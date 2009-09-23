@@ -104,11 +104,11 @@ public class CommitAction extends RepositoryAction {
 			final RepositoryConfig config = repository.getConfig();
 			author = config.getAuthorName();
 			final String authorEmail = config.getAuthorEmail();
-			author = author + " <" + authorEmail + ">";
+			author = author + " <" + authorEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 
 			committer = config.getCommitterName();
 			final String committerEmail = config.getCommitterEmail();
-			committer = committer + " <" + committerEmail + ">";
+			committer = committer + " <" + committerEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		loadPreviousCommit();
@@ -123,7 +123,7 @@ public class CommitAction extends RepositoryAction {
 		if (previousCommit != null) {
 			commitDialog.setPreviousCommitMessage(previousCommit.getMessage());
 			PersonIdent previousAuthor = previousCommit.getAuthor();
-			commitDialog.setPreviousAuthor(previousAuthor.getName() + " <" + previousAuthor.getEmailAddress() + ">");
+			commitDialog.setPreviousAuthor(previousAuthor.getName() + " <" + previousAuthor.getEmailAddress() + ">"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		if (commitDialog.open() != IDialogConstants.OK_ID)
@@ -250,7 +250,7 @@ public class CommitAction extends RepositoryAction {
 				if (projTree == null)
 					projTree = new Tree(repository);
 				treeMap.put(repository, projTree);
-				System.out.println("Orig tree id: " + projTree.getId());
+				System.out.println("Orig tree id: " + projTree.getId()); //$NON-NLS-1$
 			}
 			GitIndex index = repository.getIndex();
 			String repoRelativePath = repositoryMapping
@@ -269,7 +269,7 @@ public class CommitAction extends RepositoryAction {
 				if (!thisfile.isFile()) {
 					index.remove(repositoryMapping.getWorkDir(), thisfile);
 					index.write();
-					System.out.println("Phantom file, so removing from index");
+					System.out.println("Phantom file, so removing from index"); //$NON-NLS-1$
 					continue;
 				} else {
 					if (idxEntry.update(thisfile))
@@ -283,8 +283,8 @@ public class CommitAction extends RepositoryAction {
 				TreeEntry newMember = projTree.findBlobMember(repoRelativePath);
 
 				newMember.setId(idxEntry.getObjectId());
-				System.out.println("New member id for " + repoRelativePath
-						+ ": " + newMember.getId() + " idx id: "
+				System.out.println("New member id for " + repoRelativePath //$NON-NLS-1$
+						+ ": " + newMember.getId() + " idx id: " //$NON-NLS-1$ //$NON-NLS-2$
 						+ idxEntry.getObjectId());
 			}
 		}
@@ -292,18 +292,18 @@ public class CommitAction extends RepositoryAction {
 
 	private String buildReflogMessage(String commitMessage) {
 		String firstLine = commitMessage;
-		int newlineIndex = commitMessage.indexOf("\n");
+		int newlineIndex = commitMessage.indexOf("\n"); //$NON-NLS-1$
 		if (newlineIndex > 0) {
 			firstLine = commitMessage.substring(0, newlineIndex);
 		}
-		String commitStr = amending ? "commit (amend):" : "commit: ";
+		String commitStr = amending ? "commit (amend):" : "commit: "; //$NON-NLS-1$ //$NON-NLS-2$
 		String message = commitStr + firstLine;
 		return message;
 	}
 
 	private void writeTreeWithSubTrees(Tree tree) throws TeamException {
 		if (tree.getId() == null) {
-			System.out.println("writing tree for: " + tree.getFullName());
+			System.out.println("writing tree for: " + tree.getFullName()); //$NON-NLS-1$
 			try {
 				for (TreeEntry entry : tree.members()) {
 					if (entry.isModified()) {
@@ -312,7 +312,7 @@ public class CommitAction extends RepositoryAction {
 						} else {
 							// this shouldn't happen.... not quite sure what to
 							// do here :)
-							System.out.println("BAD JUJU: "
+							System.out.println("BAD JUJU: " //$NON-NLS-1$
 									+ entry.getFullName());
 						}
 					}
@@ -346,7 +346,7 @@ public class CommitAction extends RepositoryAction {
 	private void includeList(IProject project, HashSet<String> added, ArrayList<IFile> category) {
 		String repoRelativePath = RepositoryMapping.getMapping(project).getRepoRelativePath(project);
 		if (repoRelativePath.length() > 0) {
-			repoRelativePath += "/";
+			repoRelativePath += "/"; //$NON-NLS-1$
 		}
 
 		for (String filename : added) {
@@ -360,7 +360,7 @@ public class CommitAction extends RepositoryAction {
 						files.add((IFile) member);
 					category.add((IFile) member);
 				} else {
-					System.out.println("Couldn't find " + filename);
+					System.out.println("Couldn't find " + filename); //$NON-NLS-1$
 				}
 			} catch (Exception t) {
 				t.printStackTrace();

@@ -56,7 +56,7 @@ class CommitMessageViewer extends TextViewer {
 
 	CommitMessageViewer(final Composite parent) {
 		super(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
-		fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
 
 		final StyledText t = getTextWidget();
 		t.setFont(Activator.getFont(UIPreferences.THEME_CommitMessageFont));
@@ -180,14 +180,14 @@ class CommitMessageViewer extends TextViewer {
 		}
 
 		makeGrayText(d, styles);
-		d.append("\n");
+		d.append("\n"); //$NON-NLS-1$
 		String msg = commit.getFullMessage();
-		Pattern p = Pattern.compile("\n([A-Z](?:[A-Za-z]+-)+by: [^\n]+)");
+		Pattern p = Pattern.compile("\n([A-Z](?:[A-Za-z]+-)+by: [^\n]+)"); //$NON-NLS-1$
 		if (fill) {
 			Matcher spm = p.matcher(msg);
 			if (spm.find()) {
 				String subMsg = msg.substring(0, spm.end());
-				msg = subMsg.replaceAll("([\\w.,; \t])\n(\\w)", "$1 $2")
+				msg = subMsg.replaceAll("([\\w.,; \t])\n(\\w)", "$1 $2") //$NON-NLS-1$ //$NON-NLS-2$
 						+ msg.substring(spm.end());
 			}
 		}

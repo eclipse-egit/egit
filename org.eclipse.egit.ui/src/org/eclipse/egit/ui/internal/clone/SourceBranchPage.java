@@ -231,7 +231,7 @@ class SourceBranchPage extends BaseWizardPage {
 		final ListRemoteOperation listRemoteOp;
 		try {
 			final URIish uri = newRepoSelection.getURI();
-			final Repository db = new Repository(new File("/tmp"));
+			final Repository db = new Repository(new File("/tmp")); //$NON-NLS-1$
 			listRemoteOp = new ListRemoteOperation(db, uri);
 			getContainer().run(true, true, listRemoteOp);
 		} catch (InvocationTargetException e) {

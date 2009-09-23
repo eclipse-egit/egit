@@ -59,7 +59,7 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 
 	private final IPreferenceStore store;
 
-	private String branch = "";
+	private String branch = ""; //$NON-NLS-1$
 
 	private boolean tracked = false;
 
@@ -297,7 +297,7 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		if (repositoryPaths.isEmpty())
 			return false;
 
-		if (repositoryPaths.contains(""))
+		if (repositoryPaths.contains("")) //$NON-NLS-1$
 			return true; // Project filter
 
 		treeWalk.setFilter(PathFilterGroup.createFromStrings(repositoryPaths));

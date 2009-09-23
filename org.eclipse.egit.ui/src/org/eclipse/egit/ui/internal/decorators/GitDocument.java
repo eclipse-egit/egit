@@ -43,7 +43,7 @@ class GitDocument extends Document implements RepositoryListener {
 	static Map<GitDocument,Repository> doc2repo = new WeakHashMap<GitDocument, Repository>();
 
 	static GitDocument create(final IResource resource) throws IOException {
-		Activator.trace("(GitDocument) create: " + resource);
+		Activator.trace("(GitDocument) create: " + resource); //$NON-NLS-1$
 		GitDocument ret = null;
 		if (RepositoryProvider.getProvider(resource.getProject()) instanceof GitProvider) {
 			ret = new GitDocument(resource);
@@ -66,17 +66,17 @@ class GitDocument extends Document implements RepositoryListener {
 		lastBlob = blob != null ? blob.copy() : null;
 		set(value);
 		if (blob != null)
-			Activator.trace("(GitDocument) resolved " + resource + " to " + lastBlob + " in " + lastCommit + "/" + lastTree);
+			Activator.trace("(GitDocument) resolved " + resource + " to " + lastBlob + " in " + lastCommit + "/" + lastTree); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		else
-			Activator.trace("(GitDocument) unresolved " + resource);
+			Activator.trace("(GitDocument) unresolved " + resource); //$NON-NLS-1$
 	}
 
 	void populate() throws IOException {
-		Activator.trace("(GitDocument) populate: " + resource);
+		Activator.trace("(GitDocument) populate: " + resource); //$NON-NLS-1$
 		final IProject project = resource.getProject();
 		RepositoryMapping mapping = RepositoryMapping.getMapping(project);
 		if (mapping == null) {
-			setResolved(null, null, null, "");
+			setResolved(null, null, null, ""); //$NON-NLS-1$
 			return;
 		}
 		final String gitPath = mapping.getRepoRelativePath(resource);
@@ -87,14 +87,14 @@ class GitDocument extends Document implements RepositoryListener {
 		ObjectId commitId = repository.resolve(baseline);
 		if (commitId != null) {
 			if (commitId.equals(lastCommit)) {
-				Activator.trace("(GitDocument) already resolved");
+				Activator.trace("(GitDocument) already resolved"); //$NON-NLS-1$
 				return;
 			}
 		} else {
 			Activator.logError("Could not resolve quickdiff baseline "
 					+ baseline + " corresponding to " + resource + " in "
 					+ repository, new Throwable());
-			setResolved(null, null, null, "");
+			setResolved(null, null, null, ""); //$NON-NLS-1$
 			return;
 		}
 		Commit baselineCommit = repository.mapCommit(commitId);
@@ -102,12 +102,12 @@ class GitDocument extends Document implements RepositoryListener {
 			Activator.logError("Could not load commit " + commitId + " for "
 					+ baseline + " corresponding to " + resource + " in "
 					+ repository, new Throwable());
-			setResolved(null, null, null, "");
+			setResolved(null, null, null, ""); //$NON-NLS-1$
 			return;
 		}
 		ObjectId treeId = baselineCommit.getTreeId();
 		if (treeId.equals(lastTree)) {
-			Activator.trace("(GitDocument) already resolved");
+			Activator.trace("(GitDocument) already resolved"); //$NON-NLS-1$
 			return;
 		}
 		Tree baselineTree = baselineCommit.getTree();
@@ -115,12 +115,12 @@ class GitDocument extends Document implements RepositoryListener {
 			Activator.logError("Could not load tree " + treeId + " for "
 					+ baseline + " corresponding to " + resource + " in "
 					+ repository, new Throwable());
-			setResolved(null, null, null, "");
+			setResolved(null, null, null, ""); //$NON-NLS-1$
 			return;
 		}
 		TreeEntry blobEntry = baselineTree.findBlobMember(gitPath);
 		if (blobEntry != null && !blobEntry.getId().equals(lastBlob)) {
-			Activator.trace("(GitDocument) compareTo: " + baseline);
+			Activator.trace("(GitDocument) compareTo: " + baseline); //$NON-NLS-1$
 			ObjectLoader loader = repository.openBlob(blobEntry.getId());
 			byte[] bytes = loader.getBytes();
 			String charset;
@@ -141,17 +141,17 @@ class GitDocument extends Document implements RepositoryListener {
 			// to the content. We don't do that here.
 			String s = new String(bytes, charset);
 			setResolved(commitId, baselineTree.getId(), blobEntry.getId(), s);
-			Activator.trace("(GitDocument) has reference doc, size=" + s.length() + " bytes");
+			Activator.trace("(GitDocument) has reference doc, size=" + s.length() + " bytes"); //$NON-NLS-1$ //$NON-NLS-2$
 		} else {
 			if (blobEntry == null)
-				setResolved(null, null, null, "");
+				setResolved(null, null, null, ""); //$NON-NLS-1$
 			else
-				Activator.trace("(GitDocument) already resolved");
+				Activator.trace("(GitDocument) already resolved"); //$NON-NLS-1$
 		}
 	}
 
 	void dispose() {
-		Activator.trace("(GitDocument) dispose: " + resource);
+		Activator.trace("(GitDocument) dispose: " + resource); //$NON-NLS-1$
 		doc2repo.remove(this);
 		Repository repository = getRepository();
 		if (repository != null)

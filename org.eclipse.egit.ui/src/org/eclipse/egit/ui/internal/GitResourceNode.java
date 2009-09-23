@@ -86,7 +86,7 @@ public class GitResourceNode extends BufferedContent implements IStructureCompar
 		if (entry != null)
 			return entry.getFullName();
 		else
-			return "<none>";
+			return "<none>"; //$NON-NLS-1$
 	}
 
 	public Image getImage() {
@@ -107,9 +107,9 @@ public class GitResourceNode extends BufferedContent implements IStructureCompar
 						return ""; //$NON-NLS-1$
 					return name.substring(index + 1);
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			} else
-				return "";
+				return ""; //$NON-NLS-1$
 		}
 	}
 

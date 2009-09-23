@@ -89,32 +89,32 @@ public class UIIcons {
 
 	static {
 		base = init();
-		OVR_STAGED = map("ovr/staged.gif");
-		OVR_STAGED_ADD = map("ovr/staged_added.gif");
-		OVR_STAGED_REMOVE = map("ovr/staged_removed.gif");
-		OVR_UNTRACKED = map("ovr/untracked.gif");
-		OVR_CONFLICT = map("ovr/conflict.gif");
-		OVR_ASSUMEVALID = map("ovr/assume_valid.gif");
-		ELCL16_FIND = map("elcl16/find.gif");
-		ELCL16_NEXT = map("elcl16/next.gif");
-		ELCL16_PREVIOUS = map("elcl16/previous.gif");
-		WIZBAN_IMPORT_REPO = map("wizban/import_wiz.png");
-		WIZBAN_CONNECT_REPO = map("wizban/newconnect_wizban.png");
-		ELCL16_COMMIT = map("elcl16/commit.gif");
-		ELCL16_COMMENTS = map("elcl16/comment.gif");
-		ELCL16_AUTHOR = map("elcl16/author.gif");
-		ELCL16_COMMITTER = map("elcl16/committer.gif");
-		ELCL16_DELETE = map("elcl16/delete.gif");
-		ELCL16_ADD = map("elcl16/add.gif");
-		ELCL16_TRASH = map("elcl16/trash.gif");
-		ELCL16_CLEAR = map("elcl16/clear.gif");
-		CHECKBOX_ENABLED_CHECKED = map("checkboxes/enabled_checked.gif");
-		CHECKBOX_ENABLED_UNCHECKED = map("checkboxes/enabled_unchecked.gif");
-		CHECKBOX_DISABLED_CHECKED = map("checkboxes/disabled_checked.gif");
-		CHECKBOX_DISABLED_UNCHECKED = map("checkboxes/disabled_unchecked.gif");
-		FILTERREPO = map("elcl16/filterrepo.gif");
-		FILTERPROJECT = map("elcl16/filterproject.gif");
-		FILTERFOLDER = map("elcl16/filterfolder.gif");
+		OVR_STAGED = map("ovr/staged.gif"); //$NON-NLS-1$
+		OVR_STAGED_ADD = map("ovr/staged_added.gif"); //$NON-NLS-1$
+		OVR_STAGED_REMOVE = map("ovr/staged_removed.gif"); //$NON-NLS-1$
+		OVR_UNTRACKED = map("ovr/untracked.gif"); //$NON-NLS-1$
+		OVR_CONFLICT = map("ovr/conflict.gif"); //$NON-NLS-1$
+		OVR_ASSUMEVALID = map("ovr/assume_valid.gif"); //$NON-NLS-1$
+		ELCL16_FIND = map("elcl16/find.gif"); //$NON-NLS-1$
+		ELCL16_NEXT = map("elcl16/next.gif"); //$NON-NLS-1$
+		ELCL16_PREVIOUS = map("elcl16/previous.gif"); //$NON-NLS-1$
+		WIZBAN_IMPORT_REPO = map("wizban/import_wiz.png"); //$NON-NLS-1$
+		WIZBAN_CONNECT_REPO = map("wizban/newconnect_wizban.png"); //$NON-NLS-1$
+		ELCL16_COMMIT = map("elcl16/commit.gif"); //$NON-NLS-1$
+		ELCL16_COMMENTS = map("elcl16/comment.gif"); //$NON-NLS-1$
+		ELCL16_AUTHOR = map("elcl16/author.gif"); //$NON-NLS-1$
+		ELCL16_COMMITTER = map("elcl16/committer.gif"); //$NON-NLS-1$
+		ELCL16_DELETE = map("elcl16/delete.gif"); //$NON-NLS-1$
+		ELCL16_ADD = map("elcl16/add.gif"); //$NON-NLS-1$
+		ELCL16_TRASH = map("elcl16/trash.gif"); //$NON-NLS-1$
+		ELCL16_CLEAR = map("elcl16/clear.gif"); //$NON-NLS-1$
+		CHECKBOX_ENABLED_CHECKED = map("checkboxes/enabled_checked.gif"); //$NON-NLS-1$
+		CHECKBOX_ENABLED_UNCHECKED = map("checkboxes/enabled_unchecked.gif"); //$NON-NLS-1$
+		CHECKBOX_DISABLED_CHECKED = map("checkboxes/disabled_checked.gif"); //$NON-NLS-1$
+		CHECKBOX_DISABLED_UNCHECKED = map("checkboxes/disabled_unchecked.gif"); //$NON-NLS-1$
+		FILTERREPO = map("elcl16/filterrepo.gif"); //$NON-NLS-1$
+		FILTERPROJECT = map("elcl16/filterproject.gif"); //$NON-NLS-1$
+		FILTERFOLDER = map("elcl16/filterfolder.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
@@ -130,8 +130,8 @@ public class UIIcons {
 
 	private static URL init() {
 		try {
-			return new URL(Activator.getDefault().getBundle().getEntry("/"),
-					"icons/");
+			return new URL(Activator.getDefault().getBundle().getEntry("/"), //$NON-NLS-1$
+					"icons/"); //$NON-NLS-1$
 		} catch (MalformedURLException mux) {
 			Activator.logError("Can't determine icon base.", mux);
 			return null;

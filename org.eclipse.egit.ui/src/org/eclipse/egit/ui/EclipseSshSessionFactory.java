@@ -32,7 +32,7 @@ class EclipseSshSessionFactory extends SshConfigSessionFactory {
 		// and configured private keys to be initialized. This is needed by
 		// our parent class in case non-default JSch instances need to be made.
 		//
-		provider.createSession("127.0.0.1", 0, "eclipse");
+		provider.createSession("127.0.0.1", 0, "eclipse"); //$NON-NLS-1$ //$NON-NLS-2$
 		return provider.getJSch();
 	}
 

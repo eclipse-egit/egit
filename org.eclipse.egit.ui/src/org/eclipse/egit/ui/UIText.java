@@ -1083,6 +1083,6 @@ public class UIText extends NLS {
 	public static String DecoratorPreferencesPage_iconsShowAssumeValid;
 
 	static {
-		initializeMessages("org.eclipse.egit.ui.uitext", UIText.class);
+		initializeMessages("org.eclipse.egit.ui.uitext", UIText.class); //$NON-NLS-1$
 	}
 }

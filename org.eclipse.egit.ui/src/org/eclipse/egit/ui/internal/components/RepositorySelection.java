@@ -44,7 +44,7 @@ public class RepositorySelection {
 	RepositorySelection(final URIish uri, final RemoteConfig config) {
 		if (config != null && uri != null)
 			throw new IllegalArgumentException(
-					"URI and config cannot be set at the same time.");
+					"URI and config cannot be set at the same time."); //$NON-NLS-1$
 		this.config = config;
 		this.uri = uri;
 	}

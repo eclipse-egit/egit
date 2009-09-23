@@ -30,7 +30,7 @@ class StorageSizeFieldEditor extends StringFieldEditor {
 		setTextLimit(10);
 		setEmptyStringAllowed(false);
 		setErrorMessage(JFaceResources
-				.getString("IntegerFieldEditor.errorMessage"));
+				.getString("IntegerFieldEditor.errorMessage")); //$NON-NLS-1$
 		createControl(parent);
 		minValidValue = min;
 		maxValidValue = max;
@@ -89,11 +89,11 @@ class StorageSizeFieldEditor extends StringFieldEditor {
 
 	private String format(int value) {
 		if (value > GB && (value / GB) * GB == value)
-			return String.valueOf(value / GB) + " g";
+			return String.valueOf(value / GB) + " g"; //$NON-NLS-1$
 		if (value > MB && (value / MB) * MB == value)
-			return String.valueOf(value / MB) + " m";
+			return String.valueOf(value / MB) + " m"; //$NON-NLS-1$
 		if (value > KB && (value / KB) * KB == value)
-			return String.valueOf(value / KB) + " k";
+			return String.valueOf(value / KB) + " k"; //$NON-NLS-1$
 		return String.valueOf(value);
 	}
 

@@ -93,7 +93,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 
 	private static final String SHOW_FIND_TOOLBAR = UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR;
 
-	private static final String POPUP_ID = "org.eclipse.egit.ui.historyPageContributions";
+	private static final String POPUP_ID = "org.eclipse.egit.ui.historyPageContributions"; //$NON-NLS-1$
 
 	/**
 	 * Determine if the input can be shown in this viewer.
@@ -347,7 +347,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 				refschangedRunnable = new Runnable() {
 					public void run() {
 						if (!getControl().isDisposed()) {
-							Activator.trace("Executing async repository changed event");
+							Activator.trace("Executing async repository changed event"); //$NON-NLS-1$
 							refschangedRunnable = null;
 							inputSet();
 						}
@@ -828,19 +828,19 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 	public String getName() {
 		final ResourceList in = (ResourceList) super.getInput();
 		if (currentWalk == null || in == null)
-			return "";
+			return ""; //$NON-NLS-1$
 		final IResource[] items = in.getItems();
 		if (items.length == 0)
-			return "";
+			return ""; //$NON-NLS-1$
 
 		final StringBuilder b = new StringBuilder();
 		b.append(items[0].getProject().getName());
 		if (currentWalk.getRevFilter() != RevFilter.ALL) {
-			b.append(": ");
+			b.append(": "); //$NON-NLS-1$
 			b.append(currentWalk.getRevFilter());
 		}
 		if (currentWalk.getTreeFilter() != TreeFilter.ALL) {
-			b.append(":");
+			b.append(":"); //$NON-NLS-1$
 			for (final String p : pathFilters) {
 				b.append(' ');
 				b.append(p);

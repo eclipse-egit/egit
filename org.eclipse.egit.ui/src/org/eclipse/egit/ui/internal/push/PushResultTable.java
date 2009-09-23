@@ -58,19 +58,19 @@ class PushResultTable {
 
 	private static final int COLUMN_MODE_WEIGHT = 15;
 
-	private static final String IMAGE_DELETE = "MODE_DELETE";
+	private static final String IMAGE_DELETE = "MODE_DELETE"; //$NON-NLS-1$
 
-	private static final String IMAGE_ADD = "MODE_ADD";
+	private static final String IMAGE_ADD = "MODE_ADD"; //$NON-NLS-1$
 
-	private static final String COLOR_REJECTED_KEY = "REJECTED";
+	private static final String COLOR_REJECTED_KEY = "REJECTED"; //$NON-NLS-1$
 
 	private static final RGB COLOR_REJECTED = new RGB(255, 0, 0);
 
-	private static final String COLOR_UPDATED_KEY = "UPDATED";
+	private static final String COLOR_UPDATED_KEY = "UPDATED"; //$NON-NLS-1$
 
 	private static final RGB COLOR_UPDATED = new RGB(0, 255, 0);
 
-	private static final String COLOR_UP_TO_DATE_KEY = "UP_TO_DATE";
+	private static final String COLOR_UP_TO_DATE_KEY = "UP_TO_DATE"; //$NON-NLS-1$
 
 	private static final RGB COLOR_UP_TO_DATE = new RGB(245, 245, 245);
 
@@ -235,7 +235,7 @@ class PushResultTable {
 				}
 
 				return oldRef.getObjectId().abbreviate(localDb).name()
-						+ (rru.isFastForward() ? ".." : "...")
+						+ (rru.isFastForward() ? ".." : "...") //$NON-NLS-1$ //$NON-NLS-2$
 						+ rru.getNewObjectId().abbreviate(localDb).name();
 			case UP_TO_DATE:
 				return UIText.PushResultTable_statusUpToDate;

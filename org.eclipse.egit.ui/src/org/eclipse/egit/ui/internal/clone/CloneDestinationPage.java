@@ -114,7 +114,7 @@ class CloneDestinationPage extends WizardPage {
 		final Group g = createGroup(parent,
 				UIText.CloneDestinationPage_groupDestination);
 
-		newLabel(g, UIText.CloneDestinationPage_promptDirectory + ":");
+		newLabel(g, UIText.CloneDestinationPage_promptDirectory + ":"); //$NON-NLS-1$
 		final Composite p = new Composite(g, SWT.NONE);
 		final GridLayout grid = new GridLayout();
 		grid.numColumns = 2;
@@ -146,7 +146,7 @@ class CloneDestinationPage extends WizardPage {
 			}
 		});
 
-		newLabel(g, UIText.CloneDestinationPage_promptInitialBranch + ":");
+		newLabel(g, UIText.CloneDestinationPage_promptInitialBranch + ":"); //$NON-NLS-1$
 		initialBranch = new Combo(g, SWT.DROP_DOWN | SWT.READ_ONLY);
 		initialBranch.setLayoutData(createFieldGridData());
 		initialBranch.addSelectionListener(new SelectionAdapter() {
@@ -161,9 +161,9 @@ class CloneDestinationPage extends WizardPage {
 		final Group g = createGroup(parent,
 				UIText.CloneDestinationPage_groupConfiguration);
 
-		newLabel(g, UIText.CloneDestinationPage_promptRemoteName + ":");
+		newLabel(g, UIText.CloneDestinationPage_promptRemoteName + ":"); //$NON-NLS-1$
 		remoteText = new Text(g, SWT.BORDER);
-		remoteText.setText("origin");
+		remoteText.setText("origin"); //$NON-NLS-1$
 		remoteText.setLayoutData(createFieldGridData());
 		remoteText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -334,7 +334,7 @@ class CloneDestinationPage extends WizardPage {
 		int s = path.lastIndexOf('/');
 		if (s != -1)
 			path = path.substring(s + 1);
-		if (path.endsWith(".git"))
+		if (path.endsWith(".git")) //$NON-NLS-1$
 			path = path.substring(0, path.length() - 4);
 		return path;
 	}

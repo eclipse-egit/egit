@@ -20,6 +20,6 @@ public class ResetQuickdiffBaselineHeadParentAction extends AbstractRevObjectAct
 
 	@Override
 	protected IWorkspaceRunnable createOperation(IAction act, List selection) {
-		return new QuickdiffBaselineOperation(getActiveRepository(), "HEAD^1");
+		return new QuickdiffBaselineOperation(getActiveRepository(), "HEAD^1"); //$NON-NLS-1$
 	}
 }

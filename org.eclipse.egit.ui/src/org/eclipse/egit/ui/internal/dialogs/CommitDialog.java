@@ -251,7 +251,7 @@ public class CommitDialog extends Dialog {
 					commitText.setText(signOff(curText));
 				} else {
 					// remove signed off line
-					curText = replaceSignOff(curText, getSignedOff(), "");
+					curText = replaceSignOff(curText, getSignedOff(), ""); //$NON-NLS-1$
 					if (curText.endsWith(Text.DELIMITER + Text.DELIMITER))
 						curText = curText.substring(0, curText.length() - Text.DELIMITER.length());
 					commitText.setText(curText);
