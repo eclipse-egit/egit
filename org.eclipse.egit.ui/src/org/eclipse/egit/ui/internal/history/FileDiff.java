@@ -41,7 +41,7 @@ class FileDiff {
 		case 1:
 			while (walk.next()) {
 				final FileDiff d = new FileDiff(commit, walk.getPathString());
-				d.change = "A";
+				d.change = "A"; //$NON-NLS-1$
 				d.blobs = new ObjectId[] { walk.getObjectId(0) };
 				r.add(d);
 			}
@@ -51,17 +51,17 @@ class FileDiff {
 				final FileDiff d = new FileDiff(commit, walk.getPathString());
 				final ObjectId id0 = walk.getObjectId(0);
 				final ObjectId id1 = walk.getObjectId(1);
-				d.change = "M";
+				d.change = "M"; //$NON-NLS-1$
 				d.blobs = new ObjectId[] { id0, id1 };
 
 				final int m0 = walk.getRawMode(0);
 				final int m1 = walk.getRawMode(1);
 				if (m0 == 0 && m1 != 0)
-					d.change = "A";
+					d.change = "A"; //$NON-NLS-1$
 				else if (m0 != 0 && m1 == 0)
-					d.change = "D";
+					d.change = "D"; //$NON-NLS-1$
 				else if (m0 != m1 && walk.idEqual(0, 1))
-					d.change = "T";
+					d.change = "T"; //$NON-NLS-1$
 				r.add(d);
 			}
 			break;
@@ -75,13 +75,13 @@ class FileDiff {
 				for (int i = 0; i < myTree; i++)
 					m0 |= walk.getRawMode(i);
 				final int m1 = walk.getRawMode(myTree);
-				d.change = "M";
+				d.change = "M"; //$NON-NLS-1$
 				if (m0 == 0 && m1 != 0)
-					d.change = "A";
+					d.change = "A"; //$NON-NLS-1$
 				else if (m0 != 0 && m1 == 0)
-					d.change = "D";
+					d.change = "D"; //$NON-NLS-1$
 				else if (m0 != m1 && walk.idEqual(0, myTree))
-					d.change = "T";
+					d.change = "T"; //$NON-NLS-1$
 				d.blobs = new ObjectId[nTree];
 				for (int i = 0; i < nTree; i++)
 					d.blobs[i] = walk.getObjectId(i);

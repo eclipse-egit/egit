@@ -146,7 +146,7 @@ class CommitGraphTable {
 		while (itr.hasNext()) {
 			final PlotCommit d = itr.next();
 			if (r.length() > 0)
-				r.append("\n");
+				r.append("\n"); //$NON-NLS-1$
 			r.append(d.getId().name());
 		}
 
@@ -171,7 +171,7 @@ class CommitGraphTable {
 	private void createColumns(final Table rawTable, final TableLayout layout) {
 		final TableColumn graph = new TableColumn(rawTable, SWT.NONE);
 		graph.setResizable(true);
-		graph.setText("");
+		graph.setText(""); //$NON-NLS-1$
 		graph.setWidth(250);
 		layout.addColumnData(new ColumnWeightData(20, true));
 

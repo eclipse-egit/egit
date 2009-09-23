@@ -145,7 +145,7 @@ public class FindToolbar extends Composite {
 		GridData findTextData = new GridData(SWT.FILL, SWT.FILL, true, false);
 		findTextData.minimumWidth = 50;
 		patternField.setLayoutData(findTextData);
-		patternField.setText("");
+		patternField.setText(""); //$NON-NLS-1$
 		patternField.setTextLimit(100);
 
 		nextButton = new Button(this, SWT.HORIZONTAL);
@@ -206,7 +206,7 @@ public class FindToolbar extends Composite {
 		totalLabelData.grabExcessHorizontalSpace = true;
 		currentPositionLabel.setLayoutData(totalLabelData);
 		currentPositionLabel.setAlignment(SWT.RIGHT);
-		currentPositionLabel.setText("");
+		currentPositionLabel.setText(""); //$NON-NLS-1$
 
 		progressBar = new ProgressBar(this, SWT.HORIZONTAL);
 		GridData findProgressBarData = new GridData();
@@ -272,11 +272,11 @@ public class FindToolbar extends Composite {
 					String current = null;
 					int currentValue = findResults.getMatchNumberFor(newIx);
 					if (currentValue == -1) {
-						current = "-";
+						current = "-"; //$NON-NLS-1$
 					} else {
 						current = String.valueOf(currentValue);
 					}
-					currentPositionLabel.setText(current + "/"
+					currentPositionLabel.setText(current + "/" //$NON-NLS-1$
 							+ findResults.size());
 				}
 			}
@@ -417,7 +417,7 @@ public class FindToolbar extends Composite {
 
 	void progressUpdate(int percent) {
 		int total = findResults.size();
-		currentPositionLabel.setText("-/" + total);
+		currentPositionLabel.setText("-/" + total); //$NON-NLS-1$
 		currentPositionLabel.setForeground(null);
 		if (total > 0) {
 			nextButton.setEnabled(true);
@@ -436,10 +436,10 @@ public class FindToolbar extends Composite {
 		if (total > 0) {
 			if (overflow) {
 				currentPositionLabel
-						.setText(UIText.HistoryPage_findbar_exceeded + " 1/"
+						.setText(UIText.HistoryPage_findbar_exceeded + " 1/" //$NON-NLS-1$
 								+ total);
 			} else {
-				currentPositionLabel.setText("1/" + total);
+				currentPositionLabel.setText("1/" + total); //$NON-NLS-1$
 			}
 			int ix = findResults.getFirstIndex();
 			sendEvent(null, ix);
@@ -465,7 +465,7 @@ public class FindToolbar extends Composite {
 				lastErrorPattern = pattern;
 			} else {
 				patternField.setBackground(null);
-				currentPositionLabel.setText("");
+				currentPositionLabel.setText(""); //$NON-NLS-1$
 				nextButton.setEnabled(false);
 				previousButton.setEnabled(false);
 				lastErrorPattern = null;
@@ -497,7 +497,7 @@ public class FindToolbar extends Composite {
 			nextButton.setEnabled(false);
 			previousButton.setEnabled(false);
 		}
-		currentPositionLabel.setText("");
+		currentPositionLabel.setText(""); //$NON-NLS-1$
 		progressBar.setSelection(0);
 		lastErrorPattern = null;
 

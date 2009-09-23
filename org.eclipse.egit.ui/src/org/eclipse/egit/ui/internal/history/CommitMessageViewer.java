@@ -56,7 +56,7 @@ class CommitMessageViewer extends TextViewer {
 
 	CommitMessageViewer(final Composite parent) {
 		super(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
-		fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
 
 		final StyledText t = getTextWidget();
 		t.setFont(Activator.getFont(UIPreferences.THEME_CommitMessageFont));
@@ -135,59 +135,59 @@ class CommitMessageViewer extends TextViewer {
 		final StringBuilder d = new StringBuilder();
 		final ArrayList<StyleRange> styles = new ArrayList<StyleRange>();
 
-		d.append("commit ");
+		d.append("commit "); //$NON-NLS-1$
 		d.append(commit.getId().name());
-		d.append("\n");
+		d.append("\n"); //$NON-NLS-1$
 
 		if (author != null) {
-			d.append("Author: ");
+			d.append("Author: "); //$NON-NLS-1$
 			d.append(author.getName());
-			d.append(" <");
+			d.append(" <"); //$NON-NLS-1$
 			d.append(author.getEmailAddress());
-			d.append("> ");
+			d.append("> "); //$NON-NLS-1$
 			d.append(fmt.format(author.getWhen()));
-			d.append("\n");
+			d.append("\n"); //$NON-NLS-1$
 		}
 
 		if (committer != null) {
-			d.append("Committer: ");
+			d.append("Committer: "); //$NON-NLS-1$
 			d.append(committer.getName());
-			d.append(" <");
+			d.append(" <"); //$NON-NLS-1$
 			d.append(committer.getEmailAddress());
-			d.append("> ");
+			d.append("> "); //$NON-NLS-1$
 			d.append(fmt.format(committer.getWhen()));
-			d.append("\n");
+			d.append("\n"); //$NON-NLS-1$
 		}
 
 		for (int i = 0; i < commit.getParentCount(); i++) {
 			final RevCommit p = commit.getParent(i);
-			d.append("Parent: ");
+			d.append("Parent: "); //$NON-NLS-1$
 			addLink(d, styles, p);
-			d.append(" (");
+			d.append(" ("); //$NON-NLS-1$
 			d.append(p.getShortMessage());
-			d.append(")");
-			d.append("\n");
+			d.append(")"); //$NON-NLS-1$
+			d.append("\n"); //$NON-NLS-1$
 		}
 
 		for (int i = 0; i < commit.getChildCount(); i++) {
 			final RevCommit p = commit.getChild(i);
-			d.append("Child:  ");
+			d.append("Child:  "); //$NON-NLS-1$
 			addLink(d, styles, p);
-			d.append(" (");
+			d.append(" ("); //$NON-NLS-1$
 			d.append(p.getShortMessage());
-			d.append(")");
-			d.append("\n");
+			d.append(")"); //$NON-NLS-1$
+			d.append("\n"); //$NON-NLS-1$
 		}
 
 		makeGrayText(d, styles);
-		d.append("\n");
+		d.append("\n"); //$NON-NLS-1$
 		String msg = commit.getFullMessage();
-		Pattern p = Pattern.compile("\n([A-Z](?:[A-Za-z]+-)+by: [^\n]+)");
+		Pattern p = Pattern.compile("\n([A-Z](?:[A-Za-z]+-)+by: [^\n]+)"); //$NON-NLS-1$
 		if (fill) {
 			Matcher spm = p.matcher(msg);
 			if (spm.find()) {
 				String subMsg = msg.substring(0, spm.end());
-				msg = subMsg.replaceAll("([\\w.,; \t])\n(\\w)", "$1 $2")
+				msg = subMsg.replaceAll("([\\w.,; \t])\n(\\w)", "$1 $2") //$NON-NLS-1$ //$NON-NLS-2$
 						+ msg.substring(spm.end());
 			}
 		}

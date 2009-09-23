@@ -224,13 +224,13 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		if(left != null && left instanceof GitResourceNode) {
 			String ci = ((GitResourceNode)left).getContentIdentifier();
 			if(ci != null) {
-				cc.setLeftLabel(ci.substring(0, 7) + "..");
+				cc.setLeftLabel(ci.substring(0, 7) + ".."); //$NON-NLS-1$
 			}
 		}
 		if(right != null && right instanceof GitResourceNode) {
 			String ci = ((GitResourceNode)right).getContentIdentifier();
 			if(ci != null) {
-				cc.setRightLabel(ci.substring(0, 7) + "..");
+				cc.setRightLabel(ci.substring(0, 7) + ".."); //$NON-NLS-1$
 			}
 		}
 		if (getLeftRevision() != null) {

@@ -43,12 +43,12 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 	 * Create the GitQuickDiffProvider instance
 	 */
 	public GitQuickDiffProvider() {
-		Activator.trace("(GitQuickDiffProvider) constructor");
+		Activator.trace("(GitQuickDiffProvider) constructor"); //$NON-NLS-1$
 		// Empty
 	}
 
 	public void dispose() {
-		Activator.trace("(GitQuickDiffProvider) dispose");
+		Activator.trace("(GitQuickDiffProvider) dispose"); //$NON-NLS-1$
 		if (document != null)
 			document.dispose();
 	}
@@ -59,7 +59,7 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 
 	public IDocument getReference(IProgressMonitor monitor)
 			throws CoreException {
-		Activator.trace("(GitQuickDiffProvider) file: " + resource);
+		Activator.trace("(GitQuickDiffProvider) file: " + resource); //$NON-NLS-1$
 		if (resource == null)
 			return null;
 		RepositoryProvider provider = RepositoryProvider.getProvider(resource
@@ -81,7 +81,7 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 	}
 
 	public void setActiveEditor(ITextEditor editor) {
-		Activator.trace("(GitQuickDiffProvider) setActiveEditor: " + editor.getTitle());
+		Activator.trace("(GitQuickDiffProvider) setActiveEditor: " + editor.getTitle()); //$NON-NLS-1$
 		IEditorInput editorInput = editor.getEditorInput();
 		resource = ResourceUtil.getResource(editorInput);
 	}

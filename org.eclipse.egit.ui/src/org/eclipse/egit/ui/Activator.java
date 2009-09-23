@@ -130,7 +130,7 @@ public class Activator extends AbstractUIPlugin {
 	private static boolean isOptionSet(final String optionId) {
 		final String option = getPluginId() + optionId;
 		final String value = Platform.getDebugOption(option);
-		return value != null && value.equals("true");
+		return value != null && value.equals("true"); //$NON-NLS-1$
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static void trace(final String what) {
 		if (getDefault().traceVerbose) {
-			System.out.println("[" + getPluginId() + "] " + what);
+			System.out.println("[" + getPluginId() + "] " + what); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -191,7 +191,7 @@ public class Activator extends AbstractUIPlugin {
 
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-		traceVerbose = isOptionSet("/trace/verbose");
+		traceVerbose = isOptionSet("/trace/verbose"); //$NON-NLS-1$
 		setupSSH(context);
 		setupProxy(context);
 		setupRepoChangeScanner();
@@ -325,7 +325,7 @@ public class Activator extends AbstractUIPlugin {
 						if (!scanned.contains(r)) {
 							if (monitor.isCanceled())
 								break;
-							trace("Scanning " + r + " for changes");
+							trace("Scanning " + r + " for changes"); //$NON-NLS-1$ //$NON-NLS-2$
 							scanned.add(r);
 							ISchedulingRule rule = p.getWorkspace().getRuleFactory().modifyRule(p);
 							getJobManager().beginRule(rule, monitor);
@@ -339,10 +339,10 @@ public class Activator extends AbstractUIPlugin {
 					monitor.worked(1);
 				}
 				monitor.done();
-				trace("Rescheduling " + getName() + " job");
+				trace("Rescheduling " + getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
 				schedule(REPO_SCAN_INTERVAL);
 			} catch (Exception e) {
-				trace("Stopped rescheduling " + getName() + "job");
+				trace("Stopped rescheduling " + getName() + "job"); //$NON-NLS-1$ //$NON-NLS-2$
 				return new Status(
 						IStatus.ERROR,
 						getPluginId(),
@@ -382,15 +382,15 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	public void stop(final BundleContext context) throws Exception {
-		trace("Trying to cancel " + rcs.getName() + " job");
+		trace("Trying to cancel " + rcs.getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
 		rcs.cancel();
-		trace("Trying to cancel " + refreshJob.getName() + " job");
+		trace("Trying to cancel " + refreshJob.getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
 		refreshJob.cancel();
 
 		rcs.join();
 		refreshJob.join();
 
-		trace("Jobs terminated");
+		trace("Jobs terminated"); //$NON-NLS-1$
 		super.stop(context);
 		plugin = null;
 	}

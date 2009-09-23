@@ -130,7 +130,7 @@ class CommitFileDiffViewer extends TableViewer {
 		while (itr.hasNext()) {
 			final FileDiff d = itr.next();
 			if (r.length() > 0)
-				r.append("\n");
+				r.append("\n"); //$NON-NLS-1$
 			r.append(d.path);
 		}
 
@@ -141,7 +141,7 @@ class CommitFileDiffViewer extends TableViewer {
 	private void createColumns(final Table rawTable, final TableLayout layout) {
 		final TableColumn mode = new TableColumn(rawTable, SWT.NONE);
 		mode.setResizable(true);
-		mode.setText("");
+		mode.setText(""); //$NON-NLS-1$
 		mode.setWidth(5);
 		layout.addColumnData(new ColumnWeightData(1, true));
 

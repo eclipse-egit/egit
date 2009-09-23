@@ -115,7 +115,7 @@ class ExistingOrNewPage extends WizardPage {
 		button.setText(UIText.ExistingOrNewPage_CreateButton);
 		button.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-				File gitDir = new File(repositoryToCreate.getText(),".git");
+				File gitDir = new File(repositoryToCreate.getText(),".git"); //$NON-NLS-1$
 				try {
 					Repository repository = new Repository(gitDir);
 					repository.create();
@@ -134,7 +134,7 @@ class ExistingOrNewPage extends WizardPage {
 									new NullProgressMonitor());
 					}
 				} catch (IOException e1) {
-					MessageDialog.openError(getShell(), UIText.ExistingOrNewPage_ErrorFailedToCreateRepository, gitDir.toString() + ":\n" + e1.getMessage());
+					MessageDialog.openError(getShell(), UIText.ExistingOrNewPage_ErrorFailedToCreateRepository, gitDir.toString() + ":\n" + e1.getMessage()); //$NON-NLS-1$
 					Activator.logError("Failed to create repository at " + gitDir, e1); //$NON-NLS-1$
 				} catch (CoreException e2) {
 					Activator.logError(UIText.ExistingOrNewPage_ErrorFailedToRefreshRepository + gitDir, e2);

@@ -36,15 +36,15 @@ public class RefContentProposal implements IContentProposal {
 			Constants.R_REMOTES, Constants.R_TAGS };
 
 	private static final String PREFIXES_DESCRIPTIONS[] = new String[] {
-			" [branch]", " [tracking branch]", " [tag]" };
+			" [branch]", " [tracking branch]", " [tag]" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 	private static void appendObjectSummary(final StringBuilder sb,
 			final String type, final PersonIdent author, final String message) {
-		sb.append(type + " by ");
+		sb.append(type + " by "); //$NON-NLS-1$
 		sb.append(author.getName());
-		sb.append("\n");
+		sb.append("\n"); //$NON-NLS-1$
 		sb.append(author.getWhen());
-		sb.append("\n\n");
+		sb.append("\n\n"); //$NON-NLS-1$
 		final int newLine = message.indexOf('\n');
 		final int last = (newLine != -1 ? newLine : message.length());
 		sb.append(message.substring(0, last));
@@ -113,17 +113,17 @@ public class RefContentProposal implements IContentProposal {
 		sb.append(refName);
 		sb.append('\n');
 		sb.append(objectId.abbreviate(db).name());
-		sb.append(" - ");
+		sb.append(" - "); //$NON-NLS-1$
 		if (obj instanceof Commit) {
 			final Commit c = ((Commit) obj);
-			appendObjectSummary(sb, "commit", c.getAuthor(), c.getMessage());
+			appendObjectSummary(sb, "commit", c.getAuthor(), c.getMessage()); //$NON-NLS-1$
 		} else if (obj instanceof Tag) {
 			final Tag t = ((Tag) obj);
-			appendObjectSummary(sb, "tag", t.getAuthor(), t.getMessage());
+			appendObjectSummary(sb, "tag", t.getAuthor(), t.getMessage()); //$NON-NLS-1$
 		} else if (obj instanceof Tree) {
-			sb.append("tree");
+			sb.append("tree"); //$NON-NLS-1$
 		} else if (obj instanceof Blob) {
-			sb.append("blob");
+			sb.append("blob"); //$NON-NLS-1$
 		} else
 			sb.append("locally unknown object");
 		return sb.toString();

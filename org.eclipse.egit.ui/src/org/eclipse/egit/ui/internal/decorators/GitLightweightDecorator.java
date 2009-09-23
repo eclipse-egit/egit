@@ -280,7 +280,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 
 		private void decorateText(IDecoration decoration,
 				IDecoratableResource resource) {
-			String format = "";
+			String format = ""; //$NON-NLS-1$
 			switch (resource.getType()) {
 			case IResource.FILE:
 				format = store
@@ -299,9 +299,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 			Map<String, String> bindings = new HashMap<String, String>();
 			bindings.put(BINDING_RESOURCE_NAME, resource.getName());
 			bindings.put(BINDING_BRANCH_NAME, resource.getBranch());
-			bindings.put(BINDING_DIRTY_FLAG, resource.isDirty() ? ">" : null);
+			bindings.put(BINDING_DIRTY_FLAG, resource.isDirty() ? ">" : null); //$NON-NLS-1$
 			bindings.put(BINDING_STAGED_FLAG,
-					resource.staged() != Staged.NOT_STAGED ? "*" : null);
+					resource.staged() != Staged.NOT_STAGED ? "*" : null); //$NON-NLS-1$
 
 			decorate(decoration, format, bindings);
 		}
@@ -377,7 +377,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 
 						// Allow users to override the binding
 						if (key.indexOf(':') > -1) {
-							String[] keyAndBinding = key.split(":", 2);
+							String[] keyAndBinding = key.split(":", 2); //$NON-NLS-1$
 							key = keyAndBinding[0];
 							if (keyAndBinding.length > 1
 									&& bindings.get(key) != null)
@@ -417,12 +417,12 @@ public class GitLightweightDecorator extends LabelProvider implements
 				}
 			}
 
-			String prefixString = prefix.toString().replaceAll("^\\s+", "");
+			String prefixString = prefix.toString().replaceAll("^\\s+", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			if (prefixString != null) {
 				decoration.addPrefix(TextProcessor.process(prefixString,
 						"()[].")); //$NON-NLS-1$
 			}
-			String suffixString = suffix.toString().replaceAll("\\s+$", "");
+			String suffixString = suffix.toString().replaceAll("\\s+$", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			if (suffixString != null) {
 				decoration.addSuffix(TextProcessor.process(suffixString,
 						"()[].")); //$NON-NLS-1$

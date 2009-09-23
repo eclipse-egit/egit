@@ -135,7 +135,7 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		}
 
 		if (txt.length() > 12)
-			txt = txt.substring(0,11) + "\u2026"; // ellipsis "…" (in UTF-8)
+			txt = txt.substring(0,11) + "\u2026"; // ellipsis "…" (in UTF-8) //$NON-NLS-1$
 
 		Point textsz = g.stringExtent(txt);
 		int arc = textsz.y/2;
