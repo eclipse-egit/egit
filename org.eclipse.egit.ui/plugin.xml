@@ -225,14 +225,11 @@
 	    <enabledWhen>
 		<adapt type="org.eclipse.core.resources.IProject">
 			<test
-		    property="projectPersistentProperty org.eclipse.team.core.repository" value="org.eclipse.egit.core.GitProvider">
+				property="org.eclipse.core.resources.projectPersistentProperty"
+				args="org.eclipse.team.core.repository, org.eclipse.egit.core.GitProvider">
 			</test>
 		</adapt>
 	    </enabledWhen>
-         <filter
-               name="projectPersistentProperty"
-               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
-         </filter>
       </page>
    </extension>
 
