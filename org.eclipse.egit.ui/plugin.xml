@@ -113,7 +113,7 @@
 	       id="org.eclipse.egit.ui.internal.actions.CompareWithIndexAction"
 	       label="%CompareWithIndexAction_label"
 	       menubarPath="compareWithMenu/gitCompareWithGroup"
-	       tooltip="&amp;CompareWithIndexAction_tooltip">
+	       tooltip="%CompareWithIndexAction_tooltip">
 	 </action>
 	  </objectContribution>
 	  <objectContribution
