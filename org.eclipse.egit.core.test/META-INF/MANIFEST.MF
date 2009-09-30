@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test Plug-in (Incubation)
+Bundle-SymbolicName: org.eclipse.egit.core.test
+Bundle-Version: 0.5.0.qualifier
+Bundle-Activator: org.eclipse.egit.core.test.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.team.core,
+ org.junit,
+ org.eclipse.egit.core,
+ org.eclipse.egit.ui,
+ org.eclipse.jgit,
+ org.eclipse.core.filesystem
+Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.core.resources,
+ org.eclipse.jdt.core,
+ org.eclipse.jdt.junit,
+ org.eclipse.jdt.launching
+Export-Package: org.eclipse.egit.core.internal.mapping
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="Eclipse Git Plugin">
+      This is a pure Java implementation of the Git version control system. The native Git version is also required in this version,
+   </description>
+   <feature url="features/org.eclipse.egit_0.5.0.qualifier.jar" id="org.eclipse.egit" version="0.5.0.qualifier" patch="true">
+      <category name="Eclipse Git Plugin (Incubation)"/>
+   </feature>
+   <category-def name="Eclipse Git Plugin (Incubation)" label="Eclipse Git Plugin (Incubation)">
+      <description>
+         Eclipse Git Plugin (Incubation)
+      </description>
+   </category-def>
+</site>

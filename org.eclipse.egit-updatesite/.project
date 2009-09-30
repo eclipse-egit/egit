@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>org.eclipse.egit-updatesite</name>
+	<comment></comment>
+	<projects>
+		<project>org.eclipse.egit</project>
+		<project>org.eclipse.egit.core</project>
+		<project>org.eclipse.egit.core.test</project>
+		<project>org.eclipse.egit.ui</project>
+		<project>org.eclipse.egit-feature</project>
+		<project>org.eclipse.jgit</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.pde.UpdateSiteBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.pde.UpdateSiteNature</nature>
+	</natures>
+</projectDescription>

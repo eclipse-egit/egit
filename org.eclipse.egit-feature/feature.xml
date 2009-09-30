@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.egit"
+      label="Eclipse Git Feature (Incubation)"
+      version="0.5.0.qualifier"
+      provider-name="eclipse.org"
+      plugin="org.eclipse.egit">
+
+   <description url="http://www.jgit.org">
+An Eclipse Git Plugin in pure Java.
+
+ !!!Uninstall any pre-0.5 plugins!!!
+
+@buildId@
+
+Changes on @branch@ since @refversion@:
+
+<![CDATA[@shortlog@]]>
+
+   </description>
+
+   <copyright>
+     %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+     %license
+   </license>
+
+   <url>
+      <update label="Eclipse Update Site (experimental)" url="http://www.jgit.org/updates"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime" version="3.4" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.core.filesystem"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.team.ui"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.compare"/>
+      <import plugin="org.eclipse.core.net"/>
+      <import plugin="org.eclipse.team.core" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jsch.ui" version="1.1.100" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jsch.core"/>
+      <import plugin="com.jcraft.jsch"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.egit.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.egit.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.egit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jgit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
