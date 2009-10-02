@@ -5,11 +5,12 @@ Short Version:
 
  - Review and follow the Eclipse Due Diligence Process
 
+	 http://www.eclipse.org/projects/dev_process/ip-process-in-cartoons.php
      http://www.eclipse.org/legal/EclipseLegalProcessPoster.pdf
 
- - Submit patch as an attachment to eclipse.org via bugzilla:
+ - Review and follow the current guidelines:
 
-     https://bugs.eclipse.org/bugs/enter_bug.cgi?product=EGit
+     http://wiki.eclipse.org/EGit/Contributor_Guide
 
 
 Long Version:
