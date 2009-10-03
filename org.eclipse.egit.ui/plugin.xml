@@ -385,4 +385,19 @@
 		</action>
       </actionSet>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commands.ShareSingleProjectCommand"
+            description="%ShareProjectCommand_desc"
+            id="org.eclipse.egit.ui.command.shareProject"
+            name="%ShareProjectCommand_name">
+         <commandParameter
+               id="org.eclipse.egit.ui.command.projectNameParameter"
+               name="Project"
+               optional="false"
+               values="org.eclipse.egit.ui.internal.commands.ProjectNameParameterValues">
+         </commandParameter>
+      </command>
+   </extension>
 </plugin>
