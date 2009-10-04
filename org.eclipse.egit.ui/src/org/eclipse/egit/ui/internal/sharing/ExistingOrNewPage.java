@@ -87,22 +87,24 @@ class ExistingOrNewPage extends WizardPage {
 			Collection<RepositoryMapping> find;
 			try {
 				find = repositoryFinder.find(new NullProgressMonitor());
-				if (find.size() == 0)
+				Iterator<RepositoryMapping> mi = find.iterator();
+
+				// special case for a git repository in the project's root
+				final File gitDirInProjectRoot = project.getLocation().append(
+						".git").toFile(); //$NON-NLS-1$
+				if (!gitDirInProjectRoot.isDirectory()) {
+					// '.git/' isn't there, enable repository creation
 					treeItem.setText(2, ""); //$NON-NLS-1$
-				else {
-					Iterator<RepositoryMapping> mi = find.iterator();
+				} else {
+					// '.git/' is there
+					fillTreeItemWithGitDirectory(mi.next(), treeItem);
+				}
+
+				while (mi.hasNext()) {
 					RepositoryMapping m = mi.next();
-					if (m.getGitDir() == null)
-						treeItem.setText(2,UIText.ExistingOrNewPage_SymbolicValueEmptyMapping);
-					else
-						treeItem.setText(2, m.getGitDir());
-					while (mi.hasNext()) {
-						TreeItem treeItem2 = new TreeItem(treeItem, SWT.NONE);
-						if (m.getGitDir() == null)
-							treeItem2.setText(2,UIText.ExistingOrNewPage_SymbolicValueEmptyMapping);
-						else
-							treeItem2.setText(2,m.getGitDir());
-					}
+					TreeItem treeItem2 = new TreeItem(treeItem, SWT.NONE);
+					treeItem2.setData(m.getContainer().getProject());
+					fillTreeItemWithGitDirectory(m, treeItem2);
 				}
 			} catch (CoreException e) {
 				TreeItem treeItem2 = new TreeItem(treeItem, SWT.BOLD|SWT.ITALIC);
@@ -175,6 +177,13 @@ class ExistingOrNewPage extends WizardPage {
 		});
 		updateCreateOptions();
 		setControl(g);
+	}
+
+	private void fillTreeItemWithGitDirectory(RepositoryMapping m, TreeItem treeItem2) {
+		if (m.getGitDir() == null)
+			treeItem2.setText(2, UIText.ExistingOrNewPage_SymbolicValueEmptyMapping);
+		else
+			treeItem2.setText(2, m.getGitDir());
 	}
 
 	private void updateCreateOptions() {

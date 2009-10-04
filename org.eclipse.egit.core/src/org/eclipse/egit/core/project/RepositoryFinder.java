@@ -94,13 +94,13 @@ public class RepositoryFinder {
 
 				if (ownCfg.isFile()) {
 					register(c, ownCfg.getParentFile());
-				} else if (c.isLinked() || c instanceof IProject) {
+				}
+				if (c.isLinked() || c instanceof IProject) {
 					File p = fsLoc.getParentFile();
 					while (p != null) {
 						final File pCfg = configFor(p);
 						if (pCfg.isFile()) {
 							register(c, pCfg.getParentFile());
-							break;
 						}
 						p = p.getParentFile();
 					}
