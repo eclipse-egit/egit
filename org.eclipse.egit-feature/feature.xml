@@ -2,14 +2,14 @@
 <feature
       id="org.eclipse.egit"
       label="Eclipse Git Feature (Incubation)"
-      version="0.5.0.qualifier"
+      version="0.6.0.qualifier"
       provider-name="eclipse.org"
       plugin="org.eclipse.egit">
 
    <description url="http://www.jgit.org">
 An Eclipse Git Plugin in pure Java.
 
- !!!Uninstall any pre-0.5 plugins!!!
+ !!!Uninstall any pre-0.6 plugins!!!
 
 @buildId@
 
