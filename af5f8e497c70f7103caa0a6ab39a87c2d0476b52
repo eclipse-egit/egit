@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAAX////M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefContentProposal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-10-02T00:28:56Z",
+      "side": 1,
+      "message": "No, this class is horrible, it should be translated.",
+      "revId": "af5f8e497c70f7103caa0a6ab39a87c2d0476b52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAAX////I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-10-02T00:28:56Z",
+      "side": 1,
+      "message": "Somehow I have this sinking feeling this winds up being a user visible message.  :-(",
+      "revId": "af5f8e497c70f7103caa0a6ab39a87c2d0476b52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAAX///+0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-10-02T00:28:56Z",
+      "side": 1,
+      "message": "Yea, we can say NON-NLS here, but really these might need to be localized for some locales.  They are labels appearing before field values, and thus probably should be something translated.",
+      "revId": "af5f8e497c70f7103caa0a6ab39a87c2d0476b52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAAX////E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-10-02T00:28:56Z",
+      "side": 1,
+      "message": "Same as commit above.",
+      "revId": "af5f8e497c70f7103caa0a6ab39a87c2d0476b52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAAX////A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-10-02T00:28:56Z",
+      "side": 1,
+      "message": "Same as Author.",
+      "revId": "af5f8e497c70f7103caa0a6ab39a87c2d0476b52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAAX///+8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-10-02T00:28:56Z",
+      "side": 1,
+      "message": "Same as Author.",
+      "revId": "af5f8e497c70f7103caa0a6ab39a87c2d0476b52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAAX///+4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-10-02T00:28:56Z",
+      "side": 1,
+      "message": "Same as Author.",
+      "revId": "af5f8e497c70f7103caa0a6ab39a87c2d0476b52",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
