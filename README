@@ -12,40 +12,29 @@ three for packaging.
     and support routines to allow processing against the Eclipse
     workspace and resource APIs, rather than the standard Java
     file APIs.  It also supplies the team provider implementation.
-    Everything here is EPL.
 
   org.eclipse.egit.ui/
 
     An Eclipse plugin providing the user interface on top of
     org.eclipse.egit.core.
 
-    Everything here is EPL.
-
   org.eclipse.egit.core.test/
 
     Unit tests for org.eclipse.egit.core.
-
-    Everything here is EPL.
 
   org.eclipse.egit/
 
     A plugin for packaging
 
-    Everything here is EPL.
-
-  org.eclipse.egit-feature
+  org.eclipse.egit-feature/
 
     Also packaging. This project is for building an Eclipse "feature"
     out of the plugins above.
-
-    Everything here is EPL.
 
   org.eclipse.egit-updatesite/
 
     This package is for producing and update site, i.e. a web site
     you can point your eclipse at and just upgrade.
-
-    Everything here is EPL.
 
             == WARNINGS / CAVEATS              ==
 
