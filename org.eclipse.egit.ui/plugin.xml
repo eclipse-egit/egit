@@ -122,46 +122,46 @@
          <action
                class="org.eclipse.egit.ui.internal.actions.SoftResetToRevisionAction"
                id="org.eclipse.egit.ui.softresettorevision"
-               label="Soft Reset"
+               label="%Soft_Reset_label"
                menubarPath="additions"
                enablesFor="1"
-               tooltip="Resets HEAD but not working directory nor index">
+               tooltip="%Soft_Reset_tooltip">
          </action>
          <action
                class="org.eclipse.egit.ui.internal.actions.MixedResetToRevisionAction"
                id="org.eclipse.egit.ui.mixedresettorevision"
-               label="Mixed Reset"
+               label="%Mixed_Reset_label"
                menubarPath="additions"
                enablesFor="1"
-               tooltip="Resets HEAD and index, but not working directory">
+               tooltip="%Mixed_Reset_tooltip">
          </action>
          <action
                class="org.eclipse.egit.ui.internal.actions.HardResetToRevisionAction"
                id="org.eclipse.egit.ui.hardresettorevision"
-               label="Hard Reset"
+               label="%Hard_Reset_label"
                menubarPath="additions"
                enablesFor="1"
-               tooltip="Resets HEAD and index, and working directory (changed in tracked files will be lost)">
+               tooltip="%Hard_Reset_tooltip">
          </action>
 	 <action
 	       class="org.eclipse.egit.ui.internal.actions.SetQuickdiffBaselineAction"
 	       enablesFor="1"
 	       id="org.eclipse.egit.ui.setquickdiffbaseline"
-	       label="Set as quickdiff baseline"
+	       label="%Set_As_Quickdiff_Baseline_label"
 	       menubarPath="additions">
 	 </action>
 	 <action
 	       class="org.eclipse.egit.ui.internal.actions.ResetQuickdiffBaselineAction"
 	       enablesFor="*"
 	       id="org.eclipse.egit.ui.resetquickdiffbaseline"
-	       label="Reset quickdiff baseline to HEAD"
+	       label="%Reset_quickdiff_baseline_to_HEAD_label"
 	       menubarPath="additions">
 	 </action>
 	 <action
 	       class="org.eclipse.egit.ui.internal.actions.ResetQuickdiffBaselineHeadParentAction"
 	       enablesFor="*"
 	       id="org.eclipse.egit.ui.resetquickdiffheadparentbaseline"
-	       label="Reset quickdiff baseline to first parent of HEAD"
+	       label="%Reset_Quickdiff_Baseline_To_First_Parent_label"
 	       menubarPath="additions">
 	 </action>
 	  </objectContribution>
@@ -236,7 +236,7 @@
    <extension point="org.eclipse.ui.keywords">
 	  <keyword
 			id="org.eclipse.egit.ui.keyword.git"
-			label="git">
+			label="%GitKeyword_label">
 	  </keyword>
    </extension>
 
@@ -303,7 +303,7 @@
    <extension
 	 point="org.eclipse.ui.actionSets">
       <actionSet
-	    description="Common things to do with Git"
+	    description="%GitActions_description"
 	    id="org.eclipse.egit.ui.gitaction"
 	    label="%GitActions_label"
 	    visible="false"
