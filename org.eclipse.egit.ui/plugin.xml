@@ -114,7 +114,13 @@
 	       label="%CompareWithIndexAction_label"
 	       menubarPath="compareWithMenu/gitCompareWithGroup"
 	       tooltip="%CompareWithIndexAction_tooltip">
-	 </action>
+		</action>
+		<action
+			class="org.eclipse.egit.ui.internal.actions.IgnoreAction"
+			id="org.eclipse.egit.ui.internal.actions.IgnoreAction"
+			label="%IgnoreAction_label"
+			menubarPath="team.main/group1"
+			tooltip="%IgnoreAction_tooltip"/>
 	  </objectContribution>
 	  <objectContribution
          id="org.eclipse.egit.ui.resetto"
