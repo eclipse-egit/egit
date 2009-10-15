@@ -186,8 +186,12 @@ class ExistingOrNewPage extends WizardPage {
 	private void fillTreeItemWithGitDirectory(RepositoryMapping m, TreeItem treeItem2) {
 		if (m.getGitDir() == null)
 			treeItem2.setText(2, UIText.ExistingOrNewPage_SymbolicValueEmptyMapping);
-		else
-			treeItem2.setText(2, m.getGitDir());
+		else {
+			String container = m.getContainerPath().toString();
+			if (container.length() > 0)
+				container += File.separator;
+			treeItem2.setText(2, container + m.getGitDir());
+		}
 	}
 
 	private void updateCreateOptions() {
@@ -241,7 +245,11 @@ class ExistingOrNewPage extends WizardPage {
 		final TreeItem[] selection = tree.getSelection();
 		Map<IProject, File> ret = new HashMap<IProject, File>(selection.length);
 		for (int i = 0; i < selection.length; ++i) {
-			final TreeItem treeItem = selection[i];
+			TreeItem treeItem = selection[i];
+			while (treeItem.getData() ==  null && treeItem.getParentItem() != null) {
+				treeItem = treeItem.getParentItem();
+			}
+
 			final IProject project = (IProject) treeItem.getData();
 			final File selectedRepo = new File(treeItem.getText(2));
 			File localPathToRepo = selectedRepo;
