@@ -29,8 +29,6 @@ import org.eclipse.team.core.Team;
  */
 public class IgnoreAction extends RepositoryAction {
 	
-	private static final String GITIGNORE = ".gitignore"; //$NON-NLS-1$
-
 	@SuppressWarnings("restriction")
 	@Override
 	public void run(IAction action) {
@@ -47,7 +45,7 @@ public class IgnoreAction extends RepositoryAction {
 						// NB This does the same thing in DecoratableResourceAdapter, but neither currently consult .gitignore
 						if (!Team.isIgnoredHint(resource)) {
 							IContainer container = resource.getParent();
-							IFile gitignore = container.getFile(new Path(GITIGNORE));
+							IFile gitignore = container.getFile(new Path(Constants.GITIGNORE_FILENAME));
 							String entry = "/" + resource.getName() + "\n"; //$NON-NLS-1$  //$NON-NLS-2$
 							// TODO What is the character set and new-line convention?
 							if(gitignore.exists()) {
