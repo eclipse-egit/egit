@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///zc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/IgnoreAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-10-16T16:37:29Z",
+      "side": 1,
+      "message": "Might as well squash to the prior patch while respinning the prior one to address style nits.",
+      "revId": "ccbd3b46559856a14ea2e9a0d21926aef022709d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
