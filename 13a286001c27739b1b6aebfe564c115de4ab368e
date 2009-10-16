@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///5U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/ProjectNameParameterValues.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2009-10-15T20:18:02Z",
+      "side": 1,
+      "message": "remove trailing whitespace",
+      "revId": "13a286001c27739b1b6aebfe564c115de4ab368e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///5Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/ShareSingleProjectCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2009-10-15T20:18:02Z",
+      "side": 1,
+      "message": "remove trailing whitespace",
+      "revId": "13a286001c27739b1b6aebfe564c115de4ab368e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
