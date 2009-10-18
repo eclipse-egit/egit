@@ -198,15 +198,15 @@ public class RepositoryMapping {
 	}
 
 	/**
+	 * This method should only be called for resources that are actually in this
+	 * repository, so we can safely assume that their path prefix matches
+	 * {@link #getWorkDir()}. Testing that here is rather expensive so we don't
+	 * bother.
+	 *
 	 * @param rsrc
 	 * @return the path relative to the Git repository, including base name.
 	 */
 	public String getRepoRelativePath(final IResource rsrc) {
-		// We should only be called for resources that are actually
-		// in this repository, so we can safely assume that their
-		// path prefix matches workdirPrefix. Testing that here is
-		// rather expensive so we don't bother.
-		//
 		final int pfxLen = workdirPrefix.length();
 		final String p = rsrc.getLocation().toString();
 		final int pLen = p.length();
