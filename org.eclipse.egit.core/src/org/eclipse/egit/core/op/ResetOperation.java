@@ -54,11 +54,11 @@ public class ResetOperation implements IWorkspaceRunnable {
 		 */
 		HARD
 	}
-	
+
 	private final Repository repository;
 	private final String refName;
 	private final ResetType type;
-	
+
 	private Commit commit;
 	private Commit previousCommit;
 	private Tree newTree;
@@ -79,13 +79,13 @@ public class ResetOperation implements IWorkspaceRunnable {
 
 	public void run(IProgressMonitor monitor) throws CoreException {
 		monitor.beginTask("Performing " + type.toString().toLowerCase() + " reset to " + refName, 7);
-		
+
 		mapObjects();
 		monitor.worked(1);
-		
+
 		writeRef();
 		monitor.worked(1);
-		
+
 		if (type != ResetType.SOFT) {
 			if (type == ResetType.MIXED)
 				resetIndex();
@@ -94,22 +94,22 @@ public class ResetOperation implements IWorkspaceRunnable {
 			writeIndex();
 		}
 		monitor.worked(1);
-		
+
 		if (type == ResetType.HARD) {
 			checkoutIndex();
 		}
 		monitor.worked(1);
-		
+
 		if (type != ResetType.SOFT) {
 			refreshIndex();
 		}
 		monitor.worked(1);
-		
+
 		writeReflogs();
 		monitor.worked(1);
 
 		refreshProjects();
-		
+
 		monitor.done();
 	}
 
@@ -160,7 +160,7 @@ public class ResetOperation implements IWorkspaceRunnable {
 				throw new TeamException("looking up commit " + commitId, e2);
 			}
 		}
-		
+
 		try {
 			previousCommit = repository.mapCommit(repository.resolve(Constants.HEAD));
 		} catch (IOException e) {
@@ -210,7 +210,7 @@ public class ResetOperation implements IWorkspaceRunnable {
 	private void checkoutIndex() throws TeamException {
 		final File parentFile = repository.getWorkDir();
 		try {
-			WorkDirCheckout workDirCheckout = 
+			WorkDirCheckout workDirCheckout =
 				new WorkDirCheckout(repository, parentFile, index, newTree);
 			workDirCheckout.setFailOnConflict(false);
 			workDirCheckout.checkout();
@@ -226,9 +226,9 @@ public class ResetOperation implements IWorkspaceRunnable {
 			name = name.substring(11);
 		if (name.startsWith("refs/remotes/"))
 			name = name.substring(13);
-		
+
 		String message = "reset --" + type.toString().toLowerCase() + " " + name;
-		
+
 		RefLogWriter.writeReflog(repository, previousCommit.getCommitId(), commit.getCommitId(), message, reflogRelPath);
 	}
 

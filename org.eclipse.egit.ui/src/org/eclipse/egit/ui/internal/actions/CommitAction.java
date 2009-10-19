@@ -82,7 +82,7 @@ public class CommitAction extends RepositoryAction {
 				return;
 			}
 		}
-		
+
 		if (files.isEmpty()) {
 			if (amendAllowed) {
 				boolean result = MessageDialog
@@ -276,8 +276,8 @@ public class CommitAction extends RepositoryAction {
 						index.write();
 				}
 			}
-				
-			
+
+
 			if (idxEntry != null) {
 				projTree.addFile(repoRelativePath);
 				TreeEntry newMember = projTree.findBlobMember(repoRelativePath);
@@ -387,7 +387,7 @@ public class CommitAction extends RepositoryAction {
 		}
 		return false;
 	}
-	
+
 	private boolean isChanged(RepositoryMapping map, IFile resource) {
 		try {
 			Repository repository = map.getRepository();

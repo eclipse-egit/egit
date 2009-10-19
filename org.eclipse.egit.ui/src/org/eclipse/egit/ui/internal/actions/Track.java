@@ -22,7 +22,7 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 
 /**
  * An action to add resources to the Git repository.
- * 
+ *
  * @see TrackOperation
  */
 public class Track extends RepositoryAction {

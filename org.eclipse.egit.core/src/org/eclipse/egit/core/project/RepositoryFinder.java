@@ -52,7 +52,7 @@ public class RepositoryFinder {
 
 	/**
 	 * Create a new finder to locate Git repositories for a project.
-	 * 
+	 *
 	 * @param p
 	 *            the project this new finder should locate the existing Git
 	 *            repositories of.
@@ -63,7 +63,7 @@ public class RepositoryFinder {
 
 	/**
 	 * Run the search algorithm.
-	 * 
+	 *
 	 * @param m
 	 *            a progress monitor to report feedback to; may be null.
 	 * @return all found {@link RepositoryMapping} instances associated with the

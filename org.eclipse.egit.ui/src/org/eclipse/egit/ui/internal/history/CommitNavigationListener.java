@@ -13,7 +13,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 interface CommitNavigationListener {
 	/**
 	 * Show the requested commit.
-	 * 
+	 *
 	 * @param c
 	 *            the commit that the caller is displaying.
 	 */

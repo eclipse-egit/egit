@@ -54,7 +54,7 @@ public class BranchOperation implements IWorkspaceRunnable {
 	private GitIndex index;
 
 	private Tree newTree;
-	
+
 	private Commit oldCommit;
 
 	private Commit newCommit;

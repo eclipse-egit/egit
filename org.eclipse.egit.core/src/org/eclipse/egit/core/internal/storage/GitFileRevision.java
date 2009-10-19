@@ -33,7 +33,7 @@ public abstract class GitFileRevision extends FileRevision {
 
 	/**
 	 * Obtain a file revision for a specific blob of an existing commit.
-	 * 
+	 *
 	 * @param db
 	 *            the repository this commit was loaded out of, and that this
 	 *            file's blob should also be reachable through.

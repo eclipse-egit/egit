@@ -34,7 +34,7 @@ public class DisconnectProviderOperation implements IWorkspaceRunnable {
 
 	/**
 	 * Create a new disconnect operation.
-	 * 
+	 *
 	 * @param projs
 	 *            the collection of {@link IProject}s which should be
 	 *            disconnected from the Git team provider, and returned to

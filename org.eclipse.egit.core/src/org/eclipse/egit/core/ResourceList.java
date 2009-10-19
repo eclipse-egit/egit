@@ -18,7 +18,7 @@ public class ResourceList implements IAdaptable {
 
 	/**
 	 * Create a new list of resources.
-	 * 
+	 *
 	 * @param items
 	 *            the items to contain in this list.
 	 */
@@ -28,7 +28,7 @@ public class ResourceList implements IAdaptable {
 
 	/**
 	 * Get the items stored in this list.
-	 * 
+	 *
 	 * @return the list provided to our constructor.
 	 */
 	public IResource[] getItems() {

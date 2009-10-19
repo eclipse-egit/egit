@@ -107,7 +107,7 @@ class CommitFileRevision extends GitFileRevision {
 
 	/**
 	 * Get the commit that introduced this file revision.
-	 * 
+	 *
 	 * @return the commit we most recently noticed this file in.
 	 */
 	public RevCommit getRevCommit() {

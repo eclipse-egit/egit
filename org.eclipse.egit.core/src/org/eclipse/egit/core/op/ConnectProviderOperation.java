@@ -35,7 +35,7 @@ public class ConnectProviderOperation implements IWorkspaceRunnable {
 
 	/**
 	 * Create a new connection operation to execute within the workspace.
-	 * 
+	 *
 	 * @param proj
 	 *            the project to connect to the Git team provider.
 	 */

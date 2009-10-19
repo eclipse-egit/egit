@@ -53,7 +53,7 @@ class StorageSizeFieldEditor extends StringFieldEditor {
 
 	/**
 	 * Verify this value is acceptable.
-	 * 
+	 *
 	 * @param number
 	 *            the value parsed from the input.
 	 * @return true if the value is OK; false otherwise.

@@ -106,7 +106,7 @@ public class GitProjectData {
 	 * This is a no-op if <code>objectThatCares</code> has already been
 	 * registered.
 	 * </p>
-	 * 
+	 *
 	 * @param objectThatCares
 	 *            the new listener to register. Must not be null.
 	 */
@@ -130,7 +130,7 @@ public class GitProjectData {
 
 	/**
 	 * Notify registered {@link RepositoryChangeListener}s of a change.
-	 * 
+	 *
 	 * @param which
 	 *            the repository which has had changes occur within it.
 	 */

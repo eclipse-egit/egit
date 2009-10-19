@@ -50,7 +50,7 @@ public class TrackOperation implements IWorkspaceRunnable {
 
 	/**
 	 * Create a new operation to track additional files/folders.
-	 * 
+	 *
 	 * @param rsrcs
 	 *            collection of {@link IResource}s which should be added to the
 	 *            relevant Git repositories.
@@ -116,7 +116,7 @@ public class TrackOperation implements IWorkspaceRunnable {
 					} else {
 						Entry entry = index.add(rm.getWorkDir(), new File(rm.getWorkDir(),rm.getRepoRelativePath(toAdd)));
 						entry.setAssumeValid(false);
-						
+
 					}
 				}
 				m.worked(200);

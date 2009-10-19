@@ -48,7 +48,7 @@ public class BranchAction extends RepositoryAction {
 		if (dialog.open() != IDialogConstants.OK_ID) {
 			return;
 		}
-		
+
 		final String refName = dialog.getRefName();
 		try {
 			getTargetPart().getSite().getWorkbenchWindow().run(true, false,
@@ -62,7 +62,7 @@ public class BranchAction extends RepositoryAction {
 						ce.printStackTrace();
 						Display.getDefault().asyncExec(new Runnable() {
 							public void run() {
-								handle(ce, "Error while switching branches", "Unable to switch branches");							
+								handle(ce, "Error while switching branches", "Unable to switch branches");
 							}
 						});
 					}

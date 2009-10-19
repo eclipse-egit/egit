@@ -52,7 +52,7 @@ public abstract class RepositoryAction extends TeamAction {
 	 * @param projects
 	 *            a list of projects
 	 * @return the repositories that projects map to iff all projects are mapped
-	 */ 
+	 */
 	protected Repository[] getRepositoriesFor(final IProject[] projects) {
 		Set<Repository> ret = new HashSet<Repository>();
 		for (IProject project : projects) {
@@ -63,11 +63,11 @@ public abstract class RepositoryAction extends TeamAction {
 		}
 		return ret.toArray(new Repository[ret.size()]);
 	}
-	
+
 	/**
 	 * List the projects with selected resources, if all projects are connected
 	 * to a Git repository.
-	 * 
+	 *
 	 * @return the tracked projects affected by the current resource selection
 	 */
 	public IProject[] getProjectsInRepositoryOfSelectedResources() {
@@ -97,7 +97,7 @@ public abstract class RepositoryAction extends TeamAction {
 		RepositoryMapping mapping = null;
 		for (IProject project : getSelectedProjects()) {
 			RepositoryMapping repositoryMapping = RepositoryMapping.getMapping(project);
-			if (mapping == null) 
+			if (mapping == null)
 				mapping = repositoryMapping;
 			if (repositoryMapping == null)
 				return null;
@@ -112,7 +112,7 @@ public abstract class RepositoryAction extends TeamAction {
 				MessageDialog.openError(getShell(), "Cannot Find Repository", "Could not find a repository associated with this project");
 			return null;
 		}
-		
+
 		final Repository repository = mapping.getRepository();
 		return repository;
 	}
