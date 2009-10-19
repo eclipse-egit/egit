@@ -23,7 +23,7 @@ import org.eclipse.egit.core.internal.UpdateJob;
  * <p>
  * Accepts a collection of resources (files and/or directories) whose content
  * should be updated in the corresponding Git repositories. Resources in the
- * collection can be associated with multiple repositories. 
+ * collection can be associated with multiple repositories.
  * </p>
  */
 public class UpdateOperation implements IWorkspaceRunnable {
@@ -31,7 +31,7 @@ public class UpdateOperation implements IWorkspaceRunnable {
 
 	/**
 	 * Create a new operation to update files/folders.
-	 * 
+	 *
 	 * @param rsrcs
 	 *            collection of {@link IResource}s which should be added to the
 	 *            relevant Git repositories.

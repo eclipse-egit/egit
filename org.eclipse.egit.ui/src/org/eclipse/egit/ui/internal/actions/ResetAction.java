@@ -36,7 +36,7 @@ public class ResetAction extends RepositoryAction {
 		final Repository repository = getRepository(true);
 		if (repository == null)
 			return;
-		
+
 		if (!repository.getRepositoryState().canResetHead()) {
 			MessageDialog.openError(getShell(), "Cannot reset HEAD now",
 					"Repository state:"
@@ -69,7 +69,7 @@ public class ResetAction extends RepositoryAction {
 				MessageDialog.openError(getShell(),"Reset failed", e.getMessage());
 			}
 		}
-		
+
 	}
 
 	@Override

@@ -76,7 +76,7 @@ public class UIPreferences {
 
 	/**
 	 * Get the preference values associated with a fixed integer array.
-	 * 
+	 *
 	 * @param prefs
 	 *            the store to read.
 	 * @param key
@@ -99,7 +99,7 @@ public class UIPreferences {
 
 	/**
 	 * Set the preference values associated with a fixed integer array.
-	 * 
+	 *
 	 * @param prefs
 	 *            the store to read.
 	 * @param key
@@ -120,7 +120,7 @@ public class UIPreferences {
 
 	/**
 	 * Set the preference values associated with a fixed integer array.
-	 * 
+	 *
 	 * @param prefs
 	 *            the store to read.
 	 * @param key

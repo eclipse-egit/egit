@@ -20,7 +20,7 @@ package org.eclipse.egit.core.project;
 public interface RepositoryChangeListener {
 	/**
 	 * Invoked when a repository has had some or all of its contents change.
-	 * 
+	 *
 	 * @param which
 	 *            the affected repository. Never null.
 	 */

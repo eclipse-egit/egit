@@ -52,7 +52,7 @@ public class UntrackOperation implements IWorkspaceRunnable {
 
 	/**
 	 * Create a new operation to stop tracking existing files/folders.
-	 * 
+	 *
 	 * @param rsrcs
 	 *            collection of {@link IResource}s which should be removed from
 	 *            the relevant Git repositories.

@@ -97,7 +97,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 
 	/**
 	 * Determine if the input can be shown in this viewer.
-	 * 
+	 *
 	 * @param object
 	 *            an object that is hopefully of type ResourceList or IResource,
 	 *            but may be anything (including null).

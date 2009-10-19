@@ -98,7 +98,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Instantiate an error exception.
-	 * 
+	 *
 	 * @param message
 	 *            description of the error
 	 * @param thr
@@ -112,7 +112,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Log an error via the Eclipse logging routines.
-	 * 
+	 *
 	 * @param message
 	 * @param thr
 	 *            cause of error
@@ -135,7 +135,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Log a debug message
-	 * 
+	 *
 	 * @param what
 	 *            message to log
 	 */
@@ -147,7 +147,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Get the theme used by this plugin.
-	 * 
+	 *
 	 * @return our theme.
 	 */
 	public static ITheme getTheme() {
@@ -156,7 +156,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Get a font known to this plugin.
-	 * 
+	 *
 	 * @param id
 	 *            one of our THEME_* font preference ids (see
 	 *            {@link UIPreferences});
@@ -168,7 +168,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Get a font known to this plugin, but with bold style applied over top.
-	 * 
+	 *
 	 * @param id
 	 *            one of our THEME_* font preference ids (see
 	 *            {@link UIPreferences});

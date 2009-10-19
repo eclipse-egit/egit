@@ -66,7 +66,7 @@ public class CloneOperation implements IRunnableWithProgress {
 
 	/**
 	 * Create a new clone operation.
-	 * 
+	 *
 	 * @param uri
 	 *            remote we should fetch from.
 	 * @param allSelected
