@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Google Inc.
+ * Copyright (C) 2009, Mykola Nikishov <mn@mn.com.ua>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,7 +10,12 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -31,16 +37,31 @@ import org.eclipse.team.core.RepositoryProvider;
  * Connects Eclipse to an existing Git repository
  */
 public class ConnectProviderOperation implements IWorkspaceRunnable {
-	private final IProject[] projects;
+	private final Map<IProject, File> projects = new HashMap<IProject, File>();
 
 	/**
 	 * Create a new connection operation to execute within the workspace.
 	 * 
+	 * Uses <code>.git</code> as a default relative path to repository.
+	 * @see #ConnectProviderOperation(IProject, File)
+	 *
 	 * @param proj
 	 *            the project to connect to the Git team provider.
 	 */
 	public ConnectProviderOperation(final IProject proj) {
-		this(new IProject[] { proj });
+		this(proj, new File(".git"));
+	}
+
+	/**
+	 * Create a new connection operation to execute within the workspace.
+	 *
+	 * @param proj
+	 *            the project to connect to the Git team provider.
+	 * @param pathToRepo
+	 *            relative path to the repository
+	 */
+	public ConnectProviderOperation(final IProject proj, File pathToRepo) {
+		this.projects.put(proj, pathToRepo);
 	}
 
 	/**
@@ -49,8 +70,8 @@ public class ConnectProviderOperation implements IWorkspaceRunnable {
 	 * @param projects
 	 *            the projects to connect to the Git team provider.
 	 */
-	public ConnectProviderOperation(final IProject[] projects) {
-		this.projects = projects;
+	public ConnectProviderOperation(final Map<IProject, File> projects) {
+		this.projects.putAll(projects);
 	}
 
 	public void run(IProgressMonitor m) throws CoreException {
@@ -59,20 +80,23 @@ public class ConnectProviderOperation implements IWorkspaceRunnable {
 		}
 
 		m.beginTask(CoreText.ConnectProviderOperation_connecting,
-				100 * projects.length);
+				100 * projects.size());
 		try {
 
-			for (IProject project : projects) {
+			for (Iterator iterator = projects.keySet().iterator(); iterator.hasNext();) {
+				IProject project = (IProject) iterator.next();
 				m.setTaskName(NLS.bind(
 						CoreText.ConnectProviderOperation_ConnectingProject,
 						project.getName()));
 				Activator.trace("Locating repository for " + project); //$NON-NLS-1$
 				Collection<RepositoryMapping> repos = new RepositoryFinder(
 						project).find(new SubProgressMonitor(m, 40));
-				if (repos.size() == 1) {
+				File suggestedRepo = projects.get(project);
+				RepositoryMapping actualMapping= findActualRepository(repos, suggestedRepo);
+				if (actualMapping != null) {
 					GitProjectData projectData = new GitProjectData(project);
 					try {
-						projectData.setRepositoryMappings(repos);
+						projectData.setRepositoryMappings(Arrays.asList(actualMapping));
 						projectData.store();
 					} catch (CoreException ce) {
 						GitProjectData.delete(project);
@@ -97,5 +121,22 @@ public class ConnectProviderOperation implements IWorkspaceRunnable {
 		} finally {
 			m.done();
 		}
+	}
+
+	/**
+	 * @param repos
+	 *            available repositories
+	 * @param suggestedRepo
+	 *            relative path to git repository
+	 * @return a repository mapping which corresponds to a suggested repository
+	 *         location, <code>null</code> otherwise
+	 */
+	private RepositoryMapping findActualRepository(
+			Collection<RepositoryMapping> repos, File suggestedRepo) {
+		for (RepositoryMapping rm : repos) {
+			if (rm.getGitDir().equals(suggestedRepo.getPath()))
+				return rm;
+		}
+		return null;
 	}
 }
