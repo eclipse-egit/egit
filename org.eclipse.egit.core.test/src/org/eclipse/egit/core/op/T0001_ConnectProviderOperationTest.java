@@ -37,7 +37,7 @@ public class T0001_ConnectProviderOperationTest extends GitTestCase {
 	public void testNoRepository() throws CoreException {
 
 		ConnectProviderOperation operation = new ConnectProviderOperation(
-				project.getProject());
+				project.getProject(), new File("../../.git"));
 		operation.run(null);
 
 		assertFalse(RepositoryProvider.isShared(project.getProject()));
@@ -52,7 +52,7 @@ public class T0001_ConnectProviderOperationTest extends GitTestCase {
 		repository.create();
 		repository.close();
 		ConnectProviderOperation operation = new ConnectProviderOperation(
-				project.getProject());
+				project.getProject(), new File("../.git"));
 		operation.run(null);
 
 		assertTrue(RepositoryProvider.isShared(project.getProject()));
@@ -94,7 +94,7 @@ public class T0001_ConnectProviderOperationTest extends GitTestCase {
 		assertEquals(RefUpdate.Result.NEW, lck.forceUpdate());
 
 		ConnectProviderOperation operation = new ConnectProviderOperation(
-				project.getProject());
+				project.getProject(), new File("../.git"));
 		operation.run(null);
 
 		final boolean f[] = new boolean[1];
