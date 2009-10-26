@@ -9,6 +9,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +24,20 @@ import org.eclipse.jface.text.DefaultTextDoubleClickStrategy;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.TextViewer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jgit.diff.DiffFormatter;
+import org.eclipse.jgit.diff.MyersDiff;
+import org.eclipse.jgit.diff.RawText;
+import org.eclipse.jgit.lib.FileMode;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revplot.PlotCommit;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
@@ -33,11 +49,8 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.revplot.PlotCommit;
-import org.eclipse.jgit.revwalk.RevCommit;
 
-class CommitMessageViewer extends TextViewer {
+class CommitMessageViewer extends TextViewer implements ISelectionChangedListener{
 	private final ListenerList navListeners = new ListenerList();
 
 	private final DateFormat fmt;
@@ -53,6 +66,12 @@ class CommitMessageViewer extends TextViewer {
 	private Cursor sys_normalCursor;
 
 	private boolean fill;
+
+	private Repository db;
+
+	private TreeWalk walker;
+
+	private DiffFormatter diffFmt = new DiffFormatter();
 
 	CommitMessageViewer(final Composite parent) {
 		super(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
@@ -122,6 +141,10 @@ class CommitMessageViewer extends TextViewer {
 
 	public Object getInput() {
 		return commit;
+	}
+
+	void setTreeWalk(final TreeWalk walk) {
+		walker = walk;
 	}
 
 	private void format() {
@@ -194,6 +217,11 @@ class CommitMessageViewer extends TextViewer {
 		int h0 = d.length();
 		d.append(msg);
 
+		d.append("\n"); //$NON-NLS-1$
+
+		addDiff(d);
+
+
 		Matcher matcher = p.matcher(msg);
 		while (matcher.find()) {
 			styles.add(new StyleRange(h0 + matcher.start(), matcher.end()-matcher.start(), null,  null, SWT.ITALIC));
@@ -238,6 +266,76 @@ class CommitMessageViewer extends TextViewer {
 		styles.add(sr);
 	}
 
+	private void addDiff(final StringBuilder d) {
+		if (!(commit.getParentCount() == 1))
+			return;
+		try {
+			FileDiff[] diffs = FileDiff.compute(walker, commit);
+
+			for (FileDiff diff : diffs) {
+				if (diff.blobs.length == 2)
+					outputDiff(d, diff);
+			}
+		} catch (IOException e) {
+			Activator.error("Can't get file difference of "
+					+ commit.getId() + ".", e);
+		}
+	}
+
+	private void outputDiff(final StringBuilder d, FileDiff fileDiff) throws IOException {
+		String path = fileDiff.path;
+		ObjectId id1 = fileDiff.blobs[0];
+		ObjectId id2 = fileDiff.blobs[1];
+		FileMode mode1 = fileDiff.modes[0];
+		FileMode mode2 = fileDiff.modes[1];
+
+		d.append(formatPathLine(path)).append("\n"); //$NON-NLS-1$
+		if (id1.equals(ObjectId.zeroId())) {
+			d.append("new file mode " + mode2).append("\n"); //$NON-NLS-2$
+			d.append("deleted file mode " + mode1);
+		} else if (!mode1.equals(mode2)) {
+			d.append("old mode " + mode1);
+			d.append("new mode " + mode2).append("\n"); //$NON-NLS-2$
+		}
+		d.append("index ").append(id1.abbreviate(db, 7).name()).
+			append("..").append(id2.abbreviate(db, 7).name()). //$NON-NLS-1$
+			append (mode1.equals(mode2) ? " " + mode1 : ""). append("\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+		RawText a = getRawText(id1);
+		RawText b = getRawText(id2);
+		MyersDiff diff = new MyersDiff(a, b);
+		diffFmt.formatEdits(new OutputStream() {
+
+			@Override
+			public void write(int b) throws IOException {
+				d.append((char) b);
+
+			}
+		 } , a, b, diff.getEdits());
+		d.append("\n"); //$NON-NLS-1$
+	}
+
+	private String formatPathLine(String path) {
+		int n = 80 - path.length() - 2;
+		if (n < 0 )
+			return path;
+		final StringBuilder d = new StringBuilder();
+		int i = 0;
+		for (; i < n/2; i++)
+			d.append("-"); //$NON-NLS-1$
+		d.append(" ").append(path).append(" "); //$NON-NLS-1$ //$NON-NLS-2$
+		for (; i < n - 1; i++)
+			d.append("-"); //$NON-NLS-1$
+		return d.toString();
+	}
+
+
+	private RawText getRawText(ObjectId id) throws IOException {
+		if (id.equals(ObjectId.zeroId()))
+			return new RawText(new byte[] { });
+		return new RawText(db.openBlob(id).getCachedBytes());
+	}
+
 	static class ObjectLink extends StyleRange {
 		RevCommit targetCommit;
 
@@ -258,5 +356,22 @@ class CommitMessageViewer extends TextViewer {
 	void setFill(boolean fill) {
 		this.fill = fill;
 		format();
+	}
+
+	public void setDb(Repository db) {
+		this.db = db;
+	}
+
+	public void selectionChanged(SelectionChangedEvent event) {
+		ISelection selection = event.getSelection();
+		if (selection instanceof IStructuredSelection) {
+			IStructuredSelection sel = (IStructuredSelection)selection;
+			Object obj = sel.getFirstElement();
+			if (obj instanceof FileDiff) {
+				String path = ((FileDiff)obj).path;
+				findAndSelect(0, formatPathLine(path), true, true, false, false);
+			}
+		}
+
 	}
 }

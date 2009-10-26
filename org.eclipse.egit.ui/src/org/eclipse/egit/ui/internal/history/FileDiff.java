@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import org.eclipse.jgit.errors.CorruptObjectException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -43,6 +44,7 @@ class FileDiff {
 				final FileDiff d = new FileDiff(commit, walk.getPathString());
 				d.change = "A"; //$NON-NLS-1$
 				d.blobs = new ObjectId[] { walk.getObjectId(0) };
+				d.modes = new FileMode[] { walk.getFileMode(0) };
 				r.add(d);
 			}
 			break;
@@ -51,8 +53,11 @@ class FileDiff {
 				final FileDiff d = new FileDiff(commit, walk.getPathString());
 				final ObjectId id0 = walk.getObjectId(0);
 				final ObjectId id1 = walk.getObjectId(1);
+				final FileMode fm0 = walk.getFileMode(0);
+				final FileMode fm1 = walk.getFileMode(1);
 				d.change = "M"; //$NON-NLS-1$
 				d.blobs = new ObjectId[] { id0, id1 };
+				d.modes = new FileMode[] { fm0, fm1 };
 
 				final int m0 = walk.getRawMode(0);
 				final int m1 = walk.getRawMode(1);
@@ -83,8 +88,11 @@ class FileDiff {
 				else if (m0 != m1 && walk.idEqual(0, myTree))
 					d.change = "T"; //$NON-NLS-1$
 				d.blobs = new ObjectId[nTree];
-				for (int i = 0; i < nTree; i++)
+				d.modes = new FileMode[nTree];
+				for (int i = 0; i < nTree; i++) {
 					d.blobs[i] = walk.getObjectId(i);
+					d.modes[i] = walk.getFileMode(i);
+				}
 				r.add(d);
 			}
 			break;
@@ -110,6 +118,8 @@ class FileDiff {
 	String change;
 
 	ObjectId[] blobs;
+
+	FileMode[] modes;
 
 	FileDiff(final RevCommit c, final String p) {
 		commit = c;
