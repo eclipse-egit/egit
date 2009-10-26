@@ -729,6 +729,9 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			fileWalker.setFilter(TreeFilter.ANY_DIFF);
 		}
 		fileViewer.setTreeWalk(fileWalker);
+		fileViewer.addSelectionChangedListener(commentViewer);
+		commentViewer.setTreeWalk(fileWalker);
+		commentViewer.setDb(db);
 		findToolbar.clear();
 		graph.setInput(highlightFlag, null, null);
 
