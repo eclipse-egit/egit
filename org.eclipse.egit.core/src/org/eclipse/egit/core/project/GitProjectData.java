@@ -31,6 +31,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Preferences;
@@ -41,6 +42,7 @@ import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
+import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.WindowCache;
 import org.eclipse.jgit.lib.WindowCacheConfig;
@@ -69,8 +71,48 @@ public class GitProjectData {
 			case IResourceChangeEvent.PRE_DELETE:
 				delete((IProject) event.getResource());
 				break;
+			case IResourceChangeEvent.POST_CHANGE:
+				handleProjectOpenEvent(event);
+				break;
 			default:
 				break;
+			}
+		}
+
+		private void handleProjectOpenEvent(final IResourceChangeEvent event) {
+			final IResourceDelta delta = event.getDelta();
+			if (delta != null) {
+				final boolean isProjectOpenCloseEvent = delta.getKind() == IResourceDelta.CHANGED
+						&& (delta.getFlags() & IResourceDelta.OPEN) == 0;
+				if (isProjectOpenCloseEvent) {
+					for (IResourceDelta change : delta.getAffectedChildren()) {
+						// Is it safe to assume that a changed resource
+						// always a project?
+						// Adapt it to a project just to be sure there are
+						// no surprises
+						IProject project = (IProject) change.getResource()
+								.getAdapter(IProject.class);
+
+						// project is open now means it was closed
+						if (project.isOpen()) {
+							try {
+								final RepositoryMapping rm = RepositoryMapping
+										.getMapping(project);
+								if ((rm != null)) {
+									// reload only if a project is under Git
+									// control
+									rm.getRepository().getConfig().load();
+								}
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ConfigInvalidException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}
+				}
 			}
 		}
 	}
