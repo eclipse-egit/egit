@@ -53,19 +53,17 @@ public abstract class AbstractOperationAction implements IObjectActionDelegate {
 		} else {
 			selection = Collections.EMPTY_LIST;
 		}
-		op = createOperation(act, selection);
+		op = createOperation(selection);
 		act.setEnabled(op != null && wp != null);
 	}
 
 	/**
 	 * Instantiate an operation on an action on provided objects.
-	 *
-	 * @param act
 	 * @param selection
+	 *
 	 * @return a {@link IWorkspaceRunnable} for invoking this operation later on
 	 */
-	protected abstract IWorkspaceRunnable createOperation(final IAction act,
-			final List selection);
+	protected abstract IWorkspaceRunnable createOperation(final List selection);
 
 	/**
 	 * A method to invoke when the operation is finished.

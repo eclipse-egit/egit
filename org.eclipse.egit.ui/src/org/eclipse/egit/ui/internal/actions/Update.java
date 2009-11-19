@@ -13,7 +13,6 @@ import java.util.List;
 
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.egit.core.op.UpdateOperation;
-import org.eclipse.jface.action.IAction;
 
 /**
  * Action to update index for selected resources with content from workdir.
@@ -21,8 +20,7 @@ import org.eclipse.jface.action.IAction;
  * @see UpdateOperation
  */
 public class Update extends AbstractOperationAction {
-	protected IWorkspaceRunnable createOperation(final IAction act,
-			final List sel) {
+	protected IWorkspaceRunnable createOperation(final List sel) {
 		return sel.isEmpty() ? null : new UpdateOperation(sel);
 	}
 }
