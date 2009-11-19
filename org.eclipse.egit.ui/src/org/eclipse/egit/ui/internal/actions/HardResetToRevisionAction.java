@@ -12,7 +12,6 @@ import java.util.List;
 
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.egit.core.op.ResetOperation;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jgit.lib.AnyObjectId;
 
 /**
@@ -21,7 +20,7 @@ import org.eclipse.jgit.lib.AnyObjectId;
 public class HardResetToRevisionAction extends AbstractRevObjectAction {
 
 	@Override
-	protected IWorkspaceRunnable createOperation(IAction act, List selection) {
+	protected IWorkspaceRunnable createOperation(List selection) {
 		return new ResetOperation(getActiveRepository(),
 				((AnyObjectId) selection.get(0)).name(),
 				ResetOperation.ResetType.HARD);
