@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.compare.CompareEditorInput;
+import org.eclipse.compare.CompareUI;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Preferences;
 import org.eclipse.core.runtime.Preferences.IPropertyChangeListener;
@@ -21,11 +24,14 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.ResourceList;
+import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.EditableRevision;
+import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
@@ -35,9 +41,12 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.ITextOperationTarget;
+import org.eclipse.jface.util.OpenStrategy;
+import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -51,10 +60,19 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.internal.ui.IPreferenceIds;
+import org.eclipse.team.internal.ui.TeamUIPlugin;
 import org.eclipse.team.ui.history.HistoryPage;
+import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IReusableEditor;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.actions.ActionFactory;
@@ -308,6 +326,29 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 		graphDetailSplit.setLayoutData(gd);
 
 		graph = new CommitGraphTable(graphDetailSplit);
+		graph.getTableView().addOpenListener(new IOpenListener() {
+			public void open(OpenEvent event) {
+				// this is the resource we show the history for
+				final IResource resource = (IResource) getInput();
+				final RepositoryMapping mapping = RepositoryMapping.getMapping(resource.getProject());
+				final String gitPath = mapping.getRepoRelativePath(resource);
+				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+				SWTCommit commit = (SWTCommit) selection.getFirstElement();
+				System.out.println(selection);
+				// this is the selected revision
+				final IFileRevision nextFile = GitFileRevision.inCommit(
+						db,
+						commit,
+						gitPath,
+						null);
+				final IFile baseFile = (IFile) resource;
+				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+						SaveableCompareEditorInput.createFileElement(baseFile),
+						new EditableRevision(nextFile),
+						null);
+				openInCompare(in);
+			}
+		});
 		revInfoSplit = new SashForm(graphDetailSplit, SWT.HORIZONTAL);
 		commentViewer = new CommitMessageViewer(revInfoSplit);
 		fileViewer = new CommitFileDiffViewer(revInfoSplit);
@@ -331,6 +372,70 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 		layout();
 
 		Repository.addAnyRepositoryChangedListener(this);
+	}
+
+	private void openInCompare(CompareEditorInput input) {
+		IWorkbenchPage workBenchPage = getSite().getPage();
+		IEditorPart editor = findReusableCompareEditor(input, workBenchPage);
+		if (editor != null) {
+			IEditorInput otherInput = editor.getEditorInput();
+			if (otherInput.equals(input)) {
+				// simply provide focus to editor
+				if (OpenStrategy.activateOnOpen())
+					workBenchPage.activate(editor);
+				else
+					workBenchPage.bringToTop(editor);
+			} else {
+				// if editor is currently not open on that input either re-use
+				// existing
+				CompareUI.reuseCompareEditor(input, (IReusableEditor) editor);
+				if (OpenStrategy.activateOnOpen())
+					workBenchPage.activate(editor);
+				else
+					workBenchPage.bringToTop(editor);
+			}
+		} else {
+			CompareUI.openCompareEditor(input, OpenStrategy.activateOnOpen());
+		}
+	}
+
+	/**
+	 * Returns an editor that can be re-used. An open compare editor that
+	 * has un-saved changes cannot be re-used.
+	 * @param input the input being opened
+	 * @param page
+	 * @return an EditorPart or <code>null</code> if none can be found
+	 */
+	private IEditorPart findReusableCompareEditor(CompareEditorInput input, IWorkbenchPage page) {
+		IEditorReference[] editorRefs = page.getEditorReferences();
+		// first loop looking for an editor with the same input
+		for (int i = 0; i < editorRefs.length; i++) {
+			IEditorPart part = editorRefs[i].getEditor(false);
+			if (part != null
+					&& (part.getEditorInput() instanceof GitCompareFileRevisionEditorInput)
+					&& part instanceof IReusableEditor
+					&& part.getEditorInput().equals(input)) {
+				return part;
+			}
+		}
+		// if none found and "Reuse open compare editors" preference is on use
+		// a non-dirty editor
+		if (isReuseOpenEditor()) {
+			for (int i = 0; i < editorRefs.length; i++) {
+				IEditorPart part = editorRefs[i].getEditor(false);
+				if (part != null
+						&& (part.getEditorInput() instanceof SaveableCompareEditorInput)
+						&& part instanceof IReusableEditor && !part.isDirty()) {
+					return part;
+				}
+			}
+		}
+		// no re-usable editor found
+		return null;
+	}
+
+	private static boolean isReuseOpenEditor() {
+		return TeamUIPlugin.getPlugin().getPreferenceStore().getBoolean(IPreferenceIds.REUSE_OPEN_COMPARE_EDITOR);
 	}
 
 	private Runnable refschangedRunnable;
@@ -805,7 +910,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			public void run() {
 				if (!graph.getControl().isDisposed() && job == j) {
 					graph.setInput(highlightFlag, list, asArray);
-					findToolbar.setInput(highlightFlag, graph.getTable(),
+					findToolbar.setInput(highlightFlag, graph.getTableView().getTable(),
 							asArray);
 				}
 			}
