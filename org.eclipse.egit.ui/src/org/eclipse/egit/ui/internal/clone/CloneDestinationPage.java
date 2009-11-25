@@ -163,7 +163,7 @@ class CloneDestinationPage extends WizardPage {
 
 		newLabel(g, UIText.CloneDestinationPage_promptRemoteName + ":"); //$NON-NLS-1$
 		remoteText = new Text(g, SWT.BORDER);
-		remoteText.setText("origin"); //$NON-NLS-1$
+		remoteText.setText(Constants.REMOTE);
 		remoteText.setLayoutData(createFieldGridData());
 		remoteText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
