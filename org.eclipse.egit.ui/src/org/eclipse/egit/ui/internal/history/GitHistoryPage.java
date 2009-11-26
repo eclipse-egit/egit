@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.compare.CompareEditorInput;
@@ -34,8 +35,10 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.EditableRevision;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
@@ -81,6 +84,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.internal.ui.IPreferenceIds;
 import org.eclipse.team.internal.ui.TeamUIPlugin;
+import org.eclipse.team.internal.ui.history.FileRevisionTypedElement;
 import org.eclipse.team.ui.history.HistoryPage;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IActionBars;
@@ -115,6 +119,10 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 	private static final String SHOW_FIND_TOOLBAR = UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR;
 
 	private static final String POPUP_ID = "org.eclipse.egit.ui.historyPageContributions"; //$NON-NLS-1$
+
+	private IAction compareAction = new CompareWithWorkingTreeAction();
+
+	private IAction compareVersionsAction = new CompareVersionsAction();
 
 	/**
 	 * Determine if the input can be shown in this viewer.
@@ -197,8 +205,8 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 	/**
 	 * Highlight flag that can be applied to commits to make them stand out.
 	 * <p>
-	 * Allocated at the same time as {@link #currentWalk}. If the walk
-	 * rebuilds, so must this flag.
+	 * Allocated at the same time as {@link #currentWalk}. If the walk rebuilds,
+	 * so must this flag.
 	 */
 	private RevFlag highlightFlag;
 
@@ -218,21 +226,20 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 	private static final String PREF_SHOWALLFILTER = "org.eclipse.egit.ui.githistorypage.showallfilter"; //$NON-NLS-1$
 
 	enum ShowFilter {
-		SHOWALLRESOURCE,
-		SHOWALLFOLDER,
-		SHOWALLPROJECT,
-		SHOWALLREPO,
+		SHOWALLRESOURCE, SHOWALLFOLDER, SHOWALLPROJECT, SHOWALLREPO,
 	}
 
 	class ShowFilterAction extends Action {
 		private final ShowFilter filter;
 
-		ShowFilterAction(ShowFilter filter, ImageDescriptor icon, String toolTipText) {
+		ShowFilterAction(ShowFilter filter, ImageDescriptor icon,
+				String toolTipText) {
 			super(null, IAction.AS_CHECK_BOX);
 			this.filter = filter;
 			setImageDescriptor(icon);
 			setToolTipText(toolTipText);
 		}
+
 		@Override
 		public void run() {
 			if (!isChecked()) {
@@ -254,6 +261,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			Activator.getDefault().getPreferenceStore().setValue(
 					PREF_SHOWALLFILTER, showAllFilter.toString());
 		}
+
 		@Override
 		public String toString() {
 			return "ShowFilter[" + filter.toString() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
@@ -476,7 +484,8 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 				refschangedRunnable = new Runnable() {
 					public void run() {
 						if (!getControl().isDisposed()) {
-							Activator.trace("Executing async repository changed event"); //$NON-NLS-1$
+							Activator
+									.trace("Executing async repository changed event"); //$NON-NLS-1$
 							refschangedRunnable = null;
 							inputSet();
 						}
@@ -502,6 +511,26 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 
 	private void attachContextMenu(final Control c) {
 		c.setMenu(popupMgr.createContextMenu(c));
+
+		popupMgr.addMenuListener(new IMenuListener() {
+
+			public void menuAboutToShow(IMenuManager manager) {
+				popupMgr.remove(new ActionContributionItem(compareAction));
+				popupMgr.remove(new ActionContributionItem(compareVersionsAction));
+				int size = ((IStructuredSelection) revObjectSelectionProvider
+						.getSelection()).size();
+				if (IFile.class.isAssignableFrom(getInput()
+						.getClass())) {
+					if (size == 1 ) {
+						popupMgr.add(compareAction);
+					}
+					else if (size == 2) {
+						popupMgr.add(compareVersionsAction);
+					}
+				}
+
+			}
+		});
 	}
 
 	private void layoutSashForm(final SashForm sf, final String key) {
@@ -799,7 +828,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 					paths.add(name);
 			} else if (showAllFilter == ShowFilter.SHOWALLREPO) {
 				// nothing
-			} else /*if (showAllFilter == ShowFilter.SHOWALLRESOURCE)*/ {
+			} else /* if (showAllFilter == ShowFilter.SHOWALLRESOURCE) */{
 				final String name = map.getRepoRelativePath(r);
 				if (name != null && name.length() > 0)
 					paths.add(name);
@@ -1106,4 +1135,93 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			// gained it from us.
 		}
 	}
+
+	private class CompareWithWorkingTreeAction extends Action {
+		public CompareWithWorkingTreeAction() {
+			super("Compare");
+		}
+
+		@Override
+		public void run() {
+			IStructuredSelection selection = ((IStructuredSelection) revObjectSelectionProvider
+					.getSelection());
+			if (selection.size() == 1) {
+				Iterator<?> it = selection.iterator();
+				SWTCommit commit1 = (SWTCommit) it.next();
+				if (getInput() instanceof IFile){
+					IFile file = (IFile) getInput();
+					final RepositoryMapping map = RepositoryMapping
+							.getMapping(file);
+					final String gitPath = map
+							.getRepoRelativePath(file);
+					final IFileRevision file1 = GitFileRevision.inCommit(db,
+							commit1, gitPath, null);
+					final ITypedElement base = SaveableCompareEditorInput.createFileElement(file);
+
+					final FileRevisionTypedElement next = new FileRevisionTypedElement(file1);
+
+					final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+							base, next, null);
+					CompareUI.openCompareEditor(in);
+				}
+
+			}
+
+		}
+
+		@Override
+		public boolean isEnabled() {
+			int size = ((IStructuredSelection) revObjectSelectionProvider
+					.getSelection()).size();
+			return IFile.class.isAssignableFrom(getInput().getClass())
+					&& size == 1;
+		}
+
+	}
+
+	private class CompareVersionsAction extends Action {
+		public CompareVersionsAction() {
+			super("Compare versions");
+		}
+
+		@Override
+		public void run() {
+			IStructuredSelection selection = ((IStructuredSelection) revObjectSelectionProvider
+					.getSelection());
+			if (selection.size() == 2) {
+				Iterator<?> it = selection.iterator();
+				SWTCommit commit1 = (SWTCommit) it.next();
+				SWTCommit commit2 = (SWTCommit) it.next();
+
+				if (getInput() instanceof IResource){
+					IResource resource = (IResource) getInput();
+					final RepositoryMapping map = RepositoryMapping
+							.getMapping(resource);
+					final String gitPath = map
+							.getRepoRelativePath(resource);
+					final IFileRevision file1 = GitFileRevision.inCommit(db,
+							commit1, gitPath, null);
+					final IFileRevision file2 = GitFileRevision.inCommit(db,
+							commit2, gitPath, null);
+
+					final FileRevisionTypedElement base = new FileRevisionTypedElement(file1);
+					final FileRevisionTypedElement next = new FileRevisionTypedElement(file2);
+					CompareEditorInput in = new GitCompareFileRevisionEditorInput(base, next, null);
+					CompareUI.openCompareEditor(in);
+				}
+
+			}
+
+		}
+
+		@Override
+		public boolean isEnabled() {
+			int size = ((IStructuredSelection) revObjectSelectionProvider
+					.getSelection()).size();
+			return IFile.class.isAssignableFrom(getInput().getClass())
+					&& size == 2;
+		}
+
+	}
+
 }
