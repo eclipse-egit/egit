@@ -127,10 +127,10 @@ public class GitProjectsImportPage extends WizardPage {
 					// name as the project name
 					if (isDefaultLocation(path)) {
 						projectName = path.segment(path.segmentCount() - 2);
-						description = IDEWorkbenchPlugin.getPluginWorkspace()
+						description = ResourcesPlugin.getWorkspace()
 								.newProjectDescription(projectName);
 					} else {
-						description = IDEWorkbenchPlugin.getPluginWorkspace()
+						description = ResourcesPlugin.getWorkspace()
 								.loadProjectDescription(path);
 						projectName = description.getName();
 					}
