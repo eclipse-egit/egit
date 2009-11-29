@@ -298,6 +298,12 @@ public class CoreText extends NLS {
 	/** */
 	public static String OperationNotYetExecuted;
 
+	/** */
+	public static String PsfReference_InvalidTokensCount;
+
+	/** */
+	public static String PsfImport_CloneToExistingDirectory;
+
 	static {
 		initializeMessages("org.eclipse.egit.core.coretext", //$NON-NLS-1$
 				CoreText.class);
