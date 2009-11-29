@@ -8,7 +8,8 @@
   <extension point="org.eclipse.team.core.repository">
 	<repository
 		class="org.eclipse.egit.core.GitProvider"
-		id="org.eclipse.egit.core.GitProvider">
+		id="org.eclipse.egit.core.GitProvider"
+		typeClass="org.eclipse.egit.core.GitProviderType">
 	</repository>
   </extension>
   <extension
