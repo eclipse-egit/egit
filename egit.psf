@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.eclipse.egit.core.GitProvider">
+<project reference="git://egit.eclipse.org/egit/parallelip-jgit.git||org.eclipse.jgit"/>
+<project reference="git://egit.eclipse.org/egit/parallelip-jgit.git||org.eclipse.jgit.console"/>
+<project reference="git://egit.eclipse.org/egit/parallelip-jgit.git||org.eclipse.jgit-feature"/>
+<project reference="git://egit.eclipse.org/egit/parallelip-jgit.git||org.eclipse.jgit.junit"/>
+<project reference="git://egit.eclipse.org/egit/parallelip-jgit.git||org.eclipse.jgit.pgm"/>
+<project reference="git://egit.eclipse.org/egit/parallelip-jgit.git||org.eclipse.jgit.test"/>
+<project reference="git://egit.eclipse.org/egit/parallelip-jgit.git||org.eclipse.jgit.ui"/>
+<project reference="git://egit.eclipse.org/egit/parallelip-egit.git||org.eclipse.egit"/>
+<project reference="git://egit.eclipse.org/egit/parallelip-egit.git||org.eclipse.egit.core"/>
+<project reference="git://egit.eclipse.org/egit/parallelip-egit.git||org.eclipse.egit.core.test"/>
+<project reference="git://egit.eclipse.org/egit/parallelip-egit.git||org.eclipse.egit-feature"/>
+<project reference="git://egit.eclipse.org/egit/parallelip-egit.git||org.eclipse.egit.ui"/>
+<project reference="git://egit.eclipse.org/egit/parallelip-egit.git||org.eclipse.egit-updatesite"/>
+</provider>
+</psf>
