@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.eclipse.egit</groupId>
+    <artifactId>egit-parent</artifactId>
+    <version>0.6.0-SNAPSHOT</version>
+  </parent>
+  
+  <artifactId>org.eclipse.egit.core.test</artifactId>
+  <packaging>eclipse-test-plugin</packaging>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.tycho</groupId>
+        <artifactId>maven-osgi-test-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <excludes>
+            <!-- test mojo matches TestProject be default and treats it as PojoTest -->
+            <exclude>**/Test*.class</exclude>
+          </excludes>
+          <useUIHarness>true</useUIHarness>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
