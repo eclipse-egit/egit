@@ -41,9 +41,24 @@ public class TestProject {
 
 	private IPackageFragmentRoot sourceFolder;
 
+	/**
+	 * @throws CoreException
+	 *             If project already exists
+	 */
 	public TestProject() throws CoreException {
+		this(false);
+	}
+
+	/**
+	 * @param remove
+	 *            should project be removed if already exists
+	 * @throws CoreException
+	 */
+	public TestProject(final boolean remove) throws CoreException {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		project = root.getProject("Project-1");
+		if (remove)
+			project.delete(true, null);
 		project.create(null);
 		project.open(null);
 		javaProject = JavaCore.create(project);

@@ -10,6 +10,11 @@ package org.eclipse.egit.core.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.egit.core.project.RepositoryFinder;
+import org.eclipse.egit.core.project.RepositoryMapping;
 
 import junit.framework.TestCase;
 
@@ -21,7 +26,8 @@ public abstract class GitTestCase extends TestCase {
 
 	protected void setUp() throws Exception {
 		super.setUp();
-		project = new TestProject();
+		project = new TestProject(true);
+		checkNotNested();
 		gitDir = new File(project.getProject().getWorkspace().getRoot()
 				.getRawLocation().toFile(), ".git");
 		rmrf(gitDir);
@@ -49,6 +55,13 @@ public abstract class GitTestCase extends TestCase {
 		if (!d.delete())
 			throw new IOException(d + " in use or undeletable");
 		assert !d.exists();
+	}
+
+	protected void checkNotNested() throws CoreException {
+		final Collection<RepositoryMapping> parentRepositories = new RepositoryFinder(
+				project.getProject()).find(null);
+		final int numOfRepositories = parentRepositories.size();
+		assertTrue("parent repository found", numOfRepositories == 0);
 	}
 
 }
