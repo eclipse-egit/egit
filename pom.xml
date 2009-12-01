@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright (C) 2009, Igor Fedorenko <igor@ifedorenko.com>
+
+   All rights reserved. This program and the accompanying materials
+   are made available under the terms of the Eclipse Public License v1.0
+   which accompanies this distribution, and is available at
+   http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <prerequisites>
+    <maven>3.0</maven>
+  </prerequisites>
+
+  <groupId>org.eclipse.egit</groupId>
+  <artifactId>egit-parent</artifactId>
+  <version>0.6.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <tycho-version>0.6.0-SNAPSHOT</tycho-version>
+  </properties>
+
+  <modules>
+    <module>org.eclipse.egit</module>
+    <module>org.eclipse.egit.core</module>
+    <module>org.eclipse.egit.ui</module>
+
+    <module>org.eclipse.egit-feature</module>
+    <module>org.eclipse.egit-updatesite</module>
+
+    <module>org.eclipse.egit.core.test</module>
+  </modules>
+
+  <repositories>
+    <repository>
+      <id>galileo</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/releases/galileo</url>
+    </repository>
+  </repositories>
+
+  <!--
+    Temporary, until we sycn Tycho to maven central,
+    see https://issues.sonatype.org/browse/TYCHO-312
+   -->
+  <pluginRepositories>
+    <pluginRepository>
+      <id>nexus</id>
+      <url>http://repository.sonatype.org/content/groups/public</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <extensions>true</extensions>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <resolver>p2</resolver>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
