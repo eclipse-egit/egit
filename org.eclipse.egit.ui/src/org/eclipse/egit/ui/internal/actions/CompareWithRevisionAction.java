@@ -10,15 +10,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-import java.util.Arrays;
-import java.util.Hashtable;
-
-import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.team.internal.ui.actions.TeamAction;
 import org.eclipse.team.ui.TeamUI;
-import org.eclipse.team.ui.history.HistoryPageSaveablePart;
 
 /**
  *	Compare the resources filtered in the history view with the current
@@ -37,23 +31,10 @@ public class CompareWithRevisionAction extends TeamAction {
 
 	@Override
 	public void run(IAction action) {
-		super.run(action);
-		System.out.println("Run:" + action); //$NON-NLS-1$
-		System.out.println("Selection resources:" //$NON-NLS-1$
-				+ Arrays.asList(getSelectedResources()));
-		IResource[] r = getSelectedResources();
-		Hashtable providerMapping = this.getProviderMapping(r);
-		System.out.println("Mapping:" + providerMapping); //$NON-NLS-1$
 		TeamUI.getHistoryView().showHistoryFor(getSelectedResources()[0]);
-
-	}
-
-	void showCompareInDialog(Shell shell, Object object) {
-		HistoryPageSaveablePart.showHistoryInDialog(shell, object);
 	}
 
 	public boolean isEnabled() {
 		return !getSelection().isEmpty();
 	}
-
 }
