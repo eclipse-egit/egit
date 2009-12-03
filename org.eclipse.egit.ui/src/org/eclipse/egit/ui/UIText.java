@@ -1082,6 +1082,15 @@ public class UIText extends NLS {
 	/** */
 	public static String DecoratorPreferencesPage_iconsShowAssumeValid;
 
+	/** */
+	public static String IgnoreAction_jobName;
+
+	/** */
+	public static String IgnoreAction_taskName;
+
+	/** */
+	public static String IgnoreAction_error;
+
 	static {
 		initializeMessages("org.eclipse.egit.ui.uitext", UIText.class); //$NON-NLS-1$
 	}
