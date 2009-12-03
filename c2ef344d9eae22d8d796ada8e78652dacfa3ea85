@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAABH///5c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitCompareFileRevisionEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2009-11-26T14:07:59Z",
+      "side": 1,
+      "message": "I would suggest to show here the short message of the commit like in the History View (in class CommitMessageViewer) using element.getComment(). This would be more consistent and be more relevant for the user.",
+      "revId": "c2ef344d9eae22d8d796ada8e78652dacfa3ea85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAABH///5Y\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareWithRevisionAction.java",
         "patchSetId": 1
