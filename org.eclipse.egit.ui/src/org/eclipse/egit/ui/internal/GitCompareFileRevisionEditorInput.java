@@ -251,7 +251,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		if (fileObject instanceof LocalFileRevision){
 			return NLS.bind(TeamUIMessages.CompareFileRevisionEditorInput_localRevision, new Object[]{element.getName(), element.getTimestamp()});
 		} else {
-			return NLS.bind(TeamUIMessages.CompareFileRevisionEditorInput_repository, new Object[]{ element.getName(), element.getContentIdentifier()});
+			return NLS.bind(TeamUIMessages.CompareFileRevisionEditorInput_repository, new Object[]{element.getName(), element.getContentIdentifier(), element.getAuthor()});
 		}
 	}
 
