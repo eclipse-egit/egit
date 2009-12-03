@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAABH///5Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareWithRevisionAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2009-11-26T14:07:59Z",
+      "side": 1,
+      "message": "I doubt that this is what a user expects. I would expect that a dialog opens where I can choose a revision to compare with.",
+      "revId": "c2ef344d9eae22d8d796ada8e78652dacfa3ea85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABH///5U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2009-11-26T14:07:59Z",
+      "side": 1,
+      "message": "Unsafe cast: The return value could be a ResourceList!",
+      "revId": "c2ef344d9eae22d8d796ada8e78652dacfa3ea85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABH///5Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2009-11-26T14:07:59Z",
+      "side": 1,
+      "message": "This leads to a ClassCastException if resource is a Folder or a Project. Better check this before; in this case we do not show a diff of course.",
+      "revId": "c2ef344d9eae22d8d796ada8e78652dacfa3ea85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
