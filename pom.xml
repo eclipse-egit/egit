@@ -16,7 +16,6 @@
 
   <properties>
     <tycho-version>0.6.0-SNAPSHOT</tycho-version>
-    <jgit-version>0.6.0-SNAPSHOT</jgit-version>
   </properties>
 
   <modules>
@@ -29,14 +28,6 @@
 
     <module>org.eclipse.egit.core.test</module>
   </modules>
-  
-  <dependencies>
-    <dependency>
-      <groupId>org.eclipse.jgit</groupId>
-      <artifactId>org.eclipse.jgit</artifactId>
-      <version>${jgit-version}</version>  
-    </dependency>
-  </dependencies>
 
   <repositories>
     <repository>
