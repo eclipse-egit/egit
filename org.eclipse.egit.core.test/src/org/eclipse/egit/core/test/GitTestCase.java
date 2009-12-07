@@ -10,15 +10,17 @@ package org.eclipse.egit.core.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.junit.LocalDiskRepositoryTestCase;
 
-import junit.framework.TestCase;
-
-public abstract class GitTestCase extends TestCase {
+public abstract class GitTestCase extends LocalDiskRepositoryTestCase {
 
 	protected TestProject project;
 
@@ -31,6 +33,13 @@ public abstract class GitTestCase extends TestCase {
 		gitDir = new File(project.getProject().getWorkspace().getRoot()
 				.getRawLocation().toFile(), ".git");
 		rmrf(gitDir);
+	}
+
+	@Override
+	protected List<File> getCeilings() {
+		List<File> ret = new ArrayList<File>(super.getCeilings());
+		ret.add(ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile().getAbsoluteFile());
+		return ret;
 	}
 
 	protected void tearDown() throws Exception {
