@@ -83,8 +83,9 @@ public class CommitAction extends RepositoryAction {
 			}
 		}
 
+		loadPreviousCommit();
 		if (files.isEmpty()) {
-			if (amendAllowed) {
+			if (amendAllowed && previousCommit != null) {
 				boolean result = MessageDialog
 				.openQuestion(getTargetPart().getSite().getShell(),
 						"No files to commit",
@@ -93,10 +94,11 @@ public class CommitAction extends RepositoryAction {
 					return;
 				amending = true;
 			} else {
-				MessageDialog.openWarning(getTargetPart().getSite().getShell(), "No files to commit", "No changed items were selected.\n\nAmend is not possible as you have selected multiple repositories.");
+				MessageDialog.openWarning(getTargetPart().getSite().getShell(), "No files to commit", "No changed items were selected and amend is not possible.");
 				return;
 			}
 		}
+
 
 		String author = null;
 		String committer = null;
@@ -110,8 +112,6 @@ public class CommitAction extends RepositoryAction {
 			final String committerEmail = config.getCommitterEmail();
 			committer = committer + " <" + committerEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 		}
-
-		loadPreviousCommit();
 
 		CommitDialog commitDialog = new CommitDialog(getTargetPart().getSite().getShell());
 		commitDialog.setAmending(amending);
