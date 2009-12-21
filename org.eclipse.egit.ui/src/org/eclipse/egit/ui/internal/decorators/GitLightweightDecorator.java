@@ -15,6 +15,7 @@
 package org.eclipse.egit.ui.internal.decorators;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -49,7 +50,15 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.IndexChangedEvent;
+import org.eclipse.jgit.lib.RefsChangedEvent;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryChangedEvent;
+import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.osgi.util.TextProcessor;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.ui.ISharedImages;
@@ -57,11 +66,7 @@ import org.eclipse.team.ui.TeamImages;
 import org.eclipse.team.ui.TeamUI;
 import org.eclipse.ui.IContributorResourceAdapter;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.jgit.lib.IndexChangedEvent;
-import org.eclipse.jgit.lib.RefsChangedEvent;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryChangedEvent;
-import org.eclipse.jgit.lib.RepositoryListener;
+import org.eclipse.ui.themes.ITheme;
 
 /**
  * Supplies annotations for displayed resources
@@ -69,8 +74,6 @@ import org.eclipse.jgit.lib.RepositoryListener;
  * This decorator provides annotations to indicate the status of each resource
  * when compared to <code>HEAD</code>, as well as the index in the relevant
  * repository.
- *
- * TODO: Add support for colors and font decoration
  */
 public class GitLightweightDecorator extends LabelProvider implements
 		ILightweightLabelDecorator, IPropertyChangeListener,
@@ -98,6 +101,13 @@ public class GitLightweightDecorator extends LabelProvider implements
 			UIText.Decorator_exceptionMessage, Activator.getPluginId(),
 			IStatus.ERROR, Activator.getDefault().getLog());
 
+	private static String[] fonts = new String[]  {
+		UIPreferences.THEME_UncommittedChangeFont};
+
+	private static String[] colors = new String[] {
+		UIPreferences.THEME_UncommittedChangeBackgroundColor,
+		UIPreferences.THEME_UncommittedChangeForegroundColor};
+
 	/**
 	 * Constructs a new Git resource decorator
 	 */
@@ -110,6 +120,33 @@ public class GitLightweightDecorator extends LabelProvider implements
 		GitProjectData.addRepositoryChangeListener(this);
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this,
 				IResourceChangeEvent.POST_CHANGE);
+
+		// This is an optimization to ensure that while decorating our fonts and colors are
+		// pre-created and decoration can occur without having to syncExec.
+		ensureFontAndColorsCreated(fonts, colors);
+	}
+
+	/**
+	 * This method will ensure that the fonts and colors used by the decorator
+	 * are cached in the registries. This avoids having to syncExec when
+	 * decorating since we ensure that the fonts and colors are pre-created.
+	 *
+	 * @param fonts fonts ids to cache
+	 * @param colors color ids to cache
+	 */
+	private void ensureFontAndColorsCreated(final String[] fonts, final String[] colors) {
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				ITheme theme  = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
+				for (int i = 0; i < colors.length; i++) {
+					theme.getColorRegistry().get(colors[i]);
+
+				}
+				for (int i = 0; i < fonts.length; i++) {
+					theme.getFontRegistry().get(fonts[i]);
+				}
+			}
+		});
 	}
 
 	/*
@@ -276,6 +313,26 @@ public class GitLightweightDecorator extends LabelProvider implements
 
 			decorateText(decoration, resource);
 			decorateIcons(decoration, resource);
+			decorateFontAndColour(decoration, resource);
+		}
+
+		private void decorateFontAndColour(IDecoration decoration,
+				IDecoratableResource resource) {
+			ITheme current = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
+			if (resource.isIgnored()) {
+				return;
+			}
+			if (!resource.isTracked()
+					|| resource.isDirty()
+					|| resource.staged() != Staged.NOT_STAGED) {
+				Color bc = current.getColorRegistry().get(UIPreferences.THEME_UncommittedChangeBackgroundColor);
+				Color fc = current.getColorRegistry().get(UIPreferences.THEME_UncommittedChangeForegroundColor);
+				Font f = current.getFontRegistry().get(UIPreferences.THEME_UncommittedChangeFont);
+
+				decoration.setBackgroundColor(bc);
+				decoration.setForegroundColor(fc);
+				decoration.setFont(f);
+			}
 		}
 
 		private void decorateText(IDecoration decoration,
@@ -459,6 +516,11 @@ public class GitLightweightDecorator extends LabelProvider implements
 				|| prop.equals(TeamUI.GLOBAL_FILE_TYPES_CHANGED)
 				|| prop.equals(Activator.DECORATORS_CHANGED)) {
 			postLabelEvent(new LabelProviderChangedEvent(this));
+		} else if (prop.equals(UIPreferences.THEME_UncommittedChangeBackgroundColor)
+				|| prop.equals(UIPreferences.THEME_UncommittedChangeFont)
+				|| prop.equals(UIPreferences.THEME_UncommittedChangeForegroundColor)) {
+			ensureFontAndColorsCreated(fonts, colors);
+			postLabelEvent(new LabelProviderChangedEvent(this)); // TODO do I really need this?
 		}
 	}
 
@@ -509,7 +571,12 @@ public class GitLightweightDecorator extends LabelProvider implements
 					}
 
 					// All seems good, schedule the resource for update
-					resourcesToUpdate.add(resource);
+					if (Constants.GITIGNORE_FILENAME.equals(resource.getName())) {
+						// re-decorate all container members when .gitignore changes
+						resourcesToUpdate.addAll(Arrays.asList(resource.getParent().members()));
+					} else {
+						resourcesToUpdate.add(resource);
+					}
 
 					if (delta.getKind() == IResourceDelta.CHANGED
 							&& (delta.getFlags() & IResourceDelta.OPEN) > 1)
