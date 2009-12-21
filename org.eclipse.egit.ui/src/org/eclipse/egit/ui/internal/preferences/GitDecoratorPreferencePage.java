@@ -711,9 +711,14 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			setColorsAndFonts(fViewer.getTree().getItems());
 		}
 
-		@SuppressWarnings("unused")
 		private void setColorsAndFonts(TreeItem[] items) {
-			// TODO: Implement colors and fonts
+			for (int i = 0; i < items.length; i++) {
+				PreviewDecoration decoration = getDecoration(items[i].getData());
+				items[i].setBackground(decoration.getBackgroundColor());
+				items[i].setForeground(decoration.getForegroundColor());
+				items[i].setFont(decoration.getFont());
+				setColorsAndFonts(items[i].getItems());
+			}
 		}
 
 		public void update(Observable o, Object arg) {
@@ -874,6 +879,12 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		private ImageDescriptor overlay = null;
 
+		private Color backgroundColor = null;
+
+		private Font font = null;
+
+		private Color foregroundColor = null;
+
 		/**
 		 * Adds an icon overlay to the decoration
 		 * <p>
@@ -902,19 +913,31 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		}
 
 		public void setBackgroundColor(Color color) {
-			// TODO: Add support for color
+			backgroundColor = color;
 		}
 
 		public void setForegroundColor(Color color) {
-			// TODO: Add support for color
+			foregroundColor = color;
 		}
 
 		public void setFont(Font font) {
-			// TODO: Add support for fonts
+			this.font = font;
 		}
 
 		public ImageDescriptor getOverlay() {
 			return overlay;
+		}
+
+		public Color getBackgroundColor() {
+			return backgroundColor;
+		}
+
+		public Color getForegroundColor() {
+			return foregroundColor;
+		}
+
+		public Font getFont() {
+			return font;
 		}
 
 		public String getPrefix() {
