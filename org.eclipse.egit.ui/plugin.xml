@@ -200,7 +200,7 @@
             </adapter>
          </factory>
    </extension>
-   
+
    <extension point="org.eclipse.ui.preferencePages">
       <page name="%GitPreferences_name"
             category="org.eclipse.team.ui.TeamPreferences"
@@ -304,6 +304,32 @@
          <description>
             %Theme_CommitMessageFont_description
          </description>
+      </fontDefinition>
+	<colorDefinition
+        id="org.eclipse.egit.ui.UncommittedChangeForegroundColor"
+        categoryId="org.eclipse.egit.ui.GitTheme"
+        label="%Theme_UncommittedChangeForegroundColor_label"
+        value="COLOR_LIST_FOREGROUND">
+        <description>
+        %Theme_UncommittedChangeForegroundColor_description
+        </description>
+      </colorDefinition>
+      <colorDefinition
+        id="org.eclipse.egit.ui.UncommittedChangeBackgroundColor"
+        categoryId="org.eclipse.egit.ui.GitTheme"
+        label="%Theme_UncommittedChangeBackgroundColor_label"
+        value="COLOR_LIST_BACKGROUND">
+        <description>
+        %Theme_UncommittedChangeBackgroundColor_description
+        </description>
+      </colorDefinition>
+      <fontDefinition
+        id="org.eclipse.egit.ui.UncommittedChangeFont"
+        categoryId="org.eclipse.egit.ui.GitTheme"
+        label="%Theme_UncommittedChangeFont_label">
+        <description>
+        %Theme_UncommittedChangeFont_description
+        </description>
       </fontDefinition>
    </extension>
 
