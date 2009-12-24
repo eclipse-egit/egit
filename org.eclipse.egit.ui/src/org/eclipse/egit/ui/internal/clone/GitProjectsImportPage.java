@@ -95,12 +95,6 @@ public class GitProjectsImportPage extends WizardPage {
 		IProjectDescription description;
 
 		/**
-		 * Relative path to repository, '../.git' is by default. If you'll set
-		 * it null you're on your own, no checks for null performed.
-		 */
-		File repository = new File("../.git"); //$NON-NLS-1$
-
-		/**
 		 * Create a record for a project based on the info in the file.
 		 *
 		 * @param file
@@ -108,19 +102,6 @@ public class GitProjectsImportPage extends WizardPage {
 		ProjectRecord(File file) {
 			projectSystemFile = file;
 			setProjectName();
-		}
-
-		/**
-		 * Create a record for a project based on the info in the file.
-		 *
-		 * @param file
-		 * @param aRepository
-		 *            relative path to repository
-		 */
-		ProjectRecord(File file, File aRepository) {
-			projectSystemFile = file;
-			setProjectName();
-			repository = aRepository;
 		}
 
 		/**
@@ -216,7 +197,7 @@ public class GitProjectsImportPage extends WizardPage {
 	private String lastPath;
 
 	// The last time that the file or folder at the selected path was modified
-	// to mimize searches
+	// to minimize searches
 	private long lastModified;
 
 	private Button shareCheckBox;
@@ -732,7 +713,7 @@ public class GitProjectsImportPage extends WizardPage {
 					monitor, openTicks));
 			if (share) {
 				ConnectProviderOperation connectProviderOperation = new ConnectProviderOperation(
-						project, record.repository);
+						project);
 				connectProviderOperation
 						.run(new SubProgressMonitor(monitor, 20));
 			}
