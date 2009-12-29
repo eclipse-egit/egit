@@ -332,6 +332,16 @@ public class GitProjectData {
 		return null;
 	}
 
+	/**
+	 * If the project has a single git repository mapping, returns it.  Otherwise
+	 * returns </code>null</code>.
+	 *
+	 * @return the single repository mapping for the project, or <code>null</code>
+	 */
+	public RepositoryMapping getSingleRepositoryMapping() {
+		return (mappings.size() == 1) ? mappings.iterator().next() : null;
+	}
+
 	private void delete() {
 		final File dir = propertyFile().getParentFile();
 		final File[] todel = dir.listFiles();

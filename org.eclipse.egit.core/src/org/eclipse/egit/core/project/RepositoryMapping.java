@@ -243,6 +243,38 @@ public class RepositoryMapping {
 	}
 
 	/**
+	 * Gets the repository mapping for a resource.  In the special case when the
+	 * resource is a project, returns a repository mapping if there is only one,
+	 * even though the project itself may be unmapped.
+	 *
+	 * @param resource
+	 * @return the RepositoryMapping for this resource
+	 */
+	public static RepositoryMapping getMappingAllowUnmappedProject(final IResource resource) {
+		final IProject project = resource.getProject();
+		if (project == null)
+			return null;
+
+		final RepositoryProvider rp = RepositoryProvider.getProvider(project);
+		if (!(rp instanceof GitProvider))
+			return null;
+
+		GitProjectData data = ((GitProvider)rp).getData();
+		if (data == null)
+			return null;
+
+		RepositoryMapping mapping = data.getRepositoryMapping(resource);
+		if (mapping != null)
+			return mapping;
+
+		// Special-case a project with a single git repository attached.
+		if (resource.getType() != IResource.PROJECT)
+			return null;
+
+		return data.getSingleRepositoryMapping();
+	}
+
+	/**
 	 * @return the name of the .git directory
 	 */
 	public String getGitDir() {
