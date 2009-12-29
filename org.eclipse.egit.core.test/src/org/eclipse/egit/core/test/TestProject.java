@@ -9,6 +9,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.test;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,14 +17,17 @@ import java.net.URL;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IPluginDescriptor;
 import org.eclipse.core.runtime.IPluginRegistry;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
@@ -80,12 +84,7 @@ public class TestProject {
 	public void addJar(String plugin, String jar) throws MalformedURLException,
 			IOException, JavaModelException {
 		Path result = findFileInPlugin(plugin, jar);
-		IClasspathEntry[] oldEntries = javaProject.getRawClasspath();
-		IClasspathEntry[] newEntries = new IClasspathEntry[oldEntries.length + 1];
-		System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
-		newEntries[oldEntries.length] = JavaCore.newLibraryEntry(result, null,
-				null);
-		javaProject.setRawClasspath(newEntries, null);
+		addClassPathEntry(JavaCore.newLibraryEntry(result, null, null));
 	}
 
 	public IPackageFragment createPackage(String name) throws CoreException {
@@ -132,20 +131,31 @@ public class TestProject {
 		IFolder folder = project.getFolder("src");
 		folder.create(false, true, null);
 		IPackageFragmentRoot root = javaProject.getPackageFragmentRoot(folder);
-		IClasspathEntry[] oldEntries = javaProject.getRawClasspath();
-		IClasspathEntry[] newEntries = new IClasspathEntry[oldEntries.length + 1];
-		System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
-		newEntries[oldEntries.length] = JavaCore.newSourceEntry(root.getPath());
-		javaProject.setRawClasspath(newEntries, null);
+		addClassPathEntry(JavaCore.newSourceEntry(root.getPath()));
 		return root;
 	}
 
+	public void createLinkedSourceFolder(File directory) throws CoreException {
+		IFolder folder = project.getFolder("src");
+		IPath ipath = new Path(directory.getAbsolutePath());
+		if (!project.getWorkspace().validateLinkLocation(folder, ipath).isOK()) {
+			throw new CoreException(new Status(IStatus.ERROR, "TestProject",
+					"Link location validation failed"));
+		}
+		folder.createLink(ipath, IResource.NONE, null);
+		IPackageFragmentRoot root = javaProject.getPackageFragmentRoot(folder);
+		addClassPathEntry(JavaCore.newSourceEntry(root.getPath()));
+	}
+
 	private void addSystemLibraries() throws JavaModelException {
+		addClassPathEntry(JavaRuntime.getDefaultJREContainerEntry());
+	}
+
+	private void addClassPathEntry(IClasspathEntry entry) throws JavaModelException {
 		IClasspathEntry[] oldEntries = javaProject.getRawClasspath();
 		IClasspathEntry[] newEntries = new IClasspathEntry[oldEntries.length + 1];
 		System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
-		newEntries[oldEntries.length] = JavaRuntime
-				.getDefaultJREContainerEntry();
+		newEntries[oldEntries.length] = entry;
 		javaProject.setRawClasspath(newEntries, null);
 	}
 
