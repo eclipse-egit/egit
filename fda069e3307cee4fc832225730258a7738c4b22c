@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAABX///6c\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-03T16:13:51Z",
+      "side": 1,
+      "message": "What\u0027s going on here, bad indentation on this element?  Can we avoid changing it while adding new functionality?  I\u0027d prefer to have pure whitespace fix patches be isolated.",
+      "revId": "fda069e3307cee4fc832225730258a7738c4b22c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX///6g\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-03T16:13:51Z",
+      "side": 1,
+      "message": "Should be translated through a property.\n\nAlso, shouldn\u0027t we have a tooltip?",
+      "revId": "fda069e3307cee4fc832225730258a7738c4b22c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
