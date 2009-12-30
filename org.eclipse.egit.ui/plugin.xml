@@ -170,6 +170,17 @@
 	       menubarPath="additions">
 	 </action>
 	  </objectContribution>
+   	  <objectContribution
+         adaptable="true"
+         id="org.eclipse.egit.ui.fileContributions"
+         objectClass="org.eclipse.core.resources.IFile">
+         <action
+               class="org.eclipse.egit.ui.internal.actions.CompareWithRevisionAction"
+               id="org.eclipse.egit.ui.internal.actions.CompareWithRevisionAction"
+               label="%CompareWithRevisionAction_label"
+               menubarPath="compareWithMenu/gitCompareWithGroup"
+               tooltip="%CompareWithRevisionAction_tooltip" />
+      </objectContribution>
    </extension>
 
    <extension
