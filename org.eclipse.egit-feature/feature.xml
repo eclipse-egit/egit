@@ -7,23 +7,22 @@
       plugin="org.eclipse.egit">
 
    <description url="http://www.jgit.org">
-An Eclipse Git Team provider in pure Java.
+      An Eclipse Git Team provider in pure Java.
 
  !!!Uninstall any pre-0.6 plugins!!!
 @buildId@
 
 Changes on @branch@ since @refversion@:
 
-<![CDATA[@shortlog@]]>
-
+@shortlog@
    </description>
 
    <copyright>
-     %copyright
+      %copyright
    </copyright>
 
    <license url="%licenseURL">
-     %license
+      %license
    </license>
 
    <url>
@@ -64,6 +63,13 @@ Changes on @branch@ since @refversion@:
 
    <plugin
          id="org.eclipse.egit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jgit"
          download-size="0"
          install-size="0"
          version="0.0.0"
