@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAABX///zw\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitTestCase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2009-12-11T11:39:42Z",
+      "side": 1,
+      "message": "JUnit 3 apparently doesn\u0027t like this change, it doesn\u0027t find the test cases anymore if they are not directly extending junit.framework.TestCase. This leads for all tests to the exception:\n\njunit.framework.AssertionFailedError: No tests found in org.eclipse.egit.core.T0003_AdaptableFileTreeIteratorTest\n\tat junit.framework.Assert.fail(Assert.java:47)\n\tat junit.framework.TestSuite$1.runTest(TestSuite.java:90)\n...",
+      "revId": "c4041c907dd05db54d6293d742bd57cd2ef3eb0e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
