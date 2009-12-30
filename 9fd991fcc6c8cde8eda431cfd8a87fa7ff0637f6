@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAACH////M\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitTestCase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2009-12-20T21:34:54Z",
+      "side": 0,
+      "message": "if this is no longer called (see above) why do we need to retain this method ?",
+      "revId": "9fd991fcc6c8cde8eda431cfd8a87fa7ff0637f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
