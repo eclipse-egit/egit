@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAADn////8\u003d",
+        "filename": "org.eclipse.egit-feature/.gitignore",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-31T03:08:24Z",
+      "side": 1,
+      "message": "FYI, I usually prefer to write these as /target, so they aren\u0027t considered below the top level directory.  When ignoring files in Git I try to be as specific as I can, so we don\u0027t accidentally ignore a package whose name is \"org.eclipse.egit.ui.target\" or something like that.",
+      "revId": "c14a017aff2bd4ff8ed9ded4daf6f72d542c756c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
