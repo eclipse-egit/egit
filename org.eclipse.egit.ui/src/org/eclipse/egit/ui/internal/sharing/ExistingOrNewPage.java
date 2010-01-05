@@ -54,11 +54,13 @@ import org.eclipse.swt.widgets.TreeItem;
  */
 class ExistingOrNewPage extends WizardPage {
 
+	private static final String DOT_GIT_SEGMENT = File.separatorChar + ".git"; //$NON-NLS-1$
 	private final SharingWizard myWizard;
 	private Button button;
 	private Tree tree;
 	private Text repositoryToCreate;
 	private IPath minumumPath;
+	private Text dotGitSegment;
 
 	ExistingOrNewPage(SharingWizard w) {
 		super(ExistingOrNewPage.class.getName());
@@ -190,11 +192,12 @@ class ExistingOrNewPage extends WizardPage {
 						.segmentCount());
 			}
 		});
-		Text l = new Text(g,SWT.NONE);
-		l.setEnabled(false);
-		l.setEditable(false);
-		l.setText(File.separatorChar + ".git"); //$NON-NLS-1$
-		l.setLayoutData(GridDataFactory.fillDefaults().create());
+		dotGitSegment = new Text(g ,SWT.NONE);
+		dotGitSegment.setEnabled(false);
+		dotGitSegment.setEditable(false);
+		dotGitSegment.setText(DOT_GIT_SEGMENT);
+		dotGitSegment.setLayoutData(GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).create());
+
 		tree.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				updateCreateOptions();
@@ -247,6 +250,7 @@ class ExistingOrNewPage extends WizardPage {
 		}
 		button.setEnabled(p != null);
 		repositoryToCreate.setEnabled(p != null);
+		dotGitSegment.setEnabled(p != null);
 		getContainer().updateButtons();
 	}
 
