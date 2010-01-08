@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAD3///zE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-01-07T23:10:52Z",
+      "side": 1,
+      "message": "I think we should in addition remove the explanation:\n\"refs/heads/ will be prepended to the name you type\" or move it to the online help since that\u0027s more an implementation detail than really important to the user, or am I missing something here ?",
+      "revId": "6793f6dd4f8cd80df4043e4bed9bad120ad6f02c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
