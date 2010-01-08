@@ -369,7 +369,7 @@ public class BranchSelectionDialog extends Dialog {
 					// check what ref name the user selected, if any.
 					refNameFromDialog();
 
-					InputDialog labelDialog = getRefNameInputDialog(UIText.BranchSelectionDialog_QuestionNewBranchNameMessage);
+					InputDialog labelDialog = getRefNameInputDialog(UIText.BranchSelectionDialog_QuestionNewBranchMessage);
 					if (labelDialog.open() == Window.OK) {
 						String newRefName = Constants.R_HEADS + labelDialog.getValue();
 						RefUpdate updateRef;
