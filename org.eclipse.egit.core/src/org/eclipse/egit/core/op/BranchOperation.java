@@ -24,7 +24,7 @@ import org.eclipse.jgit.errors.CheckoutConflictException;
 import org.eclipse.jgit.lib.Commit;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GitIndex;
-import org.eclipse.jgit.lib.RefLogWriter;
+import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.lib.WorkDirCheckout;
@@ -77,9 +77,6 @@ public class BranchOperation implements IWorkspaceRunnable {
 		updateHeadRef();
 		monitor.worked(1);
 
-		writeHeadReflog();
-		monitor.worked(1);
-
 		refreshProjects();
 		monitor.worked(1);
 
@@ -103,19 +100,18 @@ public class BranchOperation implements IWorkspaceRunnable {
 		}
 	}
 
-	private void writeHeadReflog() throws TeamException {
-		try {
-			RefLogWriter.writeReflog(repository, oldCommit.getCommitId(),
-					newCommit.getCommitId(), "checkout: moving to " + refName,
-					Constants.HEAD);
-		} catch (IOException e) {
-			throw new TeamException("Writing HEAD's reflog", e);
-		}
-	}
-
 	private void updateHeadRef() throws TeamException {
 		try {
-			repository.writeSymref(Constants.HEAD, refName);
+			RefUpdate u = repository.updateRef(Constants.HEAD);
+			u.setRefLogMessage("checkout: moving to " + refName, false);
+			switch (u.link(refName)) {
+			case NEW:
+			case FORCED:
+			case NO_CHANGE:
+				break;
+			default:
+				throw new IOException(u.getResult().name());
+			}
 		} catch (IOException e) {
 			throw new TeamException("Updating HEAD to ref: " + refName, e);
 		}
