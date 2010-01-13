@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAEH///7o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/ExistingOrNewPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-01-13T22:07:11Z",
+      "side": 1,
+      "message": "We do that separately in JGit.",
+      "parentUuid": "AAAAD3///wk\u003d",
+      "revId": "ecfab655182a6d21fbae0530c321d15349f6a26b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
