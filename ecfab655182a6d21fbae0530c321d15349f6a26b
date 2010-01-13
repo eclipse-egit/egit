@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAAD3///wk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/ExistingOrNewPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2010-01-08T20:50:26Z",
+      "side": 1,
+      "message": "Please introduce a constant for \".git\" part: there are several places where this \u0027magic string\u0027 used and I see no reason to introduce an another one.",
+      "revId": "ecfab655182a6d21fbae0530c321d15349f6a26b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAEH///7o\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/ExistingOrNewPage.java",
         "patchSetId": 1
