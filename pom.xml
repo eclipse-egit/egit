@@ -26,6 +26,8 @@
 
   <properties>
     <tycho-version>0.6.0</tycho-version>
+    <jgit-site>${project.baseUri}../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.updatesite/target/site</jgit-site>
+    <eclipse-site>http://download.eclipse.org/releases/galileo</eclipse-site>
   </properties>
 
   <modules>
@@ -43,7 +45,12 @@
     <repository>
       <id>galileo</id>
       <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/galileo</url>
+      <url>${eclipse-site}</url>
+    </repository>
+    <repository>
+      <id>jgit</id>
+      <layout>p2</layout>
+      <url>${jgit-site}</url>
     </repository>
   </repositories>
 
@@ -80,6 +87,15 @@
           <version>2.4.1</version>
           <configuration>
             <encoding>ISO-8859-1</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.sonatype.tycho</groupId>
+          <artifactId>target-platform-configuration</artifactId>
+          <version>${tycho-version}</version>
+          <configuration>
+            <resolver>p2</resolver>
+	    <pomDependencies>consider</pomDependencies>
           </configuration>
         </plugin>
       </plugins>
