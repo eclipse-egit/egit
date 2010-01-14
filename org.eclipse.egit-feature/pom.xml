@@ -24,4 +24,12 @@
 
   <name>Eclipse Git Feature (Incubation)</name>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.jgit</groupId>
+      <artifactId>org.eclipse.jgit</artifactId>
+      <version>${jgit-version}</version>
+    </dependency>
+  </dependencies>
+
 </project>

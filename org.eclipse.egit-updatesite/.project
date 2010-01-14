@@ -8,7 +8,6 @@
 		<project>org.eclipse.egit.core.test</project>
 		<project>org.eclipse.egit.ui</project>
 		<project>org.eclipse.egit-feature</project>
-		<project>org.eclipse.jgit</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
