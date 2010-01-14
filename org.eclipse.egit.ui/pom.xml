@@ -42,16 +42,5 @@
         </excludes>
       </resource>
     </resources>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.tycho</groupId>
-        <artifactId>target-platform-configuration</artifactId>
-        <version>${tycho-version}</version>
-        <configuration>
-          <resolver>p2</resolver>
-          <pomDependencies>consider</pomDependencies>
-        </configuration>
-      </plugin>
-    </plugins>
   </build>
 </project>
