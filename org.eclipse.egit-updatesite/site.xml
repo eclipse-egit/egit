@@ -6,6 +6,9 @@
    <feature url="features/org.eclipse.egit_0.0.0.qualifier.jar" id="org.eclipse.egit" version="0.0.0" patch="true">
       <category name="Eclipse Git Plugin (Incubation)"/>
    </feature>
+   <feature url="features/org.eclipse.jgit_0.0.0.qualifier.jar" id="org.eclipse.jgit" version="0.0.0" patch="true">
+      <category name="JGit Plugin (Incubation)"/>
+   </feature>
    <category-def name="Eclipse Git Plugin (Incubation)" label="Eclipse Git Plugin (Incubation)">
       <description>
          Eclipse Git Plugin (Incubation)
