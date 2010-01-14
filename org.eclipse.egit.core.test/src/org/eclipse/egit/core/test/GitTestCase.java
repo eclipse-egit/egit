@@ -15,6 +15,7 @@ import java.util.Collection;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.lib.Constants;
 
 import junit.framework.TestCase;
 
@@ -29,7 +30,7 @@ public abstract class GitTestCase extends TestCase {
 		project = new TestProject(true);
 		checkNotNested();
 		gitDir = new File(project.getProject().getWorkspace().getRoot()
-				.getRawLocation().toFile(), ".git");
+				.getRawLocation().toFile(), Constants.DOT_GIT);
 		rmrf(gitDir);
 	}
 

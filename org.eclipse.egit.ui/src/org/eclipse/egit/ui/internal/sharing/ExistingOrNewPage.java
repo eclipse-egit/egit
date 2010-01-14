@@ -44,6 +44,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -95,7 +96,7 @@ class ExistingOrNewPage extends WizardPage {
 
 				// special case for a git repository in the project's root
 				final File gitDirInProjectRoot = project.getLocation().append(
-						".git").toFile(); //$NON-NLS-1$
+						Constants.DOT_GIT).toFile();
 				if (!gitDirInProjectRoot.isDirectory()) {
 					// '.git/' isn't there, enable repository creation
 					treeItem.setText(2, ""); //$NON-NLS-1$
@@ -121,7 +122,7 @@ class ExistingOrNewPage extends WizardPage {
 		button.setText(UIText.ExistingOrNewPage_CreateButton);
 		button.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-				File gitDir = new File(repositoryToCreate.getText(),".git"); //$NON-NLS-1$
+				File gitDir = new File(repositoryToCreate.getText(),Constants.DOT_GIT);
 				try {
 					Repository repository = new Repository(gitDir);
 					repository.create();
@@ -169,7 +170,7 @@ class ExistingOrNewPage extends WizardPage {
 		Text l = new Text(g,SWT.NONE);
 		l.setEnabled(false);
 		l.setEditable(false);
-		l.setText(File.separatorChar + ".git"); //$NON-NLS-1$
+		l.setText(File.separatorChar + Constants.DOT_GIT);
 		l.setLayoutData(GridDataFactory.fillDefaults().create());
 		tree.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {

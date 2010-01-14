@@ -24,6 +24,7 @@ import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.jgit.lib.Commit;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileTreeEntry;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectWriter;
@@ -47,7 +48,7 @@ public class T0001_ConnectProviderOperationTest extends GitTestCase {
 	public void testNewRepository() throws CoreException, IOException {
 
 		File gitDir = new File(project.getProject().getWorkspace().getRoot()
-				.getRawLocation().toFile(), ".git");
+				.getRawLocation().toFile(), Constants.DOT_GIT);
 		Repository repository = new Repository(gitDir);
 		repository.create();
 		repository.close();
@@ -69,7 +70,7 @@ public class T0001_ConnectProviderOperationTest extends GitTestCase {
 		fileA.create(new ByteArrayInputStream(srcA.getBytes()), false, null);
 
 		File gitDir = new File(project.getProject().getWorkspace().getRoot()
-				.getRawLocation().toFile(), ".git");
+				.getRawLocation().toFile(), Constants.DOT_GIT);
 		Repository thisGit = new Repository(gitDir);
 		thisGit.create();
 		Tree rootTree = new Tree(thisGit);
