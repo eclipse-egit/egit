@@ -82,6 +82,15 @@
             <encoding>ISO-8859-1</encoding>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.sonatype.tycho</groupId>
+          <artifactId>target-platform-configuration</artifactId>
+          <version>${tycho-version}</version>
+          <configuration>
+            <resolver>p2</resolver>
+	    <pomDependencies>consider</pomDependencies>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
