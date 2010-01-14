@@ -135,7 +135,7 @@ public class CloneOperation implements IRunnableWithProgress {
 			throws URISyntaxException, IOException {
 		monitor.setTaskName("Initializing local repository");
 
-		final File gitdir = new File(workdir, ".git");
+		final File gitdir = new File(workdir, Constants.DOT_GIT);
 		local = new Repository(gitdir);
 		local.create();
 

@@ -131,7 +131,7 @@ public class RepositoryFinder {
 					for (int k = 0; k < children.length; k++) {
 						final IResource o = children[k];
 						if (o instanceof IContainer
-								&& !o.getName().equals(".git")) {
+								&& !o.getName().equals(Constants.DOT_GIT)) {
 							find(new SubProgressMonitor(m, scale),
 									(IContainer) o);
 						} else {
@@ -146,7 +146,7 @@ public class RepositoryFinder {
 	}
 
 	private File configFor(final File fsLoc) {
-		return new File(new File(fsLoc, ".git"), "config");
+		return new File(new File(fsLoc, Constants.DOT_GIT), "config");
 	}
 
 	private void register(final IContainer c, final File gitdir) {

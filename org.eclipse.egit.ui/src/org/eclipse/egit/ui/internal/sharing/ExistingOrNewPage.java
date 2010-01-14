@@ -48,13 +48,13 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.jgit.lib.Constants;
 
 /**
  * Wizard page for connecting projects to Git repositories.
  */
 class ExistingOrNewPage extends WizardPage {
 
-	private static final String DOT_GIT_SEGMENT = File.separatorChar + ".git"; //$NON-NLS-1$
 	private final SharingWizard myWizard;
 	private Button button;
 	private Tree tree;
@@ -147,7 +147,7 @@ class ExistingOrNewPage extends WizardPage {
 		button.setText(UIText.ExistingOrNewPage_CreateButton);
 		button.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-				File gitDir = new File(repositoryToCreate.getText(),".git"); //$NON-NLS-1$
+				File gitDir = new File(repositoryToCreate.getText(),Constants.DOT_GIT);
 				try {
 					Repository repository = new Repository(gitDir);
 					repository.create();
@@ -195,7 +195,7 @@ class ExistingOrNewPage extends WizardPage {
 		dotGitSegment = new Text(g ,SWT.NONE);
 		dotGitSegment.setEnabled(false);
 		dotGitSegment.setEditable(false);
-		dotGitSegment.setText(DOT_GIT_SEGMENT);
+		dotGitSegment.setText(File.separatorChar + Constants.DOT_GIT);
 		dotGitSegment.setLayoutData(GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).create());
 
 		tree.addSelectionListener(new SelectionListener() {

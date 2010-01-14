@@ -10,12 +10,12 @@ package org.eclipse.egit.core.test;
 
 import java.io.File;
 import java.io.IOException;
+import org.eclipse.jgit.lib.Constants;
 
 import junit.framework.TestCase;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jgit.junit.MockSystemReader;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.util.SystemReader;
 
 public abstract class GitTestCase extends TestCase {
@@ -32,7 +32,7 @@ public abstract class GitTestCase extends TestCase {
 						.getAbsoluteFile().toString());
 		project = new TestProject(true);
 		gitDir = new File(project.getProject().getWorkspace().getRoot()
-				.getRawLocation().toFile(), ".git");
+				.getRawLocation().toFile(), Constants.DOT_GIT);
 		rmrf(gitDir);
 	}
 

@@ -41,6 +41,7 @@ import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.WindowCache;
 import org.eclipse.jgit.lib.WindowCacheConfig;
@@ -286,7 +287,7 @@ public class GitProjectData {
 			if (c == null)
 				continue; // Not fully mapped yet?
 
-			final IResource dotGit = c.findMember(".git");
+			final IResource dotGit = c.findMember(Constants.DOT_GIT);
 			if (dotGit != null) {
 				try {
 					final Repository r = rm.getRepository();
@@ -475,7 +476,7 @@ public class GitProjectData {
 			Activator.logError("Failed to cache RepositoryMapping", err);
 		}
 
-		dotGit = c.findMember(".git");
+		dotGit = c.findMember(Constants.DOT_GIT);
 		if (dotGit != null && dotGit.getLocation().toFile().equals(git)) {
 			protect(dotGit);
 		}

@@ -31,6 +31,7 @@ import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
 
@@ -50,7 +51,7 @@ public class ConnectProviderOperation implements IWorkspaceRunnable {
 	 *            the project to connect to the Git team provider.
 	 */
 	public ConnectProviderOperation(final IProject proj) {
-		this(proj, new File(".git"));
+		this(proj, new File(Constants.DOT_GIT));
 	}
 
 	/**
