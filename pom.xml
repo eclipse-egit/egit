@@ -26,6 +26,7 @@
 
   <properties>
     <tycho-version>0.6.0</tycho-version>
+    <jgit-version>0.6.0-SNAPSHOT</jgit-version>
   </properties>
 
   <modules>
@@ -47,6 +48,19 @@
     </repository>
   </repositories>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.jgit</groupId>
+      <artifactId>org.eclipse.jgit</artifactId>
+      <version>${jgit-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jgit</groupId>
+      <artifactId>org.eclipse.jgit.junit</artifactId>
+      <version>${jgit-version}</version>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -61,6 +75,7 @@
         <version>${tycho-version}</version>
         <configuration>
           <resolver>p2</resolver>
+          <pomDependencies>consider</pomDependencies>
         </configuration>
       </plugin>
     </plugins>
