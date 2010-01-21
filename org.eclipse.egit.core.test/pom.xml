@@ -24,19 +24,6 @@
 
   <name>Test Plug-in (Incubation)</name>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.eclipse.jgit</groupId>
-      <artifactId>org.eclipse.jgit</artifactId>
-      <version>${jgit-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jgit</groupId>
-      <artifactId>org.eclipse.jgit.junit</artifactId>
-      <version>${jgit-version}</version>
-    </dependency>
-  </dependencies>
-
   <build>
     <plugins>
       <plugin>

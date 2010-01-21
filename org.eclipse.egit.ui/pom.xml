@@ -24,14 +24,6 @@
 
   <name>Git Team Provider (UI) (Incubation)</name>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.eclipse.jgit</groupId>
-      <artifactId>org.eclipse.jgit</artifactId>
-      <version>${jgit-version}</version>
-    </dependency>
-  </dependencies>
-
   <!-- workaround for https://issues.sonatype.org/browse/TYCHO-168 -->
   <build>
     <resources>
