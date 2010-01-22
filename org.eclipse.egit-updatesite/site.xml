@@ -4,9 +4,12 @@
       This is a pure Java implementation of the Git version control system. The native Git version is also required in this version.
    </description>
    <feature url="features/org.eclipse.egit_0.0.0.qualifier.jar" id="org.eclipse.egit" version="0.0.0" patch="true">
-      <category name="Eclipse Git Plugin (Incubation)"/>
+      <category name="Eclipse Git Team Provider (Incubation)"/>
    </feature>
-   <category-def name="Eclipse Git Plugin (Incubation)" label="Eclipse Git Team Provider (Incubation)">
+   <feature url="features/org.eclipse.jgit_0.0.0.qualifier.jar" id="org.eclipse.jgit" version="0.0.0" patch="true">
+      <category name="Eclipse Git Team Provider (Incubation)"/>
+   </feature>
+   <category-def name="Eclipse Git Team Provider (Incubation)" label="Eclipse Git Team Provider (Incubation)">
       <description>
          Eclipse Git Team Provider (Incubation)
       </description>

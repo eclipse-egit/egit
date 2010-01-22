@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.egit"
-      label="Eclipse Git Feature (Incubation)"
+      label="Eclipse EGit Feature (Incubation)"
       version="0.6.0.qualifier"
       provider-name="eclipse.org"
       plugin="org.eclipse.egit">
@@ -44,7 +44,7 @@ Changes on @branch@ since @refversion@:
       <import plugin="org.eclipse.jsch.ui" version="1.1.100" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jsch.core"/>
       <import plugin="com.jcraft.jsch"/>
-      <import plugin="org.eclipse.jgit" version="0.6.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.jgit" version="0.6.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
