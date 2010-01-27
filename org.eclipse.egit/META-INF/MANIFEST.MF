@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Eclipse Git (Incubation)
+Bundle-Name: %plugin_name
 Bundle-SymbolicName: org.eclipse.egit
 Bundle-Version: 0.6.0.qualifier
-Bundle-Vendor: eclipse.org
+Bundle-Vendor: %provider_name
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
