@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAEX///yE\u003d",
+        "filename": "org.eclipse.egit-updatesite/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-01-27T22:15:58Z",
+      "side": 1,
+      "message": "Should we be this specific?  Why not just include the entire web directory?",
+      "revId": "819561ffb0121c7c2f4f152cc36b7b22bfdef479",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAEX///yI\u003d",
+        "filename": "org.eclipse.egit-updatesite/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-01-27T22:15:58Z",
+      "side": 1,
+      "message": "I\u0027d prefer the blank line before the new plugin, not after it where there\u0027s nothing to pad to.",
+      "revId": "819561ffb0121c7c2f4f152cc36b7b22bfdef479",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
