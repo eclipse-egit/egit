@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.egit"
-      label="Eclipse EGit Feature (Incubation)"
+      label="%featureName"
       version="0.6.0.qualifier"
-      provider-name="eclipse.org"
+      provider-name="%providerName"
       plugin="org.eclipse.egit">
 
-   <description url="http://www.jgit.org">
-An Eclipse Git Team provider in pure Java.
-
- !!!Uninstall any pre-0.6 plugins!!!
-@buildId@
-
-Changes on @branch@ since @refversion@:
-
-<![CDATA[@shortlog@]]>
+   <description url="http://www.eclipse.org/egit/">
+     %description
    </description>
 
    <copyright>
@@ -26,7 +19,8 @@ Changes on @branch@ since @refversion@:
    </license>
 
    <url>
-      <update label="Eclipse Update Site (experimental)" url="http://www.jgit.org/updates"/>
+      <update label="%updateSiteName" url="http://www.eclipse.org/egit/updates"/>
+      <discovery label="%updateSiteName" url="http://www.eclipse.org/egit/updates"/>
    </url>
 
    <requires>
