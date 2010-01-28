@@ -19,8 +19,8 @@
    </license>
 
    <url>
-      <update label="%updateSiteName" url="http://www.eclipse.org/egit/updates"/>
-      <discovery label="%updateSiteName" url="http://www.eclipse.org/egit/updates"/>
+      <update label="%updateSiteName" url="http://download.eclipse.org/egit/updates"/>
+      <discovery label="%updateSiteName" url="http://download.eclipse.org/egit/updates"/>
    </url>
 
    <requires>
