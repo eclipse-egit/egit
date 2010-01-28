@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAEX///xw\u003d",
+        "filename": "org.eclipse.egit-feature/feature.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-01-27T22:22:53Z",
+      "side": 1,
+      "message": "Just today I submitted a change to EGit that did at least some of this... you should rebase onto current master I think.",
+      "revId": "83eb7aa93cc7dc23fc208eb19e4d06ede4da9ff1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
