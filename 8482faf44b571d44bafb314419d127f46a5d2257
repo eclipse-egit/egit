@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAEn///+E\u003d",
+        "filename": ".eclipse_iplog",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-02-01T15:09:40Z",
+      "side": 1,
+      "message": "I\u0027m only reporting what the automated IP log tools are reporting.  E.g. if you look at the standard automatic log for EGit [1] you will see the same information presented, which doesn\u0027t include the \"unmodified binary\" use flag.  Because the IP team didn\u0027t tag this CQ properly.\n\n[1] http://www.eclipse.org/projects/ip_log.php?projectid\u003dtechnology.egit",
+      "parentUuid": "AAAAEn///+U\u003d",
+      "revId": "8482faf44b571d44bafb314419d127f46a5d2257",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
