@@ -1,0 +1,14 @@
+[project "technology.egit"]
+	name = EGit
+	license = Eclipse Public License v1.0
+
+[CQ "3493"]
+	description = JSch Version: 0.1.41 (PB CQ3040)
+	license = New BSD license
+	use = unmodified binary
+	state = approved
+
+[CQ "3589"]
+	description = Junit Version: 3.8.2 (ATO CQ299) (using Orbit CQ2206)
+	license = Common Public License 1.0
+	state = approved
