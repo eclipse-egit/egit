@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAAD3///ww\u003d",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2010-01-08T20:06:57Z",
+      "side": 1,
+      "message": "Do we really need an activator?",
+      "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAD3///wc\u003d",
         "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
         "patchSetId": 1
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "The activator is something I got from a tutorial on unit testing Eclipse plugins. Maybe that\u0027s obsolete now?",
       "parentUuid": "AAAAD3///ww\u003d",
+      "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX///zc\u003d",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2009-12-11T12:43:51Z",
+      "side": 1,
+      "message": "The same net.sf.swtbot vs o.e.swtbot:\n\ndiff --git a/org.eclipse.egit.ui.test/META-INF/MANIFEST.MF b/org.eclipse.egit.ui.test/META-INF/MANIFEST.MF\nindex e3554e4..2670d4c 100644\n--- a/org.eclipse.egit.ui.test/META-INF/MANIFEST.MF\n+++ b/org.eclipse.egit.ui.test/META-INF/MANIFEST.MF\n@@ -6,14 +6,15 @@ Bundle-Version: 0.6.0.qualifier\n Bundle-Activator: org.eclipse.egit.ui.test.Activator\n Require-Bundle: org.eclipse.core.runtime,\n  org.eclipse.egit.ui;bundle-version\u003d\"0.6.0\",\n- net.sf.swtbot.eclipse.finder;bundle-version\u003d\"2.0.0\",\n- net.sf.swtbot.eclipse.spy;bundle-version\u003d\"2.0.0\",\n- net.sf.swtbot.eclipse.ui;bundle-version\u003d\"2.0.0\",\n- net.sf.swtbot.finder;bundle-version\u003d\"2.0.0\",\n+ org.eclipse.swtbot.eclipse.finder;bundle-version\u003d\"2.0.0\",\n+ org.eclipse.swtbot.eclipse.spy;bundle-version\u003d\"2.0.0\",\n+ org.eclipse.swtbot.eclipse.ui;bundle-version\u003d\"2.0.0\",\n+ org.eclipse.swtbot.swt.finder;bundle-version\u003d\"2.0.0\",\n  org.eclipse.swt;bundle-version\u003d\"3.4.0\",\n  org.eclipse.ui;bundle-version\u003d\"3.4.0\",\n  org.eclipse.core.resources;bundle-version\u003d\"3.4.0\",\n  org.eclipse.jgit;bundle-version\u003d\"0.6.0\",\n- org.apache.log4j;bundle-version\u003d\"1.2.13\"\n+ org.apache.log4j;bundle-version\u003d\"1.2.13\",\n+ org.hamcrest;bundle-version\u003d\"1.1.0\"\n Bundle-ActivationPolicy: lazy\n Bundle-RequiredExecutionEnvironment: J2SE-1.5",
       "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -55,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAD3///w4\u003d",
+        "filename": "org.eclipse.egit.ui.test/org.eclipse.egit.ui--All tests.launch",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2010-01-08T20:06:57Z",
+      "side": 1,
+      "message": "IIRC there are some issues when JUnit3 and JUnit4 bundles available in the same time. See http://wiki.eclipse.org/Eclipse/Testing/JUnit4_Changes#Moving_to_JUnit4 for more info on migrating to JUnit4.",
+      "parentUuid": "AAAAD3///xc\u003d",
+      "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAD3///yE\u003d",
         "filename": "org.eclipse.egit.ui.test/org.eclipse.egit.ui--All tests.launch",
         "patchSetId": 1
@@ -66,6 +118,40 @@
       "writtenOn": "2010-01-08T15:00:54Z",
       "side": 1,
       "message": "according to SWTBot documentation [1] tests should not run in UI thread hence add:\n\n\u003cbooleanAttribute key\u003d\"run_in_ui_thread\" value\u003d\"false\"/\u003e\n\nIn order to make it work on German system I had to pass US keyboard layout as VM parameter, in order to play with timing parameters I added the other 2 parameters :\n\n\u003cstringAttribute key\u003d\"org.eclipse.jdt.launching.VM_ARGUMENTS\" value\u003d\"-Dorg.eclipse.swtbot.playback.poll.delay\u003d500 -Dorg.eclipse.swtbot.playback.delay\u003d0 -Dorg.eclipse.swtbot.keyboard.layout\u003dEN_US\"/\u003e\n\n[1] http://wiki.eclipse.org/SWTBot/FAQ#Why_do_tests_run_on_a_non-UI_thread.3F",
+      "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX///zg\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/sharing/GitCloneWizardTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2009-12-11T12:43:51Z",
+      "side": 1,
+      "message": "Why net.sf.swtbot was used and not org.eclipse.swtbot.*?\n\n--- INDEX:/org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/sharing/GitCloneWizardTest.java\n+++ WORKDIR:/org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/sharing/GitCloneWizardTest.java\n@@ -4,14 +4,13 @@\n import java.io.FileOutputStream;\n import java.io.IOException;\n \n-import net.sf.swtbot.eclipse.finder.SWTBotEclipseTestCase;\n-import net.sf.swtbot.wait.Conditions;\n-import net.sf.swtbot.widgets.SWTBotShell;\n-import net.sf.swtbot.widgets.SWTBotTree;\n-\n import org.eclipse.core.resources.ResourcesPlugin;\n import org.eclipse.core.runtime.Platform;\n import org.eclipse.jgit.lib.Repository;\n+import org.eclipse.swtbot.eclipse.finder.SWTBotEclipseTestCase;\n+import org.eclipse.swtbot.swt.finder.waits.Conditions;\n+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;\n+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;",
+      "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX///zk\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/sharing/GitCloneWizardTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2009-12-11T12:43:51Z",
+      "side": 1,
+      "message": "The same issue as in http://egit.eclipse.org/r/133:\n\norg.eclipse.egit.ui--All tests\norg.eclipse.egit.ui.internal.sharing.GitCloneWizardTest\nwarning(junit.framework.TestSuite$1)\njunit.framework.AssertionFailedError: No tests found in org.eclipse.egit.ui.internal.sharing.GitCloneWizardTest\n\tat junit.framework.Assert.fail(Assert.java:47)\n\tat junit.framework.TestSuite$1.runTest(TestSuite.java:90)\n\tat junit.framework.TestCase.runBare(TestCase.java:130)\n\tat junit.framework.TestResult$1.protect(TestResult.java:106)",
       "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
