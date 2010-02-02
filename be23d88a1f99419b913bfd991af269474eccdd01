@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAD3///s0\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/sharing/GitCloneWizardTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2010-01-10T20:43:32Z",
+      "side": 1,
+      "message": "Here\u0027s what\u0027s happening:\n\nAll operations in swtbot are async.\n\nWhich means that the clicks on the Next button (above) has still not changed the page. when this line is executed. As a result swtbot finds the table on the previous page. This table has 0 rows, as a result the uncheck does not happen and the assert after this loop fails.",
+      "revId": "be23d88a1f99419b913bfd991af269474eccdd01",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
