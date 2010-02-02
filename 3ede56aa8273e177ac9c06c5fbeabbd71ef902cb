@@ -2,6 +2,24 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAAD3///wc\u003d",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-01-08T21:59:19Z",
+      "side": 1,
+      "message": "The activator is something I got from a tutorial on unit testing Eclipse plugins. Maybe that\u0027s obsolete now?",
+      "parentUuid": "AAAAD3///ww\u003d",
+      "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAD3///yA\u003d",
         "filename": "org.eclipse.egit.ui.test/org.eclipse.egit.ui--All tests.launch",
         "patchSetId": 1
@@ -13,6 +31,24 @@
       "writtenOn": "2010-01-08T15:00:54Z",
       "side": 1,
       "message": "I had to switch to JUnit 4 and annotate classes otherwise SWTBot doesn\u0027t find the test cases (probably because JUnit 3 only find tests which directly inherit from TestCase)",
+      "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAD3///xc\u003d",
+        "filename": "org.eclipse.egit.ui.test/org.eclipse.egit.ui--All tests.launch",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-01-08T15:59:44Z",
+      "side": 1,
+      "message": "Probably sine you switched to another swtbot",
+      "parentUuid": "AAAAD3///yA\u003d",
       "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +157,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAD3///v4\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/sharing/GitCloneWizardTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-01-09T23:01:59Z",
+      "side": 1,
+      "message": "A difference between SWTBot or Eclipse versions",
+      "parentUuid": "AAAAD3///wU\u003d",
+      "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAD3///wQ\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/sharing/GitCloneWizardTest.java",
         "patchSetId": 1
@@ -138,6 +192,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAD3///vw\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/sharing/GitCloneWizardTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-01-09T23:01:59Z",
+      "side": 1,
+      "message": "The behaviour here is also to switch to the branch page, which is disabled until the error occurs after about five minutes (something I\u0027d like to shorten somhoew).",
+      "parentUuid": "AAAAD3///wQ\u003d",
+      "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAD3///wM\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/sharing/GitCloneWizardTest.java",
         "patchSetId": 1
@@ -149,6 +221,24 @@
       "writtenOn": "2010-01-09T00:18:59Z",
       "side": 1,
       "message": "EGit behaves differently than this test expects, when timeout is reached it doesn\u0027t display the error on the wizard page but raises an extra error popup saying\n\nTransport error  Reason: \ngit://www.example.com/EGIT: connection timeout: connect\n\nhence this assert fails consistently.",
+      "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAD3///v0\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/sharing/GitCloneWizardTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-01-09T23:01:59Z",
+      "side": 1,
+      "message": "No popup here. I wonder what is going on.\nThis timeout takes a long time on my machine.",
+      "parentUuid": "AAAAD3///wM\u003d",
       "revId": "3ede56aa8273e177ac9c06c5fbeabbd71ef902cb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
