@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAE3///8g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-02-03T16:37:42Z",
+      "side": 1,
+      "message": "Always doing a content check is horribly expensive.  Normally a Git application will check timestamps between the indexEntry and resourceEntry, and then fall back into content check only if a race condition was detected.  The logic is roughly:\n\n  IF indexEntry.time !\u003d resourceEntry.time:\n    assume dirty / modified\n\n  ELSE:\n    IF indexEntry.time !\u003d indexFile.time:\n        assume clean\n\n    ELSE:\n       IF indexContent \u003d\u003d resourceContent:\n         set indexFile.time \u003d resourceEntry.time\n         save indexFile\n\n       ELSE:\n         set indexFile.time !\u003d resourceEntry.time\n         save indexFile\n\nThis is the \"racily clean\" or \"racy git\" problem in Git.  For a bit more details, try looking at DirCacheEntry at the mightBeRacilyClean and smudgeRacilyClean methods.  The decorator code is basically doing the work of \"git status\" in command line tools, it should be taking advantage of the same strategy about checking file modification times, falling back into content checks when there is a race condition, and correcting the cached index timestamp after a content check so we don\u0027t have to do it again during a future request.\n\nBasically that\u0027s what the TODO you deleted was trying to talk about.",
+      "revId": "4c037edee095626ec02a3e1a7cb8cb3fc5871f78",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
