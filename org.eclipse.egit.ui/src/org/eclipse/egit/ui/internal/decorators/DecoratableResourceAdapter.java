@@ -30,6 +30,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.team.core.Team;
+import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
@@ -38,6 +39,7 @@ import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
@@ -160,12 +162,8 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 			dirty = false;
 			assumeValid = true;
 		} else {
-			if (!timestampMatches(indexEntry, resourceEntry))
+			if (!contentMatches(indexEntry, resourceEntry))
 				dirty = true;
-
-			// TODO: Consider doing a content check here, to rule out false
-			// positives, as we might get mismatch between timestamps, even
-			// if the content is the same.
 		}
 	}
 
@@ -345,25 +343,38 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		return treeWalk;
 	}
 
-	private static boolean timestampMatches(DirCacheEntry indexEntry,
+	private boolean contentMatches(DirCacheEntry indexEntry,
 			ResourceEntry resourceEntry) {
-		long tIndex = indexEntry.getLastModified();
-		long tWorkspaceResource = resourceEntry.getLastModified();
+		try {
+			// read content from the repository
+			ObjectLoader obj = repository.openBlob(indexEntry.getObjectId());
+			RawText repositoryContent = new RawText(obj.getBytes());
 
+			// read content from resource
+			File file = resourceEntry.getResource().getLocation().toFile();
+			RawText resourceContent = new RawText(file);
 
-		// C-Git under Windows stores timestamps with 1-seconds resolution,
-		// so we need to check to see if this is the case here, and possibly
-		// fix the timestamp of the resource to match the resolution of the
-		// index.
-		// It also appears the timestamp in Java on Linux may also be rounded
-		// in which case the index timestamp may have subseconds, but not
-		// the timestamp from the workspace resource.
-		// If either timestamp looks rounded we skip the subscond part.
-		if (tIndex % 1000 == 0 || tWorkspaceResource % 1000 == 0) {
-			return tIndex / 1000 == tWorkspaceResource / 1000;
-		} else {
-			return tIndex == tWorkspaceResource;
+			if (resourceContent.size() != repositoryContent.size()) {
+				return false;
+			} else if (!rawTextMatches(resourceContent, repositoryContent)) {
+				return false;
+			}
+
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
+
+		return true;
+	}
+
+	private boolean rawTextMatches(RawText resourceContent,
+			RawText repositoryContent) {
+		for (int i = 0; i < repositoryContent.size(); i++) {
+			if (!repositoryContent.equals(i, resourceContent, i)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private static boolean isIgnored(IResource resource) {
