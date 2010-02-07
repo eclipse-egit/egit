@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAB3////U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2009-12-17T22:17:11Z",
+      "side": 1,
+      "message": "I think this warning could be more precisely point to the reason why commit is not possible:\n\n\"No changed items were selected and no commit exists hence neither commit nor amend are possible.\"",
+      "revId": "f7c963a68df9013a2f91161550a211feda327ea0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
