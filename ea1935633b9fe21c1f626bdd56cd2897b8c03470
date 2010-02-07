@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAE3///6I\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2010-02-05T16:51:57Z",
+      "side": 1,
+      "message": "I\u0027d recommend using perspectiveByLabel() instead to make tests more readable.",
+      "revId": "ea1935633b9fe21c1f626bdd56cd2897b8c03470",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
