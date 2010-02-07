@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2010 Chris Aniszczyk and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+         Chris Aniszczyk - initial API and implementation
+ -->
+
+<project name="org.eclipse.egit.doc" default="all">
+    <description>
+            Generate Eclipse help content for the EGit user guide
+    </description>
+
+	<property name="help.doc.url.base" value="http://wiki.eclipse.org"/>
+	<property name="wiki.url.base" value="${help.doc.url.base}/EGit"/>
+	<property name="imageFolder" value="images"/>
+
+	<path id="wikitext.tasks.classpath">
+		<fileset dir="lib">
+			<include name="org.eclipse.mylyn.wikitext.*core*.jar"/>
+		</fileset>
+	</path>
+
+	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/internal/wikitext/mediawiki/core/tasks/tasks.properties"/>
+	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/wikitext/core/util/anttask/tasks.properties"/>
+
+	<target name="init">
+		<mkdir dir="tmp"/>
+	</target>
+
+	<target name="clean" depends="init">
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="tmp"/>
+		</delete>
+	</target>
+
+    <target name="all" depends="init" description="Generate Eclipse help content for the EGit user guide">
+		<eclipse-wiki-to-help
+			help.doc.filenamenoextension="EGit User Guide"
+			help.doc.url.base="${help.doc.url.base}"
+			help.doc.pageName="EGit/User_Guide"
+			help.imagefolder="${imageFolder}"
+			targetfolder="userguide"
+			wiki.url.base="${help.doc.url.base}/EGit"/>
+		<replaceregexp file="userguide/EGit User Guide-toc.xml" match="(&lt;topic.*?href=&quot;userguide/Task-Repository-Connectors.html.*?&gt;(\s*&lt;topic\s*href=&quot;.*?&quot;\s*label=&quot;.*&quot;&gt;\s*?&lt;/topic&gt;)+)(\s*)(&lt;/topic&gt;)"
+					replace="\1\3&lt;anchor id=&quot;additions-repository-connectors&quot;/&gt;\3\4"
+					flags="s"/>
+    </target>
+
+	<macrodef name="eclipse-wiki-to-help">
+		<attribute name="help.doc.url.base"/>
+		<attribute name="wiki.url.base"/>
+		<attribute name="help.doc.pageName"/>
+		<attribute name="help.doc.filenameNoExtension"/>
+		<attribute name="help.imageFolder"/>
+		<attribute name="targetFolder"/>
+		<sequential>
+			<get dest="tmp/@{help.doc.filenameNoExtension}.mediawiki" src="@{help.doc.url.base}/index.php?title=@{help.doc.pageName}&amp;action=raw"/>
+			<echo append="true" file="tmp/@{help.doc.filenameNoExtension}.mediawiki">
+
+= Updating This Document =
+
+This document is maintained in a collaborative wiki.  If you wish to update or modify this document please visit
+@{help.doc.url.base}/@{help.doc.pageName}
+			</echo>
+
+			<copy todir="tmp">
+				<fileset dir="images"/>
+			</copy>
+			<mediawiki-fetch-images dest="tmp" url="@{help.doc.url.base}" pageName="@{help.doc.pageName}"/>
+
+			<wikitext-to-eclipse-help markupLanguage="org.eclipse.mylyn.wikitext.mediawiki.core.MediaWikiLanguage"
+				multipleOutputFiles="true"
+				navigationImages="true"
+				helpPrefix="@{targetFolder}"
+				internallinkpattern="@{wiki.url.base}/{0}"
+				validate="true"
+				failonvalidationerror="true"
+				prependImagePrefix="${imageFolder}"
+				formatoutput="true"
+				defaultAbsoluteLinkTarget="mylyn_external">
+				<fileset dir="tmp" includes="**/*.mediawiki"/>
+				<stylesheet url="book.css"/>
+			</wikitext-to-eclipse-help>
+
+			<mkdir dir="@{targetFolder}/${imageFolder}"/>
+			<copy todir="@{targetFolder}/${imageFolder}" overwrite="true">
+				<fileset dir="tmp">
+					<include name="*.gif"/>
+					<include name="*.png"/>
+				</fileset>
+			</copy>
+			<copy todir="@{targetFolder}" overwrite="true">
+				<fileset dir="tmp">
+					<include name="*.html"/>
+					<include name="*toc.xml"/>
+					<exclude name="help.doc.html"/>
+				</fileset>
+			</copy>
+			<antcall target="test"/>
+		</sequential>
+	</macrodef>
+
+	<target name="test" depends="init" description="verify that all of the HTML files are well-formed XML">
+		<echo level="info">
+Validating help content XML and HTML files: The Eclipse help system expects well-formed XML
+
+If validation fails it is because either:
+
+* the userguide source code is poorly formed, or
+* the WikiText MediaWiki parser has a bug
+
+Problems with userguide source are usually caused by improper use of HTML markup in the MediaWiki source,
+or inadvertently starting a line with a space character (in MediaWiki this starts a preformatted block)
+		</echo>
+
+		<!--
+		Don't bother with DTD validation: we only care if the files are well-formed.
+		We therefore provide an empty DTD
+		-->
+		<echo file="tmp/__empty.dtd" message=""/>
+		<xmlvalidate lenient="true">
+			<fileset dir="userguide">
+				<include name="**/*.xml"/>
+			</fileset>
+			<fileset dir="userguide">
+				<include name="**/*.html"/>
+			</fileset>
+			<dtd publicid="-//W3C//DTD XHTML 1.0 Transitional//EN" location="${basedir}/tmp/__empty.dtd"/>
+		</xmlvalidate>
+	</target>
+</project>

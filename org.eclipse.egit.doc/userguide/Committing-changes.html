@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit User Guide - Committing changes</title>
+		<link type="text/css" rel="stylesheet" href="book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">Committing changes</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Inspecting-the-state-of-the-Repository.html" title="Inspecting the state of the Repository">
+						<img alt="Previous" border="0" src="images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Updating-This-Document.html" title="Updating This Document">
+						<img alt="Next" border="0" src="images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Inspecting the state of the Repository</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
+			</tr>
+		</table><hr/>
+		<h1 id="Committing_changes">Committing changes</h1>
+		<p>Modifications to a project which is version-controlled with Git are persistently recorded in the history through commits. In Git you modify your project until you have reached a state you are satisfied with and then you commit all these changes together to the repository in one single commit.</p>
+		<h2 id="Modifying_the_content">Modifying the content</h2>
+		<p>If you have a project which is already shared with Git then doing the actual modifications is easy: just modify or delete files either within Eclipse or even directly on the file-system. There is no need to "check-out" files or to tell Git in advance about these operations. Only when you add new files you should be cautious: new files which should be version-controlled have to be explicitly announced to git through the files context-menu.</p>
+		<p>
+			<img border="0" src="images/EGit_AddFile.png"/>
+		</p>
+		<p>You can see for example in the Package Explorer View which files have been added (file icon marked with "+") and which files have been modified (file marked with ">" in front of the filename). Here is an example of one added and one modified file in the Package Explorer:</p>
+		<p>
+			<img border="0" src="images/EGit_AddedAndModifiedFiles.png"/>
+		</p>
+		<h2 id="Committing">Committing</h2>
+		<p>When you are satisfied with the state of the project you may commit your changes. To do that select "Team -> Commit..." from the context menu of a project or a file in the project. </p>
+		<p>
+			<img border="0" src="images/EGit_Commit.png"/>
+		</p>
+		<p>It does not play a role whether you select this action on a certain file or on the whole project. The reason for this is that Git tracks all changes made to the whole repository capturing the modifications of each and every version-controlled file in that repository not regarding if these files reside in the same Eclipse project or not. </p>
+		<p>Once you have triggered the commit the following dialog will pop-up.</p>
+		<p>
+			<img border="0" src="images/EGit_CommitDialog.png"/>
+		</p>
+		<p>In this dialog you specifiy the commit message describing the change.</p>
+		<p>Additionally this dialog controls which of the changes will be included in the commit. If you clear the checkbox in front of a file, the changes to this file will not be included in the commit. The local file in your eclipse workspace will still contain the modifications giving you the chance to commit these changes with a subsequent commit.  This feature is often used to separate modifications done to a set of files into different commits.  </p>
+		<p>One example: Imagine since the last commit you have fixed a bug in A.java and you have added a new method to B.java. These two modifications are logically independent from each other hence you may want to commit them in two independant commits. In this case you initate the commit, deselect B.java from the set of committed files and specify a commit message describing only the bugfix in A.java. After a succesfull first commit you just call commit again and the upcoming dialog will present you the remaining changes in B.java. Now you specify a commit message describing the addition of the method and finish the second commit.</p>
+		<p>Be aware that new files you added to the project which have not been explicitly added to version control (see "Modifying the content") will not be listed in the commit dialog and will not be part of the commit. If you are not sure whether you have created such files you may select "Team -> Add to Version Control" on an Eclipse project to add new files in the project to version control.</p>
+		<h3 id="Ammending_Commits">Ammending Commits</h3>
+		<p>When you commit you may specify that the current commit should "amend" the previous commit in the current branch. Your commit will then replace the previous commit. This feature is often use to correct wrong commits before they are published to other repositories.</p>
+		<p>Example: Imagine you have committed a change to a file containing a typo </p>
+		<p>
+			<img border="0" src="images/EGit_Typo.png"/>
+		</p>
+		<p>After you committed you detect the typo. In order to correct this typo and the corresponding commit you just fix the typo in the source file</p>
+		<p>
+			<img border="0" src="images/EGit_Corrected.png"/>
+		</p>
+		<p>Afterwards you trigger the commit and select the option "Amend previous commit". </p>
+		<p>
+			<img border="0" src="images/EGit_AmendBringsOldCommitMessage.png"/>
+		</p>
+		<p>The commit message of your previous commit (the one which you want to replace) is filled into the "Commit Message" field. This gives you the chance not only to correct errors in the content of the version-controlled files but to also correct errors (e.g. typos) in the commit message describing your change.</p>
+		<p>As an alternative to amending you could just commit the corrected version as a subsequent commit. But the first commit containing the typo is of no use to anybody else and in order not to clutter the history of your project with unneeded commits you may decide to use the amend feature.</p>
+		<p>Be aware that amending commits which are already published to other repositories may cause trouble. Once you have pushed a commit to a remote repository or your local repository was cloned by somebody else you should be very careful whith amending commits. In this case publishing a second commit which corrects the first one is probably a better solution.</p>
+		<h3 id="Signing_off_commits">Signing off commits</h3>
+		<p>Git gives you the chance to "sign off" commits. This adds a "Signed-off-by: &lt;Your Name and Email-Adress>" footer to the commit message.
+			The purpose of this signed-off-by information is not defined by Git but by the team using Git. Some teams use this information to record who has reviewed a certain commit. Other teams use the signed-off information to record that a commiter agreed to certain standards/rules. E.g. you may have to sign-off your own commits to state that you have read and understood the license-specific rules of your project.</p><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Inspecting-the-state-of-the-Repository.html" title="Inspecting the state of the Repository">
+						<img alt="Previous" border="0" src="images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center">
+					<a href="EGit User Guide.html" title="EGit User Guide">
+						<img alt="EGit User Guide" border="0" src="images/home.gif"/>
+					</a>
+				</td>
+				<td style="width: 20%" align="right">
+					<a href="Updating-This-Document.html" title="Updating This Document">
+						<img alt="Next" border="0" src="images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Inspecting the state of the Repository</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
+			</tr>
+		</table>
+	</body>
+</html>
