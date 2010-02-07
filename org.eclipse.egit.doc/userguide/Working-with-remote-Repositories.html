@@ -1,0 +1,240 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit User Guide - Working with remote Repositories</title>
+		<link type="text/css" rel="stylesheet" href="book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">Working with remote Repositories</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Creating-a-new-empty-Git-Repository.html" title="Creating a new empty Git Repository">
+						<img alt="Previous" border="0" src="images/images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Inspecting-the-state-of-the-Repository.html" title="Inspecting the state of the Repository">
+						<img alt="Next" border="0" src="images/images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Creating a new empty Git Repository</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Inspecting the state of the Repository</td>
+			</tr>
+		</table><hr/>
+		<h1 id="Working_with_remote_Repositories">Working with remote Repositories</h1>
+		<h2 id="Cloning_remote_Repositories">Cloning remote Repositories</h2>
+		<p>Using the Git import wizard you can clone remote repositories using different transport protocols.
+			Additionally you may import existing Eclipse projects into your workspace and share the projects with the Git team provider. </p>
+		<p>Start the import wizard by navigating to File -> Import... and choose "Git Repository".</p>
+		<p>
+			<img border="0" src="images/01-CloneExistingRepository.png"/>
+		</p>
+		<h3 id="Repository_Selection">Repository Selection</h3>
+		<p>On the first page of the wizard enter the location of the remote repository:</p>
+		<p>
+			<img border="0" src="images/02-GitProtocol.png"/>
+		</p>
+		<ul>
+			<li>
+				<b>URI</b>  - The complete URI of the remote repository or the path on the file system. This field is automatically synchronized with the other fields.
+			</li>
+			<li>
+				<b>Host</b> -  The name of the remote host or empty if cloning from the file system.
+			</li>
+			<li>
+				<b>Repository Path</b> - Path to the remote repository or on the file system.
+			</li>
+			<li>
+				<b>Protocol</b> - One of the protocols described below.
+			</li>
+			<li>
+				<b>Port</b> - Port number.
+			</li>
+			<li>
+				<b>User</b> - The user name used for authentication.
+			</li>
+			<li>
+				<b>Password</b> The password used for authentication.
+			</li>
+		</ul>
+		<p>The following protocols are supported:</p>
+		<ul>
+			<li>
+				<b>git</b> - The most efficient built-in git protocol (default port 9418). This protocol doesn't provide authentication. Typically used for anonymous read access to the repository.
+			</li>
+			<li>
+				<b>git+ssh</b> - Git over 
+				<a href="http://tools.ietf.org/html/rfc4251" target="mylyn_external">secure shell (SSH)</a> protocol. Typically used for authenticated write access to the repository.
+			</li>
+			<li>
+				<b>sftp</b> - 
+				<a href="http://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol" target="mylyn_external">SSH File Transfer Protocol</a>
+			</li>
+			<li>
+				<b>http</b> - 
+				<a href="http://tools.ietf.org/html/rfc2616" target="mylyn_external">Hypertext Transfer Protocol</a> can be tunneled through firewalls.
+			</li>
+			<li>
+				<b>https</b> - 
+				<a href="http://tools.ietf.org/html/rfc2818" target="mylyn_external">Hypertext Transfer Protocol Secure</a> can be tunneled through firewalls.
+			</li>
+			<li>
+				<b>ftp</b>  - 
+				<a href="http://tools.ietf.org/html/rfc959" target="mylyn_external">File Transfer Protocol</a>
+			</li>
+			<li>
+				<b>file</b> - File system access to the repository.
+			</li>
+		</ul>
+		<h3 id="Branch_selection">Branch selection</h3>
+		<p>On the next page choose which branch should be cloned from the remote repository:</p>
+		<p>
+			<img border="0" src="images/05-branches.png"/>
+		</p>
+		<h3 id="Local_Destination">Local Destination</h3>
+		<p>On the next page define where you want to store the repository on your file system and define some initial settings.</p>
+		<p>
+			<img border="0" src="images/06-LocalStorage.png"/>
+		</p>
+		<ul>
+			<li>
+				<b>Directory</b> - The directory which will contain the Git repository. It will be created by the wizard if it does not yet exist.
+			</li>
+			<li>
+				<b>Initial branch</b> - Choose here which local branch will be created and checked out.
+			</li>
+			<li>
+				<b>Remote name</b> - Define a name for the remote repository. The default is "origin".
+			</li>
+			<li>
+				<b>Import projects after clone</b> - If checked, the repository is searched for eclipse projects. In this case the finish button is disabled and the wizard continues with the project selection. If not checked, the finish button is enabled.
+			</li>
+		</ul>
+		<p>Note that if you press "Next" on this page the repository will immediately be cloned by the wizard. This is necessary to find the eclipse projects. If you end the wizard with the "Cancel" button later on you will be asked if the clone should be deleted.</p>
+		<h3 id="Import_Projects">Import Projects</h3>
+		<p>On the next page the Eclipse projects found in the cloned repository are presented.</p>
+		<p>
+			<img border="0" src="images/07-ImportProjects.png"/>
+		</p>
+		<ul>
+			<li>
+				<b>Enable Git Team operations on imported projects</b> - If this checkbox is selected the imported project are shared with the EGit Team provider. If it is not checked, the Team operations can still be enabled later on by choosing the project in eclipse and selecting Team -> Share Project...
+			</li>
+		</ul>
+		<h2 id="Pushing_a_Local_Repository_to_GitHub">Pushing a Local Repository to GitHub</h2>
+		<h3 id="Create_Local_Repository">Create Local Repository</h3>
+		<ul>
+			<li>follow 
+				<a href="http://wiki.eclipse.org/EGit/User_Guide/Getting_Started" title="EGit/User Guide/Getting Started" target="mylyn_external">EGit/User Guide/Getting Started</a> to create a new local repository (with your content instead of the demo project)
+			</li>
+		</ul>
+		<h3 id="Create_Repository_at_GitHub">Create Repository at GitHub</h3>
+		<ul>
+			<li>create a new repository at GitHub</li>
+		</ul>
+		<p>
+			<img border="0" src="images/egit-0.6-001-CreateRepoAtGithub.png"/>
+		</p>
+		<ul>
+			<li>you get a fresh clone URL for this new repository</li>
+		</ul>
+		<p>
+			<img border="0" src="images/egit-0.6-002-CloneUrl.png"/>
+		</p>
+		<h3 id="Eclipse_SSH_Configuration">Eclipse SSH Configuration</h3>
+		<ul>
+			<li>open "Window" > "Preferences" and ensure that your SSH2 home is configured correctly (usually this is ~/.ssh) and contains your SSH2 keys (upload your public key to your GitHub account settings)</li>
+		</ul>
+		<p>
+			<img border="0" src="images/egit-0.6-003-SshPreferences.png"/>
+		</p>
+		<ul>
+			<li>if you don't have SSH keys yet you may generate them on the second tab "Key Management" of this dialog, use a good pass phrase to protect your private key, for more details see 
+				<a href="http://help.github.com/working-with-key-passphrases/" target="mylyn_external">"working with key passphrases"</a>
+			</li>
+		</ul>
+		<h3 id="Push_Upstream">Push Upstream</h3>
+		<ul>
+			<li>Select your new Eclipse project and click "Team" > "Push To" and enter "Your GitHub Clone URL" and your GitHub password(with the free github accoutns do not enter a password but leave blank), leave the user as "git"</li>
+		</ul>
+		<p>
+			<img border="0" src="images/egit-0.6-004-PushDialog.png"/>
+		</p>
+		<ul>
+			<li>click "Next" and on first connection accept GitHub's host key</li>
+		</ul>
+		<p>
+			<img border="0" src="images/egit-0.6-005-AcceptHostKey.png"/>
+		</p>
+		<ul>
+			<li>enter your SSH key's passphrase</li>
+		</ul>
+		<p>
+			<img border="0" src="images/egit-0.6-006-PassPhrase.png"/>
+		</p>
+		<ul>
+			<li>enter as source ref: refs/heads/master and as target ref: refs/heads/master and click button "Add all branches spec"</li>
+		</ul>
+		<p>
+			<img border="0" src="images/egit-0.6-007-PushRefSpecifications.png"/>
+		</p>
+		<ul>
+			<li>click "Next" and click "Finish" to confirm the push</li>
+		</ul>
+		<p>
+			<img border="0" src="images/egit-0.6-008-PushConfirmation.png"/>
+		</p>
+		<ul>
+			<li>the next dialog shows the result of the push operation</li>
+		</ul>
+		<p>
+			<img border="0" src="images/egit-0.6-009-PushResult.png"/>
+		</p>
+		<ul>
+			<li>point your browser at your GitHub repository to see that your new repository content has arrived</li>
+		</ul>
+		<p>
+			<img border="0" src="images/egit-0.6-010-PushResultOnGithub.png"/>
+		</p>
+		<h2 id="Pulling_.28merge_or_rebase.29_new_changes_from_upstream">Pulling (merge or rebase) new changes from upstream</h2>
+		<p>This is not yet available.  Available alternatives currently include:</p>
+		<ul>
+			<li>run "git pull" from outside eclipse (but 
+				<a href="http://marc.info/?l=git&amp;m=123924844219075" target="mylyn_external">beware on Windows</a>)
+			</li>
+			<li>if you did no local change or want to discard your local changes, use "Team/Reset To..."</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Creating-a-new-empty-Git-Repository.html" title="Creating a new empty Git Repository">
+						<img alt="Previous" border="0" src="images/images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center">
+					<a href="EGit User Guide.html" title="EGit User Guide">
+						<img alt="EGit User Guide" border="0" src="images/images/home.gif"/>
+					</a>
+				</td>
+				<td style="width: 20%" align="right">
+					<a href="Inspecting-the-state-of-the-Repository.html" title="Inspecting the state of the Repository">
+						<img alt="Next" border="0" src="images/images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Creating a new empty Git Repository</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Inspecting the state of the Repository</td>
+			</tr>
+		</table>
+	</body>
+</html>
