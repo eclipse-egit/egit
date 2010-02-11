@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAE3///zI\u003d",
+        "filename": "org.eclipse.egit.core.test/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-02-11T15:17:22Z",
+      "side": 1,
+      "message": "Hmm.  Probably doesn\u0027t need to be .2.  But its mostly pointless I think.  When we merge SWTBot based tests we have to change this line anyway to [4.0.0,5.0.0) I guess.  Right now our CQ 3589 declared 3.8.2 reuse, so that is what I was sticking with.",
+      "parentUuid": "AAAAE3///zY\u003d",
+      "revId": "c9a04d72bbba74529a16b5e84c0122431113d116",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAE3///zM\u003d",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-02-11T15:17:22Z",
+      "side": 1,
+      "message": "Yup.  Its a bug in Gerrit Code Review.  I\u0027ve logged it as http://code.google.com/p/gerrit/issues/detail?id\u003d445",
+      "parentUuid": "AAAAE3///zU\u003d",
+      "revId": "c9a04d72bbba74529a16b5e84c0122431113d116",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
