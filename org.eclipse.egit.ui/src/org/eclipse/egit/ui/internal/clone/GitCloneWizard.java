@@ -140,6 +140,7 @@ public class GitCloneWizard extends Wizard implements IImportWizard {
 
 		final CloneOperation op = new CloneOperation(uri, allSelected,
 				selectedBranches, workdir, branch, remoteName);
+		importProject.setGitDir(op.getGitDir());
 		if (background) {
 			final Job job = new Job(NLS.bind(UIText.GitCloneWizard_jobName, uri
 					.toString())) {

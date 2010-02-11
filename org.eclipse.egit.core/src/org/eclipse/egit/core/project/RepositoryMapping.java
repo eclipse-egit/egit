@@ -253,4 +253,11 @@ public class RepositoryMapping {
 	public String getGitDir() {
 		return gitdirPath;
 	}
+
+	/**
+	 * @return The GIT DIR absolute path
+	 */
+	public IPath getGitDirAbsolutePath() {
+		return container.getLocation().append(getGitDirPath());
+	}
 }
