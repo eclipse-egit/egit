@@ -7,7 +7,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.core.op;
+package org.eclipse.egit.core.test.op;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -53,7 +53,7 @@ public class T0001_ConnectProviderOperationTest extends GitTestCase {
 		repository.create();
 		repository.close();
 		ConnectProviderOperation operation = new ConnectProviderOperation(
-				project.getProject(), new File("..", Constants.DOT_GIT));
+				project.getProject(), gitDir);
 		operation.run(null);
 
 		assertTrue(RepositoryProvider.isShared(project.getProject()));
@@ -95,7 +95,7 @@ public class T0001_ConnectProviderOperationTest extends GitTestCase {
 		assertEquals(RefUpdate.Result.NEW, lck.forceUpdate());
 
 		ConnectProviderOperation operation = new ConnectProviderOperation(
-				project.getProject(), new File("..", Constants.DOT_GIT));
+				project.getProject(), gitDir);
 		operation.run(null);
 
 		final boolean f[] = new boolean[1];
