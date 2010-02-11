@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAD3///8w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-01-06T12:02:16Z",
+      "side": 1,
+      "message": "Doesn\u0027t this just pick the first one, all the time? What if it\u0027s null?",
+      "revId": "7a722031c79ec2558c3766e092d894f803f37fe5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
