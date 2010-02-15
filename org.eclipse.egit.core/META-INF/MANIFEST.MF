@@ -6,11 +6,11 @@ Bundle-Version: 0.6.0.qualifier
 Bundle-Activator: org.eclipse.egit.core.Activator
 Bundle-Vendor: %provider_name
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.core.runtime;version="[3.4.0,4.0.0)",
- org.eclipse.team.core;version="[3.4.0,4.0.0)",
- org.eclipse.core.resources;version="[3.4.0,4.0.0)",
- org.eclipse.core.filesystem;version="[3.4.0,4.0.0)",
- org.eclipse.ui;version="[3.4.0,4.0.0)"
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
+ org.eclipse.team.core;bundle-version="[3.4.0,4.0.0)",
+ org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
+ org.eclipse.core.filesystem;bundle-version="[1.2.0,2.0.0)",
+ org.eclipse.ui;bundle-version="[3.4.0,4.0.0)"
 Export-Package: org.eclipse.egit.core;version="0.6.0",
  org.eclipse.egit.core.internal.storage;version="0.6.0";x-friends:="org.eclipse.egit.ui",
  org.eclipse.egit.core.internal.util;version="0.6.0";x-friends:="org.eclipse.egit.ui",
