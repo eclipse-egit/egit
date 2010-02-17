@@ -51,7 +51,7 @@ public class ConnectProviderOperation implements IWorkspaceRunnable {
 	 *            the project to connect to the Git team provider.
 	 */
 	public ConnectProviderOperation(final IProject proj) {
-		this(proj, proj.getLocation().append("/").append(Constants.DOT_GIT).toFile());
+		this(proj, proj.getLocation().append(Constants.DOT_GIT).toFile());
 	}
 
 	/**
