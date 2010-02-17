@@ -11,7 +11,6 @@ package org.eclipse.egit.ui.internal.sharing;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,6 +32,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -48,7 +48,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.jgit.lib.Constants;
 
 /**
  * Wizard page for connecting projects to Git repositories.
@@ -268,9 +267,8 @@ class ExistingOrNewPage extends WizardPage {
 	}
 
 	/**
-	 * @return map between project and repository root directory (converted to a
-	 *         path relative to project's root) for all projects selected by
-	 *         user
+	 * @return map between project and repository root directory (converted to an
+	 *         absolute path) for all projects selected by user
 	 */
 	public Map<IProject, File> getProjects() {
 		final TreeItem[] selection = tree.getSelection();
@@ -282,13 +280,12 @@ class ExistingOrNewPage extends WizardPage {
 			}
 
 			final IProject project = (IProject) treeItem.getData();
-			final File selectedRepo = new File(treeItem.getText(2));
-			File localPathToRepo = selectedRepo;
-			if (selectedRepo.isAbsolute()) {
-				final URI projectLocation = project.getLocationURI();
-				localPathToRepo = new File(projectLocation.relativize(selectedRepo.toURI()).getPath());
+			final IPath selectedRepo = Path.fromOSString(treeItem.getText(2));
+			IPath localPathToRepo = selectedRepo;
+			if (!selectedRepo.isAbsolute()) {
+				localPathToRepo = project.getLocation().append("/").append(selectedRepo); //$NON-NLS-1$
 			}
-			ret.put(project, localPathToRepo);
+			ret.put(project, localPathToRepo.toFile());
 		}
 		return ret;
 	}
