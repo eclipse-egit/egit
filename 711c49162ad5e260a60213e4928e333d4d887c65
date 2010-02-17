@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAABX///6Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2009-12-03T16:27:57Z",
+      "side": 1,
+      "message": "Unsafe cast: The return value could be a ResourceList!",
+      "revId": "711c49162ad5e260a60213e4928e333d4d887c65",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX///6U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2009-12-03T16:27:57Z",
+      "side": 1,
+      "message": "This leads to a ClassCastException if resource is a Folder or a Project. Better check this before; in this case we do not show a diff of course.",
+      "revId": "711c49162ad5e260a60213e4928e333d4d887c65",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
