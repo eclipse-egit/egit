@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAE3///oU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/ExistingOrNewPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-02-19T10:05:08Z",
+      "side": 1,
+      "message": "I think append(\"/\") has no effect here.\nproject.getLocation().append(selectedRepo) should work.",
+      "revId": "48ba60b830a8b73a30ed08a02900f4c25dab4d63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
