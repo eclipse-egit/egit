@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.core.test;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,6 +26,8 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.junit.Before;
+import org.junit.Test;
 
 public class T0003_AdaptableFileTreeIteratorTest extends GitTestCase {
 
@@ -33,7 +37,8 @@ public class T0003_AdaptableFileTreeIteratorTest extends GitTestCase {
 
 	private File file;
 
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		super.setUp();
 
 		repository = new Repository(gitDir);
@@ -50,6 +55,7 @@ public class T0003_AdaptableFileTreeIteratorTest extends GitTestCase {
 		operation.run(null);
 	}
 
+	@Test
 	public void testFileTreeToContainerAdaptation() throws IOException {
 		final IWorkspaceRoot root = project.getProject().getWorkspace()
 				.getRoot();
