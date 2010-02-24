@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAE3///pA\u003d",
+        "filename": "org.eclipse.egit.core.test/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-02-19T02:14:51Z",
+      "side": 1,
+      "message": "Do we want to explicitly refer to bundle name instead of package name here? Do we want to put 4.3.1 instead of 4.3?  Do we need to change any pom.xml as well?",
+      "revId": "95b050584b4294655d6b61702bd3dfd9c7f86740",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAE3///o8\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/T0003_AdaptableFileTreeIteratorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-02-19T02:14:51Z",
+      "side": 1,
+      "message": "We changed the name before; but not here. Should we have changed the previous?",
+      "revId": "95b050584b4294655d6b61702bd3dfd9c7f86740",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAE3///o4\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/T0001_ConnectProviderOperationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-02-19T02:14:51Z",
+      "side": 1,
+      "message": "This change doesn\u0027t appear to be related to the JUnit migration?",
+      "revId": "95b050584b4294655d6b61702bd3dfd9c7f86740",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
