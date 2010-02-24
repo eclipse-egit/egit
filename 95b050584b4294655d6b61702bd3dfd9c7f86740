@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAE3///oc\u003d",
+        "filename": "org.eclipse.egit.core.test/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-02-19T12:11:13Z",
+      "side": 1,
+      "message": "- Reference to package isn\u0027t respected by Tycho osgi-test-plugin, by experiment I found that bundle reference seems to work. In Eclipse both are working as expected. This is most probably a bug in Tycho. Hence I added Igor to the reviewer list.\n- We want to be Eclipse 3.4 backward compatible, 4.3.1 is the version available there.\n- pom.xml change shouldn\u0027t be necessary since we do manifest-first here, i.e. Maven /Tycho should pick dependencies from the manifest.",
+      "parentUuid": "AAAAE3///pA\u003d",
+      "revId": "95b050584b4294655d6b61702bd3dfd9c7f86740",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAE3///o8\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/T0003_AdaptableFileTreeIteratorTest.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAE3///oM\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/T0003_AdaptableFileTreeIteratorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-02-19T12:11:13Z",
+      "side": 1,
+      "message": "Aargh, I don\u0027t know what I thought when I wrote that.",
+      "parentUuid": "AAAAE3///o8\u003d",
+      "revId": "95b050584b4294655d6b61702bd3dfd9c7f86740",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAE3///o4\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/T0001_ConnectProviderOperationTest.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2010-02-19T02:14:51Z",
       "side": 1,
       "message": "This change doesn\u0027t appear to be related to the JUnit migration?",
+      "revId": "95b050584b4294655d6b61702bd3dfd9c7f86740",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAE3///oY\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/T0001_ConnectProviderOperationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-02-19T12:11:13Z",
+      "side": 1,
+      "message": "That\u0027s right, I\u0027ll split that into a separate change.",
+      "parentUuid": "AAAAE3///o4\u003d",
       "revId": "95b050584b4294655d6b61702bd3dfd9c7f86740",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
