@@ -17,6 +17,10 @@ import org.eclipse.osgi.util.NLS;
  * duplicating strings.
  */
 public class UIText extends NLS {
+
+	/** */
+	public static String WizardProjectsImportPage_filterText;
+
 	/** */
 	public static String WizardProjectsImportPage_ImportProjectsTitle;
 
