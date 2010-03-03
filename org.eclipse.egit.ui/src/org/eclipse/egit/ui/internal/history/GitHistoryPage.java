@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.compare.CompareEditorInput;
@@ -34,8 +35,10 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.EditableRevision;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
@@ -115,6 +118,10 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 	private static final String SHOW_FIND_TOOLBAR = UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR;
 
 	private static final String POPUP_ID = "org.eclipse.egit.ui.historyPageContributions"; //$NON-NLS-1$
+
+	private IAction compareAction = new CompareWithWorkingTreeAction();
+
+	private IAction compareVersionsAction = new CompareVersionsAction();
 
 	/**
 	 * Determine if the input can be shown in this viewer.
@@ -350,28 +357,6 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 				openInCompare(in);
 			}
 
-			private ITypedElement getEditableRevision(final IFile resource,
-					final String gitPath, SWTCommit commit) {
-				ITypedElement right = new EmptyElement(NLS.bind(UIText.GitHistoryPage_FileNotInCommit,
-						resource.getName(), commit));
-
-				try {
-					TreeWalk w = TreeWalk.forPath(db, gitPath, commit.getTree());
-					// check if file is contained in commit
-					if (w != null) {
-						final IFileRevision nextFile = GitFileRevision.inCommit(
-								db,
-								commit,
-								gitPath,
-								null);
-						right = new EditableRevision(nextFile);
-					}
-				} catch (IOException e) {
-					Activator.error("IO error looking up path" + gitPath + " in "
-							+ commit.getId() + ".", e);
-				}
-				return right;
-			}
 		});
 		revInfoSplit = new SashForm(graphDetailSplit, SWT.HORIZONTAL);
 		commentViewer = new CommitMessageViewer(revInfoSplit);
@@ -396,6 +381,29 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 		layout();
 
 		Repository.addAnyRepositoryChangedListener(this);
+	}
+
+	private ITypedElement getEditableRevision(final IFile resource,
+			final String gitPath, SWTCommit commit) {
+		ITypedElement right = new EmptyElement(NLS.bind(UIText.GitHistoryPage_FileNotInCommit,
+				resource.getName(), commit));
+
+		try {
+			TreeWalk w = TreeWalk.forPath(db, gitPath, commit.getTree());
+			// check if file is contained in commit
+			if (w != null) {
+				final IFileRevision nextFile = GitFileRevision.inCommit(
+						db,
+						commit,
+						gitPath,
+						null);
+				right = new EditableRevision(nextFile);
+			}
+		} catch (IOException e) {
+			Activator.error("IO error looking up path" + gitPath + " in "
+					+ commit.getId() + ".", e);
+		}
+		return right;
 	}
 
 	private void openInCompare(CompareEditorInput input) {
@@ -502,6 +510,26 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 
 	private void attachContextMenu(final Control c) {
 		c.setMenu(popupMgr.createContextMenu(c));
+
+		popupMgr.addMenuListener(new IMenuListener() {
+
+			public void menuAboutToShow(IMenuManager manager) {
+				popupMgr.remove(new ActionContributionItem(compareAction));
+				popupMgr.remove(new ActionContributionItem(compareVersionsAction));
+				int size = ((IStructuredSelection) revObjectSelectionProvider
+						.getSelection()).size();
+				if (IFile.class.isAssignableFrom(getInput()
+						.getClass())) {
+					if (size == 1 ) {
+						popupMgr.add(compareAction);
+					}
+					else if (size == 2) {
+						popupMgr.add(compareVersionsAction);
+					}
+				}
+
+			}
+		});
 	}
 
 	private void layoutSashForm(final SashForm sf, final String key) {
@@ -1106,4 +1134,85 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			// gained it from us.
 		}
 	}
+
+	private class CompareWithWorkingTreeAction extends Action {
+		public CompareWithWorkingTreeAction() {
+			super(UIText.GitHistoryPage_CompareWithWorking);
+		}
+
+		@Override
+		public void run() {
+			IStructuredSelection selection = ((IStructuredSelection) revObjectSelectionProvider
+					.getSelection());
+			if (selection.size() == 1) {
+				Iterator<?> it = selection.iterator();
+				SWTCommit commit = (SWTCommit) it.next();
+				if (getInput() instanceof IFile){
+					IFile file = (IFile) getInput();
+					final RepositoryMapping mapping = RepositoryMapping.getMapping(file.getProject());
+					final String gitPath = mapping.getRepoRelativePath(file);
+					ITypedElement right = getEditableRevision(file, gitPath,
+							commit);
+					final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+							SaveableCompareEditorInput.createFileElement(file),
+							right,
+							null);
+					openInCompare(in);
+				}
+
+			}
+
+		}
+
+		@Override
+		public boolean isEnabled() {
+			int size = ((IStructuredSelection) revObjectSelectionProvider
+					.getSelection()).size();
+			return IFile.class.isAssignableFrom(getInput().getClass())
+					&& size == 1;
+		}
+
+	}
+
+	private class CompareVersionsAction extends Action {
+		public CompareVersionsAction() {
+			super(UIText.GitHistoryPage_CompareVersions);
+		}
+
+		@Override
+		public void run() {
+			IStructuredSelection selection = ((IStructuredSelection) revObjectSelectionProvider
+					.getSelection());
+			if (selection.size() == 2) {
+				Iterator<?> it = selection.iterator();
+				SWTCommit commit1 = (SWTCommit) it.next();
+				SWTCommit commit2 = (SWTCommit) it.next();
+
+				if (getInput() instanceof IFile){
+					IFile resource = (IFile) getInput();
+					final RepositoryMapping map = RepositoryMapping
+							.getMapping(resource);
+					final String gitPath = map
+							.getRepoRelativePath(resource);
+
+					final ITypedElement base = getEditableRevision(resource, gitPath, commit1);
+					final ITypedElement next = getEditableRevision(resource, gitPath, commit2);
+					CompareEditorInput in = new GitCompareFileRevisionEditorInput(base, next, null);
+					openInCompare(in);
+				}
+
+			}
+
+		}
+
+		@Override
+		public boolean isEnabled() {
+			int size = ((IStructuredSelection) revObjectSelectionProvider
+					.getSelection()).size();
+			return IFile.class.isAssignableFrom(getInput().getClass())
+					&& size == 2;
+		}
+
+	}
+
 }
