@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAFX////c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2010-02-26T08:28:07Z",
+      "side": 1,
+      "message": "Are you sure the this string should not be translatable? Looks too me as a good candidate and then $NON-NLS would be wrong here.",
+      "revId": "3a9ef2d750de4f5653366331e02f6f6d9ecabd49",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
