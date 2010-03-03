@@ -120,6 +120,12 @@
                label="%IgnoreAction_label"
                menubarPath="team.main/group1"
                tooltip="%IgnoreAction_tooltip"/>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.AddToIndexAction"
+               id="org.eclipse.egit.ui.internal.actions.AddToIndexAction"
+               label="%AddToIndexAction_label"
+               menubarPath="team.main/group1"
+               tooltip="%AddToIndexAction_tooltip"/>               
 	  </objectContribution>
 	  <objectContribution
          id="org.eclipse.egit.ui.resetto"
