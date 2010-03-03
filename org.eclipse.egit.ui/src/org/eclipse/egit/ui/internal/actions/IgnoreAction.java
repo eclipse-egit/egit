@@ -47,7 +47,7 @@ public class IgnoreAction extends RepositoryAction {
 						// DecoratableResourceAdapter, but neither currently
 						// consult .gitignore
 
-						if (!IgnoredResources.isIgnored(resource)) {
+						if (!IgnoredResources.isGitIgnored(resource)) {
 							addIgnore(monitor, resource);
 						}
 						monitor.worked(1);

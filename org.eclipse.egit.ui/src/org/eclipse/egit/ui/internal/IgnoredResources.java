@@ -32,7 +32,16 @@ public class IgnoredResources {
 	 */
 	public static boolean isIgnored(IResource resource) {
 		return (Team.isIgnoredHint(resource) || checkGitIgnore(resource) || checkGitExclude(resource)) ;
+	}
 
+	/**
+	 *	Same as isIgnored, but without a check in the exclude file
+	 *
+	 * @param resource
+	 * @return true if resource is ignored
+	 */
+	public static boolean isGitIgnored(IResource resource) {
+		return (Team.isIgnoredHint(resource) || checkGitIgnore(resource));
 	}
 
 	private static boolean checkGitIgnore(IResource resource) {
@@ -64,7 +73,7 @@ public class IgnoredResources {
 		* seems to be to use the underlying file
 		* Possible problems:
 		*  - Changes to the resource not reflected in the actual file
-		*  - File does not exist (not a problem, just catch the error and return false)
+		*  - File does not exist (just catch the error and return false)
 		*/
 			File f = new File(file.getLocation().toOSString());
 			try {
@@ -78,19 +87,22 @@ public class IgnoredResources {
 						if (patt.equals(target))
 							return true;
 						//Possible regular expression -- make modifications to match Java regex
+						//TODO: Char-by-char replace instead of calling .replace 3 times
 						Pattern p = Pattern.compile(patt.replace(".", "\\."). //$NON-NLS-1$ //$NON-NLS-2$
-								replace("*", ".*")); //$NON-NLS-1$ //$NON-NLS-2$
+								replace("*", ".*").replace("?", ".")); //$NON-NLS-1$ //$NON-NLS-2$  //$NON-NLS-3$ //$NON-NLS-4$
 						if (p.matcher(target).matches()) {
 							return true;
 						}
 					}
 					br.close();
 				} catch (IOException e) {
+					//May wish to throw an error here
 					return false;
 				} finally {
 					try {
 						br.close();
 					} catch (IOException e) {
+						//May wish to throw an error here
 						return false;
 					}
 				}
