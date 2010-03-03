@@ -12,6 +12,7 @@
 package org.eclipse.egit.ui.internal.components;
 
 import java.io.File;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.List;
@@ -33,9 +34,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
@@ -131,10 +134,11 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	 * @param configuredRemotes
 	 *            list of configured remotes that user may select as an
 	 *            alternative to manual URI specification. Remotes appear in
-	 *            given order in GUI, with {@value Constants#DEFAULT_REMOTE_NAME} as the
-	 *            default choice. List may be null or empty - no remotes
-	 *            configurations appear in this case. Note that the provided
-	 *            list may be changed by this constructor.
+	 *            given order in GUI, with
+	 *            {@value Constants#DEFAULT_REMOTE_NAME} as the default choice.
+	 *            List may be null or empty - no remotes configurations appear
+	 *            in this case. Note that the provided list may be changed by
+	 *            this constructor.
 	 */
 	public RepositorySelectionPage(final boolean sourceSelection,
 			final List<RemoteConfig> configuredRemotes) {
@@ -266,8 +270,11 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		final Group g = createGroup(parent,
 				UIText.RepositorySelectionPage_groupLocation);
 
+		g.setLayout(new GridLayout(3, false));
+
 		newLabel(g, UIText.RepositorySelectionPage_promptURI + ":"); //$NON-NLS-1$
 		uriText = new Text(g, SWT.BORDER);
+
 		uriText.setLayoutData(createFieldGridData());
 		uriText.addModifyListener(new ModifyListener() {
 			public void modifyText(final ModifyEvent e) {
@@ -319,9 +326,38 @@ public class RepositorySelectionPage extends BaseWizardPage {
 			}
 		});
 
+		Button browseButton = new Button(g, SWT.NULL);
+		browseButton.setText(UIText.RepositorySelectionPage_BrowseLocalFile);
+		browseButton.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				DirectoryDialog dialog = new DirectoryDialog(getShell());
+				// if a file-uri was selected before, let's try to open
+				// the directory dialog on the same directory
+				if (!uriText.getText().equals("")) { //$NON-NLS-1$
+					URI testUri = URI.create(uriText.getText().replace('\\',
+							'/'));
+					if (testUri.getScheme().equals("file")) { //$NON-NLS-1$
+						String path = testUri.getPath();
+						if (path.length() > 1 && path.startsWith("/")) { //$NON-NLS-1$
+							path = path.substring(1);
+						}
+						dialog.setFilterPath(path);
+					}
+
+				}
+				String result = dialog.open();
+				if (result != null) {
+					uriText.setText("file:///" + result); //$NON-NLS-1$
+				}
+			}
+
+		});
+
 		newLabel(g, UIText.RepositorySelectionPage_promptHost + ":"); //$NON-NLS-1$
 		hostText = new Text(g, SWT.BORDER);
-		hostText.setLayoutData(createFieldGridData());
+		GridDataFactory.fillDefaults().span(2, 1).applyTo(hostText);
 		hostText.addModifyListener(new ModifyListener() {
 			public void modifyText(final ModifyEvent e) {
 				setURI(uri.setHost(nullString(hostText.getText())));
@@ -330,7 +366,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 
 		newLabel(g, UIText.RepositorySelectionPage_promptPath + ":"); //$NON-NLS-1$
 		pathText = new Text(g, SWT.BORDER);
-		pathText.setLayoutData(createFieldGridData());
+		GridDataFactory.fillDefaults().span(2, 1).applyTo(pathText);
 		pathText.addModifyListener(new ModifyListener() {
 			public void modifyText(final ModifyEvent e) {
 				setURI(uri.setPath(nullString(pathText.getText())));
@@ -494,7 +530,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 
 	private RemoteConfig selectDefaultRemoteConfig() {
 		for (final RemoteConfig rc : configuredRemotes)
-			if (Constants.DEFAULT_REMOTE_NAME.equals(getTextForRemoteConfig(rc)))
+			if (Constants.DEFAULT_REMOTE_NAME
+					.equals(getTextForRemoteConfig(rc)))
 				return rc;
 		return configuredRemotes.get(0);
 	}
@@ -536,7 +573,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 				if (uri.getPath() == null) {
 					selectionIncomplete(NLS.bind(
 							UIText.RepositorySelectionPage_fieldRequired,
-							unamp(UIText.RepositorySelectionPage_promptPath), proto));
+							unamp(UIText.RepositorySelectionPage_promptPath),
+							proto));
 					return;
 				}
 
@@ -571,7 +609,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 				if (uri.getHost() == null) {
 					selectionIncomplete(NLS.bind(
 							UIText.RepositorySelectionPage_fieldRequired,
-							unamp(UIText.RepositorySelectionPage_promptHost), proto));
+							unamp(UIText.RepositorySelectionPage_promptHost),
+							proto));
 					return;
 				}
 
@@ -609,7 +648,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	}
 
 	private String unamp(String s) {
-		return s.replace("&",""); //$NON-NLS-1$ //$NON-NLS-2$
+		return s.replace("&", ""); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private void selectionIncomplete(final String errorMessage) {
