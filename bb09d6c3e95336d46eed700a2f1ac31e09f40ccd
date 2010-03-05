@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAF3///+E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-03T23:59:46Z",
+      "side": 0,
+      "message": "style nit: pure reformatting change should be avoided (several more below)",
+      "revId": "bb09d6c3e95336d46eed700a2f1ac31e09f40ccd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

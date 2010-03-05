@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAF3///+I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-03T23:59:46Z",
+      "side": 1,
+      "message": "style nit: we try to avoid pure reformatting changes",
+      "revId": "7599e2edc27e9b39a2b828f8768f535ad19b92de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAF3///9c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-04T12:14:33Z",
+      "side": 1,
+      "message": "Don\u0027t run the auto code formatter on the whole file but only on those parts you edit. The pro of this approach is that we don\u0027t clutter history with pure formatting changes, the downside is that sometimes the formatting isn\u0027t 100% consistent.",
+      "parentUuid": "AAAAF3///9o\u003d",
+      "revId": "7599e2edc27e9b39a2b828f8768f535ad19b92de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
