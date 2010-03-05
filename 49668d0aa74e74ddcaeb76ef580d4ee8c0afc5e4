@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAE3///sQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-02-16T22:29:09Z",
+      "side": 1,
+      "message": "Is it worth noting that this is something used from GWT Designer? Does it make sense to keep this in the main repository?",
+      "revId": "49668d0aa74e74ddcaeb76ef580d4ee8c0afc5e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAE3///sM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-02-16T22:29:09Z",
+      "side": 1,
+      "message": "Why did we remove the (non-JavaDoc) comment here? The purpose of including it is to note that the method comes from elsewhere, but without overriding the JavaDoc comment. It may get generated again later.",
+      "revId": "49668d0aa74e74ddcaeb76ef580d4ee8c0afc5e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAE3///sI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-02-16T22:29:09Z",
+      "side": 1,
+      "message": "There\u0027s no dice to begin with; why do we need to comment this fact?",
+      "revId": "49668d0aa74e74ddcaeb76ef580d4ee8c0afc5e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
