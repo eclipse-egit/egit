@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAF3///9o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-04T10:34:03Z",
+      "side": 1,
+      "message": "Hi Matthias,\nI\u0027m aware of this, but the code formmater settings have changed, so Source-\u003eFormat does introduce these changes.\nWhat\u0027s your suggestion here?",
+      "parentUuid": "AAAAF3///+I\u003d",
+      "revId": "7599e2edc27e9b39a2b828f8768f535ad19b92de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAF3///9c\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
         "patchSetId": 1

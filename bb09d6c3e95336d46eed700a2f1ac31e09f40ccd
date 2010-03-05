@@ -16,6 +16,24 @@
       "revId": "bb09d6c3e95336d46eed700a2f1ac31e09f40ccd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAF3///9k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-04T10:34:03Z",
+      "side": 0,
+      "message": "See comment above.",
+      "parentUuid": "AAAAF3///+E\u003d",
+      "revId": "bb09d6c3e95336d46eed700a2f1ac31e09f40ccd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
