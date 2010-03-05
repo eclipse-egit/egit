@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.IgnoredResources;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.team.core.Team;
@@ -46,7 +47,7 @@ public class IgnoreAction extends RepositoryAction {
 						// DecoratableResourceAdapter, but neither currently
 						// consult .gitignore
 
-						if (!Team.isIgnoredHint(resource)) {
+						if (!IgnoredResources.isGitIgnored(resource)) {
 							addIgnore(monitor, resource);
 						}
 						monitor.worked(1);
@@ -68,7 +69,10 @@ public class IgnoreAction extends RepositoryAction {
 				IContainer container = resource.getParent();
 				IFile gitignore = container.getFile(new Path(
 						Constants.GITIGNORE_FILENAME));
-				String entry = "/" + resource.getName() + "\n"; //$NON-NLS-1$  //$NON-NLS-2$
+				String suffix = "\n"; //$NON-NLS-1$
+				if (resource instanceof IContainer)
+					suffix = "/\n"; //$NON-NLS-1$
+				String entry = "/" + resource.getName() + suffix; //$NON-NLS-1$
 				ByteArrayInputStream entryBytes = asStream(entry);
 
 				if (gitignore.exists())
