@@ -208,6 +208,9 @@ public class UIText extends NLS {
 	public static String RepositorySelectionPage_configuredRemoteChoice;
 
 	/** */
+	public static String RepositorySelectionPage_ShowPrevisousURIs_Tooltip;
+
+	/** */
 	public static String RepositorySelectionPage_uriChoice;
 
 	/** */
