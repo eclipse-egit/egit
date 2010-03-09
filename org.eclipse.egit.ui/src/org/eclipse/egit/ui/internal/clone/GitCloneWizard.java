@@ -147,6 +147,7 @@ public class GitCloneWizard extends Wizard implements IImportWizard {
 				protected IStatus run(final IProgressMonitor monitor) {
 					try {
 						op.run(monitor);
+						cloneSource.saveUriInPrefs(uri.toString());
 						return Status.OK_STATUS;
 					} catch (InterruptedException e) {
 						return Status.CANCEL_STATUS;
@@ -156,6 +157,7 @@ public class GitCloneWizard extends Wizard implements IImportWizard {
 								.getPluginId(), 0, thr.getMessage(), thr);
 					}
 				}
+
 			};
 			job.setUser(true);
 			job.schedule();
@@ -165,6 +167,7 @@ public class GitCloneWizard extends Wizard implements IImportWizard {
 				// Perform clone in ModalContext thread with progress
 				// reporting on the wizard.
 				getContainer().run(true, true, op);
+				cloneSource.saveUriInPrefs(uri.toString());
 				return true;
 			} catch (InterruptedException e) {
 				MessageDialog.openInformation(getShell(),
