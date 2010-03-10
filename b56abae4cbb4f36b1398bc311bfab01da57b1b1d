@@ -33,6 +33,23 @@
       "revId": "b56abae4cbb4f36b1398bc311bfab01da57b1b1d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAE3///4I\u003d",
+        "filename": "org.eclipse.egit.doc/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-02-09T10:16:31Z",
+      "side": 1,
+      "message": "s/EGit Documentation/EGit Documentation (Incubation)/",
+      "revId": "b56abae4cbb4f36b1398bc311bfab01da57b1b1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
