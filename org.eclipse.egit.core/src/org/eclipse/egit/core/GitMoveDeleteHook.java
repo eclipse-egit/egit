@@ -165,7 +165,8 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			final DirCacheEditor sEdit = sCache.editor();
 			sEdit.add(new DirCacheEditor.DeleteTree(sPath));
 			if (dstm != null && dstm.getRepository() == srcm.getRepository()) {
-				final String dPath = srcm.getRepoRelativePath(dstf) + "/";
+				final String dPath =
+					srcm.getRepoRelativePath(dstf) + "/"; //$NON-NLS-1$
 				final int sPathLen = sPath.length() + 1;
 				for (final DirCacheEntry se : sEnt) {
 					final String p = se.getPathString().substring(sPathLen);

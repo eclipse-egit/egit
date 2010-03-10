@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.Team;
 import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.GitIndex.Entry;
@@ -79,7 +80,8 @@ public class TrackOperation implements IWorkspaceRunnable {
 						Entry entry = index.getEntry(repoPath);
 						if (entry != null) {
 							if (!entry.isAssumedValid()) {
-								System.out.println("Already tracked - skipping");
+								System.out
+										.println("Already tracked - skipping"); //$NON-NLS-1$
 								continue;
 							}
 						}
@@ -122,7 +124,7 @@ public class TrackOperation implements IWorkspaceRunnable {
 				m.worked(200);
 			}
 			for (RepositoryMapping rm : tomerge.keySet()) {
-				m.setTaskName("Writing index for "+rm.getRepository().getDirectory());
+				m.setTaskName(NLS.bind(CoreText.TrackOperation_writingIndex, rm.getRepository().getDirectory()));
 				rm.getRepository().getIndex().write();
 			}
 		} catch (RuntimeException e) {

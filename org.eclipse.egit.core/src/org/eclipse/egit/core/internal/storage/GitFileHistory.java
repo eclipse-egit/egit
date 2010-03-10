@@ -16,7 +16,9 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileHistoryProvider;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.core.history.provider.FileHistory;
@@ -58,8 +60,8 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 	private KidWalk buildWalk() {
 		final RepositoryMapping rm = RepositoryMapping.getMapping(resource);
 		if (rm == null) {
-			Activator.logError("Git not attached to project "
-					+ resource.getProject().getName() + ".", null);
+			Activator.logError(NLS.bind(CoreText.GitFileHistory_gitNotAttached,
+					resource.getProject().getName()), null);
 			return null;
 		}
 
@@ -81,9 +83,9 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 		try {
 			final AnyObjectId headId = db.resolve(Constants.HEAD);
 			if (headId == null) {
-				Activator.logError("No HEAD revision available from Git"
-						+ " for project " + resource.getProject().getName()
-						+ ".", null);
+				Activator.logError(NLS.bind(
+						CoreText.GitFileHistory_noHeadRevisionAvailable,
+						resource.getProject().getName()), null);
 				return NO_REVISIONS;
 			}
 
@@ -101,8 +103,9 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 
 			walk.markStart(root);
 		} catch (IOException e) {
-			Activator.logError("Invalid HEAD revision for project "
-					+ resource.getProject().getName() + ".", e);
+			Activator.logError(NLS.bind(
+					CoreText.GitFileHistory_invalidHeadRevision, resource
+							.getProject().getName()), e);
 			return NO_REVISIONS;
 		}
 
@@ -118,8 +121,9 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 					break;
 			}
 		} catch (IOException e) {
-			Activator.logError("Error parsing history for "
-					+ resource.getFullPath() + ".", e);
+			Activator.logError(NLS.bind(
+					CoreText.GitFileHistory_errorParsingHistory, resource
+							.getFullPath()), e);
 			return NO_REVISIONS;
 		}
 
@@ -162,7 +166,8 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 	}
 
 	public IFileRevision getFileRevision(final String id) {
-		if (id == null || id.equals("") || GitFileRevision.WORKSPACE.equals(id))
+		if (id == null || id.equals("") //$NON-NLS-1$
+				|| GitFileRevision.WORKSPACE.equals(id))
 			return new WorkspaceFileRevision(resource);
 		if (GitFileRevision.INDEX.equals(id))
 			return new IndexFileRevision(walk.getRepository(), gitPath);

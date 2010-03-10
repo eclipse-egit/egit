@@ -98,7 +98,7 @@ public class RepositoryFinder {
 			throws CoreException {
 		final IPath loc = c.getLocation();
 
-		m.beginTask("", 101);
+		m.beginTask("", 101);  //$NON-NLS-1$
 		m.subTask(CoreText.RepositoryFinder_finding);
 		try {
 			if (loc != null) {
@@ -113,7 +113,9 @@ public class RepositoryFinder {
 				if (c.isLinked() || c instanceof IProject) {
 					File p = fsLoc.getParentFile();
 					while (p != null) {
-						System.out.println("Looking at candidate dir: " + p);
+						System.out.println(
+								"Looking at candidate dir: "  //$NON-NLS-1$
+								+ p);
 						final File pCfg = configFor(p);
 						if (pCfg.isFile()) {
 							register(c, pCfg.getParentFile());
@@ -146,7 +148,8 @@ public class RepositoryFinder {
 	}
 
 	private File configFor(final File fsLoc) {
-		return new File(new File(fsLoc, Constants.DOT_GIT), "config");
+		return new File(new File(fsLoc, Constants.DOT_GIT),
+				"config");  //$NON-NLS-1$
 	}
 
 	private void register(final IContainer c, final File gitdir) {

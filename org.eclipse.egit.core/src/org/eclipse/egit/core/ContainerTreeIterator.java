@@ -48,7 +48,8 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	private static String computePrefix(final IContainer base) {
 		final RepositoryMapping rm = RepositoryMapping.getMapping(base);
 		if (rm == null)
-			throw new IllegalArgumentException("Not in a Git project: " + base);
+			throw new IllegalArgumentException(
+					"Not in a Git project: " + base);  //$NON-NLS-1$
 		return rm.getRepoRelativePath(base);
 	}
 
@@ -84,7 +85,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	 *            the workspace root to walk over.
 	 */
 	public ContainerTreeIterator(final IWorkspaceRoot root) {
-		super("");
+		super("");  //$NON-NLS-1$
 		node = root;
 		init(entries());
 	}
@@ -220,7 +221,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 					throw ioe;
 				}
 			}
-			throw new IOException("Not a regular file: " + rsrc);
+			throw new IOException("Not a regular file: " + rsrc);  //$NON-NLS-1$
 		}
 
 		/**
