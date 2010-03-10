@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAGX////c\u003d",
+        "filename": "org.eclipse.egit.doc/build-help.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-10T23:28:21Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace all over this file",
+      "revId": "a88b63bf304b6b2b0e884c10882edacc00f89ff2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGX////Y\u003d",
+        "filename": "org.eclipse.egit.doc/userguide/Inspecting-the-state-of-the-Repository.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-10T23:28:21Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "a88b63bf304b6b2b0e884c10882edacc00f89ff2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGX////U\u003d",
+        "filename": "org.eclipse.egit.doc/userguide/Updating-This-Document.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-10T23:28:21Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "a88b63bf304b6b2b0e884c10882edacc00f89ff2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGX////Q\u003d",
+        "filename": "org.eclipse.egit.doc/userguide/Working-with-remote-Repositories.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-10T23:28:21Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "a88b63bf304b6b2b0e884c10882edacc00f89ff2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
