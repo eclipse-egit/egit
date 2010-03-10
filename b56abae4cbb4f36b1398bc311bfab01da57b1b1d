@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAE3///5U\u003d",
+        "filename": "org.eclipse.egit.doc/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-02-08T16:39:56Z",
+      "side": 1,
+      "message": "We\u0027ve been using %plugin_name and %provider_name within EGit for these localized tags.  Can you please match that?",
+      "revId": "b56abae4cbb4f36b1398bc311bfab01da57b1b1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAE3///5Q\u003d",
+        "filename": "org.eclipse.egit.doc/build-help.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-02-08T16:39:56Z",
+      "side": 1,
+      "message": "This file is full of whitespace errors.  Please consider cleaning them up.",
+      "revId": "b56abae4cbb4f36b1398bc311bfab01da57b1b1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
