@@ -20,7 +20,9 @@ import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.GitTag;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.core.history.ITag;
 import org.eclipse.jgit.lib.AnyObjectId;
@@ -89,7 +91,7 @@ class CommitFileRevision extends GitFileRevision {
 	}
 
 	public String toString() {
-		return commit.getId() + ":" + path;
+		return commit.getId() + ":" + path;  //$NON-NLS-1$
 	}
 
 	public ITag[] getTags() {
@@ -119,13 +121,15 @@ class CommitFileRevision extends GitFileRevision {
 			final TreeWalk w = TreeWalk.forPath(db, path, commit.getTree());
 			if (w == null)
 				throw new ResourceException(IResourceStatus.FAILED_READ_LOCAL,
-						Path.fromPortableString(path), "Path not in "
-								+ commit.getId() + ".", null);
+						Path.fromPortableString(path), NLS.bind(
+								CoreText.CommitFileRevision_pathNotIn, commit
+										.getId()), null);
 			return w.getObjectId(0);
 		} catch (IOException e) {
 			throw new ResourceException(IResourceStatus.FAILED_READ_LOCAL, Path
-					.fromPortableString(path), "IO error looking up path in "
-					+ commit.getId() + ".", e);
+					.fromPortableString(path), NLS.bind(
+					CoreText.CommitFileRevision_errorLookingUpPath, commit
+							.getId()), e);
 		}
 	}
 }

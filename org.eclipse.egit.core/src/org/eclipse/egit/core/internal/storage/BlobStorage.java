@@ -19,11 +19,13 @@ import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.CoreText;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.osgi.util.NLS;
 
 /** Accesses a blob from Git. */
 class BlobStorage implements IStorage {
@@ -45,8 +47,8 @@ class BlobStorage implements IStorage {
 			return open();
 		} catch (IOException e) {
 			throw new ResourceException(IResourceStatus.FAILED_READ_LOCAL,
-					getFullPath(), "IO error reading Git blob " + blobId + ".",
-					e);
+					getFullPath(), NLS.bind(
+							CoreText.BlobStorage_errorReadingBlob, blobId), e);
 		}
 	}
 
@@ -55,7 +57,8 @@ class BlobStorage implements IStorage {
 		final ObjectLoader reader = db.openBlob(blobId);
 		if (reader == null)
 			throw new ResourceException(IResourceStatus.FAILED_READ_LOCAL,
-					getFullPath(), "Git blob " + blobId + " not found.", null);
+					getFullPath(), NLS.bind(CoreText.BlobStorage_blobNotFound,
+							blobId), null);
 		final byte[] data = reader.getBytes();
 		if (reader.getType() != Constants.OBJ_BLOB)
 			throw new IncorrectObjectTypeException(blobId, Constants.TYPE_BLOB);

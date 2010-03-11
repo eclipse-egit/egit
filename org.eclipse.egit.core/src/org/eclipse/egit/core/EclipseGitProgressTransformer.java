@@ -14,6 +14,8 @@ import org.eclipse.jgit.lib.ProgressMonitor;
 
 /** Create a new Git to Eclipse progress monitor. */
 public class EclipseGitProgressTransformer implements ProgressMonitor {
+	private final String EMPTY_STRING = "";  //$NON-NLS-1$
+
 	private final IProgressMonitor root;
 
 	private IProgressMonitor task;
@@ -35,7 +37,7 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 	}
 
 	public void start(final int totalTasks) {
-		root.beginTask("", totalTasks * 1000);
+		root.beginTask(EMPTY_STRING, totalTasks * 1000);
 	}
 
 	public void beginTask(final String name, final int total) {
@@ -45,9 +47,9 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 		totalWork = total;
 		task = new SubProgressMonitor(root, 1000);
 		if (totalWork == UNKNOWN)
-			task.beginTask("", IProgressMonitor.UNKNOWN);
+			task.beginTask(EMPTY_STRING, IProgressMonitor.UNKNOWN);
 		else
-			task.beginTask("", totalWork);
+			task.beginTask(EMPTY_STRING, totalWork);
 		task.subTask(msg);
 	}
 
@@ -57,13 +59,13 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 
 		final int cmp = lastWorked + work;
 		if (lastWorked == UNKNOWN && cmp > 0) {
-			task.subTask(msg + ", " + cmp);
+			task.subTask(msg + ", " + cmp);  //$NON-NLS-1$
 		} else if (totalWork <= 0) {
 			// Do nothing to update the task.
 		} else if (cmp * 100 / totalWork != lastWorked * 100 / totalWork) {
 			final StringBuilder m = new StringBuilder();
 			m.append(msg);
-			m.append(": ");
+			m.append(": ");  //$NON-NLS-1$
 			while (m.length() < 25)
 				m.append(' ');
 
@@ -73,18 +75,18 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 				final String twstr = String.valueOf(totalWork);
 				String cmpstr = String.valueOf(cmp);
 				while (cmpstr.length() < twstr.length())
-					cmpstr = " " + cmpstr;
+					cmpstr = " " + cmpstr;  //$NON-NLS-1$
 				final int pcnt = (cmp * 100 / totalWork);
 				if (pcnt < 100)
 					m.append(' ');
 				if (pcnt < 10)
 					m.append(' ');
 				m.append(pcnt);
-				m.append("% (");
+				m.append("% (");  //$NON-NLS-1$
 				m.append(cmpstr);
-				m.append("/");
+				m.append("/");  //$NON-NLS-1$
 				m.append(twstr);
-				m.append(")");
+				m.append(")");  //$NON-NLS-1$
 			}
 			task.subTask(m.toString());
 		}
