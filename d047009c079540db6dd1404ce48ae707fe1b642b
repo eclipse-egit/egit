@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAGH///9A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-03-09T16:24:56Z",
+      "side": 1,
+      "message": "You could use the content of the input field to filter the list of proposals. The list of proposals may be very long.",
+      "revId": "d047009c079540db6dd1404ce48ae707fe1b642b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
