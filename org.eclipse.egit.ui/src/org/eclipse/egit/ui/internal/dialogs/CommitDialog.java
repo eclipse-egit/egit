@@ -413,8 +413,8 @@ public class CommitDialog extends Dialog {
 			Tree headTree = repo.mapTree(Constants.HEAD);
 
 			String repoPath = repositoryMapping.getRepoRelativePath(file);
-			TreeEntry headEntry = headTree.findBlobMember(repoPath);
-			boolean headExists = headTree.existsBlob(repoPath);
+			TreeEntry headEntry = (headTree == null ? null : headTree.findBlobMember(repoPath));
+			boolean headExists = (headTree == null ? false : headTree.existsBlob(repoPath));
 
 			Entry indexEntry = index.getEntry(repoPath);
 			if (headEntry == null) {
