@@ -64,7 +64,7 @@ public class Activator extends AbstractUIPlugin {
 	private static boolean isOptionSet(final String optionId) {
 		final String option = getPluginId() + optionId;
 		final String value = Platform.getDebugOption(option);
-		return value != null && value.equals("true");
+		return value != null && value.equals("true");  //$NON-NLS-1$
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static void trace(final String what) {
 		if (getDefault().traceVerbose) {
-			System.out.println("[" + getPluginId() + "] " + what);
+			System.out.println("[" + getPluginId() + "] " + what);   //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -89,7 +89,7 @@ public class Activator extends AbstractUIPlugin {
 
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-		traceVerbose = isOptionSet("/trace/verbose");
+		traceVerbose = isOptionSet("/trace/verbose");  //$NON-NLS-1$
 		GitProjectData.reconfigureWindowCache();
 		GitProjectData.attachToWorkspace(true);
 	}

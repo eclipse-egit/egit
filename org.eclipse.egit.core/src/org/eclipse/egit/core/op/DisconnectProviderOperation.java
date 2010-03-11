@@ -57,7 +57,7 @@ public class DisconnectProviderOperation implements IWorkspaceRunnable {
 				if (obj instanceof IProject) {
 					final IProject p = (IProject) obj;
 
-					Activator.trace("disconnect " + p.getName());
+					Activator.trace("disconnect " + p.getName());  //$NON-NLS-1$
 					unmarkTeamPrivate(p);
 					RepositoryProvider.unmap(p);
 					m.worked(100);
@@ -82,7 +82,7 @@ public class DisconnectProviderOperation implements IWorkspaceRunnable {
 					unmarkTeamPrivate((IContainer) c[k]);
 				}
 				if (c[k].isTeamPrivateMember()) {
-					Activator.trace("notTeamPrivate " + c[k]);
+					Activator.trace("notTeamPrivate " + c[k]);  //$NON-NLS-1$
 					c[k].setTeamPrivateMember(false);
 				}
 			}
