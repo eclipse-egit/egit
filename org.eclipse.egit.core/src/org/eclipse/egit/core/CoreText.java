@@ -100,6 +100,9 @@ public class CoreText extends NLS {
 	/** */
 	public static String PushOperation_taskNameNormalRun;
 
+	/** */
+	public static String AddToIndexOperation_failed;
+
 	static {
 		initializeMessages("org.eclipse.egit.core.coretext", CoreText.class);
 	}
