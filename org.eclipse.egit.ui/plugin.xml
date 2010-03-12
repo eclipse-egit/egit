@@ -126,6 +126,12 @@
                label="%AddToIndexAction_label"
                menubarPath="team.main/group1"
                tooltip="%AddToIndexAction_tooltip"/>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.DiscardChangesAction"
+               id="org.eclipse.egit.ui.internal.actions.DiscardChangesAction"
+               label="%DiscardChangesAction_label"
+               menubarPath="replaceWithMenu/gitReplaceWithGroup"
+               tooltip="%DiscardChangesAction_tooltip"/>
 	  </objectContribution>
 	  <objectContribution
          id="org.eclipse.egit.ui.resetto"
