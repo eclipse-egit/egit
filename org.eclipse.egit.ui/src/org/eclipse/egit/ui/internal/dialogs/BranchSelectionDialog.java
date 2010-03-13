@@ -3,6 +3,7 @@
  * Copyright (C) 2007, Robin Rosenberg <me@lathund.dewire.com.dewire.com>
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,6 +33,10 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
@@ -93,6 +98,23 @@ public class BranchSelectionDialog extends Dialog {
 		new Label(parent, SWT.NONE).setText(UIText.BranchSelectionDialog_Refs);
 		branchTree = new Tree(parent, SWT.BORDER);
 		branchTree.setLayoutData(GridDataFactory.fillDefaults().grab(true,true).hint(500, 300).create());
+		branchTree.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				TreeItem item = branchTree.getSelection()[0];
+				if (item.getData() != null)
+					okPressed();
+			}
+		});
+		branchTree.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (SWT.ARROW_RIGHT == e.keyCode) // expand tree
+					expandTreeElement(true);
+				else if (SWT.ARROW_LEFT == e.keyCode) // collapse tree
+					expandTreeElement(false);
+			}
+		});
 
 		if (showResetType) {
 			buildResetGroup();
@@ -430,5 +452,13 @@ public class BranchSelectionDialog extends Dialog {
 		String msg = NLS.bind(message, args);
 		MessageDialog.openError(getShell(), title, msg);
 		Activator.logError(msg, e);
+	}
+
+	private void expandTreeElement(boolean expand) {
+		TreeItem[] selection = branchTree.getSelection();
+		if (selection != null && selection.length > 0) {
+			TreeItem item = selection[0];
+			item.setExpanded(expand);
+		}
 	}
 }
