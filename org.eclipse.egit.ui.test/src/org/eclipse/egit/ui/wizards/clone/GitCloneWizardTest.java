@@ -335,6 +335,14 @@ public class GitCloneWizardTest {
 	@After
 	public void resetWorkbench() {
 		new Eclipse().reset();
+		
+		// delete workspace after each test
+		File workspace = new File(ResourcesPlugin.getWorkspace().getRoot()
+				.getLocation().toFile().getParent(), "junit-workspace");
+		if (workspace.exists()) {
+			workspace.delete();
+		}
+
 	}
 
 }
