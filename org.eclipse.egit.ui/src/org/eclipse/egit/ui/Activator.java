@@ -140,7 +140,7 @@ public class Activator extends AbstractUIPlugin {
 	 *            message to log
 	 */
 	public static void trace(final String what) {
-		if (getDefault().traceVerbose) {
+		if (traceVerbose) {
 			System.out.println("[" + getPluginId() + "] " + what); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
@@ -178,7 +178,7 @@ public class Activator extends AbstractUIPlugin {
 		return getTheme().getFontRegistry().getBold(id);
 	}
 
-	private boolean traceVerbose;
+	private static boolean traceVerbose;
 	private RCS rcs;
 	private RIRefresh refreshJob;
 
@@ -391,6 +391,7 @@ public class Activator extends AbstractUIPlugin {
 		refreshJob.join();
 
 		trace("Jobs terminated"); //$NON-NLS-1$
+		traceVerbose = false;
 		super.stop(context);
 		plugin = null;
 	}
