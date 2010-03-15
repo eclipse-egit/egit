@@ -26,6 +26,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Ref;
@@ -166,7 +167,13 @@ public class GitCloneWizard extends Wizard implements IImportWizard {
 			try {
 				// Perform clone in ModalContext thread with progress
 				// reporting on the wizard.
-				getContainer().run(true, true, op);
+				getContainer().run(true, true, new IRunnableWithProgress() {
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException,
+							InterruptedException {
+						op.run(monitor);
+					}
+				});
 				cloneSource.saveUriInPrefs(uri.toString());
 				return true;
 			} catch (InterruptedException e) {
