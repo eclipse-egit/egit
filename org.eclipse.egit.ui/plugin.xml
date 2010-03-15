@@ -448,4 +448,18 @@
          </commandParameter>
       </command>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.eclipse.egit.ui.GitCategory"
+            class="org.eclipse.egit.ui.internal.repository.RepositoriesView"
+            id="org.eclipse.egit.ui.RepositoriesView"
+            name="Git Repositories"
+            restorable="true">
+      </view>
+      <category
+            id="org.eclipse.egit.ui.GitCategory"
+            name="Git">
+      </category>
+   </extension>
 </plugin>

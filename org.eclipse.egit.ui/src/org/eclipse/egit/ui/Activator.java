@@ -51,6 +51,16 @@ import org.eclipse.jgit.transport.SshSessionFactory;
  */
 public class Activator extends AbstractUIPlugin {
 
+	/** the repository icon */
+	public static final String ICON_REPOSITORY = "Icon_Repository"; //$NON-NLS-1$
+
+	/** the branches icon */
+	public static final String ICON_BRANCHES = "Icon_Branches"; //$NON-NLS-1$
+
+	/** the checked-out overlay icon */
+	public static final String ICON_CHECKEDOUT_OVR = "Icon_CheckedOut_Overlay"; //$NON-NLS-1$
+
+
 	/**
 	 *  The one and only instance
 	 */
@@ -196,6 +206,13 @@ public class Activator extends AbstractUIPlugin {
 		setupProxy(context);
 		setupRepoChangeScanner();
 		setupRepoIndexRefresh();
+		setupImageRegistry();
+	}
+
+	private void setupImageRegistry() {
+		getImageRegistry().put(ICON_REPOSITORY, imageDescriptorFromPlugin(getPluginId(), "icons/obj16/repository_rep.gif")); //$NON-NLS-1$
+		getImageRegistry().put(ICON_BRANCHES, imageDescriptorFromPlugin(getPluginId(), "icons/obj16/branches_rep.gif")); //$NON-NLS-1$
+		getImageRegistry().put(ICON_CHECKEDOUT_OVR, imageDescriptorFromPlugin(getPluginId(), "icons/ovr/checkedout_ov.gif")); //$NON-NLS-1$
 	}
 
 	private void setupRepoIndexRefresh() {
