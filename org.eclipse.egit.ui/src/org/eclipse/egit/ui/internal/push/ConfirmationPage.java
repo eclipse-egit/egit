@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.op.PushOperation;
@@ -26,6 +27,7 @@ import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
 import org.eclipse.egit.ui.internal.components.SelectionChangeListener;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -185,7 +187,12 @@ class ConfirmationPage extends WizardPage {
 
 			operation = new PushOperation(local, spec, true,
 					displayedRepoSelection.getConfig());
-			getContainer().run(true, true, operation);
+			getContainer().run(true, true, new IRunnableWithProgress() {
+				public void run(IProgressMonitor monitor)
+						throws InvocationTargetException, InterruptedException {
+					operation.run(monitor);
+				}
+			});
 		} catch (final IOException e) {
 			setErrorMessage(NLS.bind(
 					UIText.ConfirmationPage_errorCantResolveSpecs, e
