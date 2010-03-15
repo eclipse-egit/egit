@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.op.ListRemoteOperation;
@@ -28,6 +29,7 @@ import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
 import org.eclipse.egit.ui.internal.components.SelectionChangeListener;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -233,7 +235,12 @@ class SourceBranchPage extends BaseWizardPage {
 			final URIish uri = newRepoSelection.getURI();
 			final Repository db = new Repository(new File("/tmp")); //$NON-NLS-1$
 			listRemoteOp = new ListRemoteOperation(db, uri);
-			getContainer().run(true, true, listRemoteOp);
+			getContainer().run(true, true, new IRunnableWithProgress() {
+				public void run(IProgressMonitor monitor)
+						throws InvocationTargetException, InterruptedException {
+					listRemoteOp.run(monitor);
+				}
+			});
 		} catch (InvocationTargetException e) {
 			Throwable why = e.getCause();
 			transportError(why.getMessage());

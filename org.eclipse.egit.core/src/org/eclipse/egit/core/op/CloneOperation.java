@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.errors.TransportException;
@@ -45,7 +44,7 @@ import org.eclipse.jgit.transport.URIish;
 /**
  * Clones a repository from a remote location to a local location.
  */
-public class CloneOperation implements IRunnableWithProgress {
+public class CloneOperation {
 	private final URIish uri;
 
 	private final boolean allSelected;
@@ -98,6 +97,13 @@ public class CloneOperation implements IRunnableWithProgress {
 		this.remoteName = remoteName;
 	}
 
+	/**
+	 * @param pm
+	 *            the monitor to be used for reporting progress and responding
+	 *            to cancellation. The monitor is never <code>null</code>
+	 * @throws InvocationTargetException
+	 * @throws InterruptedException
+	 */
 	public void run(final IProgressMonitor pm)
 			throws InvocationTargetException, InterruptedException {
 		final IProgressMonitor monitor;
