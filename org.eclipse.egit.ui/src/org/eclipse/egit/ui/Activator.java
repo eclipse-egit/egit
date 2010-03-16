@@ -307,6 +307,12 @@ public class Activator extends AbstractUIPlugin {
 
 		// FIXME, need to be more intelligent about this to avoid too much work
 		private static final long REPO_SCAN_INTERVAL = 10000L;
+		// volatile in order to ensure thread synchronization
+		private volatile boolean doReschedule = true;
+
+		void setReschedule(boolean reschedule){
+			doReschedule = reschedule;
+		}
 
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
@@ -340,7 +346,8 @@ public class Activator extends AbstractUIPlugin {
 				}
 				monitor.done();
 				trace("Rescheduling " + getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
-				schedule(REPO_SCAN_INTERVAL);
+				if (doReschedule)
+					schedule(REPO_SCAN_INTERVAL);
 			} catch (Exception e) {
 				trace("Stopped rescheduling " + getName() + "job"); //$NON-NLS-1$ //$NON-NLS-2$
 				return new Status(
@@ -382,6 +389,7 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	public void stop(final BundleContext context) throws Exception {
+		rcs.setReschedule(false);
 		trace("Trying to cancel " + rcs.getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
 		rcs.cancel();
 		trace("Trying to cancel " + refreshJob.getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -391,6 +399,7 @@ public class Activator extends AbstractUIPlugin {
 		refreshJob.join();
 
 		trace("Jobs terminated"); //$NON-NLS-1$
+		traceVerbose = false;
 		super.stop(context);
 		plugin = null;
 	}
