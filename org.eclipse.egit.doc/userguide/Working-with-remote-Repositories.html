@@ -1,9 +1,9 @@
-<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>EGit User Guide - Working with remote Repositories</title>
-		<link type="text/css" rel="stylesheet" href="book.css"/>
+		<link type="text/css" rel="stylesheet" href="book.css" />
 	</head>
 	<body>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
@@ -13,34 +13,35 @@
 			<tr>
 				<td style="width: 20%" align="left">
 					<a href="Creating-a-new-empty-Git-Repository.html" title="Creating a new empty Git Repository">
-						<img alt="Previous" border="0" src="images/prev.gif"/>
+						<img alt="Previous" border="0" src="images/prev.gif" />
 					</a>
 				</td>
-				<td style="width: 60%" align="center"></td>
+				<td style="width: 60%" align="center" />
 				<td style="width: 20%" align="right">
 					<a href="Inspecting-the-state-of-the-Repository.html" title="Inspecting the state of the Repository">
-						<img alt="Next" border="0" src="images/next.gif"/>
+						<img alt="Next" border="0" src="images/next.gif" />
 					</a>
 				</td>
 			</tr>
 			<tr>
 				<td style="width: 20%" align="left" valign="top">Creating a new empty Git Repository</td>
-				<td style="width: 60%" align="center"></td>
+				<td style="width: 60%" align="center" />
 				<td style="width: 20%" align="right" valign="top">Inspecting the state of the Repository</td>
 			</tr>
-		</table><hr/>
+		</table>
+		<hr />
 		<h1 id="Working_with_remote_Repositories">Working with remote Repositories</h1>
 		<h2 id="Cloning_remote_Repositories">Cloning remote Repositories</h2>
 		<p>Using the Git import wizard you can clone remote repositories using different transport protocols.
 			Additionally you may import existing Eclipse projects into your workspace and share the projects with the Git team provider. </p>
 		<p>Start the import wizard by navigating to File -> Import... and choose "Git Repository".</p>
 		<p>
-			<img border="0" src="images/01-CloneExistingRepository.png"/>
+			<img border="0" src="images/01-CloneExistingRepository.png" />
 		</p>
 		<h3 id="Repository_Selection">Repository Selection</h3>
 		<p>On the first page of the wizard enter the location of the remote repository:</p>
 		<p>
-			<img border="0" src="images/02-GitProtocol.png"/>
+			<img border="0" src="images/02-GitProtocol.png" />
 		</p>
 		<ul>
 			<li>
@@ -97,12 +98,12 @@
 		<h3 id="Branch_selection">Branch selection</h3>
 		<p>On the next page choose which branch should be cloned from the remote repository:</p>
 		<p>
-			<img border="0" src="images/05-branches.png"/>
+			<img border="0" src="images/05-branches.png" />
 		</p>
 		<h3 id="Local_Destination">Local Destination</h3>
 		<p>On the next page define where you want to store the repository on your file system and define some initial settings.</p>
 		<p>
-			<img border="0" src="images/06-LocalStorage.png"/>
+			<img border="0" src="images/06-LocalStorage.png" />
 		</p>
 		<ul>
 			<li>
@@ -122,7 +123,7 @@
 		<h3 id="Import_Projects">Import Projects</h3>
 		<p>On the next page the Eclipse projects found in the cloned repository are presented.</p>
 		<p>
-			<img border="0" src="images/07-ImportProjects.png"/>
+			<img border="0" src="images/07-ImportProjects.png" />
 		</p>
 		<ul>
 			<li>
@@ -141,20 +142,20 @@
 			<li>create a new repository at GitHub</li>
 		</ul>
 		<p>
-			<img border="0" src="images/egit-0.6-001-CreateRepoAtGithub.png"/>
+			<img border="0" src="images/Egit-0.6-001-CreateRepoAtGithub.png" />
 		</p>
 		<ul>
 			<li>you get a fresh clone URL for this new repository</li>
 		</ul>
 		<p>
-			<img border="0" src="images/egit-0.6-002-CloneUrl.png"/>
+			<img border="0" src="images/Egit-0.6-002-CloneUrl.png" />
 		</p>
 		<h3 id="Eclipse_SSH_Configuration">Eclipse SSH Configuration</h3>
 		<ul>
 			<li>open "Window" > "Preferences" and ensure that your SSH2 home is configured correctly (usually this is ~/.ssh) and contains your SSH2 keys (upload your public key to your GitHub account settings)</li>
 		</ul>
 		<p>
-			<img border="0" src="images/egit-0.6-003-SshPreferences.png"/>
+			<img border="0" src="images/Egit-0.6-003-SshPreferences.png" />
 		</p>
 		<ul>
 			<li>if you don't have SSH keys yet you may generate them on the second tab "Key Management" of this dialog, use a good pass phrase to protect your private key, for more details see
@@ -166,43 +167,43 @@
 			<li>Select your new Eclipse project and click "Team" > "Push To" and enter "Your GitHub Clone URL" and your GitHub password(with the free github accoutns do not enter a password but leave blank), leave the user as "git"</li>
 		</ul>
 		<p>
-			<img border="0" src="images/egit-0.6-004-PushDialog.png"/>
+			<img border="0" src="images/Egit-0.6-004-PushDialog.png" />
 		</p>
 		<ul>
 			<li>click "Next" and on first connection accept GitHub's host key</li>
 		</ul>
 		<p>
-			<img border="0" src="images/egit-0.6-005-AcceptHostKey.png"/>
+			<img border="0" src="images/Egit-0.6-005-AcceptHostKey.png" />
 		</p>
 		<ul>
 			<li>enter your SSH key's passphrase</li>
 		</ul>
 		<p>
-			<img border="0" src="images/egit-0.6-006-PassPhrase.png"/>
+			<img border="0" src="images/Egit-0.6-006-PassPhrase.png" />
 		</p>
 		<ul>
 			<li>enter as source ref: refs/heads/master and as target ref: refs/heads/master and click button "Add all branches spec"</li>
 		</ul>
 		<p>
-			<img border="0" src="images/egit-0.6-007-PushRefSpecifications.png"/>
+			<img border="0" src="images/Egit-0.6-007-PushRefSpecifications.png" />
 		</p>
 		<ul>
 			<li>click "Next" and click "Finish" to confirm the push</li>
 		</ul>
 		<p>
-			<img border="0" src="images/egit-0.6-008-PushConfirmation.png"/>
+			<img border="0" src="images/Egit-0.6-008-PushConfirmation.png" />
 		</p>
 		<ul>
 			<li>the next dialog shows the result of the push operation</li>
 		</ul>
 		<p>
-			<img border="0" src="images/egit-0.6-009-PushResult.png"/>
+			<img border="0" src="images/Egit-0.6-009-PushResult.png" />
 		</p>
 		<ul>
 			<li>point your browser at your GitHub repository to see that your new repository content has arrived</li>
 		</ul>
 		<p>
-			<img border="0" src="images/egit-0.6-010-PushResultOnGithub.png"/>
+			<img border="0" src="images/Egit-0.6-010-PushResultOnGithub.png" />
 		</p>
 		<h2 id="Pulling_.28merge_or_rebase.29_new_changes_from_upstream">Pulling (merge or rebase) new changes from upstream</h2>
 		<p>This is not yet available.  Available alternatives currently include:</p>
@@ -211,28 +212,29 @@
 				<a href="http://marc.info/?l=git&amp;m=123924844219075" target="mylyn_external">beware on Windows</a>)
 			</li>
 			<li>if you did no local change or want to discard your local changes, use "Team/Reset To..."</li>
-		</ul><hr/>
+		</ul>
+		<hr />
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left">
 					<a href="Creating-a-new-empty-Git-Repository.html" title="Creating a new empty Git Repository">
-						<img alt="Previous" border="0" src="images/prev.gif"/>
+						<img alt="Previous" border="0" src="images/prev.gif" />
 					</a>
 				</td>
 				<td style="width: 60%" align="center">
 					<a href="EGit User Guide.html" title="EGit User Guide">
-						<img alt="EGit User Guide" border="0" src="images/home.gif"/>
+						<img alt="EGit User Guide" border="0" src="images/home.gif" />
 					</a>
 				</td>
 				<td style="width: 20%" align="right">
 					<a href="Inspecting-the-state-of-the-Repository.html" title="Inspecting the state of the Repository">
-						<img alt="Next" border="0" src="images/next.gif"/>
+						<img alt="Next" border="0" src="images/next.gif" />
 					</a>
 				</td>
 			</tr>
 			<tr>
 				<td style="width: 20%" align="left" valign="top">Creating a new empty Git Repository</td>
-				<td style="width: 60%" align="center"></td>
+				<td style="width: 60%" align="center" />
 				<td style="width: 20%" align="right" valign="top">Inspecting the state of the Repository</td>
 			</tr>
 		</table>
