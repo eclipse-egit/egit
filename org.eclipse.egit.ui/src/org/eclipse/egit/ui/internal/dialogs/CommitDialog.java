@@ -18,11 +18,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.internal.storage.GitFileHistoryProvider;
@@ -31,7 +35,14 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.fieldassist.ContentProposalAdapter;
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
+import org.eclipse.jface.fieldassist.IContentProposal;
+import org.eclipse.jface.fieldassist.IContentProposalProvider;
+import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -125,6 +136,9 @@ public class CommitDialog extends Dialog {
 
 	ArrayList<CommitItem> items = new ArrayList<CommitItem>();
 
+	private static final String COMMITTER_VALUES_PREF = "CommitDialog.committerValues"; //$NON-NLS-1$
+	private static final String AUTHOR_VALUES_PREF = "CommitDialog.authorValues"; //$NON-NLS-1$
+
 	/**
 	 * @param parentShell
 	 */
@@ -186,6 +200,7 @@ public class CommitDialog extends Dialog {
 		if (author != null)
 			authorText.setText(author);
 
+		addContentProposalToText(authorText, AUTHOR_VALUES_PREF);
 		new Label(container, SWT.LEFT).setText(UIText.CommitDialog_Committer);
 		committerText = new Text(container, SWT.BORDER);
 		committerText.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
@@ -205,6 +220,8 @@ public class CommitDialog extends Dialog {
 				}
 			}
 		});
+
+		addContentProposalToText(committerText, COMMITTER_VALUES_PREF);
 
 		amendingButton = new Button(container, SWT.CHECK);
 		if (amending) {
@@ -574,6 +591,9 @@ public class CommitDialog extends Dialog {
 		signedOff = signedOffButton.getSelection();
 		amending = amendingButton.getSelection();
 
+		addValueToPrefs(author, AUTHOR_VALUES_PREF);
+		addValueToPrefs(committer, COMMITTER_VALUES_PREF);
+
 		Object[] checkedElements = filesViewer.getCheckedElements();
 		selectedFiles.clear();
 		for (Object obj : checkedElements)
@@ -617,6 +637,35 @@ public class CommitDialog extends Dialog {
 			return;
 		}
 		super.okPressed();
+	}
+
+	private void addValueToPrefs(String value, String prefsName) {
+		// don't store empty values
+		if (value.length() > 0) {
+			// we need to mix the value in
+			IDialogSettings settings = org.eclipse.egit.ui.Activator
+					.getDefault().getDialogSettings();
+			String[] existingValues = settings.getArray(prefsName);
+			if (existingValues == null) {
+				existingValues = new String[] { value };
+				settings.put(prefsName, existingValues);
+			} else {
+				List<String> values = new ArrayList<String>(
+						existingValues.length + 1);
+				for (String existingValue : existingValues) {
+					if (!values.contains(existingValue))
+						values.add(existingValue);
+				}
+				if (!values.contains(value))
+					values.add(value);
+				// limit the list to 10 elements
+				while (values.size() > 10)
+					values.remove(0);
+
+				settings.put(prefsName, values
+						.toArray(new String[values.size()]));
+			}
+		}
 	}
 
 	/**
@@ -741,6 +790,87 @@ public class CommitDialog extends Dialog {
 	@Override
 	protected int getShellStyle() {
 		return super.getShellStyle() | SWT.RESIZE;
+	}
+
+	private void addContentProposalToText(Text textField,
+			final String preferenceKey) {
+
+		ControlDecoration dec = new ControlDecoration(textField, SWT.TOP
+				| SWT.LEFT);
+
+		if (Platform.isRunning()) {
+			dec.setImage(FieldDecorationRegistry.getDefault()
+					.getFieldDecoration(
+							FieldDecorationRegistry.DEC_CONTENT_PROPOSAL)
+					.getImage());
+		}
+		dec.setShowOnlyOnFocus(true);
+		dec.setShowHover(true);
+
+		dec
+				.setDescriptionText(UIText.CommitDialog_ValueHelp_Message);
+
+		IContentProposalProvider cp = new IContentProposalProvider() {
+
+			public IContentProposal[] getProposals(String contents, int position) {
+				List<IContentProposal> resultList = new ArrayList<IContentProposal>();
+
+				// make the simplest possible pattern check: allow "*"
+				// for multiple characters
+				String patternString = contents.replaceAll("\\x2A", ".*"); //$NON-NLS-1$ //$NON-NLS-2$
+				// make sure we add a (logical) * at the end
+				if (!patternString.endsWith(".*")) { //$NON-NLS-1$
+					patternString = patternString + ".*"; //$NON-NLS-1$
+				}
+				// let's compile a case-insensitive pattern (assumes ASCII only)
+				Pattern pattern;
+				try {
+					pattern = Pattern.compile(patternString,
+							Pattern.CASE_INSENSITIVE);
+				} catch (PatternSyntaxException e) {
+					pattern = null;
+				}
+
+				String[] proposals = org.eclipse.egit.ui.Activator.getDefault()
+						.getDialogSettings().getArray(preferenceKey);
+				if (proposals != null)
+					for (final String uriString : proposals) {
+
+						if (pattern != null
+								&& !pattern.matcher(uriString).matches())
+							continue;
+
+						IContentProposal propsal = new IContentProposal() {
+
+							public String getLabel() {
+								return null;
+							}
+
+							public String getDescription() {
+								return null;
+							}
+
+							public int getCursorPosition() {
+								return 0;
+							}
+
+							public String getContent() {
+								return uriString;
+							}
+						};
+						resultList.add(propsal);
+					}
+
+				return resultList.toArray(new IContentProposal[resultList
+						.size()]);
+			}
+		};
+
+		// set the acceptance style to always replace the complete content
+		new ContentProposalAdapter(textField, new TextContentAdapter(), cp,
+				null, null)
+				.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+
 	}
 }
 

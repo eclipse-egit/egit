@@ -706,6 +706,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_StatusUnknown;
 
 	/** */
+	public static String CommitDialog_ValueHelp_Message;
+
+	/** */
 	public static String ConfirmationPage_cantConnectToAnyTitle;
 
 	/** */
