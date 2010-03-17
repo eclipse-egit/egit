@@ -10,19 +10,14 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
-import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRunnable;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.CoreText;
-import org.eclipse.egit.core.internal.trace.GitTraceLocation;
-import org.eclipse.osgi.util.NLS;
-import org.eclipse.team.core.TeamException;
+import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.errors.CheckoutConflictException;
 import org.eclipse.jgit.lib.Commit;
 import org.eclipse.jgit.lib.Constants;
@@ -31,6 +26,8 @@ import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.lib.WorkDirCheckout;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.team.core.TeamException;
 
 /**
  * This class implements checkouts of a specific revision. A check
@@ -65,6 +62,8 @@ public class BranchOperation implements IWorkspaceRunnable {
 
 
 	public void run(IProgressMonitor monitor) throws CoreException {
+		monitor.beginTask(NLS.bind(CoreText.BranchOperation_performingBranch,
+				refName), 6);
 		lookupRefs();
 		monitor.worked(1);
 
@@ -80,32 +79,11 @@ public class BranchOperation implements IWorkspaceRunnable {
 		updateHeadRef();
 		monitor.worked(1);
 
-		refreshProjects();
+		ProjectUtil.refreshProjects(repository, new SubProgressMonitor(monitor,
+				1));
 		monitor.worked(1);
 
 		monitor.done();
-	}
-
-	private void refreshProjects() {
-		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects();
-		final File parentFile = repository.getWorkDir();
-		for (IProject p : projects) {
-			final File file = p.getLocation().toFile();
-			if (file.getAbsolutePath().startsWith(parentFile.getAbsolutePath())) {
-				try {
-					// TODO is this the right location?
-					if (GitTraceLocation.CORE.isActive())
-						GitTraceLocation.getTrace().trace(
-								GitTraceLocation.CORE.getLocation(),
-								"Refreshing " + p); //$NON-NLS-1$
-					p.refreshLocal(IResource.DEPTH_INFINITE, null);
-				} catch (CoreException e) {
-					if (GitTraceLocation.CORE.isActive())
-						GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
-				}
-			}
-		}
 	}
 
 	private void updateHeadRef() throws TeamException {

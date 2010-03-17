@@ -185,6 +185,9 @@ public class CoreText extends NLS {
 	public static String ListRemoteOperation_title;
 
 	/** */
+	public static String ProjectUtil_refreshingProjects;
+
+	/** */
 	public static String PushOperation_resultCancelled;
 
 	/** */
@@ -207,6 +210,9 @@ public class CoreText extends NLS {
 
 	/** */
 	public static String TrackOperation_writingIndex;
+
+	/** */
+	public static String BranchOperation_performingBranch;
 
 	static {
 		initializeMessages("org.eclipse.egit.core.coretext", //$NON-NLS-1$
