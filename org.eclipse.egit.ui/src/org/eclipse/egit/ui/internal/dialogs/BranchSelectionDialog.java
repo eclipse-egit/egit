@@ -102,21 +102,19 @@ public class BranchSelectionDialog extends Dialog {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				TreeItem item = branchTree.getSelection()[0];
-				if (item.getData() != null) {
+				if (item.getData() != null)
 					okPressed();
-				} else { // expand element if it does not contains data
+				else // expand element if it does not contain data
 					item.setExpanded(!item.getExpanded());
-				}
 			}
 		});
 		branchTree.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (SWT.ARROW_RIGHT == e.keyCode) { // expand three
+				if (SWT.ARROW_RIGHT == e.keyCode) // expand tree
 					expandTreeElement(true);
-				} else if (SWT.ARROW_LEFT == e.keyCode){ // collapse three
+				else if (SWT.ARROW_LEFT == e.keyCode) // collapse tree
 					expandTreeElement(false);
-				}
 			}
 		});
 
