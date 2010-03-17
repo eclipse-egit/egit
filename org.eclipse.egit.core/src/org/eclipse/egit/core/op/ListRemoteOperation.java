@@ -15,7 +15,6 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.CoreText;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.lib.Ref;
@@ -27,7 +26,7 @@ import org.eclipse.jgit.transport.URIish;
 /**
  * Operation of listing remote repository advertised refs.
  */
-public class ListRemoteOperation implements IRunnableWithProgress {
+public class ListRemoteOperation {
 	private final Repository localDb;
 
 	private final URIish uri;
@@ -71,6 +70,13 @@ public class ListRemoteOperation implements IRunnableWithProgress {
 		return remoteRefsMap.get(refName);
 	}
 
+	/**
+	 * @param pm
+	 *            the monitor to be used for reporting progress and responding
+	 *            to cancellation. The monitor is never <code>null</code>
+	 * @throws InvocationTargetException
+	 * @throws InterruptedException
+	 */
 	public void run(IProgressMonitor pm) throws InvocationTargetException,
 			InterruptedException {
 		Transport transport = null;
