@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <toc topic="userguide/EGit User Guide.html" label="EGit User Guide">
-	<topic href="userguide/EGit User Guide.html" label="Getting Started"></topic>
-	<topic href="userguide/Adding-a-project-to-version-control.html" label="Adding a project to version control"></topic>
+	<topic href="userguide/EGit User Guide.html" label="Getting Started/Adding a project to version control"></topic>
 	<topic href="userguide/Creating-a-new-empty-Git-Repository.html" label="Creating a new empty Git Repository"></topic>
 	<topic href="userguide/Working-with-remote-Repositories.html" label="Working with remote Repositories">
 		<topic href="userguide/Working-with-remote-Repositories.html#Cloning_remote_Repositories" label="Cloning remote Repositories">
