@@ -61,6 +61,8 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 
 	private String branch = ""; //$NON-NLS-1$
 
+	private final String repositoryName;
+
 	private boolean tracked = false;
 
 	private boolean ignored = false;
@@ -89,6 +91,12 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 
 		store = Activator.getDefault().getPreferenceStore();
 
+		File gitDir = repository.getDirectory();
+		if (gitDir != null)
+			repositoryName = repository.getDirectory().getParentFile()
+					.getName();
+		else
+			repositoryName = ""; //$NON-NLS-1$
 		// TODO: Add option to shorten branch name to 6 chars if it's a SHA
 		branch = repository.getBranch();
 
@@ -377,6 +385,10 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 
 	public int getType() {
 		return resource.getType();
+	}
+
+	public String getRepositoryName() {
+		return repositoryName;
 	}
 
 	public String getBranch() {
