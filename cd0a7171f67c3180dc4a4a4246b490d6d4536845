@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAGn///90\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-03-12T18:41:49Z",
+      "side": 1,
+      "message": "Style-nit:  As a project we prefer \"static final\".  And at least please be consistent within the same class, just 17 lines later you use the reverse ordering of \"static final\".",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///9Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-03-12T18:41:49Z",
+      "side": 1,
+      "message": "Would it be cleaner to just have different subclasses of this class for the different types that can appear?  Rather than faking a type system using an enum and some rather ugly switch statements?",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///9M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-03-12T18:41:49Z",
+      "side": 1,
+      "message": "Can you use Repository.shortenRefName here to shorten the leaf\u0027s name?  Showing refs/heads/ to a user is ugly.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///9E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-03-12T18:41:49Z",
+      "side": 1,
+      "message": "Every one of these calls causes a disk IO operation.  (Well, open, read, close.  Hopefully its cached.)  You might want to cache this in the repository node when children are fetched so we aren\u0027t incurring this lookup every time the UI needs the label text.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///9I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-03-12T18:41:49Z",
+      "side": 1,
+      "message": "Can you use Repository.shortenRefName here to shorten the name?  Showing refs/heads/ to a user is ugly.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///9U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-03-12T18:41:49Z",
+      "side": 1,
+      "message": "FWIW, this is nested way too deep.  Maybe some utility classes or helper methods at the outer class would help.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///9s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-03-12T18:41:49Z",
+      "side": 1,
+      "message": "Hmm.  We probably can\u0027t active detect file locks on pack files on Windows, can we?  It would be nice if we could support a delete, but only if the repository is reasonably believed to be not-in-use right now.\n\nWithin EGit you might be able to check GitProjectData and its repositoryCache to see if the repository is open by this workspace.  If it is, then we know we shouldn\u0027t try to delete it.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///9w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-03-12T18:41:49Z",
+      "side": 1,
+      "message": "Obviously this text needs to be externalized.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///9Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-03-12T18:41:49Z",
+      "side": 1,
+      "message": "Use Constants.DOT_GIT.\n\nBut actually if you want to test that a directory is a Git repository, use RepositoryCache.FileKey.isGitRepository().",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
