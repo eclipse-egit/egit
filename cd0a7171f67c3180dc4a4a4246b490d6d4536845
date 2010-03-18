@@ -36,6 +36,92 @@
     },
     {
       "key": {
+        "uuid": "AAAAGn///8s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-03-12T22:00:28Z",
+      "side": 1,
+      "message": "or attach methods to the enum values.",
+      "parentUuid": "AAAAGn///9Q\u003d",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///8k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-03-12T22:00:28Z",
+      "side": 1,
+      "message": "Please sort.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///8w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-03-12T22:00:28Z",
+      "side": 1,
+      "message": "Just iterating over the values results in easier to read code.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///8o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-03-12T22:00:28Z",
+      "side": 1,
+      "message": "Please sort the result here",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///80\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-03-12T22:00:28Z",
+      "side": 1,
+      "message": "Reusing messages across different view is, I think, not a good thing. The name of this message clearcly states that it belongs to anoter piece of code.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAGn///9M\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 1
@@ -132,6 +218,23 @@
       "writtenOn": "2010-03-12T18:41:49Z",
       "side": 1,
       "message": "Obviously this text needs to be externalized.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///88\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-03-12T22:00:28Z",
+      "side": 1,
+      "message": "forgot something?",
       "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
