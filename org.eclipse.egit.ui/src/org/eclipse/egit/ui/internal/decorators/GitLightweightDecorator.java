@@ -231,6 +231,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 		public static final String BINDING_BRANCH_NAME = "branch"; //$NON-NLS-1$
 
 		/** */
+		public static final String BINDING_REPOSITORY_NAME = "repository"; //$NON-NLS-1$
+
+		/** */
 		public static final String BINDING_DIRTY_FLAG = "dirty"; //$NON-NLS-1$
 
 		/** */
@@ -355,6 +358,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 
 			Map<String, String> bindings = new HashMap<String, String>();
 			bindings.put(BINDING_RESOURCE_NAME, resource.getName());
+			bindings.put(BINDING_REPOSITORY_NAME, resource.getRepositoryName());
 			bindings.put(BINDING_BRANCH_NAME, resource.getBranch());
 			bindings.put(BINDING_DIRTY_FLAG, resource.isDirty() ? ">" : null); //$NON-NLS-1$
 			bindings.put(BINDING_STAGED_FLAG,

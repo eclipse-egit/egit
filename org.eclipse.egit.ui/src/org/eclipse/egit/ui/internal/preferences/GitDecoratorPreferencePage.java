@@ -102,42 +102,42 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 	static {
 		final PreviewResource project = new PreviewResource(
-				"Project", IResource.PROJECT, "master", true, false, true, Staged.NOT_STAGED, false, false); //$NON-NLS-1$ //$NON-NLS-2$1
+				"Project", IResource.PROJECT, "repository", "master", true, false, true, Staged.NOT_STAGED, false, false); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		final ArrayList<PreviewResource> children = new ArrayList<PreviewResource>();
 
 		children
 				.add(new PreviewResource(
-						"folder", IResource.FOLDER, null, true, false, true, Staged.NOT_STAGED, false, false)); //$NON-NLS-1$
+						"folder", IResource.FOLDER, "repository", null, true, false, true, Staged.NOT_STAGED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
 		children
 				.add(new PreviewResource(
-						"tracked.txt", IResource.FILE, null, true, false, false, Staged.NOT_STAGED, false, false)); //$NON-NLS-1$
+						"tracked.txt", IResource.FILE, "repository", null, true, false, false, Staged.NOT_STAGED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
 		children
 				.add(new PreviewResource(
-						"untracked.txt", IResource.FILE, null, false, false, false, Staged.NOT_STAGED, false, false)); //$NON-NLS-1$
+						"untracked.txt", IResource.FILE, "repository", null, false, false, false, Staged.NOT_STAGED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
 		children
 				.add(new PreviewResource(
-						"ignored.txt", IResource.FILE, null, false, true, false, Staged.NOT_STAGED, false, false)); //$NON-NLS-1$
+						"ignored.txt", IResource.FILE, "repository", null, false, true, false, Staged.NOT_STAGED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
 		children
 				.add(new PreviewResource(
-						"dirty.txt", IResource.FILE, null, true, false, true, Staged.NOT_STAGED, false, false)); //$NON-NLS-1$
+						"dirty.txt", IResource.FILE, "repository", null, true, false, true, Staged.NOT_STAGED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
 		children
 				.add(new PreviewResource(
-						"staged.txt", IResource.FILE, null, true, false, false, Staged.MODIFIED, false, false)); //$NON-NLS-1$
+						"staged.txt", IResource.FILE, "repository", null, true, false, false, Staged.MODIFIED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
 		children
 				.add(new PreviewResource(
-						"partially-staged.txt", IResource.FILE, null, true, false, true, Staged.MODIFIED, false, false)); //$NON-NLS-1$
+						"partially-staged.txt", IResource.FILE, "repository", null, true, false, true, Staged.MODIFIED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
 		children
 				.add(new PreviewResource(
-						"added.txt", IResource.FILE, null, true, false, false, Staged.ADDED, false, false)); //$NON-NLS-1$
+						"added.txt", IResource.FILE, "repository", null, true, false, false, Staged.ADDED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
 		children
 				.add(new PreviewResource(
-						"removed.txt", IResource.FILE, null, true, false, false, Staged.REMOVED, false, false)); //$NON-NLS-1$
+						"removed.txt", IResource.FILE, "repository", null, true, false, false, Staged.REMOVED, false, false)); //$NON-NLS-1$ //$NON-NLS-2$
 		children
 				.add(new PreviewResource(
-						"conflict.txt", IResource.FILE, null, true, false, true, Staged.NOT_STAGED, true, false)); //$NON-NLS-1$
+						"conflict.txt", IResource.FILE, "repository", null, true, false, true, Staged.NOT_STAGED, true, false)); //$NON-NLS-1$ //$NON-NLS-2$
 		children
 				.add(new PreviewResource(
-						"assume-valid.txt", IResource.FILE, null, true, false, false, Staged.NOT_STAGED, false, true)); //$NON-NLS-1$
+						"assume-valid.txt", IResource.FILE, "repository", null, true, false, false, Staged.NOT_STAGED, false, true)); //$NON-NLS-1$ //$NON-NLS-2$
 		project.children = children;
 		PREVIEW_FILESYSTEM_ROOT = Collections.singleton(project);
 
@@ -156,6 +156,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 				UIText.DecoratorPreferencesPage_bindingDirtyFlag);
 		PROJECT_BINDINGS.put(DecorationHelper.BINDING_STAGED_FLAG,
 				UIText.DecoratorPreferencesPage_bindingStagedFlag);
+		PROJECT_BINDINGS.put(DecorationHelper.BINDING_REPOSITORY_NAME,
+				UIText.GitDecoratorPreferencePage_bindingRepositoryNameFlag);
 		PROJECT_BINDINGS.put(DecorationHelper.BINDING_BRANCH_NAME,
 				UIText.DecoratorPreferencesPage_bindingBranchName);
 	}
@@ -800,6 +802,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 	private static class PreviewResource implements IDecoratableResource {
 		private final String name;
 
+		private final String repositoryName;
+
 		private final String branch;
 
 		private final int type;
@@ -818,11 +822,12 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		private boolean assumeValid;
 
-		public PreviewResource(String name, int type, String branch,
+		public PreviewResource(String name, int type, String repositoryName, String branch,
 				boolean tracked, boolean ignored, boolean dirty, Staged staged,
 				boolean conflicts, boolean assumeValid) {
 
 			this.name = name;
+			this.repositoryName = repositoryName;
 			this.branch = branch;
 			this.type = type;
 			this.children = Collections.EMPTY_LIST;
@@ -836,6 +841,10 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		public String getName() {
 			return name;
+		}
+
+		public String getRepositoryName() {
+			return repositoryName;
 		}
 
 		public int getType() {

@@ -47,6 +47,14 @@ public interface IDecoratableResource {
 	String getName();
 
 	/**
+	 * Gets the name of the repository of the resource
+	 *
+	 * @return the name of the current branch, or <code>null</code> if not
+	 *         applicable
+	 */
+	String getRepositoryName();
+
+	/**
 	 * Gets the current branch of the resource if applicable
 	 *
 	 * @return the name of the current branch, or <code>null</code> if not
