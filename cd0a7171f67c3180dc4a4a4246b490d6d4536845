@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAGn///3w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAGn///90\u003d",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAGn///9Q\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 1
@@ -54,6 +72,42 @@
     },
     {
       "key": {
+        "uuid": "AAAAGn///3s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "I added Icon support to the type enum, so I would rather stay with that. Going for subclasses wouldn\u0027t do away with the type, either, unless you would want to use instanceof to detect the actual type.",
+      "parentUuid": "AAAAGn///9Q\u003d",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///3o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Added the icons support to the enum.",
+      "parentUuid": "AAAAGn///8s\u003d",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAGn///8k\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 1
@@ -65,6 +119,24 @@
       "writtenOn": "2010-03-12T22:00:28Z",
       "side": 1,
       "message": "Please sort.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///3k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAGn///8k\u003d",
       "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAGn///3g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAGn///8w\u003d",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAGn///8o\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 1
@@ -99,6 +189,24 @@
       "writtenOn": "2010-03-12T22:00:28Z",
       "side": 1,
       "message": "Please sort the result here",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///3c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAGn///8o\u003d",
       "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAGn///3Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAGn///80\u003d",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAGn///9M\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 1
@@ -133,6 +259,24 @@
       "writtenOn": "2010-03-12T18:41:49Z",
       "side": 1,
       "message": "Can you use Repository.shortenRefName here to shorten the leaf\u0027s name?  Showing refs/heads/ to a user is ugly.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///3U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAGn///9M\u003d",
       "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAGn///3Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAGn///9E\u003d",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAGn///9I\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 1
@@ -167,6 +329,24 @@
       "writtenOn": "2010-03-12T18:41:49Z",
       "side": 1,
       "message": "Can you use Repository.shortenRefName here to shorten the name?  Showing refs/heads/ to a user is ugly.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///3M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAGn///9I\u003d",
       "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAGn///3I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAGn///9U\u003d",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAGn///9s\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 1
@@ -201,6 +399,24 @@
       "writtenOn": "2010-03-12T18:41:49Z",
       "side": 1,
       "message": "Hmm.  We probably can\u0027t active detect file locks on pack files on Windows, can we?  It would be nice if we could support a delete, but only if the repository is reasonably believed to be not-in-use right now.\n\nWithin EGit you might be able to check GitProjectData and its repositoryCache to see if the repository is open by this workspace.  If it is, then we know we shouldn\u0027t try to delete it.",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///3E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Added your remarks to the code in the form of comments. Let\u0027s try to look into this in one of the next iterations.",
+      "parentUuid": "AAAAGn///9s\u003d",
       "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -224,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAGn///3A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAGn///9w\u003d",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAGn///88\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 1
@@ -241,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAGn///28\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAGn///88\u003d",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAGn///9Y\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 1
@@ -252,6 +504,24 @@
       "writtenOn": "2010-03-12T18:41:49Z",
       "side": 1,
       "message": "Use Constants.DOT_GIT.\n\nBut actually if you want to test that a directory is a Git repository, use RepositoryCache.FileKey.isGitRepository().",
+      "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///24\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-15T14:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAGn///9Y\u003d",
       "revId": "cd0a7171f67c3180dc4a4a4246b490d6d4536845",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
