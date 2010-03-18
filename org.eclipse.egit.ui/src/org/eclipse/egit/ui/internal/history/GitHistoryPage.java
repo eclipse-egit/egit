@@ -9,16 +9,26 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Preferences;
 import org.eclipse.core.runtime.Preferences.IPropertyChangeListener;
 import org.eclipse.core.runtime.Preferences.PropertyChangeEvent;
@@ -52,6 +62,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexChangedEvent;
@@ -80,6 +91,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.internal.ui.IPreferenceIds;
@@ -122,6 +134,8 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 	private IAction compareAction = new CompareWithWorkingTreeAction();
 
 	private IAction compareVersionsAction = new CompareVersionsAction();
+
+	private CreatePatchAction createPatchAction = new CreatePatchAction();
 
 	/**
 	 * Determine if the input can be shown in this viewer.
@@ -516,8 +530,13 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			public void menuAboutToShow(IMenuManager manager) {
 				popupMgr.remove(new ActionContributionItem(compareAction));
 				popupMgr.remove(new ActionContributionItem(compareVersionsAction));
+				popupMgr.remove(new ActionContributionItem(createPatchAction));
 				int size = ((IStructuredSelection) revObjectSelectionProvider
 						.getSelection()).size();
+				if (size == 1) {
+					popupMgr.add(createPatchAction);
+					createPatchAction.setEnabled(createPatchAction.isEnabled());
+				}
 				if (IFile.class.isAssignableFrom(getInput()
 						.getClass())) {
 					if (size == 1 ) {
@@ -889,6 +908,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 		fileViewer.addSelectionChangedListener(commentViewer);
 		commentViewer.setTreeWalk(fileWalker);
 		commentViewer.setDb(db);
+		createPatchAction.setTreeWalk(fileWalker);
 		findToolbar.clear();
 		graph.setInput(highlightFlag, null, null);
 
@@ -1215,4 +1235,108 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 
 	}
 
+	private class CreatePatchAction extends Action {
+
+		private TreeWalk walker;
+
+		public CreatePatchAction() {
+			super(UIText.GitHistoryPage_CreatePatch);
+		}
+
+		@Override
+		public void run() {
+			IStructuredSelection selection = ((IStructuredSelection) revObjectSelectionProvider
+					.getSelection());
+			if (selection.size() == 1) {
+
+				Iterator<?> it = selection.iterator();
+				SWTCommit commit = (SWTCommit) it.next();
+
+				FileDialog saveFileDialog = new FileDialog(ourControl
+						.getShell(), SWT.SAVE);
+				saveFileDialog.setText(UIText.GitHistoryPage_SelectPatchFile);
+				saveFileDialog.setFileName(createFileName(commit));
+				String path = saveFileDialog.open();
+				if (path == null)
+					return;
+				File file = new File(new Path(path).toOSString());
+
+				StringBuilder sb = new StringBuilder();
+				DiffFormatter diffFmt = new DiffFormatter();
+				try {
+					writePatch(commit, sb, diffFmt);
+
+					Writer output = new BufferedWriter(new FileWriter(file));
+					try {
+						// FileWriter always assumes default encoding is OK!
+						output.write(sb.toString());
+					} finally {
+						output.close();
+					}
+				} catch (IOException e) {
+					Activator.logError(UIText.GitHistoryPage_ErrorNotWritten, e);
+				}
+
+			}
+
+		}
+
+		private String createFileName(SWTCommit commit) {
+			String name = commit.getShortMessage();
+
+			try {
+				name = URLEncoder.encode(name, "UTF-8"); //$NON-NLS-1$
+			} catch (UnsupportedEncodingException e) {
+				// We're pretty sure that UTF-8 will be supported in future
+			}
+			name = name.concat(".patch"); //$NON-NLS-1$
+			return name;
+		}
+
+		private void writePatch(SWTCommit commit, StringBuilder sb,
+				DiffFormatter diffFmt) throws IOException {
+
+			final SimpleDateFormat dtfmt;
+			dtfmt = new SimpleDateFormat("EEE MMM d HH:mm:ss yyyy Z", Locale.US); //$NON-NLS-1$
+			dtfmt.setTimeZone(commit.getAuthorIdent().getTimeZone());
+			sb.append(UIText.GitHistoryPage_From).append(" "). //$NON-NLS-1$
+				append(commit.getId().getName()).append(" "). //$NON-NLS-1$
+				append(dtfmt.format(Long.valueOf(commit.getCommitTime()))).append("\n"); //$NON-NLS-1$
+			sb.append(UIText.GitHistoryPage_From).append(": "). //$NON-NLS-1$
+				append(commit.getAuthorIdent().getName()).
+				append(" <").append(commit.getAuthorIdent().getEmailAddress()).//$NON-NLS-1$
+				append(">\n"); //$NON-NLS-1$
+			sb.append(UIText.GitHistoryPage_Date).append(": "). //$NON-NLS-1$
+				append(dtfmt.format(System.currentTimeMillis())).
+				append("\n"); //$NON-NLS-1$
+			sb.append(UIText.GitHistoryPage_Subject).append(": [PATCH] "). //$NON-NLS-1$
+				append(commit.getShortMessage()).
+				append("\n\n"); //$NON-NLS-1$
+
+			sb.append(commit.getFullMessage()).append("\n\n"); //$NON-NLS-1$
+
+			FileDiff[] diffs = FileDiff.compute(walker, commit);
+			for (FileDiff diff : diffs) {
+				sb.append("diff --git a").append(IPath.SEPARATOR). //$NON-NLS-1$
+						append(diff.path).append(" b").append(IPath.SEPARATOR). //$NON-NLS-1$
+						append(diff.path).append("\n"); //$NON-NLS-1$
+				diff.outputDiff(sb, db, diffFmt);
+			}
+		}
+
+		public void setTreeWalk(TreeWalk walker) {
+			this.walker = walker;
+		}
+
+		@Override
+		public boolean isEnabled() {
+			IStructuredSelection selection = ((IStructuredSelection) revObjectSelectionProvider
+					.getSelection());
+			Iterator<?> it = selection.iterator();
+			SWTCommit commit = (SWTCommit) it.next();
+			return (commit.getParentCount() == 1);
+
+		}
+
+	}
 }
