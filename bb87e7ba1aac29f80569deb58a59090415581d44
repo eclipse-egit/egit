@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAGX///+w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ContainerTreeIterator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-10T23:58:31Z",
+      "side": 1,
+      "message": "non-technical, shouldn\u0027t that be translatable ?",
+      "revId": "bb87e7ba1aac29f80569deb58a59090415581d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGX///+s\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-10T23:58:31Z",
+      "side": 1,
+      "message": "trailing whitespace ? or is an argument following here ?",
+      "revId": "bb87e7ba1aac29f80569deb58a59090415581d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGX///+o\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ListRemoteOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-10T23:58:31Z",
+      "side": 1,
+      "message": "I think this should be externalized",
+      "revId": "bb87e7ba1aac29f80569deb58a59090415581d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
