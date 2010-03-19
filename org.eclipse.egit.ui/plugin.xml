@@ -25,6 +25,21 @@
       </wizard>
    </extension>
 
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.eclipse.egit.ui.GitCategory"
+            class="org.eclipse.egit.ui.internal.repository.RepositoriesView"
+            id="org.eclipse.egit.ui.RepositoriesView"
+            name="Git Repositories"
+            restorable="true">
+      </view>
+      <category
+            id="org.eclipse.egit.ui.GitCategory"
+            name="Git">
+      </category>
+   </extension>
+
    <extension point="org.eclipse.ui.popupMenus">
       <objectContribution id="org.eclipse.egit.ui.projectContributions"
             objectClass="org.eclipse.core.resources.IProject"
@@ -76,6 +91,7 @@
                label="%UntrackAction_label"
                class="org.eclipse.egit.ui.internal.actions.Untrack"
                tooltip="%UntrackAction_tooltip"
+		       definitionId="org.eclipse.egit.ui.commands.untrack"
                menubarPath="team.main/group1"
                id="org.eclipse.egit.ui.internal.actions.Untrack"/>
          <action
@@ -88,6 +104,7 @@
                label="%AssumeUnchangedAction_label"
                class="org.eclipse.egit.ui.internal.actions.AssumeUnchanged"
                tooltip="%AssumeUnchangedAction_tooltip"
+		       definitionId="org.eclipse.egit.ui.commands.assumeUnchanged"
                menubarPath="team.main/group1"
                id="org.eclipse.egit.ui.internal.actions.AssumeUnchanged"/>
          <action
@@ -99,6 +116,7 @@
          <action
                class="org.eclipse.egit.ui.internal.actions.Update"
                id="org.eclipse.egit.ui.internal.actions.Update"
+       		   definitionId="org.eclipse.egit.ui.commands.update"
                label="%UpdateAction_label"
                menubarPath="team.main/group1"
                tooltip="%UpdateAction_tooltip"/>
@@ -111,18 +129,21 @@
          <action
                class="org.eclipse.egit.ui.internal.actions.CompareWithIndexAction"
                id="org.eclipse.egit.ui.internal.actions.CompareWithIndexAction"
+       		   definitionId="org.eclipse.egit.ui.commands.compareWithIndex"
                label="%CompareWithIndexAction_label"
                menubarPath="compareWithMenu/gitCompareWithGroup"
                tooltip="%CompareWithIndexAction_tooltip"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.IgnoreAction"
                id="org.eclipse.egit.ui.internal.actions.IgnoreAction"
+       		   definitionId="org.eclipse.egit.ui.commands.ignore"
                label="%IgnoreAction_label"
                menubarPath="team.main/group1"
                tooltip="%IgnoreAction_tooltip"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.AddToIndexAction"
                id="org.eclipse.egit.ui.internal.actions.AddToIndexAction"
+		       definitionId="org.eclipse.egit.ui.commands.addToIndex"
                label="%AddToIndexAction_label"
                menubarPath="team.main/group1"
                tooltip="%AddToIndexAction_tooltip"/>
@@ -370,6 +391,7 @@
         disabledIcon="icons/toolbar/fetchd.png"
         icon="icons/toolbar/fetche.png"
         id="org.eclipse.egit.ui.actionfetch"
+       	definitionId="org.eclipse.egit.ui.commands.fetch"
         label="%FetchAction_label"
         menubarPath="org.eclipse.egit.ui.gitmenu/repo"
         style="push"
@@ -381,6 +403,7 @@
         disabledIcon="icons/toolbar/pushd.png"
         icon="icons/toolbar/pushe.png"
         id="org.eclipse.egit.ui.actionpush"
+       	definitionId="org.eclipse.egit.ui.commands.push"
         label="%PushAction_label"
         menubarPath="org.eclipse.egit.ui.gitmenu/repo"
         style="push"
@@ -392,6 +415,7 @@
 		       disabledIcon="icons/toolbar/checkoutd.png"
 		       icon="icons/toolbar/checkoute.png"
 		       id="org.eclipse.egit.ui.actionbranch"
+		       definitionId="org.eclipse.egit.ui.commands.branch"
 		       label="%BranchAction_label"
 		       style="push"
 		       menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
@@ -403,6 +427,7 @@
 		       disabledIcon="icons/toolbar/commitd.png"
 		       icon="icons/toolbar/commite.png"
 		       id="org.eclipse.egit.ui.actioncommit"
+		       definitionId="org.eclipse.egit.ui.commands.commit"
 		       label="%CommitAction_label"
 		       style="push"
 		       menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
@@ -414,6 +439,7 @@
 		       disabledIcon="icons/toolbar/resetd.png"
 		       icon="icons/toolbar/resete.png"
 		       id="org.eclipse.egit.ui.actionreset"
+		       definitionId="org.eclipse.egit.ui.commands.reset"
 		       label="%ResetAction_label"
 		       style="push"
 		       menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
@@ -425,6 +451,7 @@
 		       disabledIcon="icons/toolbar/trackd.png"
 		       icon="icons/toolbar/tracke.png"
 		       id="org.eclipse.egit.ui.trackaction"
+		       definitionId="org.eclipse.egit.ui.commands.track"
 		       label="%TrackAction_label"
 		       style="push"
 		       menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
@@ -435,6 +462,10 @@
    </extension>
    <extension
          point="org.eclipse.ui.commands">
+		<category
+			name="%EGit_category"
+			description="%EGit_category.description"
+			id="org.eclipse.egit.ui.commandCategory"/>
       <command
             defaultHandler="org.eclipse.egit.ui.internal.commands.ShareSingleProjectCommand"
             description="%ShareProjectCommand_desc"
@@ -447,19 +478,220 @@
                values="org.eclipse.egit.ui.internal.commands.ProjectNameParameterValues">
          </commandParameter>
       </command>
+		<!--  commands for binding actions to keybindings -->
+		<command 
+			name="%CommitCommand_name"
+			description="%CommitAction_tooltip" 
+			categoryId="org.eclipse.egit.ui.commandCategory" 
+			id="org.eclipse.egit.ui.commands.commit"
+			>
+	         <commandParameter id="org.eclipse.egit.ui.command.action.class"
+	               name="CommandActionClass" optional="false" values="" />
+		</command>
+		<command 
+			name="%UntrackCommand_name"
+			description="%UntrackAction_tooltip" 
+			categoryId="org.eclipse.egit.ui.commandCategory" 
+			id="org.eclipse.egit.ui.commands.untrack"
+			>
+         <commandParameter id="org.eclipse.egit.ui.command.action.class"
+               name="CommandActionClass" optional="false" values="" />
+		</command>
+		<command 
+			name="%TrackCommand_name"
+			description="%TrackAction_tooltip" 
+			categoryId="org.eclipse.egit.ui.commandCategory" 
+			id="org.eclipse.egit.ui.commands.track"
+			>
+         <commandParameter id="org.eclipse.egit.ui.command.action.class"
+               name="CommandActionClass" optional="false" values="" />
+		</command>
+		<command 
+			name="%PushCommand_name"
+			description="%PushAction_tooltip" 
+			categoryId="org.eclipse.egit.ui.commandCategory" 
+			id="org.eclipse.egit.ui.commands.push"
+			>
+         <commandParameter id="org.eclipse.egit.ui.command.action.class"
+               name="CommandActionClass" optional="false" values="" />
+		</command>
+		<command 
+			name="%IgnoreCommand_name"
+			description="%IgnoreAction_tooltip" 
+			categoryId="org.eclipse.egit.ui.commandCategory" 
+			id="org.eclipse.egit.ui.commands.ignore"
+			>
+         <commandParameter id="org.eclipse.egit.ui.command.action.class"
+               name="CommandActionClass" optional="false" values="" />
+		</command>
+		<command 
+			name="%UpdateCommand_name"
+			description="%UpdateAction_tooltip" 
+			categoryId="org.eclipse.egit.ui.commandCategory" 
+			id="org.eclipse.egit.ui.commands.update"
+			>
+         <commandParameter id="org.eclipse.egit.ui.command.action.class"
+               name="CommandActionClass" optional="false" values="" />
+		</command>
+		<command 
+			name="%FetchCommand_name"
+			description="%FetchAction_tooltip" 
+			categoryId="org.eclipse.egit.ui.commandCategory" 
+			id="org.eclipse.egit.ui.commands.fetch"
+			>
+         <commandParameter id="org.eclipse.egit.ui.command.action.class"
+               name="CommandActionClass" optional="false" values="" />
+		</command>
+		<command 
+			name="%ResetCommand_name"
+			description="%ResetAction_tooltip" 
+			categoryId="org.eclipse.egit.ui.commandCategory" 
+			id="org.eclipse.egit.ui.commands.reset"
+			>
+         <commandParameter id="org.eclipse.egit.ui.command.action.class"
+               name="CommandActionClass" optional="false" values="" />
+		</command>
+		<command 
+			name="%AddToIndexCommand_name"
+			description="%AddToIndexAction_tooltip" 
+			categoryId="org.eclipse.egit.ui.commandCategory" 
+			id="org.eclipse.egit.ui.commands.addToIndex"
+			>
+         <commandParameter id="org.eclipse.egit.ui.command.action.class"
+               name="CommandActionClass" optional="false" values="" />
+		</command>
+		<command 
+			name="%AssumeUnchangedCommand_name"
+			description="%AssumeUnchangedAction_tooltip" 
+			categoryId="org.eclipse.egit.ui.commandCategory" 
+			id="org.eclipse.egit.ui.commands.assumeUnchanged"
+			>
+         <commandParameter id="org.eclipse.egit.ui.command.action.class"
+               name="CommandActionClass" optional="false" values="" />
+		</command>
+		<command 
+			name="%BranchCommand_name"
+			description="%BranchAction_tooltip" 
+			categoryId="org.eclipse.egit.ui.commandCategory" 
+			id="org.eclipse.egit.ui.commands.branch"
+			>
+         <commandParameter id="org.eclipse.egit.ui.command.action.class"
+               name="CommandActionClass" optional="false" values="" />
+		</command>
+		<!-- compare commands -->
+		<command 
+			name="%CompareWithIndexCommand_name"
+			description="%CompareWithIndexAction_tooltip" 
+			categoryId="org.eclipse.egit.ui.commandCategory" 
+			id="org.eclipse.egit.ui.commands.compareWithIndex"
+			>
+         <commandParameter id="org.eclipse.egit.ui.command.action.class"
+               name="CommandActionClass" optional="false" values="" />
+		</command>
+
+    </extension>
+
+	<extension
+        point="org.eclipse.ui.handlers">
+		<handler commandId="org.eclipse.egit.ui.commands.commit" class="org.eclipse.egit.ui.internal.handlers.RepositoryActionHandler" />
+		<handler commandId="org.eclipse.egit.ui.commands.track" class="org.eclipse.egit.ui.internal.handlers.RepositoryActionHandler" />
+		<handler commandId="org.eclipse.egit.ui.commands.untrack" class="org.eclipse.egit.ui.internal.handlers.RepositoryActionHandler" />
+		<handler commandId="org.eclipse.egit.ui.commands.ignore" class="org.eclipse.egit.ui.internal.handlers.RepositoryActionHandler" />
+		<handler commandId="org.eclipse.egit.ui.commands.push" class="org.eclipse.egit.ui.internal.handlers.RepositoryActionHandler" />
+		<handler commandId="org.eclipse.egit.ui.commands.fetch" class="org.eclipse.egit.ui.internal.handlers.RepositoryActionHandler" />
+		<handler commandId="org.eclipse.egit.ui.commands.update" class="org.eclipse.egit.ui.internal.handlers.RepositoryActionHandler" />
+		<handler commandId="org.eclipse.egit.ui.commands.branch" class="org.eclipse.egit.ui.internal.handlers.RepositoryActionHandler" />
+		<handler commandId="org.eclipse.egit.ui.commands.addToIndex" class="org.eclipse.egit.ui.internal.handlers.RepositoryActionHandler" />
+		<handler commandId="org.eclipse.egit.ui.commands.assumeUnchanged" class="org.eclipse.egit.ui.internal.handlers.RepositoryActionHandler" />
+		<handler commandId="org.eclipse.egit.ui.commands.reset" class="org.eclipse.egit.ui.internal.handlers.RepositoryActionHandler" />
+		<handler commandId="org.eclipse.egit.ui.commands.compareWithIndex" class="org.eclipse.egit.ui.internal.handlers.RepositoryActionHandler" />				
+	</extension>
+	<extension point="org.eclipse.ui.bindings">
+		<!--
+			The "M" modifier keys are a platform-independent way of representing keys,
+			and these are generally preferred.
+			M1 is the COMMAND key on MacOS X, and the CTRL key on most other platforms.
+			M2 is the SHIFT key.
+			M3 is the Option key on MacOS X, and the ALT key on most other platforms.
+			M4 is the CTRL key on MacOS X, and is undefined on other platforms.
+			
+			See: http://help.eclipse.org/help32/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/extension-points/org_eclipse_ui_bindings.html
+		-->
+		<!-- auto comment -->
+		<key sequence="M3+M4+G M3+M4+V C"
+			commandId="org.eclipse.egit.ui.commands.commit"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<parameter id="org.eclipse.egit.ui.command.action.class"
+		        value="org.eclipse.egit.ui.internal.actions.CommitAction" />
+		</key>
+		<key sequence="M3+M4+G M3+M4+V A"
+			commandId="org.eclipse.egit.ui.commands.track"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<parameter id="org.eclipse.egit.ui.command.action.class"
+		        value="org.eclipse.egit.ui.internal.actions.Track" />
+		</key>
+		<key sequence="M3+M4+G M3+M4+V R"
+			commandId="org.eclipse.egit.ui.commands.untrack"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<parameter id="org.eclipse.egit.ui.command.action.class"
+		        value="org.eclipse.egit.ui.internal.actions.Untrack" />
+		</key>
+		<key sequence="M3+M4+G M3+M4+V I"
+			commandId="org.eclipse.egit.ui.commands.ignore"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<parameter id="org.eclipse.egit.ui.command.action.class"
+		        value="org.eclipse.egit.ui.internal.actions.IgnoreAction" />
+		</key>
+		<key sequence="M3+M4+G P"
+			commandId="org.eclipse.egit.ui.commands.push"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<parameter id="org.eclipse.egit.ui.command.action.class"
+		        value="org.eclipse.egit.ui.internal.actions.PushAction" />
+		</key>
+		<key sequence="M3+M4+G F"
+			commandId="org.eclipse.egit.ui.commands.fetch"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<parameter id="org.eclipse.egit.ui.command.action.class"
+		        value="org.eclipse.egit.ui.internal.actions.FetchAction" />
+		</key>
+		<key sequence="M3+M4+G U"
+			commandId="org.eclipse.egit.ui.commands.update"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<parameter id="org.eclipse.egit.ui.command.action.class"
+		        value="org.eclipse.egit.ui.internal.actions.Update" />
+		</key>
+		<key sequence="M3+M4+G B"
+			commandId="org.eclipse.egit.ui.commands.branch"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<parameter id="org.eclipse.egit.ui.command.action.class"
+		        value="org.eclipse.egit.ui.internal.actions.BranchAction" />
+		</key>
+		<key sequence="M3+M4+G M3+M4+V M3+A"
+			commandId="org.eclipse.egit.ui.commands.addToIndex"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<parameter id="org.eclipse.egit.ui.command.action.class"
+		        value="org.eclipse.egit.ui.internal.actions.AddToIndexAction" />
+		</key>
+		<key sequence="M3+M4+G M3+M4+V M3+U"
+			commandId="org.eclipse.egit.ui.commands.assumeUnchanged"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<parameter id="org.eclipse.egit.ui.command.action.class"
+		        value="org.eclipse.egit.ui.internal.actions.AssumeUnchanged" />
+		</key>
+		<!-- reset commands -->
+		<key sequence="M3+M4+G M3+M4+R R"
+			commandId="org.eclipse.egit.ui.commands.reset"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<parameter id="org.eclipse.egit.ui.command.action.class"
+		        value="org.eclipse.egit.ui.internal.actions.ResetAction" />
+		</key>
+		<!-- compare commands -->
+		<key sequence="M3+M4+G M3+M4+C I"
+			commandId="org.eclipse.egit.ui.commands.compareWithIndex"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<parameter id="org.eclipse.egit.ui.command.action.class"
+		        value="org.eclipse.egit.ui.internal.actions.CompareWithIndexAction" />
+		</key>
    </extension>
-   <extension
-         point="org.eclipse.ui.views">
-      <view
-            category="org.eclipse.egit.ui.GitCategory"
-            class="org.eclipse.egit.ui.internal.repository.RepositoriesView"
-            id="org.eclipse.egit.ui.RepositoriesView"
-            name="Git Repositories"
-            restorable="true">
-      </view>
-      <category
-            id="org.eclipse.egit.ui.GitCategory"
-            name="Git">
-      </category>
-   </extension>
+
 </plugin>

@@ -19,7 +19,12 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.team.internal.ui.actions.TeamAction;
+import org.eclipse.ui.ide.ResourceUtil;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -36,6 +41,33 @@ public abstract class RepositoryAction extends TeamAction {
 	 */
 	public void execute(IAction action) {
 		run(action);
+	}
+
+	@Override
+	/**
+	 * This will try to get the selection first from the target workbench part,
+	 * and falls back to the default if it can't.  This is a work-around for
+	 * the limitations on what TeamAction considers a selection change.
+	 *   ie: it ignores selections from within editors
+	 *
+	 * @return selection
+	 */
+	protected IStructuredSelection getSelection() {
+		if (getTargetPart().getSite() != null) {
+			final ISelection partSelection = getTargetPart().getSite()
+					.getSelectionProvider().getSelection();
+			if (partSelection != null) {
+				if (partSelection instanceof IStructuredSelection) {
+					return (IStructuredSelection) partSelection;
+				} else if (partSelection instanceof ITextSelection) {
+					IResource resource = ResourceUtil.getResource(getTargetPart()
+							.getSite().getWorkbenchWindow().getActivePage()
+							.getActiveEditor().getEditorInput());
+					return new StructuredSelection(resource);
+				}
+			}
+		}
+		return super.getSelection();
 	}
 
 	/**
