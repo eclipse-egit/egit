@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %plugin_name
 Bundle-SymbolicName: org.eclipse.egit.core;singleton:=true
-Bundle-Version: 0.6.0.qualifier
+Bundle-Version: 0.7.0.qualifier
 Bundle-Activator: org.eclipse.egit.core.Activator
 Bundle-Vendor: %provider_name
 Bundle-Localization: plugin
@@ -10,18 +10,18 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.team.core;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.filesystem;bundle-version="[1.2.0,2.0.0)"
-Export-Package: org.eclipse.egit.core;version="0.6.0",
- org.eclipse.egit.core.internal.storage;version="0.6.0";x-friends:="org.eclipse.egit.ui",
- org.eclipse.egit.core.internal.util;version="0.6.0";x-friends:="org.eclipse.egit.ui",
- org.eclipse.egit.core.op;version="0.6.0",
- org.eclipse.egit.core.project;version="0.6.0"
+Export-Package: org.eclipse.egit.core;version="0.7.0",
+ org.eclipse.egit.core.internal.storage;version="0.7.0";x-friends:="org.eclipse.egit.ui",
+ org.eclipse.egit.core.internal.util;version="0.7.0";x-friends:="org.eclipse.egit.ui",
+ org.eclipse.egit.core.op;version="0.7.0",
+ org.eclipse.egit.core.project;version="0.7.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.eclipse.jgit.dircache;version="[0.6.0,0.7.0)",
- org.eclipse.jgit.errors;version="[0.6.0,0.7.0)",
- org.eclipse.jgit.lib;version="[0.6.0,0.7.0)",
- org.eclipse.jgit.revwalk;version="[0.6.0,0.7.0)",
- org.eclipse.jgit.transport;version="[0.6.0,0.7.0)",
- org.eclipse.jgit.treewalk;version="[0.6.0,0.7.0)",
- org.eclipse.jgit.treewalk.filter;version="[0.6.0,0.7.0)",
- org.eclipse.jgit.util;version="[0.6.0,0.7.0)"
+Import-Package: org.eclipse.jgit.dircache;version="[0.7.0,0.8.0)",
+ org.eclipse.jgit.errors;version="[0.7.0,0.8.0)",
+ org.eclipse.jgit.lib;version="[0.7.0,0.8.0)",
+ org.eclipse.jgit.revwalk;version="[0.7.0,0.8.0)",
+ org.eclipse.jgit.transport;version="[0.7.0,0.8.0)",
+ org.eclipse.jgit.treewalk;version="[0.7.0,0.8.0)",
+ org.eclipse.jgit.treewalk.filter;version="[0.7.0,0.8.0)",
+ org.eclipse.jgit.util;version="[0.7.0,0.8.0)"

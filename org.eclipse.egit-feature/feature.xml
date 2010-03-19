@@ -2,20 +2,20 @@
 <feature
       id="org.eclipse.egit"
       label="%featureName"
-      version="0.6.0.qualifier"
+      version="0.7.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.egit">
 
    <description url="http://www.eclipse.org/egit/">
-     %description
+      %description
    </description>
 
    <copyright>
-     %copyright
+      %copyright
    </copyright>
 
    <license url="%licenseURL">
-     %license
+      %license
    </license>
 
    <url>
@@ -68,4 +68,5 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
 </feature>
