@@ -19,7 +19,7 @@
 
   <groupId>org.eclipse.egit</groupId>
   <artifactId>egit-parent</artifactId>
-  <version>0.6.0-SNAPSHOT</version>
+  <version>0.8.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>EGit Parent (Incubation)</name>
@@ -61,7 +61,7 @@
 
   <properties>
     <tycho-version>0.7.0</tycho-version>
-    <jgit-version>0.6.0-SNAPSHOT</jgit-version>
+    <jgit-version>0.8.0-SNAPSHOT</jgit-version>
     <eclipse-site>http://download.eclipse.org/releases/galileo</eclipse-site>
   </properties>
 
