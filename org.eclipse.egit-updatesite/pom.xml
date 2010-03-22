@@ -16,7 +16,7 @@
   <parent>
     <groupId>org.eclipse.egit</groupId>
     <artifactId>egit-parent</artifactId>
-    <version>0.7.0</version>
+    <version>0.7.1</version>
   </parent>
 
   <artifactId>org.eclipse.egit-updatesite</artifactId>
@@ -24,7 +24,7 @@
 
   <name>Eclipse Git Plugin Update Site (Incubation)</name>
   <!-- see http://issues.sonatype.org/browse/TYCHO-313 -->
-  <version>0.7.0</version>
+  <version>0.7.1</version>
 
   <dependencies>
     <dependency>
