@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -49,7 +50,6 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * Searches for Git directories under a path that can be selected by the user
- * TODO String externalization
  */
 public class RepositorySearchDialog extends Dialog {
 
@@ -127,7 +127,7 @@ public class RepositorySearchDialog extends Dialog {
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Search Git Repositories");
+		newShell.setText(UIText.RepositorySearchDialog_SearchRepositoriesHeader);
 	}
 
 	@Override
@@ -149,7 +149,7 @@ public class RepositorySearchDialog extends Dialog {
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
 
 		Label dirLabel = new Label(main, SWT.NONE);
-		dirLabel.setText("Directory");
+		dirLabel.setText(UIText.RepositorySearchDialog_DirectoryLabel);
 		final Text dir = new Text(main, SWT.NONE);
 		if (myInitialPath != null)
 			dir.setText(myInitialPath);
@@ -158,7 +158,7 @@ public class RepositorySearchDialog extends Dialog {
 				false).applyTo(dir);
 
 		Button browse = new Button(main, SWT.PUSH);
-		browse.setText("Browse...");
+		browse.setText(UIText.RepositorySearchDialog_BrowseButton);
 		browse.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -174,7 +174,7 @@ public class RepositorySearchDialog extends Dialog {
 		});
 
 		Button search = new Button(main, SWT.PUSH);
-		search.setText("Search");
+		search.setText(UIText.RepositorySearchDialog_SearchButton);
 		GridDataFactory.fillDefaults().align(SWT.LEAD, SWT.CENTER).span(3, 1)
 				.applyTo(search);
 
@@ -217,7 +217,7 @@ public class RepositorySearchDialog extends Dialog {
 						pd.run(true, true, action);
 
 					} catch (InvocationTargetException e1) {
-						MessageDialog.openError(getShell(), "Error", e1
+						MessageDialog.openError(getShell(), UIText.RepositorySearchDialog_ErrorHeader, e1
 								.getCause().getMessage());
 					} catch (InterruptedException e1) {
 						// ignore
