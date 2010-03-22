@@ -931,7 +931,10 @@ public class UIText extends NLS {
 	public static String BranchSelectionDialog_ErrorCouldNotRenameRef2;
 
 	/** */
-	public static String BranchSelectionDialog_BranchSelectionDialog_CreateFailedTitle;
+	public static String BranchSelectionDialog_BranchSelectionDialog_CreateBranchFailedTitle;
+
+	/** */
+	public static String BranchSelectionDialog_BranchSelectionDialog_CreateTagFailedTitle;
 
 	/** */
 	public static String BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle;
@@ -983,6 +986,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String BranchSelectionDialog_NewBranch;
+
+	/** */
+	public static String BranchSelectionDialog_QuestionNewTagMessage;
+
+	/** */
+	public static String BranchSelectionDialog_NewTag;
 
 	/** */
 	public static String BranchSelectionDialog_ErrorAlreadyExists;
