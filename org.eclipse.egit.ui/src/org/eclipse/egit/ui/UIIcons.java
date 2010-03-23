@@ -60,6 +60,8 @@ public class UIIcons {
 	public static final ImageDescriptor ELCL16_TRASH;
 	/** Clear icon */
 	public static final ImageDescriptor ELCL16_CLEAR;
+	/** Refresh icon */
+	public static final ImageDescriptor ELCL16_REFRESH;
 
 	/** Enabled, checked, checkbox image */
 	public static final ImageDescriptor CHECKBOX_ENABLED_CHECKED;
@@ -85,6 +87,21 @@ public class UIIcons {
 	/** History filter, select all version in same folder */
 	public static ImageDescriptor FILTERFOLDER;
 
+	/** Import button */
+	public static ImageDescriptor IMPORT;
+
+	/** Repository tree node */
+	public static ImageDescriptor REPOSITORY;
+
+	/** Remote Repository tree node */
+	public static ImageDescriptor REMOTE_REPOSITORY;
+
+	/** Branches tree node */
+	public static ImageDescriptor BRANCHES;
+
+	/** Checked-out decorator for branch */
+	public static ImageDescriptor OVR_CHECKEDOUT;
+
 	private static final URL base;
 
 	static {
@@ -108,6 +125,7 @@ public class UIIcons {
 		ELCL16_ADD = map("elcl16/add.gif"); //$NON-NLS-1$
 		ELCL16_TRASH = map("elcl16/trash.gif"); //$NON-NLS-1$
 		ELCL16_CLEAR = map("elcl16/clear.gif"); //$NON-NLS-1$
+		ELCL16_REFRESH = map("elcl16/refresh.gif"); //$NON-NLS-1$
 		CHECKBOX_ENABLED_CHECKED = map("checkboxes/enabled_checked.gif"); //$NON-NLS-1$
 		CHECKBOX_ENABLED_UNCHECKED = map("checkboxes/enabled_unchecked.gif"); //$NON-NLS-1$
 		CHECKBOX_DISABLED_CHECKED = map("checkboxes/disabled_checked.gif"); //$NON-NLS-1$
@@ -115,6 +133,11 @@ public class UIIcons {
 		FILTERREPO = map("elcl16/filterrepo.gif"); //$NON-NLS-1$
 		FILTERPROJECT = map("elcl16/filterproject.gif"); //$NON-NLS-1$
 		FILTERFOLDER = map("elcl16/filterfolder.gif"); //$NON-NLS-1$
+		IMPORT = map("etool16/import_wiz.gif"); //$NON-NLS-1$
+		REPOSITORY = map("obj16/repository_rep.gif"); //$NON-NLS-1$
+		REMOTE_REPOSITORY = map("obj16/remote_entry_tbl.gif"); //$NON-NLS-1$
+		BRANCHES = map("obj16/branches_rep.gif"); //$NON-NLS-1$
+		OVR_CHECKEDOUT = map("ovr/checkedout_ov.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {

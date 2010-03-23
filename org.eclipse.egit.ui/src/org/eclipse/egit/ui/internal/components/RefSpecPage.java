@@ -67,6 +67,13 @@ public class RefSpecPage extends BaseWizardPage {
 
 	private String transportError;
 
+	// special mode for configuration: the remote name is set by the wizard
+	private final String remoteName;
+
+	// hack: if there were specs when opening this page, then
+	// we allow to finish even if the specs table is empty
+	private int initialSpecSize = -1;
+
 	/**
 	 * Create specifications selection page for provided context.
 	 *
@@ -78,10 +85,13 @@ public class RefSpecPage extends BaseWizardPage {
 	 * @param repoPage
 	 *            repository selection page - must be predecessor of this page
 	 *            in wizard.
+	 * @param remoteName
+	 *            preselected remote name, may be null
 	 */
 	public RefSpecPage(final Repository local, final boolean pushPage,
-			final RepositorySelectionPage repoPage) {
+			final RepositorySelectionPage repoPage, String remoteName) {
 		super(RefSpecPage.class.getName());
+		this.remoteName = remoteName;
 		this.local = local;
 		this.repoPage = repoPage;
 		this.pushPage = pushPage;
@@ -101,6 +111,23 @@ public class RefSpecPage extends BaseWizardPage {
 					checkPage();
 			}
 		});
+	}
+
+	/**
+	 * Create specifications selection page for provided context.
+	 *
+	 * @param local
+	 *            local repository.
+	 * @param pushPage
+	 *            true if this page is used for push specifications selection,
+	 *            false if it used for fetch specifications selection.
+	 * @param repoPage
+	 *            repository selection page - must be predecessor of this page
+	 *            in wizard.
+	 */
+	public RefSpecPage(final Repository local, final boolean pushPage,
+			final RepositorySelectionPage repoPage) {
+		this(local, pushPage, repoPage, null);
 	}
 
 	public void createControl(Composite parent) {
@@ -252,13 +279,21 @@ public class RefSpecPage extends BaseWizardPage {
 		}
 
 		this.validatedRepoSelection = newRepoSelection;
-		final String remoteName = validatedRepoSelection.getConfigName();
+		final String actRemoteName;
+		if (remoteName == null)
+			actRemoteName = validatedRepoSelection.getConfigName();
+		else
+			actRemoteName = remoteName;
+		if (initialSpecSize < 0)
+			initialSpecSize = listRemotesOp.getRemoteRefs().size();
 		specsPanel.setAssistanceData(local, listRemotesOp.getRemoteRefs(),
-				remoteName);
+				actRemoteName);
 
-		tagsAutoFollowButton.setSelection(false);
-		tagsFetchTagsButton.setSelection(false);
-		tagsNoTagsButton.setSelection(false);
+		if (!pushPage) {
+			tagsAutoFollowButton.setSelection(false);
+			tagsFetchTagsButton.setSelection(false);
+			tagsNoTagsButton.setSelection(false);
+		}
 
 		if (newRepoSelection.isConfigSelected()) {
 			saveButton.setVisible(true);
@@ -277,7 +312,7 @@ public class RefSpecPage extends BaseWizardPage {
 				tagsNoTagsButton.setSelection(true);
 				break;
 			}
-		} else
+		} else if (!pushPage)
 			tagsAutoFollowButton.setSelection(true);
 
 		checkPage();
@@ -301,6 +336,6 @@ public class RefSpecPage extends BaseWizardPage {
 			return;
 		}
 		setErrorMessage(specsPanel.getErrorMessage());
-		setPageComplete(!specsPanel.isEmpty() && specsPanel.isValid());
+		setPageComplete(initialSpecSize > 0 || (!specsPanel.isEmpty() && specsPanel.isValid()));
 	}
 }
