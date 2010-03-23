@@ -20,6 +20,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.trace.GitTraceLocation;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.jgit.errors.CheckoutConflictException;
@@ -93,10 +94,15 @@ public class BranchOperation implements IWorkspaceRunnable {
 			final File file = p.getLocation().toFile();
 			if (file.getAbsolutePath().startsWith(parentFile.getAbsolutePath())) {
 				try {
-					System.out.println("Refreshing " + p);  //$NON-NLS-1$
+					// TODO is this the right location?
+					if (GitTraceLocation.CORE.isActive())
+						GitTraceLocation.getTrace().trace(
+								GitTraceLocation.CORE.getLocation(),
+								"Refreshing " + p); //$NON-NLS-1$
 					p.refreshLocal(IResource.DEPTH_INFINITE, null);
 				} catch (CoreException e) {
-					e.printStackTrace();
+					if (GitTraceLocation.CORE.isActive())
+						GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
 				}
 			}
 		}

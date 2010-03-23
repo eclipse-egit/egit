@@ -1,1 +1,3 @@
-org.eclipse.egit.core/trace/verbose = false
+org.eclipse.egit.core/debug = false
+org.eclipse.egit.core/debug/core = false
+org.eclipse.egit.core/debug/ui = false
