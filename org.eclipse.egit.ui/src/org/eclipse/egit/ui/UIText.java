@@ -70,6 +70,24 @@ public class UIText extends NLS {
 	public static String WizardProjectsImportPage_enableGit;
 
 	/** */
+	public static String SelectRemoteNamePage_NameInUseMessage;
+
+	/** */
+	public static String SelectRemoteNamePage_NameMustNotBeEmptyMessage;
+
+	/** */
+	public static String SelectRemoteNamePage_RemoteNameLabel;
+
+	/** */
+	public static String SelectRemoteNamePage_RemoteNameMessage;
+
+	/** */
+	public static String SelectRemoteNamePage_RemoteNameTitle;
+
+	/** */
+	public static String SelectRemoteNamePage_SelectRemoteNameMessage;
+
+	/** */
 	public static String SharingWizard_windowTitle;
 
 	/** */
@@ -152,6 +170,54 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitProjectPropertyPage_ValueUnbornBranch;
+
+	/** */
+	public static String RepositoryPropertySource_ConfigureKeysAction;
+
+	/** */
+	public static String RepositoryPropertySource_EffectiveConfigurationAction;
+
+	/** */
+	public static String RepositoryPropertySource_EffectiveConfigurationCategory;
+
+	/** */
+	public static String RepositoryPropertySource_ErrorHeader;
+
+	/** */
+	public static String RepositoryPropertySource_GlobalConfigurationCategory;
+
+	/** */
+	public static String RepositoryPropertySource_RepositoryConfigurationCategory;
+
+	/** */
+	public static String RepositoryPropertySource_RestoreStandardAction;
+
+	/** */
+	public static String RepositoryRemotePropertySource_ErrorHeader;
+
+	/** */
+	public static String RepositoryRemotePropertySource_FetchLabel;
+
+	/** */
+	public static String RepositoryRemotePropertySource_PushLabel;
+
+	/** */
+	public static String RepositoryRemotePropertySource_RemoteUrlLabel;
+
+	/** */
+	public static String RepositorySearchDialog_BrowseButton;
+
+	/** */
+	public static String RepositorySearchDialog_DirectoryLabel;
+
+	/** */
+	public static String RepositorySearchDialog_ErrorHeader;
+
+	/** */
+	public static String RepositorySearchDialog_SearchButton;
+
+	/** */
+	public static String RepositorySearchDialog_SearchRepositoriesHeader;
 
 	/** */
 	public static String RepositorySelectionPage_BrowseLocalFile;
@@ -704,6 +770,30 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitDialog_StatusUnknown;
+
+	/** */
+	public static String ConfigureKeysDialog_AddStandardButton;
+
+	/** */
+	public static String ConfigureKeysDialog_AlreadyThere_Message;
+
+	/** */
+	public static String ConfigureKeysDialog_DeleteButton;
+
+	/** */
+	public static String ConfigureKeysDialog_DialogTitle;
+
+	/** */
+	public static String ConfigureKeysDialog_NewButton;
+
+	/** */
+	public static String ConfigureKeysDialog_NewKeyLabel;
+
+	/** */
+	public static String ConfigureRemoteWizard_WizardTitle_Change;
+
+	/** */
+	public static String ConfigureRemoteWizard_WizardTitle_New;
 
 	/** */
 	public static String ConfirmationPage_cantConnectToAnyTitle;

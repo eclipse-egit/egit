@@ -140,6 +140,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 
 	private Button uriButton;
 
+	private String presetUri;
+
 	/**
 	 * Create repository selection page, allowing user specifying URI or
 	 * (optionally) choosing from preconfigured remotes list.
@@ -196,6 +198,16 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	}
 
 	/**
+	 * Special mode: the URI is preset by the wizard
+	 *
+	 * @param presetUri remote URI
+	 */
+	public RepositorySelectionPage(String presetUri) {
+		this(true, null);
+		this.presetUri = presetUri;
+	}
+
+	/**
 	 * @return repository selection representing current page state.
 	 */
 	public RepositorySelection getSelection() {
@@ -224,6 +236,9 @@ public class RepositorySelectionPage extends BaseWizardPage {
 
 		updateRemoteAndURIPanels();
 		setControl(panel);
+		if (presetUri != null)
+			uriText.setText(presetUri);
+
 		checkPage();
 	}
 
@@ -525,7 +540,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	}
 
 	private boolean isURISelected() {
-		return configuredRemotes == null || uriButton.getSelection();
+		return configuredRemotes == null || presetUri != null || uriButton.getSelection();
 	}
 
 	private void setURI(final URIish u) {
