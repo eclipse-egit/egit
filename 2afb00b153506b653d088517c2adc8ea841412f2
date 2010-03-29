@@ -33,6 +33,24 @@
       "revId": "2afb00b153506b653d088517c2adc8ea841412f2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAAX////I\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-29T14:10:10Z",
+      "side": 1,
+      "message": "This is the import. The export in the EGit core plug-in is internal in fact, only allowing EGit UI to see this package.",
+      "parentUuid": "AAAAAX////g\u003d",
+      "revId": "2afb00b153506b653d088517c2adc8ea841412f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
