@@ -11,10 +11,12 @@ package org.eclipse.egit.ui.internal.history;
 import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.osgi.util.NLS;
 
 class FileDiffContentProvider implements IStructuredContentProvider {
 	private TreeWalk walk;
@@ -35,8 +37,8 @@ class FileDiffContentProvider implements IStructuredContentProvider {
 			try {
 				diff = FileDiff.compute(walk, commit);
 			} catch (IOException err) {
-				Activator.error("Can't get file difference of "
-						+ commit.getId() + ".", err);
+				Activator.error(NLS.bind(UIText.FileDiffContentProvider_errorGettingDifference,
+						commit.getId()), err);
 			}
 		}
 		return diff;

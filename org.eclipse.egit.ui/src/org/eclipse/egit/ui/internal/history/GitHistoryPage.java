@@ -400,8 +400,8 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 				right = new EditableRevision(nextFile);
 			}
 		} catch (IOException e) {
-			Activator.error("IO error looking up path" + gitPath + " in "
-					+ commit.getId() + ".", e);
+			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
+					gitPath, commit.getId()), e);
 		}
 		return right;
 	}
@@ -621,7 +621,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 	}
 
 	private IAction createFindToolbarAction() {
-		final IAction r = new Action("Fi", UIIcons.ELCL16_FIND) {
+		final IAction r = new Action(UIText.GitHistoryPage_find, UIIcons.ELCL16_FIND) {
 			public void run() {
 				prefs.setValue(SHOW_FIND_TOOLBAR, isChecked());
 				layout();
@@ -841,8 +841,8 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 		try {
 			headId = db.resolve(Constants.HEAD);
 		} catch (IOException e) {
-			Activator.logError("Cannot parse HEAD in: "
-					+ db.getDirectory().getAbsolutePath(), e);
+			Activator.logError(NLS.bind(UIText.GitHistoryPage_errorParsingHead,
+					db.getDirectory().getAbsolutePath()), e);
 			return false;
 		}
 
@@ -857,7 +857,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			currentWalk = new SWTWalk(db);
 			currentWalk.sort(RevSort.COMMIT_TIME_DESC, true);
 			currentWalk.sort(RevSort.BOUNDARY, true);
-			highlightFlag = currentWalk.newFlag("highlight");
+			highlightFlag = currentWalk.newFlag("highlight"); //$NON-NLS-1$
 		} else {
 			currentWalk.reset();
 		}
@@ -867,8 +867,8 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 		try {
 			currentWalk.markStart(currentWalk.parseCommit(headId));
 		} catch (IOException e) {
-			Activator.logError("Cannot read HEAD commit " + headId + " in: "
-					+ db.getDirectory().getAbsolutePath(), e);
+			Activator.logError(NLS.bind(UIText.GitHistoryPage_errorReadingHeadCommit,
+					headId, db.getDirectory().getAbsolutePath()), e);
 			return false;
 		}
 

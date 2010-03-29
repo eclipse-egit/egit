@@ -122,7 +122,7 @@ public class UIIcons {
 			try {
 				return ImageDescriptor.createFromURL(new URL(base, icon));
 			} catch (MalformedURLException mux) {
-				Activator.logError("Can't load plugin image.", mux);
+				Activator.logError(UIText.UIIcons_errorLoadingPluginImage, mux);
 			}
 		}
 		return ImageDescriptor.getMissingImageDescriptor();
@@ -133,7 +133,7 @@ public class UIIcons {
 			return new URL(Activator.getDefault().getBundle().getEntry("/"), //$NON-NLS-1$
 					"icons/"); //$NON-NLS-1$
 		} catch (MalformedURLException mux) {
-			Activator.logError("Can't determine icon base.", mux);
+			Activator.logError(UIText.UIIcons_errorDeterminingIconBase, mux);
 			return null;
 		}
 	}

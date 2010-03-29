@@ -15,12 +15,14 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.BranchOperation;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.jgit.lib.Repository;
 
@@ -37,9 +39,10 @@ public class BranchAction extends RepositoryAction {
 			return;
 
 		if (!repository.getRepositoryState().canCheckout()) {
-			MessageDialog.openError(getShell(), "Cannot checkout now",
-					"Repository state:"
-							+ repository.getRepositoryState().getDescription());
+			MessageDialog.openError(getShell(),
+					UIText.BranchAction_cannotCheckout, NLS.bind(
+							UIText.BranchAction_repositoryState, repository
+									.getRepositoryState().getDescription()));
 			return;
 		}
 
@@ -60,11 +63,14 @@ public class BranchAction extends RepositoryAction {
 						GitLightweightDecorator.refresh();
 					} catch (final CoreException ce) {
 						ce.printStackTrace();
-						Display.getDefault().asyncExec(new Runnable() {
-							public void run() {
-								handle(ce, "Error while switching branches", "Unable to switch branches");
-							}
-						});
+								Display.getDefault().asyncExec(new Runnable() {
+									public void run() {
+										handle(
+												ce,
+												UIText.BranchAction_errorSwitchingBranches,
+												UIText.BranchAction_unableToSwitchBranches);
+									}
+								});
 					}
 				}
 			});

@@ -256,7 +256,7 @@ public class Activator extends AbstractUIPlugin {
 	static class RIRefresh extends Job implements RepositoryListener {
 
 		RIRefresh() {
-			super("Git index refresh Job");
+			super(UIText.Activator_refreshJobName);
 		}
 
 		private Set<IProject> projectsToScan = new LinkedHashSet<IProject>();
@@ -264,7 +264,7 @@ public class Activator extends AbstractUIPlugin {
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
 			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-			monitor.beginTask("Refreshing git managed projects", projects.length);
+			monitor.beginTask(UIText.Activator_refreshingProjects, projects.length);
 
 			while (projectsToScan.size() > 0) {
 				IProject p;
@@ -280,7 +280,7 @@ public class Activator extends AbstractUIPlugin {
 					getJobManager().beginRule(rule, monitor);
 					p.refreshLocal(IResource.DEPTH_INFINITE, new SubProgressMonitor(monitor, 1));
 				} catch (CoreException e) {
-					logError("Failed to refresh projects from index changes", e);
+					logError(UIText.Activator_refreshFailed, e);
 					return new Status(IStatus.ERROR, getPluginId(), e.getMessage());
 				} finally {
 					getJobManager().endRule(rule);
@@ -319,7 +319,7 @@ public class Activator extends AbstractUIPlugin {
 
 	static class RCS extends Job {
 		RCS() {
-			super("Repository Change Scanner");
+			super(UIText.Activator_repoScanJobName);
 		}
 
 		// FIXME, need to be more intelligent about this to avoid too much work
@@ -333,7 +333,7 @@ public class Activator extends AbstractUIPlugin {
 				// repositories. We discard that as being ugly and stupid for
 				// the moment.
 				IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-				monitor.beginTask("Scanning Git repositories for changes", projects.length);
+				monitor.beginTask(UIText.Activator_scanningRepositories, projects.length);
 				Set<Repository> scanned = new HashSet<Repository>();
 				for (IProject p : projects) {
 					RepositoryMapping mapping = RepositoryMapping.getMapping(p);
@@ -364,7 +364,7 @@ public class Activator extends AbstractUIPlugin {
 						IStatus.ERROR,
 						getPluginId(),
 						0,
-						"An error occurred while scanning for changes. Scanning aborted",
+						UIText.Activator_scanError,
 						e);
 			}
 			return Status.OK_STATUS;
