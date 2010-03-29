@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAAX////M\u003d",
+        "filename": "org.eclipse.egit.core/.options",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-29T14:10:10Z",
+      "side": 1,
+      "message": "Good idea. Added to patch set 2.",
+      "parentUuid": "AAAAAX////c\u003d",
+      "revId": "2afb00b153506b653d088517c2adc8ea841412f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAAX////g\u003d",
         "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
         "patchSetId": 1
