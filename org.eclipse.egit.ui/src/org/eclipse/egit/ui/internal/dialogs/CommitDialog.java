@@ -26,6 +26,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.internal.storage.GitFileHistoryProvider;
+import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
@@ -392,7 +393,8 @@ public class CommitDialog extends Dialog {
 						filesViewer.refresh(true);
 					}
 				} catch (IOException e) {
-					e.printStackTrace();
+					if (GitTraceLocation.CORE.isActive())
+						GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
 					return;
 				}
 			}

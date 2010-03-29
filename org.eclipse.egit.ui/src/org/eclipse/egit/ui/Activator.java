@@ -25,14 +25,19 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jgit.lib.IndexChangedEvent;
+import org.eclipse.jgit.lib.RefsChangedEvent;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryListener;
+import org.eclipse.jgit.transport.SshSessionFactory;
 import org.eclipse.jsch.core.IJSchService;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
@@ -40,11 +45,6 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.themes.ITheme;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import org.eclipse.jgit.lib.IndexChangedEvent;
-import org.eclipse.jgit.lib.RefsChangedEvent;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryListener;
-import org.eclipse.jgit.transport.SshSessionFactory;
 
 /**
  * This is a plugin singleton mostly controlling logging.
@@ -123,29 +123,6 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * @param optionId
-	 *            name of debug option
-	 * @return whether a named debug option is set
-	 */
-	private static boolean isOptionSet(final String optionId) {
-		final String option = getPluginId() + optionId;
-		final String value = Platform.getDebugOption(option);
-		return value != null && value.equals("true"); //$NON-NLS-1$
-	}
-
-	/**
-	 * Log a debug message
-	 *
-	 * @param what
-	 *            message to log
-	 */
-	public static void trace(final String what) {
-		if (getDefault().traceVerbose) {
-			System.out.println("[" + getPluginId() + "] " + what); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-	}
-
-	/**
 	 * Get the theme used by this plugin.
 	 *
 	 * @return our theme.
@@ -178,7 +155,6 @@ public class Activator extends AbstractUIPlugin {
 		return getTheme().getFontRegistry().getBold(id);
 	}
 
-	private boolean traceVerbose;
 	private RCS rcs;
 	private RIRefresh refreshJob;
 
@@ -191,7 +167,6 @@ public class Activator extends AbstractUIPlugin {
 
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-		traceVerbose = isOptionSet("/trace/verbose"); //$NON-NLS-1$
 		setupSSH(context);
 		setupProxy(context);
 		setupRepoChangeScanner();
@@ -325,7 +300,11 @@ public class Activator extends AbstractUIPlugin {
 						if (!scanned.contains(r)) {
 							if (monitor.isCanceled())
 								break;
-							trace("Scanning " + r + " for changes"); //$NON-NLS-1$ //$NON-NLS-2$
+							// TODO is this the right location?
+							if (GitTraceLocation.UI.isActive())
+								GitTraceLocation.getTrace().trace(
+										GitTraceLocation.UI.getLocation(),
+										"Scanning " + r + " for changes"); //$NON-NLS-1$ //$NON-NLS-2$
 							scanned.add(r);
 							ISchedulingRule rule = p.getWorkspace().getRuleFactory().modifyRule(p);
 							getJobManager().beginRule(rule, monitor);
@@ -339,10 +318,18 @@ public class Activator extends AbstractUIPlugin {
 					monitor.worked(1);
 				}
 				monitor.done();
-				trace("Rescheduling " + getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
+				// TODO is this the right location?
+				if (GitTraceLocation.UI.isActive())
+					GitTraceLocation.getTrace().trace(
+							GitTraceLocation.UI.getLocation(),
+							"Rescheduling " + getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
 				schedule(REPO_SCAN_INTERVAL);
 			} catch (Exception e) {
-				trace("Stopped rescheduling " + getName() + "job"); //$NON-NLS-1$ //$NON-NLS-2$
+				// TODO is this the right location?
+				if (GitTraceLocation.UI.isActive())
+					GitTraceLocation.getTrace().trace(
+							GitTraceLocation.UI.getLocation(),
+							"Stopped rescheduling " + getName() + "job"); //$NON-NLS-1$ //$NON-NLS-2$
 				return new Status(
 						IStatus.ERROR,
 						getPluginId(),
@@ -382,15 +369,23 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	public void stop(final BundleContext context) throws Exception {
-		trace("Trying to cancel " + rcs.getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
+		if (GitTraceLocation.UI.isActive())
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.UI.getLocation(),
+					"Trying to cancel " + rcs.getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
 		rcs.cancel();
-		trace("Trying to cancel " + refreshJob.getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
+		if (GitTraceLocation.UI.isActive())
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.UI.getLocation(),
+					"Trying to cancel " + refreshJob.getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
 		refreshJob.cancel();
 
 		rcs.join();
 		refreshJob.join();
 
-		trace("Jobs terminated"); //$NON-NLS-1$
+		if (GitTraceLocation.UI.isActive())
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.UI.getLocation(), "Jobs terminated"); //$NON-NLS-1$
 		super.stop(context);
 		plugin = null;
 	}

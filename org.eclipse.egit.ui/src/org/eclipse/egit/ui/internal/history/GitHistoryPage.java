@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.ResourceList;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
+import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
@@ -484,7 +485,14 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 				refschangedRunnable = new Runnable() {
 					public void run() {
 						if (!getControl().isDisposed()) {
-							Activator.trace("Executing async repository changed event"); //$NON-NLS-1$
+							// TODO is this the right location?
+							if (GitTraceLocation.UI.isActive())
+								GitTraceLocation
+										.getTrace()
+										.trace(
+												GitTraceLocation.UI
+														.getLocation(),
+												"Executing async repository changed event"); //$NON-NLS-1$
 							refschangedRunnable = null;
 							inputSet();
 						}
