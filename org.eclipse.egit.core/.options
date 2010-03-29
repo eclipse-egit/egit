@@ -1,1 +1,6 @@
-org.eclipse.egit.core/trace/verbose = false
+# Main Debug Trace switch
+org.eclipse.egit.core/debug = false
+# General trace location for the EGit Core Plugin
+org.eclipse.egit.core/debug/core = false
+# General trace location for the EGit UI Plugin
+org.eclipse.egit.core/debug/ui = false

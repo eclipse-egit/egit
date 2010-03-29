@@ -19,6 +19,7 @@ import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.structuremergeviewer.IStructureComparator;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.egit.core.trace.GitTraceLocation;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.jgit.lib.FileTreeEntry;
 import org.eclipse.jgit.lib.ObjectId;
@@ -55,7 +56,8 @@ public class GitResourceNode extends BufferedContent implements IStructureCompar
 				}
 			} catch (IOException e) {
 				// TODO: eclipse error handling
-				e.printStackTrace();
+				if (GitTraceLocation.CORE.isActive())
+					GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
 				children = new GitResourceNode[0];
 			}
 		}
@@ -75,7 +77,8 @@ public class GitResourceNode extends BufferedContent implements IStructureCompar
 				return new ByteArrayInputStream(bytes);
 			} catch (IOException e) {
 				// TODO: eclipse error handling
-				e.printStackTrace();
+				if (GitTraceLocation.CORE.isActive())
+					GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
 				return null;
 			}
 		}

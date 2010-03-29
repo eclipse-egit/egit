@@ -9,19 +9,23 @@
  *******************************************************************************/
 package org.eclipse.egit.core;
 
+import java.util.Hashtable;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.project.GitProjectData;
+import org.eclipse.egit.core.trace.GitTraceLocation;
+import org.eclipse.osgi.service.debug.DebugOptions;
+import org.eclipse.osgi.service.debug.DebugOptionsListener;
 import org.osgi.framework.BundleContext;
 
 /**
  * The plugin class for the org.eclipse.egit.core plugin. This
  * is a singleton class.
  */
-public class Activator extends Plugin {
+public class Activator extends Plugin implements DebugOptionsListener {
 	private static Activator plugin;
 
 	/**
@@ -61,25 +65,6 @@ public class Activator extends Plugin {
 				new Status(IStatus.ERROR, getPluginId(), 0, message, thr));
 	}
 
-	private static boolean isOptionSet(final String optionId) {
-		final String option = getPluginId() + optionId;
-		final String value = Platform.getDebugOption(option);
-		return value != null && value.equals("true");  //$NON-NLS-1$
-	}
-
-	/**
-	 * Utility method for debug logging.
-	 *
-	 * @param what
-	 */
-	public static void trace(final String what) {
-		if (getDefault().traceVerbose) {
-			System.out.println("[" + getPluginId() + "] " + what);   //$NON-NLS-1$ //$NON-NLS-2$
-		}
-	}
-
-	private boolean traceVerbose;
-
 	/**
 	 * Construct the {@link Activator} singleton instance
 	 */
@@ -89,7 +74,12 @@ public class Activator extends Plugin {
 
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
-		traceVerbose = isOptionSet("/trace/verbose");  //$NON-NLS-1$
+        // register this as DebugOptions listener
+		Hashtable<String, String> props = new Hashtable<String, String>(4);
+		// we want to get notified about our own DebugOptions
+		props.put(DebugOptions.LISTENER_SYMBOLICNAME, context.getBundle().getSymbolicName());
+		context.registerService(DebugOptionsListener.class.getName(), this, props);
+
 		GitProjectData.reconfigureWindowCache();
 		GitProjectData.attachToWorkspace(true);
 	}
@@ -98,5 +88,9 @@ public class Activator extends Plugin {
 		GitProjectData.detachFromWorkspace();
 		super.stop(context);
 		plugin = null;
+	}
+
+	public void optionsChanged(DebugOptions options) {
+		GitTraceLocation.initializeFromOptions(options, isDebugging());
 	}
 }

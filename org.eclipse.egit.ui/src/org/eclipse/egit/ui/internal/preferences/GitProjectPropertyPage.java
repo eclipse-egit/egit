@@ -13,6 +13,7 @@ import java.io.IOException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.trace.GitTraceLocation;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -80,7 +81,8 @@ public class GitProjectPropertyPage extends PropertyPage {
 			try {
 				fillValues(repository);
 			} catch (IOException e) {
-				e.printStackTrace();
+				if (GitTraceLocation.CORE.isActive())
+					GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
 			}
 		}
 

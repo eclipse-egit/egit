@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.trace.GitTraceLocation;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.util.SystemReader;
 
@@ -113,9 +114,12 @@ public class RepositoryFinder {
 				if (c.isLinked() || c instanceof IProject) {
 					File p = fsLoc.getParentFile();
 					while (p != null) {
-						System.out.println(
-								"Looking at candidate dir: "  //$NON-NLS-1$
-								+ p);
+						// TODO is this the right location?
+						if (GitTraceLocation.CORE.isActive())
+							GitTraceLocation.getTrace().trace(
+									GitTraceLocation.CORE.getLocation(),
+									"Looking at candidate dir: " //$NON-NLS-1$
+											+ p);
 						final File pCfg = configFor(p);
 						if (pCfg.isFile()) {
 							register(c, pCfg.getParentFile());

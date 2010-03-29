@@ -39,6 +39,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.GitProvider;
+import org.eclipse.egit.core.trace.GitTraceLocation;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.jgit.lib.Constants;
@@ -191,7 +192,11 @@ public class GitProjectData {
 	}
 
 	static void trace(final String m) {
-		Activator.trace("(GitProjectData) " + m);  //$NON-NLS-1$
+		// TODO is this the right location?
+		if (GitTraceLocation.CORE.isActive())
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.CORE.getLocation(),
+					"(GitProjectData) " + m); //$NON-NLS-1$
 	}
 
 	private synchronized static void cache(final IProject p,
