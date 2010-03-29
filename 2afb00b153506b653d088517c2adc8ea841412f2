@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAAX////c\u003d",
+        "filename": "org.eclipse.egit.core/.options",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-03-29T13:42:23Z",
+      "side": 1,
+      "message": "You may consider putting comments in this file to describe the type of output... but it is pretty evident by the name.",
+      "revId": "2afb00b153506b653d088517c2adc8ea841412f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAAX////g\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-03-29T13:42:23Z",
+      "side": 1,
+      "message": "Do we really intend on this package being API?\n\nTracing seems to be something internal to the EGit plug-in.",
+      "revId": "2afb00b153506b653d088517c2adc8ea841412f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
