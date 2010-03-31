@@ -799,6 +799,9 @@ public class UIText extends NLS {
 	public static String ConfigureRemoteWizard_WizardTitle_New;
 
 	/** */
+	public static String CommitDialog_ValueHelp_Message;
+
+	/** */
 	public static String ConfirmationPage_cantConnectToAnyTitle;
 
 	/** */
