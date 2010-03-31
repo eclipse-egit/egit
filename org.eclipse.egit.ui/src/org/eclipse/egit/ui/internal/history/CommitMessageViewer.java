@@ -45,10 +45,13 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.themes.ITheme;
 
 class CommitMessageViewer extends TextViewer implements ISelectionChangedListener{
 	private final ListenerList navListeners = new ListenerList();
@@ -78,7 +81,7 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
 
 		final StyledText t = getTextWidget();
-		t.setFont(Activator.getFont(UIPreferences.THEME_CommitMessageFont));
+		t.setFont(getFont(UIPreferences.THEME_CommitMessageFont));
 
 		sys_linkColor = t.getDisplay().getSystemColor(SWT.COLOR_BLUE);
 		sys_darkgray = t.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
@@ -277,6 +280,7 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 					outputDiff(d, diff);
 			}
 		} catch (IOException e) {
+			// TODO trace or throw?
 			Activator.error("Can't get file difference of "
 					+ commit.getId() + ".", e);
 		}
@@ -374,5 +378,10 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 			}
 		}
 
+	}
+
+	private Font getFont(final String id) {
+		ITheme theme = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
+		return theme.getFontRegistry().get(id);
 	}
 }

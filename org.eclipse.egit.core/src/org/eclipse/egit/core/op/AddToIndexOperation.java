@@ -81,9 +81,9 @@ public class AddToIndexOperation implements IWorkspaceRunnable {
 
 			}
 		} catch (RuntimeException e) {
-			throw Activator.error(CoreText.AddToIndexOperation_failed, e);
+			throw new CoreException(Activator.error(CoreText.AddToIndexOperation_failed, e));
 		} catch (IOException e) {
-			throw Activator.error(CoreText.AddToIndexOperation_failed, e);
+			throw new CoreException(Activator.error(CoreText.AddToIndexOperation_failed, e));
 		} finally {
 			for (final RepositoryMapping rm : mappings.keySet())
 				rm.fireRepositoryChanged();

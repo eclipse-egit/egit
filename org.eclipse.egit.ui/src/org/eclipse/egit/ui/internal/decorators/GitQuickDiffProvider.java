@@ -77,6 +77,7 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 			try {
 				document = GitDocument.create(resource);
 			} catch (IOException e) {
+				// TODO trace or throw?
 				Activator.error(UIText.QuickDiff_failedLoading, e);
 			}
 			return document;

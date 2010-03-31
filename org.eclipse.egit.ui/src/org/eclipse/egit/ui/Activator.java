@@ -39,10 +39,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.jgit.transport.SshSessionFactory;
 import org.eclipse.jsch.core.IJSchService;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.ui.themes.ITheme;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -82,32 +79,16 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the standard display to be used. The method first checks, if the
-	 * thread calling this method has an associated display. If so, this display
-	 * is returned. Otherwise the method returns the default display.
-	 *
-	 * @return the display to use
-	 */
-	public static Display getStandardDisplay() {
-		Display display = Display.getCurrent();
-		if (display == null) {
-			display = Display.getDefault();
-		}
-		return display;
-	}
-
-	/**
-	 * Instantiate an error exception.
+	 * Instantiate an error status.
 	 *
 	 * @param message
 	 *            description of the error
 	 * @param thr
 	 *            cause of the error or null
-	 * @return an initialized {@link CoreException}
+	 * @return an error status
 	 */
-	public static CoreException error(final String message, final Throwable thr) {
-		return new CoreException(new Status(IStatus.ERROR, getPluginId(), 0,
-				message, thr));
+	public static IStatus error(final String message, final Throwable thr) {
+		return new Status(IStatus.ERROR, getPluginId(), 0, message, thr);
 	}
 
 	/**
@@ -120,39 +101,6 @@ public class Activator extends AbstractUIPlugin {
 	public static void logError(final String message, final Throwable thr) {
 		getDefault().getLog().log(
 				new Status(IStatus.ERROR, getPluginId(), 0, message, thr));
-	}
-
-	/**
-	 * Get the theme used by this plugin.
-	 *
-	 * @return our theme.
-	 */
-	public static ITheme getTheme() {
-		return plugin.getWorkbench().getThemeManager().getCurrentTheme();
-	}
-
-	/**
-	 * Get a font known to this plugin.
-	 *
-	 * @param id
-	 *            one of our THEME_* font preference ids (see
-	 *            {@link UIPreferences});
-	 * @return the configured font, borrowed from the registry.
-	 */
-	public static Font getFont(final String id) {
-		return getTheme().getFontRegistry().get(id);
-	}
-
-	/**
-	 * Get a font known to this plugin, but with bold style applied over top.
-	 *
-	 * @param id
-	 *            one of our THEME_* font preference ids (see
-	 *            {@link UIPreferences});
-	 * @return the configured font, borrowed from the registry.
-	 */
-	public static Font getBoldFont(final String id) {
-		return getTheme().getFontRegistry().getBold(id);
 	}
 
 	private RCS rcs;

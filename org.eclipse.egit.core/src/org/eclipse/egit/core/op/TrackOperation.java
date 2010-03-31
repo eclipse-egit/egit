@@ -118,7 +118,7 @@ public class TrackOperation implements IWorkspaceRunnable {
 								} catch (IOException e) {
 									if (GitTraceLocation.CORE.isActive())
 										GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
-									throw Activator.error(CoreText.AddOperation_failed, e);
+									throw new CoreException(Activator.error(CoreText.AddOperation_failed, e));
 								}
 								return true;
 							}
@@ -138,11 +138,11 @@ public class TrackOperation implements IWorkspaceRunnable {
 		} catch (RuntimeException e) {
 			if (GitTraceLocation.CORE.isActive())
 				GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
-			throw Activator.error(CoreText.AddOperation_failed, e);
+                throw new CoreException(Activator.error(CoreText.AddOperation_failed, e));
 		} catch (IOException e) {
 			if (GitTraceLocation.CORE.isActive())
 				GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
-			throw Activator.error(CoreText.AddOperation_failed, e);
+			throw new CoreException(Activator.error(CoreText.AddOperation_failed, e));
 		} finally {
 			try {
 				final Iterator i = tomerge.keySet().iterator();

@@ -401,6 +401,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 				right = new EditableRevision(nextFile);
 			}
 		} catch (IOException e) {
+			// TODO trace or throw?
 			Activator.error("IO error looking up path" + gitPath + " in "
 					+ commit.getId() + ".", e);
 		}
