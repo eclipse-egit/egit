@@ -115,6 +115,8 @@ import org.osgi.service.prefs.BackingStoreException;
  */
 public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
+	/** the view ID of this */
+	public static final String VIEW_ID = "org.eclipse.egit.ui.RepositoriesView"; //$NON-NLS-1$
 	// TODO central constants? RemoteConfig ones are private
 	static final String REMOTE = "remote"; //$NON-NLS-1$
 

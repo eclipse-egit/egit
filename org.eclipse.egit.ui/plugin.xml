@@ -442,7 +442,7 @@
             name="%ShareProjectCommand_name">
          <commandParameter
                id="org.eclipse.egit.ui.command.projectNameParameter"
-               name="Project"
+               name="%ShareProjectCommandParameter_name"
                optional="false"
                values="org.eclipse.egit.ui.internal.commands.ProjectNameParameterValues">
          </commandParameter>
@@ -454,12 +454,21 @@
             category="org.eclipse.egit.ui.GitCategory"
             class="org.eclipse.egit.ui.internal.repository.RepositoriesView"
             id="org.eclipse.egit.ui.RepositoriesView"
-            name="Git Repositories"
+            name="%GitRepositoriesView_name"
             restorable="true">
       </view>
       <category
             id="org.eclipse.egit.ui.GitCategory"
-            name="Git">
+            name="%GitCategory_name">
       </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eclipse.egit.ui.GitRepositoriesPerspectiveFactory"
+            icon="icons/obj16/gitrepository.gif"
+            id="org.eclipse.egit.ui.GitRepositoryExploring"
+            name="%GitRepositoryPerspective_name">
+      </perspective>
    </extension>
 </plugin>
