@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAA3////4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-31T20:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAAn///+8\u003d",
+      "revId": "35700e6a8731ccf851c24216c47ba37852e8b1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAAn////A\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2010-03-31T10:32:11Z",
       "side": 1,
       "message": "Why do we need this?",
+      "revId": "35700e6a8731ccf851c24216c47ba37852e8b1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3////0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-03-31T20:02:26Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "AAAAAn////A\u003d",
       "revId": "35700e6a8731ccf851c24216c47ba37852e8b1c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
