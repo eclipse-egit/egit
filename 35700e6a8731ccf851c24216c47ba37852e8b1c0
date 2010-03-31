@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAAn///+8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-03-31T10:32:11Z",
+      "side": 1,
+      "message": "Could we sort in an existing one in such a way that it appears on top of the list?",
+      "revId": "35700e6a8731ccf851c24216c47ba37852e8b1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAAn////A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-03-31T10:32:11Z",
+      "side": 1,
+      "message": "Why do we need this?",
+      "revId": "35700e6a8731ccf851c24216c47ba37852e8b1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
