@@ -115,7 +115,6 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 	/** The view ID */
 	public static final String VIEW_ID = "org.eclipse.egit.ui.RepositoriesView"; //$NON-NLS-1$
-
 	// TODO central constants? RemoteConfig ones are private
 	static final String REMOTE = "remote"; //$NON-NLS-1$
 
