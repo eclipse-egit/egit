@@ -228,7 +228,6 @@ public class RepositoryPropertySource implements IPropertySource,
 		String name;
 
 		String[] valueList = null;
-		String value = null;
 		if (tok.countTokens() == 2) {
 			section = tok.nextToken();
 			subsection = null;
@@ -242,11 +241,6 @@ public class RepositoryPropertySource implements IPropertySource,
 			return null;
 		}
 
-		value = config.getString(section, subsection, name);
-
-		if (value != null)
-			return value;
-
 		valueList = config.getStringList(section, subsection, name);
 
 		if (valueList == null || valueList.length == 0)
@@ -256,7 +250,14 @@ public class RepositoryPropertySource implements IPropertySource,
 			return valueList[0];
 		}
 
-		return valueList;
+		StringBuilder sb = new StringBuilder();
+		for (String value: valueList){
+			sb.append('[');
+			sb.append(value);
+			sb.append(']');
+		}
+
+		return sb.toString();
 
 	}
 
@@ -323,11 +324,21 @@ public class RepositoryPropertySource implements IPropertySource,
 			}
 			categoryString = UIText.RepositoryPropertySource_RepositoryConfigurationCategory
 					+ repositoryConfig.getFile().getAbsolutePath();
+
+			boolean editable = true;
+
 			for (String key : configuredKeys) {
 
+				// remote stuff is not configurable
+				editable = !key.startsWith("remote"); //$NON-NLS-1$
+
 				for (String sub : getSubSections(effectiveConfig, key)) {
-					TextPropertyDescriptor desc = new TextPropertyDescriptor(
-							REPO_ID_PREFIX + sub, sub);
+					PropertyDescriptor desc;
+					if (editable)
+						desc = new TextPropertyDescriptor(REPO_ID_PREFIX + sub,
+								sub);
+					else
+						desc = new PropertyDescriptor(REPO_ID_PREFIX + sub, sub);
 					desc.setCategory(categoryString);
 					resultList.add(desc);
 				}
