@@ -14,10 +14,10 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
+import org.eclipse.egit.ui.nternal.trace.GitTraceLocation;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -60,8 +60,8 @@ public class BranchAction extends RepositoryAction {
 						new BranchOperation(repository, refName).run(monitor);
 						GitLightweightDecorator.refresh();
 					} catch (final CoreException e) {
-						if (GitTraceLocation.CORE.isActive())
-							GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
+						if (GitTraceLocation.UI.isActive())
+							GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
 						Display.getDefault().asyncExec(new Runnable() {
 							public void run() {
 								handle(e, "Error while switching branches", "Unable to switch branches");
@@ -71,11 +71,11 @@ public class BranchAction extends RepositoryAction {
 				}
 			});
 		} catch (InvocationTargetException e) {
-			if (GitTraceLocation.CORE.isActive())
-				GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
+			if (GitTraceLocation.UI.isActive())
+				GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
 		} catch (InterruptedException e) {
-			if (GitTraceLocation.CORE.isActive())
-				GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
+			if (GitTraceLocation.UI.isActive())
+				GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
 		}
 	}
 

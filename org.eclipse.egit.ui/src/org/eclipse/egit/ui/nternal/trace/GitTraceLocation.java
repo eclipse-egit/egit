@@ -8,9 +8,9 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.core.internal.trace;
+package org.eclipse.egit.ui.nternal.trace;
 
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugTrace;
 
@@ -19,8 +19,9 @@ import org.eclipse.osgi.service.debug.DebugTrace;
  *
  */
 public enum GitTraceLocation implements ITraceLocation {
-	/** Core */
-	CORE("/debug/core"); //$NON-NLS-1$
+
+	/** UI */
+	UI("/debug/ui"); //$NON-NLS-1$
 
 	/**
 	 * Initialize the locations
