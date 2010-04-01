@@ -151,7 +151,28 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_CompareWithWorking;
 
 	/** */
+	public static String GitHistoryPage_CreateGitPatch;
+
+	/** */
+	public static String GitHistoryPage_CreatePatch;
+
+	/** */
+	public static String GitHistoryPage_Date;
+
+	/** */
+	public static String GitHistoryPage_ErrorNotWritten;
+
+	/** */
 	public static String GitHistoryPage_FileNotInCommit;
+
+	/** */
+	public static String GitHistoryPage_From;
+
+	/** */
+	public static String GitHistoryPage_SelectPatchFile;
+
+	/** */
+	public static String GitHistoryPage_Subject;
 
 	/** */
 	public static String GitProjectPropertyPage_LabelBranch;
