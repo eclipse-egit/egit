@@ -10,7 +10,6 @@
 package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,10 +28,6 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jgit.diff.DiffFormatter;
-import org.eclipse.jgit.diff.MyersDiff;
-import org.eclipse.jgit.diff.RawText;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
@@ -273,8 +268,11 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 			FileDiff[] diffs = FileDiff.compute(walker, commit);
 
 			for (FileDiff diff : diffs) {
-				if (diff.blobs.length == 2)
-					outputDiff(d, diff);
+				if (diff.blobs.length == 2) {
+					String path = diff.path;
+					d.append(formatPathLine(path)).append("\n"); //$NON-NLS-1$
+					diff.outputDiff(d, db, diffFmt, false);
+				}
 			}
 		} catch (IOException e) {
 			Activator.error("Can't get file difference of "
@@ -282,39 +280,6 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		}
 	}
 
-	private void outputDiff(final StringBuilder d, FileDiff fileDiff) throws IOException {
-		String path = fileDiff.path;
-		ObjectId id1 = fileDiff.blobs[0];
-		ObjectId id2 = fileDiff.blobs[1];
-		FileMode mode1 = fileDiff.modes[0];
-		FileMode mode2 = fileDiff.modes[1];
-
-		d.append(formatPathLine(path)).append("\n"); //$NON-NLS-1$
-		if (id1.equals(ObjectId.zeroId())) {
-			d.append("new file mode " + mode2).append("\n"); //$NON-NLS-2$
-		} else if (id2.equals(ObjectId.zeroId())) {
-			d.append("deleted file mode " + mode1).append("\n"); //$NON-NLS-2$
-		} else if (!mode1.equals(mode2)) {
-			d.append("old mode " + mode1);
-			d.append("new mode " + mode2).append("\n"); //$NON-NLS-2$
-		}
-		d.append("index ").append(id1.abbreviate(db, 7).name()).
-			append("..").append(id2.abbreviate(db, 7).name()). //$NON-NLS-1$
-			append (mode1.equals(mode2) ? " " + mode1 : ""). append("\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-
-		RawText a = getRawText(id1);
-		RawText b = getRawText(id2);
-		MyersDiff diff = new MyersDiff(a, b);
-		diffFmt.formatEdits(new OutputStream() {
-
-			@Override
-			public void write(int b) throws IOException {
-				d.append((char) b);
-
-			}
-		 } , a, b, diff.getEdits());
-		d.append("\n"); //$NON-NLS-1$
-	}
 
 	private String formatPathLine(String path) {
 		int n = 80 - path.length() - 2;
@@ -330,12 +295,6 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		return d.toString();
 	}
 
-
-	private RawText getRawText(ObjectId id) throws IOException {
-		if (id.equals(ObjectId.zeroId()))
-			return new RawText(new byte[] { });
-		return new RawText(db.openBlob(id).getCachedBytes());
-	}
 
 	static class ObjectLink extends StyleRange {
 		RevCommit targetCommit;
