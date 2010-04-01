@@ -52,7 +52,6 @@ import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTree
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -73,7 +72,7 @@ import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
@@ -230,9 +229,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 	public void createPartControl(Composite parent) {
 
 		Composite main = new Composite(parent, SWT.NONE);
-		main.setLayout(new GridLayout(1, false));
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
-		main.setLayout(new GridLayout(1, false));
+		main.setLayout(new FillLayout());
 
 		tv = new TreeViewer(main);
 		tv.setContentProvider(new RepositoriesViewContentProvider());
@@ -257,8 +254,6 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 		});
 		// make the tree rather wide to accommodate long directory names
 		tv.getTree().getColumn(0).setWidth(700);
-
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(tv.getTree());
 
 		addContextMenu();
 
