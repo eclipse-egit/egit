@@ -54,7 +54,7 @@ import org.eclipse.jgit.lib.WindowCacheConfig;
 public class GitProjectData {
 	private static final Map<IProject, GitProjectData> projectDataCache = new HashMap<IProject, GitProjectData>();
 
-	private static final Map<File, WeakReference> repositoryCache = new HashMap<File, WeakReference>();
+	private static final Map<File, Reference<Repository>> repositoryCache = new HashMap<File, Reference<Repository>>();
 
 	private static Set<RepositoryChangeListener> repositoryChangeListeners = new HashSet<RepositoryChangeListener>();
 
@@ -217,22 +217,22 @@ public class GitProjectData {
 
 	private synchronized static Repository lookupRepository(final File gitDir)
 			throws IOException {
-		final Iterator i = repositoryCache.entrySet().iterator();
-		while (i.hasNext()) {
-			final Map.Entry e = (Map.Entry) i.next();
-			if (((Reference) e.getValue()).get() == null) {
-				i.remove();
-			}
-		}
-
-		final Repository d;
-		if (repositoryCache.containsKey(gitDir)) {
-			d = (Repository) repositoryCache.get(gitDir).get();
-		} else {
+		Reference<Repository> r = repositoryCache.get(gitDir);
+		Repository d = r != null ? r.get() : null;
+		if (d == null) {
 			d = new Repository(gitDir);
 			repositoryCache.put(gitDir, new WeakReference<Repository>(d));
 		}
+		prune(repositoryCache);
 		return d;
+	}
+
+	private static <K, V> void prune(Map<K, Reference<V>> map) {
+		for (final Iterator<Map.Entry<K, Reference<V>>> i = map.entrySet()
+				.iterator(); i.hasNext();) {
+			if (i.next().getValue().get() == null)
+				i.remove();
+		}
 	}
 
 	/**
