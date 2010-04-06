@@ -13,7 +13,6 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.util.Iterator;
 
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -42,6 +41,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
@@ -50,8 +50,8 @@ class CommitGraphTable {
 	private static Font highlightFont() {
 		final Font n, h;
 
-		n = Activator.getFont(UIPreferences.THEME_CommitGraphNormalFont);
-		h = Activator.getFont(UIPreferences.THEME_CommitGraphHighlightFont);
+		n = getFont(UIPreferences.THEME_CommitGraphNormalFont);
+		h = getFont(UIPreferences.THEME_CommitGraphHighlightFont);
 
 		final FontData[] nData = n.getFontData();
 		final FontData[] hData = h.getFontData();
@@ -61,7 +61,7 @@ class CommitGraphTable {
 			if (!nData[i].equals(hData[i]))
 				return h;
 
-		return Activator.getBoldFont(UIPreferences.THEME_CommitGraphNormalFont);
+		return getBoldFont(UIPreferences.THEME_CommitGraphNormalFont);
 	}
 
 	private final TableViewer table;
@@ -79,7 +79,7 @@ class CommitGraphTable {
 	private RevFlag highlight;
 
 	CommitGraphTable(final Composite parent) {
-		nFont = Activator.getFont(UIPreferences.THEME_CommitGraphNormalFont);
+		nFont = getFont(UIPreferences.THEME_CommitGraphNormalFont);
 		hFont = highlightFont();
 
 		Table rawTable = new Table(parent, SWT.MULTI | SWT.H_SCROLL
@@ -235,5 +235,15 @@ class CommitGraphTable {
 	 */
 	public TableViewer getTableView() {
 		return table;
+	}
+
+	private static Font getFont(final String id) {
+		return PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
+				.getFontRegistry().get(id);
+	}
+
+	private static Font getBoldFont(final String id) {
+		return PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
+				.getFontRegistry().getBold(id);
 	}
 }
