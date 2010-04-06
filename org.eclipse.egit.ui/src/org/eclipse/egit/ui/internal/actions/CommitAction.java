@@ -48,6 +48,7 @@ import org.eclipse.jgit.lib.RepositoryConfig;
 import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.lib.TreeEntry;
 import org.eclipse.jgit.lib.GitIndex.Entry;
+import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.Team;
 import org.eclipse.team.core.TeamException;
@@ -227,6 +228,16 @@ public class CommitAction extends RepositoryAction {
 				else
 					parentIds = new ObjectId[0];
 			}
+			if (commitDialog.getCreateChangeId()) {
+				ObjectId parentId;
+				if (parentIds.length > 0)
+					parentId = parentIds[0];
+				else
+					parentId = null;
+				ObjectId changeId = ChangeIdUtil.computeChangeId(tree.getId(), parentId, authorIdent, committerIdent, commitMessage);
+				commitMessage = ChangeIdUtil.insertId(commitMessage, changeId);
+			}
+
 			Commit commit = new Commit(repo, parentIds);
 			commit.setTree(tree);
 			commit.setMessage(commitMessage);
