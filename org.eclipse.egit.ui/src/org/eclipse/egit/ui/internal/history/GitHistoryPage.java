@@ -401,6 +401,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 				right = new EditableRevision(nextFile);
 			}
 		} catch (IOException e) {
+			// TODO throw an exception or log this?
 			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
 					gitPath, commit.getId()), e);
 		}

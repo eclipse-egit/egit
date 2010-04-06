@@ -82,9 +82,9 @@ public class AssumeUnchangedOperation implements IWorkspaceRunnable {
 				editor.commit();
 			}
 		} catch (RuntimeException e) {
-			throw Activator.error(CoreText.UntrackOperation_failed, e);
+			throw new CoreException(Activator.error(CoreText.UntrackOperation_failed, e));
 		} catch (IOException e) {
-			throw Activator.error(CoreText.UntrackOperation_failed, e);
+			throw new CoreException(Activator.error(CoreText.UntrackOperation_failed, e));
 		} finally {
 			for (final RepositoryMapping rm : mappings.keySet())
 				rm.fireRepositoryChanged();
@@ -109,7 +109,7 @@ public class AssumeUnchangedOperation implements IWorkspaceRunnable {
 			try {
 				cache = DirCache.lock(db);
 			} catch (IOException err) {
-				throw Activator.error(CoreText.UntrackOperation_failed, err);
+				throw new CoreException(Activator.error(CoreText.UntrackOperation_failed, err));
 			}
 			caches.put(db, cache);
 			mappings.put(rm, rm);
