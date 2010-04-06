@@ -175,6 +175,8 @@ public class CommitDialog extends Dialog {
 
 	CheckboxTableViewer filesViewer;
 
+	private Button changeIdButton;
+
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite container = (Composite) super.createDialogArea(parent);
@@ -291,12 +293,27 @@ public class CommitDialog extends Dialog {
 			}
 		});
 
+		changeIdButton = new Button(container, SWT.CHECK);
+		changeIdButton.setText(UIText.CommitDialog_AddChangeId);
+		changeIdButton.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).span(2, 1).create());
+		changeIdButton.addSelectionListener(new SelectionListener() {
+
+			public void widgetSelected(SelectionEvent e) {
+				createChangeId = changeIdButton.getSelection();
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// empty
+			}
+		});
 		commitText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateSignedOffButton();
+				updateChangeIdButton();
 			}
 		});
 		updateSignedOffButton();
+		updateChangeIdButton();
 
 		Table resourcesTable = new Table(container, SWT.H_SCROLL | SWT.V_SCROLL
 				| SWT.FULL_SELECTION | SWT.MULTI | SWT.CHECK | SWT.BORDER);
@@ -333,6 +350,17 @@ public class CommitDialog extends Dialog {
 			curText += Text.DELIMITER;
 
 		signedOffButton.setSelection(curText.indexOf(getSignedOff() + Text.DELIMITER) != -1);
+	}
+
+	private void updateChangeIdButton() {
+		String curText = commitText.getText();
+		if (!curText.endsWith(Text.DELIMITER))
+			curText += Text.DELIMITER;
+
+		boolean hasId = curText.indexOf(Text.DELIMITER + "Change-Id: ") != -1; //$NON-NLS-1$
+		if (hasId)
+			changeIdButton.setSelection(true);
+		changeIdButton.setEnabled(!hasId);
 	}
 
 	private String getSignedOff() {
@@ -494,6 +522,7 @@ public class CommitDialog extends Dialog {
 	private boolean signedOff = false;
 	private boolean amending = false;
 	private boolean amendAllowed = true;
+	private boolean createChangeId = false;
 
 	private ArrayList<IFile> selectedFiles = new ArrayList<IFile>();
 	private String previousCommitMessage = ""; //$NON-NLS-1$
@@ -913,6 +942,13 @@ public class CommitDialog extends Dialog {
 		adapter
 				.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 
+	}
+
+	/**
+	 * @return true if a Change-Id line for Gerrit should be created
+	 */
+	public boolean getCreateChangeId() {
+		return createChangeId;
 	}
 
 }
