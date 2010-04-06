@@ -97,17 +97,16 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Instantiate an error exception.
+	 * Instantiate an error status.
 	 *
 	 * @param message
 	 *            description of the error
 	 * @param thr
 	 *            cause of the error or null
-	 * @return an initialized {@link CoreException}
+	 * @return an initialized error status
 	 */
-	public static CoreException error(final String message, final Throwable thr) {
-		return new CoreException(new Status(IStatus.ERROR, getPluginId(), 0,
-				message, thr));
+	public static IStatus error(final String message, final Throwable thr) {
+		return new Status(IStatus.ERROR, getPluginId(), 0, message, thr);
 	}
 
 	/**

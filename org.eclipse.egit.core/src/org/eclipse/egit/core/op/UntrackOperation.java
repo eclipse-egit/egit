@@ -87,9 +87,9 @@ public class UntrackOperation implements IWorkspaceRunnable {
 				editor.commit();
 			}
 		} catch (RuntimeException e) {
-			throw Activator.error(CoreText.UntrackOperation_failed, e);
+			throw new CoreException(Activator.error(CoreText.UntrackOperation_failed, e));
 		} catch (IOException e) {
-			throw Activator.error(CoreText.UntrackOperation_failed, e);
+			throw new CoreException(Activator.error(CoreText.UntrackOperation_failed, e));
 		} finally {
 			for (final RepositoryMapping rm : mappings.keySet())
 				rm.fireRepositoryChanged();
@@ -114,7 +114,7 @@ public class UntrackOperation implements IWorkspaceRunnable {
 			try {
 				e = DirCache.lock(db).editor();
 			} catch (IOException err) {
-				throw Activator.error(CoreText.UntrackOperation_failed, err);
+				throw new CoreException(Activator.error(CoreText.UntrackOperation_failed, err));
 			}
 			edits.put(db, e);
 			mappings.put(rm, rm);
