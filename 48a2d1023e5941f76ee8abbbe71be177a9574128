@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAGn///2Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesAction.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 40
+      },
+      "writtenOn": "2010-03-15T21:38:49Z",
+      "side": 1,
+      "message": "For the IOException, I could say that something went wrong while interacting with the index, since it isn\u0027t necessarily going to be an issue with the checkout failing.",
+      "parentUuid": "AAAAGn///8Y\u003d",
+      "revId": "48a2d1023e5941f76ee8abbbe71be177a9574128",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAGn///8Q\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesAction.java",
         "patchSetId": 7
