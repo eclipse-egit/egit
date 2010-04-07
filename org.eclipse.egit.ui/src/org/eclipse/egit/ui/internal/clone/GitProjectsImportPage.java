@@ -220,16 +220,7 @@ public class GitProjectsImportPage extends WizardPage {
 	 * Creates a new project creation wizard page.
 	 */
 	public GitProjectsImportPage() {
-		this("gitWizardExternalProjectsPage"); //$NON-NLS-1$
-	}
-
-	/**
-	 * Create a new instance of the receiver.
-	 *
-	 * @param pageName
-	 */
-	public GitProjectsImportPage(String pageName) {
-		super(pageName);
+		super("gitWizardExternalProjectsPage"); //$NON-NLS-1$
 		setPageComplete(false);
 		setTitle(UIText.WizardProjectsImportPage_ImportProjectsTitle);
 		setDescription(UIText.WizardProjectsImportPage_ImportProjectsDescription);
