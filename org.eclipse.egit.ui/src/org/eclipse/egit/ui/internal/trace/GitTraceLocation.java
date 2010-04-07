@@ -8,9 +8,9 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.core.internal.trace;
+package org.eclipse.egit.ui.internal.trace;
 
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.osgi.service.debug.DebugOptions;
 
 /**
@@ -18,8 +18,9 @@ import org.eclipse.osgi.service.debug.DebugOptions;
  *
  */
 public enum GitTraceLocation implements ITraceLocation {
-	/** Core */
-	CORE("/debug/core"); //$NON-NLS-1$
+
+	/** UI */
+	UI("/debug/ui"); //$NON-NLS-1$
 
 	/**
 	 * Initialize the locations
@@ -33,16 +34,26 @@ public enum GitTraceLocation implements ITraceLocation {
 		if (pluginIsDebugging) {
 			myTrace = new DebugTrace() {
 
+				public void traceEntry(String location, String message) {
+					// not implemented
+				}
+
+				public void traceEntry(String location) {
+					// not implemented
+				}
+
 				public void trace(String location, String message, Throwable error) {
-					// TODO Auto-generated method stub
+					System.out.println(message);
+					if (error != null)
+						System.out.println(error.getMessage());
 
 				}
 
 				public void trace(String location, String message) {
-					// TODO Auto-generated method stub
-
+					System.out.println(message);
 				}
 			};
+
 			for (GitTraceLocation loc : values()) {
 				boolean active = options.getBooleanOption(loc.getFullPath(), false);
 				loc.setActive(active);
