@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAGn///+E\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-03-12T09:52:40Z",
+      "side": 1,
+      "message": "This is not what the action does. It does not replace the content with HEAD but with the staged content in the index (as git checkout does).\n\nSo why not call it \"Replace with Git Index\".",
+      "revId": "ffe46ddea4a98687c898c32318c42ddfc9de8db8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///+I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-03-12T09:52:40Z",
+      "side": 1,
+      "message": "Why do we need to change this?",
+      "revId": "ffe46ddea4a98687c898c32318c42ddfc9de8db8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
