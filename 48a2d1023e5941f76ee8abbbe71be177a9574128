@@ -67,6 +67,24 @@
       "revId": "48a2d1023e5941f76ee8abbbe71be177a9574128",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///2U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesAction.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 40
+      },
+      "writtenOn": "2010-03-15T21:38:49Z",
+      "side": 1,
+      "message": "The comment inside the catch was a bit misleading. According to the javadoc, if a resource is a closed project, or does not exist, then the members() call will throw a CoreException. I\u0027ve changed this method to not add members of a given resource if their \"parent\" throws this exception.",
+      "parentUuid": "AAAAGn///8U\u003d",
+      "revId": "48a2d1023e5941f76ee8abbbe71be177a9574128",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
