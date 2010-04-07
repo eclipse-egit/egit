@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAGn///8M\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-03-12T22:18:16Z",
+      "side": 1,
+      "message": "I\u0027d prefer Replace with file in Git Index",
+      "revId": "48a2d1023e5941f76ee8abbbe71be177a9574128",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///8Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesAction.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-03-12T22:18:16Z",
+      "side": 1,
+      "message": "Do we know this is a refresh and not something entirely different. or opposed to the IOException, which we really don\u0027t know much about either",
+      "revId": "48a2d1023e5941f76ee8abbbe71be177a9574128",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///8Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesAction.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-03-12T22:18:16Z",
+      "side": 1,
+      "message": "Non-checked exceptions gets swalllowed and ignored here. Catching RuntimeException would tell the user something bad happed",
+      "revId": "48a2d1023e5941f76ee8abbbe71be177a9574128",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAGn///8U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesAction.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-03-12T22:18:16Z",
+      "side": 1,
+      "message": "CoreException is much wider than ResourceException, which is the one\nyou want to ignore. Wouldn\u0027t explicitlyt checking whether the resource exists be more precise?",
+      "revId": "48a2d1023e5941f76ee8abbbe71be177a9574128",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
