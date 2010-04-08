@@ -16,12 +16,11 @@ import org.eclipse.core.resources.IEncodedStorage;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.GitProvider;
-import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.text.Document;
-import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Commit;
 import org.eclipse.jgit.lib.Constants;
@@ -34,6 +33,7 @@ import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.lib.TreeEntry;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.team.core.RepositoryProvider;
 
 class GitDocument extends Document implements RepositoryListener {
 	private final IResource resource;

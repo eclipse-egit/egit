@@ -8,21 +8,21 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.core.internal.trace;
+package org.eclipse.egit.ui.internal.trace;
 
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.osgi.service.debug.DebugOptions;
 
 /**
  * EGit Trace locations
- *
  */
 public enum GitTraceLocation implements ITraceLocation {
-	/** Core */
-	CORE("/debug/core"); //$NON-NLS-1$
+
+	/** UI */
+	UI("/debug/ui"); //$NON-NLS-1$
 
 	/**
 	 * Initialize the locations
@@ -36,6 +36,7 @@ public enum GitTraceLocation implements ITraceLocation {
 		// we evaluate the plug-in switch
 		if (pluginIsDebugging) {
 			myTrace = new DebugTraceImpl();
+
 			for (GitTraceLocation loc : values()) {
 				boolean active = options.getBooleanOption(loc.getFullPath(),
 						false);
@@ -74,7 +75,6 @@ public enum GitTraceLocation implements ITraceLocation {
 	}
 
 	/**
-	 *
 	 * @return <code>true</code> if this location is active
 	 */
 	public boolean isActive() {
@@ -125,6 +125,14 @@ public enum GitTraceLocation implements ITraceLocation {
 
 		}
 
+		public void traceEntry(String location) {
+			// not implemented
+		}
+
+		public void traceEntry(String location, String message) {
+			// not implemented
+		}
+
 		private ILog getLog() {
 			if (myLog == null) {
 				myLog = Activator.getDefault().getLog();
@@ -133,4 +141,5 @@ public enum GitTraceLocation implements ITraceLocation {
 		}
 
 	}
+
 }

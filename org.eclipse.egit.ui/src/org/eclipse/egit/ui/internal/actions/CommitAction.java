@@ -25,11 +25,11 @@ import java.util.TimeZone;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -410,8 +410,8 @@ public class CommitAction extends RepositoryAction {
 								"Couldn't find " + filename); //$NON-NLS-1$
 				}
 			} catch (Exception e) {
-				if (GitTraceLocation.CORE.isActive())
-					GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
+				if (GitTraceLocation.UI.isActive())
+					GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
 				continue;
 			} // if it's outside the workspace, bad things happen
 		}
@@ -431,8 +431,8 @@ public class CommitAction extends RepositoryAction {
 				return true;
 			}
 		} catch (Exception e) {
-			if (GitTraceLocation.CORE.isActive())
-				GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
+			if (GitTraceLocation.UI.isActive())
+				GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
 		}
 		return false;
 	}
@@ -447,11 +447,11 @@ public class CommitAction extends RepositoryAction {
 				return entry.isModified(map.getWorkDir());
 			return false;
 		} catch (UnsupportedEncodingException e) {
-			if (GitTraceLocation.CORE.isActive())
-				GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
+			if (GitTraceLocation.UI.isActive())
+				GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
 		} catch (IOException e) {
-			if (GitTraceLocation.CORE.isActive())
-				GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
+			if (GitTraceLocation.UI.isActive())
+				GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
 		}
 		return false;
 	}

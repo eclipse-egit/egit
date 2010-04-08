@@ -14,12 +14,12 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.core.op.ResetOperation.ResetType;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -60,8 +60,8 @@ public class ResetAction extends RepositoryAction {
 							new ResetOperation(repository, refName, type).run(monitor);
 							GitLightweightDecorator.refresh();
 						} catch (CoreException e) {
-							if (GitTraceLocation.CORE.isActive())
-								GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
+							if (GitTraceLocation.UI.isActive())
+								GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
 							throw new InvocationTargetException(e);
 						}
 					}

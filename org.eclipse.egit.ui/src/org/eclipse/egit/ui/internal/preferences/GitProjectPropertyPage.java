@@ -12,9 +12,9 @@ import java.io.IOException;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -81,8 +81,8 @@ public class GitProjectPropertyPage extends PropertyPage {
 			try {
 				fillValues(repository);
 			} catch (IOException e) {
-				if (GitTraceLocation.CORE.isActive())
-					GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
+				if (GitTraceLocation.UI.isActive())
+					GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
 			}
 		}
 
