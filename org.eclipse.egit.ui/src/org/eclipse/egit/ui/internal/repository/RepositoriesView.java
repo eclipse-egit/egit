@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -65,6 +66,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
@@ -115,6 +117,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 	/** The view ID */
 	public static final String VIEW_ID = "org.eclipse.egit.ui.RepositoriesView"; //$NON-NLS-1$
+
 	// TODO central constants? RemoteConfig ones are private
 	static final String REMOTE = "remote"; //$NON-NLS-1$
 
@@ -670,9 +673,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					new WizardDialog(getSite().getShell(),
-							new ConfigureRemoteWizard(node.getRepository()))
-							.open();
+					new WizardDialog(getSite().getShell(), new NewRemoteWizard(
+							node.getRepository())).open();
 					scheduleRefresh();
 
 				}
@@ -682,11 +684,28 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 		if (node.getType() == RepositoryTreeNodeType.REMOTE) {
 
-			final String name = (String) node.getObject();
+			final String configName = (String) node.getObject();
+
+			RemoteConfig rconfig;
+			try {
+				rconfig = new RemoteConfig(node.getRepository().getConfig(),
+						configName);
+			} catch (URISyntaxException e2) {
+				// TODO Exception handling
+				rconfig = null;
+			}
+
+			boolean fetchExists = rconfig != null
+					&& !rconfig.getURIs().isEmpty();
+			boolean pushExists = rconfig != null
+					&& !rconfig.getPushURIs().isEmpty();
 
 			MenuItem configureUrlFetch = new MenuItem(men, SWT.PUSH);
-			configureUrlFetch
-					.setText(UIText.RepositoriesView_ConfigureFetchMenu);
+			if (fetchExists)
+				configureUrlFetch
+						.setText(UIText.RepositoriesView_ConfigureFetchMenu);
+			else
+				configureUrlFetch.setText(UIText.RepositoriesView_CreateFetch_menu);
 			configureUrlFetch.addSelectionListener(new SelectionAdapter() {
 
 				@Override
@@ -694,15 +713,43 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 					new WizardDialog(getSite().getShell(),
 							new ConfigureRemoteWizard(node.getRepository(),
-									name, false)).open();
+									configName, false)).open();
 					scheduleRefresh();
 
 				}
 
 			});
 
+			if (fetchExists) {
+				MenuItem deleteFetch = new MenuItem(men, SWT.PUSH);
+				deleteFetch.setText(UIText.RepositoriesView_RemoveFetch_menu);
+				deleteFetch.addSelectionListener(new SelectionAdapter() {
+
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						RepositoryConfig config = node.getRepository()
+								.getConfig();
+						config.unset("remote", configName, "url"); //$NON-NLS-1$ //$NON-NLS-2$
+						config.unset("remote", configName, "fetch");  //$NON-NLS-1$//$NON-NLS-2$
+						try {
+							config.save();
+							scheduleRefresh();
+						} catch (IOException e1) {
+							MessageDialog.openError(getSite().getShell(),
+									UIText.RepositoriesView_ErrorHeader, e1
+											.getMessage());
+						}
+					}
+
+				});
+			}
+
 			MenuItem configureUrlPush = new MenuItem(men, SWT.PUSH);
-			configureUrlPush.setText(UIText.RepositoriesView_ConfigurePushMenu);
+			if (pushExists)
+				configureUrlPush
+						.setText(UIText.RepositoriesView_ConfigurePushMenu);
+			else
+				configureUrlPush.setText(UIText.RepositoriesView_CreatePush_menu);
 			configureUrlPush.addSelectionListener(new SelectionAdapter() {
 
 				@Override
@@ -710,12 +757,36 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 					new WizardDialog(getSite().getShell(),
 							new ConfigureRemoteWizard(node.getRepository(),
-									name, true)).open();
+									configName, true)).open();
 					scheduleRefresh();
 
 				}
 
 			});
+
+			if (pushExists) {
+				MenuItem deleteFetch = new MenuItem(men, SWT.PUSH);
+				deleteFetch.setText(UIText.RepositoriesView_RemovePush_menu);
+				deleteFetch.addSelectionListener(new SelectionAdapter() {
+
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						RepositoryConfig config = node.getRepository()
+								.getConfig();
+						config.unset("remote", configName, "pushurl"); //$NON-NLS-1$ //$NON-NLS-2$
+						config.unset("remote", configName, "push"); //$NON-NLS-1$ //$NON-NLS-2$
+						try {
+							config.save();
+							scheduleRefresh();
+						} catch (IOException e1) {
+							MessageDialog.openError(getSite().getShell(),
+									UIText.RepositoriesView_ErrorHeader, e1
+											.getMessage());
+						}
+					}
+
+				});
+			}
 
 			new MenuItem(men, SWT.SEPARATOR);
 
@@ -733,11 +804,11 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 									NLS
 											.bind(
 													UIText.RepositoriesView_ConfirmDeleteRemoteMessage,
-													name));
+													configName));
 					if (ok) {
 						RepositoryConfig config = node.getRepository()
 								.getConfig();
-						config.unsetSection(REMOTE, name);
+						config.unsetSection(REMOTE, configName);
 						try {
 							config.save();
 							scheduleRefresh();
@@ -958,7 +1029,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 		getViewSite().getActionBars().getToolBarManager().add(addAction);
 
-		linkWithSelectionAction = new Action(UIText.RepositoriesView_LinkWithSelection_action,
+		linkWithSelectionAction = new Action(
+				UIText.RepositoriesView_LinkWithSelection_action,
 				IAction.AS_CHECK_BOX) {
 
 			@Override
@@ -980,7 +1052,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 		};
 
-		linkWithSelectionAction.setToolTipText(UIText.RepositoriesView_LinkWithSelection_action);
+		linkWithSelectionAction
+				.setToolTipText(UIText.RepositoriesView_LinkWithSelection_action);
 
 		linkWithSelectionAction.setImageDescriptor(UIIcons.ELCL16_SYNCED);
 

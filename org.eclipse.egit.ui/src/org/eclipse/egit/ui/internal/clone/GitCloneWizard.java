@@ -54,7 +54,7 @@ public class GitCloneWizard extends Wizard implements IImportWizard {
 		setWindowTitle(UIText.GitCloneWizard_title);
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 		setNeedsProgressMonitor(true);
-		cloneSource = new RepositorySelectionPage(true);
+		cloneSource = new RepositorySelectionPage(true, null);
 		validSource = new SourceBranchPage(cloneSource);
 		cloneDestination = new CloneDestinationPage(cloneSource, validSource);
 		importProject = new GitProjectsImportPage() {
@@ -160,7 +160,7 @@ public class GitCloneWizard extends Wizard implements IImportWizard {
 				protected IStatus run(final IProgressMonitor monitor) {
 					try {
 						op.run(monitor);
-						cloneSource.saveUriInPrefs(uri.toString());
+						RepositorySelectionPage.saveUriInPrefs(uri.toString());
 						RepositoriesView.addDir(op.getGitDir());
 						if (view != null)
 							view.scheduleRefresh();
@@ -190,7 +190,7 @@ public class GitCloneWizard extends Wizard implements IImportWizard {
 						op.run(monitor);
 					}
 				});
-				cloneSource.saveUriInPrefs(uri.toString());
+				RepositorySelectionPage.saveUriInPrefs(uri.toString());
 				RepositoriesView.addDir(op.getGitDir());
 				if (view != null)
 					view.scheduleRefresh();

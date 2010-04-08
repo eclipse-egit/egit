@@ -166,6 +166,8 @@ class RepositoryTreeNode<T> {
 							.hashCode());
 			break;
 		case REMOTE:
+		case PUSH:
+		case FETCH:
 			result = prime * result
 					+ ((myObject == null) ? 0 : myObject.hashCode());
 
@@ -235,6 +237,8 @@ class RepositoryTreeNode<T> {
 			return ((File) myObject).getPath().equals(
 					((File) otherObject).getPath());
 		case REMOTE:
+		case FETCH:
+		case PUSH:
 			return myObject.equals(otherObject);
 		}
 		return false;
@@ -257,6 +261,8 @@ class RepositoryTreeNode<T> {
 		REMOTES(UIIcons.REMOTE_REPOSITORY.createImage()), //
 		REMOTE(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FOLDER)), //
+		FETCH(UIIcons.IMPORT.createImage()), // TODO icon
+		PUSH(UIIcons.EXPORT.createImage()), // TODO icon
 		WORKINGDIR(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FOLDER))
 

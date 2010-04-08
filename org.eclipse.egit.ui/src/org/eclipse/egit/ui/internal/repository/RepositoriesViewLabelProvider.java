@@ -176,9 +176,13 @@ public class RepositoriesViewLabelProvider extends BaseLabelProvider implements
 					+ " - " //$NON-NLS-1$
 					+ node.getRepository().getWorkDir().getAbsolutePath();
 
-		default:
-			return null;
+		case PUSH: // fall through
+		case FETCH:
+			return (String) node.getObject();
+
 		}
+
+		return null;
 	}
 
 	private Image decorateImage(final Image image, Object element) {

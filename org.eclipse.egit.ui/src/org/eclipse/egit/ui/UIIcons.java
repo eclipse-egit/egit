@@ -92,6 +92,9 @@ public class UIIcons {
 	/** Import button */
 	public static ImageDescriptor IMPORT;
 
+	/** Export button */
+	public static ImageDescriptor EXPORT;
+
 	/** Repository tree node */
 	public static ImageDescriptor REPOSITORY;
 
@@ -140,6 +143,7 @@ public class UIIcons {
 		FILTERPROJECT = map("elcl16/filterproject.gif"); //$NON-NLS-1$
 		FILTERFOLDER = map("elcl16/filterfolder.gif"); //$NON-NLS-1$
 		IMPORT = map("etool16/import_wiz.gif"); //$NON-NLS-1$
+		EXPORT = map("etool16/export_wiz.gif"); //$NON-NLS-1$
 		REPOSITORY = map("obj16/repository_rep.gif"); //$NON-NLS-1$
 		NEW_REPOSITORY = map("etool16/newlocation_wiz.gif"); //$NON-NLS-1$
 		REMOTE_REPOSITORY = map("obj16/remote_entry_tbl.gif"); //$NON-NLS-1$

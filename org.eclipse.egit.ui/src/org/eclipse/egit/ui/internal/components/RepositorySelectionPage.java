@@ -15,7 +15,6 @@ import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
@@ -56,13 +55,14 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.osgi.service.prefs.BackingStoreException;
 
-
 /**
  * Wizard page that allows the user entering the location of a remote repository
  * by specifying URL manually or selecting a preconfigured remote repository.
  */
 public class RepositorySelectionPage extends BaseWizardPage {
+
 	private final static String USED_URIS_PREF = "RepositorySelectionPage.UsedUris"; //$NON-NLS-1$
+
 	private final static String USED_URIS_LENGTH_PREF = "RepositorySelectionPage.UsedUrisLength"; //$NON-NLS-1$
 
 	private static final int REMOTE_CONFIG_TEXT_MAX_LENGTH = 80;
@@ -82,6 +82,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	private static final int S_FILE = 6;
 
 	private static final String[] DEFAULT_SCHEMES;
+
 	static {
 		DEFAULT_SCHEMES = new String[7];
 		DEFAULT_SCHEMES[S_GIT] = "git"; //$NON-NLS-1$
@@ -93,17 +94,11 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		DEFAULT_SCHEMES[S_FILE] = "file"; //$NON-NLS-1$
 	}
 
-	private static void setEnabledRecursively(final Control control,
-			final boolean enable) {
-		control.setEnabled(enable);
-		if (control instanceof Composite)
-			for (final Control child : ((Composite) control).getChildren())
-				setEnabledRecursively(child, enable);
-	}
-
 	private final List<RemoteConfig> configuredRemotes;
 
 	private final boolean sourceSelection;
+
+	private final String presetUri;
 
 	private Group authGroup;
 
@@ -139,33 +134,11 @@ public class RepositorySelectionPage extends BaseWizardPage {
 
 	private Button uriButton;
 
-	private String presetUri;
-
 	/**
 	 * Create repository selection page, allowing user specifying URI or
 	 * (optionally) choosing from preconfigured remotes list.
 	 * <p>
 	 * Wizard page is created without image, just with text description.
-	 *
-	 * @param sourceSelection
-	 *            true if dialog is used for source selection; false otherwise
-	 *            (destination selection). This indicates appropriate text
-	 *            messages.
-	 * @param configuredRemotes
-	 *            list of configured remotes that user may select as an
-	 *            alternative to manual URI specification. Remotes appear in
-	 *            given order in GUI, with {@value Constants#DEFAULT_REMOTE_NAME} as the
-	 *            default choice. List may be null or empty - no remotes
-	 *            configurations appear in this case. Note that the provided
-	 *            list may be changed by this constructor.
-	 */
-	public RepositorySelectionPage(final boolean sourceSelection,
-			final List<RemoteConfig> configuredRemotes) {
-		this(sourceSelection, configuredRemotes, null);
-	}
-
-	/**
-	 * Special case: the URI is set externally
 	 *
 	 * @param sourceSelection
 	 *            true if dialog is used for source selection; false otherwise
@@ -180,23 +153,20 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	 *            in this case. Note that the provided list may be changed by
 	 *            this constructor.
 	 * @param presetUri
-	 *            the pre-set URI
+	 *            the pre-set URI, may be null
 	 */
 	public RepositorySelectionPage(final boolean sourceSelection,
 			final List<RemoteConfig> configuredRemotes, String presetUri) {
+
 		super(RepositorySelectionPage.class.getName());
+
 		this.uri = new URIish();
 		this.sourceSelection = sourceSelection;
 		this.presetUri = presetUri;
 
-		if (configuredRemotes != null)
-			removeUnusableRemoteConfigs(configuredRemotes);
-		if (configuredRemotes == null || configuredRemotes.isEmpty())
-			this.configuredRemotes = null;
-		else {
-			this.configuredRemotes = configuredRemotes;
-			this.remoteConfig = selectDefaultRemoteConfig();
-		}
+		this.configuredRemotes = getUsableConfigs(configuredRemotes);
+		this.remoteConfig = selectDefaultRemoteConfig();
+
 		selection = RepositorySelection.INVALID_SELECTION;
 
 		if (sourceSelection) {
@@ -216,11 +186,13 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	 *            true if dialog is used for source selection; false otherwise
 	 *            (destination selection). This indicates appropriate text
 	 *            messages.
+	 * @param presetUri
+	 *            the pre-set URI, may be null
 	 */
-	public RepositorySelectionPage(final boolean sourceSelection) {
-		this(sourceSelection, null, null);
+	public RepositorySelectionPage(final boolean sourceSelection,
+			String presetUri) {
+		this(sourceSelection, null, presetUri);
 	}
-
 
 	/**
 	 * @return repository selection representing current page state.
@@ -247,12 +219,11 @@ public class RepositorySelectionPage extends BaseWizardPage {
 
 		if (configuredRemotes != null)
 			createRemotePanel(panel);
+
 		createUriPanel(panel);
 
 		updateRemoteAndURIPanels();
 		setControl(panel);
-		if (presetUri != null)
-			uriText.setText(presetUri);
 
 		checkPage();
 	}
@@ -322,6 +293,10 @@ public class RepositorySelectionPage extends BaseWizardPage {
 
 		newLabel(g, UIText.RepositorySelectionPage_promptURI + ":"); //$NON-NLS-1$
 		uriText = new Text(g, SWT.BORDER);
+
+		if (presetUri != null)
+			uriText.setText(presetUri);
+
 		uriText.setLayoutData(createFieldGridData());
 		uriText.addModifyListener(new ModifyListener() {
 			public void modifyText(final ModifyEvent e) {
@@ -492,7 +467,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		});
 	}
 
-	private static Group createGroup(final Composite parent, final String text) {
+	private Group createGroup(final Composite parent, final String text) {
 		final Group g = new Group(parent, SWT.NONE);
 		final GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
@@ -505,19 +480,19 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		return g;
 	}
 
-	private static void newLabel(final Group g, final String text) {
+	private void newLabel(final Group g, final String text) {
 		new Label(g, SWT.NULL).setText(text);
 	}
 
-	private static GridData createFieldGridData() {
+	private GridData createFieldGridData() {
 		return new GridData(SWT.FILL, SWT.DEFAULT, true, false);
 	}
 
-	private static boolean isGIT(final URIish uri) {
+	private boolean isGIT(final URIish uri) {
 		return "git".equals(uri.getScheme()); //$NON-NLS-1$
 	}
 
-	private static boolean isFile(final URIish uri) {
+	private boolean isFile(final URIish uri) {
 		if ("file".equals(uri.getScheme()) || uri.getScheme() == null) //$NON-NLS-1$
 			return true;
 		if (uri.getHost() != null || uri.getPort() > 0 || uri.getUser() != null
@@ -528,7 +503,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		return false;
 	}
 
-	private static boolean isSSH(final URIish uri) {
+	private boolean isSSH(final URIish uri) {
 		if (!uri.isRemote())
 			return false;
 		final String scheme = uri.getScheme();
@@ -543,19 +518,20 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		return false;
 	}
 
-	private static String nullString(final String value) {
+	private String nullString(final String value) {
 		if (value == null)
 			return null;
 		final String v = value.trim();
 		return v.length() == 0 ? null : v;
 	}
 
-	private static void safeSet(final Text text, final String value) {
+	private void safeSet(final Text text, final String value) {
 		text.setText(value != null ? value : ""); //$NON-NLS-1$
 	}
 
 	private boolean isURISelected() {
-		return configuredRemotes == null || presetUri != null || uriButton.getSelection();
+		return configuredRemotes == null || presetUri != null
+				|| uriButton.getSelection();
 	}
 
 	private void setURI(final URIish u) {
@@ -571,19 +547,29 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		}
 	}
 
-	private static void removeUnusableRemoteConfigs(
-			final List<RemoteConfig> remotes) {
-		final Iterator<RemoteConfig> iter = remotes.iterator();
-		while (iter.hasNext()) {
-			final RemoteConfig rc = iter.next();
-			if (rc.getURIs().isEmpty())
-				iter.remove();
-		}
+	private List<RemoteConfig> getUsableConfigs(final List<RemoteConfig> remotes) {
+
+		if (remotes == null)
+			return null;
+
+		List<RemoteConfig> result = new ArrayList<RemoteConfig>();
+
+		for (RemoteConfig config : remotes)
+			if ((sourceSelection && !config.getURIs().isEmpty() || !sourceSelection
+					&& !config.getPushURIs().isEmpty()))
+				result.add(config);
+
+		if (!result.isEmpty())
+			return result;
+
+		return null;
 	}
 
 	private RemoteConfig selectDefaultRemoteConfig() {
+		if (configuredRemotes == null)
+			return null;
 		for (final RemoteConfig rc : configuredRemotes)
-			if (Constants.DEFAULT_REMOTE_NAME.equals(getTextForRemoteConfig(rc)))
+			if (Constants.DEFAULT_REMOTE_NAME.equals(rc.getName()))
 				return rc;
 		return configuredRemotes.get(0);
 	}
@@ -633,7 +619,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 				if (uri.getPath() == null) {
 					selectionIncomplete(NLS.bind(
 							UIText.RepositorySelectionPage_fieldRequired,
-							unamp(UIText.RepositorySelectionPage_promptPath), proto));
+							unamp(UIText.RepositorySelectionPage_promptPath),
+							proto));
 					return;
 				}
 
@@ -668,7 +655,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 				if (uri.getHost() == null) {
 					selectionIncomplete(NLS.bind(
 							UIText.RepositorySelectionPage_fieldRequired,
-							unamp(UIText.RepositorySelectionPage_promptHost), proto));
+							unamp(UIText.RepositorySelectionPage_promptHost),
+							proto));
 					return;
 				}
 
@@ -706,7 +694,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	}
 
 	private String unamp(String s) {
-		return s.replace("&",""); //$NON-NLS-1$ //$NON-NLS-2$
+		return s.replace("&", ""); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private void selectionIncomplete(final String errorMessage) {
@@ -719,6 +707,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		setExposedSelection(u, rc);
 		setErrorMessage(null);
 		setPageComplete(true);
+		notifySelectionChanged();
 	}
 
 	private void setExposedSelection(final URIish u, final RemoteConfig rc) {
@@ -772,9 +761,12 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	/**
 	 * Adds a URI string to the list of previously added ones
 	 *
+	 * TODO move this to some proper preferences handling class instead of
+	 * making it static
+	 *
 	 * @param stringToAdd
 	 */
-	public void saveUriInPrefs(String stringToAdd) {
+	public static void saveUriInPrefs(String stringToAdd) {
 
 		List<String> uriStrings = getUrisFromPrefs();
 
@@ -808,9 +800,12 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	/**
 	 * Gets the previously added URIs from the preferences
 	 *
+	 * TODO move this to some proper preferences handling class instead of
+	 * making it static
+	 *
 	 * @return a (possibly empty) list of URIs, never <code>null</code>
 	 */
-	public List<String> getUrisFromPrefs() {
+	public static List<String> getUrisFromPrefs() {
 
 		// use a TreeSet to get the same sorting always
 		List<String> uriStrings = new ArrayList<String>();
@@ -840,6 +835,14 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		return uriStrings;
 	}
 
+	private void setEnabledRecursively(final Control control,
+			final boolean enable) {
+		control.setEnabled(enable);
+		if (control instanceof Composite)
+			for (final Control child : ((Composite) control).getChildren())
+				setEnabledRecursively(child, enable);
+	}
+
 	private void addContentProposalToUriText(Text uriTextField) {
 
 		ControlDecoration dec = new ControlDecoration(uriTextField, SWT.TOP
@@ -851,7 +854,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		dec.setShowOnlyOnFocus(true);
 		dec.setShowHover(true);
 
-		dec.setDescriptionText(UIText.RepositorySelectionPage_ShowPreviousURIs_HoverText);
+		dec
+				.setDescriptionText(UIText.RepositorySelectionPage_ShowPreviousURIs_HoverText);
 
 		IContentProposalProvider cp = new IContentProposalProvider() {
 
@@ -860,7 +864,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 				List<IContentProposal> resultList = new ArrayList<IContentProposal>();
 
 				String patternString = contents;
-				while (patternString.length() > 0 && patternString.charAt(0)==' ')
+				while (patternString.length() > 0
+						&& patternString.charAt(0) == ' ')
 					patternString = patternString.substring(1);
 				// make the simplest possible pattern check: allow "*"
 				// for multiple characters
@@ -881,7 +886,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 				List<String> uriStrings = getUrisFromPrefs();
 				for (final String uriString : uriStrings) {
 
-					if (pattern!=null && !pattern.matcher(uriString).matches())
+					if (pattern != null
+							&& !pattern.matcher(uriString).matches())
 						continue;
 
 					IContentProposal propsal = new IContentProposal() {
