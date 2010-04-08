@@ -465,7 +465,7 @@ public class CommitDialog extends Dialog {
 			}
 
 		} catch (Exception e) {
-			Activator.logError("Problem in finding file status", e);
+			Activator.logError(UIText.CommitDialog_problemFindingFileStatus, e);
 			prefix = e.getMessage();
 		}
 

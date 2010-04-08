@@ -20,6 +20,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.EditableRevision;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.jface.action.IAction;
@@ -61,8 +62,8 @@ public class CompareWithIndexAction extends RepositoryAction {
 					index.write();
 				} catch (IOException e) {
 					Utils.handleError(getTargetPart().getSite().getShell(), e,
-							"Error during adding to index",
-							"Error during adding to index");
+							UIText.CompareWithIndexAction_errorOnAddToIndex,
+							UIText.CompareWithIndexAction_errorOnAddToIndex);
 					return;
 				}
 			}

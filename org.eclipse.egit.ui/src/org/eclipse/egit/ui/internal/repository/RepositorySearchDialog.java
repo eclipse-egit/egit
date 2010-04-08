@@ -141,8 +141,7 @@ public class RepositorySearchDialog extends Dialog {
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell
-				.setText(UIText.RepositorySearchDialog_SearchRepositoriesHeader);
+		newShell.setText(UIText.RepositorySearchDialog_searchRepositories);
 	}
 
 	@Override
@@ -166,7 +165,7 @@ public class RepositorySearchDialog extends Dialog {
 		main.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		Label dirLabel = new Label(main, SWT.NONE);
-		dirLabel.setText(UIText.RepositorySearchDialog_DirectoryLabel);
+		dirLabel.setText(UIText.RepositorySearchDialog_directory);
 		final Text dir = new Text(main, SWT.BORDER);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).span(2, 1).hint(300,
 				SWT.DEFAULT).applyTo(dir);
@@ -179,7 +178,7 @@ public class RepositorySearchDialog extends Dialog {
 		Button browse = new Button(main, SWT.PUSH);
 		browse.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false,
 				1, 1));
-		browse.setText(UIText.RepositorySearchDialog_BrowseButton);
+		browse.setText(UIText.RepositorySearchDialog_browse);
 		browse.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -229,7 +228,7 @@ public class RepositorySearchDialog extends Dialog {
 		Button search = new Button(main, SWT.PUSH);
 		search.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false,
 				1, 1));
-		search.setText(UIText.RepositorySearchDialog_SearchButton);
+		search.setText(UIText.RepositorySearchDialog_search);
 
 		tv = CheckboxTableViewer.newCheckList(main, SWT.BORDER);
 		tab = tv.getTable();
@@ -317,7 +316,7 @@ public class RepositorySearchDialog extends Dialog {
 
 					} catch (InvocationTargetException e1) {
 						MessageDialog.openError(getShell(),
-								UIText.RepositorySearchDialog_ErrorHeader, e1
+								UIText.RepositorySearchDialog_errorOccurred, e1
 										.getCause().getMessage());
 					} catch (InterruptedException e1) {
 						// ignore

@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.team.internal.ui.actions.TeamAction;
@@ -103,13 +104,17 @@ public abstract class RepositoryAction extends TeamAction {
 				return null;
 			if (mapping.getRepository() != repositoryMapping.getRepository()) {
 				if (warn)
-					MessageDialog.openError(getShell(), "Multiple Repositories Selection", "Cannot perform reset on multiple repositories simultaneously.\n\nPlease select items from only one repository.");
+					MessageDialog.openError(getShell(),
+							UIText.RepositoryAction_multiRepoSelectionTitle,
+							UIText.RepositoryAction_multiRepoSelection);
 				return null;
 			}
 		}
 		if (mapping == null) {
 			if (warn)
-				MessageDialog.openError(getShell(), "Cannot Find Repository", "Could not find a repository associated with this project");
+				MessageDialog.openError(getShell(),
+						UIText.RepositoryAction_errorFindingRepoTitle,
+						UIText.RepositoryAction_errorFindingRepo);
 			return null;
 		}
 
