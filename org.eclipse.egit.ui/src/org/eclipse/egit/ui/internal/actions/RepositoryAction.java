@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ public abstract class RepositoryAction extends TeamAction {
 	 *
 	 * @param action
 	 */
-	public void execute(IAction action) {
+	public void execute(IAction action) throws InvocationTargetException, InterruptedException {
 		run(action);
 	}
 
