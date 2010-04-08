@@ -65,6 +65,9 @@ public class CoreText extends NLS {
 	public static String BranchOperation_checkoutMovingTo;
 
 	/** */
+	public static String BranchOperation_CheckoutOnlyBranchOrTag;
+
+	/** */
 	public static String BranchOperation_checkoutProblem;
 
 	/** */

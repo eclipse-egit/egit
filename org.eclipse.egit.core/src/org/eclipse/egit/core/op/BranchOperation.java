@@ -62,6 +62,11 @@ public class BranchOperation implements IWorkspaceRunnable {
 
 
 	public void run(IProgressMonitor monitor) throws CoreException {
+
+		if (!refName.startsWith(Constants.R_REFS))
+			throw new TeamException(NLS.bind(
+					CoreText.BranchOperation_CheckoutOnlyBranchOrTag, refName));
+
 		monitor.beginTask(NLS.bind(CoreText.BranchOperation_performingBranch,
 				refName), 6);
 		lookupRefs();
