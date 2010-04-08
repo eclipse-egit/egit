@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.TimeZone;
 
 import org.eclipse.core.resources.IFile;
@@ -348,20 +349,40 @@ public class CommitAction extends RepositoryAction {
 	}
 
 	private void buildIndexHeadDiffList() throws IOException {
+		HashMap<Repository, HashSet<IProject>> repositories = new HashMap<Repository, HashSet<IProject>>();
+
 		for (IProject project : getProjectsInRepositoryOfSelectedResources()) {
 			RepositoryMapping repositoryMapping = RepositoryMapping.getMapping(project);
 			assert repositoryMapping != null;
+
 			Repository repository = repositoryMapping.getRepository();
+
+			HashSet<IProject> projects = repositories.get(repository);
+
+			if (projects == null) {
+				projects = new HashSet<IProject>();
+				repositories.put(repository, projects);
+			}
+
+			projects.add(project);
+		}
+
+		for (Map.Entry<Repository, HashSet<IProject>> entry : repositories.entrySet()) {
+			Repository repository = entry.getKey();
+			HashSet<IProject> projects = entry.getValue();
+
 			Tree head = repository.mapTree(Constants.HEAD);
 			GitIndex index = repository.getIndex();
 			IndexDiff indexDiff = new IndexDiff(head, index);
 			indexDiff.diff();
 
-			includeList(project, indexDiff.getAdded(), indexChanges);
-			includeList(project, indexDiff.getChanged(), indexChanges);
-			includeList(project, indexDiff.getRemoved(), indexChanges);
-			includeList(project, indexDiff.getMissing(), notIndexed);
-			includeList(project, indexDiff.getModified(), notIndexed);
+			for (IProject project : projects) {
+				includeList(project, indexDiff.getAdded(), indexChanges);
+				includeList(project, indexDiff.getChanged(), indexChanges);
+				includeList(project, indexDiff.getRemoved(), indexChanges);
+				includeList(project, indexDiff.getMissing(), notIndexed);
+				includeList(project, indexDiff.getModified(), notIndexed);
+			}
 		}
 	}
 
