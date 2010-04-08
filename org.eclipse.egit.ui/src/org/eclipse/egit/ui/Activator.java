@@ -29,8 +29,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jgit.lib.IndexChangedEvent;
@@ -39,12 +39,14 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.jgit.transport.SshSessionFactory;
 import org.eclipse.jsch.core.IJSchService;
+import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.themes.ITheme;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * This is a plugin singleton mostly controlling logging.
@@ -167,6 +169,16 @@ public class Activator extends AbstractUIPlugin {
 
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
+
+		if (isDebugging()) {
+			ServiceTracker debugTracker = new ServiceTracker(context,
+					DebugOptions.class.getName(), null);
+			debugTracker.open();
+
+			DebugOptions opts = (DebugOptions) debugTracker.getService();
+			GitTraceLocation.initializeFromOptions(opts, true);
+		}
+
 		setupSSH(context);
 		setupProxy(context);
 		setupRepoChangeScanner();
@@ -402,4 +414,5 @@ public class Activator extends AbstractUIPlugin {
 		super.stop(context);
 		plugin = null;
 	}
+
 }
