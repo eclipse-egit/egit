@@ -25,6 +25,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.team.core.TeamException;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -34,7 +35,7 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class BranchAction extends RepositoryAction {
 	@Override
-	public void execute(IAction action) throws InvocationTargetException {
+	public void execute(IAction action) throws InvocationTargetException, InterruptedException {
 		final Repository repository = getRepository(true);
 		if (repository == null)
 			return;
@@ -68,7 +69,7 @@ public class BranchAction extends RepositoryAction {
 						Display.getDefault().asyncExec(new Runnable() {
 							public void run() {
 								handle(
-										e,
+										new TeamException(e.getStatus()),
 										UIText.BranchAction_errorSwitchingBranches,
 										UIText.BranchAction_unableToSwitchBranches);
 							}
@@ -79,9 +80,11 @@ public class BranchAction extends RepositoryAction {
 		} catch (InvocationTargetException e) {
 			if (GitTraceLocation.UI.isActive())
 				GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
+			throw e;
 		} catch (InterruptedException e) {
 			if (GitTraceLocation.UI.isActive())
 				GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
+			throw new InvocationTargetException(e);
 		}
 	}
 
