@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAAA3///3E\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/trace/DebugTrace.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-04-07T19:37:47Z",
+      "side": 1,
+      "message": "insert empty line here",
+      "revId": "23e2835b86fdd2ec3a926b69896f9920e78e8879",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///3I\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/trace/GitTraceLocation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-04-07T19:37:47Z",
+      "side": 1,
+      "message": "CRLF line endings",
+      "revId": "23e2835b86fdd2ec3a926b69896f9920e78e8879",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAA3///3M\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/trace/DebugTrace.java",
         "patchSetId": 4
