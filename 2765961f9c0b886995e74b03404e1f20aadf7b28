@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAA3///7A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-04-06T14:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAA3///8U\u003d",
+      "revId": "2765961f9c0b886995e74b03404e1f20aadf7b28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAA3///8Y\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2010-04-03T16:19:20Z",
       "side": 1,
       "message": "We want javadoc for all public methods and fields. \nOur project settings should give you an error here.",
+      "revId": "2765961f9c0b886995e74b03404e1f20aadf7b28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///68\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-04-06T14:41:52Z",
+      "side": 1,
+      "message": "Method removed in next patch set. I did not change the project settings whatsoever, but since this (in 3.5) overrides an interface method, it was not marked as error.",
+      "parentUuid": "AAAAA3///8Y\u003d",
       "revId": "2765961f9c0b886995e74b03404e1f20aadf7b28",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAA3///6w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/nternal/trace/GitTraceLocation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-04-06T14:41:52Z",
+      "side": 1,
+      "message": "Absolutely.",
+      "parentUuid": "AAAAA3///+s\u003d",
+      "revId": "2765961f9c0b886995e74b03404e1f20aadf7b28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAA3///8g\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/nternal/trace/GitTraceLocation.java",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAA3///6s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/nternal/trace/GitTraceLocation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-04-06T14:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAA3///8g\u003d",
+      "revId": "2765961f9c0b886995e74b03404e1f20aadf7b28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAA3///8k\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/nternal/trace/GitTraceLocation.java",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2010-04-03T15:33:11Z",
       "side": 1,
       "message": "DebugTrace is not available in Eclipse 3.4",
+      "revId": "2765961f9c0b886995e74b03404e1f20aadf7b28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///6o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/nternal/trace/GitTraceLocation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-04-06T14:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAA3///8k\u003d",
       "revId": "2765961f9c0b886995e74b03404e1f20aadf7b28",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
