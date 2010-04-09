@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAA3///2U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/trace/DebugTrace.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-04-08T06:50:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAA3///3M\u003d",
+      "revId": "23e2835b86fdd2ec3a926b69896f9920e78e8879",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAA3///3U\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/trace/GitTraceLocation.java",
         "patchSetId": 4
@@ -64,6 +82,24 @@
       "writtenOn": "2010-04-07T19:37:47Z",
       "side": 1,
       "message": "Extrra empty comment line.\nThis file has CRLF line endings",
+      "revId": "23e2835b86fdd2ec3a926b69896f9920e78e8879",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///2Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/trace/GitTraceLocation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-04-08T06:50:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAA3///3U\u003d",
       "revId": "23e2835b86fdd2ec3a926b69896f9920e78e8879",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAA3///2M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/trace/GitTraceLocation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-04-08T06:50:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAA3///3Q\u003d",
+      "revId": "23e2835b86fdd2ec3a926b69896f9920e78e8879",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAA3///3Y\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/trace/ITraceLocation.java",
         "patchSetId": 4
@@ -98,6 +152,24 @@
       "writtenOn": "2010-04-07T19:37:47Z",
       "side": 1,
       "message": "extra empty line here.\n\nI addition this file has CRLF line endings",
+      "revId": "23e2835b86fdd2ec3a926b69896f9920e78e8879",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///2I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/trace/ITraceLocation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-04-08T06:50:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAA3///3Y\u003d",
       "revId": "23e2835b86fdd2ec3a926b69896f9920e78e8879",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
