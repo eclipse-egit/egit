@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAA3///2Y\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/trace/DebugTrace.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-04-08T06:50:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAAA3///3E\u003d",
+      "revId": "23e2835b86fdd2ec3a926b69896f9920e78e8879",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAA3///3I\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/trace/GitTraceLocation.java",
         "patchSetId": 4
