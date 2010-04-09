@@ -30,7 +30,7 @@ import org.eclipse.jgit.lib.GitIndex.Entry;
 public class DiscardChangesAction extends RepositoryAction{
 
 	@Override
-	public void run(IAction action) {
+	public void execute(IAction action) {
 
 		boolean performAction = MessageDialog.openConfirm(getShell(),
 				UIText.DiscardChangesAction_confirmActionTitle,

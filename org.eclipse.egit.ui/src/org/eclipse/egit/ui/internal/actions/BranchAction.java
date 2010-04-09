@@ -34,7 +34,7 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class BranchAction extends RepositoryAction {
 	@Override
-	public void run(IAction action) {
+	public void execute(IAction action) throws InvocationTargetException {
 		final Repository repository = getRepository(true);
 		if (repository == null)
 			return;
