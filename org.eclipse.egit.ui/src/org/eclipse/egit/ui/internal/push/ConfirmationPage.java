@@ -165,7 +165,7 @@ class ConfirmationPage extends WizardPage {
 
 		final List<RefSpec> fetchSpecs;
 		if (displayedRepoSelection.isConfigSelected())
-			fetchSpecs = displayedRepoSelection.getConfig().getFetchRefSpecs();
+			fetchSpecs = displayedRepoSelection.getConfig().getPushRefSpecs();
 		else
 			fetchSpecs = null;
 
@@ -182,7 +182,7 @@ class ConfirmationPage extends WizardPage {
 			}
 
 			final PushOperationSpecification spec = new PushOperationSpecification();
-			for (final URIish uri : displayedRepoSelection.getAllURIs())
+			for (final URIish uri : displayedRepoSelection.getPushURIs())
 				spec.addURIRefUpdates(uri, copyUpdates(updates));
 
 			operation = new PushOperation(local, spec, true,

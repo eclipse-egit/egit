@@ -74,6 +74,19 @@ public class RepositorySelection {
 	}
 
 	/**
+	 * @return list of all selected URIs - either the one specified as custom
+	 *         URI or all URIs from selected configuration. May be null in case
+	 *         of no valid selection.
+	 */
+	public List<URIish> getPushURIs() {
+		if (isURISelected())
+			return Collections.singletonList(uri);
+		if (isConfigSelected())
+			return config.getPushURIs();
+		return null;
+	}
+
+	/**
 	 * @return the selected remote configuration. null if user chosen to select
 	 *         repository as URI.
 	 */
