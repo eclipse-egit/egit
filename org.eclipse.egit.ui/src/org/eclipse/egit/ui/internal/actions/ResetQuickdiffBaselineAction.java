@@ -11,7 +11,6 @@ package org.eclipse.egit.ui.internal.actions;
 import java.util.List;
 
 import org.eclipse.core.resources.IWorkspaceRunnable;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jgit.lib.Constants;
 
 /**
@@ -20,7 +19,7 @@ import org.eclipse.jgit.lib.Constants;
 public class ResetQuickdiffBaselineAction extends AbstractRevObjectAction {
 
 	@Override
-	protected IWorkspaceRunnable createOperation(IAction act, List selection) {
+	protected IWorkspaceRunnable createOperation(List selection) {
 		return new QuickdiffBaselineOperation(getActiveRepository(), Constants.HEAD);
 	}
 }

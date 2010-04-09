@@ -15,7 +15,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 
 /**
@@ -26,8 +25,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 public class AddToIndexAction extends AbstractOperationAction {
 	private AddToIndexOperation operation = null;
 
-	protected IWorkspaceRunnable createOperation(final IAction act,
-			final List sel) {
+	protected IWorkspaceRunnable createOperation(final List sel) {
 		if (sel.isEmpty()) {
 			return null;
 		} else {
