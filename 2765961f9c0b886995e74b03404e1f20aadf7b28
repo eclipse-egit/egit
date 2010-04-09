@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///8U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-04-03T16:21:07Z",
+      "side": 1,
+      "message": "DebugOptionsListener is not available in Eclipse 3.4",
+      "revId": "2765961f9c0b886995e74b03404e1f20aadf7b28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///8Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-04-03T16:19:20Z",
+      "side": 1,
+      "message": "We want javadoc for all public methods and fields. \nOur project settings should give you an error here.",
+      "revId": "2765961f9c0b886995e74b03404e1f20aadf7b28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///8g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/nternal/trace/GitTraceLocation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-04-03T15:33:11Z",
+      "side": 1,
+      "message": "DebugTrace is not available in Eclipse 3.4",
+      "revId": "2765961f9c0b886995e74b03404e1f20aadf7b28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///8k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/nternal/trace/GitTraceLocation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-04-03T15:33:11Z",
+      "side": 1,
+      "message": "DebugTrace is not available in Eclipse 3.4",
+      "revId": "2765961f9c0b886995e74b03404e1f20aadf7b28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
