@@ -26,7 +26,7 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class FetchAction extends RepositoryAction {
 	@Override
-	public void run(IAction action) {
+	public void execute(IAction action) {
 		final Repository repository = getRepository(true);
 		if (repository == null)
 			return;

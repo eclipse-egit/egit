@@ -35,7 +35,7 @@ import org.eclipse.osgi.util.NLS;
 public class ResetAction extends RepositoryAction {
 
 	@Override
-	public void run(IAction action) {
+	public void execute(IAction action) {
 		final Repository repository = getRepository(true);
 		if (repository == null)
 			return;
