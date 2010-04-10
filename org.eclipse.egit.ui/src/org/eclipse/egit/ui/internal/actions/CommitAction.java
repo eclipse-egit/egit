@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
 import org.eclipse.core.resources.IFile;
@@ -345,15 +347,20 @@ public class CommitAction extends RepositoryAction {
 	}
 
 	private void buildIndexHeadDiffList() throws IOException {
-		for (IProject project : getProjectsInRepositoryOfSelectedResources()) {
-			RepositoryMapping repositoryMapping = RepositoryMapping.getMapping(project);
-			assert repositoryMapping != null;
-			Repository repository = repositoryMapping.getRepository();
+		IProject[] projectsInRepositoryOfSelectedResources = getProjectsInRepositoryOfSelectedResources();
+		Repository[] getRepositoriesFor = getRepositoriesFor(projectsInRepositoryOfSelectedResources);
+		Map<Repository,IndexDiff> diffs = new IdentityHashMap<Repository, IndexDiff>();
+		for (Repository repository : getRepositoriesFor) {
 			Tree head = repository.mapTree(Constants.HEAD);
 			GitIndex index = repository.getIndex();
 			IndexDiff indexDiff = new IndexDiff(head, index);
 			indexDiff.diff();
-
+			diffs.put(repository, indexDiff);
+		}
+		for (IProject project : projectsInRepositoryOfSelectedResources) {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+			Repository repository = mapping.getRepository();
+			IndexDiff indexDiff = diffs.get(repository);
 			includeList(project, indexDiff.getAdded(), indexChanges);
 			includeList(project, indexDiff.getChanged(), indexChanges);
 			includeList(project, indexDiff.getRemoved(), indexChanges);
