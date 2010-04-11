@@ -3,6 +3,7 @@
  * Copyright (C) 2007, Robin Rosenberg <me@lathund.dewire.com.dewire.com>
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,6 +29,16 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectWriter;
+import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.RefRename;
+import org.eclipse.jgit.lib.RefUpdate;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.Tag;
+import org.eclipse.jgit.lib.RefUpdate.Result;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -48,13 +59,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefRename;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RefUpdate.Result;
 
 /**
  * The branch and reset selection dialog
@@ -62,6 +66,8 @@ import org.eclipse.jgit.lib.RefUpdate.Result;
  */
 public class BranchSelectionDialog extends Dialog {
 	private final Repository repo;
+
+	private Button renameButton;
 
 	private boolean showResetType = true;
 
@@ -103,6 +109,7 @@ public class BranchSelectionDialog extends Dialog {
 				refNameFromDialog();
 				// make sure it's a valid selection
 				confirmationBtn.setEnabled(refName != null);
+				renameButton.setEnabled(refName != null && !Constants.HEAD.equals(refName));
 			}
 		});
 
@@ -314,66 +321,27 @@ public class BranchSelectionDialog extends Dialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		if (!showResetType) {
-			Button newButton = new Button(parent, SWT.PUSH);
-			newButton.setFont(JFaceResources.getDialogFont());
-			newButton.setText(UIText.BranchSelectionDialog_NewBranch);
+			Button newBranchButton = new Button(parent, SWT.PUSH);
+			newBranchButton.setFont(JFaceResources.getDialogFont());
+			newBranchButton.setText(UIText.BranchSelectionDialog_NewBranch);
+			Button newTagButton = new Button(parent, SWT.PUSH);
+			newTagButton.setFont(JFaceResources.getDialogFont());
+			newTagButton.setText(UIText.BranchSelectionDialog_NewTag);
 			((GridLayout)parent.getLayout()).numColumns++;
-			Button renameButton = new Button(parent, SWT.PUSH);
+			renameButton = new Button(parent, SWT.PUSH);
 			renameButton.setText(UIText.BranchSelectionDialog_Rename);
 			renameButton.addSelectionListener(new SelectionListener() {
 				public void widgetSelected(SelectionEvent e) {
-					// check what ref name the user selected, if any.
-					refNameFromDialog();
-
-					String branchName;
-					if (refName.startsWith(Constants.R_HEADS))
-						branchName = refName.substring(Constants.R_HEADS.length());
-					else
-						branchName = refName;
-					InputDialog labelDialog = getRefNameInputDialog(NLS
-							.bind(
-									UIText.BranchSelectionDialog_QuestionNewBranchNameMessage,
-									branchName));
-					if (labelDialog.open() == Window.OK) {
-						String newRefName = Constants.R_HEADS + labelDialog.getValue();
-						try {
-							RefRename renameRef = repo.renameRef(refName, newRefName);
-							if (renameRef.rename() != Result.RENAMED) {
-								reportError(
-										null,
-										UIText.BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle,
-										UIText.BranchSelectionDialog_ErrorCouldNotRenameRef,
-										refName, newRefName, renameRef
-												.getResult());
-							}
-						} catch (Throwable e1) {
-							reportError(
-									e1,
-									UIText.BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle,
-									UIText.BranchSelectionDialog_ErrorCouldNotRenameRef,
-									refName, newRefName, e1.getMessage());
-						}
-						try {
-							branchTree.removeAll();
-							fillTreeWithBranches(newRefName);
-						} catch (Throwable e1) {
-							reportError(
-									e1,
-									UIText.BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle,
-									UIText.BranchSelectionDialog_ErrorCouldNotRefreshBranchList);
-						}
-					}
+					renameRef();
 				}
+
 				public void widgetDefaultSelected(SelectionEvent e) {
 					widgetSelected(e);
 				}
 			});
-			newButton.addSelectionListener(new SelectionListener() {
+			newBranchButton.addSelectionListener(new SelectionListener() {
 
 				public void widgetSelected(SelectionEvent e) {
-					// check what ref name the user selected, if any.
-					refNameFromDialog();
-
 					InputDialog labelDialog = getRefNameInputDialog(UIText.BranchSelectionDialog_QuestionNewBranchMessage);
 					if (labelDialog.open() == Window.OK) {
 						String newRefName = Constants.R_HEADS + labelDialog.getValue();
@@ -398,21 +366,23 @@ public class BranchSelectionDialog extends Dialog {
 						} catch (Throwable e1) {
 							reportError(
 									e1,
-									UIText.BranchSelectionDialog_BranchSelectionDialog_CreateFailedTitle,
+									UIText.BranchSelectionDialog_BranchSelectionDialog_CreateBranchFailedTitle,
 									UIText.BranchSelectionDialog_ErrorCouldNotCreateNewRef,
 									newRefName);
 						}
-						try {
-							branchTree.removeAll();
-							fillTreeWithBranches(newRefName);
-						} catch (Throwable e1) {
-							reportError(e1,
-									UIText.BranchSelectionDialog_BranchSelectionDialog_CreateFailedTitle,
-									UIText.BranchSelectionDialog_ErrorCouldNotRefreshBranchList);
-						}
+						reloadTree(newRefName);
 					}
 				}
 
+				public void widgetDefaultSelected(SelectionEvent e) {
+					widgetSelected(e);
+				}
+			});
+			newTagButton.addSelectionListener(new SelectionListener() {
+
+				public void widgetSelected(SelectionEvent e) {
+					createTag();
+				}
 
 				public void widgetDefaultSelected(SelectionEvent e) {
 					widgetSelected(e);
@@ -438,5 +408,104 @@ public class BranchSelectionDialog extends Dialog {
 		String msg = NLS.bind(message, args);
 		MessageDialog.openError(getShell(), title, msg);
 		Activator.logError(msg, e);
+	}
+
+	private void createTag() {
+		TagInputDialog inputDialog = new TagInputDialog(repo, getShell(),
+				UIText.BranchSelectionDialog_QuestionNewTagMessage);
+		if (inputDialog.open() == Window.OK) {
+			String newRefName = Constants.R_TAGS + inputDialog.getValue();
+			String tagMessage = inputDialog.getMessage();
+
+			try {
+				Tag tag = new Tag(repo);
+				tag.setMessage(tagMessage);
+				tag.setTagger(new PersonIdent(repo));
+				tag.setTag(inputDialog.getValue());
+
+				ObjectId startAt;
+				if (refName == null)
+					startAt = repo.resolve(Constants.HEAD);
+				else
+					startAt = repo.resolve(refName);
+				tag.setObjId(startAt);
+				tag.setType(Constants.typeString(repo.openObject(startAt)
+						.getType()));
+
+				ObjectWriter objWriter = new ObjectWriter(repo);
+				tag.setTagId(objWriter.writeTag(tag));
+
+				RefUpdate tagRef = repo.updateRef(newRefName);
+				tagRef.setNewObjectId(tag.getTagId());
+				tagRef.setRefLogMessage("tag: " + newRefName, false); //$NON-NLS-1$
+
+				Result updateResult = tagRef.update();
+				if (updateResult != Result.NEW)
+					reportError(
+							null,
+							UIText.BranchSelectionDialog_BranchSelectionDialog_CreateTagFailedTitle,
+							UIText.BranchSelectionDialog_ErrorCouldNotCreateNewRef,
+							newRefName, tagMessage);
+			} catch (Throwable e) {
+				reportError(
+						e,
+						UIText.BranchSelectionDialog_BranchSelectionDialog_CreateTagFailedTitle,
+						UIText.BranchSelectionDialog_ErrorCouldNotCreateNewRef,
+						newRefName, tagMessage);
+			}
+			reloadTree(newRefName);
+		}
+	}
+
+	private void reloadTree(String newRefName) {
+		try {
+			branchTree.removeAll();
+			fillTreeWithBranches(newRefName);
+		} catch (Throwable e1) {
+			reportError(
+					e1,
+					UIText.BranchSelectionDialog_BranchSelectionDialog_CreateBranchFailedTitle,
+					UIText.BranchSelectionDialog_ErrorCouldNotRefreshBranchList);
+		}
+	}
+
+	private void renameRef() {
+		String prompt;
+		String refBase;
+		String branchName;
+		if (refName.startsWith(Constants.R_HEADS)) {
+			refBase = Constants.R_HEADS;
+			branchName = refName.substring(Constants.R_HEADS.length());
+			prompt = UIText.BranchSelectionDialog_QuestionNewBranchNameMessage;
+		} else if (refName.startsWith(Constants.R_TAGS)) {
+			refBase = Constants.R_TAGS;
+			branchName = refName.substring(Constants.R_TAGS.length());
+			prompt = UIText.BranchSelectionDialog_QuestionNewTagNameMessage;
+		} else {
+			return;
+		}
+		InputDialog labelDialog = getRefNameInputDialog(NLS.bind(
+				prompt,
+				branchName));
+		if (labelDialog.open() == Window.OK) {
+			String newRefName = refBase + labelDialog.getValue();
+			try {
+				RefRename renameRef = repo.renameRef(refName, newRefName);
+				if (renameRef.rename() != Result.RENAMED) {
+					reportError(
+							null,
+							UIText.BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle,
+							UIText.BranchSelectionDialog_ErrorCouldNotRenameRef,
+							refName, newRefName, renameRef.getResult());
+				}
+			} catch (Throwable e1) {
+				reportError(
+						e1,
+						UIText.BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle,
+						UIText.BranchSelectionDialog_ErrorCouldNotRenameRef,
+						refName, newRefName, e1.getMessage());
+			}
+			reloadTree(newRefName);
+		}
 	}
 }
