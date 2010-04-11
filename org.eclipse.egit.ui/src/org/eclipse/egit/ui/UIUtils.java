@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui;
 
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.resource.FontRegistry;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -35,6 +39,27 @@ public class UIUtils {
 	public static Font getBoldFont(final String id) {
 		return PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
 				.getFontRegistry().getBold(id);
+	}
+
+	/**
+	 * Adds little bulb decoration to given control. Bulb will appear in top left
+	 * corner of control after giving focus for this control.
+	 *
+	 * After clicking on bulb image text from <code>tooltip</code> will appear.
+	 *
+	 * @param control instance of {@link Control} object with should be decorated
+	 * @param tooltip text value with should appear after clicking on bulb image.
+	 */
+	public static void addBulbDecorator(final Control control, final String tooltip) {
+		ControlDecoration dec = new ControlDecoration(control, SWT.TOP | SWT.LEFT);
+
+		dec.setImage(FieldDecorationRegistry.getDefault().getFieldDecoration(
+				FieldDecorationRegistry.DEC_CONTENT_PROPOSAL).getImage());
+
+		dec.setShowOnlyOnFocus(true);
+		dec.setShowHover(true);
+
+		dec.setDescriptionText(tooltip);
 	}
 
 }

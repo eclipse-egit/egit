@@ -11,15 +11,27 @@
 
 package org.eclipse.egit.ui.internal;
 
+import java.io.IOException;
+
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PreferenceLinkArea;
 import org.eclipse.ui.preferences.IWorkbenchPreferenceContainer;
 
@@ -560,6 +572,38 @@ public class SWTUtils {
 				minimum = length;
 		}
 		return minimum;
+	}
+
+	/**
+	 * Creates and returns input validator for refNames
+	 *
+	 * @param repo
+	 * @param refPrefix
+	 * @return input validator for refNames
+	 */
+	public static IInputValidator getRefNameInputValidator(final Repository repo, final String refPrefix) {
+		return new IInputValidator() {
+			public String isValid(String newText) {
+				if (newText.length() == 0) {
+					// nothing entered, just don't let the user proceed,
+					// no need to prompt them with an error message
+					return ""; //$NON-NLS-1$
+				}
+
+				String testFor = refPrefix + newText;
+				try {
+					if (repo.resolve(testFor) != null)
+						return UIText.BranchSelectionDialog_ErrorAlreadyExists;
+				} catch (IOException e1) {
+					Activator.logError(NLS.bind(
+							UIText.BranchSelectionDialog_ErrorCouldNotResolve, testFor), e1);
+					return e1.getMessage();
+				}
+				if (!Repository.isValidRefName(testFor))
+					return UIText.BranchSelectionDialog_ErrorInvalidRefName;
+				return null;
+			}
+		};
 	}
 
 	private static class PixelConverter {

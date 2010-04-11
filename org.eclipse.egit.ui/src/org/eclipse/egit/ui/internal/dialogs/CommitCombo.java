@@ -1,0 +1,214 @@
+/*******************************************************************************
+ * Copyright (C) 2010, Darusz Luksza <dariusz@luksza.org>
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+package org.eclipse.egit.ui.internal.dialogs;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.eclipse.core.runtime.Assert;
+import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.jface.fieldassist.ComboContentAdapter;
+import org.eclipse.jface.fieldassist.ContentProposalAdapter;
+import org.eclipse.jface.fieldassist.IContentProposal;
+import org.eclipse.jface.fieldassist.IContentProposalProvider;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+
+/**
+ * This is an extended version of {@link Combo} widget with is specialized in
+ * displaying commits and simplifying selection process.
+ *
+ * It is integrated with {@link ContentProposalAdapter} that helps select
+ * preferred tag by user. To get activate proposal provider simply just start
+ * writing commit SHA-1 or part of commit's message first line
+ */
+public class CommitCombo extends Composite {
+
+	private final List<ComboCommitEnt> commits;
+
+	private final Combo combo;
+
+	private class ComboCommitEnt {
+
+		private final String message;
+
+		private final ObjectId objectId;
+
+		public ComboCommitEnt(ObjectId objecId, String message) {
+			this.objectId = objecId;
+			this.message = message;
+		}
+
+	}
+
+	private class CommitContentProposalProvider implements
+			IContentProposalProvider {
+
+		public IContentProposal[] getProposals(String contents, int position) {
+			List<IContentProposal> list = new ArrayList<IContentProposal>();
+			Pattern pattern = Pattern.compile(contents,
+					Pattern.CASE_INSENSITIVE);
+			for (int i = 0; i < commits.size(); i++) {
+				String message = commits.get(i).message;
+				if (message.length() >= contents.length()
+						&& pattern.matcher(message).find()) {
+					list.add(makeContentProposal(message));
+				}
+			}
+			return list.toArray(new IContentProposal[] {});
+		}
+
+		/*
+		 * Make an IContentProposal for showing the specified String.
+		 */
+		private IContentProposal makeContentProposal(final String proposal) {
+			return new IContentProposal() {
+				public String getContent() {
+					return proposal;
+				}
+
+				public String getDescription() {
+					return null;
+				}
+
+				public String getLabel() {
+					return null;
+				}
+
+				public int getCursorPosition() {
+					return proposal.length();
+				}
+			};
+		}
+	}
+
+	/**
+	 * Constructs a new instance of this class given its parent and a style
+	 * value describing its behavior and appearance.
+	 *
+	 * @param parent
+	 * @param style
+	 */
+	public CommitCombo(Composite parent, int style) {
+		super(parent, style);
+
+		combo = new Combo(this, SWT.DROP_DOWN);
+		commits = new ArrayList<ComboCommitEnt>();
+
+		setLayout(GridLayoutFactory.swtDefaults().create());
+		setLayoutData(GridDataFactory.fillDefaults().create());
+
+		GridData totalLabelData = new GridData();
+		totalLabelData.horizontalAlignment = SWT.FILL;
+		totalLabelData.grabExcessHorizontalSpace = true;
+		combo.setLayoutData(totalLabelData);
+		combo.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (null == getValue())
+					combo.setText(""); //$NON-NLS-1$
+			}
+		});
+
+		UIUtils.addBulbDecorator(combo, UIText.CommitCombo_showSuggestedCommits);
+
+		ContentProposalAdapter adapter = new ContentProposalAdapter(combo,
+				new ComboContentAdapter(), new CommitContentProposalProvider(),
+				null, null);
+		adapter.setPropagateKeys(true);
+		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+	}
+
+	/**
+	 * Add a {@link RevCommit} to widget.
+	 *
+	 * @param revCommit
+	 */
+	public void add(RevCommit revCommit) {
+		Assert.isNotNull(revCommit);
+		checkWidget();
+
+		String shortSha1 = revCommit.getName().substring(0, 6);
+		String message = shortSha1 + ": " + revCommit.getShortMessage(); //$NON-NLS-1$
+		combo.add(message);
+		commits.add(new ComboCommitEnt(revCommit.getId(), message));
+	}
+
+	/**
+	 * Returns value of SHA-1 for selected commit.
+	 *
+	 * @param index
+	 * @return SHA-1 of selected commit
+	 */
+	public ObjectId getItem(int index) {
+		checkWidget();
+
+		if (!(0 <= index && index < commits.size())) {
+			SWT.error(SWT.ERROR_INVALID_RANGE);
+		}
+		return commits.get(index).objectId;
+	}
+
+	/**
+	 * @return index of selected element
+	 */
+	public int getSelectedIndex() {
+		return combo.getSelectionIndex();
+	}
+
+	/**
+	 * Returns SHA-1 of selected commit.
+	 *
+	 * @return SHA-1 of selected commit
+	 */
+	public ObjectId getValue() {
+		int selectionIndex = combo.getSelectionIndex();
+		return -1 != selectionIndex ? getItem(selectionIndex) : null;
+	}
+
+	/**
+	 * @param objectId
+	 */
+	public void setSelectedElement(ObjectId objectId) {
+		if (null == objectId) {
+			return;
+		}
+
+		for (int i = 0; i < commits.size(); i++)
+			if (objectId.equals(commits.get(i).objectId)) {
+				combo.select(i);
+				break;
+			}
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		combo.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return combo.isEnabled();
+	}
+
+	@Override
+	public boolean getEnabled() {
+		return combo.isEnabled();
+	}
+}
