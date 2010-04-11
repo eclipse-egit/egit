@@ -51,17 +51,13 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.FilteredTree;
@@ -91,8 +87,6 @@ public class GitProjectsImportPage extends WizardPage {
 	private TreeViewer projectsList;
 
 	private ProjectRecord[] selectedProjects = new ProjectRecord[0];
-
-	final private HashSet<Object> checkedItems = new HashSet<Object>();
 
 	private IProject[] wsProjects;
 
@@ -141,7 +135,6 @@ public class GitProjectsImportPage extends WizardPage {
 		createProjectsList(workArea);
 		createOptionsArea(workArea);
 		Dialog.applyDialogFont(workArea);
-
 	}
 
 	/**
@@ -172,8 +165,6 @@ public class GitProjectsImportPage extends WizardPage {
 	 */
 	private void createProjectsList(Composite workArea) {
 
-		checkedItems.clear();
-
 		Label title = new Label(workArea, SWT.NONE);
 		title.setText(UIText.WizardProjectsImportPage_ProjectsListTitle);
 
@@ -191,14 +182,12 @@ public class GitProjectsImportPage extends WizardPage {
 
 			@Override
 			public boolean isElementVisible(Viewer viewer, Object element) {
-
-				if (checkedItems.contains(element)) {
+				if (getCheckedProjects().contains(element)) {
 					return true;
 				}
 
 				return super.isElementVisible(viewer, element);
 			}
-
 		};
 
 		FilteredTree filteredTree = new FilteredTree(listComposite, SWT.CHECK
@@ -237,33 +226,18 @@ public class GitProjectsImportPage extends WizardPage {
 
 		});
 
-		projectsList.getTree().addMouseListener(new MouseAdapter() {
+		projectsList.getTree().addSelectionListener(new SelectionAdapter() {
+
 			@Override
-			public void mouseUp(MouseEvent e) {
-				if (e.widget instanceof Tree) {
-					TreeItem item = ((Tree) e.widget).getItem(new Point(e.x,
-							e.y));
-					if (item != null) {
-						if (item.getChecked())
-							checkedItems.add(item.getData());
-						else
-							checkedItems.remove(item.getData());
-						setPageComplete(!checkedItems.isEmpty());
-					}
-				}
+			public void widgetSelected(SelectionEvent e) {
+				checkPageComplete();
 			}
 		});
 
 		projectsList.setLabelProvider(new LabelProvider() {
 			public String getText(Object element) {
-				// Need to set the checked item state. FIXME This is clumsy.
-				for (final TreeItem item : projectsList.getTree().getItems()) {
-					if (checkedItems.contains(item.getData()))
-						item.setChecked(true);
-					else
-						item.setChecked(false);
-				}
-				return ((ProjectRecord) element).getProjectLabel(structureProvider);
+				return ((ProjectRecord) element)
+						.getProjectLabel(structureProvider);
 			}
 		});
 
@@ -291,11 +265,9 @@ public class GitProjectsImportPage extends WizardPage {
 		selectAll.setText(UIText.WizardProjectsImportPage_selectAll);
 		selectAll.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				checkedItems.clear();
 				// only the root has children
 				for (final TreeItem item : projectsList.getTree().getItems()) {
 					item.setChecked(true);
-					checkedItems.add(item.getData());
 				}
 				setPageComplete(true);
 			}
@@ -307,8 +279,6 @@ public class GitProjectsImportPage extends WizardPage {
 		deselectAll.setText(UIText.WizardProjectsImportPage_deselectAll);
 		deselectAll.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				checkedItems.clear();
-				// only the root has children
 				for (final TreeItem item : projectsList.getTree().getItems()) {
 					item.setChecked(false);
 				}
@@ -318,7 +288,6 @@ public class GitProjectsImportPage extends WizardPage {
 		});
 		Dialog.applyDialogFont(deselectAll);
 		setButtonLayoutData(deselectAll);
-
 	}
 
 	/**
@@ -340,6 +309,10 @@ public class GitProjectsImportPage extends WizardPage {
 
 	}
 
+	/*
+	 * (non-Javadoc) Method declared on IDialogPage. Set the focus on path
+	 * fields when page becomes visible.
+	 */
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 	}
@@ -365,7 +338,7 @@ public class GitProjectsImportPage extends WizardPage {
 			setMessage(UIText.WizardProjectsImportPage_ImportProjectsDescription);
 			selectedProjects = new ProjectRecord[0];
 			projectsList.refresh(true);
-			setPageComplete(checkedItems.size() > 0);
+			checkPageComplete();
 			lastPath = path;
 			return;
 		}
@@ -407,7 +380,6 @@ public class GitProjectsImportPage extends WizardPage {
 						while (filesIterator.hasNext()) {
 							File file = filesIterator.next();
 							selectedProjects[index] = new ProjectRecord(file);
-							checkedItems.add(selectedProjects[index]);
 							index++;
 						}
 					} else {
@@ -430,7 +402,7 @@ public class GitProjectsImportPage extends WizardPage {
 		} else {
 			setMessage(UIText.WizardProjectsImportPage_ImportProjectsDescription);
 		}
-		setPageComplete(checkedItems.size() > 0);
+		checkPageComplete();
 	}
 
 	/**
@@ -512,7 +484,7 @@ public class GitProjectsImportPage extends WizardPage {
 	 *         successful.
 	 */
 	boolean createProjects() {
-		final Object[] selected = checkedItems.toArray();
+		final Object[] selected = getCheckedProjects().toArray();
 		WorkspaceModifyOperation op = new WorkspaceModifyOperation() {
 			protected void execute(IProgressMonitor monitor)
 					throws InvocationTargetException, InterruptedException {
@@ -672,4 +644,19 @@ public class GitProjectsImportPage extends WizardPage {
 		return false;
 	}
 
+	/**
+	 * @return All the currently checked projects in the projectsList tree
+	 */
+	private HashSet<Object> getCheckedProjects() {
+		HashSet<Object> ret = new HashSet<Object>();
+		for (TreeItem item : projectsList.getTree().getItems())
+			if (item.getChecked())
+				ret.add(item.getData());
+
+		return ret;
+	}
+
+	private void checkPageComplete() {
+		setPageComplete(!getCheckedProjects().isEmpty());
+	}
 }
