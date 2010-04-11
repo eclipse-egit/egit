@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///8M\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2010-04-03T19:22:41Z",
+      "side": 1,
+      "message": "Does it prevent EGit from installing on Galileo because it has 0.1.41 and not 0.1.37? What about using \u0027[0.1.37,0.2.0)\u0027?",
+      "revId": "b2b5d53f84f59cd3b543addac3486e9407b6ea96",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
