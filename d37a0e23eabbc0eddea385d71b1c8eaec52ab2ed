@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///xo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-04-11T02:18:11Z",
+      "side": 1,
+      "message": "This code is complex enough that it might justify a new top level method, rather than being buried down within a selection listener.",
+      "revId": "d37a0e23eabbc0eddea385d71b1c8eaec52ab2ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///xw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-04-11T02:18:11Z",
+      "side": 1,
+      "message": "This TODO obviously needs to be addressed before submitting the change.  Ideally the text would be obtained at the same time as the tag name, so another field in the same dialog.",
+      "revId": "d37a0e23eabbc0eddea385d71b1c8eaec52ab2ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///xs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-04-11T02:18:11Z",
+      "side": 1,
+      "message": "You need to check the result to make sure it was actually created.",
+      "revId": "d37a0e23eabbc0eddea385d71b1c8eaec52ab2ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
