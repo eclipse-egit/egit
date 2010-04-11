@@ -20,14 +20,15 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.EditableRevision;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.internal.ui.Utils;
-import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.team.core.TeamException;
+import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 
 /**
  * The "compare with index" action. This action opens a diff editor comparing
@@ -60,9 +61,12 @@ public class CompareWithIndexAction extends RepositoryAction {
 					index.add(mapping.getWorkDir(), file, newContent);
 					index.write();
 				} catch (IOException e) {
-					Utils.handleError(getTargetPart().getSite().getShell(), e,
-							"Error during adding to index",
-							"Error during adding to index");
+					handle(
+							new TeamException(
+									UIText.CompareWithIndexAction_errorOnAddToIndex,
+									e),
+							UIText.CompareWithIndexAction_errorOnAddToIndex,
+							UIText.CompareWithIndexAction_errorOnAddToIndex);
 					return;
 				}
 			}

@@ -14,16 +14,18 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.core.op.ResetOperation.ResetType;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * An action to reset the current branch to a specific revision.
@@ -33,15 +35,14 @@ import org.eclipse.jgit.lib.Repository;
 public class ResetAction extends RepositoryAction {
 
 	@Override
-	public void run(IAction action) {
+	public void execute(IAction action) {
 		final Repository repository = getRepository(true);
 		if (repository == null)
 			return;
 
 		if (!repository.getRepositoryState().canResetHead()) {
-			MessageDialog.openError(getShell(), "Cannot reset HEAD now",
-					"Repository state:"
-							+ repository.getRepositoryState().getDescription());
+			MessageDialog.openError(getShell(), UIText.ResetAction_errorResettingHead,
+					NLS.bind(UIText.ResetAction_repositoryState, repository.getRepositoryState().getDescription()));
 			return;
 		}
 
@@ -59,16 +60,16 @@ public class ResetAction extends RepositoryAction {
 							new ResetOperation(repository, refName, type).run(monitor);
 							GitLightweightDecorator.refresh();
 						} catch (CoreException e) {
-							if (GitTraceLocation.CORE.isActive())
-								GitTraceLocation.getTrace().trace(GitTraceLocation.CORE.getLocation(), e.getMessage(), e);
+							if (GitTraceLocation.UI.isActive())
+								GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
 							throw new InvocationTargetException(e);
 						}
 					}
 				});
 			} catch (InvocationTargetException e) {
-				MessageDialog.openError(getShell(),"Reset failed", e.getMessage());
+				MessageDialog.openError(getShell(),UIText.ResetAction_resetFailed, e.getMessage());
 			} catch (InterruptedException e) {
-				MessageDialog.openError(getShell(),"Reset failed", e.getMessage());
+				MessageDialog.openError(getShell(),UIText.ResetAction_resetFailed, e.getMessage());
 			}
 		}
 

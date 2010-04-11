@@ -11,7 +11,6 @@ package org.eclipse.egit.ui.internal.actions;
 import java.util.List;
 
 import org.eclipse.core.resources.IWorkspaceRunnable;
-import org.eclipse.jface.action.IAction;
 
 /**
  * Changes the reference for the quickdiff to the (first) parent of HEAD
@@ -19,7 +18,7 @@ import org.eclipse.jface.action.IAction;
 public class ResetQuickdiffBaselineHeadParentAction extends AbstractRevObjectAction {
 
 	@Override
-	protected IWorkspaceRunnable createOperation(IAction act, List selection) {
+	protected IWorkspaceRunnable createOperation(List selection) {
 		return new QuickdiffBaselineOperation(getActiveRepository(), "HEAD^1"); //$NON-NLS-1$
 	}
 }

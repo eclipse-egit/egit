@@ -29,8 +29,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jgit.lib.IndexChangedEvent;
@@ -39,12 +39,14 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.jgit.transport.SshSessionFactory;
 import org.eclipse.jsch.core.IJSchService;
+import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.themes.ITheme;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * This is a plugin singleton mostly controlling logging.
@@ -167,6 +169,16 @@ public class Activator extends AbstractUIPlugin {
 
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
+
+		if (isDebugging()) {
+			ServiceTracker debugTracker = new ServiceTracker(context,
+					DebugOptions.class.getName(), null);
+			debugTracker.open();
+
+			DebugOptions opts = (DebugOptions) debugTracker.getService();
+			GitTraceLocation.initializeFromOptions(opts, true);
+		}
+
 		setupSSH(context);
 		setupProxy(context);
 		setupRepoChangeScanner();
@@ -214,7 +226,7 @@ public class Activator extends AbstractUIPlugin {
 	static class RIRefresh extends Job implements RepositoryListener {
 
 		RIRefresh() {
-			super("Git index refresh Job");
+			super(UIText.Activator_refreshJobName);
 		}
 
 		private Set<IProject> projectsToScan = new LinkedHashSet<IProject>();
@@ -222,7 +234,7 @@ public class Activator extends AbstractUIPlugin {
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
 			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-			monitor.beginTask("Refreshing git managed projects", projects.length);
+			monitor.beginTask(UIText.Activator_refreshingProjects, projects.length);
 
 			while (projectsToScan.size() > 0) {
 				IProject p;
@@ -238,7 +250,7 @@ public class Activator extends AbstractUIPlugin {
 					getJobManager().beginRule(rule, monitor);
 					p.refreshLocal(IResource.DEPTH_INFINITE, new SubProgressMonitor(monitor, 1));
 				} catch (CoreException e) {
-					logError("Failed to refresh projects from index changes", e);
+					logError(UIText.Activator_refreshFailed, e);
 					return new Status(IStatus.ERROR, getPluginId(), e.getMessage());
 				} finally {
 					getJobManager().endRule(rule);
@@ -277,7 +289,7 @@ public class Activator extends AbstractUIPlugin {
 
 	static class RCS extends Job {
 		RCS() {
-			super("Repository Change Scanner");
+			super(UIText.Activator_repoScanJobName);
 		}
 
 		// FIXME, need to be more intelligent about this to avoid too much work
@@ -297,7 +309,7 @@ public class Activator extends AbstractUIPlugin {
 				// repositories. We discard that as being ugly and stupid for
 				// the moment.
 				IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-				monitor.beginTask("Scanning Git repositories for changes", projects.length);
+				monitor.beginTask(UIText.Activator_scanningRepositories, projects.length);
 				Set<Repository> scanned = new HashSet<Repository>();
 				for (IProject p : projects) {
 					RepositoryMapping mapping = RepositoryMapping.getMapping(p);
@@ -341,7 +353,7 @@ public class Activator extends AbstractUIPlugin {
 						IStatus.ERROR,
 						getPluginId(),
 						0,
-						"An error occurred while scanning for changes. Scanning aborted",
+						UIText.Activator_scanError,
 						e);
 			}
 			return Status.OK_STATUS;
@@ -402,4 +414,5 @@ public class Activator extends AbstractUIPlugin {
 		super.stop(context);
 		plugin = null;
 	}
+
 }

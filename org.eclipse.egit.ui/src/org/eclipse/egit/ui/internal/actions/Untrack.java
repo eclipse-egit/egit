@@ -13,7 +13,6 @@ import java.util.List;
 
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.egit.core.op.UntrackOperation;
-import org.eclipse.jface.action.IAction;
 
 /**
  * An action to remove files from a Git repository. The removal does not alter
@@ -22,8 +21,7 @@ import org.eclipse.jface.action.IAction;
  * @see UntrackOperation
  */
 public class Untrack extends AbstractOperationAction {
-	protected IWorkspaceRunnable createOperation(final IAction act,
-			final List sel) {
+	protected IWorkspaceRunnable createOperation(final List sel) {
 		return sel.isEmpty() ? null : new UntrackOperation(sel);
 	}
 }

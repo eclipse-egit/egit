@@ -77,8 +77,8 @@ public class GitCloneWizard extends Wizard implements IImportWizard {
 	public boolean performCancel() {
 		if (cloneDestination.alreadyClonedInto != null) {
 			if (MessageDialog
-					.openQuestion(getShell(), "Aborting clone.",
-							"A complete clone was already made. Do you want to delete it?")) {
+					.openQuestion(getShell(), UIText.GitCloneWizard_abortingCloneTitle,
+							UIText.GitCloneWizard_abortingCloneMsg)) {
 				deleteRecursively(new File(cloneDestination.alreadyClonedInto));
 			}
 		}

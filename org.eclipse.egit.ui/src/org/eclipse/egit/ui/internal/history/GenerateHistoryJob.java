@@ -53,7 +53,7 @@ class GenerateHistoryJob extends Job {
 				}
 			} catch (IOException e) {
 				status = new Status(IStatus.ERROR, Activator.getPluginId(),
-						"Cannot compute Git history.", e);
+						UIText.GenerateHistoryJob_errorComputingHistory, e);
 			}
 
 			if (monitor.isCanceled())
