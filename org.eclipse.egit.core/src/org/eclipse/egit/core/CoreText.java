@@ -235,6 +235,15 @@ public class CoreText extends NLS {
 	/** */
 	public static String BranchOperation_performingBranch;
 
+	/** */
+	public static String TagOperation_performingTagging;
+
+	/** */
+	public static String TagOperation_taggingFailure;
+
+	/** */
+	public static String TagOperation_objectIdNotFound;
+
 	static {
 		initializeMessages("org.eclipse.egit.core.coretext", //$NON-NLS-1$
 				CoreText.class);

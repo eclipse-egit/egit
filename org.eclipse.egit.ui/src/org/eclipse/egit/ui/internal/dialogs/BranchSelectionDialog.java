@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (C) 2007, Dave Watson <dwatson@mimvista.com>
  * Copyright (C) 2007, Robin Rosenberg <me@lathund.dewire.com.dewire.com>
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
@@ -22,9 +22,9 @@ import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTreeNodeType;
+import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -308,28 +308,7 @@ public class BranchSelectionDialog extends Dialog {
 				getShell(),
 				UIText.BranchSelectionDialog_QuestionNewBranchTitle,
 				prompt,
-				null, new IInputValidator() {
-					public String isValid(String newText) {
-						if (newText.length() == 0) {
-							// nothing entered, just don't let the user proceed,
-							// no need to prompt them with an error message
-							return ""; //$NON-NLS-1$
-						}
-
-						String testFor = refPrefix + newText;
-						try {
-							if (repo.resolve(testFor) != null)
-								return UIText.BranchSelectionDialog_ErrorAlreadyExists;
-						} catch (IOException e1) {
-							Activator.logError(NLS.bind(
-									UIText.BranchSelectionDialog_ErrorCouldNotResolve, testFor), e1);
-							return e1.getMessage();
-						}
-						if (!Repository.isValidRefName(testFor))
-							return UIText.BranchSelectionDialog_ErrorInvalidRefName;
-						return null;
-					}
-				});
+				null, ValidationUtils.getRefNameInputValidator(repo, refPrefix));
 		labelDialog.setBlockOnOpen(true);
 		return labelDialog;
 	}
