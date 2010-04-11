@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAAn////M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-03-31T14:05:59Z",
+      "side": 1,
+      "message": "The tree already expands on double click. This code then reverts the expansion (Tested on Windows).",
+      "revId": "165224290097b153559dcdbf7fa0fb7699f9ebb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
