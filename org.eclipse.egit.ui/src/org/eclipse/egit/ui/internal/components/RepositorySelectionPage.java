@@ -24,9 +24,8 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
-import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
@@ -847,17 +846,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 
 	private void addContentProposalToUriText(Text uriTextField) {
 
-		ControlDecoration dec = new ControlDecoration(uriTextField, SWT.TOP
-				| SWT.LEFT);
-
-		dec.setImage(FieldDecorationRegistry.getDefault().getFieldDecoration(
-				FieldDecorationRegistry.DEC_CONTENT_PROPOSAL).getImage());
-
-		dec.setShowOnlyOnFocus(true);
-		dec.setShowHover(true);
-
-		dec
-				.setDescriptionText(UIText.RepositorySelectionPage_ShowPreviousURIs_HoverText);
+		UIUtils.addBulbDecorator(uriTextField, UIText.RepositorySelectionPage_ShowPreviousURIs_HoverText);
 
 		IContentProposalProvider cp = new IContentProposalProvider() {
 
