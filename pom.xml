@@ -62,8 +62,49 @@
   <properties>
     <tycho-version>0.8.0</tycho-version>
     <jgit-version>0.8.0-SNAPSHOT</jgit-version>
-    <eclipse-site>http://download.eclipse.org/releases/ganymede</eclipse-site>
+    <platform-version-name>ganymede</platform-version-name>
+    <eclipse-site>http://download.eclipse.org/releases/${platform-version-name}</eclipse-site>
+    <swtbot-site>http://download.eclipse.org/technology/swtbot/${platform-version-name}/dev-build/update-site</swtbot-site>
   </properties>
+
+  <profiles>
+    <profile>
+      <id>platform-ganymede</id>
+      <activation>
+        <property>
+          <name>platform-version-name</name>
+          <value>ganymede</value>
+        </property>
+      </activation>
+      <properties>
+        <platform-version>[3.4,3.5)</platform-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>platform-galileo</id>
+      <activation>
+        <property>
+          <name>platform-version-name</name>
+          <value>galileo</value>
+        </property>
+      </activation>
+      <properties>
+        <platform-version>[3.5,3.6)</platform-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>platform-helios</id>
+      <activation>
+        <property>
+          <name>platform-version-name</name>
+          <value>helios</value>
+        </property>
+      </activation>
+      <properties>
+        <platform-version>[3.6,3.7)</platform-version>
+      </properties>
+    </profile>
+  </profiles>
 
   <modules>
     <module>org.eclipse.egit</module>
@@ -75,6 +116,7 @@
     <module>org.eclipse.egit-updatesite</module>
 
     <module>org.eclipse.egit.core.test</module>
+    <module>org.eclipse.egit.ui.test</module>
   </modules>
 
   <repositories>
@@ -82,6 +124,11 @@
       <id>ganymede</id>
       <layout>p2</layout>
       <url>${eclipse-site}</url>
+    </repository>
+    <repository>
+      <id>swtbot</id>
+      <layout>p2</layout>
+      <url>${swtbot-site}</url>
     </repository>
   </repositories>
 
