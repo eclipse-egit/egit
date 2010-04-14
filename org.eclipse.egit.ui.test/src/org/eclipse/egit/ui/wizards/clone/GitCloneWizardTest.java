@@ -177,9 +177,8 @@ public class GitCloneWizardTest {
 	@SuppressWarnings("boxing")
 	@Test
 	public void canCloneARemoteRepo() throws Exception {
-		File destRepo = new File(new File(ResourcesPlugin.getWorkspace()
-				.getRoot().getLocation().toFile().getParent(),
-				"junit-workspace"), "egit");
+		File destRepo = new File(ResourcesPlugin.getWorkspace()
+				.getRoot().getLocation().toFile(), "egit");
 
 		RepoPropertiesPage propertiesPage = importWizard.openWizard();
 
