@@ -202,7 +202,22 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_FileNotInCommit;
 
 	/** */
+	public static String GitHistoryPage_fileNotFound;
+
+	/** */
 	public static String GitHistoryPage_find;
+
+	/** */
+	public static String GitHistoryPage_notContainedInCommits;
+
+	/** */
+	public static String GitHistoryPage_open;
+
+	/** */
+	public static String GitHistoryPage_openFailed;
+
+	/** */
+	public static String GitHistoryPage_seeLog;
 
 	/** */
 	public static String GitProjectPropertyPage_LabelBranch;
