@@ -39,7 +39,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
-import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
@@ -75,6 +74,8 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.MenuDetectEvent;
+import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -519,25 +520,36 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 	private void attachContextMenu(final Control c) {
 		c.setMenu(popupMgr.createContextMenu(c));
 
-		popupMgr.addMenuListener(new IMenuListener() {
+		if (c == graph.getControl()) {
 
-			public void menuAboutToShow(IMenuManager manager) {
-				popupMgr.remove(new ActionContributionItem(compareAction));
-				popupMgr.remove(new ActionContributionItem(compareVersionsAction));
-				int size = ((IStructuredSelection) revObjectSelectionProvider
-						.getSelection()).size();
-				if (IFile.class.isAssignableFrom(getInput()
-						.getClass())) {
-					if (size == 1 ) {
-						popupMgr.add(compareAction);
+			c.addMenuDetectListener(new MenuDetectListener() {
+
+				public void menuDetected(MenuDetectEvent e) {
+					popupMgr.remove(new ActionContributionItem(compareAction));
+					popupMgr.remove(new ActionContributionItem(
+							compareVersionsAction));
+					int size = ((IStructuredSelection) revObjectSelectionProvider
+							.getSelection()).size();
+					if (IFile.class.isAssignableFrom(getInput().getClass())) {
+						if (size == 1 ) {
+							popupMgr.add(compareAction);
+						} else if (size == 2) {
+							popupMgr.add(compareVersionsAction);
+						}
 					}
-					else if (size == 2) {
-						popupMgr.add(compareVersionsAction);
-					}
+
 				}
+			});
+		} else {
+			c.addMenuDetectListener(new MenuDetectListener() {
 
-			}
-		});
+				public void menuDetected(MenuDetectEvent e) {
+					popupMgr.remove(new ActionContributionItem(compareAction));
+					popupMgr.remove(new ActionContributionItem(
+							compareVersionsAction));
+				}
+			});
+		}
 	}
 
 	private void layoutSashForm(final SashForm sf, final String key) {
