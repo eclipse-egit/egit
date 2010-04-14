@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///3o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitQuickDiffProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-04-07T16:21:47Z",
+      "side": 1,
+      "message": "I think the trow was just forgotten here and could be added (surrounding method throws CoreExecption).",
+      "revId": "b02420e581046fca1582d14d38abb44909e7965e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
