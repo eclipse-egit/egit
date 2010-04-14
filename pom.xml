@@ -62,7 +62,9 @@
   <properties>
     <tycho-version>0.8.0</tycho-version>
     <jgit-version>0.8.0-SNAPSHOT</jgit-version>
-    <eclipse-site>http://download.eclipse.org/releases/ganymede</eclipse-site>
+    <platform-version-name>ganymede</platform-version-name>
+    <eclipse-site>http://download.eclipse.org/releases/${platform-version-name}</eclipse-site>
+    <swtbot-site>http://download.eclipse.org/technology/swtbot/${platform-version-name}/dev-build/update-site</swtbot-site>
   </properties>
 
   <modules>
@@ -75,6 +77,7 @@
     <module>org.eclipse.egit-updatesite</module>
 
     <module>org.eclipse.egit.core.test</module>
+    <module>org.eclipse.egit.ui.test</module>
   </modules>
 
   <repositories>
@@ -82,6 +85,11 @@
       <id>ganymede</id>
       <layout>p2</layout>
       <url>${eclipse-site}</url>
+    </repository>
+    <repository>
+      <id>swtbot</id>
+      <layout>p2</layout>
+      <url>${swtbot-site}</url>
     </repository>
   </repositories>
 
