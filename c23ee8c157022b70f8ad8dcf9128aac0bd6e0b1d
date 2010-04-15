@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAAA3///6c\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-04-06T15:05:40Z",
+      "side": 1,
+      "message": "Why is hard to read generic coding used here?",
+      "revId": "c23ee8c157022b70f8ad8dcf9128aac0bd6e0b1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAA3///5g\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
         "patchSetId": 1
