@@ -250,6 +250,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 		}
 		@Override
 		public void run() {
+			String oldName = getName();
 			if (!isChecked()) {
 				if (showAllFilter == filter) {
 					showAllFilter = ShowFilter.SHOWALLRESOURCE;
@@ -266,6 +267,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 					showAllFolderVersionsAction.setChecked(false);
 				refresh();
 			}
+			GitHistoryPage.this.firePropertyChange(GitHistoryPage.this, P_NAME, oldName, getName());
 			Activator.getDefault().getPreferenceStore().setValue(
 					PREF_SHOWALLFILTER, showAllFilter.toString());
 		}
