@@ -1013,7 +1013,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			return ""; //$NON-NLS-1$
 
 		final StringBuilder b = new StringBuilder();
-		b.append(items[0].getProject().getName());
+		b.append(db.getDirectory().getParentFile().getName());
 		if (currentWalk.getRevFilter() != RevFilter.ALL) {
 			b.append(": "); //$NON-NLS-1$
 			b.append(currentWalk.getRevFilter());
