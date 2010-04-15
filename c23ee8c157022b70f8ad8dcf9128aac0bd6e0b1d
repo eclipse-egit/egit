@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///5g\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-04-06T17:30:36Z",
+      "side": 1,
+      "message": "Ever since we adopted Java 5 we have  adopted generics in general. I guess this case \ncould be an exception...",
+      "parentUuid": "AAAAA3///6c\u003d",
+      "revId": "c23ee8c157022b70f8ad8dcf9128aac0bd6e0b1d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
