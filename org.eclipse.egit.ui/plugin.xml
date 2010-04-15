@@ -123,6 +123,12 @@
                menubarPath="compareWithMenu/gitCompareWithGroup"
                tooltip="%CompareWithIndexAction_tooltip"/>
          <action
+               class="org.eclipse.egit.ui.internal.actions.CompareWithHeadAction"
+               id="org.eclipse.egit.ui.internal.actions.CompareWithHeadAction"
+               label="%CompareWithHeadAction_label"
+               menubarPath="compareWithMenu/gitCompareWithGroup"
+               tooltip="%CompareWithHeadAction_tooltip"/>
+         <action
                class="org.eclipse.egit.ui.internal.actions.IgnoreAction"
                id="org.eclipse.egit.ui.internal.actions.IgnoreAction"
                label="%IgnoreAction_label"
