@@ -42,7 +42,7 @@ class IndexFileRevision extends GitFileRevision implements IFileRevision {
 	public IStorage getStorage(IProgressMonitor monitor) throws CoreException {
 		if (blobId == null)
 			blobId = locateBlobObjectId();
-		return new BlobStorage(db, path, blobId);
+		return new IndexBlobStorage(db, path, blobId);
 	}
 
 	public boolean isPropertyMissing() {
