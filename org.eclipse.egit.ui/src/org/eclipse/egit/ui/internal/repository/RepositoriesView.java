@@ -1153,7 +1153,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 	@Override
 	public void setFocus() {
-		// nothing special
+		tv.getTree().setFocus();
 	}
 
 	@SuppressWarnings("boxing")
