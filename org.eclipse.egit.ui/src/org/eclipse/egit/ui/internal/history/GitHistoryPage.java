@@ -80,7 +80,6 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -394,18 +393,16 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 
 	private ITypedElement getEditableRevision(final IFile resource,
 			final String gitPath, SWTCommit commit) {
-		ITypedElement right = new EmptyElement(NLS.bind(UIText.GitHistoryPage_FileNotInCommit,
-				resource.getName(), commit));
+		ITypedElement right = new GitCompareFileRevisionEditorInput.EmptyTypedElement(
+				NLS.bind(UIText.GitHistoryPage_FileNotInCommit, resource
+						.getName(), commit));
 
 		try {
 			TreeWalk w = TreeWalk.forPath(db, gitPath, commit.getTree());
 			// check if file is contained in commit
 			if (w != null) {
-				final IFileRevision nextFile = GitFileRevision.inCommit(
-						db,
-						commit,
-						gitPath,
-						null);
+				final IFileRevision nextFile = GitFileRevision.inCommit(db,
+						commit, gitPath, null);
 				right = new EditableRevision(nextFile);
 			}
 		} catch (IOException e) {
@@ -1046,27 +1043,6 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 	public String getDescription() {
 		return getName();
 	}
-
-	private class EmptyElement implements ITypedElement{
-
-		private String name;
-
-		public EmptyElement(String name) {
-			this.name = name;
-		}
-
-		public Image getImage() {
-			return null;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public String getType() {
-			return null;
-		}
-	};
 
 	private abstract class BooleanPrefAction extends Action implements
 			IPropertyChangeListener, ActionFactory.IWorkbenchAction {
