@@ -60,6 +60,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -209,6 +210,10 @@ public class GitProjectsImportPage extends WizardPage {
 
 	private Button shareCheckBox;
 
+	private Button selectAll;
+
+	private Button deselectAll;
+
 	private boolean share;
 
 	/**
@@ -303,6 +308,20 @@ public class GitProjectsImportPage extends WizardPage {
 				return super.isElementVisible(viewer, element);
 			}
 
+			@Override
+			public void setPattern(String patternString) {
+				super.setPattern(patternString);
+				// TODO: is there a better way to react on changes in the tree?
+				// disable select all button when tree becomes empty due to
+				// filtering
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
+						enableSelectAllButtons();
+					}
+				});
+
+			}
+
 		};
 
 		FilteredTree filteredTree = new FilteredTree(listComposite, SWT.CHECK
@@ -391,7 +410,7 @@ public class GitProjectsImportPage extends WizardPage {
 		buttonsComposite.setLayoutData(new GridData(
 				GridData.VERTICAL_ALIGN_BEGINNING));
 
-		Button selectAll = new Button(buttonsComposite, SWT.PUSH);
+		selectAll = new Button(buttonsComposite, SWT.PUSH);
 		selectAll.setText(UIText.WizardProjectsImportPage_selectAll);
 		selectAll.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -407,7 +426,7 @@ public class GitProjectsImportPage extends WizardPage {
 		Dialog.applyDialogFont(selectAll);
 		setButtonLayoutData(selectAll);
 
-		Button deselectAll = new Button(buttonsComposite, SWT.PUSH);
+		deselectAll = new Button(buttonsComposite, SWT.PUSH);
 		deselectAll.setText(UIText.WizardProjectsImportPage_deselectAll);
 		deselectAll.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -534,7 +553,18 @@ public class GitProjectsImportPage extends WizardPage {
 		} else {
 			setMessage(UIText.WizardProjectsImportPage_ImportProjectsDescription);
 		}
+		enableSelectAllButtons();
 		setPageComplete(checkedItems.size() > 0);
+	}
+
+	private void enableSelectAllButtons() {
+		if (projectsList.getTree().getItemCount()>0){
+			selectAll.setEnabled(true);
+			deselectAll.setEnabled(true);
+		} else {
+			selectAll.setEnabled(false);
+			deselectAll.setEnabled(false);
+		}
 	}
 
 	/**
