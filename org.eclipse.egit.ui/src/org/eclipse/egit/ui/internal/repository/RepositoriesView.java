@@ -670,11 +670,11 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					new WizardDialog(getSite().getShell(),
-							new ConfigureRemoteWizard(node.getRepository()))
-							.open();
-					scheduleRefresh();
-
+					WizardDialog dialog = new WizardDialog(getSite().getShell(),
+							new ConfigureRemoteWizard(node.getRepository()));
+					if (dialog.open() == Window.OK) {
+						scheduleRefresh();
+					}
 				}
 
 			});
@@ -691,12 +691,11 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-
-					new WizardDialog(getSite().getShell(),
-							new ConfigureRemoteWizard(node.getRepository(),
-									name, false)).open();
-					scheduleRefresh();
-
+					WizardDialog dialog = new WizardDialog(getSite().getShell(),
+							new ConfigureRemoteWizard(node.getRepository(), name, false));
+					if (dialog.open() == Window.OK) {
+						scheduleRefresh();
+					}
 				}
 
 			});
@@ -707,12 +706,11 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-
-					new WizardDialog(getSite().getShell(),
-							new ConfigureRemoteWizard(node.getRepository(),
-									name, true)).open();
-					scheduleRefresh();
-
+					WizardDialog dialog = new WizardDialog(getSite().getShell(),
+							new ConfigureRemoteWizard(node.getRepository(), name, true));
+					if (dialog.open() == Window.OK) {
+						scheduleRefresh();
+					}
 				}
 
 			});

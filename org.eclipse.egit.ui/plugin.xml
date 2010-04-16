@@ -7,19 +7,19 @@
 
    <extension point="org.eclipse.ui.importWizards">
       <category name="%Git_clone_category"
-	    id="org.eclipse.egit.ui.internal.clone.gitclonecategory"/>
+        id="org.eclipse.egit.ui.internal.clone.gitclonecategory"/>
       <wizard name="%Git_clone_wizard"
-	    icon="icons/obj16/import_obj.gif"
-	    class="org.eclipse.egit.ui.internal.clone.GitCloneWizard"
-	    id="org.eclipse.egit.ui.internal.clone.GitCloneWizard"
-	    category="org.eclipse.egit.ui.internal.clone.gitclonecategory">
-	    <description>%Git_clone_description</description>
+        icon="icons/obj16/import_obj.gif"
+        class="org.eclipse.egit.ui.internal.clone.GitCloneWizard"
+        id="org.eclipse.egit.ui.internal.clone.GitCloneWizard"
+        category="org.eclipse.egit.ui.internal.clone.gitclonecategory">
+        <description>%Git_clone_description</description>
       </wizard>
    </extension>
 
    <extension point="org.eclipse.team.ui.configurationWizards">
       <wizard name="%SharingWizard_name"
-	    icon="icons/etool16/newconnect_wiz.gif"
+        icon="icons/etool16/newconnect_wiz.gif"
             class="org.eclipse.egit.ui.internal.sharing.SharingWizard"
             id="org.eclipse.egit.ui.internal.sharing.SharingWizard">
       </wizard>
@@ -146,8 +146,8 @@
                label="%DiscardChangesAction_label"
                menubarPath="replaceWithMenu/gitReplaceWithGroup"
                tooltip="%DiscardChangesAction_tooltip"/>
-	  </objectContribution>
-	  <objectContribution
+      </objectContribution>
+      <objectContribution
          id="org.eclipse.egit.ui.resetto"
          objectClass="org.eclipse.jgit.revwalk.RevCommit">
          <action
@@ -174,29 +174,29 @@
                enablesFor="1"
                tooltip="%Hard_Reset_tooltip">
          </action>
-	 <action
-	       class="org.eclipse.egit.ui.internal.actions.SetQuickdiffBaselineAction"
-	       enablesFor="1"
-	       id="org.eclipse.egit.ui.setquickdiffbaseline"
-	       label="%Set_As_Quickdiff_Baseline_label"
-	       menubarPath="additions">
-	 </action>
-	 <action
-	       class="org.eclipse.egit.ui.internal.actions.ResetQuickdiffBaselineAction"
-	       enablesFor="*"
-	       id="org.eclipse.egit.ui.resetquickdiffbaseline"
-	       label="%Reset_Quickdiff_Baseline_To_HEAD_label"
-	       menubarPath="additions">
-	 </action>
-	 <action
-	       class="org.eclipse.egit.ui.internal.actions.ResetQuickdiffBaselineHeadParentAction"
-	       enablesFor="*"
-	       id="org.eclipse.egit.ui.resetquickdiffheadparentbaseline"
-	       label="%Reset_Quickdiff_Baseline_To_First_Parent_label"
-	       menubarPath="additions">
-	 </action>
-	  </objectContribution>
-   	  <objectContribution
+     <action
+           class="org.eclipse.egit.ui.internal.actions.SetQuickdiffBaselineAction"
+           enablesFor="1"
+           id="org.eclipse.egit.ui.setquickdiffbaseline"
+           label="%Set_As_Quickdiff_Baseline_label"
+           menubarPath="additions">
+     </action>
+     <action
+           class="org.eclipse.egit.ui.internal.actions.ResetQuickdiffBaselineAction"
+           enablesFor="*"
+           id="org.eclipse.egit.ui.resetquickdiffbaseline"
+           label="%Reset_Quickdiff_Baseline_To_HEAD_label"
+           menubarPath="additions">
+     </action>
+     <action
+           class="org.eclipse.egit.ui.internal.actions.ResetQuickdiffBaselineHeadParentAction"
+           enablesFor="*"
+           id="org.eclipse.egit.ui.resetquickdiffheadparentbaseline"
+           label="%Reset_Quickdiff_Baseline_To_First_Parent_label"
+           menubarPath="additions">
+     </action>
+      </objectContribution>
+      <objectContribution
          adaptable="true"
          id="org.eclipse.egit.ui.fileContributions"
          objectClass="org.eclipse.core.resources.IFile">
@@ -219,7 +219,7 @@
             </adapter>
          </factory>
          <factory
-	       adaptableType="org.eclipse.core.resources.IResource"
+           adaptableType="org.eclipse.core.resources.IResource"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
                   type="org.eclipse.team.ui.history.IHistoryPageSource">
@@ -234,28 +234,28 @@
             id="org.eclipse.egit.ui.GitPreferences" />
 
       <page name="%GitPreferences_HistoryPreferencePage_name"
-	    category="org.eclipse.egit.ui.GitPreferences"
+        category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"
-	    id="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage" >
-	    <keywordReference
-		  id="org.eclipse.egit.ui.keyword.git">
-	    </keywordReference>
-	    </page>
+        id="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage" >
+        <keywordReference
+          id="org.eclipse.egit.ui.keyword.git">
+        </keywordReference>
+        </page>
       <page name="%GitPreferences_WindowCachePreferencePage_name"
-	    category="org.eclipse.egit.ui.GitPreferences"
+        category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage"
-	    id="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage" >
-	    <keywordReference
-		  id="org.eclipse.egit.ui.keyword.git">
-	    </keywordReference>
+        id="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage" >
+        <keywordReference
+          id="org.eclipse.egit.ui.keyword.git">
+        </keywordReference>
       </page>
-	  <page name="%GitPreferences_DecoratorPreferencePage_name"
-	    category="org.eclipse.egit.ui.GitPreferences"
+      <page name="%GitPreferences_DecoratorPreferencePage_name"
+        category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage"
-	    id="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage" >
-	    <keywordReference
-		  id="org.eclipse.egit.ui.keyword.git">
-	    </keywordReference>
+        id="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage" >
+        <keywordReference
+          id="org.eclipse.egit.ui.keyword.git">
+        </keywordReference>
       </page>
    </extension>
 
@@ -264,22 +264,22 @@
             name="%Git"
             class="org.eclipse.egit.ui.internal.preferences.GitProjectPropertyPage"
             id="org.eclipse.egit.ui.preferences.GitProjectPropertyPage">
-	    <enabledWhen>
-		<adapt type="org.eclipse.core.resources.IProject">
-			<test
-				property="org.eclipse.core.resources.projectPersistentProperty"
-				args="org.eclipse.team.core.repository, org.eclipse.egit.core.GitProvider">
-			</test>
-		</adapt>
-	    </enabledWhen>
+        <enabledWhen>
+        <adapt type="org.eclipse.core.resources.IProject">
+            <test
+                property="org.eclipse.core.resources.projectPersistentProperty"
+                args="org.eclipse.team.core.repository, org.eclipse.egit.core.GitProvider">
+            </test>
+        </adapt>
+        </enabledWhen>
       </page>
    </extension>
 
    <extension point="org.eclipse.ui.keywords">
-	  <keyword
-			id="org.eclipse.egit.ui.keyword.git"
-			label="%GitKeyword_label">
-	  </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.keyword.git"
+            label="%GitKeyword_label">
+      </keyword>
    </extension>
 
    <extension point="org.eclipse.ui.decorators">
@@ -331,7 +331,7 @@
             %Theme_CommitMessageFont_description
          </description>
       </fontDefinition>
-	<colorDefinition
+    <colorDefinition
         id="org.eclipse.egit.ui.UncommittedChangeForegroundColor"
         categoryId="org.eclipse.egit.ui.GitTheme"
         label="%Theme_UncommittedChangeForegroundColor_label"
@@ -369,14 +369,14 @@
       </referenceprovider>
    </extension>
    <extension
-	 point="org.eclipse.ui.actionSets">
+     point="org.eclipse.ui.actionSets">
       <actionSet
-	    description="%GitActions_description"
-	    id="org.eclipse.egit.ui.gitaction"
-	    label="%GitActions_label"
-	    visible="false"
-	    >
-	    <menu
+        description="%GitActions_description"
+        id="org.eclipse.egit.ui.gitaction"
+        label="%GitActions_label"
+        visible="false"
+        >
+        <menu
            id="org.eclipse.egit.ui.gitmenu"
            label="%GitMenu_label"
            path="additions"
@@ -384,8 +384,8 @@
         <separator
               name="repositoryGroup">
         </separator>
-	    </menu>
-		<action
+        </menu>
+        <action
         class="org.eclipse.egit.ui.internal.actions.FetchAction"
         disabledIcon="icons/toolbar/fetchd.png"
         icon="icons/toolbar/fetche.png"
@@ -395,8 +395,8 @@
         style="push"
         toolbarPath="org.eclipse.egit.ui"
         tooltip="%FetchAction_tooltip">
-		</action>
-		<action
+        </action>
+        <action
         class="org.eclipse.egit.ui.internal.actions.PushAction"
         disabledIcon="icons/toolbar/pushd.png"
         icon="icons/toolbar/pushe.png"
@@ -406,51 +406,51 @@
         style="push"
         toolbarPath="org.eclipse.egit.ui"
         tooltip="%PushAction_tooltip">
-		</action>
-		<action
-		       class="org.eclipse.egit.ui.internal.actions.BranchAction"
-		       disabledIcon="icons/toolbar/checkoutd.png"
-		       icon="icons/toolbar/checkoute.png"
-		       id="org.eclipse.egit.ui.actionbranch"
-		       label="%BranchAction_label"
-		       style="push"
-		       menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
-		       toolbarPath="Normal/additions"
-		       tooltip="%BranchAction_tooltip">
-		</action>
-		<action
-		       class="org.eclipse.egit.ui.internal.actions.CommitAction"
-		       disabledIcon="icons/toolbar/commitd.png"
-		       icon="icons/toolbar/commite.png"
-		       id="org.eclipse.egit.ui.actioncommit"
-		       label="%CommitAction_label"
-		       style="push"
-		       menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
-		       toolbarPath="Normal/additions"
-		       tooltip="%CommitAction_tooltip">
-		</action>
-		<action
-		       class="org.eclipse.egit.ui.internal.actions.ResetAction"
-		       disabledIcon="icons/toolbar/resetd.png"
-		       icon="icons/toolbar/resete.png"
-		       id="org.eclipse.egit.ui.actionreset"
-		       label="%ResetAction_label"
-		       style="push"
-		       menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
-		       toolbarPath="Normal/additions"
-		       tooltip="%ResetAction_tooltip">
-		</action>
-		<action
-		       class="org.eclipse.egit.ui.internal.actions.Track"
-		       disabledIcon="icons/toolbar/trackd.png"
-		       icon="icons/toolbar/tracke.png"
-		       id="org.eclipse.egit.ui.trackaction"
-		       label="%TrackAction_label"
-		       style="push"
-		       menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
-		       toolbarPath="Normal/additions"
-		       tooltip="%TrackAction_tooltip">
-		</action>
+        </action>
+        <action
+               class="org.eclipse.egit.ui.internal.actions.BranchAction"
+               disabledIcon="icons/toolbar/checkoutd.png"
+               icon="icons/toolbar/checkoute.png"
+               id="org.eclipse.egit.ui.actionbranch"
+               label="%BranchAction_label"
+               style="push"
+               menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
+               toolbarPath="Normal/additions"
+               tooltip="%BranchAction_tooltip">
+        </action>
+        <action
+               class="org.eclipse.egit.ui.internal.actions.CommitAction"
+               disabledIcon="icons/toolbar/commitd.png"
+               icon="icons/toolbar/commite.png"
+               id="org.eclipse.egit.ui.actioncommit"
+               label="%CommitAction_label"
+               style="push"
+               menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
+               toolbarPath="Normal/additions"
+               tooltip="%CommitAction_tooltip">
+        </action>
+        <action
+               class="org.eclipse.egit.ui.internal.actions.ResetAction"
+               disabledIcon="icons/toolbar/resetd.png"
+               icon="icons/toolbar/resete.png"
+               id="org.eclipse.egit.ui.actionreset"
+               label="%ResetAction_label"
+               style="push"
+               menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
+               toolbarPath="Normal/additions"
+               tooltip="%ResetAction_tooltip">
+        </action>
+        <action
+               class="org.eclipse.egit.ui.internal.actions.Track"
+               disabledIcon="icons/toolbar/trackd.png"
+               icon="icons/toolbar/tracke.png"
+               id="org.eclipse.egit.ui.trackaction"
+               label="%TrackAction_label"
+               style="push"
+               menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
+               toolbarPath="Normal/additions"
+               tooltip="%TrackAction_tooltip">
+        </action>
       </actionSet>
    </extension>
    <extension
