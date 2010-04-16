@@ -25,6 +25,8 @@ import java.util.TimeZone;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceVisitor;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIText;
@@ -33,8 +35,6 @@ import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.team.core.TeamException;
-import org.eclipse.team.internal.ui.Utils;
 import org.eclipse.jgit.lib.Commit;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GitIndex;
@@ -49,6 +49,9 @@ import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.lib.TreeEntry;
 import org.eclipse.jgit.lib.GitIndex.Entry;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.team.core.Team;
+import org.eclipse.team.core.TeamException;
+import org.eclipse.team.internal.ui.Utils;
 
 /**
  * Scan for modified resources in the same project as the selected resources.
@@ -57,6 +60,7 @@ public class CommitAction extends RepositoryAction {
 
 	private ArrayList<IFile> notIndexed;
 	private ArrayList<IFile> indexChanges;
+	private ArrayList<IFile> notTracked;
 	private ArrayList<IFile> files;
 
 	private Commit previousCommit;
@@ -70,6 +74,12 @@ public class CommitAction extends RepositoryAction {
 		try {
 			buildIndexHeadDiffList();
 		} catch (IOException e) {
+			handle(
+					new TeamException(UIText.CommitAction_errorComputingDiffs,
+							e), UIText.CommitAction_errorDuringCommit,
+					UIText.CommitAction_errorComputingDiffs);
+			return;
+		} catch (CoreException e) {
 			handle(
 					new TeamException(UIText.CommitAction_errorComputingDiffs,
 							e), UIText.CommitAction_errorDuringCommit,
@@ -125,6 +135,8 @@ public class CommitAction extends RepositoryAction {
 		commitDialog.setFileList(files);
 		commitDialog.setAuthor(author);
 		commitDialog.setCommitter(committer);
+		if(notTracked.size() == files.size())
+			commitDialog.setShowUntracked(true);
 
 		if (previousCommit != null) {
 			commitDialog.setPreviousCommitMessage(previousCommit.getMessage());
@@ -149,6 +161,7 @@ public class CommitAction extends RepositoryAction {
 		files = new ArrayList<IFile>();
 		notIndexed = new ArrayList<IFile>();
 		indexChanges = new ArrayList<IFile>();
+		notTracked = new ArrayList<IFile>();
 		amending = false;
 		previousCommit = null;
 	}
@@ -291,6 +304,12 @@ public class CommitAction extends RepositoryAction {
 						index.write();
 				}
 			}
+			if (notTracked.contains(file)) {
+				idxEntry = index.add(repositoryMapping.getWorkDir(), new File(repositoryMapping.getWorkDir(),
+						repoRelativePath));
+				index.write();
+
+			}
 
 
 			if (idxEntry != null) {
@@ -352,7 +371,7 @@ public class CommitAction extends RepositoryAction {
 		}
 	}
 
-	private void buildIndexHeadDiffList() throws IOException {
+	private void buildIndexHeadDiffList() throws IOException, CoreException {
 		HashMap<Repository, HashSet<IProject>> repositories = new HashMap<Repository, HashSet<IProject>>();
 
 		for (IProject project : getProjectsInRepositoryOfSelectedResources()) {
@@ -386,8 +405,40 @@ public class CommitAction extends RepositoryAction {
 				includeList(project, indexDiff.getRemoved(), indexChanges);
 				includeList(project, indexDiff.getMissing(), notIndexed);
 				includeList(project, indexDiff.getModified(), notIndexed);
+				addUntrackedFiles(repository, project);
 			}
 		}
+	}
+
+	private void addUntrackedFiles(final Repository repository, final IProject project) throws CoreException, IOException {
+		final GitIndex index = repository.getIndex();
+		final Tree headTree = repository.mapTree(Constants.HEAD);
+		project.accept(new IResourceVisitor() {
+
+			public boolean visit(IResource resource) throws CoreException {
+				if (resource.getType() == IResource.FILE && !Team.isIgnoredHint(resource)) {
+
+					String repoRelativePath = RepositoryMapping.getMapping(project).getRepoRelativePath(resource);
+					try {
+						TreeEntry  headEntry = (headTree == null ? null : headTree.findBlobMember(repoRelativePath));
+						if (headEntry == null){
+							Entry indexEntry = null;
+							indexEntry = index.getEntry(repoRelativePath);
+
+							if (indexEntry == null) {
+								notTracked.add((IFile)resource);
+								files.add((IFile)resource);
+							}
+						}
+					} catch (IOException e) {
+						throw new TeamException(UIText.CommitAction_InternalError, e);
+					}
+				}
+				return true;
+			}
+		});
+
+
 	}
 
 	private void includeList(IProject project, HashSet<String> added, ArrayList<IFile> category) {

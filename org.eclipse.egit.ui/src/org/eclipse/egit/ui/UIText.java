@@ -865,6 +865,9 @@ public class UIText extends NLS {
 	public static String CommitAction_failedToUpdate;
 
 	/** */
+	public static String CommitAction_InternalError;
+
+	/** */
 	public static String CommitAction_noFilesToCommit;
 
 	/** */
@@ -928,6 +931,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_SelectAll;
 
 	/** */
+	public static String CommitDialog_ShowUntrackedFiles;
+
+	/** */
 	public static String CommitDialog_Status;
 
 	/** */
@@ -953,6 +959,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitDialog_StatusUnknown;
+
+	/** */
+	public static String CommitDialog_StatusUntracked;
 
 	/** */
 	public static String ConfigureKeysDialog_AddStandardButton;
