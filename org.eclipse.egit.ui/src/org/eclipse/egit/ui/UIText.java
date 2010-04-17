@@ -1297,9 +1297,6 @@ public class UIText extends NLS {
 	public static String BranchSelectionDialog_LocalBranches;
 
 	/** */
-	public static String BranchSelectionDialog_NoBranchSeletectTitle;
-
-	/** */
 	public static String BranchSelectionDialog_ReallyResetTitle;
 
 	/** */
@@ -1334,9 +1331,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String BranchSelectionDialog_OkCheckout;
-
-	/** */
-	public static String BranchSelectionDialog_NoBranchSeletectMessage;
 
 	/** */
 	public static String BranchSelectionDialog_Refs;
