@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Dariusz Luksza <dariusz@luksza.org> - add synchronization feature
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -57,6 +58,8 @@ import org.eclipse.egit.ui.internal.push.PushWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
+import org.eclipse.egit.ui.internal.synchronize.GitSynchronize;
+import org.eclipse.egit.ui.internal.synchronize.dto.GitSynchronizeData;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -514,6 +517,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			if (!ref.isSymbolic()) {
 
 				if (!isBare) {
+					addSynchtonizeItem(men, node, ref);
+
 					MenuItem checkout = new MenuItem(men, SWT.PUSH);
 					checkout.setText(UIText.RepositoriesView_CheckOut_MenuItem);
 
@@ -1583,11 +1588,13 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 						return new Status(IStatus.ERROR, Activator
 								.getPluginId(), e.getMessage(), e);
 					}
-					for (RepositoryTreeNode<Repository> node: newInput) {
+					for (RepositoryTreeNode<Repository> node : newInput) {
 						Repository repo = node.getRepository();
 						// add listener if not already added
-						repo.removeRepositoryChangedListener(RepositoriesView.this);
-						repo.addRepositoryChangedListener(RepositoriesView.this);
+						repo
+								.removeRepositoryChangedListener(RepositoriesView.this);
+						repo
+								.addRepositoryChangedListener(RepositoriesView.this);
 					}
 				} else {
 					newInput = null;
@@ -1922,6 +1929,32 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 	public void refsChanged(RefsChangedEvent e) {
 		scheduleRefresh();
+	}
+
+	private void addSynchtonizeItem(Menu men, final RepositoryTreeNode node,
+			final Ref ref) {
+		final Repository repo = node.getRepository();
+		String projectName = repo.getDirectory().getParentFile().getName();
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(projectName);
+
+		MenuItem sync = new MenuItem(men, SWT.PUSH);
+		sync.setText(UIText.RepositoriesView_Synchronize_MenuItem);
+
+		boolean projectExist = project.exists();
+		sync.setEnabled(projectExist);
+
+		if (projectExist) {
+			sync.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					GitSynchronizeData gsd = new GitSynchronizeData(repo,
+							Constants.HEAD, ref.getName(), project, false);
+
+					new GitSynchronize(gsd);
+				}
+			});
+		}
 	}
 
 }
