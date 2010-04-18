@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Dariusz Luksza <dariusz@luksza.org> - add synchronization feature
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -45,6 +46,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
@@ -57,6 +59,7 @@ import org.eclipse.egit.ui.internal.push.PushWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
+import org.eclipse.egit.ui.internal.synchronize.GitSynchronize;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -521,6 +524,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			if (!ref.isSymbolic()) {
 
 				if (!isBare) {
+					addSynchronizeItem(men, node, ref);
+
 					MenuItem checkout = new MenuItem(men, SWT.PUSH);
 					checkout.setText(UIText.RepositoriesView_CheckOut_MenuItem);
 
@@ -1946,4 +1951,38 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			Activator.logError(e1.getMessage(), e1);
 		}
 	}
+
+	private void addSynchronizeItem(Menu men, final RepositoryTreeNode node,
+			final Ref ref) {
+		final Repository repo = node.getRepository();
+		final Set<IProject> repoProjects = new HashSet<IProject>();
+		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+
+		for (IProject project : projects) {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+			if (mapping != null && mapping.getRepository() == repo) {
+				repoProjects.add(project);
+			}
+		}
+
+		MenuItem sync = new MenuItem(men, SWT.PUSH);
+		sync.setText(UIText.RepositoriesView_Synchronize_MenuItem);
+
+		boolean projectExist = !repoProjects.isEmpty();
+
+		sync.setEnabled(projectExist);
+
+		if (projectExist) {
+			sync.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					GitSynchronizeData gsd = new GitSynchronizeData(repo,
+							Constants.HEAD, ref.getName(), repoProjects, false);
+
+					new GitSynchronize(gsd);
+				}
+			});
+		}
+	}
+
 }
