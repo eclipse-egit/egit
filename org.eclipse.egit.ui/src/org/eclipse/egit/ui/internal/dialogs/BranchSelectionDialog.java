@@ -293,6 +293,12 @@ public class BranchSelectionDialog extends Dialog {
 				prompt,
 				null, new IInputValidator() {
 					public String isValid(String newText) {
+						if (newText.length() == 0) {
+							// nothing entered, just don't let the user proceed,
+							// no need to prompt them with an error message
+							return ""; //$NON-NLS-1$
+						}
+
 						String testFor = Constants.R_HEADS + newText;
 						try {
 							if (repo.resolve(testFor) != null)
