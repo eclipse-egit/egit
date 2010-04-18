@@ -19,6 +19,12 @@ public class WorkingCopyPage {
 
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
+	private final String cloneUrl;
+
+	public WorkingCopyPage(String cloneUrl) {
+		this.cloneUrl = cloneUrl;
+	}
+
 	public void assertDirectory(String localDir) {
 		assertText(localDir, bot.textWithLabel("Directory:"));
 	}
@@ -35,7 +41,7 @@ public class WorkingCopyPage {
 		bot.button("Finish").click();
 
 		// TODO: pass the repo url in via the constructor from the first page.
-		SWTBotShell shell = bot.shell("Cloning from git://repo.or.cz/egit.git");
+		SWTBotShell shell = bot.shell("Cloning from " + cloneUrl);
 
 		// This is not a performance test. Allow lots of time to complete
 		bot.waitUntil(shellCloses(shell), 120000);

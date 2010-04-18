@@ -45,7 +45,8 @@ public class GitCloneWizardTest {
 	public void updatesParameterFieldsInImportDialogWhenURIIsUpdated()
 			throws Exception {
 
-		RepoPropertiesPage propertiesPage = importWizard.openWizard();
+		importWizard.openWizard();
+		RepoPropertiesPage propertiesPage = importWizard.openCloneWizard();
 
 		propertiesPage.setURI("git://www.jgit.org/EGIT");
 		propertiesPage.assertSourceParams(null, "www.jgit.org", "/EGIT", "git",
@@ -177,10 +178,11 @@ public class GitCloneWizardTest {
 	@SuppressWarnings("boxing")
 	@Test
 	public void canCloneARemoteRepo() throws Exception {
-		File destRepo = new File(ResourcesPlugin.getWorkspace()
-				.getRoot().getLocation().toFile(), "egit");
+		File destRepo = new File(ResourcesPlugin.getWorkspace().getRoot()
+				.getLocation().toFile(), "egit");
 
-		RepoPropertiesPage propertiesPage = importWizard.openWizard();
+		importWizard.openWizard();
+		RepoPropertiesPage propertiesPage = importWizard.openCloneWizard();
 
 		RepoRemoteBranchesPage remoteBranches = propertiesPage
 				.nextToRemoteBranches("git://repo.or.cz/egit.git");
@@ -223,7 +225,8 @@ public class GitCloneWizardTest {
 
 	@Test
 	public void clonedRepositoryShouldExistOnFileSystem() throws Exception {
-		RepoPropertiesPage repoProperties = importWizard.openWizard();
+		importWizard.openWizard();
+		RepoPropertiesPage repoProperties = importWizard.openCloneWizard();
 		RepoRemoteBranchesPage remoteBranches = repoProperties
 				.nextToRemoteBranches("git://repo.or.cz/egit.git");
 		WorkingCopyPage workingCopy = remoteBranches.nextToWorkingCopy();
@@ -233,10 +236,11 @@ public class GitCloneWizardTest {
 	@Test
 	public void alteringSomeParametersDuringClone() throws Exception {
 
-		File destRepo = new File(ResourcesPlugin.getWorkspace()
-				.getRoot().getLocation().toFile(), "egit2");
+		File destRepo = new File(ResourcesPlugin.getWorkspace().getRoot()
+				.getLocation().toFile(), "egit2");
 
-		RepoPropertiesPage repoProperties = importWizard.openWizard();
+		importWizard.openWizard();
+		RepoPropertiesPage repoProperties = importWizard.openCloneWizard();
 		RepoRemoteBranchesPage remoteBranches = repoProperties
 				.nextToRemoteBranches("git://repo.or.cz/egit.git");
 		remoteBranches.deselectAllBranches();
@@ -273,7 +277,8 @@ public class GitCloneWizardTest {
 
 	@Test
 	public void invalidHostnameFreezesDialog() throws Exception {
-		RepoPropertiesPage repoProperties = importWizard.openWizard();
+		importWizard.openWizard();
+		RepoPropertiesPage repoProperties = importWizard.openCloneWizard();
 		RepoRemoteBranchesPage remoteBranches = repoProperties
 				.nextToRemoteBranches("git://no.example.com/EGIT");
 		remoteBranches
@@ -286,7 +291,8 @@ public class GitCloneWizardTest {
 	// an error. Perhaps set a higher timeout for this test ?
 	@Ignore
 	public void invalidPortFreezesDialog() throws Exception {
-		RepoPropertiesPage repoProperties = importWizard.openWizard();
+		importWizard.openWizard();
+		RepoPropertiesPage repoProperties = importWizard.openCloneWizard();
 		RepoRemoteBranchesPage remoteBranches = repoProperties
 				.nextToRemoteBranches("git://localhost:80/EGIT");
 		remoteBranches
@@ -299,7 +305,8 @@ public class GitCloneWizardTest {
 	// an error. Perhaps set a higher timeout for this test ?
 	@Ignore
 	public void timeoutToASocketFreezesDialog() throws Exception {
-		RepoPropertiesPage repoProperties = importWizard.openWizard();
+		importWizard.openWizard();
+		RepoPropertiesPage repoProperties = importWizard.openCloneWizard();
 		RepoRemoteBranchesPage remoteBranches = repoProperties
 				.nextToRemoteBranches("git://www.example.com/EGIT");
 		remoteBranches

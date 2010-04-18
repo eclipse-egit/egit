@@ -19,6 +19,12 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 public class RepoRemoteBranchesPage {
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
+	private final String cloneUrl;
+
+	public RepoRemoteBranchesPage(String cloneUrl) {
+		this.cloneUrl = cloneUrl;
+	}
+
 	public void assertRemoteBranches(String... branches) {
 		SWTBotTable table = bot.table();
 		bot.waitUntil(widgetIsEnabled(table));
@@ -37,7 +43,7 @@ public class RepoRemoteBranchesPage {
 
 	public WorkingCopyPage nextToWorkingCopy() {
 		bot.button("Next >").click();
-		return new WorkingCopyPage();
+		return new WorkingCopyPage(cloneUrl);
 	}
 
 	public void deselectAllBranches() {

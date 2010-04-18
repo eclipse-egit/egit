@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Dariusz Luksza <dariusz@luksza.org> - add synchronization feature
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -57,6 +58,8 @@ import org.eclipse.egit.ui.internal.push.PushWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
+import org.eclipse.egit.ui.internal.synchronize.GitSynchronize;
+import org.eclipse.egit.ui.internal.synchronize.dto.GitSynchronizeData;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -532,6 +535,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			if (!ref.isSymbolic()) {
 
 				if (!isBare) {
+					addSynchtonizeItem(men, node, ref);
+
 					MenuItem checkout = new MenuItem(men, SWT.PUSH);
 					checkout.setText(UIText.RepositoriesView_CheckOut_MenuItem);
 
@@ -1747,7 +1752,16 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			try {
 				File dir = new File(dirString);
 				if (dir.exists() && dir.isDirectory()) {
-					Repository repo = new Repository(dir);
+					IProject project = ResourcesPlugin.getWorkspace().getRoot()
+							.getProject(dir.getParentFile().getName());
+					Repository repo;
+					if (project.exists()) {
+						RepositoryMapping repoMapping = RepositoryMapping
+								.getMapping(project);
+						repo = repoMapping.getRepository();
+					} else {
+						repo = new Repository(dir);
+					}
 					// reset repository change events here so that check for
 					// repository changes does not trigger an unnecessary
 					// refresh
@@ -1973,6 +1987,32 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 					IWorkspace.AVOID_UPDATE, monitor);
 		} catch (CoreException e1) {
 			Activator.logError(e1.getMessage(), e1);
+		}
+	}
+
+	private void addSynchtonizeItem(Menu men, final RepositoryTreeNode node,
+			final Ref ref) {
+		final Repository repo = node.getRepository();
+		String projectName = repo.getDirectory().getParentFile().getName();
+		final IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(projectName);
+
+		MenuItem sync = new MenuItem(men, SWT.PUSH);
+		sync.setText(UIText.RepositoriesView_Synchronize_MenuItem);
+
+		boolean projectExist = project.exists();
+		sync.setEnabled(projectExist);
+
+		if (projectExist) {
+			sync.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					GitSynchronizeData gsd = new GitSynchronizeData(repo,
+							Constants.HEAD, ref.getName(), project, false);
+
+					new GitSynchronize(gsd);
+				}
+			});
 		}
 	}
 }
