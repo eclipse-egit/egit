@@ -492,4 +492,24 @@
             name="%GitRepositoryPerspective_name">
       </perspective>
    </extension>
+   <extension
+         point="org.eclipse.team.ui.synchronizeWizards">
+      <wizard
+            class="org.eclipse.egit.ui.internal.synchronize.GitSynchronizeWizard"
+            description="description"
+            icon="icons/obj16/gitrepository.gif"
+            id="org.eclipse.egit.ui.wizard1"
+            name="%Synchronize_Name">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.team.ui.synchronizeParticipants">
+      <participant
+            class="org.eclipse.egit.ui.internal.synchronize.GitBranchResourceVariantTreeSubscriber"
+            id="org.eclipse.egit.ui.synchronizeParticipant"
+            icon="icons/obj16/gitrepository.gif"
+            name="%Synchronize_Name"
+            persistent="false">
+      </participant>
+   </extension>
 </plugin>
