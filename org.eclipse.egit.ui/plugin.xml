@@ -59,15 +59,22 @@
                icon="$nl$/icons/obj16/reset.gif"
                id="org.eclipse.egit.ui.internal.actions.ResetAction"
                label="%ResetAction_label"
-               menubarPath="team.main/group4"
+               menubarPath="team.main/group5"
                tooltip="%ResetAction_tooltip">
          </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.SynchronizeWithAction"
+               id="org.eclipse.egit.ui.internal.actions.SynchronizeWithAction"
+               icon="$nl$/icons/obj16/remotespec.gif"
+               label="%SynchronizeWith_label"
+               menubarPath="team.main/group3"
+               tooltip="%SynchronizeWith_tooltip"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.TagAction"
                icon="$nl$/icons/obj16/tags.gif"
                id="org.eclipse.egit.ui.internal.actions.TagAction"
                label="%TagAction_label"
-               menubarPath="team.main/group4"
+               menubarPath="team.main/group5"
                tooltip="%TagAction_tooltip"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.MergeAction"
@@ -81,7 +88,7 @@
                icon="$nl$/icons/obj16/branch_obj.gif"
                id="org.eclipse.egit.ui.internal.actions.BranchAction"
                label="%BranchAction_label"
-               menubarPath="team.main/group4"
+               menubarPath="team.main/group5"
                tooltip="%BranchAction_tooltip"/>
      </objectContribution>
      <objectContribution
@@ -117,7 +124,7 @@
                icon="$nl$/icons/obj16/refresh.gif"
                id="org.eclipse.egit.ui.internal.actions.Update"
                label="%UpdateAction_label"
-               menubarPath="team.main/group3"
+               menubarPath="team.main/group4"
                tooltip="%UpdateAction_tooltip"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.CommitAction"
@@ -163,7 +170,7 @@
                enablesFor="*"
                id="org.eclipse.egit.ui.internal.actions.applyPatch"
                label="%ApplyPatchAction_label"
-               menubarPath="team.main/group5"
+               menubarPath="team.main/group6"
                overrideActionId="org.eclipse.team.ui.applyPatch">
          </action>
 	  </objectContribution>
@@ -725,6 +732,40 @@
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewSynchronize"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                           </instanceof>
+                        </or>
+                        <not>
+                           <test
+                                 property="GitRepository.isRefCheckedOut">
+                           </test>
+                        </not>
+                        <not>
+                           <test
+                                 property="GitRepository.isBare">
+                           </test>
+                        </not>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesViewFetchConfigured"
                style="push">
             <visibleWhen
@@ -1253,6 +1294,13 @@
                class="org.eclipse.egit.ui.internal.repository.tree.command.LinkWithSelectionCommand">
          </defaultHandler>
       </command>
+      <command
+            id="org.eclipse.egit.ui.RepositoriesViewSynchronize"
+            name="%SynchronizeCommand">
+         <defaultHandler
+               class="org.eclipse.egit.ui.internal.repository.tree.command.SynchronizeCommand">
+         </defaultHandler>
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.commandImages">
@@ -1306,5 +1354,25 @@
             </instanceof>
          </selectionEnablement>
       </linkHelper>
+    </extension>
+    <extension
+         point="org.eclipse.team.ui.synchronizeWizards">
+      <wizard
+            class="org.eclipse.egit.ui.internal.synchronize.GitSynchronizeWizard"
+            description="description"
+            icon="icons/obj16/gitrepository.gif"
+            id="org.eclipse.egit.ui.wizard1"
+            name="%Synchronize_Name">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.team.ui.synchronizeParticipants">
+      <participant
+            class="org.eclipse.egit.ui.internal.synchronize.GitSubscriberParticipant"
+            id="org.eclipse.egit.ui.synchronizeParticipant"
+            icon="icons/obj16/gitrepository.gif"
+            name="%Synchronize_Name"
+            persistent="false">
+      </participant>
    </extension>
 </plugin>
