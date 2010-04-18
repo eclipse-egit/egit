@@ -10,11 +10,29 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.team.core;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.filesystem;bundle-version="[1.2.0,2.0.0)"
-Export-Package: org.eclipse.egit.core;version="0.9.0",
+Export-Package: org.eclipse.egit.core;version="0.9.0";
+  uses:="org.eclipse.core.runtime,
+   org.eclipse.egit.core.project,
+   org.eclipse.core.resources.team,
+   org.eclipse.team.core.history,
+   org.eclipse.core.runtime.preferences,
+   org.eclipse.jgit.lib,
+   org.eclipse.osgi.util,
+   org.eclipse.jgit.treewalk,
+   org.eclipse.team.core,
+   org.eclipse.core.resources,
+   org.osgi.framework",
  org.eclipse.egit.core.internal.storage;version="0.9.0";x-friends:="org.eclipse.egit.ui,org.eclipse.egit.core.test",
  org.eclipse.egit.core.internal.util;version="0.9.0";x-friends:="org.eclipse.egit.ui",
- org.eclipse.egit.core.op;version="0.9.0",
- org.eclipse.egit.core.project;version="0.9.0"
+ org.eclipse.egit.core.op;version="0.9.0";
+  uses:="org.eclipse.jgit.lib,
+   org.eclipse.core.runtime,
+   org.eclipse.core.runtime.jobs,
+   org.eclipse.core.resources,
+   org.eclipse.jgit.transport",
+ org.eclipse.egit.core.project;version="0.9.0";uses:="org.eclipse.jgit.lib,org.eclipse.core.runtime,org.eclipse.core.resources",
+ org.eclipse.egit.core.synchronize;version="0.9.0",
+ org.eclipse.egit.core.synchronize.dto;version="0.9.0";uses:="org.eclipse.jgit.lib,org.eclipse.core.resources"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.eclipse.jgit.api;version="[0.9.0,0.10.0)",
