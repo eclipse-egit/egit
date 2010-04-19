@@ -142,18 +142,18 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		final int texty = (y * 2 - textsz.y) / 2;
 
 		// Draw backgrounds
-		g.fillRoundRectangle(x + 1, cellY + texty -1, textsz.x + 3, textsz.y + 1, arc, arc);
+		g.fillRoundRectangle(cellX + x + 1, cellY + texty -1,  textsz.x + 3, textsz.y + 1, arc, arc);
 		g.setForeground(sys_black);
-		g.drawString(txt, x + 2, cellY + texty, true);
+		g.drawString(txt,cellX + x + 2, cellY + texty, true);
 		g.setLineWidth(2);
 
 		// And a two color shaded border, blend with whatever background there already is
 		g.setAlpha(128);
 		g.setForeground(sys_gray);
-		g.drawRoundRectangle(x, cellY + texty -2, textsz.x + 5, textsz.y + 3, arc, arc);
+		g.drawRoundRectangle(x + cellX, cellY + texty -2, textsz.x + 5, textsz.y + 3, arc, arc);
 		g.setLineWidth(2);
 		g.setForeground(sys_black);
-		g.drawRoundRectangle(x + 1, cellY + texty -1, textsz.x + 3, textsz.y + 1, arc, arc);
+		g.drawRoundRectangle(cellX +x + 1, cellY + texty -1,  textsz.x + 3, textsz.y + 1, arc, arc);
 		g.setAlpha(255);
 
 		if (peeledColor != null)
