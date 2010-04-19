@@ -12,22 +12,28 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.egit.core.project.GitProjectData;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
@@ -40,9 +46,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectWriter;
 import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryConfig;
 import org.eclipse.jgit.lib.Tree;
@@ -58,19 +62,35 @@ import org.eclipse.team.internal.ui.Utils;
  */
 public class CommitAction extends RepositoryAction {
 
-	private ArrayList<IFile> notIndexed;
-	private ArrayList<IFile> indexChanges;
-	private ArrayList<IFile> notTracked;
-	private ArrayList<IFile> files;
+	private Map<Repository, List<IFile>> notIndexed;
+
+	private Map<Repository, List<IFile>> notTracked;
+
+	private Map<Repository, List<IFile>> fileCandidates;
 
 	private Commit previousCommit;
-
-	private boolean amendAllowed;
-	private boolean amending;
 
 	@Override
 	public void execute(IAction act) {
 		resetState();
+
+		Repository[] repos = getRepositoriesFor(getProjectsForSelectedResources());
+		if (repos.length == 0) {
+			return;
+		}
+
+		for (Repository repo : repos) {
+			if (!repo.getRepositoryState().canCommit()) {
+				MessageDialog
+						.openError(getTargetPart().getSite().getShell(),
+								UIText.CommitAction_cannotCommit, NLS.bind(
+										UIText.CommitAction_repositoryState,
+										repo.getRepositoryState()
+												.getDescription()));
+				return;
+			}
+		}
+
 		try {
 			buildIndexHeadDiffList();
 		} catch (IOException e) {
@@ -87,21 +107,10 @@ public class CommitAction extends RepositoryAction {
 			return;
 		}
 
-		Repository[] repos = getRepositoriesFor(getProjectsForSelectedResources());
-		Repository repository = null;
-		amendAllowed = repos.length == 1;
-		for (Repository repo : repos) {
-			repository = repo;
-			if (!repo.getRepositoryState().canCommit()) {
-				MessageDialog.openError(getTargetPart().getSite().getShell(),
-					UIText.CommitAction_cannotCommit,
-					NLS.bind(UIText.CommitAction_repositoryState, repo.getRepositoryState().getDescription()));
-				return;
-			}
-		}
-
 		loadPreviousCommit();
-		if (files.isEmpty()) {
+		boolean amending = false;
+		boolean amendAllowed = repos.length == 1;
+		if (fileCandidates.isEmpty()) {
 			if (amendAllowed && previousCommit != null) {
 				boolean result = MessageDialog
 				.openQuestion(getTargetPart().getSite().getShell(),
@@ -118,24 +127,24 @@ public class CommitAction extends RepositoryAction {
 
 		String author = null;
 		String committer = null;
-		if (repository != null) {
-			final RepositoryConfig config = repository.getConfig();
-			author = config.getAuthorName();
-			final String authorEmail = config.getAuthorEmail();
-			author = author + " <" + authorEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
+		// just take the first one
+		final RepositoryConfig config = fileCandidates.keySet().iterator()
+				.next().getConfig();
+		author = config.getAuthorName();
+		final String authorEmail = config.getAuthorEmail();
+		author = author + " <" + authorEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 
-			committer = config.getCommitterName();
-			final String committerEmail = config.getCommitterEmail();
-			committer = committer + " <" + committerEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
-		}
+		committer = config.getCommitterName();
+		final String committerEmail = config.getCommitterEmail();
+		committer = committer + " <" + committerEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 
 		CommitDialog commitDialog = new CommitDialog(getTargetPart().getSite().getShell());
 		commitDialog.setAmending(amending);
 		commitDialog.setAmendAllowed(amendAllowed);
-		commitDialog.setFileList(files);
+		commitDialog.setFileList(getFiles());
 		commitDialog.setAuthor(author);
 		commitDialog.setCommitter(committer);
-		if(notTracked.size() == files.size())
+		if (notTracked.size() == fileCandidates.size())
 			commitDialog.setShowUntracked(true);
 
 		if (previousCommit != null) {
@@ -149,20 +158,21 @@ public class CommitAction extends RepositoryAction {
 
 		String commitMessage = commitDialog.getCommitMessage();
 		amending = commitDialog.isAmending();
-		try {
-			performCommit(commitDialog, commitMessage);
-		} catch (TeamException e) {
-			handle(e, UIText.CommitAction_errorDuringCommit,
-					UIText.CommitAction_errorOnCommit);
+		performCommit(commitDialog, commitMessage, amending);
+	}
+
+	private ArrayList<IFile> getFiles() {
+		ArrayList<IFile> candidateList = new ArrayList<IFile>();
+		for (List<IFile> candidates : fileCandidates.values()) {
+			candidateList.addAll(candidates);
 		}
+		return candidateList;
 	}
 
 	private void resetState() {
-		files = new ArrayList<IFile>();
-		notIndexed = new ArrayList<IFile>();
-		indexChanges = new ArrayList<IFile>();
-		notTracked = new ArrayList<IFile>();
-		amending = false;
+		fileCandidates = new HashMap<Repository, List<IFile>>();
+		notIndexed = new HashMap<Repository, List<IFile>>();
+		notTracked = new HashMap<Repository, List<IFile>>();
 		previousCommit = null;
 	}
 
@@ -179,196 +189,70 @@ public class CommitAction extends RepositoryAction {
 		}
 	}
 
-	private void performCommit(CommitDialog commitDialog, String commitMessage)
-			throws TeamException {
-
-		IFile[] selectedItems = commitDialog.getSelectedFiles();
-
-		HashMap<Repository, Tree> treeMap = new HashMap<Repository, Tree>();
-		try {
-			prepareTrees(selectedItems, treeMap);
-		} catch (IOException e) {
-			throw new TeamException(UIText.CommitAction_errorPreparingTrees, e);
-		}
-
-		try {
-			doCommits(commitDialog, commitMessage, treeMap);
-		} catch (IOException e) {
-			throw new TeamException(UIText.CommitAction_errorCommittingChanges, e);
-		}
-		for (IProject proj : getProjectsForSelectedResources()) {
-			RepositoryMapping.getMapping(proj).fireRepositoryChanged();
-		}
-	}
-
-	private void doCommits(CommitDialog commitDialog, String commitMessage,
-			HashMap<Repository, Tree> treeMap) throws IOException, TeamException {
-
+	private void performCommit(CommitDialog commitDialog,
+			final String commitMessage, final boolean amending) {
 		final String author = commitDialog.getAuthor();
 		final String committer = commitDialog.getCommitter();
-		final Date commitDate = new Date();
-		final TimeZone timeZone = TimeZone.getDefault();
+		final IFile[] files = commitDialog.getSelectedFiles();
+		ISchedulingRule rule = MultiRule.combine(files);
 
-		final PersonIdent authorIdent = new PersonIdent(author);
-		final PersonIdent committerIdent = new PersonIdent(committer);
+		// there may be multiple commit operations going on at once
+		final Commit prevCommit = previousCommit;
+		final Map<Repository, List<IFile>> notIndexedFiles = new HashMap<Repository, List<IFile>>(
+				notIndexed);
+		final Map<Repository, List<IFile>> notTrackedFiles = new HashMap<Repository, List<IFile>>(
+				notTracked);
 
-		for (java.util.Map.Entry<Repository, Tree> entry : treeMap.entrySet()) {
-			Tree tree = entry.getValue();
-			Repository repo = tree.getRepository();
-			writeTreeWithSubTrees(tree);
-
-			ObjectId currentHeadId = repo.resolve(Constants.HEAD);
-			ObjectId[] parentIds;
-			if (amending) {
-				parentIds = previousCommit.getParentIds();
-			} else {
-				if (currentHeadId != null)
-					parentIds = new ObjectId[] { currentHeadId };
-				else
-					parentIds = new ObjectId[0];
-			}
-			Commit commit = new Commit(repo, parentIds);
-			commit.setTree(tree);
-			commit.setMessage(commitMessage);
-			commit.setAuthor(new PersonIdent(authorIdent, commitDate, timeZone));
-			commit.setCommitter(new PersonIdent(committerIdent, commitDate, timeZone));
-
-			ObjectWriter writer = new ObjectWriter(repo);
-			commit.setCommitId(writer.writeCommit(commit));
-
-			final RefUpdate ru = repo.updateRef(Constants.HEAD);
-			ru.setNewObjectId(commit.getCommitId());
-			ru.setRefLogMessage(buildReflogMessage(commitMessage), false);
-			if (ru.forceUpdate() == RefUpdate.Result.LOCK_FAILURE) {
-				throw new TeamException(
-						NLS.bind(UIText.CommitAction_failedToUpdate, ru.getName(),
-						commit.getCommitId()));
-			}
-		}
-	}
-
-	private void prepareTrees(IFile[] selectedItems,
-			HashMap<Repository, Tree> treeMap) throws IOException,
-			UnsupportedEncodingException {
-		if (selectedItems.length == 0) {
-			// amending commit - need to put something into the map
-			for (IProject proj : getProjectsForSelectedResources()) {
-				Repository repo = RepositoryMapping.getMapping(proj).getRepository();
-				if (!treeMap.containsKey(repo))
-					treeMap.put(repo, repo.mapTree(Constants.HEAD));
-			}
-		}
-
-		for (IFile file : selectedItems) {
-
-			IProject project = file.getProject();
-			RepositoryMapping repositoryMapping = RepositoryMapping.getMapping(project);
-			Repository repository = repositoryMapping.getRepository();
-			Tree projTree = treeMap.get(repository);
-			if (projTree == null) {
-				projTree = repository.mapTree(Constants.HEAD);
-				if (projTree == null)
-					projTree = new Tree(repository);
-				treeMap.put(repository, projTree);
-				// TODO is this the right Location?
-				if (GitTraceLocation.UI.isActive())
-					GitTraceLocation.getTrace().trace(
-							GitTraceLocation.UI.getLocation(),
-							"Orig tree id: " + projTree.getId()); //$NON-NLS-1$
-			}
-			GitIndex index = repository.getIndex();
-			String repoRelativePath = repositoryMapping
-					.getRepoRelativePath(file);
-			String string = repoRelativePath;
-
-			TreeEntry treeMember = projTree.findBlobMember(repoRelativePath);
-			// we always want to delete it from the current tree, since if it's
-			// updated, we'll add it again
-			if (treeMember != null)
-				treeMember.delete();
-
-			Entry idxEntry = index.getEntry(string);
-			if (notIndexed.contains(file)) {
-				File thisfile = new File(repositoryMapping.getWorkDir(), idxEntry.getName());
-				if (!thisfile.isFile()) {
-					index.remove(repositoryMapping.getWorkDir(), thisfile);
-					index.write();
-					// TODO is this the right Location?
-					if (GitTraceLocation.UI.isActive())
-						GitTraceLocation.getTrace().trace(
-								GitTraceLocation.UI.getLocation(),
-								"Phantom file, so removing from index"); //$NON-NLS-1$
-					continue;
-				} else {
-					if (idxEntry.update(thisfile))
-						index.write();
+		Job job = new Job("Committing resources...") {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				SubMonitor subMonitor = SubMonitor.convert(monitor);
+				Map<RepositoryMapping, List<IFile>> targets = new HashMap<RepositoryMapping, List<IFile>>();
+				for (IFile file : files) {
+					RepositoryMapping mapping = RepositoryMapping
+							.getMapping(file);
+					List<IFile> list = targets.get(mapping);
+					if (list == null) {
+						list = new ArrayList<IFile>();
+						targets.put(mapping, list);
+					}
+					list.add(file);
 				}
-			}
-			if (notTracked.contains(file)) {
-				idxEntry = index.add(repositoryMapping.getWorkDir(), new File(repositoryMapping.getWorkDir(),
-						repoRelativePath));
-				index.write();
 
-			}
+				subMonitor.beginTask("Committing to the repositories...",
+						targets.size());
+				IWorkspace workspace = ResourcesPlugin.getWorkspace();
 
+				for (Map.Entry<RepositoryMapping, List<IFile>> target : targets
+						.entrySet()) {
+					RepositoryMapping mapping = target.getKey();
+					Repository repository = mapping.getRepository();
+					List<IFile> filesList = target.getValue();
+					IFile[] filesToCommit = filesList
+							.toArray(new IFile[filesList.size()]);
 
-			if (idxEntry != null) {
-				projTree.addFile(repoRelativePath);
-				TreeEntry newMember = projTree.findBlobMember(repoRelativePath);
+					CommitOperation operation = new CommitOperation(amending,
+							author, committer, commitMessage, filesToCommit,
+							repository, mapping, prevCommit, notIndexedFiles
+									.get(repository), notTrackedFiles
+									.get(repository));
 
-				newMember.setId(idxEntry.getObjectId());
-				// TODO is this the right Location?
-				if (GitTraceLocation.UI.isActive())
-					GitTraceLocation.getTrace().trace(
-							GitTraceLocation.UI.getLocation(),
-							"New member id for " + repoRelativePath //$NON-NLS-1$
-									+ ": " + newMember.getId() + " idx id: " //$NON-NLS-1$ //$NON-NLS-2$
-									+ idxEntry.getObjectId());
-			}
-		}
-	}
-
-	private String buildReflogMessage(String commitMessage) {
-		String firstLine = commitMessage;
-		int newlineIndex = commitMessage.indexOf("\n"); //$NON-NLS-1$
-		if (newlineIndex > 0) {
-			firstLine = commitMessage.substring(0, newlineIndex);
-		}
-		String commitStr = amending ? "commit (amend):" : "commit: "; //$NON-NLS-1$ //$NON-NLS-2$
-		String message = commitStr + firstLine;
-		return message;
-	}
-
-	private void writeTreeWithSubTrees(Tree tree) throws TeamException {
-		if (tree.getId() == null) {
-			// TODO is this the right Location?
-			if (GitTraceLocation.UI.isActive())
-				GitTraceLocation.getTrace().trace(
-						GitTraceLocation.UI.getLocation(),
-						"writing tree for: " + tree.getFullName()); //$NON-NLS-1$
-			try {
-				for (TreeEntry entry : tree.members()) {
-					if (entry.isModified()) {
-						if (entry instanceof Tree) {
-							writeTreeWithSubTrees((Tree) entry);
-						} else {
-							// this shouldn't happen.... not quite sure what to
-							// do here :)
-							// TODO is this the right Location?
-							if (GitTraceLocation.UI.isActive())
-								GitTraceLocation.getTrace().trace(
-										GitTraceLocation.UI.getLocation(),
-										"BAD JUJU: " //$NON-NLS-1$
-												+ entry.getFullName());
-						}
+					try {
+						workspace.run(operation, MultiRule
+								.combine(filesToCommit),
+								IWorkspace.AVOID_UPDATE, subMonitor.newChild(1,
+										SubMonitor.SUPPRESS_NONE));
+					} catch (CoreException e) {
+						monitor.done();
+						return e.getStatus();
 					}
 				}
-				ObjectWriter writer = new ObjectWriter(tree.getRepository());
-				tree.setId(writer.writeTree(tree));
-			} catch (IOException e) {
-				throw new TeamException(UIText.CommitAction_errorWritingTrees, e);
+				monitor.done();
+				return Status.OK_STATUS;
 			}
-		}
+		};
+		job.setRule(rule);
+		job.schedule();
 	}
 
 	private void buildIndexHeadDiffList() throws IOException, CoreException {
@@ -399,20 +283,41 @@ public class CommitAction extends RepositoryAction {
 			IndexDiff indexDiff = new IndexDiff(head, index);
 			indexDiff.diff();
 
+			List<IFile> candidates = new ArrayList<IFile>();
+			fileCandidates.put(repository, candidates);
+
+			List<IFile> notIndexedFiles = new ArrayList<IFile>();
+			notIndexed.put(repository, notIndexedFiles);
+
+			List<IFile> notTrackedFiles = new ArrayList<IFile>();
+			notTracked.put(repository, notTrackedFiles);
+
 			for (IProject project : projects) {
-				includeList(project, indexDiff.getAdded(), indexChanges);
-				includeList(project, indexDiff.getChanged(), indexChanges);
-				includeList(project, indexDiff.getRemoved(), indexChanges);
-				includeList(project, indexDiff.getMissing(), notIndexed);
-				includeList(project, indexDiff.getModified(), notIndexed);
-				addUntrackedFiles(repository, project);
+				includeList(project, indexDiff.getAdded(), Collections
+						.<IFile> emptyList(), candidates);
+				includeList(project, indexDiff.getChanged(), Collections
+						.<IFile> emptyList(), candidates);
+				includeList(project, indexDiff.getRemoved(), Collections
+						.<IFile> emptyList(), candidates);
+				includeList(project, indexDiff.getMissing(), notIndexedFiles,
+						candidates);
+				includeList(project, indexDiff.getModified(), notIndexedFiles,
+						candidates);
+				addUntrackedFiles(repository, project, notTrackedFiles,
+						candidates);
 			}
 		}
 	}
 
-	private void addUntrackedFiles(final Repository repository, final IProject project) throws CoreException, IOException {
-		final GitIndex index = repository.getIndex();
+	private void addUntrackedFiles(final Repository repository,
+			final IProject project, final List<IFile> notTrackedFiles,
+			final List<IFile> candidates) throws CoreException, IOException {
 		final Tree headTree = repository.mapTree(Constants.HEAD);
+		if (headTree == null) {
+			return;
+		}
+
+		final GitIndex index = repository.getIndex();
 		project.accept(new IResourceVisitor() {
 
 			public boolean visit(IResource resource) throws CoreException {
@@ -420,14 +325,15 @@ public class CommitAction extends RepositoryAction {
 
 					String repoRelativePath = RepositoryMapping.getMapping(project).getRepoRelativePath(resource);
 					try {
-						TreeEntry  headEntry = (headTree == null ? null : headTree.findBlobMember(repoRelativePath));
-						if (headEntry == null){
+						TreeEntry headEntry = headTree
+								.findBlobMember(repoRelativePath);
+						if (headEntry == null) {
 							Entry indexEntry = null;
 							indexEntry = index.getEntry(repoRelativePath);
 
 							if (indexEntry == null) {
-								notTracked.add((IFile)resource);
-								files.add((IFile)resource);
+								notTrackedFiles.add((IFile) resource);
+								candidates.add((IFile) resource);
 							}
 						}
 					} catch (IOException e) {
@@ -441,8 +347,10 @@ public class CommitAction extends RepositoryAction {
 
 	}
 
-	private void includeList(IProject project, HashSet<String> added, ArrayList<IFile> category) {
-		String repoRelativePath = RepositoryMapping.getMapping(project).getRepoRelativePath(project);
+	private void includeList(IProject project, HashSet<String> added,
+			List<IFile> category, List<IFile> candidates) {
+		String repoRelativePath = RepositoryMapping.getMapping(project)
+				.getRepoRelativePath(project);
 		if (repoRelativePath.length() > 0) {
 			repoRelativePath += "/"; //$NON-NLS-1$
 		}
@@ -453,9 +361,9 @@ public class CommitAction extends RepositoryAction {
 					continue;
 				String projectRelativePath = filename.substring(repoRelativePath.length());
 				IResource member = project.getFile(projectRelativePath);
-				if (member != null && member instanceof IFile) {
-					if (!files.contains(member))
-						files.add((IFile) member);
+				if (member instanceof IFile) {
+					if (!candidates.contains(member))
+						candidates.add((IFile) member);
 					category.add((IFile) member);
 				} else {
 					// TODO is this the right Location?
@@ -470,45 +378,6 @@ public class CommitAction extends RepositoryAction {
 				continue;
 			} // if it's outside the workspace, bad things happen
 		}
-	}
-
-	boolean tryAddResource(IFile resource, GitProjectData projectData, ArrayList<IFile> category) {
-		if (files.contains(resource))
-			return false;
-
-		try {
-			RepositoryMapping repositoryMapping = projectData
-					.getRepositoryMapping(resource);
-
-			if (isChanged(repositoryMapping, resource)) {
-				files.add(resource);
-				category.add(resource);
-				return true;
-			}
-		} catch (Exception e) {
-			if (GitTraceLocation.UI.isActive())
-				GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
-		}
-		return false;
-	}
-
-	private boolean isChanged(RepositoryMapping map, IFile resource) {
-		try {
-			Repository repository = map.getRepository();
-			GitIndex index = repository.getIndex();
-			String repoRelativePath = map.getRepoRelativePath(resource);
-			Entry entry = index.getEntry(repoRelativePath);
-			if (entry != null)
-				return entry.isModified(map.getWorkDir());
-			return false;
-		} catch (UnsupportedEncodingException e) {
-			if (GitTraceLocation.UI.isActive())
-				GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
-		} catch (IOException e) {
-			if (GitTraceLocation.UI.isActive())
-				GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
-		}
-		return false;
 	}
 
 	@Override
