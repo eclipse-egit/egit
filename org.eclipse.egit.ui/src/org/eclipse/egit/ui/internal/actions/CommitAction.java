@@ -416,7 +416,9 @@ public class CommitAction extends RepositoryAction {
 		project.accept(new IResourceVisitor() {
 
 			public boolean visit(IResource resource) throws CoreException {
-				if (resource.getType() == IResource.FILE && !Team.isIgnoredHint(resource)) {
+				if (Team.isIgnoredHint(resource))
+					return false;
+				if (resource.getType() == IResource.FILE) {
 
 					String repoRelativePath = RepositoryMapping.getMapping(project).getRepoRelativePath(resource);
 					try {
