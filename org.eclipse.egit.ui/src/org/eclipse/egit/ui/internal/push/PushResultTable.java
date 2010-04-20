@@ -13,7 +13,6 @@ import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.components.CenteredImageLabelProvider;
 import org.eclipse.jface.layout.TableColumnLayout;
-import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
@@ -27,7 +26,6 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -62,25 +60,17 @@ class PushResultTable {
 
 	private static final String IMAGE_ADD = "MODE_ADD"; //$NON-NLS-1$
 
-	private static final String COLOR_REJECTED_KEY = "REJECTED"; //$NON-NLS-1$
-
-	private static final RGB COLOR_REJECTED = new RGB(255, 0, 0);
-
-	private static final String COLOR_UPDATED_KEY = "UPDATED"; //$NON-NLS-1$
-
-	private static final RGB COLOR_UPDATED = new RGB(0, 255, 0);
-
-	private static final String COLOR_UP_TO_DATE_KEY = "UP_TO_DATE"; //$NON-NLS-1$
-
-	private static final RGB COLOR_UP_TO_DATE = new RGB(245, 245, 245);
-
 	private final TableViewer tableViewer;
 
 	private final Composite tablePanel;
 
 	private final ImageRegistry imageRegistry;
 
-	private final ColorRegistry colorRegistry;
+	private final Color rejectedColor;
+
+	private final Color updatedColor;
+
+	private final Color upToDateColor;
 
 	PushResultTable(final Composite parent) {
 		tablePanel = new Composite(parent, SWT.NONE);
@@ -98,13 +88,16 @@ class PushResultTable {
 		imageRegistry.put(IMAGE_ADD, UIIcons.ELCL16_ADD);
 		imageRegistry.put(IMAGE_DELETE, UIIcons.ELCL16_DELETE);
 
-		colorRegistry = new ColorRegistry(table.getDisplay());
-		colorRegistry.put(COLOR_REJECTED_KEY, COLOR_REJECTED);
-		colorRegistry.put(COLOR_UPDATED_KEY, COLOR_UPDATED);
-		colorRegistry.put(COLOR_UP_TO_DATE_KEY, COLOR_UP_TO_DATE);
+		rejectedColor = new Color(parent.getDisplay(), 255, 0, 0);
+		updatedColor = new Color(parent.getDisplay(), 0, 255, 0);
+		upToDateColor = new Color(parent.getDisplay(), 245, 245, 245);
 
 		tablePanel.addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
+				// dispose of our allocated Color instances
+				rejectedColor.dispose();
+				updatedColor.dispose();
+				upToDateColor.dispose();
 				imageRegistry.dispose();
 			}
 		});
@@ -258,20 +251,20 @@ class PushResultTable {
 		public Color getBackground(Object element) {
 			final RefUpdateElement rue = (RefUpdateElement) element;
 			if (!rue.isSuccessfulConnection(uri))
-				return colorRegistry.get(COLOR_REJECTED_KEY);
+				return rejectedColor;
 
 			final Status status = rue.getRemoteRefUpdate(uri).getStatus();
 			switch (status) {
 			case OK:
-				return colorRegistry.get(COLOR_UPDATED_KEY);
+				return updatedColor;
 			case UP_TO_DATE:
 			case NON_EXISTING:
-				return colorRegistry.get(COLOR_UP_TO_DATE_KEY);
+				return upToDateColor;
 			case REJECTED_NODELETE:
 			case REJECTED_NONFASTFORWARD:
 			case REJECTED_REMOTE_CHANGED:
 			case REJECTED_OTHER_REASON:
-				return colorRegistry.get(COLOR_REJECTED_KEY);
+				return rejectedColor;
 			default:
 				throw new IllegalArgumentException(NLS.bind(
 						UIText.PushResultTable_statusUnexpected, status));
