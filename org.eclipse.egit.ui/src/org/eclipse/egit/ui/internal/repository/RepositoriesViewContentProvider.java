@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.repository;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -164,6 +165,19 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 				return null;
 
 			File[] childFiles = workingDir.listFiles();
+			Arrays.sort(childFiles, new Comparator<File>() {
+				public int compare(File o1, File o2) {
+					if (o1.isDirectory()) {
+						if (o2.isDirectory()) {
+							return o1.compareTo(o2);
+						}
+						return -1;
+					} else if (o2.isDirectory()) {
+						return 1;
+					}
+					return o1.compareTo(o2);
+				}
+			});
 			for (File file : childFiles) {
 				if (file.isDirectory()) {
 					children.add(new RepositoryTreeNode<File>(node,
@@ -183,6 +197,19 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			File parent = ((File) node.getObject());
 
 			File[] childFiles = parent.listFiles();
+			Arrays.sort(childFiles, new Comparator<File>() {
+				public int compare(File o1, File o2) {
+					if (o1.isDirectory()) {
+						if (o2.isDirectory()) {
+							return o1.compareTo(o2);
+						}
+						return -1;
+					} else if (o2.isDirectory()) {
+						return 1;
+					}
+					return o1.compareTo(o2);
+				}
+			});
 			for (File file : childFiles) {
 				if (file.isDirectory()) {
 					children.add(new RepositoryTreeNode<File>(node,
