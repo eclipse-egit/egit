@@ -131,6 +131,10 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 
 	private IAction viewVersionsAction = new ViewVersionsAction();
 
+	private IAction compareModeAction;
+
+	private boolean compareMode = false;
+
 	/**
 	 * Determine if the input can be shown in this viewer.
 	 *
@@ -324,6 +328,32 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 				showAllFolderVersionsAction);
 	}
 
+	private void createCompareModeAction() {
+		final IToolBarManager barManager = getSite().getActionBars()
+				.getToolBarManager();
+		compareModeAction = new Action(UIText.GitHistoryPage_compareMode,
+				UIIcons.ELCL16_COMPARE_VIEW) {
+			public void run() {
+				compareMode = !compareMode;
+				setChecked(compareMode);
+			}
+		};
+		compareModeAction.setChecked(compareMode);
+		compareModeAction.setToolTipText(UIText.GitHistoryPage_compareMode);
+		barManager.add(compareModeAction);
+	}
+
+	/**
+	 * @param compareMode
+	 * switch compare mode button of the view on / off
+	 */
+	public void setCompareMode(boolean compareMode) {
+		if (compareModeAction!=null) {
+			this.compareMode = !compareMode;
+			compareModeAction.run();
+		}
+	}
+
 	@Override
 	public void createControl(final Composite parent) {
 		GridData gd;
@@ -353,17 +383,21 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 				if (!(input instanceof IFile)) {
 					return;
 				}
-				final IFile resource = (IFile) input;
-				final RepositoryMapping mapping = RepositoryMapping.getMapping(resource.getProject());
-				final String gitPath = mapping.getRepoRelativePath(resource);
-				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-				SWTCommit commit = (SWTCommit) selection.getFirstElement();
-				ITypedElement right = getFileRevisionTypedElement(resource, gitPath, commit);
-				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-						SaveableCompareEditorInput.createFileElement(resource),
-						right,
-						null);
-				openInCompare(in);
+				if (compareMode) {
+					final IFile resource = (IFile) input;
+					final RepositoryMapping mapping = RepositoryMapping.getMapping(resource.getProject());
+					final String gitPath = mapping.getRepoRelativePath(resource);
+					IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+					SWTCommit commit = (SWTCommit) selection.getFirstElement();
+					ITypedElement right = getFileRevisionTypedElement(resource, gitPath, commit);
+					final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+							SaveableCompareEditorInput.createFileElement(resource),
+							right,
+							null);
+					openInCompare(in);
+				} else {
+					new ViewVersionsAction().run();
+				}
 			}
 
 		});
@@ -380,6 +414,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 		attachCommitSelectionChanged();
 		createLocalToolbarActions();
 		createResourceFilterActions();
+		createCompareModeAction();
 		createStandardActions();
 		createViewMenu();
 
