@@ -52,10 +52,13 @@ import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTree
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -249,6 +252,39 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 					setSelection(new StructuredSelection());
 				}
 
+			}
+		});
+		tv.addOpenListener(new IOpenListener() {
+			public void open(OpenEvent event) {
+				IStructuredSelection selection = (IStructuredSelection) event
+						.getSelection();
+				if (selection.isEmpty()) {
+					// nothing selected, ignore
+					return;
+				}
+
+				Object element = selection.getFirstElement();
+				ITreeContentProvider contentProvider = (ITreeContentProvider) tv
+						.getContentProvider();
+				if (contentProvider.hasChildren(element)) {
+					// this element has children, expand/collapse it
+					tv.setExpandedState(element, !tv.getExpandedState(element));
+				} else {
+					Object[] selectionArray = selection.toArray();
+					for (Object selectedElement : selectionArray) {
+						RepositoryTreeNode node = (RepositoryTreeNode) selectedElement;
+						// if any of the selected elements are not files, ignore the open request
+						if (node.getType() != RepositoryTreeNodeType.FILE) {
+							return;
+						}
+					}
+
+					// open the files the user has selected
+					for (Object selectedElement : selectionArray) {
+						RepositoryTreeNode node = (RepositoryTreeNode) selectedElement;
+						openFile((File) node.getObject());
+					}
+				}
 			}
 		});
 		// make the tree rather wide to accommodate long directory names
@@ -781,20 +817,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					IFileStore store = EFS.getLocalFileSystem().getStore(
-							new Path(file.getAbsolutePath()));
-					try {
-						// TODO do we need a read-only editor here?
-						IDE.openEditor(getSite().getPage(),
-								new FileStoreEditorInput(store),
-								EditorsUI.DEFAULT_TEXT_EDITOR_ID);
-
-					} catch (PartInitException e1) {
-						MessageDialog.openError(getSite().getShell(),
-								UIText.RepositoriesView_Error_WindowTitle, e1
-										.getMessage());
-					}
-
+					openFile(file);
 				}
 
 			});
@@ -810,6 +833,22 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 			createImportProjectItem(men, node.getRepository(), path);
 		}
 
+	}
+
+	private void openFile(File file) {
+		IFileStore store = EFS.getLocalFileSystem().getStore(
+				new Path(file.getAbsolutePath()));
+		try {
+			// TODO do we need a read-only editor here?
+			IDE.openEditor(getSite().getPage(),
+					new FileStoreEditorInput(store),
+					EditorsUI.DEFAULT_TEXT_EDITOR_ID);
+		} catch (PartInitException e) {
+			MessageDialog.openError(getSite().getShell(),
+					UIText.RepositoriesView_Error_WindowTitle, e.getMessage());
+			Activator.getDefault().getLog().log(
+					Activator.error("Failed to open editor on external file", e)); //$NON-NLS-1$
+		}
 	}
 
 	private void createImportProjectItem(Menu men, final Repository repo,
