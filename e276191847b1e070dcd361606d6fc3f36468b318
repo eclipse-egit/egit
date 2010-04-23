@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///cs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareWithRevisionAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-04-22T23:15:42Z",
+      "side": 1,
+      "message": "The API says null can be returned, we should check for this.",
+      "revId": "e276191847b1e070dcd361606d6fc3f36468b318",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///c0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-04-22T23:15:42Z",
+      "side": 1,
+      "message": "I think we should explicitly spec that this action is a check item by using IAction.AS_CHECK_BOX.",
+      "revId": "e276191847b1e070dcd361606d6fc3f36468b318",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///c4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-04-22T23:15:42Z",
+      "side": 1,
+      "message": "It seems like this is guaranteed to be \u0027false\u0027 when the view is brought up in the beginning. Is it the intent that this value will be persisted between the view being opened/closed? If not it seems like this line should just go away.",
+      "revId": "e276191847b1e070dcd361606d6fc3f36468b318",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///cw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-04-22T23:15:42Z",
+      "side": 1,
+      "message": "It seems wrong to me that we invert what was set and then let the action set it back. :P\n\nHow about we just take the option as is and then do compareModeAction.setChecked(compareMode)?",
+      "revId": "e276191847b1e070dcd361606d6fc3f36468b318",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
