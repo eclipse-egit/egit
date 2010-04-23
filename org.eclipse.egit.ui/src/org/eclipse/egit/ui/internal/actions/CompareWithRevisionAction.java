@@ -10,9 +10,13 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
+import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.team.internal.ui.TeamUIPlugin;
 import org.eclipse.team.internal.ui.actions.TeamAction;
 import org.eclipse.team.ui.TeamUI;
+import org.eclipse.team.ui.history.IHistoryPage;
+import org.eclipse.team.ui.history.IHistoryView;
 
 /**
  *	Compare the resources filtered in the history view with the current
@@ -22,7 +26,14 @@ public class CompareWithRevisionAction extends TeamAction {
 
 	@Override
 	public void execute(IAction action) {
-		TeamUI.getHistoryView().showHistoryFor(getSelectedResources()[0]);
+		IHistoryView view = TeamUI.showHistoryFor(TeamUIPlugin.getActivePage(), getSelectedResources()[0], null);
+		if (view == null)
+			return;
+		IHistoryPage page = view.getHistoryPage();
+		if (page instanceof GitHistoryPage){
+			GitHistoryPage gitHistoryPage = (GitHistoryPage) page;
+			gitHistoryPage.setCompareMode(true);
+		}
 	}
 
 	public boolean isEnabled() {
