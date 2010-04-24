@@ -72,7 +72,6 @@ import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
@@ -226,11 +225,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 	@Override
 	public void createPartControl(Composite parent) {
-
-		Composite main = new Composite(parent, SWT.NONE);
-		main.setLayout(new FillLayout());
-
-		tv = new TreeViewer(main);
+		tv = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		tv.setContentProvider(new RepositoriesViewContentProvider());
 		// the label provider registers itself
 		new RepositoriesViewLabelProvider(tv);
