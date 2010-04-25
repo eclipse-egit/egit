@@ -246,8 +246,6 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 			}
 		});
-		// make the tree rather wide to accommodate long directory names
-		tv.getTree().getColumn(0).setWidth(700);
 
 		addContextMenu();
 
