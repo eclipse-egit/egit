@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///YQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SWTPlotRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-04-25T21:57:46Z",
+      "side": 1,
+      "message": "style nit: extra blank before textsz.x",
+      "revId": "aa3fa44c7f3759e85084d76a60dc703bb549b6d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///YM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SWTPlotRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-04-25T21:57:46Z",
+      "side": 1,
+      "message": "style nit: missing blank after comma",
+      "revId": "aa3fa44c7f3759e85084d76a60dc703bb549b6d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///YY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SWTPlotRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-04-25T21:57:46Z",
+      "side": 1,
+      "message": "style nit:\nthe following order of arguments\n(cellX + x, cellY + ...\nwould be more consistent with other similar statements",
+      "revId": "aa3fa44c7f3759e85084d76a60dc703bb549b6d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///YU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/SWTPlotRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-04-25T21:57:46Z",
+      "side": 1,
+      "message": "style nit: missing blank after + operator and extra blank before textsz.x",
+      "revId": "aa3fa44c7f3759e85084d76a60dc703bb549b6d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
