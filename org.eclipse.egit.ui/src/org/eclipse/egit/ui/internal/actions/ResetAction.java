@@ -46,7 +46,7 @@ public class ResetAction extends RepositoryAction {
 			return;
 		}
 
-		BranchSelectionDialog branchSelectionDialog = new BranchSelectionDialog(getShell(), repository);
+		BranchSelectionDialog branchSelectionDialog = new BranchSelectionDialog(getShell(), repository, true);
 		if (branchSelectionDialog.open() == IDialogConstants.OK_ID) {
 			final String refName = branchSelectionDialog.getRefName();
 			final ResetType type = branchSelectionDialog.getResetType();
