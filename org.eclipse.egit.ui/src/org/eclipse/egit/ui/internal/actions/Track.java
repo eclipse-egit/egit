@@ -50,6 +50,7 @@ public class Track extends RepositoryAction {
 			Activator.logError(UIText.Track_error, e);
 			MessageDialog.openError(getShell(), UIText.Track_error, UIText.Track_see_log);
 		} catch (InterruptedException e) {
+			Activator.logError(UIText.Track_error, e);
 			MessageDialog.openError(getShell(), UIText.Track_error, e.getMessage());
 		}
 	}

@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -53,10 +54,12 @@ public class DiscardChangesAction extends RepositoryAction{
 				discardChange(res);
 
 			} catch (IOException e1) {
+				Activator.logError(UIText.DiscardChangesAction_unexpectedErrorMessage, e1);
 				MessageDialog.openError(getShell(),
 						UIText.DiscardChangesAction_unexpectedErrorTitle,
 						UIText.DiscardChangesAction_unexpectedErrorMessage);
 			}catch (RuntimeException e2) {
+				Activator.logError(UIText.DiscardChangesAction_unexpectedIndexErrorMessage, e2);
 				MessageDialog.openError(getShell(),
 						UIText.DiscardChangesAction_unexpectedErrorTitle,
 						UIText.DiscardChangesAction_unexpectedIndexErrorMessage);
@@ -79,6 +82,7 @@ public class DiscardChangesAction extends RepositoryAction{
 			try {
 				res.refreshLocal(0, new NullProgressMonitor());
 			} catch (CoreException e1) {
+				Activator.logError(UIText.DiscardChangesAction_refreshErrorMessage, e1);
 				MessageDialog.openError(getShell(),
 						UIText.DiscardChangesAction_refreshErrorTitle,
 						UIText.DiscardChangesAction_refreshErrorMessage);
