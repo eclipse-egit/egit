@@ -38,7 +38,9 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.op.BranchOperation;
@@ -117,6 +119,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 	/** The view ID */
 	public static final String VIEW_ID = "org.eclipse.egit.ui.RepositoriesView"; //$NON-NLS-1$
+
 	// TODO central constants? RemoteConfig ones are private
 	static final String REMOTE = "remote"; //$NON-NLS-1$
 
@@ -676,8 +679,9 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					WizardDialog dialog = new WizardDialog(getSite().getShell(),
-							new ConfigureRemoteWizard(node.getRepository()));
+					WizardDialog dialog = new WizardDialog(
+							getSite().getShell(), new ConfigureRemoteWizard(
+									node.getRepository()));
 					if (dialog.open() == Window.OK) {
 						scheduleRefresh();
 					}
@@ -697,8 +701,9 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					WizardDialog dialog = new WizardDialog(getSite().getShell(),
-							new ConfigureRemoteWizard(node.getRepository(), name, false));
+					WizardDialog dialog = new WizardDialog(
+							getSite().getShell(), new ConfigureRemoteWizard(
+									node.getRepository(), name, false));
 					if (dialog.open() == Window.OK) {
 						scheduleRefresh();
 					}
@@ -712,8 +717,9 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					WizardDialog dialog = new WizardDialog(getSite().getShell(),
-							new ConfigureRemoteWizard(node.getRepository(), name, true));
+					WizardDialog dialog = new WizardDialog(
+							getSite().getShell(), new ConfigureRemoteWizard(
+									node.getRepository(), name, true));
 					if (dialog.open() == Window.OK) {
 						scheduleRefresh();
 					}
@@ -962,7 +968,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 		getViewSite().getActionBars().getToolBarManager().add(addAction);
 
-		linkWithSelectionAction = new Action(UIText.RepositoriesView_LinkWithSelection_action,
+		linkWithSelectionAction = new Action(
+				UIText.RepositoriesView_LinkWithSelection_action,
 				IAction.AS_CHECK_BOX) {
 
 			@Override
@@ -984,7 +991,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 		};
 
-		linkWithSelectionAction.setToolTipText(UIText.RepositoriesView_LinkWithSelection_action);
+		linkWithSelectionAction
+				.setToolTipText(UIText.RepositoriesView_LinkWithSelection_action);
 
 		linkWithSelectionAction.setImageDescriptor(UIIcons.ELCL16_SYNCED);
 
@@ -1203,7 +1211,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 	 *            TODO exceptions?
 	 */
 	@SuppressWarnings("unchecked")
-	public void showResource(IResource resource) {
+	public void showResource(final IResource resource) {
 		IProject project = resource.getProject();
 		RepositoryMapping mapping = RepositoryMapping.getMapping(project);
 		if (mapping == null)
@@ -1211,46 +1219,68 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 		if (addDir(mapping.getRepository().getDirectory())) {
 			scheduleRefresh();
-			try {
-				scheduledJob.join();
-			} catch (InterruptedException e) {
-				// ignore here
+		}
+
+		boolean doSetSelection = false;
+
+		if (this.scheduledJob != null) {
+			int state = this.scheduledJob.getState();
+			if (state == Job.WAITING || state == Job.RUNNING) {
+				this.scheduledJob.addJobChangeListener(new JobChangeAdapter() {
+
+					@Override
+					public void done(IJobChangeEvent event) {
+						showResource(resource);
+					}
+				});
+			} else {
+				doSetSelection = true;
 			}
 		}
 
-		RepositoriesViewContentProvider cp = (RepositoriesViewContentProvider) tv
-				.getContentProvider();
-		RepositoryTreeNode currentNode = null;
-		Object[] repos = cp.getElements(tv.getInput());
-		for (Object repo : repos) {
-			RepositoryTreeNode node = (RepositoryTreeNode) repo;
-			// TODO equals implementation of Repository?
-			if (mapping.getRepository().getDirectory().equals(
-					((Repository) node.getObject()).getDirectory())) {
-				for (Object child : cp.getChildren(node)) {
-					RepositoryTreeNode childNode = (RepositoryTreeNode) child;
-					if (childNode.getType() == RepositoryTreeNodeType.WORKINGDIR) {
+		if (doSetSelection) {
+			RepositoriesViewContentProvider cp = (RepositoriesViewContentProvider) tv
+					.getContentProvider();
+			RepositoryTreeNode currentNode = null;
+			Object[] repos = cp.getElements(tv.getInput());
+			for (Object repo : repos) {
+				RepositoryTreeNode node = (RepositoryTreeNode) repo;
+				// TODO equals implementation of Repository?
+				if (mapping.getRepository().getDirectory().equals(
+						((Repository) node.getObject()).getDirectory())) {
+					for (Object child : cp.getChildren(node)) {
+						RepositoryTreeNode childNode = (RepositoryTreeNode) child;
+						if (childNode.getType() == RepositoryTreeNodeType.WORKINGDIR) {
+							currentNode = childNode;
+							break;
+						}
+					}
+					break;
+				}
+			}
+
+			IPath relPath = new Path(mapping.getRepoRelativePath(resource));
+
+			for (String segment : relPath.segments()) {
+				for (Object child : cp.getChildren(currentNode)) {
+					RepositoryTreeNode<File> childNode = (RepositoryTreeNode<File>) child;
+					if (childNode.getObject().getName().equals(segment)) {
 						currentNode = childNode;
 						break;
 					}
 				}
-				break;
 			}
-		}
 
-		IPath relPath = new Path(mapping.getRepoRelativePath(resource));
+			final RepositoryTreeNode selNode = currentNode;
 
-		for (String segment : relPath.segments()) {
-			for (Object child : cp.getChildren(currentNode)) {
-				RepositoryTreeNode<File> childNode = (RepositoryTreeNode<File>) child;
-				if (childNode.getObject().getName().equals(segment)) {
-					currentNode = childNode;
-					break;
+			Display.getDefault().asyncExec(new Runnable() {
+
+				public void run() {
+					tv.setSelection(new StructuredSelection(selNode), true);
 				}
-			}
-		}
+			});
 
-		tv.setSelection(new StructuredSelection(currentNode), true);
+		}
 
 	}
 
