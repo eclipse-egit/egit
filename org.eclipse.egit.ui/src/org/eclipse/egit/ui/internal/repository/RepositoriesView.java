@@ -77,6 +77,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
@@ -260,11 +263,21 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 			public void selectionChanged(IWorkbenchPart part,
 					ISelection selection) {
 
+				// if the "link with selection" toggle is off, we're done
 				if (linkWithSelectionAction == null
 						|| !linkWithSelectionAction.isChecked())
 					return;
 
-				reactOnSelection(selection);
+				// this may happen if we switch between editors
+				if (part instanceof IEditorPart) {
+					IEditorInput input = ((IEditorPart) part).getEditorInput();
+					if (input instanceof IFileEditorInput)
+						reactOnSelection(new StructuredSelection(
+								((IFileEditorInput) input).getFile()));
+
+				} else {
+					reactOnSelection(selection);
+				}
 			}
 
 		});
