@@ -114,6 +114,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 	/** The view ID */
 	public static final String VIEW_ID = "org.eclipse.egit.ui.RepositoriesView"; //$NON-NLS-1$
+
 	// TODO central constants? RemoteConfig ones are private
 	static final String REMOTE = "remote"; //$NON-NLS-1$
 
@@ -663,8 +664,9 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					WizardDialog dialog = new WizardDialog(getSite().getShell(),
-							new ConfigureRemoteWizard(node.getRepository()));
+					WizardDialog dialog = new WizardDialog(
+							getSite().getShell(), new ConfigureRemoteWizard(
+									node.getRepository()));
 					if (dialog.open() == Window.OK) {
 						scheduleRefresh();
 					}
@@ -684,8 +686,9 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					WizardDialog dialog = new WizardDialog(getSite().getShell(),
-							new ConfigureRemoteWizard(node.getRepository(), name, false));
+					WizardDialog dialog = new WizardDialog(
+							getSite().getShell(), new ConfigureRemoteWizard(
+									node.getRepository(), name, false));
 					if (dialog.open() == Window.OK) {
 						scheduleRefresh();
 					}
@@ -699,8 +702,9 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					WizardDialog dialog = new WizardDialog(getSite().getShell(),
-							new ConfigureRemoteWizard(node.getRepository(), name, true));
+					WizardDialog dialog = new WizardDialog(
+							getSite().getShell(), new ConfigureRemoteWizard(
+									node.getRepository(), name, true));
 					if (dialog.open() == Window.OK) {
 						scheduleRefresh();
 					}
@@ -816,10 +820,20 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
+				// Instead of the generic ExternalProjectImportWizard
+				// from the org.eclipse.ui.ide plug-in, we use our
+				// own wizard (the generic one does not allow to set the
+				// path in 3.4; in addition, we have added project filtering
+				// capabilities)
+
 				Wizard wiz = new GitImportProjectsWizard(repo, path);
 
 				WizardDialog dlg = new WizardDialog(getSite().getShell(), wiz);
-				dlg.open();
+				if (dlg.open() == Window.OK)
+					// TODO if we drop the "existing projects" node, we can
+					// probably do without refresh
+					scheduleRefresh();
+
 			}
 
 		});
@@ -863,7 +877,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 		getViewSite().getActionBars().getToolBarManager().add(addAction);
 
-		linkWithSelectionAction = new Action(UIText.RepositoriesView_LinkWithSelection_action,
+		linkWithSelectionAction = new Action(
+				UIText.RepositoriesView_LinkWithSelection_action,
 				IAction.AS_CHECK_BOX) {
 
 			@Override
@@ -885,7 +900,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 		};
 
-		linkWithSelectionAction.setToolTipText(UIText.RepositoriesView_LinkWithSelection_action);
+		linkWithSelectionAction
+				.setToolTipText(UIText.RepositoriesView_LinkWithSelection_action);
 
 		linkWithSelectionAction.setImageDescriptor(UIIcons.ELCL16_SYNCED);
 
