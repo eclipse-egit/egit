@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.jface.text.DefaultTextDoubleClickStrategy;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
@@ -86,7 +87,7 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
 
 		final StyledText t = getTextWidget();
-		t.setFont(Activator.getFont(UIPreferences.THEME_CommitMessageFont));
+		t.setFont(UIUtils.getFont(UIPreferences.THEME_CommitMessageFont));
 
 		sys_linkColor = t.getDisplay().getSystemColor(SWT.COLOR_BLUE);
 		sys_darkgray = t.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
@@ -392,4 +393,5 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		}
 
 	}
+
 }
