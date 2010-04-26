@@ -50,6 +50,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.clone.GitCloneWizard;
+import org.eclipse.egit.ui.internal.clone.GitImportProjectsWizard;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTreeNodeType;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -97,7 +98,6 @@ import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
-import org.eclipse.ui.wizards.datatransfer.ExternalProjectImportWizard;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
@@ -834,97 +834,19 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO the ExternalProjectImportWizard
-				// does not allow to set a path in 3.4
-				// use the GitCloneWizard page in a new
-				// GitImportWizard instead
-				Wizard wiz = new ExternalProjectImportWizard() {
-
-					@Override
-					public void addPages() {
-						super.addPages();
-						// we could add some page with a single
-					}
-
-					@Override
-					public boolean performFinish() {
-
-						final Set<IPath> previousLocations = new HashSet<IPath>();
-						// we want to share only new projects
-						for (IProject project : ResourcesPlugin.getWorkspace()
-								.getRoot().getProjects()) {
-							previousLocations.add(project.getLocation());
-						}
-
-						boolean success = super.performFinish();
-						if (success) {
-							// IWizardPage page = getPage("Share");
-							// TODO evaluate checkbox or such, but
-							// if we do share
-							// always, we don't even need another
-							// page
-
-							IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
-
-								public void run(IProgressMonitor monitor)
-										throws CoreException {
-									File gitDir = repo.getDirectory();
-									File gitWorkDir = repo.getWorkDir();
-									Path workPath = new Path(gitWorkDir
-											.getAbsolutePath());
-
-									// we check which projects are
-									// in the workspace
-									// pointing to a location in the
-									// repo's
-									// working directory
-									// and share them
-									for (IProject prj : ResourcesPlugin
-											.getWorkspace().getRoot()
-											.getProjects()) {
-
-										if (workPath.isPrefixOf(prj
-												.getLocation())) {
-											if (previousLocations.contains(prj
-													.getLocation())) {
-												continue;
-											}
-											ConnectProviderOperation connectProviderOperation = new ConnectProviderOperation(
-													prj, gitDir);
-											connectProviderOperation
-													.run(new SubProgressMonitor(
-															monitor, 20));
-
-										}
-									}
-
-								}
-							};
-
-							try {
-								ResourcesPlugin.getWorkspace().run(
-										wsr,
-										ResourcesPlugin.getWorkspace()
-												.getRoot(),
-										IWorkspace.AVOID_UPDATE,
-										new NullProgressMonitor());
-								scheduleRefresh();
-							} catch (CoreException ce) {
-								MessageDialog
-										.openError(
-												getShell(),
-												UIText.RepositoriesView_Error_WindowTitle,
-												ce.getMessage());
-							}
-
-						}
-						return success;
-					}
-
-				};
+				// Instead of the generic ExternalProjectImportWizard
+				// from the org.eclipse.ui.ide plug-in, we use our
+				// own wizard (the generic one does not allow to set the
+				// path in 3.4; in addition, we have added project filtering
+				// capabilities)
+				Wizard wiz = new GitImportProjectsWizard(repo, path);
 
 				WizardDialog dlg = new WizardDialog(getSite().getShell(), wiz);
-				dlg.open();
+				if (dlg.open() == Window.OK)
+					// TODO if we drop the "existing projects" node, we can
+					// probably do without refresh
+					scheduleRefresh();
+
 			}
 
 		});
