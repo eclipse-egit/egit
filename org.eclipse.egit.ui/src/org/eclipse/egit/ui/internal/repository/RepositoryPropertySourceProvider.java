@@ -55,8 +55,12 @@ public class RepositoryPropertySourceProvider implements
 		} else if (node.getType() == RepositoryTreeNodeType.REMOTE) {
 			lastObject = object;
 			lastRepositorySource = new RepositoryRemotePropertySource(node
-					.getRepository().getConfig(), (String) node.getObject(), myPage);
+					.getRepository().getConfig(), (String) node.getObject(),
+					myPage);
 			return lastRepositorySource;
+		} else if (node.getType() == RepositoryTreeNodeType.FETCH
+				|| node.getType() == RepositoryTreeNodeType.PUSH) {
+			return getPropertySource(node.getParent());
 		} else {
 			return null;
 		}

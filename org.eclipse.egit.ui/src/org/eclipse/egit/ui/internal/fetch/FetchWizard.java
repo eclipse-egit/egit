@@ -66,8 +66,9 @@ public class FetchWizard extends Wizard {
 		this.localDb = localDb;
 		final List<RemoteConfig> remotes = RemoteConfig
 				.getAllRemoteConfigs(localDb.getConfig());
-		repoPage = new RepositorySelectionPage(true, remotes);
-		refSpecPage = new RefSpecPage(localDb, false, repoPage);
+		repoPage = new RepositorySelectionPage(true, remotes, null);
+		// TODO notify refSpec page about repoPage changes
+		refSpecPage = new RefSpecPage(localDb, false);
 		// TODO use/create another cool icon
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 		setNeedsProgressMonitor(true);
@@ -77,6 +78,16 @@ public class FetchWizard extends Wizard {
 	public void addPages() {
 		addPage(repoPage);
 		addPage(refSpecPage);
+	}
+
+
+
+	@Override
+	public IWizardPage getNextPage(IWizardPage page) {
+		if (page == getPages()[0]){
+			refSpecPage.setSelection(repoPage.getSelection());
+		}
+		return super.getNextPage(page);
 	}
 
 	@Override
@@ -107,7 +118,7 @@ public class FetchWizard extends Wizard {
 		fetchJob.setUser(true);
 		fetchJob.schedule();
 
-		repoPage.saveUriInPrefs(repoPage.getSelection().getURI().toString());
+		RepositorySelectionPage.saveUriInPrefs(repoPage.getSelection().getURI().toString());
 
 		return true;
 	}

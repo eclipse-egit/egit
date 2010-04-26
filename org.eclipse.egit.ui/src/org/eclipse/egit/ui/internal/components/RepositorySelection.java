@@ -41,7 +41,7 @@ public class RepositorySelection {
 	 *            the new remote config. null if user chosen to specify
 	 *            repository as URI.
 	 */
-	RepositorySelection(final URIish uri, final RemoteConfig config) {
+	public RepositorySelection(final URIish uri, final RemoteConfig config) {
 		if (config != null && uri != null)
 			throw new IllegalArgumentException(
 					"URI and config cannot be set at the same time."); //$NON-NLS-1$
