@@ -272,28 +272,29 @@ public class RefSpecPage extends BaseWizardPage {
 		specsPanel.setAssistanceData(local, listRemotesOp.getRemoteRefs(),
 				actRemoteName);
 
-		if (!pushPage) {
-			tagsAutoFollowButton.setSelection(false);
-			tagsFetchTagsButton.setSelection(false);
-			tagsNoTagsButton.setSelection(false);
-		}
-
 		if (newRepoSelection.isConfigSelected()) {
 			saveButton.setVisible(true);
 			saveButton.setText(NLS.bind(UIText.RefSpecPage_saveSpecifications,
 					actRemoteName));
 			saveButton.getParent().layout();
-			final TagOpt tagOpt = newRepoSelection.getConfig().getTagOpt();
-			switch (tagOpt) {
-			case AUTO_FOLLOW:
-				tagsAutoFollowButton.setSelection(true);
-				break;
-			case FETCH_TAGS:
-				tagsFetchTagsButton.setSelection(true);
-				break;
-			case NO_TAGS:
-				tagsNoTagsButton.setSelection(true);
-				break;
+
+			if (!pushPage) {
+				tagsAutoFollowButton.setSelection(false);
+				tagsFetchTagsButton.setSelection(false);
+				tagsNoTagsButton.setSelection(false);
+
+				final TagOpt tagOpt = newRepoSelection.getConfig().getTagOpt();
+				switch (tagOpt) {
+				case AUTO_FOLLOW:
+					tagsAutoFollowButton.setSelection(true);
+					break;
+				case FETCH_TAGS:
+					tagsFetchTagsButton.setSelection(true);
+					break;
+				case NO_TAGS:
+					tagsNoTagsButton.setSelection(true);
+					break;
+				}
 			}
 		} else if (!pushPage)
 			tagsAutoFollowButton.setSelection(true);
