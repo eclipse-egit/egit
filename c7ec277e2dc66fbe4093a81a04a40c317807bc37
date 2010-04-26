@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///V0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-04-26T14:41:40Z",
+      "side": 1,
+      "message": "Should we instead put this into a utility class?  The method is used twice, which is probably why we put it into the Activator in the first place... to avoid duplicating it.",
+      "revId": "c7ec277e2dc66fbe4093a81a04a40c317807bc37",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
