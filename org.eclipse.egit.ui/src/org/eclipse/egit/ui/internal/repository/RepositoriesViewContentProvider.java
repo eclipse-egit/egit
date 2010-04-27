@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,17 +26,19 @@ import java.util.TreeSet;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.clone.GitProjectsImportPage;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTreeNodeType;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 /**
@@ -78,7 +81,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	public Object[] getChildren(Object parentElement) {
 
 		RepositoryTreeNode node = (RepositoryTreeNode) parentElement;
-		Repository repo = node.getRepository();
+		final Repository repo = node.getRepository();
 
 		switch (node.getType()) {
 
@@ -135,10 +138,30 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			List<RepositoryTreeNode<File>> projects = new ArrayList<RepositoryTreeNode<File>>();
 
 			// TODO do we want to show the projects here?
-			Collection<File> result = new HashSet<File>();
-			Set<String> traversed = new HashSet<String>();
-			collectProjectFilesFromDirectory(result, repo.getDirectory()
-					.getParentFile(), traversed, new NullProgressMonitor());
+			final Collection<File> result = new HashSet<File>();
+			final Set<String> traversed = new HashSet<String>();
+
+			try {
+				// TODO we could make this cancel-able if we provide some
+				// sort of error icon upon InterruptedException
+				new ProgressMonitorDialog(Display.getDefault().getActiveShell())
+						.run(false, false, new IRunnableWithProgress() {
+
+							public void run(IProgressMonitor monitor)
+									throws InvocationTargetException,
+									InterruptedException {
+								collectProjectFilesFromDirectory(result, repo
+										.getDirectory().getParentFile(),
+										traversed, monitor);
+
+							}
+						});
+			} catch (InvocationTargetException e) {
+				Activator.logError(e.getMessage(), e);
+			} catch (InterruptedException e) {
+				Activator.logError(e.getMessage(), e);
+			}
+
 			for (File file : result) {
 				projects.add(new RepositoryTreeNode<File>(node,
 						RepositoryTreeNodeType.PROJ, repo, file));
@@ -235,25 +258,36 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	}
 
 	public boolean hasChildren(Object element) {
-		Object[] children = getChildren(element);
-		return children != null && children.length > 0;
+
+		RepositoryTreeNode node = (RepositoryTreeNode) element;
+
+		switch (node.getType()) {
+		case PROJECTS:
+			// we simply return true here in order to avoid costly
+			// file system traversals here
+			return true;
+		default:
+			// all other nodes fall back to getChildren()
+			Object[] children = getChildren(element);
+			return children != null && children.length > 0;
+
+		}
 	}
 
-	private boolean collectProjectFilesFromDirectory(Collection<File> files,
+	private void collectProjectFilesFromDirectory(Collection<File> files,
 			File directory, Set<String> directoriesVisited,
 			IProgressMonitor monitor) {
 
-		// stolen from the GitCloneWizard; perhaps we should completely drop
-		// the projects from this view, though
-		if (monitor.isCanceled()) {
-			return false;
-		}
-		monitor.subTask(NLS.bind(
-				UIText.RepositoriesView_Checking_Message,
+		// stolen from the GitCloneWizard
+
+		if (monitor.isCanceled())
+			return;
+
+		monitor.subTask(NLS.bind(UIText.RepositoriesView_Checking_Message,
 				directory.getPath()));
 		File[] contents = directory.listFiles();
 		if (contents == null)
-			return false;
+			return;
 
 		// first look for project description files
 		final String dotProject = IProjectDescription.DESCRIPTION_FILE_NAME;
@@ -263,7 +297,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 				files.add(file.getParentFile());
 				// don't search sub-directories since we can't have nested
 				// projects
-				return true;
+				return;
 			}
 		}
 		// no project description found, so recurse into sub-directories
@@ -289,7 +323,6 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 				}
 			}
 		}
-		return true;
 	}
 
 	private static String getRepositoryName(Repository repository) {
