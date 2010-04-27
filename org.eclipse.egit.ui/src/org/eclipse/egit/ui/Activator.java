@@ -43,6 +43,7 @@ import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.ui.themes.ITheme;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -121,6 +122,24 @@ public class Activator extends AbstractUIPlugin {
 	public static void logError(final String message, final Throwable thr) {
 		getDefault().getLog().log(
 				new Status(IStatus.ERROR, getPluginId(), 0, message, thr));
+	}
+
+	/**
+	 * Handle an error. The error is logged. If <code>show</code> is
+	 * <code>true</code> the error is shown to the user.
+	 *
+	 * @param message 		a localized message
+	 * @param throwable
+	 * @param show
+	 */
+	public static void handleError(String message, Throwable throwable,
+			boolean show) {
+		IStatus status = new Status(IStatus.ERROR, getPluginId(), message,
+				throwable);
+		int style = StatusManager.LOG;
+		if (show)
+			style |= StatusManager.SHOW;
+		StatusManager.getManager().handle(status, style);
 	}
 
 	/**
