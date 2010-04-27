@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -71,6 +72,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
@@ -274,7 +276,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 					Object[] selectionArray = selection.toArray();
 					for (Object selectedElement : selectionArray) {
 						RepositoryTreeNode node = (RepositoryTreeNode) selectedElement;
-						// if any of the selected elements are not files, ignore the open request
+						// if any of the selected elements are not files, ignore
+						// the open request
 						if (node.getType() != RepositoryTreeNodeType.FILE) {
 							return;
 						}
@@ -715,12 +718,12 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					WizardDialog dialog = new WizardDialog(
-							getSite().getShell(), new ConfigureRemoteWizard(
-									node.getRepository()));
-					if (dialog.open() == Window.OK) {
+
+					WizardDialog dlg = new WizardDialog(getSite().getShell(),
+							new NewRemoteWizard(node.getRepository()));
+					if (dlg.open() == Window.OK)
 						scheduleRefresh();
-					}
+
 				}
 
 			});
@@ -728,40 +731,112 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 		if (node.getType() == RepositoryTreeNodeType.REMOTE) {
 
-			final String name = (String) node.getObject();
+			final String configName = (String) node.getObject();
+
+			RemoteConfig rconfig;
+			try {
+				rconfig = new RemoteConfig(node.getRepository().getConfig(),
+						configName);
+			} catch (URISyntaxException e2) {
+				// TODO Exception handling
+				rconfig = null;
+			}
+
+			boolean fetchExists = rconfig != null
+					&& !rconfig.getURIs().isEmpty();
+			boolean pushExists = rconfig != null
+					&& !rconfig.getPushURIs().isEmpty();
 
 			MenuItem configureUrlFetch = new MenuItem(men, SWT.PUSH);
-			configureUrlFetch
-					.setText(UIText.RepositoriesView_ConfigureFetchMenu);
+			if (fetchExists)
+				configureUrlFetch
+						.setText(UIText.RepositoriesView_ConfigureFetchMenu);
+			else
+				configureUrlFetch
+						.setText(UIText.RepositoriesView_CreateFetch_menu);
 			configureUrlFetch.addSelectionListener(new SelectionAdapter() {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					WizardDialog dialog = new WizardDialog(
-							getSite().getShell(), new ConfigureRemoteWizard(
-									node.getRepository(), name, false));
-					if (dialog.open() == Window.OK) {
+
+					WizardDialog dlg = new WizardDialog(getSite().getShell(),
+							new ConfigureRemoteWizard(node.getRepository(),
+									configName, false));
+					if (dlg.open() == Window.OK)
 						scheduleRefresh();
-					}
+
 				}
 
 			});
 
+			if (fetchExists) {
+				MenuItem deleteFetch = new MenuItem(men, SWT.PUSH);
+				deleteFetch.setText(UIText.RepositoriesView_RemoveFetch_menu);
+				deleteFetch.addSelectionListener(new SelectionAdapter() {
+
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						RepositoryConfig config = node.getRepository()
+								.getConfig();
+						config.unset("remote", configName, "url"); //$NON-NLS-1$ //$NON-NLS-2$
+						config.unset("remote", configName, "fetch"); //$NON-NLS-1$//$NON-NLS-2$
+						try {
+							config.save();
+							scheduleRefresh();
+						} catch (IOException e1) {
+							MessageDialog.openError(getSite().getShell(),
+									UIText.RepositoriesView_ErrorHeader, e1
+											.getMessage());
+						}
+					}
+
+				});
+			}
+
 			MenuItem configureUrlPush = new MenuItem(men, SWT.PUSH);
-			configureUrlPush.setText(UIText.RepositoriesView_ConfigurePushMenu);
+			if (pushExists)
+				configureUrlPush
+						.setText(UIText.RepositoriesView_ConfigurePushMenu);
+			else
+				configureUrlPush
+						.setText(UIText.RepositoriesView_CreatePush_menu);
 			configureUrlPush.addSelectionListener(new SelectionAdapter() {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					WizardDialog dialog = new WizardDialog(
-							getSite().getShell(), new ConfigureRemoteWizard(
-									node.getRepository(), name, true));
-					if (dialog.open() == Window.OK) {
+
+					WizardDialog dlg = new WizardDialog(getSite().getShell(),
+							new ConfigureRemoteWizard(node.getRepository(),
+									configName, true));
+					if (dlg.open() == Window.OK)
 						scheduleRefresh();
-					}
 				}
 
 			});
+
+			if (pushExists) {
+				MenuItem deleteFetch = new MenuItem(men, SWT.PUSH);
+				deleteFetch.setText(UIText.RepositoriesView_RemovePush_menu);
+				deleteFetch.addSelectionListener(new SelectionAdapter() {
+
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						RepositoryConfig config = node.getRepository()
+								.getConfig();
+						config.unset("remote", configName, "pushurl"); //$NON-NLS-1$ //$NON-NLS-2$
+						config.unset("remote", configName, "push"); //$NON-NLS-1$ //$NON-NLS-2$
+						try {
+							config.save();
+							scheduleRefresh();
+						} catch (IOException e1) {
+							MessageDialog.openError(getSite().getShell(),
+									UIText.RepositoriesView_ErrorHeader, e1
+											.getMessage());
+						}
+					}
+
+				});
+			}
 
 			new MenuItem(men, SWT.SEPARATOR);
 
@@ -779,11 +854,11 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 									NLS
 											.bind(
 													UIText.RepositoriesView_ConfirmDeleteRemoteMessage,
-													name));
+													configName));
 					if (ok) {
 						RepositoryConfig config = node.getRepository()
 								.getConfig();
-						config.unsetSection(REMOTE, name);
+						config.unsetSection(REMOTE, configName);
 						try {
 							config.save();
 							scheduleRefresh();
@@ -858,8 +933,13 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 		} catch (PartInitException e) {
 			MessageDialog.openError(getSite().getShell(),
 					UIText.RepositoriesView_Error_WindowTitle, e.getMessage());
-			Activator.getDefault().getLog().log(
-					Activator.error("Failed to open editor on external file", e)); //$NON-NLS-1$
+			Activator
+					.getDefault()
+					.getLog()
+					.log(
+							Activator
+									.error(
+											"Failed to open editor on external file", e)); //$NON-NLS-1$
 		}
 	}
 
