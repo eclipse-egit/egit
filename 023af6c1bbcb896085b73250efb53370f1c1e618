@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///PA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-04-27T14:07:49Z",
+      "side": 1,
+      "message": "What is the difference between error() and logError() ?",
+      "revId": "023af6c1bbcb896085b73250efb53370f1c1e618",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
