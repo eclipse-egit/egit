@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///tU\u003d",
+        "filename": "org.eclipse.egit.ui.test/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-04-15T01:42:08Z",
+      "side": 1,
+      "message": "Tab here and on next line, but we use spaces only in our pom.xml files.",
+      "revId": "b9b797ec5917a44e55b62b8e81477e91f9c41a88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
