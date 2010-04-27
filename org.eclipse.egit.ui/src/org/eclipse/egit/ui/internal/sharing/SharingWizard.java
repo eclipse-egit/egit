@@ -19,7 +19,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.team.ui.IConfigurationWizard;
@@ -85,9 +84,7 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 				status = new Status(IStatus.ERROR, Activator.getPluginId(), 1,
 						UIText.SharingWizard_failed, e);
 			}
-			Activator.logError(UIText.SharingWizard_failed, e);
-			ErrorDialog.openError(getContainer().getShell(), getWindowTitle(),
-					UIText.SharingWizard_failed, status, status.getSeverity());
+			Activator.handleError(UIText.SharingWizard_failed, e, true);
 			return false;
 		}
 	}
