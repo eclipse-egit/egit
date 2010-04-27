@@ -1516,6 +1516,9 @@ public class UIText extends NLS {
 	public static String RepositoriesView_Checking_Message;
 
 	/** */
+	public static String RepositoriesView_CheckingOutMessage;
+
+	/** */
 	public static String RepositoriesView_CheckOut_MenuItem;
 
 	/** */
