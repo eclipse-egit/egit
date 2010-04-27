@@ -40,7 +40,10 @@ import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.jgit.transport.SshSessionFactory;
 import org.eclipse.jsch.core.IJSchService;
 import org.eclipse.osgi.service.debug.DebugOptions;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.statushandlers.StatusManager;
+import org.eclipse.ui.themes.ITheme;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
@@ -80,30 +83,55 @@ public class Activator extends AbstractUIPlugin {
 		return getDefault().getBundle().getSymbolicName();
 	}
 
-
 	/**
-	 * Instantiate an error status.
+	 * Handle an error. The error is logged. If <code>show</code> is
+	 * <code>true</code> the error is shown to the user.
 	 *
-	 * @param message
-	 *            description of the error
-	 * @param thr
-	 *            cause of the error or null
-	 * @return an initialized error status
+	 * @param message 		a localized message
+	 * @param throwable
+	 * @param show
 	 */
-	public static IStatus error(final String message, final Throwable thr) {
-		return new Status(IStatus.ERROR, getPluginId(), 0, message, thr);
+	public static void handleError(String message, Throwable throwable,
+			boolean show) {
+		IStatus status = new Status(IStatus.ERROR, getPluginId(), message,
+				throwable);
+		int style = StatusManager.LOG;
+		if (show)
+			style |= StatusManager.SHOW;
+		StatusManager.getManager().handle(status, style);
 	}
 
 	/**
-	 * Log an error via the Eclipse logging routines.
+	 * Get the theme used by this plugin.
 	 *
-	 * @param message
-	 * @param thr
-	 *            cause of error
+	 * @return our theme.
 	 */
-	public static void logError(final String message, final Throwable thr) {
-		getDefault().getLog().log(
-				new Status(IStatus.ERROR, getPluginId(), 0, message, thr));
+	public static ITheme getTheme() {
+		return plugin.getWorkbench().getThemeManager().getCurrentTheme();
+	}
+
+	/**
+	 * Get a font known to this plugin.
+	 *
+	 * @param id
+	 *            one of our THEME_* font preference ids (see
+	 *            {@link UIPreferences});
+	 * @return the configured font, borrowed from the registry.
+	 */
+	public static Font getFont(final String id) {
+		return getTheme().getFontRegistry().get(id);
+	}
+
+	/**
+	 * Get a font known to this plugin, but with bold style applied over top.
+	 *
+	 * @param id
+	 *            one of our THEME_* font preference ids (see
+	 *            {@link UIPreferences});
+	 * @return the configured font, borrowed from the registry.
+	 */
+	public static Font getBoldFont(final String id) {
+		return getTheme().getFontRegistry().getBold(id);
 	}
 
 	private RCS rcs;
@@ -199,7 +227,7 @@ public class Activator extends AbstractUIPlugin {
 					getJobManager().beginRule(rule, monitor);
 					p.refreshLocal(IResource.DEPTH_INFINITE, new SubProgressMonitor(monitor, 1));
 				} catch (CoreException e) {
-					logError(UIText.Activator_refreshFailed, e);
+					handleError(UIText.Activator_refreshFailed, e, false);
 					return new Status(IStatus.ERROR, getPluginId(), e.getMessage());
 				} finally {
 					getJobManager().endRule(rule);
