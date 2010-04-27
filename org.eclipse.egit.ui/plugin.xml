@@ -91,20 +91,6 @@
                menubarPath="team.main/group1"
                id="org.eclipse.egit.ui.internal.actions.AssumeUnchanged"/>
          <action
-               class="org.eclipse.egit.ui.internal.actions.ShowResourceInHistoryAction"
-               id="org.eclipse.egit.ui.internal.actions.ShowResourceInHistoryAction"
-               label="%ShowResourceInHistoryAction_label"
-               menubarPath="team.main/group1"
-               tooltip="%ShowResourceInHistoryAction_tooltip"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.ShowInRepositoriesViewAction"
-               definitionId="org.eclipse.egit.ui.ShowInRepositoriesView"
-               enablesFor="1"
-               id="org.eclipse.egit.ui.internal.actions.ShowInRepositoriesView"
-               label="&amp;Show in Git Repositories View"
-               menubarPath="team.main/group1">
-         </action>
-         <action
                class="org.eclipse.egit.ui.internal.actions.Update"
                id="org.eclipse.egit.ui.internal.actions.Update"
                label="%UpdateAction_label"
@@ -491,5 +477,14 @@
             id="org.eclipse.egit.ui.GitRepositoryExploring"
             name="%GitRepositoryPerspective_name">
       </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <showInPart
+               id="org.eclipse.egit.ui.RepositoriesView">
+         </showInPart>
+      </perspectiveExtension>
    </extension>
 </plugin>
