@@ -23,7 +23,6 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.lib.Config;
@@ -92,13 +91,10 @@ public class RepositoryPropertySource implements IPropertySource,
 			userHomeConfig.load();
 			repositoryConfig.load();
 		} catch (IOException e) {
-			// TODO refactor to a method and react on exceptions
-			e.printStackTrace();
+			showExceptionMessage(e);
 		} catch (ConfigInvalidException e) {
-			// TODO refactor to a method and react on exceptions
-			e.printStackTrace();
+			showExceptionMessage(e);
 		}
-
 	}
 
 	private void makeActions() {
@@ -460,8 +456,7 @@ public class RepositoryPropertySource implements IPropertySource,
 	}
 
 	private void showExceptionMessage(Exception e) {
-		MessageDialog.openError(myPage.getSite().getShell(),
-				UIText.RepositoryPropertySource_ErrorHeader, e.getMessage());
+		org.eclipse.egit.ui.Activator.handleError(UIText.RepositoryPropertySource_ErrorHeader, e, true);
 	}
 
 }
