@@ -24,16 +24,15 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -165,10 +164,17 @@ class ExistingOrNewPage extends WizardPage {
 									new NullProgressMonitor());
 					}
 				} catch (IOException e1) {
-					MessageDialog.openError(getShell(), UIText.ExistingOrNewPage_ErrorFailedToCreateRepository, gitDir.toString() + ":\n" + e1.getMessage()); //$NON-NLS-1$
-					Activator.logError("Failed to create repository at " + gitDir, e1); //$NON-NLS-1$
+					String msg = NLS
+							.bind(
+									UIText.ExistingOrNewPage_ErrorFailedToCreateRepository,
+									gitDir.toString());
+					org.eclipse.egit.ui.Activator.handleError(msg, e1, true);
 				} catch (CoreException e2) {
-					Activator.logError(UIText.ExistingOrNewPage_ErrorFailedToRefreshRepository + gitDir, e2);
+					String msg = NLS
+							.bind(
+									UIText.ExistingOrNewPage_ErrorFailedToRefreshRepository,
+									gitDir);
+					org.eclipse.egit.ui.Activator.handleError(msg, e2, true);
 				}
 				for (TreeItem ti : tree.getSelection()) {
 					ti.setText(2, gitDir.toString());

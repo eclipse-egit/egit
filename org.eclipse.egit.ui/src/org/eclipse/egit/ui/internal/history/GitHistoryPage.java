@@ -1313,9 +1313,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 				}
 			}
 			if (errorOccured)
-				MessageDialog.openError(getSite().getShell(),
-						UIText.GitHistoryPage_openFailed,
-						UIText.GitHistoryPage_seeLog);
+				Activator.showError(UIText.GitHistoryPage_openFailed, null);
 			if (ids.size() > 0) {
 				String idList = ""; //$NON-NLS-1$
 				for (ObjectId objectId : ids) {
