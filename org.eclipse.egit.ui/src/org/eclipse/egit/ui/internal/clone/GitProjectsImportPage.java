@@ -721,7 +721,7 @@ public class GitProjectsImportPage extends WizardPage {
 				ConnectProviderOperation connectProviderOperation = new ConnectProviderOperation(
 						project, gitRepositoryDir);
 				connectProviderOperation
-						.run(new SubProgressMonitor(monitor, 20));
+						.execute(new SubProgressMonitor(monitor, 20));
 			}
 		} catch (CoreException e) {
 			throw new InvocationTargetException(e);

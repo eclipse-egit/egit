@@ -13,6 +13,7 @@ package org.eclipse.egit.core.op;
 import java.io.IOException;
 
 import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -33,7 +34,7 @@ import org.eclipse.team.core.TeamException;
  * This class implements checkouts of a specific revision. A check
  * is made that this can be done without data loss.
  */
-public class BranchOperation implements IWorkspaceRunnable {
+public class BranchOperation implements IEGitOperation {
 
 	private final Repository repository;
 
@@ -61,34 +62,44 @@ public class BranchOperation implements IWorkspaceRunnable {
 
 
 
-	public void run(IProgressMonitor monitor) throws CoreException {
+	/* (non-Javadoc)
+	 * @see org.eclipse.egit.core.op.IEGitOperation#execute(org.eclipse.core.runtime.IProgressMonitor)
+	 */
+	public void execute(IProgressMonitor monitor) throws CoreException {
 
 		if (!refName.startsWith(Constants.R_REFS))
 			throw new TeamException(NLS.bind(
 					CoreText.BranchOperation_CheckoutOnlyBranchOrTag, refName));
 
-		monitor.beginTask(NLS.bind(CoreText.BranchOperation_performingBranch,
-				refName), 6);
-		lookupRefs();
-		monitor.worked(1);
+		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
-		mapObjects();
-		monitor.worked(1);
+			public void run(IProgressMonitor monitor) throws CoreException {
+				monitor.beginTask(NLS.bind(
+						CoreText.BranchOperation_performingBranch, refName), 6);
+				lookupRefs();
+				monitor.worked(1);
 
-		checkoutTree();
-		monitor.worked(1);
+				mapObjects();
+				monitor.worked(1);
 
-		writeIndex();
-		monitor.worked(1);
+				checkoutTree();
+				monitor.worked(1);
 
-		updateHeadRef();
-		monitor.worked(1);
+				writeIndex();
+				monitor.worked(1);
 
-		ProjectUtil.refreshProjects(repository, new SubProgressMonitor(monitor,
-				1));
-		monitor.worked(1);
+				updateHeadRef();
+				monitor.worked(1);
 
-		monitor.done();
+				ProjectUtil.refreshProjects(repository, new SubProgressMonitor(
+						monitor, 1));
+				monitor.worked(1);
+
+				monitor.done();
+			}
+		};
+		// lock workspace to protect working tree changes
+		ResourcesPlugin.getWorkspace().run(action, monitor);
 	}
 
 	private void updateHeadRef() throws TeamException {

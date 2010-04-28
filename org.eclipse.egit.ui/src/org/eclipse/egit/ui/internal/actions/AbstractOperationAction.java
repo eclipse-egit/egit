@@ -13,11 +13,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.action.IAction;
@@ -38,7 +38,7 @@ public abstract class AbstractOperationAction implements IObjectActionDelegate {
 	 */
 	protected IWorkbenchPart wp;
 
-	private IWorkspaceRunnable op;
+	private IEGitOperation op;
 
 	private List selection;
 
@@ -58,9 +58,9 @@ public abstract class AbstractOperationAction implements IObjectActionDelegate {
 	 * Instantiate an operation on an action on provided objects.
 	 * @param selection
 	 *
-	 * @return a {@link IWorkspaceRunnable} for invoking this operation later on
+	 * @return a {@link IEGitOperation} for invoking this operation later on
 	 */
-	protected abstract IWorkspaceRunnable createOperation(final List selection);
+	protected abstract IEGitOperation createOperation(final List selection);
 
 	/**
 	 * A method to invoke when the operation is finished.
@@ -79,7 +79,7 @@ public abstract class AbstractOperationAction implements IObjectActionDelegate {
 								public void run(final IProgressMonitor monitor)
 										throws InvocationTargetException {
 									try {
-										op.run(monitor);
+										op.execute(monitor);
 									} catch (CoreException ce) {
 										throw new InvocationTargetException(ce);
 									}

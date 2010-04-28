@@ -18,7 +18,6 @@ import java.util.Map;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -44,7 +43,7 @@ import org.eclipse.osgi.util.NLS;
  * Resources are only scheduled for removal in the index-
  * </p>
  */
-public class UntrackOperation implements IWorkspaceRunnable {
+public class UntrackOperation implements IEGitOperation {
 	private final Collection rsrcList;
 
 	private final IdentityHashMap<Repository, DirCacheEditor> edits;
@@ -64,7 +63,10 @@ public class UntrackOperation implements IWorkspaceRunnable {
 		mappings = new IdentityHashMap<RepositoryMapping, Object>();
 	}
 
-	public void run(IProgressMonitor m) throws CoreException {
+	/* (non-Javadoc)
+	 * @see org.eclipse.egit.core.op.IEGitOperation#execute(org.eclipse.core.runtime.IProgressMonitor)
+	 */
+	public void execute(IProgressMonitor m) throws CoreException {
 		if (m == null)
 			m = new NullProgressMonitor();
 

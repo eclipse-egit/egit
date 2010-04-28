@@ -11,8 +11,8 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.util.List;
 
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.egit.core.op.DisconnectProviderOperation;
+import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 
 /**
@@ -21,7 +21,7 @@ import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
  *  @see DisconnectProviderOperation
  */
 public class Disconnect extends AbstractOperationAction {
-	protected IWorkspaceRunnable createOperation(final List sel) {
+	protected IEGitOperation createOperation(final List sel) {
 		return sel.isEmpty() ? null : new DisconnectProviderOperation(sel);
 	}
 

@@ -52,7 +52,7 @@ public class T0003_AdaptableFileTreeIteratorTest extends GitTestCase {
 
 		final ConnectProviderOperation operation = new ConnectProviderOperation(
 				project.getProject(), gitDir);
-		operation.run(null);
+		operation.execute(null);
 	}
 
 	@Test

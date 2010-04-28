@@ -11,7 +11,7 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.util.List;
 
-import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.core.op.UntrackOperation;
 
 /**
@@ -21,7 +21,7 @@ import org.eclipse.egit.core.op.UntrackOperation;
  * @see UntrackOperation
  */
 public class Untrack extends AbstractOperationAction {
-	protected IWorkspaceRunnable createOperation(final List sel) {
+	protected IEGitOperation createOperation(final List sel) {
 		return sel.isEmpty() ? null : new UntrackOperation(sel);
 	}
 }
