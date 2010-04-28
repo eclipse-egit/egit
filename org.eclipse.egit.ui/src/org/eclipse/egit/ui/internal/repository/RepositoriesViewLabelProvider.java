@@ -150,6 +150,12 @@ public class RepositoriesViewLabelProvider extends LabelProvider {
 			return ((File) node.getObject()).getName();
 		case BRANCHES:
 			return UIText.RepositoriesView_Branches_Nodetext;
+		case LOCALBRANCHES:
+			return UIText.RepositoriesViewLabelProvider_LocalBranchesNodetext;
+		case REMOTEBRANCHES:
+			return UIText.RepositoriesViewLabelProvider_RemoteBrancheNodetext;
+		case TAGS:
+			return UIText.RepositoriesViewLabelProvider_TagsNodeText;
 		case REMOTES:
 			return UIText.RepositoriesView_RemotesNodeText;
 		case REMOTE:
@@ -157,14 +163,17 @@ public class RepositoriesViewLabelProvider extends LabelProvider {
 		case PROJECTS:
 			return UIText.RepositoriesView_ExistingProjects_Nodetext;
 		case REF:
+			// fall through
+		case HEAD:
+			// fall through
+		case TAG:
 			Ref ref = (Ref) node.getObject();
 			// shorten the name
 			String refName = node.getRepository().shortenRefName(ref.getName());
 			if (ref.isSymbolic()) {
 				refName = refName
 						+ " - " //$NON-NLS-1$
-						+ node.getRepository().shortenRefName(
-								ref.getLeaf().getName());
+						+ ref.getLeaf().getName();
 			}
 			return refName;
 		case PROJ:
