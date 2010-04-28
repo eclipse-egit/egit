@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.lib.RepositoryConfig;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
@@ -32,8 +32,6 @@ public class RepositoryRemotePropertySource implements IPropertySource {
 
 	private final String myName;
 
-	private final PropertySheetPage myPage;
-
 	/**
 	 * @param config
 	 * @param remoteName
@@ -44,7 +42,6 @@ public class RepositoryRemotePropertySource implements IPropertySource {
 			String remoteName, PropertySheetPage page) {
 		myConfig = config;
 		myName = remoteName;
-		myPage = page;
 	}
 
 	public Object getEditableValue() {
@@ -56,9 +53,11 @@ public class RepositoryRemotePropertySource implements IPropertySource {
 		try {
 			myConfig.load();
 		} catch (IOException e) {
-			showExceptionMessage(e);
+			Activator.handleError(
+					UIText.RepositoryRemotePropertySource_ErrorHeader, e, true);
 		} catch (ConfigInvalidException e) {
-			showExceptionMessage(e);
+			Activator.handleError(
+					UIText.RepositoryRemotePropertySource_ErrorHeader, e, true);
 		}
 		List<IPropertyDescriptor> resultList = new ArrayList<IPropertyDescriptor>();
 		PropertyDescriptor desc = new PropertyDescriptor(RepositoriesView.URL,
@@ -105,9 +104,4 @@ public class RepositoryRemotePropertySource implements IPropertySource {
 		// read-only
 	}
 
-	private void showExceptionMessage(Exception e) {
-		MessageDialog.openError(myPage.getSite().getShell(),
-				UIText.RepositoryRemotePropertySource_ErrorHeader, e
-						.getMessage());
-	}
 }

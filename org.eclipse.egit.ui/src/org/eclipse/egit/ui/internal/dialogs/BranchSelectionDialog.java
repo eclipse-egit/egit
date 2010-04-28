@@ -381,7 +381,6 @@ public class BranchSelectionDialog extends Dialog {
 							if (renameRef.rename() != Result.RENAMED) {
 								reportError(
 										null,
-										UIText.BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle,
 										UIText.BranchSelectionDialog_ErrorCouldNotRenameRef,
 										refName, newRefName, renameRef
 												.getResult());
@@ -389,7 +388,6 @@ public class BranchSelectionDialog extends Dialog {
 						} catch (Throwable e1) {
 							reportError(
 									e1,
-									UIText.BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle,
 									UIText.BranchSelectionDialog_ErrorCouldNotRenameRef,
 									refName, newRefName, e1.getMessage());
 						}
@@ -399,7 +397,6 @@ public class BranchSelectionDialog extends Dialog {
 						} catch (Throwable e1) {
 							reportError(
 									e1,
-									UIText.BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle,
 									UIText.BranchSelectionDialog_ErrorCouldNotRefreshBranchList);
 						}
 					}
@@ -451,7 +448,6 @@ public class BranchSelectionDialog extends Dialog {
 						} catch (Throwable e1) {
 							reportError(
 									e1,
-									UIText.BranchSelectionDialog_BranchSelectionDialog_CreateFailedTitle,
 									UIText.BranchSelectionDialog_ErrorCouldNotCreateNewRef,
 									newRefName);
 						}
@@ -460,7 +456,6 @@ public class BranchSelectionDialog extends Dialog {
 							fillTreeWithBranches(newRefName);
 						} catch (Throwable e1) {
 							reportError(e1,
-									UIText.BranchSelectionDialog_BranchSelectionDialog_CreateFailedTitle,
 									UIText.BranchSelectionDialog_ErrorCouldNotRefreshBranchList);
 						}
 					}
@@ -481,10 +476,8 @@ public class BranchSelectionDialog extends Dialog {
 		return super.getShellStyle() | SWT.RESIZE;
 	}
 
-	private void reportError(Throwable e, String title, String message,
-			Object... args) {
+	private void reportError(Throwable e, String message, Object... args) {
 		String msg = NLS.bind(message, args);
-		MessageDialog.openError(getShell(), title, msg);
-		Activator.logError(msg, e);
+		Activator.handleError(msg, e, true);
 	}
 }

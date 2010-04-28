@@ -28,7 +28,6 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -315,9 +314,9 @@ public class RepositorySearchDialog extends Dialog {
 						pd.run(true, true, action);
 
 					} catch (InvocationTargetException e1) {
-						MessageDialog.openError(getShell(),
-								UIText.RepositorySearchDialog_errorOccurred, e1
-										.getCause().getMessage());
+						org.eclipse.egit.ui.Activator.handleError(
+								UIText.RepositorySearchDialog_errorOccurred,
+								e1, true);
 					} catch (InterruptedException e1) {
 						// ignore
 					}
