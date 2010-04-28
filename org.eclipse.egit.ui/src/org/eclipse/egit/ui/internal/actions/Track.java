@@ -39,7 +39,7 @@ public class Track extends RepositoryAction {
 								throws InvocationTargetException,
 								InterruptedException {
 							try {
-								op.run(arg0);
+								op.execute(arg0);
 							} catch (CoreException e) {
 								throw new InvocationTargetException(e);
 							}

@@ -46,7 +46,7 @@ public class T0001_ConnectProviderOperationTest extends GitTestCase {
 
 		ConnectProviderOperation operation = new ConnectProviderOperation(
 				project.getProject(), new File("../..", Constants.DOT_GIT));
-		operation.run(null);
+		operation.execute(null);
 
 		assertFalse(RepositoryProvider.isShared(project.getProject()));
 		assertTrue(!gitDir.exists());
@@ -62,7 +62,7 @@ public class T0001_ConnectProviderOperationTest extends GitTestCase {
 		repository.close();
 		ConnectProviderOperation operation = new ConnectProviderOperation(
 				project.getProject(), gitDir);
-		operation.run(null);
+		operation.execute(null);
 
 		assertTrue(RepositoryProvider.isShared(project.getProject()));
 
@@ -105,7 +105,7 @@ public class T0001_ConnectProviderOperationTest extends GitTestCase {
 
 		ConnectProviderOperation operation = new ConnectProviderOperation(
 				project.getProject(), gitDir);
-		operation.run(null);
+		operation.execute(null);
 
 		final boolean f[] = new boolean[1];
 		new Job("wait") {

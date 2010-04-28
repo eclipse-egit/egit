@@ -11,8 +11,8 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.util.List;
 
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.egit.core.op.AssumeUnchangedOperation;
+import org.eclipse.egit.core.op.IEGitOperation;
 
 /**
  * This operation sets the assume-valid bit in the index for the
@@ -21,7 +21,7 @@ import org.eclipse.egit.core.op.AssumeUnchangedOperation;
  * @see AssumeUnchangedOperation
  */
 public class AssumeUnchanged extends AbstractOperationAction {
-	protected IWorkspaceRunnable createOperation(final List sel) {
+	protected IEGitOperation createOperation(final List sel) {
 		return sel.isEmpty() ? null : new AssumeUnchangedOperation(sel);
 	}
 }

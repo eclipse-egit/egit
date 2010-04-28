@@ -1,22 +1,25 @@
 /*******************************************************************************
- * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
+ * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.actions;
+package org.eclipse.egit.core.op;
 
-import org.eclipse.egit.core.op.IEGitOperation;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 
-abstract class AbstractRevObjectOperation implements IEGitOperation {
-
-	Repository repository;
-
-	AbstractRevObjectOperation(final Repository repository) {
-		this.repository = repository;
-	}
-
+/**
+ * interface for EGit operations
+ *
+ */
+public interface IEGitOperation {
+	/**
+	 * Executes the operation
+	 * @param monitor
+	 * @throws CoreException
+	 */
+	void execute(IProgressMonitor monitor) throws CoreException;
 }
