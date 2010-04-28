@@ -471,7 +471,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 						scheduleRefresh();
 					} catch (CoreException e1) {
-						Activator.getDefault().getLog().log(e1.getStatus());
+						Activator.logError(e1.getMessage(), e1);
 					}
 
 				}
@@ -526,10 +526,10 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 										monitor);
 								scheduleRefresh();
 							} catch (CoreException e1) {
-								return e1.getStatus();
+								return new Status(IStatus.ERROR, Activator
+										.getPluginId(), e1.getMessage(), e1);
 							}
-							return new Status(IStatus.OK, Activator
-									.getPluginId(), ""); //$NON-NLS-1$
+							return Status.OK_STATUS;
 						}
 					};
 
@@ -597,7 +597,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 								IWorkspace.AVOID_UPDATE,
 								new NullProgressMonitor());
 					} catch (CoreException e1) {
-						Activator.getDefault().getLog().log(e1.getStatus());
+						Activator.logError(e1.getMessage(), e1);
 					}
 
 				}
