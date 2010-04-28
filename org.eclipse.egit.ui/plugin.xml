@@ -486,5 +486,23 @@
                id="org.eclipse.egit.ui.RepositoriesView">
          </showInPart>
       </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <showInPart
+               id="org.eclipse.egit.ui.RepositoriesView">
+         </showInPart>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.debug.ui.DebugPerspective">
+         <showInPart
+               id="org.eclipse.egit.ui.RepositoriesView">
+         </showInPart>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.pde.ui.PDEPerspective">
+         <showInPart
+               id="org.eclipse.egit.ui.RepositoriesView">
+         </showInPart>
+      </perspectiveExtension>
    </extension>
 </plugin>
