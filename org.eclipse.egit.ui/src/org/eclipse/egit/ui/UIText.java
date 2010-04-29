@@ -1543,6 +1543,9 @@ public class UIText extends NLS {
 	public static String RepositoriesView_ConfirmProjectDeletion_WindowTitle;
 
 	/** */
+	public static String RepositoriesView_CopyPathToClipboardMenu;
+
+	/** */
 	public static String RepositoriesView_CreateFetch_menu;
 
 	/** */
@@ -1565,6 +1568,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositoriesView_ImportProject_MenuItem;
+
+	/** */
+	public static String RepositoriesView_ImportProjectsMenu;
 
 	/** */
 	public static String RepositoriesView_ImportRepository_MenuItem;
