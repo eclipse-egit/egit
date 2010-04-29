@@ -14,17 +14,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import org.eclipse.core.internal.resources.ResourceException;
-import org.eclipse.core.resources.IResourceStatus;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.GitTag;
-import org.eclipse.osgi.util.NLS;
-import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.core.history.ITag;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
@@ -32,6 +28,9 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.core.history.ITag;
 
 /**
  * An {@link IFileRevision} for a version of a specified resource in the
@@ -120,16 +119,14 @@ class CommitFileRevision extends GitFileRevision {
 		try {
 			final TreeWalk w = TreeWalk.forPath(db, path, commit.getTree());
 			if (w == null)
-				throw new ResourceException(IResourceStatus.FAILED_READ_LOCAL,
-						Path.fromPortableString(path), NLS.bind(
-								CoreText.CommitFileRevision_pathNotIn, commit
-										.getId()), null);
+				throw new CoreException(new Status(IStatus.ERROR, path, NLS
+						.bind(CoreText.CommitFileRevision_pathNotIn, commit
+								.getId()), null));
 			return w.getObjectId(0);
 		} catch (IOException e) {
-			throw new ResourceException(IResourceStatus.FAILED_READ_LOCAL, Path
-					.fromPortableString(path), NLS.bind(
+			throw new CoreException(new Status(IStatus.ERROR, path, NLS.bind(
 					CoreText.CommitFileRevision_errorLookingUpPath, commit
-							.getId()), e);
+							.getId()), e));
 		}
 	}
 }

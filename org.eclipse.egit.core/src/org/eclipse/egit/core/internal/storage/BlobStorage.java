@@ -13,12 +13,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.eclipse.core.internal.resources.ResourceException;
-import org.eclipse.core.resources.IResourceStatus;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.Constants;
@@ -46,19 +46,18 @@ class BlobStorage implements IStorage {
 		try {
 			return open();
 		} catch (IOException e) {
-			throw new ResourceException(IResourceStatus.FAILED_READ_LOCAL,
-					getFullPath(), NLS.bind(
-							CoreText.BlobStorage_errorReadingBlob, blobId), e);
+			throw new CoreException(new Status(IStatus.ERROR, path, NLS.bind(
+					CoreText.BlobStorage_errorReadingBlob, blobId), e));
 		}
 	}
 
-	private InputStream open() throws IOException, ResourceException,
+	private InputStream open() throws IOException, CoreException,
 			IncorrectObjectTypeException {
 		final ObjectLoader reader = db.openBlob(blobId);
 		if (reader == null)
-			throw new ResourceException(IResourceStatus.FAILED_READ_LOCAL,
-					getFullPath(), NLS.bind(CoreText.BlobStorage_blobNotFound,
-							blobId), null);
+			throw new CoreException(new Status(IStatus.ERROR,
+					path, NLS.bind(CoreText.BlobStorage_blobNotFound,
+							blobId), null));
 		final byte[] data = reader.getBytes();
 		if (reader.getType() != Constants.OBJ_BLOB)
 			throw new IncorrectObjectTypeException(blobId, Constants.TYPE_BLOB);

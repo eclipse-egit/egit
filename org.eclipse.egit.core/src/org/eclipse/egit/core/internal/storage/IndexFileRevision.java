@@ -12,18 +12,17 @@ package org.eclipse.egit.core.internal.storage;
 
 import java.io.IOException;
 
-import org.eclipse.core.internal.resources.ResourceException;
-import org.eclipse.core.resources.IResourceStatus;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.CoreText;
-import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.GitIndex.Entry;
+import org.eclipse.team.core.history.IFileRevision;
 
 /** An {@link IFileRevision} for the version in the Git index. */
 class IndexFileRevision extends GitFileRevision implements IFileRevision {
@@ -75,15 +74,13 @@ class IndexFileRevision extends GitFileRevision implements IFileRevision {
 			final GitIndex idx = db.getIndex();
 			final Entry e = idx.getEntry(path);
 			if (e == null)
-				throw new ResourceException(IResourceStatus.FAILED_READ_LOCAL,
-						Path.fromPortableString(path),
-						CoreText.IndexFileRevision_indexEntryNotFound, null);
+				throw new CoreException(new Status(IStatus.ERROR, path,
+						CoreText.IndexFileRevision_indexEntryNotFound, null));
 			return e.getObjectId();
 
 		} catch (IOException e) {
-			throw new ResourceException(IResourceStatus.FAILED_READ_LOCAL, Path
-					.fromPortableString(path),
-					CoreText.IndexFileRevision_errorLookingUpPath, e);
+			throw new CoreException(new Status(IStatus.ERROR, path,
+					CoreText.IndexFileRevision_errorLookingUpPath, e));
 		}
 	}
 }
