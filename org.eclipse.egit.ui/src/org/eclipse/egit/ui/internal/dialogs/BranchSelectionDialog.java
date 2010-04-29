@@ -114,11 +114,14 @@ public class BranchSelectionDialog extends Dialog {
 				// TODO add support for checkout of tags
 				confirmationBtn.setEnabled(oneSelected && branchSelected && !headSelected
 						&& !tagSelected);
-				// we don't support rename on tags
-				renameButton.setEnabled(oneSelected && branchSelected && !headSelected && !tagSelected);
 
-				// new branch can not be based on a tag
-				newButton.setEnabled(oneSelected && branchSelected && !tagSelected);
+				if (!showResetType) {
+					// we don't support rename on tags
+					renameButton.setEnabled(oneSelected && branchSelected && !headSelected && !tagSelected);
+
+					// new branch can not be based on a tag
+					newButton.setEnabled(oneSelected && branchSelected && !tagSelected);
+				}
 			}
 		});
 
