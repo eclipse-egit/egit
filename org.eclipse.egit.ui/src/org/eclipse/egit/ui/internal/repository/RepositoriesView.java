@@ -486,59 +486,63 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 		final RepositoryTreeNode node = (RepositoryTreeNode) sel
 				.getFirstElement();
 
-		// for Refs (branches): checkout
 		if (node.getType() == RepositoryTreeNodeType.REF) {
 
 			final Ref ref = (Ref) node.getObject();
 
-			MenuItem checkout = new MenuItem(men, SWT.PUSH);
-			checkout.setText(UIText.RepositoriesView_CheckOut_MenuItem);
-			checkout.addSelectionListener(new SelectionAdapter() {
+			// we don't check out symbolic references (most notably HEAD)
+			if (!ref.isSymbolic()) {
 
-				@Override
-				public void widgetSelected(SelectionEvent e) {
+				MenuItem checkout = new MenuItem(men, SWT.PUSH);
+				checkout.setText(UIText.RepositoriesView_CheckOut_MenuItem);
+				checkout.addSelectionListener(new SelectionAdapter() {
 
-					final String refName = ref.getLeaf().getName();
+					@Override
+					public void widgetSelected(SelectionEvent e) {
 
-					Job job = new Job(NLS.bind(UIText.RepositoriesView_CheckingOutMessage, refName)) {
+						final String refName = ref.getLeaf().getName();
+						// for the sake of UI responsiveness, let's start a job
+						Job job = new Job(NLS.bind(
+								UIText.RepositoriesView_CheckingOutMessage,
+								refName)) {
 
-						@Override
-						protected IStatus run(IProgressMonitor monitor) {
+							@Override
+							protected IStatus run(IProgressMonitor monitor) {
 
-							Repository repo = node.getRepository();
+								Repository repo = node.getRepository();
 
-							final BranchOperation op = new BranchOperation(
-									repo, refName);
-							IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
+								final BranchOperation op = new BranchOperation(
+										repo, refName);
+								IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
 
-								public void run(IProgressMonitor myMonitor)
-										throws CoreException {
-									op.run(myMonitor);
+									public void run(IProgressMonitor myMonitor)
+											throws CoreException {
+										op.run(myMonitor);
+									}
+								};
+
+								try {
+									ResourcesPlugin.getWorkspace().run(
+											wsr,
+											ResourcesPlugin.getWorkspace()
+													.getRoot(),
+											IWorkspace.AVOID_UPDATE, monitor);
+									scheduleRefresh();
+								} catch (CoreException e1) {
+									return e1.getStatus();
 								}
-							};
-
-							try {
-								ResourcesPlugin.getWorkspace().run(
-										wsr,
-										ResourcesPlugin.getWorkspace()
-												.getRoot(),
-										IWorkspace.AVOID_UPDATE,
-										monitor);
-								scheduleRefresh();
-							} catch (CoreException e1) {
-								return e1.getStatus();
+								return new Status(IStatus.OK, Activator
+										.getPluginId(), ""); //$NON-NLS-1$
 							}
-							return new Status(IStatus.OK, Activator
-									.getPluginId(), ""); //$NON-NLS-1$
-						}
-					};
+						};
 
-					job.setUser(true);
-					job.schedule();
+						job.setUser(true);
+						job.schedule();
 
-				}
+					}
 
-			});
+				});
+			}
 		}
 
 		// for Repository: import existing projects, remove, (delete), open
@@ -947,7 +951,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 					new FileStoreEditorInput(store),
 					EditorsUI.DEFAULT_TEXT_EDITOR_ID);
 		} catch (PartInitException e) {
-			Activator.handleError(UIText.RepositoriesView_Error_WindowTitle, e, true);
+			Activator.handleError(UIText.RepositoriesView_Error_WindowTitle, e,
+					true);
 		}
 	}
 

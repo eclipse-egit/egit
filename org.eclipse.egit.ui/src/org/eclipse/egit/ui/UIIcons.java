@@ -112,6 +112,15 @@ public class UIIcons {
 	/** Checked-out decorator for branch */
 	public static ImageDescriptor OVR_CHECKEDOUT;
 
+	/** Tags icon */
+	public static ImageDescriptor TAGS;
+
+	/** Tag icon */
+	public static ImageDescriptor TAG;
+
+	/** Branch icon */
+	public static ImageDescriptor BRANCH;
+
 	private static final URL base;
 
 	static {
@@ -152,6 +161,9 @@ public class UIIcons {
 		REMOTE_REPOSITORY = map("obj16/remote_entry_tbl.gif"); //$NON-NLS-1$
 		BRANCHES = map("obj16/branches_rep.gif"); //$NON-NLS-1$
 		OVR_CHECKEDOUT = map("ovr/checkedout_ov.gif"); //$NON-NLS-1$
+		TAGS = map("obj16/versions_rep.gif"); //$NON-NLS-1$
+		TAG = map("obj16/version_rep.gif"); //$NON-NLS-1$
+		BRANCH = map("obj16/branch.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
