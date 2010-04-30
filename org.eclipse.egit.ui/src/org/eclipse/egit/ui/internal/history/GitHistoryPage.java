@@ -20,6 +20,7 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Preferences;
 import org.eclipse.core.runtime.Preferences.IPropertyChangeListener;
@@ -155,6 +156,12 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			}
 			return true;
 
+		}
+
+		if (object instanceof IAdaptable) {
+			IResource resource = (IResource) ((IAdaptable) object)
+					.getAdapter(IResource.class);
+			return resource == null ? false : typeOk(resource);
 		}
 
 		if (object instanceof IResource) {
@@ -862,7 +869,10 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			in = new ResourceList(new IResource[] { (IResource) o });
 		else if (o instanceof ResourceList)
 			in = o;
-		else
+		else if (o instanceof IAdaptable) {
+			IResource resource = (IResource) ((IAdaptable) o).getAdapter(IResource.class);
+			in = resource == null ? null : new ResourceList(new IResource[] { resource });
+		} else
 			in = null;
 		return super.setInput(in);
 	}
@@ -873,7 +883,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			revObjectSelectionProvider.setActiveRepository(null);
 		cancelRefreshJob();
 
-		if (graph == null)
+		if (graph == null || super.getInput() == null)
 			return false;
 
 		final IResource[] in = ((ResourceList) super.getInput()).getItems();
