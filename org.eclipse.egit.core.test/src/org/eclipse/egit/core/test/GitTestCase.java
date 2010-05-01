@@ -26,13 +26,15 @@ public abstract class GitTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		((MockSystemReader) SystemReader.getInstance()).setProperty(
-				Constants.GIT_CEILING_DIRECTORIES_KEY, ResourcesPlugin
-						.getWorkspace().getRoot().getLocation().toFile()
+		MockSystemReader mockSystemReader = new MockSystemReader();
+		SystemReader.setInstance(mockSystemReader);
+		mockSystemReader.setProperty(Constants.GIT_CEILING_DIRECTORIES_KEY,
+				ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile()
 						.getAbsoluteFile().toString());
 		project = new TestProject(true);
-		gitDir = new File(project.getProject().getWorkspace().getRoot()
-				.getRawLocation().toFile(), Constants.DOT_GIT);
+		gitDir = new File(project.getProject().getWorkspace()
+				.getRoot().getRawLocation().toFile(),
+				Constants.DOT_GIT);
 		rmrf(gitDir);
 	}
 
@@ -42,7 +44,16 @@ public abstract class GitTestCase {
 		rmrf(gitDir);
 	}
 
-	private void rmrf(File d) throws IOException {
+	/**
+	 * Delete the file d recursively. <strong>Be very careful when executing
+	 * this function. It is intended to cleanup between test case, but could
+	 * really destroy anything.</strong>
+	 *
+	 * @param d
+	 *            the directory to delete
+	 * @throws IOException
+	 */
+	protected void rmrf(File d) throws IOException {
 		if (!d.exists())
 			return;
 
