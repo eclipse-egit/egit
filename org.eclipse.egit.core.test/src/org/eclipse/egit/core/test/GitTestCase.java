@@ -26,9 +26,10 @@ public abstract class GitTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		((MockSystemReader) SystemReader.getInstance()).setProperty(
-				Constants.GIT_CEILING_DIRECTORIES_KEY, ResourcesPlugin
-						.getWorkspace().getRoot().getLocation().toFile()
+		MockSystemReader mockSystemReader = new MockSystemReader();
+		SystemReader.setInstance(mockSystemReader);
+		mockSystemReader.setProperty(Constants.GIT_CEILING_DIRECTORIES_KEY,
+				ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile()
 						.getAbsoluteFile().toString());
 		project = new TestProject(true);
 		gitDir = new File(project.getProject().getWorkspace().getRoot()
