@@ -98,6 +98,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.ide.FileStoreEditorInput;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.part.IShowInTarget;
+import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
@@ -120,7 +122,8 @@ import org.osgi.service.prefs.BackingStoreException;
  * <li>Clarification whether to show projects, perhaps configurable switch</li>
  *
  */
-public class RepositoriesView extends ViewPart implements ISelectionProvider {
+public class RepositoriesView extends ViewPart implements ISelectionProvider,
+		IShowInTarget {
 
 	/** The view ID */
 	public static final String VIEW_ID = "org.eclipse.egit.ui.RepositoriesView"; //$NON-NLS-1$
@@ -1331,6 +1334,25 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider {
 
 		}
 
+	}
+
+	public boolean show(ShowInContext context) {
+		ISelection selection = context.getSelection();
+		if (selection instanceof IStructuredSelection) {
+			IStructuredSelection ss = (IStructuredSelection) selection;
+			if (ss.size() == 1) {
+				Object element = ss.getFirstElement();
+				if (element instanceof IAdaptable) {
+					IResource resource = (IResource) ((IAdaptable) element)
+							.getAdapter(IResource.class);
+					if (resource != null) {
+						showResource(resource);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 }
