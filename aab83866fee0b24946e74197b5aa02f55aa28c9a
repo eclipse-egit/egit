@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALuX///3U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-02T09:42:51Z",
+      "side": 0,
+      "message": "Remove unused text from UIText",
+      "revId": "aab83866fee0b24946e74197b5aa02f55aa28c9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///3Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-02T09:42:51Z",
+      "side": 0,
+      "message": "Remove the title from UIText too",
+      "revId": "aab83866fee0b24946e74197b5aa02f55aa28c9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///3Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-02T09:42:51Z",
+      "side": 0,
+      "message": "Remove references text from uitex",
+      "revId": "aab83866fee0b24946e74197b5aa02f55aa28c9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
