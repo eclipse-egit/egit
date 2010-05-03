@@ -1603,6 +1603,21 @@ public class UIText extends NLS {
 	public static String RepositoriesView_WorkingDir_treenode;
 
 	/** */
+	public static String RepositoriesViewContentProvider_ExceptionNodeText;
+
+	/** */
+	public static String RepositoriesViewLabelProvider_LocalBranchesNodetext;
+
+	/** */
+	public static String RepositoriesViewLabelProvider_RemoteBrancheNodetext;
+
+	/** */
+	public static String RepositoriesViewLabelProvider_SymbolicRefNodeText;
+
+	/** */
+	public static String RepositoriesViewLabelProvider_TagsNodeText;
+
+	/** */
 	public static String DiscardChangesAction_confirmActionTitle;
 
 	/** */
