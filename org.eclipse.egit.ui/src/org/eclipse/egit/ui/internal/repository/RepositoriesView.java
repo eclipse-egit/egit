@@ -51,7 +51,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.clone.GitCloneWizard;
-import org.eclipse.egit.ui.internal.clone.GitImportProjectsWizard;
+import org.eclipse.egit.ui.internal.clone.GitCreateProjectViaWizardWizard;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTreeNodeType;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -67,7 +67,6 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -75,6 +74,9 @@ import org.eclipse.jgit.lib.RepositoryConfig;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -535,6 +537,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 									return new Status(IStatus.ERROR, Activator
 											.getPluginId(), e1.getMessage(), e1);
 								}
+
 								return Status.OK_STATUS;
 							}
 						};
@@ -714,6 +717,10 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 			new MenuItem(men, SWT.SEPARATOR);
 
+			createImportProjectItem(men, repo, repo.getWorkDir().getPath());
+
+			new MenuItem(men, SWT.SEPARATOR);
+
 			MenuItem openPropsView = new MenuItem(men, SWT.PUSH);
 			openPropsView.setText(UIText.RepositoriesView_OpenPropertiesMenu);
 			openPropsView.addSelectionListener(new SelectionAdapter() {
@@ -730,6 +737,10 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 				}
 
 			});
+
+			new MenuItem(men, SWT.SEPARATOR);
+
+			createCopyPathItem(men, repo.getDirectory().getPath());
 		}
 
 		if (node.getType() == RepositoryTreeNodeType.REMOTES) {
@@ -974,17 +985,45 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 				}
 
 			});
-		}
 
-		if (node.getType() == RepositoryTreeNodeType.FOLDER) {
-			String path = ((File) node.getObject()).getAbsolutePath();
-			createImportProjectItem(men, node.getRepository(), path);
+			new MenuItem(men, SWT.SEPARATOR);
+			createCopyPathItem(men, file.getPath());
 		}
 
 		if (node.getType() == RepositoryTreeNodeType.WORKINGDIR) {
 			String path = node.getRepository().getWorkDir().getAbsolutePath();
 			createImportProjectItem(men, node.getRepository(), path);
+			new MenuItem(men, SWT.SEPARATOR);
+			createCopyPathItem(men, path);
 		}
+
+		if (node.getType() == RepositoryTreeNodeType.FOLDER) {
+			String path = ((File) node.getObject()).getPath();
+			createImportProjectItem(men, node.getRepository(), path);
+			new MenuItem(men, SWT.SEPARATOR);
+			createCopyPathItem(men, path);
+		}
+
+	}
+
+	private void createCopyPathItem(Menu men, final String path) {
+
+		MenuItem copyPath;
+		copyPath = new MenuItem(men, SWT.PUSH);
+		copyPath.setText(UIText.RepositoriesView_CopyPathToClipboardMenu);
+		copyPath.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Clipboard clipboard = new Clipboard(null);
+				TextTransfer textTransfer = TextTransfer.getInstance();
+				Transfer[] transfers = new Transfer[] { textTransfer };
+				Object[] data = new Object[] { path };
+				clipboard.setContents(data, transfers);
+				clipboard.dispose();
+			}
+
+		});
 
 	}
 
@@ -1004,30 +1043,51 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 	private void createImportProjectItem(Menu men, final Repository repo,
 			final String path) {
-		MenuItem importProjects;
-		importProjects = new MenuItem(men, SWT.PUSH);
-		importProjects
-				.setText(UIText.RepositoriesView_ImportExistingProjects_MenuItem);
-		importProjects.addSelectionListener(new SelectionAdapter() {
+
+		MenuItem startWizard;
+		startWizard = new MenuItem(men, SWT.PUSH);
+		startWizard.setText(UIText.RepositoriesView_ImportProjectsMenu);
+		startWizard.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// Instead of the generic ExternalProjectImportWizard
-				// from the org.eclipse.ui.ide plug-in, we use our
-				// own wizard (the generic one does not allow to set the
-				// path in 3.4; in addition, we have added project filtering
-				// capabilities)
-				Wizard wiz = new GitImportProjectsWizard(repo, path);
-
-				WizardDialog dlg = new WizardDialog(getSite().getShell(), wiz);
+				WizardDialog dlg = new WizardDialog(getSite().getShell(),
+						new GitCreateProjectViaWizardWizard(repo, path));
 				if (dlg.open() == Window.OK)
-					// TODO if we drop the "existing projects" node, we can
-					// probably do without refresh
 					scheduleRefresh();
 
 			}
 
 		});
+
+		// we could start the ImportWizard here,
+		// unfortunately, this fails within a wizard
+		// startWizard = new MenuItem(men, SWT.PUSH);
+		// startWizard.setText("Start the Import wizard...");
+		// startWizard.addSelectionListener(new SelectionAdapter() {
+		//
+		// @Override
+		// public void widgetSelected(SelectionEvent e) {
+		//
+		// IHandlerService handlerService = (IHandlerService) getSite()
+		// .getWorkbenchWindow().getWorkbench().getService(
+		// IHandlerService.class);
+		//
+		// try {
+		//					handlerService.executeCommand("org.eclipse.ui.file.import", //$NON-NLS-1$
+		// null);
+		// } catch (ExecutionException e1) {
+		// Activator.handleError(e1.getMessage(), e1, true);
+		// } catch (NotDefinedException e1) {
+		// Activator.handleError(e1.getMessage(), e1, true);
+		// } catch (NotEnabledException e1) {
+		// Activator.handleError(e1.getMessage(), e1, true);
+		// } catch (NotHandledException e1) {
+		// Activator.handleError(e1.getMessage(), e1, true);
+		// }
+		// }
+		//
+		// });
 	}
 
 	private void addActionsToToolbar() {
