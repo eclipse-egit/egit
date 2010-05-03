@@ -22,23 +22,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.Map.Entry;
 
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.clone.GitProjectsImportPage;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTreeNodeType;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.statushandlers.StatusManager;
 
 /**
  * Content Provider for the Git Repositories View
@@ -85,11 +85,82 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		switch (node.getType()) {
 
 		case BRANCHES: {
+
+			List<RepositoryTreeNode<Repository>> nodes = new ArrayList<RepositoryTreeNode<Repository>>();
+
+			nodes.add(new RepositoryTreeNode<Repository>(node,
+					RepositoryTreeNodeType.LOCALBRANCHES, repo, repo));
+			nodes.add(new RepositoryTreeNode<Repository>(node,
+					RepositoryTreeNodeType.REMOTEBRANCHES, repo, repo));
+
+			return nodes.toArray();
+		}
+
+		case LOCALBRANCHES: {
 			List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
 
-			for (Ref ref : repo.getAllRefs().values()) {
-				refs.add(new RepositoryTreeNode<Ref>(node,
-						RepositoryTreeNodeType.REF, repo, ref));
+			try {
+				for (Entry<String, Ref> refEntry : repo.getRefDatabase()
+						.getRefs(Constants.R_HEADS).entrySet()) {
+					if (!refEntry.getValue().isSymbolic())
+						refs.add(new RepositoryTreeNode<Ref>(node,
+								RepositoryTreeNodeType.REF, repo, refEntry
+										.getValue()));
+				}
+			} catch (IOException e) {
+				handleException(e, node);
+			}
+
+			return refs.toArray();
+		}
+
+		case REMOTEBRANCHES: {
+			List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
+
+			try {
+				for (Entry<String, Ref> refEntry : repo.getRefDatabase()
+						.getRefs(Constants.R_REMOTES).entrySet()) {
+					if (!refEntry.getValue().isSymbolic())
+						refs.add(new RepositoryTreeNode<Ref>(node,
+								RepositoryTreeNodeType.REF, repo, refEntry
+										.getValue()));
+				}
+			} catch (IOException e) {
+				handleException(e, node);
+			}
+
+			return refs.toArray();
+		}
+		case TAGS: {
+			List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
+
+			try {
+				for (Entry<String, Ref> refEntry : repo.getRefDatabase()
+						.getRefs(Constants.R_TAGS).entrySet()) {
+					refs.add(new RepositoryTreeNode<Ref>(node,
+							RepositoryTreeNodeType.TAG, repo, refEntry
+									.getValue()));
+				}
+			} catch (IOException e) {
+				handleException(e, node);
+			}
+
+			return refs.toArray();
+		}
+
+		case SYMBOLICREFS: {
+			List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
+
+			try {
+				for (Entry<String, Ref> refEntry : repo.getRefDatabase()
+						.getRefs(RefDatabase.ALL).entrySet()) {
+					if (refEntry.getValue().isSymbolic())
+						refs.add(new RepositoryTreeNode<Ref>(node,
+								RepositoryTreeNodeType.SYMBOLICREF, repo,
+								refEntry.getValue()));
+				}
+			} catch (IOException e) {
+				handleException(e, node);
 			}
 
 			return refs.toArray();
@@ -112,25 +183,32 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		}
 
 		case REPO: {
-			List<RepositoryTreeNode<Repository>> branches = new ArrayList<RepositoryTreeNode<Repository>>();
 
-			branches.add(new RepositoryTreeNode<Repository>(node,
+			List<RepositoryTreeNode<? extends Object>> nodeList = new ArrayList<RepositoryTreeNode<? extends Object>>();
+
+			nodeList.add(new RepositoryTreeNode<Repository>(node,
 					RepositoryTreeNodeType.BRANCHES, node.getRepository(), node
 							.getRepository()));
 
-			branches.add(new RepositoryTreeNode<Repository>(node,
+			nodeList.add(new RepositoryTreeNode<Repository>(node,
+					RepositoryTreeNodeType.TAGS, repo, repo));
+
+			nodeList.add(new RepositoryTreeNode<Repository>(node,
+					RepositoryTreeNodeType.SYMBOLICREFS, repo, repo));
+
+			nodeList.add(new RepositoryTreeNode<Repository>(node,
 					RepositoryTreeNodeType.WORKINGDIR, node.getRepository(),
 					node.getRepository()));
 
-			branches.add(new RepositoryTreeNode<Repository>(node,
+			nodeList.add(new RepositoryTreeNode<Repository>(node,
 					RepositoryTreeNodeType.PROJECTS, node.getRepository(), node
 							.getRepository()));
 
-			branches.add(new RepositoryTreeNode<Repository>(node,
+			nodeList.add(new RepositoryTreeNode<Repository>(node,
 					RepositoryTreeNodeType.REMOTES, node.getRepository(), node
 							.getRepository()));
 
-			return branches.toArray();
+			return nodeList.toArray();
 		}
 
 		case PROJECTS: {
@@ -235,7 +313,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 				rc = new RemoteConfig(node.getRepository().getConfig(),
 						remoteName);
 			} catch (URISyntaxException e) {
-				return null;
+				handleException(e, node);
+				return children.toArray();
 			}
 
 			if (!rc.getURIs().isEmpty())
@@ -257,17 +336,37 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 		}
 
-		case FILE: // fall through
-		case REF: // fall through
-		case PUSH: // fall through
-		case PROJ: // fall through
+		case FILE:
+			// fall through
+		case REF:
+			// fall through
+		case PUSH:
+			// fall through
+		case PROJ:
+			// fall through
+		case HEAD:
+			// fall through
+		case TAG:
+			// fall through
 		case FETCH:
+			// fall through
+		case ERROR:
+			// fall through
+		case SYMBOLICREF:
 			return null;
 
 		}
 
 		return null;
 
+	}
+
+	private void handleException(Exception e, RepositoryTreeNode parentNode) {
+		Activator.handleError(e.getMessage(), e, false);
+		// add a node indicating that there was an Exception
+		new RepositoryTreeNode<String>(parentNode,
+				RepositoryTreeNodeType.ERROR, parentNode.getRepository(),
+				UIText.RepositoriesViewContentProvider_ExceptionNodeText);
 	}
 
 	public Object getParent(Object element) {
@@ -317,12 +416,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 							// already been here --> do not recurse
 							continue;
 						}
-					} catch (IOException exception) {
-						StatusManager.getManager().handle(
-								new Status(IStatus.ERROR, Activator
-										.getPluginId(), exception
-										.getLocalizedMessage(), exception));
-
+					} catch (IOException e) {
+						Activator.handleError(e.getMessage(), e, false);
 					}
 					collectProjectFilesFromDirectory(files, contents[i],
 							directoriesVisited, monitor);
