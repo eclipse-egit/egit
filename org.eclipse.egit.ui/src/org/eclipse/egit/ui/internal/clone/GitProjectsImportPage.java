@@ -212,14 +212,25 @@ public class GitProjectsImportPage extends WizardPage {
 
 	private boolean share;
 
+	private final boolean showShare;
+
 	/**
 	 * Creates a new project creation wizard page.
+	 * @param showShareCheckbox
 	 */
-	public GitProjectsImportPage() {
+	public GitProjectsImportPage(boolean showShareCheckbox) {
 		super("gitWizardExternalProjectsPage"); //$NON-NLS-1$
+		this.showShare = showShareCheckbox;
 		setPageComplete(false);
 		setTitle(UIText.WizardProjectsImportPage_ImportProjectsTitle);
 		setDescription(UIText.WizardProjectsImportPage_ImportProjectsDescription);
+	}
+
+	/**
+	 *
+	 */
+	public GitProjectsImportPage(){
+		this(true);
 	}
 
 	public void createControl(Composite parent) {
@@ -250,15 +261,19 @@ public class GitProjectsImportPage extends WizardPage {
 		optionsGroup.setLayout(new GridLayout());
 		optionsGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-		shareCheckBox = new Button(optionsGroup, SWT.CHECK);
-		shareCheckBox.setText(UIText.WizardProjectsImportPage_enableGit);
-		shareCheckBox.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		shareCheckBox.setSelection(share = true);
-		shareCheckBox.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				share = shareCheckBox.getSelection();
-			}
-		});
+		if (showShare) {
+			shareCheckBox = new Button(optionsGroup, SWT.CHECK);
+			shareCheckBox.setText(UIText.WizardProjectsImportPage_enableGit);
+			shareCheckBox.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			shareCheckBox.setSelection(share = true);
+			shareCheckBox.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					share = shareCheckBox.getSelection();
+				}
+			});
+		} else {
+			share = false;
+		}
 	}
 
 	/**
