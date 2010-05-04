@@ -29,6 +29,7 @@ import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
 import org.eclipse.egit.ui.internal.components.SelectionChangeListener;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -58,6 +59,8 @@ class SourceBranchPage extends BaseWizardPage {
 
 	private List<Ref> selectedRefs = new ArrayList<Ref>();
 
+	private boolean sourceRepoEmpty = false;
+
 	private Label label;
 
 	private Table refsTable;
@@ -86,6 +89,10 @@ class SourceBranchPage extends BaseWizardPage {
 
 	Ref getHEAD() {
 		return head;
+	}
+
+	boolean isSourceRepoEmpty() {
+		return sourceRepoEmpty;
 	}
 
 	boolean isAllSelected() {
@@ -189,7 +196,13 @@ class SourceBranchPage extends BaseWizardPage {
 			return;
 		}
 
-		if (getSelectedBranches().isEmpty()) {
+		if (isSourceRepoEmpty()) {
+			setMessage(UIText.SourceBranchPage_repoEmpty, IMessageProvider.WARNING);
+			setPageComplete(true);
+			return;
+		}
+
+		if ( getSelectedBranches().isEmpty()) {
 			setErrorMessage(UIText.SourceBranchPage_errorBranchRequired);
 			setPageComplete(false);
 			return;
@@ -290,6 +303,8 @@ class SourceBranchPage extends BaseWizardPage {
 			ti.setChecked(true);
 			selectedRefs.add(r);
 		}
+		if (availableRefs.size() == 0)
+			sourceRepoEmpty = true;
 		notifySelectionChanged();
 		checkPage();
 	}

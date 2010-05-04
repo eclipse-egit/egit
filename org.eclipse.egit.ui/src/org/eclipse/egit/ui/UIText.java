@@ -397,6 +397,9 @@ public class UIText extends NLS {
 	public static String RepositorySelectionPage_uriChoice;
 
 	/** */
+	public static String SourceBranchPage_repoEmpty;
+
+	/** */
 	public static String SourceBranchPage_title;
 
 	/** */
