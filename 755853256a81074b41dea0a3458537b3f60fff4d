@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALuX///50\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/BlobStorage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-04-30T15:02:41Z",
+      "side": 1,
+      "message": "Second parameter of Status is the pluginId. Why to pass path here?",
+      "revId": "755853256a81074b41dea0a3458537b3f60fff4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///5w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/BlobStorage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-04-30T15:02:41Z",
+      "side": 1,
+      "message": "Second parameter of Status is the pluginId. Why to pass path here?",
+      "revId": "755853256a81074b41dea0a3458537b3f60fff4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///6E\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/CommitFileRevision.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-04-30T15:02:41Z",
+      "side": 1,
+      "message": "Second parameter of Status is the pluginId. Why to pass path here?",
+      "revId": "755853256a81074b41dea0a3458537b3f60fff4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///6A\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/CommitFileRevision.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-04-30T15:02:41Z",
+      "side": 1,
+      "message": "Second parameter of Status is the pluginId. Why to pass path here?",
+      "revId": "755853256a81074b41dea0a3458537b3f60fff4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///58\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/IndexFileRevision.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-04-30T15:02:41Z",
+      "side": 1,
+      "message": "Second parameter of Status is the pluginId. Why to pass path here?",
+      "revId": "755853256a81074b41dea0a3458537b3f60fff4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///54\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/IndexFileRevision.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-04-30T15:02:41Z",
+      "side": 1,
+      "message": "Second parameter of Status is the pluginId. Why to pass path here?",
+      "revId": "755853256a81074b41dea0a3458537b3f60fff4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
