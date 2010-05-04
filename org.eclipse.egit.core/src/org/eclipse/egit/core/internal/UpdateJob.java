@@ -175,7 +175,7 @@ public class UpdateJob extends Job {
 		// TODO is this the right location?
 		if (GitTraceLocation.CORE.isActive())
 			GitTraceLocation.getTrace().trace(
-					GitTraceLocation.CORE.getLocation(), "(UpdateJob)" + m);
+					GitTraceLocation.CORE.getLocation(), "(UpdateJob)" + m); //$NON-NLS-1$
 	}
 
 }

@@ -30,10 +30,10 @@ public class GitRepositoriesPerspectiveFactory implements IPerspectiveFactory {
 				.getEditorArea());
 
 		// place holder for Package Explorer under repositories
-		layout.addPlaceholder("org.eclipse.jdt.ui.PackageExplorer", IPageLayout.BOTTOM, (float) 0.7, RepositoriesView.VIEW_ID);
+		layout.addPlaceholder("org.eclipse.jdt.ui.PackageExplorer", IPageLayout.BOTTOM, (float) 0.7, RepositoriesView.VIEW_ID); //$NON-NLS-1$
 
 		// shortcut to Package Explorer
-		layout.addShowViewShortcut("org.eclipse.jdt.ui.PackageExplorer");
+		layout.addShowViewShortcut("org.eclipse.jdt.ui.PackageExplorer"); //$NON-NLS-1$
 		// shortcut to History view
 		layout.addShowViewShortcut(IHistoryView.VIEW_ID);
 

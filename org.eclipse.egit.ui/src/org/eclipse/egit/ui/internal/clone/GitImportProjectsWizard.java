@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.clone;
 
 import java.io.File;
 
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Repository;
 
@@ -35,7 +36,7 @@ public class GitImportProjectsWizard extends Wizard {
 		super();
 		myWorkingDir = path;
 		myGitDir = repository.getDirectory();
-		setWindowTitle("Import existing projects");
+		setWindowTitle(UIText.GitImportProjectsWizard_ImportExistingProjects0);
 	}
 
 	@Override

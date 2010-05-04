@@ -1672,6 +1672,9 @@ public class UIText extends NLS {
 	public static String GitCreateProjectViaWizardWizard_WizardTitle;
 
 	/** */
+	public static String GitImportProjectsWizard_ImportExistingProjects0;
+
+	/** */
 	public static String GitSelectWizardPage_AutoShareButton;
 
 	/** */
