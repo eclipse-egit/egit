@@ -20,6 +20,8 @@ import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
 import org.eclipse.egit.ui.internal.components.SelectionChangeListener;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -35,8 +37,6 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
 
 /**
  * Wizard page that allows the user entering the location of a repository to be
@@ -58,10 +58,6 @@ class CloneDestinationPage extends WizardPage {
 	private Text directoryText;
 
 	private Text remoteText;
-
-	Button showImportWizard;
-
-	String alreadyClonedInto;
 
 	CloneDestinationPage(final RepositorySelectionPage sp,
 			final SourceBranchPage bp) {
@@ -87,7 +83,6 @@ class CloneDestinationPage extends WizardPage {
 
 		createDestinationGroup(panel);
 		createConfigGroup(panel);
-		createWorkbenchGroup(panel);
 		setControl(panel);
 		checkPage();
 	}
@@ -97,8 +92,6 @@ class CloneDestinationPage extends WizardPage {
 		if (visible) {
 			if (branchPage.isSourceRepoEmpty()) {
 				initialBranch.setEnabled(false);
-				showImportWizard.setSelection(false);
-				showImportWizard.setEnabled(false);
 			}
 			revalidate();
 		}
@@ -178,20 +171,6 @@ class CloneDestinationPage extends WizardPage {
 		});
 	}
 
-	private void createWorkbenchGroup(Composite parent) {
-		final Group g = createGroup(parent, UIText.CloneDestinationPage_workspaceImport);
-		showImportWizard = new Button(g, SWT.CHECK);
-		showImportWizard.setSelection(true);
-		showImportWizard.setText(UIText.CloneDestinationPage_importProjectsAfterClone);
-		showImportWizard.setLayoutData(createFieldGridData());
-		showImportWizard.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				checkPage();
-			}
-		});
-	}
-
 	private static Group createGroup(final Composite parent, final String text) {
 		final Group g = new Group(parent, SWT.NONE);
 		final GridLayout layout = new GridLayout();
@@ -249,8 +228,7 @@ class CloneDestinationPage extends WizardPage {
 			return;
 		}
 		final File absoluteFile = new File(dstpath).getAbsoluteFile();
-		if (!absoluteFile.getAbsolutePath().equals(alreadyClonedInto)
-				&& !isEmptyDir(absoluteFile)) {
+		if (!isEmptyDir(absoluteFile)) {
 			setErrorMessage(NLS.bind(
 					UIText.CloneDestinationPage_errorNotEmptyDir, absoluteFile
 							.getPath()));
@@ -336,8 +314,4 @@ class CloneDestinationPage extends WizardPage {
 		checkPage();
 	}
 
-	@Override
-	public boolean canFlipToNextPage() {
-		return super.canFlipToNextPage() && showImportWizard.getSelection();
-	}
 }

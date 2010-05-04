@@ -122,7 +122,7 @@ public class RepositorySearchDialog extends Dialog {
 	 * @param parentShell
 	 * @param existingDirs
 	 */
-	protected RepositorySearchDialog(Shell parentShell,
+	public RepositorySearchDialog(Shell parentShell,
 			Collection<String> existingDirs) {
 		super(parentShell);
 		this.existingRepositoryDirs.addAll(existingDirs);
