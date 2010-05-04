@@ -161,7 +161,12 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 	private IAction linkWithSelectionAction;
 
-	private static List<String> getDirs() {
+	/**
+	 * TODO move to utility class
+	 *
+	 * @return the directories
+	 */
+	public static List<String> getDirs() {
 		List<String> resultStrings = new ArrayList<String>();
 		String dirs = getPrefs().get(PREFS_DIRECTORIES, ""); //$NON-NLS-1$
 		if (dirs != null && dirs.length() > 0) {
@@ -540,6 +545,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 								return Status.OK_STATUS;
 							}
+
 						};
 
 						job.setUser(true);
@@ -1095,9 +1101,10 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 			@Override
 			public void run() {
-				GitCloneWizard wiz = new GitCloneWizard();
-				wiz.init(null, null);
-				new WizardDialog(getSite().getShell(), wiz).open();
+				WizardDialog dlg = new WizardDialog(getSite().getShell(),
+						new GitCloneWizard());
+				if (dlg.open() == Window.OK)
+					scheduleRefresh();
 			}
 		};
 		importAction.setToolTipText(UIText.RepositoriesView_Clone_Tooltip);
@@ -1202,13 +1209,28 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 
-				final List<Repository> input;
+				final List<RepositoryTreeNode<Repository>> input;
 				try {
 					input = getRepositoriesFromDirs(monitor);
 				} catch (InterruptedException e) {
 					return new Status(IStatus.ERROR, Activator.getPluginId(), e
 							.getMessage(), e);
 				}
+
+				boolean needsNewInput = tv.getInput() == null;
+				List oldInput = (List) tv.getInput();
+				if (!needsNewInput)
+					needsNewInput = oldInput.size() != input.size();
+
+				if (!needsNewInput) {
+					for (int i = 0; i < input.size(); i++) {
+						needsNewInput = !input.get(i).equals(oldInput.get(i));
+						if (needsNewInput)
+							break;
+					}
+				}
+
+				final boolean updateInput = needsNewInput;
 
 				Display.getDefault().syncExec(new Runnable() {
 
@@ -1219,7 +1241,10 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 						Object[] expanded = tv.getExpandedElements();
 						IStructuredSelection sel = (IStructuredSelection) tv
 								.getSelection();
-						tv.setInput(input);
+						if (updateInput)
+							tv.setInput(input);
+						else
+							tv.refresh();
 						tv.setExpandedElements(expanded);
 
 						Object selected = sel.getFirstElement();
@@ -1254,30 +1279,6 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 	}
 
-	private List<Repository> getRepositoriesFromDirs(IProgressMonitor monitor)
-			throws InterruptedException {
-
-		List<String> gitDirStrings = getDirs();
-		List<Repository> input = new ArrayList<Repository>();
-		for (String dirString : gitDirStrings) {
-			if (monitor.isCanceled()) {
-				throw new InterruptedException(
-						UIText.RepositoriesView_ActionCanceled_Message);
-			}
-			try {
-				File dir = new File(dirString);
-				if (dir.exists() && dir.isDirectory()) {
-					input.add(new Repository(dir));
-				}
-			} catch (IOException e) {
-				IStatus error = new Status(IStatus.ERROR, Activator
-						.getPluginId(), e.getMessage(), e);
-				Activator.getDefault().getLog().log(error);
-			}
-		}
-		return input;
-	}
-
 	/**
 	 * Adds a directory to the list if it is not already there
 	 *
@@ -1303,6 +1304,42 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			saveDirs(dirs);
 			return true;
 		}
+	}
+
+	/**
+	 * TODO move to some utility class
+	 *
+	 * @param monitor
+	 * @return a list of nodes
+	 * @throws InterruptedException
+	 */
+	public static List<RepositoryTreeNode<Repository>> getRepositoriesFromDirs(
+			IProgressMonitor monitor) throws InterruptedException {
+
+		List<String> gitDirStrings = getDirs();
+		List<RepositoryTreeNode<Repository>> input = new ArrayList<RepositoryTreeNode<Repository>>();
+
+		for (String dirString : gitDirStrings) {
+			if (monitor != null && monitor.isCanceled()) {
+				throw new InterruptedException(
+						UIText.RepositoriesView_ActionCanceled_Message);
+			}
+			try {
+				File dir = new File(dirString);
+				if (dir.exists() && dir.isDirectory()) {
+					Repository repo = new Repository(dir);
+					RepositoryTreeNode<Repository> node = new RepositoryTreeNode<Repository>(
+							null, RepositoryTreeNodeType.REPO, repo, repo);
+					input.add(node);
+				}
+			} catch (IOException e) {
+				IStatus error = new Status(IStatus.ERROR, Activator
+						.getPluginId(), e.getMessage(), e);
+				Activator.getDefault().getLog().log(error);
+			}
+		}
+		Collections.sort(input);
+		return input;
 	}
 
 	private static void saveDirs(Set<String> gitDirStrings) {

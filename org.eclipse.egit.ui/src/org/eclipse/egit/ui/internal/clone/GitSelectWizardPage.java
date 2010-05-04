@@ -51,9 +51,9 @@ public class GitSelectWizardPage extends WizardPage {
 	/** */
 	public static final int ACTION_NO_SHARE = 2;
 
-	private static final String PREF_WIZ = "GitSelectWizardPageWizardSel"; //$NON-NLS-1$
+	private final String PREF_WIZ = getName() + "WizardSel"; //$NON-NLS-1$
 
-	private static final String PREF_ACT = "GitSelectWizardPageActionSel"; //$NON-NLS-1$
+	private final String PREF_ACT = getName() + "ActionSel"; //$NON-NLS-1$
 
 	Button importExisting;
 
@@ -73,6 +73,14 @@ public class GitSelectWizardPage extends WizardPage {
 	public GitSelectWizardPage() {
 		super(GitSelectWizardPage.class.getName());
 		setTitle(UIText.GitSelectWizardPage_WizardTitle);
+	}
+
+	/**
+	 * @param name
+	 *            the page name
+	 */
+	protected GitSelectWizardPage(String name) {
+		super(name);
 	}
 
 	public void createControl(Composite parent) {
@@ -99,7 +107,8 @@ public class GitSelectWizardPage extends WizardPage {
 		importExisting.addSelectionListener(sl);
 
 		newProjectWizard = new Button(wizardType, SWT.RADIO);
-		newProjectWizard.setText(UIText.GitSelectWizardPage_UseNewProjectsWizardButton);
+		newProjectWizard
+				.setText(UIText.GitSelectWizardPage_UseNewProjectsWizardButton);
 		newProjectWizard.addSelectionListener(sl);
 
 		generalWizard = new Button(wizardType, SWT.RADIO);
@@ -114,12 +123,12 @@ public class GitSelectWizardPage extends WizardPage {
 		afterImportAction.setLayout(new GridLayout(1, false));
 
 		actionAutoShare = new Button(afterImportAction, SWT.RADIO);
-		actionAutoShare
-				.setText(UIText.GitSelectWizardPage_AutoShareButton);
+		actionAutoShare.setText(UIText.GitSelectWizardPage_AutoShareButton);
 		actionAutoShare.addSelectionListener(sl);
 
 		actionDialogShare = new Button(afterImportAction, SWT.RADIO);
-		actionDialogShare.setText(UIText.GitSelectWizardPage_InteractiveShareButton);
+		actionDialogShare
+				.setText(UIText.GitSelectWizardPage_InteractiveShareButton);
 		actionDialogShare.addSelectionListener(sl);
 
 		actionNothing = new Button(afterImportAction, SWT.RADIO);
@@ -194,7 +203,10 @@ public class GitSelectWizardPage extends WizardPage {
 		return -1;
 	}
 
-	private void checkPage() {
+	/**
+	 * check routine
+	 */
+	protected void checkPage() {
 
 		// we save the selected radio button in the preferences
 		IDialogSettings settings = Activator.getDefault().getDialogSettings();

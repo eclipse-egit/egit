@@ -11,7 +11,6 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
@@ -28,7 +27,7 @@ import org.eclipse.ui.ide.IDE.SharedImages;
  * @param <T>
  *            the type
  */
-class RepositoryTreeNode<T> {
+public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 
 	private final Repository myRepository;
 
@@ -38,10 +37,20 @@ class RepositoryTreeNode<T> {
 
 	private final RepositoryTreeNode myParent;
 
-	private String branch;
-
-	RepositoryTreeNode(RepositoryTreeNode parent, RepositoryTreeNodeType type,
-			Repository repository, T treeObject) {
+	/**
+	 * Constructs a node
+	 *
+	 * @param parent
+	 *            the parent (may be null)
+	 * @param type
+	 *            the type
+	 * @param repository
+	 *            the {@link Repository}
+	 * @param treeObject
+	 *            an object (depending on the type)
+	 */
+	public RepositoryTreeNode(RepositoryTreeNode parent,
+			RepositoryTreeNodeType type, Repository repository, T treeObject) {
 		myParent = parent;
 		myRepository = repository;
 		myType = type;
@@ -55,22 +64,6 @@ class RepositoryTreeNode<T> {
 		} else {
 			return getParent().getRepositoryNode();
 		}
-	}
-
-	/**
-	 * We keep this cached in the repository node to avoid repeated lookups
-	 *
-	 * @return the full branch
-	 * @throws IOException
-	 */
-	public String getBranch() throws IOException {
-		if (myType != RepositoryTreeNodeType.REPO) {
-			return getRepositoryNode().getBranch();
-		}
-		if (branch == null) {
-			branch = getRepository().getBranch();
-		}
-		return branch;
 	}
 
 	/**
@@ -249,6 +242,62 @@ class RepositoryTreeNode<T> {
 		return true;
 	}
 
+	public int compareTo(RepositoryTreeNode otherNode) {
+
+		int typeDiff = otherNode.getType().ordinal() - this.myType.ordinal();
+		if (typeDiff != 0)
+			return typeDiff;
+
+		// we only implement this for sorting, so we only have to
+		// implement this for nodes that can be on the same level
+		// i.e. siblings to each other
+
+		switch (myType) {
+
+		case BRANCHES:
+			// fall through
+		case PROJECTS:
+			// fall through
+		case REMOTES:
+			// fall through
+		case WORKINGDIR:
+			return 0;
+
+		case FETCH:
+			// fall through
+		case PROJ:
+			// fall through
+		case PUSH:
+			// fall through
+		case REMOTE:
+			return ((String) myObject)
+					.compareTo((String) otherNode.getObject());
+		case FILE:
+			// fall through
+		case FOLDER:
+			return ((File) myObject).getName().compareTo(
+					((File) otherNode.getObject()).getName());
+		case REF:
+			return ((Ref) myObject).getName().compareTo(
+					((Ref) otherNode.getObject()).getName());
+		case REPO:
+			int nameCompare = ((Repository) myObject).getDirectory()
+					.getParentFile().getName().compareTo(
+							(((Repository) otherNode.getObject())
+									.getDirectory().getParentFile().getName()));
+			if (nameCompare != 0)
+				return nameCompare;
+			// if the name is not unique, let's look at the whole path
+			return ((Repository) myObject).getDirectory().getParentFile()
+					.getParentFile().getPath().compareTo(
+							(((Repository) otherNode.getObject())
+									.getDirectory().getParentFile()
+									.getParentFile().getPath()));
+
+		}
+		return 0;
+	}
+
 	private boolean checkObjectsEqual(Object otherObject) {
 		switch (myType) {
 		case REPO:
@@ -298,38 +347,61 @@ class RepositoryTreeNode<T> {
 		return false;
 	}
 
-	enum RepositoryTreeNodeType {
+	/**
+	 * Specifies the type of a {@link RepositoryTreeNode}
+	 */
+	public enum RepositoryTreeNodeType {
 
+		/**	 */
 		REPO(UIIcons.REPOSITORY.createImage()), //
+		/**	 */
 		PROJ(PlatformUI.getWorkbench().getSharedImages().getImage(
 				SharedImages.IMG_OBJ_PROJECT_CLOSED)), //
+		/**	 */
 		BRANCHES(UIIcons.BRANCHES.createImage()), //
+		/** */
 		REF(UIIcons.BRANCH.createImage()), //
+		/** */
 		HEAD(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FILE)), // TODO icon
+		/** */
 		LOCALBRANCHES(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FOLDER)), //
+		/** */
 		REMOTEBRANCHES(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FOLDER)), //
+		/** */
 		TAGS(UIIcons.TAGS.createImage()), //
+		/** */
 		SYMBOLICREFS(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FOLDER)), //
+		/** */
 		SYMBOLICREF(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FILE)), // TODO icon
+		/** */
 		TAG(UIIcons.TAG.createImage()), //
+		/**	 */
 		FILE(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FILE)), //
+		/**	 */
 		FOLDER(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FOLDER)), //
+		/**	 */
 		PROJECTS(PlatformUI.getWorkbench().getSharedImages().getImage(
 				SharedImages.IMG_OBJ_PROJECT_CLOSED)), //
+		/**	 */
 		REMOTES(UIIcons.REMOTE_REPOSITORY.createImage()), //
+		/**	 */
 		REMOTE(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FOLDER)), //
+		/**	 */
 		FETCH(UIIcons.IMPORT.createImage()), // TODO icon
+		/**	 */
 		PUSH(UIIcons.EXPORT.createImage()), // TODO icon
+		/**	 */
 		WORKINGDIR(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FOLDER)), //
+		/** */
 		ERROR(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_ELCL_STOP)) // TODO icon?
 
@@ -353,6 +425,9 @@ class RepositoryTreeNode<T> {
 
 		}
 
+		/**
+		 * @return the icon for this type
+		 */
 		public Image getIcon() {
 			return myImage;
 		}
