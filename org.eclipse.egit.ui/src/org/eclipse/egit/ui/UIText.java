@@ -1096,6 +1096,54 @@ public class UIText extends NLS {
 	public static String ConfirmationPage_title;
 
 	/** */
+	public static String CreateBranchPage_BranchAlreadyExistsMessage;
+
+	/** */
+	public static String CreateBranchPage_BranchNameLabel;
+
+	/** */
+	public static String CreateBranchPage_BranchNameTooltip;
+
+	/** */
+	public static String CreateBranchPage_CheckingOutMessage;
+
+	/** */
+	public static String CreateBranchPage_CheckoutButton;
+
+	/** */
+	public static String CreateBranchPage_ChooseBranchAndNameMessage;
+
+	/** */
+	public static String CreateBranchPage_ChosseNameMessage;
+
+	/** */
+	public static String CreateBranchPage_CreateLocalBasedTitle;
+
+	/** */
+	public static String CreateBranchPage_CreateLocalTitle;
+
+	/** */
+	public static String CreateBranchPage_CreateRemoteBaseOnTitle;
+
+	/** */
+	public static String CreateBranchPage_CreateRemoteTitle;
+
+	/** */
+	public static String CreateBranchPage_CreatingBranchMessage;
+
+	/** */
+	public static String CreateBranchPage_MissingNameMessage;
+
+	/** */
+	public static String CreateBranchPage_MissingSourceMessage;
+
+	/** */
+	public static String CreateBranchPage_SourceBranchLabel;
+
+	/** */
+	public static String CreateBranchPage_SourceBranchTooltip;
+
+	/** */
 	public static String PushResultTable_columnStatusRepo;
 
 	/** */
@@ -1507,6 +1555,12 @@ public class UIText extends NLS {
 	public static String RepositoriesView_AddRepository_Tooltip;
 
 	/** */
+	public static String RepositoriesView_BranchCreationFailureMessage;
+
+	/** */
+	public static String RepositoriesView_BranchDeletionFailureMessage;
+
+	/** */
 	public static String RepositoriesView_Branches_Nodetext;
 
 	/** */
@@ -1528,10 +1582,16 @@ public class UIText extends NLS {
 	public static String RepositoriesView_ConfigurePushMenu;
 
 	/** */
+	public static String RepositoriesView_ConfirmBranchDeletionMessage;
+
+	/** */
 	public static String RepositoriesView_ConfirmDeleteRemoteHeader;
 
 	/** */
 	public static String RepositoriesView_ConfirmDeleteRemoteMessage;
+
+	/** */
+	public static String RepositoriesView_ConfirmDeleteTitle;
 
 	/** */
 	public static String RepositoriesView_ConfirmProjectDeletion_Question;
@@ -1547,6 +1607,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositoriesView_CreatePush_menu;
+
+	/** */
+	public static String RepositoriesView_DeleteBranchMenu;
 
 	/** */
 	public static String RepositoriesView_Error_WindowTitle;
@@ -1574,6 +1637,15 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositoriesView_LinkWithSelection_action;
+
+	/** */
+	public static String RepositoriesView_NewBranchTitle;
+
+	/** */
+	public static String RepositoriesView_NewLocalBranchMenu;
+
+	/** */
+	public static String RepositoriesView_NewRemoteBranchMenu;
 
 	/** */
 	public static String RepositoriesView_NewRemoteMenu;
