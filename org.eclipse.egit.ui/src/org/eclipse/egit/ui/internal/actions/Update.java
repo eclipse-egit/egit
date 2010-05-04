@@ -11,7 +11,7 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.util.List;
 
-import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.core.op.UpdateOperation;
 
 /**
@@ -20,7 +20,7 @@ import org.eclipse.egit.core.op.UpdateOperation;
  * @see UpdateOperation
  */
 public class Update extends AbstractOperationAction {
-	protected IWorkspaceRunnable createOperation(final List sel) {
+	protected IEGitOperation createOperation(final List sel) {
 		return sel.isEmpty() ? null : new UpdateOperation(sel);
 	}
 }

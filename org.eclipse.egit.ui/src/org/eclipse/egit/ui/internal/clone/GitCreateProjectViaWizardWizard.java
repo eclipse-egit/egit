@@ -195,7 +195,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 							ConnectProviderOperation connectProviderOperation = new ConnectProviderOperation(
 									prj, myRepository.getDirectory());
 							try {
-								connectProviderOperation.run(monitor);
+								connectProviderOperation.execute(monitor);
 							} catch (CoreException e) {
 								throw new InvocationTargetException(e);
 							}

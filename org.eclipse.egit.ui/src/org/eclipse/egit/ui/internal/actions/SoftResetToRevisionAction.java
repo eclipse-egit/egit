@@ -10,7 +10,7 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.util.List;
 
-import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.jgit.lib.AnyObjectId;
 
@@ -20,7 +20,7 @@ import org.eclipse.jgit.lib.AnyObjectId;
 public class SoftResetToRevisionAction extends AbstractRevObjectAction {
 
 	@Override
-	protected IWorkspaceRunnable createOperation(List selection) {
+	protected IEGitOperation createOperation(List selection) {
 		return new ResetOperation(getActiveRepository(),
 				((AnyObjectId) selection.get(0)).name(),
 				ResetOperation.ResetType.SOFT);

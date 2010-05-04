@@ -1270,7 +1270,13 @@ public class UIText extends NLS {
 	public static String WindowCachePreferencePage_packedGitMMAP;
 
 	/** */
+	public static String BranchAction_branchFailed;
+
+	/** */
 	public static String BranchAction_cannotCheckout;
+
+	/** */
+	public static String BranchAction_checkingOut;
 
 	/** */
 	public static String BranchAction_errorSwitchingBranches;

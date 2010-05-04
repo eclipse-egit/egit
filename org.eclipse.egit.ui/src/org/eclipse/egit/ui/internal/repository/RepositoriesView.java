@@ -460,7 +460,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 								ConnectProviderOperation connectProviderOperation = new ConnectProviderOperation(
 										project, gitDir);
 								connectProviderOperation
-										.run(new SubProgressMonitor(monitor, 20));
+										.execute(new SubProgressMonitor(monitor, 20));
 
 							}
 
@@ -518,26 +518,13 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 								final BranchOperation op = new BranchOperation(
 										repo, refName);
-								IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
-
-									public void run(IProgressMonitor myMonitor)
-											throws CoreException {
-										op.run(myMonitor);
-									}
-								};
-
 								try {
-									ResourcesPlugin.getWorkspace().run(
-											wsr,
-											ResourcesPlugin.getWorkspace()
-													.getRoot(),
-											IWorkspace.AVOID_UPDATE, monitor);
+									op.execute(monitor);
 									scheduleRefresh();
 								} catch (CoreException e1) {
 									return new Status(IStatus.ERROR, Activator
 											.getPluginId(), e1.getMessage(), e1);
 								}
-
 								return Status.OK_STATUS;
 							}
 						};

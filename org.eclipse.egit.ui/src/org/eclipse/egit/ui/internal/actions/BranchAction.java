@@ -14,19 +14,19 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.BranchOperation;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
-import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.team.core.TeamException;
 
 /**
  * Action for selecting a branch and checking it out.
@@ -54,37 +54,24 @@ public class BranchAction extends RepositoryAction {
 		}
 
 		final String refName = dialog.getRefName();
-		try {
-			getTargetPart().getSite().getWorkbenchWindow().run(true, false,
-					new IRunnableWithProgress() {
-				public void run(final IProgressMonitor monitor)
-				throws InvocationTargetException {
-					try {
-						new BranchOperation(repository, refName).run(monitor);
-						GitLightweightDecorator.refresh();
-					} catch (final CoreException e) {
-						if (GitTraceLocation.UI.isActive())
-							GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
-						Display.getDefault().asyncExec(new Runnable() {
-							public void run() {
-								handle(
-										new TeamException(e.getStatus()),
-										UIText.BranchAction_errorSwitchingBranches,
-										UIText.BranchAction_unableToSwitchBranches);
-							}
-						});
-					}
+
+		String jobname = NLS.bind(UIText.BranchAction_checkingOut, refName);
+		Job job = new Job(jobname) {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					new BranchOperation(repository, refName).execute(monitor);
+				} catch (CoreException e) {
+					return Activator.createErrorStatus(
+							UIText.BranchAction_branchFailed, e);
+				} finally {
+					GitLightweightDecorator.refresh();
 				}
-			});
-		} catch (InvocationTargetException e) {
-			if (GitTraceLocation.UI.isActive())
-				GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
-			throw e;
-		} catch (InterruptedException e) {
-			if (GitTraceLocation.UI.isActive())
-				GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
-			throw new InvocationTargetException(e);
-		}
+				return Status.OK_STATUS;
+			}
+		};
+		job.setUser(true);
+		job.schedule();
 	}
 
 	@Override

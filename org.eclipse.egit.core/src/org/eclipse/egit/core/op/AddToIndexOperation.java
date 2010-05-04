@@ -17,7 +17,6 @@ import java.util.IdentityHashMap;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -31,7 +30,7 @@ import org.eclipse.jgit.lib.GitIndex.Entry;
 
 /**
  */
-public class AddToIndexOperation implements IWorkspaceRunnable {
+public class AddToIndexOperation implements IEGitOperation {
 	private final Collection rsrcList;
 	private final Collection<IFile> notAddedFiles;
 
@@ -50,14 +49,10 @@ public class AddToIndexOperation implements IWorkspaceRunnable {
 		notAddedFiles = new ArrayList<IFile>();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.eclipse.core.resources.IWorkspaceRunnable#run(org.eclipse.core.runtime
-	 * .IProgressMonitor)
+	/* (non-Javadoc)
+	 * @see org.eclipse.egit.core.op.IEGitOperation#execute(org.eclipse.core.runtime.IProgressMonitor)
 	 */
-	public void run(IProgressMonitor m) throws CoreException {
+	public void execute(IProgressMonitor m) throws CoreException {
 		IProgressMonitor monitor;
 		if (m == null)
 			monitor = new NullProgressMonitor();
