@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALuX///14\u003d",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-02T23:36:45Z",
+      "side": 1,
+      "message": "since org.eclipse.egit.core.test is a test fragment now we don\u0027t need to make it x-friend anymore, right ?",
+      "revId": "3b56c3a45446b2fc963bbfc468dc5307c813cf63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
