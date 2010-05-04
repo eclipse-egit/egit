@@ -99,8 +99,8 @@ class SourceBranchPage extends BaseWizardPage {
 		return availableRefs.size() == selectedRefs.size();
 	}
 
-	boolean selectionEquals(final List<Ref> selectedRefs, final Ref head) {
-		return this.selectedRefs.equals(selectedRefs) && this.head == head;
+	boolean selectionEquals(final List<Ref> actSelectedRef, final Ref actHead) {
+		return this.selectedRefs.equals(actSelectedRef) && this.head == actHead;
 	}
 
 	public void createControl(final Composite parent) {
