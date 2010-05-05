@@ -1358,6 +1358,21 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 		refreshAction.setImageDescriptor(UIIcons.ELCL16_REFRESH);
 
 		getViewSite().getActionBars().getToolBarManager().add(refreshAction);
+
+		IAction collapseAllAction = new Action(
+				UIText.RepositoriesView_CollapseAllMenu) {
+
+			@Override
+			public void run() {
+				tv.collapseAll();
+			}
+
+		};
+
+		collapseAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
+
+		getViewSite().getActionBars().getToolBarManager()
+				.add(collapseAllAction);
 	}
 
 	/**
