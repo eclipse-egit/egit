@@ -37,7 +37,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.Dialog;
@@ -82,8 +81,6 @@ public class GitProjectsImportPage extends WizardPage {
 	public static final String METADATA_FOLDER = ".metadata"; //$NON-NLS-1$
 
 	private IImportStructureProvider structureProvider;
-
-	private File gitRepositoryDir;
 
 	class ProjectRecord {
 		File projectSystemFile;
@@ -204,33 +201,18 @@ public class GitProjectsImportPage extends WizardPage {
 	// to minimize searches
 	private long lastModified;
 
-	private Button shareCheckBox;
-
 	private Button selectAll;
 
 	private Button deselectAll;
 
-	private boolean share;
-
-	private final boolean showShare;
-
 	/**
 	 * Creates a new project creation wizard page.
-	 * @param showShareCheckbox
 	 */
-	public GitProjectsImportPage(boolean showShareCheckbox) {
-		super("gitWizardExternalProjectsPage"); //$NON-NLS-1$
-		this.showShare = showShareCheckbox;
+	public GitProjectsImportPage() {
+		super(GitProjectsImportPage.class.getName());
 		setPageComplete(false);
 		setTitle(UIText.WizardProjectsImportPage_ImportProjectsTitle);
 		setDescription(UIText.WizardProjectsImportPage_ImportProjectsDescription);
-	}
-
-	/**
-	 *
-	 */
-	public GitProjectsImportPage(){
-		this(true);
 	}
 
 	public void createControl(Composite parent) {
@@ -246,34 +228,8 @@ public class GitProjectsImportPage extends WizardPage {
 
 		createProjectsRoot(workArea);
 		createProjectsList(workArea);
-		createOptionsArea(workArea);
 		Dialog.applyDialogFont(workArea);
 
-	}
-
-	/**
-	 * Create the area with the extra options.
-	 *
-	 * @param workArea
-	 */
-	private void createOptionsArea(Composite workArea) {
-		Composite optionsGroup = new Composite(workArea, SWT.NONE);
-		optionsGroup.setLayout(new GridLayout());
-		optionsGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-		if (showShare) {
-			shareCheckBox = new Button(optionsGroup, SWT.CHECK);
-			shareCheckBox.setText(UIText.WizardProjectsImportPage_enableGit);
-			shareCheckBox.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-			shareCheckBox.setSelection(share = true);
-			shareCheckBox.addSelectionListener(new SelectionAdapter() {
-				public void widgetSelected(SelectionEvent e) {
-					share = shareCheckBox.getSelection();
-				}
-			});
-		} else {
-			share = false;
-		}
 	}
 
 	/**
@@ -325,7 +281,8 @@ public class GitProjectsImportPage extends WizardPage {
 			}
 
 		};
-
+		// we have to use the old constructor in order to be 3.4 compatible
+		// once we drop 3.4 support, we should change to the new constructor
 		FilteredTree filteredTree = new FilteredTree(listComposite, SWT.CHECK
 				| SWT.BORDER, filter);
 		filteredTree.setInitialText(UIText.WizardProjectsImportPage_filterText);
@@ -353,11 +310,12 @@ public class GitProjectsImportPage extends WizardPage {
 			}
 
 			public void dispose() {
-
+				// ignore
 			}
 
 			public void inputChanged(Viewer viewer, Object oldInput,
 					Object newInput) {
+				// ignore
 			}
 
 		});
@@ -470,15 +428,6 @@ public class GitProjectsImportPage extends WizardPage {
 	}
 
 	/**
-	 * Set the git directory which will contain the repository
-	 *
-	 * @param gitDir
-	 */
-	public void setGitDir(File gitDir) {
-		this.gitRepositoryDir = gitDir;
-	}
-
-	/**
 	 * Update the list of projects based on path. This will not check any
 	 * projects.
 	 *
@@ -487,11 +436,11 @@ public class GitProjectsImportPage extends WizardPage {
 	void setProjectsList(final String path) {
 		// on an empty path empty selectedProjects
 		if (path == null || path.length() == 0) {
-			setMessage(UIText.WizardProjectsImportPage_ImportProjectsDescription);
 			selectedProjects = new ProjectRecord[0];
 			projectsList.refresh(true);
 			setPageComplete(checkedItems.size() > 0);
 			lastPath = path;
+			setErrorMessage(UIText.GitProjectsImportPage_NoProjectsMessage);
 			return;
 		}
 
@@ -502,6 +451,8 @@ public class GitProjectsImportPage extends WizardPage {
 			// change, no refreshing is required
 			return;
 		}
+
+		setErrorMessage(null);
 
 		lastPath = path;
 		lastModified = modified;
@@ -535,6 +486,9 @@ public class GitProjectsImportPage extends WizardPage {
 							checkedItems.add(selectedProjects[index]);
 							index++;
 						}
+
+						if (files.isEmpty())
+							setErrorMessage(UIText.GitProjectsImportPage_NoProjectsMessage);
 					} else {
 						monitor.worked(60);
 					}
@@ -560,7 +514,7 @@ public class GitProjectsImportPage extends WizardPage {
 	}
 
 	private void enableSelectAllButtons() {
-		if (projectsList.getTree().getItemCount()>0){
+		if (projectsList.getTree().getItemCount() > 0) {
 			selectAll.setEnabled(true);
 			deselectAll.setEnabled(true);
 		} else {
@@ -601,8 +555,8 @@ public class GitProjectsImportPage extends WizardPage {
 				directoriesVisited.add(directory.getCanonicalPath());
 			} catch (IOException exception) {
 				StatusManager.getManager().handle(
-						new Status(IStatus.ERROR, Activator.getPluginId(), exception
-								.getLocalizedMessage(), exception));
+						new Status(IStatus.ERROR, Activator.getPluginId(),
+								exception.getLocalizedMessage(), exception));
 			}
 		}
 
@@ -629,7 +583,8 @@ public class GitProjectsImportPage extends WizardPage {
 						}
 					} catch (IOException exception) {
 						StatusManager.getManager().handle(
-								new Status(IStatus.ERROR, Activator.getPluginId(), exception
+								new Status(IStatus.ERROR, Activator
+										.getPluginId(), exception
 										.getLocalizedMessage(), exception));
 
 					}
@@ -674,7 +629,8 @@ public class GitProjectsImportPage extends WizardPage {
 		} catch (InvocationTargetException e) {
 			// one of the steps resulted in a core exception
 			Throwable t = e.getTargetException();
-			Activator.handleError(UIText.WizardProjectImportPage_errorMessage, t, true);
+			Activator.handleError(UIText.WizardProjectImportPage_errorMessage,
+					t, true);
 			return false;
 		}
 		return true;
@@ -716,15 +672,8 @@ public class GitProjectsImportPage extends WizardPage {
 					UIText.WizardProjectsImportPage_CreateProjectsTask, 100);
 			project.create(record.description, new SubProgressMonitor(monitor,
 					30));
-			int openTicks = share ? 50 : 70;
 			project.open(IResource.BACKGROUND_REFRESH, new SubProgressMonitor(
-					monitor, openTicks));
-			if (share) {
-				ConnectProviderOperation connectProviderOperation = new ConnectProviderOperation(
-						project, gitRepositoryDir);
-				connectProviderOperation
-						.execute(new SubProgressMonitor(monitor, 20));
-			}
+					monitor, 50));
 		} catch (CoreException e) {
 			throw new InvocationTargetException(e);
 		} finally {
