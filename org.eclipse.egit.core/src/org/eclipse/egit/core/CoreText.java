@@ -47,6 +47,12 @@ public class CoreText extends NLS {
 	public static String ConnectProviderOperation_ConnectingProject;
 
 	/** */
+	public static String DiscardChangesOperation_discardFailed;
+
+	/** */
+	public static String DiscardChangesOperation_repoNotFound;
+
+	/** */
 	public static String DisconnectProviderOperation_disconnecting;
 
 	/** */
