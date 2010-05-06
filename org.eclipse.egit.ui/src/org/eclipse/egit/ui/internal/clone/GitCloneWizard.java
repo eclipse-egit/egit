@@ -105,11 +105,16 @@ public class GitCloneWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		return performClone(false);
+		try {
+			return performClone(false);
+		} finally {
+			setWindowTitle(UIText.GitCloneWizard_title);
+		}
 	}
 
 	boolean performClone(boolean background) {
 		final URIish uri = cloneSource.getSelection().getURI();
+		setWindowTitle(NLS.bind(UIText.GitCloneWizard_jobName, uri.toString()));
 		final boolean allSelected;
 		final Collection<Ref> selectedBranches;
 		if (validSource.isSourceRepoEmpty()) {
