@@ -20,11 +20,15 @@ public class GitImportRepoWizard {
 		bot.menu("File").menu("Import...").click();
 		bot.shell("Import").activate();
 
-		bot.tree().expandNode("Git").select("Git Repository");
+		bot.tree().expandNode("Git").select("Projects from Git");
 
 		bot.button("Next >").click();
 
-		bot.shell("Import Git Repository").activate();
+		bot.shell("Import Projects from Git").activate();
+		
+		bot.button("Clone...").click();
+		
+		bot.shell("Clone Git Repository").activate();
 
 		return new RepoPropertiesPage();
 	}
