@@ -26,7 +26,6 @@ import java.util.TreeSet;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -39,14 +38,12 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.op.BranchOperation;
-import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
@@ -118,7 +115,7 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
- *
+ * 
  * The Git Repositories view.
  * <p>
  * This keeps track of a bunch of local directory names each of which represent
@@ -130,7 +127,7 @@ import org.osgi.service.prefs.BackingStoreException;
  * <p>
  * TODO
  * <li>Clarification whether to show projects, perhaps configurable switch</li>
- *
+ * 
  */
 public class RepositoriesView extends ViewPart implements ISelectionProvider,
 		IShowInTarget {
@@ -175,7 +172,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 	/**
 	 * TODO move to utility class
-	 *
+	 * 
 	 * @return the directories as configured for this view
 	 */
 	public static List<String> getDirs() {
@@ -454,85 +451,10 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 	}
 
-	@SuppressWarnings("unchecked")
 	private void addMenuItemsForTreeSelection(Menu men) {
 
 		final IStructuredSelection sel = (IStructuredSelection) tv
 				.getSelection();
-
-		boolean importableProjectsOnly = true;
-
-		for (Object node : sel.toArray()) {
-			RepositoryTreeNode tnode = (RepositoryTreeNode) node;
-			importableProjectsOnly = tnode.getType() == RepositoryTreeNodeType.PROJ;
-			if (!importableProjectsOnly)
-				break;
-		}
-
-		if (importableProjectsOnly) {
-			MenuItem sync = new MenuItem(men, SWT.PUSH);
-			sync.setText(UIText.RepositoriesView_ImportProject_MenuItem);
-
-			sync.addSelectionListener(new SelectionAdapter() {
-
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-
-					IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
-
-						public void run(IProgressMonitor monitor)
-								throws CoreException {
-
-							for (Object selected : sel.toArray()) {
-								RepositoryTreeNode<File> projectNode = (RepositoryTreeNode<File>) selected;
-								File file = projectNode.getObject();
-
-								IProjectDescription pd = ResourcesPlugin
-										.getWorkspace().newProjectDescription(
-												file.getName());
-								IPath locationPath = new Path(file
-										.getAbsolutePath());
-
-								pd.setLocation(locationPath);
-
-								ResourcesPlugin.getWorkspace().getRoot()
-										.getProject(pd.getName()).create(pd,
-												monitor);
-								IProject project = ResourcesPlugin
-										.getWorkspace().getRoot().getProject(
-												pd.getName());
-								project.open(monitor);
-
-								File gitDir = projectNode.getRepository()
-										.getDirectory();
-
-								ConnectProviderOperation connectProviderOperation = new ConnectProviderOperation(
-										project, gitDir);
-								connectProviderOperation
-										.execute(new SubProgressMonitor(
-												monitor, 20));
-
-							}
-
-						}
-					};
-
-					try {
-
-						ResourcesPlugin.getWorkspace().run(wsr,
-								ResourcesPlugin.getWorkspace().getRoot(),
-								IWorkspace.AVOID_UPDATE,
-								new NullProgressMonitor());
-
-						scheduleRefresh();
-					} catch (CoreException e1) {
-						Activator.logError(e1.getMessage(), e1);
-					}
-
-				}
-
-			});
-		}
 
 		// from here on, we only deal with single selection
 		if (sel.size() > 1)
@@ -1610,7 +1532,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 	/**
 	 * Adds a directory to the list if it is not already there
-	 *
+	 * 
 	 * @param file
 	 * @return see {@link Collection#add(Object)}
 	 */
@@ -1640,7 +1562,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 	 * {@link Repository} objects suitable for the tree content provider
 	 * <p>
 	 * TODO move to some utility class
-	 *
+	 * 
 	 * @param monitor
 	 * @return a list of nodes
 	 * @throws InterruptedException
@@ -1735,7 +1657,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 	/**
 	 * Opens the tree and marks the folder to which a project is pointing
-	 *
+	 * 
 	 * @param resource
 	 *            TODO exceptions?
 	 */
