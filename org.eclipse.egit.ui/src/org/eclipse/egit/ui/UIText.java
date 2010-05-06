@@ -1723,6 +1723,9 @@ public class UIText extends NLS {
 	public static String DiscardChangesAction_confirmActionMessage;
 
 	/** */
+	public static String DiscardChangesAction_discardChanges;
+
+	/** */
 	public static String DiscardChangesAction_unexpectedErrorTitle;
 
 	/** */
