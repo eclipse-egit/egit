@@ -124,6 +124,9 @@ public class UIIcons {
 	/** Branch icon */
 	public static ImageDescriptor BRANCH;
 
+	/** Clone Icon */
+	public static ImageDescriptor CLONEGIT;
+
 	private static final URL base;
 
 	static {
@@ -168,6 +171,7 @@ public class UIIcons {
 		TAG = map("obj16/version_rep.gif"); //$NON-NLS-1$
 		BRANCH = map("obj16/branch.gif"); //$NON-NLS-1$
 		COLLAPSEALL = map("elcl16/collapseall.gif"); //$NON-NLS-1$
+		CLONEGIT = map("obj16/cloneGit.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {

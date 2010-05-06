@@ -1321,7 +1321,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 		};
 		importAction.setToolTipText(UIText.RepositoriesView_Clone_Tooltip);
 
-		importAction.setImageDescriptor(UIIcons.IMPORT);
+		importAction.setImageDescriptor(UIIcons.CLONEGIT);
 
 		getViewSite().getActionBars().getToolBarManager().add(importAction);
 
