@@ -1576,6 +1576,12 @@ public class UIText extends NLS {
 	public static String RepositoriesView_CheckOut_MenuItem;
 
 	/** */
+	public static String RepositoriesView_ClipboardContentNoGitRepoMessage;
+
+	/** */
+	public static String RepositoriesView_ClipboardContentNotDirectoryMessage;
+
+	/** */
 	public static String RepositoriesView_Clone_Tooltip;
 
 	/** */
@@ -1657,10 +1663,22 @@ public class UIText extends NLS {
 	public static String RepositoriesView_NewRemoteMenu;
 
 	/** */
+	public static String RepositoriesView_NothingToPasteMessage;
+
+	/** */
 	public static String RepositoriesView_OpenInTextEditor_menu;
 
 	/** */
 	public static String RepositoriesView_OpenPropertiesMenu;
+
+	/** */
+	public static String RepositoriesView_PasteFailureTitle;
+
+	/** */
+	public static String RepositoriesView_PasteMenu;
+
+	/** */
+	public static String RepositoriesView_PasteRepoAlreadyThere;
 
 	/** */
 	public static String RepositoriesView_Refresh_Button;
