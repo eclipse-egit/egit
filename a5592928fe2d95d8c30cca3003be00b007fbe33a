@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun////I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitImportWithDirectoriesPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-05T12:25:51Z",
+      "side": 1,
+      "message": "style: unnecessary blank line",
+      "revId": "a5592928fe2d95d8c30cca3003be00b007fbe33a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun////E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitImportWithDirectoriesPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-05T12:25:51Z",
+      "side": 1,
+      "message": "style: unnecessary blank line",
+      "revId": "a5592928fe2d95d8c30cca3003be00b007fbe33a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun////A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitImportWithDirectoriesPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-05T12:25:51Z",
+      "side": 1,
+      "message": "style: unnecessary blank line",
+      "revId": "a5592928fe2d95d8c30cca3003be00b007fbe33a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///+8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitImportWizard.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-05T12:25:51Z",
+      "side": 1,
+      "message": "why have some fields the prefix \"my\" ?",
+      "revId": "a5592928fe2d95d8c30cca3003be00b007fbe33a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///+4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitImportWizard.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-05T12:25:51Z",
+      "side": 1,
+      "message": "style: unnecessary blank line",
+      "revId": "a5592928fe2d95d8c30cca3003be00b007fbe33a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///+0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitImportWizard.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-05T12:25:51Z",
+      "side": 1,
+      "message": "style: unnecessary blank line",
+      "revId": "a5592928fe2d95d8c30cca3003be00b007fbe33a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///+w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-05T12:25:51Z",
+      "side": 1,
+      "message": "should be marked as TODO",
+      "revId": "a5592928fe2d95d8c30cca3003be00b007fbe33a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///+s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitSelectRepositoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-05T12:25:51Z",
+      "side": 1,
+      "message": "style: unnecessary blank line",
+      "revId": "a5592928fe2d95d8c30cca3003be00b007fbe33a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///+o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1297,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-05T12:25:51Z",
+      "side": 1,
+      "message": "JavaDoc missing, what is this method good for ?",
+      "revId": "a5592928fe2d95d8c30cca3003be00b007fbe33a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///+k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryTreeNode.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-05T12:25:51Z",
+      "side": 1,
+      "message": "style: unnecessary blank line",
+      "revId": "a5592928fe2d95d8c30cca3003be00b007fbe33a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
