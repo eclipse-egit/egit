@@ -19,7 +19,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.ide.IDE.SharedImages;
 
 /**
  * A node in the Git Repositories view tree
@@ -98,14 +97,6 @@ public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 	 * <td>{@link String}</td>
 	 * </tr>
 	 * <tr>
-	 * <td>{@link RepositoryTreeNodeType#PROJ}</td>
-	 * <td>{@link File}</td>
-	 * </tr>
-	 * <tr>
-	 * <td>{@link RepositoryTreeNodeType#PROJECTS}</td>
-	 * <td>{@link String}</td>
-	 * </tr>
-	 * <tr>
 	 * <td>{@link RepositoryTreeNodeType#LOCALBRANCHES}</td>
 	 * <td>{@link String}</td>
 	 * </tr>
@@ -144,8 +135,6 @@ public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 		switch (myType) {
 		case REPO:
 			// fall through
-		case PROJECTS:
-			// fall through
 		case REMOTES:
 			// fall through
 		case LOCALBRANCHES:
@@ -162,8 +151,6 @@ public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 					+ ((myObject == null) ? 0 : ((Repository) myObject)
 							.getDirectory().hashCode());
 			break;
-		case HEAD:
-			// fall through
 		case REF:
 			// fall through
 		case TAG:
@@ -174,8 +161,8 @@ public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 					+ ((myObject == null) ? 0 : ((Ref) myObject).getName()
 							.hashCode());
 			break;
-		case PROJ:
 		case FILE:
+			// fall through
 		case FOLDER:
 			result = prime
 					* result
@@ -255,16 +242,20 @@ public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 
 		case BRANCHES:
 			// fall through
-		case PROJECTS:
+		case LOCALBRANCHES:
+			// fall through
+		case REMOTEBRANCHES:
 			// fall through
 		case REMOTES:
+			// fall through
+		case SYMBOLICREFS:
+			// fall through
+		case TAGS:
 			// fall through
 		case WORKINGDIR:
 			return 0;
 
 		case FETCH:
-			// fall through
-		case PROJ:
 			// fall through
 		case PUSH:
 			// fall through
@@ -276,6 +267,10 @@ public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 		case FOLDER:
 			return ((File) myObject).getName().compareTo(
 					((File) otherNode.getObject()).getName());
+		case TAG:
+			// fall through
+		case SYMBOLICREF:
+			// fall through
 		case REF:
 			return ((Ref) myObject).getName().compareTo(
 					((Ref) otherNode.getObject()).getName());
@@ -301,8 +296,6 @@ public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 		switch (myType) {
 		case REPO:
 			// fall through
-		case PROJECTS:
-			// fall through
 		case REMOTES:
 			// fall through
 		case BRANCHES:
@@ -320,15 +313,11 @@ public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 					((Repository) otherObject).getDirectory());
 		case REF:
 			// fall through
-		case HEAD:
-			// fall through
 		case TAG:
 			// fall through
 		case SYMBOLICREF:
 			return ((Ref) myObject).getName().equals(
 					((Ref) otherObject).getName());
-		case PROJ:
-			// fall through
 		case FOLDER:
 			// fall through
 		case FILE:
@@ -354,15 +343,9 @@ public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 		/**	 */
 		REPO(UIIcons.REPOSITORY.createImage()), //
 		/**	 */
-		PROJ(PlatformUI.getWorkbench().getSharedImages().getImage(
-				SharedImages.IMG_OBJ_PROJECT_CLOSED)), //
-		/**	 */
 		BRANCHES(UIIcons.BRANCHES.createImage()), //
 		/** */
 		REF(UIIcons.BRANCH.createImage()), //
-		/** */
-		HEAD(PlatformUI.getWorkbench().getSharedImages().getImage(
-				ISharedImages.IMG_OBJ_FILE)), // TODO icon
 		/** */
 		LOCALBRANCHES(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FOLDER)), //
@@ -385,9 +368,6 @@ public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 		/**	 */
 		FOLDER(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FOLDER)), //
-		/**	 */
-		PROJECTS(PlatformUI.getWorkbench().getSharedImages().getImage(
-				SharedImages.IMG_OBJ_PROJECT_CLOSED)), //
 		/**	 */
 		REMOTES(UIIcons.REMOTE_REPOSITORY.createImage()), //
 		/**	 */
