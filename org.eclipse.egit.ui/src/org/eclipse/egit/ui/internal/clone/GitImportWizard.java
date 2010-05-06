@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.clone;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,149 +24,69 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IImportWizard;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.NewWizardAction;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 /**
- * A wizard used to import existing projects from a {@link Repository}
+ * The import wizard including options to clone/add repositories
  */
-public class GitCreateProjectViaWizardWizard extends Wizard implements
-		ProjectCreator {
-
-	private final Repository myRepository;
-
-	private final String myGitDir;
+public class GitImportWizard extends Wizard implements ProjectCreator,
+		IImportWizard {
 
 	private final IProject[] previousProjects;
 
-	private GitSelectWizardPage mySelectionPage;
+	private GitSelectRepositoryPage selectRepoPage = new GitSelectRepositoryPage();
 
-	private GitCreateGeneralProjectPage myCreateGeneralProjectPage;
+	private GitImportWithDirectoriesPage importWithDirectoriesPage = new GitImportWithDirectoriesPage();
 
-	private GitProjectsImportPage myProjectsImportPage;
+	private GitProjectsImportPage projectsImportPage = new GitProjectsImportPage();
 
-	private GitShareProjectsPage mySharePage;
+	private GitCreateGeneralProjectPage createGeneralProjectPage = new GitCreateGeneralProjectPage();
+
+	private GitShareProjectsPage shareProjectsPage = new GitShareProjectsPage();
 
 	/**
-	 * @param repository
-	 * @param path
+	 * Default constructor
 	 */
-	public GitCreateProjectViaWizardWizard(Repository repository, String path) {
-		super();
+	public GitImportWizard() {
+		setWindowTitle(UIText.GitImportWizard_WizardTitle);
+		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 		previousProjects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
-		myRepository = repository;
-		myGitDir = path;
-		setWindowTitle(NLS.bind(
-				UIText.GitCreateProjectViaWizardWizard_WizardTitle,
-				myRepository.getDirectory().getPath()));
-
-		// the "Import" wizard could be started like this,
-		// but throws an Exception if started within a wizard
-		// context (no active workbench window found) and the
-		// list of available wizards is empty
-		// -> investigate if we can include that wizard
-		//
-		// IHandlerService handlerService = (IHandlerService)
-		// PlatformUI.getWorkbench().getService(IHandlerService.class);
-		//
-		// handlerService.executeCommand("org.eclipse.ui.file.import",
-
 	}
 
 	@Override
 	public void addPages() {
-
-		mySelectionPage = new GitSelectWizardPage();
-		addPage(mySelectionPage);
-		myCreateGeneralProjectPage = new GitCreateGeneralProjectPage(myGitDir);
-		addPage(myCreateGeneralProjectPage);
-		myProjectsImportPage = new GitProjectsImportPage() {
-
-			@Override
-			public void setVisible(boolean visible) {
-				setProjectsList(myGitDir);
-				super.setVisible(visible);
-			}
-
-		};
-		addPage(myProjectsImportPage);
-		mySharePage = new GitShareProjectsPage();
-		addPage(mySharePage);
-	}
-
-	@Override
-	public IWizardPage getNextPage(IWizardPage page) {
-
-		if (page == mySelectionPage) {
-
-			switch (mySelectionPage.getWizardSelection()) {
-			case GitSelectWizardPage.EXISTING_PROJECTS_WIZARD:
-				return myProjectsImportPage;
-			case GitSelectWizardPage.NEW_WIZARD:
-				if (mySelectionPage.getActionSelection() != GitSelectWizardPage.ACTION_DIALOG_SHARE)
-					return null;
-				else
-					return mySharePage;
-
-			case GitSelectWizardPage.GENERAL_WIZARD:
-				return myCreateGeneralProjectPage;
-
-			}
-
-			return super.getNextPage(page);
-
-		} else if (page == myCreateGeneralProjectPage
-				|| page == myProjectsImportPage) {
-
-			if (mySelectionPage.getActionSelection() != GitSelectWizardPage.ACTION_DIALOG_SHARE)
-				return null;
-			else
-				return mySharePage;
-		}
-		return super.getNextPage(page);
-	}
-
-	@Override
-	public boolean canFinish() {
-
-		boolean showSharePage = mySelectionPage.getActionSelection() == GitSelectWizardPage.ACTION_DIALOG_SHARE;
-		boolean showShareComplete = !showSharePage
-				|| mySharePage.isPageComplete();
-
-		switch (mySelectionPage.getWizardSelection()) {
-		case GitSelectWizardPage.EXISTING_PROJECTS_WIZARD:
-			return myProjectsImportPage.isPageComplete() && showShareComplete;
-		case GitSelectWizardPage.NEW_WIZARD:
-			return showShareComplete;
-		case GitSelectWizardPage.GENERAL_WIZARD:
-			return myCreateGeneralProjectPage.isPageComplete()
-					&& showShareComplete;
-		}
-		return super.canFinish();
-
+		addPage(selectRepoPage);
+		addPage(importWithDirectoriesPage);
+		addPage(projectsImportPage);
+		addPage(createGeneralProjectPage);
+		addPage(shareProjectsPage);
 	}
 
 	@Override
 	public boolean performFinish() {
-
 		try {
-
-			final int actionSelection = mySelectionPage.getActionSelection();
+			final int actionSelection = importWithDirectoriesPage
+					.getActionSelection();
 
 			final IProject[] projectsToShare;
 			if (actionSelection == GitSelectWizardPage.ACTION_DIALOG_SHARE)
-				projectsToShare = mySharePage.getSelectedProjects();
+				projectsToShare = shareProjectsPage.getSelectedProjects();
 			else
 				projectsToShare = null;
+
+			final File repoDir = selectRepoPage.getRepository().getDirectory();
 
 			getContainer().run(true, true, new IRunnableWithProgress() {
 
@@ -194,7 +115,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 								throw new InterruptedException();
 							//
 							ConnectProviderOperation connectProviderOperation = new ConnectProviderOperation(
-									prj, myRepository.getDirectory());
+									prj, repoDir);
 							try {
 								connectProviderOperation.execute(monitor);
 							} catch (CoreException e) {
@@ -217,22 +138,74 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public IWizardPage getNextPage(IWizardPage page) {
+		if (page == selectRepoPage) {
+			importWithDirectoriesPage.setRepository(selectRepoPage
+					.getRepository());
+			return importWithDirectoriesPage;
+		} else if (page == importWithDirectoriesPage) {
+
+			switch (importWithDirectoriesPage.getWizardSelection()) {
+			case GitSelectWizardPage.EXISTING_PROJECTS_WIZARD:
+				projectsImportPage.setProjectsList(importWithDirectoriesPage
+						.getPath());
+				return projectsImportPage;
+			case GitSelectWizardPage.NEW_WIZARD:
+				if (importWithDirectoriesPage.getActionSelection() != GitSelectWizardPage.ACTION_DIALOG_SHARE)
+					return null;
+				else
+					return shareProjectsPage;
+
+			case GitSelectWizardPage.GENERAL_WIZARD:
+				createGeneralProjectPage.setPath(importWithDirectoriesPage
+						.getPath());
+				return createGeneralProjectPage;
+
+			}
+
+		} else if (page == createGeneralProjectPage
+				|| page == projectsImportPage) {
+
+			if (importWithDirectoriesPage.getActionSelection() != GitSelectWizardPage.ACTION_DIALOG_SHARE)
+				return null;
+			else
+				return shareProjectsPage;
+		}
+		return super.getNextPage(page);
+	}
+
+	@Override
+	public boolean canFinish() {
+
+		boolean showSharePage = importWithDirectoriesPage.getActionSelection() == GitSelectWizardPage.ACTION_DIALOG_SHARE;
+		boolean showShareComplete = !showSharePage
+				|| shareProjectsPage.isPageComplete();
+
+		switch (importWithDirectoriesPage.getWizardSelection()) {
+		case GitSelectWizardPage.EXISTING_PROJECTS_WIZARD:
+			return projectsImportPage.isPageComplete() && showShareComplete;
+		case GitSelectWizardPage.NEW_WIZARD:
+			return showShareComplete;
+		case GitSelectWizardPage.GENERAL_WIZARD:
+			return createGeneralProjectPage.isPageComplete()
+					&& showShareComplete;
+		}
+		return super.canFinish();
 
 	}
 
-	/**
-	 *
-	 */
 	public void importProjects() {
-
 		// TODO progress monitoring and cancellation
 		Display.getDefault().syncExec(new Runnable() {
 
 			public void run() {
 
-				switch (mySelectionPage.getWizardSelection()) {
+				switch (importWithDirectoriesPage.getWizardSelection()) {
 				case GitSelectWizardPage.EXISTING_PROJECTS_WIZARD:
-					myProjectsImportPage.createProjects();
+					projectsImportPage.createProjects();
 					break;
 				case GitSelectWizardPage.NEW_WIZARD:
 					new NewWizardAction(PlatformUI.getWorkbench()
@@ -240,8 +213,10 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 					break;
 				case GitSelectWizardPage.GENERAL_WIZARD:
 					try {
-						final String projectName = myCreateGeneralProjectPage
+
+						final String projectName = createGeneralProjectPage
 								.getProjectName();
+						final String path = importWithDirectoriesPage.getPath();
 						getContainer().run(true, false,
 								new WorkspaceModifyOperation() {
 
@@ -256,7 +231,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 												.getWorkspace()
 												.newProjectDescription(
 														projectName);
-										desc.setLocation(new Path(myGitDir));
+										desc.setLocation(new Path(path));
 
 										IProject prj = ResourcesPlugin
 												.getWorkspace().getRoot()
@@ -282,6 +257,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 				}
 			}
 		});
+
 	}
 
 	public IProject[] getAddedProjects() {
@@ -305,6 +281,10 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 		}
 
 		return newProjects.toArray(new IProject[0]);
+	}
+
+	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		// nothing to do
 	}
 
 }
