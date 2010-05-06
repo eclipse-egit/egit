@@ -76,6 +76,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.lib.RepositoryConfig;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.osgi.util.NLS;
@@ -103,6 +104,7 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.ide.FileStoreEditorInput;
 import org.eclipse.ui.ide.IDE;
@@ -166,6 +168,10 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 	private IAction refreshAction;
 
 	private IAction linkWithSelectionAction;
+
+	private IAction copyAction;
+
+	private IAction pasteAction;
 
 	private static List<String> getDirs() {
 		List<String> resultStrings = new ArrayList<String>();
@@ -258,9 +264,21 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 			public void selectionChanged(SelectionChangedEvent event) {
 
+				copyAction.setEnabled(false);
+
 				IStructuredSelection ssel = (IStructuredSelection) event
 						.getSelection();
 				if (ssel.size() == 1) {
+					RepositoryTreeNode node = (RepositoryTreeNode) ssel
+							.getFirstElement();
+					// allow copy on repository, file, or folder (copying the
+					// directory)
+					if (node.getType() == RepositoryTreeNodeType.REPO
+							|| node.getType() == RepositoryTreeNodeType.WORKINGDIR
+							|| node.getType() == RepositoryTreeNodeType.FOLDER
+							|| node.getType() == RepositoryTreeNodeType.FILE) {
+						copyAction.setEnabled(true);
+					}
 					setSelection(new StructuredSelection(ssel.getFirstElement()));
 				} else {
 					setSelection(new StructuredSelection());
@@ -407,6 +425,17 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 		});
 
+		MenuItem pasteItem = new MenuItem(men, SWT.PUSH);
+		pasteItem.setText(UIText.RepositoriesView_PasteMenu);
+		pasteItem.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				pasteAction.run();
+			}
+
+		});
+
 		MenuItem refreshItem = new MenuItem(men, SWT.PUSH);
 		refreshItem.setText(refreshAction.getText());
 		refreshItem.addSelectionListener(new SelectionAdapter() {
@@ -475,7 +504,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 								ConnectProviderOperation connectProviderOperation = new ConnectProviderOperation(
 										project, gitDir);
 								connectProviderOperation
-										.execute(new SubProgressMonitor(monitor, 20));
+										.execute(new SubProgressMonitor(
+												monitor, 20));
 
 							}
 
@@ -537,11 +567,11 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 				});
 
 				new MenuItem(men, SWT.SEPARATOR);
-
-				createCreateBranchItem(men, node);
-				createDeleteBranchItem(men, node);
-
 			}
+
+			createCreateBranchItem(men, node);
+			createDeleteBranchItem(men, node);
+
 		}
 
 		if (node.getType() == RepositoryTreeNodeType.LOCALBRANCHES
@@ -1366,6 +1396,103 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			public void run() {
 				tv.collapseAll();
 			}
+		};
+		// copy and paste are global actions; we just implement them
+		// and register them with the global action handler
+		// we enable/disable them upon tree selection changes
+
+		copyAction = new Action("") { //$NON-NLS-1$
+
+			@Override
+			public void run() {
+				// for REPO, WORKINGDIR, FILE, FOLDER: copy directory
+				IStructuredSelection sel = (IStructuredSelection) tv
+						.getSelection();
+				if (sel.size() == 1) {
+					RepositoryTreeNode node = (RepositoryTreeNode) sel
+							.getFirstElement();
+					String dir = null;
+					if (node.getType() == RepositoryTreeNodeType.REPO) {
+						dir = node.getRepository().getDirectory().getPath();
+					} else if (node.getType() == RepositoryTreeNodeType.FILE
+							|| node.getType() == RepositoryTreeNodeType.FOLDER) {
+						dir = ((File) node.getObject()).getPath();
+					} else if (node.getType() == RepositoryTreeNodeType.WORKINGDIR) {
+						dir = node.getRepository().getWorkDir().getPath();
+					}
+					if (dir != null) {
+						Clipboard clip = null;
+						try {
+							clip = new Clipboard(getSite().getShell()
+									.getDisplay());
+							clip
+									.setContents(new Object[] { dir },
+											new Transfer[] { TextTransfer
+													.getInstance() });
+						} finally {
+							if (clip != null)
+								// we must dispose ourselves
+								clip.dispose();
+						}
+					}
+				}
+			}
+
+		};
+		copyAction.setEnabled(false);
+
+		getViewSite().getActionBars().setGlobalActionHandler(
+				ActionFactory.COPY.getId(), copyAction);
+
+		pasteAction = new Action("") { //$NON-NLS-1$
+
+			@Override
+			public void run() {
+				// we check if the pasted content is a directory
+				// repository location and try to add this
+				String errorMessage = null;
+
+				Clipboard clip = null;
+				try {
+					clip = new Clipboard(getSite().getShell().getDisplay());
+					String content = (String) clip.getContents(TextTransfer
+							.getInstance());
+					if (content == null) {
+						errorMessage = UIText.RepositoriesView_NothingToPasteMessage;
+						return;
+					}
+
+					File file = new File(content);
+					if (!file.exists() || !file.isDirectory()) {
+						errorMessage = UIText.RepositoriesView_ClipboardContentNotDirectoryMessage;
+						return;
+					}
+
+					if (!RepositoryCache.FileKey.isGitRepository(file)) {
+						errorMessage = NLS
+								.bind(
+										UIText.RepositoriesView_ClipboardContentNoGitRepoMessage,
+										content);
+						return;
+					}
+
+					if (addDir(file))
+						scheduleRefresh();
+					else
+						errorMessage = NLS.bind(
+								UIText.RepositoriesView_PasteRepoAlreadyThere,
+								content);
+				} finally {
+					if (clip != null)
+						// we must dispose ourselves
+						clip.dispose();
+					if (errorMessage != null)
+						// TODO String ext
+						MessageDialog.openWarning(getSite().getShell(),
+								UIText.RepositoriesView_PasteFailureTitle,
+								errorMessage);
+				}
+			}
 
 		};
 
@@ -1373,6 +1500,10 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 		getViewSite().getActionBars().getToolBarManager()
 				.add(collapseAllAction);
+
+		getViewSite().getActionBars().setGlobalActionHandler(
+				ActionFactory.PASTE.getId(), pasteAction);
+
 	}
 
 	/**
