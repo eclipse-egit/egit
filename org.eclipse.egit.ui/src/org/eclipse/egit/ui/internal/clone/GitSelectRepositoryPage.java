@@ -151,10 +151,12 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 		try {
 			tv.setInput(RepositoriesView.getRepositoriesFromDirs(null));
-			checkPage();
 		} catch (InterruptedException e) {
 			// ignore
 		}
+
+		// we need to select at least a repository to become complete
+		setPageComplete(false);
 
 		setControl(main);
 
