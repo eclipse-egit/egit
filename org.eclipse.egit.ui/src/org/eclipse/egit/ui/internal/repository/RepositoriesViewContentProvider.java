@@ -15,20 +15,14 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.clone.GitProjectsImportPage;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTreeNodeType;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -37,7 +31,6 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.RemoteConfig;
-import org.eclipse.osgi.util.NLS;
 
 /**
  * Content Provider for the Git Repositories View
@@ -184,40 +177,10 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 					node.getRepository()));
 
 			nodeList.add(new RepositoryTreeNode<Repository>(node,
-					RepositoryTreeNodeType.PROJECTS, node.getRepository(), node
-							.getRepository()));
-
-			nodeList.add(new RepositoryTreeNode<Repository>(node,
 					RepositoryTreeNodeType.REMOTES, node.getRepository(), node
 							.getRepository()));
 
 			return nodeList.toArray();
-		}
-
-		case PROJECTS: {
-			List<RepositoryTreeNode<File>> projects = new ArrayList<RepositoryTreeNode<File>>();
-
-			// TODO do we want to show the projects here?
-			Collection<File> result = new HashSet<File>();
-			Set<String> traversed = new HashSet<String>();
-			collectProjectFilesFromDirectory(result, repo.getDirectory()
-					.getParentFile(), traversed, new NullProgressMonitor());
-			for (File file : result) {
-				projects.add(new RepositoryTreeNode<File>(node,
-						RepositoryTreeNodeType.PROJ, repo, file));
-			}
-
-			Comparator<RepositoryTreeNode<File>> sorter = new Comparator<RepositoryTreeNode<File>>() {
-
-				public int compare(RepositoryTreeNode<File> o1,
-						RepositoryTreeNode<File> o2) {
-					return o1.getObject().getName().compareTo(
-							o2.getObject().getName());
-				}
-			};
-			Collections.sort(projects, sorter);
-
-			return projects.toArray();
 		}
 
 		case WORKINGDIR: {
@@ -325,10 +288,6 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			// fall through
 		case PUSH:
 			// fall through
-		case PROJ:
-			// fall through
-		case HEAD:
-			// fall through
 		case TAG:
 			// fall through
 		case FETCH:
@@ -360,54 +319,6 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	public boolean hasChildren(Object element) {
 		Object[] children = getChildren(element);
 		return children != null && children.length > 0;
-	}
-
-	private boolean collectProjectFilesFromDirectory(Collection<File> files,
-			File directory, Set<String> directoriesVisited,
-			IProgressMonitor monitor) {
-
-		// stolen from the GitCloneWizard; perhaps we should completely drop
-		// the projects from this view, though
-		if (monitor.isCanceled()) {
-			return false;
-		}
-		monitor.subTask(NLS.bind(UIText.RepositoriesView_Checking_Message,
-				directory.getPath()));
-		File[] contents = directory.listFiles();
-		if (contents == null)
-			return false;
-
-		// first look for project description files
-		final String dotProject = IProjectDescription.DESCRIPTION_FILE_NAME;
-		for (int i = 0; i < contents.length; i++) {
-			File file = contents[i];
-			if (file.isFile() && file.getName().equals(dotProject)) {
-				files.add(file.getParentFile());
-				// don't search sub-directories since we can't have nested
-				// projects
-				return true;
-			}
-		}
-		// no project description found, so recurse into sub-directories
-		for (int i = 0; i < contents.length; i++) {
-			if (contents[i].isDirectory()) {
-				if (!contents[i].getName().equals(
-						GitProjectsImportPage.METADATA_FOLDER)) {
-					try {
-						String canonicalPath = contents[i].getCanonicalPath();
-						if (!directoriesVisited.add(canonicalPath)) {
-							// already been here --> do not recurse
-							continue;
-						}
-					} catch (IOException e) {
-						Activator.handleError(e.getMessage(), e, false);
-					}
-					collectProjectFilesFromDirectory(files, contents[i],
-							directoriesVisited, monitor);
-				}
-			}
-		}
-		return true;
 	}
 
 }
