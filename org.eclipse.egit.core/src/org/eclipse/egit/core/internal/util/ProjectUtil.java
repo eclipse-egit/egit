@@ -21,7 +21,7 @@ import org.eclipse.jgit.lib.Repository;
 
 /**
  * This class contains utility methods related to projects
- *
+ * TODO: rename to RefreshUtil or ResourceUtil?
  */
 public class ProjectUtil {
 	/**
@@ -53,4 +53,31 @@ public class ProjectUtil {
 			monitor.done();
 		}
 	}
+
+	/**
+	 * The method refreshes resources
+	 *
+	 * @param resources
+	 *            resources to refresh
+	 * @param monitor
+	 * @throws CoreException
+	 */
+	public static void refreshResources(IResource[] resources,
+			IProgressMonitor monitor) throws CoreException {
+		try {
+			monitor.beginTask(CoreText.ProjectUtil_refreshing,
+					resources.length);
+			for (IResource resource : resources) {
+				if (monitor.isCanceled())
+					break;
+				resource.refreshLocal(IResource.DEPTH_INFINITE,
+						new SubProgressMonitor(monitor, 1));
+				monitor.worked(1);
+			}
+		} finally {
+			monitor.done();
+		}
+
+	}
+
 }
