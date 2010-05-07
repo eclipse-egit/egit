@@ -1,0 +1,94 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///7E\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-05-06T15:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///88\u003d",
+      "revId": "06fe4efa096ae4ca6b1110c2f7259243e1d2c99d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///70\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-05-06T15:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///9A\u003d",
+      "revId": "06fe4efa096ae4ca6b1110c2f7259243e1d2c99d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///7A\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-05-06T15:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///84\u003d",
+      "revId": "06fe4efa096ae4ca6b1110c2f7259243e1d2c99d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///7s\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-05-06T15:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///80\u003d",
+      "revId": "06fe4efa096ae4ca6b1110c2f7259243e1d2c99d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///74\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-05-06T15:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///9E\u003d",
+      "revId": "06fe4efa096ae4ca6b1110c2f7259243e1d2c99d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
