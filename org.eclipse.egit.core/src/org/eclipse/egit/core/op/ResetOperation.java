@@ -18,6 +18,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.lib.Commit;
@@ -76,6 +77,17 @@ public class ResetOperation implements IEGitOperation {
 		this.refName = refName;
 		this.type = type;
 	}
+
+	/**
+	 * @return the rule needed to execute this operation
+	 */
+	public ISchedulingRule getSchedulingRule() {
+		if (type == ResetType.HARD)
+			return ResourcesPlugin.getWorkspace().getRoot();
+		else
+			return null;
+	}
+
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.egit.core.op.IEGitOperation#execute(org.eclipse.core.runtime.IProgressMonitor)
