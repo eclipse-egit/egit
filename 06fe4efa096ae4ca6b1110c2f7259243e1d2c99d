@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALun///88\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-05T17:08:27Z",
+      "side": 1,
+      "message": "Please convert the monitor to a SubMonitor and then split up appropriate work units. As is we just pass the original monitor to the discardChange(*) method which implies that the monitor may be marked as completed on just one iteration which leads to incorrect progress reporting. :(",
+      "revId": "06fe4efa096ae4ca6b1110c2f7259243e1d2c99d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///7E\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
         "patchSetId": 1
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALun///88\u003d",
+      "revId": "06fe4efa096ae4ca6b1110c2f7259243e1d2c99d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///9A\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-05T17:08:27Z",
+      "side": 1,
+      "message": "Why do we need to lock the whole tree if we\u0027re solely dealing with IFiles?",
       "revId": "06fe4efa096ae4ca6b1110c2f7259243e1d2c99d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -38,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "AAALun///84\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-05T17:08:27Z",
+      "side": 1,
+      "message": "Multiple files may be in the same repository. Would it be better to check out all the entries and then just doing one write operation against the index?\n\nIf one checkout succeeds and another fails, we\u0027d still want to write the \"partially modified\" index though, I think?",
+      "revId": "06fe4efa096ae4ca6b1110c2f7259243e1d2c99d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///7A\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
         "patchSetId": 1
@@ -56,6 +107,23 @@
     },
     {
       "key": {
+        "uuid": "AAALun///80\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-05T17:08:27Z",
+      "side": 1,
+      "message": "Move this line down. We don\u0027t need to instantiate a new object if it\u0027s not an IContainer.",
+      "revId": "06fe4efa096ae4ca6b1110c2f7259243e1d2c99d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///7s\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
         "patchSetId": 1
@@ -68,6 +136,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALun///80\u003d",
+      "revId": "06fe4efa096ae4ca6b1110c2f7259243e1d2c99d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///9E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-05T17:08:27Z",
+      "side": 1,
+      "message": "We should set a scheduling rule for the job based on the resources.",
       "revId": "06fe4efa096ae4ca6b1110c2f7259243e1d2c99d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
