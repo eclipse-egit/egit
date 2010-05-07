@@ -45,6 +45,7 @@ import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.lib.TreeEntry;
 import org.eclipse.jgit.lib.GitIndex.Entry;
@@ -92,10 +93,12 @@ public class CommitAction extends RepositoryAction {
 		amendAllowed = repos.length == 1;
 		for (Repository repo : repos) {
 			repository = repo;
-			if (!repo.getRepositoryState().canCommit()) {
+			RepositoryState state = repo.getRepositoryState();
+			// currently we don't support committing a merge commit
+			if (state.equals(RepositoryState.MERGING_RESOLVED) || !state.canCommit()) {
 				MessageDialog.openError(getTargetPart().getSite().getShell(),
 					UIText.CommitAction_cannotCommit,
-					NLS.bind(UIText.CommitAction_repositoryState, repo.getRepositoryState().getDescription()));
+					NLS.bind(UIText.CommitAction_repositoryState, state.getDescription()));
 				return;
 			}
 		}
