@@ -230,7 +230,7 @@ public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 	}
 
 	public int compareTo(RepositoryTreeNode otherNode) {
-		int typeDiff = otherNode.getType().ordinal() - this.myType.ordinal();
+		int typeDiff = this.myType.ordinal() - otherNode.getType().ordinal();
 		if (typeDiff != 0)
 			return typeDiff;
 
@@ -251,6 +251,8 @@ public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 		case SYMBOLICREFS:
 			// fall through
 		case TAGS:
+			// fall through
+		case ERROR:
 			// fall through
 		case WORKINGDIR:
 			return 0;
