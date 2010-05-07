@@ -458,6 +458,34 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 		final IStructuredSelection sel = (IStructuredSelection) tv
 				.getSelection();
 
+		boolean repoOnly = true;
+		for (Object selected : sel.toArray()) {
+
+			if (((RepositoryTreeNode) selected).getType() != RepositoryTreeNodeType.REPO) {
+				repoOnly = false;
+				break;
+			}
+		}
+
+		if (sel.size() > 1 && repoOnly) {
+			List nodes = sel.toList();
+			final Repository[] repos = new Repository[nodes.size()];
+			for (int i = 0; i < sel.size(); i++)
+				repos[i] = ((RepositoryTreeNode) nodes.get(i)).getRepository();
+
+			MenuItem remove = new MenuItem(men, SWT.PUSH);
+			remove.setText(UIText.RepositoriesView_Remove_MenuItem);
+			remove.addSelectionListener(new SelectionAdapter() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					// TODO progress monitoring/cancellation
+					removeRepository(new NullProgressMonitor(), repos);
+				}
+			});
+
+		}
+
 		// from here on, we only deal with single selection
 		if (sel.size() > 1)
 			return;
@@ -519,53 +547,9 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-
-					List<IProject> projectsToDelete = new ArrayList<IProject>();
-					File workDir = repo.getWorkDir();
-					final IPath wdPath = new Path(workDir.getAbsolutePath());
-					for (IProject prj : ResourcesPlugin.getWorkspace()
-							.getRoot().getProjects()) {
-						if (wdPath.isPrefixOf(prj.getLocation())) {
-							projectsToDelete.add(prj);
-						}
-					}
-
-					if (!projectsToDelete.isEmpty()) {
-						boolean confirmed;
-						confirmed = confirmProjectDeletion(projectsToDelete);
-						if (!confirmed) {
-							return;
-						}
-					}
-
-					IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
-
-						public void run(IProgressMonitor monitor)
-								throws CoreException {
-
-							for (IProject prj : ResourcesPlugin.getWorkspace()
-									.getRoot().getProjects()) {
-								if (wdPath.isPrefixOf(prj.getLocation())) {
-									prj.delete(false, false, monitor);
-								}
-							}
-
-							removeDir(repo.getDirectory());
-							scheduleRefresh();
-						}
-					};
-
-					try {
-						ResourcesPlugin.getWorkspace().run(wsr,
-								ResourcesPlugin.getWorkspace().getRoot(),
-								IWorkspace.AVOID_UPDATE,
-								new NullProgressMonitor());
-					} catch (CoreException e1) {
-						Activator.logError(e1.getMessage(), e1);
-					}
-
+					// TODO progress monitoring/cancellation
+					removeRepository(new NullProgressMonitor(), repo);
 				}
-
 			});
 
 			// TODO delete does not work because of file locks on .pack-files
@@ -1234,7 +1218,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 	private void addActionsToToolbar() {
 
-		IToolBarManager manager = getViewSite().getActionBars().getToolBarManager();
+		IToolBarManager manager = getViewSite().getActionBars()
+				.getToolBarManager();
 
 		refreshAction = new Action(UIText.RepositoriesView_Refresh_Button) {
 
@@ -1753,4 +1738,56 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 		return false;
 	}
 
+	private void removeRepository(final IProgressMonitor monitor,
+			final Repository... repository) {
+		final List<IProject> projectsToDelete = new ArrayList<IProject>();
+
+		monitor
+				.setTaskName(UIText.RepositoriesView_DeleteRepoDeterminProjectsMessage);
+
+		for (Repository repo : repository) {
+			File workDir = repo.getWorkDir();
+			final IPath wdPath = new Path(workDir.getAbsolutePath());
+			for (IProject prj : ResourcesPlugin.getWorkspace().getRoot()
+					.getProjects()) {
+				if (monitor.isCanceled())
+					return;
+				if (wdPath.isPrefixOf(prj.getLocation())) {
+					projectsToDelete.add(prj);
+				}
+			}
+		}
+
+		if (!projectsToDelete.isEmpty()) {
+			boolean confirmed;
+			confirmed = confirmProjectDeletion(projectsToDelete);
+			if (!confirmed) {
+				return;
+			}
+		}
+
+		if (monitor.isCanceled())
+			return;
+
+		IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
+
+			public void run(IProgressMonitor actMonitor) throws CoreException {
+
+				for (IProject prj : projectsToDelete) {
+					prj.delete(false, false, actMonitor);
+				}
+				for (Repository repo : repository)
+					removeDir(repo.getDirectory());
+				scheduleRefresh();
+			}
+		};
+
+		try {
+			ResourcesPlugin.getWorkspace().run(wsr,
+					ResourcesPlugin.getWorkspace().getRoot(),
+					IWorkspace.AVOID_UPDATE, monitor);
+		} catch (CoreException e1) {
+			Activator.logError(e1.getMessage(), e1);
+		}
+	}
 }
