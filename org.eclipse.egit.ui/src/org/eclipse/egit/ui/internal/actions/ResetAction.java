@@ -10,21 +10,20 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.core.op.ResetOperation.ResetType;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
-import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 
@@ -40,40 +39,33 @@ public class ResetAction extends RepositoryAction {
 		final Repository repository = getRepository(true);
 		if (repository == null)
 			return;
-
 		if (!repository.getRepositoryState().canResetHead()) {
 			MessageDialog.openError(getShell(), UIText.ResetAction_errorResettingHead,
 					NLS.bind(UIText.ResetAction_repositoryState, repository.getRepositoryState().getDescription()));
 			return;
 		}
-
 		BranchSelectionDialog branchSelectionDialog = new BranchSelectionDialog(getShell(), repository, true);
 		if (branchSelectionDialog.open() == IDialogConstants.OK_ID) {
 			final String refName = branchSelectionDialog.getRefName();
 			final ResetType type = branchSelectionDialog.getResetType();
-
-			try {
-				getTargetPart().getSite().getWorkbenchWindow().run(true, false,
-						new IRunnableWithProgress() {
-					public void run(final IProgressMonitor monitor)
-					throws InvocationTargetException {
-						try {
-							new ResetOperation(repository, refName, type).execute(monitor);
-							GitLightweightDecorator.refresh();
-						} catch (CoreException e) {
-							if (GitTraceLocation.UI.isActive())
-								GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
-							throw new InvocationTargetException(e);
-						}
+			String jobname = NLS.bind(UIText.ResetAction_reset, refName);
+			Job job = new Job(jobname) {
+				@Override
+				protected IStatus run(IProgressMonitor monitor) {
+					try {
+						new ResetOperation(repository, refName, type)
+								.execute(monitor);
+						GitLightweightDecorator.refresh();
+					} catch (CoreException e) {
+						return Activator.createErrorStatus(e.getStatus()
+								.getMessage(), e);
 					}
-				});
-			} catch (InvocationTargetException e) {
-				Activator.handleError(UIText.ResetAction_resetFailed, e, true);
-			} catch (InterruptedException e) {
-				Activator.handleError(UIText.ResetAction_resetFailed, e, true);
-			}
+					return Status.OK_STATUS;
+				}
+			};
+			job.setUser(true);
+			job.schedule();
 		}
-
 	}
 
 	@Override
