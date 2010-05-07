@@ -53,6 +53,8 @@ import org.eclipse.egit.ui.internal.clone.GitCreateProjectViaWizardWizard;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTreeNodeType;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -115,7 +117,7 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
- * 
+ *
  * The Git Repositories view.
  * <p>
  * This keeps track of a bunch of local directory names each of which represent
@@ -127,7 +129,7 @@ import org.osgi.service.prefs.BackingStoreException;
  * <p>
  * TODO
  * <li>Clarification whether to show projects, perhaps configurable switch</li>
- * 
+ *
  */
 public class RepositoriesView extends ViewPart implements ISelectionProvider,
 		IShowInTarget {
@@ -172,7 +174,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 	/**
 	 * TODO move to utility class
-	 * 
+	 *
 	 * @return the directories as configured for this view
 	 */
 	public static List<String> getDirs() {
@@ -1231,43 +1233,18 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 	}
 
 	private void addActionsToToolbar() {
-		importAction = new Action(UIText.RepositoriesView_Import_Button) {
+
+		IToolBarManager manager = getViewSite().getActionBars().getToolBarManager();
+
+		refreshAction = new Action(UIText.RepositoriesView_Refresh_Button) {
 
 			@Override
 			public void run() {
-				WizardDialog dlg = new WizardDialog(getSite().getShell(),
-						new GitCloneWizard());
-				if (dlg.open() == Window.OK)
-					scheduleRefresh();
+				scheduleRefresh();
 			}
 		};
-		importAction.setToolTipText(UIText.RepositoriesView_Clone_Tooltip);
-
-		importAction.setImageDescriptor(UIIcons.CLONEGIT);
-
-		getViewSite().getActionBars().getToolBarManager().add(importAction);
-
-		addAction = new Action(UIText.RepositoriesView_Add_Button) {
-
-			@Override
-			public void run() {
-				RepositorySearchDialog sd = new RepositorySearchDialog(
-						getSite().getShell(), getDirs());
-				if (sd.open() == Window.OK) {
-					Set<String> dirs = new HashSet<String>();
-					dirs.addAll(getDirs());
-					if (dirs.addAll(sd.getDirectories()))
-						saveDirs(dirs);
-					scheduleRefresh();
-				}
-
-			}
-		};
-		addAction.setToolTipText(UIText.RepositoriesView_AddRepository_Tooltip);
-
-		addAction.setImageDescriptor(UIIcons.NEW_REPOSITORY);
-
-		getViewSite().getActionBars().getToolBarManager().add(addAction);
+		refreshAction.setImageDescriptor(UIIcons.ELCL16_REFRESH);
+		manager.add(refreshAction);
 
 		linkWithSelectionAction = new Action(
 				UIText.RepositoriesView_LinkWithSelection_action,
@@ -1294,26 +1271,13 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 		linkWithSelectionAction
 				.setToolTipText(UIText.RepositoriesView_LinkWithSelection_action);
-
 		linkWithSelectionAction.setImageDescriptor(UIIcons.ELCL16_SYNCED);
-
 		linkWithSelectionAction.setChecked(getPrefs().getBoolean(PREFS_SYNCED,
 				false));
 
-		getViewSite().getActionBars().getToolBarManager().add(
-				linkWithSelectionAction);
+		manager.add(linkWithSelectionAction);
 
-		refreshAction = new Action(UIText.RepositoriesView_Refresh_Button) {
-
-			@Override
-			public void run() {
-				scheduleRefresh();
-			}
-		};
-
-		refreshAction.setImageDescriptor(UIIcons.ELCL16_REFRESH);
-
-		getViewSite().getActionBars().getToolBarManager().add(refreshAction);
+		manager.add(new Separator());
 
 		IAction collapseAllAction = new Action(
 				UIText.RepositoriesView_CollapseAllMenu) {
@@ -1323,6 +1287,46 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 				tv.collapseAll();
 			}
 		};
+		collapseAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
+		manager.add(collapseAllAction);
+
+		manager.add(new Separator());
+
+		importAction = new Action(UIText.RepositoriesView_Import_Button) {
+
+			@Override
+			public void run() {
+				WizardDialog dlg = new WizardDialog(getSite().getShell(),
+						new GitCloneWizard());
+				if (dlg.open() == Window.OK)
+					scheduleRefresh();
+			}
+		};
+		importAction.setToolTipText(UIText.RepositoriesView_Clone_Tooltip);
+		importAction.setImageDescriptor(UIIcons.CLONEGIT);
+
+		manager.add(importAction);
+
+		addAction = new Action(UIText.RepositoriesView_Add_Button) {
+
+			@Override
+			public void run() {
+				RepositorySearchDialog sd = new RepositorySearchDialog(
+						getSite().getShell(), getDirs());
+				if (sd.open() == Window.OK) {
+					Set<String> dirs = new HashSet<String>();
+					dirs.addAll(getDirs());
+					if (dirs.addAll(sd.getDirectories()))
+						saveDirs(dirs);
+					scheduleRefresh();
+				}
+
+			}
+		};
+		addAction.setToolTipText(UIText.RepositoriesView_AddRepository_Tooltip);
+		addAction.setImageDescriptor(UIIcons.NEW_REPOSITORY);
+
+		manager.add(addAction);
 
 		// copy and paste are global actions; we just implement them
 		// and register them with the global action handler
@@ -1422,11 +1426,6 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			}
 
 		};
-
-		collapseAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
-
-		getViewSite().getActionBars().getToolBarManager()
-				.add(collapseAllAction);
 
 		getViewSite().getActionBars().setGlobalActionHandler(
 				ActionFactory.PASTE.getId(), pasteAction);
@@ -1532,7 +1531,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 	/**
 	 * Adds a directory to the list if it is not already there
-	 * 
+	 *
 	 * @param file
 	 * @return see {@link Collection#add(Object)}
 	 */
@@ -1562,7 +1561,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 	 * {@link Repository} objects suitable for the tree content provider
 	 * <p>
 	 * TODO move to some utility class
-	 * 
+	 *
 	 * @param monitor
 	 * @return a list of nodes
 	 * @throws InterruptedException
@@ -1657,7 +1656,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 	/**
 	 * Opens the tree and marks the folder to which a project is pointing
-	 * 
+	 *
 	 * @param resource
 	 *            TODO exceptions?
 	 */
