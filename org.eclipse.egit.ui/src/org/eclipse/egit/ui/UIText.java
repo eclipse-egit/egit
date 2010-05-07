@@ -1630,6 +1630,9 @@ public class UIText extends NLS {
 	public static String RepositoriesView_DeleteBranchMenu;
 
 	/** */
+	public static String RepositoriesView_DeleteRepoDeterminProjectsMessage;
+
+	/** */
 	public static String RepositoriesView_Error_WindowTitle;
 
 	/** */
