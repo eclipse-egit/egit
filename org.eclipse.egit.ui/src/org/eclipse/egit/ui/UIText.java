@@ -730,6 +730,9 @@ public class UIText extends NLS {
 	public static String ResetAction_repositoryState;
 
 	/** */
+	public static String ResetAction_reset;
+
+	/** */
 	public static String ResetAction_resetFailed;
 
 	/** */
@@ -1538,6 +1541,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String IgnoreAction_error;
+
+	/** */
+	public static String Track_addToVersionControl;
 
 	/** */
 	public static String Track_error;
