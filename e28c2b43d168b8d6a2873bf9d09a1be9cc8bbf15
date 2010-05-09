@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALun///20\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-07T17:15:31Z",
+      "side": 1,
+      "message": "It is safe to use \u003d\u003d for enums",
+      "revId": "e28c2b43d168b8d6a2873bf9d09a1be9cc8bbf15",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///y8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitAction.java",
         "patchSetId": 1
