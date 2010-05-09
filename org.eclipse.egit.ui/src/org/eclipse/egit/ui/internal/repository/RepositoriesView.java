@@ -388,9 +388,11 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 		tv.getTree().addMenuDetectListener(new MenuDetectListener() {
 
 			public void menuDetected(MenuDetectEvent e) {
-
-				tv.getTree().setMenu(null);
-				Menu men = new Menu(tv.getTree());
+				Menu men = tv.getTree().getMenu();
+				if (men != null) {
+					men.dispose();
+				}
+				men = new Menu(tv.getTree());
 
 				TreeItem testItem = tv.getTree().getItem(
 						tv.getTree().toControl(new Point(e.x, e.y)));
