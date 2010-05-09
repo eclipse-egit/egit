@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///y8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-08T22:35:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///20\u003d",
+      "revId": "e28c2b43d168b8d6a2873bf9d09a1be9cc8bbf15",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
