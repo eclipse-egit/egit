@@ -39,7 +39,7 @@ public class RepositoriesViewLabelProvider extends LabelProvider {
 	// private DefaultInformationControl infoControl;
 
 	/**
-	 * 
+	 *
 	 * @param viewer
 	 */
 	public RepositoriesViewLabelProvider(final ColumnViewer viewer) {
@@ -210,9 +210,9 @@ public class RepositoriesViewLabelProvider extends LabelProvider {
 		case REF:
 			Ref ref = (Ref) node.getObject();
 			// shorten the name
-			String refName = node.getRepository().shortenRefName(ref.getName());
+			String refName = ref.getName();
 			try {
-				String branch = node.getRepository().getBranch();
+				String branch = node.getRepository().getFullBranch();
 				if (refName.equals(branch)) {
 					return getDecoratedImage(image);
 				}
