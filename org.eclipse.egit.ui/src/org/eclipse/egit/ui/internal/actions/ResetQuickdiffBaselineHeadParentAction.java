@@ -11,14 +11,21 @@ package org.eclipse.egit.ui.internal.actions;
 import java.util.List;
 
 import org.eclipse.egit.core.op.IEGitOperation;
+import org.eclipse.egit.ui.UIText;
+import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
  * Changes the reference for the quickdiff to the (first) parent of HEAD
  */
-public class ResetQuickdiffBaselineHeadParentAction extends AbstractRevObjectAction {
+public class ResetQuickdiffBaselineHeadParentAction extends AbstractRevCommitOperationAction {
 
 	@Override
-	protected IEGitOperation createOperation(List selection) {
+	protected IEGitOperation createOperation(List<RevCommit> selection) {
 		return new QuickdiffBaselineOperation(getActiveRepository(), "HEAD^1"); //$NON-NLS-1$
+	}
+
+	@Override
+	protected String getJobName() {
+		return UIText.ResetQuickdiffBaselineHeadParentAction_0;
 	}
 }

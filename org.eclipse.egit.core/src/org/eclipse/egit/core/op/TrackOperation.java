@@ -60,8 +60,8 @@ public class TrackOperation implements IEGitOperation {
 		rsrcList = rsrcs;
 	}
 
-	/**
-	 * @return the rule needed to execute this operation
+	/* (non-Javadoc)
+	 * @see org.eclipse.egit.core.op.IEGitOperation#getSchedulingRule()
 	 */
 	public ISchedulingRule getSchedulingRule() {
 		return new MultiRule(rsrcList);

@@ -78,8 +78,8 @@ public class ResetOperation implements IEGitOperation {
 		this.type = type;
 	}
 
-	/**
-	 * @return the rule needed to execute this operation
+	/* (non-Javadoc)
+	 * @see org.eclipse.egit.core.op.IEGitOperation#getSchedulingRule()
 	 */
 	public ISchedulingRule getSchedulingRule() {
 		if (type == ResetType.HARD)

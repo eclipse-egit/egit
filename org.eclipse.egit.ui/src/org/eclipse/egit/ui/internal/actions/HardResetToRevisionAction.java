@@ -12,17 +12,23 @@ import java.util.List;
 
 import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.core.op.ResetOperation;
-import org.eclipse.jgit.lib.AnyObjectId;
+import org.eclipse.egit.ui.UIText;
+import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
  * Hard reset to selected revision
  */
-public class HardResetToRevisionAction extends AbstractRevObjectAction {
+public class HardResetToRevisionAction extends AbstractRevCommitOperationAction {
 
 	@Override
-	protected IEGitOperation createOperation(List selection) {
+	protected IEGitOperation createOperation(final List<RevCommit> commits) {
 		return new ResetOperation(getActiveRepository(),
-				((AnyObjectId) selection.get(0)).name(),
+				commits.get(0).getName(),
 				ResetOperation.ResetType.HARD);
+	}
+
+	@Override
+	protected String getJobName() {
+		return UIText.HardResetToRevisionAction_hardReset;
 	}
 }

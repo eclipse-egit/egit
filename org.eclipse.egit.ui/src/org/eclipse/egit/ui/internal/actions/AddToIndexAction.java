@@ -12,20 +12,22 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * An action to add files to a Git index.
  *
  * @see AddToIndexOperation
  */
-public class AddToIndexAction extends AbstractOperationAction {
+public class AddToIndexAction extends AbstractResourceOperationAction {
 	private AddToIndexOperation operation = null;
 
-	protected IEGitOperation createOperation(final List sel) {
+	protected IEGitOperation createOperation(final List<IResource> sel) {
 		if (sel.isEmpty()) {
 			return null;
 		} else {
@@ -39,11 +41,17 @@ public class AddToIndexAction extends AbstractOperationAction {
 		Collection<IFile> notAddedFiles = operation.getNotAddedFiles();
 		if (notAddedFiles.size()==0)
 			return;
-		String title = UIText.AddToIndexAction_addingFilesFailed;
+		final String title = UIText.AddToIndexAction_addingFilesFailed;
 		String message = UIText.AddToIndexAction_indexesWithUnmergedEntries;
 		message += "\n\n";  //$NON-NLS-1$
 		message += getFileList(notAddedFiles);
-		MessageDialog.openWarning(wp.getSite().getShell(), title, message);
+		final String fMessage = message;
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				MessageDialog.openWarning(wp.getSite().getShell(), title, fMessage);
+			}
+		});
+
 	}
 
 	private static String getFileList(Collection<IFile> notAddedFiles) {
@@ -53,6 +61,11 @@ public class AddToIndexAction extends AbstractOperationAction {
 			result += "\n"; //$NON-NLS-1$
 		}
 		return result;
+	}
+
+	@Override
+	protected String getJobName() {
+		return UIText.AddToIndexAction_addingFiles;
 	}
 
 

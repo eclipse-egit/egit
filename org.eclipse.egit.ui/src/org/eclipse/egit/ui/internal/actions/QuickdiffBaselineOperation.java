@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitQuickDiffProvider;
@@ -47,6 +48,10 @@ public class QuickdiffBaselineOperation extends AbstractRevObjectOperation {
 							UIText.QuickdiffBaselineOperation_baseline,
 							e);
 		}
+	}
+
+	public ISchedulingRule getSchedulingRule() {
+		return null;
 	}
 
 }

@@ -11,8 +11,10 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.util.List;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.core.op.UntrackOperation;
+import org.eclipse.egit.ui.UIText;
 
 /**
  * An action to remove files from a Git repository. The removal does not alter
@@ -20,8 +22,13 @@ import org.eclipse.egit.core.op.UntrackOperation;
  *
  * @see UntrackOperation
  */
-public class Untrack extends AbstractOperationAction {
-	protected IEGitOperation createOperation(final List sel) {
+public class Untrack extends AbstractResourceOperationAction {
+	protected IEGitOperation createOperation(final List<IResource> sel) {
 		return sel.isEmpty() ? null : new UntrackOperation(sel);
+	}
+
+	@Override
+	protected String getJobName() {
+		return UIText.Untrack_untrack;
 	}
 }

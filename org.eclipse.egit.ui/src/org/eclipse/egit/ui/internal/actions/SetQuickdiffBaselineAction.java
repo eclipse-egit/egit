@@ -11,16 +11,22 @@ package org.eclipse.egit.ui.internal.actions;
 import java.util.List;
 
 import org.eclipse.egit.core.op.IEGitOperation;
-import org.eclipse.jgit.revwalk.RevObject;
+import org.eclipse.egit.ui.UIText;
+import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
  * Changes the reference for the quickdiff
  */
-public class SetQuickdiffBaselineAction extends AbstractRevObjectAction {
+public class SetQuickdiffBaselineAction extends AbstractRevCommitOperationAction {
 
 	@Override
-	protected IEGitOperation createOperation(List selection) {
-		return new QuickdiffBaselineOperation(getActiveRepository(), ((RevObject)selection.get(0)).getId().name());
+	protected IEGitOperation createOperation(List<RevCommit> selection) {
+		return new QuickdiffBaselineOperation(getActiveRepository(), selection.get(0).getId().name());
+	}
+
+	@Override
+	protected String getJobName() {
+		return UIText.SetQuickdiffBaselineAction_setQuickdiffBaseline;
 	}
 
 }

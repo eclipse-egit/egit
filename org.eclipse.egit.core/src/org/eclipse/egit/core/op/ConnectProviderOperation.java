@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -24,6 +25,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
@@ -133,6 +136,14 @@ public class ConnectProviderOperation implements IEGitOperation {
 		} finally {
 			m.done();
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.egit.core.op.IEGitOperation#getSchedulingRule()
+	 */
+	public ISchedulingRule getSchedulingRule() {
+		Set<IProject> projectSet = projects.keySet();
+		return new MultiRule(projectSet.toArray(new IProject[projectSet.size()]));
 	}
 
 	/**

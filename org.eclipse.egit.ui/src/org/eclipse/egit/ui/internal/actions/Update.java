@@ -11,16 +11,23 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.util.List;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.core.op.UpdateOperation;
+import org.eclipse.egit.ui.UIText;
 
 /**
  * Action to update index for selected resources with content from workdir.
  *
  * @see UpdateOperation
  */
-public class Update extends AbstractOperationAction {
-	protected IEGitOperation createOperation(final List sel) {
+public class Update extends AbstractResourceOperationAction {
+	protected IEGitOperation createOperation(final List<IResource> sel) {
 		return sel.isEmpty() ? null : new UpdateOperation(sel);
+	}
+
+	@Override
+	protected String getJobName() {
+		return UIText.Update_update;
 	}
 }
