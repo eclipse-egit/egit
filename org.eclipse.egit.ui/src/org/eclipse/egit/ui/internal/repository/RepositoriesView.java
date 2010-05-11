@@ -324,9 +324,10 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 							openFile((File) node.getObject());
 						else if (node.getType() == RepositoryTreeNodeType.REF) {
 							Ref ref = (Ref) node.getObject();
-							if (ref.getName().startsWith(Constants.R_HEADS)
-									|| ref.getName().startsWith(
-											Constants.R_REMOTES))
+							if (!isBare(node.getRepository())
+									&& (ref.getName().startsWith(
+											Constants.R_HEADS) || ref.getName()
+											.startsWith(Constants.R_REMOTES)))
 								checkoutBranch(node, ref.getName());
 						}
 					}
@@ -495,6 +496,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 		final RepositoryTreeNode node = (RepositoryTreeNode) sel
 				.getFirstElement();
 
+		final boolean isBare = isBare(node.getRepository());
+
 		if (node.getType() == RepositoryTreeNodeType.REF) {
 
 			final Ref ref = (Ref) node.getObject();
@@ -502,28 +505,30 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			// we don't check out symbolic references
 			if (!ref.isSymbolic()) {
 
-				MenuItem checkout = new MenuItem(men, SWT.PUSH);
-				checkout.setText(UIText.RepositoriesView_CheckOut_MenuItem);
+				if (!isBare) {
+					MenuItem checkout = new MenuItem(men, SWT.PUSH);
+					checkout.setText(UIText.RepositoriesView_CheckOut_MenuItem);
 
-				try {
-					if (node.getRepository().getFullBranch().equals(
-							ref.getName())) {
-						// no checkout on current branch
-						checkout.setEnabled(false);
+					try {
+						if (node.getRepository().getFullBranch().equals(
+								ref.getName())) {
+							// no checkout on current branch
+							checkout.setEnabled(false);
+						}
+					} catch (IOException e2) {
+						// ignore
 					}
-				} catch (IOException e2) {
-					// ignore
+
+					checkout.addSelectionListener(new SelectionAdapter() {
+
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							checkoutBranch(node, ref.getLeaf().getName());
+						}
+					});
+
+					new MenuItem(men, SWT.SEPARATOR);
 				}
-
-				checkout.addSelectionListener(new SelectionAdapter() {
-
-					@Override
-					public void widgetSelected(SelectionEvent e) {
-						checkoutBranch(node, ref.getLeaf().getName());
-					}
-				});
-
-				new MenuItem(men, SWT.SEPARATOR);
 
 				createCreateBranchItem(men, node);
 				createDeleteBranchItem(men, node);
@@ -658,9 +663,11 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 			new MenuItem(men, SWT.SEPARATOR);
 
-			createImportProjectItem(men, repo, repo.getWorkDir().getPath());
+			if (!isBare) {
+				createImportProjectItem(men, repo, repo.getWorkDir().getPath());
 
-			new MenuItem(men, SWT.SEPARATOR);
+				new MenuItem(men, SWT.SEPARATOR);
+			}
 
 			MenuItem openPropsView = new MenuItem(men, SWT.PUSH);
 			openPropsView.setText(UIText.RepositoriesView_OpenPropertiesMenu);
@@ -931,7 +938,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			createCopyPathItem(men, file.getPath());
 		}
 
-		if (node.getType() == RepositoryTreeNodeType.WORKINGDIR) {
+		if (!isBare && node.getType() == RepositoryTreeNodeType.WORKINGDIR) {
 			String path = node.getRepository().getWorkDir().getAbsolutePath();
 			createImportProjectItem(men, node.getRepository(), path);
 			new MenuItem(men, SWT.SEPARATOR);
@@ -945,6 +952,10 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			createCopyPathItem(men, path);
 		}
 
+	}
+
+	private boolean isBare(Repository repository) {
+		return repository.getConfig().getBoolean("core", "bare", false); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private void createCopyPathItem(Menu men, final String path) {
@@ -1336,7 +1347,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 							|| node.getType() == RepositoryTreeNodeType.FOLDER) {
 						dir = ((File) node.getObject()).getPath();
 					} else if (node.getType() == RepositoryTreeNodeType.WORKINGDIR) {
-						dir = node.getRepository().getWorkDir().getPath();
+						if (!isBare(node.getRepository()))
+							dir = node.getRepository().getWorkDir().getPath();
 					}
 					if (dir != null) {
 						Clipboard clip = null;

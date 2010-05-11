@@ -186,6 +186,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		case WORKINGDIR: {
 			List<RepositoryTreeNode<File>> children = new ArrayList<RepositoryTreeNode<File>>();
 
+			if (node.getRepository().getConfig().getBoolean(
+					"core", "bare", false)) //$NON-NLS-1$ //$NON-NLS-2$
+				return children.toArray();
 			File workingDir = repo.getWorkDir();
 			if (workingDir == null || !workingDir.exists())
 				return null;

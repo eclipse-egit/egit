@@ -153,10 +153,17 @@ public class CreateBranchPage extends WizardPage {
 				checkPage();
 			}
 		});
+
+		boolean isBare = myRepository.getConfig().getBoolean(
+				"core", "bare", false); //$NON-NLS-1$ //$NON-NLS-2$
 		checkout = new Button(main, SWT.CHECK);
 		checkout.setText(UIText.CreateBranchPage_CheckoutButton);
 		// most of the time, we probably will check this out
-		checkout.setSelection(true);
+		// unless we have a bare repository which doesn't allow
+		// check out at all
+		checkout.setSelection(!isBare);
+		checkout.setEnabled(!isBare);
+		checkout.setVisible(!isBare);
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1).applyTo(
 				checkout);
 		checkout.addSelectionListener(new SelectionAdapter() {
