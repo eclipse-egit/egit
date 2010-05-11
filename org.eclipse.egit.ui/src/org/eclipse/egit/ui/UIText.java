@@ -220,6 +220,15 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_errorReadingHeadCommit;
 
 	/** */
+	public static String GitHistoryPage_CreatePatch;
+
+	/** */
+	public static String GitHistoryPage_Date;
+
+	/** */
+	public static String GitHistoryPage_ErrorNotWritten;
+
+	/** */
 	public static String GitHistoryPage_FileNotInCommit;
 
 	/** */
@@ -236,6 +245,15 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitHistoryPage_openFailed;
+
+	/** */
+	public static String GitHistoryPage_seeLog;
+
+	/** */
+	public static String GitHistoryPage_From;
+
+	/** */
+	public static String GitHistoryPage_Subject;
 
 	/** */
 	public static String GitProjectPropertyPage_LabelBranch;
@@ -1796,6 +1814,36 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitCreateGeneralProjectPage_ProjectNameLabel;
+
+	/** */
+	public static String GitCreatePatchWizard_Browse;
+
+	/** */
+	public static String GitCreatePatchWizard_Clipboard;
+
+	/** */
+	public static String GitCreatePatchWizard_CreatePatchTitle;
+
+	/** */
+	public static String GitCreatePatchWizard_File;
+
+	/** */
+	public static String GitCreatePatchWizard_GitFormat;
+
+	/** */
+	public static String GitCreatePatchWizard_InternalError;
+
+	/** */
+	public static String GitCreatePatchWizard_SelectLocationDescription;
+
+	/** */
+	public static String GitCreatePatchWizard_SelectLocationTitle;
+
+	/** */
+	public static String GitCreatePatchWizard_SelectOptionsDescription;
+
+	/** */
+	public static String GitCreatePatchWizard_SelectOptionsTitle;
 
 	/** */
 	public static String GitCreateProjectViaWizardWizard_AbortedMessage;

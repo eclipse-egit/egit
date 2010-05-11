@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (c) 2010, Stefan Lay <stefan.lay@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -135,6 +136,8 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 	private IAction compareModeAction;
 
 	private boolean compareMode = false;
+
+	private CreatePatchAction createPatchAction = new CreatePatchAction();
 
 	/**
 	 * Determine if the input can be shown in this viewer.
@@ -582,6 +585,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			c.addMenuDetectListener(new MenuDetectListener() {
 
 				public void menuDetected(MenuDetectEvent e) {
+					popupMgr.remove(new ActionContributionItem(createPatchAction));
 					popupMgr.remove(new ActionContributionItem(compareAction));
 					popupMgr.remove(new ActionContributionItem(
 							compareVersionsAction));
@@ -589,6 +593,11 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 							viewVersionsAction));
 					int size = ((IStructuredSelection) revObjectSelectionProvider
 							.getSelection()).size();
+					if (size == 1) {
+						popupMgr.add(new Separator());
+						popupMgr.add(createPatchAction);
+						createPatchAction.setEnabled(createPatchAction.isEnabled());
+					}
 					if (IFile.class.isAssignableFrom(getInput().getClass())) {
 						popupMgr.add(new Separator());
 						if (size == 1) {
@@ -605,6 +614,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			c.addMenuDetectListener(new MenuDetectListener() {
 
 				public void menuDetected(MenuDetectEvent e) {
+					popupMgr.remove(new ActionContributionItem(createPatchAction));
 					popupMgr.remove(new ActionContributionItem(compareAction));
 					popupMgr.remove(new ActionContributionItem(
 							compareVersionsAction));
@@ -975,6 +985,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 		fileViewer.addSelectionChangedListener(commentViewer);
 		commentViewer.setTreeWalk(fileWalker);
 		commentViewer.setDb(db);
+		createPatchAction.setTreeWalk(fileWalker);
 		findToolbar.clear();
 		graph.setInput(highlightFlag, null, null);
 
@@ -1347,4 +1358,41 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 
 	}
 
+	private class CreatePatchAction extends Action {
+
+		private TreeWalk walker;
+
+		public CreatePatchAction() {
+			super(UIText.GitHistoryPage_CreatePatch);
+		}
+
+		@Override
+		public void run() {
+			IStructuredSelection selection = ((IStructuredSelection) revObjectSelectionProvider
+					.getSelection());
+			if (selection.size() == 1) {
+
+				Iterator<?> it = selection.iterator();
+				SWTCommit commit = (SWTCommit) it.next();
+
+				GitCreatePatchWizard.run(getHistoryPageSite().getPart(),
+						commit, walker, db);
+			}
+		}
+
+		public void setTreeWalk(TreeWalk walker) {
+			this.walker = walker;
+		}
+
+		@Override
+		public boolean isEnabled() {
+			IStructuredSelection selection = ((IStructuredSelection) revObjectSelectionProvider
+					.getSelection());
+			Iterator<?> it = selection.iterator();
+			SWTCommit commit = (SWTCommit) it.next();
+			return (commit.getParentCount() == 1);
+
+		}
+
+	}
 }
