@@ -23,10 +23,7 @@ public class CoreText extends NLS {
 	public static String AssumeUnchangedOperation_writingIndex;
 
 	/** */
-	public static String UpdateJob_updatingIndex;
-
-	/** */
-	public static String UpdateJob_writingIndex;
+	public static String UpdateOperation_writingIndex;
 
 	/** */
 	public static String UpdateOperation_updating;

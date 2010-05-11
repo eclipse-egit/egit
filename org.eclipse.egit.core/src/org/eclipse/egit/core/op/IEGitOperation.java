@@ -25,7 +25,8 @@ public interface IEGitOperation {
 	void execute(IProgressMonitor monitor) throws CoreException;
 
 	/**
-	 * @return the rule needed to execute this operation
+	 * @return the rule needed to execute this operation.
+	 * <code>null</code> if no rule is required.
 	 */
 	ISchedulingRule getSchedulingRule();
 }
