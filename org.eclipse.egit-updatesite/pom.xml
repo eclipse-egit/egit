@@ -26,19 +26,6 @@
   <!-- see http://issues.sonatype.org/browse/TYCHO-313 -->
   <version>0.8.0</version>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.eclipse.jgit</groupId>
-      <artifactId>org.eclipse.jgit</artifactId>
-      <version>${jgit-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jgit</groupId>
-      <artifactId>org.eclipse.jgit.feature</artifactId>
-      <version>${jgit-version}</version>
-    </dependency>
-  </dependencies>
-
   <build>
     <plugins>
       <plugin>
