@@ -13,12 +13,15 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.egit.core.op.ResetOperation.ResetType;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
+import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
+import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTreeNodeType;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -27,6 +30,13 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.viewers.IOpenListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.OpenEvent;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -37,12 +47,8 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RefUpdate.Result;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
@@ -52,8 +58,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
 
 /**
  * The branch and reset selection dialog
@@ -65,7 +69,7 @@ public class BranchSelectionDialog extends Dialog {
 
 	private final boolean showResetType;
 
-	private Tree branchTree;
+	private TreeViewer branchTree;
 
 	private Button confirmationBtn;
 
@@ -77,6 +81,12 @@ public class BranchSelectionDialog extends Dialog {
 
 	private ResetType resetType = ResetType.MIXED;
 
+	private final RepositoryTreeNode<Repository> localBranches;
+
+	private final RepositoryTreeNode<Repository> remoteBranches;
+
+	private final RepositoryTreeNode<Repository> tags;
+
 	/**
 	 * Construct a dialog to select a branch to reset to or check out
 	 * @param parentShell
@@ -87,6 +97,12 @@ public class BranchSelectionDialog extends Dialog {
 		super(parentShell);
 		this.repo = repo;
 		this.showResetType = showReset;
+		localBranches = new RepositoryTreeNode<Repository>(null,
+				RepositoryTreeNodeType.LOCALBRANCHES, this.repo, this.repo);
+		remoteBranches = new RepositoryTreeNode<Repository>(null,
+				RepositoryTreeNodeType.REMOTEBRANCHES, this.repo, this.repo);
+		tags = new RepositoryTreeNode<Repository>(null,
+				RepositoryTreeNodeType.TAGS, this.repo, this.repo);
 	}
 
 	@Override
@@ -94,34 +110,56 @@ public class BranchSelectionDialog extends Dialog {
 		Composite parent = (Composite) super.createDialogArea(base);
 		parent.setLayout(GridLayoutFactory.swtDefaults().create());
 		new Label(parent, SWT.NONE).setText(UIText.BranchSelectionDialog_Refs);
-		branchTree = new Tree(parent, SWT.BORDER);
-		branchTree.setLayoutData(GridDataFactory.fillDefaults().grab(true,true).hint(500, 300).create());
-		branchTree.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
+
+		branchTree = new TreeViewer(parent, SWT.SINGLE | SWT.BORDER);
+		new RepositoriesViewLabelProvider(branchTree);
+		branchTree.setContentProvider(new RepositoriesViewContentProvider());
+
+		GridDataFactory.fillDefaults().grab(true, true).hint(500, 300).applyTo(
+				branchTree.getTree());
+		branchTree.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			public void selectionChanged(SelectionChangedEvent event) {
 				// enable the buttons depending on the selection
-				boolean oneSelected = branchTree.getSelection().length == 1;
 
 				String refName = refNameFromDialog();
 
 				boolean headSelected = Constants.HEAD.equals(refName);
 
-				boolean tagSelected = refName!=null && refName.startsWith(
-						Constants.R_TAGS);
+				boolean tagSelected = refName != null
+						&& refName.startsWith(Constants.R_TAGS);
 
-				boolean branchSelected = refName!=null && (refName.startsWith(Constants.R_HEADS) || refName.startsWith(Constants.R_REMOTES));
+				boolean branchSelected = refName != null
+						&& (refName.startsWith(Constants.R_HEADS) || refName
+								.startsWith(Constants.R_REMOTES));
 
 				// TODO add support for checkout of tags
-				confirmationBtn.setEnabled(oneSelected && branchSelected && !headSelected
+				confirmationBtn.setEnabled(branchSelected && !headSelected
 						&& !tagSelected);
 
 				if (!showResetType) {
 					// we don't support rename on tags
-					renameButton.setEnabled(oneSelected && branchSelected && !headSelected && !tagSelected);
+					renameButton.setEnabled(branchSelected && !headSelected
+							&& !tagSelected);
 
 					// new branch can not be based on a tag
-					newButton.setEnabled(oneSelected && branchSelected && !tagSelected);
+					newButton.setEnabled(branchSelected && !tagSelected);
 				}
+			}
+		});
+
+		// double-click support
+		branchTree.addOpenListener(new IOpenListener() {
+
+			public void open(OpenEvent event) {
+				RepositoryTreeNode node = (RepositoryTreeNode) ((IStructuredSelection) branchTree
+						.getSelection()).getFirstElement();
+				if (node.getType() != RepositoryTreeNodeType.REF)
+					branchTree.setExpandedState(node, !branchTree
+							.getExpandedState(node));
+				else if (confirmationBtn.isEnabled())
+					okPressed();
+
 			}
 		});
 
@@ -134,13 +172,61 @@ public class BranchSelectionDialog extends Dialog {
 		getShell().setText(
 				NLS.bind(rawTitle, new Object[] { repo.getDirectory() }));
 
+		return parent;
+	}
+
+	@Override
+	public void create() {
+		super.create();
+
+		List<RepositoryTreeNode> roots = new ArrayList<RepositoryTreeNode>();
+		roots.add(localBranches);
+		roots.add(remoteBranches);
+		roots.add(tags);
+
+		branchTree.setInput(roots);
+
 		try {
-			fillTreeWithBranches(null);
-		} catch (Throwable e) {
-			Activator.logError(UIText.BranchSelectionDialog_ErrorCouldNotRefresh, e);
+			// initially, we mark the current head if it can be determined
+			String fullBranch = repo.getFullBranch();
+			if (!markRef(fullBranch))
+				// if we can't determine a branch, we just expand local branches
+				branchTree.expandToLevel(localBranches, 1);
+		} catch (IOException e) {
+			// ignore
+		}
+	}
+
+	private boolean markRef(String refName) {
+		// selects the entry specified by the name
+		if (refName == null)
+			return false;
+		Ref actRef;
+		try {
+			actRef = repo.getRef(refName);
+		} catch (IOException e) {
+			// ignore
+			return false;
 		}
 
-		return parent;
+		if (actRef == null)
+			return false;
+
+		RepositoryTreeNode<Repository> parentNode;
+		if (refName.startsWith(Constants.R_HEADS)) {
+			parentNode = localBranches;
+		} else if (refName.startsWith(Constants.R_REMOTES)) {
+			parentNode = remoteBranches;
+		} else if (refName.startsWith(Constants.R_TAGS)) {
+			parentNode = tags;
+		} else {
+			return false;
+		}
+
+		RepositoryTreeNode<Ref> actNode = new RepositoryTreeNode<Ref>(
+				parentNode, RepositoryTreeNodeType.REF, repo, actRef);
+		branchTree.setSelection(new StructuredSelection(actNode), true);
+		return true;
 	}
 
 	private void buildResetGroup(Composite parent) {
@@ -175,93 +261,6 @@ public class BranchSelectionDialog extends Dialog {
 		});
 	}
 
-	private void fillTreeWithBranches(String select) throws IOException {
-		String branch = repo.getFullBranch();
-		List<String> branches = new ArrayList<String>(repo.getAllRefs()
-				.keySet());
-		Collections.sort(branches);
-
-		TreeItem curItem = null;
-		TreeItem curSubItem = null;
-		String curPrefix = null;
-		String curSubPrefix = null;
-		TreeItem itemToSelect = null;
-
-		for (String ref : branches) {
-			String shortName = ref;
-			if (ref.startsWith(Constants.R_HEADS)) {
-				shortName = ref.substring(11);
-				if (!Constants.R_HEADS.equals(curPrefix)) {
-					curPrefix = Constants.R_HEADS;
-					curSubPrefix = null;
-					curSubItem = null;
-					curItem = new TreeItem(branchTree, SWT.NONE);
-					curItem.setText(UIText.BranchSelectionDialog_LocalBranches);
-				}
-			} else if (ref.startsWith(Constants.R_REMOTES)) {
-				shortName = ref.substring(13);
-				if (!Constants.R_REMOTES.equals(curPrefix)) {
-					curPrefix = Constants.R_REMOTES;
-					curItem = new TreeItem(branchTree, SWT.NONE);
-					curItem.setText(UIText.BranchSelectionDialog_RemoteBranches);
-					curSubItem = null;
-					curSubPrefix = null;
-				}
-
-				int slashPos = shortName.indexOf("/"); //$NON-NLS-1$
-				if (slashPos > -1) {
-					String remoteName = shortName.substring(0, slashPos);
-					shortName = shortName.substring(slashPos+1);
-					if (!remoteName.equals(curSubPrefix)) {
-						curSubItem = new TreeItem(curItem, SWT.NONE);
-						curSubItem.setText(remoteName);
-						curSubPrefix = remoteName;
-					}
-				} else {
-					curSubItem = null;
-					curSubPrefix = null;
-				}
-			} else if (ref.startsWith(Constants.R_TAGS)) {
-				shortName = ref.substring(10);
-				if (!Constants.R_TAGS.equals(curPrefix)) {
-					curPrefix = Constants.R_TAGS;
-					curSubPrefix = null;
-					curSubItem = null;
-					curItem = new TreeItem(branchTree, SWT.NONE);
-					curItem.setText(UIText.BranchSelectionDialog_Tags);
-				}
-			}
-			TreeItem item;
-			if (curItem == null)
-				item = new TreeItem(branchTree, SWT.NONE);
-			else if (curSubItem == null)
-				item = new TreeItem(curItem, SWT.NONE);
-			else item = new TreeItem(curSubItem, SWT.NONE);
-			item.setData(ref);
-			if (ref.equals(branch)) {
-				item.setText(shortName + UIText.BranchSelectionDialog_BranchSuffix_Current);
-				FontData fd = item.getFont().getFontData()[0];
-				fd.setStyle(fd.getStyle() | SWT.BOLD);
-				final Font f = new Font(getShell().getDisplay(), fd);
-				item.setFont(f);
-				item.addDisposeListener(new DisposeListener() {
-					public void widgetDisposed(DisposeEvent e) {
-						f.dispose();
-					}
-				});
-				branchTree.showItem(item);
-			}
-			else item.setText(shortName);
-			if (ref.equals(select))
-				itemToSelect = item;
-			branchTree.setLinesVisible(true);
-		}
-		if (itemToSelect != null) {
-			branchTree.select(itemToSelect);
-			branchTree.showItem(itemToSelect);
-		}
-	}
-
 	/**
 	 * @return the selected refName
 	 */
@@ -293,10 +292,13 @@ public class BranchSelectionDialog extends Dialog {
 	}
 
 	private String refNameFromDialog() {
-		TreeItem[] selection = branchTree.getSelection();
-		if (selection.length > 0) {
-			TreeItem item = selection[0];
-			return (String) item.getData();
+		IStructuredSelection sel = (IStructuredSelection) branchTree
+				.getSelection();
+		if (sel.size() != 1)
+			return null;
+		RepositoryTreeNode node = (RepositoryTreeNode) sel.getFirstElement();
+		if (node.getType() == RepositoryTreeNodeType.REF) {
+			return ((Ref) node.getObject()).getName();
 		}
 		return null;
 	}
@@ -385,19 +387,13 @@ public class BranchSelectionDialog extends Dialog {
 										refName, newRefName, renameRef
 												.getResult());
 							}
+							branchTree.refresh();
+							markRef(newRefName);
 						} catch (Throwable e1) {
 							reportError(
 									e1,
 									UIText.BranchSelectionDialog_ErrorCouldNotRenameRef,
 									refName, newRefName, e1.getMessage());
-						}
-						try {
-							branchTree.removeAll();
-							fillTreeWithBranches(newRefName);
-						} catch (Throwable e1) {
-							reportError(
-									e1,
-									UIText.BranchSelectionDialog_ErrorCouldNotRefreshBranchList);
 						}
 					}
 				}
@@ -408,26 +404,19 @@ public class BranchSelectionDialog extends Dialog {
 					// check what ref name the user selected, if any.
 					String refName = refNameFromDialog();
 
-					String refPrefix;
-
 					// the button should be disabled anyway, but we check again
 					if (refName.equals(Constants.HEAD))
 						return;
-
-					if (refName.startsWith(Constants.R_HEADS))
-						refPrefix = Constants.R_HEADS;
-					else if (refName.startsWith(Constants.R_REMOTES))
-						refPrefix = Constants.R_REMOTES;
-					else {
+					if (refName.startsWith(Constants.R_TAGS))
 						// the button should be disabled anyway, but we check again
 						return;
-					}
 
 					InputDialog labelDialog = getRefNameInputDialog(
 							NLS
 									.bind(
 											UIText.BranchSelectionDialog_QuestionNewBranchMessage,
-											refName, refPrefix), refPrefix);
+											refName, Constants.R_HEADS),
+							Constants.R_HEADS);
 
 					if (labelDialog.open() == Window.OK) {
 						String newRefName = Constants.R_HEADS + labelDialog.getValue();
@@ -445,18 +434,13 @@ public class BranchSelectionDialog extends Dialog {
 							updateRef.setNewObjectId(startAt);
 							updateRef.setRefLogMessage("branch: Created from " + startBranch, false); //$NON-NLS-1$
 							updateRef.update();
+							branchTree.refresh();
+							markRef(newRefName);
 						} catch (Throwable e1) {
 							reportError(
 									e1,
 									UIText.BranchSelectionDialog_ErrorCouldNotCreateNewRef,
 									newRefName);
-						}
-						try {
-							branchTree.removeAll();
-							fillTreeWithBranches(newRefName);
-						} catch (Throwable e1) {
-							reportError(e1,
-									UIText.BranchSelectionDialog_ErrorCouldNotRefreshBranchList);
 						}
 					}
 				}
@@ -468,7 +452,7 @@ public class BranchSelectionDialog extends Dialog {
 		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 
 		// can't advance without a selection
-		confirmationBtn.setEnabled(branchTree.getSelectionCount() != 0);
+		confirmationBtn.setEnabled(!branchTree.getSelection().isEmpty());
 	}
 
 	@Override
