@@ -20,6 +20,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.resource.CompositeImageDescriptor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.graphics.Image;
@@ -207,18 +208,46 @@ public class RepositoriesViewLabelProvider extends LabelProvider {
 		RepositoryTreeNode node = (RepositoryTreeNode) element;
 		switch (node.getType()) {
 
+		case TAG:
+			// fall through
 		case REF:
-			Ref ref = (Ref) node.getObject();
-			// shorten the name
-			String refName = ref.getName();
+			// if the branch or tag is checked out,
+			// we want to decorate the corresponding
+			// node with a little check indicator
+			String refName = ((Ref) node.getObject()).getName();
+
+			String branchName;
+			String compareString;
+
 			try {
-				String branch = node.getRepository().getFullBranch();
-				if (refName.equals(branch)) {
-					return getDecoratedImage(image);
+				branchName = node.getRepository().getFullBranch();
+				if (branchName == null)
+					return image;
+				if (refName.startsWith(Constants.R_HEADS)) {
+					// local branch: HEAD would be on the branch
+					compareString = refName;
+				} else if (refName.startsWith(Constants.R_TAGS)) {
+					// tag: HEAD would be on the commit id to which the tag is
+					// pointing
+					compareString = node.getRepository().mapTag(refName)
+							.getObjId().getName();
+				} else if (refName.startsWith(Constants.R_REMOTES)) {
+					// remote branch: HEAD would be on the commit id to which
+					// the branch is pointing
+					compareString = node.getRepository().mapCommit(refName)
+							.getCommitId().getName();
+				} else {
+					// some other symbolic reference
+					return image;
 				}
 			} catch (IOException e1) {
-				// simply ignore here
+				return image;
 			}
+
+			if (compareString.equals(branchName)) {
+				return getDecoratedImage(image);
+			}
+
 			return image;
 
 		default:
