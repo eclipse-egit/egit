@@ -686,6 +686,23 @@
     },
     {
       "key": {
+        "uuid": "AAALun///2A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-08T16:48:26Z",
+      "side": 1,
+      "message": "I am not sure subclassing InputDialog for such a complicated user interface is such a great idea.",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///00\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
         "patchSetId": 6
@@ -812,6 +829,23 @@
     },
     {
       "key": {
+        "uuid": "AAALun///2E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-08T16:48:26Z",
+      "side": 1,
+      "message": "What is there to gain by introducing columns when there is only one column? See change 597 for a previous bug caused by the introduction of columns.",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///1k\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
         "patchSetId": 6
@@ -894,6 +928,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALun///xo\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///2I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-08T16:48:26Z",
+      "side": 1,
+      "message": "Don\u0027t end with a period in this case.",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
