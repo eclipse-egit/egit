@@ -739,6 +739,23 @@
     },
     {
       "key": {
+        "uuid": "AAALun///2Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-08T16:48:26Z",
+      "side": 1,
+      "message": "The dialog is not resizable.",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///1c\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
         "patchSetId": 6
@@ -787,6 +804,23 @@
       "side": 1,
       "message": "In this case there should appear a scroll bar so that user can scroll list of existing tags.",
       "parentUuid": "AAALun///yg\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///2M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-08T16:48:26Z",
+      "side": 1,
+      "message": "This has the same eager enablement problem that I described before.\n\n1. Make a tag.\n2. Select an existing tag.\n3. Check the \u0027Force replace existing tag.\u0027 checkbox.\n4. Delete the name.\n5. Uncheck the \u0027Force replace existing tag.\u0027 checkbox.\n6. Check the \u0027Force replace existing tag.\u0027 checkbox.\n7. The \u0027OK\u0027 button is now enabled, click it.\n\norg.eclipse.team.core.TeamException: Tag  creation failed\n\tat org.eclipse.egit.core.op.TagOperation.updateRepo(TagOperation.java:83)\n\tat org.eclipse.egit.core.op.TagOperation.execute(TagOperation.java:64)\n\tat org.eclipse.egit.ui.internal.actions.TagAction$1.run(TagAction.java:111)\n\tat org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
