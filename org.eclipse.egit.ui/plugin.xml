@@ -140,7 +140,7 @@
                class="org.eclipse.egit.ui.internal.actions.SoftResetToRevisionAction"
                id="org.eclipse.egit.ui.softresettorevision"
                label="%Soft_Reset_label"
-               menubarPath="additions"
+               menubarPath="org.eclipse.egit.ui.reset/reset"
                enablesFor="1"
                tooltip="%Soft_Reset_tooltip">
          </action>
@@ -148,7 +148,7 @@
                class="org.eclipse.egit.ui.internal.actions.MixedResetToRevisionAction"
                id="org.eclipse.egit.ui.mixedresettorevision"
                label="%Mixed_Reset_label"
-               menubarPath="additions"
+               menubarPath="org.eclipse.egit.ui.reset/reset"
                enablesFor="1"
                tooltip="%Mixed_Reset_tooltip">
          </action>
@@ -156,7 +156,7 @@
                class="org.eclipse.egit.ui.internal.actions.HardResetToRevisionAction"
                id="org.eclipse.egit.ui.hardresettorevision"
                label="%Hard_Reset_label"
-               menubarPath="additions"
+               menubarPath="org.eclipse.egit.ui.reset/reset"
                enablesFor="1"
                tooltip="%Hard_Reset_tooltip">
          </action>
@@ -165,22 +165,38 @@
 	       enablesFor="1"
 	       id="org.eclipse.egit.ui.setquickdiffbaseline"
 	       label="%Set_As_Quickdiff_Baseline_label"
-	       menubarPath="additions">
+	       menubarPath="org.eclipse.egit.ui.quickdiffbaseline/quickdiff">
 	 </action>
 	 <action
 	       class="org.eclipse.egit.ui.internal.actions.ResetQuickdiffBaselineAction"
 	       enablesFor="*"
 	       id="org.eclipse.egit.ui.resetquickdiffbaseline"
 	       label="%Reset_Quickdiff_Baseline_To_HEAD_label"
-	       menubarPath="additions">
+	       menubarPath="org.eclipse.egit.ui.quickdiffbaseline/quickdiff">
 	 </action>
 	 <action
 	       class="org.eclipse.egit.ui.internal.actions.ResetQuickdiffBaselineHeadParentAction"
 	       enablesFor="*"
 	       id="org.eclipse.egit.ui.resetquickdiffheadparentbaseline"
 	       label="%Reset_Quickdiff_Baseline_To_First_Parent_label"
-	       menubarPath="additions">
+	       menubarPath="org.eclipse.egit.ui.quickdiffbaseline/quickdiff">
 	 </action>
+  <menu
+        id="org.eclipse.egit.ui.quickdiffbaseline"
+        label="%QuickDiffMenuName"
+        path="additions">
+     <groupMarker
+           name="quickdiff">
+     </groupMarker>
+  </menu>
+  <menu
+        id="org.eclipse.egit.ui.reset"
+        label="%ResetMenuName"
+        path="additions">
+     <groupMarker
+           name="reset">
+     </groupMarker>
+  </menu>
 	  </objectContribution>
    	  <objectContribution
          adaptable="true"
