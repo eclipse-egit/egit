@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///zQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///1M\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///1I\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2010-05-08T20:33:48Z",
       "side": 1,
       "message": "We usually write something trivial nice looking here. \"Construct TagOperation\" or something very brief",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///zM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///1I\u003d",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -122,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///y0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "Right, if C Git doesn\u0027t log that we also shouldn\u0027t.\nLine removed.\nDone.",
+      "parentUuid": "AAALun///04\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///0w\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
         "patchSetId": 6
@@ -133,6 +187,24 @@
       "writtenOn": "2010-05-08T20:33:48Z",
       "side": 1,
       "message": "Some hint about why the operation failed would be nice to the user.",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///yo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "Yes, it would be nice, but right now I don\u0027t see simple solution to achieve that. Here we have only enum value without any \u0027human readable\u0027 message.",
+      "parentUuid": "AAALun///0w\u003d",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -490,6 +562,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///yU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///0c\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///0U\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
         "patchSetId": 6
@@ -542,6 +632,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///ws\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-09T18:45:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///0I\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///00\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
         "patchSetId": 6
@@ -553,6 +661,24 @@
       "writtenOn": "2010-05-08T20:15:40Z",
       "side": 1,
       "message": "Good hint!\n\nThis is an \"old\" part from second or third patch set. Subclassing InputDialog give us only tag name validation and displaying message when it isn\u0027t valid. Now when this dialog is already complicated we can also implement validation not even for tag name but also for tag message.",
+      "parentUuid": "AAALun///2A\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///zU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "AAALun///2A\u003d",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
@@ -596,6 +722,42 @@
     },
     {
       "key": {
+        "uuid": "AAALun///yE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "In this case there should appear a scroll bar so that user can scroll list of existing tags.",
+      "parentUuid": "AAALun///yg\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///1g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T20:15:40Z",
+      "side": 1,
+      "message": "I\u0027ll check that.",
+      "parentUuid": "AAALun///2M\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///zY\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
         "patchSetId": 6
@@ -614,6 +776,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///1k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T20:15:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///2E\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///xs\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 6
@@ -625,6 +805,24 @@
       "writtenOn": "2010-05-09T00:01:39Z",
       "side": 1,
       "message": "s/Tagging/tagging/",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///wo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-09T18:45:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///xs\u003d",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -660,6 +858,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALun///xo\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///1o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T20:15:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///2I\u003d",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
