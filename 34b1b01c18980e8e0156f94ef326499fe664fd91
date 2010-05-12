@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///zA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///08\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///04\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
         "patchSetId": 6
@@ -139,6 +157,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///wY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-09T18:45:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///xQ\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///w8\u003d",
         "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
         "patchSetId": 6
@@ -150,6 +186,24 @@
       "writtenOn": "2010-05-09T08:24:36Z",
       "side": 1,
       "message": "Here is the problem with the missing classes in 3.4.  This bundle is exported as 3.3.100 in Eclipse 3.4",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///ww\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-09T18:45:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///w8\u003d",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -173,6 +227,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///yk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///1Q\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///xE\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagAction.java",
         "patchSetId": 6
@@ -184,6 +256,24 @@
       "writtenOn": "2010-05-09T08:24:36Z",
       "side": 1,
       "message": "The underlying error is not displayed or logged.",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///v8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-09T18:45:39Z",
+      "side": 1,
+      "message": "I can\u0027t agree with you, current repository state (see line 67) is attached to message content. So in this case we inform user what is wrong. But I\u0027m open for any proposition how we can do this better.",
+      "parentUuid": "AAALun///xE\u003d",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -207,6 +297,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///wA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-09T18:45:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///xI\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///xM\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagAction.java",
         "patchSetId": 6
@@ -218,6 +326,24 @@
       "writtenOn": "2010-05-09T08:24:36Z",
       "side": 1,
       "message": "The underlying error is not displayed or logged.",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///wE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-09T18:45:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///xM\u003d",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -241,6 +367,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///yc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "Yes this piece of code is strange ... I\u0027ve removed this method.",
+      "parentUuid": "AAALun///0M\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///0k\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
         "patchSetId": 6
@@ -258,6 +402,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///yI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "If we want to reuse this widget somewhere else then yes, it should be public.",
+      "parentUuid": "AAALun///0k\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///0g\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
         "patchSetId": 6
@@ -269,6 +431,24 @@
       "writtenOn": "2010-05-08T20:33:48Z",
       "side": 1,
       "message": "perhaps we should use revCommit.abbreviate() here, though it yields 8 digits",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///yY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "I don\u0027t want to mix up UI code with operation\u0027s on repository. Proposed revCommit.abbreviate() takes repository as a parameter so in this case I don\u0027t want to use it here. But we can substring commit SHA-1 to 8 characters instead of 6.",
+      "parentUuid": "AAALun///0g\u003d",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -327,6 +507,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///yQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "AAALun///0U\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///0I\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
         "patchSetId": 6
@@ -338,6 +536,42 @@
       "writtenOn": "2010-05-08T20:33:48Z",
       "side": 1,
       "message": "These three classes (above) are not in Eclipse 3.4",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///00\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T20:15:40Z",
+      "side": 1,
+      "message": "Good hint!\n\nThis is an \"old\" part from second or third patch set. Subclassing InputDialog give us only tag name validation and displaying message when it isn\u0027t valid. Now when this dialog is already complicated we can also implement validation not even for tag name but also for tag message.",
+      "parentUuid": "AAALun///2A\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///1c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T20:15:40Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure does it should be resizable. We don\u0027t have here much data to present so that we need to resize this dialog to have better overview.",
+      "parentUuid": "AAALun///2Q\u003d",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -356,6 +590,24 @@
       "side": 1,
       "message": "I saw repositories with tons of tags, so the list of existing tags could be very long.",
       "parentUuid": "AAALun///1c\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///zY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///2M\u003d",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -396,6 +648,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///wk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-09T18:45:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///xo\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///xk\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 6
@@ -413,6 +683,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///wg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-09T18:45:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///xk\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///xg\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 6
@@ -424,6 +712,24 @@
       "writtenOn": "2010-05-09T00:01:39Z",
       "side": 1,
       "message": "s/filer/filter/",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///wc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-09T18:45:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///xg\u003d",
       "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
