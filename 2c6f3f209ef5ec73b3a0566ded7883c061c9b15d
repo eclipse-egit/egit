@@ -1,0 +1,111 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALuX///yY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "I\u0027ll replace IWorkspaceRunnable with IEGitOperation interface in next commit.",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///yQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALuX///5I\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///yM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALuX///5M\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///yE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALuX///4c\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///yA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "To be honest I prefer to have list of suggestion immediately after typing without pressing Ctrl+Space, but I\u0027m open for any discussion what behavior would be more useful.",
+      "parentUuid": "AAALuX///5A\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///x8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALuX///48\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
