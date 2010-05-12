@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///s4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-05-11T11:14:44Z",
+      "side": 1,
+      "message": "Null is ok here because the operation does not change Eclipse resources.",
+      "parentUuid": "AAALun///tU\u003d",
+      "revId": "c4d3fc6b1508ef101f6f4c8a3e29a2c073ae6e4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
