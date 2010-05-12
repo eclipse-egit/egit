@@ -50,6 +50,24 @@
       "revId": "83009f0624f8b8bdb6bf0f9b714a1d4a701d6f41",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///vI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-09T22:21:37Z",
+      "side": 1,
+      "message": "Right, done.",
+      "parentUuid": "AAALun///vg\u003d",
+      "revId": "83009f0624f8b8bdb6bf0f9b714a1d4a701d6f41",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
