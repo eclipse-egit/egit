@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///20\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-04-08T06:14:07Z",
+      "side": 1,
+      "message": "Above we use\nsetPageComplete(!getCheckedProjects().isEmpty());\nso in terms of clarity, it might be good to refactor this into some checkPage() method and call this from the different places where the page completion flag is set.",
+      "revId": "5c0889e9f6e95c2c62d96195623499802ce701a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///2w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-04-08T06:14:07Z",
+      "side": 1,
+      "message": "See above",
+      "revId": "5c0889e9f6e95c2c62d96195623499802ce701a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///2s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-04-08T06:14:07Z",
+      "side": 1,
+      "message": "for single lines, we do not want to have brackets",
+      "revId": "5c0889e9f6e95c2c62d96195623499802ce701a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
