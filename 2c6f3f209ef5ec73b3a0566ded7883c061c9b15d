@@ -54,6 +54,23 @@
     },
     {
       "key": {
+        "uuid": "AAALuX///5I\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-01T01:08:33Z",
+      "side": 1,
+      "message": "SubMonitor is preferred over SubProgressMonitor.",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALuX///yQ\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
         "patchSetId": 4
@@ -66,6 +83,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALuX///5I\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///5M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-01T01:08:33Z",
+      "side": 1,
+      "message": "This monitor.worked(1) line is unnecessary. Just allocate three units of work and split up as 1-1-1. The code right now makes it seem like 1-1-2.",
       "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -300,6 +334,23 @@
     },
     {
       "key": {
+        "uuid": "AAALuX///40\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-01T01:08:33Z",
+      "side": 1,
+      "message": "Dialogs block on open by default.\n\nThis dialog should be resizable.",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALuX///x4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
         "patchSetId": 4
@@ -312,6 +363,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALuX///40\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///44\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-01T01:08:33Z",
+      "side": 1,
+      "message": "You do not want to do this. That means I can just check the \u0027Overwrite\u0027 button and then the \u0027OK\u0027 button gets enabled which allows the user to create a tag with an empty string. You need to perform input validation.\n\nAlso, if I\u0027m overwriting a tag, the dialog still says \"Already exists\".",
       "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
