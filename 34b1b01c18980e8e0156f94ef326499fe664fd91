@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///zI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-08T23:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///1E\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///1A\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
         "patchSetId": 6
