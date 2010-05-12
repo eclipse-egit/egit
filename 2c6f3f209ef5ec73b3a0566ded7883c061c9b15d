@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALuX///yU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALuX///5Q\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALuX///yQ\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
         "patchSetId": 4
@@ -49,6 +67,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALuX///5M\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///yI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagAction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "No, I\u0027ve just taken this section from old version of BranchOperation, I\u0027ll reimplement it using job.\n\nDone.",
+      "parentUuid": "AAALuX///5E\u003d",
       "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -103,6 +139,114 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALuX///48\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///x0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "You are right here IAdaptable interface is useless here, but I\u0027ll keep IWorkbenchAdapter implemented because when it is removed list of tags is empty.",
+      "parentUuid": "AAALuX///4Y\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///x4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALuX///40\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///xs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "Good point! This should be rethink as well as validation.",
+      "parentUuid": "AAALuX///44\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///xo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "This \"Details pattern\" is taken from eclipse\u0027s CVS tag dialog, but this can be changed. Maybe list of existing tags should be always visible in tag dialog as Matthias suggest it; this should be discussed.",
+      "parentUuid": "AAALuX///4o\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///xk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "No, I was thinking that this can free some used resources eg. file handler or sth. But if it doesn\u0027t I\u0027ll remove it.",
+      "parentUuid": "AAALuX///4w\u003d",
+      "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX///xg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-04T22:22:44Z",
+      "side": 1,
+      "message": "When I first think about this \"feature\" it seems to me quite fancy. But right now I agree with you that this is a strange behavior. I\u0027ll remove it.",
+      "parentUuid": "AAALuX///4s\u003d",
       "revId": "2c6f3f209ef5ec73b3a0566ded7883c061c9b15d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
