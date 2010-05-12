@@ -2,6 +2,228 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALun///1E\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-08T20:33:48Z",
+      "side": 1,
+      "message": "\"\u003ccode\u003etrue\u003c/code\u003e top replace existing tag with same name",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///08\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-08T20:33:48Z",
+      "side": 1,
+      "message": "refName is redundant. Use local variablesl later on if necessary",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///w8\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-09T08:24:36Z",
+      "side": 1,
+      "message": "Here is the problem with the missing classes in 3.4.  This bundle is exported as 3.3.100 in Eclipse 3.4",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///1Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-08T20:33:48Z",
+      "side": 1,
+      "message": "spelling: which",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///xE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-09T08:24:36Z",
+      "side": 1,
+      "message": "The underlying error is not displayed or logged.",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///xI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-09T08:24:36Z",
+      "side": 1,
+      "message": "The underlying error is not displayed or logged.",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///xM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-09T08:24:36Z",
+      "side": 1,
+      "message": "The underlying error is not displayed or logged.",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///0M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-08T20:33:48Z",
+      "side": 1,
+      "message": "Not sure what happens here. Hopes it makes sense to skip error handling",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///0k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-08T20:33:48Z",
+      "side": 1,
+      "message": "Does it have to be public?",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///0g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-08T20:33:48Z",
+      "side": 1,
+      "message": "perhaps we should use revCommit.abbreviate() here, though it yields 8 digits",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///xA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-09T08:24:36Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "AAALun///yY\u003d",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///0U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-08T20:33:48Z",
+      "side": 1,
+      "message": "Why not the more straightforward objectId \u003d\u003d null? (this isn\u0027t C)",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///0I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-08T20:33:48Z",
+      "side": 1,
+      "message": "These three classes (above) are not in Eclipse 3.4",
+      "revId": "34b1b01c18980e8e0156f94ef326499fe664fd91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///yg\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
         "patchSetId": 6
