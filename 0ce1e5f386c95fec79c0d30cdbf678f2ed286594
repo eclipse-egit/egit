@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///5I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/SWTUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-07T11:36:09Z",
+      "side": 1,
+      "message": "This methods is not SWT-related and thus does not belong in a class called SWTUtils",
+      "revId": "0ce1e5f386c95fec79c0d30cdbf678f2ed286594",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///5E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagAction.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-07T11:36:09Z",
+      "side": 1,
+      "message": "We should avoid internal classes from other modules",
+      "revId": "0ce1e5f386c95fec79c0d30cdbf678f2ed286594",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///44\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-07T11:36:09Z",
+      "side": 1,
+      "message": "SWT style bits?",
+      "revId": "0ce1e5f386c95fec79c0d30cdbf678f2ed286594",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///5A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-07T11:36:09Z",
+      "side": 1,
+      "message": "Only @return needed",
+      "revId": "0ce1e5f386c95fec79c0d30cdbf678f2ed286594",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///40\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-07T11:36:09Z",
+      "side": 1,
+      "message": "?",
+      "revId": "0ce1e5f386c95fec79c0d30cdbf678f2ed286594",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///4w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-07T11:36:09Z",
+      "side": 1,
+      "message": "double javadoc",
+      "revId": "0ce1e5f386c95fec79c0d30cdbf678f2ed286594",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///4s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-07T11:36:09Z",
+      "side": 1,
+      "message": "double...",
+      "revId": "0ce1e5f386c95fec79c0d30cdbf678f2ed286594",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///4o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-07T11:36:09Z",
+      "side": 1,
+      "message": "....",
+      "revId": "0ce1e5f386c95fec79c0d30cdbf678f2ed286594",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
