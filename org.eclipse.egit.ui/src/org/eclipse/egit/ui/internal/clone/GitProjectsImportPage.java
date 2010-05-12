@@ -66,7 +66,6 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
 import org.eclipse.ui.statushandlers.StatusManager;
-import org.eclipse.ui.wizards.datatransfer.IImportStructureProvider;
 
 /**
  * The GitWizardProjectsImportPage is the page that allows the user to import
@@ -79,8 +78,6 @@ public class GitProjectsImportPage extends WizardPage {
 	 * The name of the folder containing metadata information for the workspace.
 	 */
 	public static final String METADATA_FOLDER = ".metadata"; //$NON-NLS-1$
-
-	private IImportStructureProvider structureProvider;
 
 	private TreeViewer projectsList;
 
@@ -242,7 +239,7 @@ public class GitProjectsImportPage extends WizardPage {
 					else
 						item.setChecked(false);
 				}
-				return ((ProjectRecord) element).getProjectLabel(structureProvider);
+				return ((ProjectRecord) element).getProjectLabel();
 			}
 		});
 

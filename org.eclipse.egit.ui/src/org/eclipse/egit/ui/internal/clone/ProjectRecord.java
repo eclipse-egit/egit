@@ -23,16 +23,11 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.wizards.datatransfer.IImportStructureProvider;
 
 class ProjectRecord {
 	File projectSystemFile;
 
 	String projectName;
-
-	Object parent;
-
-	int level;
 
 	IProjectDescription description;
 
@@ -43,18 +38,6 @@ class ProjectRecord {
 	 */
 	ProjectRecord(File file) {
 		projectSystemFile = file;
-		setProjectName();
-	}
-
-	/**
-	 * @param parent
-	 *            The parent folder of the .project file
-	 * @param level
-	 *            The number of levels deep in the provider the file is
-	 */
-	ProjectRecord(Object parent, int level) {
-		this.parent = parent;
-		this.level = level;
 		setProjectName();
 	}
 
@@ -113,17 +96,15 @@ class ProjectRecord {
 	/**
 	 * Gets the label to be used when rendering this project record in the
 	 * UI.
-	 * @param structureProvider
 	 *
 	 * @return String the label
 	 * @since 3.4
 	 */
-	public String getProjectLabel(IImportStructureProvider structureProvider) {
+	public String getProjectLabel() {
 		if (description == null)
 			return projectName;
 
-		String path = projectSystemFile == null ? structureProvider
-				.getLabel(parent) : projectSystemFile.getParent();
+		String path = projectSystemFile.getParent();
 
 		return NLS.bind(UIText.WizardProjectsImportPage_projectLabel,
 				projectName, path);
