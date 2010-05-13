@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.dialogs;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -26,6 +27,7 @@ import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.Activator;
@@ -193,6 +195,11 @@ public class CommitDialog extends Dialog {
 
 	CheckboxTableViewer filesViewer;
 
+	/**
+	 * A collection of files that should be already checked in the table.
+	 */
+	private Collection<IFile> preselectedFiles = Collections.emptyList();
+
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite container = (Composite) super.createDialogArea(parent);
@@ -355,8 +362,17 @@ public class CommitDialog extends Dialog {
 		filesViewer.setLabelProvider(new CommitLabelProvider());
 		filesViewer.addFilter(new CommitItemFilter());
 		filesViewer.setInput(items);
-		filesViewer.setAllChecked(true);
 		filesViewer.getTable().setMenu(getContextMenu());
+
+		// pre-emptively check any preselected files
+		for (IFile selectedFile : preselectedFiles) {
+			for (CommitItem item : items) {
+				if (item.file.equals(selectedFile)) {
+					filesViewer.setChecked(item, true);
+					break;
+				}
+			}
+		}
 
 		container.pack();
 		return container;
@@ -548,6 +564,7 @@ public class CommitDialog extends Dialog {
 	private ArrayList<IFile> selectedFiles = new ArrayList<IFile>();
 	private String previousCommitMessage = ""; //$NON-NLS-1$
 
+
 	/**
 	 * Pre-select suggested set of resources to commit
 	 *
@@ -564,6 +581,18 @@ public class CommitDialog extends Dialog {
 		return selectedFiles.toArray(new IFile[0]);
 	}
 
+	/**
+	 * Sets the files that should be checked in this table.
+	 *
+	 * @param preselectedFiles
+	 *            the files to be checked in the dialog's table, must not be
+	 *            <code>null</code>
+	 */
+	public void setPreselectedFiles(Collection<IFile> preselectedFiles) {
+		Assert.isNotNull(preselectedFiles);
+		this.preselectedFiles = preselectedFiles;
+	}
+
 	class HeaderSelectionListener extends SelectionAdapter {
 
 		private CommitItem.Order order;
@@ -576,7 +605,7 @@ public class CommitDialog extends Dialog {
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			TableColumn column = (TableColumn)e.widget;
+			TableColumn column = (TableColumn) e.widget;
 			Table table = column.getParent();
 
 			if (column == table.getSortColumn()) {
@@ -603,7 +632,8 @@ public class CommitDialog extends Dialog {
 	class CommitItemSelectionListener extends SelectionAdapter {
 
 		public void widgetDefaultSelected(SelectionEvent e) {
-			IStructuredSelection selection = (IStructuredSelection) filesViewer.getSelection();
+			IStructuredSelection selection = (IStructuredSelection) filesViewer
+					.getSelection();
 
 			CommitItem commitItem = (CommitItem) selection.getFirstElement();
 			if (commitItem == null) {
@@ -630,18 +660,24 @@ public class CommitDialog extends Dialog {
 				return;
 			}
 
-			GitProvider provider = (GitProvider) RepositoryProvider.getProvider(project);
-			GitFileHistoryProvider fileHistoryProvider = (GitFileHistoryProvider) provider.getFileHistoryProvider();
+			GitProvider provider = (GitProvider) RepositoryProvider
+					.getProvider(project);
+			GitFileHistoryProvider fileHistoryProvider = (GitFileHistoryProvider) provider
+					.getFileHistoryProvider();
 
-			IFileHistory fileHistory = fileHistoryProvider.getFileHistoryFor(commitItem.file, IFileHistoryProvider.SINGLE_REVISION, null);
+			IFileHistory fileHistory = fileHistoryProvider
+					.getFileHistoryFor(commitItem.file,
+							IFileHistoryProvider.SINGLE_REVISION, null);
 
 			IFileRevision baseFile = fileHistory.getFileRevisions()[0];
-			IFileRevision nextFile = fileHistoryProvider.getWorkspaceFileRevision(commitItem.file);
+			IFileRevision nextFile = fileHistoryProvider
+					.getWorkspaceFileRevision(commitItem.file);
 
 			ITypedElement base = new FileRevisionTypedElement(baseFile);
 			ITypedElement next = new FileRevisionTypedElement(nextFile);
 
-			GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(base, next, null);
+			GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(
+					base, next, null);
 			CompareUI.openCompareDialog(input);
 		}
 
@@ -661,7 +697,9 @@ public class CommitDialog extends Dialog {
 			selectedFiles.add(((CommitItem) obj).file);
 
 		if (commitMessage.trim().length() == 0) {
-			MessageDialog.openWarning(getShell(), UIText.CommitDialog_ErrorNoMessage, UIText.CommitDialog_ErrorMustEnterCommitMessage);
+			MessageDialog.openWarning(getShell(),
+					UIText.CommitDialog_ErrorNoMessage,
+					UIText.CommitDialog_ErrorMustEnterCommitMessage);
 			return;
 		}
 
@@ -675,7 +713,9 @@ public class CommitDialog extends Dialog {
 			}
 		}
 		if (!authorValid) {
-			MessageDialog.openWarning(getShell(), UIText.CommitDialog_ErrorInvalidAuthor, UIText.CommitDialog_ErrorInvalidAuthorSpecified);
+			MessageDialog.openWarning(getShell(),
+					UIText.CommitDialog_ErrorInvalidAuthor,
+					UIText.CommitDialog_ErrorInvalidAuthorSpecified);
 			return;
 		}
 
@@ -689,12 +729,16 @@ public class CommitDialog extends Dialog {
 			}
 		}
 		if (!committerValid) {
-			MessageDialog.openWarning(getShell(), UIText.CommitDialog_ErrorInvalidAuthor, UIText.CommitDialog_ErrorInvalidCommitterSpecified);
+			MessageDialog.openWarning(getShell(),
+					UIText.CommitDialog_ErrorInvalidAuthor,
+					UIText.CommitDialog_ErrorInvalidCommitterSpecified);
 			return;
 		}
 
 		if (selectedFiles.isEmpty() && !amending) {
-			MessageDialog.openWarning(getShell(), UIText.CommitDialog_ErrorNoItemsSelected, UIText.CommitDialog_ErrorNoItemsSelectedToBeCommitted);
+			MessageDialog.openWarning(getShell(),
+					UIText.CommitDialog_ErrorNoItemsSelected,
+					UIText.CommitDialog_ErrorNoItemsSelectedToBeCommitted);
 			return;
 		}
 
@@ -733,17 +777,17 @@ public class CommitDialog extends Dialog {
 				while (values.size() > 10)
 					values.remove(values.size() - 1);
 
-				settings.put(prefsName, values
-						.toArray(new String[values.size()]));
+				settings.put(prefsName,
+						values.toArray(new String[values.size()]));
 			}
 		}
 	}
 
 	/**
-	 * Set the total list of changed resources, including additions and
-	 * removals
+	 * Set the total list of changed resources, including additions and removals
 	 *
-	 * @param files potentially affected by a new commit
+	 * @param files
+	 *            potentially affected by a new commit
 	 */
 	public void setFileList(ArrayList<IFile> files) {
 		items.clear();
@@ -886,17 +930,23 @@ public class CommitDialog extends Dialog {
 		try {
 			stroke = KeyStroke.getInstance("M1+SPACE"); //$NON-NLS-1$
 		} catch (ParseException e1) {
-			org.eclipse.egit.ui.Activator.getDefault().getLog().log(
-					new Status(IStatus.ERROR, org.eclipse.egit.ui.Activator
-							.getPluginId(), e1.getMessage(), e1));
+			org.eclipse.egit.ui.Activator
+					.getDefault()
+					.getLog()
+					.log(new Status(IStatus.ERROR,
+							org.eclipse.egit.ui.Activator.getPluginId(), e1
+									.getMessage(), e1));
 			return;
 		}
 
 		ControlDecoration dec = new ControlDecoration(textField, SWT.TOP
 				| SWT.LEFT);
 
-		dec.setImage(FieldDecorationRegistry.getDefault().getFieldDecoration(
-				FieldDecorationRegistry.DEC_CONTENT_PROPOSAL).getImage());
+		dec.setImage(FieldDecorationRegistry
+				.getDefault()
+				.getFieldDecoration(
+						FieldDecorationRegistry.DEC_CONTENT_PROPOSAL)
+				.getImage());
 
 		dec.setShowOnlyOnFocus(true);
 		dec.setShowHover(true);
@@ -979,8 +1029,7 @@ public class CommitDialog extends Dialog {
 				new TextContentAdapter(), cp, stroke,
 				VALUE_HELP_ACTIVATIONCHARS);
 		// set the acceptance style to always replace the complete content
-		adapter
-				.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 
 	}
 
@@ -1003,8 +1052,8 @@ class CommitItem {
 		ByFile() {
 
 			public int compare(CommitItem o1, CommitItem o2) {
-				return o1.file.getProjectRelativePath().toString().
-					compareTo(o2.file.getProjectRelativePath().toString());
+				return o1.file.getProjectRelativePath().toString()
+						.compareTo(o2.file.getProjectRelativePath().toString());
 			}
 
 		};
@@ -1021,7 +1070,7 @@ class CommitItem {
 
 class CommitViewerComparator extends ViewerComparator {
 
-	public CommitViewerComparator(Comparator comparator){
+	public CommitViewerComparator(Comparator comparator) {
 		super(comparator);
 	}
 
