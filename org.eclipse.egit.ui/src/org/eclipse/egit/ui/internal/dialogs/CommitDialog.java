@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.dialogs;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -26,6 +27,7 @@ import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.Activator;
@@ -193,6 +195,11 @@ public class CommitDialog extends Dialog {
 
 	CheckboxTableViewer filesViewer;
 
+	/**
+	 * A collection of files that should be already checked in the table.
+	 */
+	private Collection<IFile> preselectedFiles = Collections.emptyList();
+
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite container = (Composite) super.createDialogArea(parent);
@@ -355,8 +362,17 @@ public class CommitDialog extends Dialog {
 		filesViewer.setLabelProvider(new CommitLabelProvider());
 		filesViewer.addFilter(new CommitItemFilter());
 		filesViewer.setInput(items);
-		filesViewer.setAllChecked(true);
 		filesViewer.getTable().setMenu(getContextMenu());
+
+		// pre-emptively check any preselected files
+		for (IFile selectedFile : preselectedFiles) {
+			for (CommitItem item : items) {
+				if (item.file.equals(selectedFile)) {
+					filesViewer.setChecked(item, true);
+					break;
+				}
+			}
+		}
 
 		container.pack();
 		return container;
@@ -562,6 +578,18 @@ public class CommitDialog extends Dialog {
 	 */
 	public IFile[] getSelectedFiles() {
 		return selectedFiles.toArray(new IFile[0]);
+	}
+
+	/**
+	 * Sets the files that should be checked in this table.
+	 *
+	 * @param preselectedFiles
+	 *            the files to be checked in the dialog's table, must not be
+	 *            <code>null</code>
+	 */
+	public void setPreselectedFiles(Collection<IFile> preselectedFiles) {
+		Assert.isNotNull(preselectedFiles);
+		this.preselectedFiles = preselectedFiles;
 	}
 
 	class HeaderSelectionListener extends SelectionAdapter {
