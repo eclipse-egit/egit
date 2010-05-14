@@ -45,6 +45,10 @@ public class GitProjectPropertyPage extends PropertyPage {
 
 	@Override
 	protected Control createContents(Composite parent) {
+		// this page just shows read-only information to the user, no
+		// default/apply buttons needed
+		noDefaultAndApplyButton();
+
 		final Composite composite = new Composite(parent, SWT.NULL);
 
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
