@@ -76,6 +76,9 @@ public class UIIcons {
 	/** Disabled, unchecked, checkbox image */
 	public static final ImageDescriptor CHECKBOX_DISABLED_UNCHECKED;
 
+	/** Create Patch Wizard banner */
+	public static final ImageDescriptor WIZBAN_CREATE_PATCH;
+
 	/** Import Wizard banner */
 	public static final ImageDescriptor WIZBAN_IMPORT_REPO;
 
@@ -141,6 +144,7 @@ public class UIIcons {
 		ELCL16_COMPARE_VIEW = map("elcl16/compare_view.gif"); //$NON-NLS-1$
 		ELCL16_NEXT = map("elcl16/next.gif"); //$NON-NLS-1$
 		ELCL16_PREVIOUS = map("elcl16/previous.gif"); //$NON-NLS-1$
+		WIZBAN_CREATE_PATCH = map("wizban/createpatch_wizban.png"); //$NON-NLS-1$
 		WIZBAN_IMPORT_REPO = map("wizban/import_wiz.png"); //$NON-NLS-1$
 		WIZBAN_CONNECT_REPO = map("wizban/newconnect_wizban.png"); //$NON-NLS-1$
 		ELCL16_COMMIT = map("elcl16/commit.gif"); //$NON-NLS-1$
