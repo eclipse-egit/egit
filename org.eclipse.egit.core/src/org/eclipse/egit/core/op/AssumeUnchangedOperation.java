@@ -19,7 +19,6 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
@@ -37,7 +36,7 @@ import org.eclipse.osgi.util.NLS;
  * Tell JGit to ignore changes in selected files
  */
 public class AssumeUnchangedOperation implements IEGitOperation {
-	private final Collection<IResource> rsrcList;
+	private final Collection<? extends IResource> rsrcList;
 
 	private final IdentityHashMap<Repository, DirCache> caches;
 
@@ -50,7 +49,7 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 	 *            collection of {@link IResource}s which should be ignored when
 	 *            looking for changes or committing.
 	 */
-	public AssumeUnchangedOperation(final Collection<IResource> rsrcs) {
+	public AssumeUnchangedOperation(final Collection<? extends IResource> rsrcs) {
 		rsrcList = rsrcs;
 		caches = new IdentityHashMap<Repository, DirCache>();
 		mappings = new IdentityHashMap<RepositoryMapping, Object>();
@@ -69,10 +68,8 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 		m.beginTask(CoreText.AssumeUnchangedOperation_adding,
 				rsrcList.size() * 200);
 		try {
-			for (Object obj : rsrcList) {
-				obj = ((IAdaptable) obj).getAdapter(IResource.class);
-				if (obj instanceof IResource)
-					assumeValid((IResource) obj);
+			for (IResource resource : rsrcList) {
+				assumeValid(resource);
 				m.worked(200);
 			}
 

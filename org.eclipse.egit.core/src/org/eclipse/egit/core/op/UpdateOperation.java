@@ -45,7 +45,7 @@ import org.eclipse.osgi.util.NLS;
  * </p>
  */
 public class UpdateOperation implements IEGitOperation {
-	private final Collection<IResource> rsrcList;
+	private final Collection<? extends IResource> rsrcList;
 
 	/**
 	 * Create a new operation to update files/folders.
@@ -54,7 +54,7 @@ public class UpdateOperation implements IEGitOperation {
 	 *            collection of {@link IResource}s which should be added to the
 	 *            relevant Git repositories.
 	 */
-	public UpdateOperation(final Collection<IResource> rsrcs) {
+	public UpdateOperation(final Collection<? extends IResource> rsrcs) {
 		rsrcList = rsrcs;
 	}
 
