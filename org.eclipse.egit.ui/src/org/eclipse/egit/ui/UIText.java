@@ -2034,6 +2034,30 @@ public class UIText extends NLS {
 	/** */
 	public static String CommitCombo_showSuggestedCommits;
 
+	/** */
+	public static String ModifiedNode_Label;
+
+	/** */
+	public static String StagedNode_Label;
+
+	/** */
+	public static String UntrackedNode_Label;
+
+	/** */
+	public static String StagingView_StagingJobLabel;
+
+	/** */
+	public static String StagingView_StagingJobTaskName;
+
+	/** */
+	public static String StagingView_AnalyzeJobLabel;
+
+	/** */
+	public static String StagingView_AnalyzeJobTaskName;
+
+	/** */
+	public static String StagingView_AnalyzeJobSubTaskName;
+
 	static {
 		initializeMessages("org.eclipse.egit.ui.uitext", UIText.class); //$NON-NLS-1$
 	}
