@@ -486,10 +486,38 @@
             name="%GitRepositoriesView_name"
             restorable="true">
       </view>
+      <view
+            category="org.eclipse.egit.ui.GitCategory"
+            class="org.eclipse.egit.ui.internal.staging.StagingView"
+            icon="icons/eview16/repo_rep.gif"
+            id="org.eclipse.egit.ui.StagingView"
+            name="Staging">
+      </view>
       <category
             id="org.eclipse.egit.ui.GitCategory"
             name="%GitCategory_name">
       </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.egit.ui.internal.staging.RefreshHandler"
+            commandId="org.eclipse.ui.file.refresh">
+         <activeWhen>
+            <with
+                  variable="activePartId">
+               <equals value="org.eclipse.egit.ui.StagingView"/>
+            </with>
+         </activeWhen>
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.egit.ui.StagingView?after=additions">
+         <command commandId="org.eclipse.ui.file.refresh"/>
+         <command commandId="org.eclipse.ui.file.properties"/>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
@@ -526,5 +554,15 @@
                id="org.eclipse.egit.ui.RepositoriesView">
          </showInPart>
       </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.staging.ResourceNode"
+            class="org.eclipse.egit.ui.internal.staging.ResourceNodeAdapterFactory">
+         <adapter
+               type="org.eclipse.core.resources.IResource">
+         </adapter>
+      </factory>
    </extension>
 </plugin>
