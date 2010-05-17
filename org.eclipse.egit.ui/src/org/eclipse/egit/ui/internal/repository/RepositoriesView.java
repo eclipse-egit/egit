@@ -100,7 +100,10 @@ import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
@@ -1553,6 +1556,25 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			saveDirs(dirs);
 			return true;
 		}
+	}
+
+	/**
+	 * Refreshes the instance if one is active
+	 */
+	public static void refreshIfNeeded() {
+		for (IWorkbenchWindow window : PlatformUI.getWorkbench()
+				.getWorkbenchWindows())
+
+			for (IWorkbenchPage page : window.getPages()) {
+				IViewReference ref = page.findViewReference(VIEW_ID);
+				if (ref != null) {
+					IViewPart vp = ref.getView(false);
+					if (vp != null) {
+						RepositoriesView rv = (RepositoriesView) vp;
+						rv.scheduleRefresh();
+					}
+				}
+			}
 	}
 
 	/**
