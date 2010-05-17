@@ -3437,6 +3437,29 @@ public class UIText extends NLS {
 	public static String DecoratableResourceHelper_noHead;
 
 	/** */
+	public static String ModifiedNode_Label;
+
+	/** */
+	public static String StagedNode_Label;
+
+	/** */
+	public static String UntrackedNode_Label;
+
+	/** */
+	public static String StagingView_StagingJobLabel;
+
+	/** */
+	public static String StagingView_StagingJobTaskName;
+
+	/** */
+	public static String StagingView_AnalyzeJobLabel;
+
+	/** */
+	public static String StagingView_AnalyzeJobTaskName;
+
+	/** */
+	public static String StagingView_AnalyzeJobSubTaskName;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}

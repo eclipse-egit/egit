@@ -45,6 +45,9 @@ public class UIIcons {
 	/** Decoration for lightweight tags **/
 	public final static ImageDescriptor OVR_LIGHTTAG;
 
+	/** Decoration for resource that has been modified. */
+	public static final ImageDescriptor OVR_MODIFIED;
+
 	/** Find icon */
 	public final static ImageDescriptor ELCL16_FIND;
 	/** Compare / View icon */
@@ -168,6 +171,7 @@ public class UIIcons {
 		OVR_ASSUMEVALID = map("ovr/assume_valid.gif"); //$NON-NLS-1$
 		OVR_DIRTY = map("ovr/dirty.gif"); //$NON-NLS-1$
 		OVR_LIGHTTAG = map("ovr/lighttag.gif"); //$NON-NLS-1$
+		OVR_MODIFIED = map("ovr/modified.gif"); //$NON-NLS-1$
 		ELCL16_FIND = map("elcl16/find.gif"); //$NON-NLS-1$
 		ELCL16_COMPARE_VIEW = map("elcl16/compare_view.gif"); //$NON-NLS-1$
 		ELCL16_NEXT = map("elcl16/next.gif"); //$NON-NLS-1$
