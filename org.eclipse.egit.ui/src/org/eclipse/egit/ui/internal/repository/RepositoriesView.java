@@ -312,7 +312,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 						// if any of the selected elements are not files, ignore
 						// the open request
 						if (node.getType() != RepositoryTreeNodeType.FILE
-								&& node.getType() != RepositoryTreeNodeType.REF) {
+								&& node.getType() != RepositoryTreeNodeType.REF
+								&& node.getType() != RepositoryTreeNodeType.TAG) {
 							return;
 						}
 					}
@@ -322,12 +323,12 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 						RepositoryTreeNode node = (RepositoryTreeNode) selectedElement;
 						if (node.getType() == RepositoryTreeNodeType.FILE)
 							openFile((File) node.getObject());
-						else if (node.getType() == RepositoryTreeNodeType.REF) {
+						else if (node.getType() == RepositoryTreeNodeType.REF
+								|| node.getType() == RepositoryTreeNodeType.TAG) {
 							Ref ref = (Ref) node.getObject();
 							if (!isBare(node.getRepository())
-									&& (ref.getName().startsWith(
-											Constants.R_HEADS) || ref.getName()
-											.startsWith(Constants.R_REMOTES)))
+									&& ref.getName().startsWith(
+											Constants.R_REFS))
 								checkoutBranch(node, ref.getName());
 						}
 					}
@@ -509,15 +510,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 					MenuItem checkout = new MenuItem(men, SWT.PUSH);
 					checkout.setText(UIText.RepositoriesView_CheckOut_MenuItem);
 
-					try {
-						if (node.getRepository().getFullBranch().equals(
-								ref.getName())) {
-							// no checkout on current branch
-							checkout.setEnabled(false);
-						}
-					} catch (IOException e2) {
-						// ignore
-					}
+					checkout.setEnabled(!isRefCheckedOut(node.getRepository(),
+							ref.getName()));
 
 					checkout.addSelectionListener(new SelectionAdapter() {
 
@@ -534,6 +528,26 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 				createDeleteBranchItem(men, node);
 
 			}
+		}
+
+		if (node.getType() == RepositoryTreeNodeType.TAG) {
+
+			final Ref ref = (Ref) node.getObject();
+
+			MenuItem checkout = new MenuItem(men, SWT.PUSH);
+			checkout.setText(UIText.RepositoriesView_CheckOut_MenuItem);
+
+			checkout.setEnabled(!isRefCheckedOut(node.getRepository(), ref
+					.getName()));
+
+			checkout.addSelectionListener(new SelectionAdapter() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					checkoutBranch(node, ref.getLeaf().getName());
+				}
+			});
+
 		}
 
 		if (node.getType() == RepositoryTreeNodeType.LOCALBRANCHES
@@ -958,6 +972,37 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 		return repository.getConfig().getBoolean("core", "bare", false); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
+	private boolean isRefCheckedOut(Repository repository, String refName) {
+		String branchName;
+		String compareString;
+
+		try {
+			branchName = repository.getFullBranch();
+			if (branchName == null)
+				return false;
+			if (refName.startsWith(Constants.R_HEADS)) {
+				// local branch: HEAD would be on the branch
+				compareString = refName;
+			} else if (refName.startsWith(Constants.R_TAGS)) {
+				// tag: HEAD would be on the commit id to which the tag is
+				// pointing
+				compareString = repository.mapTag(refName).getObjId().getName();
+			} else if (refName.startsWith(Constants.R_REMOTES)) {
+				// remote branch: HEAD would be on the commit id to which
+				// the branch is pointing
+				compareString = repository.mapCommit(refName).getCommitId()
+						.getName();
+			} else {
+				// some other symbolic reference
+				return false;
+			}
+		} catch (IOException e1) {
+			return false;
+		}
+
+		return compareString.equals(branchName);
+	}
+
 	private void createCopyPathItem(Menu men, final String path) {
 
 		MenuItem copyPath;
@@ -1065,13 +1110,8 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 		MenuItem deleteBranch = new MenuItem(men, SWT.PUSH);
 		deleteBranch.setText(UIText.RepositoriesView_DeleteBranchMenu);
 
-		try {
-			if (node.getRepository().getFullBranch().equals(ref.getName())) {
-				deleteBranch.setEnabled(false);
-			}
-		} catch (IOException e2) {
-			// ignore
-		}
+		deleteBranch.setEnabled(!isRefCheckedOut(node.getRepository(), ref
+				.getName()));
 
 		deleteBranch.addSelectionListener(new SelectionAdapter() {
 
