@@ -1849,6 +1849,18 @@ public class UIText extends NLS {
 	public static String GitCreatePatchWizard_SelectOptionsTitle;
 
 	/** */
+	public static String GitCreatePatchWizard_FilesystemError;
+
+	/** */
+	public static String GitCreatePatchWizard_FilesystemInvalidError;
+
+	/** */
+	public static String GitCreatePatchWizard_FilesystemDirectoryError;
+
+	/** */
+	public static String GitCreatePatchWizard_FilesystemDirectoryNotExistsError;
+
+	/** */
 	public static String GitCreateProjectViaWizardWizard_AbortedMessage;
 
 	/** */
