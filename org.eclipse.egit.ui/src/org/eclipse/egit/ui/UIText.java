@@ -856,6 +856,15 @@ public class UIText extends NLS {
 	public static String PushAction_wrongURITitle;
 
 	/** */
+	public static String PushConfiguredRemoteAction_NoSpecDefined;
+
+	/** */
+	public static String PushConfiguredRemoteAction_NoUpdatesFoundMessage;
+
+	/** */
+	public static String PushConfiguredRemoteAction_NoUrisMessage;
+
+	/** */
 	public static String PushWizard_cantConnectToAny;
 
 	/** */
@@ -1262,6 +1271,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String FetchAction_wrongURIMessage;
+
+	/** */
+	public static String FetchConfiguredRemoteAction_NoSpecsDefinedMessage;
+
+	/** */
+	public static String FetchConfiguredRemoteAction_NoUrisDefinedMessage;
 
 	/** */
 	public static String FetchResultDialog_labelEmptyResult;
@@ -1672,6 +1687,9 @@ public class UIText extends NLS {
 	public static String RepositoriesView_DeleteRepoDeterminProjectsMessage;
 
 	/** */
+	public static String RepositoriesView_DoPushMenuItem;
+
+	/** */
 	public static String RepositoriesView_Error_WindowTitle;
 
 	/** */
@@ -1679,6 +1697,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositoriesView_ExistingProjects_Nodetext;
+
+	/** */
+	public static String RepositoriesView_FetchMenu;
 
 	/** */
 	public static String RepositoriesView_Import_Button;
