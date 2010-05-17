@@ -107,6 +107,11 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		t.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(final MouseEvent e) {
+				// only process the hyperlink if it was a primary mouse click
+				if (e.button != 1) {
+					return;
+				}
+
 				final int o;
 				try {
 					o = t.getOffsetAtLocation(new Point(e.x, e.y));
