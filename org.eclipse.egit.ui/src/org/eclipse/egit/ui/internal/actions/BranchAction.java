@@ -22,6 +22,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
+import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
@@ -65,6 +66,7 @@ public class BranchAction extends RepositoryAction {
 					return Activator.createErrorStatus(
 							UIText.BranchAction_branchFailed, e);
 				} finally {
+					RepositoriesView.refreshIfNeeded();
 					GitLightweightDecorator.refresh();
 				}
 				return Status.OK_STATUS;
