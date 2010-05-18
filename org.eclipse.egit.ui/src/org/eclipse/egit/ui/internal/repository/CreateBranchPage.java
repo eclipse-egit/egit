@@ -38,16 +38,14 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * Allows to create a branch based on another branch or with a selection of
- * another branch
+ * Allows to create a new local branch based on another branch. The source
+ * branch can be selected using a drop down.
  */
 public class CreateBranchPage extends WizardPage {
 
 	private final Repository myRepository;
 
 	private final Ref myBaseBranch;
-
-	private final boolean remoteMode;
 
 	private Text nameText;
 
@@ -56,45 +54,32 @@ public class CreateBranchPage extends WizardPage {
 	private Combo branchCombo;
 
 	/**
-	 * Create a branch
+	 * Constructs this page.
+	 * <p>
+	 * If a base branch is provided, the drop down will be selected accordingly
 	 *
 	 * @param repo
 	 *            the repository
 	 * @param baseBranch
 	 *            the branch to base the new branch on, may be null
-	 * @param remote
-	 *            true if remote branch is to be created
 	 */
-	public CreateBranchPage(Repository repo, Ref baseBranch, boolean remote) {
+	public CreateBranchPage(Repository repo, Ref baseBranch) {
 		super(CreateBranchPage.class.getName());
 		this.myRepository = repo;
 		this.myBaseBranch = baseBranch;
-		this.remoteMode = remote;
-		if (this.remoteMode)
-			if (baseBranch != null)
-				setTitle(NLS.bind(
-						UIText.CreateBranchPage_CreateRemoteBaseOnTitle,
-						myBaseBranch.getName()));
-			else
-				setTitle(UIText.CreateBranchPage_CreateRemoteTitle);
-		else if (baseBranch != null)
-			setTitle(NLS.bind(UIText.CreateBranchPage_CreateLocalBasedTitle,
-					myBaseBranch.getName()));
-		else
-			setTitle(UIText.CreateBranchPage_CreateLocalTitle);
+		setTitle(UIText.CreateBranchPage_Title);
 	}
 
 	public void createControl(Composite parent) {
-
 		Composite main = new Composite(parent, SWT.NONE);
-		main.setLayout(new GridLayout(2, false));
+		main.setLayout(new GridLayout(3, false));
 
 		Label sourceLabel = new Label(main, SWT.NONE);
 		sourceLabel.setText(UIText.CreateBranchPage_SourceBranchLabel);
 		sourceLabel.setToolTipText(UIText.CreateBranchPage_SourceBranchTooltip);
 		this.branchCombo = new Combo(main, SWT.READ_ONLY | SWT.DROP_DOWN);
 
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(
+		GridDataFactory.fillDefaults().span(2, 1).grab(true, false).applyTo(
 				this.branchCombo);
 
 		try {
@@ -114,17 +99,19 @@ public class CreateBranchPage extends WizardPage {
 		}
 
 		this.branchCombo.addSelectionListener(new SelectionAdapter() {
-
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				checkPage();
 			}
-
 		});
+		// select the current branch in the drop down
 		if (myBaseBranch != null) {
 			this.branchCombo.setText(myBaseBranch.getName());
-			this.branchCombo.setEnabled(false);
 		} else {
+			// TODO this only works for local branches; once we have a solution
+			// for accessing the correct information (we need this for the
+			// project label decoration, too), we should figure out if a remote
+			// branch is checked-out and set the text accordingly
 			String fullBranch;
 			try {
 				fullBranch = myRepository.getFullBranch();
@@ -136,19 +123,16 @@ public class CreateBranchPage extends WizardPage {
 
 		Label nameLabel = new Label(main, SWT.NONE);
 		nameLabel.setText(UIText.CreateBranchPage_BranchNameLabel);
-		if (remoteMode)
-			nameLabel.setToolTipText(NLS.bind(
-					UIText.CreateBranchPage_BranchNameTooltip,
-					Constants.R_REMOTES));
-		else
-			nameLabel.setToolTipText(NLS.bind(
-					UIText.CreateBranchPage_BranchNameTooltip,
-					Constants.R_HEADS));
+
+		// we visualize the prefix here
+		Text prefix = new Text(main, SWT.NONE);
+		prefix.setText(Constants.R_HEADS);
+		prefix.setEnabled(false);
 
 		nameText = new Text(main, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(nameText);
-		nameText.addModifyListener(new ModifyListener() {
 
+		nameText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				checkPage();
 			}
@@ -164,7 +148,7 @@ public class CreateBranchPage extends WizardPage {
 		checkout.setSelection(!isBare);
 		checkout.setEnabled(!isBare);
 		checkout.setVisible(!isBare);
-		GridDataFactory.fillDefaults().grab(true, false).span(2, 1).applyTo(
+		GridDataFactory.fillDefaults().grab(true, false).span(3, 1).applyTo(
 				checkout);
 		checkout.addSelectionListener(new SelectionAdapter() {
 
@@ -216,10 +200,7 @@ public class CreateBranchPage extends WizardPage {
 	}
 
 	private String getBranchName() {
-		if (remoteMode)
-			return Constants.R_REMOTES + nameText.getText();
-		else
-			return Constants.R_HEADS + nameText.getText();
+		return Constants.R_HEADS + nameText.getText();
 	}
 
 	private String getSourceBranchName() {
@@ -238,7 +219,6 @@ public class CreateBranchPage extends WizardPage {
 	 */
 	public void createBranch(IProgressMonitor monitor) throws CoreException,
 			IOException {
-
 		String newRefName = getBranchName();
 		RefUpdate updateRef;
 
