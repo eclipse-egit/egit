@@ -72,11 +72,14 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.IndexChangedEvent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
+import org.eclipse.jgit.lib.RefsChangedEvent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -127,9 +130,7 @@ import org.osgi.service.prefs.BackingStoreException;
  * Implements {@link ISelectionProvider} in order to integrate with the
  * Properties view.
  * <p>
- * TODO
- * <li>Clarification whether to show projects, perhaps configurable switch</li>
- *
+ * This periodically refreshes itself in order to react on Repository changes.
  */
 public class RepositoriesView extends ViewPart implements ISelectionProvider,
 		IShowInTarget {
@@ -154,9 +155,13 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 	private final List<ISelectionChangedListener> selectionListeners = new ArrayList<ISelectionChangedListener>();
 
+	private final static long AUTO_REFRESH_INTERVAL_MILLISECONDS = 10000l;
+
 	private ISelection currentSelection = new StructuredSelection();
 
 	private Job scheduledJob;
+
+	private Job autoRefreshJob;
 
 	private TreeViewer tv;
 
@@ -185,7 +190,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			while (tok.hasMoreTokens()) {
 				String dirName = tok.nextToken();
 				File testFile = new File(dirName);
-				if (testFile.exists()) {
+				if (testFile.exists() && !resultStrings.contains(dirName)) {
 					resultStrings.add(dirName);
 				}
 			}
@@ -341,6 +346,20 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 		addActionsToToolbar();
 
 		scheduleRefresh();
+
+		// schedule the auto-refresh job
+		autoRefreshJob = new Job("Git Repositories View Auto-Refresh") { //$NON-NLS-1$
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				scheduleRefresh();
+				schedule(AUTO_REFRESH_INTERVAL_MILLISECONDS);
+				return Status.OK_STATUS;
+			}
+		};
+
+		autoRefreshJob.setSystem(true);
+		autoRefreshJob.schedule(AUTO_REFRESH_INTERVAL_MILLISECONDS);
 
 		ISelectionService srv = (ISelectionService) getSite().getService(
 				ISelectionService.class);
@@ -717,7 +736,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 					WizardDialog dlg = new WizardDialog(getSite().getShell(),
 							new NewRemoteWizard(node.getRepository()));
 					if (dlg.open() == Window.OK)
-						scheduleRefresh();
+						tv.refresh();
 
 				}
 
@@ -756,7 +775,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 								.getShell(), new ConfigureRemoteWizard(node
 								.getRepository(), configName, false));
 						if (dlg.open() == Window.OK)
-							scheduleRefresh();
+							tv.refresh();
 
 					}
 
@@ -778,7 +797,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 								.getShell(), new ConfigureRemoteWizard(node
 								.getRepository(), configName, true));
 						if (dlg.open() == Window.OK)
-							scheduleRefresh();
+							tv.refresh();
 
 					}
 
@@ -810,7 +829,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 						config.unsetSection(REMOTE, configName);
 						try {
 							config.save();
-							scheduleRefresh();
+							tv.refresh();
 						} catch (IOException e1) {
 							Activator.handleError(
 									UIText.RepositoriesView_ErrorHeader, e1,
@@ -859,7 +878,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 							new ConfigureRemoteWizard(node.getRepository(),
 									configName, false));
 					if (dlg.open() == Window.OK)
-						scheduleRefresh();
+						tv.refresh();
 
 				}
 
@@ -876,7 +895,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 					config.unset("remote", configName, "fetch"); //$NON-NLS-1$//$NON-NLS-2$
 					try {
 						config.save();
-						scheduleRefresh();
+						tv.refresh();
 					} catch (IOException e1) {
 						MessageDialog.openError(getSite().getShell(),
 								UIText.RepositoriesView_ErrorHeader, e1
@@ -905,7 +924,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 							new ConfigureRemoteWizard(node.getRepository(),
 									configName, true));
 					if (dlg.open() == Window.OK)
-						scheduleRefresh();
+						tv.refresh();
 				}
 
 			});
@@ -921,7 +940,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 					config.unset("remote", configName, "push"); //$NON-NLS-1$ //$NON-NLS-2$
 					try {
 						config.save();
-						scheduleRefresh();
+						tv.refresh();
 					} catch (IOException e1) {
 						MessageDialog.openError(getSite().getShell(),
 								UIText.RepositoriesView_ErrorHeader, e1
@@ -1096,7 +1115,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 					}
 				};
 				if (new WizardDialog(getSite().getShell(), wiz).open() == Window.OK)
-					scheduleRefresh();
+					tv.refresh();
 			}
 
 		});
@@ -1146,7 +1165,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 										// due to minor issues
 										op.setForceUpdate(true);
 										op.delete();
-										scheduleRefresh();
+										tv.refresh();
 									} catch (IOException ioe) {
 										throw new InvocationTargetException(ioe);
 									}
@@ -1206,7 +1225,13 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 					ResourcesPlugin.getWorkspace().run(wsr,
 							ResourcesPlugin.getWorkspace().getRoot(),
 							IWorkspace.AVOID_UPDATE, monitor);
-					scheduleRefresh();
+					Display.getDefault().syncExec(new Runnable() {
+
+						public void run() {
+							tv.refresh();
+						}
+					});
+
 				} catch (CoreException e1) {
 					return new Status(IStatus.ERROR, Activator.getPluginId(),
 							e1.getMessage(), e1);
@@ -1232,9 +1257,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			public void widgetSelected(SelectionEvent e) {
 				WizardDialog dlg = new WizardDialog(getSite().getShell(),
 						new GitCreateProjectViaWizardWizard(repo, path));
-				if (dlg.open() == Window.OK)
-					scheduleRefresh();
-
+				dlg.open();
 			}
 
 		});
@@ -1485,75 +1508,127 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			this.scheduledJob.cancel();
 			this.scheduledJob = null;
 		}
+		// and the auto refresh job, too
+		if (this.autoRefreshJob != null) {
+			this.autoRefreshJob.cancel();
+			this.autoRefreshJob = null;
+		}
 		super.dispose();
 	}
 
+	@SuppressWarnings("unchecked")
+	private boolean checkForRepositoryChanges() {
+
+		if (tv.getInput() == null)
+			return false;
+
+		final Set<Repository> reposToRefresh = new HashSet<Repository>();
+
+		RepositoryListener listener = new RepositoryListener() {
+
+			public void refsChanged(RefsChangedEvent e) {
+				reposToRefresh.add(e.getRepository());
+			}
+
+			public void indexChanged(IndexChangedEvent e) {
+				reposToRefresh.add(e.getRepository());
+			}
+		};
+
+		List<RepositoryTreeNode<Repository>> input = (List<RepositoryTreeNode<Repository>>) tv
+				.getInput();
+
+		for (final RepositoryTreeNode<Repository> node : input) {
+
+			Repository repository = node.getRepository();
+			repository.addRepositoryChangedListener(listener);
+			try {
+				repository.scanForRepoChanges();
+			} catch (IOException e1) {
+				// ignore
+			} finally {
+				repository.removeRepositoryChangedListener(listener);
+			}
+		}
+
+		return !reposToRefresh.isEmpty();
+	}
+
 	/**
-	 * Schedules a refreh
+	 * Schedules a refresh
 	 */
-	public void scheduleRefresh() {
+	private void scheduleRefresh() {
 
 		Job job = new Job("Refreshing Git Repositories view") { //$NON-NLS-1$
 
+			@SuppressWarnings("unchecked")
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-
-				final List<RepositoryTreeNode<Repository>> input;
-				try {
-					input = getRepositoriesFromDirs(monitor);
-				} catch (InterruptedException e) {
-					return new Status(IStatus.ERROR, Activator.getPluginId(), e
-							.getMessage(), e);
-				}
+				// first, let's check if the list of Directories has changed
+				final List<String> directories = getDirs();
 
 				boolean needsNewInput = tv.getInput() == null;
-				List oldInput = (List) tv.getInput();
+				List<RepositoryTreeNode<Repository>> oldInput = (List) tv
+						.getInput();
 				if (!needsNewInput)
-					needsNewInput = oldInput.size() != input.size();
+					needsNewInput = oldInput.size() != directories.size();
 
 				if (!needsNewInput) {
-					for (int i = 0; i < input.size(); i++) {
-						needsNewInput = !input.get(i).equals(oldInput.get(i));
-						if (needsNewInput)
-							break;
+					List<String> oldDirectories = new ArrayList<String>();
+					for (RepositoryTreeNode<Repository> node : oldInput) {
+						oldDirectories.add(node.getRepository().getDirectory()
+								.getPath());
 					}
+					needsNewInput = !directories.containsAll(oldDirectories);
 				}
 
 				final boolean updateInput = needsNewInput;
-
-				Display.getDefault().syncExec(new Runnable() {
-
-					public void run() {
-						// keep expansion state and selection so that we can
-						// restore the tree
-						// after update
-						Object[] expanded = tv.getExpandedElements();
-						IStructuredSelection sel = (IStructuredSelection) tv
-								.getSelection();
-						if (updateInput)
-							tv.setInput(input);
-						else
-							tv.refresh();
-						tv.setExpandedElements(expanded);
-
-						Object selected = sel.getFirstElement();
-						if (selected != null)
-							tv.reveal(selected);
-
-						IViewPart part = PlatformUI.getWorkbench()
-								.getActiveWorkbenchWindow().getActivePage()
-								.findView(IPageLayout.ID_PROP_SHEET);
-						if (part != null) {
-							PropertySheet sheet = (PropertySheet) part;
-							PropertySheetPage page = (PropertySheetPage) sheet
-									.getCurrentPage();
-							page.refresh();
-						}
+				final List newInput;
+				if (updateInput)
+					try {
+						newInput = getRepositoriesFromDirs(monitor);
+					} catch (InterruptedException e) {
+						return new Status(IStatus.ERROR, Activator
+								.getPluginId(), e.getMessage(), e);
 					}
-				});
+				else
+					newInput = null;
 
+				// we only check for Repository changes if we don't
+				// have a new input
+				if (updateInput || checkForRepositoryChanges()) {
+					Display.getDefault().asyncExec(new Runnable() {
+						public void run() {
+							// keep expansion state and selection so that we can
+							// restore the tree
+							// after update
+							Object[] expanded = tv.getExpandedElements();
+							IStructuredSelection sel = (IStructuredSelection) tv
+									.getSelection();
+
+							if (updateInput)
+								tv.setInput(newInput);
+							else
+								tv.refresh();
+							tv.setExpandedElements(expanded);
+
+							Object selected = sel.getFirstElement();
+							if (selected != null)
+								tv.reveal(selected);
+
+							IViewPart part = PlatformUI.getWorkbench()
+									.getActiveWorkbenchWindow().getActivePage()
+									.findView(IPageLayout.ID_PROP_SHEET);
+							if (part != null) {
+								PropertySheet sheet = (PropertySheet) part;
+								PropertySheetPage page = (PropertySheetPage) sheet
+										.getCurrentPage();
+								page.refresh();
+							}
+						}
+					});
+				}
 				return new Status(IStatus.OK, Activator.getPluginId(), ""); //$NON-NLS-1$
-
 			}
 
 		};
@@ -1620,6 +1695,10 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 				File dir = new File(dirString);
 				if (dir.exists() && dir.isDirectory()) {
 					Repository repo = new Repository(dir);
+					// reset repository change events here so that check for
+					// repository changes does not trigger an unnecessary
+					// refresh
+					repo.scanForRepoChanges();
 					RepositoryTreeNode<Repository> node = new RepositoryTreeNode<Repository>(
 							null, RepositoryTreeNodeType.REPO, repo, repo);
 					input.add(node);

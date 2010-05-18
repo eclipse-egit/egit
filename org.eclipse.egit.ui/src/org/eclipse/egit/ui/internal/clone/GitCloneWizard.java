@@ -34,8 +34,6 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Import Git Repository Wizard. A front end to a git clone operation.
@@ -141,15 +139,6 @@ public class GitCloneWizard extends Wizard {
 			return false;
 		}
 
-		final RepositoriesView view;
-		IViewPart vp = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-				.getActivePage().findView(RepositoriesView.VIEW_ID);
-		if (vp != null) {
-			view = (RepositoriesView) vp;
-		} else {
-			view = null;
-		}
-
 		final CloneOperation op = new CloneOperation(uri, allSelected,
 				selectedBranches, workdir, branch, remoteName);
 
@@ -164,9 +153,6 @@ public class GitCloneWizard extends Wizard {
 						op.run(monitor);
 						RepositorySelectionPage.saveUriInPrefs(uri.toString());
 						RepositoriesView.addDir(op.getGitDir());
-						if (view != null)
-							view.scheduleRefresh();
-
 						return Status.OK_STATUS;
 					} catch (InterruptedException e) {
 						return Status.CANCEL_STATUS;
@@ -197,8 +183,6 @@ public class GitCloneWizard extends Wizard {
 
 				RepositorySelectionPage.saveUriInPrefs(uri.toString());
 				RepositoriesView.addDir(op.getGitDir());
-				if (view != null)
-					view.scheduleRefresh();
 				return true;
 			} catch (InterruptedException e) {
 				MessageDialog.openInformation(getShell(),
