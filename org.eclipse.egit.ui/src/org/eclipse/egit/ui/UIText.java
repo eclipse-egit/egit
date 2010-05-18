@@ -331,6 +331,9 @@ public class UIText extends NLS {
 	public static String RepositorySearchDialog_ToggleSelection_button;
 
 	/** */
+	public static String CompareWithIndexAction_FileNotInIndex;
+
+	/** */
 	public static String RepositoryAction_errorFindingRepo;
 
 	/** */
