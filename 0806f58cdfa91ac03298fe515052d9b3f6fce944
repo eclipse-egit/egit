@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///ek\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/ContextMenuHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-05-17T15:44:44Z",
+      "side": 1,
+      "message": "whitespace (2 more below)",
+      "revId": "0806f58cdfa91ac03298fe515052d9b3f6fce944",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///es\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/share/SharingWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-05-17T15:44:44Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "0806f58cdfa91ac03298fe515052d9b3f6fce944",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///eo\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/share/SharingWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-05-17T15:44:44Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "0806f58cdfa91ac03298fe515052d9b3f6fce944",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///eg\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/share/SharingWizardTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-05-17T15:44:44Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "0806f58cdfa91ac03298fe515052d9b3f6fce944",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
