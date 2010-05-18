@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///eY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-05-17T16:21:49Z",
+      "side": 1,
+      "message": "Thanks. See next patch set.",
+      "parentUuid": "AAALun///fA\u003d",
+      "revId": "ee00e1ca7fbf865e4fd59acc904803ded933b3df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
