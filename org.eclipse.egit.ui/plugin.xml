@@ -70,6 +70,12 @@
                label="%BranchAction_label"
                menubarPath="team.main/projectGroup"
                tooltip="%BranchAction_tooltip"/>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.MergeAction"
+               id="org.eclipse.egit.ui.internal.actions.MergeAction"
+               label="%MergeAction_label"
+               menubarPath="team.main/projectGroup"
+               tooltip="%MergeAction_tooltip"/>
      </objectContribution>
      <objectContribution
             adaptable="true"

@@ -173,6 +173,18 @@ public class CoreText extends NLS {
 	public static String ResetOperation_writingIndex;
 
 	/** */
+	public static String MergeOperation_InternalError;
+
+	/** */
+	public static String MergeOperation_MergeFailedNoHead;
+
+	/** */
+	public static String MergeOperation_MergeFailedRefUpdate;
+
+	/** */
+	public static String MergeOperation_ProgressMerge;
+
+	/** */
 	public static String MoveDeleteHook_cannotModifyFolder;
 
 	/** */
