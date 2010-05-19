@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///Zk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchConfiguredRemoteAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-19T09:44:35Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "275a0c01c0fcec3e7e9a9d4e5c1b3d3a03df940d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///ZY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchConfiguredRemoteAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-19T09:44:35Z",
+      "side": 1,
+      "message": "style: could be formatted on less lines",
+      "revId": "275a0c01c0fcec3e7e9a9d4e5c1b3d3a03df940d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///ZU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchConfiguredRemoteAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-19T09:44:35Z",
+      "side": 1,
+      "message": "style: could be formatted on less lines",
+      "revId": "275a0c01c0fcec3e7e9a9d4e5c1b3d3a03df940d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///Zg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushConfiguredRemoteAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-19T09:44:35Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "275a0c01c0fcec3e7e9a9d4e5c1b3d3a03df940d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///Zc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushConfiguredRemoteAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-19T09:44:35Z",
+      "side": 1,
+      "message": "style: strange formatting, could use less lines",
+      "revId": "275a0c01c0fcec3e7e9a9d4e5c1b3d3a03df940d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
