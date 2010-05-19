@@ -50,6 +50,8 @@ import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.clone.GitCloneWizard;
 import org.eclipse.egit.ui.internal.clone.GitCreateProjectViaWizardWizard;
+import org.eclipse.egit.ui.internal.fetch.FetchConfiguredRemoteAction;
+import org.eclipse.egit.ui.internal.push.PushConfiguredRemoteAction;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTreeNodeType;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -866,6 +868,18 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 			final String configName = (String) node.getParent().getObject();
 
+			MenuItem doFetch = new MenuItem(men, SWT.PUSH);
+			doFetch.setText(UIText.RepositoriesView_FetchMenu);
+			doFetch.addSelectionListener(new SelectionAdapter() {
+
+				@Override
+				public void widgetSelected(SelectionEvent evt) {
+					new FetchConfiguredRemoteAction(node.getRepository(),
+							configName).run(getSite().getShell());
+				}
+
+			});
+
 			MenuItem configureUrlFetch = new MenuItem(men, SWT.PUSH);
 			configureUrlFetch
 					.setText(UIText.RepositoriesView_ConfigureFetchMenu);
@@ -912,8 +926,18 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 
 			final String configName = (String) node.getParent().getObject();
 
-			MenuItem configureUrlPush = new MenuItem(men, SWT.PUSH);
+			MenuItem doPush = new MenuItem(men, SWT.PUSH);
+			doPush.setText(UIText.RepositoriesView_DoPushMenuItem);
+			doPush.addSelectionListener(new SelectionAdapter() {
 
+				@Override
+				public void widgetSelected(SelectionEvent evt) {
+					new PushConfiguredRemoteAction(node.getRepository(),
+							configName).run(getSite().getShell(), false);
+				}
+			});
+
+			MenuItem configureUrlPush = new MenuItem(men, SWT.PUSH);
 			configureUrlPush.setText(UIText.RepositoriesView_ConfigurePushMenu);
 
 			configureUrlPush.addSelectionListener(new SelectionAdapter() {
