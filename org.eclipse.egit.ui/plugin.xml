@@ -100,7 +100,7 @@
                tooltip="%UntrackAction_tooltip"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.AssumeUnchanged"
-               icon="$nl$/icons/obj16/add.gif"
+               icon="icons/obj16/assume-unchanged.gif"
                id="org.eclipse.egit.ui.internal.actions.AssumeUnchanged"
                label="%AssumeUnchangedAction_label"
                menubarPath="team.main/group9"
