@@ -20,7 +20,7 @@ import org.eclipse.egit.core.op.ResetOperation.ResetType;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
-import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
+import org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -44,7 +44,7 @@ public class ResetAction extends RepositoryAction {
 					NLS.bind(UIText.ResetAction_repositoryState, repository.getRepositoryState().getDescription()));
 			return;
 		}
-		BranchSelectionDialog branchSelectionDialog = new BranchSelectionDialog(getShell(), repository, true);
+		ResetTargetSelectionDialog branchSelectionDialog = new ResetTargetSelectionDialog(getShell(), repository);
 		if (branchSelectionDialog.open() == IDialogConstants.OK_ID) {
 			final String refName = branchSelectionDialog.getRefName();
 			final ResetType type = branchSelectionDialog.getResetType();
