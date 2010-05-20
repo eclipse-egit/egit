@@ -70,6 +70,13 @@
                menubarPath="team.main/group4"
                tooltip="%TagAction_tooltip"/>
          <action
+               class="org.eclipse.egit.ui.internal.actions.MergeAction"
+               icon="$nl$/icons/obj16/merge.gif"
+               id="org.eclipse.egit.ui.internal.actions.MergeAction"
+               label="%MergeAction_label"
+               menubarPath="team.main/group4"
+               tooltip="%MergeAction_tooltip"/>
+         <action
                class="org.eclipse.egit.ui.internal.actions.BranchAction"
                icon="$nl$/icons/obj16/branch_obj.gif"
                id="org.eclipse.egit.ui.internal.actions.BranchAction"
