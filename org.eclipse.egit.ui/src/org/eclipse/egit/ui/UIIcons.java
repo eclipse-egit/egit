@@ -95,10 +95,10 @@ public class UIIcons {
 	public static ImageDescriptor FILTERFOLDER;
 
 	/** Import button */
-	public static ImageDescriptor IMPORT;
+	public static ImageDescriptor FETCH;
 
 	/** Export button */
-	public static ImageDescriptor EXPORT;
+	public static ImageDescriptor PUSH;
 
 	/** Collapse all button */
 	public static ImageDescriptor COLLAPSEALL;
@@ -111,6 +111,9 @@ public class UIIcons {
 
 	/** Remote Repository tree node */
 	public static ImageDescriptor REMOTE_REPOSITORY;
+
+	/** Remote Repository tree node */
+	public static ImageDescriptor REMOTE_SPEC;
 
 	/** Branches tree node */
 	public static ImageDescriptor BRANCHES;
@@ -164,11 +167,12 @@ public class UIIcons {
 		FILTERREPO = map("elcl16/filterrepo.gif"); //$NON-NLS-1$
 		FILTERPROJECT = map("elcl16/filterproject.gif"); //$NON-NLS-1$
 		FILTERFOLDER = map("elcl16/filterfolder.gif"); //$NON-NLS-1$
-		IMPORT = map("etool16/import_wiz.gif"); //$NON-NLS-1$
-		EXPORT = map("etool16/export_wiz.gif"); //$NON-NLS-1$
+		FETCH = map("obj16/pull.gif"); //$NON-NLS-1$
+		PUSH = map("obj16/commit.gif"); //$NON-NLS-1$
 		REPOSITORY = map("obj16/repository_rep.gif"); //$NON-NLS-1$
 		NEW_REPOSITORY = map("etool16/newlocation_wiz.gif"); //$NON-NLS-1$
 		REMOTE_REPOSITORY = map("obj16/remote_entry_tbl.gif"); //$NON-NLS-1$
+		REMOTE_SPEC = map("obj16/remotespec.gif"); //$NON-NLS-1$
 		BRANCHES = map("obj16/branches_rep.gif"); //$NON-NLS-1$
 		OVR_CHECKEDOUT = map("ovr/checkedout_ov.gif"); //$NON-NLS-1$
 		TAGS = map("obj16/versions_rep.gif"); //$NON-NLS-1$

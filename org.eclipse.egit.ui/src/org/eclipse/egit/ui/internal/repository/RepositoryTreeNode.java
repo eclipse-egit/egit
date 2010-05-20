@@ -373,12 +373,11 @@ public class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 		/**	 */
 		REMOTES(UIIcons.REMOTE_REPOSITORY.createImage()), //
 		/**	 */
-		REMOTE(PlatformUI.getWorkbench().getSharedImages().getImage(
-				ISharedImages.IMG_OBJ_FOLDER)), //
+		REMOTE(UIIcons.REMOTE_SPEC.createImage()), //
 		/**	 */
-		FETCH(UIIcons.IMPORT.createImage()), // TODO icon
+		FETCH(UIIcons.FETCH.createImage()), //
 		/**	 */
-		PUSH(UIIcons.EXPORT.createImage()), // TODO icon
+		PUSH(UIIcons.PUSH.createImage()), //
 		/**	 */
 		WORKINGDIR(PlatformUI.getWorkbench().getSharedImages().getImage(
 				ISharedImages.IMG_OBJ_FOLDER)), //
