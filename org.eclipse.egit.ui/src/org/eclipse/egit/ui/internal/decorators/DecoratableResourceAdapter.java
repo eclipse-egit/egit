@@ -91,13 +91,8 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		headId = repository.resolve(Constants.HEAD);
 
 		store = Activator.getDefault().getPreferenceStore();
+		repositoryName = Activator.getDefault().getRepositoryUtil().getRepositoryName(repository);
 
-		File gitDir = repository.getDirectory();
-		if (gitDir != null)
-			repositoryName = repository.getDirectory().getParentFile()
-					.getName();
-		else
-			repositoryName = ""; //$NON-NLS-1$
 		branch = getShortBranch();
 
 		TreeWalk treeWalk = createThreeWayTreeWalk();
@@ -120,8 +115,16 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 
 	private String getShortBranch() throws IOException {
 		Ref head = repository.getRef(Constants.HEAD);
-		if (head != null && !head.isSymbolic())
-			return repository.getFullBranch().substring(0, 7) + "..."; //$NON-NLS-1$
+		if (head != null && !head.isSymbolic()) {
+			String refString = Activator.getDefault().getRepositoryUtil()
+					.mapCommitToRef(repository, repository.getFullBranch(),
+							false);
+			if (refString != null) {
+				return repository.getFullBranch().substring(0, 7)
+						+ "... (" + refString + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+			} else
+				return repository.getFullBranch().substring(0, 7) + "..."; //$NON-NLS-1$
+		}
 
 		return repository.getBranch();
 	}
