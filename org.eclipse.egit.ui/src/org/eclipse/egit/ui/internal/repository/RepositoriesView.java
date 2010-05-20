@@ -1570,6 +1570,9 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 	 */
 	private void scheduleRefresh() {
 
+		if (scheduledJob != null && scheduledJob.getState() == Job.RUNNING)
+			return;
+
 		Job job = new Job("Refreshing Git Repositories view") { //$NON-NLS-1$
 
 			@SuppressWarnings("unchecked")
