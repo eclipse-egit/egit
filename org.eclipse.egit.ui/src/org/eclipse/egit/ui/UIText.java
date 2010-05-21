@@ -1585,6 +1585,9 @@ public class UIText extends NLS {
 	public static String RepositoriesView_DeleteRepoDeterminProjectsMessage;
 
 	/** */
+	public static String RepositoriesView_DoFetchMenu;
+
+	/** */
 	public static String RepositoriesView_DoPushMenuItem;
 
 	/** */
@@ -1634,6 +1637,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositoriesView_PasteRepoAlreadyThere;
+
+	/** */
+	public static String RepositoriesView_PushMenu;
 
 	/** */
 	public static String RepositoriesView_Refresh_Button;
