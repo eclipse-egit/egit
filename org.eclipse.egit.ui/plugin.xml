@@ -86,14 +86,14 @@
          </filter>
          <action
                class="org.eclipse.egit.ui.internal.actions.Track"
-               icon="$nl$/icons/obj16/add.gif"
+               icon="$nl$/icons/obj16/track.gif"
                id="org.eclipse.egit.ui.internal.actions.Track"
                label="%TrackAction_label"
                menubarPath="team.main/group9"
                tooltip="%TrackAction_tooltip"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.Untrack"
-               icon="$nl$/icons/obj16/remove.gif"
+               icon="$nl$/icons/obj16/untrack.gif"
                id="org.eclipse.egit.ui.internal.actions.Untrack"
                label="%UntrackAction_label"
                menubarPath="team.main/group9"
