@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2009, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2010, Ketan Padegaonkar <KetanPadegaonkar@gmail.com>
+ * Copyright (C) 2010, Matthias Sohn <matthias.sohn@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,15 +17,18 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.ui.test.Eclipse;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -39,7 +43,19 @@ public class GitCloneWizardTest {
 
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
+	private static SampleTestRepository r;
+
 	private GitImportRepoWizard importWizard;
+
+	@BeforeClass
+	public static void setup() throws Exception {
+		r = new SampleTestRepository();
+	}
+
+	@AfterClass
+	public static void tearDown() throws IOException {
+		r.shutDown();
+	}
 
 	@Test
 	public void updatesParameterFieldsInImportDialogWhenURIIsUpdated()
@@ -178,42 +194,43 @@ public class GitCloneWizardTest {
 	@Test
 	public void canCloneARemoteRepo() throws Exception {
 		File destRepo = new File(ResourcesPlugin.getWorkspace()
-				.getRoot().getLocation().toFile(), "egit");
+				.getRoot().getLocation().toFile(), "test1");
 
 		RepoPropertiesPage propertiesPage = importWizard.openWizard();
 
 		RepoRemoteBranchesPage remoteBranches = propertiesPage
-				.nextToRemoteBranches("git://repo.or.cz/egit.git");
+				.nextToRemoteBranches(r.getUri());
 
-		remoteBranches.assertRemoteBranches("historical/pre-eclipse", "master");
-		remoteBranches.selectBranches("historical/pre-eclipse");
+		remoteBranches.assertRemoteBranches(SampleTestRepository.FIX, Constants.MASTER);
+		remoteBranches.selectBranches(SampleTestRepository.FIX, Constants.MASTER);
 
 		WorkingCopyPage workingCopy = remoteBranches.nextToWorkingCopy();
+		workingCopy.setDirectory(destRepo.toString());
 
 		workingCopy.assertDirectory(destRepo.toString());
-		workingCopy.assertBranch("master");
-		workingCopy.assertRemoteName("origin");
-		workingCopy.waitForCreate();
+		workingCopy.assertBranch(Constants.MASTER);
+		workingCopy.assertRemoteName(Constants.DEFAULT_REMOTE_NAME);
+		workingCopy.waitForCreate(r.getUri());
 
 		// Some random sampling to see we got something. We do not test
 		// the integrity of the repository here. Only a few basic properties
 		// we'd expect from a clone made this way, that would possibly
 		// not hold true given other parameters in the GUI.
-		Repository repository = new Repository(new File(destRepo, ".git"));
+		Repository repository = new Repository(new File(destRepo, Constants.DOT_GIT));
 		// we always have an origin/master
 		assertNotNull(repository.resolve("origin/master"));
 		// and a local master initialized from origin/master (default!)
-		assertEquals(repository.resolve("origin/master"), repository
+		assertEquals(repository.resolve("master"), repository
 				.resolve("origin/master"));
 		// A well known tag
-		assertEquals("90b818e596660b813b6fcf68f1e9e9b62c615130", repository
-				.resolve("refs/tags/v0.4.0").name());
+		assertNotNull(repository.resolve(Constants.R_TAGS + SampleTestRepository.v1_0_name).name());
 		// lots of refs
-		assertTrue(repository.getAllRefs().size() >= 10);
-		// and a README in the working dir
-		assertTrue(new File(destRepo, "README").exists());
+		int refs = repository.getAllRefs().size();
+		assertTrue(refs >= 4);
+		// and a known file in the working dir
+		assertTrue(new File(destRepo, SampleTestRepository.A_txt_name).exists());
 		assertFalse(repository.getIndex().isChanged());
-		assertFalse(repository.getIndex().getEntry("README").isModified(
+		assertFalse(repository.getIndex().getEntry(SampleTestRepository.A_txt_name).isModified(
 				destRepo));
 		// No project have been imported
 		assertEquals(0,
@@ -225,51 +242,48 @@ public class GitCloneWizardTest {
 	public void clonedRepositoryShouldExistOnFileSystem() throws Exception {
 		RepoPropertiesPage repoProperties = importWizard.openWizard();
 		RepoRemoteBranchesPage remoteBranches = repoProperties
-				.nextToRemoteBranches("git://repo.or.cz/egit.git");
+				.nextToRemoteBranches(r.getUri());
 		WorkingCopyPage workingCopy = remoteBranches.nextToWorkingCopy();
-		workingCopy.assertWorkingCopyExists();
+		workingCopy.assertWorkingCopyExists(r.getUri());
 	}
 
 	@Test
 	public void alteringSomeParametersDuringClone() throws Exception {
-
-		File destRepo = new File(new File(ResourcesPlugin.getWorkspace()
-				.getRoot().getLocation().toFile().getParent(),
-				"junit-workspace"), "EGIT2");
+		File destRepo = new File(ResourcesPlugin.getWorkspace()
+				.getRoot().getLocation().toFile(), "test2");
 
 		RepoPropertiesPage repoProperties = importWizard.openWizard();
 		RepoRemoteBranchesPage remoteBranches = repoProperties
-				.nextToRemoteBranches("git://repo.or.cz/egit.git");
+				.nextToRemoteBranches(r.getUri());
 		remoteBranches.deselectAllBranches();
 		remoteBranches
 				.assertErrorMessage("At least one branch must be selected.");
 		remoteBranches.assertNextIsDisabled();
 
-		remoteBranches.selectBranches("historical/pre-eclipse");
+		remoteBranches.selectBranches(SampleTestRepository.FIX);
 		remoteBranches.assertNextIsEnabled();
 
 		WorkingCopyPage workingCopy = remoteBranches.nextToWorkingCopy();
 		workingCopy.setDirectory(destRepo.toString());
-		workingCopy.assertBranch("historical/pre-eclipse");
+		workingCopy.assertBranch(SampleTestRepository.FIX);
 		workingCopy.setRemoteName("src");
-		workingCopy.waitForCreate();
+		workingCopy.waitForCreate(r.getUri());
 
 		// Some random sampling to see we got something. We do not test
-		// the integrity of the repo here. Only a few basic properties
+		// the integrity of the repository here. Only a few basic properties
 		// we'd expect from a clone made this way, that would possibly
-		// not hold true given othe parameters in the GUI.
-		Repository repository = new Repository(new File(destRepo, ".git"));
-		assertNotNull(repository.resolve("src/historical/pre-eclipse"));
+		// not hold true given other parameters in the GUI.
+		Repository repository = new Repository(new File(destRepo, Constants.DOT_GIT));
+		assertNotNull(repository.resolve("src/" + SampleTestRepository.FIX));
 		// we didn't clone that one
 		assertNull(repository.resolve("src/master"));
 		// and a local master initialized from origin/master (default!)
 		assertEquals(repository.resolve("stable"), repository
 				.resolve("src/stable"));
 		// A well known tag
-		assertEquals("90b818e596660b813b6fcf68f1e9e9b62c615130", repository
-				.resolve("refs/tags/v0.4.0").name());
+		assertNotNull(repository.resolve(Constants.R_TAGS + SampleTestRepository.v2_0_name).name());
 		// lots of refs
-		assertTrue(repository.getAllRefs().size() >= 10);
+		assertTrue(repository.getAllRefs().size() >= 4);
 	}
 
 	@Test
