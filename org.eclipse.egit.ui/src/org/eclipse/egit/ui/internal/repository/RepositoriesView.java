@@ -51,7 +51,9 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.clone.GitCloneWizard;
 import org.eclipse.egit.ui.internal.clone.GitCreateProjectViaWizardWizard;
 import org.eclipse.egit.ui.internal.fetch.FetchConfiguredRemoteAction;
+import org.eclipse.egit.ui.internal.fetch.FetchWizard;
 import org.eclipse.egit.ui.internal.push.PushConfiguredRemoteAction;
+import org.eclipse.egit.ui.internal.push.PushWizard;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTreeNodeType;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -595,6 +597,42 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 				}
 			});
 
+			new MenuItem(men, SWT.SEPARATOR);
+
+			MenuItem fetchItem = new MenuItem(men, SWT.PUSH);
+			fetchItem.setText(UIText.RepositoriesView_FetchMenu);
+			fetchItem.setImage(UIIcons.FETCH.createImage());
+			fetchItem.addSelectionListener(new SelectionAdapter() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					try {
+						new WizardDialog(getSite().getShell(), new FetchWizard(
+								repo)).open();
+					} catch (URISyntaxException e1) {
+						Activator.handleError(e1.getMessage(), e1, true);
+					}
+				}
+
+			});
+
+			MenuItem pushItem = new MenuItem(men, SWT.PUSH);
+			pushItem.setText(UIText.RepositoriesView_PushMenu);
+			pushItem.setImage(UIIcons.PUSH.createImage());
+			pushItem.addSelectionListener(new SelectionAdapter() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					try {
+						new WizardDialog(getSite().getShell(), new PushWizard(
+								repo)).open();
+					} catch (URISyntaxException e1) {
+						Activator.handleError(e1.getMessage(), e1, true);
+					}
+				}
+
+			});
+
 			// TODO delete does not work because of file locks on .pack-files
 			// Shawn Pearce has added the following thoughts:
 
@@ -869,7 +907,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 			final String configName = (String) node.getParent().getObject();
 
 			MenuItem doFetch = new MenuItem(men, SWT.PUSH);
-			doFetch.setText(UIText.RepositoriesView_FetchMenu);
+			doFetch.setText(UIText.RepositoriesView_DoFetchMenu);
 			doFetch.addSelectionListener(new SelectionAdapter() {
 
 				@Override
@@ -1491,7 +1529,6 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 						// we must dispose ourselves
 						clip.dispose();
 					if (errorMessage != null)
-						// TODO String ext
 						MessageDialog.openWarning(getSite().getShell(),
 								UIText.RepositoriesView_PasteFailureTitle,
 								errorMessage);
