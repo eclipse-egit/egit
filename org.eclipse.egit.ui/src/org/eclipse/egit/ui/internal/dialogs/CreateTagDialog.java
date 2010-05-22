@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.dialogs;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.jface.dialogs.Dialog;
@@ -19,6 +20,9 @@ import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.resource.LocalResourceManager;
+import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.resource.StringConverter;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -142,12 +146,19 @@ public class CreateTagDialog extends Dialog {
 	class TagLabelProvider extends WorkbenchLabelProvider implements
 			ITableLabelProvider {
 
+		private final ResourceManager fImageCache = new LocalResourceManager(JFaceResources
+				.getResources());
+
 		public Image getColumnImage(Object element, int columnIndex) {
-			return null;
+			return fImageCache.createImage(UIIcons.TAG);
 		}
 
 		public String getColumnText(Object element, int columnIndex) {
 			return ((Tag) element).getTag();
+		}
+
+		public void dispose() {
+			fImageCache.dispose();
 		}
 
 	}
