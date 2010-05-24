@@ -248,7 +248,7 @@ public class CreateTagDialog extends Dialog {
 					UIText.CreateTagDialog_questionNewTagTitle, branchName));
 		}
 
-		newShell.setMinimumSize(703, 345);
+		newShell.setMinimumSize(600, 400);
 	}
 
 	@Override
@@ -335,7 +335,7 @@ public class CreateTagDialog extends Dialog {
 		GridData data = new GridData(GridData.GRAB_HORIZONTAL
 				| GridData.HORIZONTAL_ALIGN_FILL
 				| GridData.VERTICAL_ALIGN_CENTER);
-		data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
+		data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH/2);
 		label.setLayoutData(data);
 		label.setFont(left.getFont());
 
@@ -428,7 +428,7 @@ public class CreateTagDialog extends Dialog {
 
 		commitCombo = new CommitCombo(advancedComposite, SWT.NORMAL);
 		commitCombo.setLayoutData(GridDataFactory.fillDefaults().grab(true,
-				false).create());
+				false).hint(300, SWT.DEFAULT).create());
 
 		for (RevCommit revCommit : revCommits)
 			commitCombo.add(revCommit);
