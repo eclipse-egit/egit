@@ -1417,6 +1417,12 @@ public class UIText extends NLS {
 	public static String DecoratorPreferencesPage_addVariablesAction;
 
 	/** */
+	public static String DecoratorPreferencesPage_addVariablesAction2;
+
+	/** */
+	public static String DecoratorPreferencesPage_addVariablesAction3;
+
+	/** */
 	public static String DecoratorPreferencesPage_recomputeAncestorDecorations;
 
 	/** */

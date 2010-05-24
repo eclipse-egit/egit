@@ -364,12 +364,12 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 					UIPreferences.DECORATOR_FILETEXT_DECORATION);
 			folderTextFormat = new FormatEditor(composite,
 					UIText.DecoratorPreferencesPage_folderFormatLabel,
-					UIText.DecoratorPreferencesPage_addVariablesAction,
+					UIText.DecoratorPreferencesPage_addVariablesAction2,
 					FILE_AND_FOLDER_BINDINGS,
 					UIPreferences.DECORATOR_FOLDERTEXT_DECORATION);
 			projectTextFormat = new FormatEditor(composite,
 					UIText.DecoratorPreferencesPage_projectFormatLabel,
-					UIText.DecoratorPreferencesPage_addVariablesAction,
+					UIText.DecoratorPreferencesPage_addVariablesAction3,
 					PROJECT_BINDINGS,
 					UIPreferences.DECORATOR_PROJECTTEXT_DECORATION);
 
