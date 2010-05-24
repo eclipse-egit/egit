@@ -1,8 +1,8 @@
 ﻿/*******************************************************************************
  * Copyright (C) 2007, Dave Watson <dwatson@mimvista.com>
- * Copyright (C) 2007, Robin Rosenberg <me@lathund.dewire.com.dewire.com>
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2010, Chris Aniszczyk <caniszczyk@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -41,8 +41,8 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefRename;
 import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RefUpdate.Result;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -52,10 +52,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.dialogs.FilteredTree;
+import org.eclipse.ui.dialogs.PatternFilter;
 
 /**
  * The branch and reset selection dialog
- *
  */
 public class BranchSelectionDialog extends Dialog {
 
@@ -102,12 +103,14 @@ public class BranchSelectionDialog extends Dialog {
 		parent.setLayout(GridLayoutFactory.swtDefaults().create());
 		new Label(parent, SWT.NONE).setText(getRefsLabel());
 
-		branchTree = new TreeViewer(parent, SWT.SINGLE | SWT.BORDER);
+		// TODO deprecated constructor for now
+		FilteredTree tree = new FilteredTree(parent, SWT.SINGLE | SWT.BORDER, new PatternFilter());
+		branchTree = tree.getViewer();
 		new RepositoriesViewLabelProvider(branchTree);
 		branchTree.setContentProvider(new RepositoriesViewContentProvider());
 
 		GridDataFactory.fillDefaults().grab(true, true).hint(500, 300).applyTo(
-				branchTree.getTree());
+				tree);
 		branchTree.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			public void selectionChanged(SelectionChangedEvent event) {
