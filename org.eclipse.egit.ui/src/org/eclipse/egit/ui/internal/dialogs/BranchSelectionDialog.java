@@ -22,9 +22,9 @@ import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTreeNodeType;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
@@ -50,7 +50,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
@@ -58,7 +57,7 @@ import org.eclipse.ui.dialogs.PatternFilter;
 /**
  * The branch and reset selection dialog
  */
-public class BranchSelectionDialog extends Dialog {
+public class BranchSelectionDialog extends TitleAreaDialog {
 
 	private final Repository repo;
 
@@ -100,8 +99,7 @@ public class BranchSelectionDialog extends Dialog {
 	@Override
 	protected Composite createDialogArea(Composite base) {
 		Composite parent = (Composite) super.createDialogArea(base);
-		parent.setLayout(GridLayoutFactory.swtDefaults().create());
-		new Label(parent, SWT.NONE).setText(getRefsLabel());
+		parent.setLayout(GridLayoutFactory.fillDefaults().create());
 
 		// TODO deprecated constructor for now
 		FilteredTree tree = new FilteredTree(parent, SWT.SINGLE | SWT.BORDER, new PatternFilter());
@@ -162,9 +160,11 @@ public class BranchSelectionDialog extends Dialog {
 		createCustomArea(parent);
 
 		String rawTitle = getTitle();
+		String title = NLS.bind(rawTitle, new Object[] { repo.getDirectory() });
 
-		getShell().setText(
-				NLS.bind(rawTitle, new Object[] { repo.getDirectory() }));
+		setTitle(title);
+		setMessage(getMessageText());
+		getShell().setText(title);
 
 		return parent;
 	}
@@ -380,9 +380,9 @@ public class BranchSelectionDialog extends Dialog {
 	}
 
 	/**
-	 * @return the label shown above the refs tree
+	 * @return the message shown above the refs tree
 	 */
-	protected String getRefsLabel() {
+	protected String getMessageText() {
 		return UIText.BranchSelectionDialog_Refs;
 	}
 

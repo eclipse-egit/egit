@@ -17,7 +17,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -45,8 +45,8 @@ public class ResetTargetSelectionDialog extends BranchSelectionDialog {
 	protected void createCustomArea(Composite parent) {
 		Group g = new Group(parent, SWT.NONE);
 		g.setText(UIText.BranchSelectionDialog_ResetType);
-		g.setLayoutData(GridDataFactory.swtDefaults().align(SWT.CENTER, SWT.CENTER).create());
-		g.setLayout(new RowLayout(SWT.VERTICAL));
+		g.setLayoutData(GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).create());
+		g.setLayout(new GridLayout(1, false));
 
 		Button soft = new Button(g, SWT.RADIO);
 		soft.setText(UIText.BranchSelectionDialog_ResetTypeSoft);
