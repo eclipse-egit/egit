@@ -310,7 +310,10 @@ public class UIText extends NLS {
 	public static String RepositorySearchDialog_ScanningForRepositories_message;
 
 	/** */
-	public static String RepositorySearchDialog_ToggleSelection_button;
+	public static String RepositorySearchDialog_DeselectAll_button;
+
+	/** */
+	public static String RepositorySearchDialog_SelectAll_button;
 
 	/** */
 	public static String CompareWithIndexAction_FileNotInIndex;
@@ -341,6 +344,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositorySearchDialog_searchRepositories;
+
+	/** */
+	public static String RepositorySearchDialog_searchRepositoriesMessage;
 
 	/** */
 	public static String RepositorySelectionPage_BrowseLocalFile;
