@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///Ic\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-22T18:18:49Z",
+      "side": 1,
+      "message": "You are leaking image resources here, I think you should use a ResourceManager to dispose the images when the dialog is closed. For an example have a look at class GitDecoratorPreferencePage",
+      "revId": "74acb8f02b2a3292c536bf58dd74e6ba05125960",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
