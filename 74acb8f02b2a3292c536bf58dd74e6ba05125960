@@ -16,6 +16,24 @@
       "revId": "74acb8f02b2a3292c536bf58dd74e6ba05125960",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///IU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-22T18:56:31Z",
+      "side": 1,
+      "message": "Can I use ImageRegistry instead of ResourceManager ?\n\nIt seems that ImageRegistry is easier to use here.",
+      "parentUuid": "AAALun///Ic\u003d",
+      "revId": "74acb8f02b2a3292c536bf58dd74e6ba05125960",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
