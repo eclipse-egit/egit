@@ -26,6 +26,7 @@ import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.CheckoutConflictException;
 import org.eclipse.jgit.api.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.InvalidMergeHeadsException;
 import org.eclipse.jgit.api.MergeCommand;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.NoHeadException;
@@ -99,6 +100,8 @@ public class MergeOperation implements IEGitOperation {
 				} catch (ConcurrentRefUpdateException e) {
 					throw new TeamException(CoreText.MergeOperation_MergeFailedRefUpdate, e);
 				} catch (CheckoutConflictException e) {
+					throw new TeamException(e.getLocalizedMessage(), e.getCause());
+				} catch (InvalidMergeHeadsException e) {
 					throw new TeamException(e.getLocalizedMessage(), e.getCause());
 				}
 				ProjectUtil.refreshProjects(repository, new SubProgressMonitor(
