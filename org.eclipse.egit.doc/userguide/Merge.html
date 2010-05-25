@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit User Guide - Merge</title>
+		<link type="text/css" rel="stylesheet" href="book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">Merge</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Reverting-Changes.html" title="Reverting Changes">
+						<img alt="Previous" border="0" src="images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Tags.html" title="Tags">
+						<img alt="Next" border="0" src="images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Reverting Changes</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Tags</td>
+			</tr>
+		</table><hr/>
+		<h1 id="Merge">Merge</h1>
+		<p>A merge incorporates changes from named commits (since the time their histories diverged from the current branch) into the current branch. </p>
+		<h2 id="Merging_a_branch_or_a_tag_into_the_current_branch">Merging a branch or a tag into the current branch</h2>
+		<p>Note: Egit currently supports only fast-forward merges (see below).</p>
+		<p>In the Package Explorer or Navigator, open the context menu on a project node.
+			Select Team -&gt;Merge...</p>
+		<p>Now the merge dialog opens:</p>
+		<p>
+			<img border="0" src="images/MergeDialog.png"/>
+		</p>
+		<p>On the dialog, select a branch or a tag you want to merge with your current branch. After pressing the Merge button,
+			the following scenarios can occur:</p>
+		<ul>
+			<li>Already up to date: Your current branch points to a commit that has the selected branch or tag as predecessor. In this case nothing is changed.</li>
+			<li>Fast-forward:  Your current branch points to a commit that is a predecessor of the selected branch or tag.  In this case your branch is moved and points to the selected branch or tag; this new HEAD is checked out to the working tree. Fast-forward is very common when working with remote repositories: When a remote tracking branch is updated, the merge with the corresponding branch generally is a fast-forward. You can perform a pull by fetching the remote branch (e.g. origin/master) and merging it into the corresponding local branch (e.g. master).</li>
+			<li>Real merge: When neither of the conditions above apply egit triggers a merge of the commits. This is not implemented yet.</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Reverting-Changes.html" title="Reverting Changes">
+						<img alt="Previous" border="0" src="images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center">
+					<a href="EGit User Guide.html" title="EGit User Guide">
+						<img alt="EGit User Guide" border="0" src="images/home.gif"/>
+					</a>
+				</td>
+				<td style="width: 20%" align="right">
+					<a href="Tags.html" title="Tags">
+						<img alt="Next" border="0" src="images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Reverting Changes</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Tags</td>
+			</tr>
+		</table>
+	</body>
+</html>

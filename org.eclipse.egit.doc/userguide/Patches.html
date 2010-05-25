@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit User Guide - Patches</title>
+		<link type="text/css" rel="stylesheet" href="book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">Patches</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Tags.html" title="Tags">
+						<img alt="Previous" border="0" src="images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Managing-Repositories.html" title="Managing Repositories">
+						<img alt="Next" border="0" src="images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Tags</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Managing Repositories</td>
+			</tr>
+		</table><hr/>
+		<h1 id="Patches">Patches</h1>
+		<h2 id="Creating_Patches">Creating Patches</h2>
+		<p>"A patch is a piece of software designed to fix problems with, or update a computer program or its supporting data" (wikipedia). A patch file contains a description of changes of a set of resources which can be automatically applied to another eclipse workspace or git repository.</p>
+		<p>The patch formats used by eclipse (Team &gt; Apply Patch) and by git (git apply or git am on the command line) are different. It is possible to create both types of a patch in EGit.</p>
+		<h3 id="Create_a_Patch_from_a_Commit">Create a Patch from a Commit</h3>
+		<p>This is the most common use case for a distributed versioning system. A developer commits a change on a local feature or bugfix branch and wants to export this change into a patch file.</p>
+		<p>It can be done from the history view:</p>
+		<p>
+			<img border="0" src="images/PatchContextMenu.png"/>
+		</p>
+		<p>The patch file will contain the difference between the commit and its parent in the history view. Note that the filter of the history view applies also for patch creation.</p>
+		<h3 id="Patch_Wizard">Patch Wizard</h3>
+		<p>The Wizard consists of two pages. Page one lets you select the location of the patch:</p>
+		<p>
+			<img border="0" src="images/PatchWizardPage1.png"/>
+		</p>
+		<p>The name of the patch file is created from the first line of the commit message.</p>
+		<p>On the second page you can change the patch format. </p>
+		<p>Currently there is one check box: "Export in git patch format". </p>
+		<ul>
+			<li>If you do not check it (this is the default) the patch can be applied with the eclipse "Apply Patch... " wizard. The paths are relative to the eclipse projects and do not contain prefixes (like "git format-patch --no-prefix" on the git command line).</li>
+			<li>If you check it the patch will look like the result of "git format-patch --no-stat" on the git command line. </li>
+		</ul>
+		<h2 id="Applying_Patches">Applying Patches</h2>
+		<p>Currently it s not possible to apply patches in git format. It is possible to apply patches using the standard eclipse format using Team &gt; Apply Patch...</p><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Tags.html" title="Tags">
+						<img alt="Previous" border="0" src="images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center">
+					<a href="EGit User Guide.html" title="EGit User Guide">
+						<img alt="EGit User Guide" border="0" src="images/home.gif"/>
+					</a>
+				</td>
+				<td style="width: 20%" align="right">
+					<a href="Managing-Repositories.html" title="Managing Repositories">
+						<img alt="Next" border="0" src="images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Tags</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Managing Repositories</td>
+			</tr>
+		</table>
+	</body>
+</html>
