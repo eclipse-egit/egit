@@ -129,10 +129,13 @@ public class FilteredCheckboxTree extends FilteredTree {
 		return checkboxViewer;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.dialogs.FilteredTree#getRefreshJobDelay()
+	/**
+	 * Overrides org.eclipse.ui.dialogs.FilteredTree#getRefreshJobDelay() in
+	 * Eclipse 3.5 and newer. No effect in eclipse 3.4
+	 *
+	 * @return refresh delay
 	 */
+	//	TODO: remove this javadoc when support for 3.4 is dropped
 	protected long getRefreshJobDelay() {
 		return FILTER_DELAY;
 	}
