@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///Fo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/FilteredCheckboxTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-24T22:29:00Z",
+      "side": 1,
+      "message": "This and the other constructors don\u0027 work with 3.4 since the FilteredTree class doesn\u0027t take FotmToolkit as a constructor argument",
+      "revId": "6a8ab1f3a134fae58bd0ead134bbf967efa2fd5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///Fk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/FilteredCheckboxTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-24T22:29:00Z",
+      "side": 1,
+      "message": "The seconds argument is not available in .3.4",
+      "revId": "6a8ab1f3a134fae58bd0ead134bbf967efa2fd5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///Fw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/FilteredCheckboxTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-24T22:29:00Z",
+      "side": 1,
+      "message": "Unknown methods in Eclipse 3.4. Not fatal though",
+      "revId": "6a8ab1f3a134fae58bd0ead134bbf967efa2fd5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
