@@ -64,7 +64,7 @@ public class FilteredCheckboxTree extends FilteredTree {
 	 * @param filter pattern filter to use in the filter control
 	 */
 	public FilteredCheckboxTree(Composite parent, FormToolkit toolkit, int treeStyle, PatternFilter filter) {
-		super(parent, true);
+		super(parent, treeStyle, filter);
 		fToolkit = toolkit;
 		init(treeStyle, filter);
 	}
