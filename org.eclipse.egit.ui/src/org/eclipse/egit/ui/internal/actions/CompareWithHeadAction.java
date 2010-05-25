@@ -15,9 +15,8 @@ import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jgit.lib.Constants;
@@ -25,10 +24,6 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.osgi.util.NLS;
-import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.internal.ui.history.FileRevisionTypedElement;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 
 /**
@@ -53,14 +48,8 @@ public class CompareWithHeadAction extends RepositoryAction {
 			RevWalk rw = new RevWalk(repository);
 			RevCommit commit = rw.parseCommit(head.getObjectId());
 
-			next = new GitCompareFileRevisionEditorInput.EmptyTypedElement(NLS.bind(UIText.GitHistoryPage_FileNotInCommit,
-					resource.getName(), commit));
-			TreeWalk w = TreeWalk.forPath(repository, gitPath, commit.getTree());
-			// check if file is contained in commit
-			if (w != null) {
-				final IFileRevision nextFile = GitFileRevision.inCommit(repository, commit, gitPath, null);
-				next = new FileRevisionTypedElement(nextFile);
-			}
+			next = CompareUtils.getFileRevisionTypedElement(gitPath, commit,
+					repository);
 		} catch (IOException e) {
 			// this exception is handled by TeamAction.run
 			throw new InvocationTargetException(e);

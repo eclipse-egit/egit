@@ -30,12 +30,12 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.ResourceList;
-import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.Action;
@@ -91,7 +91,6 @@ import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.internal.ui.IPreferenceIds;
 import org.eclipse.team.internal.ui.TeamUIPlugin;
 import org.eclipse.team.internal.ui.Utils;
-import org.eclipse.team.internal.ui.history.FileRevisionTypedElement;
 import org.eclipse.team.ui.history.HistoryPage;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IActionBars;
@@ -400,7 +399,8 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 					final String gitPath = mapping.getRepoRelativePath(resource);
 					IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 					SWTCommit commit = (SWTCommit) selection.getFirstElement();
-					ITypedElement right = getFileRevisionTypedElement(resource, gitPath, commit);
+					ITypedElement right = CompareUtils
+							.getFileRevisionTypedElement(gitPath, commit, db);
 					final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 							SaveableCompareEditorInput.createFileElement(resource),
 							right,
@@ -436,36 +436,6 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 		layout();
 
 		Repository.addAnyRepositoryChangedListener(this);
-	}
-
-	private ITypedElement getFileRevisionTypedElement(final IFile resource,
-			final String gitPath, SWTCommit commit) {
-		ITypedElement right = new GitCompareFileRevisionEditorInput.EmptyTypedElement(
-				NLS.bind(UIText.GitHistoryPage_FileNotInCommit, resource
-						.getName(), commit));
-
-		try {
-			IFileRevision nextFile = getFileRevision(resource, gitPath, commit);
-			if (nextFile != null)
-				right = new FileRevisionTypedElement(nextFile);
-		} catch (IOException e) {
-			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
-					gitPath, commit.getId()), e);
-		}
-		return right;
-	}
-
-	private IFileRevision getFileRevision(final IFile resource,
-			final String gitPath, SWTCommit commit) throws IOException {
-
-		TreeWalk w = TreeWalk.forPath(db, gitPath, commit.getTree());
-		// check if file is contained in commit
-		if (w != null) {
-			final IFileRevision fileRevision = GitFileRevision.inCommit(db,
-					commit, gitPath, null);
-			return fileRevision;
-		}
-		return null;
 	}
 
 	private void openInCompare(CompareEditorInput input) {
@@ -1227,7 +1197,8 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 					IFile file = (IFile) getInput();
 					final RepositoryMapping mapping = RepositoryMapping.getMapping(file.getProject());
 					final String gitPath = mapping.getRepoRelativePath(file);
-					ITypedElement right = getFileRevisionTypedElement(file, gitPath, commit);
+					ITypedElement right = CompareUtils
+							.getFileRevisionTypedElement(gitPath, commit, db);
 					final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 							SaveableCompareEditorInput.createFileElement(file),
 							right,
@@ -1270,8 +1241,10 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 					final String gitPath = map
 							.getRepoRelativePath(resource);
 
-					final ITypedElement base = getFileRevisionTypedElement(resource, gitPath, commit1);
-					final ITypedElement next = getFileRevisionTypedElement(resource, gitPath, commit2);
+					final ITypedElement base = CompareUtils
+							.getFileRevisionTypedElement(gitPath, commit1, db);
+					final ITypedElement next = CompareUtils
+							.getFileRevisionTypedElement(gitPath, commit2, db);
 					CompareEditorInput in = new GitCompareFileRevisionEditorInput(base, next, null);
 					openInCompare(in);
 				}
@@ -1314,7 +1287,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 				SWTCommit commit = (SWTCommit) it.next();
 				IFileRevision rev = null;
 				try {
-					rev = getFileRevision(resource, gitPath, commit);
+					rev = CompareUtils.getFileRevision(gitPath, commit, db, null);
 				} catch (IOException e) {
 					Activator.logError(NLS.bind(
 							UIText.GitHistoryPage_errorLookingUpPath, gitPath,

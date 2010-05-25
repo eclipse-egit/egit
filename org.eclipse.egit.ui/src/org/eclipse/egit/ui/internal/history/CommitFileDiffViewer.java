@@ -12,8 +12,8 @@ import java.util.Iterator;
 
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.IOpenListener;
@@ -24,6 +24,9 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
@@ -34,11 +37,6 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.internal.ui.history.FileRevisionTypedElement;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.treewalk.TreeWalk;
 
 class CommitFileDiffViewer extends TableViewer {
 	private TreeWalk walker;
@@ -85,16 +83,12 @@ class CommitFileDiffViewer extends TableViewer {
 		final Repository db = walker.getRepository();
 		final String p = d.path;
 		final RevCommit c = d.commit;
-		final IFileRevision baseFile;
-		final IFileRevision nextFile;
 		final ITypedElement base;
 		final ITypedElement next;
 
-		baseFile = GitFileRevision.inCommit(db, c.getParent(0), p, d.blobs[0]);
-		nextFile = GitFileRevision.inCommit(db, c, p, d.blobs[1]);
+		base = CompareUtils.getFileRevisionTypedElement(p, c.getParent(0), db, d.blobs[0]);
+		next = CompareUtils.getFileRevisionTypedElement(p, c, db, d.blobs[1]);
 
-		base = new FileRevisionTypedElement(baseFile);
-		next = new FileRevisionTypedElement(nextFile);
 		in = new GitCompareFileRevisionEditorInput(base, next, null);
 		CompareUI.openCompareEditor(in);
 	}
