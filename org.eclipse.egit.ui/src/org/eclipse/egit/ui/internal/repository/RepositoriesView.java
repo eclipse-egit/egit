@@ -54,7 +54,9 @@ import org.eclipse.egit.ui.internal.fetch.FetchConfiguredRemoteAction;
 import org.eclipse.egit.ui.internal.fetch.FetchWizard;
 import org.eclipse.egit.ui.internal.push.PushConfiguredRemoteAction;
 import org.eclipse.egit.ui.internal.push.PushWizard;
-import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTreeNodeType;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -1750,8 +1752,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 					// repository changes does not trigger an unnecessary
 					// refresh
 					repo.scanForRepoChanges();
-					RepositoryTreeNode<Repository> node = new RepositoryTreeNode<Repository>(
-							null, RepositoryTreeNodeType.REPO, repo, repo);
+					RepositoryNode node = new RepositoryNode(null, repo);
 					input.add(node);
 				}
 			} catch (IOException e) {
