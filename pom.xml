@@ -65,6 +65,7 @@
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.updatesite/target/site</jgit-site>
     <eclipse-site>http://download.eclipse.org/releases/${platform-version-name}</eclipse-site>
     <swtbot-site>http://download.eclipse.org/technology/swtbot/${platform-version-name}/dev-build/update-site</swtbot-site>
+    <wikitext-site>http://download.eclipse.org/tools/mylyn/update/weekly/e3.4</wikitext-site>
   </properties>
 
   <profiles>
@@ -134,6 +135,11 @@
       <id>swtbot</id>
       <layout>p2</layout>
       <url>${swtbot-site}</url>
+    </repository>
+    <repository>
+      <id>wikitext</id>
+      <layout>p2</layout>
+      <url>${wikitext-site}</url>
     </repository>
   </repositories>
 

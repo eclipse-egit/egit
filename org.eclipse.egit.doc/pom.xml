@@ -39,8 +39,9 @@
           <execution>
             <phase>generate-sources</phase>
             <configuration>
-	      <tasks if="update.egit.doc">
-                <property name="runtime-classpath" refid="maven.runtime.classpath"/>
+                <tasks if="update.egit.doc">
+                <id>update-documentation</id>
+                <property name="compile_classpath" refid="maven.compile.classpath"/>
                 <ant target="all" inheritRefs="true" antfile="build-help.xml"/>
               </tasks>
             </configuration>
