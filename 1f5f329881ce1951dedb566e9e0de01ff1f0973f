@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALun///B0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IEGitOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-05-26T12:05:41Z",
+      "side": 1,
+      "message": "There is actually no need to mention SubProgressMonitor. I merely brought SubMonitor up on the bug for the benefit of others that are not familiar with that class. :)\n\nJust state what the monitor is for and whether null is allowed or not and such and keep the @param description \"narrow\" by only talking about IProgressMonitor, the interface.",
+      "revId": "1f5f329881ce1951dedb566e9e0de01ff1f0973f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///BY\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IEGitOperation.java",
         "patchSetId": 1
