@@ -1,0 +1,281 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit User Guide - Inspecting the state of the Repository</title>
+		<link type="text/css" rel="stylesheet" href="../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">Inspecting the state of the Repository</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Working-with-remote-Repositories.html" title="Working with remote Repositories">
+						<img alt="Previous" border="0" src="../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Committing-Changes.html" title="Committing Changes">
+						<img alt="Next" border="0" src="../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Working with remote Repositories</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Committing Changes</td>
+			</tr>
+		</table><hr/>
+		<h1 id="Inspecting_the_state_of_the_Repository">Inspecting the state of the Repository</h1>
+		<h2 id="Label_Decorations">Label Decorations</h2>
+		<p>Label decorations show Git specific information on resources under Git version control. They appear in all views showing model objects, like Package Explorer, Project Explorer, Navigator, Hierarchy View. </p>
+		<p>The Git label decorations can be switched on globally in the Preference Menu (Window -&gt; Preferences) under General -&gt; Appearance -&gt; Label Decorations. </p>
+		<p>More detailed settings can be done in the Preferences under Team -&gt; Git -&gt; Label Decorations. </p>
+		<p>There are two different types of label decorations: text decorations and icon decorations. </p>
+		<p>
+			<b>Text Decorations</b>
+			<br/> Text decorations appear on the left or right side of the text label. They can be configured on the Preferences dialog under Team -&gt; Git -&gt; Label Decorations on the tab "Text Decorations". For example, the default for a dirty resource is a &gt; on the left side of its name. 
+		</p>
+		<p>These are the default settings: </p>
+		<p>
+			<img border="0" src="images/01-TextDecorations.png"/> 
+		</p>
+		<p>For files and folders there are the variables "name", "dirty" and "staged". "Dirty" and "staged" are flags; if they are true, the text after the colon is displayed.</p>
+		<p>For projects there are the additional variables "repository" and "branch". The "repository" variable displays the name of the repository.</p>
+		<p>The "branch" variable displays the name of the currently checked out branch. If no branch is checked out, the decoration shows the shortened name of the commit (first seven characters followed by ellipsis). If tags and/or remote branches are pointing to this commit, a "best guess" heuristic is applied to also show this information: tags take precedence over remote branches, if several tags apply, the newest one is displayed; if there are several remote branches or tags have no modification date, then alphabetic sorting is applied and the last one is shown. Example: the checked out commit "e49f576..." refers to tag "v.0.7.1" of&nbsp;repository "egit":
+			<br/>
+		</p>
+		<p>
+			<img border="0" src="images/03-ExampleDecoration.png"/>
+		</p>
+		<p>
+			<b>Icon Decorations</b>
+			<br/> Icon decorations appear on the lower right corner of the icon displayed in front of the label. They can be configured on the Preferences dialog under Team -&gt; Git -&gt; Label Decorations on the tab "Icon Decorations". 
+		</p>
+		<p>These are the default decorations: </p>
+		<p>
+			<img border="0" src="images/02-IconDecorations.png"/> 
+		</p>
+		<ul>
+			<li>
+				<b>dirty (folder)</b> - At least one file below the folder is dirty; that means that it has changes in the working tree that are neither in the index nor in the repository. 
+			</li>
+			<li>
+				<b>tracked</b> - The resource is known to the Git repository and hence under version control. 
+			</li>
+			<li>
+				<b>untracked</b> - The resource is not known to the Git repository and will not be version controlled until it is explicitly added. 
+			</li>
+			<li>
+				<b>ignored</b> - The resource is ignored by the Git team provider. Here only the preference settings under Team -&gt; Ignored Resources and the "derived" flag are relevant. Settings from .gitignore files are not yet taken into account. 
+			</li>
+			<li>
+				<b>dirty</b> - The resource has changes in the working tree that are neither in the index nor in the repository. 
+			</li>
+			<li>
+				<b>staged</b> - The resource has changes which have been added to the index. Note that adding changes to the index is currently possible only in the commit dialog via the context menu of a resource. 
+			</li>
+			<li>
+				<b>partially-staged</b> - The resource has changes which are added to the index and additional changes in the working tree that neither reached the index nor have been committed to the repository. 
+			</li>
+			<li>
+				<b>added</b> - The resource has not yet reached any commit in the repository but has been freshly added to the Git repository in order to be tracked in future. 
+			</li>
+			<li>
+				<b>removed</b> - The resource is staged for removal from the Git repository. 
+			</li>
+			<li>
+				<b>conflict</b> - A merge conflict exists for the file. 
+			</li>
+			<li>
+				<b>assume-valid</b> - The resource has the "assume unchanged" flag. This means that Git stops checking the working tree files for possible modifications, so you need to manually unset the bit to tell Git when you change the working tree file. This setting can be switched on with the menu action Team-&gt;Assume unchanged (or on the command line with git update-index --assume-unchanged). Currently it can only be switched back on the command line with git update-index --no-assume-unchanged.
+			</li>
+		</ul>
+		<h2 id="History_View">History View</h2>
+		<p>The History View displays the the history of the files versioned in a Git repository.
+			Open the History View by selecting "Show In -&gt; History View" from the context menu on any resource under Git version control.</p>
+		<p>
+			<img border="0" src="images/Egit-0.8-history-view.png"/> 
+		</p>
+		<p>The top level pane is the commit graph displaying the commit log in reverse chronological order (newest commit on top).</p>
+		<p>
+			<img border="0" src="images/Egit-0.8-history-view-branches.png‎"/>
+			<br/>
+		</p>
+		<ul>
+			<li>The tips of local branches are shown as green rectangles</li>
+			<li>The tips of remote branches are shown as grey rectangles</li>
+			<li>The local HEAD is shown as a white rectangle</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-0.8-history-view-tag.png‎"/>
+			<br/>
+		</p>
+		<ul>
+			<li>Tags are shown as yellow rectangles</li>
+		</ul>
+		<p>The lower two panes show the details of the selected commit. 
+			In the lower right pane the files affected by the commit are listed.</p>
+		<p>The letter in the first column of this table describes the nature of the change for this file:</p>
+		<dl>
+			<dd>
+				<b>A</b> &nbsp;the file was added by the commit
+			</dd>
+			<dd>
+				<b>M</b> &nbsp;the file was modified by the commit
+			</dd>
+			<dd>
+				<b>D</b> &nbsp;the file was deleted by the commit
+			</dd>
+		</dl>
+		<p>In the lower left pane the commit message and some of its metadata and the git diff for the affected files are listed.</p>
+		<h3 id="History_View_Configuration">History View Configuration</h3>
+		<p>The toggle buttons in the the view toolbar control how the displayed commits are filtered with respect to the context set by the resource selected in e.g. the Navigator or Package Explorer view:</p>
+		<p>
+			<img border="0" src="images/Egit-0.8-history-view-toggle-none.png"/>
+
+			<br/>If none of the toggle buttons is down the commit log is filtered to show only commits which affected the selected resource.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-0.8-history-view-toggle-folder.png"/>
+
+			<br/>If the right-most toggle is down the commit log is filtered to show all commits which affected any of the resources in the selected resource's parent folder.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-0.8-history-view-toggle-project.png"/>
+
+			<br/>If the middle toggle is down the commit log is filtered to show all commits which affected any of the resources in the selected resource's project.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-0.8-history-view-toggle-repository.png"/>
+
+			<br/>If the left toggle is down the commit log is not filtered and shows all commits reachable from the currently checked out branch.
+		</p>
+		<p>When the toggle button with the magnifying glass is down a search bar is displayed which allows to search for commits in the commit log:
+			<br/>
+
+			<img border="0" src="images/Egit-0.8-history-view-toggle-magnifier.png"/>
+		</p>
+		<p>Depending on the setting in the drop-down list in the search bar the commit's title, comments, author or committer are searched.
+
+			<br/> The found search hits are high-lighted in bold and the "next" and "previous" buttons allow to jump to the next or previous commit matching the search criteria.
+			<br/>
+
+			<img border="0" src="images/Egit-0.8-history-view-search.png"/>
+		</p>
+		<p>The configuration drop-down menu in the view's toolbar allows to change formatting rules for the commit message and controls if the lower two panes of the History View should be displayed:
+
+			<br/>
+
+			<img border="0" src="images/Egit-0.8-history-view-configuration.png"/>
+		</p>
+		<h2 id="Commit_Dialog">Commit Dialog</h2>
+		<p>A summary of the status of all modified tracked files is displayed on the commit dialog. By double clicking a file the changes to be committed will be displayed in a compare dialog. As EGit currently always commits the content of the working tree (corresponding to git commit -a on the command line) the compare dialog will compare the working tree with the last commit.</p>
+		<h2 id="Comparing_Content">Comparing Content</h2>
+		<p>In daily work you will often want to see the changes between your last commit, the index, and the current working tree. </p>
+		<p>
+			<img border="0" src="images/03-CompareWith.png"/>
+		</p>
+		<p>Currently a compare dialog can only be opened for a single selected file. </p>
+		<p>
+			<b>Compare working tree with last commit</b>
+			<br/> The difference between a file in the current working directory and in the last commit in the current branch can be viewed from the context menu "Compare With" -&gt; "HEAD revision". This feature is also available in the Commit dialog. Double clicking on an entry in the Commit dialog opens a compare dialog. 
+		</p>
+		<p>
+			<b>Compare working tree with index</b>
+			<br/> The difference between a file in the current working directory and in the index can be viewed from the context menu "Compare With" -&gt; "Git Index". 
+		</p>
+		<p>
+			<b>Compare working tree with any commit</b>
+			<br/> 
+		</p>
+		<ul>
+			<li>Select a file in the package explorer </li>
+			<li>from the context menu select "Show in" &gt; "History" or "Compare With" -&gt; "History..."</li>
+			<li>in the commit graph select a commit </li>
+			<li>from the context menu select "Compare with working tree" </li>
+			<li>this will open a compare dialog showing the changes between the selected commit and the current working tree</li>
+		</ul>
+		<p>
+			<b>Compare two commits with each other</b>
+			<br/> 
+		</p>
+		<ul>
+			<li>Select a file in the package explorer </li>
+			<li>from the context menu select "Show in" &gt; "History" or "Compare With" -&gt; "History..."</li>
+			<li>in the commit graph select two commits </li>
+			<li>from the context menu select "Compare with each other" </li>
+			<li>this will open a compare dialog showing the changes between the two selected commits</li>
+		</ul>
+		<p>
+			<b>Compare index with HEAD or any other commit</b>
+			<br/> This feature is not implemented yet.
+		</p>
+		<h2 id="Quickdiff">Quickdiff</h2>
+		<p>Instead of using a compare editor you can enable quick diff support and see the changes within the text editor. 
+
+			<br/>This feature can be enabled via the General &gt; Editors &gt; Text Editors &gt; Quick Diff preference page: 
+		</p>
+		<p>
+			<img border="0" src="images/04-QuickDiffPreferences.png"/> 
+		</p>
+		<p>The difference annotation will then be displayed on the left hand side of the editor: </p>
+		<p>
+			<img border="0" src="images/05-QuickDiffInEditor.png"/> 
+		</p>
+		<p>If you move your mouse over the annotation you see the content of the version you are comparing to: </p>
+		<p>
+			<img border="0" src="images/06-QuickDiffInEditorPopup.png"/> 
+		</p>
+		<p>Per default, the comparison is against the HEAD. You can determine the version you are comparing to, the so-called quickdiff baseline, from the context menu of a commit in the history view (Show in -&gt; History). There are three menu entries: </p>
+		<ul>
+			<li>
+				<b>Quick Diff -&gt; Reset baseline to first parent of HEAD</b> - Compare against the first commit before HEAD.
+			</li>
+			<li>
+				<b>Quick Diff -&gt; Reset baseline to HEAD</b> - Compare against HEAD. 
+			</li>
+			<li>
+				<b>Quick Diff -&gt; Set as baseline</b> - Compare against the selected commit
+			</li>
+		</ul>
+		<h2 id="View_Diff_for_a_Commit">View Diff for a Commit</h2>
+		<p>To display the diff for a given commit </p>
+		<ul>
+			<li>from context menu in package explorer select "Team" &gt; "Show in Resource History" </li>
+			<li>select the commit you want to inspect </li>
+			<li>the history view will display the diff in the lower left pane</li>
+			<li>selecting a file in the lower right pane will scroll to the corresponding file section of the diff</li>
+		</ul>
+		<p>
+			<img border="0" src="images/EGit-0.7-ViewDiffInResourceHistory.png"/>
+		</p><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Working-with-remote-Repositories.html" title="Working with remote Repositories">
+						<img alt="Previous" border="0" src="../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center">
+					<a href="User-Guide.html" title="EGit User Guide">
+						<img alt="EGit User Guide" border="0" src="../../images/home.gif"/>
+					</a>
+				</td>
+				<td style="width: 20%" align="right">
+					<a href="Committing-Changes.html" title="Committing Changes">
+						<img alt="Next" border="0" src="../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Working with remote Repositories</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Committing Changes</td>
+			</tr>
+		</table>
+	</body>
+</html>
