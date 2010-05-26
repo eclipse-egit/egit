@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>Git at Eclipse</title>
+		<link type="text/css" rel="stylesheet" href="../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">Git at Eclipse</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Updating-This-Document.html" title="Updating This Document">
+						<img alt="Next" border="0" src="../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
+			</tr>
+		</table><hr/>
+		<p><div style="border: thin solid black; background-color: #F4FFF4; margin: 3px"><div style="margin: 4px">
+			This page is a work in progress, and is not yet complete.  Not every project has a Git repository -- just like not every project has an SVN or CVS repository.
+</div></div></p>
+		<h2 id="Git_mirrors_of_CVS_repositories">Git mirrors of CVS repositories</h2>
+		<p>The CVS repositories at Eclipse.org are being mirrored to read-only Git repositories.  Please see the 
+			<a href="http://dev.eclipse.org/git/" target="egit_external">git repositories page</a> for the full list of repositories.  Please note that Git mirrors will be deleted for those projects that migrate to Git.
+		</p>
+		<h2 id="Git_repositories">Git repositories</h2>
+		<p>Eclipse projects may use either CVS, SVN or Git.  The project you are looking for may not be using Git. Please see 
+			<a href="http://wiki.eclipse.org/CVS_Howto" title="CVS_Howto" target="egit_external">CVS_Howto</a> and 
+			<a href="http://wiki.eclipse.org/SVN_Howto" title="SVN_Howto" target="egit_external">SVN_Howto</a> for more information.  If you are unsure which type of repository a project is using, please go to that project's home page.
+		</p>
+		<h3 id="My_Eclipse_project_wants_to_use_Git">My Eclipse project wants to use Git</h3>
+		<ul>
+			<li>New projects may choose Git as their repository in the 
+				<a href="http://www.eclipse.org/projects/project_provisioning_request.php" target="egit_external">New Project Provisioning Request</a>.
+			</li>
+			<li>Existing projects may migrate to Git from SVN or CVS.  Please see 
+				<a href="../\Git\Migrating_to_Git/Migrating-to-Git.html" title="Git/Migrating to Git">Git/Migrating to Git</a> for more details.
+			</li>
+		</ul>
+		<h3 id="Migrating_from_CVS.2FSVN_to_Git">Migrating from CVS/SVN to Git</h3>
+		<p>Please see 
+			<a href="../\Git\Migrating_to_Git/Migrating-to-Git.html" title="Git/Migrating to Git">Git/Migrating to Git</a>.
+		</p>
+		<h3 id="Committers_new_to_Git">Committers new to Git</h3>
+		<p>Before working on a Git repository, please:</p>
+		<ul>
+			<li>Read 
+				<a href="http://wiki.freegeek.org/index.php/Git_for_dummies" target="egit_external">Git for Dummies</a>
+			</li>
+			<li>Have the 
+				<a href="http://wiki.sourcemage.org/Git_Guide" target="egit_external">Git Guide</a> handy
+			</li>
+			<li>Note that anyone can commit to 
+				<b>their</b> repo, but only Eclipse committers can push their repo to git.eclipse.org
+			</li>
+			<li>
+				<b>DON'T FORGET to configure your git environment</b>
+			</li>
+		</ul>
+		<pre>   git config --global user.email my_committer_email@address.com
+   git config --global user.name "John Doe"
+</pre>
+		<h3 id="List_of_Git_repositories_available">List of Git repositories available</h3>
+		<p>Please connect to 
+			<a href="http://git.eclipse.org/" target="egit_external">http://git.eclipse.org/</a>
+		</p>
+		<h3 id="Connecting.2C_cloning_a_repo">Connecting, cloning a repo</h3>
+		<p>Please see the list of Git repositories (above).</p>
+		<p>Committer access:</p>
+		<pre>   git clone ssh://committer_id@git.eclipse.org/gitroot/project/repo
+</pre>
+		<p>Anonymous, read-only access:</p>
+		<pre>   git clone git://git.eclipse.org/gitroot/project/repo
+</pre>
+		<p>Examples:</p>
+		<pre>   git clone ssh://droy@git.eclipse.org/gitroot/babel/org.eclipse.babel.server.git
+   git clone git://git.eclipse.org/gitroot/babel/org.eclipse.babel.server.git
+</pre>
+		<h3 id="Committing_and_pushing">Committing and pushing</h3>
+		<p>
+			<div class="thumb">
+				<div class="thumbinner">
+					<a href="Git.png" class="image">
+						<img class="thumbimage" border="0" src="images/Git.png"/>
+					</a>
+					<div class="thumbcaption">The wrong way</div>
+				</div>
+			</div>
+		</p>
+		<p>
+			<div class="thumb">
+				<div class="thumbinner">
+					<a href="Git-correct.png" class="image">
+						<img class="thumbimage" border="0" src="images/Git-correct.png"/>
+					</a>
+					<div class="thumbcaption">The right way</div>
+				</div>
+			</div>
+			Before committing code to your cloned repo, please ensure that your Git environment is properly set.  Otherwise, the email address stored in the commit transaction in your repository will not match the email address of your Eclipse Committer record with the Eclipse Foundation, and your push will fail.
+		</p>
+		<h3 id="Setting_up_ssh_keys">Setting up ssh keys</h3>
+		<p>[
+			<b>This doesn't work unless you are a project lead or are granted a proper shell to work in (only project leads at the moment). See 
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=312034" target="egit_external">bug 312034</a>.
+			</b>]
+		</p>
+		<p>To avoid having to type in your password for each interaction with the server when using git from the command line:</p>
+		<ul>
+			<li>Generate a public/private key pair if you don't already have one on your own machine</li>
+			<li>sftp committer_id@git.eclipse.org and transfer the id_xxx.pub files from your .ssh directory</li>
+			<li>ssh committer_id@git.eclipse.org</li>
+			<li>mkdir .ssh</li>
+			<li>chmod 755 .ssh</li>
+			<li>cd .ssh</li>
+			<li>cat ../id_xxx.pub &gt;&gt;authorized_keys (for each .pub file you transferred)</li>
+			<li>chmod 755 authorized_keys</li>
+		</ul>
+		<p>[
+			<b>At the moment, sftp is blocked, and using scp works, but you cannot run the mkdir command so cannot put the *.pub files into authorized_keys.</b>]
+		</p>
+		<h3 id="Notes_on_DVCS">Notes on DVCS</h3>
+		<p>Due to our rigorous IP process, the Eclipse.org use-case for a DVCS is different than that of other Open Source organizations. For this reason, an update hook is installed on all Git repositories to ensure a clean IP provenance.  For that reason, an update hook is installed 
+			<b>and must remain in place</b> on every Git repository.
+		</p>
+		<p>The Eclipse update hook will examine the 
+			<b>Committer</b> entries of an incoming push.  All the committer entries 
+			<b>must</b> be made by the committer performing the push, or the push will fail.  Furthermore, your committer ID, or the committer email address registered with your committer account at the Eclipse Foundation must be present in the Committer Email record. Here are some scenarios to help understand this restriction:
+		</p>
+		<pre>   '''Scenario 1'''
+   Jane Contributor is Author of code.  Commits to her local repo.
+   Jane Contributer pushes (publishes) to a committer's local repo.
+   Committer pushes code to git.eclipse.org will '''fail'''.  Committer cannot push code to us that they did not Commit.
+</pre>
+		<pre>   '''Scenario 2'''
+   Jane Committer is Author of code. Commits to her local repo.
+   Jane Committer pushes (publishes) to another committer's local repo.
+   Committer pushes code to git.eclipse.org will '''fail'''.  Committer cannot push code to us that they did not commit (even if it is from another committer).
+</pre>
+		<pre>   '''Scenario 3'''
+   Jane Committer, known as jane@bigcorp.com to the Eclipse Foundation, is Author of code. Commits to her local repo as jane@someisp.com.
+   Jane Committer pushes code to git.eclipse.org will '''fail'''.  Eclipse.org does not recognize jane@someisp.com.
+</pre>
+		<pre>   '''Scenario 4'''
+   Joe Contributor Authors code. Commits to his local repo.
+   Joe Contributor attaches patch to Bugzilla.
+   Committer applies patch to his local repo, commits to his local repo.
+   Committer pushes code to git.eclipse.org will '''succeed'''.   Committer can push their committed code to us, preserving the Author information in the transaction.
+</pre>
+		<h3 id="Creating_a_new_repository">Creating a new repository</h3>
+		<p>Webmaster can create a new repository for you.  Just 
+			<a href="https://bugs.eclipse.org/bugs/enter_bug.cgi?product=Community&amp;component=Git" target="egit_external">open a bug</a> against Eclipse Foundation &gt; Community &gt; Git.  However, Eclipse committers with shell accounts can create new repositories:
+		</p>
+		<pre>   initrepo /gitroot/project/org.eclipse.repo.name.git
+</pre>
+		<p>For consistency, the name of the repository 
+			<b>must</b> end with .git.
+		</p>
+		<h3 id="Permanently_deleting_code_from_Git">Permanently deleting code from Git</h3>
+		<p>If you are required to permanently remove code from a Git repository, please open a bug against 
+			<a href="https://bugs.eclipse.org/bugs/enter_bug.cgi?product=Community&amp;component=Git" target="egit_external">Community/Git</a> and Webmaster will do this for you.
+		</p><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Updating-This-Document.html" title="Updating This Document">
+						<img alt="Next" border="0" src="../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
+			</tr>
+		</table>
+	</body>
+</html>
