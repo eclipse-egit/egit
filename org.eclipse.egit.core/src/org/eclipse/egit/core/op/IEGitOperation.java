@@ -11,6 +11,7 @@ package org.eclipse.egit.core.op;
 import org.eclipse.core.resources.IResourceRuleFactory;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 
 /**
@@ -20,8 +21,13 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 public interface IEGitOperation {
 	/**
 	 * Executes the operation
+	 *
 	 * @param monitor
+	 *            monitor for reporting progress. Do not pass this monitor to
+	 *            other API methods. Create a SubProgressMonitor from this
+	 *            monitor instead.
 	 * @throws CoreException
+	 * @see SubProgressMonitor
 	 */
 	void execute(IProgressMonitor monitor) throws CoreException;
 
