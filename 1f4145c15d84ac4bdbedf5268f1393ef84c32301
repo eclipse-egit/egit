@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///A4\u003d",
+        "filename": "org.eclipse.egit.doc/build-help.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-05-26T13:52:40Z",
+      "side": 1,
+      "message": "We may not need to include this one as this is heavily targeted towards Eclipse.org developers and not EGit users specifically. For now, I think it\u0027s fine.",
+      "revId": "1f4145c15d84ac4bdbedf5268f1393ef84c32301",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
