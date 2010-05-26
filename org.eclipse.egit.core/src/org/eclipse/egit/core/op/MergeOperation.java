@@ -17,6 +17,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
@@ -72,7 +73,12 @@ public class MergeOperation implements IEGitOperation {
 			this.mergeStrategy = MergeStrategy.get(mergeStrategy);
 	}
 
-	public void execute(IProgressMonitor monitor) throws CoreException {
+	public void execute(IProgressMonitor m) throws CoreException {
+		IProgressMonitor monitor;
+		if (m == null)
+			monitor = new NullProgressMonitor();
+		else
+			monitor = m;
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
 			public void run(IProgressMonitor mymonitor) throws CoreException {
