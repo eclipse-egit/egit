@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>Migrating to Git at Eclipse</title>
+		<link type="text/css" rel="stylesheet" href="../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">Migrating to Git at Eclipse</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Updating-This-Document.html" title="Updating This Document">
+						<img alt="Next" border="0" src="../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
+			</tr>
+		</table><hr/>
+		<p>Eclipse projects currently using CVS or SVN may migrate their repository to Git.  Here is an outline of the steps:</p>
+		<h2 id="Talk_to_your_community.2C_project_lead">Talk to your community, project lead</h2>
+		<p>Your project lead(s) needs to endorse the move to Git.  Inform your community about the desire to migrate.  Keep them informed on the plan and the progress.</p>
+		<h2 id="Understand_the_concept_of_Git_repos">Understand the concept of Git repos</h2>
+		<p>Since a Git repo is not the same as a CVS or SVN repo, we assume you understand the Git repository concept.  More information can be found on the 
+			<a href="../../\Git/Git.html" title="Git">Git</a> page.
+		</p>
+		<h2 id="Know_the_caveats">Know the caveats</h2>
+		<p>Git is new at Eclipse.org, and some of our existing tooling may not yet support Git.  However, we expect that most of these issues will be resolved in time.</p>
+		<ul>
+			<li>The Web front-end to Git is not, and will not be hosted on 
+				<a href="http://dev.eclipse.org/viewcvs" target="egit_external">ViewVC</a>.  Git is hosted at 
+				<a href="http://git.eclipse.org/" target="egit_external">http://git.eclipse.org/</a>.
+			</li>
+			<li>Git is not yet included in the Dash tools, such as the 
+				<a href="http://dash.eclipse.org" target="egit_external">Commits explorer</a>.
+			</li>
+			<li>Git may not be fully integrated into the 
+				<a href="https://build.eclipse.org/hudson/" target="egit_external">Eclipse build infrastructure</a>.
+			</li>
+			<li>Due to our rigorous IP process, the Eclipse.org use-case for a 
+				<a href="http://en.wikipedia.org/wiki/Distributed_revision_control_system" target="egit_external">DVCS</a> is different than that of other Open Source organizations.  For this reason, an update hook is installed on all Git repositories to ensure a clean IP provenance. See 
+				<a href="../../\Git/Git.html#Committing_and_pushing" title="Git#Committing_and_pushing">Git#Committing_and_pushing</a> for more information.
+			</li>
+		</ul>
+		<h2 id="Plan_and_structure_your_Git_space">Plan and structure your Git space</h2>
+		<ul>
+			<li>Webmaster will create a directory on git.eclipse.org to store your Git repositories.  Although Webmaster can create your Git repos for you, you are free to do this yourself.</li>
+			<li>Decide on a timeline: webmaster needs exclusive access to your CVS/SVN repo to import it (if that is what is decided).  This will disrupt project operations.  Choose a timeline to minimize impact.</li>
+			<li>Now is a great time to refactor your code structure.  Map the current CVS/SVN directories, modules, plugins, etc. to their new home in Git.  Typically, one Git repository (.git) is created for each logical unit, or grouping of code -- a plugin, a connector, a component, and so on.  For instance, the Babel project (
+				<a href="http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.babel/?root=Technology_Project" target="egit_external">ViewCVS</a>) has one CVS repository which contains a server component and a plugin component which, in turn, contains several modules.  Here is one example:
+			</li>
+		</ul>
+		<pre>   ServerRepo: org.eclipse.babel.server.git
+   URL: git://git.eclipse.org/babel/org.eclipse.babel.server.git
+</pre>
+		<pre>   Plugin Repo: org.eclipse.babel.build.git
+   URL: git://git.eclipse.org/babel/org.eclipse.babel.build.git
+         will contain directories: org.eclipse.babel.build.ant, o.e.b.b.core, o.e.b.b.ui
+</pre>
+		<pre>   Plugin Repo: org.eclipse.babel.core.git
+   URL: git://git.eclipse.org/babel/org.eclipse.babel.core.git
+</pre>
+		<pre>   Plugin Repo: org.eclipse.babel.editor.git
+   URL: git://git.eclipse.org/babel/org.eclipse.babel.editor.git
+</pre>
+		<pre>   Plugin Repo: org.eclipse.babel.runtime.git
+   URL: git://git.eclipse.org/babel/org.eclipse.babel.runtime.git
+</pre>
+		<h2 id="Decide_what_to_do_with_your_existing_code">Decide what to do with your existing code</h2>
+		<p>You have two options for migrating your existing codebase to Git:</p>
+		<h3 id="Archive_your_current_CVS_or_SVN_repository">Archive your current CVS or SVN repository</h3>
+		<ul>
+			<li>Webmaster will flag it as read-only.  </li>
+			<li>Commit the HEAD stream into Git.  </li>
+			<li>Start with a fresh, clean Git repository while preserving CVS/SVN history in its original state.</li>
+			<li>When, and if the CVS and/or SVN service is retired at Eclipse.org, the read-only repositories will be zipped and available for download as an archive.</li>
+		</ul>
+		<h3 id="Import_your_CVS.2FSVN_history_into_Git">Import your CVS/SVN history into Git</h3>
+		<h4 id="Using_svn2git">Using svn2git</h4>
+		<p>These notes are taken from the 
+			<a href="http://github.com/guides/import-from-subversion" target="egit_external">Github guide "Import from Subversion"</a>.
+		</p>
+		<p>Install svn2git by following the instructions on the github repository:
+
+			<a href="http://github.com/nirvdrum/svn2git" target="egit_external">http://github.com/nirvdrum/svn2git</a>
+		</p>
+		<p>Once it is installed, run a command similar to this one:
+			svn2git svn+ssh://atoulme@dev.eclipse.org/svnroot/stp/org.eclipse.stp.bpmn-modeler --authors ~/users.txt</p>
+		<p>Make sure to fill the authors in the users.txt file, using this syntax:
+			%svnusername% = %First name% %Last name% %email%</p>
+		<p>If one is missing, the process will stop and you will have the opportunity to amend the file, and enter the same command to continue.</p>
+		<p>When you are done creating the git repository locally:</p>
+		<ul>
+			<li>Edit the .git/description file</li>
+		</ul>
+		<p>It should contain a one-liner description of your repository.</p>
+		<ul>
+			<li>rsync it to git.eclipse.org:</li>
+		</ul>
+		<p>rsync . atoulme@git.eclipse.org:/gitroot/bpmnmodeler -r</p>
+		<h2 id="Open_a_Bug">Open a Bug</h2>
+		<p>Open a bug against Eclipse 
+			<a href="https://bugs.eclipse.org/bugs/enter_bug.cgi?product=Community&amp;component=Git&amp;short_desc=Git%20migration%20request" target="egit_external">Foundation &gt; Community &gt; Git</a> requesting the migration.  Make sure your project lead is CC'd and add a +1 to the bug.  Include detailed plans for your migration:
+		</p>
+		<ul>
+			<li>migration timeline</li>
+			<li>mapping of current code to new Git repos</li>
+			<li>your decision regarding existing code (archive or import)</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Updating-This-Document.html" title="Updating This Document">
+						<img alt="Next" border="0" src="../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Updating This Document</td>
+			</tr>
+		</table>
+	</body>
+</html>
