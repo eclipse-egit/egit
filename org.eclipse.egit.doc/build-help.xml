@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="org.eclipse.egit.doc" basedir="." default="all">
+<!--
     Copyright (c) 2010 Chris Aniszczyk and others.
     Copyright (c) 2010 Matthias Sohn <matthias.sohn@sap.com>
     All rights reserved. This program and the accompanying materials
@@ -8,130 +10,49 @@
 
     Contributors:
          Chris Aniszczyk - initial API and implementation
-         Matthias Sohn - maven integration
- -->
-
-<project name="org.eclipse.egit.doc" default="all">
-    <description>
-            Generate Eclipse help content for the EGit user guide
-    </description>
-
-	<property name="help.doc.url.base" value="http://wiki.eclipse.org"/>
-	<property name="wiki.url.base" value="${help.doc.url.base}/EGit"/>
-	<property name="imageFolder" value="images"/>
-	<property name="tmpFolder" value="target/tmp"/>
+         Matthias Sohn - maven integration, update to wikitext 1.3, adding additional wikis
+-->
+	<description>
+		Generate Eclipse help content for the EGit user guide
+	</description>
 
 	<path id="wikitext.tasks.classpath">
 		<pathelement path="${compile_classpath}"/>
 	</path>
         <echo message="compile classpath: ${compile_classpath}"/>
-
 	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/internal/wikitext/mediawiki/core/tasks/tasks.properties"/>
 	<taskdef classpathref="wikitext.tasks.classpath" resource="org/eclipse/mylyn/wikitext/core/util/anttask/tasks.properties"/>
 
-	<target name="init">
-		<mkdir dir="${tmpFolder}"/>
-	</target>
+	<property name="egit.help.doc.url.base" value="http://wiki.eclipse.org" />
 
-	<target name="clean" depends="init">
-		<delete includeemptydirs="true" failonerror="false">
-			<fileset dir="${tmpFolder}"/>
-		</delete>
-	</target>
-
-    <target name="all" depends="init" description="Generate Eclipse help content for the EGit user guide">
-		<eclipse-wiki-to-help
-			help.doc.filenamenoextension="EGit User Guide"
-			help.doc.url.base="${help.doc.url.base}"
-			help.doc.pageName="EGit/User_Guide"
-			help.imagefolder="${imageFolder}"
-			targetfolder="userguide"
-			wiki.url.base="${help.doc.url.base}/EGit"/>
-		<replaceregexp file="userguide/EGit User Guide-toc.xml" match="(&lt;topic.*?href=&quot;userguide/Task-Repository-Connectors.html.*?&gt;(\s*&lt;topic\s*href=&quot;.*?&quot;\s*label=&quot;.*&quot;&gt;\s*?&lt;/topic&gt;)+)(\s*)(&lt;/topic&gt;)"
-					replace="\1\3&lt;anchor id=&quot;additions-repository-connectors&quot;/&gt;\3\4"
-					flags="s"/>
-    </target>
-
-	<macrodef name="eclipse-wiki-to-help">
-		<attribute name="help.doc.url.base"/>
-		<attribute name="wiki.url.base"/>
-		<attribute name="help.doc.pageName"/>
-		<attribute name="help.doc.filenameNoExtension"/>
-		<attribute name="help.imageFolder"/>
-		<attribute name="targetFolder"/>
+	<target name="all" description="Generate Eclipse help content for the EGit documentation">
 		<sequential>
-			<get dest="${tmpFolder}/@{help.doc.filenameNoExtension}.mediawiki" src="@{help.doc.url.base}/index.php?title=@{help.doc.pageName}&amp;action=raw"/>
-			<echo append="true" file="${tmpFolder}/@{help.doc.filenameNoExtension}.mediawiki">
+			<delete failonerror="false">
+				<fileset dir="${basedir}/help/images" />
+			</delete>
 
-= Updating This Document =
+			<mediawiki-to-eclipse-help wikiBaseUrl="${egit.help.doc.url.base}"
+				validate="true" failonvalidationerror="true" prependImagePrefix="images"
+				formatoutput="true" defaultAbsoluteLinkTarget="egit_external" dest="${basedir}/help"
+				navigationimages="true" title="EGit Documentation" helpPrefix="help"
+				generateUnifiedToc="true">
+				<path name="EGit/User_Guide" title="EGit User Guide" />
+				<path name="EGit/Git_For_Eclipse_Users" title="Git for Eclipse Users" />
+				<path name="Git" title="Git at Eclipse" />
+				<path name="Git/Migrating_to_Git" title="Migrating to Git at Eclipse" />
+				<stylesheet url="book.css" />
+				<pageAppendum>
 
-This document is maintained in a collaborative wiki.  If you wish to update or modify this document please visit
-@{help.doc.url.base}/@{help.doc.pageName}
-			</echo>
+					= Updating This Document =
 
-			<copy todir="${tmpFolder}">
-				<fileset dir="userguide/images"/>
+					This document is maintained in a collaborative wiki. If you wish to
+					update or modify this document please visit
+					{url}</pageAppendum>
+			</mediawiki-to-eclipse-help>
+			<mkdir dir="help/images" />
+			<copy todir="${basedir}/help/images" overwrite="true">
+				<fileset dir="images" />
 			</copy>
-			<mediawiki-fetch-images dest="${tmpFolder}" url="@{help.doc.url.base}" pageName="@{help.doc.pageName}"/>
-
-			<wikitext-to-eclipse-help markupLanguage="org.eclipse.mylyn.wikitext.mediawiki.core.MediaWikiLanguage"
-				multipleOutputFiles="true"
-				navigationImages="true"
-				helpPrefix="@{targetFolder}"
-				internallinkpattern="@{wiki.url.base}/{0}"
-				validate="true"
-				failonvalidationerror="true"
-				prependImagePrefix="${imageFolder}"
-				formatoutput="true"
-				defaultAbsoluteLinkTarget="mylyn_external">
-				<fileset dir="${tmpFolder}" includes="**/*.mediawiki"/>
-				<stylesheet url="book.css"/>
-			</wikitext-to-eclipse-help>
-
-			<mkdir dir="@{targetFolder}/${imageFolder}"/>
-			<copy todir="@{targetFolder}/${imageFolder}" overwrite="true">
-				<fileset dir="${tmpFolder}">
-					<include name="*.gif"/>
-					<include name="*.png"/>
-				</fileset>
-			</copy>
-			<copy todir="@{targetFolder}" overwrite="true">
-				<fileset dir="${tmpFolder}">
-					<include name="*.html"/>
-					<include name="*toc.xml"/>
-					<exclude name="help.doc.html"/>
-				</fileset>
-			</copy>
-			<antcall target="test"/>
 		</sequential>
-	</macrodef>
-
-	<target name="test" depends="init" description="verify that all of the HTML files are well-formed XML">
-		<echo level="info">
-Validating help content XML and HTML files: The Eclipse help system expects well-formed XML
-
-If validation fails it is because either:
-
-* the userguide source code is poorly formed, or
-* the WikiText MediaWiki parser has a bug
-
-Problems with userguide source are usually caused by improper use of HTML markup in the MediaWiki source,
-or inadvertently starting a line with a space character (in MediaWiki this starts a preformatted block)
-		</echo>
-
-		<!--
-		Don't bother with DTD validation: we only care if the files are well-formed.
-		We therefore provide an empty DTD
-		-->
-		<echo file="${tmpFolder}/__empty.dtd" message=""/>
-		<xmlvalidate lenient="true">
-			<fileset dir="userguide">
-				<include name="**/*.xml"/>
-			</fileset>
-			<fileset dir="userguide">
-				<include name="**/*.html"/>
-			</fileset>
-			<dtd publicid="-//W3C//DTD XHTML 1.0 Transitional//EN" location="${basedir}/${tmpFolder}/__empty.dtd"/>
-		</xmlvalidate>
 	</target>
 </project>
