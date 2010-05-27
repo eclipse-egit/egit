@@ -24,6 +24,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class Activator extends Plugin {
 	private static Activator plugin;
+	private RepositoryCache repositoryCache;
 
 	/**
 	 * @return the singleton {@link Activator}
@@ -80,12 +81,21 @@ public class Activator extends Plugin {
 			GitTraceLocation.initializeFromOptions(opts, true);
 		}
 
+		repositoryCache = new RepositoryCache();
 		GitProjectData.reconfigureWindowCache();
 		GitProjectData.attachToWorkspace(true);
 	}
 
+	/**
+	 *  @return cache for Repository objects
+	 */
+	public RepositoryCache getRepositoryCache() {
+		return repositoryCache;
+	}
+
 	public void stop(final BundleContext context) throws Exception {
 		GitProjectData.detachFromWorkspace();
+		repositoryCache = null;
 		super.stop(context);
 		plugin = null;
 	}
