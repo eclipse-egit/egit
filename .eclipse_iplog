@@ -2,6 +2,11 @@
 	name = EGit
 	license = Eclipse Public License v1.0
 
+[consumes "technology.jgit"]
+	name = JGit
+	version = 0.8.0
+	license = Eclipse Distribution License v1.0
+
 [CQ "3493"]
 	description = JSch Version: 0.1.41 (PB CQ3040)
 	license = New BSD license
