@@ -2,6 +2,9 @@
 	name = EGit
 	license = Eclipse Public License v1.0
 
+[review]
+	url = http://egit.eclipse.org/r/r/
+
 [consumes "technology.jgit"]
 	name = JGit
 	version = 0.8.0
