@@ -472,7 +472,8 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 			if (foundOld > 0) {
 				String message = NLS
 						.bind(
-								"{0} directories are hidden as they have alredy been added", Integer.valueOf(foundOld)); //$NON-NLS-1$
+								UIText.RepositorySearchDialog_SomeDirectoriesHiddenMessage,
+								Integer.valueOf(foundOld));
 				setMessage(message, IMessageProvider.WARNING);
 			} else
 				setMessage(null);
