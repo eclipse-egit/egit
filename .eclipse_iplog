@@ -12,3 +12,9 @@
 	description = Junit Version: 3.8.2 (ATO CQ299) (using Orbit CQ2206)
 	license = Common Public License 1.0
 	state = approved
+
+[CQ "3905"]
+	description = jsch Version: 0.1.37 (using Orbit CQ2002)
+	license = New BSD license
+	use = unmodified source & binary
+	state = approved
