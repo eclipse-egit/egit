@@ -20,7 +20,9 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.egit.ui.test.Eclipse;
+import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.junit.After;
@@ -43,6 +45,12 @@ public class SharingWizardTest {
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
+
+		MockSystemReader mockSystemReader = new MockSystemReader();
+		SystemReader.setInstance(mockSystemReader);
+		mockSystemReader.setProperty(Constants.GIT_CEILING_DIRECTORIES_KEY,
+				ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile()
+						.getAbsoluteFile().toString());
 
 		if (bot.activeView().getTitle().equals("Welcome"))
 			bot.viewByTitle("Welcome").close();
