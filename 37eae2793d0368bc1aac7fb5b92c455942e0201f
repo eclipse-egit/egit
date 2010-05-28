@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun//+/k\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-27T16:25:57Z",
+      "side": 1,
+      "message": "you should also copy the copyrights from the original authors, you are just moving the code they wrote ...",
+      "revId": "37eae2793d0368bc1aac7fb5b92c455942e0201f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
