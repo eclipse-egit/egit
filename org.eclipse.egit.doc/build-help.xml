@@ -38,8 +38,6 @@
 				generateUnifiedToc="true">
 				<path name="EGit/User_Guide" title="EGit User Guide" />
 				<path name="EGit/Git_For_Eclipse_Users" title="Git for Eclipse Users" />
-				<path name="Git" title="Git at Eclipse" />
-				<path name="Git/Migrating_to_Git" title="Migrating to Git at Eclipse" />
 				<stylesheet url="book.css" />
 				<pageAppendum>
 
