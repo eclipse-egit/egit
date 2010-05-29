@@ -233,9 +233,8 @@ public class GitCloneWizardTest {
 	@Test
 	public void alteringSomeParametersDuringClone() throws Exception {
 
-		File destRepo = new File(new File(ResourcesPlugin.getWorkspace()
-				.getRoot().getLocation().toFile().getParent(),
-				"junit-workspace"), "EGIT2");
+		File destRepo = new File(ResourcesPlugin.getWorkspace()
+				.getRoot().getLocation().toFile(), "egit2");
 
 		RepoPropertiesPage repoProperties = importWizard.openWizard();
 		RepoRemoteBranchesPage remoteBranches = repoProperties
