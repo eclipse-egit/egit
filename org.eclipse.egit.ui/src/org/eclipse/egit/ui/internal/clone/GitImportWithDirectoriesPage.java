@@ -17,8 +17,9 @@ import java.util.List;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
-import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode;
-import org.eclipse.egit.ui.internal.repository.RepositoryTreeNode.RepositoryTreeNodeType;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
+import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -52,10 +53,9 @@ public class GitImportWithDirectoriesPage extends GitSelectWizardPage {
 	 * @param repo
 	 */
 	public void setRepository(Repository repo) {
-		List<RepositoryTreeNode<Repository>> input = new ArrayList<RepositoryTreeNode<Repository>>();
+		List<WorkingDirNode> input = new ArrayList<WorkingDirNode>();
 		if (repo != null)
-			input.add(new RepositoryTreeNode<Repository>(null,
-					RepositoryTreeNodeType.WORKINGDIR, repo, repo));
+			input.add(new WorkingDirNode(null, repo));
 		tv.setInput(input);
 		// select the working directory as default
 		tv.setSelection(new StructuredSelection(input.get(0)));
