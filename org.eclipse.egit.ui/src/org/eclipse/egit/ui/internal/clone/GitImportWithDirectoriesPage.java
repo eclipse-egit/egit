@@ -70,7 +70,7 @@ public class GitImportWithDirectoriesPage extends GitSelectWizardPage {
 				| SWT.BORDER);
 		tv.setContentProvider(new RepositoriesViewContentProvider());
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(tv.getTree());
-		new RepositoriesViewLabelProvider(tv);
+		tv.setLabelProvider(new RepositoriesViewLabelProvider());
 
 		SelectionListener sl = new SelectionAdapter() {
 
