@@ -555,7 +555,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 
 		for (RemoteConfig config : remotes)
 			if ((sourceSelection && !config.getURIs().isEmpty() || !sourceSelection
-					&& !config.getPushURIs().isEmpty()))
+					&& (!config.getPushURIs().isEmpty() || !config.getURIs()
+							.isEmpty())))
 				result.add(config);
 
 		if (!result.isEmpty())
@@ -581,8 +582,11 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		if (sourceSelection) {
 			uris = rc.getURIs();
 		} else {
-			// TODO shouldn't this be getPushURIs?
 			uris = rc.getPushURIs();
+			// if no push URIs are defined, use fetch URIs instead
+			if (uris.isEmpty()) {
+				uris = rc.getURIs();
+			}
 		}
 
 		for (final URIish u : uris) {
