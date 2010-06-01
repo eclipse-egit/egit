@@ -15,8 +15,11 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jgit.lib.Repository;
@@ -50,6 +53,20 @@ public class RepositoryCache {
 		}
 		prune(repositoryCache);
 		return d;
+	}
+
+	/**
+	 * @return all Repository instances contained in the cache
+	 */
+	public synchronized Repository[] getAllReposiotries() {
+		List<Repository> result = new ArrayList<Repository>();
+		Collection<Reference<Repository>> values = repositoryCache.values();
+		for(Reference<Repository> ref:values) {
+			Repository repo = ref.get();
+			if(repo!=null)
+				result.add(repo);
+		}
+		return result.toArray(new Repository[result.size()]);
 	}
 
 	private static <K, V> void prune(Map<K, Reference<V>> map) {
