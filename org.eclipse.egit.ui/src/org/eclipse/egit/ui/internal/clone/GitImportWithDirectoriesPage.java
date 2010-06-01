@@ -92,6 +92,7 @@ public class GitImportWithDirectoriesPage extends GitSelectWizardPage {
 			}
 		});
 
+		tv.getTree().setEnabled(!newProjectWizard.getSelection());
 		checkPage();
 		setControl(main);
 	}
