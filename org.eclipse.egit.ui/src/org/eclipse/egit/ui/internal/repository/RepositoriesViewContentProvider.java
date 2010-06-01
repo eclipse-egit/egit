@@ -263,10 +263,10 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			if (!rc.getPushURIs().isEmpty())
 				if (rc.getPushURIs().size() == 1)
 					children.add(new PushNode(node, node.getRepository(), rc
-							.getURIs().get(0).toPrivateString()));
+							.getPushURIs().get(0).toPrivateString()));
 				else
 					children.add(new PushNode(node, node.getRepository(), rc
-							.getURIs().get(0).toPrivateString()
+							.getPushURIs().get(0).toPrivateString()
 							+ "...")); //$NON-NLS-1$
 
 			return children.toArray();
