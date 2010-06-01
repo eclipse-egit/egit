@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.clone;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -19,12 +20,14 @@ import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
 import org.eclipse.egit.ui.internal.repository.RepositorySearchDialog;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -87,8 +90,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 		cloneRepo = new Button(tb, SWT.PUSH);
 		cloneRepo.setText(UIText.GitSelectRepositoryPage_CloneButton);
-		cloneRepo
-				.setToolTipText(UIText.GitSelectRepositoryPage_CloneTooltip);
+		cloneRepo.setToolTipText(UIText.GitSelectRepositoryPage_CloneTooltip);
 
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.FILL,
 				SWT.BEGINNING).applyTo(cloneRepo);
@@ -97,6 +99,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				List<String> dirsBefore = RepositoriesView.getDirs();
 				WizardDialog dlg = new WizardDialog(getShell(),
 						new GitCloneWizard());
 
@@ -104,6 +107,24 @@ public class GitSelectRepositoryPage extends WizardPage {
 					try {
 						tv.setInput(RepositoriesView
 								.getRepositoriesFromDirs(null));
+						List<String> dirsAfter = RepositoriesView.getDirs();
+						if (!dirsBefore.containsAll(dirsAfter)) {
+							for (String dir : dirsAfter) {
+								if (!dirsBefore.contains(dir)) {
+									try {
+										RepositoryNode node = new RepositoryNode(
+												null, new Repository(new File(
+														dir)));
+										tv
+												.setSelection(new StructuredSelection(
+														node));
+									} catch (IOException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+								}
+							}
+						}
 						checkPage();
 					} catch (InterruptedException e1) {
 						// ignore
@@ -117,8 +138,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL,
 				SWT.BEGINNING).applyTo(addRepo);
 		addRepo.setText(UIText.GitSelectRepositoryPage_AddButton);
-		addRepo
-				.setToolTipText(UIText.GitSelectRepositoryPage_AddTooltip);
+		addRepo.setToolTipText(UIText.GitSelectRepositoryPage_AddTooltip);
 		addRepo.addSelectionListener(new SelectionAdapter() {
 
 			@Override
