@@ -1,133 +1,177 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<toc topic="help/EGit/User_Guide/User-Guide.html" label="EGit Documentation">
-	<topic href="help/EGit/User_Guide/User-Guide.html" label="EGit User Guide">
-		<topic href="help/EGit/User_Guide/User-Guide.html" label="Getting Started - Adding a project to version control"></topic>
-		<topic href="help/EGit/User_Guide/Perspective-Views-and-Menus.html" label="Perspective, Views and Menus"></topic>
-		<topic href="help/EGit/User_Guide/Creating-Repositories.html" label="Creating Repositories">
-			<topic href="help/EGit/User_Guide/Creating-Repositories.html#Creating_a_new_empty_Git_Repository" label="Creating a new empty Git Repository"></topic>
-			<topic href="help/EGit/User_Guide/Creating-Repositories.html#Creating_a_Git_Repository_for_multiple_Projects" label="Creating a Git Repository for multiple Projects"></topic>
+<toc topic="help//EGit/User_Guide/User-Guide.html" label="EGit Documentation">
+	<topic href="help//EGit/User_Guide/User-Guide.html" label="EGit User Guide">
+		<topic href="help//EGit/User_Guide/User-Guide.html" label="Getting Started">
+			<topic href="help//EGit/User_Guide/User-Guide.html#Overview" label="Overview"></topic>
+			<topic href="help//EGit/User_Guide/User-Guide.html#Adding_a_project_to_version_control" label="Adding a project to version control"></topic>
 		</topic>
-		<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html" label="Starting from existing Git Repositories">
-			<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Starting_the_import_wizard" label="Starting the import wizard"></topic>
-			<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Cloning_or_adding_Repositories" label="Cloning or adding Repositories">
-				<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Cloning_a_Repository" label="Cloning a Repository"></topic>
-				<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Adding_a_Repository" label="Adding a Repository"></topic>
+		<topic href="help//EGit/User_Guide/Perspective-Views-and-Menus.html" label="Perspective, Views and Menus">
+			<topic href="help//EGit/User_Guide/Perspective-Views-and-Menus.html#Git_Perspective" label="Git Perspective"></topic>
+			<topic href="help//EGit/User_Guide/Perspective-Views-and-Menus.html#Git_Repositories_View" label="Git Repositories View"></topic>
+			<topic href="help//EGit/User_Guide/Perspective-Views-and-Menus.html#History_View" label="History View"></topic>
+			<topic href="help//EGit/User_Guide/Perspective-Views-and-Menus.html#Project_Context_Menu" label="Project Context Menu"></topic>
+			<topic href="help//EGit/User_Guide/Perspective-Views-and-Menus.html#Resource_Context_Menu" label="Resource Context Menu"></topic>
+			<topic href="help//EGit/User_Guide/Perspective-Views-and-Menus.html#Menu_Actions" label="Menu Actions"></topic>
+		</topic>
+		<topic href="help//EGit/User_Guide/Creating-Repositories.html" label="Creating Repositories">
+			<topic href="help//EGit/User_Guide/Creating-Repositories.html#Creating_a_new_empty_Git_Repository" label="Creating a new empty Git Repository"></topic>
+			<topic href="help//EGit/User_Guide/Creating-Repositories.html#Creating_a_Git_Repository_for_multiple_Projects" label="Creating a Git Repository for multiple Projects"></topic>
+		</topic>
+		<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html" label="Starting from existing Git Repositories">
+			<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Starting_the_import_wizard" label="Starting the import wizard"></topic>
+			<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Cloning_or_adding_Repositories" label="Cloning or adding Repositories">
+				<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Cloning_a_Repository" label="Cloning a Repository"></topic>
+				<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Adding_a_Repository" label="Adding a Repository"></topic>
 			</topic>
-			<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Selecting_a_Repository_from_the_list" label="Selecting a Repository from the list"></topic>
-			<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Method_for_importing_Projects" label="Method for importing Projects">
-				<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Import_Existing_Projects" label="Import Existing Projects">
-					<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Limiting_the_scope_for_project_import" label="Limiting the scope for project import"></topic>
+			<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Selecting_a_Repository_from_the_List" label="Selecting a Repository from the List"></topic>
+			<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Method_for_importing_Projects" label="Method for importing Projects">
+				<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Import_Existing_Projects" label="Import Existing Projects">
+					<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Limiting_the_Scope_for_Project_Import" label="Limiting the Scope for Project Import"></topic>
 				</topic>
-				<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Use_the_New_Projects_wizard" label="Use the New Projects wizard"></topic>
-				<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Import_as_General_Project" label="Import as General Project"></topic>
+				<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Use_the_New_Projects_Wizard" label="Use the New Projects Wizard"></topic>
+				<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Import_as_General_Project" label="Import as General Project"></topic>
 			</topic>
-			<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Method_for_sharing_imported_Projects" label="Method for sharing imported Projects">
-				<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Try_to_share_newly_created_projects_automatically" label="Try to share newly created projects automatically"></topic>
-				<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Share_new_projects_interactively" label="Share new projects interactively"></topic>
-				<topic href="help/EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Do_not_share_new_projects" label="Do not share new projects"></topic>
+			<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Method_for_Sharing_Imported_Projects" label="Method for Sharing Imported Projects">
+				<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Try_to_Share_Newly_Created_Projects_Automatically" label="Try to Share Newly Created Projects Automatically"></topic>
+				<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Share_New_Projects_Interactively" label="Share New Projects Interactively"></topic>
+				<topic href="help//EGit/User_Guide/Starting-from-existing-Git-Repositories.html#Do_Not_Share_New_Projects" label="Do Not Share New Projects"></topic>
 			</topic>
 		</topic>
-		<topic href="help/EGit/User_Guide/Working-with-remote-Repositories.html" label="Working with remote Repositories">
-			<topic href="help/EGit/User_Guide/Working-with-remote-Repositories.html#Cloning_remote_Repositories" label="Cloning remote Repositories">
-				<topic href="help/EGit/User_Guide/Working-with-remote-Repositories.html#Repository_Selection" label="Repository Selection"></topic>
-				<topic href="help/EGit/User_Guide/Working-with-remote-Repositories.html#Branch_selection" label="Branch selection"></topic>
-				<topic href="help/EGit/User_Guide/Working-with-remote-Repositories.html#Local_Destination" label="Local Destination"></topic>
+		<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html" label="Working with remote Repositories">
+			<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Cloning_Remote_Repositories" label="Cloning Remote Repositories">
+				<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Repository_Selection" label="Repository Selection"></topic>
+				<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Branch_Selection" label="Branch Selection"></topic>
+				<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Local_Destination" label="Local Destination"></topic>
 			</topic>
-			<topic href="help/EGit/User_Guide/Working-with-remote-Repositories.html#Pushing_to_other_Repositories" label="Pushing to other Repositories">
-				<topic href="help/EGit/User_Guide/Working-with-remote-Repositories.html#Pushing_a_Local_Repository_to_GitHub" label="Pushing a Local Repository to GitHub">
-					<topic href="help/EGit/User_Guide/Working-with-remote-Repositories.html#Create_Local_Repository" label="Create Local Repository"></topic>
-					<topic href="help/EGit/User_Guide/Working-with-remote-Repositories.html#Create_Repository_at_GitHub" label="Create Repository at GitHub"></topic>
-					<topic href="help/EGit/User_Guide/Working-with-remote-Repositories.html#Eclipse_SSH_Configuration" label="Eclipse SSH Configuration"></topic>
-					<topic href="help/EGit/User_Guide/Working-with-remote-Repositories.html#Push_Upstream" label="Push Upstream"></topic>
+			<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Git_References" label="Git References"></topic>
+			<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Pushing_to_other_Repositories" label="Pushing to other Repositories">
+				<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Direct_Push" label="Direct Push"></topic>
+				<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Push_Wizard" label="Push Wizard">
+					<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Push_URI" label="Push URI"></topic>
+					<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Push_Ref_Specifications" label="Push Ref Specifications"></topic>
+					<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Delete_Ref_Specifications" label="Delete Ref Specifications"></topic>
+					<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Conflicting_Push_Ref_Specifications" label="Conflicting Push Ref Specifications"></topic>
+					<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Push_Confirmation" label="Push Confirmation"></topic>
+					<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Push_Result_Report" label="Push Result Report"></topic>
 				</topic>
-			</topic>
-			<topic href="help/EGit/User_Guide/Working-with-remote-Repositories.html#Fetching_from_other_Repositories" label="Fetching from other Repositories"></topic>
-			<topic href="help/EGit/User_Guide/Working-with-remote-Repositories.html#Pulling_.28merge_or_rebase.29_new_changes_from_Upstream_Repositories" label="Pulling (merge or rebase) new changes from Upstream Repositories"></topic>
-		</topic>
-		<topic href="help/EGit/User_Guide/Inspecting-the-state-of-the-Repository.html" label="Inspecting the state of the Repository">
-			<topic href="help/EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Label_Decorations" label="Label Decorations"></topic>
-			<topic href="help/EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#History_View" label="History View">
-				<topic href="help/EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#History_View_Configuration" label="History View Configuration"></topic>
-			</topic>
-			<topic href="help/EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Commit_Dialog" label="Commit Dialog"></topic>
-			<topic href="help/EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Comparing_Content" label="Comparing Content"></topic>
-			<topic href="help/EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Quickdiff" label="Quickdiff"></topic>
-			<topic href="help/EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#View_Diff_for_a_Commit" label="View Diff for a Commit"></topic>
-		</topic>
-		<topic href="help/EGit/User_Guide/Committing-Changes.html" label="Committing Changes">
-			<topic href="help/EGit/User_Guide/Committing-Changes.html#Modifying_the_content" label="Modifying the content"></topic>
-			<topic href="help/EGit/User_Guide/Committing-Changes.html#Committing" label="Committing">
-				<topic href="help/EGit/User_Guide/Committing-Changes.html#Amending_Commits" label="Amending Commits"></topic>
-				<topic href="help/EGit/User_Guide/Committing-Changes.html#Signing_off_commits" label="Signing off commits"></topic>
-			</topic>
-		</topic>
-		<topic href="help/EGit/User_Guide/Reverting-Changes.html" label="Reverting Changes">
-			<topic href="help/EGit/User_Guide/Reverting-Changes.html#Reverting_changes_in_the_working_tree" label="Reverting changes in the working tree">
-				<topic href="help/EGit/User_Guide/Reverting-Changes.html#Replace_with_File_in_Git_Index" label="Replace with File in Git Index"></topic>
-				<topic href="help/EGit/User_Guide/Reverting-Changes.html#Replace_with_HEAD" label="Replace with HEAD"></topic>
-			</topic>
-			<topic href="help/EGit/User_Guide/Reverting-Changes.html#Resetting_your_current_HEAD" label="Resetting your current HEAD">
-				<topic href="help/EGit/User_Guide/Reverting-Changes.html#Reset_to_specific_branch_or_tag" label="Reset to specific branch or tag"></topic>
-				<topic href="help/EGit/User_Guide/Reverting-Changes.html#Reset_to_a_specific_commit" label="Reset to a specific commit"></topic>
-				<topic href="help/EGit/User_Guide/Reverting-Changes.html#Revert_all_local_and_staged_changes" label="Revert all local and staged changes"></topic>
-			</topic>
-		</topic>
-		<topic href="help/EGit/User_Guide/Merge.html" label="Merge">
-			<topic href="help/EGit/User_Guide/Merge.html#Merging_a_branch_or_a_tag_into_the_current_branch" label="Merging a branch or a tag into the current branch"></topic>
-		</topic>
-		<topic href="help/EGit/User_Guide/Tags.html" label="Tags">
-			<topic href="help/EGit/User_Guide/Tags.html#Creating_a_Tag" label="Creating a Tag"></topic>
-			<topic href="help/EGit/User_Guide/Tags.html#Replacing_an_Existing_Tag" label="Replacing an Existing Tag"></topic>
-			<topic href="help/EGit/User_Guide/Tags.html#Light-weight_and_Signed_Tags" label="Light-weight and Signed Tags"></topic>
-		</topic>
-		<topic href="help/EGit/User_Guide/Patches.html" label="Patches">
-			<topic href="help/EGit/User_Guide/Patches.html#Creating_Patches" label="Creating Patches">
-				<topic href="help/EGit/User_Guide/Patches.html#Create_a_Patch_from_a_Commit" label="Create a Patch from a Commit"></topic>
-				<topic href="help/EGit/User_Guide/Patches.html#Patch_Wizard" label="Patch Wizard"></topic>
-			</topic>
-			<topic href="help/EGit/User_Guide/Patches.html#Applying_Patches" label="Applying Patches"></topic>
-		</topic>
-		<topic href="help/EGit/User_Guide/Managing-Repositories.html" label="Managing Repositories">
-			<topic href="help/EGit/User_Guide/Managing-Repositories.html#Adding_Repositories_to_the_Git_Repositories_View" label="Adding Repositories to the Git Repositories View">
-				<topic href="help/EGit/User_Guide/Managing-Repositories.html#Cloning_a_Repository_2" label="Cloning a Repository"></topic>
-				<topic href="help/EGit/User_Guide/Managing-Repositories.html#Adding_a_Repository_manually" label="Adding a Repository manually"></topic>
-				<topic href="help/EGit/User_Guide/Managing-Repositories.html#Adding_a_Repository_using_copy_and_paste" label="Adding a Repository using copy and paste"></topic>
-			</topic>
-			<topic href="help/EGit/User_Guide/Managing-Repositories.html#Structure_of_the_Git_Repositories_View" label="Structure of the Git Repositories View"></topic>
-			<topic href="help/EGit/User_Guide/Managing-Repositories.html#Functions_of_the_Git_Repositories_View" label="Functions of the Git Repositories View">
-				<topic href="help/EGit/User_Guide/Managing-Repositories.html#Project_Import" label="Project Import"></topic>
-				<topic href="help/EGit/User_Guide/Managing-Repositories.html#Branch_and_Tag_Support" label="Branch and Tag Support">
-					<topic href="help/EGit/User_Guide/Managing-Repositories.html#Check-out_of_Branches_and_Tags" label="Check-out of Branches and Tags"></topic>
-					<topic href="help/EGit/User_Guide/Managing-Repositories.html#Creation_and_Deletion_of_Branches" label="Creation and Deletion of Branches"></topic>
-					<topic href="help/EGit/User_Guide/Managing-Repositories.html#Determining_the_Checked-out_Branch" label="Determining the Checked-out Branch"></topic>
-					<topic href="help/EGit/User_Guide/Managing-Repositories.html#.22Detached.22_HEAD" label="&quot;Detached&quot; HEAD"></topic>
-				</topic>
-				<topic href="help/EGit/User_Guide/Managing-Repositories.html#Browsing_the_Working_Directory" label="Browsing the Working Directory"></topic>
-				<topic href="help/EGit/User_Guide/Managing-Repositories.html#Repository_Configuration" label="Repository Configuration"></topic>
-				<topic href="help/EGit/User_Guide/Managing-Repositories.html#Remote_Repositories" label="Remote Repositories">
-					<topic href="help/EGit/User_Guide/Managing-Repositories.html#Direct_Fetch_and_Push_Support" label="Direct Fetch and Push Support"></topic>
-					<topic href="help/EGit/User_Guide/Managing-Repositories.html#Adding_a_Remote_Configuration" label="Adding a Remote Configuration"></topic>
-					<topic href="help/EGit/User_Guide/Managing-Repositories.html#Changing_Remote_Configurations" label="Changing Remote Configurations"></topic>
+				<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Example:_Pushing_a_Local_Repository_to_GitHub" label="Example: Pushing a Local Repository to GitHub">
+					<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Create_Local_Repository" label="Create Local Repository"></topic>
+					<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Create_Repository_at_GitHub" label="Create Repository at GitHub"></topic>
+					<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Eclipse_SSH_Configuration" label="Eclipse SSH Configuration"></topic>
+					<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Push_Upstream" label="Push Upstream"></topic>
 				</topic>
 			</topic>
-			<topic href="help/EGit/User_Guide/Managing-Repositories.html#Refresh" label="Refresh"></topic>
-			<topic href="help/EGit/User_Guide/Managing-Repositories.html#Link_with_Selection" label="Link with Selection"></topic>
-			<topic href="help/EGit/User_Guide/Managing-Repositories.html#Bare_Repositories" label="Bare Repositories"></topic>
-			<topic href="help/EGit/User_Guide/Managing-Repositories.html#Removing_Repositories_from_the_Git_Repositories_View" label="Removing Repositories from the Git Repositories View"></topic>
+			<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Fetching_from_other_Repositories" label="Fetching from other Repositories">
+				<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Direct_Fetch" label="Direct Fetch"></topic>
+				<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Fetch_Wizard" label="Fetch Wizard">
+					<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Fetch_Ref_Specifications" label="Fetch Ref Specifications"></topic>
+					<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Fetch_Result_Report" label="Fetch Result Report"></topic>
+				</topic>
+			</topic>
+			<topic href="help//EGit/User_Guide/Working-with-remote-Repositories.html#Pulling_New_Changes_from_Upstream_Repositories" label="Pulling New Changes from Upstream Repositories"></topic>
 		</topic>
-		<topic href="help/EGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html" label="Inspecting the state of the Repository">
+			<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Label_Decorations" label="Label Decorations">
+				<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Text_Decorations" label="Text Decorations"></topic>
+				<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Icon_Decorations" label="Icon Decorations"></topic>
+			</topic>
+			<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#History_View_2" label="History View">
+				<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#History_View_Configuration" label="History View Configuration"></topic>
+			</topic>
+			<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Commit_Dialog" label="Commit Dialog"></topic>
+			<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Comparing_Content" label="Comparing Content">
+				<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Compare_working_tree_with_last_commit" label="Compare working tree with last commit"></topic>
+				<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Comparing_Working_Tree_with_Index" label="Comparing Working Tree with Index"></topic>
+				<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Comparing_Working_Tree_with_Any_Commit" label="Comparing Working Tree with Any Commit"></topic>
+				<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Comparing_Two_Commits_with_Each_Other" label="Comparing Two Commits with Each Other"></topic>
+				<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Comparing_Index_with_HEAD_or_Any_Other_Commit" label="Comparing Index with HEAD or Any Other Commit"></topic>
+			</topic>
+			<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#Quickdiff" label="Quickdiff"></topic>
+			<topic href="help//EGit/User_Guide/Inspecting-the-state-of-the-Repository.html#View_Diff_for_a_Commit" label="View Diff for a Commit"></topic>
+		</topic>
+		<topic href="help//EGit/User_Guide/Committing-Changes.html" label="Committing Changes">
+			<topic href="help//EGit/User_Guide/Committing-Changes.html#Modifying_the_content" label="Modifying the content"></topic>
+			<topic href="help//EGit/User_Guide/Committing-Changes.html#Committing" label="Committing">
+				<topic href="help//EGit/User_Guide/Committing-Changes.html#Commit_Message" label="Commit Message"></topic>
+				<topic href="help//EGit/User_Guide/Committing-Changes.html#Amending_Commits" label="Amending Commits"></topic>
+				<topic href="help//EGit/User_Guide/Committing-Changes.html#Signing_off_commits" label="Signing off commits"></topic>
+			</topic>
+		</topic>
+		<topic href="help//EGit/User_Guide/Reverting-Changes.html" label="Reverting Changes">
+			<topic href="help//EGit/User_Guide/Reverting-Changes.html#Reverting_changes_in_the_working_tree" label="Reverting changes in the working tree">
+				<topic href="help//EGit/User_Guide/Reverting-Changes.html#Replace_with_File_in_Git_Index" label="Replace with File in Git Index"></topic>
+				<topic href="help//EGit/User_Guide/Reverting-Changes.html#Replace_with_HEAD" label="Replace with HEAD"></topic>
+			</topic>
+			<topic href="help//EGit/User_Guide/Reverting-Changes.html#Resetting_your_current_HEAD" label="Resetting your current HEAD">
+				<topic href="help//EGit/User_Guide/Reverting-Changes.html#Reset_to_specific_branch_or_tag" label="Reset to specific branch or tag"></topic>
+				<topic href="help//EGit/User_Guide/Reverting-Changes.html#Reset_to_a_specific_commit" label="Reset to a specific commit"></topic>
+				<topic href="help//EGit/User_Guide/Reverting-Changes.html#Revert_all_local_and_staged_changes" label="Revert all local and staged changes"></topic>
+			</topic>
+		</topic>
+		<topic href="help//EGit/User_Guide/Branching.html" label="Branching">
+			<topic href="help//EGit/User_Guide/Branching.html#Branching_in_the_Repositories_View" label="Branching in the Repositories View"></topic>
+			<topic href="help//EGit/User_Guide/Branching.html#Branching_Dialog" label="Branching Dialog">
+				<topic href="help//EGit/User_Guide/Branching.html#Creating_a_New_Local_Branch" label="Creating a New Local Branch"></topic>
+				<topic href="help//EGit/User_Guide/Branching.html#Renaming_an_Existing_Branch" label="Renaming an Existing Branch"></topic>
+				<topic href="help//EGit/User_Guide/Branching.html#Checking_out_a_Branch" label="Checking out a Branch"></topic>
+			</topic>
+		</topic>
+		<topic href="help//EGit/User_Guide/Merging.html" label="Merging">
+			<topic href="help//EGit/User_Guide/Merging.html#Merging_a_branch_or_a_tag_into_the_current_branch" label="Merging a branch or a tag into the current branch"></topic>
+		</topic>
+		<topic href="help//EGit/User_Guide/Tagging.html" label="Tagging">
+			<topic href="help//EGit/User_Guide/Tagging.html#Creating_a_Tag" label="Creating a Tag"></topic>
+			<topic href="help//EGit/User_Guide/Tagging.html#Replacing_an_Existing_Tag" label="Replacing an Existing Tag"></topic>
+			<topic href="help//EGit/User_Guide/Tagging.html#Light-weight_and_Signed_Tags" label="Light-weight and Signed Tags"></topic>
+		</topic>
+		<topic href="help//EGit/User_Guide/Patches.html" label="Patches">
+			<topic href="help//EGit/User_Guide/Patches.html#Creating_Patches" label="Creating Patches">
+				<topic href="help//EGit/User_Guide/Patches.html#Create_a_Patch_from_a_Commit" label="Create a Patch from a Commit"></topic>
+				<topic href="help//EGit/User_Guide/Patches.html#Patch_Wizard" label="Patch Wizard"></topic>
+			</topic>
+			<topic href="help//EGit/User_Guide/Patches.html#Applying_Patches" label="Applying Patches"></topic>
+		</topic>
+		<topic href="help//EGit/User_Guide/Managing-Repositories.html" label="Managing Repositories">
+			<topic href="help//EGit/User_Guide/Managing-Repositories.html#Adding_Repositories_to_the_Git_Repositories_View" label="Adding Repositories to the Git Repositories View">
+				<topic href="help//EGit/User_Guide/Managing-Repositories.html#Cloning_a_Repository_2" label="Cloning a Repository"></topic>
+				<topic href="help//EGit/User_Guide/Managing-Repositories.html#Adding_a_Repository_manually" label="Adding a Repository manually"></topic>
+				<topic href="help//EGit/User_Guide/Managing-Repositories.html#Adding_a_Repository_using_copy_and_paste" label="Adding a Repository using copy and paste"></topic>
+			</topic>
+			<topic href="help//EGit/User_Guide/Managing-Repositories.html#Structure_of_the_Git_Repositories_View" label="Structure of the Git Repositories View"></topic>
+			<topic href="help//EGit/User_Guide/Managing-Repositories.html#Functions_of_the_Git_Repositories_View" label="Functions of the Git Repositories View">
+				<topic href="help//EGit/User_Guide/Managing-Repositories.html#Project_Import" label="Project Import"></topic>
+				<topic href="help//EGit/User_Guide/Managing-Repositories.html#Branch_and_Tag_Support" label="Branch and Tag Support">
+					<topic href="help//EGit/User_Guide/Managing-Repositories.html#Check-out_of_Branches_and_Tags" label="Check-out of Branches and Tags"></topic>
+					<topic href="help//EGit/User_Guide/Managing-Repositories.html#Creation_and_Deletion_of_Branches" label="Creation and Deletion of Branches"></topic>
+					<topic href="help//EGit/User_Guide/Managing-Repositories.html#Determining_the_Checked-out_Branch" label="Determining the Checked-out Branch"></topic>
+					<topic href="help//EGit/User_Guide/Managing-Repositories.html#.22Detached.22_HEAD" label="&quot;Detached&quot; HEAD"></topic>
+				</topic>
+				<topic href="help//EGit/User_Guide/Managing-Repositories.html#Browsing_the_Working_Directory" label="Browsing the Working Directory"></topic>
+				<topic href="help//EGit/User_Guide/Managing-Repositories.html#Repository_Configuration" label="Repository Configuration"></topic>
+				<topic href="help//EGit/User_Guide/Managing-Repositories.html#Remote_Repositories" label="Remote Repositories">
+					<topic href="help//EGit/User_Guide/Managing-Repositories.html#Direct_Fetch_and_Push_Support" label="Direct Fetch and Push Support"></topic>
+					<topic href="help//EGit/User_Guide/Managing-Repositories.html#Adding_a_Remote_Configuration" label="Adding a Remote Configuration"></topic>
+					<topic href="help//EGit/User_Guide/Managing-Repositories.html#Changing_Remote_Configurations" label="Changing Remote Configurations"></topic>
+				</topic>
+			</topic>
+			<topic href="help//EGit/User_Guide/Managing-Repositories.html#Refresh" label="Refresh"></topic>
+			<topic href="help//EGit/User_Guide/Managing-Repositories.html#Link_with_Selection" label="Link with Selection"></topic>
+			<topic href="help//EGit/User_Guide/Managing-Repositories.html#Bare_Repositories" label="Bare Repositories"></topic>
+			<topic href="help//EGit/User_Guide/Managing-Repositories.html#Removing_Repositories_from_the_Git_Repositories_View" label="Removing Repositories from the Git Repositories View"></topic>
+		</topic>
+		<topic href="help//EGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
-		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
-		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Distributed_Version_Control_Systems" label="Distributed Version Control Systems"></topic>
-		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#How_does_it_work.3F" label="How does it work?"></topic>
-		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Changesets_and_branches" label="Changesets and branches"></topic>
-		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Merging" label="Merging"></topic>
-		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Pulling_and_pushing" label="Pulling and pushing"></topic>
-		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Cloning_and_remotes" label="Cloning and remotes"></topic>
-		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Initialising.2C_committing_and_branching" label="Initialising, committing and branching"></topic>
-		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Worked_example" label="Worked example"></topic>
-		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Rebasing_and_fast-forwarding" label="Rebasing and fast-forwarding"></topic>
-		<topic href="help/EGit/Git_For_Eclipse_Users/Updating-This-Document.html" label="Updating This Document"></topic>
+	<topic href="help//EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
+		<topic href="help//EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
+		<topic href="help//EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Distributed_Version_Control_Systems" label="Distributed Version Control Systems"></topic>
+		<topic href="help//EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#How_does_it_work.3F" label="How does it work?"></topic>
+		<topic href="help//EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Changesets_and_branches" label="Changesets and branches"></topic>
+		<topic href="help//EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Merging" label="Merging"></topic>
+		<topic href="help//EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Pulling_and_pushing" label="Pulling and pushing"></topic>
+		<topic href="help//EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Cloning_and_remotes" label="Cloning and remotes"></topic>
+		<topic href="help//EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Initialising.2C_committing_and_branching" label="Initialising, committing and branching"></topic>
+		<topic href="help//EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Worked_example" label="Worked example"></topic>
+		<topic href="help//EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html#Rebasing_and_fast-forwarding" label="Rebasing and fast-forwarding"></topic>
+		<topic href="help//EGit/Git_For_Eclipse_Users/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 </toc>

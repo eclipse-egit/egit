@@ -31,15 +31,24 @@
 		</table><hr/>
 		<h1 id="Managing_Repositories">Managing Repositories</h1>
 		<p>The "Git Repositories View" is the primary UI element to facilitate working with multiple Repositories simultaneously (i.e. within one Eclipse Workspace).</p>
-		<p>This view can be opened using the menu path</p>
-		<pre>	Windows -&gt; Show View -&gt; Other... -&gt; Git -&gt; Git Repositories
-</pre>
-		<p>It is also part of the "Git Repository Exploring" perspective available using menu path</p>
-		<pre>	Window -&gt; Open Perspective -&gt; Other... -&gt; Git Repository Exploring
-</pre>
-		<p>If you already have projects in your workspace which are shared with a Git Repository, you can use</p>
-		<pre>	&lt;Context menu&gt; -&gt; Show In... -&gt; Git Repositories
-</pre>
+		<p>This view can be opened using the menu path
+
+			<br/>
+
+			<b>Windows &gt; Show View &gt; Other... &gt; Git &gt; Git Repositories</b>
+		</p>
+		<p>It is also part of the "Git Repository Exploring" perspective available using menu path
+
+			<br/>
+
+			<b>Window &gt; Open Perspective &gt; Other... &gt; Git Repository Exploring</b>
+		</p>
+		<p>If you already have projects in your workspace which are shared with a Git Repository, you can use
+
+			<br/>
+
+			<b>Show In... &gt; Git Repositories</b>
+		</p>
 		<p>on any resource to open the view:</p>
 		<p>
 			<img border="0" src="images/RepoMgrShowIn.png"/>
@@ -52,18 +61,29 @@
 			<li>Adding a Repository by pasting a Git Repository path to the view</li>
 		</ol>
 		<h3 id="Cloning_a_Repository_2">Cloning a Repository</h3>
-		<p>In order to clone a Repository, refer to the chapter "Cloning remote Repositories". After a successful clone operation, the newly cloned Repository should appear in the Git Repositories View automatically.</p>
-		<p>You can also use the "Clone a Git Repository" button from the view's toolbar to start the Clone wizard:</p>
+		<p>In order to clone a Repository, refer to 
+			<a href="Starting-from-existing-Git-Repositories.html#Cloning_a_Repository">Cloning remote Repositories</a>. After a successful clone operation, the newly cloned Repository should appear in the Git Repositories View automatically.
+		</p>
+		<p>You can also use the 
+			<b>Clone a Git Repository</b> button from the view's toolbar to start the Clone wizard:
+		</p>
 		<p>
 			<img border="0" src="images/RepoMgrCloneRepositoryIcon.png"/>
 		</p>
-		<p>Please refer to the description in "Cloning remote Repositories" about how to use the wizard.</p>
+		<p>Please refer to 
+			<a href="Starting-from-existing-Git-Repositories.html#Cloning_a_Repository">Cloning remote Repositories</a> about how to use the wizard.
+		</p>
 		<h3 id="Adding_a_Repository_manually">Adding a Repository manually</h3>
-		<p>You can add a Repository from your local file system to the Git Repositories View without cloning it. This can be helpful if you are setting up a new Eclipse workspace and want to re-use your Git Repositories. Use the "Add an existing Git Repository" button from the view's toolbar:</p>
+		<p>You can add a Repository from your local file system to the Git Repositories View without cloning it. This can be helpful if you are setting up a new Eclipse workspace and want to re-use your Git Repositories. Use the 
+			<b>Add an existing Git Repository</b> button from the view's toolbar:
+		</p>
 		<p>
 			<img border="0" src="images/RepoMgrAddRepositoryIcon.png"/>
 		</p>
-		<p>A dialog will appear prompting you for a directory of your local file system. After selecting the correct directory, you can hit the "Search" button to see a list of Git Repositories in this directory. You can then select some or all found Repositories and add them to the view using "Ok":</p>
+		<p>A dialog will appear prompting you for a directory of your local file system. After selecting the correct directory, you can hit the 
+			<b>Search</b> button to see a list of Git Repositories in this directory. You can then select some or all found Repositories and add them to the view using 
+			<b>OK</b>:
+		</p>
 		<p>
 			<img border="0" src="images/RepoMgrSearchDialog.png"/>
 		</p>
@@ -72,7 +92,9 @@
 		<p>
 			<img border="0" src="images/RepoMgrPasteRepositoryPath.png"/>
 		</p>
-		<p>or simply perform Edit-&gt;Paste from the main menu (or the corresponding keyboard shortcut). If the clipboard content is not suitable, an error popup will be displayed, otherwise the added Repository should appear automatically.</p>
+		<p>or simply perform 
+			<b>Edit &gt; Paste</b> from the main menu (or the corresponding keyboard shortcut). If the clipboard content is not suitable, an error popup will be displayed, otherwise the added Repository should appear automatically.
+		</p>
 		<p>After the view has been populated with some Repositories, it should look like this:</p>
 		<p>
 			<img border="0" src="images/RepoMgrViewWithRepos.png"/>
@@ -92,11 +114,14 @@
 		<p>
 			<img border="0" src="images/RepoMgrImportNodes.png"/>
 		</p>
-		<p>The rationale for offering the "Import Projects..." action on several nodes  is that some of the wizards used for importing projects can take the file system directory into account, for example the "Import Existing Projects" wizard. If the import is started from the "Repository" or the "Working Directory" node, the working directory of the repository is set as context, otherwise the directory corresponding to the currently selected "Folder" node.</p>
+		<p>The rationale for offering the 
+			<b>Import Projects...</b> action on several nodes  is that some of the wizards used for importing projects can take the file system directory into account, for example the 
+			<b>Import Existing Projects</b> wizard. If the import is started from the "Repository" or the "Working Directory" node, the working directory of the repository is set as context, otherwise the directory corresponding to the currently selected "Folder" node.
+		</p>
 		<p>The details of project import are discussed elsewhere.</p>
 		<h3 id="Branch_and_Tag_Support">Branch and Tag Support</h3>
 		<p>The "Branches" node allows to create, browse, checkout and delete local and remote branches. The "Tags" node allows for browsing and checking out of tags.
-			For better readability, branches are organized in two sub-nodes for local and remote branches, respectively, and only the shortened names are displayed, e.g. instead of "refs/heads/master" you would find an entry "master" under the "Local Branches" node, instead of "refs/remotes/origin/master" the shortened name "origin/master" is displayed under the "Remote Branches" node. Similarly, tag names are shortened by omitting the "refs/tags/" prefix:</p>
+			For better readability, branches are organized in two sub-nodes for local and remote branches, respectively, and only the shortened names are displayed, e.g. instead of <tt>"refs/heads/master"</tt> you would find an entry <tt>"master"</tt> under the "Local Branches" node, instead of <tt>"refs/remotes/origin/master"</tt> the shortened name <tt>"origin/master"</tt> is displayed under the "Remote Branches" node. Similarly, tag names are shortened by omitting the <tt>"refs/tags/"</tt> prefix:</p>
 		<p>
 			<img border="0" src="images/RepoMgrBranchesAndTags.png"/>
 		</p>
@@ -121,14 +146,21 @@
 		<p>
 			<img border="0" src="images/RepoMgrOpenTextEditor.png"/>
 		</p>
-		<p>Also, on all file and folder nodes as well as on the "Repository" node, an option is offered to copy the (file-system specific) path to the clipboard. This is sometimes useful when the path is needed, for example to open a directory using a file browser or to copy and paste Repositories between view instances (see above about how to add Repositories to the view). The "Copy to Clipboard" action is also available using Edit-&gt;Copy (or the corresponding keyboard shortcut).</p>
+		<p>Also, on all file and folder nodes as well as on the "Repository" node, an option is offered to copy the (file-system specific) path to the clipboard. This is sometimes useful when the path is needed, for example to open a directory using a file browser or to copy and paste Repositories between view instances (see above about how to add Repositories to the view). The 
+			<b>Copy to Clipboard</b> action is also available using 
+			<b>Edit &gt; Copy</b> (or the corresponding keyboard shortcut).
+		</p>
 		<h3 id="Repository_Configuration">Repository Configuration</h3>
-		<p>Integration with the generic "Properties" view in Eclipse allows to view and edit the Git Configuration (global and repository-specific configuration). If the "Properties" view is open, it is updated automatically when a "Repository" node is selected. For convenience, an "Open Properties view" action is provided in the context menu:</p>
+		<p>Integration with the generic "Properties" view in Eclipse allows to view and edit the Git Configuration (global and repository-specific configuration). If the "Properties" view is open, it is updated automatically when a "Repository" node is selected. For convenience, an 
+			<b>Open Properties view</b> action is provided in the context menu:
+		</p>
 		<p>
 			<img border="0" src="images/RepoMgrPropertiesView.png"/>
 		</p>
 		<h3 id="Remote_Repositories">Remote Repositories</h3>
-		<p>The "Remotes" node allows for browsing and editing Remote configurations. Each Remote configuration has a name and either a Push Specification, a Fetch Specification, or both. If a "Remote Configuration" node or any of its children is selected, the "Properties" view will show a summary of the Remote configuration. In this example: there is a Remote configuration named "origin" which only has a Fetch Specification, but no Push Specification:</p>
+		<p>The "Remotes" node allows for browsing and editing Remote configurations. Each Remote configuration has a name and either a Push Specification, a Fetch Specification, or both. If a "Remote Configuration" node or any of its children is selected, the 
+			<b>Properties</b> view will show a summary of the Remote configuration. In this example: there is a Remote configuration named "origin" which only has a Fetch Specification, but no Push Specification:
+		</p>
 		<p>
 			<img border="0" src="images/RepoMgrRemoteConfig.png"/>
 		</p>
@@ -151,12 +183,16 @@
 		<h4 id="Changing_Remote_Configurations">Changing Remote Configurations</h4>
 		<p>It is also possible to add, remove, or change Fetch/Push Specifications for an existing Remote configuration using the context menu.</p>
 		<h2 id="Refresh">Refresh</h2>
-		<p>The view is auto-refreshed periodically. The "Refresh" button in the toolbar allows to trigger an immediate refresh:</p>
+		<p>The view is auto-refreshed periodically. The 
+			<b>Refresh</b> button in the toolbar allows to trigger an immediate refresh:
+		</p>
 		<p>
 			<img border="0" src="images/RepoMgrRefresh.png"/>
 		</p>
 		<h2 id="Link_with_Selection">Link with Selection</h2>
-		<p>If the "Link with selection" toggle is enabled, the file or folder corresponding to the current workbench selection will be displayed automatically:</p>
+		<p>If the 
+			<b>Link with selection</b> toggle is enabled, the file or folder corresponding to the current workbench selection will be displayed automatically:
+		</p>
 		<p>
 			<img border="0" src="images/RepoMgrLinkWithSelection.png"/>
 		</p>

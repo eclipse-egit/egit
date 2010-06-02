@@ -32,10 +32,14 @@
 		<h1 id="Starting_from_existing_Git_Repositories">Starting from existing Git Repositories</h1>
 		<p>In order to work with the contents of a Git Repository in the Eclipse workbench, the files and folders contained in this repository must be imported in the form of projects. In principle, this import step can be done using the generic "New Project" or "Import..." wizards, since the working directory of a Git Repository is just a normal directory in the local file system. However, the newly created projects would still have to be shared manually with Git. The "Import Projects from Git" wizards integrates project import and sharing and also offers some extra convenience.</p>
 		<h2 id="Starting_the_import_wizard">Starting the import wizard</h2>
-		<p>The wizard is started using</p>
-		<pre>Import -&gt; Git -&gt; Projects from GIT
-</pre>
-		<p>
+		<p>The wizard is started using
+
+			<br/>
+
+			<b>Import &gt; Git &gt; Projects from Git</b>
+
+			<br/>
+
 			<img border="0" src="images/ImportProjectWizard.png"/>
 		</p>
 		<p>If you started in a clean workspace, the first page will display an empty list:</p>
@@ -51,18 +55,25 @@
 			<li>Add an existing Repository from your local file system</li>
 		</ol>
 		<h3 id="Cloning_a_Repository">Cloning a Repository</h3>
-		<p>The  first option is used if you start with a remote repository. The clone operation will copy that Repository to your local file system. The Clone wizard is started using the "Clone..." button next to the Repository list. The Clone wizard is described in more detail elsewhere. Upon successful completion of the clone wizard, the newly cloned Repository should appear in the list automatically.</p>
+		<p>The  first option is used if you start with a remote repository. The clone operation will copy that Repository to your local file system. The Clone wizard is started using the 
+			<b>Clone...</b> button next to the Repository list. The Clone wizard is described in more detail elsewhere. Upon successful completion of the clone wizard, the newly cloned Repository should appear in the list automatically.
+		</p>
 		<h3 id="Adding_a_Repository">Adding a Repository</h3>
-		<p>The second option is useful if you already have a Repository in your local file system, for example because you have cloned it earlier, you created it from scratch or you copied it from somewhere else. Clicking on the "Add..." button next to the Repository list, a dialog is displayed which allows to enter a directory in the local file system. Press "Search" to trigger a scan for Git Repositories contained in this directory. If Git Repositories are found, they will be shown in a list and you can select Repositories to add:</p>
+		<p>The second option is useful if you already have a repository in your local file system, for example because you have cloned it earlier, you created it from scratch or you copied it from somewhere else. Clicking on the 
+			<b>Add...</b> button next to the Repository list, a dialog is displayed which allows to enter a directory in the local file system. Press 
+			<b>Search</b> to trigger a scan for Git repositories contained in this directory. If Git repositories are found, they will be shown in a list and you can select repositories to add:
+		</p>
 		<p>
 			<img border="0" src="images/ImportProjectAddDialog.png"/>
 		</p>
-		<p>After successful completion, the Repository list should contain some Repositories:</p>
+		<p>After successful completion, the repository list should contain some repositories:</p>
 		<p>
 			<img border="0" src="images/ImportProjectFilledList.png"/>
 		</p>
-		<h2 id="Selecting_a_Repository_from_the_list">Selecting a Repository from the list</h2>
-		<p>You can now select a Repository and hit "Next". On the following wizard page, you will have to decide:</p>
+		<h2 id="Selecting_a_Repository_from_the_List">Selecting a Repository from the List</h2>
+		<p>You can now select a Repository and click 
+			<b>Next</b>. On the following wizard page, you will have to decide:
+		</p>
 		<ul>
 			<li>How to do the import</li>
 			<li>How to share the imported projects:</li>
@@ -73,34 +84,38 @@
 		</p>
 		<h2 id="Method_for_importing_Projects">Method for importing Projects</h2>
 		<h3 id="Import_Existing_Projects">Import Existing Projects</h3>
-		<p>If this radio button is selected, the wizard will scan the local file system for .project files and display the projects found for being imported. This is the most comfortable solution and should be used if .project files are checked into the Repository.</p>
-		<h4 id="Limiting_the_scope_for_project_import">Limiting the scope for project import</h4>
-		<p>In this case, the directory tree at the bottom is active. You can limit the search for .project files by selecting a folder in this tree, otherwise the complete working directory of the Repository will be scanned. On the next page, a list of the found projects (if any) will be shown. This is very similar to the generic "Import Existing Projects"  wizard, but has some additional filtering capabilities:</p>
+		<p>If this radio button is selected, the wizard will scan the local file system for <tt>.project</tt> files and display the projects found for being imported. This is the most comfortable solution and should be used if <tt>.project</tt> files are checked into the Repository.</p>
+		<h4 id="Limiting_the_Scope_for_Project_Import">Limiting the Scope for Project Import</h4>
+		<p>In this case, the directory tree at the bottom is active. You can limit the search for <tt>.project</tt> files by selecting a folder in this tree, otherwise the complete working directory of the Repository will be scanned. On the next page, a list of the found projects (if any) will be shown. This is very similar to the generic 
+			<b>Import Existing Projects</b> wizard, but has some additional filtering capabilities:
+		</p>
 		<p>
 			<img border="0" src="images/ImportProjectProjectList.png"/>
 		</p>
-		<h3 id="Use_the_New_Projects_wizard">Use the New Projects wizard</h3>
+		<h3 id="Use_the_New_Projects_Wizard">Use the New Projects Wizard</h3>
 		<p>When this option is chosen, this wizard branches to the generic "New Project" wizard. After completion of the "New Project" wizard, this wizard will resume and help you with sharing the newly created projects (if any) created using the "New Project" wizard.</p>
 		<p>In this case, the directory tree at the bottom is inactive, as the selection is not relevant for the "New Project" wizard.</p>
 		<h3 id="Import_as_General_Project">Import as General Project</h3>
-		<p>This option can be helpful when there are neither .project files available nor a suitable "New Project" wizard applies to the content of the Git Repository. If chosen, the wizard will generate a .project file and point the project to a folder of the Repository's working directory. The result is a "General Project".</p>
+		<p>This option can be helpful when there are neither <tt>.project</tt> files available nor a suitable "New Project" wizard applies to the content of the Git Repository. If chosen, the wizard will generate a <tt>.project</tt> file and point the project to a folder of the Repository's working directory. The result is a "General Project".</p>
 		<p>By default, the newly generated project will point to the working directory of the Repository. By selecting some folder from the directory tree at the bottom, you can have the project generated for that folder.</p>
-		<p>When clicking "Next" you will see a simple dialog suggesting a name and a directory for the new project:</p>
+		<p>When clicking 
+			<b>Next</b> you will see a simple dialog suggesting a name and a directory for the new project:
+		</p>
 		<p>
 			<img border="0" src="images/ImportProjectNewGeneralProject.png"/>
 		</p>
-		<p>The name will be suggested to be the same as the name of the directory. </p>
-		<h2 id="Method_for_sharing_imported_Projects">Method for sharing imported Projects</h2>
+		<p>The name will be suggested to be the same as the name of the directory.</p>
+		<h2 id="Method_for_Sharing_Imported_Projects">Method for Sharing Imported Projects</h2>
 		<p>The newly created projects (if any) must be shared with the correct Git Repository in order to become part of the Git Team Provider. The following options for doing this share are provided:</p>
-		<h3 id="Try_to_share_newly_created_projects_automatically">Try to share newly created projects automatically</h3>
+		<h3 id="Try_to_Share_Newly_Created_Projects_Automatically">Try to Share Newly Created Projects Automatically</h3>
 		<p>This is the recommended option: the wizard will automatically detect newly created projects and find the corresponding Repository automatically. No user interaction is required. If automatic sharing fails, the projects will simply remain unshared. You can share them any time manually.</p>
-		<h3 id="Share_new_projects_interactively">Share new projects interactively</h3>
+		<h3 id="Share_New_Projects_Interactively">Share New Projects Interactively</h3>
 		<p>This might be useful for very special circumstances where the automatic detection fails. Note that this will block the UI until project import is completed.</p>
 		<p>A page will be shown with the newly created projects and the corresponding Repositories. Using the check boxes, you can decide which projects to share:</p>
 		<p>
 			<img border="0" src="images/ImportProjectShareProject.png"/>
 		</p>
-		<h3 id="Do_not_share_new_projects">Do not share new projects</h3>
+		<h3 id="Do_Not_Share_New_Projects">Do Not Share New Projects</h3>
 		<p>This may be helpful if you want to share projects manually for some reason.</p><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
