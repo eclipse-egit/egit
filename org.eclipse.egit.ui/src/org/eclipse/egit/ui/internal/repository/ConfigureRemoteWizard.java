@@ -28,7 +28,7 @@ import org.eclipse.osgi.util.NLS;
 /**
  *
  */
-class ConfigureRemoteWizard extends Wizard {
+public class ConfigureRemoteWizard extends Wizard {
 
 	final RepositoryConfig myConfiguration;
 
