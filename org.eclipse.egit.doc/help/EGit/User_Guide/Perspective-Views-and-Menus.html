@@ -30,39 +30,86 @@
 			</tr>
 		</table><hr/>
 		<h1 id="Perspective.2C_Views_and_Menus">Perspective, Views and Menus</h1>
+		<h2 id="Git_Perspective">Git Perspective</h2>
 		<p>
-			<b>Git Perspective</b>
-
-			<br/>"Window" -&gt; "Open Perspective" -&gt; "Git Repository Exploring" opens the Git Repository Exploring perspective
+			<b>Window &gt; Open Perspective &gt; Git Repository Exploring</b> opens the Git Repository Exploring perspective
 		</p>
+		<h2 id="Git_Repositories_View">Git Repositories View</h2>
 		<p>
-			<b>Git Repositories View</b>
-
-			<br/>"Window" -&gt; "Open View" -&gt; "Git" -&gt; "Git Repositories" opens the Git Repositories view which is explained in detail 
+			<b>Window &gt; Open View &gt; Git &gt; Git Repositories</b> opens the Git Repositories view which is explained in detail 
 			<a href="Managing-Repositories.html#Managing_Repositories">here</a>.
 		</p>
+		<h2 id="History_View">History View</h2>
 		<p>
-			<b>History View</b>
-
-			<br/>"Show In" -&gt; "History View" on the context menu of resources under git version control navigates to the 
-			<a href="Inspecting-the-state-of-the-Repository.html#History_View">History View</a>.
+			<b>Show In &gt; History View</b> on the context menu of resources under git version control navigates to the 
+			<a href="Perspective-Views-and-Menus.html#History_View">History View</a>.
 		</p>
-		<p>
-			<b>Project Context Menu</b>
-
-			<br/> On project nodes in navigation views (Navigator, Package Explorer etc.) the following Git actions are available:
+		<h2 id="Project_Context_Menu">Project Context Menu</h2>
+		<p>On project nodes in navigation views (Navigator, Package Explorer etc.) the following Git actions are available for projects shared with the Git team provider:
 
 			<br/> 
 			<img border="0" src="images/Egit-0.8-context-menu-project.png"/>
 		</p>
-		<p>
-			<b>Resource Context Menu</b>
-
-			<br/> On resource nodes (files and folders) in navigation views the following Git actions are available:
+		<h2 id="Resource_Context_Menu">Resource Context Menu</h2>
+		<p>On resource nodes (files and folders) in navigation views the following Git actions are available for projects shared with the Git team provider:
 
 			<br/> 
 			<img border="0" src="images/Egit-0.8-context-menu-resource.png"/>
-		</p><hr/>
+		</p>
+		<h2 id="Menu_Actions">Menu Actions</h2>
+		<ul>
+			<li>
+				<a href="Committing-Changes.html#Committing_Changes">Commit...</a>
+			</li>
+			<li>
+				<a href="Working-with-remote-Repositories.html#Pushing_to_other_Repositories">Push...</a>
+			</li>
+			<li>
+				<a href="Branching.html#Branching">Branch...</a>
+			</li>
+			<li>
+				<a href="Merging.html#Merging">Merge...</a>
+			</li>
+			<li>
+				<a href="Tagging.html#Tagging">Tag...</a>
+			</li>
+			<li>
+				<a href="Reverting-Changes.html#Resetting_your_current_HEAD">Reset...</a>
+			</li>
+			<li>
+				<b>Refresh</b>: Updates the Git index for the selected resources. Only tracked resources are updated. This will update the index timestamps with the file timestamps. See 
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=315306" target="egit_external">bug 315306</a>.
+			</li>
+			<li>
+				<a href="Patches.html#Applying_Patches">Apply Patch...</a>
+			</li>
+			<li>
+				<a href="Working-with-remote-Repositories.html#Fetching_from_other_Repositories">Fetch...</a>
+			</li>
+			<li>
+				<b>Ignore</b>: action to add files to .gitignore. 
+				<b>Note:</b> EGit does not yet respect ignore settings stored in <tt>.gitignore</tt> files.
+			</li>
+			<li>
+				<b>Add</b>: adds changes present in the working tree to the git index, also known as staging changes. See 
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=315306" target="egit_external">bug 315306</a>.
+			</li>
+			<li>
+				<b>Assume unchanged</b>: Resources can be flagged "assume unchanged". This means that Git stops checking the working tree files for possible modifications, so you need to manually unset the bit to tell Git when you change the working tree file. This setting can be switched on with the menu action 
+				<b>Team &gt; Assume unchanged</b> (or on the command line with <tt>git update-index --assume-unchanged</tt>). Currently it can only be switched back on the command line with <tt>git update-index --no-assume-unchanged</tt>.
+			</li>
+			<li>
+				<b>Untrack</b>: Removes resources from git version control. If you want to delete the resource from the working tree click also 
+				<b>Delete</b> in the resource's context menu.
+			</li>
+			<li>
+				<b>Track</b>: puts newly created resources under git version control. Git does not automatically start tracking resources. See 
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=315306" target="egit_external">bug 315306</a>.
+			</li>
+			<li>
+				<b>Disconnect</b>: Disconnects the attached git team provider from this project.
+			</li>
+		</ul><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left">

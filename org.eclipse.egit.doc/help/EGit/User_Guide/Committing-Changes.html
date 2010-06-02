@@ -32,7 +32,10 @@
 		<h1 id="Committing_Changes">Committing Changes</h1>
 		<p>Modifications to a project which is version-controlled with Git are persistently recorded in the history through commits. In Git you modify your project until you have reached a state you are satisfied with and then you commit all these changes together to the repository in one single commit. </p>
 		<h2 id="Modifying_the_content">Modifying the content</h2>
-		<p>If you have a project which is already shared with Git then doing the actual modifications is easy: just modify or delete files either within Eclipse or even directly on the file-system. There is no need to "check-out" files or to tell Git in advance about these operations. Only when adding new files you should be cautious: new files which should be version-controlled have to be explicitly put under Git version control using the file's "Track" context-menu entry or immediately before a commit in the Commit dialog you may display untracked files by checking the "Show untracked Files" checkbox and select them for inclusion in the commit. </p>
+		<p>If you have a project which is already shared with Git then doing the actual modifications is easy: just modify or delete files either within Eclipse or even directly on the file-system. There is no need to "check-out" files or to tell Git in advance about these operations. Only when adding new files you should be cautious: new files which should be version-controlled have to be explicitly put under Git version control using the file's 
+			<b>Track</b> menu action or immediately before a commit in the Commit dialog you may display untracked files by checking the 
+			<b>Show untracked Files</b> checkbox and select them for inclusion in the commit. 
+		</p>
 		<p>
 			<img border="0" src="images/EGit-AddFile.png"/> 
 		</p>
@@ -44,7 +47,9 @@
 			<img border="0" src="images/EGit-AddedAndModifiedFiles.png"/>
 		</p>
 		<h2 id="Committing">Committing</h2>
-		<p>When you are satisfied with the state of the project you may commit your changes. To do that select "Team -&gt; Commit..." from the context menu of a project or a file in the project. </p>
+		<p>When you are satisfied with the state of the project you may commit your changes. To do that select 
+			<b>Team &gt; Commit...</b> from the context menu of a project or a file in the project. 
+		</p>
 		<p>
 			<img border="0" src="images/EGit-Commit.png"/> 
 		</p>
@@ -53,9 +58,8 @@
 		<p>
 			<img border="0" src="images/EGit-CommitDialog2.png"/> 
 		</p>
+		<h3 id="Commit_Message">Commit Message</h3>
 		<p>
-			<b>Commit Message</b> 
-
 			<br/>In this dialog you specifiy the commit message describing the change. 
 		</p>
 		<p>It is good practice to start the message with a short first line summarizing the change followed by a blank line and then the message body. In order to ensure that also git command line tools can format these messages nicely the lines shouldn't be formatted too wide.
@@ -76,7 +80,9 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>
 			<b>One example:</b> Imagine since the last commit you have fixed a bug in A.java and you have added a new method to B.java. These two modifications are logically independent from each other hence you may want to commit them in two independant commits. In this case you initate the commit, deselect B.java from the set of committed files and specify a commit message describing only the bugfix in A.java. After a succesfull first commit you just call commit again and the upcoming dialog will present you the remaining changes in B.java. Now you specify a commit message describing the addition of the method and finish the second commit. 
 		</p>
-		<p>New files you added to the project which have not been explicitly added to version control (see "Modifying the content") will be listed in the commit dialog if you select the checkbox "Show untracked Files". If you select the checkbox in front of these files in the list they will be added to the repository and committed once you press the commit button. Files which are excluded by the team ignore list or which are derived (e.g. the bin folder in java projects) will not be shown here. If you have no other changes in your repository than such untracked files the checkbox "Show untracked Files" is selected by default.</p>
+		<p>New files you added to the project which have not been explicitly added to version control (see "Modifying the content") will be listed in the commit dialog if you select the checkbox "Show untracked Files". If you select the checkbox in front of these files in the list they will be added to the repository and committed once you press the commit button. Files which are excluded by the team ignore list or which are derived (e.g. the bin folder in java projects) will not be shown here. If you have no other changes in your repository than such untracked files the checkbox 
+			<b>Show untracked Files</b> is selected by default.
+		</p>
 		<h3 id="Amending_Commits">Amending Commits</h3>
 		<p>When you commit you may specify that the current commit should "amend" the previous commit in the current branch. Your commit will then replace the previous commit. This feature is often use to correct wrong commits before they are published to other repositories. </p>
 		<p>Example: Imagine you have committed a change to a file containing a typo </p>
@@ -87,7 +93,9 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>
 			<img border="0" src="images/EGit-Corrected.png"/> 
 		</p>
-		<p>Afterwards you trigger the commit and select the option "Amend previous commit". </p>
+		<p>Afterwards you trigger the commit and select the option 
+			<b>Amend previous commit</b>. 
+		</p>
 		<p>
 			<img border="0" src="images/EGit-AmendBringsOldCommitMessage.png"/> 
 		</p>
@@ -95,7 +103,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>As an alternative to amending you could just commit the corrected version as a subsequent commit. But the first commit containing the typo is of no use to anybody else and in order not to clutter the history of your project with unneeded commits you may decide to use the amend feature. </p>
 		<p>Be aware that amending commits which are already published to other repositories may cause trouble. Once you have pushed a commit to a remote repository or your local repository was cloned by somebody else you should be very careful whith amending commits. In this case publishing a second commit which corrects the first one is probably a better solution. </p>
 		<h3 id="Signing_off_commits">Signing off commits</h3>
-		<p>Git gives you the chance to "sign off" commits. This adds a "Signed-off-by: &lt;Your Name and Email-Adress&gt;" footer to the commit message. The purpose of this signed-off-by information is not defined by Git but by the team using Git. Some teams use this information to record who has reviewed a certain commit. Other teams use the signed-off information to record that a commiter agreed to certain standards/rules. E.g. you may have to sign-off your own commits to state that you have read and understood the license-specific rules of your project.</p><hr/>
+		<p>Git gives you the chance to "sign off" commits. This adds a <tt>Signed-off-by: &lt;Your Name and Email-Adress&gt;</tt> footer to the commit message. The purpose of this signed-off-by information is not defined by Git but by the team using Git. Some teams use this information to record who has reviewed a certain commit. Other teams use the signed-off information to record that a commiter agreed to certain standards/rules. E.g. you may have to sign-off your own commits to state that you have read and understood the license-specific rules of your project.</p><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left">
