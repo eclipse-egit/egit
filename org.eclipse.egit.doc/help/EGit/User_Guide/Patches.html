@@ -12,7 +12,7 @@
 			</tr>
 			<tr>
 				<td style="width: 20%" align="left">
-					<a href="Tags.html" title="Tags">
+					<a href="Tagging.html" title="Tagging">
 						<img alt="Previous" border="0" src="../../images/prev.gif"/>
 					</a>
 				</td>
@@ -24,7 +24,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="width: 20%" align="left" valign="top">Tags</td>
+				<td style="width: 20%" align="left" valign="top">Tagging</td>
 				<td style="width: 60%" align="center"></td>
 				<td style="width: 20%" align="right" valign="top">Managing Repositories</td>
 			</tr>
@@ -32,7 +32,11 @@
 		<h1 id="Patches">Patches</h1>
 		<h2 id="Creating_Patches">Creating Patches</h2>
 		<p>"A patch is a piece of software designed to fix problems with, or update a computer program or its supporting data" (wikipedia). A patch file contains a description of changes of a set of resources which can be automatically applied to another eclipse workspace or git repository.</p>
-		<p>The patch formats used by eclipse (Team &gt; Apply Patch) and by git (git apply or git am on the command line) are different. It is possible to create both types of a patch in EGit.</p>
+		<p>The patch formats used by eclipse (
+			<b>Team &gt; Apply Patch</b>) and by git (<tt>
+			<b>git apply</b></tt> or <tt>
+			<b>git am</b></tt> on the command line) are different. It is possible to create both types of a patch in EGit.
+		</p>
 		<h3 id="Create_a_Patch_from_a_Commit">Create a Patch from a Commit</h3>
 		<p>This is the most common use case for a distributed versioning system. A developer commits a change on a local feature or bugfix branch and wants to export this change into a patch file.</p>
 		<p>It can be done from the history view:</p>
@@ -47,17 +51,26 @@
 		</p>
 		<p>The name of the patch file is created from the first line of the commit message.</p>
 		<p>On the second page you can change the patch format. </p>
-		<p>Currently there is one check box: "Export in git patch format". </p>
+		<p>Currently there is one check box: 
+			<b>Export in git patch format</b>. 
+		</p>
 		<ul>
-			<li>If you do not check it (this is the default) the patch can be applied with the eclipse "Apply Patch... " wizard. The paths are relative to the eclipse projects and do not contain prefixes (like "git format-patch --no-prefix" on the git command line).</li>
-			<li>If you check it the patch will look like the result of "git format-patch --no-stat" on the git command line. </li>
+			<li>If you do not check it (this is the default) the patch can be applied with the eclipse 
+				<b>Apply Patch...</b> wizard. The paths are relative to the eclipse projects and do not contain prefixes (like <tt>
+				<b>git format-patch --no-prefix</b></tt> on the git command line).
+			</li>
+			<li>If you check it the patch will look like the result of <tt>
+				<b>git format-patch --no-stat</b></tt> on the git command line.
+			</li>
 		</ul>
 		<h2 id="Applying_Patches">Applying Patches</h2>
-		<p>Currently it s not possible to apply patches in git format. It is possible to apply patches using the standard eclipse format using Team &gt; Apply Patch...</p><hr/>
+		<p>Currently it s not possible to apply patches in git format. It is possible to apply patches using the standard eclipse format using 
+			<b>Team &gt; Apply Patch...</b>.
+		</p><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left">
-					<a href="Tags.html" title="Tags">
+					<a href="Tagging.html" title="Tagging">
 						<img alt="Previous" border="0" src="../../images/prev.gif"/>
 					</a>
 				</td>
@@ -73,7 +86,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="width: 20%" align="left" valign="top">Tags</td>
+				<td style="width: 20%" align="left" valign="top">Tagging</td>
 				<td style="width: 60%" align="center"></td>
 				<td style="width: 20%" align="right" valign="top">Managing Repositories</td>
 			</tr>
