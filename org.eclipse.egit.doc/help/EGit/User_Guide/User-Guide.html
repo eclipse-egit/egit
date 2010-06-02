@@ -25,19 +25,27 @@
 				<td style="width: 20%" align="right" valign="top">Perspective, Views and Menus</td>
 			</tr>
 		</table><hr/>
-		<h1 id="Getting_Started_-_Adding_a_project_to_version_control">Getting Started - Adding a project to version control</h1>
+		<h1 id="Getting_Started">Getting Started</h1>
+		<h2 id="Overview">Overview</h2>
 		<p>If you're new to Git or distributed version control systems generally, then you might want to read 
-			<a href="../../\EGit\Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" title="EGit/Git For Eclipse Users">Git for Eclipse Users</a> first. 
+			<a href="../../\EGit\Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" title="EGit/Git For Eclipse Users">Git for Eclipse Users</a> first. If you need more details and background read the 
+			<a href="http://book.git-scm.com" target="egit_external">Git Community Book</a>.
 		</p>
+		<h2 id="Adding_a_project_to_version_control">Adding a project to version control</h2>
 		<p>Create a new Java project "HelloWorld" </p>
 		<p>
 			<img border="0" src="images/01-CreateNewJavaProject.png"/> 
 		</p>
-		<p>Select "File" -&gt; "Team" -&gt; "Share Project" </p>
+		<p>Select 
+			<b>File &gt; Team &gt; Share Project</b> 
+		</p>
 		<p>
 			<img border="0" src="images/02-TeamShareProject.png"/> 
 		</p>
-		<p>Select repository type "Git" and click "Next" </p>
+		<p>Select repository type 
+			<b>Git</b> and click 
+			<b>Next</b>
+		</p>
 		<p>
 			<img border="0" src="images/03-SelectRepositoryTypeGit.png"/> 
 		</p>
@@ -45,33 +53,44 @@
 		<p>
 			<img border="0" src="images/04-SelectProjectToConfigureGitRepository.png"/> 
 		</p>
-		<p>Click "Create" to initialize a new Git repository for the HelloWorld project. If your project already resides in the working tree of an exisiting GIT repository the repository is chosen automatically. </p>
+		<p>Click 
+			<b>Create</b> to initialize a new Git repository for the HelloWorld project. If your project already resides in the working tree of an exisiting Git repository the repository is chosen automatically. 
+		</p>
 		<p>
 			<img border="0" src="images/05-CreateNewGitRepository.png"/> 
 		</p>
-		<p>Click "Finish" to close the wizard. </p>
-		<p>The decorator text "
-			<a href="master">master</a>" behind the project shows that this project is tracked in a repository on the master branch and the question mark decorators show that the ".classpath" and ".project" files are not yet under version control 
+		<p>Click 
+			<b>Finish</b> to close the wizard. 
 		</p>
+		<p>The decorator text "&#91;master&#93;" behind the project shows that this project is tracked in a repository on the master branch and the question mark decorators show that the ".classpath" and ".project" files are not yet under version control </p>
 		<p>
 			<img border="0" src="images/06-NewGitRepository.png"/> 
 		</p>
-		<p>Select "Team" -&gt; "Add to version control" on the project node </p>
+		<p>Select 
+			<b>Team &gt; Track</b> on the project node 
+		</p>
 		<p>
 			<img border="0" src="images/07-AddToVersionControl.png"/> 
 		</p>
 		<p>The plus decorators show that now the ".classpath" and ".project" files are added to version control </p>
 		<p>Create a file .gitignore in the project folder with the following content: </p>
 		<p>bin </p>
-		<p>This excludes the bin folder from GIT's list of untracked files. Add .gitignore to version control. </p>
+		<p>This excludes the bin folder from Git's list of untracked files. Add .gitignore to version control. </p>
 		<p>
 			<img border="0" src="images/08-AddedToVersionControl.png"/> 
 		</p>
-		<p>The file under ".settings" is not added to version control since it is by default on the list of ignored resources which can be changed in "Preferences" -&gt; "Team" -&gt; "Ignored Resources" </p>
+		<p>The file under ".settings" is not added to version control since it is by default on the list of ignored resources which can be changed in 
+
+			<br/>
+
+			<b>Preferences &gt; Team &gt; Ignored Resources</b>
+		</p>
 		<p>
 			<img border="0" src="images/09-IgnoredResources.png"/> 
 		</p>
-		<p>Select "Team" -&gt; "Commit" from the context menu on the project </p>
+		<p>Click 
+			<b>Team &gt; Commit</b> in the project context menu
+		</p>
 		<p>
 			<img border="0" src="images/10-ClickCommit.png"/> 
 		</p>
@@ -83,7 +102,9 @@
 		<p>
 			<img border="0" src="images/12-CommittedFiles.png"/> 
 		</p>
-		<p>Select "Team" -&gt; "Show in Resource History" from the context menu to inspect the history of a resource </p>
+		<p>Select 
+			<b>Show In &gt; History</b> from the context menu to inspect the history of a resource 
+		</p>
 		<p>
 			<img border="0" src="images/13-SelectResourceHistory.png"/> 
 		</p>

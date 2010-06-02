@@ -18,7 +18,7 @@
 				</td>
 				<td style="width: 60%" align="center"></td>
 				<td style="width: 20%" align="right">
-					<a href="Merge.html" title="Merge">
+					<a href="Branching.html" title="Branching">
 						<img alt="Next" border="0" src="../../images/next.gif"/>
 					</a>
 				</td>
@@ -26,7 +26,7 @@
 			<tr>
 				<td style="width: 20%" align="left" valign="top">Committing Changes</td>
 				<td style="width: 60%" align="center"></td>
-				<td style="width: 20%" align="right" valign="top">Merge</td>
+				<td style="width: 20%" align="right" valign="top">Branching</td>
 			</tr>
 		</table><hr/>
 		<h1 id="Reverting_Changes">Reverting Changes</h1>
@@ -38,7 +38,10 @@
 			<img border="0" src="images/ReplaceWithGitIndex.png"/>
 		</p>
 		<h3 id="Replace_with_HEAD">Replace with HEAD</h3>
-		<p>This feature is currently not available on single file level. You can use "Reset to" with the option "hard" to set the whole working tree of your repository to the state of the HEAD commit (See "Resetting your current HEAD" below). By this you revert all changes in the working tree and the index. You can't do it on a selected set of files yet.</p>
+		<p>This feature is currently not available on single file level. You can use 
+			<b>Reset to</b> with the option 
+			<b>hard</b> to set the whole working tree of your repository to the state of the HEAD commit (See "Resetting your current HEAD" below). By this you revert all changes in the working tree and the index. You can't do it on a selected set of files yet.
+		</p>
 		<h2 id="Resetting_your_current_HEAD">Resetting your current HEAD</h2>
 		<p>Git offers the possibility to reset the HEAD of the current branch to any other commit. It optionally resets the index and the working tree to match that commit. Note that this action affects all files and folders in the whole repository.</p>
 		<p>You have the option to do a hard reset, a mixed reset and a soft reset.</p>
@@ -54,14 +57,26 @@
 			</li>
 		</ul>
 		<h3 id="Reset_to_specific_branch_or_tag">Reset to specific branch or tag</h3>
-		<p>Select "Team -&gt; Reset To..." on a project. This opens a dialog where you can select a branch or a tag. </p>
+		<p>Select 
+			<b>Team -&gt; Reset...</b> on a project. This opens a dialog where you can select a branch or a tag.
+		</p>
 		<h3 id="Reset_to_a_specific_commit">Reset to a specific commit</h3>
-		<p>Select a commit in the History view and open the context menu.  Here you find the entries "Hard reset", "Mixed reset" and "Soft reset".</p>
+		<p>Select a commit in the History view and open the context menu.  Here you find the entries 
+			<b>Hard reset</b>, 
+			<b>Mixed reset</b> and 
+			<b>Soft reset</b>.
+		</p>
 		<h3 id="Revert_all_local_and_staged_changes">Revert all local and staged changes</h3>
-		<p>This can be done as a special case of reset. If you reset to the current HEAD (normally the last commit on your branch) with the option "hard" you overwrite the working tree and the index with the content of the HEAD. You can do this in two ways:</p>
+		<p>This can be done as a special case of reset. If you reset to the current HEAD (normally the last commit on your branch) with the option 
+			<b>hard</b> you overwrite the working tree and the index with the content of the HEAD. You can do this in two ways:
+		</p>
 		<ul>
-			<li>Select "Team -&gt; Reset To..." on a project. In the dialog select HEAD or your current branch and switch the radio button to "hard".</li>
-			<li>Open the context menu on the HEAD commit in the history view and select "Hard Reset".</li>
+			<li>Select 
+				<b>Team &gt; Reset...</b> on a project. In the dialog select HEAD or your current branch and switch the radio button to "hard".
+			</li>
+			<li>Open the context menu on the HEAD commit in the history view and select 
+				<b>Hard Reset</b>.
+			</li>
 		</ul><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
@@ -76,7 +91,7 @@
 					</a>
 				</td>
 				<td style="width: 20%" align="right">
-					<a href="Merge.html" title="Merge">
+					<a href="Branching.html" title="Branching">
 						<img alt="Next" border="0" src="../../images/next.gif"/>
 					</a>
 				</td>
@@ -84,7 +99,7 @@
 			<tr>
 				<td style="width: 20%" align="left" valign="top">Committing Changes</td>
 				<td style="width: 60%" align="center"></td>
-				<td style="width: 20%" align="right" valign="top">Merge</td>
+				<td style="width: 20%" align="right" valign="top">Branching</td>
 			</tr>
 		</table>
 	</body>

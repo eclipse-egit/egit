@@ -30,12 +30,17 @@
 			</tr>
 		</table><hr/>
 		<h1 id="Working_with_remote_Repositories">Working with remote Repositories</h1>
-		<h2 id="Cloning_remote_Repositories">Cloning remote Repositories</h2>
-		<p>Using the Git clone wizard you may clone remote repositories using different transport protocols. </p>
-		<p>The wizard can be started from the "Import Projects from Git" wizard using </p>
-		<pre>Import... -&gt; Git -&gt; Projects from Git -&gt; Next -&gt; Clone...
-</pre>
-		<p>or from the "Git Repositories View" (described elsewhere) using the "Clone a Git Repository" toolbar button. </p>
+		<h2 id="Cloning_Remote_Repositories">Cloning Remote Repositories</h2>
+		<p>Using the Git Clone Wizard you may clone remote repositories using different transport protocols. </p>
+		<p>The wizard can be started from the "Import Projects from Git" wizard using 
+
+			<br/>
+
+			<b>Import... &gt; Git &gt; Projects from Git &gt; Next &gt; Clone...</b>
+		</p>
+		<p>or from the "Git Repositories View" (described elsewhere) using the 
+			<b>Clone a Git Repository</b> toolbar button. 
+		</p>
 		<h3 id="Repository_Selection">Repository Selection</h3>
 		<p>On the first page of the wizard enter the location of the remote repository: </p>
 		<p>
@@ -44,7 +49,8 @@
 		<ul>
 			<li>
 				<b>URI</b> - The complete URI of the remote repository or the path on the file system. This field is automatically synchronized with the other fields. 
-				<br/>Note that you can use the "Local file..." button to browse for a local directory and that the URI field offers content assist by offering previously used values 
+				<br/>Note that you can use the 
+				<b>Local file...</b> button to browse for a local directory and that the URI field offers content assist by offering previously used values 
 			</li>
 			<li>
 				<b>Host</b> - The name of the remote host or empty if cloning from the file system. 
@@ -94,7 +100,7 @@
 				<b>file</b> - File system access to the repository.
 			</li>
 		</ul>
-		<h3 id="Branch_selection">Branch selection</h3>
+		<h3 id="Branch_Selection">Branch Selection</h3>
 		<p>On the next page choose which branch should be cloned from the remote repository: </p>
 		<p>
 			<img border="0" src="images/05-branches.png"/> 
@@ -115,9 +121,158 @@
 				<b>Remote name</b> - Define a name for the remote repository. The default is "origin".
 			</li>
 		</ul>
+		<h2 id="Git_References">Git References</h2>
+		<p>Git References are also known shortly as 
+			<b>Refs</b>. 
+
+			<br/>They comprise 
+		</p>
+		<ul>
+			<li>branches </li>
+			<li>remote-tracking branches </li>
+			<li>tags </li>
+		</ul>
+		<p>They all are named with a path using '/' as path separator and are starting with "refs". </p>
+		<ul>
+			<li>Local branches start with "refs/heads/"</li>
+			<li>Remote tracking branches start with "refs/remotes/"</li>
+			<li>Tags start with "refs/tags/"</li>
+		</ul>
+		<p>Ref names can be abbreviated as long as the abbreviated form is unique. 
+
+			<br/>E.g.
+		</p>
+		<ul>
+			<li>"master" is short for "refs/heads/master"</li>
+			<li>"origin/master" is short for "refs/remotes/origin/master"</li>
+			<li>"v1.0.1" is short for "refs/tags/v1.0.1"</li>
+		</ul>
+		<p>For a complete list for Ref names and the order of precedence if multiple references have the same shorthand form see the section "Specifying Revisions" section of 
+			<a href="http://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html" target="egit_external">git rev-parse</a>.
+		</p>
 		<h2 id="Pushing_to_other_Repositories">Pushing to other Repositories</h2>
-		<p>TBD</p>
-		<h3 id="Pushing_a_Local_Repository_to_GitHub">Pushing a Local Repository to GitHub</h3>
+		<h3 id="Direct_Push">Direct Push</h3>
+		<p>The easiest way for pushing is to use 
+			<a href="Managing-Repositories.html#Direct_Fetch_and_Push_Support">Direct Push Support</a> on a Push Specification of a Remote.
+		</p>
+		<h3 id="Push_Wizard">Push Wizard</h3>
+		<p>The other way is using the Push Wizard
+
+			<br/>
+
+			<b>Team &gt; Push...</b>
+		</p>
+		<h4 id="Push_URI">Push URI</h4>
+		<ul>
+			<li>If you already configured a Push Specification in the Repositories View you may also select it here using the drop-down list under 
+				<b>Configured remote repositories</b>.
+			</li>
+			<li>Otherwise click 
+				<b>Custom URI</b> and enter the URI of the upstream repository you want to push to.
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-0.8-push-to-uri.png"/>
+		</p>
+		<h4 id="Push_Ref_Specifications">Push Ref Specifications</h4>
+		<p>
+			<br/>
+			Click 
+			<b>Next</b>
+
+			<br/>
+			Click 
+			<b>Add all branches spec</b>
+		</p>
+		<p>
+			<img border="0" src="images/Egit-0.8-push-wizard.png"/>
+		</p>
+		<p>This is a convenient way to declare that you want to map your local branch names to the same branch names on the upstream repository you want to push changes to. </p>
+		<p>Click 
+			<b>Add all tags spec</b> to map local tags 1:1 to tags in the repository you want to push to.
+		</p>
+		<p>If you want to map local branches to those in the upstream repository in a different way you may define more detailed mapping specifications in the following way</p>
+		<ul>
+			<li>enter source and destination ref or select already existing branches from the drop-down lists</li>
+			<li>click 
+				<b>Add spec</b>
+			</li>
+		</ul>
+		<p>This will transfer the newly defined mapping to the list 
+			<b>Specifications for push</b>
+		</p>
+		<p>
+			<b>Other common push specs:</b>
+		</p>
+		<ul>
+			<li>You may e.g. map <tt>refs/heads/*</tt> to <tt>refs/heads/joe/*</tt> if you want to name the branches you push to according to your nickname 
+				<i>joe</i>. This is useful if multiple users want to publish their local branches on personal branches in a jointly used public repository.
+			</li>
+			<li>Another usual mapping is to map the source ref <tt>HEAD</tt> to the destination <tt>refs/heads/master</tt>. This means you want to map your current <tt>HEAD</tt> (which might currently point e.g. to any local topic branch) to the upstream master branch.</li>
+		</ul>
+		<h4 id="Delete_Ref_Specifications">Delete Ref Specifications</h4>
+		<p>To delete a ref in the destination repository select the ref to be deleted from the drop-down list 
+			<b>Remote ref to delete</b>
+			and click 
+			<b>Add spec</b>. This will create a corresponding entry in the 
+			<b>Specifications for push</b> list. Alternatively you may type in the specification for the refs to be deleted, this may also use wildcards. Pushing Delete Ref Specifications will delete the matching Refs in the destination repository.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-0.8-push-ref-delete.png"/>
+		</p>
+		<h4 id="Conflicting_Push_Ref_Specifications">Conflicting Push Ref Specifications</h4>
+		<p>If you add multiple conflicting Push Ref Specifications they will be marked in red, solve this by removing or editing the conflicting specs. It is also possible to edit the specs in-place in the list 
+			<b>Specifications for push</b>
+		</p>
+		<p>
+			<img border="0" src="images/Egit-0.8-push-conflicting-specs.png"/>
+		</p>
+		<h4 id="Push_Confirmation">Push Confirmation</h4>
+		<p>Click 
+			<b>Next</b>
+		</p>
+		<p>This will open the Push Confirmation dialog showing a preview which changes will be pushed to the destination repository.
+			If this does not match your expectation click 
+			<b>Back</b> and correct your push specs accordingly. 
+		</p>
+		<ul>
+			<li>For ref updates the range of commits to be pushed will be shown in the format <tt>
+				<b>&lt;SHA1-from&gt;..&lt;SHA1-to&gt;</b></tt> e.g. <tt>
+				<b>d97f5a2e..adfdbfd2</b></tt> means all commits between <tt>
+				<b>d97f5a2e</b></tt> and <tt>
+				<b>adfdbfd2</b></tt> will be pushed. 
+			</li>
+			<li>For refs which do not yet exist in the destination repository <tt>
+				<b>&#91;new branch&#93;</b></tt> or <tt>
+				<b>&#91;new tag&#93;</b></tt> is displayed.
+			</li>
+			<li>For refs which will be delete <tt>
+				<b>&#91;deleted&#93;</b></tt> is shown.
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-0.8-push-confirmation.png"/>
+		</p>
+		<ul>
+			<li>Select the 
+				<b>Push only if remote refs don't change in the mean time</b> check box if you want to be sure that what you see in this preview is also what you get when pushing these changes out.
+			</li>
+			<li>Select the 
+				<b>Show final report dialog only when it differs from this confirmation report</b> check box if you only want to get a report after executing the push if the result differs from this preview.
+			</li>
+		</ul>
+		<h4 id="Push_Result_Report">Push Result Report</h4>
+		<p>Click 
+			<b>Finish</b>
+		</p>
+		<p>Depending on the options you have chosen a push result report dialog is shown</p>
+		<p>
+			<img border="0" src="images/Egit-0.8-push-result.png"/>
+		</p>
+		<p>Click 
+			<b>Ok</b> to close the dialog.
+		</p>
+		<h3 id="Example:_Pushing_a_Local_Repository_to_GitHub">Example: Pushing a Local Repository to GitHub</h3>
 		<h4 id="Create_Local_Repository">Create Local Repository</h4>
 		<ul>
 			<li>follow 
@@ -139,68 +294,202 @@
 		</p>
 		<h4 id="Eclipse_SSH_Configuration">Eclipse SSH Configuration</h4>
 		<ul>
-			<li>open "Window" &gt; "Preferences" and ensure that your SSH2 home is configured correctly (usually this is ~/.ssh) and contains your SSH2 keys (upload your public key to your GitHub account settings)</li>
+			<li>Click 
+				<b>Window &gt; Preferences</b> and ensure that your SSH2 home is configured correctly (usually this is <tt>~/.ssh</tt>) and contains your SSH2 keys (upload your public key to your GitHub account settings)
+			</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.6-003-SshPreferences.png"/> 
 		</p>
 		<ul>
-			<li>if you don't have SSH keys yet you may generate them on the second tab "Key Management" of this dialog, use a good pass phrase to protect your private key, for more details see 
+			<li>if you don't have SSH keys yet you may generate them on the second tab 
+				<b>Key Management</b> of this dialog, use a good pass phrase to protect your private key, for more details see 
 				<a href="http://help.github.com/working-with-key-passphrases/" target="egit_external">"working with key passphrases"</a>
 			</li>
 		</ul>
 		<h4 id="Push_Upstream">Push Upstream</h4>
 		<ul>
-			<li>Select your new Eclipse project and click "Team" &gt; "Push To" and enter "Your GitHub Clone URL" and your GitHub password(with the free github accoutns do not enter a password but leave blank), leave the user as "git"</li>
+			<li>Select your new Eclipse project and click 
+				<b>Team &gt; Push...</b>.
+			</li>
+			<li>Enter 
+				<b>Your GitHub Clone URL</b> and your GitHub password (with the free github accounts do not enter a password but leave this field blank), leave the user as <tt>git</tt>.
+			</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.6-004-PushDialog.png"/> 
 		</p>
 		<ul>
-			<li>click "Next" and on first connection accept GitHub's host key</li>
+			<li>Click 
+				<b>Next</b> and on first connection accept GitHub's host key.
+			</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.6-005-AcceptHostKey.png"/> 
 		</p>
 		<ul>
-			<li>enter your SSH key's passphrase</li>
+			<li>Enter your SSH key's passphrase.</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.6-006-PassPhrase.png"/> 
 		</p>
 		<ul>
-			<li>click button "Add all branches spec"</li>
+			<li>Click 
+				<b>Add all branches spec</b> to map your local branch names 1:1 to the same branch names in the destination repository.
+			</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.6-007-PushRefSpecifications.png"/> 
 		</p>
 		<ul>
-			<li>click "Next" and click "Finish" to confirm the push</li>
+			<li>Click 
+				<b>Next</b>. The push confirmation dialog will show a preview of the changes that will be pushed to the destination repository.
+			</li>
+			<li>Click 
+				<b>Finish</b> to confirm that you want to push these changes.
+			</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.6-008-PushConfirmation.png"/> 
 		</p>
 		<ul>
-			<li>the next dialog shows the result of the push operation</li>
+			<li>The next dialog reports the result of the push operation.</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.6-009-PushResult.png"/> 
 		</p>
 		<ul>
-			<li>point your browser at your GitHub repository to see that your new repository content has arrived</li>
+			<li>Point your browser at your GitHub repository to see that your new repository content has arrived</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.6-010-PushResultOnGithub.png"/>
 		</p>
 		<h2 id="Fetching_from_other_Repositories">Fetching from other Repositories</h2>
-		<p>TBD</p>
-		<h2 id="Pulling_.28merge_or_rebase.29_new_changes_from_Upstream_Repositories">Pulling (merge or rebase) new changes from Upstream Repositories</h2>
-		<p>This is not yet available. Available alternatives currently include: </p>
+		<h3 id="Direct_Fetch">Direct Fetch</h3>
+		<p>The easiest way for fetching is to use 
+			<a href="Managing-Repositories.html#Direct_Fetch_and_Push_Support">Direct Fetch Support</a> on a Fetch Specification of a Remote.
+		</p>
+		<h3 id="Fetch_Wizard">Fetch Wizard</h3>
+		<p>The other way is using the Fetch Wizard
+
+			<br/>
+
+			<b>Team &gt; Fetch...</b>
+		</p>
 		<ul>
-			<li>run "git pull" from outside eclipse (but 
+			<li>If you already configured a Fetch Specification in the Repositories View you may also select it here using the drop-down list under 
+				<b>Configured remote repositories</b>.
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-0.8-fetch-from-fetch-spec.png"/>
+		</p>
+		<ul>
+			<li>Otherwise click 
+				<b>Custom URI</b> and enter the URI of the upstream repository you want to fetch changes from.
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-0.8-fetch-from-uri.png"/>
+		</p>
+		<h4 id="Fetch_Ref_Specifications">Fetch Ref Specifications</h4>
+		<p>Click 
+			<b>Next</b>
+
+			<br/>
+			Click 
+			<b>Add all branches spec</b>
+		</p>
+		<p>
+			<img border="0" src="images/Egit-0.8-fetch-spec.png"/>
+		</p>
+		<p>This is a convenient way to declare that you want to map the branch names in the upstream repository you want to fetch changes from 1:1 to the same local branch names. </p>
+		<ul>
+			<li>Click in the edit field 
+				<b>Destination Ref</b> and replace the path segment 
+				<i>choose_remote_name</i> with a symbolic name for the upstream repository you are going to fetch from. 
+			</li>
+			<li>The default remote name for the repository your repository has been cloned from is <tt>
+				<b>origin</b></tt>. The master of this remote maps by default from <tt>
+				<b>refs/heads/master</b></tt> to <tt>
+				<b>refs/remotes/origin/master</b></tt>.
+			</li>
+			<li>If you e.g. want to additionally track branches from Joe's repository in your local repository you would map the branch in his repository <tt>
+				<b>refs/heads/*</b></tt> to the following tracking branches <tt>
+				<b>refs/remotes/joe/*</b></tt>.
+			</li>
+			<li>Deselect 
+				<b>Force Update</b> if you want to allow fast-forward updates only, select this option if you also want to allow non-fast-forward changes.
+			</li>
+			<li>Click 
+				<b>Force Update all Refs</b> to set the force update option on all specs
+			</li>
+			<li>Click 
+				<b>Remove all specs</b> to remove all specs from the list 
+				<b>Specifications for fetch</b>
+			</li>
+		</ul>
+		<ul>
+			<li>Click 
+				<b>Add all tags spec</b> to map tags tags in the repository you want to fetch from 1:1 to local tags.
+			</li>
+		</ul>
+		<p>If you want to map branches or tags in the upstream repository to local branches in a different way you may define more detailed mapping specifications in the following way</p>
+		<ul>
+			<li>enter source (ref in source repository) and destination ref (tracking branch or tag in local repository) or select already existing branches from the drop-down lists</li>
+			<li>click 
+				<b>Add spec</b>
+			</li>
+		</ul>
+		<p>This will transfer the newly defined mapping to the list 
+			<b>Specifications for fetch</b>
+		</p>
+		<h4 id="Fetch_Result_Report">Fetch Result Report</h4>
+		<p>Click 
+			<b>Finish</b>
+		</p>
+		<p>
+			<img border="0" src="images/Egit-0.8-fetch-result.png"/>
+		</p>
+		<p>A fetch result dialog is shown.</p>
+		<ul>
+			<li>For ref updates the range of commits which have been fetched will be shown in the format <tt>
+				<b>&lt;SHA1-from&gt;..&lt;SHA1-to&gt;</b></tt> e.g. <tt>
+				<b>d97f5a2e..adfdbfd2</b></tt> means all commits between <tt>
+				<b>d97f5a2e</b></tt> and <tt>
+				<b>adfdbfd2</b></tt> have been fetched. 
+			</li>
+			<li>For refs which didn't exist before in the local repository <tt>
+				<b>&#91;new branch&#93;</b></tt> or <tt>
+				<b>&#91;new tag&#93;</b></tt> is displayed.
+			</li>
+			<li>For refs which have been deleted <tt>
+				<b>&#91;deleted&#93;</b></tt> is shown.
+			</li>
+		</ul>
+		<h2 id="Pulling_New_Changes_from_Upstream_Repositories">Pulling New Changes from Upstream Repositories</h2>
+		<p>This is not yet fully available. </p>
+		<p>In cases where fast-forward merges are sufficient (full merge is not yet implemented) you may run pull in EGit in the following way:</p>
+		<ul>
+			<li>
+				<a href="Working-with-remote-Repositories.html#Fetching_from_other_Repositories">Fetch changes</a> from upstream repository
+			</li>
+			<li>
+				<a href="Managing-Repositories.html#Check-out_of_Branches_and_Tags">Checkout the branch</a> you want to pull the upstream changes into
+			</li>
+			<li>
+				<a href="Merging.html#Merging_a_branch_or_a_tag_into_the_current_branch">Merge</a> the branch or tag you want to integrate into your current branch
+			</li>
+		</ul>
+		<p>Available alternatives currently include: </p>
+		<ul>
+			<li>run 
+				<b>git pull</b> from outside eclipse (but 
 				<a href="http://marc.info/?l=git&amp;m=123924844219075" target="egit_external">beware on Windows</a>) 
 			</li>
-			<li>if you did no local change or want to discard your local changes, use "Team/Reset To..."</li>
+			<li>if you did no local change or want to discard your local changes, use 
+				<b>Team &gt; Reset...</b>
+			</li>
 		</ul><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>

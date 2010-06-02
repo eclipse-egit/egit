@@ -32,28 +32,39 @@
 		<h1 id="Inspecting_the_state_of_the_Repository">Inspecting the state of the Repository</h1>
 		<h2 id="Label_Decorations">Label Decorations</h2>
 		<p>Label decorations show Git specific information on resources under Git version control. They appear in all views showing model objects, like Package Explorer, Project Explorer, Navigator, Hierarchy View. </p>
-		<p>The Git label decorations can be switched on globally in the Preference Menu (Window -&gt; Preferences) under General -&gt; Appearance -&gt; Label Decorations. </p>
-		<p>More detailed settings can be done in the Preferences under Team -&gt; Git -&gt; Label Decorations. </p>
+		<p>The Git label decorations can be switched on globally in the Preference Menu (
+			<b>Window &gt; Preferences</b>) under
+			<b>General &gt; Appearance &gt; Label Decorations</b>.
+		</p>
+		<p>More detailed settings can be done in the Preferences under
+			<b>Team &gt; Git &gt; Label Decorations</b>.
+		</p>
 		<p>There are two different types of label decorations: text decorations and icon decorations. </p>
-		<p>
-			<b>Text Decorations</b>
-			<br/> Text decorations appear on the left or right side of the text label. They can be configured on the Preferences dialog under Team -&gt; Git -&gt; Label Decorations on the tab "Text Decorations". For example, the default for a dirty resource is a &gt; on the left side of its name.
+		<h3 id="Text_Decorations">Text Decorations</h3>
+		<p>Text decorations appear on the left or right side of the text label. They can be configured on the Preferences dialog under
+			<b>Team &gt; Git &gt; Label Decorations</b> on the tab
+			<b>Text Decorations</b>. For example, the default for a dirty resource is a <tt>
+			<b>&gt;</b></tt> on the left side of its name.
 		</p>
 		<p>These are the default settings: </p>
 		<p>
 			<img border="0" src="images/01-TextDecorations.png"/>
 		</p>
-		<p>For files and folders there are the variables "name", "dirty" and "staged". "Dirty" and "staged" are flags; if they are true, the text after the colon is displayed.</p>
-		<p>For projects there are the additional variables "repository" and "branch". The "repository" variable displays the name of the repository.</p>
-		<p>The "branch" variable displays the name of the currently checked out branch. If no branch is checked out, the decoration shows the shortened name of the commit (first seven characters followed by ellipsis). If tags and/or remote branches are pointing to this commit, a "best guess" heuristic is applied to also show this information: tags take precedence over remote branches, if several tags apply, the newest one is displayed; if there are several remote branches or tags have no modification date, then alphabetic sorting is applied and the last one is shown. Example: the checked out commit "e49f576..." refers to tag "v.0.7.1" of&nbsp;repository "egit":
+		<p>For files and folders there are the variables <tt>"name"</tt>, <tt>"dirty"</tt> and <tt>"staged"</tt>. <tt>"Dirty"</tt> and <tt>"staged"</tt> are flags; if they are true, the text after the colon is displayed.</p>
+		<p>For projects there are the additional variables <tt>"repository"</tt> and <tt>"branch"</tt>. The <tt>"repository"</tt> variable displays the name of the repository.</p>
+		<p>The <tt>"branch"</tt> variable displays the name of the currently checked out branch. If no branch is checked out, the decoration shows the shortened name of the commit (first seven characters followed by ellipsis). If tags and/or remote branches are pointing to this commit, a "best guess" heuristic is applied to also show this information: tags take precedence over remote branches, if several tags apply, the newest one is displayed; if there are several remote branches or tags have no modification date, then alphabetic sorting is applied and the last one is shown. Example: the checked out commit <tt>
+			<b>e49f576...</b></tt> refers to tag <tt>
+			<b>v.0.7.1</b></tt> of repository <tt>
+			<b>egit</b></tt>:
 			<br/>
 		</p>
 		<p>
 			<img border="0" src="images/03-ExampleDecoration.png"/>
 		</p>
-		<p>
-			<b>Icon Decorations</b>
-			<br/> Icon decorations appear on the lower right corner of the icon displayed in front of the label. They can be configured on the Preferences dialog under Team -&gt; Git -&gt; Label Decorations on the tab "Icon Decorations".
+		<h3 id="Icon_Decorations">Icon Decorations</h3>
+		<p>Icon decorations appear on the lower right corner of the icon displayed in front of the label. They can be configured on the Preferences dialog under
+			<b>Team &gt; Git &gt; Label Decorations</b> on the tab
+			<b>Icon Decorations</b>.
 		</p>
 		<p>These are the default decorations: </p>
 		<p>
@@ -70,7 +81,8 @@
 				<b>untracked</b> - The resource is not known to the Git repository and will not be version controlled until it is explicitly added.
 			</li>
 			<li>
-				<b>ignored</b> - The resource is ignored by the Git team provider. Here only the preference settings under Team -&gt; Ignored Resources and the "derived" flag are relevant. Settings from .gitignore files are not yet taken into account.
+				<b>ignored</b> - The resource is ignored by the Git team provider. Here only the preference settings under
+				<b>Team &gt; Ignored Resources</b> and the "derived" flag are relevant. Settings from <tt>.gitignore</tt> files are not yet taken into account.
 			</li>
 			<li>
 				<b>dirty</b> - The resource has changes in the working tree that are neither in the index nor in the repository.
@@ -91,19 +103,21 @@
 				<b>conflict</b> - A merge conflict exists for the file.
 			</li>
 			<li>
-				<b>assume-valid</b> - The resource has the "assume unchanged" flag. This means that Git stops checking the working tree files for possible modifications, so you need to manually unset the bit to tell Git when you change the working tree file. This setting can be switched on with the menu action Team-&gt;Assume unchanged (or on the command line with git update-index --assume-unchanged). Currently it can only be switched back on the command line with git update-index --no-assume-unchanged.
+				<b>assume-valid</b> - The resource has the "assume unchanged" flag. This means that Git stops checking the working tree files for possible modifications, so you need to manually unset the bit to tell Git when you change the working tree file. Also see
+				<a href="Perspective-Views-and-Menus.html#Menu_Actions">Assume unchanged action</a>.
 			</li>
 		</ul>
-		<h2 id="History_View">History View</h2>
+		<h2 id="History_View_2">History View</h2>
 		<p>The History View displays the the history of the files versioned in a Git repository.
-			Open the History View by selecting "Show In -&gt; History View" from the context menu on any resource under Git version control.</p>
+			To open the History View select
+			<b>Show In &gt; History View</b> from the context menu on any resource under Git version control.
+		</p>
 		<p>
 			<img border="0" src="images/Egit-0.8-history-view.png"/>
 		</p>
 		<p>The top level pane is the commit graph displaying the commit log in reverse chronological order (newest commit on top).</p>
 		<p>
 			<img border="0" src="images/Egit-0.8-history-view-branches.png"/>
-			<br/>
 		</p>
 		<ul>
 			<li>The tips of local branches are shown as green rectangles</li>
@@ -112,7 +126,6 @@
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.8-history-view-tag.png"/>
-			<br/>
 		</p>
 		<ul>
 			<li>Tags are shown as yellow rectangles</li>
@@ -180,44 +193,45 @@
 			<img border="0" src="images/03-CompareWith.png"/>
 		</p>
 		<p>Currently a compare dialog can only be opened for a single selected file. </p>
-		<p>
-			<b>Compare working tree with last commit</b>
-			<br/> The difference between a file in the current working directory and in the last commit in the current branch can be viewed from the context menu "Compare With" -&gt; "HEAD revision". This feature is also available in the Commit dialog. Double clicking on an entry in the Commit dialog opens a compare dialog.
+		<h3 id="Compare_working_tree_with_last_commit">Compare working tree with last commit</h3>
+		<p>The difference between a file in the current working directory and in the last commit in the current branch can be viewed from the context menu "Compare With" -&gt; "HEAD revision". This feature is also available in the Commit dialog. Double clicking on an entry in the Commit dialog opens a compare dialog. </p>
+		<h3 id="Comparing_Working_Tree_with_Index">Comparing Working Tree with Index</h3>
+		<p>The difference between a file in the current working directory and in the index can be viewed from the context menu
+			<b>Compare With &gt; Git Index</b>.
 		</p>
-		<p>
-			<b>Compare working tree with index</b>
-			<br/> The difference between a file in the current working directory and in the index can be viewed from the context menu "Compare With" -&gt; "Git Index".
-		</p>
-		<p>
-			<b>Compare working tree with any commit</b>
-			<br/>
-		</p>
+		<h3 id="Comparing_Working_Tree_with_Any_Commit">Comparing Working Tree with Any Commit</h3>
 		<ul>
 			<li>Select a file in the package explorer </li>
-			<li>from the context menu select "Show in" &gt; "History" or "Compare With" -&gt; "History..."</li>
+			<li>from the context menu select
+				<b>Show in &gt; History</b> or
+				<b>Compare With &gt; History...</b>
+			</li>
 			<li>in the commit graph select a commit </li>
-			<li>from the context menu select "Compare with working tree" </li>
+			<li>from the context menu select
+				<b>Compare with working tree</b>
+			</li>
 			<li>this will open a compare dialog showing the changes between the selected commit and the current working tree</li>
 		</ul>
-		<p>
-			<b>Compare two commits with each other</b>
-			<br/>
-		</p>
+		<h3 id="Comparing_Two_Commits_with_Each_Other">Comparing Two Commits with Each Other</h3>
 		<ul>
 			<li>Select a file in the package explorer </li>
-			<li>from the context menu select "Show in" &gt; "History" or "Compare With" -&gt; "History..."</li>
+			<li>from the context menu select
+				<b>Show in &gt; History</b> or
+				<b>Compare With &gt; History...</b>
+			</li>
 			<li>in the commit graph select two commits </li>
-			<li>from the context menu select "Compare with each other" </li>
+			<li>from the context menu select
+				<b>Compare with each other</b>
+			</li>
 			<li>this will open a compare dialog showing the changes between the two selected commits</li>
 		</ul>
-		<p>
-			<b>Compare index with HEAD or any other commit</b>
-			<br/> This feature is not implemented yet.
-		</p>
+		<h3 id="Comparing_Index_with_HEAD_or_Any_Other_Commit">Comparing Index with HEAD or Any Other Commit</h3>
+		<p>This feature is not implemented yet.</p>
 		<h2 id="Quickdiff">Quickdiff</h2>
 		<p>Instead of using a compare editor you can enable quick diff support and see the changes within the text editor.
 
-			<br/>This feature can be enabled via the General &gt; Editors &gt; Text Editors &gt; Quick Diff preference page:
+			<br/>This feature can be enabled via the
+			<b>General &gt; Editors &gt; Text Editors &gt; Quick Diff</b> preference page:
 		</p>
 		<p>
 			<img border="0" src="images/04-QuickDiffPreferences.png"/>
@@ -230,7 +244,9 @@
 		<p>
 			<img border="0" src="images/06-QuickDiffInEditorPopup.png"/>
 		</p>
-		<p>Per default, the comparison is against the HEAD. You can determine the version you are comparing to, the so-called quickdiff baseline, from the context menu of a commit in the history view (Show in -&gt; History). There are three menu entries: </p>
+		<p>Per default, the comparison is against the HEAD. You can determine the version you are comparing to, the so-called quickdiff baseline, from the context menu of a commit in the history view (
+			<b>Show in &gt; History</b>). There are three menu entries:
+		</p>
 		<ul>
 			<li>
 				<b>Quick Diff -&gt; Reset baseline to first parent of HEAD</b> - Compare against the first commit before HEAD.
@@ -245,7 +261,9 @@
 		<h2 id="View_Diff_for_a_Commit">View Diff for a Commit</h2>
 		<p>To display the diff for a given commit </p>
 		<ul>
-			<li>from context menu in package explorer select "Team" &gt; "Show in Resource History" </li>
+			<li>from context menu in package explorer select
+				<b>Team &gt; Show in Resource History</b>
+			</li>
 			<li>select the commit you want to inspect </li>
 			<li>the history view will display the diff in the lower left pane</li>
 			<li>selecting a file in the lower right pane will scroll to the corresponding file section of the diff</li>
