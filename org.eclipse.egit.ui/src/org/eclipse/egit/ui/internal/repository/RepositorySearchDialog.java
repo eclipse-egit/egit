@@ -474,7 +474,7 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 						.bind(
 								UIText.RepositorySearchDialog_SomeDirectoriesHiddenMessage,
 								Integer.valueOf(foundOld));
-				setMessage(message, IMessageProvider.WARNING);
+				setMessage(message, IMessageProvider.INFORMATION);
 			} else
 				setMessage(null);
 			fSelectAllButton.setEnabled(foundNew);
