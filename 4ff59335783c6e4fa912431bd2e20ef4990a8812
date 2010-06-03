@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALu3////o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitSelectRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-06-01T18:02:43Z",
+      "side": 1,
+      "message": "Can we log this?",
+      "revId": "4ff59335783c6e4fa912431bd2e20ef4990a8812",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
