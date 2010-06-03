@@ -16,6 +16,24 @@
       "revId": "4ff59335783c6e4fa912431bd2e20ef4990a8812",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3////E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitSelectRepositoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-02T06:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3////o\u003d",
+      "revId": "4ff59335783c6e4fa912431bd2e20ef4990a8812",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
