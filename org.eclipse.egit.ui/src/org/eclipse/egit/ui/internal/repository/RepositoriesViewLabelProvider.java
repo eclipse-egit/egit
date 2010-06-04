@@ -19,7 +19,6 @@ import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.resource.CompositeImageDescriptor;
-import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -38,97 +37,6 @@ public class RepositoriesViewLabelProvider extends LabelProvider {
 	 */
 	private Map<Image, Image> decoratedImages = new HashMap<Image, Image>();
 
-	// private DefaultInformationControl infoControl;
-
-	/**
-	 *
-	 * @param viewer
-	 */
-	public RepositoriesViewLabelProvider(final ColumnViewer viewer) {
-
-		viewer.setLabelProvider(this);
-		// we could implement some hover here to display additional information
-		// viewer.getTree().addMouseTrackListener(new MouseTrackAdapter() {
-		//
-		// @Override
-		// public void mouseHover(MouseEvent e) {
-
-		// Point eventPoint = new Point(e.x, e.y);
-		//
-		// TreeItem item = viewer.getTree().getItem(eventPoint);
-		// if (item != null) {
-		//
-		// RepositoryTreeNode node = (RepositoryTreeNode) item
-		// .getData();
-		// String text = node.getRepository().getDirectory()
-		// .getCanonicalPath();
-		//
-		// final ViewerCell cell = viewer.getCell(eventPoint);
-		//
-		// if (infoControl != null && infoControl.isVisible()) {
-		// infoControl.setVisible(false);
-		// }
-		//
-		// GC testGc = new GC(cell.getControl());
-		// final Point textExtent = testGc.textExtent(text);
-		// testGc.dispose();
-		//
-		// if (infoControl == null || !infoControl.isVisible()) {
-		//
-		// IInformationPresenter ips = new IInformationPresenter() {
-		//
-		// public String updatePresentation(
-		// Display display, String hoverInfo,
-		// TextPresentation presentation,
-		// int maxWidth, int maxHeight) {
-		// return hoverInfo;
-		// }
-		//
-		// };
-		//
-		// infoControl = new DefaultInformationControl(Display
-		// .getCurrent().getActiveShell().getShell(),
-		// ips) {
-		//
-		// @Override
-		// public void setInformation(String content) {
-		// super.setInformation(content);
-		// super.setSize(textExtent.x, textExtent.y);
-		// }
-		//
-		// };
-		// }
-		//
-		// Point dispPoint = viewer.getControl().toDisplay(
-		// eventPoint);
-		//
-		// infoControl.setLocation(dispPoint);
-		//
-		// // the default info provider works better with \r ...
-		// infoControl.setInformation(text);
-		//
-		// final MouseMoveListener moveListener = new
-		// MouseMoveListener() {
-		//
-		// public void mouseMove(MouseEvent evt) {
-		// infoControl.setVisible(false);
-		// cell.getControl().removeMouseMoveListener(this);
-		//
-		// }
-		// };
-		//
-		// cell.getControl().addMouseMoveListener(moveListener);
-		//
-		// infoControl.setVisible(true);
-		//
-		// }
-		//
-		// }
-		//
-		// });
-
-	}
-
 	@Override
 	public Image getImage(Object element) {
 		return decorateImage(
@@ -138,6 +46,9 @@ public class RepositoriesViewLabelProvider extends LabelProvider {
 	@Override
 	public String getText(Object element) {
 
+		if (!(element instanceof RepositoryTreeNode)){
+			return null;
+		}
 		RepositoryTreeNode node = (RepositoryTreeNode) element;
 		switch (node.getType()) {
 		case REPO:
