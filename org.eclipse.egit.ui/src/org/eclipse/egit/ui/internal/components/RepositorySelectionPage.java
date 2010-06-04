@@ -171,8 +171,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 			Clipboard clippy = new Clipboard(Display.getCurrent());
 			String text = (String) clippy.getContents(TextTransfer.getInstance());
 			try {
-				if(Transport.canHandleProtocol(new URIish(text))) {
-					preset = text;
+				if(text != null && Transport.canHandleProtocol(new URIish(text))) {
+					preset = text.trim();
 				}
 			} catch (URISyntaxException e) {
 				preset = null;
