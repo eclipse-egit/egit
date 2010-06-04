@@ -32,10 +32,13 @@ import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -49,6 +52,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -161,7 +165,20 @@ public class RepositorySelectionPage extends BaseWizardPage {
 
 		this.uri = new URIish();
 		this.sourceSelection = sourceSelection;
-		this.presetUri = presetUri;
+
+		String preset = null;
+		if (presetUri == null) {
+			Clipboard clippy = new Clipboard(Display.getCurrent());
+			String text = (String) clippy.getContents(TextTransfer.getInstance());
+			try {
+				if(Transport.canHandleProtocol(new URIish(text))) {
+					preset = text;
+				}
+			} catch (URISyntaxException e) {
+				preset = null;
+			}
+		}
+		this.presetUri = preset;
 
 		this.configuredRemotes = getUsableConfigs(configuredRemotes);
 		this.remoteConfig = selectDefaultRemoteConfig();
@@ -220,6 +237,9 @@ public class RepositorySelectionPage extends BaseWizardPage {
 			createRemotePanel(panel);
 
 		createUriPanel(panel);
+
+		if(presetUri != null)
+			updateFields(presetUri);
 
 		updateRemoteAndURIPanels();
 		setControl(panel);
@@ -299,51 +319,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		uriText.setLayoutData(createFieldGridData());
 		uriText.addModifyListener(new ModifyListener() {
 			public void modifyText(final ModifyEvent e) {
-				try {
-					eventDepth++;
-					if (eventDepth != 1)
-						return;
-
-					final URIish u = new URIish(uriText.getText());
-					safeSet(hostText, u.getHost());
-					safeSet(pathText, u.getPath());
-					safeSet(userText, u.getUser());
-					safeSet(passText, u.getPass());
-
-					if (u.getPort() > 0)
-						portText.setText(Integer.toString(u.getPort()));
-					else
-						portText.setText(""); //$NON-NLS-1$
-
-					if (isFile(u))
-						scheme.select(S_FILE);
-					else if (isSSH(u))
-						scheme.select(S_SSH);
-					else {
-						for (int i = 0; i < DEFAULT_SCHEMES.length; i++) {
-							if (DEFAULT_SCHEMES[i].equals(u.getScheme())) {
-								scheme.select(i);
-								break;
-							}
-						}
-					}
-
-					updateAuthGroup();
-					uri = u;
-				} catch (URISyntaxException err) {
-					// leave uriText as it is, but clean up underlying uri and
-					// decomposed fields
-					uri = new URIish();
-					hostText.setText(""); //$NON-NLS-1$
-					pathText.setText(""); //$NON-NLS-1$
-					userText.setText(""); //$NON-NLS-1$
-					passText.setText(""); //$NON-NLS-1$
-					portText.setText(""); //$NON-NLS-1$
-					scheme.select(0);
-				} finally {
-					eventDepth--;
-				}
-				checkPage();
+				updateFields(uriText.getText());
 			}
 		});
 
@@ -399,6 +375,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 				setURI(uri.setPath(nullString(pathText.getText())));
 			}
 		});
+
 	}
 
 	private Group createAuthenticationGroup(final Composite parent) {
@@ -916,5 +893,53 @@ public class RepositorySelectionPage extends BaseWizardPage {
 				null, null)
 				.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 
+	}
+
+	private void updateFields(final String text) {
+		try {
+			eventDepth++;
+			if (eventDepth != 1)
+				return;
+
+			final URIish u = new URIish(text);
+			safeSet(hostText, u.getHost());
+			safeSet(pathText, u.getPath());
+			safeSet(userText, u.getUser());
+			safeSet(passText, u.getPass());
+
+			if (u.getPort() > 0)
+				portText.setText(Integer.toString(u.getPort()));
+			else
+				portText.setText(""); //$NON-NLS-1$
+
+			if (isFile(u))
+				scheme.select(S_FILE);
+			else if (isSSH(u))
+				scheme.select(S_SSH);
+			else {
+				for (int i = 0; i < DEFAULT_SCHEMES.length; i++) {
+					if (DEFAULT_SCHEMES[i].equals(u.getScheme())) {
+						scheme.select(i);
+						break;
+					}
+				}
+			}
+
+			updateAuthGroup();
+			uri = u;
+		} catch (URISyntaxException err) {
+			// leave uriText as it is, but clean up underlying uri and
+			// decomposed fields
+			uri = new URIish();
+			hostText.setText(""); //$NON-NLS-1$
+			pathText.setText(""); //$NON-NLS-1$
+			userText.setText(""); //$NON-NLS-1$
+			passText.setText(""); //$NON-NLS-1$
+			portText.setText(""); //$NON-NLS-1$
+			scheme.select(0);
+		} finally {
+			eventDepth--;
+		}
+		checkPage();
 	}
 }
