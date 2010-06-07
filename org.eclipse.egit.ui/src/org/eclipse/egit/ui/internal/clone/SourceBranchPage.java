@@ -55,11 +55,9 @@ class SourceBranchPage extends BaseWizardPage {
 
 	private Ref head;
 
-	private List<Ref> availableRefs = new ArrayList<Ref>();
+	private final List<Ref> availableRefs = new ArrayList<Ref>();
 
 	private List<Ref> selectedRefs = new ArrayList<Ref>();
-
-	private boolean sourceRepoEmpty = false;
 
 	private Label label;
 
@@ -92,7 +90,7 @@ class SourceBranchPage extends BaseWizardPage {
 	}
 
 	boolean isSourceRepoEmpty() {
-		return sourceRepoEmpty;
+		return availableRefs.isEmpty();
 	}
 
 	boolean isAllSelected() {
@@ -190,6 +188,7 @@ class SourceBranchPage extends BaseWizardPage {
 	 * called only when all necessary data from previous form is available.
 	 */
 	private void checkPage() {
+		setMessage(null);
 		if (transportError != null) {
 			setErrorMessage(transportError);
 			setPageComplete(false);
@@ -303,8 +302,6 @@ class SourceBranchPage extends BaseWizardPage {
 			ti.setChecked(true);
 			selectedRefs.add(r);
 		}
-		if (availableRefs.size() == 0)
-			sourceRepoEmpty = true;
 		notifySelectionChanged();
 		checkPage();
 	}
