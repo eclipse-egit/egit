@@ -301,6 +301,9 @@ public class UIText extends NLS {
 	public static String RepositoryRemotePropertySource_RemotePushUrl_label;
 
 	/** */
+	public static String RepositorySearchDialog_AddGitRepositories;
+
+	/** */
 	public static String RepositorySearchDialog_DeepSearch_button;
 
 	/** */
@@ -311,6 +314,21 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositorySearchDialog_DeselectAll_button;
+
+	/** */
+	public static String RepositorySearchDialog_DirectoryNotFoundMessage;
+
+	/** */
+	public static String RepositorySearchDialog_Search;
+
+	/** */
+	public static String RepositorySearchDialog_SearchCriteriaGroup;
+
+	/** */
+	public static String RepositorySearchDialog_SearchRecursiveToolTip;
+
+	/** */
+	public static String RepositorySearchDialog_SearchTitle;
 
 	/** */
 	public static String RepositorySearchDialog_SelectAll_button;
@@ -340,13 +358,19 @@ public class UIText extends NLS {
 	public static String RepositorySearchDialog_directory;
 
 	/** */
+	public static String RepositorySearchDialog_EnterDirectoryToolTip;
+
+	/** */
 	public static String RepositorySearchDialog_errorOccurred;
 
 	/** */
-	public static String RepositorySearchDialog_search;
+	public static String RepositorySearchDialog_NoSearchAvailableMessage;
 
 	/** */
-	public static String RepositorySearchDialog_searchRepositories;
+	public static String RepositorySearchDialog_NothingFoundMessage;
+
+	/** */
+	public static String RepositorySearchDialog_search;
 
 	/** */
 	public static String RepositorySearchDialog_searchRepositoriesMessage;
