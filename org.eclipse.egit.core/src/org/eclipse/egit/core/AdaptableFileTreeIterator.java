@@ -19,6 +19,7 @@ import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
+import org.eclipse.jgit.util.FS;
 
 /**
  * Java IO file tree iterator that can adapt to a {@link ContainerTreeIterator}
@@ -49,7 +50,7 @@ public class AdaptableFileTreeIterator extends FileTreeIterator {
 	 */
 	public AdaptableFileTreeIterator(final File path,
 			final IWorkspaceRoot workspaceRoot) {
-		super(path);
+		super(path, FS.DETECTED);
 		root = workspaceRoot;
 	}
 
@@ -70,7 +71,7 @@ public class AdaptableFileTreeIterator extends FileTreeIterator {
 	 */
 	protected AdaptableFileTreeIterator(final AdaptableFileTreeIterator parent,
 			File path, final IWorkspaceRoot workspaceRoot) {
-		super(parent, path);
+		super(parent, path, FS.DETECTED);
 		root = workspaceRoot;
 	}
 

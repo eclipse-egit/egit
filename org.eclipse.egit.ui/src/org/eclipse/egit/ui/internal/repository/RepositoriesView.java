@@ -87,6 +87,7 @@ import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.lib.RepositoryConfig;
 import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
@@ -1500,7 +1501,7 @@ public class RepositoriesView extends ViewPart implements ISelectionProvider,
 						return;
 					}
 
-					if (!RepositoryCache.FileKey.isGitRepository(file)) {
+					if (!RepositoryCache.FileKey.isGitRepository(file, FS.DETECTED)) {
 						errorMessage = NLS
 								.bind(
 										UIText.RepositoriesView_ClipboardContentNoGitRepoMessage,
