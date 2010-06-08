@@ -29,6 +29,7 @@ import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.FileBasedConfig;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -81,7 +82,7 @@ public class RepositoryPropertySource implements IPropertySource,
 		addActions();
 
 		effectiveConfig = rep.getConfig();
-		userHomeConfig = SystemReader.getInstance().openUserConfig();
+		userHomeConfig = SystemReader.getInstance().openUserConfig(FS.DETECTED);
 		// TODO constant?
 		File configFile = new File(rep.getDirectory(), "config"); //$NON-NLS-1$
 		repositoryConfig = new FileBasedConfig(configFile);
