@@ -12,6 +12,7 @@ package org.eclipse.egit.core.op;
 
 import java.io.IOException;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -82,6 +83,7 @@ public class MergeOperation implements IEGitOperation {
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
 			public void run(IProgressMonitor mymonitor) throws CoreException {
+				IProject[] validProjects = ProjectUtil.getValidProjects(repository);
 				mymonitor.beginTask(NLS.bind(CoreText.MergeOperation_ProgressMerge, refName), 3);
 				Git git = new Git(repository);
 				mymonitor.worked(1);
@@ -110,7 +112,7 @@ public class MergeOperation implements IEGitOperation {
 				} catch (InvalidMergeHeadsException e) {
 					throw new TeamException(e.getLocalizedMessage(), e.getCause());
 				}
-				ProjectUtil.refreshProjects(repository, new SubProgressMonitor(
+				ProjectUtil.refreshValidProjects(validProjects, new SubProgressMonitor(
 						mymonitor, 1));
 				mymonitor.done();
 			}
