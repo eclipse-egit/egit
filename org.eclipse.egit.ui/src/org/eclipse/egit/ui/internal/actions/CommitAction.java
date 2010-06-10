@@ -58,6 +58,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.Team;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.internal.ui.Utils;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Scan for modified resources in the same project as the selected resources.
@@ -76,6 +77,12 @@ public class CommitAction extends RepositoryAction {
 
 	@Override
 	public void execute(IAction act) {
+		// let's see if there is any dirty editor around and
+		// ask the user if they want to save or abort
+		if (!PlatformUI.getWorkbench().saveAllEditors(true)) {
+			return;
+		}
+
 		resetState();
 		try {
 			buildIndexHeadDiffList();
