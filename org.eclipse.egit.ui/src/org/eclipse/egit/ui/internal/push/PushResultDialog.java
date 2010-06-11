@@ -61,6 +61,7 @@ class PushResultDialog extends Dialog {
 
 		getShell().setText(
 				NLS.bind(UIText.ResultDialog_title, destinationString));
+		applyDialogFont(composite);
 		return composite;
 	}
 }

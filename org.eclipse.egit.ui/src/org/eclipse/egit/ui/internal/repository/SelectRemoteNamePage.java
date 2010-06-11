@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -90,6 +91,7 @@ public class SelectRemoteNamePage extends WizardPage {
 		});
 		GridDataFactory.fillDefaults().span(2, 1).applyTo(configurePush);
 
+		Dialog.applyDialogFont(main);
 		setControl(main);
 		setPageComplete(false);
 
