@@ -106,7 +106,7 @@ public class BranchSelectionDialog extends TitleAreaDialog {
 		// TODO deprecated constructor for now
 		FilteredTree tree = new FilteredTree(parent, SWT.SINGLE | SWT.BORDER, new PatternFilter());
 		branchTree = tree.getViewer();
-		new RepositoriesViewLabelProvider(branchTree);
+		branchTree.setLabelProvider(new RepositoriesViewLabelProvider());
 		branchTree.setContentProvider(new RepositoriesViewContentProvider());
 
 		GridDataFactory.fillDefaults().grab(true, true).hint(500, 300).applyTo(
