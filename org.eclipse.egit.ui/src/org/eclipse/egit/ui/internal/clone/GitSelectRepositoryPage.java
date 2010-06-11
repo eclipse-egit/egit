@@ -23,6 +23,7 @@ import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
 import org.eclipse.egit.ui.internal.repository.RepositorySearchDialog;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -178,7 +179,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 		// we need to select at least a repository to become complete
 		setPageComplete(false);
-
+		Dialog.applyDialogFont(main);
 		setControl(main);
 
 	}

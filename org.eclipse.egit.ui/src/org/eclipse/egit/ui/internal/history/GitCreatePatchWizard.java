@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -284,7 +285,6 @@ public class GitCreatePatchWizard extends Wizard {
 			composite.setLayout(gridLayout);
 			composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 			initializeDialogUnits(composite);
-			setControl(composite);
 
 			// clipboard
 			GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
@@ -361,6 +361,10 @@ public class GitCreatePatchWizard extends Wizard {
 					validatePage();
 				}
 			});
+
+			Dialog.applyDialogFont(composite);
+			setControl(composite);
+
 		}
 
 		private String createFileName() {
@@ -469,7 +473,6 @@ public class GitCreatePatchWizard extends Wizard {
 		public void createControl(Composite parent) {
 			final Composite composite = new Composite(parent, SWT.NULL);
 			GridLayout gridLayout = new GridLayout();
-			setControl(composite);
 			gridLayout.numColumns = 3;
 			composite.setLayout(gridLayout);
 			composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -480,6 +483,9 @@ public class GitCreatePatchWizard extends Wizard {
 			gitFormat = new Button(composite, SWT.CHECK);
 			gitFormat.setText(UIText.GitCreatePatchWizard_GitFormat);
 			gitFormat.setLayoutData(gd);
+
+			Dialog.applyDialogFont(composite);
+			setControl(composite);
 		}
 
 	}

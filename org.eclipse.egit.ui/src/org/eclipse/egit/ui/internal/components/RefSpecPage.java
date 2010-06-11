@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.osgi.util.NLS;
@@ -148,6 +149,7 @@ public class RefSpecPage extends BaseWizardPage {
 		saveButton.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
 		saveButton.addSelectionListener(changesNotifier);
 
+		Dialog.applyDialogFont(panel);
 		setControl(panel);
 		notifySelectionChanged();
 		checkPage();
