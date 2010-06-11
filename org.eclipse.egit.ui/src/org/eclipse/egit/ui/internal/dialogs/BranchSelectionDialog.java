@@ -169,6 +169,8 @@ public class BranchSelectionDialog extends TitleAreaDialog {
 		setMessage(getMessageText());
 		getShell().setText(title);
 
+		applyDialogFont(parent);
+
 		return parent;
 	}
 

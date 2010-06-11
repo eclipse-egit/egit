@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.internal.components.BaseWizardPage;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
 import org.eclipse.egit.ui.internal.components.SelectionChangeListener;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -174,6 +175,7 @@ class SourceBranchPage extends BaseWizardPage {
 			}
 		});
 
+		Dialog.applyDialogFont(panel);
 		setControl(panel);
 		checkPage();
 	}

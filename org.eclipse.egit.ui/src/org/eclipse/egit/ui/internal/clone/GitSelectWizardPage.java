@@ -24,6 +24,7 @@ import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -281,6 +282,7 @@ public class GitSelectWizardPage extends WizardPage {
 			}
 		}
 		tv.getTree().setEnabled(!newProjectWizard.getSelection());
+		Dialog.applyDialogFont(main);
 		setControl(main);
 
 	}

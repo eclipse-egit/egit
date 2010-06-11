@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -193,6 +194,7 @@ public class ConfigureUriPage extends WizardPage {
 			}
 		}
 
+		Dialog.applyDialogFont(main);
 		setControl(main);
 
 	}
