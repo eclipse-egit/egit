@@ -10,9 +10,12 @@
 package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +33,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jgit.diff.DiffFormatter;
+import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
@@ -59,6 +63,12 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 
 	private Color sys_darkgray;
 
+	private Color sys_hunkHeaderColor;
+
+	private Color sys_linesAddedColor;
+
+	private Color sys_linesRemovedColor;
+
 	private Cursor sys_linkCursor;
 
 	private Cursor sys_normalCursor;
@@ -68,8 +78,6 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 	private Repository db;
 
 	private TreeWalk walker;
-
-	private DiffFormatter diffFmt = new DiffFormatter();
 
 	private static final String SPACE = " "; //$NON-NLS-1$
 
@@ -84,7 +92,12 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 
 		sys_linkColor = t.getDisplay().getSystemColor(SWT.COLOR_BLUE);
 		sys_darkgray = t.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
+		sys_hunkHeaderColor = t.getDisplay().getSystemColor(SWT.COLOR_BLUE);
+		sys_linesAddedColor = t.getDisplay().getSystemColor(SWT.COLOR_GREEN);
+		sys_linesRemovedColor = t.getDisplay().getSystemColor(SWT.COLOR_RED);
+
 		sys_linkCursor = t.getDisplay().getSystemCursor(SWT.CURSOR_HAND);
+
 		sys_normalCursor = t.getCursor();
 
 		t.addListener(SWT.MouseMove, new Listener() {
@@ -231,8 +244,7 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 
 		d.append(LF);
 
-		addDiff(d);
-
+		addDiff(d, styles);
 
 		Matcher matcher = p.matcher(msg);
 		while (matcher.find()) {
@@ -241,6 +253,11 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 
 		final StyleRange[] arr = new StyleRange[styles.size()];
 		styles.toArray(arr);
+		Arrays.sort(arr, new Comparator<StyleRange>() {
+			public int compare(StyleRange o1, StyleRange o2) {
+				return o1.start - o2.start;
+			}
+		});
 		setDocument(new Document(d.toString()));
 		getTextWidget().setStyleRanges(arr);
 	}
@@ -278,7 +295,34 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		styles.add(sr);
 	}
 
-	private void addDiff(final StringBuilder d) {
+	private void addDiff(final StringBuilder d, final ArrayList<StyleRange> styles) {
+		DiffFormatter diffFmt = new DiffFormatter() {
+			@Override
+			protected void writeHunkHeader(OutputStream out, int aCur,
+					int aEnd, int bCur, int bEnd) throws IOException {
+				int start = d.length();
+				super.writeHunkHeader(out, aCur, aEnd, bCur, bEnd);
+				int end = d.length();
+				styles.add(new StyleRange(start, end - start, sys_hunkHeaderColor, null));
+			}
+			@Override
+			protected void writeAddedLine(OutputStream out, RawText b, int bCur, boolean endOfLineMissing)
+					throws IOException {
+				int start = d.length();
+				super.writeAddedLine(out, b, bCur, endOfLineMissing);
+				int end = d.length();
+				styles.add(new StyleRange(start, end - start, sys_linesAddedColor, null));
+			}
+			@Override
+			protected void writeRemovedLine(OutputStream out, RawText b, int bCur, boolean endOfLineMissing)
+					throws IOException {
+				int start = d.length();
+				super.writeRemovedLine(out, b, bCur, endOfLineMissing);
+				int end = d.length();
+				styles.add(new StyleRange(start, end - start, sys_linesRemovedColor, null));
+			}
+		};
+
 		if (!(commit.getParentCount() == 1))
 			return;
 		try {
