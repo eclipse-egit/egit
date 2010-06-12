@@ -55,5 +55,9 @@ class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> {
 
 	static class SWTLane extends PlotLane {
 		Color color;
+		@Override
+		public boolean equals(Object o) {
+			return super.equals(o) && color.equals(((SWTLane)o).color);
+		}
 	}
 }
