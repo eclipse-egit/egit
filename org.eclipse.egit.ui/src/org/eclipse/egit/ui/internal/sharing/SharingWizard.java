@@ -15,7 +15,6 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
@@ -76,13 +75,9 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 			if (e instanceof InvocationTargetException) {
 				e = e.getCause();
 			}
-			final IStatus status;
 			if (e instanceof CoreException) {
-				status = ((CoreException) e).getStatus();
+				IStatus status = ((CoreException) e).getStatus();
 				e = status.getException();
-			} else {
-				status = new Status(IStatus.ERROR, Activator.getPluginId(), 1,
-						UIText.SharingWizard_failed, e);
 			}
 			Activator.handleError(UIText.SharingWizard_failed, e, true);
 			return false;
