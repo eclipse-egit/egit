@@ -323,6 +323,11 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 				return false;
 			return super.similarTo(style);
 		}
+
+		@Override
+		public boolean equals(Object object) {
+			return super.equals(object) && targetCommit.equals((RevCommit)object);
+		}
 	}
 
 	void setWrap(boolean wrap) {
