@@ -44,7 +44,7 @@ public class CommitCombo extends Composite {
 
 	private final Combo combo;
 
-	private class ComboCommitEnt {
+	private static class ComboCommitEnt {
 
 		private final String message;
 

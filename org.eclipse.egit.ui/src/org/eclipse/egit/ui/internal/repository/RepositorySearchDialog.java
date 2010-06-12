@@ -97,7 +97,7 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 	private final IEclipsePreferences prefs = new InstanceScope()
 			.getNode(Activator.getPluginId());
 
-	private final class ContentProvider implements ITreeContentProvider {
+	private static final class ContentProvider implements ITreeContentProvider {
 
 		@SuppressWarnings("unchecked")
 		public Object[] getElements(Object inputElement) {

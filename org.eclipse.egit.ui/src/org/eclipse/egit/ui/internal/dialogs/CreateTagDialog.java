@@ -108,7 +108,7 @@ public class CreateTagDialog extends Dialog {
 
 	private final IInputValidator tagNameValidator;
 
-	class TagInputList extends LabelProvider implements IWorkbenchAdapter {
+	static class TagInputList extends LabelProvider implements IWorkbenchAdapter {
 
 		private final List<Tag> tagList;
 
@@ -143,7 +143,7 @@ public class CreateTagDialog extends Dialog {
 		}
 	}
 
-	class TagLabelProvider extends WorkbenchLabelProvider implements
+	static class TagLabelProvider extends WorkbenchLabelProvider implements
 			ITableLabelProvider {
 
 		private final ResourceManager fImageCache = new LocalResourceManager(JFaceResources

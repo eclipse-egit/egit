@@ -880,7 +880,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		}
 	}
 
-	private class PreviewDecoration implements IDecoration {
+	private static class PreviewDecoration implements IDecoration {
 
 		private List<String> prefixes = new ArrayList<String>();
 
