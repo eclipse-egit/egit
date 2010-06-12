@@ -160,9 +160,8 @@ class GitDocument extends Document implements RepositoryListener {
 			// project settings, but there is no historic API for this.
 			IEncodedStorage encodedStorage = ((IEncodedStorage)resource);
 			try {
-				if (encodedStorage != null)
-					charset = encodedStorage.getCharset();
-				else
+				charset = encodedStorage.getCharset();
+				if (charset != null)
 					charset = resource.getParent().getDefaultCharset();
 			} catch (CoreException e) {
 				charset = Constants.CHARACTER_ENCODING;
