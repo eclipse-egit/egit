@@ -326,18 +326,10 @@ public class CommitAction extends RepositoryAction {
 				if (!filename.startsWith(repoRelativePath))
 					continue;
 				String projectRelativePath = filename.substring(repoRelativePath.length());
-				IResource member = project.getFile(projectRelativePath);
-				if (member != null && member instanceof IFile) {
-					if (!files.contains(member))
-						files.add((IFile) member);
-					category.add((IFile) member);
-				} else {
-					// TODO is this the right Location?
-					if (GitTraceLocation.UI.isActive())
-						GitTraceLocation.getTrace().trace(
-								GitTraceLocation.UI.getLocation(),
-								"Couldn't find " + filename); //$NON-NLS-1$
-				}
+				IFile member = project.getFile(projectRelativePath);
+				if (!files.contains(member))
+					files.add(member);
+				category.add(member);
 			} catch (Exception e) {
 				if (GitTraceLocation.UI.isActive())
 					GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
