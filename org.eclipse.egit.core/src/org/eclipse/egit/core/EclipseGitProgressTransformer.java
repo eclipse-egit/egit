@@ -14,7 +14,7 @@ import org.eclipse.jgit.lib.ProgressMonitor;
 
 /** Create a new Git to Eclipse progress monitor. */
 public class EclipseGitProgressTransformer implements ProgressMonitor {
-	private final String EMPTY_STRING = "";  //$NON-NLS-1$
+	private static final String EMPTY_STRING = "";  //$NON-NLS-1$
 
 	private final IProgressMonitor root;
 
