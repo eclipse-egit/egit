@@ -184,7 +184,7 @@ public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTree
 				* result
 				+ ((myRepository == null) ? 0 : myRepository.getDirectory()
 						.hashCode());
-		result = prime * result + ((myType == null) ? 0 : myType.hashCode());
+		result = prime * result + myType.hashCode();
 		return result;
 	}
 
