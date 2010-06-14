@@ -138,6 +138,11 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 
 	private CreatePatchAction createPatchAction = new CreatePatchAction();
 
+	// we need to keep track of these actions so that we can
+	// dispose them when the page is disposed (the history framework
+	// does not do this for us)
+	private final List<BooleanPrefAction> actionsToDispose = new ArrayList<BooleanPrefAction>();
+
 	/**
 	 * Determine if the input can be shown in this viewer.
 	 *
@@ -731,6 +736,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			}
 		};
 		a.apply(a.isChecked());
+		actionsToDispose.add(a);
 		return a;
 	}
 
@@ -742,25 +748,30 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			}
 		};
 		a.apply(a.isChecked());
+		actionsToDispose.add(a);
 		return a;
 	}
 
 	private IAction createShowComment() {
-		return new BooleanPrefAction(SHOW_COMMENT,
+		BooleanPrefAction a = new BooleanPrefAction(SHOW_COMMENT,
 				UIText.ResourceHistory_toggleRevComment) {
 			void apply(final boolean value) {
 				layout();
 			}
 		};
+		actionsToDispose.add(a);
+		return a;
 	}
 
 	private IAction createShowFiles() {
-		return new BooleanPrefAction(SHOW_FILES,
+		BooleanPrefAction a = new BooleanPrefAction(SHOW_FILES,
 				UIText.ResourceHistory_toggleRevDetail) {
 			void apply(final boolean value) {
 				layout();
 			}
 		};
+		actionsToDispose.add(a);
+		return a;
 	}
 
 	private void createStandardActions() {
@@ -801,6 +812,10 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 
 	public void dispose() {
 		Repository.removeAnyRepositoryChangedListener(this);
+		// dispose of the actions (the history framework doesn't do this for us)
+		for (BooleanPrefAction action: actionsToDispose)
+			action.dispose();
+		actionsToDispose.clear();
 		cancelRefreshJob();
 		if (popupMgr != null) {
 			for (final IContributionItem i : popupMgr.getItems()) {
@@ -1106,6 +1121,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 		}
 
 		public void dispose() {
+			// stop listening
 			prefs.removePropertyChangeListener(this);
 		}
 	}
