@@ -58,7 +58,7 @@
             <dependency>
               <type>p2-installable-unit</type>
               <artifactId>org.eclipse.egit.feature.group</artifactId>
-              <version>[0.8.0,0.9.0)</version>
+              <version>[0.9.0,0.10.0)</version>
             </dependency>
             <dependency>
               <type>p2-installable-unit</type>
@@ -68,7 +68,7 @@
             <dependency>
               <type>p2-installable-unit</type>
               <artifactId>org.eclipse.jgit.feature.group</artifactId>
-              <version>[0.8.0,0.9.0)</version>
+              <version>[0.9.0,0.10.0)</version>
             </dependency>
            </dependencies>
         </configuration>
