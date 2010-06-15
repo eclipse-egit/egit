@@ -13,10 +13,8 @@ import java.io.IOException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.CoreText;
-import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
@@ -67,7 +65,6 @@ public class TagOperation implements IEGitOperation {
 			updateRepo();
 			monitor.worked(1);
 
-			ProjectUtil.refreshProjects(repo, SubMonitor.convert(monitor, 1));
 		} finally {
 			monitor.done();
 		}

@@ -12,6 +12,7 @@ package org.eclipse.egit.core.op;
 
 import java.io.IOException;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -83,6 +84,7 @@ public class BranchOperation implements IEGitOperation {
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
 			public void run(IProgressMonitor monitor) throws CoreException {
+				IProject[] validProjects = ProjectUtil.getValidProjects(repository);
 				monitor.beginTask(NLS.bind(
 						CoreText.BranchOperation_performingBranch, refName), 6);
 				lookupRefs();
@@ -100,7 +102,7 @@ public class BranchOperation implements IEGitOperation {
 				updateHeadRef();
 				monitor.worked(1);
 
-				ProjectUtil.refreshProjects(repository, new SubProgressMonitor(
+				ProjectUtil.refreshValidProjects(validProjects, new SubProgressMonitor(
 						monitor, 1));
 				monitor.worked(1);
 
