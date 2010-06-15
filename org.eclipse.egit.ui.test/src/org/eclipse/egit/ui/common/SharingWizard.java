@@ -9,7 +9,7 @@
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.ui.wizards.share;
+package org.eclipse.egit.ui.common;
 
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
