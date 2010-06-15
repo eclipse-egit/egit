@@ -239,7 +239,7 @@ public class GitSelectWizardPage extends WizardPage {
 		tv.setContentProvider(cp);
 		GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT, 200)
 				.applyTo(tv.getTree());
-		new RepositoriesViewLabelProvider(tv);
+		new RepositoriesViewLabelProvider();
 
 		tv.addSelectionChangedListener(new ISelectionChangedListener() {
 
