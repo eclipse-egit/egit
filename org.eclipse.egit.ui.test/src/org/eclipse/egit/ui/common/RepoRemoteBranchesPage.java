@@ -7,7 +7,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.ui.wizards.clone;
+package org.eclipse.egit.ui.common;
 
 import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertEnabled;
 import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertNotEnabled;
@@ -18,6 +18,12 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 
 public class RepoRemoteBranchesPage {
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
+
+	private final String cloneUrl;
+
+	public RepoRemoteBranchesPage(String cloneUrl) {
+		this.cloneUrl = cloneUrl;
+	}
 
 	public void assertRemoteBranches(String... branches) {
 		SWTBotTable table = bot.table();
@@ -37,7 +43,7 @@ public class RepoRemoteBranchesPage {
 
 	public WorkingCopyPage nextToWorkingCopy() {
 		bot.button("Next >").click();
-		return new WorkingCopyPage();
+		return new WorkingCopyPage(cloneUrl);
 	}
 
 	public void deselectAllBranches() {
