@@ -7,7 +7,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.ui.wizards.clone;
+package org.eclipse.egit.ui.common;
 
 import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertEnabled;
 import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertNotEnabled;
@@ -68,6 +68,6 @@ public class RepoPropertiesPage {
 	public RepoRemoteBranchesPage nextToRemoteBranches(String string) {
 		setURI(string);
 		bot.button("Next >").click();
-		return new RepoRemoteBranchesPage();
+		return new RepoRemoteBranchesPage(string);
 	}
 }
