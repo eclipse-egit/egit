@@ -2,6 +2,7 @@
  * Copyright (C) 2007, Dave Watson <dwatson@mimvista.com>
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,14 +11,16 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.runtime.Preferences;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.jface.preference.IPersistentPreferenceStore;
+import org.eclipse.jgit.revwalk.RevFlag;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -46,7 +49,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.jgit.revwalk.RevFlag;
 
 /**
  * A toolbar for the history page.
@@ -71,7 +73,7 @@ public class FindToolbar extends Composite {
 	 */
 	public final FindResults findResults = new FindResults();
 
-	private Preferences prefs = Activator.getDefault().getPluginPreferences();
+	private IPersistentPreferenceStore store = (IPersistentPreferenceStore) Activator.getDefault().getPreferenceStore();
 
 	private List<Listener> eventList = new ArrayList<Listener>();
 
@@ -182,7 +184,7 @@ public class FindToolbar extends Composite {
 					prefsMenu.setLocation(point);
 					prefsMenu.setVisible(true);
 				} else {
-					switch (prefs.getInt(UIPreferences.FINDTOOLBAR_FIND_IN)) {
+					switch (store.getInt(UIPreferences.FINDTOOLBAR_FIND_IN)) {
 					case PREFS_FINDIN_COMMITID:
 						commentsItem.notifyListeners(SWT.Selection, null);
 						break;
@@ -305,16 +307,22 @@ public class FindToolbar extends Composite {
 
 		caseItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				prefs.setValue(UIPreferences.FINDTOOLBAR_IGNORE_CASE, caseItem
-						.getSelection());
-				Activator.getDefault().savePluginPreferences();
+				store.setValue(UIPreferences.FINDTOOLBAR_IGNORE_CASE,
+						caseItem.getSelection());
+				if (store.needsSaving()){
+					try {
+						store.save();
+					} catch (IOException e1) {
+						Activator.handleError(e1.getMessage(), e1, false);
+					}
+				}
 				clear();
 			}
 		});
-		caseItem.setSelection(prefs
+		caseItem.setSelection(store
 				.getBoolean(UIPreferences.FINDTOOLBAR_IGNORE_CASE));
 
-		int selectedPrefsItem = prefs.getInt(UIPreferences.FINDTOOLBAR_FIND_IN);
+		int selectedPrefsItem = store.getInt(UIPreferences.FINDTOOLBAR_FIND_IN);
 
 		commitIdItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -378,8 +386,14 @@ public class FindToolbar extends Composite {
 	}
 
 	private void prefsItemChanged(int findin, MenuItem item) {
-		prefs.setValue(UIPreferences.FINDTOOLBAR_FIND_IN, findin);
-		Activator.getDefault().savePluginPreferences();
+		store.setValue(UIPreferences.FINDTOOLBAR_FIND_IN, findin);
+		if (store.needsSaving()){
+			try {
+				store.save();
+			} catch (IOException e) {
+				Activator.handleError(e.getMessage(), e, false);
+			}
+		}
 		commitIdItem.setSelection(false);
 		commentsItem.setSelection(false);
 		authorItem.setSelection(false);

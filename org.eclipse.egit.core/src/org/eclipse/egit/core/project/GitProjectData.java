@@ -30,8 +30,10 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Preferences;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.GitCorePreferences;
@@ -215,11 +217,12 @@ public class GitProjectData {
 	 */
 	public static void reconfigureWindowCache() {
 		final WindowCacheConfig c = new WindowCacheConfig();
-		Preferences p = Activator.getDefault().getPluginPreferences();
-		c.setPackedGitLimit(p.getInt(GitCorePreferences.core_packedGitLimit));
-		c.setPackedGitWindowSize(p.getInt(GitCorePreferences.core_packedGitWindowSize));
-		c.setPackedGitMMAP(p.getBoolean(GitCorePreferences.core_packedGitMMAP));
-		c.setDeltaBaseCacheLimit(p.getInt(GitCorePreferences.core_deltaBaseCacheLimit));
+		IEclipsePreferences d = new DefaultScope().getNode(Activator.getPluginId());
+		IEclipsePreferences p = new InstanceScope().getNode(Activator.getPluginId());
+		c.setPackedGitLimit(p.getInt(GitCorePreferences.core_packedGitLimit, d.getInt(GitCorePreferences.core_packedGitLimit, 0)));
+		c.setPackedGitWindowSize(p.getInt(GitCorePreferences.core_packedGitWindowSize, d.getInt(GitCorePreferences.core_packedGitWindowSize, 0)));
+		c.setPackedGitMMAP(p.getBoolean(GitCorePreferences.core_packedGitMMAP, d.getBoolean(GitCorePreferences.core_packedGitMMAP, false)));
+		c.setDeltaBaseCacheLimit(p.getInt(GitCorePreferences.core_deltaBaseCacheLimit, d.getInt(GitCorePreferences.core_deltaBaseCacheLimit, 0)));
 		WindowCache.reconfigure(c);
 	}
 
