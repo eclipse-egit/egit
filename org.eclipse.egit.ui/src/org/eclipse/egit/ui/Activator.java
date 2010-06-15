@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -30,6 +31,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -256,8 +258,10 @@ public class Activator extends AbstractUIPlugin {
 
 		public void indexChanged(IndexChangedEvent e) {
 			// Check the workspace setting "refresh automatically" setting first
-			if (!ResourcesPlugin.getPlugin().getPluginPreferences().getBoolean(
-					ResourcesPlugin.PREF_AUTO_REFRESH))
+			boolean autoRefresh = new InstanceScope().getNode(
+					ResourcesPlugin.getPlugin().getBundle().getSymbolicName())
+					.getBoolean(ResourcesPlugin.PREF_AUTO_REFRESH, false);
+			if (!autoRefresh)
 				return;
 
 			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();

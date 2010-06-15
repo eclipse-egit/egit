@@ -2,6 +2,7 @@
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,11 +11,11 @@
  *******************************************************************************/
 package org.eclipse.egit.ui;
 
-import org.eclipse.core.runtime.Preferences;
 
 /**
- * Preferences used by the plugin.
- * All plugin preferences shall be referenced by a constant in this class.
+ * Preferences used by the EGit UI plug-in.
+ * <p>
+ * All plug-in preferences shall be referenced by a constant in this class.
  */
 public class UIPreferences {
 	/** */
@@ -81,22 +82,18 @@ public class UIPreferences {
 	public final static String DECORATOR_SHOW_ASSUME_VALID_ICON = "decorator_show_assume_valid_icon"; //$NON-NLS-1$
 
 	/**
-	 * Get the preference values associated with a fixed integer array.
+	 * Converts a persisted String separated with commas to an integer array
 	 *
-	 * @param prefs
-	 *            the store to read.
-	 * @param key
-	 *            key name.
+	 * @param value
+	 *            the String value
 	 * @param cnt
-	 *            number of entries in the returned array.
+	 *            number of entries in the returned array
 	 * @return the preference values for the array.
 	 */
-	public static int[] getIntArray(final Preferences prefs, final String key,
-			final int cnt) {
-		final String s = prefs.getString(key);
+	public static int[] stringToIntArray(final String value, final int cnt) {
 		final int[] r = new int[cnt];
-		if (s != null) {
-			final String[] e = s.split(","); //$NON-NLS-1$
+		if (value != null) {
+			final String[] e = value.split(","); //$NON-NLS-1$
 			for (int i = 0; i < Math.min(e.length, r.length); i++)
 				r[i] = Integer.parseInt(e[i].trim());
 		}
@@ -104,44 +101,19 @@ public class UIPreferences {
 	}
 
 	/**
-	 * Set the preference values associated with a fixed integer array.
+	 * Converts an integer array into a String separated by commas
 	 *
-	 * @param prefs
-	 *            the store to read.
-	 * @param key
-	 *            key name.
 	 * @param data
-	 *            entries to store.
+	 *            integers to store
+	 * @return the String
 	 */
-	public static void setValue(final Preferences prefs, final String key,
-			final int[] data) {
+	public static String intArrayToString(final int[] data) {
 		final StringBuilder s = new StringBuilder();
 		for (int i = 0; i < data.length; i++) {
 			if (i > 0)
 				s.append(',');
 			s.append(data[i]);
 		}
-		prefs.setValue(key, s.toString());
-	}
-
-	/**
-	 * Set the preference values associated with a fixed integer array.
-	 *
-	 * @param prefs
-	 *            the store to read.
-	 * @param key
-	 *            key nam
-	 * @param data
-	 *            entries to store.
-	 */
-	public static void setDefault(final Preferences prefs, final String key,
-			final int[] data) {
-		final StringBuilder s = new StringBuilder();
-		for (int i = 0; i < data.length; i++) {
-			if (i > 0)
-				s.append(',');
-			s.append(data[i]);
-		}
-		prefs.setDefault(key, s.toString());
+		return s.toString();
 	}
 }
