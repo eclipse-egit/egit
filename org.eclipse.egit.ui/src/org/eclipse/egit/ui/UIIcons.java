@@ -173,11 +173,11 @@ public class UIIcons {
 		NEW_REPOSITORY = map("etool16/newlocation_wiz.gif"); //$NON-NLS-1$
 		REMOTE_REPOSITORY = map("obj16/remote_entry_tbl.gif"); //$NON-NLS-1$
 		REMOTE_SPEC = map("obj16/remotespec.gif"); //$NON-NLS-1$
-		BRANCHES = map("obj16/branches_rep.gif"); //$NON-NLS-1$
+		BRANCHES = map("obj16/branches_obj.gif"); //$NON-NLS-1$
 		OVR_CHECKEDOUT = map("ovr/checkedout_ov.gif"); //$NON-NLS-1$
-		TAGS = map("obj16/versions_rep.gif"); //$NON-NLS-1$
+		TAGS = map("obj16/tags.gif"); //$NON-NLS-1$
 		TAG = map("obj16/version_rep.gif"); //$NON-NLS-1$
-		BRANCH = map("obj16/branch.gif"); //$NON-NLS-1$
+		BRANCH = map("obj16/branch_obj.gif"); //$NON-NLS-1$
 		COLLAPSEALL = map("elcl16/collapseall.gif"); //$NON-NLS-1$
 		CLONEGIT = map("obj16/cloneGit.gif"); //$NON-NLS-1$
 	}
