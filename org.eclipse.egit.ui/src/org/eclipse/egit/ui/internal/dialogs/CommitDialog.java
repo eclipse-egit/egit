@@ -33,7 +33,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.internal.storage.GitFileHistoryProvider;
-
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
@@ -57,6 +56,16 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jgit.lib.Commit;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.GitIndex;
+import org.eclipse.jgit.lib.GitIndex.Entry;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.Tree;
+import org.eclipse.jgit.lib.TreeEntry;
+import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -86,14 +95,6 @@ import org.eclipse.team.core.history.IFileHistoryProvider;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.internal.ui.history.FileRevisionTypedElement;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
-import org.eclipse.jgit.lib.Commit;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.GitIndex;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.Tree;
-import org.eclipse.jgit.lib.TreeEntry;
-import org.eclipse.jgit.lib.GitIndex.Entry;
 
 /**
  * Dialog is shown to user when they request to commit files. Changes in the
@@ -193,9 +194,12 @@ public class CommitDialog extends Dialog {
 	Text committerText;
 	Button amendingButton;
 	Button signedOffButton;
+	Button changeIdButton;
 	Button showUntrackedButton;
 
 	CheckboxTableViewer filesViewer;
+
+	ObjectId originalChangeId;
 
 	/**
 	 * A collection of files that should be already checked in the table.
@@ -267,8 +271,10 @@ public class CommitDialog extends Dialog {
 			amendingButton.setEnabled(false); // if already set, don't allow any changes
 			commitText.setText(previousCommitMessage);
 			authorText.setText(previousAuthor);
+			saveOriginalChangeId();
 		} else if (!amendAllowed) {
 			amendingButton.setEnabled(false);
+			originalChangeId = null;
 		}
 		amendingButton.addSelectionListener(new SelectionListener() {
 			boolean alreadyAdded = false;
@@ -282,6 +288,7 @@ public class CommitDialog extends Dialog {
 						curText += "\n"; //$NON-NLS-1$
 					commitText.setText(curText + previousCommitMessage);
 					authorText.setText(previousAuthor);
+					saveOriginalChangeId();
 				}
 			}
 
@@ -318,6 +325,36 @@ public class CommitDialog extends Dialog {
 			}
 		});
 
+		changeIdButton = new Button(container, SWT.CHECK);
+		changeIdButton.setText(UIText.CommitDialog_AddChangeIdLabel);
+		changeIdButton.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).span(2, 1).create());
+		changeIdButton.setToolTipText(UIText.CommitDialog_AddChangeIdTooltip);
+		changeIdButton.addSelectionListener(new SelectionListener() {
+
+			public void widgetSelected(SelectionEvent e) {
+				createChangeId = changeIdButton.getSelection();
+				String text = commitText.getText();
+				if (createChangeId) {
+					String changedText = ChangeIdUtil.insertId(text,
+							originalChangeId != null ? originalChangeId : ObjectId.zeroId());
+					if (!text.equals(changedText))
+						commitText.setText(changedText);
+				} else {
+					int changeIdOffset = findOffsetOfChangeIdLine(text);
+					if (changeIdOffset > 0) {
+						int endOfChangeId = findNextEOL(changeIdOffset, text);
+						String cleanedText = text.substring(0, changeIdOffset)
+								+ text.substring(endOfChangeId);
+						commitText.setText(cleanedText);
+					}
+				}
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// empty
+			}
+		});
+
 		showUntrackedButton = new Button(container, SWT.CHECK);
 		showUntrackedButton.setText(UIText.CommitDialog_ShowUntrackedFiles);
 		showUntrackedButton.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).span(2, 1).create());
@@ -346,9 +383,11 @@ public class CommitDialog extends Dialog {
 		commitText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateSignedOffButton();
+				updateChangeIdButton();
 			}
 		});
 		updateSignedOffButton();
+		updateChangeIdButton();
 
 		Table resourcesTable = new Table(container, SWT.H_SCROLL | SWT.V_SCROLL
 				| SWT.FULL_SELECTION | SWT.MULTI | SWT.CHECK | SWT.BORDER);
@@ -390,12 +429,44 @@ public class CommitDialog extends Dialog {
 		return container;
 	}
 
+	private void saveOriginalChangeId() {
+		int changeIdOffset = findOffsetOfChangeIdLine(previousCommitMessage);
+		if (changeIdOffset > 0) {
+			int endOfChangeId = findNextEOL(changeIdOffset, previousCommitMessage);
+			int sha1Offset = changeIdOffset + Text.DELIMITER.length() + "Change-Id: I".length(); //$NON-NLS-1$
+			try {
+				originalChangeId = ObjectId.fromString(previousCommitMessage.substring(sha1Offset, endOfChangeId));
+			} catch (IllegalArgumentException e) {
+				originalChangeId = null;
+			}
+		} else
+			originalChangeId = null;
+	}
+
+	private int findNextEOL(int oldPos, String message) {
+		return message.indexOf(Text.DELIMITER, oldPos + Text.DELIMITER.length());
+	}
+
+	private int findOffsetOfChangeIdLine(String message) {
+		return message.indexOf(Text.DELIMITER + "Change-Id: I"); //$NON-NLS-1$
+	}
+
 	private void updateSignedOffButton() {
 		String curText = commitText.getText();
 		if (!curText.endsWith(Text.DELIMITER))
 			curText += Text.DELIMITER;
 
 		signedOffButton.setSelection(curText.indexOf(getSignedOff() + Text.DELIMITER) != -1);
+	}
+
+	private void updateChangeIdButton() {
+		String curText = commitText.getText();
+		if (!curText.endsWith(Text.DELIMITER))
+			curText += Text.DELIMITER;
+
+		boolean hasId = curText.indexOf(Text.DELIMITER + "Change-Id: ") != -1; //$NON-NLS-1$
+		if (hasId)
+			changeIdButton.setSelection(true);
 	}
 
 	private String getSignedOff() {
@@ -572,6 +643,7 @@ public class CommitDialog extends Dialog {
 	private boolean amending = false;
 	private boolean amendAllowed = true;
 	private boolean showUntracked = true;
+	private boolean createChangeId = false;
 
 	private ArrayList<IFile> selectedFiles = new ArrayList<IFile>();
 	private String previousCommitMessage = ""; //$NON-NLS-1$
@@ -1009,6 +1081,13 @@ public class CommitDialog extends Dialog {
 		adapter
 				.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 
+	}
+
+	/**
+	 * @return true if a Change-Id line for Gerrit should be created
+	 */
+	public boolean getCreateChangeId() {
+		return createChangeId;
 	}
 
 }
