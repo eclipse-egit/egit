@@ -19,6 +19,8 @@ import java.io.File;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.egit.ui.common.ExistingOrNewPage;
+import org.eclipse.egit.ui.common.SharingWizard;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Constants;
