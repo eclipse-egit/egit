@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALu3///qQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-11T22:27:21Z",
+      "side": 1,
+      "message": "I would prefer COLOR_DARK_GREEN since GREEN is very light and hard to read on white background. \n\nMaybe colors could be also made configurable in another step via preferences. Think about red-green color blind users.",
+      "revId": "9bed4b08e7bdda0aeb6b6cb0c07a9c54e333b6a3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
