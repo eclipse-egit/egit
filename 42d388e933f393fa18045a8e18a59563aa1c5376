@@ -16,6 +16,24 @@
       "revId": "42d388e933f393fa18045a8e18a59563aa1c5376",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///sI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-06-09T08:49:48Z",
+      "side": 0,
+      "message": "1. refreshing projects is not required in this operation (no resources are changed).\n2. ProjectUtil.refreshProjects was deleted because it was replaced by new methods.",
+      "parentUuid": "AAALu3///sg\u003d",
+      "revId": "42d388e933f393fa18045a8e18a59563aa1c5376",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
