@@ -13,6 +13,7 @@ package org.eclipse.egit.core.op;
 import java.io.File;
 import java.io.IOException;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -116,6 +117,9 @@ public class ResetOperation implements IEGitOperation {
 		monitor.beginTask(NLS.bind(CoreText.ResetOperation_performingReset,
 				type.toString().toLowerCase(), refName), 7);
 
+		IProject[] validProjects = null;
+		if (type == ResetType.HARD)
+			validProjects = ProjectUtil.getValidProjects(repository);
 		mapObjects();
 		monitor.worked(1);
 
@@ -145,7 +149,7 @@ public class ResetOperation implements IEGitOperation {
 
 		if (type == ResetType.HARD)
 			// only refresh if working tree changes
-			ProjectUtil.refreshProjects(repository, new SubProgressMonitor(
+			ProjectUtil.refreshValidProjects(validProjects, new SubProgressMonitor(
 					monitor, 1));
 
 		monitor.done();

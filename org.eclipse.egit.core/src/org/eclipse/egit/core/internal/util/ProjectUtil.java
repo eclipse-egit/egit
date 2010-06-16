@@ -9,6 +9,8 @@
 package org.eclipse.egit.core.internal.util;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -24,35 +26,75 @@ import org.eclipse.jgit.lib.Repository;
  * TODO: rename to RefreshUtil or ResourceUtil?
  */
 public class ProjectUtil {
+
 	/**
-	 * The method refreshes all projects contained in the given Git repository
+	 * The method returns all valid projects contained in the given Git
+	 * repository. A project is considered as valid if the .project file exists.
+	 * @see ProjectUtil#refreshValidProjects(IProject[], IProgressMonitor)
 	 * @param repository
-	 * @param monitor
+	 * @return valid projects
 	 * @throws CoreException
 	 */
-	public static void refreshProjects(Repository repository,
-			IProgressMonitor monitor) throws CoreException {
+	public static IProject[] getValidProjects(Repository repository)
+			throws CoreException {
 		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
-		try {
-			monitor.beginTask(CoreText.ProjectUtil_refreshingProjects,
-					projects.length);
-			final File parentFile = repository.getWorkDir();
-			for (IProject p : projects) {
-				if (monitor.isCanceled())
-					break;
+		List<IProject> result = new ArrayList<IProject>();
+		final File parentFile = repository.getWorkDir();
+		for (IProject p : projects) {
+			String projectFilePath = p.getLocation()
+					.append(".project").toOSString(); //$NON-NLS-1$
+			File projectFile = new File(projectFilePath);
+			if (projectFile.exists()) {
 				final File file = p.getLocation().toFile();
 				if (file.getAbsolutePath().startsWith(
 						parentFile.getAbsolutePath())) {
-					p.refreshLocal(IResource.DEPTH_INFINITE,
-							new SubProgressMonitor(monitor, 1));
-					monitor.worked(1);
+					result.add(p);
 				}
+			}
+		}
+		return result.toArray(new IProject[result.size()]);
+	}
+
+	/**
+	 * The method refreshes the given projects. Projects with missing .project
+	 * file are deleted. The method should be called in the following flow:<br>
+	 * <ol>
+	 * <li>Call {@link ProjectUtil#getValidProjects(Repository)}
+	 * <li>Perform a workdir checkout (e.g. branch, reset)
+	 * <li>Call
+	 * {@link ProjectUtil#refreshValidProjects(IProject[], IProgressMonitor)}
+	 * </ol>
+	 *
+	 * @param projects
+	 *            list of valid projects before workdir checkout.
+	 * @param monitor
+	 * @throws CoreException
+	 */
+	public static void refreshValidProjects(IProject[] projects,
+			IProgressMonitor monitor) throws CoreException {
+		try {
+			monitor.beginTask(CoreText.ProjectUtil_refreshingProjects,
+					projects.length);
+			for (IProject p : projects) {
+				if (monitor.isCanceled())
+					break;
+				String projectFilePath = p.getLocation().append(".project").toOSString();  //$NON-NLS-1$
+				File projectFile = new File(projectFilePath);
+				if (projectFile.exists())
+						p.refreshLocal(IResource.DEPTH_INFINITE,
+								new SubProgressMonitor(monitor, 1));
+
+				 else
+					p.delete(false, true, new SubProgressMonitor(monitor, 1));
+
+				monitor.worked(1);
 			}
 		} finally {
 			monitor.done();
 		}
 	}
+
 
 	/**
 	 * The method refreshes resources

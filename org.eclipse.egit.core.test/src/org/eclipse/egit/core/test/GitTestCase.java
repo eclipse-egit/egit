@@ -43,31 +43,13 @@ public abstract class GitTestCase {
 		project = new TestProject(true);
 		gitDir = new File(project.getProject().getWorkspace().getRoot()
 				.getRawLocation().toFile(), Constants.DOT_GIT);
-		rmrf(gitDir);
+		TestUtils.rmrf(gitDir);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		project.dispose();
-		rmrf(gitDir);
-	}
-
-	private void rmrf(File d) throws IOException {
-		if (!d.exists())
-			return;
-
-		File[] files = d.listFiles();
-		if (files != null) {
-			for (int i = 0; i < files.length; ++i) {
-				if (files[i].isDirectory())
-					rmrf(files[i]);
-				else if (!files[i].delete())
-					throw new IOException(files[i] + " in use or undeletable");
-			}
-		}
-		if (!d.delete())
-			throw new IOException(d + " in use or undeletable");
-		assert !d.exists();
+		TestUtils.rmrf(gitDir);
 	}
 
 	protected ObjectId createFile(Repository repository, IProject project, String name, String content) throws IOException {
