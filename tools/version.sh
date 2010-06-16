@@ -101,14 +101,14 @@ EGIT_N=$(next_version "$EGIT_V")
 JGIT_V=$(to_version "$J")
 JGIT_N=$(next_version "$JGIT_V")
 
-perl -pi -e '
+perl -pi~ -e '
 	s/^(Bundle-Version:\s*).*$/${1}'"$OSGI_V"'/;
 	s/(org.eclipse.egit.*;version=")[^"[(]*(")/${1}'"$EGIT_V"'${2}/;
 	s/(org.eclipse.egit.*;version="\[)[^"]*(\)")/${1}'"$EGIT_V,$EGIT_N"'${2}/;
 	s/(org.eclipse.jgit.*;version="\[)[^"]*(\)")/${1}'"$JGIT_V,$JGIT_N"'${2}/;
 	' $(git ls-files | grep META-INF/MANIFEST.MF)
 
-perl -pi -e '
+perl -pi~ -e '
 	if ($ARGV ne $old_argv) {
 		$seen_version = 0;
 		$old_argv = $ARGV;
@@ -120,11 +120,11 @@ perl -pi -e '
 	s/(feature="org.eclipse.jgit" version=")[^"]*(")/${1}'"$JGIT_V"'${2}/;
 	' org.eclipse.egit-feature/feature.xml
 
-perl -pi -e '
+perl -pi~ -e '
 	s{<(version)>[^<\$]*</\1>}{<${1}>'"$POM_V"'</${1}>};
 	' org.eclipse.egit-feature/pom.xml
 
-perl -pi -e '
+perl -pi~ -e '
 	if ($ARGV ne $old_argv) {
 		$seen_version = 0;
 		$old_argv = $ARGV;
@@ -135,7 +135,7 @@ perl -pi -e '
 	}
 	' org.eclipse.egit-updatesite/pom.xml
 
-perl -pi -e '
+perl -pi~ -e '
 	if ($ARGV ne $old_argv) {
 		$seen_version = 0;
 		$old_argv = $ARGV;
@@ -147,4 +147,5 @@ perl -pi -e '
 	s{<(jgit-version)>[^<]*</\1>}{<${1}>'"$J"'</${1}>};
 	' $(git ls-files | grep pom.xml)
 
+find . -name '*~' | xargs rm -f
 git diff
