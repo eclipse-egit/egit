@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALu3///sg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/TagOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-06-08T19:57:23Z",
+      "side": 0,
+      "message": "What does this have to do with the subject?",
+      "revId": "42d388e933f393fa18045a8e18a59563aa1c5376",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
