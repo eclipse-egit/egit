@@ -41,6 +41,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.lib.TreeEntry;
 import org.eclipse.jgit.lib.GitIndex.Entry;
+import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 
@@ -70,6 +71,8 @@ public class CommitOperation implements IEGitOperation {
 	private ArrayList<IFile> notIndexed;
 
 	private ArrayList<IFile> notTracked;
+
+	private boolean createChangeId;
 
 	/**
 	 *
@@ -256,6 +259,17 @@ public class CommitOperation implements IEGitOperation {
 				else
 					parentIds = new ObjectId[0];
 			}
+			if (createChangeId) {
+				ObjectId parentId;
+				if (parentIds.length > 0)
+					parentId = parentIds[0];
+				else
+					parentId = null;
+				ObjectId changeId = ChangeIdUtil.computeChangeId(tree.getId(), parentId, authorIdent, committerIdent, commitMessage);
+				commitMessage = ChangeIdUtil.insertId(commitMessage, changeId);
+				if (changeId != null)
+					commitMessage = commitMessage.replaceAll("\nChange-Id: I0000000000000000000000000000000000000000\n", "\nChange-Id: I" + changeId.getName() + "\n");  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+			}
 			Commit commit = new Commit(repo, parentIds);
 			commit.setTree(tree);
 			commit.setMessage(commitMessage);
@@ -345,6 +359,14 @@ public class CommitOperation implements IEGitOperation {
 	 */
 	public void setRepos(Repository[] repos) {
 		this.repos = repos;
+	}
+
+	/**
+	 * @param createChangeId
+	 *            <code>true</code> if a Change-Id should be inserted
+	 */
+	public void setComputeChangeId(boolean createChangeId) {
+		this.createChangeId = createChangeId;
 	}
 
 }
