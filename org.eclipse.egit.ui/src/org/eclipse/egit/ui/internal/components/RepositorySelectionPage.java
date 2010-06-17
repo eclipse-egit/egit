@@ -174,8 +174,10 @@ public class RepositorySelectionPage extends BaseWizardPage {
 			try {
 				if(text != null) {
 					text = text.trim();
-					if(Transport.canHandleProtocol(new URIish(text), FS.DETECTED))
-						preset = text;
+					if(Transport.canHandleProtocol(new URIish(text), FS.DETECTED)) {
+						if(!text.startsWith("http") || text.contains(".git")) //$NON-NLS-1$ //$NON-NLS-2$
+							preset = text;
+					}
 				}
 			} catch (URISyntaxException e) {
 				preset = null;
