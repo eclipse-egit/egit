@@ -18,18 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.fieldassist.ContentProposalAdapter;
-import org.eclipse.jface.fieldassist.IContentProposal;
-import org.eclipse.jface.fieldassist.IContentProposalProvider;
-import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.transport.RemoteConfig;
@@ -57,7 +53,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * Wizard page that allows the user entering the location of a remote repository
@@ -137,6 +132,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	private Composite uriPanel;
 
 	private Button uriButton;
+
+	private IPreviousValueProposalHandler uriProposalHandler;
 
 	/**
 	 * Create repository selection page, allowing user specifying URI or
@@ -328,7 +325,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 			}
 		});
 
-		addContentProposalToUriText(uriText);
+		uriProposalHandler = UIUtils.addPreviousValuesContentProposalToText(uriText, USED_URIS_PREF);
 
 		Button browseButton = new Button(g, SWT.NULL);
 		browseButton.setText(UIText.RepositorySelectionPage_BrowseLocalFile);
@@ -744,43 +741,12 @@ public class RepositorySelectionPage extends BaseWizardPage {
 			uriText.setFocus();
 	}
 
+
 	/**
-	 * Adds a URI string to the list of previously added ones
-	 *
-	 * TODO move this to some proper preferences handling class instead of
-	 * making it static
-	 *
-	 * @param stringToAdd
+	 * Updates the proposal list for the URI field
 	 */
-	public static void saveUriInPrefs(String stringToAdd) {
-
-		List<String> uriStrings = getUrisFromPrefs();
-
-		if (uriStrings.indexOf(stringToAdd) == 0)
-			return;
-		uriStrings.add(0, stringToAdd);
-
-		IEclipsePreferences prefs = new InstanceScope().getNode(Activator
-				.getPluginId());
-
-		StringBuilder sb = new StringBuilder();
-		StringBuilder lb = new StringBuilder();
-
-		// there is no "good" separator for URIish, so we
-		// keep track of the URI lengths separately
-		for (String uriString : uriStrings) {
-			sb.append(uriString);
-			lb.append(uriString.length());
-			lb.append(" "); //$NON-NLS-1$
-		}
-		prefs.put(USED_URIS_PREF, sb.toString());
-		prefs.put(USED_URIS_LENGTH_PREF, lb.toString());
-
-		try {
-			prefs.flush();
-		} catch (BackingStoreException e) {
-			// we simply ignore this here
-		}
+	public void saveUriInPrefs() {
+		uriProposalHandler.updateProposals();
 	}
 
 	/**
@@ -827,76 +793,6 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		if (control instanceof Composite)
 			for (final Control child : ((Composite) control).getChildren())
 				setEnabledRecursively(child, enable);
-	}
-
-	private void addContentProposalToUriText(Text uriTextField) {
-
-		UIUtils.addBulbDecorator(uriTextField, UIText.RepositorySelectionPage_ShowPreviousURIs_HoverText);
-
-		IContentProposalProvider cp = new IContentProposalProvider() {
-
-			public IContentProposal[] getProposals(String contents, int position) {
-
-				List<IContentProposal> resultList = new ArrayList<IContentProposal>();
-
-				String patternString = contents;
-				while (patternString.length() > 0
-						&& patternString.charAt(0) == ' ')
-					patternString = patternString.substring(1);
-				// make the simplest possible pattern check: allow "*"
-				// for multiple characters
-				patternString = patternString.replaceAll("\\x2A", ".*"); //$NON-NLS-1$ //$NON-NLS-2$
-				// make sure we add a (logical) * at the end
-				if (!patternString.endsWith(".*")) { //$NON-NLS-1$
-					patternString = patternString + ".*"; //$NON-NLS-1$
-				}
-				// let's compile a case-insensitive pattern (assumes ASCII only)
-				Pattern pattern;
-				try {
-					pattern = Pattern.compile(patternString,
-							Pattern.CASE_INSENSITIVE);
-				} catch (PatternSyntaxException e) {
-					pattern = null;
-				}
-
-				List<String> uriStrings = getUrisFromPrefs();
-				for (final String uriString : uriStrings) {
-
-					if (pattern != null
-							&& !pattern.matcher(uriString).matches())
-						continue;
-
-					IContentProposal propsal = new IContentProposal() {
-
-						public String getLabel() {
-							return null;
-						}
-
-						public String getDescription() {
-							return null;
-						}
-
-						public int getCursorPosition() {
-							return 0;
-						}
-
-						public String getContent() {
-							return uriString;
-						}
-					};
-					resultList.add(propsal);
-				}
-
-				return resultList.toArray(new IContentProposal[resultList
-						.size()]);
-			}
-		};
-
-		// set the acceptance style to always replace the complete content
-		new ContentProposalAdapter(uriTextField, new TextContentAdapter(), cp,
-				null, null)
-				.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
-
 	}
 
 	private void updateFields(final String text) {

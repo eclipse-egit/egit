@@ -151,7 +151,7 @@ public class GitCloneWizard extends Wizard {
 				protected IStatus run(final IProgressMonitor monitor) {
 					try {
 						op.run(monitor);
-						RepositorySelectionPage.saveUriInPrefs(uri.toString());
+						cloneSource.saveUriInPrefs();
 						RepositoriesView.addDir(op.getGitDir());
 						return Status.OK_STATUS;
 					} catch (InterruptedException e) {
@@ -181,7 +181,7 @@ public class GitCloneWizard extends Wizard {
 					}
 				});
 
-				RepositorySelectionPage.saveUriInPrefs(uri.toString());
+				cloneSource.saveUriInPrefs();
 				RepositoriesView.addDir(op.getGitDir());
 				return true;
 			} catch (InterruptedException e) {
