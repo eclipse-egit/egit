@@ -16,7 +16,6 @@ import java.net.URISyntaxException;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.components.RefSpecPage;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
-import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Repository;
@@ -160,16 +159,6 @@ public class ConfigureRemoteWizard extends Wizard {
 
 		try {
 			myConfiguration.save();
-
-			// Save the uris in the RepositorySelectionPage preferences
-
-			for (URIish uri: myRemoteConfiguration.getURIs())
-				RepositorySelectionPage.saveUriInPrefs(uri.toPrivateString());
-
-			for (URIish uri: myRemoteConfiguration.getPushURIs())
-				RepositorySelectionPage.saveUriInPrefs(uri.toPrivateString());
-
-
 			return true;
 		} catch (IOException e) {
 			// TODO better Exception handling

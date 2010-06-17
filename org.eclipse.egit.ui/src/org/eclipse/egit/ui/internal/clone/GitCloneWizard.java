@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
@@ -154,7 +154,7 @@ public class GitCloneWizard extends Wizard {
 				protected IStatus run(final IProgressMonitor monitor) {
 					try {
 						op.run(monitor);
-						RepositorySelectionPage.saveUriInPrefs(uri.toString());
+						cloneSource.saveUriInPrefs();
 						config.addConfiguredRepository(op.getGitDir());
 						return Status.OK_STATUS;
 					} catch (InterruptedException e) {
@@ -184,7 +184,7 @@ public class GitCloneWizard extends Wizard {
 					}
 				});
 
-				RepositorySelectionPage.saveUriInPrefs(uri.toString());
+				cloneSource.saveUriInPrefs();
 				config.addConfiguredRepository(op.getGitDir());
 				return true;
 			} catch (InterruptedException e) {

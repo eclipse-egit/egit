@@ -125,7 +125,7 @@ public class PushWizard extends Wizard {
 
 		job.setUser(true);
 		job.schedule();
-		RepositorySelectionPage.saveUriInPrefs(repoPage.getSelection().getURI().toString());
+		repoPage.saveUriInPrefs();
 
 		return true;
 	}
