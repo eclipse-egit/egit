@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///2U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///3s\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///64\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CloneCommand.java",
         "patchSetId": 2
@@ -211,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///2I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ConfigurePushCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///3o\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///6w\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ConfigurePushCommand.java",
         "patchSetId": 2
@@ -222,6 +258,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "unnecessary blank line",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///2E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ConfigurePushCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///6w\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -245,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///2A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CopyPathCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///6s\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///6o\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CreateBranchCommand.java",
         "patchSetId": 2
@@ -256,6 +328,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "wrong javadoc",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///18\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CreateBranchCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///6o\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -314,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///10\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CreateBranchCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///6g\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///6c\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteBranchCommand.java",
         "patchSetId": 2
@@ -325,6 +433,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "wrong javadoc",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///1w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteBranchCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///6c\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -418,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///1k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteBranchCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///6Q\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///6M\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeletePushCommand.java",
         "patchSetId": 2
@@ -429,6 +573,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "wrong javadoc",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///1g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeletePushCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///6M\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -452,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///1c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeletePushCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///6I\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///6E\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/FetchCommand.java",
         "patchSetId": 2
@@ -463,6 +643,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "blank line",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///1Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/FetchCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///6E\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -486,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///1U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/FetchCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///6A\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///58\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/FetchCommand.java",
         "patchSetId": 2
@@ -497,6 +713,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "blank line",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///1Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/FetchCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///58\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -520,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///1M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/FetchConfiguredRemoteCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///54\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///50\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
         "patchSetId": 2
@@ -531,6 +783,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "blank line",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///1I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///50\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -554,6 +824,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///1E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ImportProjectsCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///5w\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///5s\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/OpenCommand.java",
         "patchSetId": 2
@@ -571,6 +859,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///1A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/OpenCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///5s\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///5o\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/OpenCommand.java",
         "patchSetId": 2
@@ -582,6 +888,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "blank line",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///08\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/OpenCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///5o\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -710,6 +1034,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///0s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/OpenPropertiesCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///5Y\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///5U\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/OpenPropertiesCommand.java",
         "patchSetId": 2
@@ -797,6 +1139,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///0g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///5Q\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///5M\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
         "patchSetId": 2
@@ -808,6 +1168,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "blank line",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///0c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///5M\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -901,6 +1279,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///0Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PushConfiguredRemoteCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///5A\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///48\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PushConfiguredRemoteCommand.java",
         "patchSetId": 2
@@ -947,6 +1343,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "wrong javadoc ?",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///0I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RefreshCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///44\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1005,6 +1419,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///0A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RefreshCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///4w\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///4s\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
         "patchSetId": 2
@@ -1016,6 +1448,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "blank line",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///z8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///4s\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1039,6 +1489,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///z4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///4o\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///4k\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
         "patchSetId": 2
@@ -1050,6 +1518,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "blank line",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///z0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///4k\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1073,6 +1559,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///zw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Because the code formatter says so.",
+      "parentUuid": "AAALu3///4g\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///4c\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
         "patchSetId": 2
@@ -1084,6 +1588,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "blank line",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///zs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///4c\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1107,6 +1629,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///zo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///4Y\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///4U\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
         "patchSetId": 2
@@ -1118,6 +1658,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "blank line",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///zk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///4U\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1176,6 +1734,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///zc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///4M\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///4I\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveRemoteCommand.java",
         "patchSetId": 2
@@ -1187,6 +1763,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "wrong javadoc",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///zY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveRemoteCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///4I\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1210,6 +1804,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///zU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveRemoteCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///4E\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///4A\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveRemoteCommand.java",
         "patchSetId": 2
@@ -1221,6 +1833,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "blank line",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///zQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveRemoteCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///4A\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -1244,6 +1874,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///zM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveRemoteCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///38\u003d",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///34\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RepositoriesViewCommandHandler.java",
         "patchSetId": 2
@@ -1255,6 +1903,24 @@
       "writtenOn": "2010-06-03T23:33:27Z",
       "side": 1,
       "message": "anything missing here ?",
+      "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///zE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RepositoriesViewCommandHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///34\u003d",
       "revId": "cb69cb357719538a5b4023f9022a0bf3fb944518",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false

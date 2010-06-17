@@ -16,6 +16,24 @@
       "revId": "8b40dd7bbfdf4616fc8fd78de4fe5d627bc74103",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///2k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/ConfigureRemoteWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-06-04T08:13:02Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "AAALu3///30\u003d",
+      "revId": "8b40dd7bbfdf4616fc8fd78de4fe5d627bc74103",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
