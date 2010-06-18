@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///Vs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitBlobResourceVariant.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-19T03:42:15Z",
+      "side": 1,
+      "message": "When we return getResource().getFullPath() \u0027Compare editor\u0027 opens without our changes (it means that file that we want to review i owerwritten with base one).\n\nI\u0027ve removed that comments.",
+      "parentUuid": "AAALun///Ws\u003d",
+      "revId": "16992a9ee213257429031ffda7e33f8ffee849e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///XY\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitFolderResourceVariant.java",
         "patchSetId": 3
