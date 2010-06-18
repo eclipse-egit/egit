@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///v0\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/EGitTesCase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-05T11:47:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///xQ\u003d",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///xM\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2010-06-04T22:57:03Z",
       "side": 1,
       "message": "Was this class started in 2009 ? Or is this copy\u0026paste problem ?",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///vk\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-05T11:47:35Z",
+      "side": 1,
+      "message": "This part comes from time when before I\u0027ve extracted EGitTestCase class and it was to indicate authors of restetWorkbench() and closeWelcomePage() methods. Now it can be removed.\n\nDone.",
+      "parentUuid": "AAALu3///xM\u003d",
       "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///vw\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-05T11:47:35Z",
+      "side": 1,
+      "message": "This should be 600s (10mins), one zero to much, done.",
+      "parentUuid": "AAALu3///xI\u003d",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///vM\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2010-06-05T13:56:53Z",
       "side": 1,
       "message": "typo in method name\n\ns/Chnages/Changes/",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///qY\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-14T18:36:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///vM\u003d",
       "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///vs\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-05T11:47:35Z",
+      "side": 1,
+      "message": "same as above, done.",
+      "parentUuid": "AAALu3///xE\u003d",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///xA\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
         "patchSetId": 9
@@ -98,6 +188,24 @@
       "writtenOn": "2010-06-04T22:57:03Z",
       "side": 1,
       "message": "English in comment should be improved (hope I didn\u0027t corrupt what you want to say):\n\nEGit decorates the project node shown in the package explorer. \nThe \u0027\u003e\u0027 decorator indicates that there are uncommitted changes present in the project. \nAlso the repository and branch name are added as a suffix (\u0027[\u003crepo name\u003e \u003cbranch name\u003e]\u0027 suffix). \nTo bypass this decoration we use here this loop.",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///vo\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-05T11:47:35Z",
+      "side": 1,
+      "message": "Thank you for pointing this out. You didn\u0027t corrupt anything, this is what I want to say. Done",
+      "parentUuid": "AAALu3///xA\u003d",
       "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///qU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-14T18:36:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///uw\u003d",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///w4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 9
@@ -166,6 +292,24 @@
       "writtenOn": "2010-06-05T13:56:53Z",
       "side": 1,
       "message": "style nit: unnecessary blank line",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///uo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitSynchronize.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-05T14:14:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///vE\u003d",
       "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
