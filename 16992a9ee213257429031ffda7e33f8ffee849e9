@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALun///Xg\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-18T22:49:10Z",
+      "side": 1,
+      "message": "Strange indentation here",
+      "revId": "16992a9ee213257429031ffda7e33f8ffee849e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///Ws\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitBlobResourceVariant.java",
         "patchSetId": 3
@@ -13,6 +30,57 @@
       "writtenOn": "2010-05-18T23:10:31Z",
       "side": 1,
       "message": "what is this commented out code good for ? Is this a TODO ?",
+      "revId": "16992a9ee213257429031ffda7e33f8ffee849e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///XY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitFolderResourceVariant.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-18T22:49:10Z",
+      "side": 1,
+      "message": "No need for the *31 here.",
+      "revId": "16992a9ee213257429031ffda7e33f8ffee849e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///XM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitResourceVariantComparator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-18T22:49:10Z",
+      "side": 1,
+      "message": "I think you should close the stream, both for the normal case, as well as for errors (finally)",
+      "revId": "16992a9ee213257429031ffda7e33f8ffee849e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///W4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitResourceVariantTree.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-18T22:49:10Z",
+      "side": 1,
+      "message": "// TODO or actually nothing \"to do\" here",
       "revId": "16992a9ee213257429031ffda7e33f8ffee849e9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
