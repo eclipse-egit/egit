@@ -108,18 +108,6 @@ public class CreateBranchPage extends WizardPage {
 		// select the current branch in the drop down
 		if (myBaseBranch != null) {
 			this.branchCombo.setText(myBaseBranch.getName());
-		} else {
-			// TODO this only works for local branches; once we have a solution
-			// for accessing the correct information (we need this for the
-			// project label decoration, too), we should figure out if a remote
-			// branch is checked-out and set the text accordingly
-			String fullBranch;
-			try {
-				fullBranch = myRepository.getFullBranch();
-				this.branchCombo.setText(fullBranch);
-			} catch (IOException e1) {
-				// ignore
-			}
 		}
 
 		Label nameLabel = new Label(main, SWT.NONE);
@@ -163,6 +151,13 @@ public class CreateBranchPage extends WizardPage {
 		Dialog.applyDialogFont(main);
 		setControl(main);
 		nameText.setFocus();
+		if (myBaseBranch != null
+				&& myBaseBranch.getName().startsWith(Constants.R_REMOTES)) {
+			// additional convenience: the last part of the name is suggested
+			// as name for the local branch
+			nameText.setText(myBaseBranch.getName().substring(
+					myBaseBranch.getName().lastIndexOf('/') + 1));
+		}
 
 		// in any case, we will have to enter the name
 		setPageComplete(false);
