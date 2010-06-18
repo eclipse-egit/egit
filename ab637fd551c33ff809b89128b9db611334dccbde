@@ -229,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///vg\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-05T11:47:35Z",
+      "side": 1,
+      "message": "Ups, I don\u0027t have idea how can I miss this conflict :/\n\nResolved, done.",
+      "parentUuid": "AAALu3///w8\u003d",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///uw\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 9
