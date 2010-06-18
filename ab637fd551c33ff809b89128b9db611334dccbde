@@ -281,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///vc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-05T11:47:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///w4\u003d",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///vE\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitSynchronize.java",
         "patchSetId": 9
