@@ -214,12 +214,11 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		case WORKINGDIR: {
 			List<RepositoryTreeNode<File>> children = new ArrayList<RepositoryTreeNode<File>>();
 
-			if (node.getRepository().getConfig().getBoolean(
-					"core", "bare", false)) //$NON-NLS-1$ //$NON-NLS-2$
+			if (node.getRepository().isBare())
 				return children.toArray();
 			File workingDir = repo.getWorkDir();
 			if (workingDir == null || !workingDir.exists())
-				return null;
+				return children.toArray();
 
 			File[] childFiles = workingDir.listFiles();
 			Arrays.sort(childFiles, new Comparator<File>() {
@@ -342,8 +341,44 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	}
 
 	public boolean hasChildren(Object element) {
-		Object[] children = getChildren(element);
-		return children != null && children.length > 0;
+		// for some of the nodes we can optimize this call
+		RepositoryTreeNode node = (RepositoryTreeNode) element;
+		Repository repo = node.getRepository();
+		switch (node.getType()) {
+		case BRANCHES:
+			return true;
+		case REPO:
+			return true;
+		case SYMBOLICREFS:
+			try {
+				for (Ref refEntry : repo.getRefDatabase().getRefs(
+						RefDatabase.ALL).values()) {
+					if (refEntry.isSymbolic())
+						return true;
+				}
+			} catch (IOException e) {
+				// true so that the node can be opened
+				return true;
+			}
+			return false;
+		case TAGS:
+			try {
+				return !repo.getRefDatabase().getRefs(Constants.R_TAGS)
+						.isEmpty();
+			} catch (IOException e) {
+				return true;
+			}
+		case WORKINGDIR:
+			if (node.getRepository().isBare())
+				return false;
+			File workingDir = repo.getWorkDir();
+			if (workingDir == null || !workingDir.exists())
+				return false;
+			return workingDir.listFiles().length > 0;
+		default:
+			Object[] children = getChildren(element);
+			return children != null && children.length > 0;
+		}
 	}
 
 }
