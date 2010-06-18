@@ -285,8 +285,10 @@ public class CommitDialog extends Dialog {
 					alreadyAdded = true;
 					String curText = commitText.getText();
 					if (curText.length() > 0)
-						curText += "\n"; //$NON-NLS-1$
-					commitText.setText(curText + previousCommitMessage);
+						curText += Text.DELIMITER;
+					commitText.setText(curText
+							+ previousCommitMessage.replaceAll(
+									"\n", Text.DELIMITER)); //$NON-NLS-1$
 					authorText.setText(previousAuthor);
 					saveOriginalChangeId();
 				}
