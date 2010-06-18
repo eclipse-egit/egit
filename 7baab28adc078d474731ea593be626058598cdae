@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///H4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-22T22:45:18Z",
+      "side": 1,
+      "message": "better:\nSelect which branch or tag to use as source and which one as destination.",
+      "revId": "7baab28adc078d474731ea593be626058598cdae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
