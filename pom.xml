@@ -61,7 +61,7 @@
 
   <properties>
     <tycho-version>0.8.0</tycho-version>
-    <platform-version-name>ganymede</platform-version-name>
+    <platform-version-name>galileo</platform-version-name>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.updatesite/target/site</jgit-site>
     <eclipse-site>http://download.eclipse.org/releases/${platform-version-name}</eclipse-site>
     <swtbot-site>http://download.eclipse.org/technology/swtbot/${platform-version-name}/dev-build/update-site</swtbot-site>
