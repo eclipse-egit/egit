@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALu3///xA\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-04T22:57:03Z",
+      "side": 1,
+      "message": "English in comment should be improved (hope I didn\u0027t corrupt what you want to say):\n\nEGit decorates the project node shown in the package explorer. \nThe \u0027\u003e\u0027 decorator indicates that there are uncommitted changes present in the project. \nAlso the repository and branch name are added as a suffix (\u0027[\u003crepo name\u003e \u003cbranch name\u003e]\u0027 suffix). \nTo bypass this decoration we use here this loop.",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///uw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-05T13:56:53Z",
+      "side": 1,
+      "message": "typo in method name",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///w4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-04T22:57:03Z",
+      "side": 1,
+      "message": "why this change ? we try to avoid pure formatting changes in places not touched by the change",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///vE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitSynchronize.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-05T13:56:53Z",
+      "side": 1,
+      "message": "style nit: unnecessary blank line",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///u8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/dto/GitSynchronizeData.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-05T13:56:53Z",
+      "side": 1,
+      "message": "this javadoc looks incomplete",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///u0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/dto/GitSynchronizeDataSet.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-05T13:56:53Z",
+      "side": 1,
+      "message": "missing javadoc",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
