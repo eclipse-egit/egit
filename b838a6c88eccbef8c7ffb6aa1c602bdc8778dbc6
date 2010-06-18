@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAA3///QQ\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-04-27T11:23:00Z",
+      "side": 1,
+      "message": "I believe this is for \"regenerating\" the subscriber upon startup. You can see below at the moment I have set the \u0027persistent\u0027 value to \u0027false\u0027. If it was \u0027true\u0027, then it would be possible for a user to synchronize without going through the wizard. In that case, the framework would have to instantiate the class spec\u0027d here manually through reflection I believe.",
+      "parentUuid": "AAAAA3///Qs\u003d",
+      "revId": "b838a6c88eccbef8c7ffb6aa1c602bdc8778dbc6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAA3///Qo\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitBranchResourceVariantTreeSubscriber.java",
         "patchSetId": 1
