@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///Qs\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-04-27T08:18:49Z",
+      "side": 1,
+      "message": "This seems to be the wrong class, it should be GitBranchSubscriberParticipant.\n\nInterestingly enough this works now with any String for this attribute. Do you know when this would be used?",
+      "revId": "b838a6c88eccbef8c7ffb6aa1c602bdc8778dbc6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///Qo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitBranchResourceVariantTreeSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-04-27T08:18:49Z",
+      "side": 1,
+      "message": "When I compare against another branch or commit, shouldn\u0027t that point to the common ancestor commit?",
+      "revId": "b838a6c88eccbef8c7ffb6aa1c602bdc8778dbc6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
