@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///Ws\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitBlobResourceVariant.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-18T23:10:31Z",
+      "side": 1,
+      "message": "what is this commented out code good for ? Is this a TODO ?",
+      "revId": "16992a9ee213257429031ffda7e33f8ffee849e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
