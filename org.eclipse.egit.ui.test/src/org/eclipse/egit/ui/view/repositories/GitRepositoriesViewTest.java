@@ -23,9 +23,9 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.common.EGitTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
-import org.eclipse.egit.ui.wizards.clone.GitCloneWizardTest;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.util.FS;
@@ -70,7 +70,7 @@ public class GitRepositoriesViewTest {
 		// the show in context menu does not appear in the project explorer for
 		// general projects
 		bot.perspectiveById("org.eclipse.pde.ui.PDEPerspective").activate();
-		GitCloneWizardTest.closeWelcomePage();
+		EGitTestCase.closeWelcomePage();
 		myProject = ResourcesPlugin.getWorkspace().getRoot().getProject(
 				PRJ_NAME);
 		if (myProject.exists())
