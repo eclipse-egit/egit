@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///F8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-24T21:20:47Z",
+      "side": 1,
+      "message": "more consistent with e.g. Fetch dialog would be\n\nRemote Repository:",
+      "revId": "8488258e655f880af1c7755666f8d71d08d3079b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///F4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-24T21:20:47Z",
+      "side": 1,
+      "message": "I would just use (similar to Fetch dialog)\n\nRef:",
+      "revId": "8488258e655f880af1c7755666f8d71d08d3079b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///GA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-05-24T21:20:47Z",
+      "side": 1,
+      "message": "better (some typos, unclear what\u0027s source what\u0027s destination):\n\nSelect which branch or tag to synchronize against the current local HEAD.",
+      "revId": "8488258e655f880af1c7755666f8d71d08d3079b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
