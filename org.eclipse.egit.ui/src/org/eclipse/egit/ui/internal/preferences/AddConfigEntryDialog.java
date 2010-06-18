@@ -1,0 +1,157 @@
+package org.eclipse.egit.ui.internal.preferences;
+
+import java.util.StringTokenizer;
+
+import org.eclipse.egit.ui.UIText;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+
+/**
+ * Requests a key and value for adding a configuration entry
+ */
+public class AddConfigEntryDialog extends TitleAreaDialog {
+	private Text keyText;
+
+	private Text valueText;
+
+	private String key;
+
+	private String value;
+
+	private final Config currentConfig;
+
+	private final String suggestedKey;
+
+	/**
+	 * @param parentShell
+	 * @param config
+	 *            the configuration
+	 * @param suggestedKey
+	 *            may be null
+	 */
+	public AddConfigEntryDialog(Shell parentShell, Config config,
+			String suggestedKey) {
+		super(parentShell);
+		setHelpAvailable(false);
+		currentConfig = config;
+		this.suggestedKey = suggestedKey;
+	}
+
+	@Override
+	protected Control createDialogArea(Composite parent) {
+		getShell().setText(UIText.AddConfigEntryDialog_AddConfigTitle);
+		setTitle(UIText.AddConfigEntryDialog_AddConfigTitle);
+		setMessage(UIText.AddConfigEntryDialog_DialogMessage);
+		Composite titleParent = (Composite) super.createDialogArea(parent);
+		Composite main = new Composite(titleParent, SWT.NONE);
+		main.setLayout(new GridLayout(2, false));
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
+		Label keylLabel = new Label(main, SWT.NONE);
+		keylLabel.setText(UIText.AddConfigEntryDialog_KeyLabel);
+		keylLabel.setToolTipText(UIText.AddConfigEntryDialog_ConfigKeyTooltip);
+		keyText = new Text(main, SWT.BORDER);
+		if (suggestedKey != null) {
+			keyText.setText(suggestedKey);
+			keyText.selectAll();
+		}
+
+		keyText.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				check();
+			}
+		});
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(keyText);
+		new Label(main, SWT.NONE)
+				.setText(UIText.AddConfigEntryDialog_ValueLabel);
+		valueText = new Text(main, SWT.BORDER);
+		valueText.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				check();
+			}
+		});
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(valueText);
+
+		applyDialogFont(main);
+		return main;
+	}
+
+	@Override
+	public void create() {
+		super.create();
+		// we need to enter something
+		getButton(OK).setEnabled(false);
+	}
+
+	private void check() {
+		setErrorMessage(null);
+		boolean hasError = false;
+		try {
+			if (keyText.getText().isEmpty()) {
+				setErrorMessage(UIText.AddConfigEntryDialog_MustEnterKeyMessage);
+				hasError = true;
+				return;
+			}
+			StringTokenizer st = new StringTokenizer(keyText.getText(), "."); //$NON-NLS-1$
+			if (st.countTokens() < 2 || st.countTokens() > 3) {
+				setErrorMessage(UIText.AddConfigEntryDialog_KeyComponentsMessage);
+				hasError = true;
+				return;
+			}
+			boolean exists = false;
+			if (st.countTokens() == 2) {
+				exists = currentConfig.getString(st.nextToken(), null, st
+						.nextToken()) != null;
+			}
+			if (st.countTokens() == 3) {
+				exists = currentConfig.getString(st.nextToken(),
+						st.nextToken(), st.nextToken()) != null;
+			}
+			if (exists) {
+				setErrorMessage(NLS.bind(
+						UIText.AddConfigEntryDialog_EntryExistsMessage, keyText
+								.getText()));
+				hasError = true;
+				return;
+			}
+			if (valueText.getText().isEmpty()) {
+				setErrorMessage(UIText.AddConfigEntryDialog_EnterValueMessage);
+				hasError = true;
+				return;
+			}
+		} finally {
+			getButton(OK).setEnabled(!hasError);
+		}
+	}
+
+	@Override
+	protected void okPressed() {
+		key = keyText.getText();
+		value = valueText.getText();
+		super.okPressed();
+	}
+
+	/**
+	 * @return the key as entered by the user
+	 */
+	public String getKey() {
+		return key;
+	}
+
+	/**
+	 * @return the value as entered by the user
+	 */
+	public String getValue() {
+		return value;
+	}
+}
