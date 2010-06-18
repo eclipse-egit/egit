@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALu3///xQ\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/EGitTesCase.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-04T22:57:03Z",
+      "side": 1,
+      "message": "Typo in class name\ns/EGitTesCase/EGitTestCase/",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///xM\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-04T22:57:03Z",
+      "side": 1,
+      "message": "Was this class started in 2009 ? Or is this copy\u0026paste problem ?",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///xI\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-04T22:57:03Z",
+      "side": 1,
+      "message": "Do you really want to wait 6000s here ? This is almost 2 hours, that\u0027s insane for an automated test.",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///vM\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-05T13:56:53Z",
+      "side": 1,
+      "message": "typo in method name\n\ns/Chnages/Changes/",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///xE\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-04T22:57:03Z",
+      "side": 1,
+      "message": "again crazy wait time",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///xA\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
         "patchSetId": 9
@@ -70,11 +155,45 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///vA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/dto/GitSynchronizeData.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-05T13:56:53Z",
+      "side": 1,
+      "message": "missing javadoc for public class",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///u8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/dto/GitSynchronizeData.java",
         "patchSetId": 9
       },
       "lineNbr": 47,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-05T13:56:53Z",
+      "side": 1,
+      "message": "this javadoc looks incomplete",
+      "revId": "ab637fd551c33ff809b89128b9db611334dccbde",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///u4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/dto/GitSynchronizeData.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
       "author": {
         "id": 4
       },
