@@ -12,7 +12,7 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.Repository;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 

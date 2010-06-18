@@ -27,7 +27,7 @@ import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.GitIndex.Entry;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.Repository;
 
 /**
  */

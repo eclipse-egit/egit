@@ -18,7 +18,7 @@ import org.eclipse.egit.ui.internal.push.PushWizard;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.Repository;
 
 /**
  * Action for choosing specifications for push, and pushing out to another

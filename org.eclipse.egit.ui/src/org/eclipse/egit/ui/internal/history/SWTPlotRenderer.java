@@ -10,6 +10,10 @@
 package org.eclipse.egit.ui.internal.history;
 
 import org.eclipse.egit.ui.internal.history.SWTCommitList.SWTLane;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.revplot.AbstractPlotRenderer;
+import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
@@ -18,10 +22,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.themes.ColorUtil;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.revplot.AbstractPlotRenderer;
-import org.eclipse.jgit.revplot.PlotCommit;
 
 class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 	private final Color sys_blue;

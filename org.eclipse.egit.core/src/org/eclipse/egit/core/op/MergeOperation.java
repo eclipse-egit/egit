@@ -32,8 +32,8 @@ import org.eclipse.jgit.api.InvalidMergeHeadsException;
 import org.eclipse.jgit.api.MergeCommand;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.NoHeadException;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.merge.MergeStrategy;
+import org.eclipse.jgit.storage.file.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 

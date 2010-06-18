@@ -20,12 +20,12 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jgit.storage.file.Repository;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.ide.ResourceUtil;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.quickdiff.IQuickDiffReferenceProvider;
-import org.eclipse.jgit.lib.Repository;
 
 /**
  * This class provides input for the Eclipse Quick Diff feature.

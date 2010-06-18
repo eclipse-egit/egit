@@ -28,10 +28,10 @@ import org.eclipse.jgit.lib.IndexChangedEvent;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.RefsChangedEvent;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.lib.TreeEntry;
+import org.eclipse.jgit.storage.file.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
 

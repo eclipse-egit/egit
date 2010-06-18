@@ -26,7 +26,7 @@ import org.eclipse.egit.ui.internal.EditableRevision;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jgit.lib.GitIndex;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.history.IFileRevision;

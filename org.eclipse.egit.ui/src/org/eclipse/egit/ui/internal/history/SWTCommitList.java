@@ -11,11 +11,11 @@ package org.eclipse.egit.ui.internal.history;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import org.eclipse.jgit.revplot.PlotCommitList;
+import org.eclipse.jgit.revplot.PlotLane;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.jgit.revplot.PlotCommitList;
-import org.eclipse.jgit.revplot.PlotLane;
 
 class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> {
 	private final ArrayList<Color> allColors;

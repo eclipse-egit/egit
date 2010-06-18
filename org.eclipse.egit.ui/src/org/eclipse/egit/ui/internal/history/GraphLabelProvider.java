@@ -14,9 +14,9 @@ import java.text.SimpleDateFormat;
 
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.graphics.Image;
 
 class GraphLabelProvider extends BaseLabelProvider implements
 		ITableLabelProvider {

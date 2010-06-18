@@ -30,9 +30,9 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tag;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
+import org.eclipse.jgit.storage.file.Repository;
 import org.eclipse.jgit.util.FS;
 import org.osgi.service.prefs.BackingStoreException;
 

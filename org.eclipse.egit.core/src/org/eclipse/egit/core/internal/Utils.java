@@ -11,7 +11,7 @@ package org.eclipse.egit.core.internal;
 import java.io.File;
 
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.Repository;
 
 /**
  * Utility class

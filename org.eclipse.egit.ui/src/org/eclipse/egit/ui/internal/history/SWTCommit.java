@@ -8,10 +8,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
-import org.eclipse.swt.widgets.Widget;
 import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.revplot.PlotCommit;
+import org.eclipse.swt.widgets.Widget;
 
 class SWTCommit extends PlotCommit<SWTCommitList.SWTLane> {
 	Widget widget;

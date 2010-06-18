@@ -9,9 +9,9 @@
 package org.eclipse.egit.ui.internal.history;
 
 import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotWalk;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.storage.file.Repository;
 
 class SWTWalk extends PlotWalk {
 	SWTWalk(final Repository repo) {

@@ -53,9 +53,9 @@ import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexChangedEvent;
 import org.eclipse.jgit.lib.RefsChangedEvent;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryChangedEvent;
 import org.eclipse.jgit.lib.RepositoryListener;
+import org.eclipse.jgit.storage.file.Repository;
 import org.eclipse.osgi.util.TextProcessor;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -642,7 +642,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.eclipse.jgit.lib.RepositoryListener#indexChanged(org.eclipse.jgit
+	 * org.eclipse.jgit.storage.file.RepositoryListener#indexChanged(org.eclipse.jgit
 	 * .lib.IndexChangedEvent)
 	 */
 	public void indexChanged(IndexChangedEvent e) {
@@ -653,7 +653,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.eclipse.jgit.lib.RepositoryListener#refsChanged(org.eclipse.jgit.
+	 * org.eclipse.jgit.storage.file.RepositoryListener#refsChanged(org.eclipse.jgit.
 	 * lib.RefsChangedEvent)
 	 */
 	public void refsChanged(RefsChangedEvent e) {
