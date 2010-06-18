@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun//+6Q\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-01T00:02:24Z",
+      "side": 1,
+      "message": "Was Remy participating in the implementation of this class ? Or is this due to cut\u0026paste",
+      "revId": "2688269da8a498dfc13abdad2b778e25f632a19b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
