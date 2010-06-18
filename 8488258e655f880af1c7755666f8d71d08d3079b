@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALun///E8\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-05-25T15:35:37Z",
+      "side": 1,
+      "message": "This seems to be the wrong class, it should be GitBranchSubscriberParticipant.\n\nSee also comment on patch set 1",
+      "revId": "8488258e655f880af1c7755666f8d71d08d3079b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///E4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitSynchronize.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-05-25T15:35:37Z",
+      "side": 1,
+      "message": "typo: getParticipant",
+      "revId": "8488258e655f880af1c7755666f8d71d08d3079b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///F8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 6
