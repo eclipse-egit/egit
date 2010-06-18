@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///V8\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-19T03:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///Xg\u003d",
+      "revId": "16992a9ee213257429031ffda7e33f8ffee849e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///Ws\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitBlobResourceVariant.java",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "AAALun///V4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitFolderResourceVariant.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-19T03:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///XY\u003d",
+      "revId": "16992a9ee213257429031ffda7e33f8ffee849e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALun///XM\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitResourceVariantComparator.java",
         "patchSetId": 3
@@ -64,6 +100,24 @@
       "writtenOn": "2010-05-18T22:49:10Z",
       "side": 1,
       "message": "I think you should close the stream, both for the normal case, as well as for errors (finally)",
+      "revId": "16992a9ee213257429031ffda7e33f8ffee849e9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///V0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitResourceVariantComparator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-05-19T03:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALun///XM\u003d",
       "revId": "16992a9ee213257429031ffda7e33f8ffee849e9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
