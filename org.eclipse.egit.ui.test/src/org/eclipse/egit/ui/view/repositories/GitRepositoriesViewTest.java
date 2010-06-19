@@ -14,9 +14,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -26,6 +23,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.EGitTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.jgit.lib.FileRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.util.FS;
@@ -44,6 +42,9 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
 
 /**
  * SWTBot Tests for the Git Repositories View
@@ -85,7 +86,7 @@ public class GitRepositoriesViewTest {
 				false, null);
 
 		File dirFile = myProject.getLocation().append(".git").toFile();
-		Repository repo = new Repository(dirFile);
+		Repository repo = new FileRepository(dirFile);
 		repo.create();
 
 		new ConnectProviderOperation(myProject, dirFile).execute(null);

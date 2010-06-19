@@ -22,6 +22,7 @@ import org.eclipse.egit.ui.RepositoryUtil;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jgit.lib.FileRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -92,7 +93,7 @@ public class LinkHelper implements ILinkHelper {
 		for (String repo : repos) {
 			Repository repository;
 			try {
-				repository = new Repository(new File(repo));
+				repository = new FileRepository(new File(repo));
 			} catch (IOException e) {
 				continue;
 			}

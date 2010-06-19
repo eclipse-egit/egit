@@ -25,6 +25,7 @@ import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.jgit.lib.Commit;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.FileRepository;
 import org.eclipse.jgit.lib.FileTreeEntry;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectWriter;
@@ -63,7 +64,7 @@ public class T0002_HistoryTest extends GitTestCase {
 		project.createSourceFolder();
 		gitDir = new File(project.getProject().getWorkspace().getRoot()
 				.getRawLocation().toFile(), Constants.DOT_GIT);
-		thisGit = new Repository(gitDir);
+		thisGit = new FileRepository(gitDir);
 		workDir = thisGit.getWorkDir();
 		thisGit.create();
 		objectWriter = new ObjectWriter(thisGit);

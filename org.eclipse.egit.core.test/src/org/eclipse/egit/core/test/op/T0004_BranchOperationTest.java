@@ -17,6 +17,7 @@ import org.eclipse.jgit.api.NoMessageException;
 import org.eclipse.jgit.api.WrongRepositoryStateException;
 import org.eclipse.jgit.errors.UnmergedPathException;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.FileRepository;
 import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -36,7 +37,7 @@ public class T0004_BranchOperationTest extends GitTestCase{
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		repository = new Repository(gitDir);
+		repository = new FileRepository(gitDir);
 		repository.create();
 	}
 
