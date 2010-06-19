@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwH///7U\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-19T22:26:28Z",
+      "side": 1,
+      "message": "better: Check if this file exists in repository",
+      "revId": "13d74670521d8152c635914c1e680dde4cd2132d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwH///7Q\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-19T22:26:28Z",
+      "side": 1,
+      "message": "typo: add to members if folder exists in repository",
+      "revId": "13d74670521d8152c635914c1e680dde4cd2132d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwH///7M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-19T22:26:28Z",
+      "side": 1,
+      "message": "style nit: no braces around single line",
+      "revId": "13d74670521d8152c635914c1e680dde4cd2132d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
