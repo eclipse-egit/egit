@@ -43,7 +43,7 @@ public class GitSubscriberParticipant extends SubscriberParticipant {
 	public GitSubscriberParticipant(GitSynchronizeDataSet data) {
 		ResourceVariantByteStore store = new SessionResourceVariantByteStore();
 		setSubscriber(new GitResourceVariantTreeSubscriber(data, store));
-		setName(UIText.GitBranchSubscriberParticipant_git);
+		setName(data.toString());
 	}
 
 	@Override
@@ -95,6 +95,7 @@ public class GitSubscriberParticipant extends SubscriberParticipant {
 	void reset(GitSynchronizeDataSet data) {
 		GitResourceVariantTreeSubscriber subscriber = (GitResourceVariantTreeSubscriber) getSubscriber();
 		subscriber.reset(data);
+		setName(data.toString());
 		reset();
 	}
 
