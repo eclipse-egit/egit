@@ -216,6 +216,10 @@ abstract class GitResourceVariantTree extends AbstractResourceVariantTree {
 	private IResourceVariant findFolderVariant(IResource resource,
 			Repository repository) {
 		File workDir = repository.getWorkDir();
+		// fix for bug 317368
+		if (resource.getLocation() == null) {
+			return null;
+		}
 		File resourceLocation = resource.getLocation().toFile();
 		String resLocationAbsolutePath = resourceLocation.getAbsolutePath();
 
@@ -234,8 +238,12 @@ abstract class GitResourceVariantTree extends AbstractResourceVariantTree {
 
 	private IResourceVariant findFileVariant(IResource resource,
 			Repository repository) throws TeamException {
-		String gitPath = RepositoryMapping.getMapping(resource)
-				.getRepoRelativePath(resource);
+		RepositoryMapping repoMapping = RepositoryMapping.getMapping(resource);
+		if (repoMapping == null) { // fix for bug 317368
+			return null;
+		}
+
+		String gitPath = repoMapping.getRepoRelativePath(resource);
 		ObjectId objectId = updated.get(gitPath);
 		if (objectId != null) {
 			File root = repository.getWorkDir();
@@ -266,8 +274,9 @@ abstract class GitResourceVariantTree extends AbstractResourceVariantTree {
 
 	public void flushVariants(IResource resource, int depth)
 			throws TeamException {
-		// nothing do to here
-		// TODO implement ?
+		if (!gsdData.getData(resource.getProject()).shouldIncludeLocal()) {
+			store.flushBytes(resource, depth);
+		}
 	}
 
 	@Override
@@ -360,7 +369,11 @@ abstract class GitResourceVariantTree extends AbstractResourceVariantTree {
 	protected IResourceVariant fetchVariant(IResource resource, int depth,
 			IProgressMonitor monitor) throws TeamException {
 		try {
-			return fetchVariant(resource, monitor);
+			if (resource != null) { // fix for bug 317368
+				return fetchVariant(resource, monitor);
+			} else {
+				return null;
+			}
 		} finally {
 			monitor.done();
 		}
