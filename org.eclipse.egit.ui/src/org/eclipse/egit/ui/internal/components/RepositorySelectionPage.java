@@ -174,6 +174,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 					int index = text.indexOf(' ');
 					if(index > 0)
 						text = text.substring(0,index);
+					if(text.startsWith("git@github.com:")) //$NON-NLS-1$
+						text = "git+ssh://git@github.com/" + text.substring("git@github.com:".length()); //$NON-NLS-1$ //$NON-NLS-2$
 					if(Transport.canHandleProtocol(new URIish(text), FS.DETECTED)) {
 						if(!text.startsWith("http") || text.contains(".git")) //$NON-NLS-1$ //$NON-NLS-2$
 							preset = text;
