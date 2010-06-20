@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALwH///50\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-19T23:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALwH///6I\u003d",
+      "revId": "5ac4c4edad1b3d421877920dc8d788a2c9cf92f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALwH///58\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2010-06-19T23:09:06Z",
       "side": 1,
       "message": "style nit: no braces around single line",
+      "revId": "5ac4c4edad1b3d421877920dc8d788a2c9cf92f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwH///5w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-19T23:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALwH///58\u003d",
       "revId": "5ac4c4edad1b3d421877920dc8d788a2c9cf92f2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAALwH///5s\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-19T23:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALwH///6E\u003d",
+      "revId": "5ac4c4edad1b3d421877920dc8d788a2c9cf92f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALwH///6A\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2010-06-19T23:09:06Z",
       "side": 1,
       "message": "style nit: no braces here",
+      "revId": "5ac4c4edad1b3d421877920dc8d788a2c9cf92f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwH///5o\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-19T23:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALwH///6A\u003d",
       "revId": "5ac4c4edad1b3d421877920dc8d788a2c9cf92f2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
