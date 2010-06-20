@@ -12,9 +12,7 @@
 package org.eclipse.egit.ui.internal.synchronize;
 
 import java.util.Map;
-import java.util.Set;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.UIText;
@@ -45,13 +43,11 @@ public class GitSynchronizeWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		Set<IProject> projects = page.getSelectedProjects();
 		GitSynchronizeDataSet gsdSet = new GitSynchronizeDataSet();
 
 		Map<Repository, String> branches = page.getSelectedBranches();
-		for (Repository repo : branches.keySet()) {
-			gsdSet.add(new GitSynchronizeData(repo, Constants.HEAD, branches.get(repo), projects, false));
-		}
+		for (Repository repo : branches.keySet())
+			gsdSet.add(new GitSynchronizeData(repo, Constants.HEAD, branches.get(repo), false));
 
 		new GitSynchronize(gsdSet);
 

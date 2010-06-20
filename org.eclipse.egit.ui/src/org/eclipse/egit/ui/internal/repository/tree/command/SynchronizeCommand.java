@@ -11,18 +11,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
@@ -33,8 +27,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 
 /**
- * Implements "Synchornize"
- *
+ * Implements "Synchronize"
  */
 public class SynchronizeCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
@@ -42,9 +35,8 @@ public class SynchronizeCommand extends
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final RepositoryTreeNode node = getSelectedNodes(event).get(0);
 		Object object = node.getObject();
-		if (!(object instanceof Ref)) {
+		if (!(object instanceof Ref))
 			return null;
-		}
 
 		final Ref ref = (Ref) object;
 		final Repository repo = node.getRepository();
@@ -54,18 +46,8 @@ public class SynchronizeCommand extends
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				Set<IProject> repoProjects = new HashSet<IProject>();
-				final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-				for (IProject project : projects) {
-					RepositoryMapping mapping = RepositoryMapping.getMapping(project);
-					if (mapping != null && mapping.getRepository() == repo) {
-						repoProjects.add(project);
-					}
-				}
-
 				GitSynchronizeData data = new GitSynchronizeData(node
-						.getRepository(), Constants.HEAD, ref.getName(),
-						repoProjects, false);
+						.getRepository(), Constants.HEAD, ref.getName(), false);
 
 				new GitSynchronize(data);
 
