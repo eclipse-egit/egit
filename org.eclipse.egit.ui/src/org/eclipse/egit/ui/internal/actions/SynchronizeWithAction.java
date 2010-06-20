@@ -46,9 +46,8 @@ public class SynchronizeWithAction extends RepositoryAction {
 			InterruptedException {
 		Repository[] repos = getRepositories();
 
-		if (repos.length != repos.length) {
+		if (repos.length != repos.length)
 			return;
-		}
 
 		GitSynchronizeDataSet gsdSet = new GitSynchronizeDataSet();
 		for (Repository repo : repos) {
@@ -60,7 +59,7 @@ public class SynchronizeWithAction extends RepositoryAction {
 				return;
 
 			gsdSet.add(new GitSynchronizeData(repo, dialog.getSrcRef(), dialog
-					.getDstRef(), getProcjetsInRepository(repo), dialog.shouldIncludeLocal()));
+					.getDstRef(), dialog.shouldIncludeLocal()));
 		}
 
 		new GitSynchronize(gsdSet);
@@ -73,9 +72,9 @@ public class SynchronizeWithAction extends RepositoryAction {
 		List<SyncRepoEntity> syncRepoEntitys = new ArrayList<SyncRepoEntity>();
 
 		syncRepoEntitys.add(getLocalSyncRepo(repo));
-		for (RemoteConfig rc : remoteConfigs) {
+		for (RemoteConfig rc : remoteConfigs)
 			syncRepoEntitys.add(getRemoteSyncRepo(refDatabase, rc));
-		}
+
 		return syncRepoEntitys;
 	}
 

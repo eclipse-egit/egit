@@ -10,13 +10,14 @@ package org.eclipse.egit.core.synchronize.dto;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Commit;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -25,7 +26,8 @@ import org.eclipse.jgit.lib.Tag;
 import org.eclipse.jgit.lib.Tree;
 
 /**
- *
+ * Simple data transfer object containing all necessary information for
+ * launching synchornization
  */
 public class GitSynchronizeData {
 
@@ -42,33 +44,32 @@ public class GitSynchronizeData {
 	private final String repoParentPath;
 
 	/**
-	 * @param repository
-	 * @param srcRef
-	 * @param dstRef
-	 * @param project
-	 * @param includeLocal <code>true</code> if local changes should be included in comparison
-	 */
-	public GitSynchronizeData(Repository repository, String srcRef,
-			String dstRef, IProject project, boolean includeLocal) {
-		this(repository, srcRef, dstRef, new HashSet<IProject>(Arrays
-				.asList(project)), includeLocal);
-	}
-
-	/**
+	 * Constructs {@link GitSynchronizeData} object
+	 *
 	 * @param repository
 	 * @param srcRev
 	 * @param dstRev
-	 * @param projects
-	 * @param includeLocal <code>true</code> if local changes should be included in comparison
+	 * @param includeLocal
+	 *            <code>true</code> if local changes should be included in
+	 *            comparison
 	 */
 	public GitSynchronizeData(Repository repository, String srcRev,
-			String dstRev, Set<IProject> projects, boolean includeLocal) {
+			String dstRev, boolean includeLocal) {
 		repo = repository;
 		this.srcRev = srcRev;
 		this.dstRev = dstRev;
-		this.projects = projects;
 		this.includeLocal = includeLocal;
 		repoParentPath = repo.getDirectory().getParentFile().getAbsolutePath();
+
+		projects = new HashSet<IProject>();
+		final IProject[] workspaceProjects = ResourcesPlugin.getWorkspace()
+				.getRoot().getProjects();
+		for (IProject project : workspaceProjects) {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+			if (mapping != null && mapping.getRepository() == repo)
+				projects.add(project);
+		}
+
 	}
 
 	/**
@@ -149,7 +150,8 @@ public class GitSynchronizeData {
 	}
 
 	/**
-	 * @return <code>true</code> if local changes should be included in comparison
+	 * @return <code>true</code> if local changes should be included in
+	 *         comparison
 	 */
 	public boolean shouldIncludeLocal() {
 		return includeLocal;
@@ -160,17 +162,15 @@ public class GitSynchronizeData {
 			Tag tag = repo.mapTag(rev);
 			Commit commit = repo.mapCommit(tag.getObjId());
 			return commit.getTree();
-		} else {
+		} else
 			return repo.mapTree(rev);
-		}
 	}
 
 	private ObjectId getObjecId(String rev) throws IOException {
 		if (rev.startsWith(Constants.R_TAGS)) {
 			return repo.mapTag(rev).getObjId();
-		} else {
+		} else
 			return repo.mapCommit(rev).getCommitId();
-		}
 	}
 
 }
