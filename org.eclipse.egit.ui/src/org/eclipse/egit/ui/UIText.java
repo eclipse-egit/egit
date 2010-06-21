@@ -40,6 +40,33 @@ public class UIText extends NLS {
 	public static String Activator_scanningRepositories;
 
 	/** */
+	public static String AddConfigEntryDialog_AddConfigTitle;
+
+	/** */
+	public static String AddConfigEntryDialog_ConfigKeyTooltip;
+
+	/** */
+	public static String AddConfigEntryDialog_DialogMessage;
+
+	/** */
+	public static String AddConfigEntryDialog_EnterValueMessage;
+
+	/** */
+	public static String AddConfigEntryDialog_EntryExistsMessage;
+
+	/** */
+	public static String AddConfigEntryDialog_KeyComponentsMessage;
+
+	/** */
+	public static String AddConfigEntryDialog_KeyLabel;
+
+	/** */
+	public static String AddConfigEntryDialog_MustEnterKeyMessage;
+
+	/** */
+	public static String AddConfigEntryDialog_ValueLabel;
+
+	/** */
 	public static String AddToIndexAction_addingFiles;
 
 	/** */
@@ -1889,6 +1916,66 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitShareProjectsPage_RepositoryLabel;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_AddButton;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_ChangeButton;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_ConfigLocationLabel;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_EmptyStringNotAllowed;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_KeyColumnHeader;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_NewValueButton;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_NoEntrySelectedMessage;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_NoSectionSubsectionMessage;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_OpenEditorButton;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_OpenEditorTooltip;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_RemoveAllButton;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_RemoveAllTooltip;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_RemoveButton;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_RemoveSectionMessage;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_RemoveSectionTitle;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_RemoveSubsectionMessage;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_RemoveSubsectionTitle;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_ValueColumnHeader;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_ValueLabel;
+
+	/** */
+	public static String GlobalConfigurationPreferencePage_WrongNumberOfTokensMessage;
 
  	/** */
 	public static String MergeAction_CannotMerge;
