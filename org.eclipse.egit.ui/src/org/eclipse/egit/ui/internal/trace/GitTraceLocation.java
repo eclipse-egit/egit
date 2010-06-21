@@ -22,7 +22,9 @@ import org.eclipse.osgi.service.debug.DebugOptions;
 public enum GitTraceLocation implements ITraceLocation {
 
 	/** UI */
-	UI("/debug/ui"); //$NON-NLS-1$
+	UI("/debug/ui"), //$NON-NLS-1$
+	/** REPOSITORIESVIEW */
+	REPOSITORIESVIEW("/debug/ui/repositoriesview"); //$NON-NLS-1$
 
 	/**
 	 * Initialize the locations
