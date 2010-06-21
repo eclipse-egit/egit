@@ -24,6 +24,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 
 /**
@@ -40,8 +41,39 @@ public class CreateBranchCommand extends
 		final Ref baseBranch;
 		if (node.getObject() instanceof Ref)
 			baseBranch = (Ref) node.getObject();
-		else
-			baseBranch = null;
+		else {
+			// we are on another node, so we have no Ref as context
+			// -> try to determine the currently checked out branch
+			Ref branch;
+			try {
+				if (node.getRepository().getFullBranch().startsWith(
+						Constants.R_HEADS)) {
+					// simple case: local branch checked out
+					branch = node.getRepository().getRef(
+							node.getRepository().getFullBranch());
+				} else {
+					// remote branch or tag checked out: resolve the commit
+					String ref = Activator
+							.getDefault()
+							.getRepositoryUtil()
+							.mapCommitToRef(node.getRepository(),
+									node.getRepository().getFullBranch(), false);
+					if (ref == null)
+						branch = null;
+					else {
+						if (ref.startsWith(Constants.R_TAGS))
+							// if a tag is checked out, we don't suggest
+							// anything
+							branch = null;
+						else
+							branch = node.getRepository().getRef(ref);
+					}
+				}
+			} catch (IOException e) {
+				branch = null;
+			}
+			baseBranch = branch;
+		}
 
 		Wizard wiz = new Wizard() {
 
