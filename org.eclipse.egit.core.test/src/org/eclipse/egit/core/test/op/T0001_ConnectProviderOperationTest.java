@@ -29,7 +29,6 @@ import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.jgit.lib.Commit;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.FileRepository;
 import org.eclipse.jgit.lib.FileTreeEntry;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectWriter;
@@ -37,6 +36,7 @@ import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tree;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.team.core.RepositoryProvider;
 import org.junit.Test;
 
