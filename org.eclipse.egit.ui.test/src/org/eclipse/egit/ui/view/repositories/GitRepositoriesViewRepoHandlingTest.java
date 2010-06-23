@@ -1,0 +1,318 @@
+/*******************************************************************************
+ * Copyright (c) 2010 SAP AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Mathias Kinzler (SAP AG) - initial implementation
+ *******************************************************************************/
+package org.eclipse.egit.ui.view.repositories;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.lib.RepositoryCache.FileKey;
+import org.eclipse.jgit.util.FS;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
+import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.utils.TableCollection;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * SWTBot Tests for the Git Repositories View
+ */
+@RunWith(SWTBotJunit4ClassRunner.class)
+public class GitRepositoriesViewRepoHandlingTest extends
+		GitRepositoriesViewTestBase {
+
+	private static File repositoryFile;
+
+	@BeforeClass
+	public static void beforeClass() throws Exception {
+		repositoryFile = createProjectAndCommitToRepository();
+	}
+
+	@Test
+	public void testCopyPathToClipboard() throws Exception {
+		clearView();
+		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
+				repositoryFile);
+		refreshAndWait();
+		final SWTBotView view = getOrOpenView();
+		final SWTBotTreeItem[] items = view.bot().tree().getAllItems();
+		items[0].select();
+		waitInUI();
+		Display.getDefault().syncExec(new Runnable() {
+
+			public void run() {
+				Clipboard clp = new Clipboard(Display.getCurrent());
+				clp.clearContents();
+				clp.setContents(new Object[] { "x" },
+						new TextTransfer[] { TextTransfer.getInstance() });
+				String value = (String) clp.getContents(TextTransfer
+						.getInstance());
+				assertEquals("Clipboard content should be x", "x", value);
+
+				ContextMenuHelper.clickContextMenu(view.bot().tree(), myUtil
+						.getPluginLocalizedValue("CopyPathCommand"));
+				value = (String) clp.getContents(TextTransfer.getInstance());
+				assertTrue("Clipboard content (" + value
+						+ ")should be a repository path", FileKey
+						.isGitRepository(new File(value), FS.DETECTED));
+
+				clp.dispose();
+			}
+		});
+
+	}
+
+	@Test
+	public void testPasteRepoPath() throws Exception {
+		clearView();
+		refreshAndWait();
+		final Exception[] exceptions = new Exception[1];
+		final SWTBotTree tree = getOrOpenView().bot().tree();
+		Display.getDefault().syncExec(new Runnable() {
+
+			public void run() {
+				Clipboard clip = null;
+				try {
+					clip = new Clipboard(Display.getDefault());
+					clip.setContents(new Object[] { repositoryFile.getPath() },
+							new Transfer[] { TextTransfer.getInstance() });
+
+					ContextMenuHelper.clickContextMenu(tree, myUtil
+							.getPluginLocalizedValue("PastePathCommand"));
+				} catch (Exception e) {
+					exceptions[0] = e;
+				} finally {
+					if (clip != null)
+						clip.dispose();
+				}
+			}
+		});
+
+		if (exceptions[0] != null)
+			throw exceptions[0];
+		refreshAndWait();
+		assertHasRepo(repositoryFile);
+	}
+
+	@Test
+	public void testRemoveRepositoryWithoutProjects() throws Exception {
+		deleteAllProjects();
+		clearView();
+		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
+				repositoryFile);
+		refreshAndWait();
+		assertHasRepo(repositoryFile);
+		SWTBotView view = getOrOpenView();
+		view.bot().tree().getAllItems()[0].select();
+		ContextMenuHelper.clickContextMenu(view.bot().tree(), myUtil
+				.getPluginLocalizedValue("RemoveRepositoryCommand"));
+		refreshAndWait();
+		assertEmpty();
+	}
+
+	@Test
+	public void testRemoveRepositoryWithProjectsYes() throws Exception {
+		deleteAllProjects();
+		assertProject1Existence(false);
+		clearView();
+		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
+				repositoryFile);
+		shareProjects(repositoryFile);
+		assertProject1Existence(true);
+		refreshAndWait();
+		assertHasRepo(repositoryFile);
+		SWTBotView view = getOrOpenView();
+		view.bot().tree().getAllItems()[0].select();
+		ContextMenuHelper.clickContextMenu(view.bot().tree(), myUtil
+				.getPluginLocalizedValue("RemoveRepositoryCommand"));
+		SWTBotShell shell = bot
+				.shell(UIText.RepositoriesView_ConfirmProjectDeletion_WindowTitle);
+		shell.activate();
+		shell.bot().button(IDialogConstants.YES_LABEL).click();
+		waitInUI();
+		refreshAndWait();
+		assertEmpty();
+		assertProject1Existence(false);
+	}
+
+	@Test
+	public void testRemoveRepositoryWithProjectsNo() throws Exception {
+		deleteAllProjects();
+		assertProject1Existence(false);
+		clearView();
+		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
+				repositoryFile);
+		shareProjects(repositoryFile);
+		assertProject1Existence(true);
+		refreshAndWait();
+		assertHasRepo(repositoryFile);
+		SWTBotView view = getOrOpenView();
+		view.bot().tree().getAllItems()[0].select();
+		ContextMenuHelper.clickContextMenu(view.bot().tree(), myUtil
+				.getPluginLocalizedValue("RemoveRepositoryCommand"));
+		SWTBotShell shell = bot
+				.shell(UIText.RepositoriesView_ConfirmProjectDeletion_WindowTitle);
+		shell.activate();
+		shell.bot().button(IDialogConstants.NO_LABEL).click();
+		refreshAndWait();
+		assertEmpty();
+		assertProject1Existence(true);
+	}
+
+	@Test
+	public void testRemoveRepositoryWithProjectsCancel() throws Exception {
+		deleteAllProjects();
+		assertProject1Existence(false);
+		clearView();
+		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
+				repositoryFile);
+		shareProjects(repositoryFile);
+		assertProject1Existence(true);
+		refreshAndWait();
+		assertHasRepo(repositoryFile);
+		SWTBotView view = getOrOpenView();
+		view.bot().tree().getAllItems()[0].select();
+		ContextMenuHelper.clickContextMenu(view.bot().tree(), myUtil
+				.getPluginLocalizedValue("RemoveRepositoryCommand"));
+		SWTBotShell shell = bot
+				.shell(UIText.RepositoriesView_ConfirmProjectDeletion_WindowTitle);
+		shell.activate();
+		shell.bot().button(IDialogConstants.CANCEL_LABEL).click();
+		refreshAndWait();
+		assertHasRepo(repositoryFile);
+		assertProject1Existence(true);
+	}
+
+	@Test
+	public void testShowIn() throws Exception {
+		SWTBotPerspective perspective = null;
+		try {
+			perspective = bot.activePerspective();
+
+			// the show in context menu does not appear in the project explorer
+			// for general projects
+			bot.perspectiveById("org.eclipse.pde.ui.PDEPerspective").activate();
+			clearView();
+			deleteAllProjects();
+			shareProjects(repositoryFile);
+			refreshAndWait();
+			assertProject1Existence(true);
+			assertEmpty();
+
+			SWTBotTree tree = bot
+					.viewById("org.eclipse.jdt.ui.PackageExplorer").bot()
+					.tree();
+			SWTBotTreeItem projectItem = tree.getAllItems()[0].select();
+			ContextMenuHelper.clickContextMenu(tree, "Show In", viewName);
+			refreshAndWait();
+			assertHasRepo(repositoryFile);
+			SWTBotTree viewerTree = getOrOpenView().bot().tree();
+
+			TableCollection selection = viewerTree.selection();
+			assertTrue("Selection should contain one element", selection
+					.rowCount() == 1);
+			String nodeText = selection.get(0).get(0);
+			assertTrue("Node text should contain project name", projectItem
+					.getText().startsWith(nodeText));
+
+			tree.select(tree.getAllItems()[0].expand().getNode(FOLDER).expand()
+					.getNode(FILE1));
+
+			ContextMenuHelper.clickContextMenu(tree, "Show In", viewName);
+
+			selection = viewerTree.selection();
+			assertTrue("Selection should contain one eelement", selection
+					.rowCount() == 1);
+			nodeText = selection.get(0).get(0);
+			assertEquals("Node text should contain file name", FILE1, nodeText);
+		} finally {
+			if (perspective != null)
+				perspective.activate();
+		}
+	}
+
+	@Test
+	public void testAddRepoButton() throws Exception {
+		deleteAllProjects();
+		clearView();
+		refreshAndWait();
+		assertEmpty();
+		getOrOpenView().toolbarButton(
+				myUtil.getPluginLocalizedValue("AddRepositoryCommand")).click();
+		SWTBotShell shell = bot.shell(
+				UIText.RepositorySearchDialog_AddGitRepositories).activate();
+		shell.bot().textWithLabel(UIText.RepositorySearchDialog_directory)
+				.setText(testDirectory.getPath());
+		shell.bot().button(UIText.RepositorySearchDialog_Search).click();
+		shell.bot().button(IDialogConstants.OK_LABEL).click();
+		refreshAndWait();
+		assertHasRepo(repositoryFile);
+	}
+
+	@Test
+	public void testCloneRepoButton() throws Exception {
+		clearView();
+		refreshAndWait();
+		assertEmpty();
+		getOrOpenView().toolbarButton(
+				myUtil.getPluginLocalizedValue("CloneRepositoryCommand"))
+				.click();
+		SWTBotShell shell = bot.shell(UIText.GitCloneWizard_title).activate();
+		// for some reason, textWithLabel doesn't seem to work
+		shell.bot()
+				.textInGroup(UIText.RepositorySelectionPage_groupLocation, 0)
+				.setText(repositoryFile.getPath());
+		// for some reason, buttonWithLabel doesn't work; 2 is next
+		shell.bot().button(2).click();
+		waitInUI();
+		// for some reason, buttonWithLabel doesn't work; 3 is next
+		shell.bot().button(3).click();
+		waitInUI();
+		// for some reason textWithLabel doesn't work; 0 is path text
+		SWTBotText pathText = shell.bot().text(0);
+		pathText.setText(pathText.getText() + "Cloned");
+		// for some reason, buttonWithLabel doesn't work; 3 is finish
+		shell.bot().button(3).click();
+		waitInUI();
+		refreshAndWait();
+		assertHasClonedRepo();
+	}
+
+	private void assertHasClonedRepo() throws Exception {
+		final SWTBotView view = getOrOpenView();
+		final SWTBotTreeItem[] items = view.bot().tree().getAllItems();
+		boolean found = false;
+		for (SWTBotTreeItem item : items) {
+			if (item.getText().startsWith(
+					repositoryFile.getParentFile().getName() + "Cloned")) {
+				found = true;
+				break;
+			}
+		}
+		assertTrue("Tree should have item with correct text", found);
+	}
+
+}
