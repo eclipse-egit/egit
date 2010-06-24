@@ -127,8 +127,7 @@ public class CreateBranchPage extends WizardPage {
 			}
 		});
 
-		boolean isBare = myRepository.getConfig().getBoolean(
-				"core", "bare", false); //$NON-NLS-1$ //$NON-NLS-2$
+		boolean isBare = myRepository.isBare();
 		checkout = new Button(main, SWT.CHECK);
 		checkout.setText(UIText.CreateBranchPage_CheckoutButton);
 		// most of the time, we probably will check this out
