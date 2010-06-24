@@ -74,7 +74,7 @@ public class PushConfiguredRemoteAction {
 		final PushOperation op;
 		try {
 			config = new RemoteConfig(repository.getConfig(), remoteName);
-			if (config.getPushURIs().isEmpty()) {
+			if (config.getPushURIs().isEmpty() && config.getURIs().isEmpty()) {
 				throw new IOException(NLS.bind(
 						UIText.PushConfiguredRemoteAction_NoUrisMessage,
 						remoteName));
@@ -89,15 +89,19 @@ public class PushConfiguredRemoteAction {
 					.findRemoteRefUpdatesFor(repository, pushSpecs, null);
 			if (updates.isEmpty()) {
 				throw new IOException(
-						NLS.bind(
-								UIText.PushConfiguredRemoteAction_NoUpdatesFoundMessage,
-								remoteName));
+						NLS
+								.bind(
+										UIText.PushConfiguredRemoteAction_NoUpdatesFoundMessage,
+										remoteName));
 			}
 
 			spec = new PushOperationSpecification();
 			for (final URIish uri : config.getPushURIs())
-				spec.addURIRefUpdates(uri,
-						ConfirmationPage.copyUpdates(updates));
+				spec.addURIRefUpdates(uri, ConfirmationPage
+						.copyUpdates(updates));
+			if (config.getURIs().size() > 0)
+				spec.addURIRefUpdates(config.getURIs().get(0), ConfirmationPage
+						.copyUpdates(updates));
 
 			op = new PushOperation(repository, spec, dryRun, config);
 
