@@ -130,7 +130,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 						refs.add(new RefNode(node, repo, refEntry.getValue()));
 				}
 			} catch (IOException e) {
-				handleException(e, node);
+				return handleException(e, node);
 			}
 
 			return refs.toArray();
@@ -146,7 +146,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 						refs.add(new RefNode(node, repo, refEntry.getValue()));
 				}
 			} catch (IOException e) {
-				handleException(e, node);
+				return handleException(e, node);
 			}
 
 			return refs.toArray();
@@ -160,7 +160,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 					refs.add(new TagNode(node, repo, refEntry.getValue()));
 				}
 			} catch (IOException e) {
-				handleException(e, node);
+				return handleException(e, node);
 			}
 
 			return refs.toArray();
@@ -177,7 +177,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 								.getValue()));
 				}
 			} catch (IOException e) {
-				handleException(e, node);
+				return handleException(e, node);
 			}
 
 			return refs.toArray();
@@ -285,8 +285,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 				rc = new RemoteConfig(node.getRepository().getConfig(),
 						remoteName);
 			} catch (URISyntaxException e) {
-				handleException(e, node);
-				return children.toArray();
+				return handleException(e, node);
 			}
 
 			if (!rc.getURIs().isEmpty())
@@ -327,11 +326,17 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 	}
 
-	private void handleException(Exception e, RepositoryTreeNode parentNode) {
+	private Object[] handleException(Exception e, RepositoryTreeNode parentNode) {
 		Activator.handleError(e.getMessage(), e, false);
 		// add a node indicating that there was an Exception
-		new ErrorNode(parentNode, parentNode.getRepository(),
-				UIText.RepositoriesViewContentProvider_ExceptionNodeText);
+		String message = e.getMessage();
+		if (message == null)
+			return new Object[] { new ErrorNode(parentNode, parentNode
+					.getRepository(),
+					UIText.RepositoriesViewContentProvider_ExceptionNodeText) };
+		else
+			return new Object[] { new ErrorNode(parentNode, parentNode
+					.getRepository(), message) };
 	}
 
 	public Object getParent(Object element) {

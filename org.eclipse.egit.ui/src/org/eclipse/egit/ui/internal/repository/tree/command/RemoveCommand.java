@@ -115,12 +115,6 @@ public class RemoveCommand extends
 				for (RepositoryNode node : getSelectedNodes(event)) {
 					util.removeDir(node.getRepository().getDirectory());
 				}
-				Display.getDefault().asyncExec(new Runnable() {
-					public void run() {
-						getView(event).getCommonViewer().refresh();
-					}
-				});
-
 				return Status.OK_STATUS;
 			}
 		};
@@ -146,7 +140,6 @@ public class RemoveCommand extends
 		int index = dlg.open();
 		if (index == 2)
 			throw new OperationCanceledException();
-
 		return index == 0;
 	}
 }
