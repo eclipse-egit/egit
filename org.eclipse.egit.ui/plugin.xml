@@ -859,6 +859,89 @@
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewCreateTag"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.TagsNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewMerge"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <test
+                              property="GitRepository.canMerge">
+                        </test>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                           </instanceof>
+                           <and>
+                              <instanceof
+                                    value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                              </instanceof>
+                              <test
+                                    property="GitRepository.isRefCheckedOut">
+                              </test>
+                           </and>
+                        </or>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewMergeSimple"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                           </instanceof>
+                        </or>
+                        <test
+                              property="GitRepository.canMerge">
+                        </test>
+                        <not>
+                           <test
+                                 property="GitRepository.isRefCheckedOut">
+                           </test>
+                        </not>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesViewNewRemote"
                style="push">
             <visibleWhen
@@ -1310,6 +1393,27 @@
                class="org.eclipse.egit.ui.internal.repository.tree.command.SynchronizeCommand">
          </defaultHandler>
       </command>
+      <command
+            id="org.eclipse.egit.ui.RepositoriesViewCreateTag"
+            name="Create Tag...">
+         <defaultHandler
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CreateTagCommand">
+         </defaultHandler>
+      </command>
+      <command
+            id="org.eclipse.egit.ui.RepositoriesViewMergeSimple"
+            name="Merge">
+         <defaultHandler
+               class="org.eclipse.egit.ui.internal.repository.tree.command.MergeCommand">
+         </defaultHandler>
+      </command>
+      <command
+            id="org.eclipse.egit.ui.RepositoriesViewMerge"
+            name="Merge...">
+         <defaultHandler
+               class="org.eclipse.egit.ui.internal.repository.tree.command.MergeCommand">
+         </defaultHandler>
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.commandImages">
@@ -1337,6 +1441,18 @@
             commandId="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
             icon="icons/elcl16/synced.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewCreateTag"
+            icon="icons/obj16/version_rep.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewMerge"
+            icon="icons/obj16/merge.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewMergeSimple"
+            icon="icons/obj16/merge.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -1344,7 +1460,7 @@
             class="org.eclipse.egit.ui.internal.repository.tree.PropertyTester"
             id="org.eclipse.egit.ui.RepositoryTester"
             namespace="GitRepository"
-            properties="isBare,isRefCheckedOut,isLocalBranch,fetchExists,pushExists"
+            properties="isBare,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge"
             type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
       </propertyTester>
    </extension>
