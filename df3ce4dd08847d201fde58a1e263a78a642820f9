@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX///4A\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewBranchHandlingTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-25T08:52:35Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "df3ce4dd08847d201fde58a1e263a78a642820f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///38\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewBranchHandlingTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-25T08:52:35Z",
+      "side": 1,
+      "message": "trailing blank",
+      "revId": "df3ce4dd08847d201fde58a1e263a78a642820f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///34\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewFetchAndPushTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-25T08:52:35Z",
+      "side": 1,
+      "message": "(fetch and push tests)",
+      "revId": "df3ce4dd08847d201fde58a1e263a78a642820f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///30\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewRepoHandlingTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-25T08:52:35Z",
+      "side": 1,
+      "message": "(repository handling)",
+      "revId": "df3ce4dd08847d201fde58a1e263a78a642820f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
