@@ -41,7 +41,8 @@ import org.osgi.service.prefs.BackingStoreException;
  */
 public class RepositoryUtil {
 
-	private static final String PREFS_DIRECTORIES = "GitRepositoriesView.GitDirectories"; //$NON-NLS-1$
+	/** The preferences to store the directories known to the Git Repositories view */
+	public static final String PREFS_DIRECTORIES = "GitRepositoriesView.GitDirectories"; //$NON-NLS-1$
 
 	private final Map<String, Map<String, String>> commitMappingCache = new HashMap<String, Map<String, String>>();
 

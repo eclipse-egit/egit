@@ -353,13 +353,14 @@ public class RepositoriesView extends CommonNavigator {
 
 	/**
 	 * Executes an immediate refresh
+	 * @return the job used to perform the refresh
 	 */
-	public void refresh() {
+	public Job refresh() {
 		lastInputUpdate = -1l;
-		scheduleRefresh(0);
+		return scheduleRefresh(0);
 	}
 
-	private void scheduleRefresh(long delay) {
+	private Job scheduleRefresh(long delay) {
 		boolean trace = GitTraceLocation.REPOSITORIESVIEW.isActive();
 		if (trace)
 			GitTraceLocation.getTrace().trace(
@@ -374,7 +375,7 @@ public class RepositoriesView extends CommonNavigator {
 				GitTraceLocation.getTrace().trace(
 						GitTraceLocation.REPOSITORIESVIEW.getLocation(),
 						"Pending refresh job, returning"); //$NON-NLS-1$
-			return;
+			return scheduledJob;
 		}
 
 		final CommonViewer tv = getCommonViewer();
@@ -489,6 +490,7 @@ public class RepositoriesView extends CommonNavigator {
 		service.schedule(job, delay);
 
 		scheduledJob = job;
+		return scheduledJob;
 	}
 
 	private void unregisterRepositoryListener() {
