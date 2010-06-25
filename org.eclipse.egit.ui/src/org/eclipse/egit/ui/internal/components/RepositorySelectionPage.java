@@ -325,8 +325,10 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		newLabel(g, UIText.RepositorySelectionPage_promptURI + ":"); //$NON-NLS-1$
 		uriText = new Text(g, SWT.BORDER);
 
-		if (presetUri != null)
+		if (presetUri != null) {
 			uriText.setText(presetUri);
+			uriText.selectAll();
+		}
 
 		uriText.setLayoutData(createFieldGridData());
 		uriText.addModifyListener(new ModifyListener() {
