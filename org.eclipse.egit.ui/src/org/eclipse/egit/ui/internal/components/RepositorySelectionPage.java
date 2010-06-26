@@ -66,44 +66,6 @@ public class RepositorySelectionPage extends BaseWizardPage {
 
 	private static final int REMOTE_CONFIG_TEXT_MAX_LENGTH = 80;
 
-	private static final int S_GIT = 0;
-
-	private static final int S_SSH = 1;
-
-	private static final int S_SFTP = 2;
-
-	private static final int S_HTTP = 3;
-
-	private static final int S_HTTPS = 4;
-
-	private static final int S_FTP = 5;
-
-	private static final int S_FILE = 6;
-
-	private static final String[] DEFAULT_SCHEMES;
-
-	private static final String[] SCHEME_TOOLTIPS;
-
-	static {
-		DEFAULT_SCHEMES = new String[7];
-		DEFAULT_SCHEMES[S_GIT] = "git"; //$NON-NLS-1$
-		DEFAULT_SCHEMES[S_SSH] = "ssh"; //$NON-NLS-1$
-		DEFAULT_SCHEMES[S_SFTP] = "sftp"; //$NON-NLS-1$
-		DEFAULT_SCHEMES[S_HTTP] = "http"; //$NON-NLS-1$
-		DEFAULT_SCHEMES[S_HTTPS] = "https"; //$NON-NLS-1$
-		DEFAULT_SCHEMES[S_FTP] = "ftp"; //$NON-NLS-1$
-		DEFAULT_SCHEMES[S_FILE] = "file"; //$NON-NLS-1$
-
-		SCHEME_TOOLTIPS = new String[7];
-		SCHEME_TOOLTIPS[S_GIT] = UIText.RepositorySelectionPage_tip_git;
-		SCHEME_TOOLTIPS[S_SSH] = UIText.RepositorySelectionPage_tip_ssh;
-		SCHEME_TOOLTIPS[S_SFTP] = UIText.RepositorySelectionPage_tip_sftp;
-		SCHEME_TOOLTIPS[S_HTTP] = UIText.RepositorySelectionPage_tip_http;
-		SCHEME_TOOLTIPS[S_HTTPS] = UIText.RepositorySelectionPage_tip_https;
-		SCHEME_TOOLTIPS[S_FTP] = UIText.RepositorySelectionPage_tip_ftp;
-		SCHEME_TOOLTIPS[S_FILE] = UIText.RepositorySelectionPage_tip_file;
-	}
-
 	private final List<RemoteConfig> configuredRemotes;
 
 	private final boolean sourceSelection;
@@ -147,6 +109,89 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	private IPreviousValueProposalHandler uriProposalHandler;
 
 	/**
+	 * Transport protocol
+	 */
+	public enum Protocol {
+		/** Git native transfer */
+		GIT("git", UIText.RepositorySelectionPage_tip_git, true, true, false), //$NON-NLS-1$
+		/** Git over SSH */
+		SSH("ssh", UIText.RepositorySelectionPage_tip_ssh, true, true, true), //$NON-NLS-1$
+		/** Secure FTP */
+		SFTP("sftp", UIText.RepositorySelectionPage_tip_sftp, true, true, true), //$NON-NLS-1$
+		/** HTTP */
+		HTTP("http", UIText.RepositorySelectionPage_tip_http, true, true, true), //$NON-NLS-1$
+		/** Secure HTTP */
+		HTTPS("https", UIText.RepositorySelectionPage_tip_https, true, true, true), //$NON-NLS-1$
+		/** FTP */
+		FTP("ftp", UIText.RepositorySelectionPage_tip_ftp, true, true, true), //$NON-NLS-1$
+		/** Local repository */
+		FILE("file", UIText.RepositorySelectionPage_tip_file, false, false, false); //$NON-NLS-1$
+
+		private final String defaultScheme;
+		private final String tooltip;
+		private final boolean hasHost;
+		private final boolean hasPort;
+		private final boolean canAuthenticate;
+
+		private Protocol(String defaultScheme, String tooltip, boolean hasHost, boolean hasPort, boolean canAuthenticate) {
+			this.defaultScheme = defaultScheme;
+			this.tooltip = tooltip;
+			this.hasHost = hasHost;
+			this.hasPort = hasPort;
+			this.canAuthenticate = canAuthenticate;
+		}
+
+		/**
+		 * @return the default protocol scheme
+		 */
+		public String getDefaultScheme() {
+			return defaultScheme;
+		}
+
+		/**
+		 * @return the tooltip text describing the protocol
+		 */
+		public String getTooltip() {
+			return tooltip;
+		}
+
+		/**
+		 * @return true if protocol has host segment
+		 */
+		public boolean hasHost() {
+			return hasHost;
+		}
+
+		/**
+		 * @return true if protocol has port
+		 */
+		public boolean hasPort() {
+			return hasPort;
+		}
+
+		/**
+		 * @return true if protocol can authenticate
+		 */
+		public boolean canAuthenticate() {
+			return canAuthenticate;
+		}
+
+		/**
+		 * Lookup protocol supporting giving URL scheme
+		 * @param scheme Scheme to lookup protocol for
+		 * @return protocol matching scheme or null
+		 */
+		public static Protocol fromScheme(String scheme){
+			Protocol[] protocols = Protocol.values();
+			for (int i = 0; i < protocols.length; i++) {
+				if (protocols[i].getDefaultScheme().equals(scheme))
+					return protocols[i];
+			}
+			return null;
+		}
+	}
+
+	/**
 	 * Create repository selection page, allowing user specifying URI or
 	 * (optionally) choosing from preconfigured remotes list.
 	 * <p>
@@ -188,11 +233,9 @@ public class RepositorySelectionPage extends BaseWizardPage {
 						text = text.substring(0, index);
 					URIish u = new URIish(text);
 					if (Transport.canHandleProtocol(u, FS.DETECTED)) {
-						String s = u.getScheme();
-						// s may be null if an existing local directory was in text
-						if (s != null && s.equals(DEFAULT_SCHEMES[S_GIT])
-								|| s.equals(DEFAULT_SCHEMES[S_SSH])
-								|| text.endsWith(Constants.DOT_GIT))
+						if (Protocol.fromScheme(u.getScheme()) == Protocol.GIT
+								|| isSSH(u) || text.endsWith(Constants.DOT_GIT))
+							;
 							preset = text;
 					}
 				}
@@ -430,7 +473,9 @@ public class RepositorySelectionPage extends BaseWizardPage {
 
 		newLabel(g, UIText.RepositorySelectionPage_promptScheme + ":"); //$NON-NLS-1$
 		scheme = new Combo(g, SWT.DROP_DOWN | SWT.READ_ONLY);
-		scheme.setItems(DEFAULT_SCHEMES);
+		for (Protocol p : Protocol.values()) {
+			scheme.add(p.getDefaultScheme());
+		}
 		scheme.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
 				final int idx = scheme.getSelectionIndex();
@@ -439,7 +484,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 					scheme.setToolTipText(""); //$NON-NLS-1$
 				} else {
 					setURI(uri.setScheme(nullString(scheme.getItem(idx))));
-					scheme.setToolTipText(SCHEME_TOOLTIPS[idx]);
+					scheme.setToolTipText(Protocol.values()[idx].getTooltip());
 				}
 				updateAuthGroup();
 			}
@@ -738,26 +783,12 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	}
 
 	private void updateAuthGroup() {
-		switch (scheme.getSelectionIndex()) {
-		case S_GIT:
-			hostText.setEnabled(true);
-			portText.setEnabled(true);
-			setEnabledRecursively(authGroup, false);
-			break;
-		case S_SSH:
-		case S_SFTP:
-		case S_HTTP:
-		case S_HTTPS:
-		case S_FTP:
-			hostText.setEnabled(true);
-			portText.setEnabled(true);
-			setEnabledRecursively(authGroup, true);
-			break;
-		case S_FILE:
-			hostText.setEnabled(false);
-			portText.setEnabled(false);
-			setEnabledRecursively(authGroup, false);
-			break;
+		int idx = scheme.getSelectionIndex();
+		if (idx >= 0) {
+			Protocol p = Protocol.values()[idx];
+			hostText.setEnabled(p.hasHost());
+			portText.setEnabled(p.hasPort());
+			setEnabledRecursively(authGroup, p.canAuthenticate());
 		}
 	}
 
@@ -839,16 +870,12 @@ public class RepositorySelectionPage extends BaseWizardPage {
 				portText.setText(""); //$NON-NLS-1$
 
 			if (isFile(u))
-				scheme.select(S_FILE);
+				scheme.select(Protocol.FILE.ordinal());
 			else if (isSSH(u))
-				scheme.select(S_SSH);
+				scheme.select(Protocol.SSH.ordinal());
 			else {
-				for (int i = 0; i < DEFAULT_SCHEMES.length; i++) {
-					if (DEFAULT_SCHEMES[i].equals(u.getScheme())) {
-						scheme.select(i);
-						break;
-					}
-				}
+				Protocol p = Protocol.fromScheme(u.getScheme());
+				scheme.select(p.ordinal());
 			}
 
 			updateAuthGroup();
