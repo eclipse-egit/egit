@@ -240,26 +240,12 @@ public class RepositoryUtil {
 	}
 
 	/**
-	 * Checks if the directories are still valid; in case of invalid directories
-	 * the underlying {@link IEclipsePreferences} will be changed (by removing
-	 * these directories) and the registered listeners will be notified.
-	 */
-	public void checkDirectories() {
-		getConfiguredRepositories(true);
-	}
-
-	/**
 	 *
 	 * @return the list of configured Repository paths; will be sorted
 	 */
 	public List<String> getConfiguredRepositories() {
-		return this.getConfiguredRepositories(false);
-	}
-
-	private List<String> getConfiguredRepositories(boolean checkPaths) {
 		synchronized (prefs) {
 			Set<String> configuredStrings = new HashSet<String>();
-			Set<String> resultStrings = new HashSet<String>();
 
 			String dirs = prefs.get(PREFS_DIRECTORIES, ""); //$NON-NLS-1$
 			if (dirs != null && dirs.length() > 0) {
@@ -268,19 +254,10 @@ public class RepositoryUtil {
 				while (tok.hasMoreTokens()) {
 					String dirName = tok.nextToken();
 					configuredStrings.add(dirName);
-					if (checkPaths) {
-						File testFile = new File(dirName);
-						if (!FileKey.isGitRepository(testFile, FS.DETECTED))
-							resultStrings.add(dirName);
-					}
-					resultStrings.add(dirName);
 				}
 			}
-
-			if (checkPaths && resultStrings.size() < configuredStrings.size())
-				saveDirs(resultStrings);
 			List<String> result = new ArrayList<String>();
-			result.addAll(resultStrings);
+			result.addAll(configuredStrings);
 			Collections.sort(result);
 			return result;
 		}
@@ -308,7 +285,7 @@ public class RepositoryUtil {
 				dirString = repositoryDir.getAbsolutePath();
 			}
 
-			List<String> dirStrings = getConfiguredRepositories(false);
+			List<String> dirStrings = getConfiguredRepositories();
 			if (dirStrings.contains(dirString)) {
 				return false;
 			} else {
@@ -336,7 +313,7 @@ public class RepositoryUtil {
 			}
 
 			Set<String> dirStrings = new HashSet<String>();
-			dirStrings.addAll(getConfiguredRepositories(false));
+			dirStrings.addAll(getConfiguredRepositories());
 			if (dirStrings.remove(dir)) {
 				saveDirs(dirStrings);
 				return true;
