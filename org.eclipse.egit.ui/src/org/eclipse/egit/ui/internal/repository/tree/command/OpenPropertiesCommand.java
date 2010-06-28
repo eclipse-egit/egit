@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -23,13 +24,18 @@ import org.eclipse.ui.PlatformUI;
 public class OpenPropertiesCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		try {
-			// TODO should we get this from the event?
-			PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-					.getActivePage().showView(IPageLayout.ID_PROP_SHEET);
-		} catch (PartInitException e1) {
-			// just ignore
-		}
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				try {
+					// TODO should we get this from the event?
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+							.getActivePage()
+							.showView(IPageLayout.ID_PROP_SHEET);
+				} catch (PartInitException e1) {
+					// just ignore
+				}
+			}
+		});
 
 		return null;
 	}

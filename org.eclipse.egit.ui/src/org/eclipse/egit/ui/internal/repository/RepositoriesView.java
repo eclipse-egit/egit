@@ -27,9 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.egit.core.RepositoryCache;
@@ -286,66 +284,54 @@ public class RepositoriesView extends CommonNavigator {
 				scheduleRefresh(0);
 			}
 
-			boolean doSetSelection = false;
-
 			if (this.scheduledJob != null) {
-				int state = this.scheduledJob.getState();
-				if (state == Job.WAITING || state == Job.RUNNING) {
-					this.scheduledJob
-							.addJobChangeListener(new JobChangeAdapter() {
-
-								@Override
-								public void done(IJobChangeEvent event) {
-									showResource(resource);
-								}
-							});
-				} else {
-					doSetSelection = true;
+				try {
+					this.scheduledJob.join();
+				} catch (InterruptedException e) {
+					Activator.handleError(e.getMessage(), e, false);
 				}
 			}
 
-			if (doSetSelection) {
-				RepositoryTreeNode currentNode = null;
-				ITreeContentProvider cp = (ITreeContentProvider) getCommonViewer()
-						.getContentProvider();
-				for (Object repo : cp.getElements(getCommonViewer().getInput())) {
-					RepositoryTreeNode node = (RepositoryTreeNode) repo;
-					// TODO equals implementation of Repository?
-					if (mapping.getRepository().getDirectory().equals(
-							((Repository) node.getObject()).getDirectory())) {
-						for (Object child : cp.getChildren(node)) {
-							RepositoryTreeNode childNode = (RepositoryTreeNode) child;
-							if (childNode.getType() == RepositoryTreeNodeType.WORKINGDIR) {
-								currentNode = childNode;
-								break;
-							}
-						}
-						break;
-					}
-				}
-
-				IPath relPath = new Path(mapping.getRepoRelativePath(resource));
-
-				for (String segment : relPath.segments()) {
-					for (Object child : cp.getChildren(currentNode)) {
-						RepositoryTreeNode<File> childNode = (RepositoryTreeNode<File>) child;
-						if (childNode.getObject().getName().equals(segment)) {
+			RepositoryTreeNode currentNode = null;
+			ITreeContentProvider cp = (ITreeContentProvider) getCommonViewer()
+					.getContentProvider();
+			for (Object repo : cp.getElements(getCommonViewer().getInput())) {
+				RepositoryTreeNode node = (RepositoryTreeNode) repo;
+				// TODO equals implementation of Repository?
+				if (mapping.getRepository().getDirectory().equals(
+						((Repository) node.getObject()).getDirectory())) {
+					for (Object child : cp.getChildren(node)) {
+						RepositoryTreeNode childNode = (RepositoryTreeNode) child;
+						if (childNode.getType() == RepositoryTreeNodeType.WORKINGDIR) {
 							currentNode = childNode;
 							break;
 						}
 					}
+					break;
 				}
-
-				final RepositoryTreeNode selNode = currentNode;
-
-				Display.getDefault().asyncExec(new Runnable() {
-
-					public void run() {
-						selectReveal(new StructuredSelection(selNode));
-					}
-				});
-
 			}
+
+			IPath relPath = new Path(mapping.getRepoRelativePath(resource));
+
+			for (String segment : relPath.segments()) {
+				for (Object child : cp.getChildren(currentNode)) {
+					RepositoryTreeNode<File> childNode = (RepositoryTreeNode<File>) child;
+					if (childNode.getObject().getName().equals(segment)) {
+						currentNode = childNode;
+						break;
+					}
+				}
+			}
+
+			final RepositoryTreeNode selNode = currentNode;
+
+			Display.getDefault().asyncExec(new Runnable() {
+
+				public void run() {
+					selectReveal(new StructuredSelection(selNode));
+				}
+			});
+
 		} catch (RuntimeException rte) {
 			Activator.handleError(rte.getMessage(), rte, false);
 		}
