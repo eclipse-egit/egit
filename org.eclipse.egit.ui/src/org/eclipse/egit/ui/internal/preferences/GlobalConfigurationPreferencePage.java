@@ -318,7 +318,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 
 		valueText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				if (valueText.getText().isEmpty()) {
+				if (valueText.getText().length() == 0) {
 					setErrorMessage(UIText.GlobalConfigurationPreferencePage_EmptyStringNotAllowed);
 					applyValue.setEnabled(false);
 				} else {
@@ -469,7 +469,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 		}
 
 		public void addValue(String newValue) {
-			if (newValue.isEmpty())
+			if (newValue.length() == 0)
 				throw new IllegalArgumentException(
 						UIText.GlobalConfigurationPreferencePage_EmptyStringNotAllowed);
 			Config config = getConfig();
@@ -505,7 +505,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 
 		public void changeValue(String newValue)
 				throws IllegalArgumentException {
-			if (newValue.isEmpty())
+			if (newValue.length() == 0)
 				throw new IllegalArgumentException(
 						UIText.GlobalConfigurationPreferencePage_EmptyStringNotAllowed);
 			Config config = getConfig();
