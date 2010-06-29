@@ -107,7 +107,7 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 		setErrorMessage(null);
 		boolean hasError = false;
 		try {
-			if (keyText.getText().isEmpty()) {
+			if (keyText.getText().length() == 0) {
 				setErrorMessage(UIText.AddConfigEntryDialog_MustEnterKeyMessage);
 				hasError = true;
 				return;
@@ -132,7 +132,7 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 				hasError = true;
 				return;
 			}
-			if (valueText.getText().isEmpty()) {
+			if (valueText.getText().length() == 0) {
 				setErrorMessage(UIText.AddConfigEntryDialog_EnterValueMessage);
 				hasError = true;
 				return;
