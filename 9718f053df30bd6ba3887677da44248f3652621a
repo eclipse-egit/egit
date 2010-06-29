@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX///yo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/AddConfigEntryDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-06-29T09:11:01Z",
+      "side": 1,
+      "message": "isEmpty is Java6. We require only Java 5",
+      "revId": "9718f053df30bd6ba3887677da44248f3652621a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
