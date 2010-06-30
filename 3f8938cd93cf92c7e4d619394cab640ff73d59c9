@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALwH///5Y\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparatorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-19T23:56:18Z",
+      "side": 1,
+      "message": "s/TrueFalse/ReturnTrue/\n\nDone",
+      "parentUuid": "AAALwH///6w\u003d",
+      "revId": "3f8938cd93cf92c7e4d619394cab640ff73d59c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALwH///6s\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSyncInfoTest.java",
         "patchSetId": 7
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "AAALwH///5M\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/GitImportRepoWizard.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-19T23:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALwH///6k\u003d",
+      "revId": "3f8938cd93cf92c7e4d619394cab640ff73d59c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALwH///6g\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
         "patchSetId": 7
@@ -81,6 +117,24 @@
       "writtenOn": "2010-06-19T22:57:16Z",
       "side": 1,
       "message": "style nit: no braces around single line",
+      "revId": "3f8938cd93cf92c7e4d619394cab640ff73d59c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwH///5I\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-19T23:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALwH///6g\u003d",
       "revId": "3f8938cd93cf92c7e4d619394cab640ff73d59c9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false

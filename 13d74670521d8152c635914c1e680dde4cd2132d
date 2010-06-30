@@ -16,6 +16,24 @@
       "revId": "13d74670521d8152c635914c1e680dde4cd2132d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwH///5E\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-19T23:56:18Z",
+      "side": 0,
+      "message": "@RunWith annotation were moved into EGitTestCase class. This change belongs also to this patch set.",
+      "parentUuid": "AAALwH///6c\u003d",
+      "revId": "13d74670521d8152c635914c1e680dde4cd2132d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
