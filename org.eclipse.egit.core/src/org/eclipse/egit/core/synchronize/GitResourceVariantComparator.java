@@ -23,24 +23,18 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.synchronize.GitBlobResourceVariant;
-import org.eclipse.egit.core.synchronize.GitFolderResourceVariant;
-import org.eclipse.egit.core.synchronize.GitResourceVariant;
+import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.variants.IResourceVariant;
 import org.eclipse.team.core.variants.IResourceVariantComparator;
-import org.eclipse.team.core.variants.ResourceVariantByteStore;
 
 class GitResourceVariantComparator implements IResourceVariantComparator {
 
 	private final GitSynchronizeDataSet gsd;
-	private final ResourceVariantByteStore store;
 
-	public GitResourceVariantComparator(GitSynchronizeDataSet dataSet, ResourceVariantByteStore store) {
+	GitResourceVariantComparator(GitSynchronizeDataSet dataSet) {
 		gsd = dataSet;
-		this.store = store;
 	}
 
 	public boolean compare(IResource local, IResourceVariant remote) {
@@ -61,6 +55,7 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 				stream = getLocal(local);
 				byte[] remoteBytes = new byte[8096];
 				byte[] bytes = new byte[8096];
+
 
 				int remoteRead = remoteStream.read(remoteBytes);
 				int read = stream.read(bytes);
@@ -131,17 +126,17 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 	}
 
 	private InputStream getLocal(IResource resource) throws CoreException {
-		if (gsd.getData(resource.getProject()).shouldIncludeLocal()) {
+		if (gsd.getData(resource.getProject().getName()).shouldIncludeLocal())
 			return ((IFile) resource).getContents();
-		} else {
+		else
 			try {
-				byte[] bytes = store.getBytes(resource);
-				return new ByteArrayInputStream(bytes != null ? bytes : new byte[0]);
+				if (resource.getType() == IResource.FILE)
+					return ((IFile) resource).getContents();
+				else
+					return new ByteArrayInputStream(null);
 			} catch (TeamException e) {
 				throw new CoreException(e.getStatus());
 			}
-		}
-
 	}
 
 	private void logException(Exception e) {

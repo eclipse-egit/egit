@@ -10,27 +10,24 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
-import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.resource.GitResource;
 import org.eclipse.team.core.variants.IResourceVariant;
 
 abstract class GitResourceVariant implements IResourceVariant {
 
-	private IResource resource;
+	private GitResource resource;
 
-	GitResourceVariant(IResource resource) {
+	GitResourceVariant(GitResource resource) {
 		this.resource = resource;
 	}
 
-	public IResource getResource() {
+	public GitResource getResource() {
 		return resource;
 	}
 
 	public String getName() {
-		return resource.getName();
-	}
-
-	public byte[] asBytes() {
-		return getContentIdentifier().getBytes();
+		String name = resource.getName();
+		return name != null ? name : ""; //$NON-NLS-1$
 	}
 
 }

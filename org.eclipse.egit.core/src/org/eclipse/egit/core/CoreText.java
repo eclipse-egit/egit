@@ -275,7 +275,13 @@ public class CoreText extends NLS {
 	public static String TagOperation_objectIdNotFound;
 
 	/** */
+	public static String GitResourceVariantTree_couldNotFindTree;
+
+	/** */
 	public static String GitResourceVariantTree_couldNotFindBlob;
+
+	/** */
+	public static String GitResourceVariantTree_couldNotOpenReaderFor;
 
 	/** */
 	public static String GitResourceVariantTree_fetchingMembers;
@@ -284,7 +290,7 @@ public class CoreText extends NLS {
 	public static String GitResourceVariantTree_fetchingVariant;
 
 	/** */
-	public static String GitResourceVariantTree_unableToReadRepository;
+	public static String GitResourceVariantTree_couldNotFetchMembersOf;
 
 	/** */
 	public static String GitBranchResourceVariantTreeSubscriber_gitRepository;
@@ -296,4 +302,5 @@ public class CoreText extends NLS {
 		initializeMessages("org.eclipse.egit.core.coretext", //$NON-NLS-1$
 				CoreText.class);
 	}
+
 }

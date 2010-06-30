@@ -12,8 +12,6 @@
 package org.eclipse.egit.core.synchronize;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevCommitList;
 import org.eclipse.team.core.Team;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.synchronize.SyncInfo;
@@ -110,12 +108,15 @@ class GitSyncInfo extends SyncInfo {
 		if (base instanceof GitBlobResourceVariant) {
 			if (remote instanceof GitBlobResourceVariant) {
 				if (getComparator().compare(local, base)) {
-					GitBlobResourceVariant baseBlob = (GitBlobResourceVariant) base;
-					GitBlobResourceVariant remoteBlob = (GitBlobResourceVariant) remote;
-
-					if (!baseBlob.getId().equals(remoteBlob.getId())) {
-						description = calculateDescBasedOnGitCommits(baseBlob,
-								remoteBlob);
+//					GitBlobResourceVariant baseBlob = (GitBlobResourceVariant) base;
+//					GitBlobResourceVariant remoteBlob = (GitBlobResourceVariant) remote;
+//
+//					if (!baseBlob.getId().equals(remoteBlob.getId())) {
+//						description = calculateDescBasedOnGitCommits(baseBlob,
+//								remoteBlob);
+//					}
+					if (!base.getContentIdentifier().equals(remote.getContentIdentifier())) {
+						description = CONFLICTING | CHANGE;
 					}
 				} else {
 					description = OUTGOING | CHANGE;
@@ -136,30 +137,30 @@ class GitSyncInfo extends SyncInfo {
 		return description;
 	}
 
-	private int calculateDescBasedOnGitCommits(GitBlobResourceVariant baseBlob,
-			GitBlobResourceVariant remoteBlob) {
-
-		RevCommitList<RevCommit> baseList = baseBlob.getCommitList();
-		RevCommitList<RevCommit> remoteList = remoteBlob.getCommitList();
-		RevCommit recentRemoteCommit = remoteList.get(0);
-		RevCommit recentBaseCommit = baseList.get(0);
-
-		// TODO can we implement it better ?
-		for (RevCommit baseCommit : baseList) {
-			if (recentRemoteCommit.name().equals(baseCommit.name())) {
-				return OUTGOING | CHANGE;
-			}
-		}
-
-		// TODO can we implement it better ?
-		for (RevCommit remoteCommit : remoteList) {
-			if (recentBaseCommit.name().equals(remoteCommit.name())) {
-				return INCOMING | CHANGE;
-			}
-		}
-
-		return CONFLICTING | CHANGE;
-	}
+//	private int calculateDescBasedOnGitCommits(GitBlobResourceVariant baseBlob,
+//			GitBlobResourceVariant remoteBlob) {
+//
+//		RevCommitList<RevCommit> baseList = baseBlob.getCommitList();
+//		RevCommitList<RevCommit> remoteList = remoteBlob.getCommitList();
+//		RevCommit recentRemoteCommit = remoteList.get(0);
+//		RevCommit recentBaseCommit = baseList.get(0);
+//
+//		// TODO can we implement it better ?
+//		for (RevCommit baseCommit : baseList) {
+//			if (recentRemoteCommit.name().equals(baseCommit.name())) {
+//				return OUTGOING | CHANGE;
+//			}
+//		}
+//
+//		// TODO can we implement it better ?
+//		for (RevCommit remoteCommit : remoteList) {
+//			if (recentBaseCommit.name().equals(remoteCommit.name())) {
+//				return INCOMING | CHANGE;
+//			}
+//		}
+//
+//		return CONFLICTING | CHANGE;
+//	}
 
 	private int compareTwoContainers(GitResourceVariant base,
 			GitResourceVariant remote) {

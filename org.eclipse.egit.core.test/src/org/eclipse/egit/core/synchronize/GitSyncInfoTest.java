@@ -64,7 +64,7 @@ public class GitSyncInfoTest extends GitTestCase {
 
 		GitSynchronizeData data = new GitSynchronizeData(repo, "", "", true);
 		GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
-		comparator = new GitResourceVariantComparator(dataSet, null);
+		comparator = new GitResourceVariantComparator(dataSet);
 	}
 
 	/**
