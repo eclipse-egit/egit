@@ -183,4 +183,17 @@ public class GitSynchronizeData {
 		return null;
 	}
 
+	/**
+	 *
+	 * @return source RevCommit object
+	 */
+	public Commit getCommit() {
+		try {
+			return repo.mapCommit(srcRev);
+		} catch (IOException e) {
+			// TODO handle exception
+			return null;
+		}
+	}
+
 }
