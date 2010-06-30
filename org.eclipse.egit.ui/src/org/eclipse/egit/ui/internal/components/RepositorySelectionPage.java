@@ -178,10 +178,12 @@ public class RepositorySelectionPage extends BaseWizardPage {
 					URIish u = new URIish(text);
 					if (Transport.canHandleProtocol(u, FS.DETECTED)) {
 						String s = u.getScheme();
-						// s may be null if an existing local directory was in text
-						if (s != null && s.equals(DEFAULT_SCHEMES[S_GIT])
-								|| s.equals(DEFAULT_SCHEMES[S_SSH])
-								|| text.endsWith(Constants.DOT_GIT))
+						// scheme may be null if an existing
+						// local directory was in text
+						if (s != null
+								&& ((s.equals(DEFAULT_SCHEMES[S_GIT])
+										|| s.equals(DEFAULT_SCHEMES[S_SSH]) || text
+										.endsWith(Constants.DOT_GIT))))
 							preset = text;
 					}
 				}
