@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALu3///Yw\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparatorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-06-16T21:04:13Z",
+      "side": 1,
+      "message": "nit-pick: reads better as ...DoesNotExist",
+      "revId": "eb728cb8307504cc50c50412d060c8895e77ae19",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Y0\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSyncInfoTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-06-16T21:04:13Z",
+      "side": 1,
+      "message": "mis-spelled name",
+      "revId": "eb728cb8307504cc50c50412d060c8895e77ae19",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Y8\u003d",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-06-16T21:04:13Z",
+      "side": 1,
+      "message": "The plugin itself should not depend on easymock, only the test plugin",
+      "revId": "eb728cb8307504cc50c50412d060c8895e77ae19",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALvX////8\u003d",
         "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
         "patchSetId": 5
@@ -14,6 +65,23 @@
       "side": 1,
       "message": "I think this should be imported via package dependency (2.4 is available in galileo as well) :\n\nImport-Package: org.easymock; version\u003d\"[2.4.0,3.0.0)\"\n\nor do you have a reason to use require-bundle for that ?\n\nwe also need to file a CQ for using that, I will do that.",
       "parentUuid": "AAALu3///Yo\u003d",
+      "revId": "eb728cb8307504cc50c50412d060c8895e77ae19",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Y4\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-06-16T21:04:13Z",
+      "side": 1,
+      "message": "Why isn\u0027t ContextMenuHelper used here?",
       "revId": "eb728cb8307504cc50c50412d060c8895e77ae19",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
