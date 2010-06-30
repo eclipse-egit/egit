@@ -226,13 +226,13 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		if(left != null && left instanceof GitResourceNode) {
 			String ci = ((GitResourceNode)left).getContentIdentifier();
 			if(ci != null) {
-				cc.setLeftLabel(ci.substring(0, 7) + ".."); //$NON-NLS-1$
+				cc.setLeftLabel(truncatedRevision(ci));
 			}
 		}
 		if(right != null && right instanceof GitResourceNode) {
 			String ci = ((GitResourceNode)right).getContentIdentifier();
 			if(ci != null) {
-				cc.setRightLabel(ci.substring(0, 7) + ".."); //$NON-NLS-1$
+				cc.setRightLabel(truncatedRevision(ci));
 			}
 		}
 		if (getLeftRevision() != null) {
@@ -253,12 +253,24 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 
 	}
 
+	/*
+	 * Returns a truncated revision identifier if it is long
+	 *
+	 * Consider moving to CompareUtils if used elsewhere'
+	 */
+	private String truncatedRevision(String ci) {
+		if(ci.length() > 10)
+			return ci.substring(0, 7) + "..."; //$NON-NLS-1$
+		else
+			return ci;
+	}
+
 	private String getFileRevisionLabel(FileRevisionTypedElement element) {
 		Object fileObject = element.getFileRevision();
 		if (fileObject instanceof LocalFileRevision){
 			return NLS.bind(TeamUIMessages.CompareFileRevisionEditorInput_localRevision, new Object[]{element.getName(), element.getTimestamp()});
 		} else {
-			return NLS.bind(TeamUIMessages.CompareFileRevisionEditorInput_repository, new Object[]{element.getName(), element.getContentIdentifier(), element.getAuthor()});
+			return NLS.bind(TeamUIMessages.CompareFileRevisionEditorInput_repository, new Object[]{element.getName(), truncatedRevision(element.getContentIdentifier()), element.getAuthor()});
 		}
 	}
 
@@ -268,8 +280,8 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	public String getToolTipText() {
 		Object[] titleObject = new Object[3];
 		titleObject[0] = getLongName(left);
-		titleObject[1] = getContentIdentifier(getLeftRevision());
-		titleObject[2] = getContentIdentifier(getRightRevision());
+		titleObject[1] = truncatedRevision(getContentIdentifier(getLeftRevision()));
+		titleObject[2] = truncatedRevision(getContentIdentifier(getRightRevision()));
 		return NLS.bind(TeamUIMessages.CompareFileRevisionEditorInput_compareResourceAndVersions, titleObject);
 	}
 
@@ -279,8 +291,8 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	public String getTitle() {
 		Object[] titleObject = new Object[3];
 		titleObject[0] = getShortName(left);
-		titleObject[1] = getContentIdentifier(getLeftRevision());
-		titleObject[2] = getContentIdentifier(getRightRevision());
+		titleObject[1] = truncatedRevision(getContentIdentifier(getLeftRevision()));
+		titleObject[2] = truncatedRevision(getContentIdentifier(getRightRevision()));
 		return NLS.bind(TeamUIMessages.CompareFileRevisionEditorInput_compareResourceAndVersions, titleObject);
 	}
 
