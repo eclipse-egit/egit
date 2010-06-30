@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///Yk\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparatorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-16T21:23:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///Yw\u003d",
+      "revId": "eb728cb8307504cc50c50412d060c8895e77ae19",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Y0\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSyncInfoTest.java",
         "patchSetId": 5
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///Yo\u003d",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-16T21:23:39Z",
+      "side": 1,
+      "message": "True, I moved this dependency to org.eclipse.egit.core.test\n\nDone",
+      "parentUuid": "AAALu3///Y8\u003d",
+      "revId": "eb728cb8307504cc50c50412d060c8895e77ae19",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALvX////8\u003d",
         "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
         "patchSetId": 5
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "AAALvX///+8\u003d",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-16T22:13:29Z",
+      "side": 1,
+      "message": "No I don\u0027t have any reasons to have it as a required-bundle. It can be move into Import-Package section.",
+      "parentUuid": "AAALvX////8\u003d",
+      "revId": "eb728cb8307504cc50c50412d060c8895e77ae19",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Y4\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
         "patchSetId": 5
@@ -82,6 +136,24 @@
       "writtenOn": "2010-06-16T21:04:13Z",
       "side": 1,
       "message": "Why isn\u0027t ContextMenuHelper used here?",
+      "revId": "eb728cb8307504cc50c50412d060c8895e77ae19",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Yc\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/views/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-16T21:23:39Z",
+      "side": 1,
+      "message": "Because (as far as I remember) it throws ClassCastException in line 53",
+      "parentUuid": "AAALu3///Y4\u003d",
       "revId": "eb728cb8307504cc50c50412d060c8895e77ae19",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
