@@ -1,5 +1,3 @@
-package org.eclipse.egit.ui.internal.clone;
-
 /*******************************************************************************
  * Copyright (c) 2004, 2008 IBM Corporation and others.
  * Copyright (C) 2007, Martin Oberhuber (martin.oberhuber@windriver.com)
@@ -13,6 +11,8 @@ package org.eclipse.egit.ui.internal.clone;
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
+
+package org.eclipse.egit.ui.internal.clone;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +28,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -59,9 +60,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IWorkingSet;
+import org.eclipse.ui.IWorkingSetManager;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
+import org.eclipse.ui.dialogs.WorkingSetGroup;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 /**
@@ -93,6 +98,8 @@ public class GitProjectsImportPage extends WizardPage {
 
 	private Button deselectAll;
 
+	private WorkingSetGroup workingSetGroup;
+
 	/**
 	 * Creates a new project creation wizard page.
 	 */
@@ -116,8 +123,18 @@ public class GitProjectsImportPage extends WizardPage {
 
 		createProjectsRoot(workArea);
 		createProjectsList(workArea);
+		createWorkingSetGroup(workArea);
 		Dialog.applyDialogFont(workArea);
 
+	}
+
+	private void createWorkingSetGroup(Composite workArea) {
+		// TODO: replace hardcoded ids once bug 245106 is fixed
+		String[] workingSetTypes = new String[] {
+			"org.eclipse.ui.resourceWorkingSetPage", //$NON-NLS-1$
+			"org.eclipse.jdt.ui.JavaWorkingSetPage" //$NON-NLS-1$
+		};
+		workingSetGroup = new WorkingSetGroup(workArea, null, workingSetTypes);
 	}
 
 	/**
@@ -491,7 +508,19 @@ public class GitProjectsImportPage extends WizardPage {
 					t, true);
 			return false;
 		}
+		addProjectsToWorkingSet(selected);
 		return true;
+	}
+
+	private void addProjectsToWorkingSet(Set<ProjectRecord> selected) {
+		IWorkingSetManager workingSetManager = PlatformUI.getWorkbench().getWorkingSetManager();
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		for (ProjectRecord projectRecord : selected) {
+			IWorkingSet[] selectedWorkingSets = workingSetGroup.getSelectedWorkingSets();
+			String projectName = projectRecord.getProjectName();
+			IProject project = root.getProject(projectName);
+			workingSetManager.addToWorkingSets(project, selectedWorkingSets);
+		}
 	}
 
 	/**
