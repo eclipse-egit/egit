@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALvX////8\u003d",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-06-16T21:57:48Z",
+      "side": 1,
+      "message": "I think this should be imported via package dependency (2.4 is available in galileo as well) :\n\nImport-Package: org.easymock; version\u003d\"[2.4.0,3.0.0)\"\n\nor do you have a reason to use require-bundle for that ?\n\nwe also need to file a CQ for using that, I will do that.",
+      "parentUuid": "AAALu3///Yo\u003d",
+      "revId": "eb728cb8307504cc50c50412d060c8895e77ae19",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
