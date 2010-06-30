@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///Yg\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSyncInfoTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-16T21:23:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///Y0\u003d",
+      "revId": "eb728cb8307504cc50c50412d060c8895e77ae19",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Y8\u003d",
         "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
         "patchSetId": 5
