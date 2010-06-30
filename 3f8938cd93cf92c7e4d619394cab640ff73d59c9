@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAALwH///5U\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSyncInfoTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-19T23:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALwH///6s\u003d",
+      "revId": "3f8938cd93cf92c7e4d619394cab640ff73d59c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALwH///6o\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/EGitTestCase.java",
         "patchSetId": 7
@@ -65,6 +83,24 @@
       "writtenOn": "2010-06-19T22:57:16Z",
       "side": 1,
       "message": "style nit: no braces around single line",
+      "revId": "3f8938cd93cf92c7e4d619394cab640ff73d59c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwH///5Q\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/EGitTestCase.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-06-19T23:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALwH///6o\u003d",
       "revId": "3f8938cd93cf92c7e4d619394cab640ff73d59c9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
