@@ -22,7 +22,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class T0004_BranchOperationTest extends GitTestCase{
+public class BranchOperationTest extends GitTestCase{
 
 	private static final String TEST = Constants.R_HEADS + "test";
 	private static final String MASTER = Constants.R_HEADS + "master";

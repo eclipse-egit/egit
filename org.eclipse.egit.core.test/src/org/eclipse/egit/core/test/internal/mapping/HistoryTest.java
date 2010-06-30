@@ -39,7 +39,7 @@ import org.eclipse.team.core.history.IFileRevision;
 import org.junit.Before;
 import org.junit.Test;
 
-public class T0002_HistoryTest extends GitTestCase {
+public class HistoryTest extends GitTestCase {
 
 	protected static final PersonIdent jauthor;
 
