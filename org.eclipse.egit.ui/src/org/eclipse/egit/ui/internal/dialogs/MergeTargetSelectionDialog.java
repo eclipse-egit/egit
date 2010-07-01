@@ -7,12 +7,17 @@
  *
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
+ *    Mathias Kinzler (SAP AG) - use the abstract super class
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
+import java.io.IOException;
+
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
@@ -20,24 +25,24 @@ import org.eclipse.swt.widgets.Shell;
  * Dialog for selecting a merge target.
  *
  */
-public class MergeTargetSelectionDialog extends BranchSelectionDialog {
+public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 
 	/**
-	 * Construct a dialog to select a branch to reset to or check out
-	 *
 	 * @param parentShell
 	 * @param repo
 	 */
 	public MergeTargetSelectionDialog(Shell parentShell, Repository repo) {
+		// TODO perhaps we can mark the default merge branch for
+		// the current branch by reading the configuration and use the other
+		// super constructor
 		super(parentShell, repo);
 	}
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		confirmationBtn = createButton(parent, IDialogConstants.OK_ID,
-				UIText.MergeTargetSelectionDialog_ButtonMerge, true);
-		createButton(parent, IDialogConstants.CANCEL_ID,
-				IDialogConstants.CANCEL_LABEL, false);
+		super.createButtonsForButtonBar(parent);
+		getButton(Window.OK).setText(
+				UIText.MergeTargetSelectionDialog_ButtonMerge);
 	}
 
 	@Override
@@ -48,7 +53,28 @@ public class MergeTargetSelectionDialog extends BranchSelectionDialog {
 
 	@Override
 	protected String getTitle() {
-		return UIText.MergeTargetSelectionDialog_TitleMerge;
+		return NLS.bind(UIText.MergeTargetSelectionDialog_TitleMerge, repo
+				.getDirectory().toString());
 	}
 
+	@Override
+	protected void refNameSelected(String refName) {
+		boolean tagSelected = refName != null
+				&& refName.startsWith(Constants.R_TAGS);
+
+		boolean branchSelected = refName != null
+				&& (refName.startsWith(Constants.R_HEADS) || refName
+						.startsWith(Constants.R_REMOTES));
+
+		boolean currentSelected;
+		try {
+			currentSelected = refName != null
+					&& refName.equals(repo.getFullBranch());
+		} catch (IOException e) {
+			currentSelected = false;
+		}
+
+		getButton(Window.OK).setEnabled(
+				!currentSelected && (branchSelected || tagSelected));
+	}
 }
