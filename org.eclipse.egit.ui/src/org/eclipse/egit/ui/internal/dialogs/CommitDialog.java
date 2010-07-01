@@ -473,8 +473,8 @@ public class CommitDialog extends Dialog {
 		if (!output.endsWith(Text.DELIMITER))
 			output += Text.DELIMITER;
 
-		// if the last line is not a signed off (amend a commit), had a line break
-		if (!getLastLine(output).startsWith(Constants.SIGNED_OFF_BY_TAG))
+		// if the last line is not footer line, add a line break
+		if (!getLastLine(output).matches("[A-Za-z\\-]+:.*")) //$NON-NLS-1$
 			output += Text.DELIMITER;
 		output += getSignedOff();
 		return output;
