@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.repository.tree;
 
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 
 /**
  * Represents the "Tags" node
@@ -25,7 +26,7 @@ public class TagsNode extends RepositoryTreeNode<Repository> {
 	 * @param repository
 	 *            the {@link Repository}
 	 */
-	public TagsNode(RepositoryTreeNode parent, Repository repository) {
+	public TagsNode(RepositoryTreeNode parent, FileRepository repository) {
 		super(parent, RepositoryTreeNodeType.TAGS, repository, repository);
 	}
 

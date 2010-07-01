@@ -33,7 +33,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -88,7 +88,7 @@ public class GitSelectWizardPage extends WizardPage {
 
 	private TreeViewer tv;
 
-	private final Repository initialRepository;
+	private final FileRepository initialRepository;
 
 	private final String initialPath;
 
@@ -109,7 +109,7 @@ public class GitSelectWizardPage extends WizardPage {
 	 * @param repository
 	 * @param path
 	 */
-	public GitSelectWizardPage(Repository repository, String path) {
+	public GitSelectWizardPage(FileRepository repository, String path) {
 		super(GitSelectWizardPage.class.getName());
 		setTitle(UIText.GitImportWithDirectoriesPage_PageTitle);
 		setMessage(UIText.GitImportWithDirectoriesPage_PageMessage);
@@ -126,14 +126,14 @@ public class GitSelectWizardPage extends WizardPage {
 		if (node != null && node.getType() == RepositoryTreeNodeType.FOLDER)
 			return ((File) node.getObject()).getPath();
 		if (node != null && node.getType() == RepositoryTreeNodeType.WORKINGDIR)
-			return node.getRepository().getWorkDir().getPath();
+			return node.getRepository().getWorkTree().getPath();
 		return null;
 	}
 
 	/**
 	 * @param repo
 	 */
-	public void setRepository(Repository repo) {
+	public void setRepository(FileRepository repo) {
 		List<WorkingDirNode> input = new ArrayList<WorkingDirNode>();
 		if (repo != null)
 			input.add(new WorkingDirNode(null, repo));
@@ -260,7 +260,7 @@ public class GitSelectWizardPage extends WizardPage {
 				RepositoryTreeNode parentNode = node;
 
 				IPath fullPath = new Path(initialPath);
-				IPath workdirPath = new Path(initialRepository.getWorkDir()
+				IPath workdirPath = new Path(initialRepository.getWorkTree()
 						.getPath());
 				if (workdirPath.isPrefixOf(fullPath)) {
 					IPath relPath = fullPath.removeFirstSegments(workdirPath

@@ -28,6 +28,7 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
@@ -40,7 +41,7 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 public class GitCreateProjectViaWizardWizard extends Wizard implements
 		ProjectCreator {
 
-	private final Repository myRepository;
+	private final FileRepository myRepository;
 
 	private final String myGitDir;
 
@@ -58,7 +59,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 	 * @param repository
 	 * @param path
 	 */
-	public GitCreateProjectViaWizardWizard(Repository repository, String path) {
+	public GitCreateProjectViaWizardWizard(FileRepository repository, String path) {
 		super();
 		previousProjects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
