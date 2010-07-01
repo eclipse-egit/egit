@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX///xQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-06-29T19:10:52Z",
+      "side": 1,
+      "message": "This change on its own is fine with me.",
+      "revId": "6c6bb8d1c296af6c3e6df67599c39c5d03811c7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///xk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-06-29T16:34:23Z",
+      "side": 1,
+      "message": "1)Capitalize spelling, i.. File Protocol\n2) No need to expand the abbreviations. Use descriptive\ntooltips, perhaps\n\nLocal repository\n\nFTP\n\nGit native transfer\n\nHTTP (smart or dumb)\n\nSecure HTTP (smart or dumb variant) \n\nSFTP transfer\n\nGit over SSH (also known as git+ssh)",
+      "revId": "6c6bb8d1c296af6c3e6df67599c39c5d03811c7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
