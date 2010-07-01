@@ -22,14 +22,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 
 /**
  * Central cache for Repository instances
  *
  */
 public class RepositoryCache {
-	private final Map<File, Reference<Repository>> repositoryCache = new HashMap<File, Reference<Repository>>();
+	private final Map<File, Reference<FileRepository>> repositoryCache = new HashMap<File, Reference<FileRepository>>();
 
 	RepositoryCache() {
 		// package private constructor
@@ -43,13 +43,13 @@ public class RepositoryCache {
 	 *         in the cache.
 	 * @throws IOException
 	 */
-	public synchronized Repository lookupRepository(final File gitDir)
+	public synchronized FileRepository lookupRepository(final File gitDir)
 			throws IOException {
-		Reference<Repository> r = repositoryCache.get(gitDir);
-		Repository d = r != null ? r.get() : null;
+		Reference<FileRepository> r = repositoryCache.get(gitDir);
+		FileRepository d = r != null ? r.get() : null;
 		if (d == null) {
-			d = new Repository(gitDir);
-			repositoryCache.put(gitDir, new WeakReference<Repository>(d));
+			d = new FileRepository(gitDir);
+			repositoryCache.put(gitDir, new WeakReference<FileRepository>(d));
 		}
 		prune(repositoryCache);
 		return d;
@@ -58,15 +58,15 @@ public class RepositoryCache {
 	/**
 	 * @return all Repository instances contained in the cache
 	 */
-	public synchronized Repository[] getAllReposiotries() {
-		List<Repository> result = new ArrayList<Repository>();
-		Collection<Reference<Repository>> values = repositoryCache.values();
-		for(Reference<Repository> ref:values) {
-			Repository repo = ref.get();
+	public synchronized FileRepository[] getAllReposiotries() {
+		List<FileRepository> result = new ArrayList<FileRepository>();
+		Collection<Reference<FileRepository>> values = repositoryCache.values();
+		for(Reference<FileRepository> ref:values) {
+			FileRepository repo = ref.get();
 			if(repo!=null)
 				result.add(repo);
 		}
-		return result.toArray(new Repository[result.size()]);
+		return result.toArray(new FileRepository[result.size()]);
 	}
 
 	private static <K, V> void prune(Map<K, Reference<V>> map) {

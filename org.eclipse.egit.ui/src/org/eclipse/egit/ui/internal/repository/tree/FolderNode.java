@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.repository.tree;
 import java.io.File;
 
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 
 /**
  * Represents a directory in the working directory tree
@@ -29,7 +30,7 @@ public class FolderNode extends RepositoryTreeNode<File> {
 	 * @param directory
 	 *            the directory
 	 */
-	public FolderNode(RepositoryTreeNode parent, Repository repository,
+	public FolderNode(RepositoryTreeNode parent, FileRepository repository,
 			File directory) {
 		super(parent, RepositoryTreeNodeType.FOLDER, repository, directory);
 	}

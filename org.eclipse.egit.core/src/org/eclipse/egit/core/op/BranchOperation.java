@@ -170,7 +170,7 @@ public class BranchOperation implements IEGitOperation {
 
 	private void checkoutTree() throws TeamException {
 		try {
-			new WorkDirCheckout(repository, repository.getWorkDir(), oldTree,
+			new WorkDirCheckout(repository, repository.getWorkTree(), oldTree,
 					index, newTree).checkout();
 		} catch (CheckoutConflictException e) {
 			TeamException teamException = new TeamException(e.getMessage());

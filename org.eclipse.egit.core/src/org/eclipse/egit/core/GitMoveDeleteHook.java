@@ -53,7 +53,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			return false;
 
 		try {
-			final DirCache dirc = DirCache.lock(map.getRepository());
+			final DirCache dirc = map.getRepository().lockDirCache();
 			final int first = dirc.findEntry(map.getRepoRelativePath(file));
 			if (first < 0) {
 				dirc.unlock();
@@ -110,7 +110,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		final RepositoryMapping dstm = RepositoryMapping.getMapping(dstf);
 
 		try {
-			final DirCache sCache = DirCache.lock(srcm.getRepository());
+			final DirCache sCache = srcm.getRepository().lockDirCache();
 			final String sPath = srcm.getRepoRelativePath(srcf);
 			final DirCacheEntry sEnt = sCache.getEntry(sPath);
 			if (sEnt == null) {
@@ -154,7 +154,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		final RepositoryMapping dstm = RepositoryMapping.getMapping(dstf);
 
 		try {
-			final DirCache sCache = DirCache.lock(srcm.getRepository());
+			final DirCache sCache = srcm.getRepository().lockDirCache();
 			final String sPath = srcm.getRepoRelativePath(srcf);
 			final DirCacheEntry[] sEnt = sCache.getEntriesWithin(sPath);
 			if (sEnt.length == 0) {

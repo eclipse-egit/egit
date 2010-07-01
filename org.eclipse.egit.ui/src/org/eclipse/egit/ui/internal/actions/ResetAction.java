@@ -24,7 +24,7 @@ import org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -36,7 +36,7 @@ public class ResetAction extends RepositoryAction {
 
 	@Override
 	public void execute(IAction action) {
-		final Repository repository = getRepository(true);
+		final FileRepository repository = getRepository(true);
 		if (repository == null)
 			return;
 		if (!repository.getRepositoryState().canResetHead()) {

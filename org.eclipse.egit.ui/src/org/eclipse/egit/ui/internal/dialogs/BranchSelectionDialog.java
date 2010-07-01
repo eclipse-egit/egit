@@ -48,6 +48,7 @@ import org.eclipse.jgit.lib.RefRename;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RefUpdate.Result;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -64,7 +65,7 @@ import org.eclipse.ui.dialogs.PatternFilter;
  */
 public class BranchSelectionDialog extends TitleAreaDialog {
 
-	private final Repository repo;
+	private final FileRepository repo;
 
 	private TreeViewer branchTree;
 
@@ -90,7 +91,7 @@ public class BranchSelectionDialog extends TitleAreaDialog {
 	 * @param parentShell
 	 * @param repo
 	 */
-	public BranchSelectionDialog(Shell parentShell, Repository repo) {
+	public BranchSelectionDialog(Shell parentShell, FileRepository repo) {
 		super(parentShell);
 		this.repo = repo;
 		localBranches = new LocalBranchesNode(null, this.repo);

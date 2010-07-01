@@ -240,7 +240,7 @@ public class ResetOperation implements IEGitOperation {
 	}
 
 	private void checkoutIndex() throws TeamException {
-		final File parentFile = repository.getWorkDir();
+		final File parentFile = repository.getWorkTree();
 		try {
 			WorkDirCheckout workDirCheckout =
 				new WorkDirCheckout(repository, parentFile, index, newTree);
