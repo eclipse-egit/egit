@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.repository.tree;
 
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 
 /**
  * Represents the "Working Directory" node
@@ -25,7 +26,7 @@ public class WorkingDirNode extends RepositoryTreeNode<Repository> {
 	 * @param repository
 	 *            the {@link Repository}
 	 */
-	public WorkingDirNode(RepositoryTreeNode parent, Repository repository) {
+	public WorkingDirNode(RepositoryTreeNode parent, FileRepository repository) {
 		super(parent, RepositoryTreeNodeType.WORKINGDIR, repository, repository);
 	}
 

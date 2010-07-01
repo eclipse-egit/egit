@@ -15,8 +15,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
-
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.ui.common.EGitTestCase;
@@ -25,9 +23,12 @@ import org.eclipse.egit.ui.common.RepoPropertiesPage;
 import org.eclipse.egit.ui.common.RepoRemoteBranchesPage;
 import org.eclipse.egit.ui.common.WorkingCopyPage;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import java.io.File;
 
 public class GitCloneWizardTest extends EGitTestCase {
 
@@ -193,7 +194,7 @@ public class GitCloneWizardTest extends EGitTestCase {
 		// the integrity of the repository here. Only a few basic properties
 		// we'd expect from a clone made this way, that would possibly
 		// not hold true given other parameters in the GUI.
-		Repository repository = new Repository(new File(destRepo, ".git"));
+		Repository repository = new FileRepository(new File(destRepo, ".git"));
 		// we always have an origin/master
 		assertNotNull(repository.resolve("origin/master"));
 		// and a local master initialized from origin/master (default!)
@@ -253,7 +254,7 @@ public class GitCloneWizardTest extends EGitTestCase {
 		// the integrity of the repo here. Only a few basic properties
 		// we'd expect from a clone made this way, that would possibly
 		// not hold true given othe parameters in the GUI.
-		Repository repository = new Repository(new File(destRepo, ".git"));
+		Repository repository = new FileRepository(new File(destRepo, ".git"));
 		assertNotNull(repository.resolve("src/historical/pre-eclipse"));
 		// we didn't clone that one
 		assertNull(repository.resolve("src/master"));

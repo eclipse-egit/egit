@@ -31,16 +31,16 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.storage.file.FileBasedConfig;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Wizard allowing user to specify all needed data to push to another repository
@@ -62,7 +62,7 @@ public class PushWizard extends Wizard {
 		return sb.toString();
 	}
 
-	private Repository localDb;
+	private FileRepository localDb;
 
 	private final RepositorySelectionPage repoPage;
 
@@ -78,7 +78,7 @@ public class PushWizard extends Wizard {
 	 * @throws URISyntaxException
 	 *             when configuration of this repository contains illegal URIs.
 	 */
-	public PushWizard(final Repository localDb) throws URISyntaxException {
+	public PushWizard(final FileRepository localDb) throws URISyntaxException {
 		this.localDb = localDb;
 		final List<RemoteConfig> remotes = RemoteConfig
 				.getAllRemoteConfigs(localDb.getConfig());
@@ -143,7 +143,7 @@ public class PushWizard extends Wizard {
 	private void saveRefSpecs() {
 		final RemoteConfig rc = repoPage.getSelection().getConfig();
 		rc.setPushRefSpecs(refSpecPage.getRefSpecs());
-		final RepositoryConfig config = localDb.getConfig();
+		final FileBasedConfig config = localDb.getConfig();
 		rc.update(config);
 		try {
 			config.save();

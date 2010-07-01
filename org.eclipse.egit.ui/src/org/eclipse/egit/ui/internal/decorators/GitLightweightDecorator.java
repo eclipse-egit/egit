@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -50,12 +52,14 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.jgit.events.IndexChangedEvent;
+import org.eclipse.jgit.events.IndexChangedListener;
+import org.eclipse.jgit.events.ListenerHandle;
+import org.eclipse.jgit.events.RefsChangedEvent;
+import org.eclipse.jgit.events.RefsChangedListener;
+import org.eclipse.jgit.events.RepositoryEvent;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.IndexChangedEvent;
-import org.eclipse.jgit.lib.RefsChangedEvent;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryChangedEvent;
-import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.osgi.util.TextProcessor;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -77,7 +81,7 @@ import org.eclipse.ui.themes.ITheme;
  */
 public class GitLightweightDecorator extends LabelProvider implements
 		ILightweightLabelDecorator, IPropertyChangeListener,
-		IResourceChangeListener, RepositoryChangeListener, RepositoryListener {
+		IResourceChangeListener, RepositoryChangeListener, RefsChangedListener, IndexChangedListener {
 
 	/**
 	 * Property constant pointing back to the extension point id of the
@@ -108,6 +112,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 		UIPreferences.THEME_UncommittedChangeBackgroundColor,
 		UIPreferences.THEME_UncommittedChangeForegroundColor};
 
+	private final List<ListenerHandle> myHandles = new LinkedList<ListenerHandle>();
+
 	/**
 	 * Constructs a new Git resource decorator
 	 */
@@ -116,7 +122,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 		Activator.addPropertyChangeListener(this);
 		PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
 				.addPropertyChangeListener(this);
-		Repository.addAnyRepositoryChangedListener(this);
+		myHandles.add(Repository.getGlobalListenerList().addIndexChangedListener(this));
+		myHandles.add(Repository.getGlobalListenerList().addRefsChangedListener(this));
 		GitProjectData.addRepositoryChangeListener(this);
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this,
 				IResourceChangeEvent.POST_CHANGE);
@@ -161,7 +168,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 				.removePropertyChangeListener(this);
 		TeamUI.removePropertyChangeListener(this);
 		Activator.removePropertyChangeListener(this);
-		Repository.removeAnyRepositoryChangedListener(this);
+		for (ListenerHandle lh : myHandles)
+			lh.remove();
+		myHandles.clear();
 		GitProjectData.removeRepositoryChangeListener(this);
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
 	}
@@ -625,7 +634,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 * @param e
 	 *            The original change event
 	 */
-	private void repositoryChanged(RepositoryChangedEvent e) {
+	private void repositoryChanged(RepositoryEvent<?> e) {
 		final Set<RepositoryMapping> ms = new HashSet<RepositoryMapping>();
 		for (final IProject p : ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects()) {
@@ -638,25 +647,11 @@ public class GitLightweightDecorator extends LabelProvider implements
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.eclipse.jgit.lib.RepositoryListener#indexChanged(org.eclipse.jgit
-	 * .lib.IndexChangedEvent)
-	 */
-	public void indexChanged(IndexChangedEvent e) {
+	public void onIndexChanged(IndexChangedEvent e) {
 		repositoryChanged(e);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.eclipse.jgit.lib.RepositoryListener#refsChanged(org.eclipse.jgit.
-	 * lib.RefsChangedEvent)
-	 */
-	public void refsChanged(RefsChangedEvent e) {
+	public void onRefsChanged(RefsChangedEvent e) {
 		repositoryChanged(e);
 	}
 

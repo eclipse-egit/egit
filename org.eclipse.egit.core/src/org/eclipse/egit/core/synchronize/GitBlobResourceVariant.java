@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,6 +25,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.content.IContentDescription;
 import org.eclipse.core.runtime.content.IContentTypeManager;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Repository;
@@ -69,8 +69,7 @@ class GitBlobResourceVariant extends GitResourceVariant {
 	public IStorage getStorage(IProgressMonitor monitor) throws TeamException {
 		if (storage == null) {
 			try {
-				ObjectLoader ol = repository.openBlob(id);
-				final byte[] bytes = ol.getBytes();
+				final ObjectLoader ol = repository.open(id, Constants.OBJ_BLOB);
 				storage = new IEncodedStorage() {
 					public Object getAdapter(Class adapter) {
 						return null;
@@ -89,7 +88,12 @@ class GitBlobResourceVariant extends GitResourceVariant {
 					}
 
 					public InputStream getContents() throws CoreException {
-						return new ByteArrayInputStream(bytes);
+						try {
+							return ol.openStream();
+						} catch (IOException e) {
+							throw new CoreException(new Status(IStatus.ERROR,
+									Activator.getPluginId(), e.getMessage(), e));
+						}
 					}
 
 					public String getCharset() throws CoreException {

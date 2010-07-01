@@ -43,6 +43,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.GitIndex.Entry;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevCommitList;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,7 +58,7 @@ public class GitSyncInfoTest extends GitTestCase {
 		super.setUp();
 		IProject iProject = project.project;
 		if (!gitDir.exists())
-			new Repository(gitDir).create();
+			new FileRepository(gitDir).create();
 
 		new ConnectProviderOperation(iProject, gitDir).execute(null);
 		repo = RepositoryMapping.getMapping(iProject).getRepository();
