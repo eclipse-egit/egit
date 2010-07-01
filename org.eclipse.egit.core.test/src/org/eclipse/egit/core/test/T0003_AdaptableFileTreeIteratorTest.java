@@ -23,6 +23,7 @@ import org.eclipse.egit.core.ContainerTreeIterator;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
@@ -41,8 +42,8 @@ public class T0003_AdaptableFileTreeIteratorTest extends GitTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		repository = new Repository(gitDir);
-		repositoryRoot = repository.getWorkDir();
+		repository = new FileRepository(gitDir);
+		repositoryRoot = repository.getWorkTree();
 		repository.create();
 
 		file = new File(project.getProject().getLocation().toFile(), "a.txt");

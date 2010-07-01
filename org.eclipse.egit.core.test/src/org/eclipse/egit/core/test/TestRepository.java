@@ -31,6 +31,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.lib.GitIndex.Entry;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.storage.file.FileRepository;
 
 /**
  * Helper class for creating and filling a test repository
@@ -48,12 +49,12 @@ public class TestRepository {
 	 * @throws IOException
 	 */
 	public TestRepository(File gitDir) throws IOException {
-		repository = new Repository(gitDir);
+		repository = new FileRepository(gitDir);
 		repository.create();
 		try {
-			workdirPrefix = repository.getWorkDir().getCanonicalPath();
+			workdirPrefix = repository.getWorkTree().getCanonicalPath();
 		} catch (IOException err) {
-			workdirPrefix = repository.getWorkDir().getAbsolutePath();
+			workdirPrefix = repository.getWorkTree().getAbsolutePath();
 		}
 		workdirPrefix = workdirPrefix.replace('\\', '/');
 		if (!workdirPrefix.endsWith("/"))  //$NON-NLS-1$
@@ -83,7 +84,7 @@ public class TestRepository {
 	public RevCommit createInitialCommit(String message) throws IOException,
 			NoHeadException, NoMessageException, ConcurrentRefUpdateException,
 			JGitInternalException, WrongRepositoryStateException {
-		String repoPath = repository.getWorkDir().getAbsolutePath();
+		String repoPath = repository.getWorkTree().getAbsolutePath();
 		File file = new File(repoPath, "dummy");
 		file.createNewFile();
 		track(file);
@@ -124,7 +125,7 @@ public class TestRepository {
 	 */
 	public void track(File file) throws IOException {
 		GitIndex index = repository.getIndex();
-		Entry entry = index.add(repository.getWorkDir(), file);
+		Entry entry = index.add(repository.getWorkTree(), file);
 		entry.setAssumeValid(false);
 		index.write();
 	}
@@ -164,8 +165,8 @@ public class TestRepository {
 		GitIndex index = repository.getIndex();
 		Entry entry = index.getEntry(getRepoRelativePath(file.getLocation().toOSString()));
 		assertNotNull(entry);
-		if (entry.isModified(repository.getWorkDir()))
-			entry.update(new File(repository.getWorkDir(), entry.getName()));
+		if (entry.isModified(repository.getWorkTree()))
+			entry.update(new File(repository.getWorkTree(), entry.getName()));
 		index.write();
 	}
 

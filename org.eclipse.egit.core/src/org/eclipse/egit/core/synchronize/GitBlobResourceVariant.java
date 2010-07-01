@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.content.IContentDescription;
 import org.eclipse.core.runtime.content.IContentTypeManager;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Repository;
@@ -69,7 +70,7 @@ class GitBlobResourceVariant extends GitResourceVariant {
 	public IStorage getStorage(IProgressMonitor monitor) throws TeamException {
 		if (storage == null) {
 			try {
-				ObjectLoader ol = repository.openBlob(id);
+				ObjectLoader ol = repository.open(id, Constants.OBJ_BLOB);
 				final byte[] bytes = ol.getBytes();
 				storage = new IEncodedStorage() {
 					public Object getAdapter(Class adapter) {

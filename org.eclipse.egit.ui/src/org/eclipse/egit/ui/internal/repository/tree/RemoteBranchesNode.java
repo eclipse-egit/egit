@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.repository.tree;
 
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 
 /**
  * Represents the "Remote Branches" node
@@ -25,7 +26,7 @@ public class RemoteBranchesNode extends RepositoryTreeNode<Repository> {
 	 * @param repository
 	 *            the {@link Repository}
 	 */
-	public RemoteBranchesNode(RepositoryTreeNode parent, Repository repository) {
+	public RemoteBranchesNode(RepositoryTreeNode parent, FileRepository repository) {
 		super(parent, RepositoryTreeNodeType.REMOTEBRANCHES, repository,
 				repository);
 	}

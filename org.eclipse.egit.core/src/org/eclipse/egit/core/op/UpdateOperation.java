@@ -110,7 +110,7 @@ public class UpdateOperation implements IEGitOperation {
 										String path = rm.getRepoRelativePath(resource);
 										Entry entry = index.getEntry(path);
 										if (entry != null) {
-											entry.update(new File(rm.getWorkDir(),path));
+											entry.update(new File(rm.getWorkTree(),path));
 										}
 										fm.worked(1);
 									}
@@ -126,7 +126,7 @@ public class UpdateOperation implements IEGitOperation {
 						String path = rm.getRepoRelativePath(r);
 						Entry entry = index.getEntry(path);
 						if (entry != null) {
-							entry.update(new File(rm.getWorkDir(),path));
+							entry.update(new File(rm.getWorkTree(),path));
 						}
 						m.worked(1);
 					}

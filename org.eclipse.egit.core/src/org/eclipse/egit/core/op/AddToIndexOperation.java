@@ -124,8 +124,8 @@ public class AddToIndexOperation implements IEGitOperation {
 				return;
 			}
 		}
-		if (entry.isModified(map.getWorkDir())) {
-			entry.update(new File(map.getWorkDir(), entry.getName()));
+		if (entry.isModified(map.getWorkTree())) {
+			entry.update(new File(map.getWorkTree(), entry.getName()));
 			if (!changedIndexes.contains(index))
 				changedIndexes.add(index);
 		}
