@@ -19,6 +19,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.RepositoryUtil;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.ui.ISources;
 
 abstract class RepositoriesViewCommandHandler<T> extends AbstractHandler {
 
@@ -27,14 +28,14 @@ abstract class RepositoriesViewCommandHandler<T> extends AbstractHandler {
 
 	public RepositoriesView getView(ExecutionEvent event) {
 		Object part = ((IEvaluationContext) event.getApplicationContext())
-				.getRoot().getVariable("activePart"); //$NON-NLS-1$ TODO constant for this?
+				.getRoot().getVariable(ISources.ACTIVE_PART_NAME);
 		return (RepositoriesView) part;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<T> getSelectedNodes(ExecutionEvent event) {
 		TreeSelection selection = (TreeSelection) ((IEvaluationContext) event
-				.getApplicationContext()).getRoot().getVariable("selection"); //$NON-NLS-1$ TODO constant for this?
+				.getApplicationContext()).getRoot().getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
 		return selection.toList();
 	}
 }
