@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
+ * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,14 +23,16 @@ import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.components.RefSpecPage;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
-import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
-import org.eclipse.egit.ui.internal.components.SelectionChangeListener;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.RefSpec;
+import org.eclipse.jgit.transport.RemoteRefUpdate;
+import org.eclipse.jgit.transport.Transport;
+import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -37,11 +40,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.RefSpec;
-import org.eclipse.jgit.transport.RemoteRefUpdate;
-import org.eclipse.jgit.transport.Transport;
-import org.eclipse.jgit.transport.URIish;
 
 class ConfirmationPage extends WizardPage {
 	static Collection<RemoteRefUpdate> copyUpdates(
@@ -55,10 +53,6 @@ class ConfirmationPage extends WizardPage {
 
 	private final Repository local;
 
-	private final RepositorySelectionPage repoPage;
-
-	private final RefSpecPage refSpecPage;
-
 	private RepositorySelection displayedRepoSelection;
 
 	private List<RefSpec> displayedRefSpecs;
@@ -71,24 +65,12 @@ class ConfirmationPage extends WizardPage {
 
 	private Button showOnlyIfChanged;
 
-	public ConfirmationPage(final Repository local,
-			final RepositorySelectionPage repoPage,
-			final RefSpecPage refSpecPage) {
+	public ConfirmationPage(final Repository local) {
 		super(ConfirmationPage.class.getName());
 		this.local = local;
-		this.repoPage = repoPage;
-		this.refSpecPage = refSpecPage;
 
 		setTitle(UIText.ConfirmationPage_title);
 		setDescription(UIText.ConfirmationPage_description);
-
-		final SelectionChangeListener listener = new SelectionChangeListener() {
-			public void selectionChanged() {
-				checkPreviousPagesSelections();
-			}
-		};
-		repoPage.addSelectionListener(listener);
-		refSpecPage.addSelectionListener(listener);
 	}
 
 	public void createControl(final Composite parent) {
@@ -111,11 +93,9 @@ class ConfirmationPage extends WizardPage {
 		setControl(panel);
 	}
 
-	@Override
-	public void setVisible(final boolean visible) {
-		if (visible)
-			revalidate();
-		super.setVisible(visible);
+	public void setSelection(RepositorySelection repositorySelection, List<RefSpec> specSelection){
+		checkPreviousPagesSelections(repositorySelection, specSelection);
+		revalidate(repositorySelection, specSelection);
 	}
 
 	boolean isConfirmed() {
@@ -134,9 +114,9 @@ class ConfirmationPage extends WizardPage {
 		return showOnlyIfChanged.getSelection();
 	}
 
-	private void checkPreviousPagesSelections() {
-		if (!repoPage.selectionEquals(displayedRepoSelection)
-				|| !refSpecPage.specsSelectionEquals(displayedRefSpecs)) {
+	private void checkPreviousPagesSelections(RepositorySelection repositorySelection,  List<RefSpec> refSpecs) {
+		if (!repositorySelection.equals(displayedRepoSelection)
+				|| !refSpecs.equals(displayedRefSpecs)) {
 			// Allow user to finish by skipping confirmation...
 			setPageComplete(true);
 		} else {
@@ -146,12 +126,12 @@ class ConfirmationPage extends WizardPage {
 		}
 	}
 
-	private void revalidate() {
+	private void revalidate(RepositorySelection repositorySelection, List<RefSpec> refSpecs) {
 		// always update this page
 		resultPanel.setData(local, null);
 		confirmedResult = null;
-		displayedRepoSelection = repoPage.getSelection();
-		displayedRefSpecs = refSpecPage.getRefSpecs();
+		displayedRepoSelection = repositorySelection;
+		displayedRefSpecs = refSpecs;
 		setErrorMessage(null);
 		setPageComplete(false);
 		getControl().getDisplay().asyncExec(new Runnable() {
