@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
+ * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -31,9 +32,6 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryConfig;
 import org.eclipse.jgit.transport.RefSpec;
@@ -41,6 +39,9 @@ import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Wizard allowing user to specify all needed data to push to another repository
@@ -83,8 +84,15 @@ public class PushWizard extends Wizard {
 		final List<RemoteConfig> remotes = RemoteConfig
 				.getAllRemoteConfigs(localDb.getConfig());
 		repoPage = new RepositorySelectionPage(false, remotes, null);
-		refSpecPage = new RefSpecPage(localDb, true);
-		confirmPage = new ConfirmationPage(localDb, repoPage, refSpecPage);
+		refSpecPage = new RefSpecPage(localDb, true) {
+			@Override
+			public void setVisible(boolean visible) {
+				if (visible)
+					setSelection(repoPage.getSelection());
+				super.setVisible(visible);
+			}
+		};
+		confirmPage = new ConfirmationPage(localDb);
 		// TODO use/create another cool icon
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 		setNeedsProgressMonitor(true);
@@ -95,14 +103,6 @@ public class PushWizard extends Wizard {
 		addPage(repoPage);
 		addPage(refSpecPage);
 		addPage(confirmPage);
-	}
-
-	@Override
-	public IWizardPage getNextPage(IWizardPage page) {
-		if (page == getPages()[0]){
-			refSpecPage.setSelection(repoPage.getSelection());
-		}
-		return super.getNextPage(page);
 	}
 
 	@Override
