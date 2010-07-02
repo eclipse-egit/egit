@@ -43,8 +43,7 @@ public class PasteCommand extends
 
 		Clipboard clip = null;
 		try {
-			clip = new Clipboard(getView(event).getSite().getShell()
-					.getDisplay());
+			clip = new Clipboard(getShell(event).getDisplay());
 			String content = (String) clip.getContents(TextTransfer
 					.getInstance());
 			if (content == null) {

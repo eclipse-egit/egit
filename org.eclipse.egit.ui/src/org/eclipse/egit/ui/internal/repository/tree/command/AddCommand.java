@@ -24,8 +24,8 @@ import org.eclipse.jface.window.Window;
 public class AddCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		RepositorySearchDialog sd = new RepositorySearchDialog(getView(event)
-				.getSite().getShell(), util.getConfiguredRepositories());
+		RepositorySearchDialog sd = new RepositorySearchDialog(getShell(event),
+				util.getConfiguredRepositories());
 		if (sd.open() == Window.OK)
 			for (String dir : sd.getDirectories())
 				util.addConfiguredRepository(new File(dir));

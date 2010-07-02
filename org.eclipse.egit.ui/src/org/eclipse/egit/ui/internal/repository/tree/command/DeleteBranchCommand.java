@@ -25,6 +25,7 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * Deletes a branch.
@@ -40,14 +41,15 @@ public class DeleteBranchCommand extends
 		final RefNode node = getSelectedNodes(event).get(0);
 		final Ref ref = node.getObject();
 
-		if (!MessageDialog.openConfirm(getView(event).getSite().getShell(),
+		Shell shell = getShell(event);
+		if (!MessageDialog.openConfirm(shell,
 				UIText.RepositoriesView_ConfirmDeleteTitle, NLS.bind(
 						UIText.RepositoriesView_ConfirmBranchDeletionMessage,
 						ref.getName())))
 			return null;
 
 		try {
-			new ProgressMonitorDialog(getView(event).getSite().getShell()).run(
+			new ProgressMonitorDialog(shell).run(
 					false, false, new IRunnableWithProgress() {
 						public void run(IProgressMonitor monitor)
 								throws InvocationTargetException,

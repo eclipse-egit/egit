@@ -28,8 +28,8 @@ public class FetchCommand extends
 		RepositoryNode node = getSelectedNodes(event).get(0);
 
 		try {
-			new WizardDialog(getView(event).getSite().getShell(),
-					new FetchWizard(node.getRepository())).open();
+			new WizardDialog(getShell(event), new FetchWizard(
+					node.getRepository())).open();
 		} catch (URISyntaxException e1) {
 			Activator.handleError(e1.getMessage(), e1, true);
 		}

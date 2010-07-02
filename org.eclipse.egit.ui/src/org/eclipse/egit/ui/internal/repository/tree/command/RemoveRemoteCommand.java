@@ -31,9 +31,9 @@ public class RemoveRemoteCommand extends
 		final RemoteNode node = getSelectedNodes(event).get(0);
 		final String configName = node.getObject();
 
-		boolean ok = MessageDialog.openConfirm(getView(event).getSite()
-				.getShell(), UIText.RepositoriesView_ConfirmDeleteRemoteHeader,
-				NLS.bind(UIText.RepositoriesView_ConfirmDeleteRemoteMessage,
+		boolean ok = MessageDialog.openConfirm(getShell(event),
+				UIText.RepositoriesView_ConfirmDeleteRemoteHeader, NLS.bind(
+						UIText.RepositoriesView_ConfirmDeleteRemoteMessage,
 						configName));
 		if (ok) {
 			RepositoryConfig config = node.getRepository().getConfig();
