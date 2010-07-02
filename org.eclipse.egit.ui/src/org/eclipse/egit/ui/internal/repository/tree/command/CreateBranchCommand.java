@@ -115,7 +115,7 @@ public class CreateBranchCommand extends
 				return true;
 			}
 		};
-		new WizardDialog(getView(event).getSite().getShell(), wiz).open();
+		new WizardDialog(getShell(event), wiz).open();
 
 		return null;
 	}

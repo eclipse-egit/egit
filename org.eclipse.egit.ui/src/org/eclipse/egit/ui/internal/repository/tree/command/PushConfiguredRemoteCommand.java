@@ -26,7 +26,7 @@ public class PushConfiguredRemoteCommand extends
 		RemoteNode remote = (RemoteNode) node.getParent();
 
 		new PushConfiguredRemoteAction(node.getRepository(), remote.getObject())
-				.run(getView(event).getSite().getShell(), false);
+				.run(getShell(event), false);
 
 		return null;
 	}

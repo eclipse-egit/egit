@@ -25,7 +25,7 @@ public class ConfigureRemoteCommand extends
 		RemotesNode node = getSelectedNodes(event).get(0);
 
 		WizardDialog dlg = new WizardDialog(
-				getView(event).getSite().getShell(), new NewRemoteWizard(node
+				getShell(event), new NewRemoteWizard(node
 						.getRepository()));
 		dlg.open();
 

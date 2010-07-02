@@ -69,7 +69,7 @@ public class MergeCommand extends
 			refName = targetRef;
 		else {
 			MergeTargetSelectionDialog mergeTargetSelectionDialog = new MergeTargetSelectionDialog(
-					getView(event).getSite().getShell(), repository);
+					getShell(event), repository);
 			if (mergeTargetSelectionDialog.open() == IDialogConstants.OK_ID) {
 				refName = mergeTargetSelectionDialog.getRefName();
 			} else {

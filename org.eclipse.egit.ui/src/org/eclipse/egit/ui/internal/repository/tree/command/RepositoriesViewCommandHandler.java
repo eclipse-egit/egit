@@ -14,27 +14,32 @@ import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.expressions.IEvaluationContext;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.RepositoryUtil;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
-import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 abstract class RepositoriesViewCommandHandler<T> extends AbstractHandler {
 
 	protected final RepositoryUtil util = Activator.getDefault()
 			.getRepositoryUtil();
 
-	public RepositoriesView getView(ExecutionEvent event) {
-		Object part = ((IEvaluationContext) event.getApplicationContext())
-				.getRoot().getVariable("activePart"); //$NON-NLS-1$ TODO constant for this?
+	public RepositoriesView getView(ExecutionEvent event) throws ExecutionException {
+		IWorkbenchPart part = HandlerUtil.getActivePartChecked(event);
 		return (RepositoriesView) part;
 	}
 
+	public Shell getShell(ExecutionEvent event) {
+		return HandlerUtil.getActiveShell(event);
+	}
+
 	@SuppressWarnings("unchecked")
-	public List<T> getSelectedNodes(ExecutionEvent event) {
-		TreeSelection selection = (TreeSelection) ((IEvaluationContext) event
-				.getApplicationContext()).getRoot().getVariable("selection"); //$NON-NLS-1$ TODO constant for this?
+	public List<T> getSelectedNodes(ExecutionEvent event) throws ExecutionException {
+		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelectionChecked(event);
 		return selection.toList();
 	}
 }
