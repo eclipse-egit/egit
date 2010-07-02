@@ -289,6 +289,9 @@ public class CoreText extends NLS {
 	/** */
 	public static String GitBranchResourceVariantTreeSubscriber_gitRepository;
 
+	/** */
+	public static String OperationAlreadyExecuted;
+
 	static {
 		initializeMessages("org.eclipse.egit.core.coretext", //$NON-NLS-1$
 				CoreText.class);
