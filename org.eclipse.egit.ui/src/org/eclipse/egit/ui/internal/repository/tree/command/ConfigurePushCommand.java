@@ -35,7 +35,7 @@ public class ConfigurePushCommand extends
 			return null;
 
 		WizardDialog dlg = new WizardDialog(
-				getView(event).getSite().getShell(), new ConfigureRemoteWizard(
+				getShell(event), new ConfigureRemoteWizard(
 						selectedNode.getRepository(), configName, true));
 		dlg.open();
 

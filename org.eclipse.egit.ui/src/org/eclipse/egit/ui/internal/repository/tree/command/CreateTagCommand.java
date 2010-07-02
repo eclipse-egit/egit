@@ -53,7 +53,7 @@ public class CreateTagCommand extends RepositoriesViewCommandHandler<RepositoryT
 		final Repository repo = node.getRepository();
 
 		if (!repo.getRepositoryState().canCheckout()) {
-			MessageDialog.openError(getView(event).getSite().getShell(),
+			MessageDialog.openError(getShell(event),
 					UIText.TagAction_cannotCheckout, NLS.bind(
 							UIText.TagAction_repositoryState, repo
 									.getRepositoryState().getDescription()));
