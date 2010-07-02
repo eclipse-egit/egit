@@ -25,10 +25,6 @@ import org.junit.runner.RunWith;
 @RunWith(SWTBotJunit4ClassRunner.class)
 public abstract class EGitTestCase {
 
-	static {
-		System.setProperty("org.eclipse.swtbot.playback.delay", "50");
-	}
-
 	protected static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
 	@BeforeClass
