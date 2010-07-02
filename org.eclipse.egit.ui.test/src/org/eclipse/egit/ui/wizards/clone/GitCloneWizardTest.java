@@ -64,19 +64,19 @@ public class GitCloneWizardTest extends EGitTestCase {
 
 		propertiesPage.setURI("ssh://user@www.jgit.org/EGIT");
 		propertiesPage.assertSourceParams(null, "www.jgit.org", "/EGIT",
-				"git+ssh", "", true, "user", "", true, true);
+				"ssh", "", true, "user", "", true, true);
 
 		propertiesPage.setURI("ssh://user@www.jgit.org/EGIT");
 		propertiesPage.assertSourceParams(null, "www.jgit.org", "/EGIT",
-				"git+ssh", "", true, "user", "", true, true);
+				"ssh", "", true, "user", "", true, true);
 
 		propertiesPage.setURI("ssh://user:hi@www.jgit.org:33/EGIT");
 		propertiesPage.assertSourceParams(null, "www.jgit.org", "/EGIT",
-				"git+ssh", "33", true, "user", "hi", true, true);
+				"ssh", "33", true, "user", "hi", true, true);
 
 		propertiesPage.setURI("ssh:///EGIT");
 		propertiesPage.assertSourceParams(" Host required for ssh protocol.",
-				"", "/EGIT", "git+ssh", "", true, "", "", true, true);
+				"", "/EGIT", "ssh", "", true, "", "", true, true);
 
 		propertiesPage.setURI("file:///some/place");
 		if (Platform.getOS().equals(Platform.OS_WIN32))
@@ -97,26 +97,26 @@ public class GitCloneWizardTest extends EGitTestCase {
 		propertiesPage.assertURI("ssh://user@example.com/EGIT");
 
 		propertiesPage.assertSourceParams(null, "example.com", "/EGIT",
-				"git+ssh", "", true, "user", "", true, true);
+				"ssh", "", true, "user", "", true, true);
 
 		// ..change user
 		bot.textWithLabel("User:").setText("gitney");
 		propertiesPage.assertURI("ssh://gitney@example.com/EGIT");
 		propertiesPage.assertSourceParams(null, "example.com", "/EGIT",
-				"git+ssh", "", true, "gitney", "", true, true);
+				"ssh", "", true, "gitney", "", true, true);
 
 		// ..change password
 		bot.textWithLabel("Password:").setText("fsck");
 		// Password is not written into the URL here!
 		propertiesPage.assertURI("ssh://gitney@example.com/EGIT");
 		propertiesPage.assertSourceParams(null, "example.com", "/EGIT",
-				"git+ssh", "", true, "gitney", "fsck", true, true);
+				"ssh", "", true, "gitney", "fsck", true, true);
 
 		// change port number
 		bot.textWithLabel("Port:").setText("99");
 		propertiesPage.assertURI("ssh://gitney@example.com:99/EGIT");
 		propertiesPage.assertSourceParams(null, "example.com", "/EGIT",
-				"git+ssh", "99", true, "gitney", "fsck", true, true);
+				"ssh", "99", true, "gitney", "fsck", true, true);
 
 		// change protocol to another with user/password capability
 		bot.comboBoxWithLabel("Protocol:").setSelection("ftp");
