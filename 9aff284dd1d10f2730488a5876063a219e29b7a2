@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAA3///40\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2010-04-07T04:07:02Z",
+      "side": 1,
+      "message": "ObjectId parentId \u003d null;\n\nand remove this else",
+      "revId": "9aff284dd1d10f2730488a5876063a219e29b7a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAA3///4w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2010-04-07T04:07:02Z",
+      "side": 1,
+      "message": "Please provide a constant at least for\n\n   Text.DELIMITER + \"Change-Id: \"\n\nor even for full Change-Id string like this\n\n   Text.DELIMITER + \"Change-Id: \" + CHANGE_ID_REGEX",
+      "revId": "9aff284dd1d10f2730488a5876063a219e29b7a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
