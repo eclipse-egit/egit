@@ -461,17 +461,17 @@ public class GitProjectsImportPage extends WizardPage {
 	 *         successful.
 	 */
 	boolean createProjects() {
-		final Object[] selected = getCheckedProjects().toArray();
+		final Set<ProjectRecord> selected = getCheckedProjects();
 		WorkspaceModifyOperation op = new WorkspaceModifyOperation() {
 			protected void execute(IProgressMonitor monitor)
 					throws InvocationTargetException, InterruptedException {
 				try {
-					monitor.beginTask("", selected.length); //$NON-NLS-1$
+					monitor.beginTask("", selected.size()); //$NON-NLS-1$
 					if (monitor.isCanceled()) {
 						throw new OperationCanceledException();
 					}
-					for (int i = 0; i < selected.length; i++) {
-						createExistingProject((ProjectRecord) selected[i],
+					for (ProjectRecord projectRecord : selected) {
+						createExistingProject(projectRecord,
 								new SubProgressMonitor(monitor, 1));
 					}
 				} finally {
@@ -608,11 +608,11 @@ public class GitProjectsImportPage extends WizardPage {
 	/**
 	 * @return All the currently checked projects in the projectsList tree
 	 */
-	private HashSet<Object> getCheckedProjects() {
-		HashSet<Object> ret = new HashSet<Object>();
+	private Set<ProjectRecord> getCheckedProjects() {
+		HashSet<ProjectRecord> ret = new HashSet<ProjectRecord>();
 		for (TreeItem item : projectsList.getTree().getItems())
 			if (item.getChecked())
-				ret.add(item.getData());
+				ret.add((ProjectRecord) item.getData());
 
 		return ret;
 	}
