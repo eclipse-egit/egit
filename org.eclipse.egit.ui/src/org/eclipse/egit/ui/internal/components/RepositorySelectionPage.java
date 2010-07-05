@@ -3,6 +3,7 @@
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
+ * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,17 +17,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.Transport;
@@ -58,11 +57,9 @@ import org.eclipse.swt.widgets.Text;
  * Wizard page that allows the user entering the location of a remote repository
  * by specifying URL manually or selecting a preconfigured remote repository.
  */
-public class RepositorySelectionPage extends BaseWizardPage {
+public class RepositorySelectionPage extends WizardPage {
 
 	private final static String USED_URIS_PREF = "RepositorySelectionPage.UsedUris"; //$NON-NLS-1$
-
-	private final static String USED_URIS_LENGTH_PREF = "RepositorySelectionPage.UsedUrisLength"; //$NON-NLS-1$
 
 	private static final int REMOTE_CONFIG_TEXT_MAX_LENGTH = 80;
 
@@ -646,7 +643,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 						badField = UIText.RepositorySelectionPage_promptPassword;
 					if (badField != null) {
 						selectionIncomplete(NLS
-								.bind(UIText.RepositorySelectionPage_fieldNotSupported,
+								.bind(
+										UIText.RepositorySelectionPage_fieldNotSupported,
 										unamp(badField), proto));
 						return;
 					}
@@ -656,7 +654,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 					if (!d.exists()) {
 						selectionIncomplete(NLS.bind(
 								UIText.RepositorySelectionPage_fileNotFound,
-								d.getAbsolutePath()));
+										d.getAbsolutePath()));
 						return;
 					}
 
@@ -680,7 +678,8 @@ public class RepositorySelectionPage extends BaseWizardPage {
 						badField = UIText.RepositorySelectionPage_promptPassword;
 					if (badField != null) {
 						selectionIncomplete(NLS
-								.bind(UIText.RepositorySelectionPage_fieldNotSupported,
+								.bind(
+										UIText.RepositorySelectionPage_fieldNotSupported,
 										unamp(badField), proto));
 						return;
 					}
@@ -719,7 +718,6 @@ public class RepositorySelectionPage extends BaseWizardPage {
 		setExposedSelection(u, rc);
 		setErrorMessage(null);
 		setPageComplete(true);
-		notifySelectionChanged();
 	}
 
 	private void setExposedSelection(final URIish u, final RemoteConfig rc) {
@@ -728,7 +726,6 @@ public class RepositorySelectionPage extends BaseWizardPage {
 			return;
 
 		selection = newSelection;
-		notifySelectionChanged();
 	}
 
 	private void updateRemoteAndURIPanels() {
@@ -775,44 +772,6 @@ public class RepositorySelectionPage extends BaseWizardPage {
 	 */
 	public void saveUriInPrefs() {
 		uriProposalHandler.updateProposals();
-	}
-
-	/**
-	 * Gets the previously added URIs from the preferences
-	 *
-	 * TODO move this to some proper preferences handling class instead of
-	 * making it static
-	 *
-	 * @return a (possibly empty) list of URIs, never <code>null</code>
-	 */
-	public static List<String> getUrisFromPrefs() {
-
-		// use a TreeSet to get the same sorting always
-		List<String> uriStrings = new ArrayList<String>();
-
-		IEclipsePreferences prefs = new InstanceScope().getNode(Activator
-				.getPluginId());
-		// since there is no "good" separator for URIish, so we
-		// keep track of the URI lengths separately
-		String uriLengths = prefs.get(USED_URIS_LENGTH_PREF, ""); //$NON-NLS-1$
-		String uris = prefs.get(USED_URIS_PREF, ""); //$NON-NLS-1$
-
-		StringTokenizer tok = new StringTokenizer(uriLengths, " "); //$NON-NLS-1$
-		int offset = 0;
-		while (tok.hasMoreTokens()) {
-			try {
-				int length = Integer.parseInt(tok.nextToken());
-				if (uris.length() >= (offset + length)) {
-					uriStrings.add(uris.substring(offset, offset + length));
-					offset += length;
-				}
-			} catch (NumberFormatException nfe) {
-				// ignore here
-			}
-
-		}
-
-		return uriStrings;
 	}
 
 	private void setEnabledRecursively(final Control control,
