@@ -39,6 +39,7 @@ import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -91,7 +92,12 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		headId = repository.resolve(Constants.HEAD);
 
 		store = Activator.getDefault().getPreferenceStore();
-		repositoryName = Activator.getDefault().getRepositoryUtil().getRepositoryName(repository);
+		String repoName = Activator.getDefault().getRepositoryUtil().getRepositoryName(repository);
+		RepositoryState state = repository.getRepositoryState();
+		if (state != RepositoryState.SAFE)
+			repositoryName = repoName + '|' + state.getDescription();
+		else
+			repositoryName = repoName;
 
 		branch = getShortBranch();
 

@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
+import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 /**
@@ -41,11 +42,11 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.DECORATOR_RECURSIVE_LIMIT,
 				Integer.MAX_VALUE);
 		store.setDefault(UIPreferences.DECORATOR_FILETEXT_DECORATION,
-				UIText.DecoratorPreferencesPage_fileFormatDefault);
+				GitLightweightDecorator.DecorationHelper.FILE_FORMAT_DEFAULT);
 		store.setDefault(UIPreferences.DECORATOR_FOLDERTEXT_DECORATION,
-				UIText.DecoratorPreferencesPage_folderFormatDefault);
+				GitLightweightDecorator.DecorationHelper.FOLDER_FORMAT_DEFAULT);
 		store.setDefault(UIPreferences.DECORATOR_PROJECTTEXT_DECORATION,
-				UIText.DecoratorPreferencesPage_projectFormatDefault);
+				GitLightweightDecorator.DecorationHelper.PROJECT_FORMAT_DEFAULT);
 		store.setDefault(UIPreferences.DECORATOR_SHOW_TRACKED_ICON, true);
 		store.setDefault(UIPreferences.DECORATOR_SHOW_UNTRACKED_ICON, true);
 		store.setDefault(UIPreferences.DECORATOR_SHOW_STAGED_ICON, true);
