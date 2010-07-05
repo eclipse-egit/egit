@@ -55,8 +55,26 @@ public class GitCloneWizard extends Wizard {
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 		setNeedsProgressMonitor(true);
 		cloneSource = new RepositorySelectionPage(true, null);
-		validSource = new SourceBranchPage(cloneSource);
-		cloneDestination = new CloneDestinationPage(cloneSource, validSource);
+		validSource = new SourceBranchPage() {
+
+			@Override
+			public void setVisible(boolean visible) {
+				if (visible)
+					setSelection(cloneSource.getSelection());
+				super.setVisible(visible);
+			}
+
+		};
+		cloneDestination = new CloneDestinationPage() {
+			@Override
+			public void setVisible(boolean visible) {
+				if (visible)
+					setSelection(cloneSource.getSelection(), validSource
+							.getAvailableBranches(), validSource
+							.getSelectedBranches(), validSource.getHEAD());
+				super.setVisible(visible);
+			}
+		};
 	}
 
 	@Override
