@@ -3,7 +3,10 @@
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
+<<<<<<< HEAD
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+=======
+>>>>>>> Extract information about supported protocols into separate class
  * Copyright (C) 2010, Matthias Sohn <matthias.sohn@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
@@ -883,6 +886,9 @@ public class RepositorySelectionPage extends WizardPage {
 
 			if (u.getScheme() != null)
 				scheme.select(scheme.indexOf(u.getScheme()));
+
+			Protocol p = Protocol.fromUri(u);
+			scheme.select(scheme.indexOf(p.getDefaultScheme()));
 
 			updateAuthGroup();
 			uri = u;
