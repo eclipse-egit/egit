@@ -52,6 +52,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -924,6 +925,7 @@ public class RepositorySelectionPage extends BaseWizardPage {
 
 			Protocol p = Protocol.fromUri(u);
 			scheme.select(scheme.indexOf(p.getDefaultScheme()));
+			scheme.notifyListeners(SWT.Selection, new Event());
 
 			updateAuthGroup();
 			uri = u;
