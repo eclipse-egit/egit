@@ -90,7 +90,7 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 		StringBuilder builder = new StringBuilder();
 
 		for (GitSynchronizeData data : gsd) {
-			builder.append(data.getRepository().getWorkDir());
+			builder.append(data.getRepository().getWorkTree());
 			builder.append(" "); //$NON-NLS-1$
 		}
 

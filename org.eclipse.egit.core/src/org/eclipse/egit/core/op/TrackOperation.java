@@ -115,7 +115,7 @@ public class TrackOperation implements IEGitOperation {
 									if (resource.getType() == IResource.FILE) {
 										Entry entry = index.getEntry(repoPath);
 										if (!isIgnored || entry != null && entry.isAssumedValid()) {
-											entry = index.add(rm.getWorkDir(), new File(rm.getWorkDir(), repoPath));
+											entry = index.add(rm.getWorkTree(), new File(rm.getWorkTree(), repoPath));
 											entry.setAssumeValid(false);
 										}
 									}
@@ -131,7 +131,7 @@ public class TrackOperation implements IEGitOperation {
 							}
 						},IResource.DEPTH_INFINITE, IContainer.EXCLUDE_DERIVED);
 					} else {
-						Entry entry = index.add(rm.getWorkDir(), new File(rm.getWorkDir(),rm.getRepoRelativePath(toAdd)));
+						Entry entry = index.add(rm.getWorkTree(), new File(rm.getWorkTree(),rm.getRepoRelativePath(toAdd)));
 						entry.setAssumeValid(false);
 
 					}

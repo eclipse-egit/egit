@@ -37,7 +37,7 @@ public class CopyPathCommand extends
 					"core", "bare", false)) { //$NON-NLS-1$ //$NON-NLS-2$
 				return null;
 			}
-			path = node.getRepository().getWorkDir().toString();
+			path = node.getRepository().getWorkTree().toString();
 			break;
 		case FILE:
 			path = ((FileNode) node).getObject().getPath().toString();

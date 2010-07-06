@@ -16,7 +16,7 @@ import java.io.IOException;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -28,10 +28,12 @@ import org.eclipse.swt.widgets.Shell;
 public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 
 	/**
+	 * Construct a dialog to select a branch to reset to or check out
+	 *
 	 * @param parentShell
 	 * @param repo
 	 */
-	public MergeTargetSelectionDialog(Shell parentShell, Repository repo) {
+	public MergeTargetSelectionDialog(Shell parentShell, FileRepository repo) {
 		// TODO perhaps we can mark the default merge branch for
 		// the current branch by reading the configuration and use the other
 		// super constructor

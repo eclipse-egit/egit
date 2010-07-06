@@ -25,7 +25,7 @@ import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -36,7 +36,7 @@ import org.eclipse.osgi.util.NLS;
 public class BranchAction extends RepositoryAction {
 	@Override
 	public void execute(IAction action) throws InvocationTargetException, InterruptedException {
-		final Repository repository = getRepository(true);
+		final FileRepository repository = getRepository(true);
 		if (repository == null)
 			return;
 
