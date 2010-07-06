@@ -3,10 +3,7 @@
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
-<<<<<<< HEAD
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
-=======
->>>>>>> cd68a14... Extract information about supported protocols into separate class
  * Copyright (C) 2010, Matthias Sohn <matthias.sohn@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
@@ -21,10 +18,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
-=======
-import java.util.StringTokenizer;
->>>>>>> cd68a14... Extract information about supported protocols into separate class
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
