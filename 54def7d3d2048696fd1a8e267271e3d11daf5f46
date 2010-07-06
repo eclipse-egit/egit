@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX///fI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-07-02T21:09:57Z",
+      "side": 1,
+      "message": "We don\u0027t need to check in commented code, do we?",
+      "revId": "54def7d3d2048696fd1a8e267271e3d11daf5f46",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///fA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-07-02T21:09:57Z",
+      "side": 1,
+      "message": "Let\u0027s not check in commented code",
+      "revId": "54def7d3d2048696fd1a8e267271e3d11daf5f46",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///e8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-07-02T21:09:57Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "54def7d3d2048696fd1a8e267271e3d11daf5f46",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///e4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-07-02T21:09:57Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "54def7d3d2048696fd1a8e267271e3d11daf5f46",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///e0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-07-02T21:09:57Z",
+      "side": 1,
+      "message": "This looks like a bad reformatting. Was it accidental?",
+      "revId": "54def7d3d2048696fd1a8e267271e3d11daf5f46",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///ew\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-07-02T21:09:57Z",
+      "side": 1,
+      "message": "Commented code",
+      "revId": "54def7d3d2048696fd1a8e267271e3d11daf5f46",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///es\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-07-02T21:09:57Z",
+      "side": 1,
+      "message": "Commented code",
+      "revId": "54def7d3d2048696fd1a8e267271e3d11daf5f46",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
