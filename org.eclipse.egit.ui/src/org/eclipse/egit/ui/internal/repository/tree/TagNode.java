@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.repository.tree;
 
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 
 /**
  * Represents the "Tag" node
@@ -28,7 +29,7 @@ public class TagNode extends RepositoryTreeNode<Ref> {
 	 * @param ref
 	 *            the tag reference
 	 */
-	public TagNode(RepositoryTreeNode parent, Repository repository, Ref ref) {
+	public TagNode(RepositoryTreeNode parent, FileRepository repository, Ref ref) {
 		super(parent, RepositoryTreeNodeType.TAG, repository, ref);
 	}
 

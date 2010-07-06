@@ -31,8 +31,8 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.storage.file.FileBasedConfig;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
@@ -49,7 +49,7 @@ import org.eclipse.ui.PlatformUI;
  * Fetch operation is performed upon successful completion of this wizard.
  */
 public class FetchWizard extends Wizard {
-	private final Repository localDb;
+	private final FileRepository localDb;
 
 	private final RepositorySelectionPage repoPage;
 
@@ -63,7 +63,7 @@ public class FetchWizard extends Wizard {
 	 * @throws URISyntaxException
 	 *             when configuration of this repository contains illegal URIs.
 	 */
-	public FetchWizard(final Repository localDb) throws URISyntaxException {
+	public FetchWizard(final FileRepository localDb) throws URISyntaxException {
 		this.localDb = localDb;
 		final List<RemoteConfig> remotes = RemoteConfig
 				.getAllRemoteConfigs(localDb.getConfig());
@@ -133,7 +133,7 @@ public class FetchWizard extends Wizard {
 		final RemoteConfig rc = repoPage.getSelection().getConfig();
 		rc.setFetchRefSpecs(refSpecPage.getRefSpecs());
 		rc.setTagOpt(refSpecPage.getTagOpt());
-		final RepositoryConfig config = localDb.getConfig();
+		final FileBasedConfig config = localDb.getConfig();
 		rc.update(config);
 		try {
 			config.save();

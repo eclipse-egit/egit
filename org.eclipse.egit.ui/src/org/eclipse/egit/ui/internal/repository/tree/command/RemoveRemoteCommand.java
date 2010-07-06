@@ -19,7 +19,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -36,7 +36,7 @@ public class RemoveRemoteCommand extends
 						UIText.RepositoriesView_ConfirmDeleteRemoteMessage,
 						configName));
 		if (ok) {
-			RepositoryConfig config = node.getRepository().getConfig();
+			FileBasedConfig config = node.getRepository().getConfig();
 			config.unsetSection(RepositoriesView.REMOTE, configName);
 			try {
 				config.save();

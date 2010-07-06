@@ -18,7 +18,7 @@ import org.eclipse.egit.ui.internal.push.PushWizard;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 
 /**
  * Action for choosing specifications for push, and pushing out to another
@@ -28,7 +28,7 @@ public class PushAction extends RepositoryAction {
 
 	@Override
 	public void execute(IAction action) {
-		final Repository repository = getRepository(true);
+		final FileRepository repository = getRepository(true);
 		if (repository == null)
 			return;
 

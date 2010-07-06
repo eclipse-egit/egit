@@ -14,6 +14,7 @@ import java.io.File;
 
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 
 /**
  * A node in the Git Repositories view tree
@@ -23,7 +24,7 @@ import org.eclipse.jgit.lib.Repository;
  */
 public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
 
-	private final Repository myRepository;
+	private final FileRepository myRepository;
 
 	private final T myObject;
 
@@ -44,7 +45,7 @@ public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTree
 	 *            an object (depending on the type)
 	 */
 	public RepositoryTreeNode(RepositoryTreeNode parent,
-			RepositoryTreeNodeType type, Repository repository, T treeObject) {
+			RepositoryTreeNodeType type, FileRepository repository, T treeObject) {
 		myParent = parent;
 		myRepository = repository;
 		myType = type;
@@ -77,7 +78,7 @@ public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTree
 	/**
 	 * @return the repository
 	 */
-	public Repository getRepository() {
+	public FileRepository getRepository() {
 		return myRepository;
 	}
 

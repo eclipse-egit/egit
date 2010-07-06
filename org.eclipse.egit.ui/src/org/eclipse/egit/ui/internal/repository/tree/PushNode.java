@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.repository.tree;
 
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 
 /**
  * Represents the "Push" node
@@ -27,7 +28,7 @@ public class PushNode extends RepositoryTreeNode<String> {
 	 * @param pushUri
 	 *            the push URI (or another suitable representation of the push)
 	 */
-	public PushNode(RepositoryTreeNode parent, Repository repository,
+	public PushNode(RepositoryTreeNode parent, FileRepository repository,
 			String pushUri) {
 		super(parent, RepositoryTreeNodeType.PUSH, repository, pushUri);
 	}

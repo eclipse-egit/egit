@@ -23,8 +23,8 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefRename;
 import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RefUpdate.Result;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -49,7 +49,7 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 	 * @param parentShell
 	 * @param repo
 	 */
-	public BranchSelectionDialog(Shell parentShell, Repository repo) {
+	public BranchSelectionDialog(Shell parentShell, FileRepository repo) {
 		super(parentShell, repo);
 	}
 

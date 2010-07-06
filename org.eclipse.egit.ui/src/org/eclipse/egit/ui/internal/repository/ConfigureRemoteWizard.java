@@ -18,8 +18,9 @@ import org.eclipse.egit.ui.internal.components.RefSpecPage;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.jgit.storage.file.FileBasedConfig;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
@@ -33,7 +34,7 @@ import org.eclipse.osgi.util.NLS;
  */
 public class ConfigureRemoteWizard extends Wizard {
 
-	final RepositoryConfig myConfiguration;
+	final FileBasedConfig myConfiguration;
 
 	RemoteConfig myRemoteConfiguration;
 
@@ -80,7 +81,7 @@ public class ConfigureRemoteWizard extends Wizard {
 	 * @param remoteName
 	 * @param push
 	 */
-	public ConfigureRemoteWizard(Repository repository, String remoteName,
+	public ConfigureRemoteWizard(FileRepository repository, String remoteName,
 			boolean push) {
 
 		myConfiguration = repository.getConfig();
@@ -130,7 +131,7 @@ public class ConfigureRemoteWizard extends Wizard {
 	 * @return the configuration
 	 *
 	 */
-	public RepositoryConfig getConfiguration() {
+	public Config getConfiguration() {
 		return myConfiguration;
 	}
 

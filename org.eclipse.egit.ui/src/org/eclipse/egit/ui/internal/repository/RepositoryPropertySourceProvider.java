@@ -12,7 +12,7 @@ package org.eclipse.egit.ui.internal.repository;
 
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
 import org.eclipse.ui.views.properties.PropertySheetPage;
@@ -51,7 +51,7 @@ public class RepositoryPropertySourceProvider implements
 		if (node.getType() == RepositoryTreeNodeType.REPO) {
 			lastObject = object;
 			lastRepositorySource = new RepositoryPropertySource(
-					(Repository) node.getObject(), myPage);
+					(FileRepository) node.getObject(), myPage);
 			return lastRepositorySource;
 		} else if (node.getType() == RepositoryTreeNodeType.REMOTE) {
 			lastObject = object;

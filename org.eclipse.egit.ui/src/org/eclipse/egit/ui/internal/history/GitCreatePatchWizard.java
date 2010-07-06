@@ -247,7 +247,7 @@ public class GitCreatePatchWizard extends Wizard {
 	private String getProjectRelaticePath(FileDiff diff) {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
-		IPath absolutePath = new Path(db.getWorkDir().getAbsolutePath())
+		IPath absolutePath = new Path(db.getWorkTree().getAbsolutePath())
 				.append(diff.path);
 		IResource resource = root.getFileForLocation(absolutePath);
 		return resource.getProjectRelativePath().toString();
@@ -382,7 +382,7 @@ public class GitCreatePatchWizard extends Wizard {
 				name = name.substring(0, name.length() - 1);
 			name = name.concat(".patch"); //$NON-NLS-1$
 
-			String defaultPath = db.getWorkDir().getAbsolutePath();
+			String defaultPath = db.getWorkTree().getAbsolutePath();
 
 			return (new File(defaultPath, name)).getPath();
 		}

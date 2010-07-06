@@ -17,7 +17,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
@@ -41,7 +41,7 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 	 * @param parentShell
 	 * @param repo
 	 */
-	public ResetTargetSelectionDialog(Shell parentShell, Repository repo) {
+	public ResetTargetSelectionDialog(Shell parentShell, FileRepository repo) {
 		super(parentShell, repo);
 	}
 

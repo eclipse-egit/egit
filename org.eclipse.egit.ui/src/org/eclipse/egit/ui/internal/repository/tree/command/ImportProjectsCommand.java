@@ -30,7 +30,7 @@ public class ImportProjectsCommand extends
 		case REPO:
 			// fall through
 		case WORKINGDIR:
-			path = node.getRepository().getWorkDir().toString();
+			path = node.getRepository().getWorkTree().toString();
 			break;
 		case FOLDER:
 			path = ((FolderNode) node).getObject().getPath().toString();

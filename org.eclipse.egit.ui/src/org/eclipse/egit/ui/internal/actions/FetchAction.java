@@ -18,7 +18,7 @@ import org.eclipse.egit.ui.internal.fetch.FetchWizard;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 
 /**
  * Action for displaying fetch wizard - allowing selection of specifications for
@@ -27,7 +27,7 @@ import org.eclipse.jgit.lib.Repository;
 public class FetchAction extends RepositoryAction {
 	@Override
 	public void execute(IAction action) {
-		final Repository repository = getRepository(true);
+		final FileRepository repository = getRepository(true);
 		if (repository == null)
 			return;
 
