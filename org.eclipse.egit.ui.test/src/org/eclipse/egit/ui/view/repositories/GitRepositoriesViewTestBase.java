@@ -317,7 +317,7 @@ public abstract class GitRepositoriesViewTestBase {
 			SWTBotShell shell = bot.shell("Show View").activate();
 			shell.bot().tree().expandNode(gitCategory).getNode(viewName)
 					.select();
-			shell.bot().button(0).click();
+			shell.bot().button(IDialogConstants.OK_LABEL).click();
 
 			viewbot = bot.viewByTitle(viewName);
 
