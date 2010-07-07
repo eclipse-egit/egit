@@ -33,6 +33,7 @@ public class BlobStorageTest extends GitTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		repository.close();
 		super.tearDown();
 	}
 
@@ -41,7 +42,7 @@ public class BlobStorageTest extends GitTestCase {
 		ObjectId id = createFile(repository, project.getProject(), "file", "data");
 		BlobStorage blobStorage = new BlobStorage(repository, "p/file", id);
 		assertEquals("file", blobStorage.getName());
-		assertEquals("data", slurpAndClose(blobStorage.getContents()));
+		assertEquals("data", testUtils.slurpAndClose(blobStorage.getContents()));
 		assertEquals(Path.fromPortableString("p/file").toOSString(), blobStorage.getFullPath().toOSString());
 
 	}

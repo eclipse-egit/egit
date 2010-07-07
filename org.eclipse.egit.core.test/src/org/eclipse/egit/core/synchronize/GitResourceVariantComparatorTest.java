@@ -34,6 +34,7 @@ import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.variants.IResourceVariant;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,6 +52,12 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 
 		new ConnectProviderOperation(iProject, gitDir).execute(null);
 		repo = RepositoryMapping.getMapping(iProject).getRepository();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		repo.close();
+		super.tearDown();
 	}
 
 	/*============================================
