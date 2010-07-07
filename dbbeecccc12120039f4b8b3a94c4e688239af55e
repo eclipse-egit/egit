@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX///WM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-07-03T20:28:54Z",
+      "side": 1,
+      "message": "We shouldn\u0027t have an ordinal. An ordinal implies some kind of total ordering over all the elements, which we can\u0027t guarantee. For example, if I want to add a new Protocol \u0027pigeon\u0027 I\u0027m going to give it MAX+1 (which is 8 in this case). But if someone else wants to add \u0027avian\u0027 (also as 8) we now have a clash. It gets worse if the next version of (E/J)Git comes out with \u0027psychic (8)\u0027 we now have a duplicate (or triplicate).\n\nThe ordinal appears to add no value at all; we can impose a total ordering over the protocol using the lexicographic sorting of the protocol names; instead of using an ArrayList, we can use a TreeMap instead.\n\nLastly, the value of ordinal appears completely unused.",
+      "revId": "dbbeecccc12120039f4b8b3a94c4e688239af55e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
