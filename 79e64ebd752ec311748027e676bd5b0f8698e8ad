@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX///Hk\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-07-07T06:39:40Z",
+      "side": 1,
+      "message": "This fails for me, as the \"Next\" button is disabled; apparently some item in the tree must be selected to enable the button.",
+      "revId": "79e64ebd752ec311748027e676bd5b0f8698e8ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
