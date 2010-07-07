@@ -75,6 +75,7 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 		new DisconnectProviderOperation(projects).execute(null);
 
 		repo.close();
+		super.tearDown();
 	}
 
 	/**

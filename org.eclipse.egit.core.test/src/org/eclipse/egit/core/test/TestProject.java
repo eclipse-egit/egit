@@ -40,6 +40,7 @@ public class TestProject {
 
 	private IPackageFragmentRoot sourceFolder;
 	private String location;
+	private TestUtils testUtils = new TestUtils();
 
 	/**
 	 * @throws CoreException
@@ -115,7 +116,7 @@ public class TestProject {
 		if (project.exists())
 			project.delete(true, true, null);
 		else
-			TestUtils.rmrf(new File(location));
+			testUtils.deleteRecursive(new File(location));
 	}
 
 	private IFolder createBinFolder() throws CoreException {
