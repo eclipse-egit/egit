@@ -19,7 +19,9 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
@@ -35,6 +37,9 @@ import org.eclipse.swtbot.swt.finder.utils.TableCollection;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.eclipse.ui.IWorkingSet;
+import org.eclipse.ui.IWorkingSetManager;
+import org.eclipse.ui.PlatformUI;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -247,7 +252,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				.isEnabled());
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		waitInUI();
-		assertProjectExistence(PROJ1, true);
+		assertProjectExistence(PROJ1, true);		
 	}
 
 	@Test
@@ -287,6 +292,59 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		waitInUI();
 		assertProjectExistence(PROJ2, true);
+	}
+
+	@Test
+	public void testImportWizardGeneralProjectWithWorkingSet() throws Exception {
+		deleteAllProjects();
+		assertProjectExistence(PROJ1, false);
+		SWTBotTree tree = getOrOpenView().bot().tree();
+		String wizardTitle = NLS.bind(
+				UIText.GitCreateProjectViaWizardWizard_WizardTitle,
+				repositoryFile.getPath());
+		// start wizard from PROJ1
+		getWorkdirItem(tree, repositoryFile).expand().getNode(PROJ1).select();
+		ContextMenuHelper.clickContextMenu(tree, myUtil
+				.getPluginLocalizedValue("ImportProjectsCommand"));
+		SWTBotShell shell = bot.shell(wizardTitle);
+		shell = bot.shell(wizardTitle);
+		// try import existing project first
+		activateItemByKeyboard(shell,
+				UIText.GitSelectWizardPage_ImportExistingButton);
+		// auto share
+		activateItemByKeyboard(shell,
+				UIText.GitSelectWizardPage_AutoShareButton);
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
+		waitInUI();
+		shell.bot().tree().getAllItems()[0].check();
+		// add to working set
+		shell.bot().checkBox().select();
+		// create new working set
+		shell.bot().button("Select...").click();
+		SWTBotShell workingSetDialog = bot.shell("Select Working Sets");
+		workingSetDialog.bot().button("New...").click();
+		SWTBotShell newDialog = bot.shell("New Working Set");
+		newDialog.bot().table().select("Java");
+		newDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
+		String workingSetName = "myWorkingSet";
+		newDialog.bot().text(0).setText(workingSetName);
+		newDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
+		workingSetDialog.bot().table().getTableItem(workingSetName).check();
+		workingSetDialog.bot().button(IDialogConstants.OK_LABEL).click();
+		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
+		waitInUI();
+		assertProjectExistence(PROJ1, true);
+		assertProjectInWorkingSet(workingSetName, PROJ1);
+	}
+
+	private void assertProjectInWorkingSet(String workingSetName,
+			String projectName) {
+		IWorkingSetManager workingSetManager = PlatformUI.getWorkbench().getWorkingSetManager();
+		IWorkingSet workingSet = workingSetManager.getWorkingSet(workingSetName);
+		IAdaptable[] elements = workingSet.getElements();
+		assertEquals("Wrong number of projects in working set", 1, elements.length);
+		IProject project = (IProject) elements[0].getAdapter(IProject.class);
+		assertEquals("Wrong project in working set", projectName, project.getName());
 	}
 
 	@Test
@@ -501,4 +559,3 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		}
 	}
 }
-
