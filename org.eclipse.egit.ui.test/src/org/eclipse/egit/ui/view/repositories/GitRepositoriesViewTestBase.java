@@ -52,6 +52,7 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -267,6 +268,10 @@ public abstract class GitRepositoriesViewTestBase {
 				"file:///" + myRemoteRepository.getDirectory().getPath());
 		myRepository.getConfig().setString("remote", "push", "push",
 				"+refs/heads/*:refs/heads/*");
+		// for some reason, this seems to be required
+		myRepository.getConfig().setString(ConfigConstants.CONFIG_CORE_SECTION,
+				null, ConfigConstants.CONFIG_KEY_REPO_FORMAT_VERSION, "0");
+
 		myRepository.getConfig().save();
 		// and push
 		PushConfiguredRemoteAction pa = new PushConfiguredRemoteAction(
@@ -571,6 +576,7 @@ public abstract class GitRepositoriesViewTestBase {
 
 	/**
 	 * Activates the item by "pressing" ALT + the character after '&'
+	 * 
 	 * @param shell
 	 * @param itemWithShortcut
 	 */
