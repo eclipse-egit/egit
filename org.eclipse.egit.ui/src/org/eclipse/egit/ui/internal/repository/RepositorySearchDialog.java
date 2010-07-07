@@ -26,6 +26,8 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.CachedCheckboxTreeViewer;
+import org.eclipse.egit.ui.internal.FilteredCheckboxTree;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -34,12 +36,11 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
+import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.IColorProvider;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.util.FS;
@@ -62,7 +63,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
 import org.osgi.service.prefs.BackingStoreException;
 
@@ -79,9 +79,9 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 
 	private Set<String> fResult;
 
-	private FilteredTree fTree;
+	private FilteredCheckboxTree fTree;
 
-	private TreeViewer fTreeViewer;
+	private CachedCheckboxTreeViewer fTreeViewer;
 
 	private Text dir;
 
@@ -99,6 +99,8 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 
 	private static final class ContentProvider implements ITreeContentProvider {
 
+		private final Object[] children = new Object[0];
+
 		@SuppressWarnings("unchecked")
 		public Object[] getElements(Object inputElement) {
 			return ((Set<String>) inputElement).toArray();
@@ -113,8 +115,8 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 		}
 
 		public Object[] getChildren(Object parentElement) {
-			// nothing
-			return null;
+			// do not return null due to a bug in FilteredTree
+			return children;
 		}
 
 		public Object getParent(Object element) {
@@ -279,20 +281,27 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 		searchResultGroup.setLayout(new GridLayout(2, false));
 		GridDataFactory.fillDefaults().applyTo(searchResultGroup);
 
-		// TODO for 3.4 compatibility, we must use this constructor
-		fTree = new FilteredTree(searchResultGroup, SWT.CHECK | SWT.BORDER,
-				new PatternFilter());
-		fTreeViewer = fTree.getViewer();
-		fTreeViewer
-				.addSelectionChangedListener(new ISelectionChangedListener() {
+		PatternFilter filter = new PatternFilter() {
 
-					public void selectionChanged(SelectionChangedEvent event) {
-						// this is used to update the OK button when the
-						// keyboard
-						// is used to toggle the check boxes
-						enableOk();
-					}
-				});
+			@Override
+			public boolean isElementVisible(Viewer viewer, Object element) {
+
+				if (getCheckedItems().contains(element))
+					return true;
+
+				return super.isElementVisible(viewer, element);
+			}
+		};
+
+		fTree = new FilteredCheckboxTree(searchResultGroup, null, SWT.NONE,
+				filter);
+		fTreeViewer = fTree.getCheckboxTreeViewer();
+		fTreeViewer.addCheckStateListener(new ICheckStateListener() {
+
+			public void checkStateChanged(CheckStateChangedEvent event) {
+				enableOk();
+			}
+		});
 
 		GridDataFactory.fillDefaults().grab(true, true).minSize(0, 300)
 				.applyTo(fTree);
@@ -314,7 +323,6 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 			public void widgetSelected(SelectionEvent e) {
 				doSearch();
 			}
-
 		});
 
 		toggleSelectionButton = new Button(buttonColumn, SWT.NONE);
@@ -327,7 +335,9 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				toggleSelection();
+				for (TreeItem item : fTreeViewer.getTree().getItems())
+					fTreeViewer.setChecked(item.getData(), !item.getChecked());
+				enableOk();
 			}
 		});
 
@@ -399,25 +409,9 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 
 	private HashSet<String> getCheckedItems() {
 		HashSet<String> ret = new HashSet<String>();
-		for (TreeItem item : fTreeViewer.getTree().getItems())
-			if (item.getChecked())
-				ret.add((String) item.getData());
-
+		for (Object item : fTreeViewer.getCheckedElements())
+			ret.add((String) item);
 		return ret;
-	}
-
-	private boolean hasCheckedItems() {
-		for (TreeItem item : fTreeViewer.getTree().getItems())
-			if (item.getChecked())
-				return true;
-
-		return false;
-	}
-
-	private void toggleSelection() {
-		for (TreeItem item : fTreeViewer.getTree().getItems())
-			item.setChecked(!item.getChecked());
-		enableOk();
 	}
 
 	private void doSearch() {
@@ -475,7 +469,7 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 
 			int foundOld = 0;
 
-			TreeSet<String> validDirs = new TreeSet<String>();
+			final TreeSet<String> validDirs = new TreeSet<String>();
 
 			for (String foundDir : directories) {
 				if (!fExistingDirectories.contains(foundDir)) {
@@ -494,10 +488,14 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 			} else if (directories.isEmpty())
 				setMessage(UIText.RepositorySearchDialog_NothingFoundMessage,
 						IMessageProvider.INFORMATION);
+
 			toggleSelectionButton.setEnabled(!validDirs.isEmpty());
+			fTree.clearFilter();
 			fTreeViewer.setInput(validDirs);
 			// this sets all to selected
-			toggleSelection();
+			fTreeViewer.setAllChecked(true);
+			enableOk();
+
 		}
 
 	}
@@ -518,7 +516,7 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 	}
 
 	private void enableOk() {
-		boolean enable = hasCheckedItems();
+		boolean enable = fTreeViewer.getCheckedElements().length > 0;
 		getButton(OK).setEnabled(enable);
 		if (enable)
 			getButton(OK).setFocus();
