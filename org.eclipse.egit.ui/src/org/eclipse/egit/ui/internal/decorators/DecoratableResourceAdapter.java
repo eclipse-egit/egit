@@ -16,15 +16,22 @@ package org.eclipse.egit.ui.internal.decorators;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.ContainerTreeIterator;
 import org.eclipse.egit.core.ContainerTreeIterator.ResourceEntry;
+import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -185,7 +192,34 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 			dirty = false;
 			assumeValid = true;
 		} else {
-			if (!timestampMatches(indexEntry, resourceEntry))
+//			try {
+//				DirCache dc = DirCache.read(repository);
+//				if(dc.getEntry("Calc.java") != null) //$NON-NLS-1$
+//					System.out.println(dc.getEntry("Calc.java").getLastModified()); //$NON-NLS-1$
+//			} catch (CorruptObjectException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+
+			// check if entry was assumed racily clean
+			long tIndex = indexEntry.getLastModified();
+			if (resourceEntry.getResource().getType() == IResource.FILE &&
+					tIndex / 1000000 == 2139062L) {
+				InputStream inIndex;
+				try {
+					inIndex = GitFileRevision.inIndex(repository, indexEntry.getPathString())
+							.getStorage(null).getContents();
+					dirty = !compareContent(inIndex,
+							((IFile)resourceEntry.getResource()).getContents());
+				} catch (CoreException e) {
+					IStatus error = new Status(IStatus.ERROR, Activator
+							.getPluginId(), e.getMessage(), e);
+					Activator.getDefault().getLog().log(error);
+				}
+			} else if (!timestampMatches(indexEntry, resourceEntry))
 				dirty = true;
 
 			// TODO: Consider doing a content check here, to rule out false
@@ -372,9 +406,9 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 
 	private static boolean timestampMatches(DirCacheEntry indexEntry,
 			ResourceEntry resourceEntry) {
+
 		long tIndex = indexEntry.getLastModified();
 		long tWorkspaceResource = resourceEntry.getLastModified();
-
 
 		// C-Git under Windows stores timestamps with 1-seconds resolution,
 		// so we need to check to see if this is the case here, and possibly
@@ -389,6 +423,38 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		} else {
 			return tIndex == tWorkspaceResource;
 		}
+	}
+
+	private boolean compareContent(InputStream stream1, InputStream stream2) {
+		try {
+			byte[] remoteBytes = new byte[8096];
+			byte[] bytes = new byte[8096];
+
+			int remoteRead = stream2.read(remoteBytes);
+			int read = stream1.read(bytes);
+			if (remoteRead != read) {
+				return false;
+			}
+
+			while (Arrays.equals(bytes, remoteBytes)) {
+				remoteRead = stream2.read(remoteBytes);
+				read = stream1.read(bytes);
+				if (remoteRead != read) {
+					// didn't read the same amount, it's uneven
+					return false;
+				} else if (read == -1) {
+					// both at EOF, check their contents
+					return Arrays.equals(bytes, remoteBytes);
+				}
+			}
+		} catch (IOException e) {
+			IStatus error = new Status(IStatus.ERROR, Activator
+					.getPluginId(), e.getMessage(), e);
+			Activator.getDefault().getLog().log(error);
+			return true;
+		}
+		return true;
+
 	}
 
 	private static boolean isIgnored(IResource resource) {
