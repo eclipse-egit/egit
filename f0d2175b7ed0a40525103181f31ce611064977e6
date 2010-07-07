@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX///Jg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2010-07-06T21:55:37Z",
+      "side": 1,
+      "message": "What about conflict markers?",
+      "revId": "f0d2175b7ed0a40525103181f31ce611064977e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
