@@ -15,15 +15,17 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.jgit.errors.NoRemoteRepositoryException;
 import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.transport.RemoteRefUpdate.Status;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * Push operation: pushing from local repository to one or many remote ones.
@@ -39,7 +41,7 @@ public class PushOperation {
 
 	private final RemoteConfig rc;
 
-	private final PushOperationResult operationResult = new PushOperationResult();
+	private PushOperationResult operationResult;
 
 	/**
 	 * Create push operation for provided specification.
@@ -72,6 +74,8 @@ public class PushOperation {
 	 * @return push operation result.
 	 */
 	public PushOperationResult getOperationResult() {
+		if (operationResult == null)
+			throw new IllegalStateException(CoreText.OperationNotYetExecuted);
 		return operationResult;
 	}
 
@@ -87,7 +91,7 @@ public class PushOperation {
 	 * on each remote repository.
 	 * <p>
 	 *
-	 * @param monitor
+	 * @param actMonitor
 	 *            the monitor to be used for reporting progress and responding
 	 *            to cancellation. The monitor is never <code>null</code>
 	 *
@@ -96,9 +100,22 @@ public class PushOperation {
 	 *             {@link TransportException}, {@link NotSupportedException} or
 	 *             some unexpected {@link RuntimeException}.
 	 */
-	public void run(IProgressMonitor monitor) throws InvocationTargetException {
-		if (monitor == null)
+	public void run(IProgressMonitor actMonitor) throws InvocationTargetException {
+
+		if (operationResult != null)
+			throw new IllegalStateException(CoreText.OperationAlreadyExecuted);
+
+		for (URIish uri : this.specification.getURIs()) {
+			for (RemoteRefUpdate update : this.specification.getRefUpdates(uri))
+				if (update.getStatus() != Status.NOT_ATTEMPTED)
+					throw new IllegalStateException(
+							CoreText.RemoteRefUpdateCantBeReused);
+		}
+		IProgressMonitor monitor;
+		if (actMonitor == null)
 			monitor = new NullProgressMonitor();
+		else
+			monitor = actMonitor;
 
 		final int totalWork = specification.getURIsNumber()
 				* WORK_UNITS_PER_TRANSPORT;
@@ -107,6 +124,8 @@ public class PushOperation {
 		else
 			monitor.beginTask(CoreText.PushOperation_taskNameNormalRun,
 					totalWork);
+
+		operationResult = new PushOperationResult();
 
 		for (final URIish uri : specification.getURIs()) {
 			final SubProgressMonitor subMonitor = new SubProgressMonitor(

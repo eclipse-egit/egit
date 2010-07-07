@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.Git;
@@ -50,6 +53,23 @@ public class TestRepository {
 	public TestRepository(File gitDir) throws IOException {
 		repository = new Repository(gitDir);
 		repository.create();
+		try {
+			workdirPrefix = repository.getWorkDir().getCanonicalPath();
+		} catch (IOException err) {
+			workdirPrefix = repository.getWorkDir().getAbsolutePath();
+		}
+		workdirPrefix = workdirPrefix.replace('\\', '/');
+		if (!workdirPrefix.endsWith("/"))  //$NON-NLS-1$
+			workdirPrefix += "/";  //$NON-NLS-1$
+	}
+
+	/**
+	 * Creates a test repository from an existing Repository
+	 * @param repository
+	 * @throws IOException
+	 */
+	public TestRepository(Repository repository) throws IOException {
+		this.repository = repository;
 		try {
 			workdirPrefix = repository.getWorkDir().getCanonicalPath();
 		} catch (IOException err) {
@@ -201,5 +221,16 @@ public class TestRepository {
 	public void dispose() {
 		repository.close();
 		repository = null;
+	}
+
+	/**
+	 * Connect a project to this repository
+	 * @param project
+	 * @throws CoreException
+	 */
+	public void connect(IProject project) throws CoreException {
+		ConnectProviderOperation op = new ConnectProviderOperation(project,
+				this.getRepository().getDirectory());
+		op.execute(null);
 	}
 }
