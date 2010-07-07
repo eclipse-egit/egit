@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX///oc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2010-07-01T10:07:14Z",
+      "side": 1,
+      "message": "We need some arguments to be mentioned right here (much better) or in the commit message (at least).",
+      "revId": "90f02c0e2eceaa039f8259de6e786a6a8f9f6ebb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
