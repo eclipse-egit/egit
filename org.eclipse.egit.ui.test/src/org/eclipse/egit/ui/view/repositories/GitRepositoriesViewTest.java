@@ -24,6 +24,7 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -228,27 +229,23 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		wizardNode = selected.get(0, 0);
 		// wizard directory should be .git
 		assertEquals(Constants.DOT_GIT, wizardNode);
-		// next is 1
-		shell.bot().button(1).click();
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		waitInUI();
 		assertTrue(shell.bot().tree().getAllItems().length == 0);
-		// back is 2
-		shell.bot().button(2).click();
+		shell.bot().button(IDialogConstants.BACK_LABEL).click();
 		// go to project with .project
 		shell.bot().tree().getAllItems()[0].getNode(PROJ1).select();
 		// next is 1
-		shell.bot().button(1).click();
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		waitInUI();
 		assertTrue(shell.bot().tree().getAllItems().length == 1);
-		// deselect all
-		shell.bot().button(1).click();
-		// finish is 4, should be disabled
-		assertTrue(!shell.bot().button(4).isEnabled());
-		// select all
-		shell.bot().button(0).click();
-		// finish is 4, should be enabled
-		assertTrue(shell.bot().button(4).isEnabled());
-		shell.bot().button(4).click();
+		shell.bot().button(UIText.WizardProjectsImportPage_deselectAll).click();
+		assertTrue(!shell.bot().button(IDialogConstants.FINISH_LABEL)
+				.isEnabled());
+		shell.bot().button(UIText.WizardProjectsImportPage_selectAll).click();
+		assertTrue(shell.bot().button(IDialogConstants.FINISH_LABEL)
+				.isEnabled());
+		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		waitInUI();
 		assertProjectExistence(PROJ1, true);
 	}
@@ -277,20 +274,17 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		String wizardNode = selected.get(0, 0);
 		// wizard directory should be PROJ2
 		assertEquals(PROJ2, wizardNode);
-		// next is 1
-		shell.bot().button(1).click();
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		waitInUI();
 		assertTrue(shell.bot().tree().getAllItems().length == 0);
-		// back is 2
-		shell.bot().button(2).click();
+		shell.bot().button(IDialogConstants.BACK_LABEL).click();
 		// import as general
 		activateItemByKeyboard(shell,
 				UIText.GitSelectWizardPage_ImportAsGeneralButton);
-		// next is 1
-		shell.bot().button(1).click();
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		assertEquals(PROJ2, shell.bot().textWithLabel(
 				UIText.GitCreateGeneralProjectPage_ProjectNameLabel).getText());
-		shell.bot().button(2).click();
+		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		waitInUI();
 		assertProjectExistence(PROJ2, true);
 	}
@@ -316,14 +310,13 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// share manual
 		activateItemByKeyboard(shell,
 				UIText.GitSelectWizardPage_InteractiveShareButton);
-		// next is 1
-		shell.bot().button(1).click();
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		assertEquals(PROJ2, shell.bot().textWithLabel(
 				UIText.GitCreateGeneralProjectPage_ProjectNameLabel).getText());
-		shell.bot().button(1).click();
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		assertEquals(PROJ2, shell.bot().table().getTableItem(0).getText(0));
 		// cancel -> not share
-		shell.bot().button(3).click();
+		shell.bot().button(IDialogConstants.CANCEL_LABEL).click();
 		waitInUI();
 		assertProjectExistence(PROJ2, true);
 		RepositoryMapping mapping = RepositoryMapping
@@ -352,14 +345,13 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// share manual
 		activateItemByKeyboard(shell,
 				UIText.GitSelectWizardPage_InteractiveShareButton);
-		// next is 1
-		shell.bot().button(1).click();
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		assertEquals(PROJ2, shell.bot().textWithLabel(
 				UIText.GitCreateGeneralProjectPage_ProjectNameLabel).getText());
-		shell.bot().button(1).click();
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		assertEquals(PROJ2, shell.bot().table().getTableItem(0).getText(0));
 		// finish -> share
-		shell.bot().button(2).click();
+		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		waitInUI();
 		assertProjectExistence(PROJ2, true);
 		RepositoryMapping mapping = RepositoryMapping

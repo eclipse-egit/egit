@@ -171,7 +171,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		SWTBotShell shell = bot.shell(UIText.RepositoriesView_NewBranchTitle);
 		shell.activate();
 		assertEquals("stable", shell.bot().text(1).getText());
-		shell.bot().button(0).click();
+		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		refreshAndWait();
 		item = getLocalBranchesItem(tree, clonedRepositoryFile).expand();
 
