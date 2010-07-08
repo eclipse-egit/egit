@@ -64,9 +64,8 @@ public class FilteredCheckboxTree extends FilteredTree {
 	 * @param filter pattern filter to use in the filter control
 	 */
 	public FilteredCheckboxTree(Composite parent, FormToolkit toolkit, int treeStyle, PatternFilter filter) {
-		super(parent, treeStyle, filter);
+		super(parent, treeStyle, filter, true);
 		fToolkit = toolkit;
-		init(treeStyle, filter);
 	}
 
 	/* (non-Javadoc)
@@ -120,6 +119,15 @@ public class FilteredCheckboxTree extends FilteredTree {
 			return fToolkit.createText(parent, null, style);
 		}
 		return parentText;
+	}
+
+	/**
+	 * Clears the filter
+	 */
+	public void clearFilter() {
+		getPatternFilter().setPattern(null);
+		setFilterText(getInitialText());
+		textChanged();
 	}
 
 	/**
