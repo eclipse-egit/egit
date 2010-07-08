@@ -38,8 +38,8 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -89,22 +89,6 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
  * selected portion of the tree are shown.
  */
 public class CommitDialog extends Dialog {
-
-	class CommitContentProvider implements IStructuredContentProvider {
-
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			// Empty
-		}
-
-		public void dispose() {
-			// Empty
-		}
-
-		public Object[] getElements(Object inputElement) {
-			return items.toArray();
-		}
-
-	}
 
 	static class CommitLabelProvider extends WorkbenchLabelProvider implements
 			ITableLabelProvider {
@@ -397,7 +381,7 @@ public class CommitDialog extends Dialog {
 		resourceCol.addSelectionListener(new HeaderSelectionListener(CommitItem.Order.ByFile));
 
 		filesViewer = new CheckboxTableViewer(resourcesTable);
-		filesViewer.setContentProvider(new CommitContentProvider());
+		filesViewer.setContentProvider(ArrayContentProvider.getInstance());
 		filesViewer.setLabelProvider(new CommitLabelProvider());
 		filesViewer.addFilter(new CommitItemFilter());
 		filesViewer.setInput(items);

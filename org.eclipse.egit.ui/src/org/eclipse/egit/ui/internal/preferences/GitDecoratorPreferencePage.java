@@ -40,6 +40,7 @@ import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.DecorationContext;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
@@ -447,20 +448,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 					}
 				};
 
-				final IStructuredContentProvider contentsProvider = new IStructuredContentProvider() {
-					public Object[] getElements(Object inputElement) {
-						return ((Collection) inputElement).toArray();
-					}
-
-					public void dispose() {
-						// No-op
-					}
-
-					public void inputChanged(Viewer viewer, Object oldInput,
-							Object newInput) {
-						// No-op
-					}
-				};
+				final IStructuredContentProvider contentsProvider = ArrayContentProvider.getInstance();
 
 				final ListSelectionDialog dialog = new ListSelectionDialog(text
 						.getShell(), bindings.entrySet(), contentsProvider,

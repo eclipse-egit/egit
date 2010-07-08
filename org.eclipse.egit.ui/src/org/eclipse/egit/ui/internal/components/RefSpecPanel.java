@@ -39,6 +39,7 @@ import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckboxCellEditor;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -46,11 +47,9 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.IElementComparer;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -925,20 +924,7 @@ public class RefSpecPanel {
 		createTableColumns(tablePanel);
 		createCellEditors(table);
 
-		tableViewer.setContentProvider(new IStructuredContentProvider() {
-			public Object[] getElements(final Object inputElement) {
-				return ((List) inputElement).toArray();
-			}
-
-			public void dispose() {
-				// nothing to dispose
-			}
-
-			public void inputChanged(Viewer viewer, Object oldInput,
-					Object newInput) {
-				// input is hard coded
-			}
-		});
+		tableViewer.setContentProvider(new ArrayContentProvider());
 		tableViewer.setInput(specs);
 
 		tableViewer.setComparer(new IElementComparer() {

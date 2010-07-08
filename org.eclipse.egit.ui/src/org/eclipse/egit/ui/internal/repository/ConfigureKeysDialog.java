@@ -19,13 +19,12 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -43,23 +42,6 @@ import org.eclipse.swt.widgets.ToolItem;
  * Configures the Git configuration keys to display in the Properties view
  */
 class ConfigureKeysDialog extends Dialog {
-
-	private static final class ContentProvider implements
-			IStructuredContentProvider {
-
-		public Object[] getElements(Object inputElement) {
-			return ((List) inputElement).toArray();
-		}
-
-		public void dispose() {
-			// nothing
-		}
-
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			// nothing
-		}
-
-	}
 
 	private static final class LabelProvider extends BaseLabelProvider
 			implements ITableLabelProvider {
@@ -202,7 +184,7 @@ class ConfigureKeysDialog extends Dialog {
 		});
 
 		tv.setLabelProvider(new LabelProvider());
-		tv.setContentProvider(new ContentProvider());
+		tv.setContentProvider(ArrayContentProvider.getInstance());
 		tv.setInput(this.activeKeys);
 		applyDialogFont(main);
 
