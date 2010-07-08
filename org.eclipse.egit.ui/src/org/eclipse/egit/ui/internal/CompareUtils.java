@@ -15,6 +15,8 @@ import java.io.IOException;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
@@ -24,7 +26,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.internal.ui.history.FileRevisionTypedElement;
 
 /**
  * A collection of helper methods useful for comparing content
@@ -113,5 +114,38 @@ public class CompareUtils {
 		return null;
 	}
 
+	/**
+	 * @param element
+	 * @param adapterType
+	 * @return the adapted element, or null
+	 */
+	public static Object getAdapter(Object element, Class adapterType) {
+		return getAdapter(element, adapterType, false);
+	}
 
+	/**
+	 * @param element
+	 * @param adapterType
+	 * @param load
+	 * @return the adapted element, or null
+	 */
+	private static Object getAdapter(Object element, Class adapterType, boolean load) {
+		if (adapterType.isInstance(element))
+			return element;
+		if (element instanceof IAdaptable) {
+			Object adapted = ((IAdaptable) element).getAdapter(adapterType);
+			if (adapterType.isInstance(adapted))
+				return adapted;
+		}
+		if (load) {
+			Object adapted = Platform.getAdapterManager().loadAdapter(element, adapterType.getName());
+			if (adapterType.isInstance(adapted))
+				return adapted;
+		} else {
+			Object adapted = Platform.getAdapterManager().getAdapter(element, adapterType);
+			if (adapterType.isInstance(adapted))
+				return adapted;
+		}
+		return null;
+	}
 }
