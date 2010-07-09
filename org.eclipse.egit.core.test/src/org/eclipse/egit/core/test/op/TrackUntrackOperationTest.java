@@ -8,9 +8,10 @@
  *******************************************************************************/
 package org.eclipse.egit.core.test.op;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -23,6 +24,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.op.TrackOperation;
 import org.eclipse.egit.core.op.UntrackOperation;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.test.DualRepositoryTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.dircache.DirCache;
@@ -68,8 +70,52 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 
 		final ArrayList<IFile> files = new ArrayList<IFile>();
 
+		project.accept(new IResourceVisitor() {
+
+			public boolean visit(IResource resource) throws CoreException {
+				if (resource instanceof IFile)
+					files.add((IFile) resource);
+				return true;
+			}
+		});
+
+		IFile[] fileArr = files.toArray(new IFile[files.size()]);
+
+		assertTrackedState(fileArr, false);
+
+		TrackOperation trop = new TrackOperation(fileArr);
+		trop.execute(new NullProgressMonitor());
+
+		assertTrackedState(fileArr, true);
+
+		UntrackOperation utop = new UntrackOperation(Arrays.asList(fileArr));
+
+		utop.execute(new NullProgressMonitor());
+
+		assertTrackedState(fileArr, false);
+	}
+
+	private void assertTrackedState(IFile[] fileArr, boolean expectedState)
+			throws IOException {
 		DirCache cache = DirCache.read(repository1.getRepository());
-		assertEquals("Wrong cache entry count", 0, cache.getEntryCount());
+		for (IFile file : fileArr) {
+			RepositoryMapping rm = RepositoryMapping.getMapping(file);
+			String fileDir = rm.getRepoRelativePath(file);
+			boolean tracked = cache.findEntry(fileDir) > -1;
+			assertTrue("Wrong tracking state", tracked == expectedState);
+		}
+	}
+
+	@Test
+	public void testTrackProject() throws Exception {
+
+		final ArrayList<IContainer> containers = new ArrayList<IContainer>();
+		containers.add(project);
+
+		IContainer[] projectArr = containers.toArray(new IContainer[containers
+				.size()]);
+
+		final ArrayList<IFile> files = new ArrayList<IFile>();
 
 		project.accept(new IResourceVisitor() {
 
@@ -82,38 +128,17 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 
 		IFile[] fileArr = files.toArray(new IFile[files.size()]);
 
-		TrackOperation trop = new TrackOperation(fileArr);
+		assertTrackedState(fileArr, false);
+
+		TrackOperation trop = new TrackOperation(projectArr);
 		trop.execute(new NullProgressMonitor());
 
-		cache.read();
-		assertEquals("Wrong cache entry count", 2, cache.getEntryCount());
+		assertTrackedState(fileArr, true);
 
-		UntrackOperation utop = new UntrackOperation(Arrays.asList(fileArr));
-		utop.execute(new NullProgressMonitor());
+		UntrackOperation utrop = new UntrackOperation(containers);
+		utrop.execute(new NullProgressMonitor());
 
-		cache.read();
-		assertEquals("Wrong cache entry count", 0, cache.getEntryCount());
-
-	}
-
-	@Test
-	public void testTrackProject() throws Exception {
-
-		final ArrayList<IContainer> containers = new ArrayList<IContainer>();
-		containers.add(project);
-
-		DirCache cache = DirCache.read(repository1.getRepository());
-
-		assertEquals("Wrong cache entry count", 0, cache.getEntryCount());
-
-		IContainer[] fileArr = containers.toArray(new IContainer[containers
-				.size()]);
-
-		TrackOperation trop = new TrackOperation(fileArr);
-		trop.execute(new NullProgressMonitor());
-
-		cache.read();
-		assertEquals("Wrong cache entry count", 2, cache.getEntryCount());
+		assertTrackedState(fileArr, false);
 	}
 
 }
