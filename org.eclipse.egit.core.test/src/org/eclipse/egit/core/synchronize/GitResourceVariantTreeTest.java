@@ -109,7 +109,7 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 	public void shouldReturnTwoRoots() throws Exception {
 		// when
 		// create second project
-		TestProject secondProject = new TestProject(false, "Project-2");
+		TestProject secondProject = new TestProject(true, "Project-2");
 		IProject secondIProject = secondProject.project;
 		// add connect project with repository
 		new ConnectProviderOperation(secondIProject, gitDir).execute(null);
