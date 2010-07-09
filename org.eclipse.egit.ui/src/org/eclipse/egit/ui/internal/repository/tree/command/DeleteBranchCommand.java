@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -38,46 +39,58 @@ import org.eclipse.swt.widgets.Shell;
 public class DeleteBranchCommand extends
 		RepositoriesViewCommandHandler<RefNode> {
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
-		final RefNode node = getSelectedNodes(event).get(0);
-		final Ref ref = node.getObject();
+		List<RefNode> nodes = getSelectedNodes(event);
 
 		Shell shell = getShell(event);
-		if (!MessageDialog.openConfirm(shell,
-				UIText.RepositoriesView_ConfirmDeleteTitle, NLS.bind(
-						UIText.RepositoriesView_ConfirmBranchDeletionMessage,
-						ref.getName())))
-			return null;
+		String confirmQuestion;
+		if (nodes.size() == 1) {
+			confirmQuestion = NLS.bind(
+					UIText.RepositoriesView_ConfirmBranchDeletionMessage, nodes
+							.get(0).getObject().getName());
 
-		try {
-			new ProgressMonitorDialog(shell).run(
-					false, false, new IRunnableWithProgress() {
-						public void run(IProgressMonitor monitor)
-								throws InvocationTargetException,
-								InterruptedException {
-							try {
-								RefUpdate op = node.getRepository().updateRef(
-										ref.getName());
-								op.setRefLogMessage("branch deleted", //$NON-NLS-1$
-										false);
-								// we set the force update in order
-								// to avoid having this rejected
-								// due to minor issues
-								op.setForceUpdate(true);
-								op.delete();
-							} catch (IOException ioe) {
-								throw new InvocationTargetException(ioe);
-							}
-						}
-					});
-		} catch (InvocationTargetException e1) {
-			Activator.handleError(
-					UIText.RepositoriesView_BranchDeletionFailureMessage, e1
-							.getCause(), true);
-			e1.printStackTrace();
-		} catch (InterruptedException e1) {
-			// ignore
+		} else {
+			confirmQuestion = NLS.bind(
+					UIText.DeleteBranchCommand_DeleteMultiBranchQuestion,
+					Integer.valueOf(nodes.size()));
 		}
 
+		if (!MessageDialog.openConfirm(shell,
+				UIText.RepositoriesView_ConfirmDeleteTitle, confirmQuestion))
+			return null;
+
+		for (final RefNode node : nodes) {
+			final Ref ref = node.getObject();
+
+			try {
+				new ProgressMonitorDialog(shell).run(false, false,
+						new IRunnableWithProgress() {
+							public void run(IProgressMonitor monitor)
+									throws InvocationTargetException,
+									InterruptedException {
+								try {
+									RefUpdate op = node.getRepository()
+											.updateRef(ref.getName());
+									op.setRefLogMessage("branch deleted", //$NON-NLS-1$
+											false);
+									// we set the force update in order
+									// to avoid having this rejected
+									// due to minor issues
+									op.setForceUpdate(true);
+									op.delete();
+								} catch (IOException ioe) {
+									throw new InvocationTargetException(ioe);
+								}
+							}
+						});
+			} catch (InvocationTargetException e1) {
+				Activator.handleError(
+						UIText.RepositoriesView_BranchDeletionFailureMessage,
+						e1.getCause(), true);
+				e1.printStackTrace();
+			} catch (InterruptedException e1) {
+				// ignore
+			}
+		}
 		return null;
 	}
 }
