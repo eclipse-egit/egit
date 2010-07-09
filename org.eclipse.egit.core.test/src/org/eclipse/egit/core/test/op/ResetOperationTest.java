@@ -26,7 +26,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class T0005_ResetOperationTest extends GitTestCase {
+public class ResetOperationTest extends GitTestCase {
 
 	TestRepository testRepository;
 
