@@ -17,12 +17,13 @@ import org.eclipse.compare.IContentChangeNotifier;
 import org.eclipse.compare.IEditableContent;
 import org.eclipse.compare.ISharedDocumentAdapter;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.compare.internal.ContentChangeNotifier;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ISafeRunnable;
+import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SafeRunner;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.internal.ui.history.FileRevisionTypedElement;
-import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;
 
 /**
  * @author simon
@@ -30,6 +31,75 @@ import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;
  */
 public class EditableRevision extends FileRevisionTypedElement implements
 		ITypedElement, IEditableContent, IContentChangeNotifier {
+
+	private final static class ContentChangeNotifier implements IContentChangeNotifier {
+
+			private ListenerList fListenerList;
+			private final IContentChangeNotifier element;
+
+			public ContentChangeNotifier(IContentChangeNotifier element) {
+				this.element = element;
+			}
+
+			/* (non-Javadoc)
+			 * see IContentChangeNotifier.addChangeListener
+			 */
+			public void addContentChangeListener(IContentChangeListener listener) {
+				if (fListenerList == null)
+					fListenerList= new ListenerList();
+				fListenerList.add(listener);
+			}
+
+			/* (non-Javadoc)
+			 * see IContentChangeNotifier.removeChangeListener
+			 */
+			public void removeContentChangeListener(IContentChangeListener listener) {
+				if (fListenerList != null) {
+					fListenerList.remove(listener);
+					if (fListenerList.isEmpty())
+						fListenerList= null;
+				}
+			}
+
+			/**
+			 * Notifies all registered <code>IContentChangeListener</code>s of a content change.
+			 */
+			public void fireContentChanged() {
+				if (isEmpty()) {
+					return;
+				}
+				// Legacy listeners may expect to be notified in the UI thread.
+				Runnable runnable = new Runnable() {
+					public void run() {
+						Object[] listeners= fListenerList.getListeners();
+						for (int i= 0; i < listeners.length; i++) {
+							final IContentChangeListener contentChangeListener = (IContentChangeListener)listeners[i];
+							SafeRunner.run(new ISafeRunnable() {
+								public void run() throws Exception {
+									(contentChangeListener).contentChanged(element);
+								}
+								public void handleException(Throwable exception) {
+									// Logged by safe runner
+								}
+							});
+						}
+					}
+				};
+				if (Display.getCurrent() == null) {
+					Display.getDefault().syncExec(runnable);
+				} else {
+					runnable.run();
+				}
+			}
+
+			/**
+			 * Return whether this notifier is empty (i.e. has no listeners).
+			 * @return whether this notifier is empty
+			 */
+			public boolean isEmpty() {
+				return fListenerList == null || fListenerList.isEmpty();
+			}
+	}
 
 	private byte[] modifiedContent;
 
@@ -84,18 +154,23 @@ public class EditableRevision extends FileRevisionTypedElement implements
 			sharedDocumentAdapter = new EditableSharedDocumentAdapter(
 					new EditableSharedDocumentAdapter.ISharedDocumentAdapterListener() {
 						public void handleDocumentConnected() {
+							// nothing
 						}
 
 						public void handleDocumentFlushed() {
+							// nothing
 						}
 
 						public void handleDocumentDeleted() {
+							// nothing
 						}
 
 						public void handleDocumentSaved() {
+							// nothing
 						}
 
 						public void handleDocumentDisconnected() {
+							// nothing
 						}
 					});
 		return sharedDocumentAdapter;

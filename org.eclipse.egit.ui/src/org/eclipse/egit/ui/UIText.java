@@ -1435,6 +1435,9 @@ public class UIText extends NLS {
 	public static String FileDiffContentProvider_errorGettingDifference;
 
 	/** */
+	public static String FileRevisionEditorInput_NameAndRevisionTitle;
+
+	/** */
 	public static String WindowCachePreferencePage_title;
 
 	/** */
@@ -1792,7 +1795,31 @@ public class UIText extends NLS {
 	public static String Disconnect_disconnect;
 
 	/** */
+	public static String GitCompareFileRevisionEditorInput_CompareInputTitle;
+
+	/** */
+	public static String GitCompareFileRevisionEditorInput_CompareTooltip;
+
+	/** */
+	public static String GitCompareFileRevisionEditorInput_CurrentRevision;
+
+	/** */
+	public static String GitCompareFileRevisionEditorInput_CurrentTitle;
+
+	/** */
 	public static String GitCompareFileRevisionEditorInput_contentIdentifier;
+
+	/** */
+	public static String GitCompareFileRevisionEditorInput_LocalHistoryLabel;
+
+	/** */
+	public static String GitCompareFileRevisionEditorInput_LocalLabel;
+
+	/** */
+	public static String GitCompareFileRevisionEditorInput_LocalRevision;
+
+	/** */
+	public static String GitCompareFileRevisionEditorInput_RevisionLabel;
 
 	/** */
 	public static String GitCreateGeneralProjectPage_DirLabel;
@@ -2178,6 +2205,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitBranchSynchronizeWizardPage_deselectAll;
+
+	/** */
+	public static String LocalFileRevision_CurrentVersion;
+
+	/** */
+	public static String LocalFileRevision_currentVersionTag;
 
 	/** */
 	public static String RemoteSelectionCombo_remoteName;
