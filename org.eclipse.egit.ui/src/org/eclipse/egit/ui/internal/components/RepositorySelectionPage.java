@@ -163,8 +163,7 @@ public class RepositorySelectionPage extends WizardPage {
 				UIText.RepositorySelectionPage_tip_file, false, false, false) {
 			@Override
 			public boolean handles(URIish uri) {
-				if (getDefaultScheme().equals(uri.getScheme())
-						|| uri.getScheme() == null)
+				if (getDefaultScheme().equals(uri.getScheme()))
 					return true;
 				if (uri.getHost() != null || uri.getPort() > 0
 						|| uri.getUser() != null || uri.getPass() != null
@@ -898,7 +897,7 @@ public class RepositorySelectionPage extends WizardPage {
 			userText.setText(""); //$NON-NLS-1$
 			passText.setText(""); //$NON-NLS-1$
 			portText.setText(""); //$NON-NLS-1$
-			scheme.select(0);
+			scheme.select(-1);
 		} finally {
 			eventDepth--;
 		}
