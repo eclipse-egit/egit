@@ -23,6 +23,9 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTag;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -145,13 +148,18 @@ public class RepositoriesViewLabelProvider extends LabelProvider {
 				} else if (refName.startsWith(Constants.R_TAGS)) {
 					// tag: HEAD would be on the commit id to which the tag is
 					// pointing
-					compareString = node.getRepository().mapTag(refName)
-							.getObjId().getName();
+					RevWalk rw = new RevWalk(node.getRepository());
+					RevTag tag = rw.parseTag(node.getRepository().resolve(
+							refName));
+					compareString = tag.getObject().name();
+
 				} else if (refName.startsWith(Constants.R_REMOTES)) {
 					// remote branch: HEAD would be on the commit id to which
 					// the branch is pointing
-					compareString = node.getRepository().mapCommit(refName)
-							.getCommitId().getName();
+					RevWalk rw = new RevWalk(node.getRepository());
+					RevCommit commit = rw.parseCommit(node.getRepository()
+							.resolve(refName));
+					compareString = commit.getId().name();
 				} else {
 					// some other symbolic reference
 					return image;
