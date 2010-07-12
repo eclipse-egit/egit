@@ -25,6 +25,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -94,6 +95,11 @@ public class CreateBranchPage extends WizardPage {
 				if (!ref.getValue().isSymbolic())
 					this.branchCombo.add(ref.getValue().getName());
 			}
+			for (Entry<String, Ref> ref : myRepository.getRefDatabase()
+					.getRefs(Constants.R_TAGS).entrySet()) {
+				if (!ref.getValue().isSymbolic())
+					this.branchCombo.add(ref.getValue().getName());
+			}
 
 		} catch (IOException e1) {
 			// ignore here
@@ -152,7 +158,8 @@ public class CreateBranchPage extends WizardPage {
 		setControl(main);
 		nameText.setFocus();
 		if (myBaseBranch != null
-				&& myBaseBranch.getName().startsWith(Constants.R_REMOTES)) {
+				&& (myBaseBranch.getName().startsWith(Constants.R_REMOTES) || myBaseBranch
+						.getName().startsWith(Constants.R_TAGS))) {
 			// additional convenience: the last part of the name is suggested
 			// as name for the local branch
 			nameText.setText(myBaseBranch.getName().substring(
@@ -218,26 +225,21 @@ public class CreateBranchPage extends WizardPage {
 	 */
 	public void createBranch(IProgressMonitor monitor) throws CoreException,
 			IOException {
-		String newRefName = getBranchName();
-		RefUpdate updateRef;
 
 		monitor.beginTask(UIText.CreateBranchPage_CreatingBranchMessage,
 				IProgressMonitor.UNKNOWN);
-		updateRef = myRepository.updateRef(newRefName);
 
-		Ref sourceBranch;
-		if (myBaseBranch != null) {
-			sourceBranch = myBaseBranch;
-		} else {
-			sourceBranch = myRepository.getRef(getSourceBranchName());
-		}
-		ObjectId startAt = sourceBranch.getObjectId();
-		String startBranch = myRepository
-				.shortenRefName(sourceBranch.getName());
+		String newRefName = getBranchName();
+
+		RefUpdate updateRef = myRepository.updateRef(newRefName);
+		ObjectId startAt = new RevWalk(myRepository).parseCommit(myRepository
+				.resolve(getSourceBranchName()));
+
 		updateRef.setNewObjectId(startAt);
-		updateRef
-				.setRefLogMessage("branch: Created from " + startBranch, false); //$NON-NLS-1$
+		updateRef.setRefLogMessage(
+				"branch: Created from " + getSourceBranchName(), false); //$NON-NLS-1$
 		updateRef.update();
+
 		if (checkout.getSelection()) {
 			if (monitor.isCanceled())
 				return;

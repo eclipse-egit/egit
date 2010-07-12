@@ -20,11 +20,11 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefRename;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RefUpdate.Result;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -82,10 +82,6 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 				String refName = refNameFromDialog();
 				String refPrefix;
 
-				// the button should be disabled anyway, but we check again
-				if (refName.equals(Constants.HEAD))
-					return;
-
 				if (refName.startsWith(Constants.R_HEADS))
 					refPrefix = Constants.R_HEADS;
 				else if (refName.startsWith(Constants.R_REMOTES))
@@ -132,13 +128,6 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 				// check what ref name the user selected, if any.
 				String refName = refNameFromDialog();
 
-				// the button should be disabled anyway, but we check again
-				if (refName.equals(Constants.HEAD))
-					return;
-				if (refName.startsWith(Constants.R_TAGS))
-					// the button should be disabled anyway, but we check again
-					return;
-
 				InputDialog labelDialog = getRefNameInputDialog(NLS.bind(
 						UIText.BranchSelectionDialog_QuestionNewBranchMessage,
 						refName, Constants.R_HEADS), Constants.R_HEADS);
@@ -149,17 +138,11 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 					RefUpdate updateRef;
 					try {
 						updateRef = repo.updateRef(newRefName);
-						Ref startRef = repo.getRef(refName);
-						ObjectId startAt = repo.resolve(refName);
-						String startBranch;
-						if (startRef != null)
-							startBranch = refName;
-						else
-							startBranch = startAt.name();
-						startBranch = repo.shortenRefName(startBranch);
+						ObjectId  startAt = new RevWalk(repo).parseCommit(repo.resolve(refName));
+
 						updateRef.setNewObjectId(startAt);
 						updateRef.setRefLogMessage(
-								"branch: Created from " + startBranch, false); //$NON-NLS-1$
+								"branch: Created from " + refName, false); //$NON-NLS-1$
 						updateRef.update();
 						branchTree.refresh();
 						markRef(newRefName);
@@ -230,15 +213,9 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 						.startsWith(Constants.R_REMOTES));
 
 		getButton(Window.OK).setEnabled(branchSelected || tagSelected);
+		newButton.setEnabled(branchSelected || tagSelected);
 
 		// we don't support rename on tags
-		if (renameButton != null) {
-			renameButton.setEnabled(branchSelected && !tagSelected);
-		}
-
-		// new branch can not be based on a tag
-		if (newButton != null) {
-			newButton.setEnabled(branchSelected && !tagSelected);
-		}
+		renameButton.setEnabled(branchSelected && !tagSelected);
 	}
 }
