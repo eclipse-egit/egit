@@ -20,7 +20,6 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectWriter;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.util.IO;
 import org.eclipse.jgit.util.SystemReader;
 import org.junit.After;
@@ -74,11 +73,4 @@ public abstract class GitTestCase {
 		fileOutputStream.close();
 		return id;
 	}
-
-	protected ObjectId createEmptyTree(Repository repository) throws IOException {
-		ObjectWriter objectWriter = new ObjectWriter(repository);
-		Tree tree = new Tree(repository);
-		return objectWriter.writeTree(tree);
-	}
-
 }

@@ -23,6 +23,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Tag;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -76,15 +77,19 @@ public class TagOperationTest extends DualRepositoryTestCase {
 
 	@Test
 	public void addTag() throws Exception {
-		assertTrue("Tags should be empty", repository1.getRepository().getTags().isEmpty());
+		assertTrue("Tags should be empty", repository1.getRepository()
+				.getTags().isEmpty());
 		Tag newTag = new Tag(repository1.getRepository());
 		newTag.setTag("TheNewTag");
 		newTag.setMessage("Well, I'm the tag");
 		newTag.setAuthor(new PersonIdent(TestUtils.AUTHOR));
-		newTag.setObjId(repository1.getRepository().resolve("refs/heads/master"));
-		TagOperation top = new TagOperation(repository1.getRepository(), newTag, false);
+		newTag.setObjId(repository1.getRepository()
+				.resolve("refs/heads/master"));
+		TagOperation top = new TagOperation(repository1.getRepository(),
+				newTag, false);
 		top.execute(new NullProgressMonitor());
-		assertFalse("Tags should not be empty", repository1.getRepository().getTags().isEmpty());
+		assertFalse("Tags should not be empty", repository1.getRepository()
+				.getTags().isEmpty());
 
 		try {
 			top.execute(null);
@@ -101,12 +106,18 @@ public class TagOperationTest extends DualRepositoryTestCase {
 			// expected
 		}
 		Ref tagRef = repository1.getRepository().getTags().get("TheNewTag");
-		Tag tag = repository1.getRepository().mapTag(tagRef.getName());
+		RevWalk walk = new RevWalk(repository1.getRepository());
+		Tag tag = walk.parseTag(
+				repository1.getRepository().resolve(tagRef.getName())).asTag(
+				walk);
+
 		newTag.setMessage("Another message");
 		assertFalse("Messages should differ", tag.getMessage().equals(
 				newTag.getMessage()));
 		top.execute(null);
-		tag = repository1.getRepository().mapTag(tagRef.getName());
+		tag = walk.parseTag(
+				repository1.getRepository().resolve(tagRef.getName())).asTag(
+				walk);
 		assertTrue("Messages be same", tag.getMessage().equals(
 				newTag.getMessage()));
 	}
