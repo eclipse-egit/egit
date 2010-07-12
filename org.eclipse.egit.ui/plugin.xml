@@ -1051,9 +1051,6 @@
             <visibleWhen
                   checkEnabled="false">
                <and>
-                  <count
-                        value="1">
-                  </count>
                   <iterate>
                      <and>
                         <or>
