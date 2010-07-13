@@ -47,6 +47,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RemoteBranchesNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemotesNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.SymbolicRefsNode;
+import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.Eclipse;
@@ -510,6 +511,19 @@ public abstract class GitRepositoriesViewTestBase {
 		return remotesItem;
 	}
 
+	protected SWTBotTreeItem getTagsItem(SWTBotTree tree, File repositoryFile)
+			throws Exception {
+		Repository repository = lookupRepository(repositoryFile);
+		RepositoryNode root = new RepositoryNode(null, repository);
+		TagsNode tags = new TagsNode(root, repository);
+
+		String rootText = labelProvider.getText(root);
+		SWTBotTreeItem rootItem = tree.getTreeItem(rootText);
+		SWTBotTreeItem tagsItem = rootItem.expand().getNode(
+				labelProvider.getText(tags));
+		return tagsItem;
+	}
+
 	protected String getTestFileContent() throws Exception {
 		IFile file = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ1)
 				.getFile(new Path("folder/test.txt"));
@@ -570,9 +584,9 @@ public abstract class GitRepositoriesViewTestBase {
 	}
 
 	/**
-	 * Activates the item by "pressing" ALT + the character after '&'
 	 * @param shell
 	 * @param itemWithShortcut
+	 *            ALT + the char right after '&' will be pressed
 	 */
 	protected void activateItemByKeyboard(SWTBotShell shell,
 			String itemWithShortcut) {

@@ -20,6 +20,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		GitRepositoriesViewRemoteHandlingTest.class,//
 		// TODO reactivate once the bugs are fixed
 		// GitRepositoriesViewFetchAndPushTest.class,//
+		GitRepositoriesViewTagHandlingTest.class,//
 		GitRepositoriesViewTest.class //
 })
 public class AllRepositoriesViewTests {
