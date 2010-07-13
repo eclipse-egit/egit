@@ -1019,6 +1019,28 @@
                </and>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewReset"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
          <separator
                name="SecondGroup">
          </separator>
@@ -1398,23 +1420,30 @@
       </command>
       <command
             id="org.eclipse.egit.ui.RepositoriesViewCreateTag"
-            name="Create Tag...">
+            name="%CreateTagCommand">
          <defaultHandler
                class="org.eclipse.egit.ui.internal.repository.tree.command.CreateTagCommand">
          </defaultHandler>
       </command>
       <command
             id="org.eclipse.egit.ui.RepositoriesViewMergeSimple"
-            name="Merge">
+            name="%MergeCommand">
          <defaultHandler
                class="org.eclipse.egit.ui.internal.repository.tree.command.MergeCommand">
          </defaultHandler>
       </command>
       <command
             id="org.eclipse.egit.ui.RepositoriesViewMerge"
-            name="Merge...">
+            name="%MergeWithDialogCommand">
          <defaultHandler
                class="org.eclipse.egit.ui.internal.repository.tree.command.MergeCommand">
+         </defaultHandler>
+      </command>
+      <command
+            id="org.eclipse.egit.ui.RepositoriesViewReset"
+            name="%ResetCommand">
+         <defaultHandler
+               class="org.eclipse.egit.ui.internal.repository.tree.command.ResetCommand">
          </defaultHandler>
       </command>
    </extension>
@@ -1456,6 +1485,10 @@
             commandId="org.eclipse.egit.ui.RepositoriesViewMergeSimple"
             icon="icons/obj16/merge.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewReset"
+            icon="icons/obj16/reset.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -1487,7 +1520,7 @@
          point="org.eclipse.team.ui.synchronizeWizards">
       <wizard
             class="org.eclipse.egit.ui.internal.synchronize.GitSynchronizeWizard"
-            description="description"
+            description="%gitsyncwizard.description"
             icon="icons/obj16/gitrepository.gif"
             id="org.eclipse.egit.ui.wizard1"
             name="%Synchronize_Name">
