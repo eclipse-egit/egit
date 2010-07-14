@@ -14,32 +14,17 @@ import java.io.IOException;
 import java.net.Authenticator;
 import java.net.ProxySelector;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.net.proxy.IProxyService;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.jgit.lib.IndexChangedEvent;
-import org.eclipse.jgit.lib.RefsChangedEvent;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.jgit.transport.SshSessionFactory;
 import org.eclipse.jsch.core.IJSchService;
 import org.eclipse.osgi.service.debug.DebugOptions;
@@ -153,7 +138,6 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	private RCS rcs;
-	private RIRefresh refreshJob;
 
 	/**
 	 * Constructor for the egit ui plugin singleton
@@ -178,12 +162,6 @@ public class Activator extends AbstractUIPlugin {
 		setupSSH(context);
 		setupProxy(context);
 		setupRepoChangeScanner();
-		setupRepoIndexRefresh();
-	}
-
-	private void setupRepoIndexRefresh() {
-		refreshJob = new RIRefresh();
-		Repository.addAnyRepositoryChangedListener(refreshJob);
 	}
 
 	/**
@@ -219,71 +197,6 @@ public class Activator extends AbstractUIPlugin {
 			listener.propertyChange(event);
 	}
 
-	static class RIRefresh extends Job implements RepositoryListener {
-
-		RIRefresh() {
-			super(UIText.Activator_refreshJobName);
-		}
-
-		private Set<IProject> projectsToScan = new LinkedHashSet<IProject>();
-
-		@Override
-		protected IStatus run(IProgressMonitor monitor) {
-			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-			monitor.beginTask(UIText.Activator_refreshingProjects, projects.length);
-
-			while (projectsToScan.size() > 0) {
-				IProject p;
-				synchronized (projectsToScan) {
-					if (projectsToScan.size() == 0)
-						break;
-					Iterator<IProject> i = projectsToScan.iterator();
-					p = i.next();
-					i.remove();
-				}
-				ISchedulingRule rule = p.getWorkspace().getRuleFactory().refreshRule(p);
-				try {
-					getJobManager().beginRule(rule, monitor);
-					p.refreshLocal(IResource.DEPTH_INFINITE, new SubProgressMonitor(monitor, 1));
-				} catch (CoreException e) {
-					handleError(UIText.Activator_refreshFailed, e, false);
-					return new Status(IStatus.ERROR, getPluginId(), e.getMessage());
-				} finally {
-					getJobManager().endRule(rule);
-				}
-			}
-			monitor.done();
-			return Status.OK_STATUS;
-		}
-
-		public void indexChanged(IndexChangedEvent e) {
-			// Check the workspace setting "refresh automatically" setting first
-			boolean autoRefresh = new InstanceScope().getNode(
-					ResourcesPlugin.getPlugin().getBundle().getSymbolicName())
-					.getBoolean(ResourcesPlugin.PREF_AUTO_REFRESH, false);
-			if (!autoRefresh)
-				return;
-
-			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-			Set<IProject> toRefresh= new HashSet<IProject>();
-			for (IProject p : projects) {
-				RepositoryMapping mapping = RepositoryMapping.getMapping(p);
-				if (mapping != null && mapping.getRepository() == e.getRepository()) {
-					toRefresh.add(p);
-				}
-			}
-			synchronized (projectsToScan) {
-				projectsToScan.addAll(toRefresh);
-			}
-			if (projectsToScan.size() > 0)
-				schedule();
-		}
-
-		public void refsChanged(RefsChangedEvent e) {
-			// Do not react here
-		}
-
-	}
 
 	static class RCS extends Job {
 		RCS() {
@@ -379,14 +292,8 @@ public class Activator extends AbstractUIPlugin {
 		rcs.setReschedule(false);
 
 		rcs.cancel();
-		if (GitTraceLocation.UI.isActive())
-			GitTraceLocation.getTrace().trace(
-					GitTraceLocation.UI.getLocation(),
-					"Trying to cancel " + refreshJob.getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
-		refreshJob.cancel();
 
 		rcs.join();
-		refreshJob.join();
 
 		if (GitTraceLocation.UI.isActive())
 			GitTraceLocation.getTrace().trace(
