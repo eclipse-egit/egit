@@ -76,7 +76,7 @@ public class GitRepositoriesViewTagHandlingTest extends
 	@Test
 	public void testCreateTags() throws Exception {
 		SWTBotTree tree = getOrOpenView().bot().tree();
-		int initialCount = getTagsItem(tree, repositoryFile).expand()
+		int initialCount = myRepoViewUtil.getTagsItem(tree, repositoryFile).expand()
 				.rowCount();
 
 		String initialObjid = getObjectIdOfCommit();
@@ -85,8 +85,8 @@ public class GitRepositoriesViewTagHandlingTest extends
 		String newObject = getObjectIdOfCommit();
 		createTag("SecondTag", "The second tag");
 		refreshAndWait();
-		SWTBotTreeItem[] items = getTagsItem(tree, repositoryFile).expand()
-				.getItems();
+		SWTBotTreeItem[] items = myRepoViewUtil.getTagsItem(tree, repositoryFile)
+				.expand().getItems();
 		assertEquals("Wrong number of tags", initialCount + 2, items.length);
 
 		assertTrue("Wrong commit id", initialObjid
@@ -106,8 +106,8 @@ public class GitRepositoriesViewTagHandlingTest extends
 		assertFalse("Wrong content", initialContent.equals(newContent));
 		createTag("ResetToSecond", "The second tag");
 		refreshAndWait();
-		getTagsItem(tree, repositoryFile).expand().getNode("ResetToFirst")
-				.select();
+		myRepoViewUtil.getTagsItem(tree, repositoryFile).expand().getNode(
+				"ResetToFirst").select();
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("ResetCommand"));
 
@@ -127,7 +127,7 @@ public class GitRepositoriesViewTagHandlingTest extends
 
 	private void createTag(String name, String message) throws Exception {
 		SWTBotTree tree = getOrOpenView().bot().tree();
-		getTagsItem(tree, repositoryFile).select();
+		myRepoViewUtil.getTagsItem(tree, repositoryFile).select();
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("CreateTagCommand"));
 		String branchName = repository.getBranch();

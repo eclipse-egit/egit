@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test;
 
+import org.eclipse.egit.team.actions.AllTeamActionTests;
 import org.eclipse.egit.ui.prefpages.configuration.GlobalConfigurationPageTest;
 import org.eclipse.egit.ui.view.repositories.AllRepositoriesViewTests;
 import org.eclipse.egit.ui.view.synchronize.SynchronizeViewTest;
@@ -22,6 +23,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		GitCloneWizardTest.class, 					//
 		GlobalConfigurationPageTest.class,			//
 		SharingWizardTest.class,					//
+		AllTeamActionTests.class,                   //
 		SynchronizeViewTest.class })
 public class AllTests {
 	// empty class, don't need anything here
