@@ -135,7 +135,7 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		return repository.getBranch();
 	}
 
-	private void extractResourceProperties(TreeWalk treeWalk) {
+	private void extractResourceProperties(TreeWalk treeWalk) throws IOException {
 		final ContainerTreeIterator workspaceIterator = treeWalk.getTree(
 				T_WORKSPACE, ContainerTreeIterator.class);
 		final ResourceEntry resourceEntry = workspaceIterator != null ? workspaceIterator
@@ -238,7 +238,7 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 			return false;
 		}
 
-		private boolean shouldRecurse(TreeWalk treeWalk) {
+		private boolean shouldRecurse(TreeWalk treeWalk) throws IOException {
 			final WorkingTreeIterator workspaceIterator = treeWalk.getTree(
 					T_WORKSPACE, WorkingTreeIterator.class);
 
@@ -391,9 +391,9 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		}
 	}
 
-	private static boolean isIgnored(IResource resource) {
+	private static boolean isIgnored(IResource resource) throws IOException {
 		// TODO: Also read ignores from .git/info/excludes et al.
-		return Team.isIgnoredHint(resource);
+		return Team.isIgnoredHint(resource) || RepositoryMapping.isIgnored(resource);
 	}
 
 	public String getName() {

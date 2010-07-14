@@ -585,6 +585,12 @@ public class GitLightweightDecorator extends LabelProvider implements
 
 					// All seems good, schedule the resource for update
 					if (Constants.GITIGNORE_FILENAME.equals(resource.getName())) {
+						try {
+							mapping.refreshIgnoreNode(resource);
+						} catch (IOException e) {
+							handleException(resource, new CoreException(new Status(IStatus.ERROR, Activator.getPluginId(),
+									e.getMessage())));
+						}
 						// re-decorate all container members when .gitignore changes
 						resourcesToUpdate.addAll(Arrays.asList(resource.getParent().members()));
 					} else {

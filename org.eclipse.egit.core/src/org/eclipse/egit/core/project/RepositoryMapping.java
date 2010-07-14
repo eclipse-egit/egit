@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.team.core.RepositoryProvider;
+import org.eclipse.egit.core.IgnoreCache;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.Repository;
@@ -45,6 +46,8 @@ public class RepositoryMapping {
 	private final String gitdirPath;
 
 	private Repository db;
+
+	private IgnoreCache cache;
 
 	private String workdirPrefix;
 
@@ -123,6 +126,7 @@ public class RepositoryMapping {
 
 	synchronized void clear() {
 		db = null;
+		cache = null;
 		workdirPrefix = null;
 		container = null;
 	}
@@ -134,8 +138,10 @@ public class RepositoryMapping {
 		return db;
 	}
 
-	synchronized void setRepository(final Repository r) {
+	synchronized void setRepository(final Repository r) throws IOException {
 		db = r;
+		cache = new IgnoreCache(this);
+		cache.initialize();
 
 		try {
 			workdirPrefix = getWorkDir().getCanonicalPath();
@@ -262,4 +268,51 @@ public class RepositoryMapping {
 	public IPath getGitDirAbsolutePath() {
 		return container.getLocation().append(getGitDirPath());
 	}
+
+	/**
+	 * @return The IgnoreCache implementation for this repository mapping
+	 */
+	public IgnoreCache getIgnoreCache() {
+		return cache;
+	}
+
+
+	/**
+	 * Refresh a single ignore node in the cache. There is no function for
+	 * deleting nodes, any node refreshed here will automatically be cleared.
+	 * Nodes will not be parsed again until a call to {@link #isIgnored(IResource)}
+	 * is made.
+	 *
+	 * @param resource
+	 * 			  The .gitignore file to refresh for.
+	 * @throws IOException
+	 * 			  Failed to initialize cache.
+	 *
+	 *
+	 */
+	public void refreshIgnoreNode(IResource resource) throws IOException {
+		if (cache != null) {
+			cache.refreshNode(resource);
+		}
+	}
+
+	/**
+	 * Check the ignored status of the given resource. Resource must be
+	 * part of a RepositoryMapping. Returns false if no mapping can be found.
+	 *
+	 * @param rsrc
+	 * 			  Resource to check.
+	 * @return True if resource is ignored. False if the resource is not
+	 * ignored or if there is no RepositoryMapping for the resource
+	 * @throws IOException
+	 * 			  Failed to check ignore status
+	 */
+	public static boolean isIgnored(IResource rsrc) throws IOException {
+		RepositoryMapping m = getMapping(rsrc);
+		if (m != null) {
+			return m.getIgnoreCache().isIgnored(m.getRepoRelativePath(rsrc));
+		}
+		return false;
+	}
+
 }
