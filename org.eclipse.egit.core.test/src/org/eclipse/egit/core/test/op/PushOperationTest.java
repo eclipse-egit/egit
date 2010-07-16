@@ -146,6 +146,11 @@ public class PushOperationTest extends DualRepositoryTestCase {
 		files.add(newFile);
 		IFile[] fileArr = files.toArray(new IFile[files.size()]);
 
+		// TODO the following wait is currently needed on
+		// file systems with low time stamp accuracy; should
+		// be removed once we replace GitIndex with DirCache
+		Thread.sleep(1000);
+
 		TrackOperation trop = new TrackOperation(fileArr);
 		trop.execute(null);
 		CommitOperation cop = new CommitOperation(fileArr, files, files,
