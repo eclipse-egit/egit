@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX///GI\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/TrackUntrackOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-07-07T13:07:25Z",
+      "side": 1,
+      "message": "You can use DirCache.getEntryCount() instead or the deprecated GitIndex.",
+      "revId": "88bf585fb851b26c4ca691bbcf470d5a64ece9d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
