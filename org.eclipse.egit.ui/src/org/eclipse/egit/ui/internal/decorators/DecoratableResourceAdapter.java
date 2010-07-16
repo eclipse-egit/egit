@@ -185,12 +185,10 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 			dirty = false;
 			assumeValid = true;
 		} else {
-			if (!timestampMatches(indexEntry, resourceEntry))
+			if (workspaceIterator != null
+					&& workspaceIterator.isModified(indexEntry, true, true,
+							repository.getFS()))
 				dirty = true;
-
-			// TODO: Consider doing a content check here, to rule out false
-			// positives, as we might get mismatch between timestamps, even
-			// if the content is the same.
 		}
 	}
 
@@ -368,27 +366,6 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 					workspaceRoot));
 
 		return treeWalk;
-	}
-
-	private static boolean timestampMatches(DirCacheEntry indexEntry,
-			ResourceEntry resourceEntry) {
-		long tIndex = indexEntry.getLastModified();
-		long tWorkspaceResource = resourceEntry.getLastModified();
-
-
-		// C-Git under Windows stores timestamps with 1-seconds resolution,
-		// so we need to check to see if this is the case here, and possibly
-		// fix the timestamp of the resource to match the resolution of the
-		// index.
-		// It also appears the timestamp in Java on Linux may also be rounded
-		// in which case the index timestamp may have subseconds, but not
-		// the timestamp from the workspace resource.
-		// If either timestamp looks rounded we skip the subscond part.
-		if (tIndex % 1000 == 0 || tWorkspaceResource % 1000 == 0) {
-			return tIndex / 1000 == tWorkspaceResource / 1000;
-		} else {
-			return tIndex == tWorkspaceResource;
-		}
 	}
 
 	private static boolean isIgnored(IResource resource) {
