@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX//+zY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteBranchCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-12T23:16:16Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "b548c8bb814adb6911526043fd75722a28244731",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX//+zU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteBranchCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-12T23:16:16Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "b548c8bb814adb6911526043fd75722a28244731",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX//+zQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteBranchCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-12T23:16:16Z",
+      "side": 1,
+      "message": "Currently branch deletion doesn\u0027t check if any commits would become unreachable from remaining branches. Setting the force update flag is not a minor thing which should go unnoticed for the user as this may result in data loss (if some commits become unreachable).\n\nAs the corresponding dialog text specifies this fact I think the logic is ok, but this comment should be corrected.",
+      "revId": "b548c8bb814adb6911526043fd75722a28244731",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
