@@ -363,7 +363,12 @@ public class GitProjectsImportPage extends WizardPage {
 						}
 
 						if (files.isEmpty())
-							setErrorMessage(UIText.GitProjectsImportPage_NoProjectsMessage);
+							// run in UI thread
+							Display.getDefault().syncExec(new Runnable() {
+								public void run() {
+									setErrorMessage(UIText.GitProjectsImportPage_NoProjectsMessage);
+								}
+							});
 					} else {
 						monitor.worked(60);
 					}
