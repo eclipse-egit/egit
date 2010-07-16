@@ -13,6 +13,8 @@ import java.util.List;
 import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
@@ -31,4 +33,14 @@ public class HardResetToRevisionAction extends AbstractRevCommitOperationAction 
 	protected String getJobName() {
 		return UIText.HardResetToRevisionAction_hardReset;
 	}
+
+	@Override
+	public void run(IAction act) {
+		if (!MessageDialog.openQuestion(wp.getSite().getShell(),
+				UIText.ResetTargetSelectionDialog_ResetQuestion,
+				UIText.ResetTargetSelectionDialog_ResetConfirmQuestion))
+			return;
+		super.run(act);
+	}
+
 }
