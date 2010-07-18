@@ -192,13 +192,19 @@ public class CreateBranchPage extends WizardPage {
 
 			String fullName = getBranchName();
 			try {
-				if (myRepository.getRef(fullName) != null)
+				if (myRepository.getRef(fullName) != null) {
+
 					setErrorMessage(NLS.bind(
 							UIText.CreateBranchPage_BranchAlreadyExistsMessage,
 							fullName));
-				return;
+					return;
+				}
 			} catch (IOException e) {
 				// ignore here
+			}
+			if (!Repository.isValidRefName(fullName)) {
+				setErrorMessage(UIText.CreateBranchPage_InvalidNameMessage);
+				return;
 			}
 		} finally {
 			setPageComplete(getErrorMessage() == null);
