@@ -244,7 +244,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		waitInUI();
 		assertTrue(shell.bot().tree().getAllItems().length == 1);
-		shell.bot().button(UIText.WizardProjectsImportPage_deselectAll).click();
 		assertTrue(!shell.bot().button(IDialogConstants.FINISH_LABEL)
 				.isEnabled());
 		shell.bot().button(UIText.WizardProjectsImportPage_selectAll).click();
