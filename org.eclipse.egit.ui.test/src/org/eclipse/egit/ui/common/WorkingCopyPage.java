@@ -12,10 +12,15 @@ package org.eclipse.egit.ui.common;
 import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertText;
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellCloses;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 
 public class WorkingCopyPage {
@@ -41,12 +46,38 @@ public class WorkingCopyPage {
 	}
 
 	public void waitForCreate() {
+		// calculate the expected target directory
+		String targetDir = bot.textWithLabel("Directory:").getText()
+				+ File.separatorChar + Constants.DOT_GIT;
+		assertFalse(
+				"Clone target should not be in the configured repositories list",
+				Activator.getDefault().getRepositoryUtil()
+						.getConfiguredRepositories().contains(targetDir));
+
 		bot.button("Finish").click();
 
-		SWTBotShell shell = bot.shell("Cloning from " + cloneUrl);
+		try {
+			SWTBotShell shell = bot.shell("Cloning from " + cloneUrl);
 
-		// This is not a performance test. Allow lots of time to complete
-		bot.waitUntil(shellCloses(shell), 120000);
+			// This is not a performance test. Allow lots of time to complete
+			bot.waitUntil(shellCloses(shell), 120000);
+		} catch (WidgetNotFoundException e1) {
+			// if the "Cloning from" window opens and closes very quickly
+			// (faster than the replay delay), we end up here, and we do an
+			// alternate test to see if the repository was cloned
+			// This is not a performance test. Allow lots of time to complete
+			for (int i = 0; i < 10; i++) {
+				if (Activator.getDefault().getRepositoryUtil()
+						.getConfiguredRepositories().contains(targetDir))
+					return;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// ignore here
+				}
+			}
+			fail("The Repository was not created");
+		}
 	}
 
 	@SuppressWarnings("boxing")
