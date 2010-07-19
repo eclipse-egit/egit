@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALw3///9o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2010-07-19T16:02:31Z",
+      "side": 0,
+      "message": "You should remove this comment! The content is checked by workspaceIterator.isModified().",
+      "revId": "e1b9c22cb93f23267a1fbf48f944ad54612d08f7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
