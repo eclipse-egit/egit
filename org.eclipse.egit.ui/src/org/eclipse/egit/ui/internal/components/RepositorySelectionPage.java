@@ -51,6 +51,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -881,8 +882,10 @@ public class RepositorySelectionPage extends WizardPage {
 			else
 				portText.setText(""); //$NON-NLS-1$
 
-			if (u.getScheme() != null)
+			if (u.getScheme() != null) {
 				scheme.select(scheme.indexOf(u.getScheme()));
+				scheme.notifyListeners(SWT.Selection, new Event());
+			}
 
 			updateAuthGroup();
 			uri = u;
