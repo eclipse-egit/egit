@@ -141,9 +141,8 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		Composite parent = (Composite) super.createDialogArea(base);
 		parent.setLayout(GridLayoutFactory.fillDefaults().create());
 
-		// TODO deprecated constructor for now
 		FilteredTree tree = new FilteredTree(parent, SWT.SINGLE | SWT.BORDER,
-				new PatternFilter());
+				new PatternFilter(), true);
 		branchTree = tree.getViewer();
 		branchTree.setLabelProvider(new RepositoriesViewLabelProvider());
 		branchTree.setContentProvider(new RepositoriesViewContentProvider());
