@@ -11,7 +11,6 @@
 package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.eclipse.core.resources.IResource;
@@ -192,14 +191,7 @@ class FileDiff {
 		final RawText a = getRawText(id1, db);
 		final RawText b = getRawText(id2, db);
 		final MyersDiff diff = new MyersDiff(a, b);
-		diffFmt.formatEdits(new OutputStream() {
-
-			@Override
-			public void write(int c) throws IOException {
-				d.append((char) c);
-
-			}
-		}, a, b, diff.getEdits());
+		diffFmt.formatEdits(a, b, diff.getEdits());
 	}
 
 	private String getProjectRelaticePath(Repository db, String repoPath) {
