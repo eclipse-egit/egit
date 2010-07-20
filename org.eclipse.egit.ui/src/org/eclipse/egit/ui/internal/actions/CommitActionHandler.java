@@ -304,8 +304,12 @@ public class CommitActionHandler extends RepositoryActionHandler {
 		project.accept(new IResourceVisitor() {
 
 			public boolean visit(IResource resource) throws CoreException {
-				if (Team.isIgnoredHint(resource))
-					return false;
+				try {
+					if (Team.isIgnoredHint(resource) || RepositoryMapping.isIgnored(resource))
+						return false;
+				} catch (IOException e) {
+					throw new TeamException(UIText.CommitAction_InternalError, e);
+				}
 				if (resource.getType() == IResource.FILE) {
 
 					String repoRelativePath = RepositoryMapping.getMapping(

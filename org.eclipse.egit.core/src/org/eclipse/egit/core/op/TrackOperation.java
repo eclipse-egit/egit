@@ -111,7 +111,7 @@ public class TrackOperation implements IEGitOperation {
 									// first. If a resource within a ignored folder is marked
 									// we ignore it here, i.e. there is no way to unmark it expect
 									// by explicitly selecting and invoking track on it.
-									boolean isIgnored = Team.isIgnoredHint(resource);
+									boolean isIgnored = Team.isIgnoredHint(resource) || RepositoryMapping.isIgnored(resource);
 									if (resource.getType() == IResource.FILE) {
 										Entry entry = index.getEntry(repoPath);
 										if (!isIgnored || entry != null && entry.isAssumedValid()) {

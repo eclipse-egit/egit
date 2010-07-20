@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jgit.lib.Constants;
@@ -48,7 +49,7 @@ public class IgnoreActionHandler extends RepositoryActionHandler {
 						// DecoratableResourceAdapter, but neither currently
 						// consult .gitignore
 
-						if (!Team.isIgnoredHint(resource)) {
+						if (!RepositoryMapping.isIgnored(resource) && !Team.isIgnoredHint(resource)) {
 							addIgnore(monitor, resource);
 						}
 						monitor.worked(1);

@@ -584,12 +584,28 @@ public class GitLightweightDecorator extends LabelProvider implements
 					}
 
 					// All seems good, schedule the resource for update
-					if (Constants.GITIGNORE_FILENAME.equals(resource.getName())) {
-						// re-decorate all container members when .gitignore changes
-						resourcesToUpdate.addAll(Arrays.asList(resource.getParent().members()));
-					} else {
-						resourcesToUpdate.add(resource);
-					}
+					 if (Constants.GITIGNORE_FILENAME.equals(resource.getName())) {
+                         try {
+                                 mapping.refreshIgnoreNode(resource);
+                         } catch (IOException e) {
+                                 handleException(resource, new CoreException(new Status(IStatus.ERROR, Activator.getPluginId(),
+                                                 e.getMessage())));
+                         }
+                         // re-decorate all container members when .gitignore changes
+                         resourcesToUpdate.addAll(Arrays.asList(resource.getParent().members()));
+					 } else if (Constants.EXCLUDE_FILENAME.equals(resource.getName()) && resource.getParent().getParent().getName().equals(Constants.DOT_GIT)) {
+                         //Exclude file
+                         try {
+                                 mapping.refreshBase();
+                         } catch (IOException e) {
+                                 handleException(resource, new CoreException(new Status(IStatus.ERROR, Activator.getPluginId(),
+                                                 e.getMessage())));
+                         }
+                         // This is weak -- we should update the entire tree, not just the base
+                         resourcesToUpdate.addAll(Arrays.asList(resource.getProject().members()));
+					 } else {
+                         resourcesToUpdate.add(resource);
+					 }
 
 					if (delta.getKind() == IResourceDelta.CHANGED
 							&& (delta.getFlags() & IResourceDelta.OPEN) > 1)
@@ -602,8 +618,10 @@ public class GitLightweightDecorator extends LabelProvider implements
 			handleException(null, e);
 		}
 
+
 		if (resourcesToUpdate.isEmpty())
 			return;
+
 
 		// If ancestor-decoration is enabled in the preferences we walk
 		// the ancestor tree of each of the changed resources and add
