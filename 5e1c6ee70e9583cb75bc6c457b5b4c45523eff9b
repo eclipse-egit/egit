@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALw3///9U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeActionHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-07-20T07:18:23Z",
+      "side": 1,
+      "message": "Here the code from 2b083c3f21a3553b6211c978b744f2259c8fd9ca is missing.",
+      "revId": "5e1c6ee70e9583cb75bc6c457b5b4c45523eff9b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
