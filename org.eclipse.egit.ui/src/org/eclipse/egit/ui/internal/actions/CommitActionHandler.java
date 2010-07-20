@@ -172,6 +172,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 			commitOperation.setPreviousCommit(previousCommit);
 			commitOperation.setRepos(repos);
 		}
+		commitOperation.setComputeChangeId(commitDialog.getCreateChangeId());
 		String jobname = UIText.CommitAction_CommittingChanges;
 		Job job = new Job(jobname) {
 			@Override
