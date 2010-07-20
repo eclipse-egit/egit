@@ -16,6 +16,57 @@
       "revId": "42885717c108a1b7a36e302d7fe1f9517e465774",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///yU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-06-29T12:27:10Z",
+      "side": 1,
+      "message": "If you have an ExecutionEvent, you can do...\n\nHandlerUtil.getCurrentSelection(executionEvent);",
+      "revId": "42885717c108a1b7a36e302d7fe1f9517e465774",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///yQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-06-29T12:27:10Z",
+      "side": 1,
+      "message": "Matthias, you can use HandlerUtil.getActiveShell(event); instead. Note that null may be returned or you can swap it with getActiveShellChecked(ExecutionEvent) instead.",
+      "revId": "42885717c108a1b7a36e302d7fe1f9517e465774",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///yM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-06-29T12:27:10Z",
+      "side": 1,
+      "message": "Matthias, you can use HandlerUtil.getActivePart(event); instead. Note that null may be returned or you can swap it with getActivePartChecked(ExecutionEvent) instead.",
+      "revId": "42885717c108a1b7a36e302d7fe1f9517e465774",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
