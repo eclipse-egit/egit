@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Constants;
@@ -70,10 +71,6 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		deleteAllProjects();
 	}
 
-	/**
-	 * Create/checkout/delete a local branch
-	 * @throws Exception
-	 */
 	@Test
 	public void testCreateCheckoutDeleteLocalBranch() throws Exception {
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
@@ -141,11 +138,6 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		assertEquals("Wrong number of children", 1, localItem.getNodes().size());
 	}
 
-	/**
-	 * Checks for the remote branches and creates a local one based on the
-	 * "stable" remote
-	 * @throws Exception
-	 */
 	@Test
 	public void testClonedRepository() throws Exception {
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
@@ -179,10 +171,6 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		assertEquals("Wrong number of local children", 2, children.size());
 	}
 
-	/**
-	 * Tests checkout of remote branches and project label decoration
-	 * @throws Exception
-	 */
 	@Test
 	public void testCheckoutRemote() throws Exception {
 		SWTBotPerspective perspective = null;
@@ -220,10 +208,16 @@ public class GitRepositoriesViewBranchHandlingTest extends
 					.getPluginLocalizedValue("CheckoutCommand"));
 			refreshAndWait();
 
+			GitLightweightDecorator.refresh();
+			// TODO find a better way than waiting here
+			waitInUI();
+			waitInUI();
+			waitInUI();
 			SWTBotTree projectExplorerTree = bot.viewById(
 					"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
-			SWTBotTreeItem projectItem = getProjectItem(projectExplorerTree, PROJ1).select();
-			waitInUI();
+			SWTBotTreeItem projectItem = getProjectItem(projectExplorerTree,
+					PROJ1).select();
+
 			assertTrue("Wrong project label decoration", projectItem.getText()
 					.contains("refs"));
 			// TODO Bug 315166 prevents this from properly working, but then it
