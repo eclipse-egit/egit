@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX///Eo\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-07-07T14:37:58Z",
+      "side": 1,
+      "message": "wouldn\u0027t it be better to depend on 3.5.0 or do we really rely on bugfixes of the service releases?",
+      "revId": "1abd31af2fbad2eaa9c4432b03f979d9698c5771",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
