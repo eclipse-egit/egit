@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX///yY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ActionCommands.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-06-29T12:27:10Z",
+      "side": 1,
+      "message": "Please add a license header.",
+      "revId": "42885717c108a1b7a36e302d7fe1f9517e465774",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
