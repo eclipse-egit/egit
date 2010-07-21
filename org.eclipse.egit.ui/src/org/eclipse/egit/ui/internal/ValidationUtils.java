@@ -32,12 +32,6 @@ public class ValidationUtils {
 	public static IInputValidator getRefNameInputValidator(final Repository repo, final String refPrefix) {
 		return new IInputValidator() {
 			public String isValid(String newText) {
-				if (newText.length() == 0) {
-					// nothing entered, just don't let the user proceed,
-					// no need to prompt them with an error message
-					return ""; //$NON-NLS-1$
-				}
-
 				String testFor = refPrefix + newText;
 				try {
 					if (repo.resolve(testFor) != null)

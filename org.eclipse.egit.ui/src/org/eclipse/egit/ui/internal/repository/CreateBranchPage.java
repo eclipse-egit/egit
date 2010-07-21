@@ -17,7 +17,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
@@ -26,7 +28,6 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -185,20 +186,12 @@ public class CreateBranchPage extends WizardPage {
 				setErrorMessage(UIText.CreateBranchPage_MissingSourceMessage);
 				return;
 			}
-			if (nameText.getText().length() == 0) {
-				setErrorMessage(UIText.CreateBranchPage_MissingNameMessage);
+			IInputValidator refNameInputValidator = ValidationUtils
+					.getRefNameInputValidator(myRepository, Constants.R_HEADS);
+			String message = refNameInputValidator.isValid(getBranchName());
+			if (message != null) {
+				setErrorMessage(message);
 				return;
-			}
-
-			String fullName = getBranchName();
-			try {
-				if (myRepository.getRef(fullName) != null)
-					setErrorMessage(NLS.bind(
-							UIText.CreateBranchPage_BranchAlreadyExistsMessage,
-							fullName));
-				return;
-			} catch (IOException e) {
-				// ignore here
 			}
 		} finally {
 			setPageComplete(getErrorMessage() == null);

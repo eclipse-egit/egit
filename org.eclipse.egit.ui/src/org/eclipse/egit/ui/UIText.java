@@ -1234,9 +1234,6 @@ public class UIText extends NLS {
 	public static String ConfirmationPage_title;
 
 	/** */
-	public static String CreateBranchPage_BranchAlreadyExistsMessage;
-
-	/** */
 	public static String CreateBranchPage_BranchNameLabel;
 
 	/** */
@@ -1253,9 +1250,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CreateBranchPage_CreatingBranchMessage;
-
-	/** */
-	public static String CreateBranchPage_MissingNameMessage;
 
 	/** */
 	public static String CreateBranchPage_MissingSourceMessage;
