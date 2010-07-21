@@ -1762,6 +1762,15 @@ public class UIText extends NLS {
 	public static String RepositoriesView_RemoveRemoteMenu;
 
 	/** */
+	public static String RepositoriesView_RenameBranchFailure;
+
+	/** */
+	public static String RepositoriesView_RenameBranchMessage;
+
+	/** */
+	public static String RepositoriesView_RenameBranchTitle;
+
+	/** */
 	public static String RepositoriesView_WorkingDir_treenode;
 
 	/** */
