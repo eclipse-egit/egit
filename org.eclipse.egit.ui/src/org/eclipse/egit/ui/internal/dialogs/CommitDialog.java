@@ -40,7 +40,9 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -189,6 +191,7 @@ public class CommitDialog extends Dialog {
 		commitText = new Text(container, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
 		commitText.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).grab(true, true)
 				.hint(600, 200).create());
+		commitText.setText(commitMessage);
 
 		// allow to commit with ctrl-enter
 		commitText.addKeyListener(new KeyAdapter() {
@@ -386,13 +389,31 @@ public class CommitDialog extends Dialog {
 		filesViewer.addFilter(new CommitItemFilter());
 		filesViewer.setInput(items);
 		filesViewer.getTable().setMenu(getContextMenu());
+		if (!allowToChangeSelection) {
+			amendingButton.setSelection(false);
+			amendingButton.setEnabled(false);
+			showUntrackedButton.setSelection(false);
+			showUntrackedButton.setEnabled(false);
 
-		// pre-emptively check any preselected files
-		for (IFile selectedFile : preselectedFiles) {
-			for (CommitItem item : items) {
-				if (item.file.equals(selectedFile)) {
-					filesViewer.setChecked(item, true);
-					break;
+			filesViewer.addCheckStateListener(new ICheckStateListener() {
+
+				public void checkStateChanged(CheckStateChangedEvent event) {
+				       if( !event.getChecked() ) {
+				    	   filesViewer.setAllChecked(true);
+				       }
+				}
+			});
+			filesViewer.setAllGrayed(true);
+			filesViewer.setAllChecked(true);
+		}
+		else {
+			// pre-emptively check any preselected files
+			for (IFile selectedFile : preselectedFiles) {
+				for (CommitItem item : items) {
+					if (item.file.equals(selectedFile)) {
+						filesViewer.setChecked(item, true);
+						break;
+					}
 				}
 			}
 		}
@@ -495,6 +516,8 @@ public class CommitDialog extends Dialog {
 	}
 
 	private Menu getContextMenu() {
+		if (!allowToChangeSelection)
+			return null;
 		Menu menu = new Menu(filesViewer.getTable());
 		MenuItem item = new MenuItem(menu, SWT.PUSH);
 		item.setText(UIText.CommitDialog_AddFileOnDiskToIndex);
@@ -619,6 +642,7 @@ public class CommitDialog extends Dialog {
 	private boolean amendAllowed = true;
 	private boolean showUntracked = true;
 	private boolean createChangeId = false;
+	private boolean allowToChangeSelection = true;
 
 	private ArrayList<IFile> selectedFiles = new ArrayList<IFile>();
 	private String previousCommitMessage = ""; //$NON-NLS-1$
@@ -914,6 +938,14 @@ public class CommitDialog extends Dialog {
 	 */
 	public void setAmendAllowed(boolean amendAllowed) {
 		this.amendAllowed = amendAllowed;
+	}
+
+	/**
+	 * Set whether is is allowed to change the set of selected files
+	 * @param allowToChangeSelection
+	 */
+	public void setAllowToChangeSelection(boolean allowToChangeSelection) {
+		this.allowToChangeSelection = allowToChangeSelection;
 	}
 
 	@Override
