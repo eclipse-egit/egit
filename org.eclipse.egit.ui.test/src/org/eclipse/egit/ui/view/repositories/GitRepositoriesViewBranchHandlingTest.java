@@ -16,13 +16,20 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.List;
 
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.IJobChangeListener;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
@@ -70,10 +77,6 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		deleteAllProjects();
 	}
 
-	/**
-	 * Create/checkout/delete a local branch
-	 * @throws Exception
-	 */
 	@Test
 	public void testCreateCheckoutDeleteLocalBranch() throws Exception {
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
@@ -141,11 +144,6 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		assertEquals("Wrong number of children", 1, localItem.getNodes().size());
 	}
 
-	/**
-	 * Checks for the remote branches and creates a local one based on the
-	 * "stable" remote
-	 * @throws Exception
-	 */
 	@Test
 	public void testClonedRepository() throws Exception {
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
@@ -179,13 +177,10 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		assertEquals("Wrong number of local children", 2, children.size());
 	}
 
-	/**
-	 * Tests checkout of remote branches and project label decoration
-	 * @throws Exception
-	 */
 	@Test
 	public void testCheckoutRemote() throws Exception {
 		SWTBotPerspective perspective = null;
+		IJobChangeListener listener = null;
 		try {
 			perspective = bot.activePerspective();
 			bot.perspectiveById("org.eclipse.pde.ui.PDEPerspective").activate();
@@ -215,21 +210,39 @@ public class GitRepositoriesViewBranchHandlingTest extends
 			children = item.getNodes();
 			assertEquals("Wrong number of remote children", 2, children.size());
 
+			final boolean[] done = new boolean[] { false };
+
+			final String jobName = NLS.bind(
+					UIText.RepositoriesView_CheckingOutMessage,
+					"refs/remotes/origin/stable");
+
+			listener = new JobChangeAdapter() {
+
+				@Override
+				public void done(IJobChangeEvent event) {
+					if (jobName.equals(event.getJob().getName()))
+						done[0] = true;
+				}
+
+			};
+
+			Job.getJobManager().addJobChangeListener(listener);
+
 			item.getNode("origin/stable").select();
 			ContextMenuHelper.clickContextMenu(tree, myUtil
 					.getPluginLocalizedValue("CheckoutCommand"));
 			refreshAndWait();
 
-			SWTBotTree projectExplorerTree = bot.viewById(
-					"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
-			SWTBotTreeItem projectItem = getProjectItem(projectExplorerTree, PROJ1).select();
-			waitInUI();
-			assertTrue("Wrong project label decoration", projectItem.getText()
-					.contains("refs"));
-			// TODO Bug 315166 prevents this from properly working, but then it
-			// should go:
-			// assertTrue(projectItem.getText().contains(
-			// tree.selection().get(0, 0)));
+			for (int i = 0; i < 1000; i++) {
+				if (done[0])
+					break;
+				Thread.sleep(10);
+			}
+
+			GitLightweightDecorator.refresh();
+
+			assertTrue("Branch should not be symbolic", ObjectId
+					.isId(lookupRepository(clonedRepositoryFile).getBranch()));
 
 			// now let's try to create a local branch from the remote one
 			item = getRemoteBranchesItem(tree, clonedRepositoryFile).expand();
@@ -247,6 +260,8 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		} finally {
 			if (perspective != null)
 				perspective.activate();
+			if (listener != null)
+				Job.getJobManager().removeJobChangeListener(listener);
 		}
 	}
 }
