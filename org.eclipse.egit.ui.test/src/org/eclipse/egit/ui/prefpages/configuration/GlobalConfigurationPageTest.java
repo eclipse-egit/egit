@@ -47,7 +47,7 @@ public class GlobalConfigurationPageTest {
 
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
-	private static final TestUtil util = TestUtil.getInstance();
+	private static final TestUtil util = new TestUtil();
 
 	private static FileBasedConfig config;
 

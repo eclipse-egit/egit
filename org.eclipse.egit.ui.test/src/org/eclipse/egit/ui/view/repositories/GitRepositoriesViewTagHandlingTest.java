@@ -16,6 +16,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.IJobChangeListener;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -76,17 +82,17 @@ public class GitRepositoriesViewTagHandlingTest extends
 	@Test
 	public void testCreateTags() throws Exception {
 		SWTBotTree tree = getOrOpenView().bot().tree();
-		int initialCount = getTagsItem(tree, repositoryFile).expand()
-				.rowCount();
+		int initialCount = myRepoViewUtil.getTagsItem(tree, repositoryFile)
+				.expand().rowCount();
 
 		String initialObjid = getObjectIdOfCommit();
 		createTag("FirstTag", "The first tag");
-		touchAndSubmit();
+		touchAndSubmit(null);
 		String newObject = getObjectIdOfCommit();
 		createTag("SecondTag", "The second tag");
 		refreshAndWait();
-		SWTBotTreeItem[] items = getTagsItem(tree, repositoryFile).expand()
-				.getItems();
+		SWTBotTreeItem[] items = myRepoViewUtil.getTagsItem(tree,
+				repositoryFile).expand().getItems();
 		assertEquals("Wrong number of tags", initialCount + 2, items.length);
 
 		assertTrue("Wrong commit id", initialObjid
@@ -98,27 +104,62 @@ public class GitRepositoriesViewTagHandlingTest extends
 	@Test
 	public void testResetToTag() throws Exception {
 		SWTBotTree tree = getOrOpenView().bot().tree();
+		IJobChangeListener listener = null;
+		try {
+			String initialContent = getTestFileContent();
+			createTag("ResetToFirst", "The first tag");
+			touchAndSubmit(null);
+			String newContent = getTestFileContent();
+			assertFalse("Wrong content", initialContent.equals(newContent));
+			createTag("ResetToSecond", "The second tag");
+			refreshAndWait();
+			myRepoViewUtil.getTagsItem(tree, repositoryFile).expand().getNode(
+					"ResetToFirst").select();
 
-		String initialContent = getTestFileContent();
-		createTag("ResetToFirst", "The first tag");
-		touchAndSubmit();
-		String newContent = getTestFileContent();
-		assertFalse("Wrong content", initialContent.equals(newContent));
-		createTag("ResetToSecond", "The second tag");
-		refreshAndWait();
-		getTagsItem(tree, repositoryFile).expand().getNode("ResetToFirst")
-				.select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("ResetCommand"));
+			final boolean[] done = new boolean[] { false };
 
-		SWTBotShell resetDialog = bot.shell(UIText.ResetCommand_WizardTitle);
-		pressAltAndChar(resetDialog, 'H');
-		resetDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
-		waitInUI();
+			final String jobName = NLS.bind(UIText.ResetAction_reset,
+					"refs/tags/ResetToFirst");
 
-		bot.shell(UIText.ResetTargetSelectionDialog_ResetQuestion).bot()
-				.button(IDialogConstants.YES_LABEL).click();
-		assertEquals("Wrong content", initialContent, getTestFileContent());
+			listener = new JobChangeAdapter() {
+
+				@Override
+				public void done(IJobChangeEvent event) {
+					if (jobName.equals(event.getJob().getName()))
+						done[0] = true;
+				}
+
+			};
+
+			Job.getJobManager().addJobChangeListener(listener);
+
+			ContextMenuHelper.clickContextMenu(tree, myUtil
+					.getPluginLocalizedValue("ResetCommand"));
+
+			SWTBotShell resetDialog = bot
+					.shell(UIText.ResetCommand_WizardTitle);
+			pressAltAndChar(resetDialog, 'H');
+			resetDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
+			waitInUI();
+
+			bot.shell(UIText.ResetTargetSelectionDialog_ResetQuestion).bot()
+					.button(IDialogConstants.YES_LABEL).click();
+
+			for (int i = 0; i < 1000; i++) {
+				if (done[0])
+					break;
+				Thread.sleep(10);
+			}
+
+			assertTrue("Job should be completed", done[0]);
+
+			ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
+					IResource.DEPTH_INFINITE, null);
+			assertEquals("Wrong content", initialContent, getTestFileContent());
+		} finally {
+			if (listener != null)
+				Job.getJobManager().removeJobChangeListener(listener);
+		}
 	}
 
 	private String getCommitIdOfTag(String tagName) throws Exception {
@@ -128,7 +169,7 @@ public class GitRepositoriesViewTagHandlingTest extends
 
 	private void createTag(String name, String message) throws Exception {
 		SWTBotTree tree = getOrOpenView().bot().tree();
-		getTagsItem(tree, repositoryFile).select();
+		myRepoViewUtil.getTagsItem(tree, repositoryFile).select();
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("CreateTagCommand"));
 		String branchName = repository.getBranch();
@@ -137,9 +178,6 @@ public class GitRepositoriesViewTagHandlingTest extends
 		SWTBotShell createDialog = bot.shell(shellTitle).activate();
 		createDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
 				.setText(name);
-		createDialog.bot().textWithLabel(UIText.CreateTagDialog_tagMessage)
-				.setText("dummy");
-		// TODO the ok button does not enable upon the first setText
 		createDialog.bot().textWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText(message);
 		waitInUI();
