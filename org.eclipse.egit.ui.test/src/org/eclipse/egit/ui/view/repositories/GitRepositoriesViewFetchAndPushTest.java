@@ -20,6 +20,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.push.PushConfiguredRemoteAction;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.URIish;
@@ -30,7 +31,6 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -58,6 +58,10 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		URIish uri = new URIish(remoteRepositoryFile.getPath());
 		File workdir = new File(testDirectory, "Cloned");
 
+		// TODO Bug: for some reason, this seems to be required
+		lookupRepository(remoteRepositoryFile).getConfig().setString(ConfigConstants.CONFIG_CORE_SECTION,
+				null, ConfigConstants.CONFIG_KEY_REPO_FORMAT_VERSION, "0");
+
 		CloneOperation op = new CloneOperation(uri, true, null, workdir,
 				"refs/heads/master", "origin");
 		op.run(null);
@@ -82,7 +86,6 @@ public class GitRepositoriesViewFetchAndPushTest extends
 	}
 
 	@Test
-	@Ignore
 	public void testPushToOrigin() throws Exception {
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
 				clonedRepositoryFile);
@@ -166,7 +169,6 @@ public class GitRepositoriesViewFetchAndPushTest extends
 	}
 
 	@Test
-	@Ignore
 	public void testFetchFromOrigin() throws Exception {
 
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
