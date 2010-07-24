@@ -11,8 +11,12 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
+import java.io.File;
 import java.io.IOException;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jgit.lib.ObjectId;
@@ -36,6 +40,9 @@ abstract class GitResourceVariant implements IResourceVariant {
 
 	private IPath fullPath;
 
+	private static final IWorkspaceRoot workspaceRoot = ResourcesPlugin
+			.getWorkspace().getRoot();
+
 	/**
 	 * Construct Git representation of {@link IResourceVariant}.
 	 *
@@ -47,16 +54,14 @@ abstract class GitResourceVariant implements IResourceVariant {
 	 */
 	GitResourceVariant(Repository repo, RevCommit revCommit, String path)
 			throws IOException {
+		this.path = path;
 		this.repo = repo;
 		this.revCommit = revCommit;
 		TreeWalk tw = getTreeWalk(repo, revCommit.getTree(), path);
-		if (tw == null) {
+		if (tw == null)
 			objectId = null;
-			this.path = null;
-		} else {
+		else
 			objectId = tw.getObjectId(0);
-			this.path = new String(tw.getRawPath());
-		}
 	}
 
 	public String getContentIdentifier() {
@@ -125,8 +130,21 @@ abstract class GitResourceVariant implements IResourceVariant {
 	}
 
 	protected IPath getFullPath() {
-		if (fullPath == null)
-			fullPath = new Path(path);
+		if (fullPath == null) {
+			IResource resource;
+			IPath location = new Path(repo.getWorkTree() + File.separator
+					+ path);
+
+			if (isContainer())
+				resource = workspaceRoot.getContainerForLocation(location);
+			else
+				resource = workspaceRoot.getFileForLocation(location);
+
+			if (resource != null)
+				fullPath = resource.getFullPath();
+			else
+				fullPath = new Path(path);
+		}
 
 		return fullPath;
 	}
