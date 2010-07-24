@@ -172,15 +172,15 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 				+ "keep");
 		RevCommit commit = testRepo.addAndCommit(iProject, file,
 				"initial commit");
-		String path = Repository.stripWorkDir(repo.getWorkTree(), file);
-		IPath iPath = new Path(path);
+		String path = Repository.stripWorkDir(repo.getWorkTree(), file.getParentFile());
+		IPath iPath = new Path(File.separator + path);
 
 		IContainer local = createMock(IContainer.class);
-		expect(local.exists()).andReturn(true);
-		expect(local.getFullPath()).andReturn(iPath);
+		expect(local.exists()).andReturn(true).anyTimes();
+		expect(local.getFullPath()).andReturn(iPath).anyTimes();
 		replay(local);
 
-		GitFolderResourceVariant remote = new GitFolderResourceVariant(repo,
+ 		GitFolderResourceVariant remote = new GitFolderResourceVariant(repo,
 				commit, path);
 
 		// then

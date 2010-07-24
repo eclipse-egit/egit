@@ -297,6 +297,64 @@
                   type="org.eclipse.team.ui.history.IHistoryPageSource">
             </adapter>
          </factory>
+         <factory
+	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRoot"
+               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            <adapter
+                  type="org.eclipse.ui.model.IWorkbenchAdapter"/>
+         </factory>
+         <factory
+	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRepository"
+               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            <adapter
+                  type="org.eclipse.ui.model.IWorkbenchAdapter"/>
+         </factory>
+         <factory
+	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit"
+               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            <adapter
+                  type="org.eclipse.ui.model.IWorkbenchAdapter"/>
+         </factory>
+         <factory
+	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelTree"
+               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            <adapter
+                  type="org.eclipse.ui.model.IWorkbenchAdapter"/>
+         </factory>
+         <factory
+	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob"
+               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            <adapter
+                  type="org.eclipse.ui.model.IWorkbenchAdapter"/>
+         </factory>
+         <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelObject"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
+         <adapter type="org.eclipse.core.resources.IResource"/>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRepository"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelTree"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
+         <adapter type="org.eclipse.core.resources.IResource"/>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
+         <adapter type="org.eclipse.core.resources.IResource"/>
+      </factory>
    </extension>
 
    <extension point="org.eclipse.ui.preferencePages">
@@ -1516,6 +1574,18 @@
       </linkHelper>
     </extension>
     <extension
+         id="changeSetModel"
+         name="Git Change Set"
+         point="org.eclipse.core.resources.modelProviders">
+      <modelProvider
+            class="org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider"/>
+      <enablement>
+        <instanceof
+             value="org.eclipse.core.resources.IResource" />
+      </enablement>
+      <extends-model id="org.eclipse.core.resources.modelProvider"/>
+   </extension>
+    <extension
          point="org.eclipse.team.ui.synchronizeWizards">
       <wizard
             class="org.eclipse.egit.ui.internal.synchronize.GitSynchronizeWizard"
@@ -1534,6 +1604,37 @@
             name="%Synchronize_Name"
             persistent="false">
       </participant>
+      <participant
+            class="org.eclipse.egit.ui.internal.synchronize.GitModelSynchronizeParticipant"
+            id="org.eclipse.egit.ui.modelCompareParticipant"
+            name="%Synchronize_ModelName"
+            persistent="false"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <navigatorContent
+            activeByDefault="true"
+            contentProvider="org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetContentProvider"
+            icon="$nl$/icons/obj16/changelog_obj.gif"
+            id="org.eclipse.egit.ui.changeSetContent"
+            labelProvider="org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetLabelProvider"
+            name="%Synchronize_ChangeSet"
+            priority="normal">
+         <enablement>
+           <or>
+            <instanceof value="org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider"/>
+           </or>
+         </enablement>
+         <commonSorter
+               class="org.eclipse.egit.ui.internal.synchronize.mapping.GitCommitChangeSetSorter"/>
+       </navigatorContent>
+   </extension>
+   <extension
+         point="org.eclipse.team.ui.teamContentProviders">
+      <teamContentProvider
+            contentExtensionId="org.eclipse.egit.ui.changeSetContent"
+            icon="$nl$/icons/obj16/changelog_obj.gif"
+            modelProviderId="org.eclipse.egit.ui.changeSetModel"/>
    </extension>
    <extension
          name="%TeamMenuCommandsLabel"
