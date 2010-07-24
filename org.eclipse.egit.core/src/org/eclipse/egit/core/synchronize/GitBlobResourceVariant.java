@@ -37,7 +37,7 @@ import org.eclipse.team.core.TeamException;
 /**
  * This is a representation of a file's blob in some branch.
  */
-class GitBlobResourceVariant extends GitResourceVariant {
+public class GitBlobResourceVariant extends GitResourceVariant {
 
 	private IStorage storage;
 
