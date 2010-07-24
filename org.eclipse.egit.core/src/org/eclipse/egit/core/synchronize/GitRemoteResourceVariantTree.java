@@ -37,7 +37,7 @@ class GitRemoteResourceVariantTree extends GitResourceVariantTree {
 		rw.setRevFilter(RevFilter.MERGE_BASE);
 
 		try {
-			Ref dstRef = repo.getRef(gsd.getDstRev());
+			Ref dstRef = gsd.getDstRev();
 			if (dstRef == null)
 				result = null;
 			else

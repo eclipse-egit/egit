@@ -28,7 +28,10 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.variants.IResourceVariant;
 
-class GitFolderResourceVariant extends GitResourceVariant {
+/**
+ *
+ */
+public class GitFolderResourceVariant extends GitResourceVariant {
 
 	private TreeWalk tw;
 
@@ -51,6 +54,11 @@ class GitFolderResourceVariant extends GitResourceVariant {
 		return getName().getBytes();
 	}
 
+	/**
+	 * @param progress
+	 * @return members
+	 * @throws IOException
+	 */
 	public IResourceVariant[] getMembers(IProgressMonitor progress)
 			throws IOException {
 		if (members != null)

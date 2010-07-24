@@ -38,8 +38,8 @@ class GitBaseResourceVariantTree extends GitResourceVariantTree {
 		rw.setRevFilter(RevFilter.MERGE_BASE);
 
 		try {
-			Ref srcRef = repo.getRef(gsd.getSrcRev());
-			Ref dstRef = repo.getRef(gsd.getDstRev());
+			Ref srcRef = gsd.getSrcRev();
+			Ref dstRef = gsd.getDstRev();
 
 			RevCommit srcRev = rw.parseCommit(srcRef.getObjectId());
 			RevCommit dstRev = rw.parseCommit(dstRef.getObjectId());
