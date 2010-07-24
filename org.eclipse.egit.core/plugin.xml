@@ -16,5 +16,5 @@
      <ignore
            enabled="true"
            pattern=".git"/>
-  </extension>   
+  </extension>
 </plugin>
