@@ -66,7 +66,7 @@ class CommitFileDiffViewer extends TableViewer {
 					return;
 				final IStructuredSelection iss = (IStructuredSelection) s;
 				final FileDiff d = (FileDiff) iss.getFirstElement();
-				if (walker != null && d.blobs.length == 2)
+				if (walker != null && d.blobs.length <= 2)
 					showTwoWayFileDiff(d);
 			}
 		});
@@ -87,8 +87,14 @@ class CommitFileDiffViewer extends TableViewer {
 		final ITypedElement base;
 		final ITypedElement next;
 
-		base = CompareUtils.getFileRevisionTypedElement(p, c.getParent(0), db, d.blobs[0]);
-		next = CompareUtils.getFileRevisionTypedElement(p, c, db, d.blobs[1]);
+		if (d.blobs.length == 2) {
+			base = CompareUtils.getFileRevisionTypedElement(p, c.getParent(0), db, d.blobs[0]);
+			next = CompareUtils.getFileRevisionTypedElement(p, c, db, d.blobs[1]);
+		} else {
+			// Initial import
+			base = new GitCompareFileRevisionEditorInput.EmptyTypedElement(""); //$NON-NLS-1$
+			next = CompareUtils.getFileRevisionTypedElement(p, c, db, d.blobs[0]);
+		}
 
 		in = new GitCompareFileRevisionEditorInput(base, next, null);
 		CompareUI.openCompareEditor(in);
