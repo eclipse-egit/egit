@@ -9,20 +9,23 @@
  *******************************************************************************/
 package org.eclipse.egit.core;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.osgi.service.debug.DebugOptions;
+import org.eclipse.osgi.service.debug.DebugOptionsListener;
 import org.osgi.framework.BundleContext;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The plugin class for the org.eclipse.egit.core plugin. This
  * is a singleton class.
  */
-public class Activator extends Plugin {
+public class Activator extends Plugin implements DebugOptionsListener {
 	private static Activator plugin;
 	private RepositoryCache repositoryCache;
 
@@ -72,14 +75,12 @@ public class Activator extends Plugin {
 
 		super.start(context);
 
-		if (isDebugging()) {
-			ServiceTracker debugTracker = new ServiceTracker(context,
-					DebugOptions.class.getName(), null);
-			debugTracker.open();
-
-			DebugOptions opts = (DebugOptions) debugTracker.getService();
-			GitTraceLocation.initializeFromOptions(opts, true);
-		}
+		// we want to be notified about debug options changes
+		Dictionary<String, String> props = new Hashtable<String, String>(4);
+		props.put(DebugOptions.LISTENER_SYMBOLICNAME, context.getBundle()
+				.getSymbolicName());
+		context.registerService(DebugOptionsListener.class.getName(), this,
+				props);
 
 		repositoryCache = new RepositoryCache();
 		try {
@@ -88,6 +89,11 @@ public class Activator extends Plugin {
 			logError(CoreText.Activator_ReconfigureWindowCacheError, e);
 		}
 		GitProjectData.attachToWorkspace(true);
+	}
+
+	public void optionsChanged(DebugOptions options) {
+		// initialize the trace stuff
+		GitTraceLocation.initializeFromOptions(options, isDebugging());
 	}
 
 	/**
