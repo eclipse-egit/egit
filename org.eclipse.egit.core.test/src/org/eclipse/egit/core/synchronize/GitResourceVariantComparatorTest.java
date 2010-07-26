@@ -33,6 +33,7 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.team.core.variants.IResourceVariant;
 import org.junit.After;
 import org.junit.Before;
@@ -48,7 +49,7 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 
 		IProject iProject = project.project;
 		if (!gitDir.exists())
-			new Repository(gitDir).create();
+			new FileRepository(gitDir).create();
 
 		new ConnectProviderOperation(iProject, gitDir).execute(null);
 		repo = RepositoryMapping.getMapping(iProject).getRepository();

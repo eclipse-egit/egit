@@ -117,8 +117,8 @@ public class RepositoryMapping {
 	/**
 	 * @return the workdir file, i.e. where the files are checked out
 	 */
-	public File getWorkDir() {
-		return getRepository().getWorkDir();
+	public File getWorkTree() {
+		return getRepository().getWorkTree();
 	}
 
 	synchronized void clear() {
@@ -138,9 +138,9 @@ public class RepositoryMapping {
 		db = r;
 
 		try {
-			workdirPrefix = getWorkDir().getCanonicalPath();
+			workdirPrefix = getWorkTree().getCanonicalPath();
 		} catch (IOException err) {
-			workdirPrefix = getWorkDir().getAbsolutePath();
+			workdirPrefix = getWorkTree().getAbsolutePath();
 		}
 		workdirPrefix = workdirPrefix.replace('\\', '/');
 		if (!workdirPrefix.endsWith("/"))  //$NON-NLS-1$
@@ -204,13 +204,13 @@ public class RepositoryMapping {
 		if (blob == null)
 			return true; // added in index
 		boolean hashesDiffer = !entry.getObjectId().equals(blob.getId());
-		return hashesDiffer || entry.isModified(getWorkDir());
+		return hashesDiffer || entry.isModified(getWorkTree());
 	}
 
 	/**
 	 * This method should only be called for resources that are actually in this
 	 * repository, so we can safely assume that their path prefix matches
-	 * {@link #getWorkDir()}. Testing that here is rather expensive so we don't
+	 * {@link #getWorkTree()}. Testing that here is rather expensive so we don't
 	 * bother.
 	 *
 	 * @param rsrc

@@ -93,7 +93,7 @@ public class TagOperation implements IEGitOperation {
 		ObjectId startPointRef = tag.getObjId();
 
 		try {
-			ObjectLoader object = repo.openObject(startPointRef);
+			ObjectLoader object = repo.open(startPointRef);
 			tag.setType(Constants.typeString(object.getType()));
 			ObjectWriter objWriter = new ObjectWriter(repo);
 			tag.setTagId(objWriter.writeTag(tag));

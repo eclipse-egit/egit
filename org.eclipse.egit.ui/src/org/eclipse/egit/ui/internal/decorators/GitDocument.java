@@ -21,26 +21,27 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.text.Document;
+import org.eclipse.jgit.events.ListenerHandle;
+import org.eclipse.jgit.events.RefsChangedEvent;
+import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Commit;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.IndexChangedEvent;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.RefsChangedEvent;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.lib.TreeEntry;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.RepositoryProvider;
 
-class GitDocument extends Document implements RepositoryListener {
+class GitDocument extends Document implements RefsChangedListener {
 	private final IResource resource;
 
 	private ObjectId lastCommit;
 	private ObjectId lastTree;
 	private ObjectId lastBlob;
+	private ListenerHandle myRefsChangedHandle;
 
 	static Map<GitDocument,Repository> doc2repo = new WeakHashMap<GitDocument, Repository>();
 
@@ -56,7 +57,8 @@ class GitDocument extends Document implements RepositoryListener {
 			ret.populate();
 			final Repository repository = ret.getRepository();
 			if (repository != null)
-				repository.addRepositoryChangedListener(ret);
+				ret.myRefsChangedHandle = repository.getListenerList()
+						.addRefsChangedListener(ret);
 		}
 		return ret;
 	}
@@ -151,7 +153,8 @@ class GitDocument extends Document implements RepositoryListener {
 				GitTraceLocation.getTrace().trace(
 						GitTraceLocation.UI.getLocation(),
 						"(GitDocument) compareTo: " + baseline); //$NON-NLS-1$
-			ObjectLoader loader = repository.openBlob(blobEntry.getId());
+			ObjectLoader loader = repository.open(blobEntry.getId(),
+					Constants.OBJ_BLOB);
 			byte[] bytes = loader.getBytes();
 			String charset;
 			// Get the encoding for the current version. As a matter of
@@ -196,21 +199,19 @@ class GitDocument extends Document implements RepositoryListener {
 					GitTraceLocation.UI.getLocation(),
 					"(GitDocument) dispose: " + resource); //$NON-NLS-1$
 		doc2repo.remove(this);
-		Repository repository = getRepository();
-		if (repository != null)
-			repository.removeRepositoryChangedListener(this);
+
+		if (myRefsChangedHandle != null) {
+			myRefsChangedHandle.remove();
+			myRefsChangedHandle = null;
+		}
 	}
 
-	public void refsChanged(final RefsChangedEvent e) {
+	public void onRefsChanged(final RefsChangedEvent e) {
 		try {
 			populate();
 		} catch (IOException e1) {
 			Activator.logError(UIText.GitDocument_errorRefreshQuickdiff, e1);
 		}
-	}
-
-	public void indexChanged(final IndexChangedEvent e) {
-		// Index not relevant at this moment
 	}
 
 	private Repository getRepository() {

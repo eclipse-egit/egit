@@ -97,7 +97,7 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 
 	private void assertTrackedState(IFile[] fileArr, boolean expectedState)
 			throws IOException {
-		DirCache cache = DirCache.read(repository1.getRepository());
+		DirCache cache = repository1.getRepository().readDirCache();
 		for (IFile file : fileArr) {
 			RepositoryMapping rm = RepositoryMapping.getMapping(file);
 			String fileDir = rm.getRepoRelativePath(file);

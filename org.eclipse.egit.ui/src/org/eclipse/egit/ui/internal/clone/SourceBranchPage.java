@@ -34,6 +34,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -229,7 +230,7 @@ class SourceBranchPage extends WizardPage {
 		final ListRemoteOperation listRemoteOp;
 		try {
 			final URIish uri = newRepoSelection.getURI();
-			final Repository db = new Repository(new File("/tmp")); //$NON-NLS-1$
+			final Repository db = new FileRepository(new File("/tmp")); //$NON-NLS-1$
 			listRemoteOp = new ListRemoteOperation(db, uri);
 			getContainer().run(true, true, new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor)

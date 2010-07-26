@@ -23,6 +23,7 @@ import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -92,11 +93,11 @@ public class LinkHelper implements ILinkHelper {
 		for (String repo : repos) {
 			Repository repository;
 			try {
-				repository = new Repository(new File(repo));
+				repository = new FileRepository(new File(repo));
 			} catch (IOException e) {
 				continue;
 			}
-			if (file.getPath().startsWith(repository.getWorkDir().getPath())) {
+			if (file.getPath().startsWith(repository.getWorkTree().getPath())) {
 				RepositoriesViewContentProvider cp = new RepositoriesViewContentProvider();
 
 				RepositoryNode repoNode = new RepositoryNode(null, repository);
@@ -113,7 +114,7 @@ public class LinkHelper implements ILinkHelper {
 					return null;
 
 				IPath remainingPath = new Path(file.getPath().substring(
-						repository.getWorkDir().getPath().length()));
+						repository.getWorkTree().getPath().length()));
 				for (String segment : remainingPath.segments()) {
 					for (Object child : cp.getChildren(result)) {
 						RepositoryTreeNode<File> fileNode;

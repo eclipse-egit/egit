@@ -32,7 +32,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
@@ -133,7 +133,7 @@ public class FetchWizard extends Wizard {
 		final RemoteConfig rc = repoPage.getSelection().getConfig();
 		rc.setFetchRefSpecs(refSpecPage.getRefSpecs());
 		rc.setTagOpt(refSpecPage.getTagOpt());
-		final RepositoryConfig config = localDb.getConfig();
+		final StoredConfig config = localDb.getConfig();
 		rc.update(config);
 		try {
 			config.save();

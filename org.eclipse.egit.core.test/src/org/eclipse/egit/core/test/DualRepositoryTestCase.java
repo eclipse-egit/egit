@@ -34,7 +34,7 @@ public abstract class DualRepositoryTestCase {
 			firstProject.delete(false, null);
 		IProjectDescription desc = ResourcesPlugin.getWorkspace()
 				.newProjectDescription(projectName);
-		File parentFile = repo.getRepository().getWorkDir();
+		File parentFile = repo.getRepository().getWorkTree();
 		desc.setLocation(new Path(new File(parentFile, projectName).getPath()));
 		firstProject.create(desc, null);
 		firstProject.open(null);

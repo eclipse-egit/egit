@@ -19,7 +19,7 @@ import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
@@ -33,7 +33,7 @@ import org.eclipse.osgi.util.NLS;
  */
 public class ConfigureRemoteWizard extends Wizard {
 
-	final RepositoryConfig myConfiguration;
+	final StoredConfig myConfiguration;
 
 	RemoteConfig myRemoteConfiguration;
 
@@ -130,7 +130,7 @@ public class ConfigureRemoteWizard extends Wizard {
 	 * @return the configuration
 	 *
 	 */
-	public RepositoryConfig getConfiguration() {
+	public StoredConfig getConfiguration() {
 		return myConfiguration;
 	}
 

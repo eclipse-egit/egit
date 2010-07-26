@@ -13,16 +13,6 @@ package org.eclipse.egit.ui.common;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.StringTokenizer;
-
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -44,6 +34,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.swt.SWT;
@@ -54,6 +45,16 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 /**
  * Base class for testing with local (file-system based) repositories
@@ -167,7 +168,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		File gitDir = new File(new File(testDirectory, REPO1),
 				Constants.DOT_GIT);
 		gitDir.mkdir();
-		Repository myRepository = new Repository(gitDir);
+		Repository myRepository = new FileRepository(gitDir);
 		myRepository.create();
 
 		// we need to commit into master first
@@ -178,7 +179,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 			firstProject.delete(true, null);
 		IProjectDescription desc = ResourcesPlugin.getWorkspace()
 				.newProjectDescription(PROJ1);
-		desc.setLocation(new Path(new File(myRepository.getWorkDir(), PROJ1)
+		desc.setLocation(new Path(new File(myRepository.getWorkTree(), PROJ1)
 				.getPath()));
 		firstProject.create(desc, null);
 		firstProject.open(null);
@@ -201,7 +202,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 			secondPoject.delete(true, null);
 
 		desc = ResourcesPlugin.getWorkspace().newProjectDescription(PROJ2);
-		desc.setLocation(new Path(new File(myRepository.getWorkDir(), PROJ2)
+		desc.setLocation(new Path(new File(myRepository.getWorkTree(), PROJ2)
 				.getPath()));
 		secondPoject.create(desc, null);
 		secondPoject.open(null);
@@ -240,9 +241,9 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	protected static File createRemoteRepository(File repositoryDir)
 			throws Exception {
-		Repository myRepository = lookupRepository(repositoryDir);
+		FileRepository myRepository = lookupRepository(repositoryDir);
 		File gitDir = new File(testDirectory, REPO2);
-		Repository myRemoteRepository = new Repository(gitDir);
+		Repository myRemoteRepository = new FileRepository(gitDir);
 		myRemoteRepository.create();
 		// double-check that this is bare
 		assertTrue(myRemoteRepository.isBare());
@@ -350,7 +351,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				return name.equals(".project");
 			}
 		};
-		for (File file : myRepository.getWorkDir().listFiles()) {
+		for (File file : myRepository.getWorkTree().listFiles()) {
 			if (file.isDirectory()) {
 				if (file.list(projectFilter).length > 0) {
 					IProjectDescription desc = ResourcesPlugin.getWorkspace()
@@ -376,9 +377,9 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				existence);
 	}
 
-	protected static Repository lookupRepository(File directory)
+	protected static FileRepository lookupRepository(File directory)
 			throws Exception {
-		return org.eclipse.egit.core.Activator.getDefault()
+		return (FileRepository) org.eclipse.egit.core.Activator.getDefault()
 				.getRepositoryCache().lookupRepository(directory);
 	}
 

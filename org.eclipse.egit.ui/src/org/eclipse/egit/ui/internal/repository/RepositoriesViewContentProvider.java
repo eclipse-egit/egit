@@ -221,7 +221,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 
 			if (node.getRepository().isBare())
 				return children.toArray();
-			File workingDir = repo.getWorkDir();
+			File workingDir = repo.getWorkTree();
 			if (workingDir == null || !workingDir.exists())
 				return children.toArray();
 
@@ -376,7 +376,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		case WORKINGDIR:
 			if (node.getRepository().isBare())
 				return false;
-			File workingDir = repo.getWorkDir();
+			File workingDir = repo.getWorkTree();
 			if (workingDir == null || !workingDir.exists())
 				return false;
 			return workingDir.listFiles().length > 0;

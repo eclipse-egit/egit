@@ -14,6 +14,8 @@ package org.eclipse.egit.ui.internal.repository;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.commands.Command;
@@ -47,10 +49,12 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
-import org.eclipse.jgit.lib.IndexChangedEvent;
-import org.eclipse.jgit.lib.RefsChangedEvent;
+import org.eclipse.jgit.events.IndexChangedEvent;
+import org.eclipse.jgit.events.IndexChangedListener;
+import org.eclipse.jgit.events.ListenerHandle;
+import org.eclipse.jgit.events.RefsChangedEvent;
+import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
@@ -99,7 +103,11 @@ public class RepositoriesView extends CommonNavigator {
 
 	private final Set<Repository> repositories = new HashSet<Repository>();
 
-	private RepositoryListener repositoryListener;
+	private final RefsChangedListener myRefsChangedListener;
+
+	private final IndexChangedListener myIndexChangedListener;
+
+	private final List<ListenerHandle> myListeners = new LinkedList<ListenerHandle>();
 
 	private Job scheduledJob;
 
@@ -134,15 +142,18 @@ public class RepositoriesView extends CommonNavigator {
 			}
 		};
 
-		repositoryListener = new RepositoryListener() {
-			public void refsChanged(RefsChangedEvent e) {
+		myRefsChangedListener = new RefsChangedListener() {
+			public void onRefsChanged(RefsChangedEvent e) {
 				lastRepositoryChange = System.currentTimeMillis();
 				scheduleRefresh(DEFAULT_REFRESH_DELAY);
 			}
+		};
 
-			public void indexChanged(IndexChangedEvent e) {
+		myIndexChangedListener = new IndexChangedListener() {
+			public void onIndexChanged(IndexChangedEvent event) {
 				lastRepositoryChange = System.currentTimeMillis();
 				scheduleRefresh(DEFAULT_REFRESH_DELAY);
+
 			}
 		};
 
@@ -232,7 +243,10 @@ public class RepositoriesView extends CommonNavigator {
 			try {
 				Repository repo = repositoryCache
 						.lookupRepository(new File(dir));
-				repo.addRepositoryChangedListener(repositoryListener);
+				myListeners.add(repo.getListenerList().addIndexChangedListener(
+						myIndexChangedListener));
+				myListeners.add(repo.getListenerList().addRefsChangedListener(
+						myRefsChangedListener));
 				repositories.add(repo);
 			} catch (IOException e) {
 				Activator.handleError(e.getMessage(), e, false);
@@ -391,8 +405,12 @@ public class RepositoriesView extends CommonNavigator {
 							try {
 								Repository repo = repositoryCache
 										.lookupRepository(new File(dir));
-								repo
-										.addRepositoryChangedListener(repositoryListener);
+								myListeners.add(repo.getListenerList()
+										.addIndexChangedListener(
+												myIndexChangedListener));
+								myListeners.add(repo.getListenerList()
+										.addRefsChangedListener(
+												myRefsChangedListener));
 								repositories.add(repo);
 							} catch (IOException e) {
 								Activator.handleError(e.getMessage(), e, false);
@@ -480,8 +498,9 @@ public class RepositoriesView extends CommonNavigator {
 	}
 
 	private void unregisterRepositoryListener() {
-		for (Repository repo : repositories)
-			repo.removeRepositoryChangedListener(repositoryListener);
+		for (ListenerHandle lh : myListeners)
+			lh.remove();
+		myListeners.clear();
 	}
 
 	public boolean show(ShowInContext context) {
@@ -555,7 +574,7 @@ public class RepositoriesView extends CommonNavigator {
 	// public void run(IProgressMonitor monitor)
 	// throws CoreException {
 	// File workDir = repos.get(0).getRepository()
-	// .getWorkDir();
+	// .getWorkTree();
 	//
 	// File gitDir = repos.get(0).getRepository()
 	// .getDirectory();

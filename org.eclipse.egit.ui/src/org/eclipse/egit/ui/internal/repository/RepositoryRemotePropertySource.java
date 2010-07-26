@@ -17,7 +17,7 @@ import java.util.List;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
@@ -28,7 +28,7 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
  */
 public class RepositoryRemotePropertySource implements IPropertySource {
 
-	private final RepositoryConfig myConfig;
+	private final StoredConfig myConfig;
 
 	private final String myName;
 
@@ -38,7 +38,7 @@ public class RepositoryRemotePropertySource implements IPropertySource {
 	 * @param page
 	 *
 	 */
-	public RepositoryRemotePropertySource(RepositoryConfig config,
+	public RepositoryRemotePropertySource(StoredConfig config,
 			String remoteName, PropertySheetPage page) {
 		myConfig = config;
 		myName = remoteName;

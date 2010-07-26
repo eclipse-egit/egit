@@ -10,18 +10,19 @@ package org.eclipse.egit.ui.wizards.clone;
 
 import static org.junit.Assert.assertFalse;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Random;
-
 import org.eclipse.jgit.junit.TestRepository;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevBlob;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.Daemon;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Random;
 
 /**
  * Creates an on disk sample repository with some generated content and starts a
@@ -94,7 +95,7 @@ public class SampleTestRepository {
 		String gitdirName = "test" + System.currentTimeMillis()
 				+ Constants.DOT_GIT;
 		File gitdir = new File(trash, gitdirName).getCanonicalFile();
-		Repository db = new Repository(gitdir);
+		Repository db = new FileRepository(gitdir);
 		assertFalse(gitdir.exists());
 		db.create();
 		return new TestRepository(db);

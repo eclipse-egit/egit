@@ -196,10 +196,10 @@ public class CommitOperation implements IEGitOperation {
 
 			Entry idxEntry = index.getEntry(string);
 			if (notIndexed.contains(file)) {
-				File thisfile = new File(repositoryMapping.getWorkDir(),
+				File thisfile = new File(repositoryMapping.getWorkTree(),
 						idxEntry.getName());
 				if (!thisfile.isFile()) {
-					index.remove(repositoryMapping.getWorkDir(), thisfile);
+					index.remove(repositoryMapping.getWorkTree(), thisfile);
 					// TODO is this the right Location?
 					if (GitTraceLocation.CORE.isActive())
 						GitTraceLocation.getTrace().trace(
@@ -211,8 +211,8 @@ public class CommitOperation implements IEGitOperation {
 				}
 			}
 			if (notTracked.contains(file)) {
-				idxEntry = index.add(repositoryMapping.getWorkDir(), new File(
-						repositoryMapping.getWorkDir(), repoRelativePath));
+				idxEntry = index.add(repositoryMapping.getWorkTree(), new File(
+						repositoryMapping.getWorkTree(), repoRelativePath));
 
 			}
 

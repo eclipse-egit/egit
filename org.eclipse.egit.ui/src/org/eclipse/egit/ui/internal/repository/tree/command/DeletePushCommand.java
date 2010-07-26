@@ -17,7 +17,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.repository.tree.PushNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
-import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.lib.StoredConfig;
 
 /**
  * Deletes the Push
@@ -26,7 +26,7 @@ public class DeletePushCommand extends RepositoriesViewCommandHandler<PushNode> 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		PushNode node = getSelectedNodes(event).get(0);
 		RemoteNode remote = (RemoteNode) node.getParent();
-		RepositoryConfig config = node.getRepository().getConfig();
+		StoredConfig config = node.getRepository().getConfig();
 		config.unset("remote", remote.getObject(), "pushurl"); //$NON-NLS-1$ //$NON-NLS-2$
 		config.unset("remote", remote.getObject(), "push"); //$NON-NLS-1$ //$NON-NLS-2$
 		try {

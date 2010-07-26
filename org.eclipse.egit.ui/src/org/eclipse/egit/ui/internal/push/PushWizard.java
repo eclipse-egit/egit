@@ -33,7 +33,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryConfig;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
@@ -151,7 +151,7 @@ public class PushWizard extends Wizard {
 	private void saveRefSpecs() {
 		final RemoteConfig rc = repoPage.getSelection().getConfig();
 		rc.setPushRefSpecs(refSpecPage.getRefSpecs());
-		final RepositoryConfig config = localDb.getConfig();
+		final StoredConfig config = localDb.getConfig();
 		rc.update(config);
 		try {
 			config.save();

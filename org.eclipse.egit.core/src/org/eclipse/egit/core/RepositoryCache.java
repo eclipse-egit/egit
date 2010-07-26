@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 
 /**
  * Central cache for Repository instances
@@ -48,7 +49,7 @@ public class RepositoryCache {
 		Reference<Repository> r = repositoryCache.get(gitDir);
 		Repository d = r != null ? r.get() : null;
 		if (d == null) {
-			d = new Repository(gitDir);
+			d = new FileRepository(gitDir);
 			repositoryCache.put(gitDir, new WeakReference<Repository>(d));
 		}
 		prune(repositoryCache);

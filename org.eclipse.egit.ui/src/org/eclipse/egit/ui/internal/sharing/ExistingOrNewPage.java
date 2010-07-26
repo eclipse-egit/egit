@@ -35,6 +35,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -150,7 +151,7 @@ class ExistingOrNewPage extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				File gitDir = new File(repositoryToCreate.getText(),Constants.DOT_GIT);
 				try {
-					Repository repository = new Repository(gitDir);
+					Repository repository = new FileRepository(gitDir);
 					repository.create();
 					for (IProject project : getProjects().keySet()) {
 						// If we don't refresh the project directories right

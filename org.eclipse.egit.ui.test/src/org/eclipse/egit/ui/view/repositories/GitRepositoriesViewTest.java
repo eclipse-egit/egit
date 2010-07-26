@@ -149,7 +149,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 	public void testExpandWorkDir() throws Exception {
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		Repository myRepository = lookupRepository(repositoryFile);
-		List<String> children = Arrays.asList(myRepository.getWorkDir().list());
+		List<String> children = Arrays.asList(myRepository.getWorkTree().list());
 		List<String> treeChildren = myRepoViewUtil.getWorkdirItem(tree,
 				repositoryFile).expand().getNodes();
 		assertTrue(children.containsAll(treeChildren)

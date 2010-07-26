@@ -126,7 +126,7 @@ public class GitSelectWizardPage extends WizardPage {
 		if (node != null && node.getType() == RepositoryTreeNodeType.FOLDER)
 			return ((File) node.getObject()).getPath();
 		if (node != null && node.getType() == RepositoryTreeNodeType.WORKINGDIR)
-			return node.getRepository().getWorkDir().getPath();
+			return node.getRepository().getWorkTree().getPath();
 		return null;
 	}
 
@@ -260,7 +260,7 @@ public class GitSelectWizardPage extends WizardPage {
 				RepositoryTreeNode parentNode = node;
 
 				IPath fullPath = new Path(initialPath);
-				IPath workdirPath = new Path(initialRepository.getWorkDir()
+				IPath workdirPath = new Path(initialRepository.getWorkTree()
 						.getPath());
 				if (workdirPath.isPrefixOf(fullPath)) {
 					IPath relPath = fullPath.removeFirstSegments(workdirPath

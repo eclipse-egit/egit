@@ -86,7 +86,7 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 					final GitIndex index = repository.getIndex();
 					final File file = new File(baseFile.getLocation()
 							.toString());
-					index.add(mapping.getWorkDir(), file, newContent);
+					index.add(mapping.getWorkTree(), file, newContent);
 					index.write();
 				} catch (IOException e) {
 					Activator.handleError(

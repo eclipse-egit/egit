@@ -57,13 +57,13 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jgit.events.ListenerHandle;
+import org.eclipse.jgit.events.RefsChangedEvent;
+import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.IndexChangedEvent;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.RefsChangedEvent;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryListener;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
@@ -110,7 +110,7 @@ import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 /** Graphical commit history viewer. */
-public class GitHistoryPage extends HistoryPage implements RepositoryListener {
+public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private static final String PREF_COMMENT_WRAP = UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP;
 
 	private static final String PREF_COMMENT_FILL = UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL;
@@ -145,6 +145,8 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 	private final List<BooleanPrefAction> actionsToDispose = new ArrayList<BooleanPrefAction>();
 
 	private final IPersistentPreferenceStore store = (IPersistentPreferenceStore) Activator.getDefault().getPreferenceStore();
+
+	private ListenerHandle myRefsChangedHandle;
 
 	/**
 	 * Determine if the input can be shown in this viewer.
@@ -439,7 +441,9 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 		attachContextMenu(fileViewer.getControl());
 		layout();
 
-		Repository.addAnyRepositoryChangedListener(this);
+		if (myRefsChangedHandle == null)
+			myRefsChangedHandle = Repository.getGlobalListenerList()
+					.addRefsChangedListener(this);
 
 		getSite().setSelectionProvider(revObjectSelectionProvider);
 	}
@@ -510,7 +514,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 
 	private Runnable refschangedRunnable;
 
-	public void refsChanged(final RefsChangedEvent e) {
+	public void onRefsChanged(final RefsChangedEvent e) {
 		if (e.getRepository() != db)
 			return;
 
@@ -538,10 +542,6 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 				getControl().getDisplay().asyncExec(refschangedRunnable);
 			}
 		}
-	}
-
-	public void indexChanged(final IndexChangedEvent e) {
-		// We do not use index information here now
 	}
 
 	private void finishContextMenu() {
@@ -826,7 +826,11 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 	}
 
 	public void dispose() {
-		Repository.removeAnyRepositoryChangedListener(this);
+		if (myRefsChangedHandle != null) {
+			myRefsChangedHandle.remove();
+			myRefsChangedHandle = null;
+		}
+
 		// dispose of the actions (the history framework doesn't do this for us)
 		for (BooleanPrefAction action: actionsToDispose)
 			action.dispose();
@@ -900,6 +904,10 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			return false;
 
 		db = null;
+		if (currentWalk != null) {
+			currentWalk.release();
+			currentWalk = null;
+		}
 
 		final ArrayList<String> paths = new ArrayList<String>(in.length);
 		for (final IResource r : in) {
@@ -941,9 +949,8 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			return false;
 		}
 
-		if (currentWalk == null || currentWalk.getRepository() != db
-				|| pathChange(pathFilters, paths) || headId != null
-				&& !headId.equals(currentHeadId)) {
+		if (currentWalk == null || pathChange(pathFilters, paths)
+				|| headId != null && !headId.equals(currentHeadId)) {
 			// TODO Do not dispose SWTWalk just because HEAD changed
 			// In theory we should be able to update the graph and
 			// not dispose of the SWTWalk, even if HEAD was reset to
@@ -980,7 +987,7 @@ public class GitHistoryPage extends HistoryPage implements RepositoryListener {
 			currentWalk.setTreeFilter(TreeFilter.ALL);
 			fileWalker.setFilter(TreeFilter.ANY_DIFF);
 		}
-		fileViewer.setTreeWalk(fileWalker);
+		fileViewer.setTreeWalk(db, fileWalker);
 		fileViewer.addSelectionChangedListener(commentViewer);
 		commentViewer.setTreeWalk(fileWalker);
 		commentViewer.setDb(db);

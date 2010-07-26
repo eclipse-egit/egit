@@ -50,10 +50,10 @@ import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryConfig;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.lib.TreeEntry;
+import org.eclipse.jgit.lib.UserConfig;
 import org.eclipse.jgit.lib.GitIndex.Entry;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.Team;
@@ -135,7 +135,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 		String author = null;
 		String committer = null;
 		if (repository != null) {
-			final RepositoryConfig config = repository.getConfig();
+			final UserConfig config = repository.getConfig().get(UserConfig.KEY);
 			author = config.getAuthorName();
 			final String authorEmail = config.getAuthorEmail();
 			author = author + " <" + authorEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
@@ -391,7 +391,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 			String repoRelativePath = map.getRepoRelativePath(resource);
 			Entry entry = index.getEntry(repoRelativePath);
 			if (entry != null)
-				return entry.isModified(map.getWorkDir());
+				return entry.isModified(map.getWorkTree());
 			return false;
 		} catch (UnsupportedEncodingException e) {
 			if (GitTraceLocation.UI.isActive())

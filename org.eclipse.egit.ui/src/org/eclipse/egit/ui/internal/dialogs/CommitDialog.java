@@ -517,8 +517,8 @@ public class CommitDialog extends Dialog {
 						index = repo.getIndex();
 						String repoRelativePath = map.getRepoRelativePath(commitItem.file);
 						Entry entry = index.getEntry(repoRelativePath);
-						if (entry != null && entry.isModified(map.getWorkDir())) {
-							entry.update(new File(map.getWorkDir(), entry.getName()));
+						if (entry != null && entry.isModified(map.getWorkTree())) {
+							entry.update(new File(map.getWorkTree(), entry.getName()));
 							if (!changedIndexes.contains(index))
 								changedIndexes.add(index);
 							commitItem.status = UIText.CommitDialog_StatusModified;
@@ -526,7 +526,7 @@ public class CommitDialog extends Dialog {
 							final Tree headTree = repo.mapTree(Constants.HEAD);
 							TreeEntry  headEntry = (headTree == null ? null : headTree.findBlobMember(repoRelativePath));
 							if (headEntry == null){
-								entry = index.add(map.getWorkDir(), new File(map.getWorkDir(), repoRelativePath));
+								entry = index.add(map.getWorkTree(), new File(map.getWorkTree(), repoRelativePath));
 								if (!changedIndexes.contains(index))
 									changedIndexes.add(index);
 								commitItem.status = UIText.CommitDialog_StatusAdded;
@@ -570,7 +570,7 @@ public class CommitDialog extends Dialog {
 				if (indexEntry == null) {
 					prefix = UIText.CommitDialog_StatusUntracked;
 				}
-				else if (indexEntry.isModified(repositoryMapping.getWorkDir()))
+				else if (indexEntry.isModified(repositoryMapping.getWorkTree()))
 					prefix = UIText.CommitDialog_StatusAddedIndexDiff;
 			} else if (indexEntry == null) {
 				prefix = UIText.CommitDialog_StatusRemoved;
@@ -578,12 +578,12 @@ public class CommitDialog extends Dialog {
 					&& !headEntry.getId().equals(indexEntry.getObjectId())) {
 				prefix = UIText.CommitDialog_StatusModified;
 
-				if (indexEntry.isModified(repositoryMapping.getWorkDir()))
+				if (indexEntry.isModified(repositoryMapping.getWorkTree()))
 					prefix = UIText.CommitDialog_StatusModifiedIndexDiff;
-			} else if (!new File(repositoryMapping.getWorkDir(), indexEntry
+			} else if (!new File(repositoryMapping.getWorkTree(), indexEntry
 					.getName()).isFile()) {
 				prefix = UIText.CommitDialog_StatusRemovedNotStaged;
-			} else if (indexEntry.isModified(repositoryMapping.getWorkDir())) {
+			} else if (indexEntry.isModified(repositoryMapping.getWorkTree())) {
 				prefix = UIText.CommitDialog_StatusModifiedNotStaged;
 			}
 

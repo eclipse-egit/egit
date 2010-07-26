@@ -38,7 +38,7 @@ import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.RemoteRefUpdate.Status;
@@ -105,7 +105,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 				"refs/heads/master", "origin");
 		clop.run(null);
 
-		repository2 = new TestRepository(new Repository(new File(workdir2,
+		repository2 = new TestRepository(new FileRepository(new File(workdir2,
 				Constants.DOT_GIT)));
 		// we push to branch "test" of repository2
 		RefUpdate createBranch = repository2.getRepository().updateRef(
@@ -147,7 +147,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 		IFile[] fileArr = files.toArray(new IFile[files.size()]);
 
 		// TODO This should be removed once we replace GitIndex with DirCache
-		// The following wait is currently needed on file 
+		// The following wait is currently needed on file
 		// systems with low time stamp accuracy or a buggy
 		// java.io.File.lastModified.
 		Thread.sleep(1000);
