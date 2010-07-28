@@ -322,7 +322,7 @@ public class RepositorySelectionPage extends WizardPage {
 					}
 				}
 			} catch (URISyntaxException e) {
-				preset = null;
+				// ignore, preset is null
 			}
 			clippy.dispose();
 		}
