@@ -129,7 +129,8 @@ public class TestUtils {
 			} else {
 				folder = folder.getFolder(filePath.segment(i));
 			}
-			folder.create(false, true, null);
+			if (!folder.exists())
+				folder.create(false, true, null);
 		}
 		IFile file = project.getFile(filePath);
 		file.create(new ByteArrayInputStream(content.getBytes(project
