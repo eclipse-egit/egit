@@ -22,6 +22,12 @@ public class UIText extends NLS {
 	public static String WizardProjectsImportPage_filterText;
 
 	/** */
+	public static String AbstractHitoryViewCommandHandler_CanNotGetCommitMessage;
+
+	/** */
+	public static String AbstractHitoryViewCommandHandler_NoRepositoryMessage;
+
+	/** */
 	public static String Activator_refreshFailed;
 
 	/** */
@@ -368,6 +374,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RepositorySearchDialog_SomeDirectoriesHiddenMessage;
+
+	/** */
+	public static String CheckoutHandler_SelectBranchMessage;
+
+	/** */
+	public static String CheckoutHandler_SelectBranchTitle;
 
 	/** */
 	public static String CompareWithIndexAction_FileNotInIndex;
