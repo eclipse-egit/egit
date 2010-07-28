@@ -22,6 +22,7 @@ public class GitAdapterFactory implements IAdapterFactory {
 
 	private Object historyPageSource = new GitHistoryPageSource();
 
+	@SuppressWarnings("unchecked")
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
 		if (adapterType.isAssignableFrom(IHistoryPageSource.class)) {
 			return historyPageSource;

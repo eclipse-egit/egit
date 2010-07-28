@@ -58,6 +58,7 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		sys_white = d.getSystemColor(SWT.COLOR_WHITE);
 	}
 
+	@SuppressWarnings("unchecked")
 	void paint(final Event event) {
 		g = event.gc;
 		cellX = event.x;

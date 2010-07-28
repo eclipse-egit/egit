@@ -140,19 +140,19 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 * are cached in the registries. This avoids having to syncExec when
 	 * decorating since we ensure that the fonts and colors are pre-created.
 	 *
-	 * @param fonts fonts ids to cache
-	 * @param colors color ids to cache
+	 * @param actFonts fonts ids to cache
+	 * @param actColors color ids to cache
 	 */
-	private void ensureFontAndColorsCreated(final String[] fonts, final String[] colors) {
+	private void ensureFontAndColorsCreated(final String[] actFonts, final String[] actColors) {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
 				ITheme theme  = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
-				for (int i = 0; i < colors.length; i++) {
-					theme.getColorRegistry().get(colors[i]);
+				for (int i = 0; i < actColors.length; i++) {
+					theme.getColorRegistry().get(actColors[i]);
 
 				}
-				for (int i = 0; i < fonts.length; i++) {
-					theme.getFontRegistry().get(fonts[i]);
+				for (int i = 0; i < actFonts.length; i++) {
+					theme.getFontRegistry().get(actFonts[i]);
 				}
 			}
 		});
@@ -679,7 +679,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 
 	// -------- Helper methods --------
 
-	private static IResource getResource(Object element) {
+	private static IResource getResource(Object actElement) {
+		Object element = actElement;
 		if (element instanceof ResourceMapping) {
 			element = ((ResourceMapping) element).getModelObject();
 		}
