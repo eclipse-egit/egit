@@ -24,12 +24,40 @@ import org.eclipse.jgit.lib.StoredConfig;
  */
 public class DeleteFetchCommand extends
 		RepositoriesViewCommandHandler<FetchNode> {
+
+	private static final String REMOTE = "remote"; //$NON-NLS-1$
+
+	private static final String FETCH = "fetch"; //$NON-NLS-1$
+
+	private static final String PUSH = "push"; //$NON-NLS-1$
+
+	private static final String URL = "url"; //$NON-NLS-1$
+
+	private static final String PUSHURL = "pushurl"; //$NON-NLS-1$
+
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		FetchNode node = getSelectedNodes(event).get(0);
 		RemoteNode remote = (RemoteNode) node.getParent();
+
 		StoredConfig config = node.getRepository().getConfig();
-		config.unset("remote", remote.getObject(), "url"); //$NON-NLS-1$ //$NON-NLS-2$
-		config.unset("remote", remote.getObject(), "fetch"); //$NON-NLS-1$//$NON-NLS-2$
+		String fetchUrl = config.getString(REMOTE, remote.getObject(), URL);
+		config.unset(REMOTE, remote.getObject(), FETCH);
+		config.unset(REMOTE, remote.getObject(), URL);
+		// the push URL may still be needed for fetch
+		if (fetchUrl != null) {
+			boolean hasPush = config.getStringList(REMOTE, remote.getObject(),
+					PUSH).length > 0;
+			if (hasPush) {
+				String[] pushurls = config.getStringList(REMOTE, remote
+						.getObject(), PUSHURL);
+				// if there are not specific push urls,
+				// copy the former fetch url into push url
+				if (pushurls.length == 0)
+					config.setString(REMOTE, remote.getObject(), PUSHURL,
+							fetchUrl);
+			}
+		}
+
 		try {
 			config.save();
 		} catch (IOException e1) {
