@@ -507,6 +507,7 @@
       </actionSet>
    </extension>
    <extension
+         name="The shared commands"
          point="org.eclipse.ui.commands">
       <command
             defaultHandler="org.eclipse.egit.ui.internal.commands.ShareSingleProjectCommand"
@@ -519,6 +520,10 @@
                optional="false"
                values="org.eclipse.egit.ui.internal.commands.ProjectNameParameterValues">
          </commandParameter>
+      </command>
+      <command
+            id="org.eclipse.egit.ui.CheckoutCommand"
+            name="%CheckoutCommand">
       </command>
    </extension>
    <extension
@@ -707,7 +712,7 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewCheckout"
+               commandId="org.eclipse.egit.ui.CheckoutCommand"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -1239,6 +1244,7 @@
       </menuContribution>
    </extension>
    <extension
+         name="The commands for the repositories view"
          point="org.eclipse.ui.commands">
       <command
             id="org.eclipse.egit.ui.RepositoriesViewAddRepository"
@@ -1547,5 +1553,44 @@
                   id="org.eclipse.egit.ui.team.Track"
                   name="%TrackAction_label">
       </command>
+   </extension>
+   <extension
+         name="The handlers for shared commands"
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="org.eclipse.egit.ui.CheckoutCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.CheckoutCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+                  </instanceof>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.CheckoutCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.history.command.CheckoutHandler"></class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.history.SWTCommit">
+                  </instanceof>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
    </extension>
 </plugin>
