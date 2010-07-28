@@ -35,6 +35,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
+import org.eclipse.egit.ui.internal.commands.SharedCommands;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
@@ -106,6 +107,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
+import org.eclipse.ui.menus.CommandContributionItem;
+import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
@@ -134,6 +137,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private IAction viewVersionsAction = new ViewVersionsAction();
 
 	private IAction compareModeAction;
+
+	private IContributionItem checkoutItem;
 
 	private boolean compareMode = false;
 
@@ -556,6 +561,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private void attachContextMenu(final Control c) {
 		c.setMenu(popupMgr.createContextMenu(c));
 
+		if (checkoutItem == null) {
+			CommandContributionItemParameter p = new CommandContributionItemParameter(
+					getSite(), SharedCommands.CHECKOUT,
+					SharedCommands.CHECKOUT, CommandContributionItem.STYLE_PUSH);
+			checkoutItem = new CommandContributionItem(p);
+		}
+
 		if (c == graph.getControl()) {
 
 			c.addMenuDetectListener(new MenuDetectListener() {
@@ -567,9 +579,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 							compareVersionsAction));
 					popupMgr.remove(new ActionContributionItem(
 							viewVersionsAction));
+					popupMgr.remove(checkoutItem);
 					int size = ((IStructuredSelection) revObjectSelectionProvider
 							.getSelection()).size();
 					if (size == 1) {
+						popupMgr.add(checkoutItem);
 						popupMgr.add(new Separator());
 						popupMgr.add(createPatchAction);
 						createPatchAction.setEnabled(createPatchAction.isEnabled());
