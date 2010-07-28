@@ -122,6 +122,7 @@ class CommitFileDiffViewer extends TableViewer {
 		setSelection(new StructuredSelection(el));
 	}
 
+	@SuppressWarnings("unchecked")
 	void doCopy() {
 		final ISelection s = getSelection();
 		if (s.isEmpty() || !(s instanceof IStructuredSelection))

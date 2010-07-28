@@ -561,7 +561,7 @@
                      value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
                </instanceof>
                <instanceof
-                     value="org.eclipse.core.internal.resources.WorkspaceRoot">
+                     value="org.eclipse.core.resources.IWorkspaceRoot">
                </instanceof>
             </or>
          </triggerPoints>

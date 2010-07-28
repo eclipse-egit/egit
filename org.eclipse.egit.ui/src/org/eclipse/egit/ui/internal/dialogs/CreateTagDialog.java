@@ -477,10 +477,10 @@ public class CreateTagDialog extends Dialog {
 			@Override
 			public boolean select(Viewer viewer, Object parentElement,
 					Object element) {
-				Tag tag = (Tag) element;
+				Tag actTag = (Tag) element;
 
 				if (tagNamePattern != null)
-					return tagNamePattern.matcher(tag.getTag()).find();
+					return tagNamePattern.matcher(actTag.getTag()).find();
 				else
 					return true;
 			}
