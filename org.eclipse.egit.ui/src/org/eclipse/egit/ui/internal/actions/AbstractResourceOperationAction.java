@@ -54,11 +54,11 @@ public abstract class AbstractResourceOperationAction implements IObjectActionDe
 
 	/**
 	 * Instantiate an operation on an action on provided objects.
-	 * @param selection
+	 * @param actSelection
 	 *
 	 * @return a {@link IEGitOperation} for invoking this operation later on
 	 */
-	protected abstract IEGitOperation createOperation(final List<IResource> selection);
+	protected abstract IEGitOperation createOperation(final List<IResource> actSelection);
 
 	/**
 	 * @return the name of the execution Job
