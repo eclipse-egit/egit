@@ -168,7 +168,7 @@ public class AddOperationTest extends GitTestCase {
 				"sub/a.txt", "some text");
 		IFile file2 = testUtils.addFileToProject(project.getProject(),
 				"sub/b.txt", "some text");
-		file2.setDerived(true, null);
+		file2.setDerived(true);
 
 		resources.add(project.getProject().getFolder("sub"));
 		new AddToIndexOperation(resources).execute(null);
@@ -185,7 +185,7 @@ public class AddOperationTest extends GitTestCase {
 				"sub/a.txt", "some text");
 		IFile file2 = testUtils.addFileToProject(project.getProject(),
 				"sub/b.txt", "some text");
-		file2.setDerived(true, null);
+		file2.setDerived(true);
 
 		resources.add(project.getProject());
 		new AddToIndexOperation(resources).execute(null);
