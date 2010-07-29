@@ -23,24 +23,18 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.synchronize.GitBlobResourceVariant;
-import org.eclipse.egit.core.synchronize.GitFolderResourceVariant;
-import org.eclipse.egit.core.synchronize.GitResourceVariant;
+import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.variants.IResourceVariant;
 import org.eclipse.team.core.variants.IResourceVariantComparator;
-import org.eclipse.team.core.variants.ResourceVariantByteStore;
 
 class GitResourceVariantComparator implements IResourceVariantComparator {
 
 	private final GitSynchronizeDataSet gsd;
-	private final ResourceVariantByteStore store;
 
-	public GitResourceVariantComparator(GitSynchronizeDataSet dataSet, ResourceVariantByteStore store) {
+	GitResourceVariantComparator(GitSynchronizeDataSet dataSet) {
 		gsd = dataSet;
-		this.store = store;
 	}
 
 	public boolean compare(IResource local, IResourceVariant remote) {
@@ -56,8 +50,8 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 			InputStream stream = null;
 			InputStream remoteStream = null;
 			try {
-				remoteStream = remote.getStorage(
-						new NullProgressMonitor()).getContents();
+				remoteStream = remote.getStorage(new NullProgressMonitor())
+						.getContents();
 				stream = getLocal(local);
 				byte[] remoteBytes = new byte[8096];
 				byte[] bytes = new byte[8096];
@@ -94,9 +88,8 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 				return false;
 			}
 
-			GitFolderResourceVariant gitVariant = (GitFolderResourceVariant) remote;
-			return local.getFullPath().equals(
-					gitVariant.getResource().getFullPath());
+			GitResourceVariant gitVariant = (GitResourceVariant) remote;
+			return local.getFullPath().equals(gitVariant.getFullPath());
 		}
 		return false;
 	}
@@ -104,26 +97,9 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 	public boolean compare(IResourceVariant base, IResourceVariant remote) {
 		GitResourceVariant gitBase = (GitResourceVariant) base;
 		GitResourceVariant gitRemote = (GitResourceVariant) remote;
-		IResource resourceBase = gitBase.getResource();
-		IResource resourceRemote = gitRemote.getResource();
 
-		if (!resourceBase.exists() || !resourceRemote.exists()) {
-			return false;
-		}
-
-		if (base.isContainer()) {
-			if (remote.isContainer()) {
-				return resourceBase.getFullPath().equals(
-						resourceRemote.getFullPath());
-			}
-			return false;
-		} else if (remote.isContainer()) {
-			return false;
-		}
-
-		GitBlobResourceVariant baseBlob = (GitBlobResourceVariant) base;
-		GitBlobResourceVariant remoteBlob = (GitBlobResourceVariant) remote;
-		return baseBlob.getId().equals(remoteBlob.getId());
+		boolean exists = gitBase.exists() && gitRemote.exists();
+		return exists && gitBase.getObjectId().equals(gitRemote.getObjectId());
 	}
 
 	public boolean isThreeWay() {
@@ -131,22 +107,22 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 	}
 
 	private InputStream getLocal(IResource resource) throws CoreException {
-		if (gsd.getData(resource.getProject()).shouldIncludeLocal()) {
+		if (gsd.getData(resource.getProject().getName()).shouldIncludeLocal())
 			return ((IFile) resource).getContents();
-		} else {
+		else
 			try {
-				byte[] bytes = store.getBytes(resource);
-				return new ByteArrayInputStream(bytes != null ? bytes : new byte[0]);
+				if (resource.getType() == IResource.FILE)
+					return ((IFile) resource).getContents();
+				else
+					return new ByteArrayInputStream(null);
 			} catch (TeamException e) {
 				throw new CoreException(e.getStatus());
 			}
-		}
-
 	}
 
 	private void logException(Exception e) {
-		IStatus error = new Status(IStatus.ERROR, Activator
-				.getPluginId(), e.getMessage(), e);
+		IStatus error = new Status(IStatus.ERROR, Activator.getPluginId(),
+				e.getMessage(), e);
 		Activator.getDefault().getLog().log(error);
 	}
 
