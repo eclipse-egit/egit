@@ -99,13 +99,6 @@
                value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
          </filter>
          <action
-               class="org.eclipse.egit.ui.internal.actions.Track"
-               icon="$nl$/icons/obj16/track.gif"
-               id="org.eclipse.egit.ui.internal.actions.Track"
-               label="%TrackAction_label"
-               menubarPath="team.main/group9"
-               tooltip="%TrackAction_tooltip"/>
-         <action
                class="org.eclipse.egit.ui.internal.actions.Untrack"
                icon="$nl$/icons/obj16/untrack.gif"
                id="org.eclipse.egit.ui.internal.actions.Untrack"
@@ -119,13 +112,6 @@
                label="%AssumeUnchangedAction_label"
                menubarPath="team.main/group9"
                tooltip="%AssumeUnchangedAction_tooltip"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.Update"
-               icon="$nl$/icons/obj16/refresh.gif"
-               id="org.eclipse.egit.ui.internal.actions.Update"
-               label="%UpdateAction_label"
-               menubarPath="team.main/group4"
-               tooltip="%UpdateAction_tooltip"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.CommitAction"
                icon="$nl$/icons/obj16/commit.gif"
@@ -492,17 +478,6 @@
 		       menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
 		       toolbarPath="Normal/additions"
 		       tooltip="%ResetAction_tooltip">
-		</action>
-		<action
-		       class="org.eclipse.egit.ui.internal.actions.Track"
-		       disabledIcon="icons/toolbar/trackd.png"
-		       icon="icons/toolbar/tracke.png"
-		       id="org.eclipse.egit.ui.trackaction"
-		       label="%TrackAction_label"
-		       style="push"
-		       menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
-		       toolbarPath="Normal/additions"
-		       tooltip="%TrackAction_tooltip">
 		</action>
       </actionSet>
    </extension>

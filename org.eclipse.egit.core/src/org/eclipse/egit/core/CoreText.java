@@ -26,15 +26,6 @@ public class CoreText extends NLS {
 	public static String AssumeUnchangedOperation_writingIndex;
 
 	/** */
-	public static String UpdateOperation_writingIndex;
-
-	/** */
-	public static String UpdateOperation_updating;
-
-	/** */
-	public static String UpdateOperation_failed;
-
-	/** */
 	public static String CommitFileRevision_errorLookingUpPath;
 
 	/** */
@@ -81,12 +72,6 @@ public class CoreText extends NLS {
 
 	/** */
 	public static String DisconnectProviderOperation_disconnecting;
-
-	/** */
-	public static String AddOperation_adding;
-
-	/** */
-	public static String AddOperation_failed;
 
 	/** */
 	public static String BlobStorage_blobNotFound;

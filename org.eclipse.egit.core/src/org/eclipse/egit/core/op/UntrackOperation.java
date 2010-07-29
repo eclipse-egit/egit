@@ -73,7 +73,7 @@ public class UntrackOperation implements IEGitOperation {
 		edits.clear();
 		mappings.clear();
 
-		m.beginTask(CoreText.AddOperation_adding, rsrcList.size() * 200);
+		m.beginTask(CoreText.UntrackOperation_adding, rsrcList.size() * 200);
 		try {
 			for (IResource obj : rsrcList) {
 				remove(obj);

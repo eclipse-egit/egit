@@ -1603,9 +1603,6 @@ public class UIText extends NLS {
 	public static String IgnoreAction_error;
 
 	/** */
-	public static String Track_addToVersionControl;
-
-	/** */
 	public static String RepositoriesView_ActionCanceled_Message;
 
 	/** */
