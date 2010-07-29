@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2010, Stefan Lay <stefan.lay@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,13 +9,10 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.IdentityHashMap;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -23,19 +21,18 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.jgit.lib.GitIndex;
-import org.eclipse.jgit.lib.GitIndex.Entry;
+import org.eclipse.jgit.api.AddCommand;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.NoFilepatternException;
 import org.eclipse.jgit.lib.Repository;
 
 /**
  */
 public class AddToIndexOperation implements IEGitOperation {
 	private final Collection<? extends IResource> rsrcList;
-	private final Collection<IFile> notAddedFiles;
-
-	private final IdentityHashMap<RepositoryMapping, Object> mappings;
 
 	/**
 	 * Create a new operation to add files to the Git index
@@ -46,8 +43,6 @@ public class AddToIndexOperation implements IEGitOperation {
 	 */
 	public AddToIndexOperation(final Collection<? extends IResource> rsrcs) {
 		rsrcList = rsrcs;
-		mappings = new IdentityHashMap<RepositoryMapping, Object>();
-		notAddedFiles = new ArrayList<IFile>();
 	}
 
 	/* (non-Javadoc)
@@ -59,31 +54,24 @@ public class AddToIndexOperation implements IEGitOperation {
 			monitor = new NullProgressMonitor();
 		else
 			monitor = m;
-		Collection<GitIndex> changedIndexes = new ArrayList<GitIndex>();
-		// GitIndex can not be updated if it contains staged entries
-		Collection<GitIndex> indexesWithStagedEntries = new ArrayList<GitIndex>();
+
+		Map<RepositoryMapping, AddCommand> addCommands = new HashMap<RepositoryMapping, AddCommand>();
 		try {
 			for (IResource obj : rsrcList) {
-				if (obj instanceof IFile) {
-					addToIndex((IFile) obj, changedIndexes,
-							indexesWithStagedEntries);
-				}
+				addToCommand(obj, addCommands);
 				monitor.worked(200);
 			}
-			if (!changedIndexes.isEmpty()) {
-				for (GitIndex idx : changedIndexes) {
-					idx.write();
-				}
 
+			for (AddCommand command : addCommands.values()) {
+				command.call();
 			}
 		} catch (RuntimeException e) {
 			throw new CoreException(Activator.error(CoreText.AddToIndexOperation_failed, e));
-		} catch (IOException e) {
+		} catch (NoFilepatternException e) {
 			throw new CoreException(Activator.error(CoreText.AddToIndexOperation_failed, e));
 		} finally {
-			for (final RepositoryMapping rm : mappings.keySet())
+			for (final RepositoryMapping rm : addCommands.keySet())
 				rm.fireRepositoryChanged();
-			mappings.clear();
 			monitor.done();
 		}
 	}
@@ -95,56 +83,23 @@ public class AddToIndexOperation implements IEGitOperation {
 		return new MultiRule(rsrcList.toArray(new IResource[rsrcList.size()]));
 	}
 
-	/**
-	 * @return returns the files that could not be added to the index
-	 * because there are unmerged entries
-	 */
-	public Collection<IFile> getNotAddedFiles() {
-		return notAddedFiles;
-	}
-
-	private void addToIndex(IFile file,
-			Collection<GitIndex> changedIndexes,
-			Collection<GitIndex> indexesWithUnmergedEntries) throws IOException {
-		IProject project = file.getProject();
+	private void addToCommand(IResource resource, Map<RepositoryMapping, AddCommand> addCommands) {
+		IProject project = resource.getProject();
 		RepositoryMapping map = RepositoryMapping.getMapping(project);
-		Repository repo = map.getRepository();
-		GitIndex index = null;
-		index = repo.getIndex();
-		Entry entry = index.getEntry(map.getRepoRelativePath(file));
-		if (entry == null)
-			return;
-		if (indexesWithUnmergedEntries.contains(index)) {
-			notAddedFiles.add(file);
-			return;
-		} else {
-			if (!canUpdateIndex(index)) {
-				indexesWithUnmergedEntries.add(index);
-				notAddedFiles.add(file);
-				return;
-			}
+		AddCommand command = addCommands.get(map);
+		if (command == null) {
+			Repository repo = map.getRepository();
+			Git git = new Git(repo);
+			AdaptableFileTreeIterator it =
+				new AdaptableFileTreeIterator(repo.getWorkTree(),
+						resource.getWorkspace().getRoot());
+			command = git.add().setWorkingTreeIterator(it);
+			addCommands.put(map, command);
 		}
-		if (entry.isModified(map.getWorkTree())) {
-			entry.update(new File(map.getWorkTree(), entry.getName()));
-			if (!changedIndexes.contains(index))
-				changedIndexes.add(index);
-		}
-	}
-
-	/**
-	 * The method checks if the given index can be updated. The index can be
-	 * updated if it does not contain entries with stage !=0.
-	 *
-	 * @param index
-	 * @return true if the given index can be updated
-	 */
-	private static boolean canUpdateIndex(GitIndex index) {
-		Entry[] members = index.getMembers();
-		for (int i = 0; i < members.length; i++) {
-			if (members[i].getStage() != 0)
-				return false;
-		}
-		return true;
+		String filepattern = map.getRepoRelativePath(resource);
+		if ("".equals(filepattern)) //$NON-NLS-1$
+			filepattern = "."; //$NON-NLS-1$
+		command.addFilepattern(filepattern);
 	}
 
 }

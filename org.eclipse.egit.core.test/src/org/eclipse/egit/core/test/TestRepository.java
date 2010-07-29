@@ -24,6 +24,7 @@ import org.eclipse.jgit.api.JGitInternalException;
 import org.eclipse.jgit.api.NoHeadException;
 import org.eclipse.jgit.api.NoMessageException;
 import org.eclipse.jgit.api.WrongRepositoryStateException;
+import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.errors.UnmergedPathException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GitIndex;
@@ -204,9 +205,27 @@ public class TestRepository {
 	}
 
 	public boolean inIndex(String path) throws IOException {
+//		String repoPath = getRepoRelativePath(path);
+//		GitIndex index = repository.getIndex();
+//		return index.getEntry(repoPath) != null;
 		String repoPath = getRepoRelativePath(path);
-		GitIndex index = repository.getIndex();
-		return index.getEntry(repoPath) != null;
+		DirCache dc = DirCache.read(repository.getIndexFile(), repository.getFS());
+
+		return dc.getEntry(repoPath) != null;
+	}
+
+	public long lastModifiedInIndex(String path) throws IOException {
+		String repoPath = getRepoRelativePath(path);
+		DirCache dc = DirCache.read(repository.getIndexFile(), repository.getFS());
+
+		return dc.getEntry(repoPath).getLastModified();
+	}
+
+	public int getDirCacheEntryLength(String path) throws IOException {
+		String repoPath = getRepoRelativePath(path);
+		DirCache dc = DirCache.read(repository.getIndexFile(), repository.getFS());
+
+		return dc.getEntry(repoPath).getLength();
 	}
 
 	public String getRepoRelativePath(String path) {

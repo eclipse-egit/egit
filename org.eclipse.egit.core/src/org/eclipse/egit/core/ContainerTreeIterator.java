@@ -27,6 +27,7 @@ import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.util.FS;
+import org.eclipse.team.core.Team;
 
 /**
  * Adapts an Eclipse {@link IContainer} for use in a <code>TreeWalk</code>.
@@ -144,6 +145,21 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		for (int i = 0; i < r.length; i++)
 			r[i] = new ResourceEntry(all[i]);
 		return r;
+	}
+
+	@Override
+	public boolean isEntryIgnored() throws IOException {
+		return super.isEntryIgnored() ||
+			isEntryIgnoredByTeamProvider(getResourceEntry().getResource());
+	}
+
+	private boolean isEntryIgnoredByTeamProvider(IResource resource) {
+		if (resource instanceof IWorkspaceRoot)
+			return false;
+		if (Team.isIgnoredHint(resource))
+			return true;
+		return isEntryIgnoredByTeamProvider(resource.getParent());
+
 	}
 
 	/**
