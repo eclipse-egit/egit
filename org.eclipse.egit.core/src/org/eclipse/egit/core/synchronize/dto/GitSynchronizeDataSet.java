@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 
 /**
  *
@@ -24,14 +23,14 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 
 	private final Set<GitSynchronizeData> gsd;
 
-	private final Map<IProject, GitSynchronizeData> projectMapping;
+	private final Map<String, GitSynchronizeData> projectMapping;
 
 	/**
 	 * Constructs GitSynchronizeDataSet.
 	 */
 	public GitSynchronizeDataSet() {
 		gsd = new HashSet<GitSynchronizeData>();
-		projectMapping = new HashMap<IProject, GitSynchronizeData>();
+		projectMapping = new HashMap<String, GitSynchronizeData>();
 	}
 
 	/**
@@ -50,7 +49,7 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 	public void add(GitSynchronizeData data) {
 		gsd.add(data);
 		for (IProject proj : data.getProjects()) {
-			projectMapping.put(proj, data);
+			projectMapping.put(proj.getName(), data);
 		}
 	}
 
@@ -63,11 +62,19 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 	}
 
 	/**
+	 * @param projectName
+	 * @return <code>null</code> if project does not have corresponding data
+	 */
+	public GitSynchronizeData getData(String projectName) {
+		return projectMapping.get(projectName);
+	}
+
+	/**
 	 * @param project
 	 * @return <code>null</code> if project does not have corresponding data
 	 */
 	public GitSynchronizeData getData(IProject project) {
-		return projectMapping.get(project);
+		return projectMapping.get(project.getName());
 	}
 
 	public Iterator<GitSynchronizeData> iterator() {
@@ -77,12 +84,12 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 	/**
 	 * @return list of all resources
 	 */
-	public IResource[] getAllResources() {
-		Set<IResource> resource = new HashSet<IResource>();
+	public IProject[] getAllProjects() {
+		Set<IProject> resource = new HashSet<IProject>();
 		for (GitSynchronizeData data : gsd) {
 			resource.addAll(data.getProjects());
 		}
-		return resource.toArray(new IResource[resource.size()]);
+		return resource.toArray(new IProject[resource.size()]);
 	}
 
 	@Override
