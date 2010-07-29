@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALw3///zU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 15
+      },
+      "writtenOn": "2010-07-22T22:33:04Z",
+      "side": 1,
+      "message": "Unintended change?",
+      "revId": "eb7b5d5dcde9b5016e59962ad54a3796305c8e01",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALw3///y8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
         "patchSetId": 1
