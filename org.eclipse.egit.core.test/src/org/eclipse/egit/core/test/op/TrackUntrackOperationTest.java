@@ -22,7 +22,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.op.TrackOperation;
+import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.op.UntrackOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.test.DualRepositoryTestCase;
@@ -83,7 +83,7 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 
 		assertTrackedState(fileArr, false);
 
-		TrackOperation trop = new TrackOperation(fileArr);
+		AddToIndexOperation trop = new AddToIndexOperation(files);
 		trop.execute(new NullProgressMonitor());
 
 		assertTrackedState(fileArr, true);
@@ -112,9 +112,6 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 		final ArrayList<IContainer> containers = new ArrayList<IContainer>();
 		containers.add(project);
 
-		IContainer[] projectArr = containers.toArray(new IContainer[containers
-				.size()]);
-
 		final ArrayList<IFile> files = new ArrayList<IFile>();
 
 		project.accept(new IResourceVisitor() {
@@ -130,7 +127,7 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 
 		assertTrackedState(fileArr, false);
 
-		TrackOperation trop = new TrackOperation(projectArr);
+		AddToIndexOperation trop = new AddToIndexOperation(containers);
 		trop.execute(new NullProgressMonitor());
 
 		assertTrackedState(fileArr, true);

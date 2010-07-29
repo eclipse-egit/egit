@@ -25,10 +25,10 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.op.DisconnectProviderOperation;
-import org.eclipse.egit.core.op.TrackOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
@@ -342,8 +342,7 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 			throws Exception {
 		List<IResource> resources = new ArrayList<IResource>();
 		resources.add(mainJava.getResource());
-		IResource[] track = resources.toArray(new IResource[resources.size()]);
-		new TrackOperation(track).execute(null); // add resource to git
+		new AddToIndexOperation(resources).execute(null); // add resource to git
 		new Git(repo).commit().setMessage(commitMsg).call(); // make commit
 	}
 
