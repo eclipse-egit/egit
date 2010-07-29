@@ -11,9 +11,17 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
+import java.io.IOException;
+
 import org.eclipse.core.resources.IResource;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.errors.StopWalkException;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevCommitList;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.team.core.Team;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.synchronize.SyncInfo;
@@ -91,95 +99,122 @@ class GitSyncInfo extends SyncInfo {
 			GitResourceVariant base, GitResourceVariant remote) {
 		int description;
 
-		if (remote == null) {
+		if (remote == null)
 			description = CONFLICTING | DELETION | PSEUDO_CONFLICT;
-		} else {
-			if (comparator.compare(base, remote))
-				description = OUTGOING | DELETION;
-			else
-				description = CONFLICTING | CHANGE;
-		}
+		else if (comparator.compare(base, remote))
+			description = OUTGOING | DELETION;
+		else
+			description = CONFLICTING | CHANGE;
 
 		return description;
 	}
 
 	private int calculateDescrBasedOnGitData(IResource local,
-			GitResourceVariant base, GitResourceVariant remote) {
+			GitResourceVariant base, GitResourceVariant remote) throws TeamException {
 		int description = IN_SYNC;
 
-		if (base instanceof GitBlobResourceVariant) {
-			if (remote instanceof GitBlobResourceVariant) {
-				if (getComparator().compare(local, base)) {
-					GitBlobResourceVariant baseBlob = (GitBlobResourceVariant) base;
-					GitBlobResourceVariant remoteBlob = (GitBlobResourceVariant) remote;
+		if (!base.isContainer()) {
+			if (!remote.isContainer()) {
+				GitBlobResourceVariant baseBlob = (GitBlobResourceVariant) base;
+				GitBlobResourceVariant remoteBlob = (GitBlobResourceVariant) remote;
 
-					if (!baseBlob.getId().equals(remoteBlob.getId())) {
-						description = calculateDescBasedOnGitCommits(baseBlob,
-								remoteBlob);
-					}
-				} else {
+				ObjectId baseObjectId = baseBlob.getObjectId();
+				ObjectId remoteObjectId = remoteBlob.getObjectId();
+				if (getComparator().compare(local, base)) {
+					description = calculateDescBasedOnGitCommits(baseBlob,
+							remoteBlob);
+				} else if (baseObjectId.equals(remoteObjectId)) {
 					description = OUTGOING | CHANGE;
+				} else {
+					description = CONFLICTING | CHANGE;
 				}
 			} else {
 				// file in local, folder on remote branch
 				description = CONFLICTING | CHANGE;
 			}
-		} else if (base.isContainer()) {
-			if (remote.isContainer()) {
+		} else {
+			if (remote.isContainer())
 				description = compareTwoContainers(base, remote);
-			} else {
+			else
 				// folder in local, file in remote branch
 				description = CONFLICTING | CHANGE;
-			}
 		}
 
 		return description;
 	}
 
 	private int calculateDescBasedOnGitCommits(GitBlobResourceVariant baseBlob,
-			GitBlobResourceVariant remoteBlob) {
+			GitBlobResourceVariant remoteBlob) throws TeamException {
+		ObjectId baseId = baseBlob.getObjectId();
+		ObjectId remoteId = remoteBlob.getObjectId();
 
-		RevCommitList<RevCommit> baseList = baseBlob.getCommitList();
-		RevCommitList<RevCommit> remoteList = remoteBlob.getCommitList();
-		RevCommit recentRemoteCommit = remoteList.get(0);
-		RevCommit recentBaseCommit = baseList.get(0);
+		if (baseId.equals(remoteId))
+			return IN_SYNC;
+		else {
+			RevCommit remoteCommit = remoteBlob.getRevCommit();
+			RevCommit baseCommit = baseBlob.getRevCommit();
 
-		// TODO can we implement it better ?
-		for (RevCommit baseCommit : baseList) {
-			if (recentRemoteCommit.name().equals(baseCommit.name())) {
+			if (findCommit(baseBlob.getRepository(), baseCommit, remoteCommit))
 				return OUTGOING | CHANGE;
-			}
-		}
-
-		// TODO can we implement it better ?
-		for (RevCommit remoteCommit : remoteList) {
-			if (recentBaseCommit.name().equals(remoteCommit.name())) {
+			else if (findCommit(baseBlob.getRepository(), remoteCommit, baseCommit))
 				return INCOMING | CHANGE;
-			}
-		}
 
-		return CONFLICTING | CHANGE;
+			return CONFLICTING | CHANGE;
+		}
 	}
 
 	private int compareTwoContainers(GitResourceVariant base,
 			GitResourceVariant remote) {
 		final int description;
-		boolean baseExists = base.getResource().exists();
-		boolean remoteExists = remote.getResource().exists();
+		boolean baseExists = base.exists();
+		boolean remoteExists = remote.exists();
+		// IMPORTANT: remember that local resource exist
 
-		if (baseExists && remoteExists) {
-			// there are no changes
+		if (baseExists && remoteExists)
 			description = IN_SYNC;
-		} else if (baseExists && remoteExists) {
-			// folder doesn't exist locally but it exists in
-			// common accessor and remote
-			description = INCOMING | ADDITION;
-		} else {
-			// in all other cases
+		else if (!baseExists && !remoteExists)
+			description = OUTGOING | ADDITION;
+		else
 			description = CONFLICTING | CHANGE;
-		}
 
 		return description;
+	}
+
+	private boolean findCommit(Repository repo, RevCommit startCommit, RevCommit commitToBeFound)
+			throws TeamException {
+		RevWalk rw = new RevWalk(repo);
+		rw.reset();
+		rw.setRevFilter(new RevCommitFilter(commitToBeFound));
+
+		try {
+			rw.markStart(startCommit);
+
+			return rw.next() != null;
+		} catch (IOException e) {
+			throw new TeamException(e.getMessage(), e);
+		}
+
+	}
+
+	private final class RevCommitFilter extends RevFilter {
+
+		private final String commitId;
+
+		public RevCommitFilter(RevCommit revCommit) {
+			commitId = revCommit.getId().getName();
+		}
+
+		@Override
+		public boolean include(RevWalk walker, RevCommit cmit)
+				throws StopWalkException, MissingObjectException,
+				IncorrectObjectTypeException, IOException {
+			return cmit.getId().getName().equals(commitId);
+		}
+
+		@Override
+		public RevFilter clone() {
+			return this;
+		}
 	}
 
 }
