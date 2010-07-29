@@ -9,21 +9,14 @@
 package org.eclipse.egit.core.synchronize.dto;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.jgit.lib.Commit;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.Tag;
-import org.eclipse.jgit.lib.Tree;
 
 /**
  * Simple data transfer object containing all necessary information for
@@ -94,51 +87,10 @@ public class GitSynchronizeData {
 	}
 
 	/**
-	 * @return source Tree
-	 * @throws IOException
-	 */
-	public Tree mapSrcTree() throws IOException {
-		return mapTree(srcRev);
-	}
-
-	/**
-	 * @return destination Tree
-	 * @throws IOException
-	 */
-	public Tree mapDstTree() throws IOException {
-		return mapTree(dstRev);
-	}
-
-	/**
-	 * @return source {@link ObjectId}
-	 * @throws IOException
-	 */
-	public ObjectId getSrcObjectId() throws IOException {
-		return getObjecId(srcRev);
-	}
-
-	/**
-	 * @return destination {@link ObjectId}
-	 * @throws IOException
-	 */
-	public ObjectId getDstObjectId() throws IOException {
-		return getObjecId(dstRev);
-	}
-
-	/**
 	 * @return list of project's that are connected with this repository
 	 */
 	public Set<IProject> getProjects() {
 		return Collections.unmodifiableSet(projects);
-	}
-
-	/**
-	 *
-	 * @param resource
-	 * @return <true> if given {@link IResource} is contained by this repository
-	 */
-	public boolean contains(IResource resource) {
-		return resource.getFullPath().toString().startsWith(repoParentPath);
 	}
 
 	/**
@@ -155,32 +107,6 @@ public class GitSynchronizeData {
 	 */
 	public boolean shouldIncludeLocal() {
 		return includeLocal;
-	}
-
-	private Tree mapTree(String rev) throws IOException {
-		if (rev.startsWith(Constants.R_TAGS)) {
-			Tag tag = repo.mapTag(rev);
-			if (tag != null) {
-				Commit commit = repo.mapCommit(tag.getObjId());
-				if (commit != null)
-					return commit.getTree();
-			}
-			return null;
-		} else
-			return repo.mapTree(rev);
-	}
-
-	private ObjectId getObjecId(String rev) throws IOException {
-		if (rev.startsWith(Constants.R_TAGS)) {
-			Tag mapTag = repo.mapTag(rev);
-			if (mapTag != null)
-				return mapTag.getObjId();
-		} else {
-			Commit mapCommit = repo.mapCommit(rev);
-			if (mapCommit != null)
-				return mapCommit.getCommitId();
-		}
-		return null;
 	}
 
 }
