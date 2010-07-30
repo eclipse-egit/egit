@@ -37,7 +37,7 @@
                icon="$nl$/icons/obj16/disconnect_co.gif"
                id="org.eclipse.egit.ui.internal.actions.Disconnect"
                label="%DisconnectAction_label"
-               menubarPath="team.main/group10"
+               menubarPath="team.main/group11"
                tooltip="%DisconnectAction_tooltip">
          </action>
          <action
@@ -158,6 +158,23 @@
                label="%ApplyPatchAction_label"
                menubarPath="team.main/group6"
                overrideActionId="org.eclipse.team.ui.applyPatch">
+         </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.ShowHistoryAction"
+               definitionId="org.eclipse.egit.ui.team.ShowHistory"
+               icon="icons/obj16/history.gif"
+               id="org.eclipse.egit.ui.internal.actions.ShowHistoryActionHandler"
+               label="%ShowResourceInHistoryAction_label"
+               menubarPath="team.main/group10"
+               tooltip="%ShowResourceInHistoryAction_tooltip">
+         </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.ShowRepositoriesViewAction"
+               definitionId="org.eclipse.egit.ui.team.ShowRepositoriesView"
+               icon="icons/eview16/repo_rep.gif"
+               id="org.eclipse.egit.ui.internal.actions.ShowRepositoriesViewAction"
+               label="%ShowRepositoryAction_label"
+               menubarPath="team.main/group10">
          </action>
 	  </objectContribution>
 	  <objectContribution
@@ -1403,6 +1420,14 @@
             commandId="org.eclipse.egit.ui.RepositoriesViewReset"
             icon="icons/obj16/reset.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.ShowRepositoriesView"
+            icon="icons/eview16/repo_rep.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.ShowHistory"
+            icon="icons/obj16/history.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -1451,7 +1476,7 @@
       </participant>
    </extension>
    <extension
-         name="The commands for the Team menu"
+         name="%TeamMenuCommandsLabel"
          point="org.eclipse.ui.commands">
       <command
             defaultHandler="org.eclipse.egit.ui.internal.actions.BranchActionHandler"
@@ -1480,7 +1505,7 @@
       <command
             defaultHandler="org.eclipse.egit.ui.internal.actions.DiscardChangesActionHandler"
             id="org.eclipse.egit.ui.team.Discard"
-            name="discard">
+            name="%DiscardChangesAction_label">
       </command>
       <command
             defaultHandler="org.eclipse.egit.ui.internal.actions.FetchActionHandler"
@@ -1516,6 +1541,16 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.TagActionHandler"
             id="org.eclipse.egit.ui.team.Tag"
             name="%TagAction_label">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.actions.ShowHistoryActionHandler"
+            id="org.eclipse.egit.ui.team.ShowHistory"
+                  name="%ShowResourceInHistoryAction_label">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.actions.ShowRepositoriesViewActionHandler"
+            id="org.eclipse.egit.ui.team.ShowRepositoriesView"
+            name="%ShowRepositoryAction_label">
       </command>
    </extension>
 </plugin>

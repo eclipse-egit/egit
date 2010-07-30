@@ -13,6 +13,6 @@ public class IgnoreAction extends RepositoryAction {
 	 *
 	 */
 	public IgnoreAction() {
-		super(ActionCommands.IGNORE_ACTION);
+		super(ActionCommands.IGNORE_ACTION, new IgnoreActionHandler());
 	}
 }

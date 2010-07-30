@@ -19,6 +19,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import java.util.Arrays;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
@@ -41,6 +42,9 @@ public class ContextMenuHelper {
 	 *            the text on the context menu.
 	 * @throws WidgetNotFoundException
 	 *             if the widget is not found.
+	 * @throws SWTException
+	 *             if the menu item is disabled (the root cause being an
+	 *             {@link IllegalStateException})
 	 */
 	public static void clickContextMenu(final AbstractSWTBot<?> bot,
 			final String... texts) {
@@ -48,24 +52,28 @@ public class ContextMenuHelper {
 		// show
 		final MenuItem menuItem = UIThreadRunnable
 				.syncExec(new WidgetResult<MenuItem>() {
+					@SuppressWarnings("unchecked")
 					public MenuItem run() {
-						MenuItem menuItem = null;
+						MenuItem theItem = null;
 						Control control = (Control) bot.widget;
 						Menu menu = control.getMenu();
 						for (String text : texts) {
 							Matcher<?> matcher = allOf(
 									instanceOf(MenuItem.class),
 									withMnemonic(text));
-							menuItem = show(menu, matcher);
-							if (menuItem != null) {
-								menu = menuItem.getMenu();
+							theItem = show(menu, matcher);
+							if (theItem != null) {
+								menu = theItem.getMenu();
 							} else {
 								hide(menu);
 								break;
 							}
 						}
+						if (theItem != null && !theItem.isEnabled())
+							throw new IllegalStateException(
+									"Menu item is diabled");
 
-						return menuItem;
+						return theItem;
 					}
 				});
 		if (menuItem == null) {
@@ -83,6 +91,7 @@ public class ContextMenuHelper {
 			}
 		});
 	}
+
 
 	private static MenuItem show(final Menu menu, final Matcher<?> matcher) {
 		if (menu != null) {

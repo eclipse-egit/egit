@@ -17,6 +17,6 @@ public class PushAction extends RepositoryAction {
 	 *
 	 */
 	public PushAction() {
-		super(ActionCommands.PUSH_ACTION);
+		super(ActionCommands.PUSH_ACTION, new PushActionHandler());
 	}
 }
