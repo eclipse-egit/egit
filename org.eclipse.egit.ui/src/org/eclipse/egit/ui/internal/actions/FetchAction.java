@@ -17,6 +17,6 @@ public class FetchAction extends RepositoryAction {
 	 *
 	 */
 	public FetchAction() {
-		super(ActionCommands.FETCH_ACTION);
+		super(ActionCommands.FETCH_ACTION, new FetchActionHandler());
 	}
 }

@@ -18,6 +18,6 @@ public class CompareWithRevisionAction extends RepositoryAction {
 	 *
 	 */
 	public CompareWithRevisionAction() {
-		super(ActionCommands.COMPARE_WITH_REVISION_ACTION);
+		super(ActionCommands.COMPARE_WITH_REVISION_ACTION, new CompareWithRevisionActionHandler());
 	}
 }

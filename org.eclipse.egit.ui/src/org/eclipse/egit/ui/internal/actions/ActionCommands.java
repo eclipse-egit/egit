@@ -47,6 +47,12 @@ public class ActionCommands {
 	/** "Reset" action command id */
 	public static final String RESET_ACTION = "org.eclipse.egit.ui.team.Reset"; //$NON-NLS-1$
 
+	/** "Show History" action command id */
+	public static final String SHOW_HISTORY = "org.eclipse.egit.ui.team.ShowHistory"; //$NON-NLS-1$
+
+	/** "Show Repository View" action command id */
+	public static final String SHOW_REPO_VIEW = "org.eclipse.egit.ui.team.ShowRepositoriesView"; //$NON-NLS-1$
+
 	/** "Synchronize with" action command id */
 	public static final String SYNC_WITH_ACTION = "org.eclipse.egit.ui.team.SyncWith"; //$NON-NLS-1$
 

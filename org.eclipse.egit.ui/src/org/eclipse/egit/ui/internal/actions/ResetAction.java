@@ -22,6 +22,6 @@ public class ResetAction extends RepositoryAction {
 	 *
 	 */
 	public ResetAction() {
-		super(ActionCommands.RESET_ACTION);
+		super(ActionCommands.RESET_ACTION, new ResetActionHandler());
 	}
 }
