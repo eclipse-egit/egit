@@ -1063,6 +1063,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_DeselectAll;
 
 	/** */
+	public static String CommitDialog_ErrorAddingFiles;
+
+	/** */
 	public static String CommitDialog_ErrorInvalidAuthor;
 
 	/** */
