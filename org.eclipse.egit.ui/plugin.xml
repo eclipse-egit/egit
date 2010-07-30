@@ -1517,10 +1517,5 @@
             id="org.eclipse.egit.ui.team.Tag"
             name="%TagAction_label">
       </command>
-            <command
-                  defaultHandler="org.eclipse.egit.ui.internal.actions.TrackHandler"
-                  id="org.eclipse.egit.ui.team.Track"
-                  name="%TrackAction_label">
-      </command>
    </extension>
 </plugin>
