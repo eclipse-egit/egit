@@ -46,7 +46,6 @@ import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.team.core.Team;
 
 class DecoratableResourceAdapter implements IDecoratableResource {
 
@@ -134,7 +133,7 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		return repository.getBranch();
 	}
 
-	private void extractResourceProperties(TreeWalk treeWalk) {
+	private void extractResourceProperties(TreeWalk treeWalk) throws IOException {
 		final ContainerTreeIterator workspaceIterator = treeWalk.getTree(
 				T_WORKSPACE, ContainerTreeIterator.class);
 		final ResourceEntry resourceEntry = workspaceIterator != null ? workspaceIterator
@@ -143,7 +142,7 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		if (resourceEntry == null)
 			return;
 
-		if (isIgnored(resourceEntry.getResource())) {
+		if (workspaceIterator != null && workspaceIterator.isEntryIgnored()) {
 			ignored = true;
 			return;
 		}
@@ -209,9 +208,20 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 				throws MissingObjectException, IncorrectObjectTypeException,
 				IOException {
 
-			if (treeWalk.getFileMode(T_HEAD) == FileMode.MISSING
-					&& treeWalk.getFileMode(T_INDEX) == FileMode.MISSING)
-				return false;
+			final ContainerTreeIterator workspaceIterator = treeWalk.getTree(
+					T_WORKSPACE, ContainerTreeIterator.class);
+			if (workspaceIterator != null) {
+				ResourceEntry resourceEntry = workspaceIterator
+						.getResourceEntry();
+				if (resource.equals(resourceEntry.getResource())
+						&& workspaceIterator.isEntryIgnored()) {
+					ignored = true;
+					return false;
+				}
+			}
+			// Note: for obtaining the ignored info we have to go through the
+			// whole working tree and can no longer cut here if the current
+			// entry is not contained in the index and not contained in head
 
 			if (FileMode.TREE.equals(treeWalk.getRawMode(T_WORKSPACE)))
 				return shouldRecurse(treeWalk);
@@ -235,7 +245,7 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 			return false;
 		}
 
-		private boolean shouldRecurse(TreeWalk treeWalk) {
+		private boolean shouldRecurse(TreeWalk treeWalk) throws IOException {
 			final WorkingTreeIterator workspaceIterator = treeWalk.getTree(
 					T_WORKSPACE, WorkingTreeIterator.class);
 
@@ -283,12 +293,6 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 	}
 
 	private void extractContainerProperties(TreeWalk treeWalk) throws IOException {
-
-		if (isIgnored(resource)) {
-			ignored = true;
-			return;
-		}
-
 		treeWalk.setFilter(AndTreeFilter.create(treeWalk.getFilter(),
 				new RecursiveStateFilter()));
 		treeWalk.setRecursive(true);
@@ -365,11 +369,6 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 					workspaceRoot));
 
 		return treeWalk;
-	}
-
-	private static boolean isIgnored(IResource resource) {
-		// TODO: Also read ignores from .git/info/excludes et al.
-		return Team.isIgnoredHint(resource);
 	}
 
 	public String getName() {
