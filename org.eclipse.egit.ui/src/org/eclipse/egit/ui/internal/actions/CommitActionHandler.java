@@ -13,6 +13,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -90,17 +94,22 @@ public class CommitActionHandler extends RepositoryActionHandler {
 
 		Repository[] repos = getRepositoriesFor(getProjectsForSelectedResources(event));
 		Repository repository = null;
+		Repository mergeRepository = null;
 		amendAllowed = repos.length == 1;
+		boolean isMergedResolved = false;
 		for (Repository repo : repos) {
 			repository = repo;
 			RepositoryState state = repo.getRepositoryState();
-			// currently we don't support committing a merge commit
-			if (state == RepositoryState.MERGING_RESOLVED || !state.canCommit()) {
+			if (!state.canCommit()) {
 				MessageDialog.openError(getShell(event),
 						UIText.CommitAction_cannotCommit, NLS.bind(
 								UIText.CommitAction_repositoryState, state
 										.getDescription()));
 				return null;
+			}
+			else if (state.equals(RepositoryState.MERGING_RESOLVED)) {
+				isMergedResolved = true;
+				mergeRepository = repo;
 			}
 		}
 
@@ -141,12 +150,16 @@ public class CommitActionHandler extends RepositoryActionHandler {
 		commitDialog.setPreselectedFiles(getSelectedFiles(event));
 		commitDialog.setAuthor(author);
 		commitDialog.setCommitter(committer);
+		commitDialog.setAllowToChangeSelection(!isMergedResolved);
 
 		if (previousCommit != null) {
 			commitDialog.setPreviousCommitMessage(previousCommit.getMessage());
 			PersonIdent previousAuthor = previousCommit.getAuthor();
 			commitDialog.setPreviousAuthor(previousAuthor.getName()
 					+ " <" + previousAuthor.getEmailAddress() + ">"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+		if (isMergedResolved) {
+			commitDialog.setCommitMessage(getMergeResolveMessage(mergeRepository, event));
 		}
 
 		if (commitDialog.open() != IDialogConstants.OK_ID)
@@ -162,6 +175,9 @@ public class CommitActionHandler extends RepositoryActionHandler {
 			commitOperation.setRepos(repos);
 		}
 		commitOperation.setComputeChangeId(commitDialog.getCreateChangeId());
+		commitOperation.setMergeResolve(isMergedResolved);
+		if (isMergedResolved)
+			commitOperation.setRepos(repos);
 		String jobname = UIText.CommitAction_CommittingChanges;
 		Job job = new Job(jobname) {
 			@Override
@@ -325,6 +341,44 @@ public class CommitActionHandler extends RepositoryActionHandler {
 		} catch (ExecutionException e) {
 			Activator.handleError(e.getMessage(), e, false);
 			return false;
+		}
+	}
+
+	private String getMergeResolveMessage(Repository mergeRepository,
+			ExecutionEvent event) throws ExecutionException {
+		File mergeMsg = new File(mergeRepository.getDirectory(), Constants.MERGE_MSG);
+		FileReader reader;
+		try {
+			reader = new FileReader(mergeMsg);
+		} catch (FileNotFoundException e) {
+			MessageDialog.openError(getShell(event),
+					UIText.CommitAction_MergeHeadErrorTitle,
+					UIText.CommitAction_MergeHeadErrorMessage);
+			throw new IllegalStateException(e);
+		}
+		BufferedReader br = new BufferedReader(reader);
+		StringBuffer message = new StringBuffer();
+		String s;
+		String newLine = newLine();
+		try {
+			while ((s = br.readLine()) != null) {
+				message.append(s).append(newLine);
+			}
+		} catch (IOException e) {
+			MessageDialog.openError(getShell(event),
+					UIText.CommitAction_MergeHeadErrorTitle,
+					UIText.CommitAction_ErrorReadingMergeMsg);
+			throw new IllegalStateException(e);
+		}
+		return message.toString();
+	}
+
+	private String newLine(){
+		if(System.getProperty("os.name").indexOf("Windows") != -1){ //$NON-NLS-1$ //$NON-NLS-2$
+			return "\r\n"; //$NON-NLS-1$
+		}
+		else {
+			return "\n"; //$NON-NLS-1$
 		}
 	}
 
