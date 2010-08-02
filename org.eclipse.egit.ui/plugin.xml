@@ -152,7 +152,8 @@
                menubarPath="replaceWithMenu/gitReplaceWithGroup"
                tooltip="%DiscardChangesAction_tooltip"/>
          <action
-               class="org.eclipse.team.internal.ui.actions.ApplyPatchAction"
+               class="org.eclipse.egit.ui.internal.actions.ApplyPatchAction"
+               definitionId="org.eclipse.egit.ui.team.ApplyPatch"
                enablesFor="*"
                id="org.eclipse.egit.ui.internal.actions.applyPatch"
                label="%ApplyPatchAction_label"
@@ -1557,6 +1558,11 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.ShowRepositoriesViewActionHandler"
             id="org.eclipse.egit.ui.team.ShowRepositoriesView"
             name="%ShowRepositoryAction_label">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.actions.ApplyPatchActionHandler"
+            id="org.eclipse.egit.ui.team.ApplyPatch"
+            name="%ApplyPatchAction_label">
       </command>
    </extension>
    <extension

@@ -166,6 +166,9 @@ public class UIText extends NLS {
 	public static String GenerateHistoryJob_errorComputingHistory;
 
 	/** */
+	public static String EgitUiUtils_CouldNotOpenEditorMessage;
+
+	/** */
 	public static String ExistingOrNewPage_CreateButton;
 
 	/** */

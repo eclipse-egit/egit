@@ -27,6 +27,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.ResourceList;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -34,6 +36,7 @@ import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
+import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.commands.SharedCommands;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -90,9 +93,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.internal.ui.IPreferenceIds;
-import org.eclipse.team.internal.ui.TeamUIPlugin;
-import org.eclipse.team.internal.ui.Utils;
 import org.eclipse.team.ui.history.HistoryPage;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IActionBars;
@@ -129,6 +129,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private static final String SHOW_FIND_TOOLBAR = UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR;
 
 	private static final String POPUP_ID = "org.eclipse.egit.ui.historyPageContributions"; //$NON-NLS-1$
+
+    /** The team ui plugin ID which is not accessible */
+	private static final String TEAM_UI_PLUGIN = "org.eclipse.team.ui"; //$NON-NLS-1$
+
+	/** A copy of the non-accessible preference constant IPreferenceIds.REUSE_OPEN_COMPARE_EDITOR from the team ui plug in */
+	private static final String REUSE_COMPARE_EDITOR_PREFID = "org.eclipse.team.ui.reuse_open_compare_editors"; //$NON-NLS-1$
 
 	private IAction compareAction = new CompareWithWorkingTreeAction();
 
@@ -514,7 +520,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	private static boolean isReuseOpenEditor() {
-		return TeamUIPlugin.getPlugin().getPreferenceStore().getBoolean(IPreferenceIds.REUSE_OPEN_COMPARE_EDITOR);
+		boolean defaultReuse = new DefaultScope().getNode(TEAM_UI_PLUGIN).getBoolean(REUSE_COMPARE_EDITOR_PREFID, false);
+		return new InstanceScope().getNode(TEAM_UI_PLUGIN).getBoolean(REUSE_COMPARE_EDITOR_PREFID, defaultReuse);
 	}
 
 	private Runnable refschangedRunnable;
@@ -1354,7 +1361,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				}
 				if (rev != null) {
 					try {
-						Utils.openEditor(getSite().getPage(), rev,
+						EgitUiEditorUtils.openEditor(getSite().getPage(), rev,
 								new NullProgressMonitor());
 					} catch (CoreException e) {
 						Activator.logError(UIText.GitHistoryPage_openFailed, e);

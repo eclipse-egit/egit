@@ -14,6 +14,9 @@ package org.eclipse.egit.ui.internal.actions;
  * Commands wrapped by actions for menu contributions
  */
 public class ActionCommands {
+	/** "Apply patch" action command id */
+	public static final String APPLY_PATCH = "org.eclipse.egit.ui.team.ApplyPatch"; //$NON-NLS-1$
+
 	/** "Branch" action command id */
 	public static final String BRANCH_ACTION = "org.eclipse.egit.ui.team.Branch"; //$NON-NLS-1$
 
