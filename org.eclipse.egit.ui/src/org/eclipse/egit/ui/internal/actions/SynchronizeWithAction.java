@@ -16,6 +16,6 @@ public class SynchronizeWithAction extends RepositoryAction {
 	 *
 	 */
 	public SynchronizeWithAction() {
-		super(ActionCommands.SYNC_WITH_ACTION);
+		super(ActionCommands.SYNC_WITH_ACTION, new SynchronizeWithActionHandler());
 	}
 }

@@ -23,6 +23,6 @@ public class CommitAction extends RepositoryAction {
 	 * Constructs this action
 	 */
 	public CommitAction() {
-		super(ActionCommands.COMMIT_ACTION);
+		super(ActionCommands.COMMIT_ACTION, new CommitActionHandler());
 	}
 }

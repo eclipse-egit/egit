@@ -18,6 +18,6 @@ public class CompareWithHeadAction extends RepositoryAction {
 	 *
 	 */
 	public CompareWithHeadAction() {
-		super(ActionCommands.COMPARE_WITH_HEAD_ACTION);
+		super(ActionCommands.COMPARE_WITH_HEAD_ACTION, new CompareWithHeadActionHandler());
 	}
 }

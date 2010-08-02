@@ -81,7 +81,7 @@ public class WorkingCopyPage {
 	}
 
 	@SuppressWarnings("boxing")
-	public void assertWorkingCopyExists(String uri) {
+	public void assertWorkingCopyExists() {
 		// get the destination directory from the wizard
 		String dirName = bot.textWithLabel("Directory:").getText();
 		File dir = new File(dirName);

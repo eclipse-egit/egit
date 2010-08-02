@@ -20,6 +20,6 @@ public class TagAction extends RepositoryAction {
 	 *
 	 */
 	public TagAction() {
-		super(ActionCommands.TAG_ACTION);
+		super(ActionCommands.TAG_ACTION, new TagActionHandler());
 	}
 }
