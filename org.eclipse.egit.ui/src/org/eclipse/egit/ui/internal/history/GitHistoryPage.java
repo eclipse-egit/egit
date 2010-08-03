@@ -363,11 +363,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			public void run() {
 				compareMode = !compareMode;
 				setChecked(compareMode);
+				fileViewer.setCompareMode(compareMode);
 			}
 		};
 		compareModeAction.setImageDescriptor(UIIcons.ELCL16_COMPARE_VIEW);
 		compareModeAction.setChecked(compareMode);
 		compareModeAction.setToolTipText(UIText.GitHistoryPage_compareMode);
+		fileViewer.setCompareMode(compareMode);
 		barManager.add(compareModeAction);
 	}
 
