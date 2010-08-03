@@ -96,7 +96,7 @@ class CommitFileDiffViewer extends TableViewer {
 			next = CompareUtils.getFileRevisionTypedElement(p, c, db, d.blobs[0]);
 		}
 
-		in = new GitCompareFileRevisionEditorInput(base, next, null);
+		in = new GitCompareFileRevisionEditorInput(next, base, null);
 		CompareUI.openCompareEditor(in);
 	}
 
