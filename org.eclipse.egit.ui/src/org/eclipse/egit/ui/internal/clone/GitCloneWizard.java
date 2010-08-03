@@ -29,7 +29,6 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.transport.URIish;
@@ -39,6 +38,12 @@ import org.eclipse.osgi.util.NLS;
  * Import Git Repository Wizard. A front end to a git clone operation.
  */
 public class GitCloneWizard extends Wizard {
+
+	/**
+	 * Job family of the Clone Repository job.
+	 */
+	public static final Object CLONE_JOB_FAMILY = new Object();
+
 	private RepositorySelectionPage cloneSource;
 
 	private SourceBranchPage validSource;
@@ -122,13 +127,13 @@ public class GitCloneWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		try {
-			return performClone(false);
+			return performClone();
 		} finally {
 			setWindowTitle(UIText.GitCloneWizard_title);
 		}
 	}
 
-	boolean performClone(boolean background) {
+	boolean performClone() {
 		final URIish uri = cloneSource.getSelection().getURI();
 		setWindowTitle(NLS.bind(UIText.GitCloneWizard_jobName, uri.toString()));
 		final boolean allSelected;
@@ -165,56 +170,28 @@ public class GitCloneWizard extends Wizard {
 		final RepositoryUtil config = Activator.getDefault()
 				.getRepositoryUtil();
 
-		if (background) {
-			final Job job = new Job(NLS.bind(UIText.GitCloneWizard_jobName, uri
-					.toString())) {
-				@Override
-				protected IStatus run(final IProgressMonitor monitor) {
-					try {
-						op.run(monitor);
-						cloneSource.saveUriInPrefs();
-						config.addConfiguredRepository(op.getGitDir());
-						return Status.OK_STATUS;
-					} catch (InterruptedException e) {
-						return Status.CANCEL_STATUS;
-					} catch (InvocationTargetException e) {
-						Throwable thr = e.getCause();
-						return new Status(IStatus.ERROR, Activator
-								.getPluginId(), 0, thr.getMessage(), thr);
-					}
+		cloneSource.saveUriInPrefs();
+		final Job job = new Job(NLS.bind(UIText.GitCloneWizard_jobName,
+				uri.toString())) {
+			@Override
+			protected IStatus run(final IProgressMonitor monitor) {
+				try {
+					op.run(monitor);
+					config.addConfiguredRepository(op.getGitDir());
+					return Status.OK_STATUS;
+				} catch (InterruptedException e) {
+					return Status.CANCEL_STATUS;
+				} catch (InvocationTargetException e) {
+					Throwable thr = e.getCause();
+					return new Status(IStatus.ERROR, Activator.getPluginId(),
+							0, thr.getMessage(), thr);
 				}
-
-			};
-			job.setUser(true);
-			job.schedule();
-			return true;
-		} else {
-			try {
-				// Perform clone in ModalContext thread with progress
-				// reporting on the wizard.
-				getContainer().run(true, true, new IRunnableWithProgress() {
-					public void run(IProgressMonitor monitor)
-							throws InvocationTargetException,
-							InterruptedException {
-						op.run(monitor);
-						if (monitor.isCanceled())
-							throw new InterruptedException();
-					}
-				});
-
-				cloneSource.saveUriInPrefs();
-				config.addConfiguredRepository(op.getGitDir());
-				return true;
-			} catch (InterruptedException e) {
-				MessageDialog.openInformation(getShell(),
-						UIText.GitCloneWizard_CloneFailedHeading,
-						UIText.GitCloneWizard_CloneCanceledMessage);
-				return false;
-			} catch (Exception e) {
-				Activator.handleError(UIText.GitCloneWizard_CloneFailedHeading,
-						e, true);
-				return false;
 			}
-		}
+
+		};
+		job.setUser(true);
+		job.belongsTo(CLONE_JOB_FAMILY);
+		job.schedule();
+		return true;
 	}
 }
