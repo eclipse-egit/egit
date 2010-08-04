@@ -50,7 +50,7 @@
                tooltip="%FetchAction_tooltip"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.PushAction"
-               icon="$nl$/icons/obj16/commit.gif"
+               icon="$nl$/icons/obj16/push.gif"
                id="org.eclipse.egit.ui.internal.actions.PushAction"
                label="%PushAction_label"
                menubarPath="team.main/group1"
@@ -1412,7 +1412,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewPush"
-            icon="icons/obj16/commit.gif">
+            icon="icons/obj16/push.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
