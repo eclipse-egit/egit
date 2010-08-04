@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALxn///6w\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1621,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-03T14:01:42Z",
+      "side": 1,
+      "message": "Why do we use E here and not M?",
+      "revId": "3c53f0f046ec7f8e99d05b22d83ae9d27f5a4e3c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
