@@ -11,9 +11,12 @@
 package org.eclipse.egit.ui.test.history;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -22,9 +25,16 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -48,10 +58,12 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 
 	private static int commitCount;
 
+	private static File repoFile;
+
 	@BeforeClass
 	public static void setup() throws Exception {
 		// File repoFile =
-		createProjectAndCommitToRepository();
+		repoFile = createProjectAndCommitToRepository();
 		perspective = bot.activePerspective();
 		bot.perspectiveById("org.eclipse.pde.ui.PDEPerspective").activate();
 		IProject prj = ResourcesPlugin.getWorkspace().getRoot().getProject(
@@ -236,5 +248,77 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 				"History");
 		return bot.viewById("org.eclipse.team.ui.GenericHistoryView").bot()
 				.table();
+	}
+
+	@Test
+	public void testAddBranch() throws Exception {
+		Repository repo = lookupRepository(repoFile);
+		assertNull(repo.resolve(Constants.R_HEADS + "NewBranch"));
+		SWTBotTable table = getHistoryViewTable(PROJ1);
+		table.getTableItem(0).select();
+
+		ContextMenuHelper.clickContextMenu(table, util
+				.getPluginLocalizedValue("CreateBranchOnCommitActionLabel"));
+		SWTBotShell dialog = bot
+				.shell(UIText.BranchSelectionDialog_QuestionNewBranchTitle);
+		dialog.bot().text().setText("NewBranch");
+		dialog.bot().button(IDialogConstants.OK_LABEL).click();
+		waitInUI();
+		assertNotNull(repo.resolve(Constants.R_HEADS + "NewBranch"));
+	}
+
+	@Test
+	public void testAddTag() throws Exception {
+		Repository repo = lookupRepository(repoFile);
+		assertNull(repo.resolve(Constants.R_TAGS + "NewTag"));
+		final SWTBotTable table = getHistoryViewTable(PROJ1);
+		table.getTableItem(0).select();
+		final RevCommit[] commit = new RevCommit[1];
+
+		Display.getDefault().syncExec(new Runnable() {
+
+			public void run() {
+				commit[0] = (RevCommit) table.widget.getSelection()[0]
+						.getData();
+			}
+		});
+
+		ContextMenuHelper.clickContextMenu(table, util
+				.getPluginLocalizedValue("CreateTagOnCommitActionLabel"));
+		SWTBotShell dialog = bot.shell(NLS.bind(
+				UIText.CreateTagDialog_CreateTagOnCommitTitle, commit[0]
+						.getId().name()));
+		dialog.bot().textWithLabel(UIText.CreateTagDialog_tagName).setText(
+				"NewTag");
+		dialog.bot().textWithLabel(UIText.CreateTagDialog_tagMessage).setText(
+				"New Tag message");
+		dialog.bot().button(IDialogConstants.OK_LABEL).click();
+		waitInUI();
+		assertNotNull(repo.resolve(Constants.R_TAGS + "NewTag"));
+	}
+
+	@Test
+	public void testCheckOut() throws Exception {
+		Repository repo = lookupRepository(repoFile);
+		assertEquals(Constants.MASTER, repo.getBranch());
+
+		final SWTBotTable table = getHistoryViewTable(PROJ1);
+		// check out the second line
+		table.getTableItem(1).select();
+		final RevCommit[] commit = new RevCommit[1];
+
+		Display.getDefault().syncExec(new Runnable() {
+
+			public void run() {
+				commit[0] = (RevCommit) table.widget.getSelection()[0]
+						.getData();
+			}
+		});
+
+		ContextMenuHelper.clickContextMenu(table, util
+				.getPluginLocalizedValue("CheckoutCommand"));
+
+		waitInUI();
+		assertEquals(commit[0].getId().name(), repo.getBranch());
 	}
 }
