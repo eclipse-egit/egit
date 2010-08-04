@@ -102,6 +102,7 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("Here's the message text");
 		tagDialog.bot().button(IDialogConstants.OK_LABEL).click();
+		waitInUI();
 		assertTrue(lookupRepository(repositoryFile).getTags().keySet()
 				.contains("AnotherTag"));
 	}
