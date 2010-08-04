@@ -16,6 +16,24 @@
       "revId": "3c53f0f046ec7f8e99d05b22d83ae9d27f5a4e3c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALxn///5k\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1621,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-04T08:48:04Z",
+      "side": 1,
+      "message": "E is used by SVN",
+      "parentUuid": "AAALxn///6w\u003d",
+      "revId": "3c53f0f046ec7f8e99d05b22d83ae9d27f5a4e3c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
