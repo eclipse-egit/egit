@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.BaseLabelProvider;
@@ -29,17 +30,18 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 
 /**
  *
@@ -60,13 +62,6 @@ public class ConfigureUriPage extends WizardPage {
 
 	/**
 	 * @param fetchMode
-	 */
-	public ConfigureUriPage(boolean fetchMode) {
-		this(fetchMode, null);
-	}
-
-	/**
-	 * @param fetchMode
 	 * @param remoteConfig
 	 *
 	 */
@@ -76,12 +71,22 @@ public class ConfigureUriPage extends WizardPage {
 
 		myFetchMode = fetchMode;
 		myConfig = remoteConfig;
-		// myRepository = repository;
 
 		if (fetchMode)
 			setTitle(UIText.ConfigureUriPage_ConfigureFetch_pagetitle);
 		else
 			setTitle(UIText.ConfigureUriPage_ConfigurePush_pagetitle);
+	}
+
+	/**
+	 * Sets the URI (only useful for push use case)
+	 *
+	 * @param uri
+	 */
+	public void setURI(URIish uri) {
+		myUri = uri;
+		uriText.setText(uri.toPrivateString());
+		checkPage();
 	}
 
 	public void createControl(Composite parent) {
@@ -127,8 +132,22 @@ public class ConfigureUriPage extends WizardPage {
 			GridDataFactory.fillDefaults().grab(true, false).applyTo(uriText);
 
 		} else {
-			main.setLayout(new GridLayout(1, false));
-			tv = new TableViewer(main);
+			main.setLayout(new GridLayout(2, false));
+
+			Label uriLabel = new Label(main, SWT.NONE);
+			uriLabel.setText(UIText.ConfigureUriPage_FetchUri_label);
+			uriText = new Text(main, SWT.BORDER);
+			GridDataFactory.fillDefaults().grab(true, false).applyTo(uriText);
+			// push mode, display only
+			uriText.setEnabled(false);
+
+			Group pushGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
+			pushGroup.setText(UIText.ConfigureUriPage_PushUriGroup);
+			pushGroup.setLayout(new GridLayout(1, false));
+			GridDataFactory.fillDefaults().span(2, 1).grab(true, true).applyTo(
+					pushGroup);
+
+			tv = new TableViewer(pushGroup);
 
 			GridDataFactory.fillDefaults().grab(true, true).applyTo(
 					tv.getTable());
@@ -136,8 +155,9 @@ public class ConfigureUriPage extends WizardPage {
 			tv.setLabelProvider(new LabelProvider());
 			tv.setContentProvider(ArrayContentProvider.getInstance());
 
-			ToolBar tb = new ToolBar(main, SWT.HORIZONTAL);
-			ToolItem add = new ToolItem(tb, SWT.PUSH);
+			Composite buttonBar = new Composite(pushGroup, SWT.NONE);
+			buttonBar.setLayout(new RowLayout());
+			Button add = new Button(buttonBar, SWT.PUSH);
 			add.setText(UIText.ConfigureUriPage_Add_button);
 
 			add.addSelectionListener(new SelectionAdapter() {
@@ -148,8 +168,17 @@ public class ConfigureUriPage extends WizardPage {
 					WizardDialog dlg = new WizardDialog(getShell(), slwz);
 					if (dlg.open() == Window.OK) {
 						URIish uri = slwz.getUri();
-						if (!myUris.contains(uri))
-							myUris.add(uri);
+						if (uri.equals(myUri) || myUris.contains(uri)) {
+							String message = NLS
+									.bind(
+											UIText.ConfigureUriPage_DuplicateUriMessage,
+											uri.toPrivateString());
+							MessageDialog.openInformation(getShell(),
+									UIText.ConfigureUriPage_DuplicateUriTitle,
+									message);
+							return;
+						}
+						myUris.add(uri);
 						tv.setInput(myUris);
 						checkPage();
 					}
@@ -157,7 +186,7 @@ public class ConfigureUriPage extends WizardPage {
 
 			});
 
-			final ToolItem remove = new ToolItem(tb, SWT.PUSH);
+			final Button remove = new Button(buttonBar, SWT.PUSH);
 			remove.setText(UIText.ConfigureUriPage_Remove_button);
 			remove.setEnabled(false);
 
@@ -182,8 +211,11 @@ public class ConfigureUriPage extends WizardPage {
 				}
 			});
 
-			if (myConfig != null && !myConfig.getPushURIs().isEmpty()) {
-
+			if (myConfig != null) {
+				if (!myConfig.getURIs().isEmpty()) {
+					myUri = myConfig.getURIs().get(0);
+					uriText.setText(myUri.toPrivateString());
+				}
 				for (URIish uri : myConfig.getPushURIs())
 					myUris.add(uri);
 				tv.setInput(myUris);
@@ -215,7 +247,7 @@ public class ConfigureUriPage extends WizardPage {
 				}
 
 			} else {
-				if (myUris.isEmpty()) {
+				if (myUri == null && myUris.isEmpty()) {
 					setErrorMessage(UIText.ConfigureUriPage_MissingUris_message);
 					return;
 				}
@@ -240,7 +272,7 @@ public class ConfigureUriPage extends WizardPage {
 	}
 
 	/**
-	 * @return the URI
+	 * @return the (fetch) URI
 	 */
 	public URIish getUri() {
 		if (myFetchMode) {
@@ -250,12 +282,28 @@ public class ConfigureUriPage extends WizardPage {
 	}
 
 	/**
-	 * @return the URI
+	 * @return the (push) URIs
 	 */
 	public List<URIish> getUris() {
 		if (myFetchMode) {
 			throw new IllegalStateException();
 		}
 		return myUris;
+	}
+
+	/**
+	 * @return all URIs
+	 */
+	public List<URIish> getAllUris() {
+		if (myFetchMode) {
+			throw new IllegalStateException();
+		}
+		List<URIish> uris = new ArrayList<URIish>();
+		uris.addAll(myUris);
+		if (myUri != null) {
+			uris.remove(myUri);
+			uris.add(0, myUri);
+		}
+		return uris;
 	}
 }
