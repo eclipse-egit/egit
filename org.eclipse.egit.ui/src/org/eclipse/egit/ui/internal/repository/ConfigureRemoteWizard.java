@@ -62,7 +62,7 @@ public class ConfigureRemoteWizard extends Wizard {
 			// use the first URI
 			configurePushSpecPage.setConfigName(myRemoteName);
 			configurePushSpecPage.setSelection(new RepositorySelection(
-					configurePushUriPage.getUris().get(0), null));
+					configurePushUriPage.getAllUris().get(0), null));
 		}
 
 		return super.getNextPage(page);
@@ -155,7 +155,7 @@ public class ConfigureRemoteWizard extends Wizard {
 			myRemoteConfiguration.setTagOpt(configureFetchSpecPage.getTagOpt());
 		}
 
-    	myRemoteConfiguration.update(myConfiguration);
+		myRemoteConfiguration.update(myConfiguration);
 
 		try {
 			myConfiguration.save();
