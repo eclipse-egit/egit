@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALwX///BE\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitTestResourceVariantTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-07-08T15:11:58Z",
+      "side": 1,
+      "message": "No I didn\u0027t want to implement this, I simply forgot to remove this comment.\n\nDone.",
+      "parentUuid": "AAALwX///Js\u003d",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALwX///Jo\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/resource/GitContainer.java",
         "patchSetId": 2
@@ -226,6 +244,24 @@
     },
     {
       "key": {
+        "uuid": "AAALwX//++c\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitRemoteResourceVariantTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-07-08T15:11:58Z",
+      "side": 1,
+      "message": "Indeed my mistake, I already change it.",
+      "parentUuid": "AAALwX//+/s\u003d",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALwX///B0\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantByteStore.java",
         "patchSetId": 2
@@ -377,6 +413,24 @@
       "writtenOn": "2010-07-07T21:58:29Z",
       "side": 1,
       "message": "I would recommend do not defer handling exceptions to a subsequent patch",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX//+wA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/dto/GitSynchronizeData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-07-15T20:31:51Z",
+      "side": 1,
+      "message": "It turns out that getCommit() method isn\u0027t used any more, so that it would be removed in upcoming change set.",
+      "parentUuid": "AAALwX///Bo\u003d",
       "revId": "e685c8c957c841818044312b00619744ec23c89b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
