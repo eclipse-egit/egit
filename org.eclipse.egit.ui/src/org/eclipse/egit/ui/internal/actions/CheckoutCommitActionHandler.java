@@ -1,14 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Mathias Kinzler (SAP AG) - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.history.command;
+package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,6 +42,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -54,9 +53,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * Implements "Checkout" from history view
+ * Action for checking out a commit
  */
-public class CheckoutHandler extends AbstractHistoryViewCommandHandler {
+public class CheckoutCommitActionHandler extends RepositoryActionHandler {
 
 	private final class BranchMessageDialog extends MessageDialog {
 		private final List<RefNode> nodes;
@@ -131,8 +130,8 @@ public class CheckoutHandler extends AbstractHistoryViewCommandHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-		PlotCommit commit = getSingleCommit(event);
-		Repository repo = getRepository(event);
+		PlotCommit commit = (PlotCommit) getSelection(event).getFirstElement();
+		Repository repo = getRepository(false, event);
 		List<Ref> availableBranches = new ArrayList<Ref>();
 
 		final BranchOperation op;
@@ -201,8 +200,18 @@ public class CheckoutHandler extends AbstractHistoryViewCommandHandler {
 
 		job.setUser(true);
 		job.schedule();
-
 		return null;
 	}
 
+	@Override
+	public boolean isEnabled() {
+		try {
+			IStructuredSelection sel = getSelection(null);
+			return sel.size() == 1
+					&& sel.getFirstElement() instanceof RevCommit;
+		} catch (ExecutionException e) {
+			Activator.handleError(e.getMessage(), e, false);
+			return false;
+		}
+	}
 }
