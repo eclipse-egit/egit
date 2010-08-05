@@ -65,7 +65,7 @@ public class TestUtils {
 	 *         directory; may or may not exist
 	 * @throws IOException
 	 */
-	public File getTempDir(String name) throws IOException {
+	public File createTempDir(String name) throws IOException {
 		File userHome = FS.DETECTED.userHome();
 		File rootDir = new File(userHome, "EGitCoreTestTempDir");
 		File result = new File(rootDir, name);

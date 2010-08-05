@@ -44,7 +44,7 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 	@Before
 	public void setUp() throws Exception {
 
-		workdir = testUtils.getTempDir("Repository1");
+		workdir = testUtils.createTempDir("Repository1");
 
 		repository1 = new TestRepository(new File(workdir, Constants.DOT_GIT));
 
@@ -62,7 +62,7 @@ public class TrackUntrackOperationTest extends DualRepositoryTestCase {
 		project.delete(false, false, null);
 		repository1.dispose();
 		repository1 = null;
-		testUtils.deleteRecursive(workdir);
+		testUtils.deleteTempDirs();
 	}
 
 	@Test
