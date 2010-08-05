@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALw3///8c\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-07-20T11:26:03Z",
+      "side": 1,
+      "message": "This input stream is never closed. This even leads to test errors because the project cannot be deleted in tearDown,",
+      "revId": "4a0211e1c1d07882bb543e52329c7865e5e47d79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALw3///8k\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-07-20T11:26:03Z",
+      "side": 1,
+      "message": "This input stream is also never closed.",
+      "revId": "4a0211e1c1d07882bb543e52329c7865e5e47d79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALw3///8U\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-07-20T11:26:03Z",
+      "side": 1,
+      "message": "This is displayed in the compare editor. I think the blobId does not make sense here. A user does not know what to do woth that. I would like to see the commit id. The commit Id is also diplayed elsewhere in the UI. \n\nThis would still adhere to the javadoc: Return a content identifier that is used to differentiate versions or revisions of the *same* resource.",
+      "revId": "4a0211e1c1d07882bb543e52329c7865e5e47d79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALw3///8Y\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-07-20T11:26:03Z",
+      "side": 1,
+      "message": "What\u0027s the difference here between shouldIncludeLocal() and not?\n\nI would suggest that we always use the workspace version as source. See also my general comments.",
+      "revId": "4a0211e1c1d07882bb543e52329c7865e5e47d79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

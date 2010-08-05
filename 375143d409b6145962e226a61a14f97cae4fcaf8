@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALw3///8g\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-07-20T11:26:03Z",
+      "side": 0,
+      "message": "This input stream is never closed. This even leads to test errors because the project cannot be deleted in tearDown,",
+      "revId": "375143d409b6145962e226a61a14f97cae4fcaf8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALw3///8o\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-07-20T11:26:03Z",
+      "side": 0,
+      "message": "This input stream is never closed. This even leads to test errors because the project cannot be deleted in tearDown,",
+      "revId": "375143d409b6145962e226a61a14f97cae4fcaf8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
