@@ -111,19 +111,6 @@ import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 /** Graphical commit history viewer. */
 public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
-	private static final String PREF_COMMENT_WRAP = UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP;
-
-	private static final String PREF_COMMENT_FILL = UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL;
-
-	private static final String SHOW_COMMENT = UIPreferences.RESOURCEHISTORY_SHOW_REV_COMMENT;
-
-	private static final String SHOW_FILES = UIPreferences.RESOURCEHISTORY_SHOW_REV_DETAIL;
-
-	private static final String SPLIT_GRAPH = UIPreferences.RESOURCEHISTORY_GRAPH_SPLIT;
-
-	private static final String SPLIT_INFO = UIPreferences.RESOURCEHISTORY_REV_SPLIT;
-
-	private static final String SHOW_FIND_TOOLBAR = UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR;
 
 	private static final String POPUP_ID = "org.eclipse.egit.ui.historyPageContributions"; //$NON-NLS-1$
 
@@ -431,8 +418,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		fileViewer = new CommitFileDiffViewer(revInfoSplit);
 		findToolbar = new FindToolbar(ourControl);
 
-		layoutSashForm(graphDetailSplit, SPLIT_GRAPH);
-		layoutSashForm(revInfoSplit, SPLIT_INFO);
+		layoutSashForm(graphDetailSplit, UIPreferences.RESOURCEHISTORY_GRAPH_SPLIT);
+		layoutSashForm(revInfoSplit, UIPreferences.RESOURCEHISTORY_REV_SPLIT);
 
 		revObjectSelectionProvider = new RevObjectSelectionProvider();
 		popupMgr = new MenuManager(null, POPUP_ID);
@@ -638,9 +625,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	private void layout() {
-		final boolean showComment = store.getBoolean(SHOW_COMMENT);
-		final boolean showFiles = store.getBoolean(SHOW_FILES);
-		final boolean showFindToolbar = store.getBoolean(SHOW_FIND_TOOLBAR);
+		final boolean showComment = store.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_REV_COMMENT);
+		final boolean showFiles = store.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_REV_DETAIL);
+		final boolean showFindToolbar = store.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
 
 		if (showComment && showFiles) {
 			graphDetailSplit.setMaximizedControl(null);
@@ -708,7 +695,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private IAction createFindToolbarAction() {
 		final IAction r = new Action(UIText.GitHistoryPage_find, UIIcons.ELCL16_FIND) {
 			public void run() {
-				store.setValue(SHOW_FIND_TOOLBAR, isChecked());
+				store.setValue(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR, isChecked());
 				if (store.needsSaving()) {
 					try {
 						store.save();
@@ -719,7 +706,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				layout();
 			}
 		};
-		r.setChecked(store.getBoolean(SHOW_FIND_TOOLBAR));
+		r.setChecked(store.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR));
 		r.setToolTipText(UIText.HistoryPage_findbar_findTooltip);
 		return r;
 	}
@@ -753,7 +740,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	private IAction createCommentWrap() {
-		final BooleanPrefAction a = new BooleanPrefAction(PREF_COMMENT_WRAP,
+		final BooleanPrefAction a = new BooleanPrefAction(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP,
 				UIText.ResourceHistory_toggleCommentWrap) {
 			void apply(boolean wrap) {
 				commentViewer.setWrap(wrap);
@@ -765,7 +752,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	private IAction createCommentFill() {
-		final BooleanPrefAction a = new BooleanPrefAction(PREF_COMMENT_FILL,
+		final BooleanPrefAction a = new BooleanPrefAction(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL,
 				UIText.ResourceHistory_toggleCommentFill) {
 			void apply(boolean fill) {
 				commentViewer.setFill(fill);
@@ -777,7 +764,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	private IAction createShowComment() {
-		BooleanPrefAction a = new BooleanPrefAction(SHOW_COMMENT,
+		BooleanPrefAction a = new BooleanPrefAction(UIPreferences.RESOURCEHISTORY_SHOW_REV_COMMENT,
 				UIText.ResourceHistory_toggleRevComment) {
 			void apply(final boolean value) {
 				layout();
@@ -788,7 +775,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	private IAction createShowFiles() {
-		BooleanPrefAction a = new BooleanPrefAction(SHOW_FILES,
+		BooleanPrefAction a = new BooleanPrefAction(UIPreferences.RESOURCEHISTORY_SHOW_REV_DETAIL,
 				UIText.ResourceHistory_toggleRevDetail) {
 			void apply(final boolean value) {
 				layout();
