@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALwX//+wE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-07-15T20:31:51Z",
+      "side": 0,
+      "message": "IMHO we can think about that in next iteration, current patch set is big enough.",
+      "parentUuid": "AAALwX//+/o\u003d",
+      "revId": "152db023a5215f175ca3635599064306807fee9d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALwX///Bk\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitSubscriberParticipant.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAALwX//+v0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitSubscriberParticipant.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-07-15T20:31:51Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "AAALwX///Bk\u003d",
+      "revId": "152db023a5215f175ca3635599064306807fee9d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALwX///Bg\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitSubscriberParticipant.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2010-07-07T21:58:29Z",
       "side": 0,
       "message": "missing javadoc",
+      "revId": "152db023a5215f175ca3635599064306807fee9d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX//+v8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitSubscriberParticipant.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-07-15T20:31:51Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "AAALwX///Bg\u003d",
       "revId": "152db023a5215f175ca3635599064306807fee9d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
