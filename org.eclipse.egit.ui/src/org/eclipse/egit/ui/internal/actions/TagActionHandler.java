@@ -9,8 +9,6 @@
 package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -33,7 +31,6 @@ import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tag;
 import org.eclipse.jgit.revwalk.RevSort;
@@ -137,26 +134,6 @@ public class TagActionHandler extends RepositoryActionHandler {
 			Activator.handleError(e.getMessage(), e, false);
 			return false;
 		}
-	}
-
-	private List<Tag> getRevTags(ExecutionEvent event)
-			throws ExecutionException {
-		Collection<Ref> revTags = repo.getTags().values();
-		List<Tag> tags = new ArrayList<Tag>();
-		RevWalk walk = new RevWalk(repo);
-		for (Ref ref : revTags) {
-			try {
-				Tag tag = walk.parseTag(repo.resolve(ref.getName())).asTag(walk);
-				tags.add(tag);
-			} catch (IOException e) {
-				ErrorDialog.openError(getShell(event),
-						UIText.TagAction_errorDuringTagging, NLS.bind(
-								UIText.TagAction_errorWhileMappingRevTag, ref
-										.getName()), new Status(IStatus.ERROR,
-								Activator.getPluginId(), e.getMessage(), e));
-			}
-		}
-		return tags;
 	}
 
 	private RevWalk getRevCommits(ExecutionEvent event)
