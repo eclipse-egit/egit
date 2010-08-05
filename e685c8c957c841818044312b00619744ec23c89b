@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX///Js\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitTestResourceVariantTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-07T21:58:29Z",
+      "side": 1,
+      "message": "did you want to implement this ?",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///Jo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/resource/GitContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-07T21:58:29Z",
+      "side": 1,
+      "message": "we want javadoc for all public classes/methods",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///CM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/resource/GitContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-07T21:58:29Z",
+      "side": 1,
+      "message": "[1] says (I am not an expert here hence I may be wrong but the restriction looks pretty strict): \n\nContainers implement the IAdaptable interface; extensions are managed by the platform\u0027s adapter manager.\n\nSee Also:\nPlatform.getAdapterManager(), IProject, IFolder, IWorkspaceRoot\n\nRestriction:\nThis interface is not intended to be implemented by clients.\n\nRestriction:\nThis interface is not intended to be extended by clients.\n\n[1] http://help.eclipse.org/helios/index.jsp?topic\u003d/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/resources/IContainer.html",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///Jk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/resource/GitContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-07T21:58:29Z",
+      "side": 1,
+      "message": "why package visisibility ? all the rest is public ...",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///CQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/resource/GitContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-07T21:58:29Z",
+      "side": 1,
+      "message": "should we throw an exception here to prevent that calling non-implemented methods causes trouble elsewhere ?",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///CY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/resource/GitFile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-07T21:58:29Z",
+      "side": 1,
+      "message": "missing javadoc",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///B8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/resource/GitProject.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-07T21:58:29Z",
+      "side": 1,
+      "message": "this variable name looks weird use project instead",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///B4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/resource/GitResource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-07T21:58:29Z",
+      "side": 1,
+      "message": "how does \"L\" associate with FILE ?",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///B0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantByteStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-07T21:58:29Z",
+      "side": 1,
+      "message": "I think some javadoc would help here",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///Bw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-07T21:58:29Z",
+      "side": 1,
+      "message": "is this dead code or a TODO ?",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///Bs\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-07T21:58:29Z",
+      "side": 1,
+      "message": "is this dead code or a TODO ?",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///Bo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/dto/GitSynchronizeData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-07-07T21:58:29Z",
+      "side": 1,
+      "message": "I would recommend do not defer handling exceptions to a subsequent patch",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
