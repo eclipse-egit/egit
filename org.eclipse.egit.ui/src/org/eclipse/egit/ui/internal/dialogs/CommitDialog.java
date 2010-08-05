@@ -252,19 +252,23 @@ public class CommitDialog extends Dialog {
 		amendingButton.addSelectionListener(new SelectionListener() {
 			boolean alreadyAdded = false;
 			public void widgetSelected(SelectionEvent arg0) {
-				if (alreadyAdded)
-					return;
-				if (amendingButton.getSelection()) {
-					alreadyAdded = true;
-					String curText = commitText.getText();
-					if (curText.length() > 0)
-						curText += Text.DELIMITER;
-					commitText.setText(curText
-							+ previousCommitMessage.replaceAll(
-									"\n", Text.DELIMITER)); //$NON-NLS-1$
-					authorText.setText(previousAuthor);
-					saveOriginalChangeId();
+				if (!amendingButton.getSelection()) {
+					originalChangeId = null;
 				}
+				else {
+					saveOriginalChangeId();
+					if (!alreadyAdded) {
+						alreadyAdded = true;
+						String curText = commitText.getText();
+						if (curText.length() > 0)
+							curText += Text.DELIMITER;
+						commitText.setText(curText
+								+ previousCommitMessage.replaceAll(
+										"\n", Text.DELIMITER)); //$NON-NLS-1$
+						authorText.setText(previousAuthor);
+					}
+				}
+				refreshChangeIdText();
 			}
 
 			public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -307,25 +311,7 @@ public class CommitDialog extends Dialog {
 		changeIdButton.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
-				createChangeId = changeIdButton.getSelection();
-				String text = commitText.getText().replaceAll(Text.DELIMITER, "\n"); //$NON-NLS-1$
-				if (createChangeId) {
-					String changedText = ChangeIdUtil.insertId(text,
-							originalChangeId != null ? originalChangeId : ObjectId.zeroId());
-					if (!text.equals(changedText)) {
-						changedText = changedText.replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
-						commitText.setText(changedText);
-					}
-				} else {
-					int changeIdOffset = findOffsetOfChangeIdLine(text);
-					if (changeIdOffset > 0) {
-						int endOfChangeId = findNextEOL(changeIdOffset, text);
-						String cleanedText = text.substring(0, changeIdOffset)
-								+ text.substring(endOfChangeId);
-						cleanedText = cleanedText.replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
-						commitText.setText(cleanedText);
-					}
-				}
+				refreshChangeIdText();
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -906,6 +892,28 @@ public class CommitDialog extends Dialog {
 	 */
 	public boolean getCreateChangeId() {
 		return createChangeId;
+	}
+
+	private void refreshChangeIdText() {
+		createChangeId = changeIdButton.getSelection();
+		String text = commitText.getText().replaceAll(Text.DELIMITER, "\n"); //$NON-NLS-1$
+		if (createChangeId) {
+			String changedText = ChangeIdUtil.insertId(text,
+					originalChangeId != null ? originalChangeId : ObjectId.zeroId(), true);
+			if (!text.equals(changedText)) {
+				changedText = changedText.replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
+				commitText.setText(changedText);
+			}
+		} else {
+			int changeIdOffset = findOffsetOfChangeIdLine(text);
+			if (changeIdOffset > 0) {
+				int endOfChangeId = findNextEOL(changeIdOffset, text);
+				String cleanedText = text.substring(0, changeIdOffset)
+						+ text.substring(endOfChangeId);
+				cleanedText = cleanedText.replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
+				commitText.setText(cleanedText);
+			}
+		}
 	}
 
 }
