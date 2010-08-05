@@ -34,15 +34,16 @@ public class TagOperationTest extends DualRepositoryTestCase {
 
 	String projectName = "TagTest";
 
+	IProject project;
+
 	@Before
 	public void setUp() throws Exception {
 
-		workdir = testUtils.getTempDir("Repository1");
+		workdir = testUtils.createTempDir("Repository1");
 
 		repository1 = new TestRepository(new File(workdir, Constants.DOT_GIT));
 
-		// now we create a project in repo1
-		IProject project = testUtils.createProjectInLocalFileSystem(workdir,
+		project = testUtils.createProjectInLocalFileSystem(workdir,
 				projectName);
 		testUtils.addFileToProject(project, "folder1/file1.txt", "Hello world");
 
@@ -70,9 +71,11 @@ public class TagOperationTest extends DualRepositoryTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		project.close(null);
+		project.delete(false, false, null);
 		repository1.dispose();
 		repository1 = null;
-		testUtils.deleteRecursive(workdir);
+		testUtils.deleteTempDirs();
 	}
 
 	@Test

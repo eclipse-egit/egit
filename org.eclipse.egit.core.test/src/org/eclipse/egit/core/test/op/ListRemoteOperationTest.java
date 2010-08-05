@@ -54,8 +54,8 @@ public class ListRemoteOperationTest extends DualRepositoryTestCase {
 	@Before
 	public void setUp() throws Exception {
 
-		workdir = testUtils.getTempDir("Repository1");
-		workdir2 = testUtils.getTempDir("Repository2");
+		workdir = testUtils.createTempDir("Repository1");
+		workdir2 = testUtils.createTempDir("Repository2");
 
 		repository1 = new TestRepository(new File(workdir, Constants.DOT_GIT));
 
@@ -109,8 +109,7 @@ public class ListRemoteOperationTest extends DualRepositoryTestCase {
 	public void tearDown() throws Exception {
 		repository1.dispose();
 		repository2.dispose();
-		testUtils.deleteRecursive(workdir);
-		testUtils.deleteRecursive(workdir2);
+		testUtils.deleteTempDirs();
 	}
 
 	/**

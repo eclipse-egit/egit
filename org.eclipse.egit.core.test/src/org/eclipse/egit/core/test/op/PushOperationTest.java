@@ -64,8 +64,8 @@ public class PushOperationTest extends DualRepositoryTestCase {
 	@Before
 	public void setUp() throws Exception {
 
-		workdir = testUtils.getTempDir("Repository1");
-		workdir2 = testUtils.getTempDir("Repository2");
+		workdir = testUtils.createTempDir("Repository1");
+		workdir2 = testUtils.createTempDir("Repository2");
 
 		repository1 = new TestRepository(new File(workdir, Constants.DOT_GIT));
 
@@ -121,8 +121,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 		repository2.dispose();
 		repository1 = null;
 		repository2 = null;
-		testUtils.deleteRecursive(workdir);
-		testUtils.deleteRecursive(workdir2);
+		testUtils.deleteTempDirs();
 	}
 
 	/**
