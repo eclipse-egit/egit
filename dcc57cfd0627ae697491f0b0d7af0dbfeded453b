@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALxn///9A\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-02T14:24:49Z",
+      "side": 1,
+      "message": "Here you already know that local and base version are equal. So the kind can only be IN_SYNC or INCOMING, right?\n\nif (getComparator().compare(base, remote)) -\u003e IN_SYNC\nelse -\u003e INCOMING",
+      "revId": "dcc57cfd0627ae697491f0b0d7af0dbfeded453b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALxn///88\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-02T14:24:49Z",
+      "side": 1,
+      "message": "You could also use (getComparator().compare(base, remote)) here, then you do not need the id\u0027s here. This would better encapsulate the responsibility of comparison to the comparator",
+      "revId": "dcc57cfd0627ae697491f0b0d7af0dbfeded453b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
