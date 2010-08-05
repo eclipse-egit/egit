@@ -106,6 +106,8 @@ public class CreateTagDialog extends Dialog {
 
 	private final String branchName;
 
+	private final ObjectId commitId;
+
 	private final IInputValidator tagNameValidator;
 
 	static class TagInputList extends LabelProvider implements IWorkbenchAdapter {
@@ -175,6 +177,22 @@ public class CreateTagDialog extends Dialog {
 		super(parent);
 		this.tagNameValidator = tagNameValidator;
 		this.branchName = branchName;
+		this.commitId = null;
+	}
+
+	/**
+	 * Construct dialog to creating or editing tag.
+	 *
+	 * @param parent
+	 * @param tagNameValidator
+	 * @param commitId
+	 */
+	public CreateTagDialog(Shell parent, IInputValidator tagNameValidator,
+			ObjectId commitId) {
+		super(parent);
+		this.tagNameValidator = tagNameValidator;
+		this.branchName = null;
+		this.commitId = commitId;
 	}
 
 	/**
@@ -246,6 +264,10 @@ public class CreateTagDialog extends Dialog {
 		if (branchName != null) {
 			newShell.setText(NLS.bind(
 					UIText.CreateTagDialog_questionNewTagTitle, branchName));
+		} else if (commitId != null) {
+			newShell.setText(NLS.bind(
+					UIText.CreateTagDialog_CreateTagOnCommitTitle, commitId
+							.name()));
 		}
 
 		newShell.setMinimumSize(600, 400);
@@ -299,9 +321,10 @@ public class CreateTagDialog extends Dialog {
 		case CLEAR_ID:
 			tagNameText.setText(""); //$NON-NLS-1$
 			tagMessageText.setText(""); //$NON-NLS-1$
-			commitCombo.clearSelection();
-
-			commitCombo.setEnabled(true);
+			if (commitCombo != null) {
+				commitCombo.clearSelection();
+				commitCombo.setEnabled(true);
+			}
 			tagNameText.setEnabled(true);
 			tagMessageText.setEnabled(true);
 			overwriteButton.setEnabled(false);
@@ -310,7 +333,8 @@ public class CreateTagDialog extends Dialog {
 		case IDialogConstants.OK_ID:
 			// read and store data from widgets
 			tagName = tagNameText.getText();
-			tagCommit = commitCombo.getValue();
+			if (commitCombo != null)
+				tagCommit = commitCombo.getValue();
 			tagMessage = tagMessageText.getText();
 			overwriteTag = overwriteButton.getSelection();
 			//$FALL-THROUGH$ continue propagating OK button action
@@ -402,7 +426,8 @@ public class CreateTagDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				boolean state = overwriteButton.getSelection();
 				tagNameText.setEnabled(state);
-				commitCombo.setEnabled(state);
+				if (commitCombo != null)
+					commitCombo.setEnabled(state);
 				tagMessageText.setEnabled(state);
 				validateInput();
 			}
@@ -412,6 +437,8 @@ public class CreateTagDialog extends Dialog {
 	}
 
 	private void createAdvancedSection(final Composite composite) {
+		if (commitId!=null)
+			return;
 		ExpandableComposite advanced = new ExpandableComposite(composite,
 				ExpandableComposite.TREE_NODE
 						| ExpandableComposite.CLIENT_INDENT);
@@ -530,7 +557,8 @@ public class CreateTagDialog extends Dialog {
 					overwriteButton.setEnabled(true);
 
 				tagNameText.setEnabled(false);
-				commitCombo.setEnabled(false);
+				if (commitCombo != null)
+					commitCombo.setEnabled(false);
 				tagMessageText.setEnabled(false);
 			}
 
@@ -540,7 +568,8 @@ public class CreateTagDialog extends Dialog {
 
 	private void setTagImpl() {
 		tagNameText.setText(tag.getTag());
-		commitCombo.setSelectedElement(tag.getObjId());
+		if (commitCombo != null)
+			commitCombo.setSelectedElement(tag.getObjId());
 
 		// handle un-annotated tags
 		String message = tag.getMessage();

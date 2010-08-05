@@ -85,7 +85,6 @@ Export-Package: org.eclipse.egit.ui;
  org.eclipse.egit.ui.internal.factories;x-internal:=true,
  org.eclipse.egit.ui.internal.fetch;x-internal:=true,
  org.eclipse.egit.ui.internal.history;x-internal:=true,
- org.eclipse.egit.ui.internal.history.command;x-internal:=true,
  org.eclipse.egit.ui.internal.preferences;x-internal:=true,
  org.eclipse.egit.ui.internal.push;x-internal:=true,
  org.eclipse.egit.ui.internal.repository;x-internal:=true,
