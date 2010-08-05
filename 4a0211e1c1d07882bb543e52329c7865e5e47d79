@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALw3///60\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-07-20T17:53:26Z",
+      "side": 1,
+      "message": "This is not the case why GitResourceVariantTreeSubscriberTest fails, but of course it is an issue that needs to be fixed\n\nDone",
+      "parentUuid": "AAALw3///8c\u003d",
+      "revId": "4a0211e1c1d07882bb543e52329c7865e5e47d79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALw3///8k\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2010-07-20T11:26:03Z",
       "side": 1,
       "message": "This input stream is also never closed.",
+      "revId": "4a0211e1c1d07882bb543e52329c7865e5e47d79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALw3///6w\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-07-20T17:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALw3///8k\u003d",
       "revId": "4a0211e1c1d07882bb543e52329c7865e5e47d79",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAALw3///6k\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-07-20T17:53:26Z",
+      "side": 1,
+      "message": "I\u0027ll prefer to make such change in separate patch, since this one is quite big and it would be easier to track such changes.",
+      "parentUuid": "AAALw3///8U\u003d",
+      "revId": "4a0211e1c1d07882bb543e52329c7865e5e47d79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALw3///8Y\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparator.java",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2010-07-20T11:26:03Z",
       "side": 1,
       "message": "What\u0027s the difference here between shouldIncludeLocal() and not?\n\nI would suggest that we always use the workspace version as source. See also my general comments.",
+      "revId": "4a0211e1c1d07882bb543e52329c7865e5e47d79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALw3///6g\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-07-20T17:53:26Z",
+      "side": 1,
+      "message": "Indeed, I didn\u0027t spot that earlier, this is same code. But IMHO this should be made by separate patch ;)",
+      "parentUuid": "AAALw3///8Y\u003d",
       "revId": "4a0211e1c1d07882bb543e52329c7865e5e47d79",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
