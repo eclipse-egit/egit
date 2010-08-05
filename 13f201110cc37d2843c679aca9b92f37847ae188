@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALxn///+A\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-02T11:24:24Z",
+      "side": 0,
+      "message": "Rebase failed, the class does not compile: The types ArrayList, List, Git, RefUpdate, Ref and ObjectId were removed from the list of imports but they are still referenced.",
+      "revId": "13f201110cc37d2843c679aca9b92f37847ae188",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

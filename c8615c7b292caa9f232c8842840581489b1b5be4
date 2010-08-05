@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALxn///9w\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparatorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-02T11:24:24Z",
+      "side": 1,
+      "message": "Now I get an error at the next statement: java.lang.IllegalStateException: Repository already exists\n\nCan you use new TestRepository(Repository repository) instead? You have created an instance of FileRepository before.",
+      "revId": "c8615c7b292caa9f232c8842840581489b1b5be4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALxn///90\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSyncInfoTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-02T11:24:24Z",
+      "side": 1,
+      "message": "Now I get an error at the next statement: java.lang.IllegalStateException: Repository already exists\n\nCan you use new TestRepository(Repository repository) instead? You have created an instance of FileRepository before.",
+      "revId": "c8615c7b292caa9f232c8842840581489b1b5be4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
