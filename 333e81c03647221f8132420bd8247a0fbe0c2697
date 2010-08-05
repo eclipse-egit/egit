@@ -1,0 +1,58 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALx3////8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-05T07:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALxn///2I\u003d",
+      "revId": "333e81c03647221f8132420bd8247a0fbe0c2697",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALx3////4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-05T07:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALxn///2E\u003d",
+      "revId": "333e81c03647221f8132420bd8247a0fbe0c2697",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALx3////0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-05T07:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALxn///2A\u003d",
+      "revId": "333e81c03647221f8132420bd8247a0fbe0c2697",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
