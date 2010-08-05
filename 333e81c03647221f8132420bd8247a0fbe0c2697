@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALxn///2I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-08-04T18:18:24Z",
+      "side": 1,
+      "message": "Why do we need a snapshot of the world? Isn\u0027t it possible to just use getCurrentState() to get the selection?",
+      "revId": "333e81c03647221f8132420bd8247a0fbe0c2697",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALx3////8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryAction.java",
         "patchSetId": 1
@@ -20,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AAALxn///2E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-08-04T18:18:24Z",
+      "side": 1,
+      "message": "Why do we need a snapshot of the world? Isn\u0027t it possible to just use getCurrentState() to get the selection?",
+      "revId": "333e81c03647221f8132420bd8247a0fbe0c2697",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALx3////4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
         "patchSetId": 1
@@ -32,6 +66,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALxn///2E\u003d",
+      "revId": "333e81c03647221f8132420bd8247a0fbe0c2697",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALxn///2A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-08-04T18:18:24Z",
+      "side": 1,
+      "message": "Seems not to be used anywhere?",
       "revId": "333e81c03647221f8132420bd8247a0fbe0c2697",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
