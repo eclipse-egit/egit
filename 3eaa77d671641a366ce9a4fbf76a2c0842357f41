@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALwX//+vo\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriberTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-07-15T20:42:08Z",
+      "side": 1,
+      "message": "I don\u0027t know why this test randomly fails when it is run as part of test suite, but it it is run as single test case it always passes.",
+      "revId": "3eaa77d671641a366ce9a4fbf76a2c0842357f41",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALwX//+vk\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriberTest.java",
         "patchSetId": 3
