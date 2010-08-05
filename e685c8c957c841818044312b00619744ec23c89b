@@ -294,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "AAALwX//++M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-07-08T15:11:58Z",
+      "side": 1,
+      "message": "This is partially dead code it should be rewritten after API of GitBlobResourceVariant will be stable",
+      "parentUuid": "AAALwX///Bs\u003d",
+      "revId": "e685c8c957c841818044312b00619744ec23c89b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALwX///Bo\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/dto/GitSynchronizeData.java",
         "patchSetId": 2
