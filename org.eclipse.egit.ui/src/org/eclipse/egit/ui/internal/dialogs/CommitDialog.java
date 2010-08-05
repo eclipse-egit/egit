@@ -70,6 +70,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -192,8 +193,9 @@ public class CommitDialog extends Dialog {
 		label.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).grab(true, false).create());
 
 		commitText = new CommitMessageArea(container, commitMessage);
+		Point size = commitText.getTextWidget().getSize();
 		commitText.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).grab(true, true)
-				.hint(600, 200).create());
+				.minSize(size).align(SWT.BEGINNING, SWT.FILL).create());
 
 		// allow to commit with ctrl-enter
 		commitText.getTextWidget().addKeyListener(new KeyAdapter() {
@@ -579,7 +581,7 @@ public class CommitDialog extends Dialog {
 	 * @return The message the user entered
 	 */
 	public String getCommitMessage() {
-		return commitMessage.replaceAll(Text.DELIMITER, "\n"); //$NON-NLS-1$;
+		return commitMessage;
 	}
 
 	/**
@@ -719,7 +721,7 @@ public class CommitDialog extends Dialog {
 
 	@Override
 	protected void okPressed() {
-		commitMessage = commitText.getText();
+		commitMessage = commitText.getCommitMessage();
 		author = authorText.getText().trim();
 		committer = committerText.getText().trim();
 		signedOff = signedOffButton.getSelection();
