@@ -16,6 +16,24 @@
       "revId": "13f201110cc37d2843c679aca9b92f37847ae188",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALxn///9k\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-02T12:07:55Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "AAALxn///+A\u003d",
+      "revId": "13f201110cc37d2843c679aca9b92f37847ae188",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
