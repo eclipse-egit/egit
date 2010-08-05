@@ -22,6 +22,8 @@ import java.util.Set;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.ContainerTreeIterator;
 import org.eclipse.egit.core.ContainerTreeIterator.ResourceEntry;
@@ -210,14 +212,27 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 
 			final WorkingTreeIterator workingTreeIterator = treeWalk.getTree(
 					T_WORKSPACE, WorkingTreeIterator.class);
-			if (workingTreeIterator instanceof ContainerTreeIterator) {
-				final ContainerTreeIterator workspaceIterator = treeWalk.getTree(
-						T_WORKSPACE, ContainerTreeIterator.class);
-				if (workspaceIterator != null) {
+			if (workingTreeIterator != null) {
+				if (workingTreeIterator instanceof ContainerTreeIterator) {
+					final ContainerTreeIterator workspaceIterator =
+						(ContainerTreeIterator) workingTreeIterator;
 					ResourceEntry resourceEntry = workspaceIterator
 							.getResourceEntry();
 					if (resource.equals(resourceEntry.getResource())
 							&& workspaceIterator.isEntryIgnored()) {
+						ignored = true;
+						return false;
+					}
+				} else {
+					// For the project resource, it's still the
+					// AdaptableFileTreeIterator. So we have to compare the path
+					// of the resource with path of the iterator
+					IPath wdPath = new Path(repository.getWorkTree()
+							.getAbsolutePath()).append(workingTreeIterator
+							.getEntryPathString());
+					IPath resPath = resource.getLocation();
+					if (wdPath.equals(resPath)
+							&& workingTreeIterator.isEntryIgnored()) {
 						ignored = true;
 						return false;
 					}
