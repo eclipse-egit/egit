@@ -75,7 +75,8 @@ public class UIIcons {
 	public static final ImageDescriptor CHECKBOX_DISABLED_CHECKED;
 	/** Disabled, unchecked, checkbox image */
 	public static final ImageDescriptor CHECKBOX_DISABLED_UNCHECKED;
-
+	/** Edit configuration */
+	public static final ImageDescriptor EDITCONFIG;
 	/** Create Patch Wizard banner */
 	public static final ImageDescriptor WIZBAN_CREATE_PATCH;
 
@@ -156,6 +157,7 @@ public class UIIcons {
 		WIZBAN_CREATE_PATCH = map("wizban/createpatch_wizban.png"); //$NON-NLS-1$
 		WIZBAN_IMPORT_REPO = map("wizban/import_wiz.png"); //$NON-NLS-1$
 		WIZBAN_CONNECT_REPO = map("wizban/newconnect_wizban.png"); //$NON-NLS-1$
+		EDITCONFIG = map("obj16/editconfig.gif"); //$NON-NLS-1$
 		ELCL16_COMMIT = map("elcl16/commit.gif"); //$NON-NLS-1$
 		ELCL16_COMMENTS = map("elcl16/comment.gif"); //$NON-NLS-1$
 		ELCL16_AUTHOR = map("elcl16/author.gif"); //$NON-NLS-1$
