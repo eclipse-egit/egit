@@ -139,6 +139,22 @@ public class TestUtils {
 	}
 
 	/**
+	 * Change the content of a file
+	 *
+	 * @param project
+	 * @param file
+	 * @param newContent
+	 * @return the file
+	 * @throws Exception
+	 */
+	public IFile changeContentOfFile(IProject project, IFile file, String newContent)
+			throws Exception {
+		file.setContents(new ByteArrayInputStream(newContent.getBytes(project
+				.getDefaultCharset())), 0, null);
+		return file;
+	}
+
+	/**
 	 * Create a project in the local file system
 	 *
 	 * @param parentFile

@@ -175,7 +175,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 			commitOperation.setRepos(repos);
 		}
 		commitOperation.setComputeChangeId(commitDialog.getCreateChangeId());
-		commitOperation.setMergeResolve(isMergedResolved);
+		commitOperation.setCommitAll(isMergedResolved);
 		if (isMergedResolved)
 			commitOperation.setRepos(repos);
 		String jobname = UIText.CommitAction_CommittingChanges;

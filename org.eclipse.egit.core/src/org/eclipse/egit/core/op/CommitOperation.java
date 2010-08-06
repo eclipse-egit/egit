@@ -69,7 +69,7 @@ public class CommitOperation implements IEGitOperation {
 
 	private boolean amending = false;
 
-	private boolean mergeResolve = false;
+	private boolean commitAll = false;
 
 	// needed for amending
 	private Commit previousCommit;
@@ -118,14 +118,22 @@ public class CommitOperation implements IEGitOperation {
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
 			public void run(IProgressMonitor monitor) throws CoreException {
+				final Date commitDate = new Date();
+				final TimeZone timeZone = TimeZone.getDefault();
 				final PersonIdent authorIdent = new PersonIdent(author);
 				final PersonIdent committerIdent = new PersonIdent(committer);
-				if (mergeResolve) {
+				if (commitAll) {
 					for (Repository repo : repos) {
 						Git git = new Git(repo);
 						try {
-							git.commit().setAll(true).setAuthor(authorIdent)
-									.setCommitter(committerIdent)
+							git.commit()
+									.setAll(true)
+									.setAuthor(
+											new PersonIdent(authorIdent,
+													commitDate, timeZone))
+									.setCommitter(
+											new PersonIdent(committerIdent,
+													commitDate, timeZone))
 									.setMessage(message).call();
 						} catch (NoHeadException e) {
 							throw new TeamException(e.getLocalizedMessage(), e);
@@ -390,10 +398,10 @@ public class CommitOperation implements IEGitOperation {
 
 	/**
 	 *
-	 * @param mergeResolve
+	 * @param commitAll
 	 */
-	public void setMergeResolve(boolean mergeResolve) {
-		this.mergeResolve = mergeResolve;
+	public void setCommitAll(boolean commitAll) {
+		this.commitAll = commitAll;
 	}
 
 	/**
