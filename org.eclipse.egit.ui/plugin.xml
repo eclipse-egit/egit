@@ -1480,6 +1480,14 @@
             commandId="org.eclipse.egit.ui.CheckoutCommand"
             icon="icons/obj16/checkout.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewCreateBranch"
+            icon="icons/obj16/branch_obj.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewNewRemote"
+            icon="icons/obj16/remotespec.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
