@@ -20,6 +20,23 @@
     },
     {
       "key": {
+        "uuid": "AAALxn////Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-07-30T09:35:04Z",
+      "side": 1,
+      "message": "too much TABs",
+      "revId": "43c6fa21fb08bc613c7731aecf9a0fa292201f2e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALxn///8M\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitActionHandler.java",
         "patchSetId": 2
