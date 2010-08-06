@@ -1639,6 +1639,15 @@ public class UIText extends NLS {
 	public static String IgnoreAction_error;
 
 	/** */
+	public static String IgnoreActionHandler_creatingFailed;
+
+	/** */
+	public static String IgnoreActionHandler_parentOutsideRepo;
+
+	/** */
+	public static String IgnoreActionHandler_updatingFailed;
+
+	/** */
 	public static String RepositoriesView_ActionCanceled_Message;
 
 	/** */
