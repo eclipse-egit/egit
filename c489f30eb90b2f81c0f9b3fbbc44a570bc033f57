@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALxn///7M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-03T06:51:05Z",
+      "side": 1,
+      "message": "Formatting",
+      "revId": "c489f30eb90b2f81c0f9b3fbbc44a570bc033f57",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
