@@ -100,7 +100,7 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 				TestUtil.TESTAUTHOR);
 		commitDialog.bot().textWithLabel(UIText.CommitDialog_Committer)
 				.setText(TestUtil.TESTCOMMITTER);
-		commitDialog.bot().textWithLabel(UIText.CommitDialog_CommitMessage)
+		commitDialog.bot().styledTextWithLabel(UIText.CommitDialog_CommitMessage)
 				.setText("The new commit");
 		commitDialog.bot().button(UIText.CommitDialog_Commit).click();
 		testOpenCommitWithoutChanged();
