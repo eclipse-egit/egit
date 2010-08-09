@@ -286,6 +286,21 @@ public class CoreText extends NLS {
 	/** */
 	public static String OperationNotYetExecuted;
 
+	/** */
+	public static String IgnoreOperation_error;
+
+	/** */
+	public static String IgnoreOperation_parentOutsideRepo;
+
+	/** */
+	public static String IgnoreOperation_creatingFailed;
+
+	/** */
+	public static String IgnoreOperation_taskName;
+
+	/** */
+	public static String IgnoreOperation_updatingFailed;
+
 	static {
 		initializeMessages("org.eclipse.egit.core.coretext", //$NON-NLS-1$
 				CoreText.class);
