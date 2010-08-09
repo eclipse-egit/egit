@@ -21,9 +21,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.team.core.variants.IResourceVariant;
 
 abstract class GitResourceVariant implements IResourceVariant {
@@ -33,8 +30,6 @@ abstract class GitResourceVariant implements IResourceVariant {
 	private final Repository repo;
 
 	private final ObjectId objectId;
-
-	private final RevCommit revCommit;
 
 	private String name;
 
@@ -47,21 +42,16 @@ abstract class GitResourceVariant implements IResourceVariant {
 	 * Construct Git representation of {@link IResourceVariant}.
 	 *
 	 * @param repo
-	 * @param revCommit
+	 * @param objectId
 	 * @param path
 	 *            should be repository relative
 	 * @throws IOException
 	 */
-	GitResourceVariant(Repository repo, RevCommit revCommit, String path)
+	GitResourceVariant(Repository repo, ObjectId objectId, String path)
 			throws IOException {
 		this.path = path;
 		this.repo = repo;
-		this.revCommit = revCommit;
-		TreeWalk tw = getTreeWalk(repo, revCommit.getTree(), path);
-		if (tw == null)
-			objectId = null;
-		else
-			objectId = tw.getObjectId(0);
+		this.objectId = objectId;
 	}
 
 	public String getContentIdentifier() {
@@ -98,31 +88,12 @@ abstract class GitResourceVariant implements IResourceVariant {
 		return path + "(" + objectId.getName() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	/**
-	 *
-	 * @param repo
-	 * @param revTree
-	 *            base commit
-	 * @param path
-	 *            to resource variant
-	 * @return new tree walk positioned on given object or <code>null</code>
-	 *         when given path was not found in repository
-	 * @throws IOException
-	 *             when something goes wrong during tree walk initialization
-	 */
-	protected abstract TreeWalk getTreeWalk(Repository repo, RevTree revTree,
-			String path) throws IOException;
-
 	protected ObjectId getObjectId() {
 		return objectId;
 	}
 
 	protected Repository getRepository() {
 		return repo;
-	}
-
-	protected RevCommit getRevCommit() {
-		return revCommit;
 	}
 
 	protected String getPath() {
