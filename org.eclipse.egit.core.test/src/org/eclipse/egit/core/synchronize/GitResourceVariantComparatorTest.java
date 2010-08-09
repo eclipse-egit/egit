@@ -15,6 +15,7 @@ import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
+import static org.eclipse.jgit.lib.Constants.HEAD;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -33,6 +34,7 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -57,6 +59,10 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 		testRepo = new TestRepository(gitDir);
 		testRepo.connect(iProject);
 		repo = RepositoryMapping.getMapping(iProject).getRepository();
+
+		// make initial commit
+		new Git(repo).commit().setAuthor("JUnit", "junit@jgit.org")
+				.setMessage("Initall commit").call();
 	}
 
 	@After
@@ -173,11 +179,11 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 		RevCommit commit = testRepo.addAndCommit(iProject, file,
 				"initial commit");
 		String path = Repository.stripWorkDir(repo.getWorkTree(), file);
-		IPath iPath = new Path(path);
+		IPath iPath = new Path(File.separator + path);
 
 		IContainer local = createMock(IContainer.class);
 		expect(local.exists()).andReturn(true);
-		expect(local.getFullPath()).andReturn(iPath);
+		expect(local.getFullPath()).andReturn(iPath).anyTimes();
 		replay(local);
 
 		GitFolderResourceVariant remote = new GitFolderResourceVariant(repo,
@@ -201,7 +207,7 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 		// when
 		byte[] shortContent = "short content".getBytes();
 		byte[] longContent = "very long long content".getBytes();
-		GitSynchronizeData data = new GitSynchronizeData(repo, "", "", true);
+		GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, HEAD, true);
 		GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
 		GitResourceVariantComparator grvc = new GitResourceVariantComparator(
 				dataSet);
@@ -243,7 +249,7 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 		byte[] localContent = "very long long content".getBytes();
 		// this typo should be here
 		byte[] remoteContent = "very long lonk content".getBytes();
-		GitSynchronizeData data = new GitSynchronizeData(repo, "", "", true);
+		GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, HEAD, true);
 		GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
 		GitResourceVariantComparator grvc = new GitResourceVariantComparator(
 				dataSet);
@@ -287,7 +293,7 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 		byte[] remoteContent = new byte[8192];
 		Arrays.fill(remoteContent, (byte) 'a');
 		remoteContent[8101] = 'b';
-		GitSynchronizeData data = new GitSynchronizeData(repo, "", "", true);
+		GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, HEAD, true);
 		GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
 		GitResourceVariantComparator grvc = new GitResourceVariantComparator(
 				dataSet);
@@ -335,7 +341,7 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 		Arrays.fill(localContent, (byte) 'a');
 		byte[] remoteContent = new byte[8200];
 		Arrays.fill(remoteContent, (byte) 'a');
-		GitSynchronizeData data = new GitSynchronizeData(repo, "", "", true);
+		GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, HEAD, true);
 		GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
 		GitResourceVariantComparator grvc = new GitResourceVariantComparator(
 				dataSet);
@@ -376,7 +382,7 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 		// when
 		byte[] localContent = "very long long content".getBytes();
 		byte[] remoteContent = "very long long content".getBytes();
-		GitSynchronizeData data = new GitSynchronizeData(repo, "", "", true);
+		GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, HEAD, true);
 		GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
 		GitResourceVariantComparator grvc = new GitResourceVariantComparator(
 				dataSet);
@@ -420,7 +426,7 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 		Arrays.fill(localContent, (byte) 'a');
 		byte[] remoteContent = new byte[8192];
 		Arrays.fill(remoteContent, (byte) 'a');
-		GitSynchronizeData data = new GitSynchronizeData(repo, "", "", true);
+		GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, HEAD, true);
 		GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
 		GitResourceVariantComparator grvc = new GitResourceVariantComparator(
 				dataSet);
