@@ -22,8 +22,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.team.core.variants.IResourceVariant;
 
 abstract class GitResourceVariant implements IResourceVariant {
@@ -48,20 +46,17 @@ abstract class GitResourceVariant implements IResourceVariant {
 	 *
 	 * @param repo
 	 * @param revCommit
+	 * @param objectId
 	 * @param path
 	 *            should be repository relative
 	 * @throws IOException
 	 */
-	GitResourceVariant(Repository repo, RevCommit revCommit, String path)
+	GitResourceVariant(Repository repo, RevCommit revCommit, ObjectId objectId, String path)
 			throws IOException {
 		this.path = path;
 		this.repo = repo;
+		this.objectId = objectId;
 		this.revCommit = revCommit;
-		TreeWalk tw = getTreeWalk(repo, revCommit.getTree(), path);
-		if (tw == null)
-			objectId = null;
-		else
-			objectId = tw.getObjectId(0);
 	}
 
 	public String getContentIdentifier() {
@@ -97,21 +92,6 @@ abstract class GitResourceVariant implements IResourceVariant {
 	public String toString() {
 		return path + "(" + objectId.getName() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
-
-	/**
-	 *
-	 * @param repo
-	 * @param revTree
-	 *            base commit
-	 * @param path
-	 *            to resource variant
-	 * @return new tree walk positioned on given object or <code>null</code>
-	 *         when given path was not found in repository
-	 * @throws IOException
-	 *             when something goes wrong during tree walk initialization
-	 */
-	protected abstract TreeWalk getTreeWalk(Repository repo, RevTree revTree,
-			String path) throws IOException;
 
 	protected ObjectId getObjectId() {
 		return objectId;

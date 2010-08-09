@@ -26,12 +26,10 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.content.IContentDescription;
 import org.eclipse.core.runtime.content.IContentTypeManager;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.team.core.TeamException;
 
 /**
@@ -43,9 +41,9 @@ public class GitBlobResourceVariant extends GitResourceVariant {
 
 	private byte[] bytes;
 
-	GitBlobResourceVariant(Repository repo, RevCommit revCommit, String path)
-			throws IOException {
-		super(repo, revCommit, path);
+	GitBlobResourceVariant(Repository repo, RevCommit revCommit,
+			ObjectId objectId, String path) throws IOException {
+		super(repo, revCommit, objectId, path);
 
 		if (getObjectId() != null) {
 			ObjectLoader blob = repo.open(getObjectId());
@@ -102,18 +100,6 @@ public class GitBlobResourceVariant extends GitResourceVariant {
 
 	public byte[] asBytes() {
 		return bytes;
-	}
-
-	@Override
-	protected TreeWalk getTreeWalk(Repository repo, RevTree revTree,
-			String path) throws IOException {
-		TreeWalk tw = new TreeWalk(repo);
-		tw.reset();
-		tw.addTree(revTree);
-		tw.setRecursive(true);
-		tw.setFilter(PathFilter.create(path));
-
-		return tw.next() ? tw : null;
 	}
 
 }
