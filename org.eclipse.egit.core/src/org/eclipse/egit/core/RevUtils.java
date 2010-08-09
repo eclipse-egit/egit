@@ -40,8 +40,8 @@ public class RevUtils {
 		RevWalk rw = new RevWalk(repo);
 		rw.setRevFilter(RevFilter.MERGE_BASE);
 
-		RevCommit srcRev = rw.parseCommit(commit1);
-		RevCommit dstRev = rw.parseCommit(commit2);
+		RevCommit srcRev = rw.lookupCommit(commit1);
+		RevCommit dstRev = rw.lookupCommit(commit2);
 
 		rw.markStart(dstRev);
 		rw.markStart(srcRev);

@@ -31,7 +31,7 @@ class GitBaseResourceVariantTree extends GitResourceVariantTree {
 			throws TeamException {
 		try {
 			return RevUtils.getCommonAncestor(gsd.getRepository(), gsd
-					.getSrcRev().getObjectId(), gsd.getDstRev().getObjectId());
+					.getSrcRevCommit(), gsd.getDstRevCommit());
 		} catch (IOException e) {
 			throw new TeamException(e.getMessage(), e);
 		}
