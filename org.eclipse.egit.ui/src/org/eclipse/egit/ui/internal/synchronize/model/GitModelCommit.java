@@ -8,10 +8,21 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
+import static org.eclipse.jgit.lib.ObjectId.zeroId;
+import static org.eclipse.team.core.synchronize.SyncInfo.ADDITION;
+import static org.eclipse.team.core.synchronize.SyncInfo.CHANGE;
+import static org.eclipse.team.core.synchronize.SyncInfo.CONFLICTING;
+import static org.eclipse.team.core.synchronize.SyncInfo.DELETION;
+import static org.eclipse.team.core.synchronize.SyncInfo.INCOMING;
+import static org.eclipse.team.core.synchronize.SyncInfo.OUTGOING;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.compare.ITypedElement;
+import org.eclipse.compare.structuremergeviewer.ICompareInput;
+import org.eclipse.compare.structuremergeviewer.ICompareInputChangeListener;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.Activator;
@@ -21,17 +32,20 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * Git commit object representation in Git ChangeSet
  */
-public class GitModelCommit extends GitModelObject {
+public class GitModelCommit extends GitModelObject implements ICompareInput {
 
 	private final RevCommit baseCommit;
 
 	private final RevCommit remoteCommit;
 
 	private final RevCommit ancestorCommit;
+
+	private int kind = -1;
 
 	private String name;
 
@@ -151,6 +165,67 @@ public class GitModelCommit extends GitModelObject {
 		return remoteCommit.hashCode();
 	}
 
+	public Image getImage() {
+		// currently itsn't used
+		return null;
+	}
+
+	public int getKind() {
+		if (kind == -1)
+			calculateKind(getAncestorSha1(), getBaseSha1(), getRemoteSha1());
+
+		return kind;
+	}
+
+	public ITypedElement getAncestor() {
+		return null;
+	}
+
+	public ITypedElement getLeft() {
+		return null;
+	}
+
+	public ITypedElement getRight() {
+		return null;
+	}
+
+	public void addCompareInputChangeListener(
+			ICompareInputChangeListener listener) {
+		// data in commit will never change, therefore change listeners are
+		// useless
+	}
+
+	public void removeCompareInputChangeListener(
+			ICompareInputChangeListener listener) {
+		// data in commit will never change, therefore change listeners are
+		// useless
+	}
+
+	public void copy(boolean leftToRight) {
+		// do nothing, we should disallow coping content between commits
+	}
+
+	/**
+	 * @return SHA1 of ancestor object
+	 */
+	protected String getAncestorSha1() {
+		return ancestorCommit.getId().getName();
+	}
+
+	/**
+	 * @return SHA1 of base object
+	 */
+	protected String getBaseSha1() {
+		return baseCommit.getId().getName();
+	}
+
+	/**
+	 * @return SHA1 of remote object
+	 */
+	protected String getRemoteSha1() {
+		return remoteCommit.getId().getName();
+	}
+
 	private RevCommit calculateAncestor(RevCommit actual) throws IOException {
 		RevWalk rw = new RevWalk(getRepository());
 		rw.setRevFilter(RevFilter.MERGE_BASE);
@@ -211,6 +286,23 @@ public class GitModelCommit extends GitModelObject {
 					objBaseId, objRemoteId, objName);
 
 		return null;
+	}
+
+	private void calculateKind(String ancestorSha1, String baseSha1,
+			String remoteSha1) {
+		if (ancestorSha1.equals(baseSha1))
+			kind = INCOMING;
+		else if (ancestorSha1.equals(baseSha1))
+			kind = OUTGOING;
+		else
+			kind = CONFLICTING;
+
+		if (baseSha1.equals(zeroId().getName()))
+			kind = kind | ADDITION;
+		else if (remoteSha1.equals(zeroId().getName()))
+			kind = kind | DELETION;
+		else
+			kind = kind | CHANGE;
 	}
 
 }
