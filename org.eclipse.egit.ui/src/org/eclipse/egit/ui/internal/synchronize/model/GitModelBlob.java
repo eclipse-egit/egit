@@ -8,10 +8,17 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
+import static org.eclipse.jgit.lib.ObjectId.zeroId;
+import static org.eclipse.team.core.synchronize.SyncInfo.ADDITION;
+import static org.eclipse.team.core.synchronize.SyncInfo.CHANGE;
+import static org.eclipse.team.core.synchronize.SyncInfo.CONFLICTING;
+import static org.eclipse.team.core.synchronize.SyncInfo.DELETION;
+import static org.eclipse.team.core.synchronize.SyncInfo.INCOMING;
+import static org.eclipse.team.core.synchronize.SyncInfo.OUTGOING;
+
 import java.io.IOException;
 
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.compare.structuremergeviewer.ICompareInputChangeListener;
 import org.eclipse.core.resources.IProject;
@@ -38,6 +45,8 @@ public class GitModelBlob extends GitModelCommit implements ICompareInput {
 	private final IPath location;
 
 	private final String gitPath;
+
+	private int kind = -1;
 
 	private static final GitModelObject[] empty = new GitModelObject[0];
 
@@ -96,7 +105,10 @@ public class GitModelBlob extends GitModelCommit implements ICompareInput {
 	}
 
 	public int getKind() {
-		return Differencer.CONFLICTING;
+		if (kind == -1)
+			calculateKind();
+
+		return kind;
 	}
 
 	public ITypedElement getAncestor() {
@@ -131,6 +143,22 @@ public class GitModelBlob extends GitModelCommit implements ICompareInput {
 
 	public void copy(boolean leftToRight) {
 		// do nothing, we should disallow coping content between commits
+	}
+
+	private void calculateKind() {
+		if (ancestorId.equals(baseId))
+			kind = OUTGOING;
+		else if (ancestorId.equals(remoteId))
+			kind = INCOMING;
+		else
+			kind = CONFLICTING;
+
+		if (baseId.equals(zeroId()))
+			kind = kind | ADDITION;
+		else if (remoteId.equals(zeroId()))
+			kind = kind | DELETION;
+		else
+			kind = kind | CHANGE;
 	}
 
 }
