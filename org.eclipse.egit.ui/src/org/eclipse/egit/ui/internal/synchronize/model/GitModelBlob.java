@@ -14,8 +14,6 @@ import java.io.IOException;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.compare.structuremergeviewer.Differencer;
-import org.eclipse.compare.structuremergeviewer.ICompareInputChangeListener;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -27,14 +25,11 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.team.ui.mapping.ISynchronizationCompareInput;
-import org.eclipse.team.ui.mapping.SaveableComparison;
 
 /**
  * Git blob object representation in Git ChangeSet
  */
-public class GitModelBlob extends GitModelCommit implements ISynchronizationCompareInput {
+public class GitModelBlob extends GitModelCommit {
 
 	private final String name;
 
@@ -99,15 +94,7 @@ public class GitModelBlob extends GitModelCommit implements ISynchronizationComp
 		return location;
 	}
 
-	public Image getImage() {
-		// currently itsn't used
-		return null;
-	}
-
-	public int getKind() {
-		return Differencer.CONFLICTING;
-	}
-
+	@Override
 	public ITypedElement getAncestor() {
 		if (objectExist(getAncestorCommit(), ancestorId))
 			return CompareUtils.getFileRevisionTypedElement(gitPath,
@@ -116,41 +103,36 @@ public class GitModelBlob extends GitModelCommit implements ISynchronizationComp
 		return null;
 	}
 
+	@Override
 	public ITypedElement getLeft() {
 		return CompareUtils.getFileRevisionTypedElement(gitPath,
 				getRemoteCommit(), getRepository(), remoteId);
-
 	}
 
+	@Override
 	public ITypedElement getRight() {
 			return CompareUtils.getFileRevisionTypedElement(gitPath,
 					getBaseCommit(), getRepository(), baseId);
 
 	}
 
-	public void addCompareInputChangeListener(
-			ICompareInputChangeListener listener) {
-		// data in commit will never change, therefore change listeners are
-		// useless
+	@Override
+	protected String getAncestorSha1() {
+		return ancestorId.getName();
 	}
 
-	public void removeCompareInputChangeListener(
-			ICompareInputChangeListener listener) {
-		// data in commit will never change, therefore change listeners are
-		// useless
+	@Override
+	protected String getBaseSha1() {
+		return baseId.getName();
 	}
 
-	public void copy(boolean leftToRight) {
-		// do nothing, we should disallow coping content between commits
+	@Override
+	protected String getRemoteSha1() {
+		return remoteId.getName();
 	}
 
 	private boolean objectExist(RevCommit commit, ObjectId id) {
 		return commit != null && id != null && !id.equals(zeroId());
-	}
-
-	public SaveableComparison getSaveable() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public void prepareInput(CompareConfiguration configuration,
@@ -171,16 +153,6 @@ public class GitModelBlob extends GitModelCommit implements ISynchronizationComp
 		}
 		else
 			return element.getName();
-	}
-
-	public String getFullPath() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean isCompareInputFor(Object object) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }
