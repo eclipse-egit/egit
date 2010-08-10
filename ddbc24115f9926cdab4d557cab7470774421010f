@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAF3///+s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/IgnoredResources.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-03T23:40:34Z",
+      "side": 1,
+      "message": "license header and copyright statement are missing",
+      "revId": "ddbc24115f9926cdab4d557cab7470774421010f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAF3///+o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/IgnoredResources.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-03T23:40:34Z",
+      "side": 1,
+      "message": "we don\u0027t use @author tags",
+      "revId": "ddbc24115f9926cdab4d557cab7470774421010f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAF3///+k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/IgnoredResources.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-03T23:40:34Z",
+      "side": 1,
+      "message": "s/ignored it appears/ignored if it appears/",
+      "revId": "ddbc24115f9926cdab4d557cab7470774421010f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAF3///+Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/IgnoredResources.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-03T23:40:34Z",
+      "side": 1,
+      "message": "We also have to respect patterns read from the file specified by the configuration variable core.excludesfile (see http://www.kernel.org/pub/software/scm/git/docs/gitignore.html ).",
+      "revId": "ddbc24115f9926cdab4d557cab7470774421010f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAF3///+g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/IgnoredResources.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-03T23:40:34Z",
+      "side": 1,
+      "message": "why do we need this method ?",
+      "revId": "ddbc24115f9926cdab4d557cab7470774421010f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAF3///+c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/IgnoredResources.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-03T23:40:34Z",
+      "side": 1,
+      "message": "According to http://www.kernel.org/pub/software/scm/git/docs/gitignore.html .gitignore files can exist in any hierarchy level of the repository.\nAlso precedence has to be properly taken into account.",
+      "revId": "ddbc24115f9926cdab4d557cab7470774421010f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAF3///+U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/IgnoredResources.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-03-03T23:40:34Z",
+      "side": 1,
+      "message": "This isn\u0027t interoperable with native git and breaks http://www.kernel.org/pub/software/scm/git/docs/gitignore.html .\nPatterns are not regular expressions but shell globs as specified in the gitignore help.",
+      "revId": "ddbc24115f9926cdab4d557cab7470774421010f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
