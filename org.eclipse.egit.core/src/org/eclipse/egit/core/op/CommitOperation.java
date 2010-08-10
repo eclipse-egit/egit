@@ -48,6 +48,7 @@ import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.lib.TreeEntry;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
@@ -72,7 +73,7 @@ public class CommitOperation implements IEGitOperation {
 	private boolean commitAll = false;
 
 	// needed for amending
-	private Commit previousCommit;
+	private RevCommit previousCommit;
 
 	// needed for amending
 	private Repository[] repos;
@@ -276,10 +277,11 @@ public class CommitOperation implements IEGitOperation {
 		return true;
 	}
 
-	private void doCommits(String commitMessage,
+	private void doCommits(String actMessage,
 			HashMap<Repository, Tree> treeMap) throws IOException,
 			TeamException {
 
+		String commitMessage = actMessage;
 		final Date commitDate = new Date();
 		final TimeZone timeZone = TimeZone.getDefault();
 
@@ -295,7 +297,10 @@ public class CommitOperation implements IEGitOperation {
 			ObjectId currentHeadId = repo.resolve(Constants.HEAD);
 			ObjectId[] parentIds;
 			if (amending) {
-				parentIds = previousCommit.getParentIds();
+				RevCommit[] parents = previousCommit.getParents();
+				parentIds = new ObjectId[parents.length];
+				for (int i = 0; i < parents.length; i++)
+					parentIds[i] = parents[i].getId();
 			} else {
 				if (currentHeadId != null)
 					parentIds = new ObjectId[] { currentHeadId };
@@ -376,8 +381,8 @@ public class CommitOperation implements IEGitOperation {
 			firstLine = commitMessage.substring(0, newlineIndex);
 		}
 		String commitStr = amending ? "commit (amend):" : "commit: "; //$NON-NLS-1$ //$NON-NLS-2$
-		String message = commitStr + firstLine;
-		return message;
+		String result = commitStr + firstLine;
+		return result;
 	}
 
 	/**
@@ -392,7 +397,7 @@ public class CommitOperation implements IEGitOperation {
 	 *
 	 * @param previousCommit
 	 */
-	public void setPreviousCommit(Commit previousCommit) {
+	public void setPreviousCommit(RevCommit previousCommit) {
 		this.previousCommit = previousCommit;
 	}
 

@@ -37,7 +37,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
-import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -47,13 +46,15 @@ import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jgit.lib.Commit;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.UserConfig;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
 
@@ -70,7 +71,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 
 	private ArrayList<IFile> files;
 
-	private Commit previousCommit;
+	private RevCommit previousCommit;
 
 	private boolean amendAllowed;
 
@@ -153,8 +154,8 @@ public class CommitActionHandler extends RepositoryActionHandler {
 		commitDialog.setAllowToChangeSelection(!isMergedResolved);
 
 		if (previousCommit != null) {
-			commitDialog.setPreviousCommitMessage(previousCommit.getMessage());
-			PersonIdent previousAuthor = previousCommit.getAuthor();
+			commitDialog.setPreviousCommitMessage(previousCommit.getFullMessage());
+			PersonIdent previousAuthor = previousCommit.getAuthorIdent();
 			commitDialog.setPreviousAuthor(previousAuthor.getName()
 					+ " <" + previousAuthor.getEmailAddress() + ">"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -254,7 +255,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 		try {
 			ObjectId parentId = repo.resolve(Constants.HEAD);
 			if (parentId != null)
-				previousCommit = repo.mapCommit(parentId);
+				previousCommit = new RevWalk(repo).parseCommit(parentId);
 		} catch (IOException e) {
 			Activator.handleError(UIText.CommitAction_errorRetrievingCommit, e,
 					true);

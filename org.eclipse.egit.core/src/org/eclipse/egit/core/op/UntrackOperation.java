@@ -67,23 +67,26 @@ public class UntrackOperation implements IEGitOperation {
 	 * @see org.eclipse.egit.core.op.IEGitOperation#execute(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void execute(IProgressMonitor m) throws CoreException {
+		IProgressMonitor monitor;
 		if (m == null)
-			m = new NullProgressMonitor();
+			monitor = new NullProgressMonitor();
+		else
+			monitor = m;
 
 		edits.clear();
 		mappings.clear();
 
-		m.beginTask(CoreText.UntrackOperation_adding, rsrcList.size() * 200);
+		monitor.beginTask(CoreText.UntrackOperation_adding, rsrcList.size() * 200);
 		try {
 			for (IResource obj : rsrcList) {
 				remove(obj);
-				m.worked(200);
+				monitor.worked(200);
 			}
 
 			for (Map.Entry<Repository, DirCacheEditor> e : edits.entrySet()) {
 				final Repository db = e.getKey();
 				final DirCacheEditor editor = e.getValue();
-				m.setTaskName(NLS.bind(CoreText.UntrackOperation_writingIndex, db.getDirectory()));
+				monitor.setTaskName(NLS.bind(CoreText.UntrackOperation_writingIndex, db.getDirectory()));
 				editor.commit();
 			}
 		} catch (RuntimeException e) {
@@ -95,7 +98,7 @@ public class UntrackOperation implements IEGitOperation {
 				rm.fireRepositoryChanged();
 			edits.clear();
 			mappings.clear();
-			m.done();
+			monitor.done();
 		}
 	}
 

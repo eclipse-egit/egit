@@ -71,13 +71,13 @@ public class FilteredCheckboxTree extends FilteredTree {
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.dialogs.FilteredTree#doCreateTreeViewer(org.eclipse.swt.widgets.Composite, int)
 	 */
-	protected TreeViewer doCreateTreeViewer(Composite parent, int style) {
+	protected TreeViewer doCreateTreeViewer(Composite actParent, int style) {
 		int treeStyle = style | SWT.CHECK | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER;
 		Tree tree = null;
 		if (fToolkit != null) {
-			tree = fToolkit.createTree(parent, treeStyle);
+			tree = fToolkit.createTree(actParent, treeStyle);
 		} else {
-			tree = new Tree(parent, treeStyle);
+			tree = new Tree(actParent, treeStyle);
 		}
 
 		checkboxViewer = new CachedCheckboxTreeViewer(tree);
@@ -110,13 +110,13 @@ public class FilteredCheckboxTree extends FilteredTree {
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.dialogs.FilteredTree#doCreateFilterText(org.eclipse.swt.widgets.Composite)
 	 */
-	protected Text doCreateFilterText(Composite parent) {
+	protected Text doCreateFilterText(Composite actParent) {
 		// Overridden so the text gets create using the toolkit if we have one
-		Text parentText = super.doCreateFilterText(parent);
+		Text parentText = super.doCreateFilterText(actParent);
 		if (fToolkit != null) {
 			int style = parentText.getStyle();
 			parentText.dispose();
-			return fToolkit.createText(parent, null, style);
+			return fToolkit.createText(actParent, null, style);
 		}
 		return parentText;
 	}
