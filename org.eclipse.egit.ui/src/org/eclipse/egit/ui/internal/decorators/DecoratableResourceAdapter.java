@@ -30,6 +30,7 @@ import org.eclipse.egit.core.ContainerTreeIterator.ResourceEntry;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
@@ -77,6 +78,8 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 
 	private Staged staged = Staged.NOT_STAGED;
 
+	private final boolean trace;
+
 	static final int T_HEAD = 0;
 
 	static final int T_INDEX = 1;
@@ -86,36 +89,53 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 	@SuppressWarnings("fallthrough")
 	public DecoratableResourceAdapter(IResource resourceToWrap)
 			throws IOException {
+		trace = GitTraceLocation.DECORATION.isActive();
 		resource = resourceToWrap;
-		mapping = RepositoryMapping.getMapping(resource);
-		repository = mapping.getRepository();
-		headId = repository.resolve(Constants.HEAD);
+		long start = 0;
+		if (trace) {
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.DECORATION.getLocation(),
+					"Decorate " + resource.getFullPath()); //$NON-NLS-1$
+			start = System.currentTimeMillis();
+		}
+		try {
+			mapping = RepositoryMapping.getMapping(resource);
+			repository = mapping.getRepository();
+			headId = repository.resolve(Constants.HEAD);
 
-		store = Activator.getDefault().getPreferenceStore();
-		String repoName = Activator.getDefault().getRepositoryUtil().getRepositoryName(repository);
-		RepositoryState state = repository.getRepositoryState();
-		if (state != RepositoryState.SAFE)
-			repositoryName = repoName + '|' + state.getDescription();
-		else
-			repositoryName = repoName;
+			store = Activator.getDefault().getPreferenceStore();
+			String repoName = Activator.getDefault().getRepositoryUtil().getRepositoryName(repository);
+			RepositoryState state = repository.getRepositoryState();
+			if (state != RepositoryState.SAFE)
+				repositoryName = repoName + '|' + state.getDescription();
+			else
+				repositoryName = repoName;
 
-		branch = getShortBranch();
+			branch = getShortBranch();
 
-		TreeWalk treeWalk = createThreeWayTreeWalk();
-		if (treeWalk == null)
-			return;
-
-		switch (resource.getType()) {
-		case IResource.FILE:
-			if (!treeWalk.next())
+			TreeWalk treeWalk = createThreeWayTreeWalk();
+			if (treeWalk == null)
 				return;
-			extractResourceProperties(treeWalk);
-			break;
-		case IResource.PROJECT:
-			tracked = true;
-		case IResource.FOLDER:
-			extractContainerProperties(treeWalk);
-			break;
+
+			switch (resource.getType()) {
+			case IResource.FILE:
+				if (!treeWalk.next())
+					return;
+				extractResourceProperties(treeWalk);
+				break;
+			case IResource.PROJECT:
+				tracked = true;
+			case IResource.FOLDER:
+				extractContainerProperties(treeWalk);
+				break;
+			}
+		} finally {
+			if (trace)
+				GitTraceLocation
+						.getTrace()
+						.trace(GitTraceLocation.DECORATION.getLocation(),
+								"Decoration took " + (System.currentTimeMillis() - start) //$NON-NLS-1$
+										+ " ms"); //$NON-NLS-1$
 		}
 	}
 
@@ -209,7 +229,10 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		public boolean include(TreeWalk treeWalk)
 				throws MissingObjectException, IncorrectObjectTypeException,
 				IOException {
-
+			if (trace)
+				GitTraceLocation.getTrace().trace(
+						GitTraceLocation.DECORATION.getLocation(),
+						treeWalk.getPathString());
 			final WorkingTreeIterator workingTreeIterator = treeWalk.getTree(
 					T_WORKSPACE, WorkingTreeIterator.class);
 			if (workingTreeIterator != null) {
@@ -223,6 +246,20 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 						ignored = true;
 						return false;
 					}
+					if (resource.getFullPath().isPrefixOf(
+							resourceEntry.getResource().getFullPath())
+							&& treeWalk.getFileMode(T_HEAD) == FileMode.MISSING
+							&& treeWalk.getFileMode(T_INDEX) == FileMode.MISSING) {
+						// we reached the folder to decorate (or are beyond)
+						// we can cut if the current entry does not
+						// exist in head and index
+						if (trace)
+							GitTraceLocation.getTrace().trace(
+									GitTraceLocation.DECORATION.getLocation(),
+									"CUT"); //$NON-NLS-1$
+						return false;
+					}
+
 				} else {
 					// For the project resource, it's still the
 					// AdaptableFileTreeIterator. So we have to compare the path
@@ -235,12 +272,22 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 							&& workingTreeIterator.isEntryIgnored()) {
 						ignored = true;
 						return false;
+
+					}
+					if (resPath.isPrefixOf(wdPath)
+							&& treeWalk.getFileMode(T_HEAD) == FileMode.MISSING
+							&& treeWalk.getFileMode(T_INDEX) == FileMode.MISSING) {
+						// we reached the folder to decorate (or are beyond)
+						// we can cut if the current entry does not
+						// exist in head and index
+						if (trace)
+							GitTraceLocation.getTrace().trace(
+									GitTraceLocation.DECORATION.getLocation(),
+									"CUT"); //$NON-NLS-1$
+						return false;
 					}
 				}
 			}
-			// Note: for obtaining the ignored info we have to go through the
-			// whole working tree and can no longer cut here if the current
-			// entry is not contained in the index and not contained in head
 
 			if (FileMode.TREE.equals(treeWalk.getRawMode(T_WORKSPACE)))
 				return shouldRecurse(treeWalk);
