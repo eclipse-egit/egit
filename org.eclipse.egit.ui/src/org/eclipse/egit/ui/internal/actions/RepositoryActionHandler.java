@@ -50,7 +50,7 @@ import org.eclipse.ui.handlers.IHandlerService;
 /**
  * A helper class for Team Actions on Git controlled projects
  */
-public abstract class RepositoryActionHandler extends AbstractHandler {
+abstract class RepositoryActionHandler extends AbstractHandler {
 
 	/**
 	 * @param event

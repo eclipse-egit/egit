@@ -38,6 +38,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarToggleButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -236,16 +237,19 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	private SWTBotTable getHistoryViewTable(String... path) {
 		SWTBotTree projectExplorerTree = bot.viewById(
 				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		SWTBotTreeItem explorerItem;
 		if (path.length == 1)
-			getProjectItem(projectExplorerTree, path[0]).select();
+			explorerItem = getProjectItem(projectExplorerTree, path[0]);
 		else if (path.length == 2)
-			getProjectItem(projectExplorerTree, path[0]).expand().getNode(
-					path[1]).select();
+			explorerItem = getProjectItem(projectExplorerTree, path[0])
+					.expand().getNode(path[1]);
 		else
-			getProjectItem(projectExplorerTree, path[0]).expand().getNode(
-					path[1]).expand().getNode(path[2]).select();
+			explorerItem = getProjectItem(projectExplorerTree, path[0])
+					.expand().getNode(path[1]).expand().getNode(path[2]);
+		explorerItem.select();
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Show In",
 				"History");
+		// explorerItem.select();
 		return bot.viewById("org.eclipse.team.ui.GenericHistoryView").bot()
 				.table();
 	}
@@ -256,9 +260,8 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		assertNull(repo.resolve(Constants.R_HEADS + "NewBranch"));
 		SWTBotTable table = getHistoryViewTable(PROJ1);
 		table.getTableItem(0).select();
-
 		ContextMenuHelper.clickContextMenu(table, util
-				.getPluginLocalizedValue("CreateBranchOnCommitActionLabel"));
+				.getPluginLocalizedValue("CreateBranch.label"));
 		SWTBotShell dialog = bot
 				.shell(UIText.BranchSelectionDialog_QuestionNewBranchTitle);
 		dialog.bot().text().setText("NewBranch");
@@ -284,7 +287,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		});
 
 		ContextMenuHelper.clickContextMenu(table, util
-				.getPluginLocalizedValue("CreateTagOnCommitActionLabel"));
+				.getPluginLocalizedValue("CreateTag.label"));
 		SWTBotShell dialog = bot.shell(NLS.bind(
 				UIText.CreateTagDialog_CreateTagOnCommitTitle, commit[0]
 						.getId().name()));
@@ -316,7 +319,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		});
 
 		ContextMenuHelper.clickContextMenu(table, util
-				.getPluginLocalizedValue("CheckoutCommand"));
+				.getPluginLocalizedValue("Checkout.label"));
 
 		waitInUI();
 		assertEquals(commit[0].getId().name(), repo.getBranch());

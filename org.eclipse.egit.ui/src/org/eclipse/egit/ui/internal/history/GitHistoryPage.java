@@ -13,46 +13,38 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.compare.CompareEditorInput;
-import org.eclipse.compare.CompareUI;
-import org.eclipse.compare.ITypedElement;
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.IParameter;
+import org.eclipse.core.commands.Parameterization;
+import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.core.runtime.preferences.DefaultScope;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.ResourceList;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.CompareUtils;
-import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
-import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
+import org.eclipse.egit.ui.internal.history.command.HistoryViewCommands;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -65,7 +57,6 @@ import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -91,66 +82,54 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.ui.history.HistoryPage;
-import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IReusableEditor;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 /** Graphical commit history viewer. */
 public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
-	private static final String PREF_COMMENT_WRAP = UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP;
-
-	private static final String PREF_COMMENT_FILL = UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL;
-
-	private static final String SHOW_COMMENT = UIPreferences.RESOURCEHISTORY_SHOW_REV_COMMENT;
-
-	private static final String SHOW_FILES = UIPreferences.RESOURCEHISTORY_SHOW_REV_DETAIL;
-
-	private static final String SPLIT_GRAPH = UIPreferences.RESOURCEHISTORY_GRAPH_SPLIT;
-
-	private static final String SPLIT_INFO = UIPreferences.RESOURCEHISTORY_REV_SPLIT;
-
-	private static final String SHOW_FIND_TOOLBAR = UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR;
 
 	private static final String POPUP_ID = "org.eclipse.egit.ui.historyPageContributions"; //$NON-NLS-1$
 
-    /** The team ui plugin ID which is not accessible */
-	private static final String TEAM_UI_PLUGIN = "org.eclipse.team.ui"; //$NON-NLS-1$
+	/** Standard action: select all */
+	private IAction selectAllAction;
 
-	/** A copy of the non-accessible preference constant IPreferenceIds.REUSE_OPEN_COMPARE_EDITOR from the team ui plug in */
-	private static final String REUSE_COMPARE_EDITOR_PREFID = "org.eclipse.team.ui.reuse_open_compare_editors"; //$NON-NLS-1$
+	/** Standard action: copy to clip board */
+	private IAction copyAction;
 
-	private IAction compareAction = new CompareWithWorkingTreeAction();
+	/** Show Comment */
+	private IAction showCommentAction;
 
-	private IAction compareVersionsAction = new CompareVersionsAction();
+	/** Show File */
+	private IAction showFilesAction;
 
-	private IAction viewVersionsAction = new ViewVersionsAction();
+	/** Wrap comment */
+	private IAction wrapCommentAction;
 
+	/** Fill comment */
+	private IAction fillCommentAction;
+
+	/** Compare mode toggle */
 	private IAction compareModeAction;
 
 	private boolean compareMode = false;
-
-	private CreatePatchAction createPatchAction = new CreatePatchAction();
 
 	// we need to keep track of these actions so that we can
 	// dispose them when the page is disposed (the history framework
 	// does not do this for us)
 	private final List<BooleanPrefAction> actionsToDispose = new ArrayList<BooleanPrefAction>();
 
-	private final IPersistentPreferenceStore store = (IPersistentPreferenceStore) Activator.getDefault().getPreferenceStore();
+	private final IPersistentPreferenceStore store = (IPersistentPreferenceStore) Activator
+			.getDefault().getPreferenceStore();
 
 	private ListenerHandle myRefsChangedHandle;
 
@@ -238,8 +217,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	/**
 	 * Highlight flag that can be applied to commits to make them stand out.
 	 * <p>
-	 * Allocated at the same time as {@link #currentWalk}. If the walk
-	 * rebuilds, so must this flag.
+	 * Allocated at the same time as {@link #currentWalk}. If the walk rebuilds,
+	 * so must this flag.
 	 */
 	private RevFlag highlightFlag;
 
@@ -259,21 +238,21 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private static final String PREF_SHOWALLFILTER = "org.eclipse.egit.ui.githistorypage.showallfilter"; //$NON-NLS-1$
 
 	enum ShowFilter {
-		SHOWALLRESOURCE,
-		SHOWALLFOLDER,
-		SHOWALLPROJECT,
-		SHOWALLREPO,
+		SHOWALLRESOURCE, SHOWALLFOLDER, SHOWALLPROJECT, SHOWALLREPO,
 	}
 
 	class ShowFilterAction extends Action {
 		private final ShowFilter filter;
 
-		ShowFilterAction(ShowFilter filter, ImageDescriptor icon, String toolTipText) {
+		ShowFilterAction(ShowFilter filter, ImageDescriptor icon,
+				String toolTipText) {
 			super(null, IAction.AS_CHECK_BOX);
 			this.filter = filter;
 			setImageDescriptor(icon);
+			setText(toolTipText);
 			setToolTipText(toolTipText);
 		}
+
 		@Override
 		public void run() {
 			String oldName = getName();
@@ -291,12 +270,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 					showAllProjectVersionsAction.setChecked(false);
 				if (this != showAllFolderVersionsAction)
 					showAllFolderVersionsAction.setChecked(false);
+				if (this != showAllResourceVersionsAction)
+					showAllResourceVersionsAction.setChecked(false);
 				refresh();
 			}
-			GitHistoryPage.this.firePropertyChange(GitHistoryPage.this, P_NAME, oldName, getName());
+			GitHistoryPage.this.firePropertyChange(GitHistoryPage.this, P_NAME,
+					oldName, getName());
 			Activator.getDefault().getPreferenceStore().setValue(
 					PREF_SHOWALLFILTER, showAllFilter.toString());
 		}
+
 		@Override
 		public String toString() {
 			return "ShowFilter[" + filter.toString() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
@@ -310,6 +293,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private ShowFilterAction showAllProjectVersionsAction;
 
 	private ShowFilterAction showAllFolderVersionsAction;
+
+	private ShowFilterAction showAllResourceVersionsAction;
 
 	private void createResourceFilterActions() {
 		try {
@@ -331,23 +316,32 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				ShowFilter.SHOWALLFOLDER, UIIcons.FILTERFOLDER,
 				UIText.HistoryPage_ShowAllVersionsForFolder);
 
+		showAllResourceVersionsAction = new ShowFilterAction(
+				ShowFilter.SHOWALLRESOURCE, UIIcons.FILTERRESOURCE,
+				UIText.GitHistoryPage_ShowAllVersionsForResource);
+
 		showAllRepoVersionsAction
 				.setChecked(showAllFilter == showAllRepoVersionsAction.filter);
 		showAllProjectVersionsAction
 				.setChecked(showAllFilter == showAllProjectVersionsAction.filter);
 		showAllFolderVersionsAction
 				.setChecked(showAllFilter == showAllFolderVersionsAction.filter);
+		showAllResourceVersionsAction
+				.setChecked(showAllFilter == showAllResourceVersionsAction.filter);
 
-		getSite().getActionBars().getToolBarManager().add(new Separator());
+		IToolBarManager mgr = getSite().getActionBars().getToolBarManager();
+		mgr.add(new Separator());
+		mgr.add(showAllRepoVersionsAction);
+		mgr.add(showAllProjectVersionsAction);
+		mgr.add(showAllFolderVersionsAction);
+		mgr.add(showAllResourceVersionsAction);
 
-		getSite().getActionBars().getToolBarManager().add(
-				showAllRepoVersionsAction);
-
-		getSite().getActionBars().getToolBarManager().add(
-				showAllProjectVersionsAction);
-
-		getSite().getActionBars().getToolBarManager().add(
-				showAllFolderVersionsAction);
+		IMenuManager viewMenuMgr = getSite().getActionBars().getMenuManager();
+		viewMenuMgr.add(new Separator());
+		viewMenuMgr.add(showAllRepoVersionsAction);
+		viewMenuMgr.add(showAllProjectVersionsAction);
+		viewMenuMgr.add(showAllFolderVersionsAction);
+		viewMenuMgr.add(showAllResourceVersionsAction);
 	}
 
 	private void createCompareModeAction() {
@@ -365,15 +359,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		compareModeAction.setChecked(compareMode);
 		compareModeAction.setToolTipText(UIText.GitHistoryPage_compareMode);
 		fileViewer.setCompareMode(compareMode);
+		barManager.add(new Separator());
 		barManager.add(compareModeAction);
 	}
 
 	/**
 	 * @param compareMode
-	 * switch compare mode button of the view on / off
+	 *            switch compare mode button of the view on / off
 	 */
 	public void setCompareMode(boolean compareMode) {
-		if (compareModeAction!=null) {
+		if (compareModeAction != null) {
 			this.compareMode = compareMode;
 			compareModeAction.setChecked(compareMode);
 		}
@@ -403,36 +398,47 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		graph.getTableView().addOpenListener(new IOpenListener() {
 			public void open(OpenEvent event) {
 				final Object input = getInput();
-				// if multiple resources (IResourceList) or something not a file is selected we do nothing
+				// if multiple resources (IResourceList) or something not a file
+				// is selected we do nothing
 				if (!(input instanceof IFile)) {
 					return;
 				}
+
+				ICommandService srv = (ICommandService) getSite().getService(
+						ICommandService.class);
+				IHandlerService hsrv = (IHandlerService) getSite().getService(
+						IHandlerService.class);
+				Command cmd = srv.getCommand(HistoryViewCommands.SHOWVERSIONS);
+				Parameterization[] parms;
 				if (compareMode) {
-					final IFile resource = (IFile) input;
-					final RepositoryMapping mapping = RepositoryMapping.getMapping(resource.getProject());
-					final String gitPath = mapping.getRepoRelativePath(resource);
-					IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-					SWTCommit commit = (SWTCommit) selection.getFirstElement();
-					ITypedElement right = CompareUtils
-							.getFileRevisionTypedElement(gitPath, commit, db);
-					final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-							SaveableCompareEditorInput.createFileElement(resource),
-							right,
-							null);
-					openInCompare(in);
-				} else {
-					new ViewVersionsAction().run();
+					try {
+						IParameter parm = cmd
+								.getParameter(HistoryViewCommands.COMPARE_MODE_PARAM);
+						parms = new Parameterization[] { new Parameterization(
+								parm, Boolean.TRUE.toString()) };
+					} catch (NotDefinedException e) {
+						Activator.handleError(e.getMessage(), e, true);
+						parms = null;
+					}
+				} else
+					parms = null;
+				ParameterizedCommand pcmd = new ParameterizedCommand(cmd, parms);
+				try {
+					hsrv.executeCommandInContext(pcmd, null, hsrv
+							.getCurrentState());
+				} catch (Exception e) {
+					Activator.handleError(e.getMessage(), e, true);
 				}
 			}
-
 		});
 		revInfoSplit = new SashForm(graphDetailSplit, SWT.HORIZONTAL);
 		commentViewer = new CommitMessageViewer(revInfoSplit);
 		fileViewer = new CommitFileDiffViewer(revInfoSplit);
 		findToolbar = new FindToolbar(ourControl);
 
-		layoutSashForm(graphDetailSplit, SPLIT_GRAPH);
-		layoutSashForm(revInfoSplit, SPLIT_INFO);
+		layoutSashForm(graphDetailSplit,
+				UIPreferences.RESOURCEHISTORY_GRAPH_SPLIT);
+		layoutSashForm(revInfoSplit, UIPreferences.RESOURCEHISTORY_REV_SPLIT);
 
 		revObjectSelectionProvider = new RevObjectSelectionProvider();
 		popupMgr = new MenuManager(null, POPUP_ID);
@@ -441,9 +447,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		createResourceFilterActions();
 		createCompareModeAction();
 		createStandardActions();
-		createViewMenu();
 
-		finishContextMenu();
+		getSite().registerContextMenu(POPUP_ID, popupMgr,
+				revObjectSelectionProvider);
+		getHistoryPageSite().getPart().getSite().setSelectionProvider(
+				revObjectSelectionProvider);
+
 		attachContextMenu(graph.getControl());
 		attachContextMenu(commentViewer.getControl());
 		attachContextMenu(fileViewer.getControl());
@@ -452,73 +461,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		if (myRefsChangedHandle == null)
 			myRefsChangedHandle = Repository.getGlobalListenerList()
 					.addRefsChangedListener(this);
-
-		getSite().setSelectionProvider(revObjectSelectionProvider);
-	}
-
-	private void openInCompare(CompareEditorInput input) {
-		IWorkbenchPage workBenchPage = getSite().getPage();
-		IEditorPart editor = findReusableCompareEditor(input, workBenchPage);
-		if (editor != null) {
-			IEditorInput otherInput = editor.getEditorInput();
-			if (otherInput.equals(input)) {
-				// simply provide focus to editor
-				if (OpenStrategy.activateOnOpen())
-					workBenchPage.activate(editor);
-				else
-					workBenchPage.bringToTop(editor);
-			} else {
-				// if editor is currently not open on that input either re-use
-				// existing
-				CompareUI.reuseCompareEditor(input, (IReusableEditor) editor);
-				if (OpenStrategy.activateOnOpen())
-					workBenchPage.activate(editor);
-				else
-					workBenchPage.bringToTop(editor);
-			}
-		} else {
-			CompareUI.openCompareEditor(input);
-		}
-	}
-
-	/**
-	 * Returns an editor that can be re-used. An open compare editor that
-	 * has un-saved changes cannot be re-used.
-	 * @param input the input being opened
-	 * @param page
-	 * @return an EditorPart or <code>null</code> if none can be found
-	 */
-	private IEditorPart findReusableCompareEditor(CompareEditorInput input, IWorkbenchPage page) {
-		IEditorReference[] editorRefs = page.getEditorReferences();
-		// first loop looking for an editor with the same input
-		for (int i = 0; i < editorRefs.length; i++) {
-			IEditorPart part = editorRefs[i].getEditor(false);
-			if (part != null
-					&& (part.getEditorInput() instanceof GitCompareFileRevisionEditorInput)
-					&& part instanceof IReusableEditor
-					&& part.getEditorInput().equals(input)) {
-				return part;
-			}
-		}
-		// if none found and "Reuse open compare editors" preference is on use
-		// a non-dirty editor
-		if (isReuseOpenEditor()) {
-			for (int i = 0; i < editorRefs.length; i++) {
-				IEditorPart part = editorRefs[i].getEditor(false);
-				if (part != null
-						&& (part.getEditorInput() instanceof SaveableCompareEditorInput)
-						&& part instanceof IReusableEditor && !part.isDirty()) {
-					return part;
-				}
-			}
-		}
-		// no re-usable editor found
-		return null;
-	}
-
-	private static boolean isReuseOpenEditor() {
-		boolean defaultReuse = new DefaultScope().getNode(TEAM_UI_PLUGIN).getBoolean(REUSE_COMPARE_EDITOR_PREFID, false);
-		return new InstanceScope().getNode(TEAM_UI_PLUGIN).getBoolean(REUSE_COMPARE_EDITOR_PREFID, defaultReuse);
 	}
 
 	private Runnable refschangedRunnable;
@@ -553,58 +495,48 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		}
 	}
 
-	private void finishContextMenu() {
-		popupMgr.add(new Separator());
-		popupMgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-		getSite().registerContextMenu(POPUP_ID, popupMgr,
-				revObjectSelectionProvider);
-		getHistoryPageSite().getPart().getSite().setSelectionProvider(
-				revObjectSelectionProvider);
-	}
-
 	private void attachContextMenu(final Control c) {
-		c.setMenu(popupMgr.createContextMenu(c));
-
 		if (c == graph.getControl()) {
-
+			// commit table
+			c.setMenu(popupMgr.createContextMenu(c));
 			c.addMenuDetectListener(new MenuDetectListener() {
-
 				public void menuDetected(MenuDetectEvent e) {
-					popupMgr.remove(new ActionContributionItem(createPatchAction));
-					popupMgr.remove(new ActionContributionItem(compareAction));
-					popupMgr.remove(new ActionContributionItem(
-							compareVersionsAction));
-					popupMgr.remove(new ActionContributionItem(
-							viewVersionsAction));
-					int size = ((IStructuredSelection) revObjectSelectionProvider
-							.getSelection()).size();
-					if (size == 1) {
+					if (popupMgr.isEmpty()) {
+						// copy and such after additions
+						popupMgr.add(new Separator(
+								IWorkbenchActionConstants.MB_ADDITIONS));
+						popupMgr.add(copyAction);
 						popupMgr.add(new Separator());
-						popupMgr.add(createPatchAction);
-						createPatchAction.setEnabled(createPatchAction.isEnabled());
+						popupMgr.add(showCommentAction);
+						popupMgr.add(showFilesAction);
 					}
-					if (IFile.class.isAssignableFrom(getInput().getClass())) {
-						popupMgr.add(new Separator());
-						if (size == 1) {
-							popupMgr.add(compareAction);
-						} else if (size == 2) {
-							popupMgr.add(compareVersionsAction);
-						}
-						if (size >= 1)
-							popupMgr.add(viewVersionsAction);
+				}
+			});
+		} else if (c == commentViewer.getControl()) {
+			// comment viewer
+			final MenuManager mgr = new MenuManager();
+			c.setMenu(mgr.createContextMenu(c));
+			c.addMenuDetectListener(new MenuDetectListener() {
+				public void menuDetected(MenuDetectEvent e) {
+					if (mgr.isEmpty()) {
+						mgr.add(selectAllAction);
+						mgr.add(copyAction);
+						mgr.add(new Separator());
+						mgr.add(wrapCommentAction);
+						mgr.add(fillCommentAction);
 					}
 				}
 			});
 		} else {
+			// file list
+			final MenuManager mgr = new MenuManager();
+			c.setMenu(mgr.createContextMenu(c));
 			c.addMenuDetectListener(new MenuDetectListener() {
-
 				public void menuDetected(MenuDetectEvent e) {
-					popupMgr.remove(new ActionContributionItem(createPatchAction));
-					popupMgr.remove(new ActionContributionItem(compareAction));
-					popupMgr.remove(new ActionContributionItem(
-							compareVersionsAction));
-					popupMgr.remove(new ActionContributionItem(
-							viewVersionsAction));
+					if (mgr.isEmpty()) {
+						mgr.add(selectAllAction);
+						mgr.add(copyAction);
+					}
 				}
 			});
 		}
@@ -638,9 +570,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	private void layout() {
-		final boolean showComment = store.getBoolean(SHOW_COMMENT);
-		final boolean showFiles = store.getBoolean(SHOW_FILES);
-		final boolean showFindToolbar = store.getBoolean(SHOW_FIND_TOOLBAR);
+		final boolean showComment = store
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_REV_COMMENT);
+		final boolean showFiles = store
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_REV_DETAIL);
+		final boolean showFindToolbar = store
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
 
 		if (showComment && showFiles) {
 			graphDetailSplit.setMaximizedControl(null);
@@ -706,9 +641,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	private IAction createFindToolbarAction() {
-		final IAction r = new Action(UIText.GitHistoryPage_find, UIIcons.ELCL16_FIND) {
+		final IAction r = new Action(UIText.GitHistoryPage_find,
+				UIIcons.ELCL16_FIND) {
 			public void run() {
-				store.setValue(SHOW_FIND_TOOLBAR, isChecked());
+				store.setValue(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR,
+						isChecked());
 				if (store.needsSaving()) {
 					try {
 						store.save();
@@ -719,41 +656,15 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				layout();
 			}
 		};
-		r.setChecked(store.getBoolean(SHOW_FIND_TOOLBAR));
+		r.setChecked(store
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR));
 		r.setToolTipText(UIText.HistoryPage_findbar_findTooltip);
 		return r;
 	}
 
-	private void createViewMenu() {
-		final IActionBars actionBars = getSite().getActionBars();
-		final IMenuManager menuManager = actionBars.getMenuManager();
-		IAction a;
-
-		a = createCommentWrap();
-		menuManager.add(a);
-		popupMgr.add(a);
-
-		a = createCommentFill();
-		menuManager.add(a);
-		popupMgr.add(a);
-
-		menuManager.add(new Separator());
-		popupMgr.add(new Separator());
-
-		a = createShowComment();
-		menuManager.add(a);
-		popupMgr.add(a);
-
-		a = createShowFiles();
-		menuManager.add(a);
-		popupMgr.add(a);
-
-		menuManager.add(new Separator());
-		popupMgr.add(new Separator());
-	}
-
 	private IAction createCommentWrap() {
-		final BooleanPrefAction a = new BooleanPrefAction(PREF_COMMENT_WRAP,
+		final BooleanPrefAction a = new BooleanPrefAction(
+				UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP,
 				UIText.ResourceHistory_toggleCommentWrap) {
 			void apply(boolean wrap) {
 				commentViewer.setWrap(wrap);
@@ -765,7 +676,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	private IAction createCommentFill() {
-		final BooleanPrefAction a = new BooleanPrefAction(PREF_COMMENT_FILL,
+		final BooleanPrefAction a = new BooleanPrefAction(
+				UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL,
 				UIText.ResourceHistory_toggleCommentFill) {
 			void apply(boolean fill) {
 				commentViewer.setFill(fill);
@@ -777,18 +689,28 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	private IAction createShowComment() {
-		BooleanPrefAction a = new BooleanPrefAction(SHOW_COMMENT,
+		BooleanPrefAction a = new BooleanPrefAction(
+				UIPreferences.RESOURCEHISTORY_SHOW_REV_COMMENT,
 				UIText.ResourceHistory_toggleRevComment) {
 			void apply(final boolean value) {
 				layout();
 			}
+
+			@Override
+			public void run() {
+				super.run();
+				wrapCommentAction.setEnabled(isChecked());
+				fillCommentAction.setEnabled(isChecked());
+			}
+
 		};
 		actionsToDispose.add(a);
 		return a;
 	}
 
 	private IAction createShowFiles() {
-		BooleanPrefAction a = new BooleanPrefAction(SHOW_FILES,
+		BooleanPrefAction a = new BooleanPrefAction(
+				UIPreferences.RESOURCEHISTORY_SHOW_REV_DETAIL,
 				UIText.ResourceHistory_toggleRevDetail) {
 			void apply(final boolean value) {
 				layout();
@@ -821,9 +743,27 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		b.setGlobalActionHandler(ActionFactory.COPY.getId(), copy);
 		b.setGlobalActionHandler(ActionFactory.SELECT_ALL.getId(), sAll);
 
-		popupMgr.add(createStandardAction(ActionFactory.COPY));
-		popupMgr.add(createStandardAction(ActionFactory.SELECT_ALL));
-		popupMgr.add(new Separator());
+		copyAction = createStandardAction(ActionFactory.COPY);
+		selectAllAction = createStandardAction(ActionFactory.SELECT_ALL);
+
+		showCommentAction = createShowComment();
+		showFilesAction = createShowFiles();
+		wrapCommentAction = createCommentWrap();
+		fillCommentAction = createCommentFill();
+
+		wrapCommentAction.setEnabled(showCommentAction.isChecked());
+		fillCommentAction.setEnabled(showCommentAction.isChecked());
+
+		final IMenuManager menuManager = getSite().getActionBars()
+				.getMenuManager();
+
+		menuManager.add(showFilesAction);
+		menuManager.add(showCommentAction);
+
+		menuManager.add(new Separator());
+
+		menuManager.add(wrapCommentAction);
+		menuManager.add(fillCommentAction);
 	}
 
 	private IAction createStandardAction(final ActionFactory af) {
@@ -841,7 +781,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		}
 
 		// dispose of the actions (the history framework doesn't do this for us)
-		for (BooleanPrefAction action: actionsToDispose)
+		for (BooleanPrefAction action : actionsToDispose)
 			action.dispose();
 		actionsToDispose.clear();
 		cancelRefreshJob();
@@ -892,8 +832,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		else if (o instanceof ResourceList)
 			in = o;
 		else if (o instanceof IAdaptable) {
-			IResource resource = (IResource) ((IAdaptable) o).getAdapter(IResource.class);
-			in = resource == null ? null : new ResourceList(new IResource[] { resource });
+			IResource resource = (IResource) ((IAdaptable) o)
+					.getAdapter(IResource.class);
+			in = resource == null ? null : new ResourceList(
+					new IResource[] { resource });
 		} else
 			in = null;
 		return super.setInput(in);
@@ -939,7 +881,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 					paths.add(name);
 			} else if (showAllFilter == ShowFilter.SHOWALLREPO) {
 				// nothing
-			} else /*if (showAllFilter == ShowFilter.SHOWALLRESOURCE)*/ {
+			} else /* if (showAllFilter == ShowFilter.SHOWALLRESOURCE) */{
 				final String name = map.getRepoRelativePath(r);
 				if (name != null && name.length() > 0)
 					paths.add(name);
@@ -978,8 +920,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		try {
 			currentWalk.markStart(currentWalk.parseCommit(headId));
 		} catch (IOException e) {
-			Activator.logError(NLS.bind(UIText.GitHistoryPage_errorReadingHeadCommit,
-					headId, db.getDirectory().getAbsolutePath()), e);
+			Activator.logError(NLS.bind(
+					UIText.GitHistoryPage_errorReadingHeadCommit, headId, db
+							.getDirectory().getAbsolutePath()), e);
 			return false;
 		}
 
@@ -1000,7 +943,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		fileViewer.addSelectionChangedListener(commentViewer);
 		commentViewer.setTreeWalk(fileWalker);
 		commentViewer.setDb(db);
-		createPatchAction.setTreeWalk(fileWalker);
 		findToolbar.clear();
 		graph.setInput(highlightFlag, null, null);
 
@@ -1077,8 +1019,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			public void run() {
 				if (!graph.getControl().isDisposed() && job == j) {
 					graph.setInput(highlightFlag, list, asArray);
-					findToolbar.setInput(highlightFlag, graph.getTableView().getTable(),
-							asArray);
+					findToolbar.setInput(highlightFlag, graph.getTableView()
+							.getTable(), asArray);
 				}
 			}
 		});
@@ -1232,193 +1174,5 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			// If focus stays in our page someone else should have
 			// gained it from us.
 		}
-	}
-
-	private class CompareWithWorkingTreeAction extends Action {
-		public CompareWithWorkingTreeAction() {
-			super(UIText.GitHistoryPage_CompareWithWorking);
-		}
-
-		@Override
-		public void run() {
-			IStructuredSelection selection = ((IStructuredSelection) revObjectSelectionProvider
-					.getSelection());
-			if (selection.size() == 1) {
-				Iterator<?> it = selection.iterator();
-				SWTCommit commit = (SWTCommit) it.next();
-				if (getInput() instanceof IFile){
-					IFile file = (IFile) getInput();
-					final RepositoryMapping mapping = RepositoryMapping.getMapping(file.getProject());
-					final String gitPath = mapping.getRepoRelativePath(file);
-					ITypedElement right = CompareUtils
-							.getFileRevisionTypedElement(gitPath, commit, db);
-					final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-							SaveableCompareEditorInput.createFileElement(file),
-							right,
-							null);
-					openInCompare(in);
-				}
-
-			}
-
-		}
-
-		@Override
-		public boolean isEnabled() {
-			int size = ((IStructuredSelection) revObjectSelectionProvider
-					.getSelection()).size();
-			return IFile.class.isAssignableFrom(getInput().getClass())
-					&& size == 1;
-		}
-
-	}
-
-	private class CompareVersionsAction extends Action {
-		public CompareVersionsAction() {
-			super(UIText.GitHistoryPage_CompareVersions);
-		}
-
-		@Override
-		public void run() {
-			IStructuredSelection selection = ((IStructuredSelection) revObjectSelectionProvider
-					.getSelection());
-			if (selection.size() == 2) {
-				Iterator<?> it = selection.iterator();
-				SWTCommit commit1 = (SWTCommit) it.next();
-				SWTCommit commit2 = (SWTCommit) it.next();
-
-				if (getInput() instanceof IFile){
-					IFile resource = (IFile) getInput();
-					final RepositoryMapping map = RepositoryMapping
-							.getMapping(resource);
-					final String gitPath = map
-							.getRepoRelativePath(resource);
-
-					final ITypedElement base = CompareUtils
-							.getFileRevisionTypedElement(gitPath, commit1, db);
-					final ITypedElement next = CompareUtils
-							.getFileRevisionTypedElement(gitPath, commit2, db);
-					CompareEditorInput in = new GitCompareFileRevisionEditorInput(base, next, null);
-					openInCompare(in);
-				}
-
-			}
-
-		}
-
-		@Override
-		public boolean isEnabled() {
-			int size = ((IStructuredSelection) revObjectSelectionProvider
-					.getSelection()).size();
-			return IFile.class.isAssignableFrom(getInput().getClass())
-					&& size == 2;
-		}
-
-	}
-
-	private class ViewVersionsAction extends Action {
-		public ViewVersionsAction() {
-			super(UIText.GitHistoryPage_open);
-		}
-
-		@Override
-		public void run() {
-			IStructuredSelection selection = ((IStructuredSelection) revObjectSelectionProvider
-					.getSelection());
-			if (selection.size() < 1)
-				return;
-			if (!(getInput() instanceof IFile))
-				return;
-			IFile resource = (IFile) getInput();
-			final RepositoryMapping map = RepositoryMapping
-					.getMapping(resource);
-			final String gitPath = map.getRepoRelativePath(resource);
-			Iterator<?> it = selection.iterator();
-			boolean errorOccured = false;
-			List<ObjectId> ids = new ArrayList<ObjectId>();
-			while (it.hasNext()) {
-				SWTCommit commit = (SWTCommit) it.next();
-				IFileRevision rev = null;
-				try {
-					rev = CompareUtils.getFileRevision(gitPath, commit, db, null);
-				} catch (IOException e) {
-					Activator.logError(NLS.bind(
-							UIText.GitHistoryPage_errorLookingUpPath, gitPath,
-							commit.getId()), e);
-					errorOccured = true;
-				}
-				if (rev != null) {
-					try {
-						EgitUiEditorUtils.openEditor(getSite().getPage(), rev,
-								new NullProgressMonitor());
-					} catch (CoreException e) {
-						Activator.logError(UIText.GitHistoryPage_openFailed, e);
-						errorOccured = true;
-					}
-				} else {
-					ids.add(commit.getId());
-				}
-			}
-			if (errorOccured)
-				Activator.showError(UIText.GitHistoryPage_openFailed, null);
-			if (ids.size() > 0) {
-				String idList = ""; //$NON-NLS-1$
-				for (ObjectId objectId : ids) {
-					idList += objectId.getName() + " "; //$NON-NLS-1$
-				}
-				MessageDialog.openError(getSite().getShell(),
-						UIText.GitHistoryPage_fileNotFound, NLS.bind(
-								UIText.GitHistoryPage_notContainedInCommits,
-								gitPath, idList));
-			}
-
-		}
-
-		@Override
-		public boolean isEnabled() {
-			int size = ((IStructuredSelection) revObjectSelectionProvider
-					.getSelection()).size();
-			return IFile.class.isAssignableFrom(getInput().getClass())
-					&& size >= 1;
-		}
-
-	}
-
-	private class CreatePatchAction extends Action {
-
-		private TreeWalk walker;
-
-		public CreatePatchAction() {
-			super(UIText.GitHistoryPage_CreatePatch);
-		}
-
-		@Override
-		public void run() {
-			IStructuredSelection selection = ((IStructuredSelection) revObjectSelectionProvider
-					.getSelection());
-			if (selection.size() == 1) {
-
-				Iterator<?> it = selection.iterator();
-				SWTCommit commit = (SWTCommit) it.next();
-
-				GitCreatePatchWizard.run(getHistoryPageSite().getPart(),
-						commit, walker, db);
-			}
-		}
-
-		public void setTreeWalk(TreeWalk walker) {
-			this.walker = walker;
-		}
-
-		@Override
-		public boolean isEnabled() {
-			IStructuredSelection selection = ((IStructuredSelection) revObjectSelectionProvider
-					.getSelection());
-			Iterator<?> it = selection.iterator();
-			SWTCommit commit = (SWTCommit) it.next();
-			return (commit.getParentCount() == 1);
-
-		}
-
 	}
 }

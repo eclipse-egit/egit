@@ -32,12 +32,6 @@ public class ActionCommands {
 	/** "Compare with revision" action command id */
 	public static final String COMPARE_WITH_REVISION_ACTION = "org.eclipse.egit.ui.team.CompareWithRevision"; //$NON-NLS-1$
 
-	/** "Create Branch" command id */
-	public static final String CREATE_BRANCH = "org.eclipse.egit.ui.command.historyCreateBranch"; //$NON-NLS-1$
-
-	/** "Create Tag" command id */
-	public static final String CREATE_TAG = "org.eclipse.egit.ui.command.historyCreateTag"; //$NON-NLS-1$
-
 	/** "Discard changes" action command id */
 	public static final String DISCARD_CHANGES_ACTION = "org.eclipse.egit.ui.team.Discard"; //$NON-NLS-1$
 

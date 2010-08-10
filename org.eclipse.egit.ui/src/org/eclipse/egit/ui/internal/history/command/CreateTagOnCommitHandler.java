@@ -6,7 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.actions;
+package org.eclipse.egit.ui.internal.history.command;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -24,20 +24,20 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tag;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * Create a tag based on a commit
+ * Create a tag based on a commit.
  */
-public class CreateTagOnCommitActionHandler extends RepositoryActionHandler {
-
+public class CreateTagOnCommitHandler extends AbstractHistoryCommanndHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		PlotCommit commit = (PlotCommit) getSelection(event).getFirstElement();
-		final Repository repo = getRepository(false, event);
+		final Repository repo = getRepository(event);
 
-		CreateTagDialog dialog = new CreateTagDialog(getShell(event),
-				ValidationUtils
-						.getRefNameInputValidator(repo, Constants.R_TAGS),
-				commit.getId());
+		CreateTagDialog dialog = new CreateTagDialog(HandlerUtil
+				.getActiveShellChecked(event), ValidationUtils
+				.getRefNameInputValidator(repo, Constants.R_TAGS), commit
+				.getId());
 
 		dialog.setExistingTags(getRevTags(event));
 		if (dialog.open() != Window.OK)
