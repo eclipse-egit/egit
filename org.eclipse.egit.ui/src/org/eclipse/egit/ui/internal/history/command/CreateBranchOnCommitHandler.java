@@ -6,7 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.actions;
+package org.eclipse.egit.ui.internal.history.command;
 
 import java.io.IOException;
 
@@ -25,23 +25,24 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * Create a branch based on a commit
+ * Create a branch based on a commit.
  */
-public class CreateBranchOnCommitActionHandler extends RepositoryActionHandler {
-
+public class CreateBranchOnCommitHandler extends AbstractHistoryCommanndHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		try {
 			PlotCommit commit = (PlotCommit) getSelection(event)
 					.getFirstElement();
 			ObjectId startAt = commit.getId();
-			Repository repo = getRepository(false, event);
+			Repository repo = getRepository(event);
 			String prompt = NLS.bind(
 					UIText.CreateBranchHandler_CreatePromptMessage, startAt
 							.name(), Constants.R_HEADS);
 
-			InputDialog dlg = new InputDialog(getShell(event),
+			InputDialog dlg = new InputDialog(HandlerUtil
+					.getActiveShellChecked(event),
 					UIText.BranchSelectionDialog_QuestionNewBranchTitle,
 					prompt, "", ValidationUtils //$NON-NLS-1$
 							.getRefNameInputValidator(repo, Constants.R_HEADS));
