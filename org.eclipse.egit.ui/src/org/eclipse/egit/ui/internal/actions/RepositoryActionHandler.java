@@ -43,6 +43,7 @@ import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.handlers.IHandlerService;
@@ -187,7 +188,10 @@ public abstract class RepositoryActionHandler extends AbstractHandler {
 		if (event != null)
 			selection = HandlerUtil.getCurrentSelectionChecked(event);
 		else {
-			IHandlerService hsr = (IHandlerService) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(IHandlerService.class);
+			IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+			if (activeWorkbenchWindow == null)
+				return new StructuredSelection();
+			IHandlerService hsr = (IHandlerService) activeWorkbenchWindow.getService(IHandlerService.class);
 			IEvaluationContext ctx = hsr.getCurrentState();
 			selection = (ISelection) ctx.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
 			if (selection == null)
