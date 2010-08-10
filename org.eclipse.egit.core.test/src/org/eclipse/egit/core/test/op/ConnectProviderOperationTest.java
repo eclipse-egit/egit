@@ -22,9 +22,6 @@ import java.util.TimeZone;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.jgit.lib.Commit;
@@ -56,8 +53,6 @@ public class ConnectProviderOperationTest extends GitTestCase {
 	@Test
 	public void testNewRepository() throws CoreException, IOException {
 
-		File gitDir = new File(project.getProject().getWorkspace().getRoot()
-				.getRawLocation().toFile(), Constants.DOT_GIT);
 		Repository repository = new FileRepository(gitDir);
 		repository.create();
 		repository.close();
@@ -71,16 +66,13 @@ public class ConnectProviderOperationTest extends GitTestCase {
 	}
 
 	@Test
-	public void testNewUnsharedFile() throws CoreException, IOException,
-			InterruptedException {
+	public void testNewUnsharedFile() throws CoreException, IOException {
 
 		project.createSourceFolder();
 		IFile fileA = project.getProject().getFolder("src").getFile("A.java");
 		String srcA = "class A {\n" + "}\n";
 		fileA.create(new ByteArrayInputStream(srcA.getBytes()), false, null);
 
-		File gitDir = new File(project.getProject().getWorkspace().getRoot()
-				.getRawLocation().toFile(), Constants.DOT_GIT);
 		Repository thisGit = new FileRepository(gitDir);
 		thisGit.create();
 		Tree rootTree = new Tree(thisGit);
@@ -107,23 +99,6 @@ public class ConnectProviderOperationTest extends GitTestCase {
 		ConnectProviderOperation operation = new ConnectProviderOperation(
 				project.getProject(), gitDir);
 		operation.execute(null);
-
-		final boolean f[] = new boolean[1];
-		new Job("wait") {
-			protected IStatus run(IProgressMonitor monitor) {
-
-				f[0] = true;
-				return null;
-			}
-
-			{
-				setRule(project.getProject());
-				schedule();
-			}
-		};
-		while (!f[0]) {
-			Thread.sleep(1000);
-		}
 
 		assertNotNull(RepositoryProvider.getProvider(project.getProject()));
 

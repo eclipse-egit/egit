@@ -82,17 +82,20 @@ public class ConnectProviderOperation implements IEGitOperation {
 	 * @see org.eclipse.egit.core.op.IEGitOperation#execute(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void execute(IProgressMonitor m) throws CoreException {
+		IProgressMonitor monitor;
 		if (m == null) {
-			m = new NullProgressMonitor();
+			monitor = new NullProgressMonitor();
+		} else {
+			monitor = m;
 		}
 
-		m.beginTask(CoreText.ConnectProviderOperation_connecting,
+		monitor.beginTask(CoreText.ConnectProviderOperation_connecting,
 				100 * projects.size());
 		try {
 
 			for (Iterator iterator = projects.keySet().iterator(); iterator.hasNext();) {
 				IProject project = (IProject) iterator.next();
-				m.setTaskName(NLS.bind(
+				monitor.setTaskName(NLS.bind(
 						CoreText.ConnectProviderOperation_ConnectingProject,
 						project.getName()));
 				// TODO is this the right location?
@@ -102,7 +105,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 							"Locating repository for " + project); //$NON-NLS-1$
 
 				Collection<RepositoryMapping> repos = new RepositoryFinder(
-						project).find(new SubProgressMonitor(m, 40));
+						project).find(new SubProgressMonitor(monitor, 40));
 				File suggestedRepo = projects.get(project);
 				RepositoryMapping actualMapping= findActualRepository(repos, suggestedRepo);
 				if (actualMapping != null) {
@@ -121,8 +124,8 @@ public class ConnectProviderOperation implements IEGitOperation {
 							.map(project, GitProvider.class.getName());
 					projectData = GitProjectData.get(project);
 					project.refreshLocal(IResource.DEPTH_INFINITE,
-							new SubProgressMonitor(m, 50));
-					m.worked(10);
+							new SubProgressMonitor(monitor, 50));
+					monitor.worked(10);
 				} else {
 					// TODO is this the right location?
 					if (GitTraceLocation.CORE.isActive())
@@ -130,11 +133,11 @@ public class ConnectProviderOperation implements IEGitOperation {
 								GitTraceLocation.CORE.getLocation(),
 								"Attempted to share project without repository ignored :" //$NON-NLS-1$
 										+ project);
-					m.worked(60);
+					monitor.worked(60);
 				}
 			}
 		} finally {
-			m.done();
+			monitor.done();
 		}
 	}
 
