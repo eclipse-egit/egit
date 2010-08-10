@@ -2240,6 +2240,9 @@ public class UIText extends NLS {
 	public static String CommitAction_messagepart6;
 
 	/** */
+	public static String CommitFileDiffViewer_notContainedInCommit;
+
+	/** */
 	public static String GitSynchronizeWizard_synchronize;
 
 	/** */
