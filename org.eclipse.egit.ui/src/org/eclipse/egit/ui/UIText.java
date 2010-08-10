@@ -2270,6 +2270,18 @@ public class UIText extends NLS {
 	public static String LocalFileRevision_currentVersionTag;
 
 	/** */
+	public static String RefreshPreferencePage_title;
+
+	/** */
+	public static String RefreshPreferencesPage_RefreshOnlyWhenActive;
+
+	/** */
+	public static String RefreshPreferencesPage_RefreshWhenHeadChange;
+
+	/** */
+	public static String RefreshPreferencesPage_RefreshWhenIndexChange;
+
+	/** */
 	public static String RemoteSelectionCombo_remoteName;
 
 	/** */
