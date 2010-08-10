@@ -14,6 +14,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ShowInContext;
@@ -39,8 +40,11 @@ public class ShowRepositoriesViewActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		ISelectionService srv = (ISelectionService) PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getService(ISelectionService.class);
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		if (activeWorkbenchWindow == null)
+			return false;
+		ISelectionService srv = (ISelectionService) activeWorkbenchWindow.getService(ISelectionService.class);
 		if (srv.getSelection() instanceof StructuredSelection) {
 			return ((StructuredSelection) srv.getSelection()).size() == 1;
 		}
