@@ -298,10 +298,11 @@ public class GitProjectData {
 	}
 
 	/**
-	 * @param r any workbench resource contained within this project.
+	 * @param resource any workbench resource contained within this project.
 	 * @return the mapping for the specified project
 	 */
-	public RepositoryMapping getRepositoryMapping(IResource r) {
+	public RepositoryMapping getRepositoryMapping(IResource resource) {
+		IResource r = resource;
 		try {
 			for (; r != null; r = r.getParent()) {
 				final RepositoryMapping m;
@@ -476,7 +477,8 @@ public class GitProjectData {
 		}
 	}
 
-	private void protect(IResource c) {
+	private void protect(IResource resource) {
+		IResource c = resource;
 		while (c != null && !c.equals(getProject())) {
 			trace("protect " + c);  //$NON-NLS-1$
 			protectedResources.add(c);

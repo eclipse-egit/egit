@@ -9,19 +9,19 @@
 package org.eclipse.egit.ui.internal.components;
 
 import java.io.IOException;
-import java.sql.Blob;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.fieldassist.IContentProposal;
-import org.eclipse.jgit.lib.Commit;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tag;
-import org.eclipse.jgit.lib.Tree;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -117,35 +117,43 @@ public class RefContentProposal implements IContentProposal {
 	public String getDescription() {
 		if (objectId == null)
 			return null;
-		final Object obj;
+		final ObjectLoader loader;
 		try {
-			obj = db.mapObject(objectId, refName);
+			loader = db.open(objectId);
+
+			final StringBuilder sb = new StringBuilder();
+			sb.append(refName);
+			sb.append('\n');
+			sb.append(objectId.abbreviate(db).name());
+			sb.append(" - "); //$NON-NLS-1$
+
+			switch (loader.getType()) {
+			case Constants.OBJ_COMMIT:
+				RevCommit c = new RevWalk(db).parseCommit(objectId);
+				appendObjectSummary(sb, UIText.RefContentProposal_commit, c
+						.getAuthorIdent(), c.getFullMessage());
+				break;
+			case Constants.OBJ_TAG:
+				RevWalk walk = new RevWalk(db);
+				Tag t = walk.parseTag(objectId).asTag(walk);
+				appendObjectSummary(sb, UIText.RefContentProposal_tag, t
+						.getAuthor(), t.getMessage());
+				break;
+			case Constants.OBJ_TREE:
+				sb.append(UIText.RefContentProposal_tree);
+				break;
+			case Constants.OBJ_BLOB:
+				sb.append(UIText.RefContentProposal_blob);
+				break;
+			default:
+				sb.append(UIText.RefContentProposal_unknownObject);
+			}
+			return sb.toString();
 		} catch (IOException e) {
 			Activator.logError(NLS.bind(
 					UIText.RefContentProposal_errorReadingObject, objectId), e);
 			return null;
 		}
-
-		final StringBuilder sb = new StringBuilder();
-		sb.append(refName);
-		sb.append('\n');
-		sb.append(objectId.abbreviate(db).name());
-		sb.append(" - "); //$NON-NLS-1$
-		if (obj instanceof Commit) {
-			final Commit c = ((Commit) obj);
-			appendObjectSummary(sb, UIText.RefContentProposal_commit, c
-					.getAuthor(), c.getMessage());
-		} else if (obj instanceof Tag) {
-			final Tag t = ((Tag) obj);
-			appendObjectSummary(sb, UIText.RefContentProposal_tag, t
-					.getAuthor(), t.getMessage());
-		} else if (obj instanceof Tree) {
-			sb.append(UIText.RefContentProposal_tree);
-		} else if (obj instanceof Blob) {
-			sb.append(UIText.RefContentProposal_blob);
-		} else
-			sb.append(UIText.RefContentProposal_unknownObject);
-		return sb.toString();
 	}
 
 	public String getLabel() {

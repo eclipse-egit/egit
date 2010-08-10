@@ -87,11 +87,14 @@ public class RepositoryFinder {
 	 *             Eclipse was unable to access its workspace, and threw up on
 	 *             us. We're throwing it back at the caller.
 	 */
-	public Collection<RepositoryMapping> find(IProgressMonitor m) throws CoreException {
-		if (m == null) {
-			m = new NullProgressMonitor();
-		}
-		find(m, proj);
+	public Collection<RepositoryMapping> find(IProgressMonitor m)
+			throws CoreException {
+		IProgressMonitor monitor;
+		if (m == null)
+			monitor = new NullProgressMonitor();
+		else
+			monitor = m;
+		find(monitor, proj);
 		return results;
 	}
 

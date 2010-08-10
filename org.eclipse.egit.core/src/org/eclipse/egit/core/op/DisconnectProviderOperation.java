@@ -48,11 +48,13 @@ public class DisconnectProviderOperation implements IEGitOperation {
 	 * @see org.eclipse.egit.core.op.IEGitOperation#execute(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void execute(IProgressMonitor m) throws CoreException {
-		if (m == null) {
-			m = new NullProgressMonitor();
-		}
+		IProgressMonitor monitor;
+		if (m == null)
+			monitor = new NullProgressMonitor();
+		else
+			monitor = m;
 
-		m.beginTask(CoreText.DisconnectProviderOperation_disconnecting,
+		monitor.beginTask(CoreText.DisconnectProviderOperation_disconnecting,
 				projectList.size() * 200);
 		try {
 			for (IProject p : projectList) {
@@ -63,13 +65,13 @@ public class DisconnectProviderOperation implements IEGitOperation {
 							"disconnect " + p.getName()); //$NON-NLS-1$
 				unmarkTeamPrivate(p);
 				RepositoryProvider.unmap(p);
-				m.worked(100);
+				monitor.worked(100);
 
 				p.refreshLocal(IResource.DEPTH_INFINITE,
-						new SubProgressMonitor(m, 100));
+						new SubProgressMonitor(monitor, 100));
 			}
 		} finally {
-			m.done();
+			monitor.done();
 		}
 	}
 
