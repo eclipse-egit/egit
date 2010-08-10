@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALyH///7g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-10T10:19:19Z",
+      "side": 1,
+      "message": "This should be final to indicate that it is set in the constructor and not dynamic.",
+      "revId": "1e0d581f77033e298716d0ecb4b2e5c2650a59df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyH///7I\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
         "patchSetId": 1
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALyH///7g\u003d",
+      "revId": "1e0d581f77033e298716d0ecb4b2e5c2650a59df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///7c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-10T10:19:19Z",
+      "side": 1,
+      "message": "if (trace) missing?",
       "revId": "1e0d581f77033e298716d0ecb4b2e5c2650a59df",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -38,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "AAALyH///7Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-10T10:19:19Z",
+      "side": 1,
+      "message": "if (trace) missing?",
+      "revId": "1e0d581f77033e298716d0ecb4b2e5c2650a59df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyH///7A\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
         "patchSetId": 1
@@ -50,6 +101,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALyH///7Y\u003d",
+      "revId": "1e0d581f77033e298716d0ecb4b2e5c2650a59df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///7U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-10T10:19:19Z",
+      "side": 1,
+      "message": "if (trace) missing?",
       "revId": "1e0d581f77033e298716d0ecb4b2e5c2650a59df",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
