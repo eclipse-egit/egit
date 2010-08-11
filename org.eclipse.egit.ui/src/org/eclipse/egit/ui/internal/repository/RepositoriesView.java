@@ -49,6 +49,8 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.jgit.events.ConfigChangedEvent;
+import org.eclipse.jgit.events.ConfigChangedListener;
 import org.eclipse.jgit.events.IndexChangedEvent;
 import org.eclipse.jgit.events.IndexChangedListener;
 import org.eclipse.jgit.events.ListenerHandle;
@@ -107,6 +109,8 @@ public class RepositoriesView extends CommonNavigator {
 
 	private final IndexChangedListener myIndexChangedListener;
 
+	private final ConfigChangedListener myConfigChangeListener;
+
 	private final List<ListenerHandle> myListeners = new LinkedList<ListenerHandle>();
 
 	private Job scheduledJob;
@@ -154,6 +158,13 @@ public class RepositoriesView extends CommonNavigator {
 				lastRepositoryChange = System.currentTimeMillis();
 				scheduleRefresh(DEFAULT_REFRESH_DELAY);
 
+			}
+		};
+
+		myConfigChangeListener = new ConfigChangedListener() {
+			public void onConfigChanged(ConfigChangedEvent event) {
+				lastRepositoryChange = System.currentTimeMillis();
+				scheduleRefresh(DEFAULT_REFRESH_DELAY);
 			}
 		};
 
@@ -237,22 +248,31 @@ public class RepositoriesView extends CommonNavigator {
 		// react on changes in the configured repositories
 		repositoryUtil.getPreferences().addPreferenceChangeListener(
 				configurationListener);
+		initRepositoriesAndListeners();
+		return viewer;
+	}
 
-		// listen for repository changes
-		for (String dir : repositoryUtil.getConfiguredRepositories()) {
-			try {
-				Repository repo = repositoryCache
-						.lookupRepository(new File(dir));
-				myListeners.add(repo.getListenerList().addIndexChangedListener(
-						myIndexChangedListener));
-				myListeners.add(repo.getListenerList().addRefsChangedListener(
-						myRefsChangedListener));
-				repositories.add(repo);
-			} catch (IOException e) {
-				Activator.handleError(e.getMessage(), e, false);
+	private void initRepositoriesAndListeners() {
+		synchronized (repositories) {
+			repositories.clear();
+			unregisterRepositoryListener();
+			// listen for repository changes
+			for (String dir : repositoryUtil.getConfiguredRepositories()) {
+				try {
+					Repository repo = repositoryCache
+							.lookupRepository(new File(dir));
+					myListeners.add(repo.getListenerList()
+							.addIndexChangedListener(myIndexChangedListener));
+					myListeners.add(repo.getListenerList()
+							.addRefsChangedListener(myRefsChangedListener));
+					myListeners.add(repo.getListenerList()
+							.addConfigChangedListener(myConfigChangeListener));
+					repositories.add(repo);
+				} catch (IOException e) {
+					Activator.handleError(e.getMessage(), e, false);
+				}
 			}
 		}
-		return viewer;
 	}
 
 	@Override
@@ -352,10 +372,10 @@ public class RepositoriesView extends CommonNavigator {
 	}
 
 	/**
-	 * Executes an immediate refresh
 	 * @return the job used to perform the refresh
 	 */
 	public Job refresh() {
+		// TODO make this void and change the tests accordingly
 		lastInputUpdate = -1l;
 		return scheduleRefresh(0);
 	}
@@ -396,28 +416,8 @@ public class RepositoriesView extends CommonNavigator {
 							GitTraceLocation.REPOSITORIESVIEW.getLocation(),
 							"Running the update"); //$NON-NLS-1$
 				lastInputUpdate = System.currentTimeMillis();
-				if (needsNewInput) {
-					synchronized (repositories) {
-						unregisterRepositoryListener();
-						repositories.clear();
-						for (String dir : repositoryUtil
-								.getConfiguredRepositories()) {
-							try {
-								Repository repo = repositoryCache
-										.lookupRepository(new File(dir));
-								myListeners.add(repo.getListenerList()
-										.addIndexChangedListener(
-												myIndexChangedListener));
-								myListeners.add(repo.getListenerList()
-										.addRefsChangedListener(
-												myRefsChangedListener));
-								repositories.add(repo);
-							} catch (IOException e) {
-								Activator.handleError(e.getMessage(), e, false);
-							}
-						}
-					}
-				}
+				if (needsNewInput)
+					initRepositoriesAndListeners();
 
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
