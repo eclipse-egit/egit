@@ -463,6 +463,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 					.addRefsChangedListener(this);
 	}
 
+	/**
+	 * @return the selection provider
+	 */
+	public RevObjectSelectionProvider getSelectionProvider() {
+		return revObjectSelectionProvider;
+	}
+
 	private Runnable refschangedRunnable;
 
 	public void onRefsChanged(final RefsChangedEvent e) {
