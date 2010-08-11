@@ -44,16 +44,13 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 	 * Create the GitQuickDiffProvider instance
 	 */
 	public GitQuickDiffProvider() {
-		// TODO is this the right location?
-		if (GitTraceLocation.UI.isActive())
-			GitTraceLocation.getTrace().traceEntry(GitTraceLocation.UI.getLocation());
-		// Empty
+		if (GitTraceLocation.QUICKDIFF.isActive())
+			GitTraceLocation.getTrace().traceEntry(GitTraceLocation.QUICKDIFF.getLocation());
 	}
 
 	public void dispose() {
-		// TODO is this the right location?
-		if (GitTraceLocation.UI.isActive())
-			GitTraceLocation.getTrace().traceEntry(GitTraceLocation.UI.getLocation());
+		if (GitTraceLocation.QUICKDIFF.isActive())
+			GitTraceLocation.getTrace().traceEntry(GitTraceLocation.QUICKDIFF.getLocation());
 		if (document != null)
 			document.dispose();
 	}
@@ -64,10 +61,9 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 
 	public IDocument getReference(IProgressMonitor monitor)
 			throws CoreException {
-		// TODO is this the right location?
-		if (GitTraceLocation.UI.isActive())
+		if (GitTraceLocation.QUICKDIFF.isActive())
 			GitTraceLocation.getTrace().trace(
-					GitTraceLocation.UI.getLocation(),
+					GitTraceLocation.QUICKDIFF.getLocation(),
 					"(GitQuickDiffProvider) file: " + resource); //$NON-NLS-1$
 		if (resource == null)
 			return null;
@@ -77,7 +73,6 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 			try {
 				document = GitDocument.create(resource);
 			} catch (IOException e) {
-				// TODO throw an exception or log this?
 				Activator.error(UIText.QuickDiff_failedLoading, e);
 			}
 			return document;
@@ -91,10 +86,9 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 	}
 
 	public void setActiveEditor(ITextEditor editor) {
-		// TODO is this the right location?
-		if (GitTraceLocation.UI.isActive())
+		if (GitTraceLocation.QUICKDIFF.isActive())
 			GitTraceLocation.getTrace().traceEntry(
-					GitTraceLocation.UI.getLocation(), editor.getTitle());
+					GitTraceLocation.QUICKDIFF.getLocation(), editor.getTitle());
 		IEditorInput editorInput = editor.getEditorInput();
 		resource = ResourceUtil.getResource(editorInput);
 	}
@@ -114,5 +108,4 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 		GitQuickDiffProvider.baseline.put(repository, baseline);
 		GitDocument.refreshRelevant(repository);
 	}
-
 }
