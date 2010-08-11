@@ -16,6 +16,24 @@
       "revId": "083944dcdf9bf4441e365e75dffaeda240ef93bf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALx3///68\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-06T16:57:31Z",
+      "side": 1,
+      "message": "You have right here, I\u0027ll reimplement this",
+      "parentUuid": "AAALx3///7Y\u003d",
+      "revId": "083944dcdf9bf4441e365e75dffaeda240ef93bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
