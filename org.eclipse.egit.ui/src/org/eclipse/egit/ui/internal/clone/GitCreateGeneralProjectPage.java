@@ -16,6 +16,7 @@ import java.io.FilenameFilter;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.UIText;
@@ -47,6 +48,8 @@ public class GitCreateGeneralProjectPage extends WizardPage {
 
 	private IProject[] wsProjects;
 
+	private boolean defaultLocation;
+
 	/**
 	 * Creates a new project creation wizard page.
 	 *
@@ -59,6 +62,12 @@ public class GitCreateGeneralProjectPage extends WizardPage {
 		setPageComplete(false);
 		setTitle(UIText.WizardProjectsImportPage_ImportProjectsTitle);
 		setDescription(UIText.WizardProjectsImportPage_ImportProjectsDescription);
+		// check for default location: is workspace location parent of path?
+		IPath parent = new Path(path).removeLastSegments(1);
+		if(ResourcesPlugin.getWorkspace().getRoot().getLocation().equals(parent))
+			defaultLocation = true;
+		else
+			defaultLocation = false;
 	}
 
 	/**
@@ -96,7 +105,10 @@ public class GitCreateGeneralProjectPage extends WizardPage {
 				.setText(UIText.GitCreateGeneralProjectPage_ProjectNameLabel);
 		projectText = new Text(workArea, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(projectText);
-		projectText.addModifyListener(new ModifyListener() {
+		if(defaultLocation)
+			projectText.setEnabled(false);
+		else
+			projectText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
 				checkPage();
@@ -128,6 +140,13 @@ public class GitCreateGeneralProjectPage extends WizardPage {
 	 */
 	public String getProjectName() {
 		return projectText.getText();
+	}
+
+	/**
+	 * @return true if the project has default location
+	 */
+	public boolean isDefaultLocation() {
+		return defaultLocation;
 	}
 
 	private void checkPage() {
@@ -183,14 +202,16 @@ public class GitCreateGeneralProjectPage extends WizardPage {
 								projectName));
 				return;
 			}
-			IProject newProject = ResourcesPlugin.getWorkspace().getRoot()
-					.getProject(projectName);
-			IStatus locationResult = ResourcesPlugin.getWorkspace()
-					.validateProjectLocation(newProject,
-							new Path(myDirectory.getPath()));
-			if (!locationResult.isOK()) {
-				setErrorMessage(locationResult.getMessage());
-				return;
+			if(!defaultLocation) {
+				IProject newProject = ResourcesPlugin.getWorkspace().getRoot()
+						.getProject(projectName);
+				IStatus locationResult = ResourcesPlugin.getWorkspace()
+						.validateProjectLocation(newProject,
+								new Path(myDirectory.getPath()));
+				if (!locationResult.isOK()) {
+					setErrorMessage(locationResult.getMessage());
+					return;
+				}
 			}
 		} finally {
 			setPageComplete(getErrorMessage() == null);
