@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALyH///5U\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-10T17:08:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyH///78\u003d",
+      "revId": "7c115fdf5e685d81ba4dd60de7ddad6cf2dabb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyH///8A\u003d",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 5
@@ -123,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "AAALyH///4s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitChangeSetModelProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-10T17:08:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyH///6s\u003d",
+      "revId": "7c115fdf5e685d81ba4dd60de7ddad6cf2dabb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyH///6o\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitChangeSetModelProvider.java",
         "patchSetId": 5
@@ -134,6 +170,24 @@
       "writtenOn": "2010-08-10T12:37:53Z",
       "side": 1,
       "message": "empty JavaDoc",
+      "revId": "7c115fdf5e685d81ba4dd60de7ddad6cf2dabb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///4o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitChangeSetModelProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-10T17:08:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyH///6o\u003d",
       "revId": "7c115fdf5e685d81ba4dd60de7ddad6cf2dabb3b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
