@@ -149,7 +149,8 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 	public void testExpandWorkDir() throws Exception {
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		Repository myRepository = lookupRepository(repositoryFile);
-		List<String> children = Arrays.asList(myRepository.getWorkTree().list());
+		List<String> children = Arrays
+				.asList(myRepository.getWorkTree().list());
 		List<String> treeChildren = myRepoViewUtil.getWorkdirItem(tree,
 				repositoryFile).expand().getNodes();
 		assertTrue(children.containsAll(treeChildren)
@@ -584,8 +585,9 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		SWTBotTreeItem masterNode = localBranchesItem.getNode("master");
 		masterNode.select();
 		ContextMenuHelper.clickContextMenu(tree, "Create Branch...");
-		SWTBotShell createBranchShell = bot.shell("Create Branch");
-		createBranchShell.bot().text("").setText("abc");
+		SWTBotShell createBranchShell = bot
+				.shell(UIText.CreateBranchWizard_NewBranchTitle);
+		createBranchShell.bot().textWithId("BranchName").setText("abc");
 		createBranchShell.bot().checkBox().deselect();
 		createBranchShell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		refreshAndWait();
@@ -616,14 +618,15 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// create first branch (abc)
 		masterNode.select();
 		ContextMenuHelper.clickContextMenu(tree, "Create Branch...");
-		SWTBotShell createBranchShell = bot.shell("Create Branch");
-		createBranchShell.bot().text("").setText("abc");
+		SWTBotShell createBranchShell = bot
+				.shell(UIText.CreateBranchWizard_NewBranchTitle);
+		createBranchShell.bot().textWithId("BranchName").setText("abc");
 		createBranchShell.bot().checkBox().deselect();
 		createBranchShell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		// create second branch (123)
 		ContextMenuHelper.clickContextMenu(tree, "Create Branch...");
-		createBranchShell = bot.shell("Create Branch");
-		createBranchShell.bot().text("").setText("123");
+		createBranchShell = bot.shell(UIText.CreateBranchWizard_NewBranchTitle);
+		createBranchShell.bot().textWithId("BranchName").setText("123");
 		createBranchShell.bot().checkBox().deselect();
 		createBranchShell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		refreshAndWait();

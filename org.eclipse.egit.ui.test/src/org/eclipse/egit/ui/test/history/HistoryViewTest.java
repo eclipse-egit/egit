@@ -263,9 +263,11 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		ContextMenuHelper.clickContextMenu(table, util
 				.getPluginLocalizedValue("CreateBranch.label"));
 		SWTBotShell dialog = bot
-				.shell(UIText.BranchSelectionDialog_QuestionNewBranchTitle);
-		dialog.bot().text().setText("NewBranch");
-		dialog.bot().button(IDialogConstants.OK_LABEL).click();
+				.shell(UIText.CreateBranchWizard_NewBranchTitle);
+		dialog.bot().textWithId("BranchName").setText("NewBranch");
+		// for some reason, checkboxwithlabel doesn't seem to work
+		dialog.bot().checkBox().deselect();
+		dialog.bot().button(IDialogConstants.FINISH_LABEL).click();
 		waitInUI();
 		assertNotNull(repo.resolve(Constants.R_HEADS + "NewBranch"));
 	}
