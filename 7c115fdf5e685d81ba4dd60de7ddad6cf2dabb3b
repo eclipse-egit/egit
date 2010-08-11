@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "AAALyH///8A\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-10T12:37:53Z",
+      "side": 1,
+      "message": "whitespace error",
+      "revId": "7c115fdf5e685d81ba4dd60de7ddad6cf2dabb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///70\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWithActionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-10T12:37:53Z",
+      "side": 1,
+      "message": "please remove outcommented code",
+      "revId": "7c115fdf5e685d81ba4dd60de7ddad6cf2dabb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyH///74\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWithActionHandler.java",
         "patchSetId": 5
@@ -30,6 +64,40 @@
       "writtenOn": "2010-08-10T12:37:53Z",
       "side": 1,
       "message": "whitespace error",
+      "revId": "7c115fdf5e685d81ba4dd60de7ddad6cf2dabb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///6s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitChangeSetModelProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-10T12:37:53Z",
+      "side": 1,
+      "message": "empty JavaDoc",
+      "revId": "7c115fdf5e685d81ba4dd60de7ddad6cf2dabb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///6o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitChangeSetModelProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-10T12:37:53Z",
+      "side": 1,
+      "message": "empty JavaDoc",
       "revId": "7c115fdf5e685d81ba4dd60de7ddad6cf2dabb3b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -64,6 +132,23 @@
       "writtenOn": "2010-08-10T12:37:53Z",
       "side": 1,
       "message": "Shouldn\u0027t it the other way round? \n\nThe eclipse standard is that the newer version is on the left side.",
+      "revId": "7c115fdf5e685d81ba4dd60de7ddad6cf2dabb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///6k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelRepository.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-10T12:37:53Z",
+      "side": 1,
+      "message": "Whitespace error",
       "revId": "7c115fdf5e685d81ba4dd60de7ddad6cf2dabb3b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
