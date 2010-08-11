@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyH///80\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelRepository.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-09T13:26:32Z",
+      "side": 1,
+      "message": "This implementation is too complicated and uses too many low level JGit features.\n\nYou can use the API log command instead, once for the incoming and once for the outgoing changes:\n\nGit git \u003d new Git(repo);\nit \u003d git.log().addRange(ancestorCommit, srcRev).call().iterator() \n...",
+      "revId": "168f81d0ce01bc69bc15598b684b9563857256b0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
