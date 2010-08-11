@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyH///6M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/dto/GitSynchronizeData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-10T13:29:52Z",
+      "side": 1,
+      "message": "IMHO you can just use \n\nthis.srcRev \u003d ow.parseCommit(srcRef.getObjectId())\n\nand you can use a RevWalk instead of an ObjectWalk.",
+      "revId": "5947b2dda09f9a1e4f6b2e3383e1250e261f3f0f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
