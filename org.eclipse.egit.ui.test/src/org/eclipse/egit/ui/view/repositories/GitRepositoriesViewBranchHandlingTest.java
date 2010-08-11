@@ -97,10 +97,10 @@ public class GitRepositoriesViewBranchHandlingTest extends
 				.getPluginLocalizedValue("CreateBranchCommand"));
 
 		SWTBotShell createPage = bot
-				.shell(UIText.RepositoriesView_NewBranchTitle);
+				.shell(UIText.CreateBranchWizard_NewBranchTitle);
 		createPage.activate();
 		// getting text with label doesn't work
-		createPage.bot().text(1).setText("newLocal");
+		createPage.bot().textWithId("BranchName").setText("newLocal");
 		createPage.bot().checkBox(UIText.CreateBranchPage_CheckoutButton)
 				.deselect();
 		createPage.bot().button(IDialogConstants.FINISH_LABEL).click();
@@ -171,9 +171,9 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		item.getNode("origin/stable").select();
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("CreateBranchCommand"));
-		SWTBotShell shell = bot.shell(UIText.RepositoriesView_NewBranchTitle);
+		SWTBotShell shell = bot.shell(UIText.CreateBranchWizard_NewBranchTitle);
 		shell.activate();
-		assertEquals("stable", shell.bot().text(1).getText());
+		assertEquals("stable", shell.bot().textWithId("BranchName").getText());
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		refreshAndWait();
 		item = myRepoViewUtil.getLocalBranchesItem(tree, clonedRepositoryFile)
@@ -257,10 +257,10 @@ public class GitRepositoriesViewBranchHandlingTest extends
 					.getPluginLocalizedValue("CreateBranchCommand"));
 
 			SWTBotShell createPage = bot
-					.shell(UIText.RepositoriesView_NewBranchTitle);
+					.shell(UIText.CreateBranchWizard_NewBranchTitle);
 			createPage.activate();
 			assertEquals("Wrong suggested branch name", "stable", createPage
-					.bot().text(1).getText());
+					.bot().textWithId("BranchName").getText());
 			createPage.close();
 
 		} finally {

@@ -11,18 +11,12 @@
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.repository.CreateBranchPage;
+import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -74,49 +68,8 @@ public class CreateBranchCommand extends
 			}
 			baseBranch = branch;
 		}
-
-		Wizard wiz = new Wizard() {
-
-			@Override
-			public void addPages() {
-				addPage(new CreateBranchPage(node.getRepository(), baseBranch));
-				setWindowTitle(UIText.RepositoriesView_NewBranchTitle);
-			}
-
-			@Override
-			public boolean performFinish() {
-				try {
-					getContainer().run(false, true,
-							new IRunnableWithProgress() {
-
-								public void run(IProgressMonitor monitor)
-										throws InvocationTargetException,
-										InterruptedException {
-									CreateBranchPage cp = (CreateBranchPage) getPages()[0];
-									try {
-										cp.createBranch(monitor);
-									} catch (CoreException ce) {
-										throw new InvocationTargetException(ce);
-									} catch (IOException ioe) {
-										throw new InvocationTargetException(ioe);
-									}
-
-								}
-							});
-				} catch (InvocationTargetException ite) {
-					Activator
-							.handleError(
-									UIText.RepositoriesView_BranchCreationFailureMessage,
-									ite.getCause(), true);
-					return false;
-				} catch (InterruptedException ie) {
-					// ignore here
-				}
-				return true;
-			}
-		};
-		new WizardDialog(getShell(event), wiz).open();
-
+		new WizardDialog(getShell(event), new CreateBranchWizard(node
+				.getRepository(), baseBranch)).open();
 		return null;
 	}
 }
