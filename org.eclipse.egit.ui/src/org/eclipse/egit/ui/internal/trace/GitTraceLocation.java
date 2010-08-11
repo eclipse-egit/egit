@@ -24,7 +24,9 @@ public enum GitTraceLocation implements ITraceLocation {
 	/** REPOSITORIESVIEW */
 	REPOSITORIESVIEW("/debug/ui/repositoriesview"), //$NON-NLS-1$
 	/** DECORATION */
-	DECORATION("/debug/ui/decoration"); //$NON-NLS-1$
+	DECORATION("/debug/ui/decoration"), //$NON-NLS-1$
+	/** QUICKDIFF */
+	QUICKDIFF("/debug/quickdiff"); //$NON-NLS-1$
 
 	/**
 	 * Initialize the locations
