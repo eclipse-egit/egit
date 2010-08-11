@@ -1243,9 +1243,6 @@ public class UIText extends NLS {
 	public static String ConfirmationPage_title;
 
 	/** */
-	public static String CreateBranchHandler_CreatePromptMessage;
-
-	/** */
 	public static String CreateBranchPage_BranchAlreadyExistsMessage;
 
 	/** */
@@ -1279,7 +1276,19 @@ public class UIText extends NLS {
 	public static String CreateBranchPage_SourceBranchTooltip;
 
 	/** */
+	public static String CreateBranchPage_SourceCommitLabel;
+
+	/** */
+	public static String CreateBranchPage_SourceCommitTooltip;
+
+	/** */
 	public static String CreateBranchPage_Title;
+
+	/** */
+	public static String CreateBranchWizard_CreationFailed;
+
+	/** */
+	public static String CreateBranchWizard_NewBranchTitle;
 
 	/** */
 	public static String PushResultTable_columnStatusRepo;
