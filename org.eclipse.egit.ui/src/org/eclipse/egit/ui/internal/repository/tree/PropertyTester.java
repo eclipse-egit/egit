@@ -92,7 +92,10 @@ public class PropertyTester extends org.eclipse.core.expressions.PropertyTester 
 		if (property.equals("canMerge")) { //$NON-NLS-1$
 			Repository rep = node.getRepository();
 			try {
-				return rep.getFullBranch().startsWith(Constants.R_HEADS);
+				String branch = rep.getFullBranch();
+				if (branch == null)
+					return false; // fail gracefully...
+				return branch.startsWith(Constants.R_HEADS);
 			} catch (IOException e) {
 				return false;
 			}
