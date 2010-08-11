@@ -25,6 +25,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
+import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.ObjectId;
@@ -110,12 +111,11 @@ public class ShowVersionsHandler extends AbstractHistoryCommanndHandler {
 
 	@Override
 	public boolean isEnabled() {
-		try {
-			int size = getSelection(null).size();
-			return size >= 1
-					&& IFile.class.isAssignableFrom(getInput(null).getClass());
-		} catch (ExecutionException e) {
+		GitHistoryPage page = getPage();
+		if (page == null)
 			return false;
-		}
+		int size = getSelection(page).size();
+		return size >= 1
+				&& IFile.class.isAssignableFrom(page.getInput().getClass());
 	}
 }
