@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "AAALyH///5M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWithActionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-10T17:08:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyH///70\u003d",
+      "revId": "7c115fdf5e685d81ba4dd60de7ddad6cf2dabb3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyH///74\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWithActionHandler.java",
         "patchSetId": 5
