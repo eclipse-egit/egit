@@ -16,6 +16,24 @@
       "revId": "168f81d0ce01bc69bc15598b684b9563857256b0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///8U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelRepository.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-09T15:31:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyH///80\u003d",
+      "revId": "168f81d0ce01bc69bc15598b684b9563857256b0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
