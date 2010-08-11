@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALx3///7Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-06T15:34:50Z",
+      "side": 1,
+      "message": "This does not do the right thing. There are outgoing and incoming commits which were created before both srcRev and dstRev.\n\nWhat you want is to get all commits between the common base and srcRev and all commits between common base and dstRev, right?\n\nYou have already determined the base commit in GitBaseResourceVariantTree, so why not have two RevWalks, one from base to srcRev  and one from base to dstRev?",
+      "revId": "083944dcdf9bf4441e365e75dffaeda240ef93bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
