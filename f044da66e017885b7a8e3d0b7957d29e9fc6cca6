@@ -16,6 +16,24 @@
       "revId": "f044da66e017885b7a8e3d0b7957d29e9fc6cca6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///0k\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-11T21:20:10Z",
+      "side": 1,
+      "message": "Yes I know that it overwrites ... but for some reasons it return false",
+      "parentUuid": "AAALyH///20\u003d",
+      "revId": "f044da66e017885b7a8e3d0b7957d29e9fc6cca6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
