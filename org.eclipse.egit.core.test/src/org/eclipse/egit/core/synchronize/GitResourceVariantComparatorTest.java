@@ -36,6 +36,7 @@ import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -99,6 +100,25 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 		verify(local);
 	}
 
+	@Test
+	@SuppressWarnings("boxing")
+	public void shouldReturnFalseWhenRemoteDoesNotExist2() throws Exception{
+		// when
+		GitResourceVariantComparator grvc = new GitResourceVariantComparator(
+				null);
+
+		// given
+		IResource local = createMock(IResource.class);
+		expect(local.exists()).andReturn(false);
+		replay(local);
+		IResourceVariant remote = new GitFolderResourceVariant(repo,
+				ObjectId.zeroId(), "./");
+
+		// then
+		assertFalse(grvc.compare(local, remote));
+		verify(local);
+	}
+
 	/**
 	 * It is possible to have a local file that has same name as a remote
 	 * folder. In some cases that two resources can be compared. In this case
@@ -142,7 +162,7 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 		IPath localPath = createMock(IPath.class);
 		replay(localPath);
 		IContainer local = createMock(IContainer.class);
-		expect(local.exists()).andReturn(true);
+		expect(local.exists()).andReturn(true).times(2);
 		expect(local.getFullPath()).andReturn(localPath);
 		replay(local);
 
@@ -183,7 +203,7 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 		IPath iPath = new Path(File.separator + path);
 
 		IContainer local = createMock(IContainer.class);
-		expect(local.exists()).andReturn(true);
+		expect(local.exists()).andReturn(true).times(2);
 		expect(local.getFullPath()).andReturn(iPath).anyTimes();
 		replay(local);
 
