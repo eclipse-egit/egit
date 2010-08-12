@@ -17,18 +17,11 @@ import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.mapping.RemoteResourceMappingContext;
-import org.eclipse.core.resources.mapping.ResourceMapping;
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
-import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
-import org.eclipse.egit.core.synchronize.GitSubscriberResourceMappingContext;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronizeParticipant;
+import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
 import org.eclipse.egit.ui.internal.synchronize.SelectSynchronizeResourceDialog;
 import org.eclipse.egit.ui.internal.synchronize.SyncRepoEntity;
 import org.eclipse.egit.ui.internal.synchronize.SyncRepoEntity.SyncRefEntity;
@@ -38,16 +31,6 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.RemoteConfig;
-import org.eclipse.team.core.RepositoryProvider;
-import org.eclipse.team.core.mapping.provider.SynchronizationContext;
-import org.eclipse.team.core.subscribers.SubscriberScopeManager;
-import org.eclipse.team.internal.ui.TeamUIPlugin;
-import org.eclipse.team.internal.ui.Utils;
-import org.eclipse.team.internal.ui.actions.TeamAction;
-import org.eclipse.team.ui.TeamUI;
-import org.eclipse.team.ui.synchronize.ISynchronizeParticipant;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * An action that launch synchronization with selected repository
@@ -84,18 +67,7 @@ public class SynchronizeWithActionHandler extends RepositoryActionHandler {
 			}
 		}
 
-		GitResourceVariantTreeSubscriber subscriber = new GitResourceVariantTreeSubscriber(
-				gsdSet);
-		ResourceMapping[] mappings = getSelectedResourceMappings(event);
-		RemoteResourceMappingContext remoteContext = new GitSubscriberResourceMappingContext(gsdSet);
-		SubscriberScopeManager manager = new SubscriberScopeManager(
-				subscriber.getName(), mappings, subscriber, remoteContext, true);
-		SynchronizationContext context = new GitSubscriberMergeContext(
-				subscriber, manager, gsdSet);
-		GitModelSynchronizeParticipant participant = new GitModelSynchronizeParticipant(context);
-		TeamUI.getSynchronizeManager().addSynchronizeParticipants(
-				new ISynchronizeParticipant[] { participant });
-		participant.run(getTargetPart());
+		new GitModelSynchronize(gsdSet, getSelectedResources(event));
 
 		return null;
 	}
@@ -148,74 +120,6 @@ public class SynchronizeWithActionHandler extends RepositoryActionHandler {
 	private Collection<Ref> getRemoteRef(RefDatabase refDb, String remoteName)
 			throws IOException {
 		return refDb.getRefs(Constants.R_REMOTES + remoteName + "/").values(); //$NON-NLS-1$
-	}
-
-
-	/**
-     * Based on {@link TeamAction#getSelectedResourceMappings}
-     *
-	 * @param event
-     * @return the resource mappings that contain resources associated with the given provider
-	 * @throws ExecutionException
-	 */
-    private ResourceMapping[] getSelectedResourceMappings(ExecutionEvent event) throws ExecutionException {
-        Object[] elements = getSelectedResources(event);
-        ArrayList providerMappings = new ArrayList();
-        for (int i = 0; i < elements.length; i++) {
-            Object object = elements[i];
-            Object adapted = getResourceMapping(object);
-            if (adapted instanceof ResourceMapping) {
-                ResourceMapping mapping = (ResourceMapping) adapted;
-                if (isMappedToProvider(mapping, "org.eclipse.egit.core.GitProvider")) { //$NON-NLS-1$
-                    providerMappings.add(mapping);
-                }
-            }
-        }
-        return (ResourceMapping[]) providerMappings.toArray(new ResourceMapping[providerMappings.size()]);
-    }
-
-    /**
-     * Copied from TeamAction#getResourceMapping(Object)
-     *
-     * @param object
-     * @return resource mapping
-     */
-    private Object getResourceMapping(Object object) {
-        if (object instanceof ResourceMapping)
-            return object;
-
-        if (object instanceof IAdaptable)
-        	return ((IAdaptable) object).getAdapter(ResourceMapping.class);
-
-        return Utils.getResourceMapping(object);
-    }
-
-    /**
-     * Copied from TeamAction#isMappedToProvider(ResourceMapping, String)
-     *
-     * @param element
-     * @param providerId
-     * @return TODO
-     */
-    private boolean isMappedToProvider(ResourceMapping element, String providerId) {
-        IProject[] projects = element.getProjects();
-        for (int k = 0; k < projects.length; k++) {
-            IProject project = projects[k];
-            RepositoryProvider provider = RepositoryProvider.getProvider(project);
-            if (provider != null && provider.getID().equals(providerId)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-	private IWorkbenchPart getTargetPart() {
-		IWorkbenchPart targetPart = null;
-		IWorkbenchPage page = TeamUIPlugin.getActivePage();
-		if (page != null) {
-			targetPart = page.getActivePart();
-		}
-		return targetPart;
 	}
 
 }
