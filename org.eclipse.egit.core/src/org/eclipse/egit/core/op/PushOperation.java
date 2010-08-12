@@ -148,6 +148,7 @@ public class PushOperation {
 				final PushResult pr = transport.push(gitSubMonitor,
 						specification.getRefUpdates(uri));
 				operationResult.addOperationResult(uri, pr);
+				monitor.worked(WORK_UNITS_PER_TRANSPORT);
 			} catch (final NoRemoteRepositoryException e) {
 				operationResult.addOperationResult(uri, NLS.bind(
 						CoreText.PushOperation_resultNoServiceError, e
