@@ -58,7 +58,7 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 	 * @return <code>true</code> if project has corresponding data
 	 */
 	public boolean contains(IProject project) {
-		return projectMapping.containsKey(project);
+		return projectMapping.containsKey(project.getName());
 	}
 
 	/**
