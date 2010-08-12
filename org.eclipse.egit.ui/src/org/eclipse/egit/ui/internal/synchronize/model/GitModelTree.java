@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
+import static org.eclipse.jgit.lib.ObjectId.zeroId;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,9 +114,17 @@ public class GitModelTree extends GitModelCommit {
 		List<GitModelObject> result = new ArrayList<GitModelObject>();
 
 		try {
-			int ancestorNth = tw.addTree(ancestorId);
-			int baseNth = tw.addTree(baseId);
-			int remoteNth = tw.addTree(remoteId);
+			int ancestorNth = -1;
+			if (!ancestorId.equals(zeroId()))
+				ancestorNth = tw.addTree(ancestorId);
+
+			int baseNth = -1;
+			if (!baseId.equals(zeroId()))
+				baseNth = tw.addTree(baseId);
+
+			int remoteNth = -1;
+			if (!remoteId.equals(zeroId()))
+				remoteNth = tw.addTree(remoteId);
 
 			while (tw.next()) {
 				GitModelObject obj = createChildren(tw, ancestorNth, baseNth,
@@ -132,9 +142,11 @@ public class GitModelTree extends GitModelCommit {
 	private GitModelObject createChildren(TreeWalk tw, int ancestorNth,
 			int baseNth, int remoteNth) throws IOException {
 		String objName = tw.getNameString();
-		ObjectId objBaseId = tw.getObjectId(baseNth);
-		ObjectId objRemoteId = tw.getObjectId(remoteNth);
-		ObjectId objAncestorId = tw.getObjectId(ancestorNth);
+		ObjectId objBaseId = baseNth != -1 ? tw.getObjectId(baseNth) : zeroId();
+		ObjectId objRemoteId = remoteNth != -1 ? tw.getObjectId(remoteNth)
+				: zeroId();
+		ObjectId objAncestorId = ancestorNth != -1 ? tw
+				.getObjectId(ancestorNth) : zeroId();
 		int objectType = tw.getFileMode(remoteNth).getObjectType();
 
 		if (objectType == Constants.OBJ_BLOB)
