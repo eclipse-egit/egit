@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyH///20\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-11T12:30:42Z",
+      "side": 1,
+      "message": "But AnyObjectId overwrites equals and this should work. \n\nAnyhow, this change does not solve the error I face: I still see for some projects conflicting folders, with their path relative to the git repository and not relative to the workspace.",
+      "revId": "f044da66e017885b7a8e3d0b7957d29e9fc6cca6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
