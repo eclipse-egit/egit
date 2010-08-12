@@ -9,6 +9,7 @@
 package org.eclipse.egit.ui.internal.synchronize;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -23,22 +24,18 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.mapping.provider.SynchronizationContext;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
-import org.eclipse.team.internal.ui.TeamUIPlugin;
-import org.eclipse.team.internal.ui.Utils;
-import org.eclipse.team.internal.ui.actions.TeamAction;
 import org.eclipse.team.ui.TeamUI;
 import org.eclipse.team.ui.synchronize.ISynchronizeParticipant;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Utility class that launches model synchronization action
  */
 public class GitModelSynchronize {
 
-	private GitModelSynchronize() {
-		// non instantiable class
-	}
+	private static final String providerId = "org.eclipse.egit.core.GitProvider"; //$NON-NLS-1$
 
 	/**
 	 * Launches Git Model synchronization action
@@ -46,7 +43,8 @@ public class GitModelSynchronize {
 	 * @param data
 	 * @param resources
 	 */
-	public static final void launch(GitSynchronizeData data, IResource[] resources) {
+	public static final void launch(GitSynchronizeData data,
+			IResource[] resources) {
 		launch(new GitSynchronizeDataSet(data), resources);
 	}
 
@@ -73,40 +71,34 @@ public class GitModelSynchronize {
 
 		TeamUI.getSynchronizeManager().addSynchronizeParticipants(
 				new ISynchronizeParticipant[] { participant });
-		participant.run(getTargetPart());
-	}
-
-	private static IWorkbenchPart getTargetPart() {
-		IWorkbenchPart targetPart = null;
-		IWorkbenchPage page = TeamUIPlugin.getActivePage();
-		if (page != null) {
-			targetPart = page.getActivePart();
-		}
-		return targetPart;
+		IWorkbenchWindow window = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		participant.run((IWorkbenchPart) window.getActivePage());
 	}
 
 	/**
-	 * Based on {@link TeamAction#getSelectedResourceMappings}
+	 * Based on {@link org.eclipse.team.internal.ui.actions.TeamAction#getSelectedResourceMappings}
 	 *
 	 * @param elements
 	 * @return the resource mappings that contain resources associated with the
 	 *         given provider
 	 */
-	private static ResourceMapping[] getSelectedResourceMappings(IResource[] elements) {
-		ArrayList providerMappings = new ArrayList();
-		for (int i = 0; i < elements.length; i++) {
-			Object object = elements[i];
-			Object adapted = getResourceMapping(object);
-			if (adapted instanceof ResourceMapping) {
+	private static ResourceMapping[] getSelectedResourceMappings(
+			IResource[] elements) {
+		List<ResourceMapping> providerMappings = new ArrayList<ResourceMapping>();
+
+		for (IResource element : elements) {
+			Object adapted = getResourceMapping(element);
+			if (adapted != null && adapted instanceof ResourceMapping) {
 				ResourceMapping mapping = (ResourceMapping) adapted;
-				if (isMappedToProvider(mapping,
-						"org.eclipse.egit.core.GitProvider")) { //$NON-NLS-1$
+
+				if (isMappedToProvider(mapping))
 					providerMappings.add(mapping);
-				}
 			}
 		}
-		return (ResourceMapping[]) providerMappings
-				.toArray(new ResourceMapping[providerMappings.size()]);
+
+		return providerMappings.toArray(new ResourceMapping[providerMappings
+				.size()]);
 	}
 
 	/**
@@ -122,27 +114,29 @@ public class GitModelSynchronize {
 		if (object instanceof IAdaptable)
 			return ((IAdaptable) object).getAdapter(ResourceMapping.class);
 
-		return Utils.getResourceMapping(object);
+		return null;
 	}
 
 	/**
 	 * Copied from TeamAction#isMappedToProvider(ResourceMapping, String)
 	 *
 	 * @param element
-	 * @param providerId
-	 * @return TODO
+	 * @return <code>true</code> if resource is mapped to Git provider,
+	 *         <code>false</code> otherwise
 	 */
-	private static boolean isMappedToProvider(ResourceMapping element,
-			String providerId) {
+	private static boolean isMappedToProvider(ResourceMapping element) {
 		IProject[] projects = element.getProjects();
-		for (int k = 0; k < projects.length; k++) {
-			IProject project = projects[k];
+		for (IProject project: projects) {
 			RepositoryProvider provider = RepositoryProvider
 					.getProvider(project);
-			if (provider != null && provider.getID().equals(providerId)) {
+
+			if (provider != null && provider.getID().equals(providerId))
 				return true;
-			}
 		}
 		return false;
+	}
+
+	private GitModelSynchronize() {
+		// non instantiable class
 	}
 }
