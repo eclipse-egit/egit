@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALyH///t4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronize.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-12T17:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyH///u4\u003d",
+      "revId": "f23feb5dea9e892a7de17c12b0d01808b86ec435",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyH///u8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronize.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2010-08-12T17:11:56Z",
       "side": 1,
       "message": "Just use Platform.getWorkbench()....getActivePage(), This would help to get rid of all these warnings. Could even be part of UIUtils.",
+      "revId": "f23feb5dea9e892a7de17c12b0d01808b86ec435",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///t0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronize.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-12T17:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyH///u8\u003d",
       "revId": "f23feb5dea9e892a7de17c12b0d01808b86ec435",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAALyH///to\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronize.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-12T17:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyH///u0\u003d",
+      "revId": "f23feb5dea9e892a7de17c12b0d01808b86ec435",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyH///vA\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronize.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2010-08-12T17:11:56Z",
       "side": 1,
       "message": "I think we could lay this out as constant. And why don\u0027t you push it into the isMappedToProvider? Seems we only want to check this for our provider.",
+      "revId": "f23feb5dea9e892a7de17c12b0d01808b86ec435",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///tk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronize.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-12T17:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyH///vA\u003d",
       "revId": "f23feb5dea9e892a7de17c12b0d01808b86ec435",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
