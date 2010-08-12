@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyH///vY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronize.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-08-12T16:51:32Z",
+      "side": 1,
+      "message": "It looks like everything here should just be static methods.\n\nHow about a static final class with a synchronize method with the arguments currently in the constructor?",
+      "revId": "5002bad8556bf0dc2338ec837440f86e5571e82d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
