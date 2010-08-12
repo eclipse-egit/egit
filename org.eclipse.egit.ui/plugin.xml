@@ -737,6 +737,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewSynchronize"
+               icon="$nl$/icons/obj16/remotespec.gif"
                style="push">
             <visibleWhen
                   checkEnabled="false">
