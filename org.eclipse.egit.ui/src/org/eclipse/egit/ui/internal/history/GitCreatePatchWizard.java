@@ -228,8 +228,8 @@ public class GitCreatePatchWizard extends Wizard {
 		FileDiff[] diffs = FileDiff.compute(walker, commit);
 		for (FileDiff diff : diffs) {
 			sb.append("diff --git a").append(IPath.SEPARATOR) //$NON-NLS-1$
-					.append(diff.path).append(" b").append(IPath.SEPARATOR) //$NON-NLS-1$
-					.append(diff.path).append("\n"); //$NON-NLS-1$
+					.append(diff.getPath()).append(" b").append(IPath.SEPARATOR) //$NON-NLS-1$
+					.append(diff.getPath()).append("\n"); //$NON-NLS-1$
 			diff.outputDiff(sb, db, diffFmt, false, false);
 		}
 		sb.append("\n--\n"); //$NON-NLS-1$
@@ -257,7 +257,7 @@ public class GitCreatePatchWizard extends Wizard {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
 		IPath absolutePath = new Path(db.getWorkTree().getAbsolutePath())
-				.append(diff.path);
+				.append(diff.getPath());
 		IResource resource = root.getFileForLocation(absolutePath);
 		return resource.getProjectRelativePath().toString();
 	}
