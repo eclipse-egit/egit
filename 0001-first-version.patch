@@ -1,0 +1,1314 @@
+From b012fde891a0c9a0d3a84ae88c8dfbadd90a7a33 Mon Sep 17 00:00:00 2001
+From: Stefan Lay <stefan.lay@sap.com>
+Date: Wed, 3 Mar 2010 17:08:49 +0100
+Subject: [PATCH] first version
+
+---
+ org.eclipse.egit.core/META-INF/MANIFEST.MF         |    1 +
+ .../org/eclipse/egit/core/op/MergeOperation.java   |  250 ++++++++++++++++
+ org.eclipse.egit.ui/plugin.properties              |    3 +
+ org.eclipse.egit.ui/plugin.xml                     |    6 +
+ .../src/org/eclipse/egit/ui/UIText.java            |   21 ++
+ .../egit/ui/internal/actions/BranchAction.java     |    1 -
+ .../egit/ui/internal/actions/CommitAction.java     |   55 +----
+ .../egit/ui/internal/actions/MergeAction.java      |  120 ++++++++
+ .../egit/ui/internal/actions/RepositoryAction.java |   84 ++++++
+ .../egit/ui/internal/actions/ResetAction.java      |    4 +-
+ .../ui/internal/dialogs/BranchSelectionDialog.java |  309 ++++++++------------
+ .../dialogs/MergeTargetSelectionDialog.java        |   35 +++
+ .../dialogs/ResetTargetSelectionDialog.java        |   98 ++++++
+ .../src/org/eclipse/egit/ui/uitext.properties      |    7 +
+ 14 files changed, 753 insertions(+), 241 deletions(-)
+ create mode 100644 org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergeOperation.java
+ create mode 100644 org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeAction.java
+ create mode 100644 org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/MergeTargetSelectionDialog.java
+ create mode 100644 org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/ResetTargetSelectionDialog.java
+
+diff --git a/org.eclipse.egit.core/META-INF/MANIFEST.MF b/org.eclipse.egit.core/META-INF/MANIFEST.MF
+index 757f06a..db19ecc 100644
+--- a/org.eclipse.egit.core/META-INF/MANIFEST.MF
++++ b/org.eclipse.egit.core/META-INF/MANIFEST.MF
+@@ -21,6 +21,7 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
+ Import-Package: org.eclipse.jgit.dircache;version="[0.6.0,0.7.0)",
+  org.eclipse.jgit.errors;version="[0.6.0,0.7.0)",
+  org.eclipse.jgit.lib;version="[0.6.0,0.7.0)",
++ org.eclipse.jgit.merge;version="[0.6.0,0.7.0)",
+  org.eclipse.jgit.revwalk;version="[0.6.0,0.7.0)",
+  org.eclipse.jgit.transport;version="[0.6.0,0.7.0)",
+  org.eclipse.jgit.treewalk;version="[0.6.0,0.7.0)",
+diff --git a/org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergeOperation.java b/org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergeOperation.java
+new file mode 100644
+index 0000000..225540e
+--- /dev/null
++++ b/org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergeOperation.java
+@@ -0,0 +1,250 @@
++/*******************************************************************************
++ * Copyright (C) 2010, Stefan Lay <stefan.lay@sap.com>
++ *
++ * All rights reserved. This program and the accompanying materials
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * http://www.eclipse.org/legal/epl-v10.html
++ *******************************************************************************/
++
++package org.eclipse.egit.core.op;
++
++import java.io.File;
++import java.io.IOException;
++
++import org.eclipse.core.resources.IProject;
++import org.eclipse.core.resources.IResource;
++import org.eclipse.core.resources.IWorkspaceRunnable;
++import org.eclipse.core.resources.ResourcesPlugin;
++import org.eclipse.core.runtime.CoreException;
++import org.eclipse.core.runtime.IProgressMonitor;
++import org.eclipse.core.runtime.IStatus;
++import org.eclipse.core.runtime.NullProgressMonitor;
++import org.eclipse.core.runtime.Status;
++import org.eclipse.egit.core.Activator;
++import org.eclipse.jgit.errors.IncorrectObjectTypeException;
++import org.eclipse.jgit.errors.MissingObjectException;
++import org.eclipse.jgit.lib.Commit;
++import org.eclipse.jgit.lib.Constants;
++import org.eclipse.jgit.lib.GitIndex;
++import org.eclipse.jgit.lib.ObjectId;
++import org.eclipse.jgit.lib.ObjectWriter;
++import org.eclipse.jgit.lib.PersonIdent;
++import org.eclipse.jgit.lib.Ref;
++import org.eclipse.jgit.lib.RefUpdate;
++import org.eclipse.jgit.lib.Repository;
++import org.eclipse.jgit.lib.Tag;
++import org.eclipse.jgit.lib.Tree;
++import org.eclipse.jgit.lib.WorkDirCheckout;
++import org.eclipse.jgit.lib.RefUpdate.Result;
++import org.eclipse.jgit.merge.MergeStrategy;
++import org.eclipse.jgit.merge.Merger;
++import org.eclipse.jgit.revwalk.RevCommit;
++import org.eclipse.jgit.revwalk.RevWalk;
++import org.eclipse.osgi.util.NLS;
++import org.eclipse.team.core.TeamException;
++
++/**
++ * Merging a commit into the current branch
++ */
++public class MergeOperation implements IWorkspaceRunnable {
++
++	private final Repository repository;
++
++	private final String remoteRef;
++
++	private final String defaultMergeStrategy = "simple-two-way-in-core";
++
++	private MergeStrategy mergeStrategy;
++
++	private Commit newHeadCommit;
++
++	private boolean mergeResult = false;
++
++	/**
++	 * Create a MergeOperation object
++	 * @param repository
++	 * @param remoteRef name of a commit which should be merged
++	 */
++	public MergeOperation(Repository repository, String remoteRef) {
++		this.repository = repository;
++		this.remoteRef = remoteRef;
++		this.mergeStrategy = MergeStrategy.get(defaultMergeStrategy);
++	}
++
++	/**
++	 * Create a MergeOperation object
++	 * @param repository
++	 * @param remoteRef name of a commit which should be merged
++	 * @param mergeStrategy the strategy to use for merge
++	 */
++	public MergeOperation(Repository repository, String remoteRef,
++			String mergeStrategy) {
++		this.repository = repository;
++		this.remoteRef = remoteRef;
++		if (mergeStrategy != null)
++			this.mergeStrategy = MergeStrategy.get(mergeStrategy);
++		else
++			this.mergeStrategy = MergeStrategy.get(defaultMergeStrategy);
++	}
++
++	public void run(IProgressMonitor pm) throws TeamException {
++		final IProgressMonitor monitor;
++		if (pm == null)
++			monitor = new NullProgressMonitor();
++		else
++			monitor = pm;
++
++		try {
++
++			final Ref head = repository.getRef(Constants.HEAD);
++			if (head == null || !head.isSymbolic())
++				throw new TeamException(new Status(IStatus.ERROR, Activator
++						.getPluginId(), "Cannot merge: HEAD is not pointing to a branch"));
++
++			monitor.beginTask(NLS.bind("Performing merge of {0} into {1}",
++					remoteRef, head), 10);
++
++			if (performMerge(head, monitor)){
++				GitIndex index = repository.getIndex();
++				checkoutNewTree(index);
++				monitor.worked(1);
++				writeIndex(index);
++				monitor.worked(1);
++				refreshProjects();
++			}
++
++
++		} catch (IOException e) {
++			throw new TeamException(new Status(IStatus.ERROR, Activator
++					.getPluginId(), e.getLocalizedMessage(), e));
++		}
++		finally {
++			monitor.done();
++		}
++
++	}
++
++	private boolean performMerge(final Ref head, final IProgressMonitor monitor)
++			throws IOException, MissingObjectException,
++			IncorrectObjectTypeException, TeamException {
++		RevWalk rw = new RevWalk(repository);
++		RevCommit baseCommit = rw.lookupCommit(head.getObjectId());
++
++		ObjectId remoteId = null;
++		Tag tag = repository.mapTag(remoteRef);
++		if (tag != null)
++			remoteId = tag.getObjId();
++		else
++			remoteId = repository.resolve(remoteRef);
++		RevCommit remoteCommit = rw.lookupCommit(remoteId);
++
++		monitor.worked(1);
++
++		StringBuilder refLogMessage = new StringBuilder("merge ");
++		refLogMessage.append(remoteRef + ": ");
++		if (rw.isMergedInto(remoteCommit, baseCommit)) {
++			// nothing to do
++			return false;
++		} else if (rw.isMergedInto(baseCommit, remoteCommit)) {
++			performFastForward(refLogMessage, rw, remoteCommit, monitor);
++		} else {
++			doRealMerge(head, baseCommit, remoteCommit, refLogMessage, monitor);
++		}
++		updateHead(refLogMessage.toString());
++		return true;
++	}
++
++	private void performFastForward(StringBuilder refLogMessage, RevWalk rw,
++			RevCommit remoteCommit, final IProgressMonitor monitor) {
++		newHeadCommit = remoteCommit.asCommit(rw);
++		refLogMessage.append("Fast forward");
++		monitor.worked(3);
++	}
++
++	private void doRealMerge(final Ref head,
++			RevCommit baseCommit, RevCommit remoteCommit,
++			StringBuilder refLogMessage, final IProgressMonitor monitor) throws IOException, TeamException {
++		Merger ourMerger = mergeStrategy.newMerger(repository);
++		mergeResult = ourMerger.merge(new ObjectId[] {
++				head.getObjectId(), remoteCommit.getId() });
++		monitor.worked(3);
++		if (!mergeResult)
++			throw new TeamException(new Status(IStatus.WARNING, Activator
++					.getPluginId(),
++					NLS.bind("Merge Strategy \"{0}\" could not finish merge", mergeStrategy.getName())));
++
++		newHeadCommit = new Commit(repository, new ObjectId[] {
++				baseCommit, remoteCommit });
++		newHeadCommit.setTree(repository.mapTree(ourMerger
++				.getResultTreeId()));
++
++		final String commitMessage = "Merge branch '" + remoteRef + "'";
++		newHeadCommit.setMessage(commitMessage);
++		newHeadCommit.setAuthor(new PersonIdent(repository));
++		newHeadCommit.setCommitter(new PersonIdent(repository));
++
++		ObjectWriter writer = new ObjectWriter(repository);
++		newHeadCommit.setCommitId(writer.writeCommit(newHeadCommit));
++
++		refLogMessage.append("Merge made by " + mergeStrategy.getName()
++				+ ".");
++		monitor.worked(1);
++	}
++
++	private void updateHead(String msg) throws IOException, TeamException {
++		RefUpdate updateRef = repository.updateRef(Constants.HEAD);
++		updateRef.setNewObjectId(newHeadCommit.getCommitId());
++		updateRef.setRefLogMessage(msg, false);
++		Result result = updateRef.forceUpdate();
++		if (!result.equals(Result.FAST_FORWARD))
++			throw new TeamException(new Status(IStatus.ERROR, Activator
++					.getPluginId(), "update Head not successful"));
++	}
++
++	/**
++	 *
++	 * @return the result of the merge operation
++	 */
++	public boolean getResult() {
++		return mergeResult;
++	}
++
++	private void checkoutNewTree(GitIndex index) throws TeamException {
++		final File parentFile = repository.getWorkDir();
++		try {
++			Tree newTree = newHeadCommit.getTree();
++			WorkDirCheckout workDirCheckout = new WorkDirCheckout(repository,
++					parentFile, index, newTree);
++			workDirCheckout.setFailOnConflict(true);
++			workDirCheckout.checkout();
++		} catch (IOException e) {
++			throw new TeamException("mapping tree for commit", e);
++		}
++	}
++
++	private void writeIndex(GitIndex index) throws TeamException {
++		try {
++			index.write();
++		} catch (IOException ex) {
++			throw new TeamException("Writing index", ex);
++		}
++	}
++
++	private void refreshProjects() throws TeamException {
++		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
++				.getProjects();
++		final File parentFile = repository.getWorkDir();
++		for (IProject p : projects) {
++			final File file = p.getLocation().toFile();
++			if (file.getAbsolutePath().startsWith(parentFile.getAbsolutePath())) {
++				try {
++					p.refreshLocal(IResource.DEPTH_INFINITE, null);
++				} catch (CoreException e) {
++					throw new TeamException(e.getLocalizedMessage(), e);
++				}
++			}
++		}
++	}
++
++}
+diff --git a/org.eclipse.egit.ui/plugin.properties b/org.eclipse.egit.ui/plugin.properties
+index e1d9331..b12875e 100644
+--- a/org.eclipse.egit.ui/plugin.properties
++++ b/org.eclipse.egit.ui/plugin.properties
+@@ -64,6 +64,9 @@ FetchAction_tooltip=Fetch from another repository
+ PushAction_label=&Push To...
+ PushAction_tooltip=Push to another repository
+ 
++MergeAction_label=&Merge With...
++MergeAction_tooltip=Merge with another branch
++
+ GitKeyword_label = git
+ GitActions_label=Git
+ GitActions_description = Common things to do with Git
+diff --git a/org.eclipse.egit.ui/plugin.xml b/org.eclipse.egit.ui/plugin.xml
+index 2c1cbbe..a014d2a 100644
+--- a/org.eclipse.egit.ui/plugin.xml
++++ b/org.eclipse.egit.ui/plugin.xml
+@@ -64,6 +64,12 @@
+                label="%BranchAction_label"
+                menubarPath="team.main/projectGroup"
+                tooltip="%BranchAction_tooltip"/>
++         <action
++               class="org.eclipse.egit.ui.internal.actions.MergeAction"
++               id="org.eclipse.egit.ui.internal.actions.MergeAction"
++               label="%MergeAction_label"
++               menubarPath="team.main/projectGroup"
++               tooltip="%MergeAction_tooltip"/>
+      </objectContribution>
+      <objectContribution
+             adaptable="true"
+diff --git a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIText.java b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIText.java
+index c1588a4..23a35df 100644
+--- a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIText.java
++++ b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIText.java
+@@ -1107,6 +1107,27 @@
+ 	public static String IgnoreAction_error;
+ 
+ 	/** */
++	public static String MergeAction_CannotMerge;
++
++	/** */
++	public static String MergeAction_ChangedFiles;
++
++	/** */
++	public static String MergeAction_ErrorMergeEnabling;
++
++	/** */
++	public static String MergeAction_HeadIsNoBranch;
++
++	/** */
++	public static String MergeAction_ProblemMerge;
++
++	/** */
++	public static String MergeAction_UnableMerge;
++
++	/** */
++	public static String MergeAction_WrongRepositoryState;
++
++	/** */
+ 	public static String Track_error;
+ 
+ 	/** */
+diff --git a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/BranchAction.java b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/BranchAction.java
+index ad09e8f..b3a8027 100644
+--- a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/BranchAction.java
++++ b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/BranchAction.java
+@@ -44,7 +44,6 @@ public void run(IAction action) {
+ 		}
+ 
+ 		BranchSelectionDialog dialog = new BranchSelectionDialog(getShell(), repository);
+-		dialog.setShowResetType(false);
+ 		if (dialog.open() != IDialogConstants.OK_ID) {
+ 			return;
+ 		}
+diff --git a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitAction.java b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitAction.java
+index d3e86e8..0f94ef4 100644
+--- a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitAction.java
++++ b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitAction.java
+@@ -18,12 +18,10 @@
+ import java.util.ArrayList;
+ import java.util.Date;
+ import java.util.HashMap;
+-import java.util.HashSet;
+ import java.util.TimeZone;
+ 
+ import org.eclipse.core.resources.IFile;
+ import org.eclipse.core.resources.IProject;
+-import org.eclipse.core.resources.IResource;
+ import org.eclipse.egit.core.project.GitProjectData;
+ import org.eclipse.egit.core.project.RepositoryMapping;
+ import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
+@@ -35,7 +33,6 @@
+ import org.eclipse.jgit.lib.Commit;
+ import org.eclipse.jgit.lib.Constants;
+ import org.eclipse.jgit.lib.GitIndex;
+-import org.eclipse.jgit.lib.IndexDiff;
+ import org.eclipse.jgit.lib.ObjectId;
+ import org.eclipse.jgit.lib.ObjectWriter;
+ import org.eclipse.jgit.lib.PersonIdent;
+@@ -51,10 +48,6 @@
+  */
+ public class CommitAction extends RepositoryAction {
+ 
+-	private ArrayList<IFile> notIndexed;
+-	private ArrayList<IFile> indexChanges;
+-	private ArrayList<IFile> files;
+-
+ 	private Commit previousCommit;
+ 
+ 	private boolean amendAllowed;
+@@ -138,9 +131,7 @@ public void run(IAction act) {
+ 	}
+ 
+ 	private void resetState() {
+-		files = new ArrayList<IFile>();
+-		notIndexed = new ArrayList<IFile>();
+-		indexChanges = new ArrayList<IFile>();
++		resetIndexHeadState();
+ 		amending = false;
+ 		previousCommit = null;
+ 	}
+@@ -324,50 +315,6 @@ private void writeTreeWithSubTrees(Tree tree) throws TeamException {
+ 		}
+ 	}
+ 
+-	private void buildIndexHeadDiffList() throws IOException {
+-		for (IProject project : getProjectsInRepositoryOfSelectedResources()) {
+-			RepositoryMapping repositoryMapping = RepositoryMapping.getMapping(project);
+-			assert repositoryMapping != null;
+-			Repository repository = repositoryMapping.getRepository();
+-			Tree head = repository.mapTree(Constants.HEAD);
+-			GitIndex index = repository.getIndex();
+-			IndexDiff indexDiff = new IndexDiff(head, index);
+-			indexDiff.diff();
+-
+-			includeList(project, indexDiff.getAdded(), indexChanges);
+-			includeList(project, indexDiff.getChanged(), indexChanges);
+-			includeList(project, indexDiff.getRemoved(), indexChanges);
+-			includeList(project, indexDiff.getMissing(), notIndexed);
+-			includeList(project, indexDiff.getModified(), notIndexed);
+-		}
+-	}
+-
+-	private void includeList(IProject project, HashSet<String> added, ArrayList<IFile> category) {
+-		String repoRelativePath = RepositoryMapping.getMapping(project).getRepoRelativePath(project);
+-		if (repoRelativePath.length() > 0) {
+-			repoRelativePath += "/"; //$NON-NLS-1$
+-		}
+-
+-		for (String filename : added) {
+-			try {
+-				if (!filename.startsWith(repoRelativePath))
+-					continue;
+-				String projectRelativePath = filename.substring(repoRelativePath.length());
+-				IResource member = project.getFile(projectRelativePath);
+-				if (member != null && member instanceof IFile) {
+-					if (!files.contains(member))
+-						files.add((IFile) member);
+-					category.add((IFile) member);
+-				} else {
+-					System.out.println("Couldn't find " + filename); //$NON-NLS-1$
+-				}
+-			} catch (Exception t) {
+-				t.printStackTrace();
+-				continue;
+-			} // if it's outside the workspace, bad things happen
+-		}
+-	}
+-
+ 	boolean tryAddResource(IFile resource, GitProjectData projectData, ArrayList<IFile> category) {
+ 		if (files.contains(resource))
+ 			return false;
+diff --git a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeAction.java b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeAction.java
+new file mode 100644
+index 0000000..11aa1b8
+--- /dev/null
++++ b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/MergeAction.java
+@@ -0,0 +1,120 @@
++/*******************************************************************************
++ * Copyright (C) 2010, Stefan Lay <stefan.lay@sap.com>
++ *
++ * All rights reserved. This program and the accompanying materials
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * http://www.eclipse.org/legal/epl-v10.html
++ *******************************************************************************/
++
++package org.eclipse.egit.ui.internal.actions;
++
++import java.io.IOException;
++import java.lang.reflect.InvocationTargetException;
++
++import org.eclipse.core.resources.ResourcesPlugin;
++import org.eclipse.core.runtime.CoreException;
++import org.eclipse.core.runtime.IProgressMonitor;
++import org.eclipse.egit.core.op.MergeOperation;
++import org.eclipse.egit.ui.Activator;
++import org.eclipse.egit.ui.UIText;
++import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
++import org.eclipse.egit.ui.internal.dialogs.MergeTargetSelectionDialog;
++import org.eclipse.jface.action.IAction;
++import org.eclipse.jface.dialogs.IDialogConstants;
++import org.eclipse.jface.dialogs.MessageDialog;
++import org.eclipse.jface.operation.IRunnableWithProgress;
++import org.eclipse.jgit.lib.Constants;
++import org.eclipse.jgit.lib.Ref;
++import org.eclipse.jgit.lib.Repository;
++import org.eclipse.jgit.lib.RepositoryState;
++import org.eclipse.osgi.util.NLS;
++import org.eclipse.swt.widgets.Display;
++
++/**
++ * Action for selecting a commit and merging it into the current branch.
++ */
++public class MergeAction extends RepositoryAction {
++
++	@Override
++	public void run(IAction action) {
++		final Repository repository = getRepository(true);
++		if (repository == null)
++			return;
++
++		if (!canMerge(repository))
++			return;
++
++		MergeTargetSelectionDialog branchSelectionDialog = new MergeTargetSelectionDialog(
++				getShell(), repository);
++		if (branchSelectionDialog.open() == IDialogConstants.OK_ID) {
++			final String refName = branchSelectionDialog.getRefName();
++			try {
++				getTargetPart().getSite().getWorkbenchWindow().run(true, false,
++						new IRunnableWithProgress() {
++							public void run(final IProgressMonitor monitor)
++									throws InvocationTargetException {
++								try {
++									ResourcesPlugin.getWorkspace().run(
++											new MergeOperation(repository, refName), monitor);
++									GitLightweightDecorator.refresh();
++								} catch (final CoreException ce) {
++									Display.getDefault().asyncExec(
++											new Runnable() {
++												public void run() {
++													handle(
++															ce,
++															UIText.MergeAction_ProblemMerge,
++															UIText.MergeAction_UnableMerge);
++												}
++											});
++								}
++							}
++						});
++			} catch (InvocationTargetException e) {
++				Activator.logError(e.getMessage(), e);
++			} catch (InterruptedException e) {
++				Activator.logError(e.getMessage(), e);
++			}
++		}
++
++	}
++
++	private boolean canMerge(final Repository repository) {
++		String message = null;
++		try {
++			Ref head = repository.getRef(Constants.HEAD);
++			if (head == null || !head.isSymbolic())
++				message = UIText.MergeAction_HeadIsNoBranch;
++			else if (!repository.getRepositoryState().equals(
++					RepositoryState.SAFE))
++				message = NLS.bind(
++						UIText.MergeAction_WrongRepositoryState,
++						repository.getRepositoryState());
++			else {
++				buildIndexHeadDiffList();
++				if (files.size() > 0)
++					message = UIText.MergeAction_ChangedFiles;
++			}
++		} catch (IOException e) {
++			Activator.logError(e.getMessage(), e);
++			message = e.getMessage();
++		}
++
++		if (message != null) {
++			MessageDialog.openError(getTargetPart().getSite().getShell(),
++					UIText.MergeAction_CannotMerge, message);
++		}
++		return (message == null);
++	}
++
++	@Override
++	public boolean isEnabled() {
++		boolean enabled = true;
++		Repository repository = getRepository(false);
++		if (repository == null)
++			enabled = false;
++		return enabled;
++	}
++
++}
+diff --git a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryAction.java b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryAction.java
+index c3f418f..1830ec2 100644
+--- a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryAction.java
++++ b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryAction.java
+@@ -10,9 +10,12 @@
+  *******************************************************************************/
+ package org.eclipse.egit.ui.internal.actions;
+ 
++import java.io.IOException;
++import java.util.ArrayList;
+ import java.util.HashSet;
+ import java.util.Set;
+ 
++import org.eclipse.core.resources.IFile;
+ import org.eclipse.core.resources.IProject;
+ import org.eclipse.core.resources.IResource;
+ import org.eclipse.core.resources.ResourcesPlugin;
+@@ -20,13 +23,35 @@
+ import org.eclipse.jface.action.IAction;
+ import org.eclipse.jface.dialogs.MessageDialog;
+ import org.eclipse.team.internal.ui.actions.TeamAction;
++import org.eclipse.jgit.lib.Constants;
++import org.eclipse.jgit.lib.GitIndex;
++import org.eclipse.jgit.lib.IndexDiff;
+ import org.eclipse.jgit.lib.Repository;
++import org.eclipse.jgit.lib.Tree;
+ 
+ /**
+  * A helper class for Team Actions on Git controlled projects
+  */
+ public abstract class RepositoryAction extends TeamAction {
+ 
++	/**
++	 * files changed in working tree
++	 * The field is filled by call of buildIndexHeadDiffList()
++	 */
++	protected ArrayList<IFile> notIndexed;
++
++	/**
++	 * files changed in index
++	 * The field is filled by call of buildIndexHeadDiffList()
++	 */
++	protected ArrayList<IFile> indexChanges;
++
++	/**
++	 * files changed in working tree or in index
++	 * The field is filled by call of buildIndexHeadDiffList()
++	 */
++	protected ArrayList<IFile> files;
++
+ 	// There are changes in Eclipse 3.3 requiring that execute be implemented
+ 	// for it to compile. while 3.2 requires that run is implemented instead.
+ 	/*
+@@ -138,4 +163,63 @@ protected Repository getRepository(boolean warn) {
+ 	// Re-make isEnabled abstract
+ 	@Override
+ 	abstract public boolean isEnabled();
++
++	/**
++	 * Can be called by subclasses if they need information about changed files
++	 * @throws IOException
++	 */
++	protected void buildIndexHeadDiffList() throws IOException {
++		resetIndexHeadState();
++		for (IProject project : getProjectsInRepositoryOfSelectedResources()) {
++			RepositoryMapping repositoryMapping = RepositoryMapping.getMapping(project);
++			assert repositoryMapping != null;
++			Repository repository = repositoryMapping.getRepository();
++			Tree head = repository.mapTree(Constants.HEAD);
++			GitIndex index = repository.getIndex();
++			IndexDiff indexDiff = new IndexDiff(head, index);
++			indexDiff.diff();
++
++			includeList(project, indexDiff.getAdded(), indexChanges);
++			includeList(project, indexDiff.getChanged(), indexChanges);
++			includeList(project, indexDiff.getRemoved(), indexChanges);
++			includeList(project, indexDiff.getMissing(), notIndexed);
++			includeList(project, indexDiff.getModified(), notIndexed);
++		}
++	}
++
++	private void includeList(IProject project, HashSet<String> added, ArrayList<IFile> category) {
++		String repoRelativePath = RepositoryMapping.getMapping(project).getRepoRelativePath(project);
++		if (repoRelativePath.length() > 0) {
++			repoRelativePath += "/"; //$NON-NLS-1$
++		}
++
++		for (String filename : added) {
++			try {
++				if (!filename.startsWith(repoRelativePath))
++					continue;
++				String projectRelativePath = filename.substring(repoRelativePath.length());
++				IResource member = project.getFile(projectRelativePath);
++				if (member != null && member instanceof IFile) {
++					if (!files.contains(member))
++						files.add((IFile) member);
++					category.add((IFile) member);
++				} else {
++					System.out.println("Couldn't find " + filename); //$NON-NLS-1$
++				}
++			} catch (Exception t) {
++				t.printStackTrace();
++				continue;
++			} // if it's outside the workspace, bad things happen
++		}
++	}
++
++	/**
++	 * reset the calculated state of the index and the working dir
++	 */
++	protected void resetIndexHeadState() {
++		files = new ArrayList<IFile>();
++		notIndexed = new ArrayList<IFile>();
++		indexChanges = new ArrayList<IFile>();
++	}
++
+ }
+diff --git a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ResetAction.java b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ResetAction.java
+index 1245b14..8156422 100644
+--- a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ResetAction.java
++++ b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ResetAction.java
+@@ -17,7 +17,7 @@
+ import org.eclipse.egit.core.op.ResetOperation;
+ import org.eclipse.egit.core.op.ResetOperation.ResetType;
+ import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
+-import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
++import org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog;
+ import org.eclipse.jface.action.IAction;
+ import org.eclipse.jface.dialogs.IDialogConstants;
+ import org.eclipse.jface.dialogs.MessageDialog;
+@@ -44,7 +44,7 @@ public void run(IAction action) {
+ 			return;
+ 		}
+ 
+-		BranchSelectionDialog branchSelectionDialog = new BranchSelectionDialog(getShell(), repository);
++		ResetTargetSelectionDialog branchSelectionDialog = new ResetTargetSelectionDialog(getShell(), repository);
+ 		if (branchSelectionDialog.open() == IDialogConstants.OK_ID) {
+ 			final String refName = branchSelectionDialog.getRefName();
+ 			final ResetType type = branchSelectionDialog.getResetType();
+diff --git a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java
+index b841b91..84706be 100644
+--- a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java
++++ b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java
+@@ -16,7 +16,6 @@
+ import java.util.Collections;
+ import java.util.List;
+ 
+-import org.eclipse.egit.core.op.ResetOperation.ResetType;
+ import org.eclipse.egit.ui.Activator;
+ import org.eclipse.egit.ui.UIText;
+ import org.eclipse.jface.dialogs.Dialog;
+@@ -28,6 +27,13 @@
+ import org.eclipse.jface.layout.GridLayoutFactory;
+ import org.eclipse.jface.resource.JFaceResources;
+ import org.eclipse.jface.window.Window;
++import org.eclipse.jgit.lib.Constants;
++import org.eclipse.jgit.lib.ObjectId;
++import org.eclipse.jgit.lib.Ref;
++import org.eclipse.jgit.lib.RefRename;
++import org.eclipse.jgit.lib.RefUpdate;
++import org.eclipse.jgit.lib.Repository;
++import org.eclipse.jgit.lib.RefUpdate.Result;
+ import org.eclipse.osgi.util.NLS;
+ import org.eclipse.swt.SWT;
+ import org.eclipse.swt.events.DisposeEvent;
+@@ -37,35 +43,25 @@
+ import org.eclipse.swt.graphics.Font;
+ import org.eclipse.swt.graphics.FontData;
+ import org.eclipse.swt.layout.GridLayout;
+-import org.eclipse.swt.layout.RowLayout;
+ import org.eclipse.swt.widgets.Button;
+ import org.eclipse.swt.widgets.Composite;
+-import org.eclipse.swt.widgets.Event;
+-import org.eclipse.swt.widgets.Group;
+ import org.eclipse.swt.widgets.Label;
+-import org.eclipse.swt.widgets.Listener;
+ import org.eclipse.swt.widgets.Shell;
+ import org.eclipse.swt.widgets.Tree;
+ import org.eclipse.swt.widgets.TreeItem;
+-import org.eclipse.jgit.lib.Constants;
+-import org.eclipse.jgit.lib.ObjectId;
+-import org.eclipse.jgit.lib.Ref;
+-import org.eclipse.jgit.lib.RefRename;
+-import org.eclipse.jgit.lib.RefUpdate;
+-import org.eclipse.jgit.lib.Repository;
+-import org.eclipse.jgit.lib.RefUpdate.Result;
+ 
+ /**
+- * The branch and reset selection dialog
++ * The branch selection dialog
+  *
+  */
+ public class BranchSelectionDialog extends Dialog {
+ 	private final Repository repo;
+ 
+-	private boolean showResetType = true;
++	private Tree branchTree;
++	private String refName = null;
+ 
+ 	/**
+-	 * Construct a dialog to select a branch to reset to or check out
++	 * Construct a dialog to select a branch
+ 	 * @param parentShell
+ 	 * @param repo
+ 	 */
+@@ -74,32 +70,17 @@ public BranchSelectionDialog(Shell parentShell, Repository repo) {
+ 		this.repo = repo;
+ 	}
+ 
+-	/**
+-	 * Pre-set whether or present a reset or checkout dialog
+-	 * @param show
+-	 */
+-	public void setShowResetType(boolean show) {
+-		this.showResetType = show;
+-	}
+-
+-	private Composite parent;
+-
+-	private Tree branchTree;
+-
+ 	@Override
+ 	protected Composite createDialogArea(Composite base) {
+-		parent = (Composite) super.createDialogArea(base);
++		Composite parent = (Composite) super.createDialogArea(base);
+ 		parent.setLayout(GridLayoutFactory.swtDefaults().create());
+ 		new Label(parent, SWT.NONE).setText(UIText.BranchSelectionDialog_Refs);
+ 		branchTree = new Tree(parent, SWT.BORDER);
+ 		branchTree.setLayoutData(GridDataFactory.fillDefaults().grab(true,true).hint(500, 300).create());
+ 
+-		if (showResetType) {
+-			buildResetGroup();
+-		}
++		createCustomArea(parent);
+ 
+-		String rawTitle = showResetType ? UIText.BranchSelectionDialog_TitleReset
+-				: UIText.BranchSelectionDialog_TitleCheckout;
++		String rawTitle = getTitle();
+ 		getShell().setText(
+ 				NLS.bind(rawTitle, new Object[] { repo.getDirectory() }));
+ 
+@@ -112,38 +93,6 @@ protected Composite createDialogArea(Composite base) {
+ 		return parent;
+ 	}
+ 
+-	private void buildResetGroup() {
+-		Group g = new Group(parent, SWT.NONE);
+-		g.setText(UIText.BranchSelectionDialog_ResetType);
+-		g.setLayoutData(GridDataFactory.swtDefaults().align(SWT.CENTER, SWT.CENTER).create());
+-		g.setLayout(new RowLayout(SWT.VERTICAL));
+-
+-		Button soft = new Button(g, SWT.RADIO);
+-		soft.setText(UIText.BranchSelectionDialog_ResetTypeSoft);
+-		soft.addListener(SWT.Selection, new Listener() {
+-			public void handleEvent(Event event) {
+-				resetType = ResetType.SOFT;
+-			}
+-		});
+-
+-		Button medium = new Button(g, SWT.RADIO);
+-		medium.setSelection(true);
+-		medium.setText(UIText.BranchSelectionDialog_ResetTypeMixed);
+-		medium.addListener(SWT.Selection, new Listener() {
+-			public void handleEvent(Event event) {
+-				resetType = ResetType.MIXED;
+-			}
+-		});
+-
+-		Button hard = new Button(g, SWT.RADIO);
+-		hard.setText(UIText.BranchSelectionDialog_ResetTypeHard);
+-		hard.addListener(SWT.Selection, new Listener() {
+-			public void handleEvent(Event event) {
+-				resetType = ResetType.HARD;
+-			}
+-		});
+-	}
+-
+ 	private void fillTreeWithBranches(String select) throws IOException {
+ 		String branch = repo.getFullBranch();
+ 		List<String> branches = new ArrayList<String>(repo.getAllRefs()
+@@ -231,8 +180,6 @@ public void widgetDisposed(DisposeEvent e) {
+ 		}
+ 	}
+ 
+-	private String refName = null;
+-
+ 	/**
+ 	 * @return Selected ref
+ 	 */
+@@ -240,15 +187,6 @@ public String getRefName() {
+ 		return refName;
+ 	}
+ 
+-	private ResetType resetType = ResetType.MIXED;
+-
+-	/**
+-	 * @return Type of Reset
+-	 */
+-	public ResetType getResetType() {
+-		return resetType;
+-	}
+-
+ 	@Override
+ 	protected void okPressed() {
+ 		refNameFromDialog();
+@@ -259,16 +197,6 @@ protected void okPressed() {
+ 			return;
+ 		}
+ 
+-		if (showResetType) {
+-			if (resetType == ResetType.HARD) {
+-				if (!MessageDialog.openQuestion(getShell(),
+-						UIText.BranchSelectionDialog_ReallyResetTitle,
+-						UIText.BranchSelectionDialog_ReallyResetMessage)) {
+-					return;
+-				}
+-			}
+-		}
+-
+ 		super.okPressed();
+ 	}
+ 
+@@ -308,115 +236,112 @@ public String isValid(String newText) {
+ 
+ 	@Override
+ 	protected void createButtonsForButtonBar(Composite parent) {
+-		if (!showResetType) {
+-			Button newButton = new Button(parent, SWT.PUSH);
+-			newButton.setFont(JFaceResources.getDialogFont());
+-			newButton.setText(UIText.BranchSelectionDialog_NewBranch);
+-			((GridLayout)parent.getLayout()).numColumns++;
+-			Button renameButton = new Button(parent, SWT.PUSH);
+-			renameButton.setText(UIText.BranchSelectionDialog_Rename);
+-			renameButton.addSelectionListener(new SelectionListener() {
+-				public void widgetSelected(SelectionEvent e) {
+-					// check what ref name the user selected, if any.
+-					refNameFromDialog();
+-
+-					String branchName;
+-					if (refName.startsWith(Constants.R_HEADS))
+-						branchName = refName.substring(Constants.R_HEADS.length());
+-					else
+-						branchName = refName;
+-					InputDialog labelDialog = getRefNameInputDialog(NLS
+-							.bind(
+-									UIText.BranchSelectionDialog_QuestionNewBranchNameMessage,
+-									branchName));
+-					if (labelDialog.open() == Window.OK) {
+-						String newRefName = Constants.R_HEADS + labelDialog.getValue();
+-						try {
+-							RefRename renameRef = repo.renameRef(refName, newRefName);
+-							if (renameRef.rename() != Result.RENAMED) {
+-								reportError(
+-										null,
+-										UIText.BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle,
+-										UIText.BranchSelectionDialog_ErrorCouldNotRenameRef,
+-										refName, newRefName, renameRef
+-												.getResult());
+-							}
+-						} catch (Throwable e1) {
++		Button newButton = new Button(parent, SWT.PUSH);
++		newButton.setFont(JFaceResources.getDialogFont());
++		newButton.setText(UIText.BranchSelectionDialog_NewBranch);
++		((GridLayout)parent.getLayout()).numColumns++;
++		Button renameButton = new Button(parent, SWT.PUSH);
++		renameButton.setText(UIText.BranchSelectionDialog_Rename);
++		renameButton.addSelectionListener(new SelectionListener() {
++			public void widgetSelected(SelectionEvent e) {
++				// check what ref name the user selected, if any.
++				refNameFromDialog();
++
++				String branchName;
++				if (refName.startsWith(Constants.R_HEADS))
++					branchName = refName.substring(Constants.R_HEADS.length());
++				else
++					branchName = refName;
++				InputDialog labelDialog = getRefNameInputDialog(NLS
++						.bind(
++								UIText.BranchSelectionDialog_QuestionNewBranchNameMessage,
++								branchName));
++				if (labelDialog.open() == Window.OK) {
++					String newRefName = Constants.R_HEADS + labelDialog.getValue();
++					try {
++						RefRename renameRef = repo.renameRef(refName, newRefName);
++						if (renameRef.rename() != Result.RENAMED) {
+ 							reportError(
+-									e1,
++									null,
+ 									UIText.BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle,
+ 									UIText.BranchSelectionDialog_ErrorCouldNotRenameRef,
+-									refName, newRefName, e1.getMessage());
+-						}
+-						try {
+-							branchTree.removeAll();
+-							fillTreeWithBranches(newRefName);
+-						} catch (Throwable e1) {
+-							reportError(
+-									e1,
+-									UIText.BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle,
+-									UIText.BranchSelectionDialog_ErrorCouldNotRefreshBranchList);
++									refName, newRefName, renameRef
++											.getResult());
+ 						}
++					} catch (Throwable e1) {
++						reportError(
++								e1,
++								UIText.BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle,
++								UIText.BranchSelectionDialog_ErrorCouldNotRenameRef,
++								refName, newRefName, e1.getMessage());
++					}
++					try {
++						branchTree.removeAll();
++						fillTreeWithBranches(newRefName);
++					} catch (Throwable e1) {
++						reportError(
++								e1,
++								UIText.BranchSelectionDialog_BranchSelectionDialog_RenamedFailedTitle,
++								UIText.BranchSelectionDialog_ErrorCouldNotRefreshBranchList);
+ 					}
+ 				}
+-				public void widgetDefaultSelected(SelectionEvent e) {
+-					widgetSelected(e);
+-				}
+-			});
+-			newButton.addSelectionListener(new SelectionListener() {
+-
+-				public void widgetSelected(SelectionEvent e) {
+-					// check what ref name the user selected, if any.
+-					refNameFromDialog();
+-
+-					InputDialog labelDialog = getRefNameInputDialog(UIText.BranchSelectionDialog_QuestionNewBranchMessage);
+-					if (labelDialog.open() == Window.OK) {
+-						String newRefName = Constants.R_HEADS + labelDialog.getValue();
+-						RefUpdate updateRef;
+-						try {
+-							updateRef = repo.updateRef(newRefName);
+-							Ref startRef = repo.getRef(refName);
+-							ObjectId startAt;
+-							if (refName == null)
+-								startAt = repo.resolve(Constants.HEAD);
+-							else
+-								startAt = repo.resolve(refName);
+-							String startBranch;
+-							if (startRef != null)
+-								startBranch = refName;
+-							else
+-								startBranch = startAt.name();
+-							startBranch = repo.shortenRefName(startBranch);
+-							updateRef.setNewObjectId(startAt);
+-							updateRef.setRefLogMessage("branch: Created from " + startBranch, false); //$NON-NLS-1$
+-							updateRef.update();
+-						} catch (Throwable e1) {
+-							reportError(
+-									e1,
+-									UIText.BranchSelectionDialog_BranchSelectionDialog_CreateFailedTitle,
+-									UIText.BranchSelectionDialog_ErrorCouldNotCreateNewRef,
+-									newRefName);
+-						}
+-						try {
+-							branchTree.removeAll();
+-							fillTreeWithBranches(newRefName);
+-						} catch (Throwable e1) {
+-							reportError(e1,
+-									UIText.BranchSelectionDialog_BranchSelectionDialog_CreateFailedTitle,
+-									UIText.BranchSelectionDialog_ErrorCouldNotRefreshBranchList);
+-						}
++			}
++			public void widgetDefaultSelected(SelectionEvent e) {
++				widgetSelected(e);
++			}
++		});
++		newButton.addSelectionListener(new SelectionListener() {
++
++			public void widgetSelected(SelectionEvent e) {
++				// check what ref name the user selected, if any.
++				refNameFromDialog();
++
++				InputDialog labelDialog = getRefNameInputDialog(UIText.BranchSelectionDialog_QuestionNewBranchMessage);
++				if (labelDialog.open() == Window.OK) {
++					String newRefName = Constants.R_HEADS + labelDialog.getValue();
++					RefUpdate updateRef;
++					try {
++						updateRef = repo.updateRef(newRefName);
++						Ref startRef = repo.getRef(refName);
++						ObjectId startAt;
++						if (refName == null)
++							startAt = repo.resolve(Constants.HEAD);
++						else
++							startAt = repo.resolve(refName);
++						String startBranch;
++						if (startRef != null)
++							startBranch = refName;
++						else
++							startBranch = startAt.name();
++						startBranch = repo.shortenRefName(startBranch);
++						updateRef.setNewObjectId(startAt);
++						updateRef.setRefLogMessage("branch: Created from " + startBranch, false); //$NON-NLS-1$
++						updateRef.update();
++					} catch (Throwable e1) {
++						reportError(
++								e1,
++								UIText.BranchSelectionDialog_BranchSelectionDialog_CreateFailedTitle,
++								UIText.BranchSelectionDialog_ErrorCouldNotCreateNewRef,
++								newRefName);
++					}
++					try {
++						branchTree.removeAll();
++						fillTreeWithBranches(newRefName);
++					} catch (Throwable e1) {
++						reportError(e1,
++								UIText.BranchSelectionDialog_BranchSelectionDialog_CreateFailedTitle,
++								UIText.BranchSelectionDialog_ErrorCouldNotRefreshBranchList);
+ 					}
+ 				}
++			}
+ 
+ 
+-				public void widgetDefaultSelected(SelectionEvent e) {
+-					widgetSelected(e);
+-				}
+-			});
+-		}
++			public void widgetDefaultSelected(SelectionEvent e) {
++				widgetSelected(e);
++			}
++		});
+ 		createButton(parent, IDialogConstants.OK_ID,
+-				showResetType ? UIText.BranchSelectionDialog_OkReset
+-						: UIText.BranchSelectionDialog_OkCheckout, true);
++				UIText.BranchSelectionDialog_OkCheckout, true);
+ 		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+ 	}
+ 
+@@ -425,6 +350,22 @@ protected int getShellStyle() {
+ 		return super.getShellStyle() | SWT.RESIZE;
+ 	}
+ 
++	/**
++	 * Subclasses may add UI elements
++	 * @param parent
++	 */
++	protected void createCustomArea(Composite parent) {
++		// do nothing
++	}
++
++	/**
++	 * Subclasses may change the title of the dialog
++	 * @return the title of the dialog
++	 */
++	protected String getTitle() {
++		return UIText.BranchSelectionDialog_TitleCheckout;
++	}
++
+ 	private void reportError(Throwable e, String title, String message,
+ 			Object... args) {
+ 		String msg = NLS.bind(message, args);
+diff --git a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/MergeTargetSelectionDialog.java b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/MergeTargetSelectionDialog.java
+new file mode 100644
+index 0000000..76dcb72
+--- /dev/null
++++ b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/MergeTargetSelectionDialog.java
+@@ -0,0 +1,35 @@
++package org.eclipse.egit.ui.internal.dialogs;
++
++import org.eclipse.jface.dialogs.IDialogConstants;
++import org.eclipse.jgit.lib.Repository;
++import org.eclipse.swt.widgets.Composite;
++import org.eclipse.swt.widgets.Shell;
++
++/**
++ * Dialog for selecting a merge target.
++ *
++ */
++public class MergeTargetSelectionDialog extends BranchSelectionDialog {
++
++	/**
++	 * Construct a dialog to select a branch to reset to or check out
++	 * @param parentShell
++	 * @param repo
++	 */
++	public MergeTargetSelectionDialog(Shell parentShell, Repository repo) {
++		super(parentShell, repo);
++	}
++
++	@Override
++	protected void createButtonsForButtonBar(Composite parent) {
++		createButton(parent, IDialogConstants.OK_ID,
++				"&Merge", true);
++		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
++	}
++
++	@Override
++	protected String getTitle() {
++		return "Merge: {0}";
++	}
++
++}
+diff --git a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/ResetTargetSelectionDialog.java b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/ResetTargetSelectionDialog.java
+new file mode 100644
+index 0000000..448f520
+--- /dev/null
++++ b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/ResetTargetSelectionDialog.java
+@@ -0,0 +1,98 @@
++package org.eclipse.egit.ui.internal.dialogs;
++
++import org.eclipse.egit.core.op.ResetOperation.ResetType;
++import org.eclipse.egit.ui.UIText;
++import org.eclipse.jface.dialogs.IDialogConstants;
++import org.eclipse.jface.dialogs.MessageDialog;
++import org.eclipse.jface.layout.GridDataFactory;
++import org.eclipse.jgit.lib.Repository;
++import org.eclipse.swt.SWT;
++import org.eclipse.swt.layout.RowLayout;
++import org.eclipse.swt.widgets.Button;
++import org.eclipse.swt.widgets.Composite;
++import org.eclipse.swt.widgets.Event;
++import org.eclipse.swt.widgets.Group;
++import org.eclipse.swt.widgets.Listener;
++import org.eclipse.swt.widgets.Shell;
++
++/**
++ * Dialog for selecting a reset target.
++ *
++ */
++public class ResetTargetSelectionDialog extends BranchSelectionDialog {
++
++	private ResetType resetType = ResetType.MIXED;
++
++	/**
++	 * Construct a dialog to select a branch to reset to
++	 * @param parentShell
++	 * @param repo
++	 */
++	public ResetTargetSelectionDialog(Shell parentShell, Repository repo) {
++		super(parentShell, repo);
++	}
++
++	@Override
++	protected void createCustomArea(Composite parent) {
++		Group g = new Group(parent, SWT.NONE);
++		g.setText(UIText.BranchSelectionDialog_ResetType);
++		g.setLayoutData(GridDataFactory.swtDefaults().align(SWT.CENTER, SWT.CENTER).create());
++		g.setLayout(new RowLayout(SWT.VERTICAL));
++
++		Button soft = new Button(g, SWT.RADIO);
++		soft.setText(UIText.BranchSelectionDialog_ResetTypeSoft);
++		soft.addListener(SWT.Selection, new Listener() {
++			public void handleEvent(Event event) {
++				resetType = ResetType.SOFT;
++			}
++		});
++
++		Button medium = new Button(g, SWT.RADIO);
++		medium.setSelection(true);
++		medium.setText(UIText.BranchSelectionDialog_ResetTypeMixed);
++		medium.addListener(SWT.Selection, new Listener() {
++			public void handleEvent(Event event) {
++				resetType = ResetType.MIXED;
++			}
++		});
++
++		Button hard = new Button(g, SWT.RADIO);
++		hard.setText(UIText.BranchSelectionDialog_ResetTypeHard);
++		hard.addListener(SWT.Selection, new Listener() {
++			public void handleEvent(Event event) {
++				resetType = ResetType.HARD;
++			}
++		});
++	}
++
++	@Override
++	protected void createButtonsForButtonBar(Composite parent) {
++		createButton(parent, IDialogConstants.OK_ID,
++				UIText.BranchSelectionDialog_OkReset, true);
++		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
++	}
++
++	@Override
++	protected String getTitle() {
++		return UIText.BranchSelectionDialog_TitleReset;
++	}
++
++	/**
++	 * @return Type of Reset
++	 */
++	public ResetType getResetType() {
++		return resetType;
++	}
++
++	@Override
++	protected void okPressed() {
++		if (resetType == ResetType.HARD) {
++			if (!MessageDialog.openQuestion(getShell(),
++					UIText.BranchSelectionDialog_ReallyResetTitle,
++					UIText.BranchSelectionDialog_ReallyResetMessage)) {
++				return;
++			}
++		}
++		super.okPressed();
++	}
++}
+diff --git a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties
+index 7c8b9a1..6e5d649 100644
+--- a/org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties
++++ b/org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties
+@@ -403,5 +403,12 @@ Decorator_exceptionMessage=Errors occurred while applying Git decorations to res
+ IgnoreAction_jobName=Ignore Git resources
+ IgnoreAction_taskName=Ignoring Git resources
+ IgnoreAction_error=Unable to ignore resources
++MergeAction_CannotMerge=Cannot merge now
++MergeAction_ChangedFiles=There are changed files. Merging is currently not supported in this case.
++MergeAction_ErrorMergeEnabling=Error during Action enabling
++MergeAction_HeadIsNoBranch=HEAD is not pointing to a branch
++MergeAction_ProblemMerge=Problem during merge
++MergeAction_UnableMerge=Unable to merge.
++MergeAction_WrongRepositoryState=The Repository State {0} does not allow to merge 
+ Track_error=Add to Version Control failed
+ Track_see_log=See error log for details.
+-- 
+1.7.0.2.msysgit.0
+
