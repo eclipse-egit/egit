@@ -721,7 +721,7 @@ public class CommitDialog extends Dialog {
 			ITypedElement base = new FileRevisionTypedElement(baseFile);
 			ITypedElement next = new FileRevisionTypedElement(nextFile);
 
-			GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(base, next, null);
+			GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(next, base, null);
 			CompareUI.openCompareDialog(input);
 		}
 
