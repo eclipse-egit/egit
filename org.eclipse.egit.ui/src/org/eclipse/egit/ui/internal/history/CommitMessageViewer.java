@@ -345,7 +345,7 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 				if (diff.getBlobs().length == 2) {
 					String path = diff.getPath();
 					d.append(formatPathLine(path)).append("\n"); //$NON-NLS-1$
-					diff.outputDiff(d, db, diffFmt, false, false);
+					diff.outputDiff(d, db, diffFmt, true);
 				}
 			}
 		} catch (IOException e) {
