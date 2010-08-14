@@ -31,6 +31,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -248,14 +249,21 @@ public class GitModelCommit extends GitModelObject implements ISynchronizationCo
 	private void getChildrenImpl() {
 		TreeWalk tw = createTreeWalk();
 		List<GitModelObject> result = new ArrayList<GitModelObject>();
+
 		try {
-			int ancestorNth = tw.addTree(ancestorCommit.getTree());
+			RevTree actualTree = remoteCommit.getTree();
+			List<String> notIgnored = getNotIgnoredNodes(actualTree);
+
+			int actualNth = tw.addTree(actualTree);
 			int baseNth = -1;
 			if (baseCommit != null)
 				baseNth = tw.addTree(baseCommit.getTree());
-			int actualNth = tw.addTree(remoteCommit.getTree());
+			int ancestorNth = tw.addTree(ancestorCommit.getTree());
 
 			while (tw.next()) {
+				if (!notIgnored.contains(tw.getNameString()))
+					continue;
+
 				GitModelObject obj = getModelObject(tw, ancestorNth, baseNth,
 						actualNth);
 				if (obj != null)

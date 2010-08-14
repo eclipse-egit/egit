@@ -44,10 +44,8 @@ public class GitBlobResourceVariant extends GitResourceVariant {
 			throws IOException {
 		super(repo, objectId, path);
 
-		if (getObjectId() != null) {
-			ObjectLoader blob = repo.open(getObjectId());
-			bytes = blob.getBytes();
-		}
+		ObjectLoader blob = repo.open(getObjectId());
+		bytes = blob.getBytes();
 	}
 
 	public boolean isContainer() {
