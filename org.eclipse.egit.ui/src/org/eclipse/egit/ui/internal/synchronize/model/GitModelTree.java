@@ -129,19 +129,22 @@ public class GitModelTree extends GitModelCommit {
 		List<GitModelObject> result = new ArrayList<GitModelObject>();
 
 		try {
-			int ancestorNth = -1;
-			if (!ancestorId.equals(zeroId()))
-				ancestorNth = tw.addTree(ancestorId);
+			List<String> notIgnored = getNotIgnoredNodes(remoteId);
+
+			int remoteNth = tw.addTree(remoteId);
 
 			int baseNth = -1;
 			if (!baseId.equals(zeroId()))
 				baseNth = tw.addTree(baseId);
 
-			int remoteNth = -1;
-			if (!remoteId.equals(zeroId()))
-				remoteNth = tw.addTree(remoteId);
+			int ancestorNth = -1;
+			if (!ancestorId.equals(zeroId()))
+				ancestorNth = tw.addTree(ancestorId);
 
 			while (tw.next()) {
+				if (!notIgnored.contains(tw.getNameString()))
+					continue;
+
 				GitModelObject obj = createChildren(tw, ancestorNth, baseNth,
 						remoteNth);
 				if (obj != null)
@@ -156,10 +159,12 @@ public class GitModelTree extends GitModelCommit {
 
 	private GitModelObject createChildren(TreeWalk tw, int ancestorNth,
 			int baseNth, int remoteNth) throws IOException {
+		ObjectId objRemoteId = tw.getObjectId(remoteNth);
+		if (objRemoteId.equals(zeroId()))
+			return null;
+
 		String objName = tw.getNameString();
 		ObjectId objBaseId = baseNth != -1 ? tw.getObjectId(baseNth) : zeroId();
-		ObjectId objRemoteId = remoteNth != -1 ? tw.getObjectId(remoteNth)
-				: zeroId();
 		ObjectId objAncestorId = ancestorNth != -1 ? tw
 				.getObjectId(ancestorNth) : zeroId();
 		int objectType = tw.getFileMode(remoteNth).getObjectType();

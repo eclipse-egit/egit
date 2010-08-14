@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
+import static org.eclipse.jgit.lib.ObjectId.zeroId;
+
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,11 +23,17 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
+import org.eclipse.jgit.errors.CorruptObjectException;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
+import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
+import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.variants.IResourceVariant;
@@ -68,21 +76,23 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 		if (path.length() == 0)
 			return handleRepositoryRoot(resource, repo, revCommit);
 
-		TreeWalk tw = initializeTreeWalk(repo, path);
-
 		try {
+			TreeWalk tw = initializeTreeWalk(repo, path);
+
 			int nth = tw.addTree(revCommit.getTree());
 			if (resource.getType() == IResource.FILE) {
 				tw.setRecursive(true);
-				if (tw.next())
+				if (tw.next() && !tw.getObjectId(nth).equals(zeroId()))
 					return new GitBlobResourceVariant(repo,
 							tw.getObjectId(nth), path);
 			} else {
 				while (tw.next() && !path.equals(tw.getPathString()))
 					if (tw.isSubtree())
 						tw.enterSubtree();
-				return new GitFolderResourceVariant(repo, tw.getObjectId(nth),
-						path);
+
+				ObjectId objectId = tw.getObjectId(nth);
+				if (!objectId.equals(zeroId()))
+					return new GitFolderResourceVariant(repo, objectId, path);
 			}
 		} catch (IOException e) {
 			throw new TeamException(
@@ -149,10 +159,15 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 		}
 	}
 
-	private TreeWalk initializeTreeWalk(Repository repo, String path) {
+	private TreeWalk initializeTreeWalk(Repository repo, String path)
+			throws CorruptObjectException {
 		TreeWalk tw = new TreeWalk(repo);
 		tw.reset();
-		tw.setFilter(PathFilter.create(path));
+		int ignoreNth = tw.addTree(new FileTreeIterator(repo));
+
+		TreeFilter pathFilter = PathFilter.create(path);
+		TreeFilter ignoreFilter = new NotIgnoredFilter(ignoreNth);
+		tw.setFilter(AndTreeFilter.create(pathFilter, ignoreFilter));
 
 		return tw;
 	}
