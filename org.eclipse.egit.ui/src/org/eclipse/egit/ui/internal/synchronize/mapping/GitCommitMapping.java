@@ -8,7 +8,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.mapping;
 
-import java.io.IOException;
+import static org.eclipse.core.resources.IResource.ALLOW_MISSING_LOCAL;
+import static org.eclipse.core.resources.IResource.DEPTH_INFINITE;
+import static org.eclipse.core.resources.IResource.DEPTH_ONE;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +25,8 @@ import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 
 class GitCommitMapping extends GitObjectMapping {
 
@@ -42,52 +40,34 @@ class GitCommitMapping extends GitObjectMapping {
 	@Override
 	public ResourceTraversal[] getTraversals(ResourceMappingContext context,
 			IProgressMonitor monitor) throws CoreException {
-		Repository repo = gitCommit.getRepository();
-		TreeWalk tw = new TreeWalk(repo);
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		List<ResourceTraversal> result = new ArrayList<ResourceTraversal>();
-		IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
-		tw.reset();
-		tw.setRecursive(false);
-		tw.setFilter(TreeFilter.ANY_DIFF);
-		try {
-			RevCommit commit = gitCommit.getRemoteCommit();
-			tw.addTree(commit.getParent(0).getTree());
-			int nth = tw.addTree(commit.getTree());
+		for (GitModelObject child : gitCommit.getChildren()) {
+			ResourceTraversal traversal;
+			IPath location = child.getLocation();
 
-			while (tw.next()) {
-				ResourceTraversal traversal = getTraversal(tw, workspaceRoot,
-						nth);
+			if (child.isContainer()) {
+				IContainer container = root.getContainerForLocation(location);
+				if (container == null)
+					continue;
 
-				if (traversal != null)
-					result.add(traversal);
+				traversal = new ResourceTraversal(
+						new IResource[] { container }, DEPTH_INFINITE,
+						ALLOW_MISSING_LOCAL);
+			} else {
+				IFile file = root.getFileForLocation(location);
+				if (file == null)
+					continue;
+
+				traversal = new ResourceTraversal(new IResource[] { file },
+						DEPTH_ONE, ALLOW_MISSING_LOCAL);
 			}
-		} catch (IOException e) {
-			Activator.logError(e.getMessage(), e);
+
+			result.add(traversal);
 		}
 
 		return result.toArray(new ResourceTraversal[result.size()]);
-	}
-
-	private ResourceTraversal getTraversal(TreeWalk tw,
-			IWorkspaceRoot workspaceRoot, int nth) {
-		IPath path = gitCommit.getLocation().append(tw.getPathString());
-		int objectType = tw.getFileMode(nth).getObjectType();
-
-		ResourceTraversal traversal = null;
-		if (objectType == Constants.OBJ_BLOB) {
-			IFile file = workspaceRoot.getFileForLocation(path);
-			if (file != null)
-				traversal = new ResourceTraversal(new IResource[] { file },
-						IResource.DEPTH_ZERO, IResource.ALLOW_MISSING_LOCAL);
-		} else if (objectType == Constants.OBJ_TREE) {
-			IContainer folder = workspaceRoot.getContainerForLocation(path);
-			if (folder != null)
-				traversal = new ResourceTraversal(new IResource[] { folder },
-						IResource.DEPTH_INFINITE, IResource.ALLOW_MISSING_LOCAL);
-		}
-
-		return traversal;
 	}
 
 }

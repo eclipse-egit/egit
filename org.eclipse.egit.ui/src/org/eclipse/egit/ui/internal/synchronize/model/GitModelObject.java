@@ -71,6 +71,14 @@ public abstract class GitModelObject extends PlatformObject {
 	public abstract IPath getLocation();
 
 	/**
+	 * Answers if model object may have children.
+	 *
+	 * @return <code>true</code> if the model object may have children and
+	 *         <code>false</code> otherwise.
+	 */
+	public abstract boolean isContainer();
+
+	/**
 	 *
 	 * @param parent
 	 *            of particular model object
