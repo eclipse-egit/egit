@@ -40,17 +40,23 @@ public class GitModelRoot {
 	/**
 	 * @return children
 	 */
-	public GitModelRepository[] getChildren() {
-		List<GitModelRepository> restult = new ArrayList<GitModelRepository>();
-		for (GitSynchronizeData data : gsds) {
-			try {
-				restult.add(new GitModelRepository(data));
-			} catch (IOException e) {
+	public GitModelObject[] getChildren() {
+		List<GitModelObject> restult = new ArrayList<GitModelObject>();
+		try {
+			if (gsds.size() == 1) {
+				GitSynchronizeData gsd = gsds.iterator().next();
+				GitModelRepository repoModel = new GitModelRepository(gsd);
+
+				for (GitModelObject obj : repoModel.getChildren())
+					restult.add(obj);
+			} else
+				for (GitSynchronizeData data : gsds)
+						restult.add(new GitModelRepository(data));
+		} catch (IOException e) {
 				Activator.logError(e.getMessage(), e);
-			}
 		}
 
-		return restult.toArray(new GitModelRepository[restult.size()]);
+		return restult.toArray(new GitModelObject[restult.size()]);
 	}
 
 }
