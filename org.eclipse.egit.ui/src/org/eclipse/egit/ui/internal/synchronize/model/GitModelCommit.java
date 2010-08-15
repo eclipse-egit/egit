@@ -210,6 +210,11 @@ public class GitModelCommit extends GitModelObject implements ISynchronizationCo
 		// do nothing, we should disallow coping content between commits
 	}
 
+	@Override
+	public boolean isContainer() {
+		return true;
+	}
+
 	/**
 	 * @return SHA1 of ancestor object
 	 */
