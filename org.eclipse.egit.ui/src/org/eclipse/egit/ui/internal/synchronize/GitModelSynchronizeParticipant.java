@@ -52,6 +52,9 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 			ISynchronizePageConfiguration configuration) {
 		configuration.setProperty(ISynchronizePageConfiguration.P_VIEWER_ID,
 				VIEWER_ID);
+		configuration.setProperty(
+				ModelSynchronizeParticipant.P_VISIBLE_MODEL_PROVIDER,
+				GitChangeSetModelProvider.ID);
 		super.initializeConfiguration(configuration);
 	}
 
