@@ -26,6 +26,7 @@ import org.eclipse.team.core.mapping.provider.SynchronizationContext;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
 import org.eclipse.team.ui.TeamUI;
 import org.eclipse.team.ui.synchronize.ISynchronizeParticipant;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
@@ -72,7 +73,11 @@ public class GitModelSynchronize {
 				new ISynchronizeParticipant[] { participant });
 		IWorkbenchWindow window = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
-		participant.run(window.getActivePage().getActivePart());
+		IWorkbenchPart activePart = null;
+		if (window != null)
+			activePart = window.getActivePage().getActivePart();
+
+		participant.run(activePart);
 	}
 
 	/**
