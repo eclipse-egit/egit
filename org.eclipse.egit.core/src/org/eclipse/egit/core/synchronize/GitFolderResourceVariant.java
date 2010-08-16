@@ -50,10 +50,6 @@ public class GitFolderResourceVariant extends GitResourceVariant {
 		return null;
 	}
 
-	public byte[] asBytes() {
-		return getName().getBytes();
-	}
-
 	/**
 	 * @param progress
 	 * @return members

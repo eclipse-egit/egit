@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -38,14 +37,13 @@ public class GitBlobResourceVariant extends GitResourceVariant {
 
 	private IStorage storage;
 
-	private byte[] bytes;
+	private final ObjectLoader blob;
 
 	GitBlobResourceVariant(Repository repo, ObjectId objectId, String path)
 			throws IOException {
 		super(repo, objectId, path);
 
-		ObjectLoader blob = repo.open(getObjectId());
-		bytes = blob.getBytes();
+		blob = repo.open(getObjectId());
 	}
 
 	public boolean isContainer() {
@@ -72,7 +70,11 @@ public class GitBlobResourceVariant extends GitResourceVariant {
 				}
 
 				public InputStream getContents() throws CoreException {
-					return new ByteArrayInputStream(bytes);
+					try {
+						return blob.openStream();
+					} catch (IOException e) {
+						throw new TeamException(e.getMessage(), e);
+					}
 				}
 
 				public String getCharset() throws CoreException {
@@ -93,10 +95,6 @@ public class GitBlobResourceVariant extends GitResourceVariant {
 		}
 
 		return storage;
-	}
-
-	public byte[] asBytes() {
-		return bytes;
 	}
 
 }

@@ -83,6 +83,10 @@ abstract class GitResourceVariant implements IResourceVariant {
 		return false;
 	}
 
+	public byte[] asBytes() {
+		return getObjectId().getName().getBytes();
+	}
+
 	@Override
 	public String toString() {
 		return path + "(" + objectId.getName() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
