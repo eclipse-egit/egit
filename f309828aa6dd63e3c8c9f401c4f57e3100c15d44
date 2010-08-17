@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyH///oI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-08-16T23:12:32Z",
+      "side": 1,
+      "message": "style nit: no braces around single line block",
+      "revId": "f309828aa6dd63e3c8c9f401c4f57e3100c15d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///oE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-08-16T23:12:32Z",
+      "side": 1,
+      "message": "why defer logging the exception ?",
+      "revId": "f309828aa6dd63e3c8c9f401c4f57e3100c15d44",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
