@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyH///3Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-11T06:27:14Z",
+      "side": 1,
+      "message": "I\u0027d like to see a comment to the effect that the window may be null during shutdown",
+      "revId": "3e1a2399c433f2282a0d7fc061ca0b6561eeb88f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///3U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ShowHistoryActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-11T06:27:14Z",
+      "side": 1,
+      "message": "I\u0027d like to see a comment to the effect that the window may be null during shutdown",
+      "revId": "3e1a2399c433f2282a0d7fc061ca0b6561eeb88f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///3Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ShowRepositoriesViewActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-11T06:27:14Z",
+      "side": 1,
+      "message": "I\u0027d like to see a comment to the effect that the window may be null during shutdown",
+      "revId": "3e1a2399c433f2282a0d7fc061ca0b6561eeb88f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
