@@ -114,9 +114,13 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 			return ((IFile) resource).getContents();
 		else
 			try {
-				if (resource.getType() == IResource.FILE)
-					return ((IFile) resource).getContents();
-				else
+				if (resource.getType() == IResource.FILE) {
+					IFile file = ((IFile) resource);
+					if (!file.isSynchronized(0))
+						file.refreshLocal(0, null);
+
+					return file.getContents();
+				} else
 					return new ByteArrayInputStream(null);
 			} catch (TeamException e) {
 				throw new CoreException(e.getStatus());
