@@ -13,6 +13,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
@@ -36,8 +37,11 @@ public class ShowHistoryActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		ISelectionService srv = (ISelectionService) PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getService(ISelectionService.class);
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		if (activeWorkbenchWindow == null)
+			return false; // During Eclipse shutdown there is no active window
+		ISelectionService srv = (ISelectionService) activeWorkbenchWindow.getService(ISelectionService.class);
 		if (srv.getSelection() instanceof StructuredSelection) {
 			return ((StructuredSelection) srv.getSelection()).size() == 1;
 		}
