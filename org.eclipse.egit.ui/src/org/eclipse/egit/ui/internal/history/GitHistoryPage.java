@@ -233,7 +233,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	/**
 	 * The selection provider tracks the selected revisions for the context menu
 	 */
-	private RevObjectSelectionProvider revObjectSelectionProvider;
+	private final RevObjectSelectionProvider revObjectSelectionProvider = new RevObjectSelectionProvider();
 
 	private static final String PREF_SHOWALLFILTER = "org.eclipse.egit.ui.githistorypage.showallfilter"; //$NON-NLS-1$
 
@@ -440,7 +440,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				UIPreferences.RESOURCEHISTORY_GRAPH_SPLIT);
 		layoutSashForm(revInfoSplit, UIPreferences.RESOURCEHISTORY_REV_SPLIT);
 
-		revObjectSelectionProvider = new RevObjectSelectionProvider();
 		popupMgr = new MenuManager(null, POPUP_ID);
 		attachCommitSelectionChanged();
 		createLocalToolbarActions();
@@ -448,7 +447,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		createCompareModeAction();
 		createStandardActions();
 
-		getSite().registerContextMenu(POPUP_ID, popupMgr,
+		getHistoryPageSite().getPart().getSite().registerContextMenu(POPUP_ID, popupMgr,
 				revObjectSelectionProvider);
 		getHistoryPageSite().getPart().getSite().setSelectionProvider(
 				revObjectSelectionProvider);
