@@ -67,7 +67,11 @@ abstract class AbstractHistoryCommanndHandler extends AbstractHandler {
 
 	protected IStructuredSelection getSelection(ExecutionEvent event)
 			throws ExecutionException {
-		ISelection selection = HandlerUtil.getCurrentSelectionChecked(event);
+		// HandlerUtil.getCurrentSelectionChecked(event) does not seem to work
+		// here since history view does not implement a selection provider
+		// (see also Bug 322877)
+		// use the active menu selection here
+		ISelection selection = HandlerUtil.getActiveMenuSelectionChecked(event);
 		if (selection instanceof IStructuredSelection) {
 			return (IStructuredSelection) selection;
 		}

@@ -450,8 +450,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 		getSite().registerContextMenu(POPUP_ID, popupMgr,
 				revObjectSelectionProvider);
-		getHistoryPageSite().getPart().getSite().setSelectionProvider(
-				revObjectSelectionProvider);
+//		Setting a selection provider has no effect here.
+//		GenericHistorView should provide the selection provider.
+//		See also Bug 322877
+//		getHistoryPageSite().getPart().getSite().setSelectionProvider(
+//				revObjectSelectionProvider);
 
 		attachContextMenu(graph.getControl());
 		attachContextMenu(commentViewer.getControl());
