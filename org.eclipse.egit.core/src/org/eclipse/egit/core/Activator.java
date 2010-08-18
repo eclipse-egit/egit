@@ -28,6 +28,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends Plugin implements DebugOptionsListener {
 	private static Activator plugin;
 	private RepositoryCache repositoryCache;
+	private RepositoryUtil repositoryUtil;
 
 	/**
 	 * @return the singleton {@link Activator}
@@ -89,6 +90,8 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			logError(CoreText.Activator_ReconfigureWindowCacheError, e);
 		}
 		GitProjectData.attachToWorkspace(true);
+
+		repositoryUtil = new RepositoryUtil();
 	}
 
 	public void optionsChanged(DebugOptions options) {
@@ -103,11 +106,21 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		return repositoryCache;
 	}
 
+	/**
+	 * @return the {@link RepositoryUtil} instance
+	 */
+	public RepositoryUtil getRepositoryUtil() {
+		return repositoryUtil;
+	}
+
 	public void stop(final BundleContext context) throws Exception {
 		GitProjectData.detachFromWorkspace();
 		repositoryCache = null;
+		repositoryUtil.dispose();
+		repositoryUtil = null;
 		super.stop(context);
 		plugin = null;
+
 	}
 
 }

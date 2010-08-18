@@ -34,7 +34,7 @@ public class CommitBlobStorage extends BlobStorage {
 
 	@Override
 	public IPath getFullPath() {
-		IPath repoPath = new Path(Utils.getRepositoryName(db));
+		IPath repoPath = new Path(repositoryUtil.getRepositoryName(db));
 		String pathString = super.getFullPath().toPortableString() + " " //$NON-NLS-1$
 				+ Utils.getShortObjectId(commit.getId());
 		return repoPath.append(Path.fromPortableString(pathString));
