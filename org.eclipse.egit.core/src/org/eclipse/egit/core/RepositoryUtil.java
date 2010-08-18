@@ -8,7 +8,7 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.ui;
+package org.eclipse.egit.core;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,8 +31,8 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.Tag;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
+import org.eclipse.jgit.lib.Tag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.util.FS;
 import org.osgi.service.prefs.BackingStoreException;
