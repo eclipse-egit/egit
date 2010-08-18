@@ -25,7 +25,7 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
 public class CreatePatchHandler extends AbstractHistoryCommanndHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = getSelection(event);
+		IStructuredSelection selection = getSelection(getPage());
 		if (selection.size() == 1) {
 			RevCommit commit = (RevCommit) selection.getFirstElement();
 			Object input = getInput(event);

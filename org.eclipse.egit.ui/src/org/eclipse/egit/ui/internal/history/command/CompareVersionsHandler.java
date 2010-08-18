@@ -29,7 +29,7 @@ import org.eclipse.ui.IWorkbenchPart;
  */
 public class CompareVersionsHandler extends AbstractHistoryCommanndHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = getSelection(event);
+		IStructuredSelection selection = getSelection(getPage());
 		if (selection.size() == 2) {
 			Iterator<?> it = selection.iterator();
 			RevCommit commit1 = (RevCommit) it.next();

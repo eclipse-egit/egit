@@ -28,7 +28,7 @@ import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 public class CompareWithWorkingTreeHandler extends
 		AbstractHistoryCommanndHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = getSelection(event);
+		IStructuredSelection selection = getSelection(getPage());
 		if (selection.size() == 1) {
 			Iterator<?> it = selection.iterator();
 			RevCommit commit = (RevCommit) it.next();

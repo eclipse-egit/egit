@@ -129,7 +129,7 @@ public class CheckoutCommitHandler extends AbstractHistoryCommanndHandler {
 	}
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		PlotCommit commit = (PlotCommit) getSelection(event).getFirstElement();
+		PlotCommit commit = (PlotCommit) getSelection(getPage()).getFirstElement();
 		Repository repo = getRepository(event);
 		List<Ref> availableBranches = new ArrayList<Ref>();
 

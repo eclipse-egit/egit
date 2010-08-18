@@ -511,10 +511,6 @@
                values="org.eclipse.egit.ui.internal.commands.ProjectNameParameterValues">
          </commandParameter>
       </command>
-      <command
-            id="org.eclipse.egit.ui.CheckoutCommand"
-            name="%CheckoutCommand">
-      </command>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -1236,172 +1232,6 @@
                style="toggle">
          </command>
       </menuContribution>
-      <menuContribution
-            locationURI="popup:org.eclipse.egit.ui.historyPageContributions">
-         <command
-               commandId="org.eclipse.egit.ui.history.CompareVersions"
-               label="%CompareWithEachOther.label"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-            </visibleWhen>
-         </command>
-         <command
-               commandId="org.eclipse.egit.ui.history.CompareWithWorkingTree"
-               label="%CompareWithWorktree.label"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-            </visibleWhen>
-         </command>
-         <command
-               commandId="org.eclipse.egit.ui.history.ShowVersions"
-               label="%Open.label"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-            </visibleWhen>
-         </command>
-         <separator
-               name="org.eclipse.egit.ui.fileGroup"
-               visible="true">
-         </separator>
-         <command
-               commandId="org.eclipse.egit.ui.CheckoutCommand"
-               label="%Checkout.label"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-            </visibleWhen>
-         </command>
-         <command
-               commandId="org.eclipse.egit.ui.history.CreateBranch"
-               label="%CreateBranch.label"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-            </visibleWhen>
-         </command>
-         <command
-               commandId="org.eclipse.egit.ui.history.CreateTag"
-               label="%CreateTag.label"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-            </visibleWhen>
-         </command>
-         <command
-               commandId="org.eclipse.egit.ui.history.CreatePatch"
-               label="%CreatePatch.label"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-            </visibleWhen>
-         </command>
-         <separator
-               name="org.eclipse.egit.ui.resetQuickdiffGroup"
-               visible="true">
-         </separator>
-         <menu
-               icon="icons/obj16/reset.gif"
-               id="reset"
-               label="%ResetMenuName">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-               </and>
-            </visibleWhen>
-            <command
-                  commandId="org.eclipse.egit.ui.history.Reset"
-                  label="%Soft_Reset_label"
-                  style="push"
-                  tooltip="%Soft_Reset_tooltip">
-               <parameter
-                     name="org.eclipse.egit.ui.history.ResetMode"
-                     value="Soft">
-               </parameter>
-               <visibleWhen
-                     checkEnabled="true">
-               </visibleWhen>
-            </command>
-            <command
-                  commandId="org.eclipse.egit.ui.history.Reset"
-                  label="%Mixed_Reset_label"
-                  style="push"
-                  tooltip="%Mixed_Reset_tooltip">
-               <parameter
-                     name="org.eclipse.egit.ui.history.ResetMode"
-                     value="Mixed">
-               </parameter>
-               <visibleWhen
-                     checkEnabled="true">
-               </visibleWhen>
-            </command>
-            <command
-                  commandId="org.eclipse.egit.ui.history.Reset"
-                  label="%Hard_Reset_label"
-                  style="push"
-                  tooltip="%Hard_Reset_tooltip">
-               <parameter
-                     name="org.eclipse.egit.ui.history.ResetMode"
-                     value="Hard">
-               </parameter>
-               <visibleWhen
-                     checkEnabled="true">
-               </visibleWhen>
-            </command>
-         </menu>
-         <menu
-               id="quickdiff"
-               label="%QuickDiffMenuName">
-            <command
-                  commandId="org.eclipse.egit.ui.history.SetQuickdiffBaseline"
-                  label="%Set_As_Quickdiff_Baseline_label"
-                  style="push">
-               <visibleWhen
-                     checkEnabled="false">
-                  <and>
-                     <count
-                           value="+">
-                     </count>
-                  </and>
-               </visibleWhen>
-            </command>
-            <command
-                  commandId="org.eclipse.egit.ui.history.ResetQuickdiffBaseline"
-                  label="%Reset_Quickdiff_Baseline_To_HEAD_label"
-                  style="push">
-               <parameter
-                     name="org.eclipse.egit.ui.history.ResetQuickdiffBaselineTarget"
-                     value="HEAD">
-               </parameter>
-               <visibleWhen
-                     checkEnabled="false">
-                  <count
-                        value="*">
-                  </count>
-               </visibleWhen>
-            </command>
-            <command
-                  commandId="org.eclipse.egit.ui.history.ResetQuickdiffBaseline"
-                  label="%Reset_Quickdiff_Baseline_To_First_Parent_label"
-                  style="push">
-               <parameter
-                     name="org.eclipse.egit.ui.history.ResetQuickdiffBaselineTarget"
-                     value="HEAD^1">
-               </parameter>
-               <visibleWhen
-                     checkEnabled="false">
-                  <count
-                        value="*">
-                  </count>
-               </visibleWhen>
-            </command>
-         </menu>
-      </menuContribution>
    </extension>
    <extension
          name="%RepositoryCommandsLabel"
@@ -1546,6 +1376,11 @@
             name="%ResetCommand"
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ResetCommand">
       </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CheckoutCommand"
+            id="org.eclipse.egit.ui.CheckoutCommand"
+            name="%CheckoutCommand">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.commandImages">
@@ -1616,6 +1451,10 @@
       <image
             commandId="org.eclipse.egit.ui.history.CreateTag"
             icon="icons/obj16/version_rep.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.history.CheckoutCommand"
+            icon="icons/obj16/checkout.gif">
       </image>
    </extension>
    <extension
@@ -1791,56 +1630,6 @@
       </command>
    </extension>
    <extension
-         name="The handlers for shared commands"
-         point="org.eclipse.ui.handlers">
-      <handler
-            commandId="org.eclipse.egit.ui.CheckoutCommand">
-         <class
-               class="org.eclipse.egit.ui.internal.repository.tree.command.CheckoutCommand">
-         </class>
-         <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <iterate>
-                  <instanceof
-                        value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
-                  </instanceof>
-               </iterate>
-            </and>
-         </activeWhen>
-      </handler>
-      <handler
-            commandId="org.eclipse.egit.ui.CheckoutCommand">
-         <class
-               class="org.eclipse.egit.ui.internal.history.command.CheckoutCommitHandler"></class>
-         <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <iterate>
-                  <instanceof
-                        value="org.eclipse.jgit.revwalk.RevCommit">
-                  </instanceof>
-               </iterate>
-            </and>
-         </activeWhen>
-      </handler>
-      <handler
-            commandId="org.eclipse.egit.ui.history.SetQuickdiffBaseline">
-         <class
-               class="org.eclipse.egit.ui.internal.history.command.SetQuickdiffBaselineHandler">
-         </class>
-         <enabledWhen>
-            <count
-                  value="1">
-            </count>
-         </enabledWhen>
-      </handler>
-   </extension>
-   <extension
          point="org.eclipse.ui.bindings">
       <key
             commandId="org.eclipse.egit.ui.team.Commit"
@@ -1918,8 +1707,14 @@
          </commandParameter>
       </command>
       <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.SetQuickdiffBaselineHandler"
             id="org.eclipse.egit.ui.history.SetQuickdiffBaseline"
-            name="%SetQuickdiffBaselineCommand.name.7">
+            name="%SetQuickdiffBaselineCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.CheckoutCommitHandler"
+            id="org.eclipse.egit.ui.history.CheckoutCommand"
+            name="Checkout">
       </command>
    </extension>
 </plugin>

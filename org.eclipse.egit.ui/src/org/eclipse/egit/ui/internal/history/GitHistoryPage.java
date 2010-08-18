@@ -13,7 +13,9 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.IParameter;
@@ -49,6 +51,7 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -92,6 +95,8 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.menus.CommandContributionItem;
+import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
@@ -230,11 +235,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	 */
 	private List<String> pathFilters;
 
-	/**
-	 * The selection provider tracks the selected revisions for the context menu
-	 */
-	private RevObjectSelectionProvider revObjectSelectionProvider;
-
 	private static final String PREF_SHOWALLFILTER = "org.eclipse.egit.ui.githistorypage.showallfilter"; //$NON-NLS-1$
 
 	enum ShowFilter {
@@ -259,6 +259,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			if (!isChecked()) {
 				if (showAllFilter == filter) {
 					showAllFilter = ShowFilter.SHOWALLRESOURCE;
+					showAllResourceVersionsAction.setChecked(true);
 					refresh();
 				}
 			}
@@ -440,7 +441,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				UIPreferences.RESOURCEHISTORY_GRAPH_SPLIT);
 		layoutSashForm(revInfoSplit, UIPreferences.RESOURCEHISTORY_REV_SPLIT);
 
-		revObjectSelectionProvider = new RevObjectSelectionProvider();
 		popupMgr = new MenuManager(null, POPUP_ID);
 		attachCommitSelectionChanged();
 		createLocalToolbarActions();
@@ -448,10 +448,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		createCompareModeAction();
 		createStandardActions();
 
-		getSite().registerContextMenu(POPUP_ID, popupMgr,
-				revObjectSelectionProvider);
-		getHistoryPageSite().getPart().getSite().setSelectionProvider(
-				revObjectSelectionProvider);
+		getSite().registerContextMenu(POPUP_ID, popupMgr, graph.getTableView());
+		// due to the issues described in bug 322751, it makes no
+		// sense to set a selection provider for the site here
 
 		attachContextMenu(graph.getControl());
 		attachContextMenu(commentViewer.getControl());
@@ -466,8 +465,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	/**
 	 * @return the selection provider
 	 */
-	public RevObjectSelectionProvider getSelectionProvider() {
-		return revObjectSelectionProvider;
+	public ISelectionProvider getSelectionProvider() {
+		return graph.getTableView();
 	}
 
 	private Runnable refschangedRunnable;
@@ -502,21 +501,130 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		}
 	}
 
+	private CommandContributionItem getCommandContributionItem(
+			String commandId, String menuLabel) {
+		CommandContributionItemParameter parameter = new CommandContributionItemParameter(
+				getSite(), commandId, commandId,
+				CommandContributionItem.STYLE_PUSH);
+		parameter.label = menuLabel;
+		return new CommandContributionItem(parameter);
+	}
+
+	private CommandContributionItem getCommandContributionItem(
+			String commandId, String menuLabel, Map<String, String> parameters) {
+		CommandContributionItemParameter parameter = new CommandContributionItemParameter(
+				getSite(), commandId, commandId,
+				CommandContributionItem.STYLE_PUSH);
+		parameter.label = menuLabel;
+		parameter.parameters = parameters;
+		return new CommandContributionItem(parameter);
+	}
+
 	private void attachContextMenu(final Control c) {
 		if (c == graph.getControl()) {
 			// commit table
 			c.setMenu(popupMgr.createContextMenu(c));
 			c.addMenuDetectListener(new MenuDetectListener() {
 				public void menuDetected(MenuDetectEvent e) {
-					if (popupMgr.isEmpty()) {
-						// copy and such after additions
-						popupMgr.add(new Separator(
-								IWorkbenchActionConstants.MB_ADDITIONS));
-						popupMgr.add(copyAction);
-						popupMgr.add(new Separator());
-						popupMgr.add(showCommentAction);
-						popupMgr.add(showFilesAction);
+					popupMgr.removeAll();
+
+					int selectionSize = ((IStructuredSelection) getSelectionProvider()
+							.getSelection()).size();
+					int type = ((IResource) getInput()).getType();
+
+					if (type == IResource.FILE) {
+						if (selectionSize == 1)
+							popupMgr
+									.add(getCommandContributionItem(
+											HistoryViewCommands.COMPARE_WITH_TREE,
+											UIText.GitHistoryPage_CompareWithWorkingTreeMenuMenuLabel));
+						else if (selectionSize == 2)
+							popupMgr
+									.add(getCommandContributionItem(
+											HistoryViewCommands.COMPARE_VERSIONS,
+											UIText.GitHistoryPage_CompareWithEachOtherMenuLabel));
+						if (selectionSize > 0)
+							popupMgr.add(getCommandContributionItem(
+									HistoryViewCommands.OPEN,
+									UIText.GitHistoryPage_OpenMenuLabel));
 					}
+
+					if (selectionSize == 1) {
+						popupMgr.add(new Separator());
+						popupMgr.add(getCommandContributionItem(
+								HistoryViewCommands.CHECKOUT,
+								UIText.GitHistoryPage_CheckoutMenuLabel));
+						popupMgr.add(getCommandContributionItem(
+								HistoryViewCommands.CREATE_BRANCH,
+								UIText.GitHistoryPage_CreateBranchMenuLabel));
+						popupMgr.add(getCommandContributionItem(
+								HistoryViewCommands.CREATE_TAG,
+								UIText.GitHistoryPage_CreateTagMenuLabel));
+						popupMgr.add(getCommandContributionItem(
+								HistoryViewCommands.CREATE_PATCH,
+								UIText.GitHistoryPage_CreatePatchMenuLabel));
+						popupMgr.add(new Separator());
+
+						MenuManager resetManager = new MenuManager(
+								UIText.GitHistoryPage_ResetMenuLabel,
+								UIIcons.RESET, "Reset"); //$NON-NLS-1$
+
+						popupMgr.add(resetManager);
+
+						Map<String, String> parameters = new HashMap<String, String>();
+						parameters.put(HistoryViewCommands.RESET_MODE, "Soft"); //$NON-NLS-1$
+						resetManager.add(getCommandContributionItem(
+								HistoryViewCommands.RESET,
+								UIText.GitHistoryPage_ResetSoftMenuLabel,
+								parameters));
+						parameters = new HashMap<String, String>();
+						parameters.put(HistoryViewCommands.RESET_MODE, "Mixed"); //$NON-NLS-1$
+						resetManager.add(getCommandContributionItem(
+								HistoryViewCommands.RESET,
+								UIText.GitHistoryPage_ResetMixedMenuLabel,
+								parameters));
+						parameters = new HashMap<String, String>();
+						parameters.put(HistoryViewCommands.RESET_MODE, "Hard"); //$NON-NLS-1$
+						resetManager.add(getCommandContributionItem(
+								HistoryViewCommands.RESET,
+								UIText.GitHistoryPage_ResetHardMenuLabel,
+								parameters));
+					}
+					popupMgr.add(new Separator());
+
+					MenuManager quickDiffManager = new MenuManager(
+							UIText.GitHistoryPage_QuickdiffMenuLabel, null,
+							"Quickdiff"); //$NON-NLS-1$
+
+					popupMgr.add(quickDiffManager);
+
+					quickDiffManager.add(getCommandContributionItem(
+							HistoryViewCommands.SET_QUICKDIFF_BASELINE,
+							UIText.GitHistoryPage_SetAsBaselineMenuLabel));
+
+					Map<String, String> parameters = new HashMap<String, String>();
+					parameters.put(HistoryViewCommands.BASELINE_TARGET, "HEAD"); //$NON-NLS-1$
+					quickDiffManager.add(getCommandContributionItem(
+							HistoryViewCommands.RESET_QUICKDIFF_BASELINE,
+							UIText.GitHistoryPage_ResetBaselineToHeadMenuLabel,
+							parameters));
+
+					parameters = new HashMap<String, String>();
+					parameters.put(HistoryViewCommands.BASELINE_TARGET,
+							"HEAD^1"); //$NON-NLS-1$
+					quickDiffManager
+							.add(getCommandContributionItem(
+									HistoryViewCommands.RESET_QUICKDIFF_BASELINE,
+									UIText.GitHistoryPage_ResetBaselineToParentOfHeadMenuLabel,
+									parameters));
+
+					// copy and such after additions
+					popupMgr.add(new Separator(
+							IWorkbenchActionConstants.MB_ADDITIONS));
+					popupMgr.add(copyAction);
+					popupMgr.add(new Separator());
+					popupMgr.add(showCommentAction);
+					popupMgr.add(showFilesAction);
 				}
 			});
 		} else if (c == commentViewer.getControl()) {
@@ -622,7 +730,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				c = (PlotCommit<?>) sel.getFirstElement();
 				commentViewer.setInput(c);
 				fileViewer.setInput(c);
-				revObjectSelectionProvider.setSelection(s);
 			}
 		});
 		commentViewer
@@ -850,8 +957,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 	@Override
 	public boolean inputSet() {
-		if (revObjectSelectionProvider != null)
-			revObjectSelectionProvider.setActiveRepository(null);
 		cancelRefreshJob();
 
 		if (graph == null || super.getInput() == null)
@@ -958,11 +1063,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		list.source(currentWalk);
 
 		final GenerateHistoryJob rj = new GenerateHistoryJob(this, list);
-		final Repository fdb = db;
 		rj.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(final IJobChangeEvent event) {
-				revObjectSelectionProvider.setActiveRepository(fdb);
 				final Control graphctl = graph.getControl();
 				if (job != rj || graphctl.isDisposed())
 					return;
