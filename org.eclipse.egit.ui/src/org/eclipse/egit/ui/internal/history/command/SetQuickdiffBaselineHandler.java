@@ -14,6 +14,8 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitQuickDiffProvider;
+import org.eclipse.egit.ui.internal.history.GitHistoryPage;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 
@@ -23,7 +25,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 public class SetQuickdiffBaselineHandler extends AbstractHistoryCommanndHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repo = getRepository(event);
-		String baseline = ((RevCommit) getSelection(event).getFirstElement())
+		String baseline = ((RevCommit) getSelection(getPage()).getFirstElement())
 				.getId().name();
 		if (baseline == null)
 			throw new ExecutionException(
@@ -36,5 +38,14 @@ public class SetQuickdiffBaselineHandler extends AbstractHistoryCommanndHandler 
 		}
 
 		return null;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		GitHistoryPage page = getPage();
+		if (page == null)
+			return false;
+		IStructuredSelection selection = getSelection(page);
+		return selection.size() == 1;
 	}
 }

@@ -65,15 +65,6 @@ abstract class AbstractHistoryCommanndHandler extends AbstractHandler {
 		return HandlerUtil.getActivePartChecked(event);
 	}
 
-	protected IStructuredSelection getSelection(ExecutionEvent event)
-			throws ExecutionException {
-		ISelection selection = HandlerUtil.getCurrentSelectionChecked(event);
-		if (selection instanceof IStructuredSelection) {
-			return (IStructuredSelection) selection;
-		}
-		return new StructuredSelection();
-	}
-
 	protected Object getInput(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchPart part = getPart(event);
 		if (!(part instanceof IHistoryView))

@@ -29,7 +29,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class ResetHandler extends AbstractHistoryCommanndHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repo = getRepository(event);
-		final RevCommit commit = (RevCommit) getSelection(event)
+		final RevCommit commit = (RevCommit) getSelection(getPage())
 				.getFirstElement();
 
 		String type = event.getParameter(HistoryViewCommands.RESET_MODE);

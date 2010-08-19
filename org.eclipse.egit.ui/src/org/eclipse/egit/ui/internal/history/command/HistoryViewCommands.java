@@ -14,17 +14,47 @@ package org.eclipse.egit.ui.internal.history.command;
  * Only those constants are listed that are being used in code.
  */
 public class HistoryViewCommands {
+	/** "Target" parameter for setting the quickdiff baseline (HEAD or HEAD^1) */
+	public static final String BASELINE_TARGET = "org.eclipse.egit.ui.history.ResetQuickdiffBaselineTarget"; //$NON-NLS-1$
+
+	/** "Checkout" */
+	public static final String CHECKOUT = "org.eclipse.egit.ui.history.CheckoutCommand"; //$NON-NLS-1$
+
 	/**
 	 * "Compare mode" parameter for the "open" command (see
 	 * {@link #SHOWVERSIONS})
 	 */
 	public static final String COMPARE_MODE_PARAM = "org.eclipse.egit.ui.history.CompareMode"; //$NON-NLS-1$
 
-	/** "Reset" mode (sort, mixed, hard) */
+	/** "Compare with each other" */
+	public static final String COMPARE_VERSIONS = "org.eclipse.egit.ui.history.CompareVersions"; //$NON-NLS-1$
+
+	/** "Compare with working tree" */
+	public static final String COMPARE_WITH_TREE = "org.eclipse.egit.ui.history.CompareWithWorkingTree"; //$NON-NLS-1$
+
+	/** "Create Branch" */
+	public static final String CREATE_BRANCH = "org.eclipse.egit.ui.history.CreateBranch"; //$NON-NLS-1$
+
+	/** "Create Patch" */
+	public static final String CREATE_PATCH = "org.eclipse.egit.ui.history.CreatePatch"; //$NON-NLS-1$
+
+	/** "Create Tag" */
+	public static final String CREATE_TAG = "org.eclipse.egit.ui.history.CreateTag"; //$NON-NLS-1$
+
+	/** "Open" */
+	public static final String OPEN = "org.eclipse.egit.ui.history.ShowVersions"; //$NON-NLS-1$
+
+	/** "Reset" (with parameter {@link #RESET_MODE}) */
+	public static final String RESET = "org.eclipse.egit.ui.history.Reset"; //$NON-NLS-1$
+
+	/** "Reset" mode (soft, mixed, hard) */
 	public static final String RESET_MODE = "org.eclipse.egit.ui.history.ResetMode"; //$NON-NLS-1$
 
-	/** "Target" parameter for setting the quickdiff baseline (HEAD or HEAD^1) */
-	public static final String BASELINE_TARGET = "org.eclipse.egit.ui.history.ResetQuickdiffBaselineTarget"; //$NON-NLS-1$
+	/** "Reset quickdiff baseline" (with parameter {@link #BASELINE_TARGET}) */
+	public static final String RESET_QUICKDIFF_BASELINE = "org.eclipse.egit.ui.history.ResetQuickdiffBaseline"; //$NON-NLS-1$
+
+	/** "Set as quickdiff baseline" */
+	public static final String SET_QUICKDIFF_BASELINE = "org.eclipse.egit.ui.history.SetQuickdiffBaseline"; //$NON-NLS-1$
 
 	/** "Open" or "Show Versions" (depending on the selection) */
 	public static final String SHOWVERSIONS = "org.eclipse.egit.ui.history.ShowVersions"; //$NON-NLS-1$

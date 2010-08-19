@@ -232,6 +232,24 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_compareMode;
 
 	/** */
+	public static String GitHistoryPage_CheckoutMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_CompareWithEachOtherMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_CompareWithWorkingTreeMenuMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_CreateBranchMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_CreatePatchMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_CreateTagMenuLabel;
+
+	/** */
 	public static String GitHistoryPage_errorLookingUpPath;
 
 	/** */
@@ -260,6 +278,33 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitHistoryPage_From;
+
+	/** */
+	public static String GitHistoryPage_OpenMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_QuickdiffMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_ResetBaselineToHeadMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_ResetBaselineToParentOfHeadMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_ResetHardMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_ResetMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_ResetMixedMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_ResetSoftMenuLabel;
+
+	/** */
+	public static String GitHistoryPage_SetAsBaselineMenuLabel;
 
 	/** */
 	public static String GitHistoryPage_ShowAllVersionsForResource;

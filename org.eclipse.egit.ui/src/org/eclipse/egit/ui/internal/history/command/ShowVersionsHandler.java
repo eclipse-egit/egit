@@ -44,7 +44,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommanndHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		boolean compareMode = Boolean.TRUE.toString().equals(
 				event.getParameter(HistoryViewCommands.COMPARE_MODE_PARAM));
-		IStructuredSelection selection = getSelection(event);
+		IStructuredSelection selection = getSelection(getPage());
 		if (selection.size() < 1)
 			return null;
 		Object input = getInput(event);

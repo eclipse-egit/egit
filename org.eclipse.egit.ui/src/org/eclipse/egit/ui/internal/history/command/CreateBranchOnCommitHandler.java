@@ -24,7 +24,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class CreateBranchOnCommitHandler extends AbstractHistoryCommanndHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		PlotCommit commit = (PlotCommit) getSelection(event).getFirstElement();
+		PlotCommit commit = (PlotCommit) getSelection(getPage()).getFirstElement();
 		Repository repo = getRepository(event);
 
 		new WizardDialog(HandlerUtil.getActiveShellChecked(event),

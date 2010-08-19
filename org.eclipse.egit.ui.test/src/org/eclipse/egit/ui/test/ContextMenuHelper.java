@@ -56,6 +56,8 @@ public class ContextMenuHelper {
 					public MenuItem run() {
 						MenuItem theItem = null;
 						Control control = (Control) bot.widget;
+						// for dynamic menus, we need to issue this event
+						control.notifyListeners(SWT.MenuDetect, new Event());
 						Menu menu = control.getMenu();
 						for (String text : texts) {
 							Matcher<?> matcher = allOf(
