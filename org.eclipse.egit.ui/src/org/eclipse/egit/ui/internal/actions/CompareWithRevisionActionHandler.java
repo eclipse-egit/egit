@@ -12,7 +12,6 @@ package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.team.ui.TeamUI;
 import org.eclipse.team.ui.history.IHistoryPage;
@@ -37,11 +36,6 @@ public class CompareWithRevisionActionHandler extends RepositoryActionHandler {
 	}
 
 	public boolean isEnabled() {
-		try {
-			return !getSelection(null).isEmpty();
-		} catch (ExecutionException e) {
-			Activator.handleError(e.getMessage(), e, false);
-			return false;
-		}
+			return !getSelection().isEmpty();
 	}
 }

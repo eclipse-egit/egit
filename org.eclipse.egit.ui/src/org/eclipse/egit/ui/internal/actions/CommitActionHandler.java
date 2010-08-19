@@ -337,12 +337,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		try {
-			return getProjectsInRepositoryOfSelectedResources(null).length > 0;
-		} catch (ExecutionException e) {
-			Activator.handleError(e.getMessage(), e, false);
-			return false;
-		}
+		return getProjectsInRepositoryOfSelectedResources().length > 0;
 	}
 
 	private String getMergeResolveMessage(Repository mergeRepository,

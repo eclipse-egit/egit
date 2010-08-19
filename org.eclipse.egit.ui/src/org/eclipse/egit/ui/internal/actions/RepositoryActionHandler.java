@@ -36,10 +36,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tag;
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -54,18 +52,28 @@ import org.eclipse.ui.handlers.IHandlerService;
 abstract class RepositoryActionHandler extends AbstractHandler {
 
 	/**
+	 * @param selection
+	 * @return the projects hosting the selected resources
+	 */
+	private IProject[] getProjectsForSelectedResources(IStructuredSelection selection) {
+		Set<IProject> ret = new HashSet<IProject>();
+		for (IResource resource : (IResource[]) getSelectedAdaptables(
+				selection, IResource.class))
+			ret.add(resource.getProject());
+		return ret.toArray(new IProject[ret.size()]);
+	}
+
+	/**
 	 * @param event
 	 * @return the projects hosting the selected resources
 	 * @throws ExecutionException
 	 */
 	protected IProject[] getProjectsForSelectedResources(ExecutionEvent event)
 			throws ExecutionException {
-		Set<IProject> ret = new HashSet<IProject>();
-		for (IResource resource : (IResource[]) getSelectedAdaptables(
-				getSelection(event), IResource.class, event))
-			ret.add(resource.getProject());
-		return ret.toArray(new IProject[ret.size()]);
+		IStructuredSelection selection = getSelection(event);
+		return getProjectsForSelectedResources(selection);
 	}
+
 
 	/**
 	 * @param projects
@@ -95,8 +103,34 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 */
 	protected IProject[] getProjectsInRepositoryOfSelectedResources(
 			ExecutionEvent event) throws ExecutionException {
+		IStructuredSelection selection = getSelection(event);
+		return getProjectsInRepositoryOfSelectedResources(selection);
+	}
+
+	/**
+	 * List the projects with selected resources, if all projects are connected
+	 * to a Git repository.
+	 *
+	 * @return the tracked projects affected by the current resource selection
+	 */
+	protected IProject[] getProjectsInRepositoryOfSelectedResources() {
+		IStructuredSelection selection = getSelection();
+		return getProjectsInRepositoryOfSelectedResources(selection);
+	}
+
+
+	/**
+	 * List the projects with selected resources, if all projects are connected
+	 * to a Git repository.
+	 *
+	 * @param selection
+	 *
+	 * @return the tracked projects affected by the current resource selection
+	 */
+	private IProject[] getProjectsInRepositoryOfSelectedResources(
+			IStructuredSelection selection) {
 		Set<IProject> ret = new HashSet<IProject>();
-		Repository[] repositories = getRepositoriesFor(getProjectsForSelectedResources(event));
+		Repository[] repositories = getRepositoriesFor(getProjectsForSelectedResources(selection));
 		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
 		for (IProject project : projects) {
@@ -111,6 +145,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		return ret.toArray(new IProject[ret.size()]);
 	}
 
+
 	/**
 	 * Figure out which repository to use. All selected resources must map to
 	 * the same Git repository.
@@ -124,8 +159,37 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 */
 	protected Repository getRepository(boolean warn, ExecutionEvent event)
 			throws ExecutionException {
+		IStructuredSelection selection = getSelection(event);
+		Shell shell = getShell(event);
+		return getRepository(warn, selection, shell);
+	}
+
+	/**
+	 * Figure out which repository to use. All selected resources must map to
+	 * the same Git repository.
+	 *
+	 * @return repository for current project, or null
+	 */
+	protected Repository getRepository() {
+		IStructuredSelection selection = getSelection();
+		return getRepository(false, selection, null);
+	}
+
+	/**
+	 * Figure out which repository to use. All selected resources must map to
+	 * the same Git repository.
+	 *
+	 * @param warn
+	 *            Put up a message dialog to warn why a resource was not
+	 *            selected
+	 * @param selection
+	 * @param shell
+	 * 			must be provided if warn = true
+	 * @return repository for current project, or null
+	 */
+	private Repository getRepository(boolean warn, IStructuredSelection selection, Shell shell) {
 		RepositoryMapping mapping = null;
-		for (IProject project : getSelectedProjects(event)) {
+		for (IProject project : getSelectedProjects(selection)) {
 			RepositoryMapping repositoryMapping = RepositoryMapping
 					.getMapping(project);
 			if (mapping == null)
@@ -134,7 +198,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 				return null;
 			if (mapping.getRepository() != repositoryMapping.getRepository()) {
 				if (warn)
-					MessageDialog.openError(getShell(event),
+					MessageDialog.openError(shell,
 							UIText.RepositoryAction_multiRepoSelectionTitle,
 							UIText.RepositoryAction_multiRepoSelection);
 				return null;
@@ -142,7 +206,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		}
 		if (mapping == null) {
 			if (warn)
-				MessageDialog.openError(getShell(event),
+				MessageDialog.openError(shell,
 						UIText.RepositoryAction_errorFindingRepoTitle,
 						UIText.RepositoryAction_errorFindingRepo);
 			return null;
@@ -151,6 +215,9 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		final Repository repository = mapping.getRepository();
 		return repository;
 	}
+
+
+
 
 	/**
 	 * Figure out which repositories to use. All selected resources must map to
@@ -177,31 +244,38 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 
 	/**
 	 * @param event
-	 *            the execution event, may be null
+	 *            the execution event, must not be null
 	 * @return the current selection
 	 * @throws ExecutionException
 	 *             if the selection can't be determined
 	 */
 	protected IStructuredSelection getSelection(ExecutionEvent event)
 			throws ExecutionException {
+		if (event == null)
+			throw new IllegalArgumentException("event must not be NULL"); //$NON-NLS-1$
 		ISelection selection;
-		if (event != null)
-			selection = HandlerUtil.getCurrentSelectionChecked(event);
-		else {
-			IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-			if (activeWorkbenchWindow == null) // During Eclipse shutdown there is no active window
-				return new StructuredSelection();
-			IHandlerService hsr = (IHandlerService) activeWorkbenchWindow.getService(IHandlerService.class);
-			IEvaluationContext ctx = hsr.getCurrentState();
-			selection = (ISelection) ctx.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
-			if (selection == null)
-				throw new ExecutionException(
-						UIText.RepositoryActionHandler_CouldNotGetSelection_message);
-
-		}
+		selection = HandlerUtil.getCurrentSelectionChecked(event);
 		if (selection instanceof IStructuredSelection)
 			return (IStructuredSelection) selection;
-		return new StructuredSelection();
+		return StructuredSelection.EMPTY;
+	}
+
+	/**
+	 * @return the current selection
+	 */
+	protected IStructuredSelection getSelection() {
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		if (activeWorkbenchWindow == null) // During Eclipse shutdown there is
+											// no active window
+			return StructuredSelection.EMPTY;
+		IHandlerService hsr = (IHandlerService) activeWorkbenchWindow
+				.getService(IHandlerService.class);
+		IEvaluationContext ctx = hsr.getCurrentState();
+		Object selection = ctx.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
+		if (selection instanceof IStructuredSelection)
+			return (IStructuredSelection) selection;
+		return StructuredSelection.EMPTY;
 	}
 
 	/**
@@ -210,19 +284,16 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 *
 	 * @param selection
 	 * @param c
-	 * @param event
 	 * @return the selected adaptables
-	 * @throws ExecutionException
 	 */
 	@SuppressWarnings("unchecked")
-	protected Object[] getSelectedAdaptables(ISelection selection, Class c,
-			ExecutionEvent event) throws ExecutionException {
+	private Object[] getSelectedAdaptables(ISelection selection, Class c) {
 		ArrayList result = null;
 		if (selection != null && !selection.isEmpty()) {
 			result = new ArrayList();
 			Iterator elements = ((IStructuredSelection) selection).iterator();
 			while (elements.hasNext()) {
-				Object adapter = getAdapter(elements.next(), c, event);
+				Object adapter = getAdapter(elements.next(), c);
 				if (c.isInstance(adapter)) {
 					result.add(adapter);
 				}
@@ -235,8 +306,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		return (Object[]) Array.newInstance(c, 0);
 	}
 
-	private Object getAdapter(Object adaptable, Class c, ExecutionEvent event)
-			throws ExecutionException {
+	private Object getAdapter(Object adaptable, Class c) {
 		if (c.isInstance(adaptable)) {
 			return adaptable;
 		}
@@ -247,16 +317,17 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 				return adapter;
 			}
 		}
-		if (adaptable instanceof RevCommit) {
-			IHistoryView view = (IHistoryView) getPart(event);
-			return getAdapter(view.getHistoryPage().getInput(), c, event);
-		}
 		return null;
 	}
 
 	private IProject[] getSelectedProjects(ExecutionEvent event)
 			throws ExecutionException {
-		IResource[] selectedResources = getSelectedResources(event);
+		IStructuredSelection selection = getSelection(event);
+		return getSelectedProjects(selection);
+	}
+
+	private IProject[] getSelectedProjects(IStructuredSelection selection) {
+		IResource[] selectedResources = getSelectedResources(selection);
 		if (selectedResources.length == 0)
 			return new IProject[0];
 		ArrayList<IProject> projects = new ArrayList<IProject>();
@@ -276,14 +347,32 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 */
 	protected IResource[] getSelectedResources(ExecutionEvent event)
 			throws ExecutionException {
+		IStructuredSelection selection = getSelection(event);
+		return getSelectedResources(selection);
+	}
+
+	/**
+	 * @return the resources in the selection
+	 */
+	protected IResource[] getSelectedResources() {
+		IStructuredSelection selection = getSelection();
+		return getSelectedResources(selection);
+	}
+
+	/**
+	 * @param selection
+	 * @return the resources in the selection
+	 */
+	private IResource[] getSelectedResources(IStructuredSelection selection) {
 		Set<IResource> result = new HashSet<IResource>();
-		for (Object o : getSelection(event).toList()) {
-			IResource resource = (IResource) getAdapter(o, IResource.class, event);
+		for (Object o : selection.toList()) {
+			IResource resource = (IResource) getAdapter(o, IResource.class);
 			if (resource != null)
 				result.add(resource);
 		}
 		return result.toArray(new IResource[result.size()]);
 	}
+
 
 	/**
 	 * @param event
