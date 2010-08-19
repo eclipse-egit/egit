@@ -26,6 +26,7 @@ import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
@@ -55,6 +56,11 @@ class CommitFileRevision extends GitFileRevision {
 			final String fileName, final ObjectId blob) {
 		super(fileName);
 		db = repo;
+		try {
+			new RevWalk(db).parseBody(rc);
+		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
+		}
 		commit = rc;
 		author = rc.getAuthorIdent();
 		path = fileName;
