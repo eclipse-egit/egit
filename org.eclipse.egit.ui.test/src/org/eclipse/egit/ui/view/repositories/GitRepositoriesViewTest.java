@@ -293,6 +293,21 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		assertEquals(PROJ2, shell.bot().textWithLabel(
 				UIText.GitCreateGeneralProjectPage_ProjectNameLabel).getText());
+		// switch to a sub directory and see if this is used
+		shell.bot().button(IDialogConstants.BACK_LABEL).click();
+		shell.bot().tree().getAllItems()[0].expand().getNode(PROJ2).expand()
+				.getNode(FOLDER).select();
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
+		String name = shell.bot().textWithLabel(
+				UIText.GitCreateGeneralProjectPage_ProjectNameLabel).getText();
+		assertEquals(FOLDER, name);
+		shell.bot().button(IDialogConstants.BACK_LABEL).click();
+		// switch back to the root directory
+		shell.bot().tree().getAllItems()[0].expand().getNode(PROJ2).select();
+		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
+		assertEquals(PROJ2, shell.bot().textWithLabel(
+				UIText.GitCreateGeneralProjectPage_ProjectNameLabel).getText());
+
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		waitInUI();
 		assertProjectExistence(PROJ2, true);
