@@ -26,6 +26,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
+import org.eclipse.jgit.treewalk.WorkingTreeOptions;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.team.core.Team;
 
@@ -69,7 +70,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	 *            the part of the workspace the iterator will walk over.
 	 */
 	public ContainerTreeIterator(final IContainer base) {
-		super(computePrefix(base));
+		super(computePrefix(base), WorkingTreeOptions.createDefaultInstance());
 		node = base;
 		init(entries());
 	}
@@ -86,7 +87,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	 *            the workspace root to walk over.
 	 */
 	public ContainerTreeIterator(final IWorkspaceRoot root) {
-		super("");  //$NON-NLS-1$
+		super("", WorkingTreeOptions.createDefaultInstance());  //$NON-NLS-1$
 		node = root;
 		init(entries());
 	}
