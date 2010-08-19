@@ -121,7 +121,7 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 
 					return file.getContents();
 				} else
-					return new ByteArrayInputStream(null);
+					return new ByteArrayInputStream(new byte[0]);
 			} catch (TeamException e) {
 				throw new CoreException(e.getStatus());
 			}
