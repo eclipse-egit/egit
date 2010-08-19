@@ -67,25 +67,19 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 		setWindowTitle(NLS.bind(
 				UIText.GitCreateProjectViaWizardWizard_WizardTitle,
 				myRepository.getDirectory().getPath()));
-
-		// the "Import" wizard could be started like this,
-		// but throws an Exception if started within a wizard
-		// context (no active workbench window found) and the
-		// list of available wizards is empty
-		// -> investigate if we can include that wizard
-		//
-		// IHandlerService handlerService = (IHandlerService)
-		// PlatformUI.getWorkbench().getService(IHandlerService.class);
-		//
-		// handlerService.executeCommand("org.eclipse.ui.file.import",
-
 	}
 
 	@Override
 	public void addPages() {
 		mySelectionPage = new GitSelectWizardPage(myRepository, myGitDir);
 		addPage(mySelectionPage);
-		myCreateGeneralProjectPage = new GitCreateGeneralProjectPage(myGitDir);
+		myCreateGeneralProjectPage = new GitCreateGeneralProjectPage(myGitDir) {
+			@Override
+			public void setVisible(boolean visible) {
+				setPath(mySelectionPage.getPath());
+				super.setVisible(visible);
+			}
+		};
 		addPage(myCreateGeneralProjectPage);
 		myProjectsImportPage = new GitProjectsImportPage() {
 
@@ -94,7 +88,6 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 				setProjectsList(mySelectionPage.getPath());
 				super.setVisible(visible);
 			}
-
 		};
 		addPage(myProjectsImportPage);
 		mySharePage = new GitShareProjectsPage();
@@ -241,7 +234,8 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 					try {
 						final String projectName = myCreateGeneralProjectPage
 								.getProjectName();
-						final boolean defaultLocation = myCreateGeneralProjectPage.isDefaultLocation();
+						final boolean defaultLocation = myCreateGeneralProjectPage
+								.isDefaultLocation();
 						getContainer().run(true, false,
 								new WorkspaceModifyOperation() {
 
@@ -257,7 +251,9 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 												.newProjectDescription(
 														projectName);
 										if (!defaultLocation)
-											desc.setLocation(new Path(myGitDir));
+											desc
+													.setLocation(new Path(
+															myGitDir));
 
 										IProject prj = ResourcesPlugin
 												.getWorkspace().getRoot()
