@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
+ * Copyright (C) 2010, Chris Aniszczyk <caniszczyk@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -137,7 +138,7 @@ public class RefContentProposal implements IContentProposal {
 				RevWalk walk = new RevWalk(db);
 				Tag t = walk.parseTag(objectId).asTag(walk);
 				appendObjectSummary(sb, UIText.RefContentProposal_tag, t
-						.getAuthor(), t.getMessage());
+						.getTagger(), t.getMessage());
 				break;
 			case Constants.OBJ_TREE:
 				sb.append(UIText.RefContentProposal_tree);

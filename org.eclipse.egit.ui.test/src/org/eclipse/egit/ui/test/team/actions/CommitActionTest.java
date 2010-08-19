@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Chris Aniszczyk <caniszczyk@gmail.com> - tag API changes
  *******************************************************************************/
 package org.eclipse.egit.ui.test.team.actions;
 
@@ -55,7 +56,7 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 
 		Tag tag = new Tag(repo);
 		tag.setTag("SomeTag");
-		tag.setAuthor(new PersonIdent(TestUtil.TESTAUTHOR));
+		tag.setTagger(new PersonIdent(TestUtil.TESTAUTHOR));
 		tag.setMessage("I'm just a little tag");
 		tag.setObjId(repo.resolve(repo.getFullBranch()));
 		TagOperation top = new TagOperation(repo, tag, false);
