@@ -116,10 +116,7 @@ class CreateBranchPage extends WizardPage {
 			sourceLabel
 					.setToolTipText(UIText.CreateBranchPage_SourceBranchTooltip);
 		}
-		if (commitMode)
-			this.branchCombo = new Combo(main, SWT.READ_ONLY | SWT.SINGLE);
-		else
-			this.branchCombo = new Combo(main, SWT.READ_ONLY | SWT.DROP_DOWN);
+		this.branchCombo = new Combo(main, SWT.READ_ONLY | SWT.DROP_DOWN);
 
 		GridDataFactory.fillDefaults().span(2, 1).grab(true, false).applyTo(
 				this.branchCombo);
