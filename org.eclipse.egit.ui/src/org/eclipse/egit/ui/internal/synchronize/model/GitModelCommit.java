@@ -333,8 +333,7 @@ public class GitModelCommit extends GitModelObject implements ISynchronizationCo
 	}
 
 	public String getFullPath() {
-		// TODO Auto-generated method stub
-		return null;
+		return getLocation().toPortableString();
 	}
 
 	public boolean isCompareInputFor(Object object) {
