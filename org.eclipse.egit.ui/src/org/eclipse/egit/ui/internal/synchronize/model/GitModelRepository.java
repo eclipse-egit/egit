@@ -142,9 +142,9 @@ public class GitModelRepository extends GitModelObject {
 					break;
 
 				if (nextCommit.has(localFlag))
-					result.add(new GitModelCommit(this, nextCommit, RIGHT));
-				else if (nextCommit.has(remoteFlag))
 					result.add(new GitModelCommit(this, nextCommit, LEFT));
+				else if (nextCommit.has(remoteFlag))
+					result.add(new GitModelCommit(this, nextCommit, RIGHT));
 			}
 		} catch (IOException e) {
 			Activator.logError(e.getMessage(), e);
