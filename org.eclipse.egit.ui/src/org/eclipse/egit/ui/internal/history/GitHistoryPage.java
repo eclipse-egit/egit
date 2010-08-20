@@ -56,6 +56,8 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
@@ -67,6 +69,7 @@ import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
 import org.eclipse.jgit.revwalk.RevSort;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
@@ -1058,14 +1061,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 		try {
 			if (showAllBranches) {
-				for (Entry<String, Ref> refEntry : db.getRefDatabase()
-						.getRefs(Constants.R_HEADS).entrySet()) {
-					Ref ref = refEntry.getValue();
-					if (ref.isSymbolic())
-						continue;
-					currentWalk.markStart(currentWalk.parseCommit(ref
-							.getObjectId()));
-				}
+				markStartAllRefs(Constants.R_HEADS);
+				markStartAllRefs(Constants.R_REMOTES);
 			} else
 				currentWalk.markStart(currentWalk.parseCommit(headId));
 		} catch (IOException e) {
@@ -1117,6 +1114,28 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		job = rj;
 		schedule(rj);
 		return true;
+	}
+
+	/**
+	 * {@link RevWalk#markStart(RevCommit)} all refs with given prefix to mark
+	 * start of graph traversal using currentWalker
+	 *
+	 * @param prefix
+	 *            prefix of refs to be marked
+	 * @throws IOException
+	 * @throws MissingObjectException
+	 * @throws IncorrectObjectTypeException
+	 */
+	private void markStartAllRefs(String prefix) throws IOException, MissingObjectException,
+			IncorrectObjectTypeException {
+		for (Entry<String, Ref> refEntry : db.getRefDatabase()
+				.getRefs(prefix).entrySet()) {
+			Ref ref = refEntry.getValue();
+			if (ref.isSymbolic())
+				continue;
+			currentWalk.markStart(currentWalk.parseCommit(ref
+					.getObjectId()));
+		}
 	}
 
 	private void cancelRefreshJob() {
