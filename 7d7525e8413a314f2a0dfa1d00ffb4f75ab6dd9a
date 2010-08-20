@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyX///6c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-08-20T23:00:42Z",
+      "side": 1,
+      "message": "Technically we could have different merge bases, since the common ancestor cannot always be determined unambigiously in the case of so called criss-cross merges. Typically we would probably use the same algorithm in both cases though. but considereing all exotic use cases Git users come up with...\n\nWe could perhaps declare that different bases are impoossible here. I\u0027m not familiar enough with the synchronization model.\n\nShawn?\n\nBTW, Isn\u0027t the term base and common ancestor supposed to be synonyms? I.e. we determine the merge base by trying to find a common ancessor from the local and remote commits. I.e. \"base\" here could probably be better described as local (or our when remote is called their).",
+      "revId": "7d7525e8413a314f2a0dfa1d00ffb4f75ab6dd9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyX///6E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-08-20T23:00:42Z",
+      "side": 1,
+      "message": "commit hashcodes are pretty well distributed so you could just xor them if you want something faster.",
+      "revId": "7d7525e8413a314f2a0dfa1d00ffb4f75ab6dd9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
