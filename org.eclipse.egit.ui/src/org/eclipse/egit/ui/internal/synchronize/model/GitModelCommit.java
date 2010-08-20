@@ -42,7 +42,8 @@ import org.eclipse.team.ui.mapping.SaveableComparison;
 /**
  * Git commit object representation in Git ChangeSet
  */
-public class GitModelCommit extends GitModelObject implements ISynchronizationCompareInput {
+public class GitModelCommit extends GitModelObject implements
+		ISynchronizationCompareInput {
 
 	private final RevCommit baseCommit;
 
@@ -162,12 +163,29 @@ public class GitModelCommit extends GitModelObject implements ISynchronizationCo
 
 	@Override
 	public boolean equals(Object obj) {
-		return remoteCommit.equals(obj);
+		if (obj instanceof GitModelCommit) {
+			GitModelCommit objCommit = (GitModelCommit) obj;
+
+			RevCommit objBaseCommit = objCommit.getBaseCommit();
+			return objBaseCommit == null ? baseCommit == null : objBaseCommit
+					.equals(baseCommit)
+					&& objCommit.getRemoteCommit().equals(remoteCommit)
+					&& objCommit.getLocation().equals(getLocation());
+		}
+
+		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return remoteCommit.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + getLocation().hashCode();
+		result = prime * result + remoteCommit.hashCode();
+		if (baseCommit != null)
+			result = prime * result + baseCommit.hashCode();
+
+		return result;
 	}
 
 	public Image getImage() {
