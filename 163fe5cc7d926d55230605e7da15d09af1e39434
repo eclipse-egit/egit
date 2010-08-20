@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALyH///Xk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T00:16:40Z",
+      "side": 1,
+      "message": "It\u0027s a \u0027Delete\u0027 button not a \u0027Remove\u0027 button.",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyX///+8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIText.java",
         "patchSetId": 2
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALyH///Xk\u003d",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///YE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T00:16:40Z",
+      "side": 1,
+      "message": "Don\u0027t use \u0027apply\u0027 in the name of the field if the widget\u0027s label is actually \u0027Change\u0027.",
       "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -38,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "AAALyH///YA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T00:16:40Z",
+      "side": 1,
+      "message": "Don\u0027t use \u0027remove\u0027 in the name of the field if the widget\u0027s label is actually \u0027Delete\u0027.",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyX///+0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
         "patchSetId": 2
@@ -50,6 +101,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALyH///YA\u003d",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///X4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T00:16:40Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer if this section was after the table (instead of at the end) and right-adjusted but am open to what others feel about the layout.",
       "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -74,6 +142,23 @@
     },
     {
       "key": {
+        "uuid": "AAALyH///Yc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T00:16:40Z",
+      "side": 1,
+      "message": "I think this is a bad name because there\u0027s also an org.eclipse.jface.viewers.LabelProvider.",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyX///+s\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
         "patchSetId": 2
@@ -86,6 +171,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALyH///Yc\u003d",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///YU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T00:16:40Z",
+      "side": 1,
+      "message": "You created it, you disposed it. This is a resource leak as this font is never disposed.",
       "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -110,6 +212,23 @@
     },
     {
       "key": {
+        "uuid": "AAALyH///Xg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertySource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T00:16:40Z",
+      "side": 1,
+      "message": "If a TitleAreaDialog is going to be used (which I am not really convinced is necessary in this scenario), please also set a description.\n\nAlso, it feels kind of weird to me to be setting a title of a dialog in a method that\u0027s meant for the creation of buttons.",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyX///+k\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertySource.java",
         "patchSetId": 2
@@ -122,6 +241,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALyH///Xg\u003d",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///Xs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T00:16:40Z",
+      "side": 1,
+      "message": "Needs a mnemonic and a colon at the end.",
       "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -146,6 +282,23 @@
     },
     {
       "key": {
+        "uuid": "AAALyH///XY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T00:16:40Z",
+      "side": 1,
+      "message": "Lowercase \u0027String\u0027 to \u0027string\u0027.",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyX///+c\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 2
@@ -158,6 +311,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALyH///XY\u003d",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///Xc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T00:16:40Z",
+      "side": 1,
+      "message": "Please change to \u0027\u0026New Entry...\u0027.",
       "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -182,6 +352,23 @@
     },
     {
       "key": {
+        "uuid": "AAALyH///Xw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T00:16:40Z",
+      "side": 1,
+      "message": "\u0027Delete\u0027 button not a \u0027Remove\u0027 button.",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyX///+U\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 2
@@ -194,6 +381,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALyH///Xw\u003d",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyH///Xo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T00:16:40Z",
+      "side": 1,
+      "message": "Needs a colon at the end.",
       "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
