@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyX///7I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T19:17:48Z",
+      "side": 1,
+      "message": "This seems off. If the other model\u0027s base commit is \u0027null\u0027, we only check if we ourselves has a base commit is \u0027null\u0027? The locations and/or remote commits of the two models may still differ from each other, no?\n\nThe location, remote commit, and base commit are all taken consideration in the hashCode() implementation so it seems to me that all three should also should be factored into the implementation of equals(Object).",
+      "revId": "d12d47e5ceb76787c93f7cbbca057950567f27ed",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
