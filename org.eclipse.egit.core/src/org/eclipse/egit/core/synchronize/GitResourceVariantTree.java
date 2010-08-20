@@ -19,6 +19,7 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
@@ -58,11 +59,27 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 		return roots.toArray(new IResource[roots.size()]);
 	}
 
-	public IResourceVariant getResourceVariant(final IResource resource)
-			throws TeamException {
-		if (resource == null)
+	@Override
+	protected IResourceVariant fetchVariant(IResource resource, int depth,
+			IProgressMonitor monitor) throws TeamException {
+		SubMonitor subMonitor = SubMonitor.convert(monitor);
+		if (resource == null) {
+			subMonitor.done();
 			return null;
+		}
 
+		subMonitor.beginTask(NLS.bind(
+				CoreText.GitResourceVariantTree_fetchingVariant,
+				resource.getName()), IProgressMonitor.UNKNOWN);
+		try {
+			return fetchVariant(resource, subMonitor);
+		} finally {
+			subMonitor.done();
+		}
+	}
+
+	private IResourceVariant fetchVariant(IResource resource,
+			IProgressMonitor monitor) throws TeamException {
 		GitSynchronizeData gsd = gsds.getData(resource.getProject());
 		if (gsd == null)
 			return null;
@@ -77,6 +94,10 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 			return handleRepositoryRoot(resource, repo, revCommit);
 
 		try {
+			if (monitor.isCanceled()) {
+				throw new OperationCanceledException();
+			}
+			
 			TreeWalk tw = initializeTreeWalk(repo, path);
 
 			int nth = tw.addTree(revCommit.getTree());
@@ -86,9 +107,14 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 					return new GitBlobResourceVariant(repo,
 							tw.getObjectId(nth), path);
 			} else {
-				while (tw.next() && !path.equals(tw.getPathString()))
+				while (tw.next() && !path.equals(tw.getPathString())) {
+					if (monitor.isCanceled()) {
+						throw new OperationCanceledException();
+					}
+
 					if (tw.isSubtree())
 						tw.enterSubtree();
+				}
 
 				ObjectId objectId = tw.getObjectId(nth);
 				if (!objectId.equals(zeroId()))
@@ -121,19 +147,9 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 		}
 	}
 
-	@Override
-	protected IResourceVariant fetchVariant(IResource resource, int depth,
-			IProgressMonitor monitor) throws TeamException {
-		SubMonitor subMonitor = SubMonitor.convert(monitor);
-		subMonitor.beginTask(NLS.bind(
-				CoreText.GitResourceVariantTree_fetchingVariant,
-				resource.getName()), IProgressMonitor.UNKNOWN);
-
-		try {
-			return getResourceVariant(resource);
-		} finally {
-			subMonitor.done();
-		}
+	public IResourceVariant getResourceVariant(final IResource resource)
+			throws TeamException {
+		return fetchVariant(resource, 0, null);
 	}
 
 	/**

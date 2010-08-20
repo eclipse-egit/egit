@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.jgit.lib.ObjectId;
@@ -81,6 +82,10 @@ public class GitFolderResourceVariant extends GitResourceVariant {
 		List<IResourceVariant> result = new ArrayList<IResourceVariant>();
 		try {
 			while (tw.next()) {
+				if (monitor.isCanceled()) {
+					throw new OperationCanceledException();
+				}
+
 				ObjectId newObjectId = tw.getObjectId(nth);
 				String path = getPath() + "/" + new String(tw.getRawPath()); //$NON-NLS-1$
 				if (!newObjectId.equals(zeroId()))
