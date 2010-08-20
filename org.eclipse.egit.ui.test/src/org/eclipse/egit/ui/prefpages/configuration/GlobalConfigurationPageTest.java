@@ -118,8 +118,7 @@ public class GlobalConfigurationPageTest {
 	@Test
 	public void testAddSectionEntry() throws Exception {
 		preferencePage.bot().button(
-				UIText.GlobalConfigurationPreferencePage_NewValueButton)
-				.click();
+				UIText.ConfigurationEditorComponent_NewValueButton).click();
 		SWTBotShell addDialog = bot
 				.shell(UIText.AddConfigEntryDialog_AddConfigTitle);
 		addDialog.activate();
@@ -141,8 +140,7 @@ public class GlobalConfigurationPageTest {
 	@Test
 	public void testAddSubSectionEntry() throws Exception {
 		preferencePage.bot().button(
-				UIText.GlobalConfigurationPreferencePage_NewValueButton)
-				.click();
+				UIText.ConfigurationEditorComponent_NewValueButton).click();
 		SWTBotShell addDialog = bot
 				.shell(UIText.AddConfigEntryDialog_AddConfigTitle);
 		addDialog.activate();
@@ -171,8 +169,7 @@ public class GlobalConfigurationPageTest {
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTSUBSECTION).select();
 		preferencePage.bot().button(
-				UIText.GlobalConfigurationPreferencePage_NewValueButton)
-				.click();
+				UIText.ConfigurationEditorComponent_NewValueButton).click();
 		SWTBotShell addDialog = bot
 				.shell(UIText.AddConfigEntryDialog_AddConfigTitle);
 		addDialog.activate();
@@ -189,17 +186,16 @@ public class GlobalConfigurationPageTest {
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(TESTNAME)
 				.select();
 		String text = preferencePage.bot().textWithLabel(
-				UIText.GlobalConfigurationPreferencePage_ValueLabel).getText();
+				UIText.ConfigurationEditorComponent_ValueLabel).getText();
 		assertEquals("true", text);
 		preferencePage.bot().textWithLabel(
-				UIText.GlobalConfigurationPreferencePage_ValueLabel).setText(
-				"false");
-		bot.button(UIText.GlobalConfigurationPreferencePage_ChangeButton)
-				.click();
+				UIText.ConfigurationEditorComponent_ValueLabel)
+				.setText("false");
+		bot.button(UIText.ConfigurationEditorComponent_ChangeButton).click();
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(TESTNAME)
 				.select();
 		text = preferencePage.bot().textWithLabel(
-				UIText.GlobalConfigurationPreferencePage_ValueLabel).getText();
+				UIText.ConfigurationEditorComponent_ValueLabel).getText();
 		assertEquals("false", text);
 		List<String> list = new ArrayList<String>(1);
 		list.add("first");
@@ -210,13 +206,11 @@ public class GlobalConfigurationPageTest {
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTNAME + "[1]").select();
 		text = preferencePage.bot().textWithLabel(
-				UIText.GlobalConfigurationPreferencePage_ValueLabel).getText();
+				UIText.ConfigurationEditorComponent_ValueLabel).getText();
 		assertEquals("second", text);
 		preferencePage.bot().textWithLabel(
-				UIText.GlobalConfigurationPreferencePage_ValueLabel).setText(
-				"new");
-		bot.button(UIText.GlobalConfigurationPreferencePage_ChangeButton)
-				.click();
+				UIText.ConfigurationEditorComponent_ValueLabel).setText("new");
+		bot.button(UIText.ConfigurationEditorComponent_ChangeButton).click();
 		config.load();
 		assertEquals(1, Arrays.asList(
 				config.getStringList(TESTSECTION, null, TESTNAME)).indexOf(
@@ -231,9 +225,9 @@ public class GlobalConfigurationPageTest {
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(TESTNAME)
 				.select();
 		preferencePage.bot().textWithLabel(
-				UIText.GlobalConfigurationPreferencePage_ValueLabel).setText(
+				UIText.ConfigurationEditorComponent_ValueLabel).setText(
 				"second");
-		bot.button(UIText.GlobalConfigurationPreferencePage_AddButton).click();
+		bot.button(UIText.ConfigurationEditorComponent_AddButton).click();
 		config.load();
 		List<String> values = Arrays.asList(config.getStringList(TESTSECTION,
 				null, TESTNAME));
@@ -244,9 +238,9 @@ public class GlobalConfigurationPageTest {
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTNAME + "[1]").select();
 		preferencePage.bot().textWithLabel(
-				UIText.GlobalConfigurationPreferencePage_ValueLabel).setText(
+				UIText.ConfigurationEditorComponent_ValueLabel).setText(
 				"middle");
-		bot.button(UIText.GlobalConfigurationPreferencePage_AddButton).click();
+		bot.button(UIText.ConfigurationEditorComponent_AddButton).click();
 		config.load();
 		values = Arrays.asList(config
 				.getStringList(TESTSECTION, null, TESTNAME));
@@ -262,8 +256,7 @@ public class GlobalConfigurationPageTest {
 		config.save();
 		getPreferencePage();
 		preferencePage.bot().button(
-				UIText.GlobalConfigurationPreferencePage_NewValueButton)
-				.click();
+				UIText.ConfigurationEditorComponent_NewValueButton).click();
 		SWTBotShell addDialog = bot
 				.shell(UIText.AddConfigEntryDialog_AddConfigTitle);
 		addDialog.activate();
@@ -279,8 +272,7 @@ public class GlobalConfigurationPageTest {
 	@Test
 	public void testChecksForKey() throws Exception {
 		preferencePage.bot().button(
-				UIText.GlobalConfigurationPreferencePage_NewValueButton)
-				.click();
+				UIText.ConfigurationEditorComponent_NewValueButton).click();
 		SWTBotShell addDialog = bot
 				.shell(UIText.AddConfigEntryDialog_AddConfigTitle);
 		addDialog.activate();
@@ -328,8 +320,7 @@ public class GlobalConfigurationPageTest {
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTNAME + "[0]").select();
 
-		bot.button(UIText.GlobalConfigurationPreferencePage_RemoveButton)
-				.click();
+		bot.button(UIText.ConfigurationEditorComponent_DeleteButton).click();
 		config.load();
 		values = Arrays.asList(config
 				.getStringList(TESTSECTION, null, TESTNAME));
@@ -349,10 +340,9 @@ public class GlobalConfigurationPageTest {
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTSUBSECTION).select();
 
-		bot.button(UIText.GlobalConfigurationPreferencePage_RemoveAllButton)
-				.click();
+		bot.button(UIText.ConfigurationEditorComponent_RemoveAllButton).click();
 		SWTBotShell confirm = bot
-				.shell(UIText.GlobalConfigurationPreferencePage_RemoveSubsectionTitle);
+				.shell(UIText.ConfigurationEditorComponent_RemoveSubsectionTitle);
 		confirm.activate();
 		confirm.bot().button(IDialogConstants.OK_LABEL).click();
 		config.load();
@@ -371,10 +361,9 @@ public class GlobalConfigurationPageTest {
 		getPreferencePage();
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).select();
 
-		bot.button(UIText.GlobalConfigurationPreferencePage_RemoveAllButton)
-				.click();
+		bot.button(UIText.ConfigurationEditorComponent_RemoveAllButton).click();
 		SWTBotShell confirm = bot
-				.shell(UIText.GlobalConfigurationPreferencePage_RemoveSectionTitle);
+				.shell(UIText.ConfigurationEditorComponent_RemoveSectionTitle);
 		confirm.activate();
 		confirm.bot().button(IDialogConstants.OK_LABEL).click();
 		config.load();
@@ -386,7 +375,7 @@ public class GlobalConfigurationPageTest {
 	public void testOpenEditor() throws Exception {
 		try {
 			preferencePage.bot().button(
-					UIText.GlobalConfigurationPreferencePage_OpenEditorButton)
+					UIText.ConfigurationEditorComponent_OpenEditorButton)
 					.click();
 			preferencePage.close();
 			assertEquals(config.getFile().getName(), bot.activeEditor()
