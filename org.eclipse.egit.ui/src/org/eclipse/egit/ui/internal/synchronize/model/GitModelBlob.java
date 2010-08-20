@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
+import static org.eclipse.compare.structuremergeviewer.Differencer.LEFT;
+import static org.eclipse.compare.structuremergeviewer.Differencer.RIGHT;
 import static org.eclipse.jgit.lib.ObjectId.zeroId;
 
 import java.io.IOException;
@@ -56,15 +58,16 @@ public class GitModelBlob extends GitModelCommit {
 	 * @param baseId
 	 *            id of base object variant
 	 * @param remoteId
-	 *            id of remote object variant
+	 *            id of remote object variants
 	 * @param name
 	 *            human readable blob name (file name)
 	 * @throws IOException
 	 */
-	public GitModelBlob(GitModelObject parent, RevCommit commit,
+	public GitModelBlob(GitModelCommit parent, RevCommit commit,
 			ObjectId ancestorId, ObjectId baseId, ObjectId remoteId, String name)
 			throws IOException {
-		super(parent, commit);
+		// only direction is important for us, therefore we mask rest of bits in kind
+		super(parent, commit, parent.getKind() & (LEFT | RIGHT));
 		this.name = name;
 		this.baseId = baseId;
 		this.remoteId = remoteId;
@@ -122,18 +125,13 @@ public class GitModelBlob extends GitModelCommit {
 	}
 
 	@Override
-	protected String getAncestorSha1() {
-		return ancestorId.getName();
+	protected ObjectId getBaseObjectId() {
+		return baseId;
 	}
 
 	@Override
-	protected String getBaseSha1() {
-		return baseId.getName();
-	}
-
-	@Override
-	protected String getRemoteSha1() {
-		return remoteId.getName();
+	protected ObjectId getRemoteObjectId() {
+		return remoteId;
 	}
 
 	private boolean objectExist(RevCommit commit, ObjectId id) {

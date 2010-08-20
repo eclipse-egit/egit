@@ -8,6 +8,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
+import static org.eclipse.compare.structuremergeviewer.Differencer.LEFT;
+import static org.eclipse.compare.structuremergeviewer.Differencer.RIGHT;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,19 +20,15 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.JGitInternalException;
-import org.eclipse.jgit.api.NoHeadException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevCommitList;
+import org.eclipse.jgit.revwalk.RevFlag;
+import org.eclipse.jgit.revwalk.RevFlagSet;
 import org.eclipse.jgit.revwalk.RevObject;
+import org.eclipse.jgit.revwalk.RevWalk;
 
 /**
  * Representation of Git repository in Git ChangeSet model.
@@ -38,9 +37,9 @@ public class GitModelRepository extends GitModelObject {
 
 	private final Repository repo;
 
-	private final ObjectId srcRev;
+	private final RevCommit srcRev;
 
-	private final ObjectId dstRev;
+	private final RevCommit dstRev;
 
 	private final IProject[] projects;
 
@@ -119,43 +118,39 @@ public class GitModelRepository extends GitModelObject {
 
 
 	private void getChildrenImpl() {
+		RevWalk rw = new RevWalk(repo);
+		RevFlag localFlag = rw.newFlag("local"); //$NON-NLS-1$
+		RevFlag remoteFlag = rw.newFlag("remote"); //$NON-NLS-1$
+		RevFlagSet allFlags = new RevFlagSet();
+		allFlags.add(localFlag);
+		allFlags.add(remoteFlag);
+		rw.carry(allFlags);
 		List<GitModelCommit> result = new ArrayList<GitModelCommit>();
 
+		rw.setRetainBody(true);
 		try {
-			RevCommit ancestorCommit = RevUtils.getCommonAncestor(repo, srcRev,
-					dstRev);
-			RevCommitList<RevCommit> commits = getRevCommits(ancestorCommit, dstRev);
-			commits.addAll(getRevCommits(ancestorCommit, srcRev));
+			RevCommit srcCommit = rw.parseCommit(srcRev);
+			srcCommit.add(localFlag);
+			rw.markStart(srcCommit);
 
-			for (RevCommit commit : commits)
-				result.add(new GitModelCommit(this, commit));
+			RevCommit dstCommit = rw.parseCommit(dstRev);
+			dstCommit.add(remoteFlag);
+			rw.markStart(dstCommit);
+
+			for (RevCommit nextCommit : rw) {
+				if (nextCommit.hasAll(allFlags))
+					break;
+
+				if (nextCommit.has(localFlag))
+					result.add(new GitModelCommit(this, nextCommit, LEFT));
+				else if (nextCommit.has(remoteFlag))
+					result.add(new GitModelCommit(this, nextCommit, RIGHT));
+			}
 		} catch (IOException e) {
 			Activator.logError(e.getMessage(), e);
 		}
 
 		childrens = result.toArray(new GitModelCommit[result.size()]);
-	}
-
-	private RevCommitList<RevCommit> getRevCommits(AnyObjectId since, AnyObjectId until) {
-		Git git = new Git(repo);
-		RevCommitList<RevCommit> result = new RevCommitList<RevCommit>();
-		try {
-			Iterable<RevCommit> call = git.log().addRange(since, until).call();
-
-			for (RevCommit commit : call)
-				result.add(commit);
-
-		} catch (NoHeadException e) {
-			Activator.logError(e.getMessage(), e);
-		} catch (JGitInternalException e) {
-			Activator.logError(e.getMessage(), e);
-		} catch (MissingObjectException e) {
-			Activator.logError(e.getMessage(), e);
-		} catch (IncorrectObjectTypeException e) {
-			Activator.logError(e.getMessage(), e);
-		}
-
-		return result;
 	}
 
 }
