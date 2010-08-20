@@ -162,12 +162,26 @@ public class GitModelCommit extends GitModelObject implements ISynchronizationCo
 
 	@Override
 	public boolean equals(Object obj) {
-		return remoteCommit.equals(obj);
+		if (obj instanceof GitModelCommit) {
+			GitModelCommit objCommit = (GitModelCommit) obj;
+
+			return objCommit.getBaseCommit().equals(baseCommit)
+					&& objCommit.getRemoteCommit().equals(remoteCommit) &&
+					objCommit.getLocation().equals(getLocation());
+		}
+
+		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return remoteCommit.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result	+ remoteCommit.hashCode();
+		result = prime * result	+ baseCommit.hashCode();
+		result = prime * result	+ getLocation().hashCode();
+
+		return result;
 	}
 
 	public Image getImage() {
