@@ -1012,7 +1012,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			return false;
 		}
 
-		if (currentWalk == null || pathChange(pathFilters, paths)
+		if (pathChange(pathFilters, paths)
 				|| headId != null && !headId.equals(currentHeadId)) {
 			// TODO Do not dispose SWTWalk just because HEAD changed
 			// In theory we should be able to update the graph and
