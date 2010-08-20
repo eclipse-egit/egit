@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALyX///5w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-20T23:48:52Z",
+      "side": 1,
+      "message": "We already had short discussion about common ancestors on jgit-dev list and according to this[1] Shawn\u0027s answer getting fist common ancestor is the best solution.\n\nIn case of naming strategy for variants. Team framework used to use \u0027local\u0027, \u0027base\u0027, and \u0027remote\u0027 names for variants where \u0027local\u0027 determinate locally stored file version. In case of git the \u0027local\u0027 in some cases can be version from branch that isn\u0027t current HEAD, even more we could exclude locally made changes from synchronization result. Therefore I\u0027ve decided to use \u0027ancestor\u0027, \u0027base\u0027 and \u0027remote\u0027 names.\n\n1. http://dev.eclipse.org/mhonarc/lists/jgit-dev/msg00435.html",
+      "parentUuid": "AAALyX///6c\u003d",
+      "revId": "7d7525e8413a314f2a0dfa1d00ffb4f75ab6dd9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyX///6E\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2010-08-20T23:00:42Z",
       "side": 1,
       "message": "commit hashcodes are pretty well distributed so you could just xor them if you want something faster.",
+      "revId": "7d7525e8413a314f2a0dfa1d00ffb4f75ab6dd9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyX///5s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-20T23:48:52Z",
+      "side": 1,
+      "message": "Good hint! Thank you! ;)",
+      "parentUuid": "AAALyX///6E\u003d",
       "revId": "7d7525e8413a314f2a0dfa1d00ffb4f75ab6dd9a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
