@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyH///Yo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-08-19T23:28:19Z",
+      "side": 1,
+      "message": "Why removing null check for headId ? Is there a guarantee that db can always resolve HEAD ?\n\nFindBugs complains that currentHeadId is never written, I suspect inside this if block currentHeadId should be set to headId then the TODO comment would make sense",
+      "revId": "ee8a07a37d2dfeca74d91c0d4990c6588cbad106",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
