@@ -232,6 +232,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_compareMode;
 
 	/** */
+	public static String GitHistoryPage_showAllBranches;
+
+	/** */
 	public static String GitHistoryPage_CheckoutMenuLabel;
 
 	/** */
