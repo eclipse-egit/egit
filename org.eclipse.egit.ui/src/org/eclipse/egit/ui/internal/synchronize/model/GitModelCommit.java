@@ -8,16 +8,17 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
+import static org.eclipse.compare.structuremergeviewer.Differencer.ADDITION;
+import static org.eclipse.compare.structuremergeviewer.Differencer.CHANGE;
+import static org.eclipse.compare.structuremergeviewer.Differencer.DELETION;
+import static org.eclipse.compare.structuremergeviewer.Differencer.LEFT;
+import static org.eclipse.compare.structuremergeviewer.Differencer.PSEUDO_CONFLICT;
+import static org.eclipse.compare.structuremergeviewer.Differencer.RIGHT;
 import static org.eclipse.jgit.lib.ObjectId.zeroId;
-import static org.eclipse.team.core.synchronize.SyncInfo.ADDITION;
-import static org.eclipse.team.core.synchronize.SyncInfo.CHANGE;
-import static org.eclipse.team.core.synchronize.SyncInfo.CONFLICTING;
-import static org.eclipse.team.core.synchronize.SyncInfo.DELETION;
-import static org.eclipse.team.core.synchronize.SyncInfo.INCOMING;
-import static org.eclipse.team.core.synchronize.SyncInfo.OUTGOING;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.eclipse.compare.CompareConfiguration;
@@ -177,7 +178,7 @@ public class GitModelCommit extends GitModelObject implements ISynchronizationCo
 
 	public int getKind() {
 		if (kind == -1)
-			calculateKind(getAncestorSha1(), getBaseSha1(), getRemoteSha1());
+			calculateKind(getBaseObjectId(), getRemoteObjectId());
 
 		return kind;
 	}
@@ -216,24 +217,17 @@ public class GitModelCommit extends GitModelObject implements ISynchronizationCo
 	}
 
 	/**
-	 * @return SHA1 of ancestor object
+	 * @return base object ObjectId
 	 */
-	protected String getAncestorSha1() {
-		return ancestorCommit.getId().getName();
+	protected ObjectId getBaseObjectId() {
+		return baseCommit != null ? baseCommit.getId() : zeroId();
 	}
 
 	/**
-	 * @return SHA1 of base object
+	 * @return remote object ObjectId
 	 */
-	protected String getBaseSha1() {
-		return baseCommit.getId().getName();
-	}
-
-	/**
-	 * @return SHA1 of remote object
-	 */
-	protected String getRemoteSha1() {
-		return remoteCommit.getId().getName();
+	protected ObjectId getRemoteObjectId() {
+		return remoteCommit.getId();
 	}
 
 	private RevCommit calculateAncestor(RevCommit actual) throws IOException {
@@ -305,18 +299,26 @@ public class GitModelCommit extends GitModelObject implements ISynchronizationCo
 		return null;
 	}
 
-	private void calculateKind(String ancestorSha1, String baseSha1,
-			String remoteSha1) {
-		if (ancestorSha1.equals(baseSha1))
-			kind = INCOMING;
-		else if (ancestorSha1.equals(baseSha1))
-			kind = OUTGOING;
+	private void calculateKind(ObjectId baseId, ObjectId remoteId) {
+		prepareCommitObject(baseCommit);
+		prepareCommitObject(remoteCommit);
+		Date remoteCommitTime = remoteCommit.getCommitterIdent().getWhen();
+		Date baseCommitTime;
+		if (baseCommit != null)
+			baseCommitTime = baseCommit.getCommitterIdent().getWhen();
 		else
-			kind = CONFLICTING;
+			baseCommitTime = new Date(0L);
 
-		if (baseSha1.equals(zeroId().getName()))
+		if (remoteCommitTime.compareTo(baseCommitTime) > 0)
+			kind = LEFT;
+		else if (remoteCommitTime.compareTo(baseCommitTime) < 0)
+			kind = RIGHT;
+		else
+			kind = PSEUDO_CONFLICT;
+
+		if (baseId.equals(zeroId()))
 			kind = kind | ADDITION;
-		else if (remoteSha1.equals(zeroId().getName()))
+		else if (remoteId.equals(zeroId()))
 			kind = kind | DELETION;
 		else
 			kind = kind | CHANGE;
@@ -339,6 +341,15 @@ public class GitModelCommit extends GitModelObject implements ISynchronizationCo
 	public boolean isCompareInputFor(Object object) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	private void prepareCommitObject(RevCommit commit) {
+		if (commit != null && commit.getRawBuffer() == null)
+			try {
+				new RevWalk(getRepository()).parseBody(commit);
+			} catch (IOException e) {
+				Activator.logError(e.getMessage(), e);
+			}
 	}
 
 }
