@@ -20,6 +20,24 @@
     },
     {
       "key": {
+        "uuid": "AAALyX///+4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-20T10:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyH///YE\u003d",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyX///+0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
         "patchSetId": 2
@@ -32,6 +50,60 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALyH///YA\u003d",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyX///+w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-20T10:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyH///X4\u003d",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyX///+s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-20T10:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyH///Yc\u003d",
+      "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyX///+o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-20T10:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyH///YU\u003d",
       "revId": "163fe5cc7d926d55230605e7da15d09af1e39434",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
