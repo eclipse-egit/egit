@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyX///7c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T18:14:56Z",
+      "side": 1,
+      "message": "It seems like an NPE can occur here. In GitModelCommit\u0027s constructors, there is a code path where the \u0027baseCommit\u0027 field is set to \u0027null\u0027.",
+      "revId": "c88ab46269ef5448f20e69053f37d3b281aeb4bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyX///7Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-20T18:14:56Z",
+      "side": 1,
+      "message": "It seems like an NPE can occur here. In GitModelCommit\u0027s constructors, there is a code path where the \u0027baseCommit\u0027 field is set to \u0027null\u0027.",
+      "revId": "c88ab46269ef5448f20e69053f37d3b281aeb4bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
