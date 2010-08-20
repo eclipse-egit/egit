@@ -115,7 +115,7 @@ public class CheckoutCommitHandler extends AbstractHistoryCommanndHandler {
 		}
 	}
 
-	private final class BranchLabelProvider extends LabelProvider {
+	private static final class BranchLabelProvider extends LabelProvider {
 		@Override
 		public String getText(Object element) {
 			RefNode refNode = (RefNode) element;
