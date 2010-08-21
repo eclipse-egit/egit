@@ -43,15 +43,14 @@ public class CreateTagOnCommitHandler extends AbstractHistoryCommanndHandler {
 		if (dialog.open() != Window.OK)
 			return null;
 
-		final Tag tag = new Tag(repo);
+		final Tag tag = new Tag();
 		PersonIdent personIdent = new PersonIdent(repo);
 		String tagName = dialog.getTagName();
 
 		tag.setTag(tagName);
 		tag.setTagger(personIdent);
 		tag.setMessage(dialog.getTagMessage());
-
-		tag.setObjId(commit.getId());
+		tag.setObjectId(commit);
 
 		try {
 			new TagOperation(repo, tag, false)

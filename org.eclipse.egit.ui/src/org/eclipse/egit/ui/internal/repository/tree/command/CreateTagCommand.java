@@ -39,7 +39,9 @@ import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tag;
+import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevSort;
+import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 
@@ -78,22 +80,20 @@ public class CreateTagCommand extends RepositoriesViewCommandHandler<RepositoryT
 		dialog.setRevCommitList(revCommits);
 
 		// get and set existing tags
-		List<Tag> tags = getRevTags(repo);
+		List<RevTag> tags = getRevTags(repo);
 		dialog.setExistingTags(tags);
 
 		if (dialog.open() != IDialogConstants.OK_ID)
 			return null;
 
-		final Tag tag = new Tag(repo);
+		final Tag tag = new Tag();
 		PersonIdent personIdent = new PersonIdent(repo);
 		String tagName = dialog.getTagName();
 
 		tag.setTag(tagName);
 		tag.setTagger(personIdent);
 		tag.setMessage(dialog.getTagMessage());
-
-		ObjectId tagCommit = getTagCommit(dialog.getTagCommit(), repo);
-		tag.setObjId(tagCommit);
+		tag.setObjectId(getTagTarget(dialog.getTagCommit(), repo));
 
 		String tagJobName = NLS.bind(UIText.TagAction_creating, tagName);
 		final boolean shouldMoveTag = dialog.shouldOverWriteTag();
@@ -120,14 +120,13 @@ public class CreateTagCommand extends RepositoriesViewCommandHandler<RepositoryT
 		return null;
 	}
 
-	private List<Tag> getRevTags(Repository repo) throws ExecutionException {
+	private List<RevTag> getRevTags(Repository repo) throws ExecutionException {
 		Collection<Ref> revTags = repo.getTags().values();
-		List<Tag> tags = new ArrayList<Tag>();
+		List<RevTag> tags = new ArrayList<RevTag>();
 		RevWalk walk = new RevWalk(repo);
 		for (Ref ref : revTags) {
 			try {
-				Tag tag = walk.parseTag(repo.resolve(ref.getName())).asTag(walk);
-				tags.add(tag);
+				tags.add(walk.parseTag(repo.resolve(ref.getName())));
 			} catch (IOException e) {
 				throw new ExecutionException(NLS
 						.bind(UIText.TagAction_errorWhileMappingRevTag, ref
@@ -153,19 +152,23 @@ public class CreateTagCommand extends RepositoriesViewCommandHandler<RepositoryT
 		return revWalk;
 	}
 
-	private ObjectId getTagCommit(ObjectId objectId, Repository repo)
+	private RevObject getTagTarget(ObjectId objectId, Repository repo)
 			throws ExecutionException {
-		ObjectId result = null;
-		if (objectId == null) {
+		try {
+			RevWalk rw = new RevWalk(repo);
 			try {
-				result = repo.resolve(Constants.HEAD);
-			} catch (IOException e) {
-				throw new ExecutionException(
-						UIText.TagAction_unableToResolveHeadObjectId, e);
+				if (objectId == null) {
+					return rw.parseAny(repo.resolve(Constants.HEAD));
+
+				} else {
+					return rw.parseAny(objectId);
+				}
+			} finally {
+				rw.release();
 			}
-		} else {
-			result = objectId;
+		} catch (IOException e) {
+			throw new ExecutionException(
+					UIText.TagAction_unableToResolveHeadObjectId, e);
 		}
-		return result;
 	}
 }

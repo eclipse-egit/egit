@@ -81,8 +81,7 @@ public class PushActionTest extends LocalRepositoryTestCase {
 			IncorrectObjectTypeException, IOException {
 		Repository repo = lookupRepository(remoteRepositoryFile);
 		RevWalk rw = new RevWalk(repo);
-		String previous = rw.parseCommit(repo.resolve("HEAD")).asCommit(rw)
-				.getCommitId().name();
+		String previous = rw.parseCommit(repo.resolve("HEAD")).name();
 
 		touchAndSubmit(null);
 		SWTBotShell pushDialog = openPushDialog();

@@ -84,8 +84,8 @@ public class ConnectProviderOperationTest extends GitTestCase {
 		srcTree.setId(writer.writeTree(srcTree));
 		prjTree.setId(writer.writeTree(prjTree));
 		rootTree.setId(writer.writeTree(rootTree));
-		Commit commit = new Commit(thisGit);
-		commit.setTree(rootTree);
+		Commit commit = new Commit();
+		commit.setTreeId(rootTree.getTreeId());
 		commit.setAuthor(new PersonIdent("J. Git", "j.git@egit.org", new Date(
 				60876075600000L), TimeZone.getTimeZone("GMT+1")));
 		commit.setCommitter(commit.getAuthor());

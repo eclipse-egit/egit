@@ -73,7 +73,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 		Repository repo = lookupRepository(repositoryFile);
 		RevWalk rw = new RevWalk(repo);
 		ObjectId id = repo.resolve(repo.getFullBranch());
-		String commitId = rw.parseCommit(id).asCommit(rw).getCommitId().name();
+		String commitId = rw.parseCommit(id).name();
 		touchAndSubmit(null);
 		deleteAllProjects();
 		shareProjects(childRepositoryFile);

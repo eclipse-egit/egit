@@ -32,7 +32,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
-import org.eclipse.jgit.lib.Tag;
+import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.util.FS;
 import org.osgi.service.prefs.BackingStoreException;
@@ -123,12 +123,11 @@ public class RepositoryUtil {
 				Map<String, Ref> tags = repository.getRefDatabase().getRefs(
 						Constants.R_TAGS);
 				for (Ref tagRef : tags.values()) {
-					Tag tag = rw.parseTag(repository.resolve(tagRef.getName()))
-							.asTag(rw);
-					if (tag.getObjId().name().equals(commitId)) {
+					RevTag tag = rw.parseTag(repository.resolve(tagRef.getName()));
+					if (tag.getObject().name().equals(commitId)) {
 						Date timestamp;
-						if (tag.getTagger() != null) {
-							timestamp = tag.getTagger().getWhen();
+						if (tag.getTaggerIdent() != null) {
+							timestamp = tag.getTaggerIdent().getWhen();
 						} else {
 							timestamp = null;
 						}

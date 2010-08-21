@@ -31,7 +31,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.Tag;
+import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.team.ui.history.IHistoryPage;
 import org.eclipse.team.ui.history.IHistoryView;
@@ -150,17 +150,15 @@ abstract class AbstractHistoryCommanndHandler extends AbstractHandler {
 	 * @return the tags
 	 * @throws ExecutionException
 	 */
-	protected List<Tag> getRevTags(ExecutionEvent event)
+	protected List<RevTag> getRevTags(ExecutionEvent event)
 			throws ExecutionException {
 		Repository repo = getRepository(event);
 		Collection<Ref> revTags = repo.getTags().values();
-		List<Tag> tags = new ArrayList<Tag>();
+		List<RevTag> tags = new ArrayList<RevTag>();
 		RevWalk walk = new RevWalk(repo);
 		for (Ref ref : revTags) {
 			try {
-				Tag tag = walk.parseTag(repo.resolve(ref.getName()))
-						.asTag(walk);
-				tags.add(tag);
+				tags.add(walk.parseTag(repo.resolve(ref.getName())));
 			} catch (IOException e) {
 				throw new ExecutionException(e.getMessage(), e);
 			}

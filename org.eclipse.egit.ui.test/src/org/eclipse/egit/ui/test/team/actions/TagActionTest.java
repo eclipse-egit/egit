@@ -24,6 +24,7 @@ import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tag;
@@ -55,11 +56,11 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		repositoryFile = createProjectAndCommitToRepository();
 		Repository repo = lookupRepository(repositoryFile);
 
-		Tag tag = new Tag(repo);
+		Tag tag = new Tag();
 		tag.setTag("SomeTag");
 		tag.setTagger(new PersonIdent(TestUtil.TESTAUTHOR));
 		tag.setMessage("I'm just a little tag");
-		tag.setObjId(repo.resolve(repo.getFullBranch()));
+		tag.setObjectId(repo.resolve(repo.getFullBranch()), Constants.OBJ_COMMIT);
 		TagOperation top = new TagOperation(repo, tag, false);
 		top.execute(null);
 		touchAndSubmit(null);
