@@ -1059,6 +1059,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			// not dispose of the SWTWalk, even if HEAD was reset to
 			// HEAD^1 and the old HEAD commit should not be visible.
 			//
+			currentHeadId = headId;
 			currentWalk = new SWTWalk(db);
 			currentWalk.sort(RevSort.COMMIT_TIME_DESC, true);
 			currentWalk.sort(RevSort.BOUNDARY, true);
