@@ -58,7 +58,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Check out of a commit.
  */
 public class CheckoutCommitHandler extends AbstractHistoryCommanndHandler {
-	private final class BranchMessageDialog extends MessageDialog {
+	private static final class BranchMessageDialog extends MessageDialog {
 		private final List<RefNode> nodes;
 
 		TableViewer branchesList;
