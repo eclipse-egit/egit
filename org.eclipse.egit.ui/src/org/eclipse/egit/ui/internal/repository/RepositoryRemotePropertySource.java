@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
@@ -42,6 +43,19 @@ public class RepositoryRemotePropertySource implements IPropertySource {
 			String remoteName, PropertySheetPage page) {
 		myConfig = config;
 		myName = remoteName;
+		IToolBarManager mgr = page.getSite().getActionBars()
+				.getToolBarManager();
+		// we may have some contributions from the RepositoryPropertySource that
+		// we should remove
+		boolean update = false;
+		update = update
+				| mgr.remove(RepositoryPropertySource.CHANGEMODEACTIONID) != null;
+		update = update
+				| mgr.remove(RepositoryPropertySource.SINGLEVALUEACTIONID) != null;
+		update = update
+				| mgr.remove(RepositoryPropertySource.EDITACTIONID) != null;
+		if (update)
+			mgr.update(false);
 	}
 
 	public Object getEditableValue() {
