@@ -14,6 +14,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
@@ -27,7 +28,7 @@ import org.eclipse.jgit.lib.CommitBuilder;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileTreeEntry;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectWriter;
+import org.eclipse.jgit.lib.ObjectInserter;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
@@ -55,7 +56,7 @@ public class HistoryTest extends GitTestCase {
 	private File gitDir;
 	private Repository thisGit;
 	private Tree tree;
-	private ObjectWriter objectWriter;
+	private ObjectInserter inserter;
 
 	@Before
 	public void setUp() throws Exception {
@@ -67,17 +68,17 @@ public class HistoryTest extends GitTestCase {
 		thisGit = new FileRepository(gitDir);
 		workDir = thisGit.getWorkTree();
 		thisGit.create();
-		objectWriter = new ObjectWriter(thisGit);
+		inserter = thisGit.newObjectInserter();
 
 		tree = new Tree(thisGit);
 		Tree projectTree = tree.addTree("Project-1");
 		File project1_a_txt = createFile("Project-1/A.txt","A.txt - first version\n");
 		addFile(projectTree,project1_a_txt);
-		projectTree.setId(objectWriter.writeTree(projectTree));
+		projectTree.setId(inserter.insert(Constants.OBJ_TREE, projectTree.format()));
 		File project1_b_txt = createFile("Project-1/B.txt","B.txt - first version\n");
 		addFile(projectTree,project1_b_txt);
-		projectTree.setId(objectWriter.writeTree(projectTree));
-		tree.setId(objectWriter.writeTree(tree));
+		projectTree.setId(inserter.insert(Constants.OBJ_TREE, projectTree.format()));
+		tree.setId(inserter.insert(Constants.OBJ_TREE, tree.format()));
 		CommitBuilder commit = new CommitBuilder();
 		commit.setAuthor(new PersonIdent(jauthor, new Date(0L), TimeZone
 				.getTimeZone("GMT+1")));
@@ -85,7 +86,7 @@ public class HistoryTest extends GitTestCase {
 				.getTimeZone("GMT+1")));
 		commit.setMessage("Foo\n\nMessage");
 		commit.setTreeId(tree.getTreeId());
-		ObjectId commitId = objectWriter.writeCommit(commit);
+		ObjectId commitId = inserter.insert(commit);
 
 		tree = new Tree(thisGit);
 		projectTree = tree.addTree("Project-1");
@@ -93,8 +94,8 @@ public class HistoryTest extends GitTestCase {
 
 		File project1_b_v2_txt = createFile("Project-1/B.txt","B.txt - second version\n");
 		addFile(projectTree,project1_b_v2_txt);
-		projectTree.setId(objectWriter.writeTree(projectTree));
-		tree.setId(objectWriter.writeTree(tree));
+		projectTree.setId(inserter.insert(Constants.OBJ_TREE, projectTree.format()));
+		tree.setId(inserter.insert(Constants.OBJ_TREE, tree.format()));
 		commit = new CommitBuilder();
 		commit.setAuthor(new PersonIdent(jauthor, new Date(0L), TimeZone
 				.getTimeZone("GMT+1")));
@@ -103,7 +104,8 @@ public class HistoryTest extends GitTestCase {
 		commit.setMessage("Modified");
 		commit.setParentId(commitId);
 		commit.setTreeId(tree.getTreeId());
-		commitId = objectWriter.writeCommit(commit);
+		commitId = inserter.insert(commit);
+		inserter.flush();
 
 		RefUpdate lck = thisGit.updateRef("refs/heads/master");
 		assertNotNull("obtained lock", lck);
@@ -115,8 +117,22 @@ public class HistoryTest extends GitTestCase {
 		operation.execute(null);
 	}
 
+	@Override
+	public void tearDown() throws Exception {
+		if (inserter != null) {
+			inserter.release();
+		}
+		super.tearDown();
+	}
+
 	private void addFile(Tree t,File f) throws IOException {
-		ObjectId id = objectWriter.writeBlob(f);
+		ObjectId id;
+		FileInputStream in = new FileInputStream(f);
+		try {
+			id = inserter.insert(Constants.OBJ_BLOB, in.getChannel().size(), in);
+		} finally {
+			in.close();
+		}
 		t.addEntry(new FileTreeEntry(t,id,f.getName().getBytes("UTF-8"),false));
 	}
 
