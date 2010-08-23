@@ -1152,6 +1152,24 @@
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewDelete"
+               label="%RepoViewDeleteRepository.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesViewOpenProperties"
                label="%RepoViewOpenProperties.label"
                style="push">
@@ -1419,6 +1437,12 @@
             id="org.eclipse.egit.ui.CheckoutCommand"
             name="%CheckoutCommand">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.DeleteCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewDelete"
+            name="%DeleteRepositoryCommand.name">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.commandImages">
@@ -1529,6 +1553,10 @@
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewOpenProperties"
             icon="icons/obj16/properties.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewDelete"
+            icon="icons/obj16/delete_obj.gif">
       </image>
    </extension>
    <extension
