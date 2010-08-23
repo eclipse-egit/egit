@@ -336,7 +336,7 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 			}
 		};
 
-		if (!(commit.getParentCount() == 1))
+		if (commit.getParentCount() > 1)
 			return;
 		try {
 			FileDiff[] diffs = FileDiff.compute(walker, commit);
