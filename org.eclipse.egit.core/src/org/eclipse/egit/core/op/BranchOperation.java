@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.errors.CheckoutConflictException;
-import org.eclipse.jgit.lib.Commit;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.ObjectId;
@@ -62,7 +61,7 @@ public class BranchOperation implements IEGitOperation {
 	}
 
 	/**
-	 * Construct a {@link BranchOperation} object for a {@link Commit}.
+	 * Construct a {@link BranchOperation} object for a commit.
 	 * @param repository
 	 * @param commit
 	 */

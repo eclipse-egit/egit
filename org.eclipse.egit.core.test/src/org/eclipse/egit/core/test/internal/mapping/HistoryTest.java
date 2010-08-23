@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
-import org.eclipse.jgit.lib.Commit;
+import org.eclipse.jgit.lib.CommitBuilder;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileTreeEntry;
 import org.eclipse.jgit.lib.ObjectId;
@@ -78,7 +78,7 @@ public class HistoryTest extends GitTestCase {
 		addFile(projectTree,project1_b_txt);
 		projectTree.setId(objectWriter.writeTree(projectTree));
 		tree.setId(objectWriter.writeTree(tree));
-		Commit commit = new Commit();
+		CommitBuilder commit = new CommitBuilder();
 		commit.setAuthor(new PersonIdent(jauthor, new Date(0L), TimeZone
 				.getTimeZone("GMT+1")));
 		commit.setCommitter(new PersonIdent(jcommitter, new Date(0L), TimeZone
@@ -95,7 +95,7 @@ public class HistoryTest extends GitTestCase {
 		addFile(projectTree,project1_b_v2_txt);
 		projectTree.setId(objectWriter.writeTree(projectTree));
 		tree.setId(objectWriter.writeTree(tree));
-		commit = new Commit();
+		commit = new CommitBuilder();
 		commit.setAuthor(new PersonIdent(jauthor, new Date(0L), TimeZone
 				.getTimeZone("GMT+1")));
 		commit.setCommitter(new PersonIdent(jcommitter, new Date(0L), TimeZone

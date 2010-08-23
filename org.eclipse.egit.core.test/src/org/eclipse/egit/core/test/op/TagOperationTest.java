@@ -30,7 +30,7 @@ import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Tag;
+import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.junit.After;
@@ -91,7 +91,7 @@ public class TagOperationTest extends DualRepositoryTestCase {
 	public void addTag() throws Exception {
 		assertTrue("Tags should be empty", repository1.getRepository()
 				.getTags().isEmpty());
-		Tag newTag = new Tag();
+		TagBuilder newTag = new TagBuilder();
 		newTag.setTag("TheNewTag");
 		newTag.setMessage("Well, I'm the tag");
 		newTag.setTagger(new PersonIdent(TestUtils.AUTHOR));
