@@ -165,8 +165,8 @@ class FileDiff {
 		return diffEntry.getNewPath();
 	}
 
-	public String getChange() {
-		return diffEntry.getChangeType().name();
+	public ChangeType getChange() {
+		return diffEntry.getChangeType();
 	}
 
 	public ObjectId[] getBlobs() {

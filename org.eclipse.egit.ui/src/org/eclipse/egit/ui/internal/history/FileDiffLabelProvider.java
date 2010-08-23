@@ -18,7 +18,7 @@ class FileDiffLabelProvider extends BaseLabelProvider implements
 		final FileDiff c = (FileDiff) element;
 		switch (columnIndex) {
 		case 0:
-			return c.getChange();
+			return c.getChange().toString();
 		case 1:
 			return c.getPath();
 		}

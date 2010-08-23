@@ -29,6 +29,7 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -103,8 +104,10 @@ class CommitFileDiffViewer extends TableViewer {
 					.getActiveWorkbenchWindow();
 			IWorkbenchPage page = window.getActivePage();
 			IFileRevision rev = CompareUtils.getFileRevision(d.getPath(),
-					d.getChange().equals("D")? d.getCommit().getParent(0) : d.getCommit(), //$NON-NLS-1$
-					db, d.getChange().equals("D")? d.getBlobs()[0] : d.getBlobs()[1]); //$NON-NLS-1$
+					d.getChange().equals(ChangeType.DELETE)?
+							d.getCommit().getParent(0) : d.getCommit(),
+					db, d.getChange().equals(ChangeType.DELETE)?
+							d.getBlobs()[0] : d.getBlobs()[1]);
 			if (rev != null)
 				EgitUiEditorUtils.openEditor(page, rev,
 						new NullProgressMonitor());
@@ -131,14 +134,16 @@ class CommitFileDiffViewer extends TableViewer {
 		final ITypedElement base;
 		final ITypedElement next;
 
-		if (d.getBlobs().length == 2) {
+		if (d.getBlobs().length == 2 && !d.getChange().equals(ChangeType.ADD))
 			base = CompareUtils.getFileRevisionTypedElement(p, c.getParent(0), db, d.getBlobs()[0]);
-			next = CompareUtils.getFileRevisionTypedElement(p, c, db, d.getBlobs()[1]);
-		} else {
+		else
 			// Initial import
 			base = new GitCompareFileRevisionEditorInput.EmptyTypedElement(""); //$NON-NLS-1$
-			next = CompareUtils.getFileRevisionTypedElement(p, c, db, d.getBlobs()[0]);
-		}
+
+		if (d.getChange().equals(ChangeType.DELETE))
+			next = new GitCompareFileRevisionEditorInput.EmptyTypedElement(""); //$NON-NLS-1$
+		else
+			next = CompareUtils.getFileRevisionTypedElement(p, c, db, d.getBlobs()[1]);
 
 		in = new GitCompareFileRevisionEditorInput(next, base, null);
 		CompareUI.openCompareEditor(in);
