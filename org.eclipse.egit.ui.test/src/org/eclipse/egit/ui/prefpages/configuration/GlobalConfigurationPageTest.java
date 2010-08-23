@@ -21,6 +21,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.EGitTestCase;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
@@ -126,7 +127,10 @@ public class GlobalConfigurationPageTest {
 				.setText(TESTSECTION + "." + TESTNAME);
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_ValueLabel)
 				.setText("true");
+		// close the dialog
 		addDialog.bot().button(IDialogConstants.OK_LABEL).click();
+		// close the editor
+		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
 		config.load();
 
 		assertTrue("Missing section", config.getSections()
@@ -148,7 +152,10 @@ public class GlobalConfigurationPageTest {
 				.setText(TESTSECTION + "." + TESTSUBSECTION + "." + TESTNAME);
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_ValueLabel)
 				.setText("true");
+		// close the dialog
 		addDialog.bot().button(IDialogConstants.OK_LABEL).click();
+		// close the editor
+		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
 		config.load();
 
 		assertTrue("Missing section", config.getSections()
@@ -211,6 +218,8 @@ public class GlobalConfigurationPageTest {
 		preferencePage.bot().textWithLabel(
 				UIText.ConfigurationEditorComponent_ValueLabel).setText("new");
 		bot.button(UIText.ConfigurationEditorComponent_ChangeButton).click();
+		// close the editor
+		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
 		config.load();
 		assertEquals(1, Arrays.asList(
 				config.getStringList(TESTSECTION, null, TESTNAME)).indexOf(
@@ -228,6 +237,8 @@ public class GlobalConfigurationPageTest {
 				UIText.ConfigurationEditorComponent_ValueLabel).setText(
 				"second");
 		bot.button(UIText.ConfigurationEditorComponent_AddButton).click();
+		// press apply
+		preferencePage.bot().button(JFaceResources.getString("apply")).click();
 		config.load();
 		List<String> values = Arrays.asList(config.getStringList(TESTSECTION,
 				null, TESTNAME));
@@ -241,6 +252,8 @@ public class GlobalConfigurationPageTest {
 				UIText.ConfigurationEditorComponent_ValueLabel).setText(
 				"middle");
 		bot.button(UIText.ConfigurationEditorComponent_AddButton).click();
+		// close the editor
+		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
 		config.load();
 		values = Arrays.asList(config
 				.getStringList(TESTSECTION, null, TESTNAME));
@@ -321,6 +334,8 @@ public class GlobalConfigurationPageTest {
 				TESTNAME + "[0]").select();
 
 		bot.button(UIText.ConfigurationEditorComponent_DeleteButton).click();
+		// close the editor
+		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
 		config.load();
 		values = Arrays.asList(config
 				.getStringList(TESTSECTION, null, TESTNAME));
@@ -345,6 +360,8 @@ public class GlobalConfigurationPageTest {
 				.shell(UIText.ConfigurationEditorComponent_RemoveSubsectionTitle);
 		confirm.activate();
 		confirm.bot().button(IDialogConstants.OK_LABEL).click();
+		// close the editor
+		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
 		config.load();
 		assertTrue("Subsection should be deleted", !config.getSubsections(
 				TESTSECTION).contains(TESTSUBSECTION));
@@ -366,6 +383,8 @@ public class GlobalConfigurationPageTest {
 				.shell(UIText.ConfigurationEditorComponent_RemoveSectionTitle);
 		confirm.activate();
 		confirm.bot().button(IDialogConstants.OK_LABEL).click();
+		// close the editor
+		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
 		config.load();
 		assertTrue("Values in section should be deleted", config.getStringList(
 				TESTSECTION, null, TESTNAME).length == 0);
