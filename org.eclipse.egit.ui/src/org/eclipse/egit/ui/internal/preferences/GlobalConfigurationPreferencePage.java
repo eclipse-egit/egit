@@ -70,23 +70,14 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	}
 
 	@Override
-	protected void performApply() {
-		try {
-			editor.save();
-		} catch (IOException e) {
-			Activator.handleError(e.getMessage(), e, true);
-		}
-		super.performApply();
-	}
-
-	@Override
 	public boolean performOk() {
-		super.performOk();
 		if (isDirty)
 			try {
 				editor.save();
+				return super.performOk();
 			} catch (IOException e) {
 				Activator.handleError(e.getMessage(), e, true);
+				return false;
 			}
 		return super.performOk();
 	}
