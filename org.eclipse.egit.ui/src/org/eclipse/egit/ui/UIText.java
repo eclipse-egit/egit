@@ -1426,6 +1426,33 @@ public class UIText extends NLS {
 	public static String CreateBranchWizard_NewBranchTitle;
 
 	/** */
+	public static String CreateRepositoryPage_BareCheckbox;
+
+	/** */
+	public static String CreateRepositoryPage_BrowseButton;
+
+	/** */
+	public static String CreateRepositoryPage_DirectoryLabel;
+
+	/** */
+	public static String CreateRepositoryPage_NotADirectoryMessage;
+
+	/** */
+	public static String CreateRepositoryPage_NotEmptyMessage;
+
+	/** */
+	public static String CreateRepositoryPage_PageMessage;
+
+	/** */
+	public static String CreateRepositoryPage_PageTitle;
+
+	/** */
+	public static String CreateRepositoryPage_PleaseSelectDirectoryMessage;
+
+	/** */
+	public static String CreateRepositoryPage_PleaseUseAbsoluePathMessage;
+
+	/** */
 	public static String PushResultTable_columnStatusRepo;
 
 	/** */
@@ -2334,6 +2361,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String LocalFileRevision_currentVersionTag;
+
+	/** */
+	public static String NewRepositoryWizard_WizardTitle;
 
 	/** */
 	public static String RemoteSelectionCombo_remoteName;

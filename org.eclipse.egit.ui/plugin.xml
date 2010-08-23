@@ -1226,11 +1226,13 @@
             locationURI="toolbar:org.eclipse.egit.ui.RepositoriesView">
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewAddRepository"
-               style="push">
+               style="push"
+               tooltip="Add an existing local Git Repository to this view">
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewClone"
-               style="push">
+               style="push"
+               tooltip="Clone a Git Repository and add the clone to this view">
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewRefresh"
@@ -1239,6 +1241,39 @@
          <command
                commandId="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
                style="toggle">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
+               style="push"
+               tooltip="Create a new Git Repository and add it to this view">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:org.eclipse.egit.ui.RepositoriesView">
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewAddRepository"
+               label="&amp;Add a Repository"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewClone"
+               label="&amp;Clone a Repository"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewRefresh"
+               label="&amp;Refresh"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
+               label="Link with &amp;Selection"
+               style="toggle">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
+               label="&amp;Create a Repository"
+               style="push">
          </command>
       </menuContribution>
    </extension>
@@ -1419,6 +1454,12 @@
             id="org.eclipse.egit.ui.CheckoutCommand"
             name="%CheckoutCommand">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CreateRepositoryCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
+            name="Create a Repository">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.commandImages">
@@ -1529,6 +1570,10 @@
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewOpenProperties"
             icon="icons/obj16/properties.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
+            icon="icons/etool16/createRepository.gif">
       </image>
    </extension>
    <extension
@@ -1806,5 +1851,20 @@
             id="org.eclipse.egit.ui.history.CheckoutCommand"
             name="%CheckoutCommand.name">
       </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.egit.ui.wizardCategory"
+            class="org.eclipse.egit.ui.internal.repository.NewRepositoryWizard"
+            hasPages="true"
+            icon="icons/etool16/createRepository.gif"
+            id="org.eclipse.egit.ui.CreateRepositoryWizard"
+            name="Git Repository">
+      </wizard>
+      <category
+            id="org.eclipse.egit.ui.wizardCategory"
+            name="%Git">
+      </category>
    </extension>
 </plugin>
