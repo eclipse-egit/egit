@@ -17,6 +17,7 @@ import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -118,14 +119,13 @@ public class RefContentProposal implements IContentProposal {
 	public String getDescription() {
 		if (objectId == null)
 			return null;
-		final ObjectLoader loader;
+		ObjectReader reader = db.newObjectReader();
 		try {
-			loader = db.open(objectId);
-
+			final ObjectLoader loader = reader.open(objectId);
 			final StringBuilder sb = new StringBuilder();
 			sb.append(refName);
 			sb.append('\n');
-			sb.append(objectId.abbreviate(db).name());
+			sb.append(reader.abbreviate(objectId).name());
 			sb.append(" - "); //$NON-NLS-1$
 
 			switch (loader.getType()) {
@@ -154,6 +154,8 @@ public class RefContentProposal implements IContentProposal {
 			Activator.logError(NLS.bind(
 					UIText.RefContentProposal_errorReadingObject, objectId), e);
 			return null;
+		} finally {
+			reader.release();
 		}
 	}
 

@@ -1,5 +1,9 @@
 package org.eclipse.egit.ui.internal.fetch;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -7,6 +11,14 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectReader;
+import org.eclipse.jgit.lib.RefUpdate;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RefUpdate.Result;
+import org.eclipse.jgit.transport.FetchResult;
+import org.eclipse.jgit.transport.TrackingRefUpdate;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -18,12 +30,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RefUpdate.Result;
-import org.eclipse.jgit.transport.FetchResult;
-import org.eclipse.jgit.transport.TrackingRefUpdate;
 
 /**
  * Component displaying table with results of fetch operation.
@@ -49,7 +55,9 @@ class FetchResultTable {
 
 	private final Color upToDateColor;
 
-	private Repository db;
+	private ObjectReader reader;
+
+	private Map<ObjectId, String> abbrevations;
 
 	FetchResultTable(final Composite parent) {
 		tablePanel = new Composite(parent, SWT.NONE);
@@ -69,6 +77,9 @@ class FetchResultTable {
 
 		tablePanel.addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
+				if (reader != null)
+					reader.release();
+
 				// dispose of our allocated Color instances
 				rejectedColor.dispose();
 				updatedColor.dispose();
@@ -84,7 +95,8 @@ class FetchResultTable {
 
 	void setData(final Repository db, final FetchResult fetchResult) {
 		tableViewer.setInput(null);
-		this.db = db;
+		this.reader = db.newObjectReader();
+		this.abbrevations = new HashMap<ObjectId, String>();
 		tableViewer.setInput(fetchResult);
 	}
 
@@ -137,14 +149,14 @@ class FetchResultTable {
 				}
 
 				if (r == RefUpdate.Result.FORCED) {
-					final String o = tru.getOldObjectId().abbreviate(db).name();
-					final String n = tru.getNewObjectId().abbreviate(db).name();
+					final String o = safeAbbreviate(tru.getOldObjectId());
+					final String n = safeAbbreviate(tru.getNewObjectId());
 					return o + "..." + n; //$NON-NLS-1$
 				}
 
 				if (r == RefUpdate.Result.FAST_FORWARD) {
-					final String o = tru.getOldObjectId().abbreviate(db).name();
-					final String n = tru.getNewObjectId().abbreviate(db).name();
+					final String o = safeAbbreviate(tru.getOldObjectId());
+					final String n = safeAbbreviate(tru.getNewObjectId());
 					return o + ".." + n; //$NON-NLS-1$
 				}
 
@@ -154,6 +166,19 @@ class FetchResultTable {
 					return UIText.FetchResultTable_statusUpToDate;
 				throw new IllegalArgumentException(NLS.bind(
 						UIText.FetchResultTable_statusUnexpected, r));
+			}
+
+			private String safeAbbreviate(ObjectId id) {
+				String abbrev = abbrevations.get(id);
+				if (abbrev == null) {
+					try {
+						abbrev = reader.abbreviate(id).name();
+					} catch (IOException cannotAbbreviate) {
+						abbrev = id.name();
+					}
+					abbrevations.put(id, abbrev);
+				}
+				return abbrev;
 			}
 
 			@Override

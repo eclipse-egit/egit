@@ -8,6 +8,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
@@ -20,6 +24,14 @@ import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.IElementComparer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectReader;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.RemoteRefUpdate;
+import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.transport.RemoteRefUpdate.Status;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -32,13 +44,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.RemoteRefUpdate;
-import org.eclipse.jgit.transport.URIish;
-import org.eclipse.jgit.transport.RemoteRefUpdate.Status;
 
 /**
  * Table displaying push operation results.
@@ -72,6 +77,10 @@ class PushResultTable {
 
 	private final Color upToDateColor;
 
+	private ObjectReader reader;
+
+	private Map<ObjectId, String> abbrevations;
+
 	PushResultTable(final Composite parent) {
 		tablePanel = new Composite(parent, SWT.NONE);
 		tablePanel.setLayout(new GridLayout());
@@ -94,6 +103,9 @@ class PushResultTable {
 
 		tablePanel.addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
+				if (reader != null)
+					reader.release();
+
 				// dispose of our allocated Color instances
 				rejectedColor.dispose();
 				updatedColor.dispose();
@@ -118,6 +130,9 @@ class PushResultTable {
 	}
 
 	void setData(final Repository localDb, final PushOperationResult result) {
+		reader = localDb.newObjectReader();
+		abbrevations = new HashMap<ObjectId,String>();
+
 		// We have to recreate columns.
 		for (final TableColumn tc : tableViewer.getTable().getColumns())
 			tc.dispose();
@@ -176,8 +191,7 @@ class PushResultTable {
 					.bind(UIText.PushResultTable_columnStatusRepo, Integer
 							.toString(++i)), COLUMN_STATUS_WEIGHT, SWT.CENTER);
 			statusViewer.getColumn().setToolTipText(uri.toString());
-			statusViewer.setLabelProvider(new UpdateStatusLabelProvider(
-					localDb, uri));
+			statusViewer.setLabelProvider(new UpdateStatusLabelProvider(uri));
 		}
 		tableViewer.setInput(result);
 		tablePanel.layout();
@@ -199,12 +213,9 @@ class PushResultTable {
 	}
 
 	private class UpdateStatusLabelProvider extends ColumnLabelProvider {
-		private Repository localDb;
-
 		private final URIish uri;
 
-		UpdateStatusLabelProvider(final Repository localDb, final URIish uri) {
-			this.localDb = localDb;
+		UpdateStatusLabelProvider(final URIish uri) {
 			this.uri = uri;
 		}
 
@@ -227,9 +238,9 @@ class PushResultTable {
 					return UIText.PushResultTable_statusOkNewBranch;
 				}
 
-				return oldRef.getObjectId().abbreviate(localDb).name()
+				return safeAbbreviate(oldRef.getObjectId())
 						+ (rru.isFastForward() ? ".." : "...") //$NON-NLS-1$ //$NON-NLS-2$
-						+ rru.getNewObjectId().abbreviate(localDb).name();
+						+ safeAbbreviate(rru.getNewObjectId());
 			case UP_TO_DATE:
 				return UIText.PushResultTable_statusUpToDate;
 			case NON_EXISTING:
@@ -245,6 +256,19 @@ class PushResultTable {
 						UIText.PushResultTable_statusUnexpected, rru
 								.getStatus()));
 			}
+		}
+
+		private String safeAbbreviate(ObjectId id) {
+			String abbrev = abbrevations.get(id);
+			if (abbrev == null) {
+				try {
+					abbrev = reader.abbreviate(id).name();
+				} catch (IOException cannotAbbreviate) {
+					abbrev = id.name();
+				}
+				abbrevations.put(id, abbrev);
+			}
+			return abbrev;
 		}
 
 		@Override
@@ -283,7 +307,7 @@ class PushResultTable {
 			case OK:
 				if (rru.isDelete())
 					return NLS.bind(UIText.PushResultTable_statusDetailDeleted,
-							oldRef.getObjectId().abbreviate(localDb).name());
+							safeAbbreviate(oldRef.getObjectId()));
 				if (oldRef == null)
 					return null;
 				if (rru.isFastForward())
@@ -303,7 +327,7 @@ class PushResultTable {
 				if (remoteRef == null)
 					curVal = UIText.PushResultTable_refNonExisting;
 				else
-					curVal = remoteRef.getObjectId().abbreviate(localDb).name();
+					curVal = safeAbbreviate(remoteRef.getObjectId());
 
 				final ObjectId expectedOldObjectId = rru
 						.getExpectedOldObjectId();
@@ -311,7 +335,7 @@ class PushResultTable {
 				if (expectedOldObjectId.equals(ObjectId.zeroId()))
 					expVal = UIText.PushResultTable_refNonExisting;
 				else
-					expVal = expectedOldObjectId.abbreviate(localDb).name();
+					expVal = safeAbbreviate(expectedOldObjectId);
 				return NLS.bind(UIText.PushResultTable_statusDetailChanged,
 						curVal, expVal);
 			case REJECTED_OTHER_REASON:
