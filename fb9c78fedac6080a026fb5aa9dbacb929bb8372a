@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyX///5g\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitFolderResourceVariant.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-20T23:52:36Z",
+      "side": 1,
+      "message": "We prefer have single statement if\u0027s without brackets.",
+      "revId": "fb9c78fedac6080a026fb5aa9dbacb929bb8372a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyX///5c\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-20T23:52:36Z",
+      "side": 1,
+      "message": "We prefer have single statement if\u0027s without brackets.",
+      "revId": "fb9c78fedac6080a026fb5aa9dbacb929bb8372a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyX///5Y\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-20T23:52:36Z",
+      "side": 1,
+      "message": "We prefer have single statement if\u0027s without brackets.",
+      "revId": "fb9c78fedac6080a026fb5aa9dbacb929bb8372a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyX///5U\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-20T23:52:36Z",
+      "side": 1,
+      "message": "We prefer have single statement if\u0027s without brackets.",
+      "revId": "fb9c78fedac6080a026fb5aa9dbacb929bb8372a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
