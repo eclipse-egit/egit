@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.preferences;
 
+import java.io.IOException;
+
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
@@ -27,24 +30,78 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  */
 public class GlobalConfigurationPreferencePage extends PreferencePage implements
 		IWorkbenchPreferencePage {
-
 	private FileBasedConfig userConfig;
+
+	private boolean isDirty;
+
+	private ConfigurationEditorComponent editor;
 
 	@Override
 	protected Control createContents(Composite parent) {
-		Control result = new ConfigurationEditorComponent(parent, userConfig,
-				true) {
+
+		editor = new ConfigurationEditorComponent(parent, userConfig, true) {
 			@Override
 			protected void setErrorMessage(String message) {
 				GlobalConfigurationPreferencePage.this.setErrorMessage(message);
 			}
-		}.createContents();
+
+			@Override
+			protected void setDirty(boolean dirty) {
+				isDirty = dirty;
+				updateApplyButton();
+			}
+		};
+		Control result = editor.createContents();
 		Dialog.applyDialogFont(result);
 		return result;
 	}
 
+	@Override
+	public void setVisible(boolean visible) {
+		if (visible)
+			updateApplyButton();
+		super.setVisible(visible);
+	}
+
+	@Override
+	protected void updateApplyButton() {
+		if (getApplyButton() != null)
+			getApplyButton().setEnabled(isDirty);
+	}
+
+	@Override
+	protected void performApply() {
+		try {
+			editor.save();
+		} catch (IOException e) {
+			Activator.handleError(e.getMessage(), e, true);
+		}
+		super.performApply();
+	}
+
+	@Override
+	public boolean performOk() {
+		super.performOk();
+		if (isDirty)
+			try {
+				editor.save();
+			} catch (IOException e) {
+				Activator.handleError(e.getMessage(), e, true);
+			}
+		return super.performOk();
+	}
+
+	@Override
+	protected void performDefaults() {
+		try {
+			editor.restore();
+		} catch (IOException e) {
+			Activator.handleError(e.getMessage(), e, true);
+		}
+		super.performDefaults();
+	}
+
 	public void init(IWorkbench workbench) {
-		super.noDefaultAndApplyButton();
 		if (userConfig == null)
 			userConfig = SystemReader.getInstance().openUserConfig(FS.DETECTED);
 	}

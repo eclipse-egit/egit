@@ -29,7 +29,6 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.IFontProvider;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -120,6 +119,32 @@ public class ConfigurationEditorComponent {
 		this.shellProvider = new SameShellProvider(parent);
 		this.parent = parent;
 		this.useDialogFont = useDialogFont;
+	}
+
+	/**
+	 * Saves and (in case of success) reloads the current configuration
+	 *
+	 * @throws IOException
+	 */
+	public void save() throws IOException {
+		editableConfig.save();
+		setDirty(false);
+		initControlsFromConfig();
+	}
+
+	/**
+	 * Restores and (in case of success) reloads the current configuration
+	 *
+	 * @throws IOException
+	 */
+	public void restore() throws IOException {
+		try {
+			editableConfig.load();
+			tv.refresh();
+		} catch (ConfigInvalidException e) {
+			throw new IOException(e.getMessage());
+		}
+		initControlsFromConfig();
 	}
 
 	/**
@@ -226,11 +251,11 @@ public class ConfigurationEditorComponent {
 					if (st.countTokens() == 2) {
 						editableConfig.setString(st.nextToken(), null, st
 								.nextToken(), dlg.getValue());
-						saveAndUpdate();
+						markDirty();
 					} else if (st.countTokens() == 3) {
 						editableConfig.setString(st.nextToken(),
 								st.nextToken(), st.nextToken(), dlg.getValue());
-						saveAndUpdate();
+						markDirty();
 					} else
 						Activator
 								.handleError(
@@ -262,7 +287,7 @@ public class ConfigurationEditorComponent {
 													UIText.ConfigurationEditorComponent_RemoveSectionMessage,
 													section.name))) {
 						editableConfig.unsetSection(section.name, null);
-						saveAndUpdate();
+						markDirty();
 					}
 				} else if (first instanceof SubSection) {
 					SubSection section = (SubSection) first;
@@ -277,7 +302,7 @@ public class ConfigurationEditorComponent {
 															+ section.name))) {
 						editableConfig.unsetSection(section.parent.name,
 								section.name);
-						saveAndUpdate();
+						markDirty();
 					}
 				} else {
 					Activator
@@ -316,7 +341,7 @@ public class ConfigurationEditorComponent {
 				if (first instanceof Entry) {
 					Entry entry = (Entry) first;
 					entry.changeValue(valueText.getText());
-					saveAndUpdate();
+					markDirty();
 				}
 			}
 		});
@@ -332,7 +357,7 @@ public class ConfigurationEditorComponent {
 				if (first instanceof Entry) {
 					Entry entry = (Entry) first;
 					entry.removeValue();
-					saveAndUpdate();
+					markDirty();
 				}
 
 			}
@@ -349,7 +374,7 @@ public class ConfigurationEditorComponent {
 				if (first instanceof Entry) {
 					Entry entry = (Entry) first;
 					entry.addValue(valueText.getText());
-					saveAndUpdate();
+					markDirty();
 				}
 
 			}
@@ -373,6 +398,11 @@ public class ConfigurationEditorComponent {
 			}
 		});
 
+		initControlsFromConfig();
+		return main;
+	}
+
+	private void initControlsFromConfig() {
 		try {
 			editableConfig.load();
 			tv.setInput(editableConfig);
@@ -387,7 +417,6 @@ public class ConfigurationEditorComponent {
 		}
 		tv.expandAll();
 		updateEnablement();
-		return main;
 	}
 
 	/**
@@ -395,6 +424,14 @@ public class ConfigurationEditorComponent {
 	 *            the error message to display
 	 */
 	protected void setErrorMessage(String message) {
+		// the default implementation does nothing
+	}
+
+	/**
+	 * @param dirty
+	 *            the dirty flag
+	 */
+	protected void setDirty(boolean dirty) {
 		// the default implementation does nothing
 	}
 
@@ -417,16 +454,9 @@ public class ConfigurationEditorComponent {
 		remove.setEnabled(sectionOrSubSectionSelected);
 	}
 
-	private void saveAndUpdate() {
-		try {
-			editableConfig.save();
-			ISelection sel = tv.getSelection();
-			tv.setInput(editableConfig);
-			tv.expandAll();
-			tv.setSelection(sel, true);
-		} catch (IOException e) {
-			Activator.handleError(e.getMessage(), e, true);
-		}
+	private void markDirty() {
+		setDirty(true);
+		tv.refresh();
 	}
 
 	private final static class Section {
