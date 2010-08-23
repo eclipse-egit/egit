@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///9U\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/CommitFileRevision.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-08-23T14:39:12Z",
+      "side": 1,
+      "message": "You shouldn\u0027t do this.  I can\u0027t promise you that parsing the body of another RevWalk\u0027s RevCommit with a new RevWalk will continue to work in the future.\n\nIf you need to ensure the buffer is parsed, you should be passing around the RevWalk that created the RevCommit you passed around, and call parseBody() on that.\n\nparseBody() knows whether or not the buffer is loaded.  Its essentially a no-op if the buffer is already loaded.  Therefore you don\u0027t need the rc.getRawBuffer() conditional check around it.\n\nI know we don\u0027t promise that getRawBuffer() implies the other things are accessible.  That is, just because getRawBuffer() returns non-null does not imply that getFullMessage() or getAuthorIdent() will work.  Only parseBody() promises that.",
+      "revId": "d28a02e08aa302e11268a34c9785019c4d770262",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
