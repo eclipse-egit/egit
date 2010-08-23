@@ -57,15 +57,17 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
  */
 public class RepositoryPropertySource implements IPropertySource {
 
+	static final String CHANGEMODEACTIONID = "ChangeMode"; //$NON-NLS-1$
+
+	static final String SINGLEVALUEACTIONID = "SingleValueToggle"; //$NON-NLS-1$
+
+	static final String EDITACTIONID = "Edit"; //$NON-NLS-1$
+
 	private static final String USER_ID_PREFIX = "user"; //$NON-NLS-1$
 
 	private static final String REPO_ID_PREFIX = "repo"; //$NON-NLS-1$
 
 	private static final String EFFECTIVE_ID_PREFIX = "effe"; //$NON-NLS-1$
-
-	private static final String CHANGEMODEACTIONID = "ChangeMode"; //$NON-NLS-1$
-
-	private static final String SINGLEVALUEACTIONID = "SingleValueToggle"; //$NON-NLS-1$
 
 	private final PropertySheetPage myPage;
 
@@ -177,7 +179,7 @@ public class RepositoryPropertySource implements IPropertySource {
 					UIIcons.EDITCONFIG) {
 				@Override
 				public String getId() {
-					return "Edit"; //$NON-NLS-1$
+					return EDITACTIONID;
 				}
 
 				@Override
