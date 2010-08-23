@@ -2342,6 +2342,18 @@ public class UIText extends NLS {
 	public static String RemoteSelectionCombo_remoteRef;
 
 	/** */
+	public static String RemoveCommand_DeleteConfirmMultiMessage;
+
+	/** */
+	public static String RemoveCommand_DeleteConfirmSingleMessage;
+
+	/** */
+	public static String RemoveCommand_DeleteConfirmTitle;
+
+	/** */
+	public static String RemoveCommand_DeleteFailureMessage;
+
+	/** */
 	public static String SelectSynchronizeResourceDialog_header;
 
 	/** */
