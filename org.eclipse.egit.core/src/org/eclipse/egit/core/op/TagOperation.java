@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectWriter;
+import org.eclipse.jgit.lib.ObjectInserter;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.TagBuilder;
@@ -93,8 +93,13 @@ public class TagOperation implements IEGitOperation {
 
 		try {
 			repo.open(startPointRef);
-			ObjectWriter objWriter = new ObjectWriter(repo);
-			tag.setTagId(objWriter.writeTag(tag));
+			ObjectInserter inserter = repo.newObjectInserter();
+			try {
+				inserter.insert(tag);
+				inserter.flush();
+			} finally {
+				inserter.release();
+			}
 		} catch (IOException e) {
 			throw new TeamException(NLS.bind(CoreText.TagOperation_objectIdNotFound,
 					tag.getTag(), e.getMessage()), e);
