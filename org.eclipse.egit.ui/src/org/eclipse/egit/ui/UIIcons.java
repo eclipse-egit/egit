@@ -140,7 +140,11 @@ public class UIIcons {
 	/** Clone Icon */
 	public static ImageDescriptor CLONEGIT;
 
+	/** Changeset Icon */
+	public static final ImageDescriptor CHANGESET;
+
 	private static final URL base;
+
 
 	static {
 		base = init();
@@ -190,6 +194,7 @@ public class UIIcons {
 		COLLAPSEALL = map("elcl16/collapseall.gif"); //$NON-NLS-1$
 		CLONEGIT = map("obj16/cloneGit.gif"); //$NON-NLS-1$
 		RESET = map("obj16/reset.gif"); //$NON-NLS-1$
+		CHANGESET = map("obj16/changelog_obj.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
