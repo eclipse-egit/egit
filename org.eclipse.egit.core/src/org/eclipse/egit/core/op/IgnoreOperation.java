@@ -59,7 +59,7 @@ public class IgnoreOperation implements IEGitOperation {
 	public IgnoreOperation(IResource[] resources) {
 		this.resources = resources;
 		gitignoreOutsideWSChanged = false;
-		calcSchedulingRule();
+		schedulingRule = calcSchedulingRule();
 	}
 
 	public void execute(IProgressMonitor monitor) throws CoreException {

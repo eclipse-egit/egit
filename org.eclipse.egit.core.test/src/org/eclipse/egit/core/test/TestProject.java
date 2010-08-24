@@ -203,6 +203,11 @@ public class TestProject {
 		//                                }, IJavaSearchConstants.WAIT_UNTIL_READY_TO_SEARCH, null);
 	}
 
+	public String getFileContent(String filepath) throws Exception {
+		IFile file = project.getFile(filepath);
+		InputStream stream = file.getContents();
+		return testUtils.slurpAndClose(stream);
+	}
 	/**
 	 * @return Returns the sourceFolder.
 	 */
