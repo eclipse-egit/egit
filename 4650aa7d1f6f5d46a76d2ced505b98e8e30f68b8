@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///88\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/ExistingOrNewPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-08-23T15:30:11Z",
+      "side": 1,
+      "message": "Text.getText() never returns null",
+      "revId": "4650aa7d1f6f5d46a76d2ced505b98e8e30f68b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
