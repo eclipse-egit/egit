@@ -11,7 +11,6 @@
 package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +27,8 @@ import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.errors.CorruptObjectException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.LargeObjectException;
 import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
@@ -38,7 +37,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.util.IO;
 
 class FileDiff {
 
@@ -166,27 +164,13 @@ class FileDiff {
 		return resource.getProjectRelativePath().toString();
 	}
 
-	private RawText getRawText(ObjectId id, ObjectReader reader) throws IOException {
+	private RawText getRawText(ObjectId id, ObjectReader reader)
+			throws IOException {
 		if (id.equals(ObjectId.zeroId()))
-			return new RawText(new byte[] { });
-		ObjectLoader ldr = reader.open(id);
-		if (!ldr.isLarge())
-			return new RawText(ldr.getCachedBytes());
-
-		long sz = ldr.getSize();
-		if (Integer.MAX_VALUE <= sz)
-			throw new LargeObjectException(id);
-
-		byte[] buf = new byte[(int) sz];
-		InputStream in = ldr.openStream();
-		try {
-			IO.readFully(in, buf, 0, buf.length);
-		} finally {
-			in.close();
-		}
-		return new RawText(buf);
+			return new RawText(new byte[] {});
+		ObjectLoader ldr = reader.open(id, Constants.OBJ_BLOB);
+		return new RawText(ldr.getCachedBytes(Integer.MAX_VALUE));
 	}
-
 
 	public RevCommit getCommit() {
 		return commit;
