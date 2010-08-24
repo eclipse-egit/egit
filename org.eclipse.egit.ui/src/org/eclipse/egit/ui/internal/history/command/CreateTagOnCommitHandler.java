@@ -21,7 +21,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.Tag;
+import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -43,7 +43,7 @@ public class CreateTagOnCommitHandler extends AbstractHistoryCommanndHandler {
 		if (dialog.open() != Window.OK)
 			return null;
 
-		final Tag tag = new Tag();
+		final TagBuilder tag = new TagBuilder();
 		PersonIdent personIdent = new PersonIdent(repo);
 		String tagName = dialog.getTagName();
 

@@ -24,7 +24,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
-import org.eclipse.jgit.lib.Commit;
+import org.eclipse.jgit.lib.CommitBuilder;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileTreeEntry;
 import org.eclipse.jgit.lib.ObjectId;
@@ -84,7 +84,7 @@ public class ConnectProviderOperationTest extends GitTestCase {
 		srcTree.setId(writer.writeTree(srcTree));
 		prjTree.setId(writer.writeTree(prjTree));
 		rootTree.setId(writer.writeTree(rootTree));
-		Commit commit = new Commit();
+		CommitBuilder commit = new CommitBuilder();
 		commit.setTreeId(rootTree.getTreeId());
 		commit.setAuthor(new PersonIdent("J. Git", "j.git@egit.org", new Date(
 				60876075600000L), TimeZone.getTimeZone("GMT+1")));

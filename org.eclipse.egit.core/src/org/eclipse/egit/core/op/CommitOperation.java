@@ -37,7 +37,7 @@ import org.eclipse.jgit.api.NoHeadException;
 import org.eclipse.jgit.api.NoMessageException;
 import org.eclipse.jgit.api.WrongRepositoryStateException;
 import org.eclipse.jgit.errors.UnmergedPathException;
-import org.eclipse.jgit.lib.Commit;
+import org.eclipse.jgit.lib.CommitBuilder;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.GitIndex.Entry;
@@ -318,7 +318,7 @@ public class CommitOperation implements IEGitOperation {
 				if (changeId != null)
 					commitMessage = commitMessage.replaceAll("\nChange-Id: I0000000000000000000000000000000000000000\n", "\nChange-Id: I" + changeId.getName() + "\n");  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 			}
-			Commit commit = new Commit();
+			CommitBuilder commit = new CommitBuilder();
 			commit.setTreeId(tree.getTreeId());
 			commit.setParentIds(parentIds);
 			commit.setMessage(commitMessage);

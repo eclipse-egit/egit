@@ -26,7 +26,7 @@ import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.Tag;
+import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -55,7 +55,7 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 		ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ2).delete(
 				false, null);
 
-		Tag tag = new Tag();
+		TagBuilder tag = new TagBuilder();
 		tag.setTag("SomeTag");
 		tag.setTagger(new PersonIdent(TestUtil.TESTAUTHOR));
 		tag.setMessage("I'm just a little tag");
