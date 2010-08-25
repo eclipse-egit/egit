@@ -217,6 +217,9 @@ public class UIText extends NLS {
 	public static String GitDecoratorPreferencePage_bindingRepositoryNameFlag;
 
 	/** */
+	public static String GitDecoratorPreferencePage_iconsShowDirty;
+
+	/** */
 	public static String GitDocument_errorLoadCommit;
 
 	/** */
