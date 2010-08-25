@@ -60,6 +60,7 @@
   </licenses>
 
   <properties>
+    <egit-version>0.9.0-SNAPSHOT</egit-version>
     <tycho-version>0.9.0</tycho-version>
     <platform-version-name>galileo</platform-version-name>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.updatesite/target/site</jgit-site>
@@ -118,7 +119,9 @@
 
     <module>org.eclipse.egit.core.test</module>
     <module>org.eclipse.egit.ui.test</module>
-  </modules>
+
+    <module>org.eclipse.egit.source-feature</module>
+   </modules>
 
   <repositories>
     <repository>
@@ -150,7 +153,7 @@
         <artifactId>tycho-maven-plugin</artifactId>
         <version>${tycho-version}</version>
         <extensions>true</extensions>
-      </plugin>
+     </plugin>
       <plugin>
         <groupId>org.sonatype.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
@@ -159,7 +162,7 @@
           <resolver>p2</resolver>
         </configuration>
       </plugin>
-    </plugins>
+   </plugins>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -170,7 +173,24 @@
             <encoding>UTF-8</encoding>
           </configuration>
         </plugin>
-        <plugin>
+      <plugin>
+        <!-- TODO remove workaround when
+             https://issues.sonatype.org/browse/TYCHO-473
+             is fixed -->
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>maven-osgi-source-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <executions>
+          <execution>
+            <id>attach-source</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>plugin-source</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
           <version>2.4.1</version>

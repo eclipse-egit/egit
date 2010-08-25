@@ -38,6 +38,10 @@
           <useUIHarness>true</useUIHarness>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>maven-osgi-source-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
 </project>

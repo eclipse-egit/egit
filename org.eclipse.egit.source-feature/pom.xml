@@ -19,27 +19,9 @@
     <version>0.9.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>org.eclipse.egit.core</artifactId>
-  <packaging>eclipse-plugin</packaging>
+  <artifactId>org.eclipse.egit.source-feature</artifactId>
+  <packaging>eclipse-feature</packaging>
 
-  <name>Git Team Provider (Core) (Incubation)</name>
-
- <build>
-     <!-- workaround for https://issues.sonatype.org/browse/TYCHO-168 -->
-     <resources>
-      <resource>
-        <directory>src</directory>
-        <excludes>
-          <exclude>**/*.java</exclude>
-        </excludes>
-      </resource>
-    </resources>
-    <plugins>
-      <plugin>
-        <groupId>org.sonatype.tycho</groupId>
-        <artifactId>maven-osgi-source-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
+  <name>Eclipse EGit Sources Feature (Incubation)</name>
 
 </project>
