@@ -34,5 +34,11 @@
         </excludes>
       </resource>
     </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>maven-osgi-source-plugin</artifactId>
+      </plugin>
+    </plugins>
   </build>
 </project>
