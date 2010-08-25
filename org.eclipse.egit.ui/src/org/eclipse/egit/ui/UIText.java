@@ -1939,6 +1939,15 @@ public class UIText extends NLS {
 	public static String RepositoriesView_RemoveRemoteMenu;
 
 	/** */
+	public static String RepositoriesView_RenameBranchFailure;
+
+	/** */
+	public static String RepositoriesView_RenameBranchMessage;
+
+	/** */
+	public static String RepositoriesView_RenameBranchTitle;
+
+	/** */
 	public static String RepositoriesView_WorkingDir_treenode;
 
 	/** */
@@ -2382,6 +2391,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RemoveCommand_DeleteFailureMessage;
+
+	/** */
+	public static String RenameBranchCommand_WrongNameMessage;
 
 	/** */
 	public static String SelectSynchronizeResourceDialog_header;
