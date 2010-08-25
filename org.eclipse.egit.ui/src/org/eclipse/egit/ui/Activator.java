@@ -48,6 +48,7 @@ import org.eclipse.jsch.core.IJSchService;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.ui.themes.ITheme;
@@ -301,43 +302,65 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
-			Repository[] repos = org.eclipse.egit.core.Activator.getDefault()
-					.getRepositoryCache().getAllReposiotries();
-			if (repos.length == 0)
-				return Status.OK_STATUS;
-			monitor.beginTask(UIText.Activator_scanningRepositories,
-					repos.length);
 			try {
-				for (Repository repo : repos) {
-					if (monitor.isCanceled())
-						break;
-					// TODO is this the right location?
-					if (GitTraceLocation.UI.isActive())
-						GitTraceLocation.getTrace().trace(
-								GitTraceLocation.UI.getLocation(),
-								"Scanning " + repo + " for changes"); //$NON-NLS-1$ //$NON-NLS-2$
-
-					repo.scanForRepoChanges();
-					monitor.worked(1);
+				boolean trace = GitTraceLocation.REPOSITORYCHANGESCANNER
+						.isActive();
+				// let's see if we have focus at all
+				final boolean[] shellActive = new boolean[] { false };
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						shellActive[0] = Display.getCurrent().getActiveShell() != null;
+					}
+				});
+				if (!shellActive[0]) {
+					if (trace)
+						GitTraceLocation
+								.getTrace()
+								.trace(
+										GitTraceLocation.REPOSITORYCHANGESCANNER
+												.getLocation(),
+										"No active shell, skipping " + getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
+					return Status.OK_STATUS;
 				}
-			} catch (IOException e) {
-				// TODO is this the right location?
-				if (GitTraceLocation.UI.isActive())
+				Repository[] repos = org.eclipse.egit.core.Activator
+						.getDefault().getRepositoryCache().getAllReposiotries();
+				if (repos.length == 0)
+					return Status.OK_STATUS;
+				monitor.beginTask(UIText.Activator_scanningRepositories,
+						repos.length);
+				try {
+					for (Repository repo : repos) {
+						if (monitor.isCanceled())
+							break;
+						if (trace)
+							GitTraceLocation.getTrace().trace(
+									GitTraceLocation.REPOSITORYCHANGESCANNER
+											.getLocation(),
+									"Scanning " + repo + " for changes"); //$NON-NLS-1$ //$NON-NLS-2$
+
+						repo.scanForRepoChanges();
+						monitor.worked(1);
+					}
+				} catch (IOException e) {
+					if (trace)
+						GitTraceLocation.getTrace().trace(
+								GitTraceLocation.REPOSITORYCHANGESCANNER
+										.getLocation(),
+								"Stopped rescheduling " + getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
+					return createErrorStatus(UIText.Activator_scanError, e);
+				} finally {
+					monitor.done();
+				}
+				if (trace)
 					GitTraceLocation.getTrace().trace(
-							GitTraceLocation.UI.getLocation(),
-							"Stopped rescheduling " + getName() + "job"); //$NON-NLS-1$ //$NON-NLS-2$
-				return createErrorStatus(UIText.Activator_scanError, e);
+							GitTraceLocation.REPOSITORYCHANGESCANNER
+									.getLocation(),
+							"Rescheduling " + getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
+				return Status.OK_STATUS;
 			} finally {
-				monitor.done();
+				if (doReschedule)
+					schedule(REPO_SCAN_INTERVAL);
 			}
-			// TODO is this the right location?
-			if (GitTraceLocation.UI.isActive())
-				GitTraceLocation.getTrace().trace(
-						GitTraceLocation.UI.getLocation(),
-						"Rescheduling " + getName() + " job"); //$NON-NLS-1$ //$NON-NLS-2$
-			if (doReschedule)
-				schedule(REPO_SCAN_INTERVAL);
-			return Status.OK_STATUS;
 		}
 	}
 
