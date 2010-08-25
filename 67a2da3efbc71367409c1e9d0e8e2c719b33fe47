@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALyn///2s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-24T17:55:50Z",
+      "side": 1,
+      "message": "Please don\u0027t downcast. I\u0027m pretty sure this will result in a CCE in 4.x.\n\nUse HandlerUtil\u0027s getActiveMenuSelection(ExecutionEvent) method instead.",
+      "revId": "67a2da3efbc71367409c1e9d0e8e2c719b33fe47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyn///0k\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
         "patchSetId": 1
@@ -20,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AAALyn///2o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-24T17:55:50Z",
+      "side": 1,
+      "message": "Please don\u0027t downcast. I\u0027m pretty sure this will result in a CCE in 4.x.\n\nUse HandlerUtil\u0027s getCurrentSelection(ExecutionEvent) method instead.",
+      "revId": "67a2da3efbc71367409c1e9d0e8e2c719b33fe47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyn///0g\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
         "patchSetId": 1
@@ -32,6 +66,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALyn///2o\u003d",
+      "revId": "67a2da3efbc71367409c1e9d0e8e2c719b33fe47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn///2k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-24T17:55:50Z",
+      "side": 1,
+      "message": "I think you can get by with calling HandlerUtil\u0027s getVariable(String, ExecutionEvent) method with ISources.ACTIVE_EDITOR_INPUT_NAME as the first parameter.",
       "revId": "67a2da3efbc71367409c1e9d0e8e2c719b33fe47",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
