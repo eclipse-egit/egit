@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -38,6 +39,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -45,6 +47,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.ide.ResourceUtil;
 
 /**
  * A helper class for Team Actions on Git controlled projects
@@ -253,10 +256,23 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 			throws ExecutionException {
 		if (event == null)
 			throw new IllegalArgumentException("event must not be NULL"); //$NON-NLS-1$
-		ISelection selection;
-		selection = HandlerUtil.getCurrentSelectionChecked(event);
+		Object selection = HandlerUtil.getActiveMenuSelection(event);
+		if (selection == null)
+			selection = HandlerUtil.getCurrentSelection(event);
+		if (selection == null)
+			throw new ExecutionException(
+					UIText.RepositoryActionHandler_NoSelectionMessage);
 		if (selection instanceof IStructuredSelection)
 			return (IStructuredSelection) selection;
+		if (selection instanceof TextSelection) {
+			IEditorInput input = (IEditorInput) HandlerUtil.getVariable(event,
+					ISources.ACTIVE_EDITOR_INPUT_NAME);
+			if (input == null)
+				return StructuredSelection.EMPTY;
+			IResource resource = ResourceUtil.getResource(input);
+			if (resource != null)
+				return new StructuredSelection(resource);
+		}
 		return StructuredSelection.EMPTY;
 	}
 
@@ -267,14 +283,25 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 		if (activeWorkbenchWindow == null) // During Eclipse shutdown there is
-											// no active window
+			// no active window
 			return StructuredSelection.EMPTY;
 		IHandlerService hsr = (IHandlerService) activeWorkbenchWindow
 				.getService(IHandlerService.class);
 		IEvaluationContext ctx = hsr.getCurrentState();
 		Object selection = ctx.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
+		if (selection == null)
+			selection = ctx.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
 		if (selection instanceof IStructuredSelection)
 			return (IStructuredSelection) selection;
+		if (selection instanceof TextSelection) {
+			IEditorInput input = (IEditorInput) ctx
+					.getVariable(ISources.ACTIVE_EDITOR_INPUT_NAME);
+			if (input == null)
+				return StructuredSelection.EMPTY;
+			IResource resource = ResourceUtil.getResource(input);
+			if (resource != null)
+				return new StructuredSelection(resource);
+		}
 		return StructuredSelection.EMPTY;
 	}
 
