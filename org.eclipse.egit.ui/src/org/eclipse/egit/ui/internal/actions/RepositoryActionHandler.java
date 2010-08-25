@@ -33,6 +33,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevTag;
@@ -405,7 +406,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 
 	/**
 	 * @param event
-	 * @return the tags
+	 * @return the annotated tags
 	 * @throws ExecutionException
 	 */
 	protected List<RevTag> getRevTags(ExecutionEvent event)
@@ -417,6 +418,8 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		for (Ref ref : revTags) {
 			try {
 				tags.add(walk.parseTag(repo.resolve(ref.getName())));
+			} catch (IncorrectObjectTypeException e) {
+				// repo.getTags() returns also lightweight tags
 			} catch (IOException e) {
 				throw new ExecutionException(e.getMessage(), e);
 			}
