@@ -41,7 +41,7 @@
          </action>
          <action
                class="org.eclipse.egit.ui.internal.actions.FetchAction"
-               definitionId="org.eclipse.egit.ui.RepositoriesViewFetch"
+               definitionId="org.eclipse.egit.ui.team.Fetch"
                icon="$nl$/icons/obj16/pull.gif"
                id="org.eclipse.egit.ui.internal.actions.FetchAction"
                label="%FetchAction_label"
@@ -1249,17 +1249,17 @@
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewAddRepository"
                style="push"
-               tooltip="Add an existing local Git Repository to this view">
+               tooltip="%RepoViewAddRepository.tooltip">
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewClone"
                style="push"
-               tooltip="Clone a Git Repository and add the clone to this view">
+               tooltip="%RepoViewCloneRepository.tooltip">
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
                style="push"
-               tooltip="Create a new Git Repository and add it to this view">
+               tooltip="%RepoViewCreateRepository.tooltip">
          </command>
          <separator
                name="org.eclipse.egit.ui.viewActions"
@@ -1278,17 +1278,17 @@
             locationURI="menu:org.eclipse.egit.ui.RepositoriesView">
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewAddRepository"
-               label="&amp;Add a Repository"
+               label="%RepoAddRepositoryViewMenu.label"
                style="push">
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewClone"
-               label="&amp;Clone a Repository"
+               label="%RepoCloneRepositoryViewMenu.label"
                style="push">
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
-               label="&amp;Create a Repository"
+               label="%RepoCreateRepositoryViewMenu.label"
                style="push">
          </command>
          <separator
@@ -1297,12 +1297,12 @@
          </separator>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewRefresh"
-               label="&amp;Refresh"
+               label="%RepoViewRefreshViewMenu.label"
                style="push">
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
-               label="Link with &amp;Selection"
+               label="%RepoViewLinkWithSelectionMenu.label"
                style="toggle">
          </command>
       </menuContribution>
@@ -1488,7 +1488,7 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CreateRepositoryCommand"
             id="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
-            name="Create a Repository">
+            name="%RepoViewCreateRepositoryCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
@@ -1900,7 +1900,7 @@
             hasPages="true"
             icon="icons/etool16/createRepository.gif"
             id="org.eclipse.egit.ui.CreateRepositoryWizard"
-            name="Git Repository">
+            name="%CreateRepositoryWizard.name">
       </wizard>
       <category
             id="org.eclipse.egit.ui.wizardCategory"
