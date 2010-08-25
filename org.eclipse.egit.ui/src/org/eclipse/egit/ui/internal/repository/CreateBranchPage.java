@@ -17,7 +17,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
@@ -27,7 +29,6 @@ import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -50,6 +51,8 @@ class CreateBranchPage extends WizardPage {
 	private final boolean commitMode;
 
 	private final Repository myRepository;
+
+	private final IInputValidator myValidator;
 
 	private final Ref myBaseBranch;
 
@@ -77,6 +80,8 @@ class CreateBranchPage extends WizardPage {
 		this.myRepository = repo;
 		this.myBaseBranch = baseBranch;
 		this.myBaseCommit = null;
+		this.myValidator = ValidationUtils.getRefNameInputValidator(
+				myRepository, Constants.R_HEADS);
 		setTitle(UIText.CreateBranchPage_Title);
 		setMessage(UIText.CreateBranchPage_ChooseBranchAndNameMessage);
 	}
@@ -97,6 +102,8 @@ class CreateBranchPage extends WizardPage {
 		this.myRepository = repo;
 		this.myBaseBranch = null;
 		this.myBaseCommit = baseCommit;
+		this.myValidator = ValidationUtils.getRefNameInputValidator(
+				myRepository, Constants.R_HEADS);
 		setTitle(UIText.CreateBranchPage_Title);
 		setMessage(UIText.CreateBranchPage_ChooseNameMessage);
 	}
@@ -172,12 +179,6 @@ class CreateBranchPage extends WizardPage {
 		nameText.setData("org.eclipse.swtbot.widget.key", "BranchName"); //$NON-NLS-1$ //$NON-NLS-2$
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(nameText);
 
-		nameText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				checkPage();
-			}
-		});
-
 		boolean isBare = myRepository.isBare();
 		checkout = new Button(main, SWT.CHECK);
 		checkout.setText(UIText.CreateBranchPage_CheckoutButton);
@@ -211,31 +212,29 @@ class CreateBranchPage extends WizardPage {
 			// in any case, we will have to enter the name
 			setPageComplete(false);
 		}
+		// add the listener just now to avoid unneeded checkPage()
+		nameText.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				checkPage();
+			}
+		});
 	}
 
 	private void checkPage() {
 		setErrorMessage(null);
-
 		try {
-
 			if (branchCombo.getText().length() == 0) {
 				setErrorMessage(UIText.CreateBranchPage_MissingSourceMessage);
 				return;
 			}
 			if (nameText.getText().length() == 0) {
-				setErrorMessage(UIText.CreateBranchPage_MissingNameMessage);
+				setErrorMessage(UIText.CreateBranchPage_ChooseNameMessage);
 				return;
 			}
-
-			String fullName = getBranchName();
-			try {
-				if (myRepository.getRef(fullName) != null)
-					setErrorMessage(NLS.bind(
-							UIText.CreateBranchPage_BranchAlreadyExistsMessage,
-							fullName));
+			String message = this.myValidator.isValid(nameText.getText());
+			if (message != null) {
+				setErrorMessage(message);
 				return;
-			} catch (IOException e) {
-				// ignore here
 			}
 		} finally {
 			setPageComplete(getErrorMessage() == null);

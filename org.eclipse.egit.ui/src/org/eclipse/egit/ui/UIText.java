@@ -1378,9 +1378,6 @@ public class UIText extends NLS {
 	public static String ConfirmationPage_title;
 
 	/** */
-	public static String CreateBranchPage_BranchAlreadyExistsMessage;
-
-	/** */
 	public static String CreateBranchPage_BranchNameLabel;
 
 	/** */
@@ -1397,9 +1394,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CreateBranchPage_CreatingBranchMessage;
-
-	/** */
-	public static String CreateBranchPage_MissingNameMessage;
 
 	/** */
 	public static String CreateBranchPage_MissingSourceMessage;
@@ -1667,15 +1661,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String BranchSelectionDialog_NewBranch;
-
-	/** */
-	public static String BranchSelectionDialog_ErrorAlreadyExists;
-
-	/** */
-	public static String BranchSelectionDialog_ErrorCouldNotResolve;
-
-	/** */
-	public static String BranchSelectionDialog_ErrorInvalidRefName;
 
 	/** */
 	public static String BranchSelectionDialog_OkCheckout;
@@ -2400,6 +2385,15 @@ public class UIText extends NLS {
 
 	/** */
 	public static String SynchronizeWithAction_localRepoName;
+
+	/** */
+	public static String ValidationUtils_CanNotResolveRefMessage;
+
+	/** */
+	public static String ValidationUtils_InvalidRefNameMessage;
+
+	/** */
+	public static String ValidationUtils_RefAlreadyExistsMessage;
 
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
