@@ -300,6 +300,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 
 		private static ImageDescriptor assumeValidImage;
 
+		private static ImageDescriptor dirtyImage;
+
 		static {
 			trackedImage = new CachedImageDescriptor(TeamImages
 					.getImageDescriptor(ISharedImages.IMG_CHECKEDIN_OVR));
@@ -310,6 +312,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 					UIIcons.OVR_STAGED_REMOVE);
 			conflictImage = new CachedImageDescriptor(UIIcons.OVR_CONFLICT);
 			assumeValidImage = new CachedImageDescriptor(UIIcons.OVR_ASSUMEVALID);
+			dirtyImage = new CachedImageDescriptor(UIIcons.OVR_DIRTY);
 		}
 
 		/**
@@ -414,6 +417,12 @@ public class GitLightweightDecorator extends LabelProvider implements
 						overlay = stagedRemovedImage;
 					else
 						overlay = stagedImage;
+				}
+
+				// Dirty overrides staged
+				if(store
+						.getBoolean(UIPreferences.DECORATOR_SHOW_DIRTY_ICON) && resource.isDirty()) {
+					overlay = dirtyImage;
 				}
 
 				// Conflicts override everything

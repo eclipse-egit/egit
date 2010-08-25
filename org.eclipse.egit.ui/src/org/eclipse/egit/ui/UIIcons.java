@@ -38,6 +38,9 @@ public class UIIcons {
 	/** Decoration for tracked resources that we want to ignore changes in. */
 	public static final ImageDescriptor OVR_ASSUMEVALID;
 
+	/** Decoration for tracked resources that are dirty. */
+	public static final ImageDescriptor OVR_DIRTY;
+
 	/** Find icon */
 	public static final ImageDescriptor ELCL16_FIND;
 	/** Compare / View icon */
@@ -154,6 +157,7 @@ public class UIIcons {
 		OVR_UNTRACKED = map("ovr/untracked.gif"); //$NON-NLS-1$
 		OVR_CONFLICT = map("ovr/conflict.gif"); //$NON-NLS-1$
 		OVR_ASSUMEVALID = map("ovr/assume_valid.gif"); //$NON-NLS-1$
+		OVR_DIRTY = map("ovr/dirty.gif"); //$NON-NLS-1$
 		ELCL16_FIND = map("elcl16/find.gif"); //$NON-NLS-1$
 		ELCL16_COMPARE_VIEW = map("elcl16/compare_view.gif"); //$NON-NLS-1$
 		ELCL16_NEXT = map("elcl16/next.gif"); //$NON-NLS-1$
