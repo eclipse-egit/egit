@@ -17,10 +17,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
-import org.eclipse.jgit.lib.GitIndex;
+import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.GitIndex.Entry;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
 
@@ -71,14 +70,12 @@ class IndexFileRevision extends GitFileRevision implements IFileRevision {
 
 	private ObjectId locateBlobObjectId() throws CoreException {
 		try {
-			final GitIndex idx = db.getIndex();
-			final Entry e = idx.getEntry(path);
-			if (e == null)
+			DirCacheEntry entry = db.readDirCache().getEntry(path);
+			if (entry == null)
 				throw new CoreException(Activator.error(NLS.bind(
 						CoreText.IndexFileRevision_indexEntryNotFound, path),
 						null));
-			return e.getObjectId();
-
+			return entry.getObjectId();
 		} catch (IOException e) {
 			throw new CoreException(Activator.error(NLS.bind(
 					CoreText.IndexFileRevision_errorLookingUpPath, path), e));
