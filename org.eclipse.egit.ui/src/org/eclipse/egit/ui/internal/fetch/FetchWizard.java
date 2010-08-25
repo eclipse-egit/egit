@@ -99,7 +99,7 @@ public class FetchWizard extends Wizard {
 			if (repoSelection.isConfigSelected())
 				transport = Transport.open(localDb, repoSelection.getConfig());
 			else
-				transport = Transport.open(localDb, repoSelection.getURI());
+				transport = Transport.open(localDb, repoSelection.getURI(false));
 		} catch (final NotSupportedException e) {
 			ErrorDialog.openError(getShell(),
 					UIText.FetchWizard_transportNotSupportedTitle,
@@ -150,7 +150,7 @@ public class FetchWizard extends Wizard {
 		final RepositorySelection repoSelection = repoPage.getSelection();
 		if (repoSelection.isConfigSelected())
 			return repoSelection.getConfigName();
-		return repoSelection.getURI().toString();
+		return repoSelection.getURI(false).toString();
 	}
 
 	private class FetchJob extends Job {
