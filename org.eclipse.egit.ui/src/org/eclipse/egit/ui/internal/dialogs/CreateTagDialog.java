@@ -39,6 +39,7 @@ import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -594,7 +595,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 	}
 
 	/**
-	 * @return the tags
+	 * @return the annotated tags
 	 */
 	private List<RevTag> getRevTags() {
 		Collection<Ref> revTags = repo.getTags().values();
@@ -603,6 +604,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 		for (Ref ref : revTags) {
 			try {
 				tags.add(walk.parseTag(repo.resolve(ref.getName())));
+			} catch (IncorrectObjectTypeException e) {
+				// repo.getTags() returns also lightweight tags
 			} catch (IOException e) {
 				Activator.logError(UIText.TagAction_unableToResolveHeadObjectId, e);
 				setErrorMessage(UIText.TagAction_unableToResolveHeadObjectId);
