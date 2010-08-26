@@ -75,7 +75,6 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
  * Dialog for creating and editing tags.
- *
  */
 public class CreateTagDialog extends TitleAreaDialog {
 
@@ -207,11 +206,6 @@ public class CreateTagDialog extends TitleAreaDialog {
 		this.repo = repo;
 	}
 
-	@Override
-	public String getMessage() {
-		return UIText.CreateTagDialog_Message;
-	}
-
 	/**
 	 * @return {@link ObjectId} of commit with new or edited tag should be
 	 *         associated with
@@ -301,7 +295,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		initializeDialogUnits(parent);
 
 		setTitle(getTitle());
-		setMessage(getMessage());
+		setMessage(UIText.CreateTagDialog_Message);
 
 		Composite composite = (Composite) super.createDialogArea(parent);
 
