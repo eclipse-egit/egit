@@ -59,7 +59,7 @@ public class RepositoryCache {
 	/**
 	 * @return all Repository instances contained in the cache
 	 */
-	public synchronized Repository[] getAllReposiotries() {
+	public synchronized Repository[] getAllRepositories() {
 		List<Repository> result = new ArrayList<Repository>();
 		Collection<Reference<Repository>> values = repositoryCache.values();
 		for(Reference<Repository> ref:values) {

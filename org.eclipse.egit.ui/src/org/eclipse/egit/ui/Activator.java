@@ -302,7 +302,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
 			Repository[] repos = org.eclipse.egit.core.Activator.getDefault()
-					.getRepositoryCache().getAllReposiotries();
+					.getRepositoryCache().getAllRepositories();
 			if (repos.length == 0)
 				return Status.OK_STATUS;
 			monitor.beginTask(UIText.Activator_scanningRepositories,
