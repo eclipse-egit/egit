@@ -35,7 +35,7 @@ public class ValidationUtils {
 				if (newText.length() == 0) {
 					// nothing entered, just don't let the user proceed,
 					// no need to prompt them with an error message
-					return ""; //$NON-NLS-1$
+					return null;
 				}
 
 				String testFor = refPrefix + newText;
@@ -48,7 +48,7 @@ public class ValidationUtils {
 					return e1.getMessage();
 				}
 				if (!Repository.isValidRefName(testFor))
-					return UIText.BranchSelectionDialog_ErrorInvalidRefName;
+					return UIText.ValidationUtils_InvalidTagName;
 				return null;
 			}
 		};

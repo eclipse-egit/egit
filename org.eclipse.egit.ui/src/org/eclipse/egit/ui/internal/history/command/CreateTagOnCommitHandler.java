@@ -13,12 +13,10 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.op.TagOperation;
-import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.egit.ui.internal.dialogs.CreateTagDialog;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.TagBuilder;
@@ -35,11 +33,8 @@ public class CreateTagOnCommitHandler extends AbstractHistoryCommanndHandler {
 		final Repository repo = getRepository(event);
 
 		CreateTagDialog dialog = new CreateTagDialog(HandlerUtil
-				.getActiveShellChecked(event), ValidationUtils
-				.getRefNameInputValidator(repo, Constants.R_TAGS), commit
-				.getId());
+				.getActiveShellChecked(event), commit.getId(), repo);
 
-		dialog.setExistingTags(getRevTags(event));
 		if (dialog.open() != Window.OK)
 			return null;
 

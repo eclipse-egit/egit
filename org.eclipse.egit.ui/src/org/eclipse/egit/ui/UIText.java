@@ -2293,6 +2293,12 @@ public class UIText extends NLS {
 	public static String CreateTagDialog_CreateTagOnCommitTitle;
 
 	/** */
+	public static String CreateTagDialog_Message;
+
+	/** */
+	public static String CreateTagDialog_NewTag;
+
+	/** */
 	public static String CommitCombo_showSuggestedCommits;
 
 	/**
@@ -2403,6 +2409,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String SynchronizeWithAction_localRepoName;
+
+	/** */
+	public static String ValidationUtils_InvalidTagName;
 
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);

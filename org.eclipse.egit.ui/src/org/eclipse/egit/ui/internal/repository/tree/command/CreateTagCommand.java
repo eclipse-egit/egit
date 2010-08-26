@@ -12,9 +12,6 @@
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -26,22 +23,17 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CreateTagDialog;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevSort;
-import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 
@@ -72,16 +64,7 @@ public class CreateTagCommand extends RepositoriesViewCommandHandler<RepositoryT
 		}
 
 		CreateTagDialog dialog = new CreateTagDialog(getView(event).getSite()
-				.getShell(), ValidationUtils.getRefNameInputValidator(repo,
-				Constants.R_TAGS), currentBranchName);
-
-		// get and set commits
-		RevWalk revCommits = getRevCommits(repo);
-		dialog.setRevCommitList(revCommits);
-
-		// get and set existing tags
-		List<RevTag> tags = getRevTags(repo);
-		dialog.setExistingTags(tags);
+				.getShell(), currentBranchName, repo);
 
 		if (dialog.open() != IDialogConstants.OK_ID)
 			return null;
@@ -118,38 +101,6 @@ public class CreateTagCommand extends RepositoriesViewCommandHandler<RepositoryT
 		tagJob.schedule();
 
 		return null;
-	}
-
-	private List<RevTag> getRevTags(Repository repo) throws ExecutionException {
-		Collection<Ref> revTags = repo.getTags().values();
-		List<RevTag> tags = new ArrayList<RevTag>();
-		RevWalk walk = new RevWalk(repo);
-		for (Ref ref : revTags) {
-			try {
-				tags.add(walk.parseTag(repo.resolve(ref.getName())));
-			} catch (IOException e) {
-				throw new ExecutionException(NLS
-						.bind(UIText.TagAction_errorWhileMappingRevTag, ref
-								.getName()), e);
-			}
-		}
-		return tags;
-	}
-
-	private RevWalk getRevCommits(Repository repo) throws ExecutionException {
-		RevWalk revWalk = new RevWalk(repo);
-		try {
-			revWalk.sort(RevSort.COMMIT_TIME_DESC, true);
-			revWalk.sort(RevSort.BOUNDARY, true);
-			AnyObjectId headId = repo.resolve(Constants.HEAD);
-			if (headId != null)
-				revWalk.markStart(revWalk.parseCommit(headId));
-
-		} catch (IOException e) {
-			throw new ExecutionException(
-					UIText.TagAction_errorWhileGettingRevCommits, e);
-		}
-		return revWalk;
 	}
 
 	private RevObject getTagTarget(ObjectId objectId, Repository repo)

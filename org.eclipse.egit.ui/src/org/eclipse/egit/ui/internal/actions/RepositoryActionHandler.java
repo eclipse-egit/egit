@@ -10,13 +10,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -34,10 +31,7 @@ import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPage;
@@ -420,24 +414,4 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		return HandlerUtil.getActivePartChecked(event);
 	}
 
-	/**
-	 * @param event
-	 * @return the tags
-	 * @throws ExecutionException
-	 */
-	protected List<RevTag> getRevTags(ExecutionEvent event)
-			throws ExecutionException {
-		Repository repo = getRepository(false, event);
-		Collection<Ref> revTags = repo.getTags().values();
-		List<RevTag> tags = new ArrayList<RevTag>();
-		RevWalk walk = new RevWalk(repo);
-		for (Ref ref : revTags) {
-			try {
-				tags.add(walk.parseTag(repo.resolve(ref.getName())));
-			} catch (IOException e) {
-				throw new ExecutionException(e.getMessage(), e);
-			}
-		}
-		return tags;
-	}
 }
