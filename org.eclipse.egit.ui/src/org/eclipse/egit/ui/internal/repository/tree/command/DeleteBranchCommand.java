@@ -46,7 +46,7 @@ import org.eclipse.swt.widgets.Shell;
 public class DeleteBranchCommand extends
 		RepositoriesViewCommandHandler<RefNode> {
 
-	private final class BranchMessageDialog extends MessageDialog {
+	private static final class BranchMessageDialog extends MessageDialog {
 		private final List<RefNode> nodes;
 
 		private BranchMessageDialog(Shell parentShell, List<RefNode> nodes) {
