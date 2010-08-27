@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAALyX///1E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-08-21T13:52:39Z",
+      "side": 1,
+      "message": "Us this the terminology confusion I commented on in a previous commit?. I.e. \"base\" here is niot the merge base, but trather \"our\"?",
+      "parentUuid": "AAALyX///1Y\u003d",
+      "revId": "25a4280e798aa7967dc4a342f8b13d0482807c7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyn///+E\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
         "patchSetId": 2
