@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAALyn///+E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-23T14:07:19Z",
+      "side": 1,
+      "message": "I still do not understand why we need any ancestor in the GitModel. An ancestor is used by the synchronize framework to calculate the entries for the three way compare. But in GitModel we just compare to the parent, don\u0027t we? I still would say that we should return null in GitModelBlob.getAncestor (javadoc: Returns null if this input has no ancestor or in the two-way compare case.)\n\nWhen there is more than one parent things of course get more complicated. But returning any ancestor commit is definitely wrong.",
+      "parentUuid": "AAALyn////M\u003d",
+      "revId": "25a4280e798aa7967dc4a342f8b13d0482807c7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyX///1c\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
         "patchSetId": 2
