@@ -293,7 +293,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		ContextMenuHelper.clickContextMenu(table,
 				UIText.GitHistoryPage_CreateTagMenuLabel);
 		SWTBotShell dialog = bot.shell(NLS.bind(
-				UIText.CreateTagDialog_CreateTagOnCommitTitle, commit[0]
+				UIText.CreateTagDialog_NewTag, commit[0]
 						.getId().name()));
 		dialog.bot().textWithLabel(UIText.CreateTagDialog_tagName).setText(
 				"NewTag");
