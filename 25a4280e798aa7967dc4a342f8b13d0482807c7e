@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALyn////k\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-22T21:42:25Z",
+      "side": 1,
+      "message": "Thank you Shawn for this information, I\u0027ll re-implement this change exactly the way you describe it ;)",
+      "parentUuid": "AAALyX///1U\u003d",
+      "revId": "25a4280e798aa7967dc4a342f8b13d0482807c7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyX///1Y\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
         "patchSetId": 2
@@ -47,6 +65,42 @@
       "writtenOn": "2010-08-21T13:52:39Z",
       "side": 1,
       "message": "Us this the terminology confusion I commented on in a previous commit?. I.e. \"base\" here is niot the merge base, but trather \"our\"?",
+      "parentUuid": "AAALyX///1Y\u003d",
+      "revId": "25a4280e798aa7967dc4a342f8b13d0482807c7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn////Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-22T21:42:25Z",
+      "side": 1,
+      "message": "Actually in some cases \u0027base\u0027 isn\u0027t always same as \u0027our\u0027. Because in Git Model we are comparing commit vs. commit. This means that most comparisons will be done \u0027our\u0027 vs \u0027our\u0027 commit (that are commit that was made by user in theirs topic branch) or \u0027their\u0027 vs \u0027their\u0027 (in this case that are commits that comes from remote repository). There would be only one commit that can be described as \u0027our\u0027 vs \u0027their\u0027, this will be a common ancestor commit.\n\nBut this is only my humble opinion ...",
+      "parentUuid": "AAALyX///1E\u003d",
+      "revId": "25a4280e798aa7967dc4a342f8b13d0482807c7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn////M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-22T21:42:25Z",
+      "side": 1,
+      "message": "I want to find parent of \u0027actual\u0027 commit so that I can find objects that was changed by \u0027actual\u0027 commit. In most cases there would be only a one commit, but in case of merge commits I want get merge ancestor so that changes in merge commit can be properly described in SyncView.",
       "parentUuid": "AAALyX///1Y\u003d",
       "revId": "25a4280e798aa7967dc4a342f8b13d0482807c7e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
