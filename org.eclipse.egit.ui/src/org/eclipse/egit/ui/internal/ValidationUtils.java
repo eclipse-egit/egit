@@ -27,15 +27,18 @@ public class ValidationUtils {
 	 *
 	 * @param repo
 	 * @param refPrefix
+	 * @param errorOnEmptyName
 	 * @return input validator for refNames
 	 */
-	public static IInputValidator getRefNameInputValidator(final Repository repo, final String refPrefix) {
+	public static IInputValidator getRefNameInputValidator(final Repository repo, final String refPrefix, final boolean errorOnEmptyName) {
 		return new IInputValidator() {
 			public String isValid(String newText) {
 				if (newText.length() == 0) {
-					// nothing entered, just don't let the user proceed,
-					// no need to prompt them with an error message
-					return null;
+					if (errorOnEmptyName)
+						return UIText.ValidationUtils_PleaseEnterNameMessage;
+					else
+						// ignore this
+						return null;
 				}
 
 				String testFor = refPrefix + newText;

@@ -182,9 +182,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 	 */
 	public CreateTagDialog(Shell parent, String branchName, Repository repo) {
 		super(parent);
-		this.tagNameValidator =
-			ValidationUtils
-				.getRefNameInputValidator(repo, Constants.R_TAGS);
+		this.tagNameValidator = ValidationUtils.getRefNameInputValidator(repo,
+				Constants.R_TAGS, false);
 		this.branchName = branchName;
 		this.commitId = null;
 		this.repo = repo;
@@ -199,8 +198,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 	 */
 	public CreateTagDialog(Shell parent, ObjectId commitId, Repository repo) {
 		super(parent);
-		this.tagNameValidator = ValidationUtils
-			.getRefNameInputValidator(repo, Constants.R_TAGS);
+		this.tagNameValidator = ValidationUtils.getRefNameInputValidator(repo,
+				Constants.R_TAGS, false);
 		this.branchName = null;
 		this.commitId = commitId;
 		this.repo = repo;

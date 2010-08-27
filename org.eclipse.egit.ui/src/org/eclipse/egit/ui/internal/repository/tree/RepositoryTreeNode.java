@@ -51,15 +51,6 @@ public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTree
 		myObject = treeObject;
 	}
 
-	@SuppressWarnings("unchecked")
-	private RepositoryTreeNode<Repository> getRepositoryNode() {
-		if (myType == RepositoryTreeNodeType.REPO) {
-			return (RepositoryTreeNode<Repository>) this;
-		} else {
-			return getParent().getRepositoryNode();
-		}
-	}
-
 	/**
 	 * @return the parent, or null
 	 */
