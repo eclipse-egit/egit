@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALwX///Qk\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/AllRepositoriesViewTests.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-07-05T22:51:16Z",
+      "side": 1,
+      "message": "Didn\u0027t you fix the bugs?",
+      "revId": "a1e44002c2949a243326798c182a26c4caad56d2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///Qg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/ConfigureUriPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-07-05T22:51:16Z",
+      "side": 1,
+      "message": "no \"-\" here",
+      "revId": "a1e44002c2949a243326798c182a26c4caad56d2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///Qc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/PropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-07-05T22:51:16Z",
+      "side": 1,
+      "message": "This one. Depends on how you want to define and use \"pushExists\"",
+      "revId": "a1e44002c2949a243326798c182a26c4caad56d2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
