@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///m8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelRepository.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-08-27T14:40:16Z",
+      "side": 1,
+      "message": "Now I get an incoming decorator for my local change and an outgoing decorator for my remote change.",
+      "revId": "cb77fa14d81526f56e2ca3168bcefd67d6640ec6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
