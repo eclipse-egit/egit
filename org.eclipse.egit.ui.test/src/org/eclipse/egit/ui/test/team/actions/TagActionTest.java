@@ -116,7 +116,7 @@ public class TagActionTest extends LocalRepositoryTestCase {
 				menuString);
 		String branchName = lookupRepository(repositoryFile).getBranch();
 		SWTBotShell dialog = bot.shell(NLS.bind(
-				UIText.CreateTagDialog_questionNewTagTitle, branchName));
+				UIText.CreateTagDialog_NewTag, branchName));
 		return dialog;
 	}
 
