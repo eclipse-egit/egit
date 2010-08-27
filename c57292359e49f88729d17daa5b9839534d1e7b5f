@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///wc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelRepository.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-25T21:31:19Z",
+      "side": 1,
+      "message": "Shawn, could you please look at this \"left-right mode\" implementation?\n\nI don\u0027t know why it returns only one RevCommit that have local flag and one with remote flag.",
+      "revId": "c57292359e49f88729d17daa5b9839534d1e7b5f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn///po\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelRepository.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-08-26T19:55:02Z",
+      "side": 1,
+      "message": "OK, I solve this problem. tw.carry(allFlags) is required when we want to mark all commits with given flag",
+      "parentUuid": "AAALyn///wc\u003d",
+      "revId": "c57292359e49f88729d17daa5b9839534d1e7b5f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
