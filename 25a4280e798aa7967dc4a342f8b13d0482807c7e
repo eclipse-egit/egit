@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyX///1U\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-08-21T01:28:34Z",
+      "side": 1,
+      "message": "I disagree.  The correct thing to do is compare the commit graphs in left-right mode.  This isn\u0027t directly supported in JGit with a thing called \"left-right mode\", you have to do configure it yourself in the application level.\n\nCreate two RevFlag instances from a RevWalk, call them LOCAL and REMOTE.\n\nparseCommit() the current branch, and add the LOCAL flag to it.  markStart() that commit.\n\nparseCommit() the matching remote branch, and add the REMOTE flag to it.  markStart() that commit.\n\nStep the RevWalk until you get back a commit that contains both LOCAL and REMOTE on it.  That is your common merge base.  But more importantly, as you stepped it looking for this point you built up a list of commits.  If you store those commits into two lists based on which flags they have (only LOCAL ones go into the \"outgoing list\" and only REMOTE ones go into the \"incoming list\"), you get a very accurate representation of what is about to sync.\n\nAs for finding the matching remote branch, that typically comes from the repository configuration.  Get the Config, find the variables branch.${currentBranchName}.remote and branch.${currentBranchName}.merge.  The first tells you which remote configuration block you need to examine.  The second tells you the branch name in that remote.  You\u0027ll then need to examine the remote.${remoteName}.fetch RefSpecs to find the one that matches the branch.merge value, so you can map that to the local reference name.  That local reference name is what you need to resolve in order to parse that remote branch\u0027s commit.",
+      "revId": "25a4280e798aa7967dc4a342f8b13d0482807c7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyX///1Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-08-21T01:28:34Z",
+      "side": 1,
+      "message": "This is uh, pointless.\n\nThe merge base of a commit and its parents is going to be one of the parents.\n\nWhat were you actually trying to do?",
+      "revId": "25a4280e798aa7967dc4a342f8b13d0482807c7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyX///1c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-08-21T01:28:34Z",
+      "side": 1,
+      "message": "Parsing zeroId will always throw an exception.",
+      "revId": "25a4280e798aa7967dc4a342f8b13d0482807c7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
