@@ -10,11 +10,19 @@
       <category name="Eclipse Git Team Provider (Incubation)"/>
    </feature>
     <feature url="features/org.eclipse.jgit_0.0.0.qualifier.jar" id="org.eclipse.jgit" version="0.0.0" patch="true">
-      <category name="Eclipse Git Team Provider (Incubation)"/>
+      <category name="JGit (Incubation)"/>
+   </feature>
+   <feature url="features/org.eclipse.jgit.sources_0.0.0.qualifier.jar" id="org.eclipse.jgit.source" version="0.0.0" patch="true">
+      <category name="JGit (Incubation)"/>
    </feature>
    <category-def name="Eclipse Git Team Provider (Incubation)" label="Eclipse Git Team Provider (Incubation)">
       <description>
          Eclipse Git Team Provider (Incubation)
+      </description>
+   </category-def>
+   <category-def name="JGit (Incubation)" label="JGit (Incubation)">
+      <description>
+         JGit (Incubation)
       </description>
    </category-def>
 </site>
