@@ -81,7 +81,7 @@ class CreateBranchPage extends WizardPage {
 		this.myBaseBranch = baseBranch;
 		this.myBaseCommit = null;
 		this.myValidator = ValidationUtils.getRefNameInputValidator(
-				myRepository, Constants.R_HEADS);
+				myRepository, Constants.R_HEADS, true);
 		setTitle(UIText.CreateBranchPage_Title);
 		setMessage(UIText.CreateBranchPage_ChooseBranchAndNameMessage);
 	}
@@ -103,7 +103,7 @@ class CreateBranchPage extends WizardPage {
 		this.myBaseBranch = null;
 		this.myBaseCommit = baseCommit;
 		this.myValidator = ValidationUtils.getRefNameInputValidator(
-				myRepository, Constants.R_HEADS);
+				myRepository, Constants.R_HEADS, true);
 		setTitle(UIText.CreateBranchPage_Title);
 		setMessage(UIText.CreateBranchPage_ChooseNameMessage);
 	}

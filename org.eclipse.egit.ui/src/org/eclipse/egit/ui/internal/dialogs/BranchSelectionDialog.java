@@ -57,7 +57,7 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 			final String refPrefix) {
 		InputDialog labelDialog = new InputDialog(getShell(),
 				UIText.BranchSelectionDialog_QuestionNewBranchTitle, prompt,
-				null, ValidationUtils.getRefNameInputValidator(repo, refPrefix));
+				null, ValidationUtils.getRefNameInputValidator(repo, refPrefix, true));
 		labelDialog.setBlockOnOpen(true);
 		return labelDialog;
 	}

@@ -33,7 +33,6 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -206,7 +205,6 @@ public class GitRepositoriesViewRepoHandlingTest extends
 	}
 
 	@Test
-	@Ignore
 	public void testShowIn() throws Exception {
 		SWTBotPerspective perspective = null;
 		try {
