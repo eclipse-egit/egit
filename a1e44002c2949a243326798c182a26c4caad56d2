@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALwX///PM\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/AllRepositoriesViewTests.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-07-06T05:27:51Z",
+      "side": 1,
+      "message": "No yet all... Needs another round.",
+      "parentUuid": "AAALwX///Qk\u003d",
+      "revId": "a1e44002c2949a243326798c182a26c4caad56d2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALwX///Qg\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/ConfigureUriPage.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAALwX///PI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/ConfigureUriPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-07-06T05:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALwX///Qg\u003d",
+      "revId": "a1e44002c2949a243326798c182a26c4caad56d2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALwX///Qc\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/PropertyTester.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2010-07-05T22:51:16Z",
       "side": 1,
       "message": "This one. Depends on how you want to define and use \"pushExists\"",
+      "revId": "a1e44002c2949a243326798c182a26c4caad56d2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALwX///PE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/PropertyTester.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-07-06T05:27:51Z",
+      "side": 1,
+      "message": "Oops. Thanks for pointing this out.",
+      "parentUuid": "AAALwX///Qc\u003d",
       "revId": "a1e44002c2949a243326798c182a26c4caad56d2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
