@@ -1704,7 +1704,8 @@
       <participant
             class="org.eclipse.egit.ui.internal.synchronize.GitModelSynchronizeParticipant"
             id="org.eclipse.egit.ui.modelCompareParticipant"
-            name="%Synchronize_ModelName"
+            name="%Synchronize_Name"
+            icon="icons/obj16/gitrepository.gif"
             persistent="false"/>
    </extension>
    <extension
