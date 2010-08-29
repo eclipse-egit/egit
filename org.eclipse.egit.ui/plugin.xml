@@ -1092,6 +1092,28 @@
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewRenameBranch"
+               label="%RepoViewRenameBranch.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <iterate>
+                     <and>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                           </instanceof>
+                           <test
+                                 property="GitRepository.isLocalBranch">
+                           </test>
+                        </or>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesViewRemoveRemote"
                label="%RepoViewRemoveRemote.label"
                style="push">
@@ -1339,6 +1361,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.FetchCommand"
             id="org.eclipse.egit.ui.RepositoriesViewFetch"
             name="%FetchCommand">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.RenameBranchCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewRenameBranch"
+            name="%RenameBranchCommand">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"

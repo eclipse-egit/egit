@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.view.repositories;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -37,6 +38,7 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
@@ -269,5 +271,41 @@ public class GitRepositoriesViewBranchHandlingTest extends
 			if (listener != null)
 				Job.getJobManager().removeJobChangeListener(listener);
 		}
+	}
+
+	@Test
+	public void testRenameBranch() throws Exception {
+		Activator.getDefault().getRepositoryUtil()
+				.addConfiguredRepository(clonedRepositoryFile);
+
+		SWTBotTree tree = getOrOpenView().bot().tree();
+
+		SWTBotTreeItem item = myRepoViewUtil.getLocalBranchesItem(tree,
+				clonedRepositoryFile).expand();
+
+		item.getNode("master").select();
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue("RepoViewRenameBranch.label"));
+		refreshAndWait();
+
+		SWTBotShell renameDialog = bot
+				.shell(UIText.RepositoriesView_RenameBranchTitle);
+		SWTBotText newBranchNameText = renameDialog.bot().text(0);
+		assertEquals("master", newBranchNameText.getText());
+		newBranchNameText.setText("invalid~name");
+
+		renameDialog.bot().text(
+				NLS.bind(UIText.ValidationUtils_InvalidRefNameMessage,
+						"refs/heads/invalid~name"));
+		assertFalse(renameDialog.bot().button(IDialogConstants.OK_LABEL)
+				.isEnabled());
+		newBranchNameText.setText("newmaster");
+		renameDialog.bot().button(IDialogConstants.OK_LABEL).click();
+
+		refreshAndWait();
+
+		item = myRepoViewUtil.getLocalBranchesItem(tree, clonedRepositoryFile)
+				.expand();
+		assertEquals("newmaster", item.getNode(0).getText());
 	}
 }
