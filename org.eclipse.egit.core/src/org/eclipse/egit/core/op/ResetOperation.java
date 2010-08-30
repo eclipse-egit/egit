@@ -115,7 +115,7 @@ public class ResetOperation implements IEGitOperation {
 
 	private void reset(IProgressMonitor monitor) throws CoreException {
 		monitor.beginTask(NLS.bind(CoreText.ResetOperation_performingReset,
-				type.toString().toLowerCase(), refName), 7);
+				type.toString().toLowerCase(), refName), 6);
 
 		IProject[] validProjects = null;
 		if (type == ResetType.HARD)
@@ -126,47 +126,34 @@ public class ResetOperation implements IEGitOperation {
 		writeRef();
 		monitor.worked(1);
 
-		if (type != ResetType.SOFT) {
-			if (type == ResetType.MIXED)
-				resetIndex();
-			else
-				readIndex();
-			writeIndex();
-		}
-		monitor.worked(1);
-
-		if (type == ResetType.HARD) {
+		switch (type) {
+		case HARD:
+			readIndex();
+			monitor.worked(1);
 			checkoutIndex();
-		}
-		monitor.worked(1);
-
-		if (type != ResetType.SOFT) {
-			refreshIndex();
-		}
-		monitor.worked(1);
-
-		monitor.worked(1);
-
-		if (type == ResetType.HARD)
+			monitor.worked(1);
+			writeIndex();
+			monitor.worked(1);
 			// only refresh if working tree changes
 			ProjectUtil.refreshValidProjects(validProjects, new SubProgressMonitor(
 					monitor, 1));
+			monitor.worked(1);
+			break;
+
+		case MIXED:
+			// Change the
+			resetIndex();
+			monitor.worked(1);
+			writeIndex();
+			monitor.worked(3);
+			break;
+
+		case SOFT:
+			// only change the ref
+			monitor.worked(4);
+		}
 
 		monitor.done();
-	}
-
-	private void refreshIndex() throws TeamException {
-//		File workdir = repository.getDirectory().getParentFile();
-//		for (Entry e : newIndex.getMembers()) {
-//			try {
-//				e.update(new File(workdir, e.getName()));
-//			} catch (IOException ignore) {}
-//		}
-		try {
-			index.write();
-		} catch (IOException e1) {
-			throw new TeamException(CoreText.ResetOperation_writingIndex, e1);
-		}
 	}
 
 	private void mapObjects() throws TeamException {
@@ -222,6 +209,7 @@ public class ResetOperation implements IEGitOperation {
 		try {
 			newTree = commit.getTree();
 			index = repository.getIndex();
+			// FIXME: reads index twice
 			index.readTree(repository.mapTree(newTree));
 		} catch (IOException e) {
 			throw new TeamException(CoreText.ResetOperation_readingIndex, e);
