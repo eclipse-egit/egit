@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///g8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ValidationUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-08-30T10:01:48Z",
+      "side": 1,
+      "message": "I wonder if we should push this to Repository.isValidRefName as JGit would suffer from the same problem when using it pragmatically.",
+      "revId": "8523d546e07fda01a88aba89c816c7078df9ffd6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
