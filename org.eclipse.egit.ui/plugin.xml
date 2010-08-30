@@ -1098,17 +1098,13 @@
             <visibleWhen
                   checkEnabled="false">
                <and>
+                  <count
+                        value="1">
+                  </count>
                   <iterate>
-                     <and>
-                        <or>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
-                           </instanceof>
-                           <test
-                                 property="GitRepository.isLocalBranch">
-                           </test>
-                        </or>
-                     </and>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                     </instanceof>
                   </iterate>
                </and>
             </visibleWhen>
