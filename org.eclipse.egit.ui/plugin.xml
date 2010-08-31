@@ -1492,7 +1492,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.MergeCommand"
             id="org.eclipse.egit.ui.RepositoriesViewMerge"
             name="%MergeWithDialogCommand">
       </command>
@@ -1931,5 +1930,34 @@
             id="org.eclipse.egit.ui.wizardCategory"
             name="%Git">
       </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.egit.ui.internal.repository.tree.command.MergeCommand"
+            commandId="org.eclipse.egit.ui.RepositoriesViewMerge">
+         <activeWhen>
+            <iterate>
+               <or>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                  </instanceof>
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                  </instanceof>
+               </or>
+            </iterate></activeWhen>
+      </handler>
+      <handler
+            class="org.eclipse.egit.ui.internal.actions.MergeAction"
+            commandId="org.eclipse.egit.ui.RepositoriesViewMerge">
+         <activeWhen>
+            <iterate>
+               <instanceof
+                     value="org.eclipse.core.resources.IProject">
+               </instanceof>
+            </iterate>
+         </activeWhen>
+      </handler>
    </extension>
 </plugin>
