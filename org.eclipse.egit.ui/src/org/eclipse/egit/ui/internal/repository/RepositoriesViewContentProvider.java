@@ -23,11 +23,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import org.eclipse.core.commands.IStateListener;
+import org.eclipse.core.commands.State;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.repository.tree.BranchHierarchyNode;
 import org.eclipse.egit.ui.internal.repository.tree.BranchesNode;
 import org.eclipse.egit.ui.internal.repository.tree.ErrorNode;
 import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
@@ -46,6 +51,7 @@ import org.eclipse.egit.ui.internal.repository.tree.SymbolicRefsNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
+import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.lib.Constants;
@@ -54,21 +60,47 @@ import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
 
 /**
  * Content Provider for the Git Repositories View
  */
-public class RepositoriesViewContentProvider implements ITreeContentProvider {
+public class RepositoriesViewContentProvider implements ITreeContentProvider,
+		IStateListener {
 
 	private final RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
 			.getDefault().getRepositoryCache();
+
+	private final State commandState;
+
+	private boolean branchHierarchyMode = false;
+
+	/**
+	 * Constructs this instance
+	 */
+	public RepositoriesViewContentProvider() {
+		ICommandService srv = (ICommandService) PlatformUI.getWorkbench()
+				.getService(ICommandService.class);
+		commandState = srv.getCommand(
+				ToggleBranchHierarchyCommand.ID)
+				.getState(ToggleBranchHierarchyCommand.TOGGLE_STATE);
+		commandState.addListener(this);
+		try {
+			this.branchHierarchyMode = ((Boolean) commandState.getValue())
+					.booleanValue();
+		} catch (Exception e) {
+			Activator.handleError(e.getMessage(), e, false);
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	public Object[] getElements(Object inputElement) {
 
 		List<RepositoryTreeNode> nodes = new ArrayList<RepositoryTreeNode>();
 		List<String> directories = new ArrayList<String>();
-		RepositoryUtil repositoryUtil = Activator.getDefault().getRepositoryUtil();
+		RepositoryUtil repositoryUtil = Activator.getDefault()
+				.getRepositoryUtil();
 
 		if (inputElement instanceof Collection) {
 			for (Iterator it = ((Collection) inputElement).iterator(); it
@@ -87,8 +119,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 			try {
 				File gitDir = new File(directory);
 				if (gitDir.exists()) {
-					RepositoryNode rNode = new RepositoryNode(null, repositoryCache
-							.lookupRepository(gitDir));
+					RepositoryNode rNode = new RepositoryNode(null,
+							repositoryCache.lookupRepository(gitDir));
 					nodes.add(rNode);
 				} else
 					repositoryUtil.removeDir(gitDir);
@@ -102,7 +134,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 	}
 
 	public void dispose() {
-		// nothing
+		commandState.removeListener(this);
 	}
 
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
@@ -117,46 +149,98 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		switch (node.getType()) {
 
 		case BRANCHES: {
-
-			List<RepositoryTreeNode<Repository>> nodes = new ArrayList<RepositoryTreeNode<Repository>>();
-
+			List<RepositoryTreeNode> nodes = new ArrayList<RepositoryTreeNode>();
 			nodes.add(new LocalBranchesNode(node, repo));
 			nodes.add(new RemoteBranchesNode(node, repo));
-
 			return nodes.toArray();
 		}
 
 		case LOCALBRANCHES: {
-			List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
-
-			try {
-				for (Entry<String, Ref> refEntry : repo.getRefDatabase()
-						.getRefs(Constants.R_HEADS).entrySet()) {
-					if (!refEntry.getValue().isSymbolic())
-						refs.add(new RefNode(node, repo, refEntry.getValue()));
+			if (branchHierarchyMode) {
+				BranchHierarchyNode hierNode = new BranchHierarchyNode(node,
+						repo, new Path(Constants.R_HEADS));
+				List<RepositoryTreeNode> children = new ArrayList<RepositoryTreeNode>();
+				try {
+					for (IPath path : hierNode.getChildPaths()) {
+						children.add(new BranchHierarchyNode(node, node
+								.getRepository(), path));
+					}
+					for (Ref ref : hierNode.getChildRefs()) {
+						children.add(new RefNode(node, node.getRepository(),
+								ref));
+					}
+				} catch (IOException e) {
+					return handleException(e, node);
 				}
-			} catch (IOException e) {
-				return handleException(e, node);
+				return children.toArray();
+			} else {
+				List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
+				try {
+					for (Entry<String, Ref> refEntry : repo.getRefDatabase()
+							.getRefs(Constants.R_HEADS).entrySet()) {
+						if (!refEntry.getValue().isSymbolic())
+							refs.add(new RefNode(node, repo, refEntry
+									.getValue()));
+					}
+				} catch (IOException e) {
+					return handleException(e, node);
+				}
+				return refs.toArray();
 			}
-
-			return refs.toArray();
 		}
 
 		case REMOTEBRANCHES: {
-			List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
+			if (branchHierarchyMode) {
+				BranchHierarchyNode hierNode = new BranchHierarchyNode(node,
+						repo, new Path(Constants.R_REMOTES));
+				List<RepositoryTreeNode> children = new ArrayList<RepositoryTreeNode>();
+				try {
+					for (IPath path : hierNode.getChildPaths()) {
+						children.add(new BranchHierarchyNode(node, node
+								.getRepository(), path));
+					}
+					for (Ref ref : hierNode.getChildRefs()) {
+						children.add(new RefNode(node, node.getRepository(),
+								ref));
+					}
+				} catch (IOException e) {
+					return handleException(e, node);
+				}
+				return children.toArray();
+			} else {
+				List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
+				try {
+					for (Entry<String, Ref> refEntry : repo.getRefDatabase()
+							.getRefs(Constants.R_REMOTES).entrySet()) {
+						if (!refEntry.getValue().isSymbolic())
+							refs.add(new RefNode(node, repo, refEntry
+									.getValue()));
+					}
+				} catch (IOException e) {
+					return handleException(e, node);
+				}
 
+				return refs.toArray();
+			}
+		}
+
+		case BRANCHHIERARCHY: {
+			BranchHierarchyNode hierNode = (BranchHierarchyNode) node;
+			List<RepositoryTreeNode> children = new ArrayList<RepositoryTreeNode>();
 			try {
-				for (Entry<String, Ref> refEntry : repo.getRefDatabase()
-						.getRefs(Constants.R_REMOTES).entrySet()) {
-					if (!refEntry.getValue().isSymbolic())
-						refs.add(new RefNode(node, repo, refEntry.getValue()));
+				for (IPath path : hierNode.getChildPaths()) {
+					children.add(new BranchHierarchyNode(node, node
+							.getRepository(), path));
+				}
+				for (Ref ref : hierNode.getChildRefs()) {
+					children.add(new RefNode(node, node.getRepository(), ref));
 				}
 			} catch (IOException e) {
 				return handleException(e, node);
 			}
-
-			return refs.toArray();
+			return children.toArray();
 		}
+
 		case TAGS: {
 			List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
 
@@ -403,4 +487,12 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider {
 		}
 	}
 
+	public void handleStateChange(State state, Object oldValue) {
+		try {
+			this.branchHierarchyMode = ((Boolean) state.getValue())
+					.booleanValue();
+		} catch (Exception e) {
+			Activator.handleError(e.getMessage(), e, false);
+		}
+	}
 }
