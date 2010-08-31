@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///fU\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-08-30T18:03:27Z",
+      "side": 1,
+      "message": "Refer to the revreted commit using words rather than hex digits. That may\nbe a challenge but the subject line does need the precision. Since we\nsometimes rebase maybe we should refer to change id\u0027s instead.",
+      "revId": "8de49badacad47ebf7aae3c0a2fea264014e3bfd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
