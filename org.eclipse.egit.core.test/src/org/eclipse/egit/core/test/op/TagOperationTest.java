@@ -28,11 +28,11 @@ import org.eclipse.egit.core.test.DualRepositoryTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.util.RawParseUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -94,7 +94,7 @@ public class TagOperationTest extends DualRepositoryTestCase {
 		TagBuilder newTag = new TagBuilder();
 		newTag.setTag("TheNewTag");
 		newTag.setMessage("Well, I'm the tag");
-		newTag.setTagger(new PersonIdent(TestUtils.AUTHOR));
+		newTag.setTagger(RawParseUtils.parsePersonIdent(TestUtils.AUTHOR));
 		newTag.setObjectId(repository1.getRepository()
 				.resolve("refs/heads/master"), Constants.OBJ_COMMIT);
 		TagOperation top = new TagOperation(repository1.getRepository(),
