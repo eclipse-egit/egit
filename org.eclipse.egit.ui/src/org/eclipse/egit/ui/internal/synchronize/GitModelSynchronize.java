@@ -81,7 +81,7 @@ public class GitModelSynchronize {
 	}
 
 	/**
-	 * Based on {@link org.eclipse.team.internal.ui.actions.TeamAction#getSelectedResourceMappings}
+	 * Based on org.eclipse.team.internal.ui.actions.TeamAction#getSelectedResourceMappings
 	 *
 	 * @param elements
 	 * @return the resource mappings that contain resources associated with the
