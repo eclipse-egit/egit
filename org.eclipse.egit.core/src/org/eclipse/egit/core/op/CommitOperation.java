@@ -50,6 +50,7 @@ import org.eclipse.jgit.lib.TreeEntry;
 import org.eclipse.jgit.lib.GitIndex.Entry;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.ChangeIdUtil;
+import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 
@@ -121,8 +122,8 @@ public class CommitOperation implements IEGitOperation {
 			public void run(IProgressMonitor monitor) throws CoreException {
 				final Date commitDate = new Date();
 				final TimeZone timeZone = TimeZone.getDefault();
-				final PersonIdent authorIdent = new PersonIdent(author);
-				final PersonIdent committerIdent = new PersonIdent(committer);
+				final PersonIdent authorIdent = RawParseUtils.parsePersonIdent(author);
+				final PersonIdent committerIdent = RawParseUtils.parsePersonIdent(committer);
 				if (commitAll) {
 					for (Repository repo : repos) {
 						Git git = new Git(repo);
@@ -285,8 +286,8 @@ public class CommitOperation implements IEGitOperation {
 		final Date commitDate = new Date();
 		final TimeZone timeZone = TimeZone.getDefault();
 
-		final PersonIdent authorIdent = new PersonIdent(author);
-		final PersonIdent committerIdent = new PersonIdent(committer);
+		final PersonIdent authorIdent = RawParseUtils.parsePersonIdent(author);
+		final PersonIdent committerIdent = RawParseUtils.parsePersonIdent(committer);
 
 		for (java.util.Map.Entry<Repository, Tree> entry : treeMap.entrySet()) {
 			Tree tree = entry.getValue();
