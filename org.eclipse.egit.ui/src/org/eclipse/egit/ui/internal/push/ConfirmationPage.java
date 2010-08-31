@@ -164,7 +164,7 @@ class ConfirmationPage extends WizardPage {
 			}
 
 			final PushOperationSpecification spec = new PushOperationSpecification();
-			for (final URIish uri : displayedRepoSelection.getAllURIs())
+			for (final URIish uri : displayedRepoSelection.getPushURIs())
 				spec.addURIRefUpdates(uri, copyUpdates(updates));
 
 			operation = new PushOperation(local, spec, true,

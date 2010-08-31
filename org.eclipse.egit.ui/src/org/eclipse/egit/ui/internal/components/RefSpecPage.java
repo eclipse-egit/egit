@@ -220,7 +220,7 @@ public class RefSpecPage extends WizardPage {
 		final ListRemoteOperation listRemotesOp;
 		try {
 			final URIish uri;
-			uri = newRepoSelection.getURI();
+			uri = newRepoSelection.getURI(pushPage);
 			listRemotesOp = new ListRemoteOperation(local, uri);
 			getContainer().run(true, true, new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor)
