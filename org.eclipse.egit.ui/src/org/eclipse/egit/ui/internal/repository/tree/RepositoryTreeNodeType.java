@@ -29,6 +29,9 @@ public enum RepositoryTreeNodeType {
 	/** */
 	LOCALBRANCHES(PlatformUI.getWorkbench().getSharedImages().getImage(
 			ISharedImages.IMG_OBJ_FOLDER)), //
+			/** */
+	BRANCHHIERARCHY(PlatformUI.getWorkbench().getSharedImages().getImage(
+			ISharedImages.IMG_OBJ_FOLDER)), //
 	/** */
 	REMOTEBRANCHES(PlatformUI.getWorkbench().getSharedImages().getImage(
 			ISharedImages.IMG_OBJ_FOLDER)), //

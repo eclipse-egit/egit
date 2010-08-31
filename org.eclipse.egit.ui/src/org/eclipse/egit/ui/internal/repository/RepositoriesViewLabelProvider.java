@@ -16,10 +16,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.resource.CompositeImageDescriptor;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -208,6 +210,8 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements ISty
 				// fall through
 			case REMOTEBRANCHES:
 				// fall through
+			case BRANCHHIERARCHY:
+				// fall through
 			case TAGS:
 				// fall through;
 			case SYMBOLICREFS:
@@ -251,6 +255,9 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements ISty
 			return UIText.RepositoriesViewLabelProvider_LocalBranchesNodetext;
 		case REMOTEBRANCHES:
 			return UIText.RepositoriesViewLabelProvider_RemoteBrancheNodetext;
+		case BRANCHHIERARCHY:
+			IPath fullPath = (IPath) node.getObject();
+			return fullPath.lastSegment();
 		case TAGS:
 			return UIText.RepositoriesViewLabelProvider_TagsNodeText;
 		case SYMBOLICREFS:
@@ -272,6 +279,10 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements ISty
 			if (ref.isSymbolic()) {
 				refName = refName + " - " //$NON-NLS-1$
 				+ ref.getLeaf().getName();
+			}
+			if (node.getParent().getType() == RepositoryTreeNodeType.BRANCHHIERARCHY) {
+				int index = refName.lastIndexOf('/');
+				refName = refName.substring(index + 1);
 			}
 			return refName;
 		case WORKINGDIR:
