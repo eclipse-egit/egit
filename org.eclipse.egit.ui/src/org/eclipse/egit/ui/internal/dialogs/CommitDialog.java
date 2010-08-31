@@ -57,11 +57,11 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.GitIndex.Entry;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.Tree;
 import org.eclipse.jgit.lib.TreeEntry;
 import org.eclipse.jgit.util.ChangeIdUtil;
+import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -747,7 +747,7 @@ public class CommitDialog extends Dialog {
 		boolean authorValid = false;
 		if (author.length() > 0) {
 			try {
-				new PersonIdent(author);
+				RawParseUtils.parsePersonIdent(author);
 				authorValid = true;
 			} catch (IllegalArgumentException e) {
 				authorValid = false;
@@ -761,7 +761,7 @@ public class CommitDialog extends Dialog {
 		boolean committerValid = false;
 		if (committer.length() > 0) {
 			try {
-				new PersonIdent(committer);
+				RawParseUtils.parsePersonIdent(committer);
 				committerValid = true;
 			} catch (IllegalArgumentException e) {
 				committerValid = false;
