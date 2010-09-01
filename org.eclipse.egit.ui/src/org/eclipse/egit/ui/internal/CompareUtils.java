@@ -15,7 +15,14 @@ import java.io.IOException;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.ui.Activator;
@@ -134,6 +141,32 @@ public class CompareUtils {
 			return ci;
 	}
 
+
+	/**
+	 * Determine the encoding used by eclipse for the resource which belongs
+	 * to repoPath to in the eclipse workspace or null if no resource is found
+	 * @param db the repository
+	 * @param repoPath the path in the git repository
+	 * @return the encoding used in eclipse for the resource or null if
+	 *
+	 */
+	public static String getResourceEncoding(Repository db, String repoPath) {
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IWorkspaceRoot root = workspace.getRoot();
+		IPath absolutePath = new Path(db.getWorkTree().getAbsolutePath()).append(repoPath);
+		IResource resource = root.getFileForLocation(absolutePath);
+		if (resource == null)
+			return null;
+		String encoding = null;
+		try {
+			encoding = resource.getProject().getDefaultCharset();
+		} catch (CoreException e) {
+			Activator.logError(e.getMessage(), e);
+		}
+		if (encoding == null)
+			encoding = ResourcesPlugin.getEncoding();
+		return encoding;
+	}
 
 	/**
 	 * @param element
