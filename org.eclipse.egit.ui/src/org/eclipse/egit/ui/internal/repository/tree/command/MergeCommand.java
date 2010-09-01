@@ -37,6 +37,8 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Implements "Merge"
@@ -95,6 +97,7 @@ public class MergeCommand extends
 			}
 		};
 		job.setUser(true);
+		job.setRule(op.getSchedulingRule());
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent jobEvent) {
@@ -102,18 +105,14 @@ public class MergeCommand extends
 				if (result.getSeverity() == IStatus.CANCEL) {
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
-							try {
-								MessageDialog
-										.openInformation(
-												getActiveShell(event),
-												UIText.MergeAction_MergeCanceledTitle,
-												UIText.MergeAction_MergeCanceledMessage);
-							} catch (ExecutionException e) {
-								Activator
-										.handleError(
-												UIText.MergeAction_MergeCanceledMessage,
-												null, true);
-							}
+							// don't use getShell(event) here since
+							// the active shell has changed since the
+							// execution has been triggered.
+							Shell shell = PlatformUI.getWorkbench()
+									.getActiveWorkbenchWindow().getShell();
+							MessageDialog.openInformation(shell,
+									UIText.MergeAction_MergeCanceledTitle,
+									UIText.MergeAction_MergeCanceledMessage);
 						}
 					});
 				} else if (!result.isOK()) {
@@ -122,15 +121,11 @@ public class MergeCommand extends
 				} else {
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
-							try {
-								MessageDialog.openInformation(
-										getActiveShell(event),
-										UIText.MergeAction_MergeResultTitle, op
-												.getResult().toString());
-							} catch (ExecutionException e) {
-								Activator.handleError(
-										op.getResult().toString(), null, true);
-							}
+							Shell shell = PlatformUI.getWorkbench()
+									.getActiveWorkbenchWindow().getShell();
+							MessageDialog.openInformation(shell,
+									UIText.MergeAction_MergeResultTitle, op
+											.getResult().toString());
 						}
 					});
 				}
