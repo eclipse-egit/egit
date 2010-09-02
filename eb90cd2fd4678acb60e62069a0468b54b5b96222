@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///Oo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-09-01T22:20:09Z",
+      "side": 1,
+      "message": "Would be cool if you can refactor this into a RepositoriesToggleBranchHierarchy.ID constant",
+      "revId": "eb90cd2fd4678acb60e62069a0468b54b5b96222",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn///Ok\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-09-01T22:20:09Z",
+      "side": 1,
+      "message": "Would be cool if you can refactor this into a RepositoriesToggleBranchHierarchy.TOGGLE_STATE constant",
+      "revId": "eb90cd2fd4678acb60e62069a0468b54b5b96222",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
