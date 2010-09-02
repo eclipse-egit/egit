@@ -153,7 +153,7 @@ class FileDiff {
 		final RawText a = getRawText(id1, reader);
 		final RawText b = getRawText(id2, reader);
 		final MyersDiff diff = new MyersDiff(a, b);
-		diffFmt.formatEdits(a, b, diff.getEdits());
+		diffFmt.format(diff.getEdits(), a, b);
 	}
 
 	private String getProjectRelativePath(Repository db, String repoPath) {
