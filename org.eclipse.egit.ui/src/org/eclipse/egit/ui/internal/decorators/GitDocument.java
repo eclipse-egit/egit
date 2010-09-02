@@ -12,13 +12,12 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import org.eclipse.core.resources.IEncodedStorage;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jgit.events.ListenerHandle;
@@ -157,18 +156,7 @@ class GitDocument extends Document implements RefsChangedListener {
 					Constants.OBJ_BLOB);
 			byte[] bytes = loader.getBytes();
 			String charset;
-			// Get the encoding for the current version. As a matter of
-			// principle one might want to use the eclipse settings for the
-			// version we are retrieving as that may be defined by the
-			// project settings, but there is no historic API for this.
-			IEncodedStorage encodedStorage = ((IEncodedStorage)resource);
-			try {
-				charset = encodedStorage.getCharset();
-				if (charset != null)
-					charset = resource.getParent().getDefaultCharset();
-			} catch (CoreException e) {
-				charset = Constants.CHARACTER_ENCODING;
-			}
+			charset = CompareUtils.getResourceEncoding(resource);
 			// Finally we could consider validating the content with respect
 			// to the content. We don't do that here.
 			String s = new String(bytes, charset);
