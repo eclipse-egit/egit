@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -69,6 +70,9 @@ public class GitCreatePatchWizard extends Wizard {
 	private LocationPage locationPage;
 
 	private OptionsPage optionsPage;
+
+	// the encoding for the currently processed file
+	private String currentEncoding = null;
 
 	// The initial size of this wizard.
 	private final static int INITIAL_WIDTH = 300;
@@ -140,7 +144,13 @@ public class GitCreatePatchWizard extends Wizard {
 						@Override
 						public synchronized void write(byte[] b, int off, int len) {
 							super.write(b, off, len);
-							sb.append(toString());
+							if (currentEncoding == null)
+								sb.append(toString());
+							else try {
+								sb.append(toString(currentEncoding));
+							} catch (UnsupportedEncodingException e) {
+								sb.append(toString());
+							}
 							reset();
 						}
 
@@ -148,6 +158,8 @@ public class GitCreatePatchWizard extends Wizard {
 					try {
 						FileDiff[] diffs = FileDiff.compute(walker, commit);
 						for (FileDiff diff : diffs) {
+							currentEncoding = CompareUtils.
+								getResourceEncoding(db, diff.getPath());
 							diff.outputDiff(sb, db, diffFmt, isGit);
 							diffFmt.flush();
 						}
