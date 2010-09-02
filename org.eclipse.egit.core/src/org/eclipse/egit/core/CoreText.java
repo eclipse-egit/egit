@@ -173,6 +173,9 @@ public class CoreText extends NLS {
 	public static String ResetOperation_readingIndex;
 
 	/** */
+	public static String ResetOperation_resetMergeFailed;
+
+	/** */
 	public static String ResetOperation_updatingFailed;
 
 	/** */
