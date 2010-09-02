@@ -177,11 +177,11 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		SWTBotView view = bot
 				.viewById("org.eclipse.team.ui.GenericHistoryView");
 		SWTBotToolbarToggleButton folder = (SWTBotToolbarToggleButton) view
-				.toolbarButton(UIText.HistoryPage_ShowAllVersionsForFolder);
+				.toolbarButton(UIText.GitHistoryPage_AllInParentTooltip);
 		SWTBotToolbarToggleButton project = (SWTBotToolbarToggleButton) view
-				.toolbarButton(UIText.HistoryPage_ShowAllVersionsForProject);
+				.toolbarButton(UIText.GitHistoryPage_AllInProjectTooltip);
 		SWTBotToolbarToggleButton repo = (SWTBotToolbarToggleButton) view
-				.toolbarButton(UIText.HistoryPage_ShowAllVersionsForRepo);
+				.toolbarButton(UIText.GitHistoryPage_AllInRepoTooltip);
 		switch (filter) {
 		case 0:
 			if (folder.isChecked())
