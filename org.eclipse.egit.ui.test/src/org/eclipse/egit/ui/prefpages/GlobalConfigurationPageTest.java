@@ -8,7 +8,7 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.ui.prefpages.configuration;
+package org.eclipse.egit.ui.prefpages;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

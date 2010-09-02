@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test;
 
-import org.eclipse.egit.ui.prefpages.configuration.GlobalConfigurationPageTest;
+import org.eclipse.egit.ui.prefpages.AllPreferencePageTests;
 import org.eclipse.egit.ui.test.history.HistoryViewTest;
 import org.eclipse.egit.ui.test.team.actions.AllTeamActionTests;
 import org.eclipse.egit.ui.view.repositories.AllRepositoriesViewTests;
@@ -20,7 +20,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses( { AllRepositoriesViewTests.class, 	//
-		GlobalConfigurationPageTest.class,			//
+		AllPreferencePageTests.class,               //
 		GitCloneWizardTest.class,                   //
 		SharingWizardTest.class,					//
 		AllTeamActionTests.class,                   //
