@@ -26,6 +26,7 @@ import org.eclipse.egit.core.op.MergeOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.dialogs.MergeTargetSelectionDialog;
+import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
@@ -123,9 +124,7 @@ public class MergeCommand extends
 						public void run() {
 							Shell shell = PlatformUI.getWorkbench()
 									.getActiveWorkbenchWindow().getShell();
-							MessageDialog.openInformation(shell,
-									UIText.MergeAction_MergeResultTitle, op
-											.getResult().toString());
+							new MergeResultDialog(shell, repository, op.getResult()).open();
 						}
 					});
 				}
