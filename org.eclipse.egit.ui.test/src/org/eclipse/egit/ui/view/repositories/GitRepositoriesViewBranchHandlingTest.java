@@ -82,6 +82,26 @@ public class GitRepositoriesViewBranchHandlingTest extends
 	}
 
 	@Test
+	public void testMergeOnRepo() throws Exception {
+		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
+				clonedRepositoryFile);
+
+		SWTBotTree tree = getOrOpenView().bot().tree();
+
+		myRepoViewUtil.getRootItem(tree, clonedRepositoryFile).select();
+
+		ContextMenuHelper.clickContextMenu(tree, myUtil
+				.getPluginLocalizedValue("RepoViewMerge.label"));
+
+		String title = NLS.bind(UIText.MergeTargetSelectionDialog_TitleMerge,
+				clonedRepositoryFile.getPath().toString());
+
+		SWTBotShell mergeDialog = bot.shell(title);
+		// TODO do some merge here
+		mergeDialog.close();
+	}
+
+	@Test
 	public void testCreateCheckoutDeleteLocalBranch() throws Exception {
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
 				repositoryFile);
@@ -307,25 +327,5 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		item = myRepoViewUtil.getLocalBranchesItem(tree, clonedRepositoryFile)
 				.expand();
 		assertEquals("newmaster", item.getNode(0).getText());
-	}
-
-	@Test
-	public void testMergeOnRepo() throws Exception {
-		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
-				clonedRepositoryFile);
-
-		SWTBotTree tree = getOrOpenView().bot().tree();
-
-		myRepoViewUtil.getRootItem(tree, clonedRepositoryFile).select();
-
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("RepoViewMerge.label"));
-
-		String title = NLS.bind(UIText.MergeTargetSelectionDialog_TitleMerge,
-				clonedRepositoryFile.getPath().toString());
-
-		SWTBotShell mergeDialog = bot.shell(title);
-		// TODO do some merge here
-		mergeDialog.close();
 	}
 }
