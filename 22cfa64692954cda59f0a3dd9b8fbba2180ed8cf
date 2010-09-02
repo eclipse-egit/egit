@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///NM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-09-02T09:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyn///Ng\u003d",
+      "revId": "22cfa64692954cda59f0a3dd9b8fbba2180ed8cf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn///NI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-09-02T09:18:26Z",
+      "side": 1,
+      "message": "That code in GitDocument#populate is in priciple way better. I missed to take into account encoding on file level. \n\nHowever, it still had a bug (if (charset !\u003d null)) and did not work for file encoding different.\n\nI fixed that bug and refactored it for reuse.",
+      "parentUuid": "AAALyn///Nc\u003d",
+      "revId": "22cfa64692954cda59f0a3dd9b8fbba2180ed8cf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
