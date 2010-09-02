@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
@@ -38,9 +39,9 @@ public class GitFolderResourceVariant extends GitResourceVariant {
 
 	private IResourceVariant members[];
 
-	GitFolderResourceVariant(Repository repo, ObjectId objectId, String path)
-			throws IOException {
-		super(repo, objectId, path);
+	GitFolderResourceVariant(Repository repo, RevCommit revCommit,
+			ObjectId objectId, String path) throws IOException {
+		super(repo, revCommit, objectId, path);
 	}
 
 	public boolean isContainer() {
@@ -90,10 +91,10 @@ public class GitFolderResourceVariant extends GitResourceVariant {
 				if (!newObjectId.equals(zeroId()))
 					if (tw.isSubtree())
 						result.add(new GitFolderResourceVariant(repo,
-								newObjectId, path));
+								getRevCommit(), newObjectId, path));
 					else
 						result.add(new GitBlobResourceVariant(repo,
-								newObjectId, path));
+								getRevCommit(), newObjectId, path));
 				monitor.worked(1);
 			}
 
