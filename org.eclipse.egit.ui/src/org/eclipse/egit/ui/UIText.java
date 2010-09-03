@@ -229,6 +229,18 @@ public class UIText extends NLS {
 	public static String GitDocument_errorRefreshQuickdiff;
 
 	/** */
+	public static String GitHistoryPage_AllChangesInFolderHint;
+
+	/** */
+	public static String GitHistoryPage_AllChangesInProjectHint;
+
+	/** */
+	public static String GitHistoryPage_AllChangesInRepoHint;
+
+	/** */
+	public static String GitHistoryPage_AllChangesOfResourceHint;
+
+	/** */
 	public static String GitDocument_errorResolveQuickdiff;
 
 	/** */
