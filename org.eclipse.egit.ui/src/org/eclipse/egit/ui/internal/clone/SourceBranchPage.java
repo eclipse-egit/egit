@@ -178,12 +178,6 @@ class SourceBranchPage extends WizardPage {
 			return;
 		}
 
-		if (isSourceRepoEmpty()) {
-			setMessage(UIText.SourceBranchPage_repoEmpty, IMessageProvider.WARNING);
-			setPageComplete(true);
-			return;
-		}
-
 		if (getSelectedBranches().isEmpty()) {
 			setErrorMessage(UIText.SourceBranchPage_errorBranchRequired);
 			setPageComplete(false);
@@ -191,6 +185,14 @@ class SourceBranchPage extends WizardPage {
 		}
 		setErrorMessage(null);
 		setPageComplete(true);
+	}
+
+	private void checkForEmptyRepo() {
+		if (isSourceRepoEmpty()) {
+			setErrorMessage(null);
+			setMessage(UIText.SourceBranchPage_repoEmpty, IMessageProvider.WARNING);
+			setPageComplete(true);
+		}
 	}
 
 	private void revalidate(final RepositorySelection newRepoSelection) {
@@ -211,6 +213,7 @@ class SourceBranchPage extends WizardPage {
 		refsViewer.setInput(null);
 		setPageComplete(false);
 		setErrorMessage(null);
+		setMessage(null);
 		label.getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				revalidateImpl(newRepoSelection);
@@ -276,6 +279,7 @@ class SourceBranchPage extends WizardPage {
 		refsViewer.setInput(availableRefs);
 		refsViewer.setAllChecked(true);
 		checkPage();
+		checkForEmptyRepo();
 	}
 
 	private void transportError(final String msg) {
