@@ -31,7 +31,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.NewWizardAction;
+import org.eclipse.ui.actions.NewProjectAction;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 /**
@@ -227,7 +227,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 					myProjectsImportPage.createProjects();
 					break;
 				case GitSelectWizardPage.NEW_WIZARD:
-					new NewWizardAction(PlatformUI.getWorkbench()
+					new NewProjectAction(PlatformUI.getWorkbench()
 							.getActiveWorkbenchWindow()).run();
 					break;
 				case GitSelectWizardPage.GENERAL_WIZARD:
