@@ -2393,10 +2393,16 @@ public class UIText extends NLS {
 	public static String NewRepositoryWizard_WizardTitle;
 
 	/** */
-	public static String RemoteSelectionCombo_remoteName;
+	public static String RemoteSelectionCombo_sourceName;
 
 	/** */
-	public static String RemoteSelectionCombo_remoteRef;
+	public static String RemoteSelectionCombo_sourceRef;
+
+	/** */
+	public static String RemoteSelectionCombo_destinationName;
+
+	/** */
+	public static String RemoteSelectionCombo_destinationRef;
 
 	/** */
 	public static String RemoveCommand_DeleteConfirmMultiMessage;
