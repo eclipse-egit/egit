@@ -54,10 +54,10 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 	}
 
 	private InputDialog getRefNameInputDialog(String prompt,
-			final String refPrefix) {
+			final String refPrefix, String initialValue) {
 		InputDialog labelDialog = new InputDialog(getShell(),
 				UIText.BranchSelectionDialog_QuestionNewBranchTitle, prompt,
-				null, ValidationUtils.getRefNameInputValidator(repo, refPrefix, true));
+				initialValue, ValidationUtils.getRefNameInputValidator(repo, refPrefix, true));
 		labelDialog.setBlockOnOpen(true);
 		return labelDialog;
 	}
@@ -99,7 +99,7 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 						NLS
 								.bind(
 										UIText.BranchSelectionDialog_QuestionNewBranchNameMessage,
-										branchName, refPrefix), refPrefix);
+										branchName, refPrefix), refPrefix, branchName);
 				if (labelDialog.open() == Window.OK) {
 					String newRefName = refPrefix + labelDialog.getValue();
 					try {
@@ -130,7 +130,7 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 
 				InputDialog labelDialog = getRefNameInputDialog(NLS.bind(
 						UIText.BranchSelectionDialog_QuestionNewBranchMessage,
-						refName, Constants.R_HEADS), Constants.R_HEADS);
+						refName, Constants.R_HEADS), Constants.R_HEADS, null);
 
 				if (labelDialog.open() == Window.OK) {
 					String newRefName = Constants.R_HEADS
