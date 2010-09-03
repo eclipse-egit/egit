@@ -3,6 +3,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (c) 2010, Benjamin Muskalla <bmuskalla@eclipsesource.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -26,10 +28,16 @@ import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
+import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.ICheckStateListener;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -40,6 +48,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -47,7 +56,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 
 class SourceBranchPage extends WizardPage {
 
@@ -57,17 +65,15 @@ class SourceBranchPage extends WizardPage {
 
 	private final List<Ref> availableRefs = new ArrayList<Ref>();
 
-	private List<Ref> selectedRefs = new ArrayList<Ref>();
-
 	private Label label;
-
-	private Table refsTable;
 
 	private String transportError;
 
 	private Button selectB;
 
 	private Button unselectB;
+
+	private CheckboxTableViewer refsViewer;
 
 	SourceBranchPage() {
 		super(SourceBranchPage.class.getName());
@@ -76,7 +82,10 @@ class SourceBranchPage extends WizardPage {
 	}
 
 	List<Ref> getSelectedBranches() {
-		return new ArrayList<Ref>(selectedRefs);
+		Object[] checkedElements = refsViewer.getCheckedElements();
+		Ref[] checkedRefs = new Ref[checkedElements.length];
+		System.arraycopy(checkedElements, 0, checkedRefs, 0, checkedElements.length);
+		return Arrays.asList(checkedRefs);
 	}
 
 	List<Ref> getAvailableBranches() {
@@ -92,11 +101,7 @@ class SourceBranchPage extends WizardPage {
 	}
 
 	boolean isAllSelected() {
-		return availableRefs.size() == selectedRefs.size();
-	}
-
-	boolean selectionEquals(final List<Ref> actSelectedRef, final Ref actHead) {
-		return this.selectedRefs.equals(actSelectedRef) && this.head == actHead;
+		return availableRefs.size() == refsViewer.getCheckedElements().length;
 	}
 
 	public void createControl(final Composite parent) {
@@ -108,42 +113,34 @@ class SourceBranchPage extends WizardPage {
 		label = new Label(panel, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
-		refsTable = new Table(panel, SWT.CHECK | SWT.V_SCROLL | SWT.BORDER);
+		Table refsTable = new Table(panel, SWT.CHECK | SWT.V_SCROLL | SWT.BORDER);
 		refsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		refsTable.addSelectionListener(new SelectionAdapter() {
+		refsViewer = new CheckboxTableViewer(refsTable);
+		refsViewer.setContentProvider(ArrayContentProvider.getInstance());
+		refsViewer.setLabelProvider(new LabelProvider() {
 			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				if (e.detail != SWT.CHECK)
-					return;
+			public String getText(Object element) {
+				return ((Ref)element).getName().substring(Constants.R_HEADS.length());
+			}
 
-				final TableItem tableItem = (TableItem) e.item;
-				final int i = refsTable.indexOf(tableItem);
-				final Ref ref = availableRefs.get(i);
-
-				if (tableItem.getChecked()) {
-					int insertionPos = 0;
-					for (int j = 0; j < i; j++) {
-						if (selectedRefs.contains(availableRefs.get(j)))
-							insertionPos++;
-					}
-					selectedRefs.add(insertionPos, ref);
-				} else
-					selectedRefs.remove(ref);
-
-				checkPage();
+			@Override
+			public Image getImage(Object element) {
+				return RepositoryTreeNodeType.REF.getIcon();
 			}
 		});
 
+		refsViewer.addCheckStateListener(new ICheckStateListener() {
+			public void checkStateChanged(CheckStateChangedEvent event) {
+				checkPage();
+			}
+		});
 		final Composite bPanel = new Composite(panel, SWT.NONE);
 		bPanel.setLayout(new RowLayout());
 		selectB = new Button(bPanel, SWT.PUSH);
 		selectB.setText(UIText.SourceBranchPage_selectAll);
 		selectB.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
-				for (int i = 0; i < refsTable.getItemCount(); i++)
-					refsTable.getItem(i).setChecked(true);
-				selectedRefs.clear();
-				selectedRefs.addAll(availableRefs);
+				refsViewer.setAllChecked(true);
 				checkPage();
 			}
 		});
@@ -151,9 +148,7 @@ class SourceBranchPage extends WizardPage {
 		unselectB.setText(UIText.SourceBranchPage_selectNone);
 		unselectB.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
-				for (int i = 0; i < refsTable.getItemCount(); i++)
-					refsTable.getItem(i).setChecked(false);
-				selectedRefs.clear();
+				refsViewer.setAllChecked(false);
 				checkPage();
 			}
 		});
@@ -174,8 +169,9 @@ class SourceBranchPage extends WizardPage {
 	 */
 	private void checkPage() {
 		setMessage(null);
-		selectB.setEnabled(selectedRefs.size() != availableRefs.size());
-		unselectB.setEnabled(selectedRefs.size() != 0);
+		int checkedElementCount = refsViewer.getCheckedElements().length;
+		selectB.setEnabled(checkedElementCount != availableRefs.size());
+		unselectB.setEnabled(checkedElementCount != 0);
 		if (transportError != null) {
 			setErrorMessage(transportError);
 			setPageComplete(false);
@@ -188,7 +184,7 @@ class SourceBranchPage extends WizardPage {
 			return;
 		}
 
-		if ( getSelectedBranches().isEmpty()) {
+		if (getSelectedBranches().isEmpty()) {
 			setErrorMessage(UIText.SourceBranchPage_errorBranchRequired);
 			setPageComplete(false);
 			return;
@@ -212,8 +208,7 @@ class SourceBranchPage extends WizardPage {
 		transportError = null;
 		head = null;
 		availableRefs.clear();
-		selectedRefs.clear();
-		refsTable.removeAll();
+		refsViewer.setInput(null);
 		setPageComplete(false);
 		setErrorMessage(null);
 		label.getDisplay().asyncExec(new Runnable() {
@@ -278,15 +273,8 @@ class SourceBranchPage extends WizardPage {
 		}
 
 		validatedRepoSelection = newRepoSelection;
-		for (final Ref r : availableRefs) {
-			String n = r.getName();
-			if (n.startsWith(Constants.R_HEADS))
-				n = n.substring(Constants.R_HEADS.length());
-			final TableItem ti = new TableItem(refsTable, SWT.NONE);
-			ti.setText(n);
-			ti.setChecked(true);
-			selectedRefs.add(r);
-		}
+		refsViewer.setInput(availableRefs);
+		refsViewer.setAllChecked(true);
 		checkPage();
 	}
 
