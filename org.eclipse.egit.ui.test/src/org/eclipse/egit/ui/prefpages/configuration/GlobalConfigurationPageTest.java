@@ -31,6 +31,8 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.OpenPreferencesAction;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -73,7 +75,14 @@ public class GlobalConfigurationPageTest {
 		if (preferencePage != null)
 			preferencePage.close();
 		bot.perspectiveById("org.eclipse.ui.resourcePerspective").activate();
-		bot.menu("Window").menu("Preferences").click();
+		// This does not work on Mac
+		// bot.menu("Window").menu("Preferences").click();
+		// Launch preferences programmatically instead
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				new OpenPreferencesAction().run();
+			}
+		});
 		preferencePage = bot.shell("Preferences").activate();
 		SWTBotTreeItem team = preferencePage.bot().tree().getTreeItem("Team");
 		team
