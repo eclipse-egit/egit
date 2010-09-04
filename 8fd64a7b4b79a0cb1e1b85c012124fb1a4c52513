@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///FY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-09-03T11:14:28Z",
+      "side": 1,
+      "message": "key is mangled\ns/Chnages/Changes/",
+      "revId": "8fd64a7b4b79a0cb1e1b85c012124fb1a4c52513",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
