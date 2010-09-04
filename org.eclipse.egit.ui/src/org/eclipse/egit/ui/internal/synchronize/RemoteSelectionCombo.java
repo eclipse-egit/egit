@@ -70,7 +70,7 @@ class RemoteSelectionCombo extends Composite {
 				refSelectedIndex).getValue();
 	}
 
-	public void setDefautlValue(String remote, String ref) {
+	public void setDefaultValue(String remote, String ref) {
 		int i = 0;
 		for (; i < syncRepos.size(); i++)
 			if (syncRepos.get(i).getName().equals(remote))
