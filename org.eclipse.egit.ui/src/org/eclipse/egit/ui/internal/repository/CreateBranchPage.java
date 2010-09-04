@@ -16,6 +16,7 @@ import java.util.Map.Entry;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.BranchOperation;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.jface.dialogs.Dialog;
@@ -128,6 +129,7 @@ class CreateBranchPage extends WizardPage {
 		GridDataFactory.fillDefaults().span(2, 1).grab(true, false).applyTo(
 				this.branchCombo);
 
+		String baseBranchName = myBaseBranch.getName();
 		if (commitMode) {
 			this.branchCombo.add(myBaseCommit.name());
 			this.branchCombo.setText(myBaseCommit.name());
@@ -162,7 +164,7 @@ class CreateBranchPage extends WizardPage {
 			});
 			// select the current branch in the drop down
 			if (myBaseBranch != null) {
-				this.branchCombo.setText(myBaseBranch.getName());
+				this.branchCombo.setText(baseBranchName);
 			}
 		}
 
@@ -201,12 +203,14 @@ class CreateBranchPage extends WizardPage {
 		setControl(main);
 		nameText.setFocus();
 		if (myBaseBranch != null
-				&& (myBaseBranch.getName().startsWith(Constants.R_REMOTES) || myBaseBranch
-						.getName().startsWith(Constants.R_TAGS))) {
+				&& (baseBranchName.startsWith(Constants.R_REMOTES) || baseBranchName.startsWith(Constants.R_TAGS))) {
 			// additional convenience: the last part of the name is suggested
-			// as name for the local branch
-			nameText.setText(myBaseBranch.getName().substring(
-					myBaseBranch.getName().lastIndexOf('/') + 1));
+			// as name for the local branch but only if it doesn't exist
+			String suggestedBranchName = baseBranchName
+					.substring(baseBranchName.lastIndexOf('/') + 1);
+			if(!existsLocalBranch(suggestedBranchName)) {
+				nameText.setText(suggestedBranchName);
+			}
 			checkPage();
 		} else {
 			// in any case, we will have to enter the name
@@ -218,6 +222,18 @@ class CreateBranchPage extends WizardPage {
 				checkPage();
 			}
 		});
+	}
+
+	private boolean existsLocalBranch(String suggestedBranchName) {
+		ObjectId localBranch = null;
+		try {
+			localBranch = myRepository.resolve(Constants.R_HEADS
+					+ suggestedBranchName);
+		} catch (Exception e) {
+			Activator.handleError(UIText.CreateBranchWizard_CreationFailed,
+					e.getCause(), false);
+		}
+		return localBranch != null;
 	}
 
 	private void checkPage() {
