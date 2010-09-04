@@ -31,8 +31,9 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.OpenPreferencesAction;
+import org.eclipse.ui.actions.ActionFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -80,7 +81,10 @@ public class GlobalConfigurationPageTest {
 		// Launch preferences programmatically instead
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 			public void run() {
-				new OpenPreferencesAction().run();
+				IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow();
+				ActionFactory.PREFERENCES.create(workbenchWindow).run();
+
 			}
 		});
 		preferencePage = bot.shell("Preferences").activate();
