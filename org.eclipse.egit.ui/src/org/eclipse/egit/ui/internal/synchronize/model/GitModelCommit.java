@@ -275,12 +275,11 @@ public class GitModelCommit extends GitModelObject implements
 	}
 
 	private void getChildrenImpl() {
-		TreeWalk tw = createTreeWalk();
 		List<GitModelObject> result = new ArrayList<GitModelObject>();
 
 		try {
+			TreeWalk tw = createTreeWalk();
 			RevTree actualTree = remoteCommit.getTree();
-			List<String> notIgnored = getNotIgnoredNodes(actualTree);
 
 			int actualNth = tw.addTree(actualTree);
 			int baseNth = -1;
@@ -289,9 +288,6 @@ public class GitModelCommit extends GitModelObject implements
 			int ancestorNth = tw.addTree(ancestorCommit.getTree());
 
 			while (tw.next()) {
-				if (!notIgnored.contains(tw.getNameString()))
-					continue;
-
 				GitModelObject obj = getModelObject(tw, ancestorNth, baseNth,
 						actualNth);
 				if (obj != null)

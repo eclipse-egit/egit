@@ -8,21 +8,21 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
+import static org.eclipse.jgit.treewalk.filter.TreeFilter.ANY_DIFF;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
+import org.eclipse.jgit.errors.CorruptObjectException;
 import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
 
 /**
  * Abstract representation of all object that are included in Git ChangeSet
@@ -112,39 +112,19 @@ public abstract class GitModelObject extends PlatformObject {
 	 * initialization call's is common for all model object's.
 	 *
 	 * @return tree walk
+	 * @throws CorruptObjectException
 	 */
-	protected TreeWalk createTreeWalk() {
-		TreeWalk tw = new TreeWalk(getRepository());
+	protected TreeWalk createTreeWalk() throws CorruptObjectException {
+		Repository repo = getRepository();
+		TreeWalk tw = new TreeWalk(repo);
 
 		tw.reset();
 		tw.setRecursive(false);
-		tw.setFilter(TreeFilter.ANY_DIFF);
-
-		return tw;
-	}
-
-	/**
-	 * Return list of not ignored children in root node.
-	 *
-	 * @param root
-	 * @return list of not ignored nodes
-	 * @throws IOException
-	 */
-	protected List<String> getNotIgnoredNodes(ObjectId root) throws IOException {
-		Repository repo = getRepository();
-		List<String> resutl = new ArrayList<String>();
-
-		TreeWalk tw = new TreeWalk(repo);
-		tw.reset();
-		tw.addTree(root);
-
 		int ignoreNth = tw.addTree(new FileTreeIterator(repo));
-		tw.setFilter(new NotIgnoredFilter(ignoreNth));
+		NotIgnoredFilter notIgnoredFilter = new NotIgnoredFilter(ignoreNth);
 
-		while (tw.next())
-			resutl.add(tw.getNameString());
-
-		return resutl;
+		tw.setFilter(AndTreeFilter.create(ANY_DIFF, notIgnoredFilter));
+		return tw;
 	}
 
 }
