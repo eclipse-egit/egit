@@ -35,7 +35,8 @@
             <!-- test mojo matches TestProject be default and treats it as PojoTest -->
             <exclude>**/Test*.class</exclude>
           </excludes>
-          <useUIHarness>true</useUIHarness>
+          <useUIHarness>false</useUIHarness>
+          <useUIThread>false</useUIThread>
         </configuration>
       </plugin>
     </plugins>
