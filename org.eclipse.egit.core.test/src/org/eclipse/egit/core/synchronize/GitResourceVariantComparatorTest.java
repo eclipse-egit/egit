@@ -487,7 +487,6 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 	 * @throws Exception
 	 */
 	@Test
-	@SuppressWarnings("boxing")
 	public void shouldReturnFalseWhenBaseDoesntExist() throws Exception {
 		// when
 		GitResourceVariantComparator grvc = new GitResourceVariantComparator(
@@ -518,7 +517,6 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 	 * @throws Exception
 	 */
 	@Test
-	@SuppressWarnings("boxing")
 	public void shouldReturnFalseWhenRemoteVariantDoesntExist()
 			throws Exception {
 		// when
@@ -550,7 +548,6 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 	 * @throws Exception
 	 */
 	@Test
-	@SuppressWarnings("boxing")
 	public void shouldReturnFalseWhenComparingRemoteVariantFileWithContainer()
 			throws Exception {
 		// when
@@ -581,7 +578,6 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 	 * @throws Exception
 	 */
 	@Test
-	@SuppressWarnings("boxing")
 	public void shouldReturnFalseWhenComparingRemoteVariantContainerWithFile()
 			throws Exception {
 		// when
@@ -613,7 +609,6 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 	 * @throws Exception
 	 */
 	@Test
-	@SuppressWarnings("boxing")
 	public void shouldReturnFalseWhenComparingRemoteVariantContainerWithContainer()
 			throws Exception {
 		// when
@@ -654,7 +649,6 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 	 * @throws Exception
 	 */
 	@Test
-	@SuppressWarnings("boxing")
 	public void shouldReturnTrueWhenComparingRemoteVariantContainerWithContainer()
 			throws Exception {
 		// when
@@ -681,7 +675,6 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 	}
 
 	@Test
-	@SuppressWarnings("boxing")
 	/**
 	 * Comparing two remote files that have different git ObjectId should return false.
 	 *
@@ -717,7 +710,6 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 	 * @throws Exception
 	 */
 	@Test
-	@SuppressWarnings("boxing")
 	public void shouldReturnTrueWhenComparingRemoteVariant() throws Exception {
 		// when
 		GitResourceVariantComparator grvc = new GitResourceVariantComparator(
