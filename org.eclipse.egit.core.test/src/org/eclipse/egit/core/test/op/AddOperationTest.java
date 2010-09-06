@@ -160,7 +160,7 @@ public class AddOperationTest extends GitTestCase {
 		 assertEquals(file1.getLocalTimeStamp() / 10,
 				 testRepository.lastModifiedInIndex(file1.getLocation().toPortableString()) / 10);
 		 assertEquals(file2.getLocalTimeStamp() / 10,
-				 testRepository.lastModifiedInIndex(file1.getLocation().toPortableString()) / 10);
+				 testRepository.lastModifiedInIndex(file2.getLocation().toPortableString()) / 10);
 	}
 
 	@Test
