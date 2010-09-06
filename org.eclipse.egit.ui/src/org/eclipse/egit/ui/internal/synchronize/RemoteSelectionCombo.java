@@ -41,6 +41,13 @@ class RemoteSelectionCombo extends Composite {
 		createRefsGroup(refLabel);
 	}
 
+	@Override
+	public void setEnabled(boolean enabled) {
+		refsCombo.setEnabled(enabled);
+		remotesCombo.setEnabled(enabled);
+		super.setEnabled(enabled);
+	}
+
 	private void createRemoteGroup(String remoteLabel) {
 		Composite remoteComposite = new Composite(this, SWT.NONE);
 		remoteComposite.setLayout(new GridLayout());
