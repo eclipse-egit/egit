@@ -70,7 +70,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
 import org.eclipse.jgit.revwalk.RevSort;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
@@ -109,6 +108,10 @@ import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 	private static final String POPUP_ID = "org.eclipse.egit.ui.historyPageContributions"; //$NON-NLS-1$
+
+	private static final String DESCRIPTION_PATTERN = "{0} - {1}"; //$NON-NLS-1$
+
+	private static final String NAME_PATTERN = "{0}: {1} [{2}]"; //$NON-NLS-1$
 
 	/** Standard action: select all */
 	private IAction selectAllAction;
@@ -266,6 +269,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		@Override
 		public void run() {
 			String oldName = getName();
+			String oldDescription = getDescription();
 			if (!isChecked()) {
 				if (showAllFilter == filter) {
 					showAllFilter = ShowFilter.SHOWALLRESOURCE;
@@ -287,6 +291,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			}
 			GitHistoryPage.this.firePropertyChange(GitHistoryPage.this, P_NAME,
 					oldName, getName());
+			// even though this is currently ending nowhere (see bug 324386), we
+			// still create the event
+			GitHistoryPage.this.firePropertyChange(GitHistoryPage.this,
+					P_DESCRIPTION, oldDescription, GitHistoryPage.this
+							.getDescription());
 			Activator.getDefault().getPreferenceStore().setValue(
 					PREF_SHOWALLFILTER, showAllFilter.toString());
 		}
@@ -1206,31 +1215,68 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	public String getName() {
+		// we always visualize the current input in the form
+		// <type>: <path> [<respository name>]
+		// in order to give the user an understanding which context
+		// menus they can expect with the current input
+		// we show the filter hint only upon getDescription()
+		// as it wrongly pollutes the navigation history
+		final String repositoryName = Activator.getDefault()
+				.getRepositoryUtil().getRepositoryName(db);
 		final ResourceList in = (ResourceList) super.getInput();
-		if (currentWalk == null || in == null)
-			return ""; //$NON-NLS-1$
-		final IResource[] items = in.getItems();
-		if (items.length == 0)
+		if (currentWalk == null || in == null || in.getItems().length == 0)
 			return ""; //$NON-NLS-1$
 
-		final StringBuilder b = new StringBuilder();
-		b.append(db.getDirectory().getParentFile().getName());
-		if (currentWalk.getRevFilter() != RevFilter.ALL) {
-			b.append(": "); //$NON-NLS-1$
-			b.append(currentWalk.getRevFilter());
-		}
-		if (currentWalk.getTreeFilter() != TreeFilter.ALL) {
-			b.append(":"); //$NON-NLS-1$
-			for (final String p : pathFilters) {
-				b.append(' ');
-				b.append(p);
+		if (in.getItems().length == 1) {
+			IResource resource = in.getItems()[0];
+			final String type;
+			switch (resource.getType()) {
+			case IResource.FILE:
+				type = UIText.GitHistoryPage_FileType;
+				break;
+			case IResource.PROJECT:
+				type = UIText.GitHistoryPage_ProjectType;
+				break;
+			default:
+				type = UIText.GitHistoryPage_FolderType;
+				break;
 			}
+			String path = resource.getFullPath().makeRelative().toString();
+			if (resource.getType() == IResource.FOLDER)
+				path = path + '/';
+			return NLS.bind(NAME_PATTERN, new Object[] { type, path,
+					repositoryName });
+		} else {
+			// can this happen at all? the generic history view can't
+			// handle multiple selection
+			StringBuilder b = new StringBuilder();
+			for (final String p : pathFilters) {
+				b.append(p);
+				b.append(' ');
+			}
+			return NLS.bind(NAME_PATTERN, new Object[] {
+					UIText.GitHistoryPage_MultiResourcesType, b.toString(), repositoryName });
 		}
-		return b.toString();
 	}
 
 	public String getDescription() {
-		return getName();
+		// this doesn't seem to be rendered anywhere, but still...
+		String filterHint = null;
+		switch (showAllFilter) {
+		case SHOWALLREPO:
+			filterHint = UIText.GitHistoryPage_AllChangesInRepoHint;
+			break;
+		case SHOWALLPROJECT:
+			filterHint = UIText.GitHistoryPage_AllChangesInProjectHint;
+			break;
+		case SHOWALLFOLDER:
+			filterHint = UIText.GitHistoryPage_AllChangesInFolderHint;
+			break;
+		case SHOWALLRESOURCE:
+			filterHint = UIText.GitHistoryPage_AllChangesOfResourceHint;
+			break;
+		}
+		return NLS.bind(DESCRIPTION_PATTERN, getName(), filterHint);
 	}
 
 	private abstract class BooleanPrefAction extends Action implements
