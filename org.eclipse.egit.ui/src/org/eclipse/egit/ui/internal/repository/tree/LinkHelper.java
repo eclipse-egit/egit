@@ -97,6 +97,8 @@ public class LinkHelper implements ILinkHelper {
 			} catch (IOException e) {
 				continue;
 			}
+			if (repository.isBare())
+				continue;
 			if (file.getPath().startsWith(repository.getWorkTree().getPath())) {
 				RepositoriesViewContentProvider cp = new RepositoriesViewContentProvider();
 
