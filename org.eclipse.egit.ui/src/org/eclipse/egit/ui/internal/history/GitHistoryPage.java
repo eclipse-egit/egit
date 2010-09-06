@@ -258,11 +258,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		private final ShowFilter filter;
 
 		ShowFilterAction(ShowFilter filter, ImageDescriptor icon,
-				String toolTipText) {
+				String menuLabel, String toolTipText) {
 			super(null, IAction.AS_CHECK_BOX);
 			this.filter = filter;
 			setImageDescriptor(icon);
-			setText(toolTipText);
+			setText(menuLabel);
 			setToolTipText(toolTipText);
 		}
 
@@ -316,7 +316,15 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 	private ShowFilterAction showAllResourceVersionsAction;
 
-	private void createResourceFilterActions() {
+	private void initActions() {
+		IAction findAction = createFindToolbarAction();
+		IAction refreshAction = new Action(
+				UIText.GitHistoryPage_RefreshMenuLabel, UIIcons.ELCL16_REFRESH) {
+			@Override
+			public void run() {
+				refresh();
+			}
+		};
 		try {
 			showAllFilter = ShowFilter.valueOf(Activator.getDefault()
 					.getPreferenceStore().getString(PREF_SHOWALLFILTER));
@@ -326,19 +334,23 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 		showAllRepoVersionsAction = new ShowFilterAction(
 				ShowFilter.SHOWALLREPO, UIIcons.REPOSITORY,
-				UIText.HistoryPage_ShowAllVersionsForRepo);
+				UIText.GitHistoryPage_AllInRepoMenuLabel,
+				UIText.GitHistoryPage_AllInRepoTooltip);
 
 		showAllProjectVersionsAction = new ShowFilterAction(
 				ShowFilter.SHOWALLPROJECT, UIIcons.FILTERPROJECT,
-				UIText.HistoryPage_ShowAllVersionsForProject);
+				UIText.GitHistoryPage_AllInProjectMenuLabel,
+				UIText.GitHistoryPage_AllInProjectTooltip);
 
 		showAllFolderVersionsAction = new ShowFilterAction(
 				ShowFilter.SHOWALLFOLDER, UIIcons.FILTERFOLDER,
-				UIText.HistoryPage_ShowAllVersionsForFolder);
+				UIText.GitHistoryPage_AllInParentMenuLabel,
+				UIText.GitHistoryPage_AllInParentTooltip);
 
 		showAllResourceVersionsAction = new ShowFilterAction(
 				ShowFilter.SHOWALLRESOURCE, UIIcons.FILTERRESOURCE,
-				UIText.GitHistoryPage_ShowAllVersionsForResource);
+				UIText.GitHistoryPage_AllOfResourceMenuLabel,
+				UIText.GitHistoryPage_AllOfResourceTooltip);
 
 		showAllRepoVersionsAction
 				.setChecked(showAllFilter == showAllRepoVersionsAction.filter);
@@ -349,24 +361,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		showAllResourceVersionsAction
 				.setChecked(showAllFilter == showAllResourceVersionsAction.filter);
 
-		IToolBarManager mgr = getSite().getActionBars().getToolBarManager();
-		mgr.add(new Separator());
-		mgr.add(showAllRepoVersionsAction);
-		mgr.add(showAllProjectVersionsAction);
-		mgr.add(showAllFolderVersionsAction);
-		mgr.add(showAllResourceVersionsAction);
-
-		IMenuManager viewMenuMgr = getSite().getActionBars().getMenuManager();
-		viewMenuMgr.add(new Separator());
-		viewMenuMgr.add(showAllRepoVersionsAction);
-		viewMenuMgr.add(showAllProjectVersionsAction);
-		viewMenuMgr.add(showAllFolderVersionsAction);
-		viewMenuMgr.add(showAllResourceVersionsAction);
-	}
-
-	private void createCompareModeAction() {
-		final IToolBarManager barManager = getSite().getActionBars()
-				.getToolBarManager();
 		compareModeAction = new Action(UIText.GitHistoryPage_compareMode,
 				IAction.AS_CHECK_BOX) {
 			public void run() {
@@ -377,17 +371,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		};
 		compareModeAction.setImageDescriptor(UIIcons.ELCL16_COMPARE_VIEW);
 		compareModeAction.setChecked(compareMode);
+		compareModeAction.setText(UIText.GitHistoryPage_CompareModeMenuLabel);
 		compareModeAction.setToolTipText(UIText.GitHistoryPage_compareMode);
 		fileViewer.setCompareMode(compareMode);
-		barManager.add(new Separator());
-		barManager.add(compareModeAction);
-	}
 
-	private void createShowAllBranchesAction() {
-		final IToolBarManager barManager = getSite().getActionBars()
-				.getToolBarManager();
-		showAllBranchesAction = new Action(UIText.GitHistoryPage_showAllBranches,
-				IAction.AS_CHECK_BOX) {
+		showAllBranchesAction = new Action(
+				UIText.GitHistoryPage_showAllBranches, IAction.AS_CHECK_BOX) {
 			public void run() {
 				showAllBranches = !showAllBranches;
 				setChecked(showAllBranches);
@@ -396,10 +385,35 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		};
 		showAllBranchesAction.setImageDescriptor(UIIcons.BRANCH);
 		showAllBranchesAction.setChecked(showAllBranches);
-		showAllBranchesAction.setToolTipText(UIText.GitHistoryPage_showAllBranches);
-		barManager.add(showAllBranchesAction);
-	}
+		showAllBranchesAction
+				.setText(UIText.GitHistoryPage_ShowAllBranchesMenuLabel);
+		showAllBranchesAction
+				.setToolTipText(UIText.GitHistoryPage_showAllBranches);
 
+		IToolBarManager mgr = getSite().getActionBars().getToolBarManager();
+		IMenuManager viewMenuMgr = getSite().getActionBars().getMenuManager();
+
+		mgr.add(findAction);
+		mgr.add(new Separator());
+		mgr.add(showAllRepoVersionsAction);
+		mgr.add(showAllProjectVersionsAction);
+		mgr.add(showAllFolderVersionsAction);
+		mgr.add(showAllResourceVersionsAction);
+		mgr.add(new Separator());
+		mgr.add(compareModeAction);
+		mgr.add(showAllBranchesAction);
+
+		viewMenuMgr.add(refreshAction);
+		viewMenuMgr.add(findAction);
+		viewMenuMgr.add(new Separator());
+		viewMenuMgr.add(showAllRepoVersionsAction);
+		viewMenuMgr.add(showAllProjectVersionsAction);
+		viewMenuMgr.add(showAllFolderVersionsAction);
+		viewMenuMgr.add(showAllResourceVersionsAction);
+		viewMenuMgr.add(new Separator());
+		viewMenuMgr.add(compareModeAction);
+		viewMenuMgr.add(showAllBranchesAction);
+	}
 
 	/**
 	 * @param compareMode
@@ -480,10 +494,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 		popupMgr = new MenuManager(null, POPUP_ID);
 		attachCommitSelectionChanged();
-		createLocalToolbarActions();
-		createResourceFilterActions();
-		createCompareModeAction();
-		createShowAllBranchesAction();
+		initActions();
 		createStandardActions();
 
 		getSite().registerContextMenu(POPUP_ID, popupMgr, graph.getTableView());
@@ -783,17 +794,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		});
 	}
 
-	private void createLocalToolbarActions() {
-		final IToolBarManager barManager = getSite().getActionBars()
-				.getToolBarManager();
-		IAction a;
-
-		a = createFindToolbarAction();
-		barManager.add(a);
-	}
-
 	private IAction createFindToolbarAction() {
-		final IAction r = new Action(UIText.GitHistoryPage_find,
+		final IAction r = new Action(UIText.GitHistoryPage_FindMenuLabel,
 				UIIcons.ELCL16_FIND) {
 			public void run() {
 				store.setValue(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR,
@@ -810,7 +812,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		};
 		r.setChecked(store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR));
-		r.setToolTipText(UIText.HistoryPage_findbar_findTooltip);
+		r.setToolTipText(UIText.GitHistoryPage_FindTooltip);
 		return r;
 	}
 
