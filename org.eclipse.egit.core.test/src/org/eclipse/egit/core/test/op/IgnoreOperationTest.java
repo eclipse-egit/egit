@@ -14,6 +14,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
@@ -42,6 +43,15 @@ public class IgnoreOperationTest extends GitTestCase {
 	@After
 	public void tearDown() throws Exception {
 		testRepository.dispose();
+		// delete gitignore file in workspace folder
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		File rootFile = root.getRawLocation().toFile();
+		File ignoreFile = new File(rootFile, Constants.GITIGNORE_FILENAME);
+		if (ignoreFile.exists()) {
+			if (!ignoreFile.delete())
+				throw new IOException(ignoreFile + " in use or undeletable");
+			assert !ignoreFile.exists();
+		}
 		super.tearDown();
 	}
 
