@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///Fg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitChangeSetLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-09-03T10:00:41Z",
+      "side": 1,
+      "message": "would be better to use AbbreviatedObjectId which can ensure that abbreviated IDs are unique within the repo",
+      "revId": "2d1c4ed7ba800d1396557de49c75ab4ab195f53b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
