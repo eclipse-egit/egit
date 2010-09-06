@@ -16,6 +16,24 @@
       "revId": "2d1c4ed7ba800d1396557de49c75ab4ab195f53b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn///Bs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitChangeSetLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-09-04T16:42:45Z",
+      "side": 1,
+      "message": "Done, even though using AbbreviatedObjectId is a little more expensive as we need to acquire a ObjectReader for every commit. We can\u0027t cache it as the labelprovider is used for several repositories in the sync view.",
+      "parentUuid": "AAALyn///Fg\u003d",
+      "revId": "2d1c4ed7ba800d1396557de49c75ab4ab195f53b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
