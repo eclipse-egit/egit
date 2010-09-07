@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALyn///K4\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/prefpages/TraceConfigurationPageTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-09-02T15:33:58Z",
+      "side": 1,
+      "message": "I did it again... Sorry.",
+      "parentUuid": "AAALyn///Lk\u003d",
+      "revId": "bd08ae3421f16c4ea116c37dbafc4ed300f0e982",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyn///Lo\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewBranchHandlingTest.java",
         "patchSetId": 1
