@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///e0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ValidationUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-08-30T19:12:00Z",
+      "side": 0,
+      "message": "Why was this removed?. This function is stiill in use by the another create branch dialog that expects this particular behavior. Please fix.",
+      "revId": "bed3457aed62a06374791ab89dbd5f9a72ef5423",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
