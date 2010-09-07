@@ -16,6 +16,24 @@
       "revId": "14f8299d32fbaeea0fb94dcac2bab413e5ad1730",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///+s\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/prefpages/TraceConfigurationPageTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-09-06T23:15:32Z",
+      "side": 1,
+      "message": "Please use API for this, see http://egit.eclipse.org/r/#patch,sidebyside,1530,2,org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/prefpages/configuration/GlobalConfigurationPageTest.java",
+      "parentUuid": "AAALy3///+4\u003d",
+      "revId": "14f8299d32fbaeea0fb94dcac2bab413e5ad1730",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
