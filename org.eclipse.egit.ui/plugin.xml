@@ -497,6 +497,11 @@
             id="org.eclipse.egit.ui.commandCategory"
             name="%Git">
       </category>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commands.ConfigureDebugTraceCommand"
+            id="org.eclipse.egit.ui.command.configureTrace"
+            name="Configure Git Debug Trace">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.views">
