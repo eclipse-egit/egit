@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALy3///+4\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/prefpages/TraceConfigurationPageTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-09-06T23:11:24Z",
+      "side": 1,
+      "message": "this fails on Mac since there preferences are under Eclipse \u003e Preferences ..., see [1] how to fix that.\n\n[1] http://egit.eclipse.org/r/#patch,unified,1520,2,org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/prefpages/configuration/GlobalConfigurationPageTest.java",
+      "revId": "14f8299d32fbaeea0fb94dcac2bab413e5ad1730",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
