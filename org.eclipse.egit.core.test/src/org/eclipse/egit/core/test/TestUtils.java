@@ -47,13 +47,30 @@ public class TestUtils {
 			for (int i = 0; i < files.length; ++i) {
 				if (files[i].isDirectory())
 					deleteRecursive(files[i]);
-				else if (!files[i].delete())
-					throw new IOException(files[i] + " in use or undeletable");
+				else
+					deleteFile(files[i]);
 			}
 		}
-		if (!d.delete())
-			throw new IOException(d + " in use or undeletable");
+		deleteFile(d);
 		assert !d.exists();
+	}
+
+	private void deleteFile(File file) throws IOException{
+		boolean deleted = false;
+		for (int i = 0; i < 10; i++) {
+			if (file.delete()) {
+				deleted = true;
+				break;
+			}
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// ignore
+			}
+			System.out.println(">>> retried deleting " + file.getAbsolutePath());
+		}
+		if (!deleted)
+			throw new IOException("Retried 10 times. Could not delete " + file.getAbsolutePath());
 	}
 
 	/**
