@@ -1,60 +1,42 @@
-<html>
-<head>
-<title>org.eclipse.egit-updatesite</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>@import url("web/site.css");</style>
-<script type="text/javascript">
-	var returnval = 0;
-	var stylesheet, xmlFile, cache, doc;
-	function init(){
-		// NSCP 7.1+ / Mozilla 1.4.1+ / Safari
-		// Use the standard DOM Level 2 technique, if it is supported
-		if (document.implementation && document.implementation.createDocument) {
-			xmlFile = document.implementation.createDocument("", "", null);
-			stylesheet = document.implementation.createDocument("", "", null);
-			if (xmlFile.load){
-				xmlFile.load("site.xml");
-				stylesheet.load("web/site.xsl");
-			} else {
-				alert("Document could not be loaded by browser.");
-			}
-			xmlFile.addEventListener("load", transform, false);
-			stylesheet.addEventListener("load", transform, false);
-		}
-		//IE 6.0+ solution
-		else if (window.ActiveXObject) {
-			xmlFile = new ActiveXObject("msxml2.DOMDocument.3.0");
-			xmlFile.async = false;
-			xmlFile.load("site.xml");
-			stylesheet = new ActiveXObject("msxml2.FreeThreadedDOMDocument.3.0");
-			stylesheet.async = false;
-			stylesheet.load("web/site.xsl");
-			cache = new ActiveXObject("msxml2.XSLTemplate.3.0");
-			cache.stylesheet = stylesheet;
-			transformData();
-		}
-	}
-	// separate transformation function for IE 6.0+
-	function transformData(){
-		var processor = cache.createProcessor();
-		processor.input = xmlFile;
-		processor.transform();
-		data.innerHTML = processor.output;
-	}
-	// separate transformation function for NSCP 7.1+ and Mozilla 1.4.1+ 
-	function transform(){
-		returnval+=1;
-		if (returnval==2){
-			var processor = new XSLTProcessor();
-			processor.importStylesheet(stylesheet); 
-			doc = processor.transformToDocument(xmlFile);
-			document.getElementById("data").innerHTML = doc.documentElement.innerHTML;
-		}
-	}
-</script>
-</head>
-<body onload="init();">
-<!--[insert static HTML here]-->
-<div id="data"><!-- this is where the transformed data goes --></div>
-</body>
-</html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<title>Eclipse EGit Software Repository</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="author" content="Eclipse EGit Project" /> 
+<link rel="stylesheet" type="text/css" href="/eclipse/eclipse.org-common/stylesheets/visual.css" media="screen" /> 
+<link rel="stylesheet" type="text/css" href="/eclipse/eclipse.org-common/stylesheets/layout.css" media="screen" /> 
+</head> 
+<body> 
+<div id="header"> 
+<a href="http://www.eclipse.org/"><img src="/eclipse/eclipse.org-common/stylesheets/header_logo.gif" width="163" height="68" border="0" alt="Eclipse Logo" class="logo" /></a> 
+</div> 
+<div id="midcolumn"> 
+
+<p>This software repository URL 
+<b><script type="text/javascript">
+<!--
+  document.write(document.URL);
+// -->
+</script></b>
+provides access to the software repository of the 
+<a href="http://www.eclipse.org/egit/">Eclipse EGit project</a>. 
+
+<p>
+<b>Compatibility: </b>This version of EGit supports Eclipse 3.5.2 (Galileo SR2) or later.</p> 
+</p>
+
+<p>If you are using Eclipse Helios you may also install EGit from the Helios repository.
+
+Click <b>Help > Install New Software</b>, type "helios", select the Helios repository URL, select
+<b>Collaboration > Eclipse EGit</b> and click <b>Install</b>.
+
+<p>Alternatively you may install EGit using the Eclipse Marketplace client: click
+<b>Help > Eclipse Marketplace</b>, enter "egit" into the search field, then click <b>Go</b> and <b>Install</b>.</p>
+
+<p>For more information about installing or updating software, see the
+<a href="http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/tasks-124.htm">Eclipse Platform Help</a>.</p> 
+
+</div> 
+</body> 
+</html> 
