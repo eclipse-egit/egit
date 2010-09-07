@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
+ * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +10,7 @@
 
 package org.eclipse.egit.ui.internal.components;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,13 +19,11 @@ import org.eclipse.jgit.transport.URIish;
 
 /**
  * Data class representing selection of remote repository made by user.
- * Selection is an URI or remote repository configuration.
+ * Selection is either a URI or a remote repository configuration.
  * <p>
  * Each immutable instance has at least one of two class fields (URI, remote
  * config) set to null. null value indicates that it has illegal value or this
  * form of repository selection is not selected.
- * <p>
- * If remote configuration is selected, it always has non-empty URIs list.
  */
 public class RepositorySelection {
 	private URIish uri;
@@ -50,39 +50,67 @@ public class RepositorySelection {
 	}
 
 	/**
-	 * @return the selected URI (if specified by user as valid custom URI) or
-	 *         first URI from selected configuration (if specified by user as
-	 *         May be null if there is no valid selection.
+	 * Return the selected URI.
+	 * <p>
+	 * If pushMode is <code>true</code> and a remote configuration was selected,
+	 * this will try to return a push URI from that configuration, otherwise a
+	 * URI; if no configuration was selected, the URI entered in the URI field
+	 * will be returned.<br>
+	 * If pushMode is <code>false</code> and a remote configuration was
+	 * selected, this will try to return a URI from that configuration,
+	 * otherwise <code>null</code> will be returned; if no configuration was
+	 * selected, the URI entered in the URI field will be returned
+	 *
+	 * @param pushMode
+	 *            the push mode
+	 * @return the selected URI, or <code>null</code> if there is no valid
+	 *         selection
 	 */
-	public URIish getURI() {
+	public URIish getURI(boolean pushMode) {
 		if (isConfigSelected())
-			return config.getURIs().get(0);
+			if (pushMode) {
+				if (config.getPushURIs().size() > 0)
+					return config.getPushURIs().get(0);
+				else if (config.getURIs().size() > 0)
+					return config.getURIs().get(0);
+				else
+					return null;
+			} else {
+				if (config.getURIs().size() > 0)
+					return config.getURIs().get(0);
+				else if (config.getPushURIs().size() > 0)
+					return config.getPushURIs().get(0);
+				else
+					return null;
+			}
 		return uri;
 	}
 
 	/**
-	 * @return list of all selected URIs - either the one specified as custom
-	 *         URI or all URIs from selected configuration. May be null in case
-	 *         of no valid selection.
+	 * @return the selected URI, <code>null</code> if a configuration was
+	 *         selected
 	 */
-	public List<URIish> getAllURIs() {
-		if (isURISelected())
-			return Collections.singletonList(uri);
+	public URIish getURI() {
 		if (isConfigSelected())
-			return config.getURIs();
-		return null;
+			return null;
+		return uri;
 	}
 
 	/**
-	 * @return list of all selected URIs - either the one specified as custom
-	 *         URI or all URIs from selected configuration. May be null in case
-	 *         of no valid selection.
+	 * @return list of all push URIs - either the one specified as custom URI or
+	 *         all push URIs of the selected configuration; if not push URIs
+	 *         were specified, the first URI is returned
 	 */
 	public List<URIish> getPushURIs() {
 		if (isURISelected())
 			return Collections.singletonList(uri);
-		if (isConfigSelected())
-			return config.getPushURIs();
+		if (isConfigSelected()) {
+			List<URIish> pushUris = new ArrayList<URIish>();
+			pushUris.addAll(config.getPushURIs());
+			if (pushUris.isEmpty())
+				pushUris.add(config.getURIs().get(0));
+			return pushUris;
+		}
 		return null;
 	}
 
