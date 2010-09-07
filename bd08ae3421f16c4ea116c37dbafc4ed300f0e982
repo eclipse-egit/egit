@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///Lk\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/prefpages/TraceConfigurationPageTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-09-02T15:25:50Z",
+      "side": 1,
+      "message": "Add a license header please...",
+      "revId": "bd08ae3421f16c4ea116c37dbafc4ed300f0e982",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn///Lo\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewBranchHandlingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-09-02T15:25:50Z",
+      "side": 1,
+      "message": "Is this related to this change?",
+      "revId": "bd08ae3421f16c4ea116c37dbafc4ed300f0e982",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
