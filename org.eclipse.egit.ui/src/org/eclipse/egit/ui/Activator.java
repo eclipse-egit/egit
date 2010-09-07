@@ -156,6 +156,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	private RCS rcs;
 	private RIRefresh refreshJob;
 	private ListenerHandle refreshHandle;
+	private DebugOptions debugOptions;
 
 	/**
 	 * Constructor for the egit ui plugin singleton
@@ -182,7 +183,15 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 
 	public void optionsChanged(DebugOptions options) {
 		// initialize the trace stuff
+		debugOptions = options;
 		GitTraceLocation.initializeFromOptions(options, isDebugging());
+	}
+
+	/**
+	 * @return the {@link DebugOptions}
+	 */
+	public DebugOptions getDebugOptions() {
+		return debugOptions;
 	}
 
 	private void setupRepoIndexRefresh() {
