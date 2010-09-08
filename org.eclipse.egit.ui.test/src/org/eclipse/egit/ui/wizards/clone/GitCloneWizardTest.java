@@ -236,7 +236,7 @@ public class GitCloneWizardTest extends EGitTestCase {
 	}
 
 	@Test
-	public void clonedRepositoryShouldExistOnFileSystem() throws Exception {
+	public void clonedRepositoryShouldExistOnFileSystem() {
 		importWizard.openWizard();
 		RepoPropertiesPage repoProperties = importWizard.openCloneWizard();
 		RepoRemoteBranchesPage remoteBranches = repoProperties

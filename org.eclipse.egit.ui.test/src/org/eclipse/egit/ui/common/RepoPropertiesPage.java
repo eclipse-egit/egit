@@ -68,6 +68,6 @@ public class RepoPropertiesPage {
 	public RepoRemoteBranchesPage nextToRemoteBranches(String string) {
 		setURI(string);
 		bot.button("Next >").click();
-		return new RepoRemoteBranchesPage(string);
+		return new RepoRemoteBranchesPage();
 	}
 }
