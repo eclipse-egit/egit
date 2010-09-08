@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "AAALyn///CE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/SelectSynchronizeResourceDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-09-04T15:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyn///DQ\u003d",
+      "revId": "e04d5edb619a3ff2634ff9a528646f6f28158c70",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyn///DU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/SelectSynchronizeResourceDialog.java",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "writtenOn": "2010-09-03T23:15:29Z",
       "side": 1,
       "message": "In my humble opinion we should break for if we find first occurrence of DEFAULT_REMOTE_NAME. I did not really get why we should iterate more and finding next one.",
+      "revId": "e04d5edb619a3ff2634ff9a528646f6f28158c70",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn///CA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/SelectSynchronizeResourceDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-09-04T15:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyn///DU\u003d",
       "revId": "e04d5edb619a3ff2634ff9a528646f6f28158c70",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -118,6 +154,24 @@
       "writtenOn": "2010-09-03T23:15:29Z",
       "side": 1,
       "message": "fix code convention issue - we don\u0027t use brackets if there is only a single statement inside if, else, for and while",
+      "revId": "e04d5edb619a3ff2634ff9a528646f6f28158c70",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn///B8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/SelectSynchronizeResourceDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-09-04T15:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyn///DY\u003d",
       "revId": "e04d5edb619a3ff2634ff9a528646f6f28158c70",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
