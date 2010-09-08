@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALyn///Fs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/SelectSynchronizeResourceDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-09-03T09:48:32Z",
+      "side": 1,
+      "message": "But it had been scrambled already before. I would say that that should be fixed in another commit.",
+      "parentUuid": "AAALyn///F4\u003d",
+      "revId": "e04d5edb619a3ff2634ff9a528646f6f28158c70",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALyn///F0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/SelectSynchronizeResourceDialog.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2010-09-03T09:44:22Z",
       "side": 1,
       "message": "wouldn\u0027t it be better to also return the first entry instead of empty string in case there are multiple entries but none named \"origin\" ?",
+      "revId": "e04d5edb619a3ff2634ff9a528646f6f28158c70",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn///Fo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/SelectSynchronizeResourceDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-09-03T09:48:32Z",
+      "side": 1,
+      "message": "I also thought about this but I think that no: If there is no obvious choice that user should be made aware of the fact that a decision has to be made.",
+      "parentUuid": "AAALyn///F0\u003d",
       "revId": "e04d5edb619a3ff2634ff9a528646f6f28158c70",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
