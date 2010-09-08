@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -35,6 +36,9 @@ public abstract class GitTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		// ensure there are no shared Repository instances left
+		// when starting a new test
+		Activator.getDefault().getRepositoryCache().clear();
 		MockSystemReader mockSystemReader = new MockSystemReader();
 		SystemReader.setInstance(mockSystemReader);
 		mockSystemReader.setProperty(Constants.GIT_CEILING_DIRECTORIES_KEY,
