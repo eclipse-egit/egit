@@ -26,3 +26,8 @@
 	license = New BSD license
 	use = unmodified source & binary
 	state = approved
+[CQ "4275"]
+	description = easymock Version: 2.4 (ATO CQ2551) (using Orbit CQ2577)
+	license = MIT license
+	use = unmodified source & binary
+	state = approved
