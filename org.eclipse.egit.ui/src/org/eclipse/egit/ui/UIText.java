@@ -1633,6 +1633,12 @@ public class UIText extends NLS {
 	public static String FileRevisionEditorInput_NameAndRevisionTitle;
 
 	/** */
+	public static String FindToolbar_NextTooltip;
+
+	/** */
+	public static String FindToolbar_PreviousTooltip;
+
+	/** */
 	public static String WindowCachePreferencePage_title;
 
 	/** */

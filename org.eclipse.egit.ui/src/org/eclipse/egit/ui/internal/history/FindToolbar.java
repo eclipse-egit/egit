@@ -144,19 +144,20 @@ public class FindToolbar extends Composite {
 		findLabel.setText(UIText.HistoryPage_findbar_find);
 
 		patternField = new Text(this, SWT.SEARCH);
-		GridData findTextData = new GridData(SWT.FILL, SWT.FILL, true, false);
+		GridData findTextData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		findTextData.minimumWidth = 50;
 		patternField.setLayoutData(findTextData);
-		patternField.setText(""); //$NON-NLS-1$
 		patternField.setTextLimit(100);
 
-		nextButton = new Button(this, SWT.HORIZONTAL);
+		nextButton = new Button(this, SWT.PUSH);
 		nextButton.setImage(nextIcon);
 		nextButton.setText(UIText.HistoryPage_findbar_next);
+		nextButton.setToolTipText(UIText.FindToolbar_NextTooltip);
 
-		previousButton = new Button(this, SWT.HORIZONTAL);
+		previousButton = new Button(this, SWT.PUSH);
 		previousButton.setImage(previousIcon);
 		previousButton.setText(UIText.HistoryPage_findbar_previous);
+		previousButton.setToolTipText(UIText.FindToolbar_PreviousTooltip);
 
 		final ToolBar toolBar = new ToolBar(this, SWT.FLAT);
 		new ToolItem(toolBar, SWT.SEPARATOR);
