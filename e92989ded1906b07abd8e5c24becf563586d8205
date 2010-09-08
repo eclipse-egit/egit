@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///As\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/SelectSynchronizeResourceDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-09-04T20:08:19Z",
+      "side": 1,
+      "message": "Those brackets can be also removed and default repo name can be returned immediately.",
+      "revId": "e92989ded1906b07abd8e5c24becf563586d8205",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
