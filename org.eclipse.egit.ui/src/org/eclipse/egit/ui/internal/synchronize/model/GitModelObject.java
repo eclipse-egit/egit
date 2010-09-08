@@ -19,10 +19,7 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.jgit.errors.CorruptObjectException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
-import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
 
 /**
  * Abstract representation of all object that are included in Git ChangeSet
@@ -120,10 +117,8 @@ public abstract class GitModelObject extends PlatformObject {
 
 		tw.reset();
 		tw.setRecursive(false);
-		int ignoreNth = tw.addTree(new FileTreeIterator(repo));
-		NotIgnoredFilter notIgnoredFilter = new NotIgnoredFilter(ignoreNth);
 
-		tw.setFilter(AndTreeFilter.create(ANY_DIFF, notIgnoredFilter));
+		tw.setFilter(ANY_DIFF);
 		return tw;
 	}
 
