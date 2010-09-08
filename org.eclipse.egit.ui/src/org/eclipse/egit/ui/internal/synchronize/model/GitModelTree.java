@@ -128,6 +128,7 @@ public class GitModelTree extends GitModelCommit {
 		try {
 			TreeWalk tw = createTreeWalk();
 			int remoteNth = tw.addTree(remoteId);
+			List<String> notIgnoredNodes = getNotIgnoredNodes(remoteId);
 
 			int baseNth = -1;
 			if (!baseId.equals(zeroId()))
@@ -138,6 +139,9 @@ public class GitModelTree extends GitModelCommit {
 				ancestorNth = tw.addTree(ancestorId);
 
 			while (tw.next()) {
+				if (!notIgnoredNodes.contains(tw.getNameString()))
+					continue;
+
 				GitModelObject obj = createChildren(tw, ancestorNth, baseNth,
 						remoteNth);
 				if (obj != null)
