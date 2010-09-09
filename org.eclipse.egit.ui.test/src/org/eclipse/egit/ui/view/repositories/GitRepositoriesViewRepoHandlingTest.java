@@ -11,14 +11,18 @@
 package org.eclipse.egit.ui.view.repositories;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.swt.dnd.Clipboard;
@@ -301,6 +305,48 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		waitInUI();
 		refreshAndWait();
 		assertHasClonedRepo();
+	}
+
+	@Test
+	public void testCreateRepository() throws Exception {
+		clearView();
+		refreshAndWait();
+		assertEmpty();
+		// create a non-bare repository
+		getOrOpenView()
+				.toolbarButton(
+						myUtil
+								.getPluginLocalizedValue("RepoViewCreateRepository.tooltip"))
+				.click();
+		SWTBotShell shell = bot.shell(UIText.NewRepositoryWizard_WizardTitle)
+				.activate();
+		IPath newPath = new Path(testDirectory.getPath())
+				.append("NewRepository");
+		shell.bot().textWithLabel(UIText.CreateRepositoryPage_DirectoryLabel)
+				.setText(newPath.toOSString());
+		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
+		refreshAndWait();
+		File repoFile = new File(newPath.toFile(), Constants.DOT_GIT);
+		myRepoViewUtil.getRootItem(getOrOpenView().bot().tree(), repoFile);
+		assertFalse(myRepoViewUtil.lookupRepository(repoFile).isBare());
+
+		// create a bare repository
+		getOrOpenView()
+				.toolbarButton(
+						myUtil
+								.getPluginLocalizedValue("RepoViewCreateRepository.tooltip"))
+				.click();
+		shell = bot.shell(UIText.NewRepositoryWizard_WizardTitle).activate();
+		newPath = new Path(testDirectory.getPath()).append("bare").append(
+				"NewBareRepository");
+		shell.bot().textWithLabel(UIText.CreateRepositoryPage_DirectoryLabel)
+				.setText(newPath.toOSString());
+		shell.bot().checkBox(UIText.CreateRepositoryPage_BareCheckbox).select();
+		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
+		refreshAndWait();
+		repoFile = newPath.toFile();
+		myRepoViewUtil.getRootItem(getOrOpenView().bot().tree(), repoFile);
+		assertTrue(myRepoViewUtil.lookupRepository(repoFile).isBare());
 	}
 
 	private void assertHasClonedRepo() throws Exception {
