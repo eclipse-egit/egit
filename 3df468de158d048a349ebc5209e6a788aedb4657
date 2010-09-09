@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALy3///5k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-09-08T13:27:33Z",
+      "side": 1,
+      "message": "Done, you\u0027re right, passing the real case makes more sense.",
+      "parentUuid": "AAALy3///8s\u003d",
+      "revId": "3df468de158d048a349ebc5209e6a788aedb4657",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3///8o\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneWizard.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2010-09-07T14:49:42Z",
       "side": 1,
       "message": "override this method",
+      "revId": "3df468de158d048a349ebc5209e6a788aedb4657",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///5g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-09-08T13:27:33Z",
+      "side": 1,
+      "message": "Done, good catch",
+      "parentUuid": "AAALy3///8o\u003d",
       "revId": "3df468de158d048a349ebc5209e6a788aedb4657",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
