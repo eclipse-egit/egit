@@ -16,7 +16,9 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
@@ -35,6 +37,8 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -61,11 +65,35 @@ class CommitFileDiffViewer extends TableViewer {
 
 	private boolean compareMode;
 
-	CommitFileDiffViewer(final Composite parent) {
-		super(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER
-				| SWT.FULL_SELECTION);
+	private StyledText noInputText;
 
+	private final StackLayout stackLayout;
+
+	/**
+	 * Shows a list of file changed by a commit.
+	 *
+	 * If no input is available, an error message is shown instead.
+	 * @param parent
+	 */
+	CommitFileDiffViewer(final Composite parent) {
+        // since out parent is a SashForm, we can't add the alternate
+		// text to be displayed in case of no input directly to that
+		// parent; we create our own parent instead and set the
+		// StackLayout on it instead
+		super(new Composite(parent, SWT.NONE), SWT.MULTI | SWT.H_SCROLL
+				| SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION);
 		final Table rawTable = getTable();
+		Composite main = rawTable.getParent();
+		stackLayout = new StackLayout();
+		main.setLayout(stackLayout);
+
+		// this is the text to be displayed if there is no input
+		noInputText = new StyledText(main, SWT.NONE);
+		// use the same font as in message viewer
+		noInputText.setFont(UIUtils
+				.getFont(UIPreferences.THEME_CommitMessageFont));
+		noInputText.setText(UIText.CommitFileDiffViewer_SelectOneCommitMessage);
+
 		rawTable.setHeaderVisible(true);
 		rawTable.setLinesVisible(true);
 
@@ -96,6 +124,28 @@ class CommitFileDiffViewer extends TableViewer {
 				clipboard.dispose();
 			}
 		});
+	}
+
+	@Override
+	protected void inputChanged(final Object input, final Object oldInput) {
+		boolean inputChanged;
+		if (oldInput == null && input == null) {
+			inputChanged = false;
+		} else if (oldInput == null || input == null) {
+			inputChanged = true;
+		} else {
+			inputChanged = !input.equals(oldInput);
+		}
+		if (inputChanged) {
+			if (input == null && stackLayout.topControl != noInputText) {
+				stackLayout.topControl = noInputText;
+				getTable().getParent().layout(false);
+			} else if (input != null && stackLayout.topControl != getTable()) {
+				stackLayout.topControl = getTable();
+				getTable().getParent().layout(false);
+			}
+			super.inputChanged(input, oldInput);
+		}
 	}
 
 	private void openFileInEditor(FileDiff d) {
