@@ -1976,7 +1976,8 @@
             class="org.eclipse.egit.ui.internal.repository.tree.command.MergeCommand"
             commandId="org.eclipse.egit.ui.RepositoriesViewMerge">
          <activeWhen>
-            <iterate>
+            <iterate
+                  ifEmpty="false">
                <or>
                   <instanceof
                         value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
@@ -1991,7 +1992,8 @@
             class="org.eclipse.egit.ui.internal.actions.MergeAction"
             commandId="org.eclipse.egit.ui.RepositoriesViewMerge">
          <activeWhen>
-            <iterate>
+            <iterate
+                  ifEmpty="false">
                <instanceof
                      value="org.eclipse.core.resources.IProject">
                </instanceof>
