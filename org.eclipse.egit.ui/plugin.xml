@@ -1677,6 +1677,10 @@
             commandId="org.eclipse.egit.ui.RepositoriesToggleBranchHierarchy"
             icon="icons/elcl16/hierarchicalLayout.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewRemove"
+            icon="icons/obj16/clear.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
