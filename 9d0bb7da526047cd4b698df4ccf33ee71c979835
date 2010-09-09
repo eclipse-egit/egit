@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALy3///3k\u003d",
+        "filename": "README",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-09-08T21:22:13Z",
+      "side": 1,
+      "message": "Would it be fair to say 3.5.2 regarding bugfixes?",
+      "revId": "9d0bb7da526047cd4b698df4ccf33ee71c979835",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
