@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALy3///4s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-09-08T16:46:31Z",
+      "side": 1,
+      "message": "Instead of abusing a SashForm, wouldn\u0027t it be better to use a StackLayout for this usecase?",
+      "revId": "4c6caaa78f2d99b54c992fec655ea706f8260e47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3///2k\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
         "patchSetId": 1
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALy3///4s\u003d",
+      "revId": "4c6caaa78f2d99b54c992fec655ea706f8260e47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///4o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2010-09-08T16:46:31Z",
+      "side": 1,
+      "message": "Why TextViewer? new Text(sash, SWT.MULTI | SWT.READ_ONLY) should be sufficent",
       "revId": "4c6caaa78f2d99b54c992fec655ea706f8260e47",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
