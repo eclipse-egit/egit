@@ -20,6 +20,7 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Comparator;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -119,10 +120,19 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 				store);
 
 		// then
-		assertEquals(2, grvt.roots().length);
-		IResource actualProject = grvt.roots()[1];
+		IResource[] roots = grvt.roots();
+		// sort in order to be able to assert the project instances
+		Arrays.sort(roots, new Comparator<IResource>() {
+			public int compare(IResource r1, IResource r2) {
+				String path1 = r1.getFullPath().toString();
+				String path2 = r2.getFullPath().toString();
+				return path1.compareTo(path2);
+			}
+		});
+		assertEquals(2, roots.length);
+		IResource actualProject = roots[0];
 		assertEquals(this.project.project, actualProject);
-		IResource actualProject1 = grvt.roots()[0];
+		IResource actualProject1 = roots[1];
 		assertEquals(secondIProject, actualProject1);
 	}
 
