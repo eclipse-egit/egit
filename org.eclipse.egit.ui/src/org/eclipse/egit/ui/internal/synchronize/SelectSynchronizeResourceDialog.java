@@ -24,6 +24,8 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -121,6 +123,16 @@ public class SelectSynchronizeResourceDialog extends TitleAreaDialog {
 		shouldIncludeLocalButton = new Button(composite, SWT.CHECK | SWT.WRAP);
 		shouldIncludeLocalButton
 				.setText(UIText.SelectSynchronizeResourceDialog_includeUncommitedChanges);
+		shouldIncludeLocalButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				boolean includeLocal = shouldIncludeLocalButton.getSelection();
+				srcRefCombo.setEnabled(!includeLocal);
+				if (includeLocal)
+					srcRefCombo.setDefaultValue(
+							UIText.SynchronizeWithAction_localRepoName, HEAD);
+			}
+		});
 
 		new Label(composite, SWT.WRAP)
 				.setText(UIText.SelectSynchronizeResourceDialog_dstRef);
