@@ -772,11 +772,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 					return;
 				}
 
-				final IStructuredSelection sel;
-				final PlotCommit<?> c;
-
-				sel = ((IStructuredSelection) s);
-				c = (PlotCommit<?>) sel.getFirstElement();
+				final IStructuredSelection sel = ((IStructuredSelection) s);
+				if (sel.size() > 1) {
+					commentViewer.setInput(null);
+					fileViewer.setInput(null);
+					return;
+				}
+				final PlotCommit<?> c = (PlotCommit<?>) sel.getFirstElement();
 				commentViewer.setInput(c);
 				fileViewer.setInput(c);
 			}
