@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALy3///2k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-09-09T07:18:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALy3///4s\u003d",
+      "revId": "4c6caaa78f2d99b54c992fec655ea706f8260e47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///2g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-09-09T07:18:10Z",
+      "side": 1,
+      "message": "Now it\u0027s StyledText, because we want to have the same font as in the message viewer.",
+      "parentUuid": "AAALy3///4o\u003d",
+      "revId": "4c6caaa78f2d99b54c992fec655ea706f8260e47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
