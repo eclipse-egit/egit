@@ -196,6 +196,7 @@ public class GlobalConfigurationPageTest {
 		String suggested = addDialog.bot().textWithLabel(
 				UIText.AddConfigEntryDialog_KeyLabel).getText();
 		assertEquals(TESTSECTION + "." + TESTSUBSECTION + ".", suggested);
+		addDialog.close();
 	}
 
 	@Test
