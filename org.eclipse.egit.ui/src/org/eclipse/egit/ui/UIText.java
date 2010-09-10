@@ -2347,6 +2347,9 @@ public class UIText extends NLS {
 	/** */
 	public static String ValidationUtils_PleaseEnterNameMessage;
 
+	/** */
+	public static String GitModelIndex_index;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
