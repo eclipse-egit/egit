@@ -10,13 +10,11 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test.team.actions;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertFalse;
 
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -74,14 +72,9 @@ public class ShowInTest extends LocalRepositoryTestCase {
 		projectExplorerTree.select(0, 1);
 		String menuString = util
 				.getPluginLocalizedValue("ShowResourceInHistoryAction_label");
-		try {
-			ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
-					menuString);
-			fail("This should have failed");
-		} catch (SWTException e) {
-			// expected
-			assertTrue(e.getCause() instanceof IllegalStateException);
-		}
+		// Team->show in history must be disabled on a multiple selection
+		assertFalse(ContextMenuHelper.isContextMenuItemEnabled(projectExplorerTree, "Team",
+					menuString));
 	}
 
 	@Test
@@ -110,14 +103,9 @@ public class ShowInTest extends LocalRepositoryTestCase {
 		projectExplorerTree.select(0, 1);
 		String menuString = util
 				.getPluginLocalizedValue("ShowRepositoryAction_label");
-		try {
-			ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
-					menuString);
-			fail("This should have failed");
-		} catch (SWTException e) {
-			// expected
-			assertTrue(e.getCause() instanceof IllegalStateException);
-		}
+		// Team->show in repository must be disabled on a multiple selection
+		assertFalse(ContextMenuHelper.isContextMenuItemEnabled(projectExplorerTree, "Team",
+				menuString));
 	}
 
 }
