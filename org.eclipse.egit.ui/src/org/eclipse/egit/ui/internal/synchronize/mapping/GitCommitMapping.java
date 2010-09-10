@@ -25,16 +25,22 @@ import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 
 class GitCommitMapping extends GitObjectMapping {
 
-	private final GitModelCommit gitCommit;
+	private final GitModelObject[] children;
 
 	public GitCommitMapping(GitModelCommit gitCommit) {
 		super(gitCommit);
-		this.gitCommit = gitCommit;
+		children = gitCommit.getChildren();
+	}
+
+	public GitCommitMapping(GitModelCache gitCache) {
+		super(gitCache);
+		children = gitCache.getChildren();
 	}
 
 	@Override
@@ -43,7 +49,7 @@ class GitCommitMapping extends GitObjectMapping {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		List<ResourceTraversal> result = new ArrayList<ResourceTraversal>();
 
-		for (GitModelObject child : gitCommit.getChildren()) {
+		for (GitModelObject child : children) {
 			ResourceTraversal traversal;
 			IPath location = child.getLocation();
 
