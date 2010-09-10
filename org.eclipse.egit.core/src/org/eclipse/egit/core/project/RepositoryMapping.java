@@ -178,10 +178,14 @@ public class RepositoryMapping {
 	 *
 	 * @param rsrc
 	 * @return the path relative to the Git repository, including base name.
+	 *         <code>null</code> if the path cannot be determined.
 	 */
 	public String getRepoRelativePath(final IResource rsrc) {
 		final int pfxLen = workdirPrefix.length();
-		final String p = rsrc.getLocation().toString();
+		IPath location = rsrc.getLocation();
+		if (location == null)
+			return null;
+		final String p = location.toString();
 		final int pLen = p.length();
 		if (pLen > pfxLen)
 			return p.substring(pfxLen);
