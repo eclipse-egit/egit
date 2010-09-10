@@ -16,7 +16,6 @@ import java.io.IOException;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -63,7 +62,7 @@ public class GitModelBlob extends GitModelCommit {
 	 *            human readable blob name (file name)
 	 * @throws IOException
 	 */
-	public GitModelBlob(GitModelCommit parent, RevCommit commit,
+	public GitModelBlob(GitModelObjectContainer parent, RevCommit commit,
 			ObjectId ancestorId, ObjectId baseId, ObjectId remoteId, String name)
 			throws IOException {
 		// only direction is important for us, therefore we mask rest of bits in kind
@@ -85,11 +84,6 @@ public class GitModelBlob extends GitModelCommit {
 	@Override
 	public String getName() {
 		return name;
-	}
-
-	@Override
-	public IProject[] getProjects() {
-		return getParent().getProjects();
 	}
 
 	@Override
@@ -125,24 +119,15 @@ public class GitModelBlob extends GitModelCommit {
 	}
 
 	@Override
-	protected ObjectId getBaseObjectId() {
-		return baseId;
-	}
-
-	@Override
-	protected ObjectId getRemoteObjectId() {
-		return remoteId;
-	}
-
-	private boolean objectExist(RevCommit commit, ObjectId id) {
-		return commit != null && id != null && !id.equals(zeroId());
-	}
-
 	public void prepareInput(CompareConfiguration configuration,
 			IProgressMonitor monitor) throws CoreException {
 		configuration.setLeftLabel(getFileRevisionLabel(getLeft()));
 		configuration.setRightLabel(getFileRevisionLabel(getRight()));
 
+	}
+
+	private boolean objectExist(RevCommit commit, ObjectId id) {
+		return commit != null && id != null && !id.equals(zeroId());
 	}
 
 	private String getFileRevisionLabel(ITypedElement element) {

@@ -116,7 +116,6 @@ public class GitModelRepository extends GitModelObject {
 		return true;
 	}
 
-
 	private void getChildrenImpl() {
 		RevWalk rw = new RevWalk(repo);
 		RevFlag localFlag = rw.newFlag("local"); //$NON-NLS-1$
@@ -125,7 +124,7 @@ public class GitModelRepository extends GitModelObject {
 		allFlags.add(localFlag);
 		allFlags.add(remoteFlag);
 		rw.carry(allFlags);
-		List<GitModelCommit> result = new ArrayList<GitModelCommit>();
+		List<GitModelObjectContainer> result = new ArrayList<GitModelObjectContainer>();
 
 		rw.setRetainBody(true);
 		try {
@@ -150,7 +149,8 @@ public class GitModelRepository extends GitModelObject {
 			Activator.logError(e.getMessage(), e);
 		}
 
-		childrens = result.toArray(new GitModelCommit[result.size()]);
+
+		childrens = result.toArray(new GitModelObjectContainer[result.size()]);
 	}
 
 }
