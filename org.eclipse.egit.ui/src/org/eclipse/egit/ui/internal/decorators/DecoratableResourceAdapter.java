@@ -384,8 +384,11 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 	 */
 	private boolean addResourceFilter(final TreeWalk treeWalk,
 			final IResource resourceToFilterBy) {
-		Set<String> repositoryPaths = Collections.singleton(mapping
-				.getRepoRelativePath(resourceToFilterBy));
+		String repoRelativePath = mapping
+						.getRepoRelativePath(resourceToFilterBy);
+		if (repoRelativePath==null)
+			return false;
+		Set<String> repositoryPaths = Collections.singleton(repoRelativePath);
 		if (repositoryPaths.isEmpty())
 			return false;
 
