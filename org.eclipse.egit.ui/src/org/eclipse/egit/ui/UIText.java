@@ -2294,6 +2294,15 @@ public class UIText extends NLS {
 	public static String RemoteSelectionCombo_sourceRef;
 
 	/** */
+	public static String RefreshPreferencePage_title;
+
+	/** */
+	public static String RefreshPreferencesPage_RefreshOnlyWhenActive;
+
+	/** */
+	public static String RefreshPreferencesPage_RefreshWhenIndexChange;
+
+	/** */
 	public static String RemoteSelectionCombo_destinationName;
 
 	/** */
