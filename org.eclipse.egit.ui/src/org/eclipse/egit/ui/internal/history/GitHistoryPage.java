@@ -1009,10 +1009,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			return false;
 
 		db = null;
-		if (currentWalk != null) {
-			currentWalk.release();
-			currentWalk = null;
-		}
 
 		final ArrayList<String> paths = new ArrayList<String>(in.length);
 		for (final IResource r : in) {
@@ -1054,7 +1050,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			return false;
 		}
 
-		if (pathChange(pathFilters, paths)
+		if (pathChange(pathFilters, paths) || currentWalk == null
 				|| headId != null && !headId.equals(currentHeadId)) {
 			// TODO Do not dispose SWTWalk just because HEAD changed
 			// In theory we should be able to update the graph and
@@ -1062,6 +1058,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			// HEAD^1 and the old HEAD commit should not be visible.
 			//
 			currentHeadId = headId;
+			if (currentWalk != null)
+				currentWalk.release();
 			currentWalk = new SWTWalk(db);
 			currentWalk.sort(RevSort.COMMIT_TIME_DESC, true);
 			currentWalk.sort(RevSort.BOUNDARY, true);
