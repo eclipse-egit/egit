@@ -16,6 +16,24 @@
       "revId": "2ded2beebf72135c22c446952e308153d35a2ecb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3////w\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-09-06T21:25:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALyn//+/E\u003d",
+      "revId": "2ded2beebf72135c22c446952e308153d35a2ecb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
