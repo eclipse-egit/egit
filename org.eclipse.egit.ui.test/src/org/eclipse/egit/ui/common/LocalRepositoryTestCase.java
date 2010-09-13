@@ -21,6 +21,7 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
@@ -135,6 +136,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		// cleanup
 		deleteAllProjects();
 		deleteRecursive(testDirectory);
+		Activator.getDefault().getRepositoryCache().clear();
 	}
 
 	protected static void deleteRecursive(File dirOrFile) {
