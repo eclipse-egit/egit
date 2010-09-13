@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALy3///zY\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-09-09T18:21:50Z",
+      "side": 1,
+      "message": "Thank you ;)\n\nDone",
+      "parentUuid": "AAALy3///1U\u003d",
+      "revId": "d8af1acadd0ba68fcadbda55c8c4fdb75f967508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3///1Q\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2010-09-09T12:13:09Z",
       "side": 1,
       "message": "determines instead of determinate",
+      "revId": "d8af1acadd0ba68fcadbda55c8c4fdb75f967508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///zU\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-09-09T18:21:50Z",
+      "side": 1,
+      "message": "Thank you ;)\n\nDone",
+      "parentUuid": "AAALy3///1Q\u003d",
       "revId": "d8af1acadd0ba68fcadbda55c8c4fdb75f967508",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAALy3///zQ\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-09-09T18:21:50Z",
+      "side": 1,
+      "message": "Thank you ;)\n\nDone",
+      "parentUuid": "AAALy3///1M\u003d",
+      "revId": "d8af1acadd0ba68fcadbda55c8c4fdb75f967508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3///1Y\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2010-09-09T12:13:09Z",
       "side": 1,
       "message": "I think we should also exclude the Java workspace model: org.eclipse.jdt.ui.modelProvider. It also operates on the local workspace.\n\nWhat do you think about returning only GitChangeSetModelProvider if !gsd.shouldIncludeLocal() and not filtering out a predefined list?",
+      "revId": "d8af1acadd0ba68fcadbda55c8c4fdb75f967508",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///zM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-09-09T18:21:50Z",
+      "side": 1,
+      "message": "Yes, returning only GitChangeSerModelProvider when !gsd.shouldIncludeLocal()  seams to be reasonable.",
+      "parentUuid": "AAALy3///1Y\u003d",
       "revId": "d8af1acadd0ba68fcadbda55c8c4fdb75f967508",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
