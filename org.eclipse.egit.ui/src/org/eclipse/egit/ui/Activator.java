@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
+ * Copyright (C) 2007,2010 Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *
@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.resources.IProject;
@@ -33,7 +34,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -42,12 +42,17 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jgit.events.IndexChangedEvent;
 import org.eclipse.jgit.events.IndexChangedListener;
 import org.eclipse.jgit.events.ListenerHandle;
+import org.eclipse.jgit.events.RepositoryEvent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.SshSessionFactory;
 import org.eclipse.jsch.core.IJSchService;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IWindowListener;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.ui.themes.ITheme;
@@ -153,10 +158,12 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		return getTheme().getFontRegistry().getBold(id);
 	}
 
-	private RCS rcs;
-	private RIRefresh refreshJob;
+	private RepositoryChangeScanner rcs;
+	private ResourceRefreshJob refreshJob;
 	private ListenerHandle refreshHandle;
 	private DebugOptions debugOptions;
+
+	private IWindowListener focusListener;
 
 	/**
 	 * Constructor for the egit ui plugin singleton
@@ -179,6 +186,42 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		setupProxy(context);
 		setupRepoChangeScanner();
 		setupRepoIndexRefresh();
+		setupFocusHandling();
+	}
+
+	static boolean isActive() {
+		final AtomicBoolean ret = new AtomicBoolean();
+		final Display display = PlatformUI.getWorkbench().getDisplay();
+		display.syncExec(new Runnable() {
+			public void run() {
+				ret.set(display.getActiveShell() != null);
+			}
+		});
+		return ret.get();
+	}
+
+	private void setupFocusHandling() {
+		focusListener = new IWindowListener() {
+
+			public void windowOpened(IWorkbenchWindow window) {
+				// nothing
+			}
+
+			public void windowDeactivated(IWorkbenchWindow window) {
+				// nothing
+			}
+
+			public void windowClosed(IWorkbenchWindow window) {
+				// nothing
+			}
+
+			public void windowActivated(IWorkbenchWindow window) {
+				if (rcs.doReschedule)
+					rcs.schedule();
+				refreshJob.triggerRefresh();
+			}
+		};
+		PlatformUI.getWorkbench().addWindowListener(focusListener);
 	}
 
 	public void optionsChanged(DebugOptions options) {
@@ -195,7 +238,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	}
 
 	private void setupRepoIndexRefresh() {
-		refreshJob = new RIRefresh();
+		refreshJob = new ResourceRefreshJob();
 		refreshHandle = Repository.getGlobalListenerList()
 				.addIndexChangedListener(refreshJob);
 	}
@@ -233,13 +276,18 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 			listener.propertyChange(event);
 	}
 
-	static class RIRefresh extends Job implements IndexChangedListener {
+	/**
+	 * Refresh projects in repositories that we suspect may have resource
+	 * changes.
+	 */
+	static class ResourceRefreshJob extends Job implements IndexChangedListener {
 
-		RIRefresh() {
+		ResourceRefreshJob() {
 			super(UIText.Activator_refreshJobName);
 		}
 
 		private Set<IProject> projectsToScan = new LinkedHashSet<IProject>();
+		private Set<Repository> repositoriesChanged = new HashSet<Repository>();
 
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
@@ -271,20 +319,47 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		}
 
 		public void onIndexChanged(IndexChangedEvent e) {
-			// Check the workspace setting "refresh automatically" setting first
-			boolean autoRefresh = new InstanceScope().getNode(
-					ResourcesPlugin.getPlugin().getBundle().getSymbolicName())
-					.getBoolean(ResourcesPlugin.PREF_AUTO_REFRESH, false);
-			if (!autoRefresh)
-				return;
+			if (Activator.getDefault().getPreferenceStore()
+					.getBoolean(UIPreferences.REFESH_ON_INDEX_CHANGE))
+				mayTriggerRefresh(e);
+		}
 
-			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-			Set<IProject> toRefresh= new HashSet<IProject>();
-			for (IProject p : projects) {
-				RepositoryMapping mapping = RepositoryMapping.getMapping(p);
-				if (mapping != null && mapping.getRepository() == e.getRepository()) {
-					toRefresh.add(p);
+		/**
+		 * Record which projects have changes. Initiate a resource refresh job
+		 * if the user settings allow it.
+		 *
+		 * @param e
+		 *            The {@link RepositoryEvent} that triggered this refresh
+		 */
+		private void mayTriggerRefresh(RepositoryEvent e) {
+			repositoriesChanged.add(e.getRepository());
+			if (!Activator.getDefault().getPreferenceStore()
+					.getBoolean(UIPreferences.REFESH_ONLY_WHEN_ACTIVE)
+					|| isActive())
+				triggerRefresh();
+		}
+
+		/**
+		 * Figure which projects belong to a repository, add them to a set of
+		 * project to refresh and schedule the refresh as a job.
+		 */
+		void triggerRefresh() {
+			if (GitTraceLocation.UI.isActive())
+				GitTraceLocation.getTrace().trace(
+						GitTraceLocation.UI.getLocation(), "Triggered refresh"); //$NON-NLS-1$
+			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
+					.getProjects();
+			Set<IProject> toRefresh = new HashSet<IProject>();
+			synchronized (repositoriesChanged) {
+				for (IProject p : projects) {
+					RepositoryMapping mapping = RepositoryMapping.getMapping(p);
+					if (mapping != null
+							&& repositoriesChanged.contains(mapping
+									.getRepository())) {
+						toRefresh.add(p);
+					}
 				}
+				repositoriesChanged.clear();
 			}
 			synchronized (projectsToScan) {
 				projectsToScan.addAll(toRefresh);
@@ -294,8 +369,12 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		}
 	}
 
-	static class RCS extends Job {
-		RCS() {
+	/**
+	 * A Job that looks at the repository meta data and triggers a refresh of
+	 * the resources in the affected projects.
+	 */
+	static class RepositoryChangeScanner extends Job {
+		RepositoryChangeScanner() {
 			super(UIText.Activator_repoScanJobName);
 		}
 
@@ -314,6 +393,21 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 					.getRepositoryCache().getAllRepositories();
 			if (repos.length == 0)
 				return Status.OK_STATUS;
+
+			// When people use Git from the command line a lot of changes
+			// may happen. Don't scan when inactive depending on the user's
+			// choice.
+
+			if (Activator.getDefault().getPreferenceStore()
+					.getBoolean(UIPreferences.REFESH_ONLY_WHEN_ACTIVE)) {
+				if (!isActive()) {
+					monitor.done();
+					if (doReschedule)
+						schedule(REPO_SCAN_INTERVAL);
+					return Status.OK_STATUS;
+				}
+			}
+
 			monitor.beginTask(UIText.Activator_scanningRepositories,
 					repos.length);
 			try {
@@ -351,9 +445,9 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	}
 
 	private void setupRepoChangeScanner() {
-		rcs = new RCS();
+		rcs = new RepositoryChangeScanner();
 		rcs.setSystem(true);
-		rcs.schedule(RCS.REPO_SCAN_INTERVAL);
+		rcs.schedule(RepositoryChangeScanner.REPO_SCAN_INTERVAL);
 	}
 
 	private void setupSSH(final BundleContext context) {
@@ -382,6 +476,11 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		if (refreshHandle != null) {
 			refreshHandle.remove();
 			refreshHandle = null;
+		}
+
+		if (focusListener != null) {
+			PlatformUI.getWorkbench().removeWindowListener(focusListener);
+			focusListener = null;
 		}
 
 		if (GitTraceLocation.UI.isActive())
