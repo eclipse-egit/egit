@@ -63,6 +63,8 @@ public class GitImportWizard extends Wizard implements ProjectCreator,
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 		previousProjects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
+		selectRepoPage.setWizard(this);
+		setNeedsProgressMonitor(true);
 	}
 
 	@Override

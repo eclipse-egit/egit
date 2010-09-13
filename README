@@ -57,7 +57,7 @@ three for packaging.
 
             == COMPATIBILITY                   ==
 
-- Eclipse 3.4 is the minimum Eclipse version.
+- Eclipse 3.5.2 is the minimum Eclipse version for egit 0.9 and later.
 
 - Newer version of EGit may implement new functionality, remove
   existing functions and change others without other notice than what

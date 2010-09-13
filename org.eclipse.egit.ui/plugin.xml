@@ -1677,6 +1677,10 @@
             commandId="org.eclipse.egit.ui.RepositoriesToggleBranchHierarchy"
             icon="icons/elcl16/hierarchicalLayout.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewRemove"
+            icon="icons/obj16/clear.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -1976,7 +1980,8 @@
             class="org.eclipse.egit.ui.internal.repository.tree.command.MergeCommand"
             commandId="org.eclipse.egit.ui.RepositoriesViewMerge">
          <activeWhen>
-            <iterate>
+            <iterate
+                  ifEmpty="false">
                <or>
                   <instanceof
                         value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
@@ -1991,7 +1996,8 @@
             class="org.eclipse.egit.ui.internal.actions.MergeAction"
             commandId="org.eclipse.egit.ui.RepositoriesViewMerge">
          <activeWhen>
-            <iterate>
+            <iterate
+                  ifEmpty="false">
                <instanceof
                      value="org.eclipse.core.resources.IProject">
                </instanceof>

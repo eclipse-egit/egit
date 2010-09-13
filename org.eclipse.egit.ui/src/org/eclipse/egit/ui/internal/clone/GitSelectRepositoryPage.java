@@ -1,5 +1,7 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (C) 2010 SAP AG.
+ * Copyright (C) 2010, Benjamin Muskalla <bmuskalla@eclipsesource.com>
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -15,6 +17,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
@@ -41,6 +45,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * Select a repository, add or clone
@@ -54,6 +59,8 @@ public class GitSelectRepositoryPage extends WizardPage {
 	private Button addRepo;
 
 	private Button cloneRepo;
+
+	private IPreferenceChangeListener configChangeListener;
 
 	/**
 	 *
@@ -103,32 +110,15 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 		cloneRepo.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				List<String> dirsBefore = util.getConfiguredRepositories();
+			public void widgetSelected(SelectionEvent event) {
+				GitCloneWizard cloneWizard = new GitCloneWizard();
+				cloneWizard.setParentContainer(getContainer());
 				WizardDialog dlg = new WizardDialog(getShell(),
-						new GitCloneWizard());
+						cloneWizard);
 
-				if (dlg.open() == Window.OK) {
-					List<String> dirsAfter = util.getConfiguredRepositories();
-					if (!dirsBefore.containsAll(dirsAfter)) {
-						tv.setInput(dirsAfter);
-						for (String dir : dirsAfter) {
-							if (!dirsBefore.contains(dir)) {
-								try {
-									RepositoryNode node = new RepositoryNode(
-											null, new FileRepository(new File(dir)));
-									tv.setSelection(new StructuredSelection(
-											node));
-								} catch (IOException e1) {
-									Activator.handleError(e1.getMessage(), e1,
-											false);
-								}
-							}
-						}
-					}
-					checkPage();
-				}
+				dlg.open();
 			}
+
 		});
 
 		addRepo = new Button(tb, SWT.PUSH);
@@ -167,11 +157,46 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 		tv.setInput(util.getConfiguredRepositories());
 
+		configChangeListener = new IPreferenceChangeListener() {
+			public void preferenceChange(PreferenceChangeEvent event) {
+				Display display = tv.getControl().getDisplay();
+				display.asyncExec(new Runnable() {
+					public void run() {
+						refreshRepositoryList();
+						checkPage();
+					}
+				});
+			}
+		};
+		util.getPreferences().addPreferenceChangeListener(configChangeListener);
+
 		// we need to select at least a repository to become complete
 		setPageComplete(false);
 		Dialog.applyDialogFont(main);
 		setControl(main);
 
+	}
+
+	private void refreshRepositoryList() {
+		@SuppressWarnings("unchecked")
+		List<String> dirsBefore = (List<String>) tv.getInput();
+		List<String> dirsAfter = util.getConfiguredRepositories();
+		if (!dirsBefore.containsAll(dirsAfter)) {
+			tv.setInput(dirsAfter);
+			for (String dir : dirsAfter) {
+				if (!dirsBefore.contains(dir)) {
+					try {
+						RepositoryNode node = new RepositoryNode(
+								null, new FileRepository(new File(dir)));
+						tv.setSelection(new StructuredSelection(
+								node));
+					} catch (IOException e1) {
+						Activator.handleError(e1.getMessage(), e1,
+								false);
+					}
+				}
+			}
+		}
 	}
 
 	private void checkPage() {
@@ -191,4 +216,10 @@ public class GitSelectRepositoryPage extends WizardPage {
 		}
 	}
 
+	@Override
+	public void dispose() {
+		super.dispose();
+		util.getPreferences().removePreferenceChangeListener(
+				configChangeListener);
+	}
 }

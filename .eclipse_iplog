@@ -7,7 +7,7 @@
 
 [consumes "technology.jgit"]
 	name = JGit
-	version = 0.8.0
+	version = 0.9.0
 	license = Eclipse Distribution License v1.0
 
 [CQ "3493"]
@@ -24,5 +24,10 @@
 [CQ "3905"]
 	description = jsch Version: 0.1.37 (using Orbit CQ2002)
 	license = New BSD license
+	use = unmodified source & binary
+	state = approved
+[CQ "4275"]
+	description = easymock Version: 2.4 (ATO CQ2551) (using Orbit CQ2577)
+	license = MIT license
 	use = unmodified source & binary
 	state = approved
