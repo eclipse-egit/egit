@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache.FileModelFactory;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
 
@@ -22,24 +23,29 @@ import org.eclipse.jgit.revwalk.RevCommit;
  */
 public class GitModelCacheTree extends GitModelTree {
 
+	private final FileModelFactory factory;
+
 	private final Map<String, GitModelObject> cacheTreeMap;
 
 	/**
 	 * @param parent
 	 *            parent object
+	 * @param commit
+	 *            last {@link RevCommit} in repository
 	 * @param repoId
 	 *            {@link ObjectId} of blob in repository
 	 * @param cacheId
 	 *            {@link ObjectId} of blob in cache
-	 * @param commit
-	 *            last {@link RevCommit} in repository
 	 * @param name
 	 *            name of tree
+	 * @param factory
 	 * @throws IOException
 	 */
 	public GitModelCacheTree(GitModelObjectContainer parent, RevCommit commit,
-			ObjectId repoId, ObjectId cacheId, String name) throws IOException {
+			ObjectId repoId, ObjectId cacheId, String name,
+			FileModelFactory factory) throws IOException {
 		super(parent, commit, repoId, repoId, cacheId, name);
+		this.factory = factory;
 		cacheTreeMap = new HashMap<String, GitModelObject>();
 	}
 
@@ -52,15 +58,14 @@ public class GitModelCacheTree extends GitModelTree {
 					.get(pathKey);
 			if (cacheEntry == null) {
 				cacheEntry = new GitModelCacheTree(this, remoteCommit, repoId,
-						cacheId, pathKey);
+						cacheId, pathKey, factory);
 				cacheTreeMap.put(pathKey, cacheEntry);
 			}
 			cacheEntry.addChild(repoId, cacheId,
 					path.substring(path.indexOf('/') + 1));
-		} else {
-			cacheTreeMap.put(pathKey, new GitModelBlob(this, remoteCommit,
-					repoId, repoId, cacheId, pathKey));
-		}
+		} else
+			cacheTreeMap.put(pathKey, factory.createFileModel(this,
+					remoteCommit, repoId, cacheId, pathKey));
 	}
 
 	@Override

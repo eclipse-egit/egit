@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree;
 
 class GitCommitMapping extends GitObjectMapping {
 
@@ -41,6 +42,11 @@ class GitCommitMapping extends GitObjectMapping {
 	public GitCommitMapping(GitModelCache gitCache) {
 		super(gitCache);
 		children = gitCache.getChildren();
+	}
+
+	public GitCommitMapping(GitModelWorkingTree workingTree) {
+		super(workingTree);
+		children = workingTree.getChildren();
 	}
 
 	@Override

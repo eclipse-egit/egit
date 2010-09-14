@@ -149,8 +149,10 @@ public class GitModelRepository extends GitModelObject {
 					result.add(new GitModelCommit(this, nextCommit, LEFT));
 			}
 
-			if (includeLocal)
+			if (includeLocal) {
 				result.add(new GitModelCache(this, dstCommit));
+				result.add(new GitModelWorkingTree(this, dstCommit));
+			}
 		} catch (IOException e) {
 			Activator.logError(e.getMessage(), e);
 		}
