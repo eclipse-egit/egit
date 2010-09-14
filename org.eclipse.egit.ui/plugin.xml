@@ -219,6 +219,12 @@
                   type="org.eclipse.ui.model.IWorkbenchAdapter"/>
          </factory>
          <factory
+	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree"
+               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            <adapter
+                  type="org.eclipse.ui.model.IWorkbenchAdapter"/>
+         </factory>
+         <factory
 	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelTree"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
@@ -248,6 +254,11 @@
       </factory>
       <factory
             adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCache"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
+      </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree"
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
          <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
       </factory>

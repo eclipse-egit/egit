@@ -2350,6 +2350,9 @@ public class UIText extends NLS {
 	/** */
 	public static String GitModelIndex_index;
 
+	/** */
+	public static String GitModelWorkingTree_workingTree;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
