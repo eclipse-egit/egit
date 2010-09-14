@@ -35,28 +35,27 @@
 		</dl>
 		<h2 id="Centralised_version_control_systems">Centralised version control systems</h2>
 		<p>So, what do you need to know about Git? Well, both CVS and SVN are known as 
-			<i>centralised</i> version control systems (CVCS). That is, there is one Master repository which people share code at; everyone checks out their code (or branch) from that repository, and checks changes back in. For code that needs to be sent person-to-person (for example, for review, or as a way of contributing fixes), it is possible to create a 
-			<i>patch</i>, which is a diff of your code against the given Master repository version (often HEAD, but sometimes a branch like Eclipse_35).
+			<i>centralised</i> version control systems (CVCS). That is, there is one Master repository where people share code; everyone checks out their code (or branch) from that repository, and checks changes back in. For code that needs to be sent person-to-person (for example, for review, or as a way of contributing fixes), it is possible to create a 
+			<i>patch</i>, which is a diff of your code against the given Master repository version (often HEAD, but sometimes a branch like Eclipse_35). 
 		</p>
-		<p>There are two problems that surface with a centralised version control system; though those problems aren't immediately apparent or obvious.</p>
+		<p>There are two problems that surface with a centralised version control system, although these problems aren't immediately apparent or obvious: </p>
 		<ul>
-			<li>You need to be 'on-line' to perform actions, like diff or patch<sup>*</sup></li>
-			<li>Patches generated against a particular branch can become outdated fairly quickly as development of the snapshot-in-time branch moves on (e.g. when it comes to apply, HEAD is different to before)</li>
+			<li>You need to be 'on-line' to perform actions, like diff or patch.<sup>*</sup> </li>
+			<li>Patches generated against a particular branch can become outdated fairly quickly as development of the snapshot-in-time branch moves on (e.g. when it is time to apply the patch, HEAD is different than it was when the patch was generated).</li>
 		</ul>
-		<p>The first one is rarely apparent for those working with Eclipse in a location at (or near to) the repository itself. Those in the same continent will rarely experience delays due to global networking variance; in addition, they tend to be employed in an organisation and sat at a desktop connected to wired networking for most of the day. Road warriors (those with laptops and who code from the local coffee shop) tend to operate in a more frequently disconnected mode, which limits repository functionality to when they are connected. 
-			<i>(*A quick note here on SVN; since SVN keeps the last-known-checkout, it's possible to do a limited set of operations whilst disconnected from SVN, like diff from the last-known-checkout. However, in general, you are prevented from doing many of the operations that are possible whilst connected.)</i>
+		<p>The first problem is rarely apparent for those working with Eclipse in a location at (or near to) the repository itself. Those in the same continent will rarely experience delays due to global networking variance; in addition, they tend to be employed in an organisation and sit at a desktop connected to wired networking for most of the day. Road warriors (those with laptops and who code from the local coffee shop) tend to operate in a more frequently disconnected mode, which limits repository functionality to when they are connected. 
+			<i>(*A note on SVN: since SVN keeps the last-known-checkout, it's possible to do a limited set of operations while disconnected from SVN, like diff from the last-known-checkout. However, in general, you are prevented from doing many of the operations that are possible while connected.)</i> 
 		</p>
-		<p>The second one is simply an artefact of the way in which patches work. These are generally performed against HEAD (a snapshot in time) and then applied later (sometimes, months or even 
+		<p>The second problem is simply an artifact of the way in which patches work. These are generally performed against HEAD (a snapshot in time) and then applied later (sometimes months or even 
 			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=4922" target="egit_external">eight years later</a>). Although they record the version of the file they were patched against, the patch itself is sensitive to big changes in the file, sometimes leading to the patch being inapplicable. Even relatively simple operations, like a file-rename, can throw a well-formed CVCS patch out of the window.
 		</p>
 		<h2 id="Distributed_Version_Control_Systems">Distributed Version Control Systems</h2>
-		<p>Distributed Version Control Systems (DVCS) are a different family of version control systems to those that most are familiar with. The two most popular are arguably 
+		<p>Distributed Version Control Systems (DVCS) are a family of version control systems unlike those with which many are familiar. Two of the most popular are 
 			<a href="http://www.git-scm.org" target="egit_external">Git</a> and 
-			<a href="http://mercurial.selenic.com" target="egit_external">Hg</a>, although many others (
+			<a href="http://mercurial.selenic.com" target="egit_external">Hg</a>, although others (
 			<a href="http://darcs.net/" target="egit_external">Darcs</a>, 
 			<a href="http://bazaar.canonical.com/en/" target="egit_external">Bazaar</a>, 
-			<a href="http://www.bitkeeper.com/" target="egit_external">Bitkeeper</a> etc.) exist. Unlike centralised version control systems (where every individual checks into/out of a shared system), a distributed version control system shares out the data across each participant. Unlike 
-			<a href="http://www.bittorrent.com/" target="egit_external">Bittorrent</a>, where the contents are scattered across various machines, in a DVCS each user has a full copy of the repository.
+			<a href="http://www.bitkeeper.com/" target="egit_external">Bitkeeper</a>, etc.) exist. In a DVCS each user has a complete copy of the repository, including its entire history.  A user may potentially push changes to or pull changes from any other repository. Although policy may confer special status to one or more repositories, in principle every repository is a first-class citizen in the DVCS model. This stands in contrast to a centralised version control system, where every individual checks files into and out of an authoritative repository.
 		</p>
 		<dl>
 			<dd>&#9758; 
@@ -84,7 +83,7 @@
 					</dd>
 				</dl>
 			</li>
-			<li>Do not try to bend the <span title="spoon">master repository</span> – that's impossible. Instead, only try to realise the truth; there is no <span title="spoon">master repository</span>.If fact, there's a veritable matrix of master repositories possible. Each repository can be considered a node in a graph; nodes in the graph can be connected to each other in any way. However, rather than an n-n set of links, the graph usually self-organises into a tree-like structure, logically associating with one point that acts as a funnel for everything else. In a sense, that's a master repository – everyone has already made the choice; now you have to understand it. Should an oracle intervene, a neo-master can be chosen.
+			<li>Do not try to bend the <span title="spoon">master repository</span> – that's impossible. Instead, only try to realise the truth; there is no <span title="spoon">master repository</span>. In fact, there's a veritable matrix of master repositories possible. Each repository can be considered a node in a graph; nodes in the graph can be connected to each other in any way. However, rather than an n-n set of links, the graph usually self-organises into a tree-like structure, logically associating with one point that acts as a funnel for everything else. In a sense, that's a master repository – everyone has already made the choice; now you have to understand it. Should an oracle intervene, a neo-master can be chosen.
 				<dl>
 					<dd>&#9758; 
 						<b>There is no master repository</b>
@@ -92,8 +91,8 @@
 				</dl>
 			</li>
 			<li>Having accepted that there is no master repository, it becomes clear that the repository must live in its entirety on each of the nodes in the DVCS. This usually leads to fears about the size of the repository, even taking into account the fact that storage is cheap.A key point here is that DVCS repositories are usually far 
-				<i>smaller</i> than their counterpart CVCS repositories, not least of which is because everyone has to have a full repository in order to do any work. It's a natural consequence that they're smaller.However, they're also smaller because each repository contains far less scope than a CVCS repository. For example, most organisations will have one mammoth CVCS repository with several thousand top-level 'modules' (or 'projects') underneath. Because of the administrative overhead with 'creating a new repository', it is often easier to reuse the same one for everything. (SVN put some limits on how wide it could grow, which CVS tended not to have; but even so, the main 
-				<a href="http://svn.apache.org/viewvc?view=revision&amp;revision=908283" target="egit_external">Apache SVN</a> is over 900k revisions.)By contrast, setting up a DVCS is usually nothing more than a directory with a few administrative files inside. It doesn't require administrator privileges or specific ports; in fact, since there's no central server to speak of, it doesn't even need to be shared by network protocols.As a result, a DVCS repository is much more granular – and easy to create – than a traditional CVCS repository. Firstly, it's always on your machine (there's no centralised server to configure) and secondly, all you need access to is a file system. So typically, a DVCS “repository” will often be at the level of an Eclipse project or project working set. For example, although the [
+				<i>smaller</i> than their counterpart CVCS repositories, not least of which is because everyone has to have a full repository in order to do any work. It's a natural consequence that they're smaller. However, they're also smaller because each repository contains far less scope than a CVCS repository. For example, most organisations will have one mammoth CVCS repository with several thousand top-level 'modules' (or 'projects') underneath. Because of the administrative overhead with 'creating a new repository', it is often easier to reuse the same one for everything. (SVN put some limits on how wide it could grow, which CVS tended not to have; but even so, the main 
+				<a href="http://svn.apache.org/viewvc?view=revision&amp;revision=908283" target="egit_external">Apache SVN</a> is over 900k revisions.) By contrast, setting up a DVCS is usually nothing more than a directory with a few administrative files inside. It doesn't require administrator privileges or specific ports; in fact, since there's no central server to speak of, it doesn't even need to be shared by network protocols. As a result, a DVCS repository is much more granular – and easy to create – than a traditional CVCS repository. Firstly, it's always on your machine (there's no centralised server to configure) and secondly, all you need access to is a file system. So typically, a DVCS “repository” will often be at the level of an Eclipse project or project working set. For example, although the [
 				<a href="http://dev.eclipse.org/viewcvs/index.cgi/?root=RT_Project" target="egit_external">http://dev.eclipse.org/viewcvs/index.cgi/?root=RT_Project</a> CVS <span title="RunTime">RT</span> repository] is shared by 
 				<a href="http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.equinox/?root=RT_Project" target="egit_external">Equinox</a> and 
 				<a href="http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.ecf/?root=RT_Project&amp;view=log" target="egit_external">ECF</a>, a DVCS-based solution would almost certainly see the Equinox and ECF projects in their own repositories; perhaps, even breaking down further into (say) ECF-Doc and ECF-Bundles. Think of a DVCS repository as one or a few Eclipse projects instead of hundreds of projects together.
@@ -183,7 +182,7 @@
 			</dd>
 		</dl>
 		<h2 id="Changesets_and_branches">Changesets and branches</h2>
-		<p>Given that a changeset is a long value like <code>48b2179994d494485b79504e8b5a6b23ce24a026</code>, it can be unfriendly to use. Fortunately, there are a couple of ways around this. Git, like other DVCSs, allow you to use an abbreviated form of the changeset, providing that it's unique in the repository. For small repositories, this means that you can refer to changesets by really short values, like <code>48b21</code> or even <code>48</code>. Conventionally, developers often use 6 digits of the hash – but large projects (like the Linux kernel) tend to have to use slightly larger references in order to have uniqueness.</p>
+		<p>Given that a changeset is a long value like <code>48b2179994d494485b79504e8b5a6b23ce24a026</code>, it can be unfriendly to use. Fortunately, there are a couple of ways around this. Git, like other DVCSs, allow you to use an abbreviated form of the changeset, provided that it's unique in the repository. For small repositories, this means that you can refer to changesets by really short values, like <code>48b21</code> or even <code>48</code>. Conventionally, developers often use 6 digits of the hash – but large projects (like the Linux kernel) tend to have to use slightly larger references in order to have uniqueness.</p>
 		<dl>
 			<dd>&#9758; 
 				<b>Git hashes can be shortened to any unique prefix</b>
