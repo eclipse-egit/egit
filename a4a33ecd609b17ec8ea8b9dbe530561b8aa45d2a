@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALyn///kg\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-28T12:44:40Z",
+      "side": 1,
+      "message": "\"were not happy\"\n\n\"This meant Eclipse\"",
+      "revId": "a4a33ecd609b17ec8ea8b9dbe530561b8aa45d2a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn///kc\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-28T12:44:40Z",
+      "side": 1,
+      "message": "\"unnecessary [what?]\"",
+      "revId": "a4a33ecd609b17ec8ea8b9dbe530561b8aa45d2a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn///kY\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-28T12:44:40Z",
+      "side": 1,
+      "message": "scane -\u003e scan",
+      "revId": "a4a33ecd609b17ec8ea8b9dbe530561b8aa45d2a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn///kQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-28T12:44:40Z",
+      "side": 1,
+      "message": "This listener should be removed when the bundle has been stopped.",
+      "revId": "a4a33ecd609b17ec8ea8b9dbe530561b8aa45d2a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALyn///kM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-08-28T12:44:40Z",
+      "side": 1,
+      "message": "It seems to me that you may end up adding a repository multiple times if its index changes more than once before the list is processed. Though I suppose this might not technically matter since the projects that will be queued up to be refreshed is stored in a set.",
+      "revId": "a4a33ecd609b17ec8ea8b9dbe530561b8aa45d2a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
