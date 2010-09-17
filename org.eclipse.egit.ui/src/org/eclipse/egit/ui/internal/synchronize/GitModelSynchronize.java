@@ -22,7 +22,6 @@ import org.eclipse.egit.core.synchronize.GitSubscriberResourceMappingContext;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.team.core.RepositoryProvider;
-import org.eclipse.team.core.mapping.provider.SynchronizationContext;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
 import org.eclipse.team.ui.TeamUI;
 import org.eclipse.team.ui.synchronize.ISynchronizeParticipant;
@@ -64,7 +63,7 @@ public class GitModelSynchronize {
 				gsdSet);
 		SubscriberScopeManager manager = new SubscriberScopeManager(
 				subscriber.getName(), mappings, subscriber, remoteContext, true);
-		SynchronizationContext context = new GitSubscriberMergeContext(
+		GitSubscriberMergeContext context = new GitSubscriberMergeContext(
 				subscriber, manager, gsdSet);
 		GitModelSynchronizeParticipant participant = new GitModelSynchronizeParticipant(
 				context);
