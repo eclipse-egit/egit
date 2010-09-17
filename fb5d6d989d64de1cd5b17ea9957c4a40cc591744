@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALy3///tc\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-09-13T20:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALy3///uk\u003d",
+      "revId": "fb5d6d989d64de1cd5b17ea9957c4a40cc591744",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3///uo\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAALy3///tY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCommit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-09-13T20:03:35Z",
+      "side": 1,
+      "message": "Indeed, I was experimenting with direction parameter and because of that both elements were merge together.",
+      "parentUuid": "AAALy3///uo\u003d",
+      "revId": "fb5d6d989d64de1cd5b17ea9957c4a40cc591744",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3///us\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelObjectContainer.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2010-09-13T12:40:03Z",
       "side": 1,
       "message": "This TODO can be removed with this commit.",
+      "revId": "fb5d6d989d64de1cd5b17ea9957c4a40cc591744",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///tU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelObjectContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-09-13T20:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALy3///us\u003d",
       "revId": "fb5d6d989d64de1cd5b17ea9957c4a40cc591744",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
