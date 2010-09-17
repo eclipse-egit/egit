@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit User Guide - Concepts</title>
+		<link type="text/css" rel="stylesheet" href="../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">Concepts</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="User-Guide.html" title="EGit User Guide">
+						<img alt="Previous" border="0" src="../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Tasks.html" title="Tasks">
+						<img alt="Next" border="0" src="../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">EGit User Guide</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Tasks</td>
+			</tr>
+		</table><hr/>
+		<h1 id="Concepts">Concepts</h1>
+		<p>Git is built on a few simple and very powerful ideas. Knowing them helps to understand more easily how git works.</p>
+		<h2 id="Repository">Repository</h2>
+		<p>The Repository or Object Database stores all objects which make up the history of the project. All objects in this database are identified through a secure 20 byte SHA-1 hash of the object content. This has several advantages:</p>
+		<ul>
+			<li>comparing two objects boils down to comparing two SHA-1 hashes</li>
+			<li>since object names are computed from the object content in the same way in every git repository the same object will be stored under the same name in all repositories which happen to contain this object</li>
+			<li>repository corruption can easily be detected by checking if the SHA-1 object name still is the secure hash of the object's content</li>
+		</ul>
+		<p>Git has four object types :</p>
+		<ul>
+			<li>A "Blob object" stores file content</li>
+			<li>A "Tree object" stores the directory structure and contains "Blob objects" and other "Tree objects" together with their file system names and modes</li>
+			<li>A "Commit object" represents a snapshot of the directory structure at the time of the commit and has links to its predecessor and successor "Commit objects" which form an acyclic graph of the repository revisions forming the repository history.</li>
+			<li>A "Tag object" is a symbolic named link to another repository object which contains the object name and type of the referenced object and optionally information about the one who created the tag and signing information.</li>
+		</ul>
+		<p>The object database is stored in the .git/objects directory. Objects are either stored as loose objects or in a pack format packing efficiently many objects into a single file to enable efficient storage and transport of objects.</p>
+		<p>
+			<b>Trust</b>
+		</p>
+		<p>Git provides a built-in trust chain through secure SHA-1 hashes which allow to verify if objects obtained from a (potentially untrusted) source are correct and have not been modified since they have been created.</p>
+		<p>If you get the signed tag for e.g. a project release which you can verify with e.g. the tagger's (e.g. the project lead) public signing key
+			git ensures that the chain of trust covers the following:</p>
+		<ul>
+			<li>the signed tag identifies a commit object</li>
+			<li>the commit object represents exactly one project revision including its content and history</li>
+			<li>the commit object contains the tree of blob objects and other tree objects representing the directory structure of the project revision</li>
+			<li>the blob objects contain the file contents for this project revision</li>
+		</ul>
+		<p>All the involved object names can be checked for consistency using the SHA-1 algorithm to ensure the correctness of the project revision and this way ensure that the entire history can be trusted.</p>
+		<h2 id="Index">Index</h2>
+		<p>The index is a binary file stored in .git/index containing a sorted list of file names, permissions and the SHA-1 object name of blob objects.
+			It has the following important properties:</p>
+		<ul>
+			<li>The index contains all information necessary to generate a single uniquely defined tree object. E.g. a commit operation generates this tree, stores it in the object database and associates it with the commit.</li>
+			<li>The index enables fast comparison of the tree it defines with the current working directory. This is achieved by storing additional meta data about the involved files in the index data.</li>
+			<li>The index can efficiently store information about merge conflicts between the trees involved in the merge so that for each pathname there is enough information about the involved trees to enable a three-way merge.</li>
+		</ul>
+		<h2 id="Working_Directory">Working Directory</h2>
+		<p>The working directory is the directory used to modify files for the next commit. By default it is located one level above the .git directory.
+			Making a new commit involves typically the following steps :</p>
+		<ul>
+			<li>Checkout the branch the new commit shall be based on, this changes the working directory so that it reflects the HEAD revision of the branch.</li>
+			<li>Do modifications in the working directory</li>
+			<li>Tell git about these modifications (add modified files). This transfers the modifications into the object database and prepares the tree to be committed in the index.</li>
+			<li>Commit the tree prepared in the index into the object database. The result is a new commit object and the HEAD of the current branch moves to the new commit.</li>
+		</ul>
+		<h2 id="Recording_Changes_in_the_Repository">Recording Changes in the Repository</h2>
+		<p>You start from a fresh checkout of a branch of a local repository. You want to do some changes and record snapshots of these changes in the repository whenever you reach a state of your changes you want to record.</p>
+		<p>Each file in the working directory can either be
+			<i>tracked</i> or
+			<i>untracked</i>.
+		</p>
+		<ul>
+			<li>Tracked files are those which were in the last snapshot or files which have been newly staged into the
+				<i>index</i>. They can be
+				<i>unmodified</i>,
+				<i>modified</i>, or
+				<i>staged</i>.
+			</li>
+			<li>Untracked files are all other files which were not in the last snapshot and have not been added to the
+				<i>index</i>.
+			</li>
+		</ul>
+		<p>When you first clone a repository all files in the working directory will be
+			<i>tracked</i> and
+			<i>unmodified</i> since they have been freshly checked out and you didn't start editing them yet.
+		</p>
+		<p>As you edit files git will recognize they are
+			<i>modified</i> since you have modified them since the last commit.
+			You
+			<i>stage</i> the modified files into the index and then commit the staged changes and the cycle repeats.
+		</p>
+		<p>This lifecycle is illustrated here</p>
+		<p>
+			<img border="0" src="images/Egit-0.9-lifecycle-file.png"/>
+		</p><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="User-Guide.html" title="EGit User Guide">
+						<img alt="Previous" border="0" src="../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center">
+					<a href="User-Guide.html" title="EGit User Guide">
+						<img alt="EGit User Guide" border="0" src="../../images/home.gif"/>
+					</a>
+				</td>
+				<td style="width: 20%" align="right">
+					<a href="Tasks.html" title="Tasks">
+						<img alt="Next" border="0" src="../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">EGit User Guide</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Tasks</td>
+			</tr>
+		</table>
+	</body>
+</html>

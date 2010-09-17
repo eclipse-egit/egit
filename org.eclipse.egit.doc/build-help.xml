@@ -37,6 +37,8 @@
 				navigationimages="true" title="EGit Documentation" helpPrefix="help"
 				generateUnifiedToc="true">
 				<path name="EGit/User_Guide" title="EGit User Guide" />
+				<path name="EGit/New_and_Noteworthy/0.9" title="EGit 0.9 New and Noteworthy" />
+				<path name="JGit/New_and_Noteworthy/0.9" title="JGit 0.9 New and Noteworthy" />
 				<path name="EGit/Git_For_Eclipse_Users" title="Git for Eclipse Users" />
 				<stylesheet url="book.css" />
 				<pageAppendum>
