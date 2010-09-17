@@ -1,0 +1,58 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALy3///tk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-09-13T22:52:58Z",
+      "side": 1,
+      "message": "Riight.",
+      "parentUuid": "AAALy3///yM\u003d",
+      "revId": "84a1b534e5ed5be1f13dd321f91e8e79caea6e5b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///tg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-09-13T22:52:58Z",
+      "side": 1,
+      "message": "Yes. Any thread may trigger repository events. At the momemnt I\u0027m not sure if that can happen, but imagine a pull beging performed in the background on one repo while committing in another",
+      "parentUuid": "AAALy3///x8\u003d",
+      "revId": "84a1b534e5ed5be1f13dd321f91e8e79caea6e5b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///tE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-09-13T22:52:58Z",
+      "side": 1,
+      "message": "right..... Done",
+      "parentUuid": "AAALy3///yA\u003d",
+      "revId": "84a1b534e5ed5be1f13dd321f91e8e79caea6e5b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
