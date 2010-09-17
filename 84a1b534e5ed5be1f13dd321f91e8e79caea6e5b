@@ -2,6 +2,41 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALy3///8M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-09-07T15:57:52Z",
+      "side": 1,
+      "message": "why is listener needed? RepositoryChangeScanner Job reschedules itself when the workbench window is not active.\nResourceRefreshJob is scheduled by indexChanged Event.",
+      "revId": "84a1b534e5ed5be1f13dd321f91e8e79caea6e5b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///yM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-09-10T16:34:40Z",
+      "side": 1,
+      "message": "Now I understood this. It\u0027s done to schedule RCS without delay after window activation.",
+      "parentUuid": "AAALy3///8M\u003d",
+      "revId": "84a1b534e5ed5be1f13dd321f91e8e79caea6e5b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3///tk\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 6
@@ -20,6 +55,41 @@
     },
     {
       "key": {
+        "uuid": "AAALy3///8Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-09-07T15:57:52Z",
+      "side": 1,
+      "message": "repositoriesChanged will always contain one repo. Pass this repo to triggerRefresh instead of using repositoriesChanged.",
+      "revId": "84a1b534e5ed5be1f13dd321f91e8e79caea6e5b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///x8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-09-10T16:34:40Z",
+      "side": 1,
+      "message": "Is it possible that w threads in parallel enter onIndexChanged? In this case my first comment is wrong and synchronization on repositoriesChanged is needed.",
+      "parentUuid": "AAALy3///8Q\u003d",
+      "revId": "84a1b534e5ed5be1f13dd321f91e8e79caea6e5b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3///tg\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
         "patchSetId": 6
@@ -32,6 +102,23 @@
       "side": 1,
       "message": "Yes. Any thread may trigger repository events. At the momemnt I\u0027m not sure if that can happen, but imagine a pull beging performed in the background on one repo while committing in another",
       "parentUuid": "AAALy3///x8\u003d",
+      "revId": "84a1b534e5ed5be1f13dd321f91e8e79caea6e5b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///yA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-09-10T16:34:40Z",
+      "side": 1,
+      "message": "if triggerRefresh was not called because the Workbench window is inactive \nthe change in repositoriesChanged is lost, right?\nPerhaps it would be easier to do the refresh in any case.\nThe refresh does not conflict with command line git.\nWhen RCS gets inactive due to inactive Workbench window there can only be refreshes triggered by the last RCS run.",
       "revId": "84a1b534e5ed5be1f13dd321f91e8e79caea6e5b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
