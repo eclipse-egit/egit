@@ -22,8 +22,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelTree;
-import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -32,27 +32,30 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
 class GitTreeTraversal extends ResourceTraversal {
 
 	public GitTreeTraversal(GitModelTree modelTree) {
-		this(modelTree.getRepository(), modelTree.getBaseId(), modelTree
-				.getRemoteId(), modelTree.getLocation());
+		this(modelTree.getRepository(), modelTree.getBaseCommit(), modelTree
+				.getLocation());
 	}
 
 	public GitTreeTraversal(Repository repo, RevCommit commit) {
-		this(repo, commit.getParent(0).getTree().getId(), commit.getTree()
-				.getId(), new Path(repo.getWorkTree().toString()));
+		this(repo, commit, new Path(repo.getWorkTree().toString()));
 	}
 
-	private GitTreeTraversal(Repository repo, AnyObjectId baseId,
-			AnyObjectId actualId, IPath path) {
-		super(getResourcesImpl(repo, path, baseId, actualId),
+	private GitTreeTraversal(Repository repo, RevCommit revCommit, IPath path) {
+		super(getResourcesImpl(repo, revCommit, path),
 				IResource.DEPTH_INFINITE, IResource.NONE);
 	}
 
-	private static IResource[] getResourcesImpl(Repository repo, IPath path,
-			AnyObjectId baseId, AnyObjectId remoteId) {
-		if (remoteId.equals(zeroId()))
+	private static IResource[] getResourcesImpl(Repository repo,
+			RevCommit revCommit, IPath path) {
+		ObjectId remoteId;
+		RevCommit[] parents = revCommit.getParents();
+		if (parents.length > 0)
+			remoteId = revCommit.getParent(0).getTree().getId();
+		else
 			return new IResource[0];
 
 		TreeWalk tw = new TreeWalk(repo);
+		ObjectId baseId = revCommit.getTree().getId();
 		List<IResource> result = new ArrayList<IResource>();
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 
