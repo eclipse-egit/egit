@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.repository.tree;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -22,7 +23,7 @@ import org.eclipse.jgit.transport.RemoteConfig;
  * Property Tester used for enabling/disabling of context menus in the Git
  * Repositories View.
  */
-public class PropertyTester extends org.eclipse.core.expressions.PropertyTester {
+public class RepositoriesViewPropertyTester extends PropertyTester {
 
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
