@@ -96,10 +96,10 @@ public class GitModelTree extends GitModelCommit {
 	}
 
 	protected GitModelObject[] getChildrenImpl() {
+		TreeWalk tw = createTreeWalk();
 		List<GitModelObject> result = new ArrayList<GitModelObject>();
 
 		try {
-			TreeWalk tw = createTreeWalk();
 			int remoteNth = tw.addTree(remoteId);
 
 			int baseNth = -1;

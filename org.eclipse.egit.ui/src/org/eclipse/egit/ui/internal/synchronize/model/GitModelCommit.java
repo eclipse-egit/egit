@@ -94,10 +94,10 @@ public class GitModelCommit extends GitModelObjectContainer implements
 
 	@Override
 	protected GitModelObject[] getChildrenImpl() {
+		TreeWalk tw = createTreeWalk();
 		List<GitModelObject> result = new ArrayList<GitModelObject>();
 
 		try {
-			TreeWalk tw = createTreeWalk();
 			RevTree actualTree = remoteCommit.getTree();
 
 			int actualNth = tw.addTree(actualTree);
