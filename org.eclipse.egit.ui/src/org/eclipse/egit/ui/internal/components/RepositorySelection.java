@@ -158,6 +158,9 @@ public class RepositorySelection {
 
 	@Override
 	public boolean equals(final Object obj) {
+		if (obj == this)
+			return true;
+
 		if (obj instanceof RepositorySelection) {
 			final RepositorySelection other = (RepositorySelection) obj;
 			if (uri == null ^ other.uri == null)

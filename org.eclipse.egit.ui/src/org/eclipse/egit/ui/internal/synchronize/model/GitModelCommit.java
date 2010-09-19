@@ -61,6 +61,9 @@ public class GitModelCommit extends GitModelObjectContainer implements
 
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == this)
+			return true;
+
 		if (obj instanceof GitModelCommit) {
 			GitModelCommit objCommit = (GitModelCommit) obj;
 

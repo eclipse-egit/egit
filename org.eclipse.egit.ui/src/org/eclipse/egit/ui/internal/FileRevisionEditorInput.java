@@ -219,6 +219,9 @@ class FileRevisionEditorInput extends PlatformObject implements
 	}
 
 	public boolean equals(Object obj) {
+		if (obj == this)
+			return true;
+
 		if (obj instanceof FileRevisionEditorInput) {
 			FileRevisionEditorInput other = (FileRevisionEditorInput) obj;
 			return (other.fileRevision.equals(this.fileRevision));

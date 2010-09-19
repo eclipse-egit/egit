@@ -87,6 +87,9 @@ abstract class GitResourceVariant implements IResourceVariant {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == this)
+			return true;
+
 		if (obj instanceof GitResourceVariant)
 			return objectId.equals(((GitResourceVariant) obj).getObjectId());
 

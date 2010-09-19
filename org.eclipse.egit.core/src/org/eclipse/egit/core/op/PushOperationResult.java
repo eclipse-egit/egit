@@ -208,6 +208,9 @@ public class PushOperationResult {
 	 */
 	@Override
 	public boolean equals(final Object obj) {
+		if (obj == this)
+			return true;
+
 		if (!(obj instanceof PushOperationResult))
 			return false;
 
