@@ -280,10 +280,6 @@ class LocalResourceTypedElement extends ResourceNode implements
 		return exists;
 	}
 
-	protected void fireContentChanged() {
-		super.fireContentChanged();
-	}
-
 	/**
 	 * Discard of any buffered contents. This must be called when the local
 	 * element is no longer needed but is dirty since a the element will connect
