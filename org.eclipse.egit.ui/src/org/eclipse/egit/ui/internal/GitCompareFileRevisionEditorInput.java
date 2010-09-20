@@ -13,7 +13,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.IEditableContent;
-import org.eclipse.compare.IResourceProvider;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
@@ -106,7 +105,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 
 	private IResource getResource(@SuppressWarnings("unused") ICompareInput input) {
 		if (getLocalElement() != null) {
-			return ((IResourceProvider) getLocalElement()).getResource();
+			return getLocalElement().getResource();
 		}
 		return null;
 	}
