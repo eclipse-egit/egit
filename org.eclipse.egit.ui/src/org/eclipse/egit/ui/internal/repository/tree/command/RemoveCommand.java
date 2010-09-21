@@ -66,32 +66,33 @@ public class RemoveCommand extends
 		IWorkbenchSiteProgressService service = (IWorkbenchSiteProgressService) activeSite
 				.getService(IWorkbenchSiteProgressService.class);
 
-		if (delete)
-			try {
-				List<RepositoryNode> selectedNodes = getSelectedNodes(event);
-				String title = UIText.RemoveCommand_DeleteConfirmTitle;
-				if (selectedNodes.size() > 1) {
-					String message = NLS.bind(
-							UIText.RemoveCommand_DeleteConfirmSingleMessage,
-							Integer.valueOf(selectedNodes.size()));
-					if (!MessageDialog.openConfirm(getShell(event), title,
-							message))
-						return;
-				} else if (selectedNodes.size() == 1) {
-					String name = org.eclipse.egit.core.Activator.getDefault()
-							.getRepositoryUtil().getRepositoryName(
-									selectedNodes.get(0).getObject());
-					String message = NLS.bind(
-							UIText.RemoveCommand_DeleteConfirmMultiMessage,
-							name);
-					if (!MessageDialog.openConfirm(getShell(event), title,
-							message))
-						return;
-				}
-			} catch (ExecutionException e) {
-				Activator.handleError(e.getMessage(), e, false);
-				return;
+		// get selected nodes
+		final List<RepositoryNode> selectedNodes;
+		try {
+			selectedNodes = getSelectedNodes(event);
+		} catch (ExecutionException e) {
+			Activator.handleError(e.getMessage(), e, true);
+			return;
+		}
+
+		if (delete) {
+			String title = UIText.RemoveCommand_DeleteConfirmTitle;
+			if (selectedNodes.size() > 1) {
+				String message = NLS.bind(
+						UIText.RemoveCommand_DeleteConfirmSingleMessage,
+						Integer.valueOf(selectedNodes.size()));
+				if (!MessageDialog.openConfirm(getShell(event), title, message))
+					return;
+			} else if (selectedNodes.size() == 1) {
+				String name = org.eclipse.egit.core.Activator.getDefault()
+						.getRepositoryUtil()
+						.getRepositoryName(selectedNodes.get(0).getObject());
+				String message = NLS.bind(
+						UIText.RemoveCommand_DeleteConfirmMultiMessage, name);
+				if (!MessageDialog.openConfirm(getShell(event), title, message))
+					return;
 			}
+		}
 
 		Job job = new Job("Remove Repositories Job") { //$NON-NLS-1$
 
@@ -102,14 +103,6 @@ public class RemoveCommand extends
 				monitor
 						.setTaskName(UIText.RepositoriesView_DeleteRepoDeterminProjectsMessage);
 
-				List<RepositoryNode> selectedNodes;
-				try {
-					selectedNodes = getSelectedNodes(event);
-				} catch (ExecutionException e) {
-					Activator.logError(e.getMessage(), e);
-					return new Status(IStatus.ERROR, Activator.getPluginId(), e
-							.getMessage(), e);
-				}
 				for (RepositoryNode node : selectedNodes) {
 					if (node.getRepository().isBare())
 						continue;
