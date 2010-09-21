@@ -112,11 +112,12 @@ public class GitSelectRepositoryPage extends WizardPage {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				GitCloneWizard cloneWizard = new GitCloneWizard();
-				cloneWizard.setParentContainer(getContainer());
+				cloneWizard.setCallerRunsCloneOperation(true);
 				WizardDialog dlg = new WizardDialog(getShell(),
 						cloneWizard);
-
 				dlg.open();
+				cloneWizard.runCloneOperation(getContainer());
+				checkPage();
 			}
 
 		});
