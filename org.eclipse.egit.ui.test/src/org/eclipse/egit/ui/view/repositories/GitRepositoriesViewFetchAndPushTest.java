@@ -93,6 +93,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		// add the configuration for push
 		repository.getConfig().setString("remote", "origin", "push",
 				"refs/heads/*:refs/remotes/origin/*");
+		repository.getConfig().save();
 
 		myRepoViewUtil.getRemotesItem(tree, clonedRepositoryFile).expand().getNode(
 				"origin").expand().getNode(1).select();
