@@ -42,6 +42,7 @@ import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
@@ -217,6 +218,14 @@ public class CommitActionHandler extends RepositoryActionHandler {
 				}
 				return Status.OK_STATUS;
 			}
+
+			@Override
+			public boolean belongsTo(Object family) {
+				if (family.equals(JobFamilies.COMMIT))
+					return true;
+				return super.belongsTo(family);
+			}
+
 		};
 		job.setUser(true);
 		job.schedule();

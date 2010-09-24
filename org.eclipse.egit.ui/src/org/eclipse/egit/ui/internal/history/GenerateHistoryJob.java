@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 
 class GenerateHistoryJob extends Job {
@@ -74,4 +75,12 @@ class GenerateHistoryJob extends Job {
 		page.showCommitList(this, allCommits, asArray);
 		lastUpdateCnt = allCommits.size();
 	}
+
+	@Override
+	public boolean belongsTo(Object family) {
+		if (family.equals(JobFamilies.GENERATE_HISTORY))
+			return true;
+		return super.belongsTo(family);
+	}
+
 }
