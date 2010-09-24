@@ -74,6 +74,8 @@ public class ContextMenuHelper {
 		// hide
 		UIThreadRunnable.syncExec(new VoidResult() {
 			public void run() {
+				if (menuItem.isDisposed())
+					return; // menu already gone
 				hide(menuItem.getParent());
 			}
 		});
@@ -133,6 +135,8 @@ public class ContextMenuHelper {
 		// hide
 		UIThreadRunnable.syncExec(new VoidResult() {
 			public void run() {
+				if (menuItem.isDisposed())
+					return; // menu already gone
 				hide(menuItem.getParent());
 			}
 		});
