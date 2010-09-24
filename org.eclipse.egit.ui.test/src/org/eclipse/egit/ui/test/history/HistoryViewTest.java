@@ -22,6 +22,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -171,8 +173,9 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	/**
 	 * @param filter
 	 *            0: none, 1: repository, 2: project, 3: folder
+	 * @throws Exception 
 	 */
-	private void initFilter(int filter) {
+	private void initFilter(int filter) throws Exception {
 		getHistoryViewTable(PROJ1);
 		SWTBotView view = bot
 				.viewById("org.eclipse.team.ui.GenericHistoryView");
@@ -233,8 +236,9 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	 * @param path
 	 *            must be length 2 or three (folder or file)
 	 * @return the bale
+	 * @throws Exception 
 	 */
-	private SWTBotTable getHistoryViewTable(String... path) {
+	private SWTBotTable getHistoryViewTable(String... path) throws Exception {
 		SWTBotTree projectExplorerTree = bot.viewById(
 				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
 		SWTBotTreeItem explorerItem;
@@ -250,6 +254,14 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Show In",
 				"History");
 		// explorerItem.select();
+		// join GenerateHistoryJob 
+		Job.getJobManager().join(JobFamilies.GENERATE_HISTORY, null);
+		// join UI update triggered by GenerateHistoryJob
+		projectExplorerTree.widget.getDisplay().syncExec(new Runnable(){
+
+			public void run() {
+				// empty
+			}});
 		return bot.viewById("org.eclipse.team.ui.GenericHistoryView").bot()
 				.table();
 	}
