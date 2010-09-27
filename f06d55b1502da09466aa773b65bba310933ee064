@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALy3///Ts\u003d",
+        "filename": "org.eclipse.egit.ui/.options",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-09-27T20:21:41Z",
+      "side": 1,
+      "message": "style nit: here you use camel case, all other trace switches are all lowercase, we should decide for one of the choices and use that consistently.",
+      "revId": "f06d55b1502da09466aa773b65bba310933ee064",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
