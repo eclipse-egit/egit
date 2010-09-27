@@ -8,3 +8,6 @@ org.eclipse.egit.ui/debug/ui/repositoriesview = false
 org.eclipse.egit.ui/debug/ui/decoration = false
 # Trace location for quickdiff
 org.eclipse.egit.ui/debug/quickdiff = false
+# Trace location for RepositoryChangeScanner
+org.eclipse.egit.ui/debug/repochangescanner = false
+
