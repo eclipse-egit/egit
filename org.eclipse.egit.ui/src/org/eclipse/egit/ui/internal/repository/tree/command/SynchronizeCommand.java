@@ -55,7 +55,7 @@ public class SynchronizeCommand extends
 				GitSynchronizeData data;
 				try {
 					data = new GitSynchronizeData(node
-							.getRepository(), Constants.HEAD, ref.getName(), false);
+							.getRepository(), Constants.HEAD, ref.getName(), true);
 
 					Set<IProject> projects = data.getProjects();
 					IResource[] resources = projects
