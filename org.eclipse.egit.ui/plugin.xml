@@ -784,11 +784,6 @@
                         </or>
                         <not>
                            <test
-                                 property="GitRepository.isRefCheckedOut">
-                           </test>
-                        </not>
-                        <not>
-                           <test
                                  property="GitRepository.isBare">
                            </test>
                         </not>
