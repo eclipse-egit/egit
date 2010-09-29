@@ -1,0 +1,35 @@
+From 49d6ae5348b5f8e88c8a021a2a9f02fccb220a08 Mon Sep 17 00:00:00 2001
+From: Stefan Lay <stefan.lay@sap.com>
+Date: Wed, 29 Sep 2010 13:01:51 +0200
+Subject: [PATCH] Make Synchronize available on current branch
+
+In the Repositories View it was not possible to trigger Synchronize from
+the current branch. Now it is possible to do that; you then see the
+changes in index and in the working tree.
+
+Bug: 322463
+Change-Id: If89cb002f2f5c4c2696a02f25b7131bf7c622908
+Signed-off-by: Stefan Lay <stefan.lay@sap.com>
+---
+ org.eclipse.egit.ui/plugin.xml |    5 -----
+ 1 files changed, 0 insertions(+), 5 deletions(-)
+
+diff --git a/org.eclipse.egit.ui/plugin.xml b/org.eclipse.egit.ui/plugin.xml
+index 32ae92d..a9aafca 100644
+--- a/org.eclipse.egit.ui/plugin.xml
++++ b/org.eclipse.egit.ui/plugin.xml
+@@ -784,11 +784,6 @@
+                         </or>
+                         <not>
+                            <test
+-                                 property="GitRepository.isRefCheckedOut">
+-                           </test>
+-                        </not>
+-                        <not>
+-                           <test
+                                  property="GitRepository.isBare">
+                            </test>
+                         </not>
+-- 
+1.7.0.2.msysgit.0
+
