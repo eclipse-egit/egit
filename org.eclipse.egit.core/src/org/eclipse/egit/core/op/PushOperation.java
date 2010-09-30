@@ -41,6 +41,8 @@ public class PushOperation {
 
 	private final RemoteConfig rc;
 
+	private final int timeout;
+
 	private PushOperationResult operationResult;
 
 	/**
@@ -60,14 +62,16 @@ public class PushOperation {
 	 *            true if push operation should just check for possible result
 	 *            and not really update remote refs, false otherwise - when push
 	 *            should act normally.
+	 * @param timeout the timeout in seconds (0 for no timeout)
 	 */
 	public PushOperation(final Repository localDb,
 			final PushOperationSpecification specification,
-			final boolean dryRun, final RemoteConfig rc) {
+			final boolean dryRun, final RemoteConfig rc, int timeout) {
 		this.localDb = localDb;
 		this.specification = specification;
 		this.dryRun = dryRun;
 		this.rc = rc;
+		this.timeout = timeout;
 	}
 
 	/**
@@ -139,6 +143,7 @@ public class PushOperation {
 					continue;
 				}
 				transport = Transport.open(localDb, uri);
+				transport.setTimeout(this.timeout);
 
 				if (rc != null)
 					transport.applyConfig(rc);

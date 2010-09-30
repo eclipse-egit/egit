@@ -26,6 +26,7 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -177,8 +178,10 @@ public class GitCloneWizard extends Wizard {
 			return false;
 		}
 
+		int timeout = Activator.getDefault().getPreferenceStore().getInt(
+				UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 		final CloneOperation op = new CloneOperation(uri, allSelected,
-				selectedBranches, workdir, branch, remoteName);
+				selectedBranches, workdir, branch, remoteName, timeout);
 		alreadyClonedInto = workdir.getPath();
 
 		cloneSource.saveUriInPrefs();

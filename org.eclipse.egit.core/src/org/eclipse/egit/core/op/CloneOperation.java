@@ -58,6 +58,8 @@ public class CloneOperation {
 
 	private final String remoteName;
 
+	private final int timeout;
+
 	private FileRepository local;
 
 	private RemoteConfig remoteConfig;
@@ -83,10 +85,11 @@ public class CloneOperation {
 	 * @param remoteName
 	 *            name of created remote config as source remote (typically
 	 *            named "origin").
+	 * @param timeout timeout in seconds
 	 */
 	public CloneOperation(final URIish uri, final boolean allSelected,
 			final Collection<Ref> selectedBranches, final File workdir,
-			final String branch, final String remoteName) {
+			final String branch, final String remoteName, int timeout) {
 		this.uri = uri;
 		this.allSelected = allSelected;
 		this.selectedBranches = selectedBranches;
@@ -94,6 +97,7 @@ public class CloneOperation {
 		this.gitdir = new File(workdir, Constants.DOT_GIT);
 		this.branch = branch;
 		this.remoteName = remoteName;
+		this.timeout = timeout;
 	}
 
 	/**
@@ -195,6 +199,7 @@ public class CloneOperation {
 	private void doFetch(final IProgressMonitor monitor)
 			throws NotSupportedException, TransportException {
 		final Transport tn = Transport.open(local, remoteConfig);
+		tn.setTimeout(this.timeout);
 		try {
 			final EclipseGitProgressTransformer pm;
 			pm = new EclipseGitProgressTransformer(monitor);
