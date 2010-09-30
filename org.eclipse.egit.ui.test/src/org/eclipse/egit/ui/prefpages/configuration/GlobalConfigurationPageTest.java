@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.EGitTestCase;
+import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.JFaceResources;
@@ -31,9 +32,6 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.ActionFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -69,28 +67,13 @@ public class GlobalConfigurationPageTest {
 		config.unsetSection(TESTSECTION, TESTSUBSECTION);
 		config.unsetSection(TESTSECTION, null);
 		config.save();
-		getPreferencePage();
+		getGitConfigurationPreferencePage();
 	}
 
-	private void getPreferencePage() {
-		if (preferencePage != null)
-			preferencePage.close();
-		bot.perspectiveById("org.eclipse.ui.resourcePerspective").activate();
-		// This does not work on Mac
-		// bot.menu("Window").menu("Preferences").click();
-		// Launch preferences programmatically instead
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-			public void run() {
-				IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow();
-				ActionFactory.PREFERENCES.create(workbenchWindow).run();
-
-			}
-		});
-		preferencePage = bot.shell("Preferences").activate();
+	private void getGitConfigurationPreferencePage() {
+		preferencePage = new Eclipse().openPreferencePage(preferencePage);
 		SWTBotTreeItem team = preferencePage.bot().tree().getTreeItem("Team");
-		team
-				.expand()
+		team.expand()
 				.getNode(util.getPluginLocalizedValue("GitPreferences_name"))
 				.expand()
 				.getNode(util.getPluginLocalizedValue("ConfigurationPage.name"))
@@ -185,7 +168,7 @@ public class GlobalConfigurationPageTest {
 	public void testAddSubSectionEntryWithSuggestion() throws Exception {
 		config.setString(TESTSECTION, TESTSUBSECTION, TESTNAME, "true");
 		config.save();
-		getPreferencePage();
+		getGitConfigurationPreferencePage();
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTSUBSECTION).select();
 		preferencePage.bot().button(
@@ -203,7 +186,7 @@ public class GlobalConfigurationPageTest {
 	public void testChangeValue() throws Exception {
 		config.setString(TESTSECTION, null, TESTNAME, "true");
 		config.save();
-		getPreferencePage();
+		getGitConfigurationPreferencePage();
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(TESTNAME)
 				.select();
 		String text = preferencePage.bot().textWithLabel(
@@ -223,7 +206,7 @@ public class GlobalConfigurationPageTest {
 		list.add("second");
 		config.setStringList(TESTSECTION, null, TESTNAME, list);
 		config.save();
-		getPreferencePage();
+		getGitConfigurationPreferencePage();
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTNAME + "[1]").select();
 		text = preferencePage.bot().textWithLabel(
@@ -244,7 +227,7 @@ public class GlobalConfigurationPageTest {
 	public void testAddValue() throws Exception {
 		config.setString(TESTSECTION, null, TESTNAME, "true");
 		config.save();
-		getPreferencePage();
+		getGitConfigurationPreferencePage();
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(TESTNAME)
 				.select();
 		preferencePage.bot().textWithLabel(
@@ -281,7 +264,7 @@ public class GlobalConfigurationPageTest {
 	public void testCantCreateSameEntryValue() throws Exception {
 		config.setString(TESTSECTION, null, TESTNAME, "already");
 		config.save();
-		getPreferencePage();
+		getGitConfigurationPreferencePage();
 		preferencePage.bot().button(
 				UIText.ConfigurationEditorComponent_NewValueButton).click();
 		SWTBotShell addDialog = bot
@@ -343,7 +326,7 @@ public class GlobalConfigurationPageTest {
 		values.add("false");
 		config.setStringList(TESTSECTION, null, TESTNAME, values);
 		config.save();
-		getPreferencePage();
+		getGitConfigurationPreferencePage();
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTNAME + "[0]").select();
 
@@ -365,7 +348,7 @@ public class GlobalConfigurationPageTest {
 		config.setStringList(TESTSECTION, null, TESTNAME, values);
 		config.setStringList(TESTSECTION, TESTSUBSECTION, TESTNAME, values);
 		config.save();
-		getPreferencePage();
+		getGitConfigurationPreferencePage();
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTSUBSECTION).select();
 
@@ -389,7 +372,7 @@ public class GlobalConfigurationPageTest {
 		config.setStringList(TESTSECTION, null, TESTNAME, values);
 		config.setStringList(TESTSECTION, TESTSUBSECTION, TESTNAME, values);
 		config.save();
-		getPreferencePage();
+		getGitConfigurationPreferencePage();
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).select();
 
 		bot.button(UIText.ConfigurationEditorComponent_RemoveAllButton).click();

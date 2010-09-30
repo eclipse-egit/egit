@@ -16,6 +16,9 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.results.BoolResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory;
 
 public class Eclipse {
 
@@ -66,6 +69,32 @@ public class Eclipse {
 		for (SWTBotEditor editor : editors) {
 			editor.save();
 		}
+	}
+	
+	/**
+	 * Opens the Eclipse Preferences and activates the dialog
+	 * 
+	 * @param preferencePage
+	 *            previous instance of preference page, maybe null, if passed it
+	 *            will be reopened
+	 * @return the preferencePage
+	 */
+	public SWTBotShell openPreferencePage(SWTBotShell preferencePage) {
+		if (preferencePage != null)
+			preferencePage.close();
+		bot.perspectiveById("org.eclipse.ui.resourcePerspective").activate();
+		// This does not work on Mac
+		// bot.menu("Window").menu("Preferences").click();
+		// Launch preferences programmatically instead
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow();
+				ActionFactory.PREFERENCES.create(workbenchWindow).run();
+
+			}
+		});
+		return bot.shell("Preferences").activate();
 	}
 
 }
