@@ -76,7 +76,6 @@ public class GitResourceVariantTreeSubscriberTest extends GitTestCase {
 		RevCommit commit = testRepo.appendContentAndCommit(iProject, file,
 				"class Main {}", "initial commit");
 		IFile mainJava = testRepo.getIFile(iProject, file);
-		ObjectId fileId = findFileId(commit, mainJava);
 		testRepo.createAndCheckoutBranch(Constants.HEAD, Constants.R_HEADS
 				+ "test");
 		testRepo.appendContentAndCommit(iProject, file, "// test1",
@@ -91,7 +90,7 @@ public class GitResourceVariantTreeSubscriberTest extends GitTestCase {
 		// then
 		IResourceVariant actual = commonAssertionsForBaseTree(baseTree,
 				mainJava);
-		assertEquals(fileId.getName(), actual.getContentIdentifier());
+		assertEquals(commit.abbreviate(7).name() + "...", actual.getContentIdentifier());
 	}
 
 	/**
