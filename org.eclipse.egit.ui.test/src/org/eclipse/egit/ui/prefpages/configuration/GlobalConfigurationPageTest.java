@@ -33,6 +33,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -84,6 +85,14 @@ public class GlobalConfigurationPageTest {
 	public void after() throws Exception {
 		if (preferencePage != null)
 			preferencePage.close();
+	}
+
+	@AfterClass
+	public static void afterTest() throws Exception {
+		// reset saved preferences state
+		SWTBotShell preferencePage = new Eclipse().openPreferencePage(null);
+		preferencePage.bot().tree(0).getTreeItem("General").select();
+		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
 	}
 
 	@Test
