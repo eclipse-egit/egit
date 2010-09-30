@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
@@ -240,7 +241,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 			return NLS.bind(UIText.GitCompareFileRevisionEditorInput_LocalHistoryLabel, new Object[]{element.getName(), element.getTimestamp()});
 		} else {
 			return NLS.bind(UIText.GitCompareFileRevisionEditorInput_RevisionLabel, new Object[]{element.getName(),
-					CompareUtils.truncatedRevision(element.getContentIdentifier()), element.getAuthor()});
+					RevUtils.truncatedRevision(element.getContentIdentifier()), element.getAuthor()});
 		}
 	}
 
@@ -250,8 +251,8 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	public String getToolTipText() {
 		Object[] titleObject = new Object[3];
 		titleObject[0] = getLongName(left);
-		titleObject[1] = CompareUtils.truncatedRevision(getContentIdentifier(getLeftRevision()));
-		titleObject[2] = CompareUtils.truncatedRevision(getContentIdentifier(getRightRevision()));
+		titleObject[1] = RevUtils.truncatedRevision(getContentIdentifier(getLeftRevision()));
+		titleObject[2] = RevUtils.truncatedRevision(getContentIdentifier(getRightRevision()));
 		return NLS.bind(UIText.GitCompareFileRevisionEditorInput_CompareTooltip, titleObject);
 	}
 
@@ -261,8 +262,8 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	public String getTitle() {
 		Object[] titleObject = new Object[3];
 		titleObject[0] = getShortName(left);
-		titleObject[1] = CompareUtils.truncatedRevision(getContentIdentifier(getLeftRevision()));
-		titleObject[2] = CompareUtils.truncatedRevision(getContentIdentifier(getRightRevision()));
+		titleObject[1] = RevUtils.truncatedRevision(getContentIdentifier(getLeftRevision()));
+		titleObject[2] = RevUtils.truncatedRevision(getContentIdentifier(getRightRevision()));
 		return NLS.bind(UIText.GitCompareFileRevisionEditorInput_CompareTooltip, titleObject);
 	}
 

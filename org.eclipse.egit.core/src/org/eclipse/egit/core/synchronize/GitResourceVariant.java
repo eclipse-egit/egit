@@ -19,6 +19,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.RevUtils;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -61,7 +62,7 @@ abstract class GitResourceVariant implements IResourceVariant {
 	}
 
 	public String getContentIdentifier() {
-		return objectId.getName();
+		return RevUtils.truncatedRevision(revCommit.getName());
 	}
 
 	public String getName() {

@@ -133,18 +133,6 @@ public class CompareUtils {
 	}
 
 	/**
-	 * @param ci
-	 * @return a truncated revision identifier if it is long
-	 */
-	public static String truncatedRevision(String ci) {
-		if(ci.length() > 10)
-			return ci.substring(0, 7) + "..."; //$NON-NLS-1$
-		else
-			return ci;
-	}
-
-
-	/**
 	 * Determine the encoding used by eclipse for the resource which belongs
 	 * to repoPath to in the eclipse workspace or null if no resource is found
 	 * @param db the repository

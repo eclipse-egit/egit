@@ -14,11 +14,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -262,7 +262,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		} else if (commitId != null) {
 			title = NLS.bind(
 					UIText.CreateTagDialog_CreateTagOnCommitTitle,
-					CompareUtils.truncatedRevision(commitId.getName()));
+					RevUtils.truncatedRevision(commitId.getName()));
 		}
 		return title;
 	}
