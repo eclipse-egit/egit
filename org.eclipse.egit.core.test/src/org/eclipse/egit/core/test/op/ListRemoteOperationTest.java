@@ -92,7 +92,7 @@ public class ListRemoteOperationTest extends DualRepositoryTestCase {
 		URIish uri = new URIish("file:///"
 				+ repository1.getRepository().getDirectory().toString());
 		CloneOperation clop = new CloneOperation(uri, true, null, workdir2,
-				"refs/heads/master", "origin");
+				"refs/heads/master", "origin", 0);
 		clop.run(null);
 
 		repository2 = new TestRepository(new FileRepository(new File(workdir2,
@@ -123,14 +123,14 @@ public class ListRemoteOperationTest extends DualRepositoryTestCase {
 		URIish uri = new URIish("file:///"
 				+ repository2.getRepository().getDirectory().getPath());
 		ListRemoteOperation lrop = new ListRemoteOperation(repository1
-				.getRepository(), uri);
+				.getRepository(), uri, 0);
 		lrop.run(null);
 		assertEquals(4, lrop.getRemoteRefs().size());
 		assertNotNull(lrop.getRemoteRef("refs/heads/test"));
 
 		uri = new URIish("file:///"
 				+ repository1.getRepository().getDirectory().getPath());
-		lrop = new ListRemoteOperation(repository2.getRepository(), uri);
+		lrop = new ListRemoteOperation(repository2.getRepository(), uri, 0);
 		lrop.run(new NullProgressMonitor());
 		assertEquals(2, lrop.getRemoteRefs().size());
 		assertNotNull(lrop.getRemoteRef("refs/heads/master"));
@@ -147,7 +147,7 @@ public class ListRemoteOperationTest extends DualRepositoryTestCase {
 		URIish uri = new URIish("file:///"
 				+ repository2.getRepository().getDirectory().getPath());
 		ListRemoteOperation lrop = new ListRemoteOperation(repository1
-				.getRepository(), uri);
+				.getRepository(), uri, 0);
 		try {
 			lrop.getRemoteRefs();
 			fail("Expected Exception not thrown");
@@ -166,7 +166,7 @@ public class ListRemoteOperationTest extends DualRepositoryTestCase {
 
 		URIish uri = new URIish("file:///" + "no/path");
 		ListRemoteOperation lrop = new ListRemoteOperation(repository1
-				.getRepository(), uri);
+				.getRepository(), uri, 0);
 		try {
 			lrop.run(new NullProgressMonitor());
 			fail("Expected Exception not thrown");

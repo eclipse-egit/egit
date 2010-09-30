@@ -31,6 +31,8 @@ public class ListRemoteOperation {
 
 	private final URIish uri;
 
+	private final int timeout;
+
 	private Map<String, Ref> remoteRefsMap;
 
 	/**
@@ -42,10 +44,14 @@ public class ListRemoteOperation {
 	 *            occur.
 	 * @param uri
 	 *            URI of remote repository to list.
+	 * @param timeout
+	 *            timeout is seconds; 0 means no timeout
 	 */
-	public ListRemoteOperation(final Repository localDb, final URIish uri) {
+	public ListRemoteOperation(final Repository localDb, final URIish uri,
+			int timeout) {
 		this.localDb = localDb;
 		this.uri = uri;
+		this.timeout = timeout;
 	}
 
 	/**
@@ -83,6 +89,7 @@ public class ListRemoteOperation {
 		Connection connection = null;
 		try {
 			transport = Transport.open(localDb, uri);
+			transport.setTimeout(this.timeout);
 
 			if (pm != null)
 				pm.beginTask(CoreText.ListRemoteOperation_title,
