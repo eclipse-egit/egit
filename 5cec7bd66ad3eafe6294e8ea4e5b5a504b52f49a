@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALy3///PQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/BranchHierarchyNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-09-30T14:49:54Z",
+      "side": 1,
+      "message": "We may want to have a utility method in the future that returns all refs that aren\u0027t symbolic, but for now this is fine...",
+      "revId": "5cec7bd66ad3eafe6294e8ea4e5b5a504b52f49a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
