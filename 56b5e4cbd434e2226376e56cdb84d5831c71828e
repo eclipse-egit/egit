@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALy3///Ow\u003d",
+        "filename": "0001-Make-Synchronize-available-on-current-branch.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-09-30T14:54:49Z",
+      "side": 1,
+      "message": "Remove this please.",
+      "revId": "56b5e4cbd434e2226376e56cdb84d5831c71828e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
