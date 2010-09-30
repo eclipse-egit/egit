@@ -50,6 +50,23 @@
       "revId": "bcef01cf457afa9499261d76955972eee90c0ea4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///Pg\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/Eclipse.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-09-30T14:36:53Z",
+      "side": 1,
+      "message": "You may be able to just get around this extra code by executing the command (IWorkbenchCommandConstants.WINDOW_PREFERENCES) via the IHandlerService. Otherwise, you can also pop it up using the PreferencesUtil class\u0027s static methods.",
+      "revId": "bcef01cf457afa9499261d76955972eee90c0ea4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
