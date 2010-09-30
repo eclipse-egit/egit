@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALy3///P4\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/Eclipse.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-09-30T14:06:12Z",
+      "side": 1,
+      "message": "Whitespace",
+      "revId": "bcef01cf457afa9499261d76955972eee90c0ea4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///P0\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/Eclipse.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-09-30T14:06:12Z",
+      "side": 1,
+      "message": "Whitespace",
+      "revId": "bcef01cf457afa9499261d76955972eee90c0ea4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///Pw\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/Eclipse.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-09-30T14:06:12Z",
+      "side": 1,
+      "message": "Do we really need to switch the perspective?",
+      "revId": "bcef01cf457afa9499261d76955972eee90c0ea4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
