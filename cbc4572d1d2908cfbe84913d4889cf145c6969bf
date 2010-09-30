@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALy3///PU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariant.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-09-30T14:49:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALy3///Qo\u003d",
+      "revId": "cbc4572d1d2908cfbe84913d4889cf145c6969bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
