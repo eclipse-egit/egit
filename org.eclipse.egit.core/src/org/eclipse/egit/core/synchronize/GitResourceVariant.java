@@ -61,7 +61,7 @@ abstract class GitResourceVariant implements IResourceVariant {
 	}
 
 	public String getContentIdentifier() {
-		return objectId.getName();
+		return revCommit.abbreviate(7).name() + "..."; //$NON-NLS-1$
 	}
 
 	public String getName() {
