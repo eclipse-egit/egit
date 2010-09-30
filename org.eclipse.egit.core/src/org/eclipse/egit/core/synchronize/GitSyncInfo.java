@@ -43,9 +43,22 @@ class GitSyncInfo extends SyncInfo {
 
 	@Override
 	protected int calculateKind() throws TeamException {
+		String localPath;
 		Repository repo = gsd.getRepository();
-		File local = getLocal().getLocation().toFile();
-		String localPath = Repository.stripWorkDir(repo.getWorkTree(), local);
+		if (getLocal().exists()) {
+			File local = getLocal().getLocation().toFile();
+			localPath = Repository.stripWorkDir(repo.getWorkTree(), local);
+		} else if (getRemote() != null)
+			localPath = ((GitResourceVariant) getRemote()).getFullPath()
+					.toString();
+		else if (getBase() != null)
+			localPath = ((GitResourceVariant) getBase()).getFullPath()
+					.toString();
+		else
+			// we cannot determinate local path therefore we cannot set proper
+			// value for PathFilter, so we use standard calulateKind()
+			// implementation
+			return super.calculateKind();
 
 		if (localPath.length() == 0)
 			return IN_SYNC;
