@@ -24,11 +24,8 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.variants.IResourceVariant;
 import org.eclipse.team.core.variants.IResourceVariantTree;
@@ -75,7 +72,6 @@ public class GitResourceVariantTreeSubscriberTest1 extends GitTestCase {
 		RevCommit commit = testRepo.appendContentAndCommit(iProject, file,
 				"class Main {}", "initial commit");
 		IFile mainJava = testRepo.getIFile(iProject, file);
-		ObjectId fileId = findFileId(commit, mainJava);
 		testRepo.createAndCheckoutBranch(Constants.HEAD, Constants.R_HEADS
 				+ "test");
 		testRepo.appendContentAndCommit(iProject, file, "// test1",
@@ -90,7 +86,8 @@ public class GitResourceVariantTreeSubscriberTest1 extends GitTestCase {
 		// then
 		IResourceVariant actual = commonAssertionsForBaseTree(baseTree,
 				mainJava);
-		assertEquals(fileId.getName(), actual.getContentIdentifier());
+		assertEquals(commit.abbreviate(7).name() + "...",
+				actual.getContentIdentifier());
 	}
 
 	private GitResourceVariantTreeSubscriber createGitResourceVariantTreeSubscriber(
@@ -99,20 +96,6 @@ public class GitResourceVariantTreeSubscriberTest1 extends GitTestCase {
 		GitSynchronizeDataSet gsds = new GitSynchronizeDataSet(gsd);
 		new GitResourceVariantTreeSubscriber(gsds);
 		return new GitResourceVariantTreeSubscriber(gsds);
-	}
-
-	private ObjectId findFileId(RevCommit commit, IFile mainJava)
-			throws Exception {
-		TreeWalk tw = new TreeWalk(repo);
-		tw.reset();
-		tw.setRecursive(true);
-		String path = Repository.stripWorkDir(repo.getWorkTree(), mainJava
-				.getLocation().toFile());
-		tw.setFilter(PathFilter.create(path));
-		int nth = tw.addTree(commit.getTree());
-		tw.next();
-
-		return tw.getObjectId(nth);
 	}
 
 	private IResourceVariant commonAssertionsForBaseTree(
