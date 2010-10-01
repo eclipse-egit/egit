@@ -16,13 +16,20 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
+import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
+import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput.EmptyTypedElement;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * Compare the file contents of two commits.
@@ -48,6 +55,33 @@ public class CompareVersionsHandler extends AbstractHistoryCommanndHandler {
 				final ITypedElement next = CompareUtils
 						.getFileRevisionTypedElement(gitPath, commit2, map
 								.getRepository());
+				if (base instanceof EmptyTypedElement
+						&& next instanceof EmptyTypedElement) {
+					// if the file is in neither commit1 nor commit2, show an
+					// error
+					RevCommit[] ids = new RevCommit[] { commit1, commit2 };
+					StringBuilder commitList = new StringBuilder();
+					for (RevCommit commit : ids) {
+						commitList.append("\n"); //$NON-NLS-1$
+						commitList.append(commit.getShortMessage());
+						commitList.append(' ');
+						commitList.append('[');
+						commitList.append(commit.name());
+						commitList.append(']');
+					}
+					String message = NLS.bind(
+							UIText.GitHistoryPage_notContainedInCommits,
+							gitPath, commitList.toString());
+					IStatus errorStatus = new Status(IStatus.ERROR, Activator
+							.getPluginId(), message);
+					EgitUiEditorUtils
+							.openErrorEditor(
+									getPart(event).getSite().getPage(),
+									errorStatus,
+									UIText.CompareVersionsHandler_ErrorOpeningCompareEditorTitle,
+									null);
+					return null;
+				}
 				CompareEditorInput in = new GitCompareFileRevisionEditorInput(
 						base, next, null);
 				openInCompare(event, in);
