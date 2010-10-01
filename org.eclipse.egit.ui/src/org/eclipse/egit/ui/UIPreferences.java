@@ -88,6 +88,8 @@ public class UIPreferences {
 	public static final String REFESH_ONLY_WHEN_ACTIVE = "refesh_only_when_active"; //$NON-NLS-1$
 	/** */
 	public static final String REMOTE_CONNECTION_TIMEOUT = "remote_connection_timeout"; //$NON-NLS-1$
+	/** */
+	public static final String DEFAULT_REPO_DIR = "default_repository_dir"; //$NON-NLS-1$
 
 	/**
 	 * Converts a persisted String separated with commas to an integer array

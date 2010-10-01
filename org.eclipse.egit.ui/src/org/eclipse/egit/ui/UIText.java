@@ -352,6 +352,12 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_ShowAllBranchesMenuLabel;
 
 	/** */
+	public static String GitPreferenceRoot_DefaultRepoFolderLabel;
+
+	/** */
+	public static String GitPreferenceRoot_DefaultRepoFolderTooltip;
+
+	/** */
 	public static String GitProjectPropertyPage_LabelBranch;
 
 	/** */
@@ -659,6 +665,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CloneDestinationPage_browseButton;
+
+	/** */
+	public static String CloneDestinationPage_DefaultRepoFolderTooltip;
 
 	/** */
 	public static String CloneDestinationPage_errorNotEmptyDir;
