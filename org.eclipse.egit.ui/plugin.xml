@@ -2071,4 +2071,14 @@
          </activeWhen>
       </handler>
    </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.egit.ui.internal.EgitErrorEditor"
+            default="false"
+            id="org.eclipse.egit.ui.errorEditor"
+            matchingStrategy="org.eclipse.egit.ui.internal.EgitErrorEditor"
+            name="%ErrorEditor.name">
+      </editor>
+   </extension>
 </plugin>
