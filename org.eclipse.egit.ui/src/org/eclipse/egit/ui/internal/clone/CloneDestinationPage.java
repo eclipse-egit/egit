@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.jface.dialogs.Dialog;
@@ -111,7 +113,10 @@ class CloneDestinationPage extends WizardPage {
 		final Group g = createGroup(parent,
 				UIText.CloneDestinationPage_groupDestination);
 
-		newLabel(g, UIText.CloneDestinationPage_promptDirectory + ":"); //$NON-NLS-1$
+		Label dirLabel = new Label(g, SWT.NONE);
+		dirLabel.setText(UIText.CloneDestinationPage_promptDirectory + ":"); //$NON-NLS-1$
+		dirLabel
+				.setToolTipText(UIText.CloneDestinationPage_DefaultRepoFolderTooltip);
 		final Composite p = new Composite(g, SWT.NONE);
 		final GridLayout grid = new GridLayout();
 		grid.numColumns = 2;
@@ -290,8 +295,14 @@ class CloneDestinationPage extends WizardPage {
 			// update repo-related selection only if it changed
 			final String n = validatedRepoSelection.getURI().getHumanishName();
 			setDescription(NLS.bind(UIText.CloneDestinationPage_description, n));
-			directoryText.setText(new File(ResourcesPlugin.getWorkspace()
-					.getRoot().getRawLocation().toFile(), n).getAbsolutePath());
+			String destinationDir = Activator.getDefault().getPreferenceStore()
+					.getString(UIPreferences.DEFAULT_REPO_DIR);
+			File parentDir = new File(destinationDir);
+			if (!parentDir.exists() || !parentDir.isDirectory()) {
+				parentDir = ResourcesPlugin.getWorkspace().getRoot()
+						.getRawLocation().toFile();
+			}
+			directoryText.setText(new File(parentDir, n).getAbsolutePath());
 		}
 
 		validatedSelectedBranches = branches;

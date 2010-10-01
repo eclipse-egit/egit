@@ -87,6 +87,8 @@ public class UIPreferences {
 	public static final String REFESH_ON_INDEX_CHANGE = "refesh_on_index_change"; //$NON-NLS-1$
 	/** */
 	public static final String REFESH_ONLY_WHEN_ACTIVE = "refesh_only_when_active"; //$NON-NLS-1$
+	/** */
+	public static final String DEFAULT_REPO_DIR = "default_repository_dir"; //$NON-NLS-1$
 
 	/**
 	 * Converts a persisted String separated with commas to an integer array
