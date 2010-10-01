@@ -16,6 +16,24 @@
       "revId": "0dd5bdd24ae15adbf7aa9e1bd47eddaa33dd1188",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///Og\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-09-30T14:57:18Z",
+      "side": 1,
+      "message": "Almost. But when we are on a local branch, we don\u0027t need to resolve.",
+      "parentUuid": "AAALy3///O4\u003d",
+      "revId": "0dd5bdd24ae15adbf7aa9e1bd47eddaa33dd1188",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
