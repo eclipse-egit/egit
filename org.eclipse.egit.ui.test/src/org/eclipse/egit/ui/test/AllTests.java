@@ -8,15 +8,14 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test;
 
-import org.eclipse.egit.ui.view.synchronize.SynchronizeViewTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses( { AllLocalTests.class, //
+@SuiteClasses({ AllLocalTests.class //
 		// these need an outside connection
-		SynchronizeViewTest.class, //
+
 })
 public class AllTests {
 	// empty class, don't need anything here
