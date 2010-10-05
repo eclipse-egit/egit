@@ -2024,6 +2024,11 @@
             id="org.eclipse.egit.ui.history.CheckoutCommand"
             name="%CheckoutCommand.name">
       </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.OpenInTextEditorHandler"
+            id="org.eclipse.egit.ui.history.OpenInTextEditorCommand"
+            name="Open in Text Editor">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
