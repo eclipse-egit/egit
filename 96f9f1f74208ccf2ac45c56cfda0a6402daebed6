@@ -16,6 +16,24 @@
       "revId": "96f9f1f74208ccf2ac45c56cfda0a6402daebed6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///QM\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-09-30T17:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALy3///QY\u003d",
+      "revId": "96f9f1f74208ccf2ac45c56cfda0a6402daebed6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
