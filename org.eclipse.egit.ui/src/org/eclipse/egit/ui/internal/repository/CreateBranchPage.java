@@ -248,10 +248,10 @@ class CreateBranchPage extends WizardPage {
 	private String getSourceBranchName() {
 		if (commitMode)
 			return myBaseCommit.name();
-		if (myBaseBranch != null)
-			return myBaseBranch.getName();
-		else if (this.branchCombo != null)
+		if (this.branchCombo != null)
 			return this.branchCombo.getText();
+		else if (myBaseBranch != null)
+			return myBaseBranch.getName();
 		else
 			return null;
 	}
