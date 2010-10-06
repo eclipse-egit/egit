@@ -437,7 +437,8 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		IWorkspaceRoot workspaceRoot = resource.getWorkspace().getRoot();
 		File repoRoot = repository.getWorkTree();
 
-		if (repoRoot.equals(project.getLocation().toFile()))
+		if (project != null && project.getLocation() != null
+				&& repoRoot.equals(project.getLocation().toFile()))
 			treeWalk.addTree(new ContainerTreeIterator(project));
 		else if (repoRoot.equals(workspaceRoot.getLocation().toFile()))
 			treeWalk.addTree(new ContainerTreeIterator(workspaceRoot));
