@@ -16,7 +16,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
+import org.eclipse.egit.ui.internal.LocalResourceTypedElement;
 
 class GitModelWorkingFile extends GitModelBlob {
 
