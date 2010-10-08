@@ -61,7 +61,7 @@
 
   <properties>
     <egit-version>0.10.0-SNAPSHOT</egit-version>
-    <tycho-version>0.9.0</tycho-version>
+    <tycho-version>0.10.0</tycho-version>
     <platform-version-name>galileo</platform-version-name>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.updatesite/target/site</jgit-site>
     <eclipse-site>http://download.eclipse.org/releases/${platform-version-name}</eclipse-site>
