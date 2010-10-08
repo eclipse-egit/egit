@@ -2237,6 +2237,9 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_SelectOneCommitMessage;
 
 	/** */
+	public static String CommitGraphTable_CommitId;
+
+	/** */
 	public static String GitSynchronizeWizard_synchronize;
 
 	/** */
