@@ -17,14 +17,13 @@ import java.io.File;
 import java.util.List;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.repository.tree.ErrorNode;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -50,6 +49,9 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		remoteRepositoryFile = createRemoteRepository(repositoryFile);
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
 				repositoryFile);
+		File repoRoot = new File(testDirectory, "RepositoryRoot");
+		repoRoot.mkdir();
+		Activator.getDefault().getPreferenceStore().setValue(UIPreferences.DEFAULT_REPO_DIR, repoRoot.getPath());
 	}
 
 	/**
@@ -97,15 +99,6 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		// error node should be shown
 		remotesItem.getNode("test3").expand().getNodes();
 		assertTrue(remotesItem.getNode("test3").expand().getNodes().size() == 1);
-		final SWTBotTreeItem errorItem = remotesItem.getNode("test3")
-				.getNode(0);
-		// check that we see an error node
-		Display.getDefault().syncExec(new Runnable() {
-			public void run() {
-				Object data = errorItem.widget.getData();
-				assertTrue(data instanceof ErrorNode);
-			}
-		});
 
 		// test the properties view on remote
 		remotesItem.getNode("test").select();
