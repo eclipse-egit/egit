@@ -180,7 +180,7 @@ public class UIIcons {
 		FILTERRESOURCE = map("elcl16/filterresource.gif"); //$NON-NLS-1$
 		FILTERPROJECT = map("elcl16/filterproject.gif"); //$NON-NLS-1$
 		FILTERFOLDER = map("elcl16/filterfolder.gif"); //$NON-NLS-1$
-		FETCH = map("obj16/pull.gif"); //$NON-NLS-1$
+		FETCH = map("obj16/fetch.gif"); //$NON-NLS-1$
 		PUSH = map("obj16/push.gif"); //$NON-NLS-1$
 		REPOSITORY = map("obj16/repository_rep.gif"); //$NON-NLS-1$
 		NEW_REPOSITORY = map("etool16/newlocation_wiz.gif"); //$NON-NLS-1$

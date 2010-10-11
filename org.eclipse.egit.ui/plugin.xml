@@ -42,7 +42,7 @@
          <action
                class="org.eclipse.egit.ui.internal.actions.FetchAction"
                definitionId="org.eclipse.egit.ui.team.Fetch"
-               icon="$nl$/icons/obj16/pull.gif"
+               icon="$nl$/icons/obj16/fetch.gif"
                id="org.eclipse.egit.ui.internal.actions.FetchAction"
                label="%FetchAction_label"
                menubarPath="team.main/group2"/>
@@ -84,6 +84,14 @@
                id="org.eclipse.egit.ui.internal.actions.BranchAction"
                label="%BranchAction_label"
                menubarPath="team.main/group5"/>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.PullCurrentBranchAction"
+               definitionId="org.eclipse.egit.ui.team.PullCurrentBranch"
+               icon="$nl$/icons/obj16/pull.gif"
+               id="org.eclipse.egit.ui.team.PullCurrentBranchAction"
+               label="%PullIntoCurrentBranchMenuLabel"
+               menubarPath="team.main/group2">
+         </action>
      </objectContribution>
      <objectContribution
             adaptable="true"
@@ -328,7 +336,7 @@
          category="org.eclipse.egit.ui.GitPreferences"
          class="org.eclipse.egit.ui.internal.preferences.RemoteConnectionPreferencePage"
          id="org.eclipse.egit.ui.page1"
-         name="Remote Connections">
+         name="%page.name">
       <keywordReference
             id="org.eclipse.egit.ui.keyword.git">
       </keywordReference>
