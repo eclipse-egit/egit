@@ -64,4 +64,8 @@ public class ActionCommands {
 
 	/** "Track" action command id */
 	public static final String TRACK_ACTION = "org.eclipse.egit.ui.team.Track"; //$NON-NLS-1$
+
+	/** "Pull Current Branch" action command id */
+	public static final String PULL_CURRENT_BRANCH = "org.eclipse.egit.ui.team.PullCurrentBranch"; //$NON-NLS-1$
+
 }
