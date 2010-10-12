@@ -10,6 +10,8 @@ package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.ResourceList;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -25,7 +27,9 @@ public class ShowHistoryActionHandler extends RepositoryActionHandler {
 			view = (IHistoryView) PlatformUI.getWorkbench()
 					.getActiveWorkbenchWindow().getActivePage().showView(
 							IHistoryView.VIEW_ID);
-			view.showHistoryFor(getSelection(event).getFirstElement());
+			IResource[] resources = getSelectedResources(event);
+			ResourceList list = new ResourceList(resources);
+			view.showHistoryFor(list);
 		} catch (PartInitException e) {
 			throw new ExecutionException(e.getMessage(), e);
 		}
@@ -34,6 +38,6 @@ public class ShowHistoryActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return getSelection().size() == 1;
+		return !getSelection().isEmpty();
 	}
 }
