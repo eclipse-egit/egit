@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALy3//+3M\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewBranchHandlingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-10-12T15:52:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALy3//+3k\u003d",
+      "revId": "d8b5ca882bc5d6059c9969b45cde24dc1850b904",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3//+3s\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewBranchHandlingTest.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAALy3//+3I\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewBranchHandlingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-10-12T15:52:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALy3//+3s\u003d",
+      "revId": "d8b5ca882bc5d6059c9969b45cde24dc1850b904",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3//+3o\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewBranchHandlingTest.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2010-10-12T15:25:51Z",
       "side": 1,
       "message": "White space error",
+      "revId": "d8b5ca882bc5d6059c9969b45cde24dc1850b904",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3//+3E\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewBranchHandlingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-10-12T15:52:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALy3//+3o\u003d",
       "revId": "d8b5ca882bc5d6059c9969b45cde24dc1850b904",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
