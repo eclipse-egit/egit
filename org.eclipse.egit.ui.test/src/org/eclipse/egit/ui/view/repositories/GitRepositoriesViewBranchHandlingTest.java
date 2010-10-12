@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
@@ -79,26 +80,6 @@ public class GitRepositoriesViewBranchHandlingTest extends
 	public void before() throws Exception {
 		clearView();
 		deleteAllProjects();
-	}
-
-	@Test
-	public void testMergeOnRepo() throws Exception {
-		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
-				clonedRepositoryFile);
-
-		SWTBotTree tree = getOrOpenView().bot().tree();
-
-		myRepoViewUtil.getRootItem(tree, clonedRepositoryFile).select();
-
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("RepoViewMerge.label"));
-
-		String title = NLS.bind(UIText.MergeTargetSelectionDialog_TitleMerge,
-				clonedRepositoryFile.getPath().toString());
-
-		SWTBotShell mergeDialog = bot.shell(title);
-		// TODO do some merge here
-		mergeDialog.close();
 	}
 
 	@Test
@@ -236,7 +217,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 			List<String> children = item.getNodes();
 			assertEquals("Wrong number of remote children", 2, children.size());
 
-			final boolean[] done = new boolean[] { false };
+			final AtomicBoolean done = new AtomicBoolean();
 
 			final String jobName = NLS.bind(
 					UIText.RepositoriesView_CheckingOutMessage,
@@ -247,7 +228,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 				@Override
 				public void done(IJobChangeEvent event) {
 					if (jobName.equals(event.getJob().getName()))
-						done[0] = true;
+						done.set(true);
 				}
 
 			};
@@ -260,11 +241,13 @@ public class GitRepositoriesViewBranchHandlingTest extends
 			refreshAndWait();
 
 			for (int i = 0; i < 1000; i++) {
-				if (done[0])
+				if (done.get())
 					break;
 				Thread.sleep(10);
 			}
-			assertTrue("Job should be completed", done[0]);
+			assertTrue("Job should be completed", done.get());
+			
+			Job.getJobManager().removeJobChangeListener(listener);
 
 			GitLightweightDecorator.refresh();
 
@@ -284,7 +267,38 @@ public class GitRepositoriesViewBranchHandlingTest extends
 			assertEquals("Wrong suggested branch name", "stable", createPage
 					.bot().textWithId("BranchName").getText());
 			createPage.close();
+			// checkout master again
+			done.set(false);
+			
+			final String jobName2 = NLS.bind(
+					UIText.RepositoriesView_CheckingOutMessage,
+					"refs/heads/master");
 
+			listener = new JobChangeAdapter() {
+
+				@Override
+				public void done(IJobChangeEvent event) {
+					if (jobName2.equals(event.getJob().getName()))
+						done.set(true);
+				}
+
+			};
+
+			Job.getJobManager().addJobChangeListener(listener);
+			
+			myRepoViewUtil.getLocalBranchesItem(tree, clonedRepositoryFile).expand().getNode("master").select();
+			ContextMenuHelper.clickContextMenu(tree, myUtil
+					.getPluginLocalizedValue("CheckoutCommand"));
+			refreshAndWait();
+
+			for (int i = 0; i < 1000; i++) {
+				if (done.get())
+					break;
+				Thread.sleep(10);
+			}
+			assertTrue("Job should be completed", done.get());
+			
+			Job.getJobManager().removeJobChangeListener(listener);
 		} finally {
 			if (perspective != null)
 				perspective.activate();
@@ -295,8 +309,8 @@ public class GitRepositoriesViewBranchHandlingTest extends
 
 	@Test
 	public void testRenameBranch() throws Exception {
-		Activator.getDefault().getRepositoryUtil()
-				.addConfiguredRepository(clonedRepositoryFile);
+		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
+				clonedRepositoryFile);
 
 		SWTBotTree tree = getOrOpenView().bot().tree();
 
@@ -304,8 +318,8 @@ public class GitRepositoriesViewBranchHandlingTest extends
 				clonedRepositoryFile).expand();
 
 		item.getNode("master").select();
-		ContextMenuHelper.clickContextMenu(tree,
-				myUtil.getPluginLocalizedValue("RepoViewRenameBranch.label"));
+		ContextMenuHelper.clickContextMenu(tree, myUtil
+				.getPluginLocalizedValue("RepoViewRenameBranch.label"));
 		refreshAndWait();
 
 		SWTBotShell renameDialog = bot
@@ -326,6 +340,43 @@ public class GitRepositoriesViewBranchHandlingTest extends
 
 		item = myRepoViewUtil.getLocalBranchesItem(tree, clonedRepositoryFile)
 				.expand();
-		assertEquals("newmaster", item.getNode(0).getText());
+		assertEquals("newmaster", item.getNode(0).select().getText());
+
+		ContextMenuHelper.clickContextMenu(tree, myUtil
+				.getPluginLocalizedValue("RepoViewRenameBranch.label"));
+		refreshAndWait();
+
+		renameDialog = bot.shell(UIText.RepositoriesView_RenameBranchTitle);
+		newBranchNameText = renameDialog.bot().text(0);
+		assertEquals("newmaster", newBranchNameText.getText());
+
+		newBranchNameText.setText("master");
+		renameDialog.bot().button(IDialogConstants.OK_LABEL).click();
+
+		refreshAndWait();
+
+		item = myRepoViewUtil.getLocalBranchesItem(tree, clonedRepositoryFile)
+				.expand();
+		assertEquals("master", item.getNode(0).select().getText());
+	}
+
+	@Test
+	public void testMergeOnRepo() throws Exception {
+		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
+				clonedRepositoryFile);
+
+		SWTBotTree tree = getOrOpenView().bot().tree();
+
+		myRepoViewUtil.getRootItem(tree, clonedRepositoryFile).select();
+
+		ContextMenuHelper.clickContextMenu(tree, myUtil
+				.getPluginLocalizedValue("RepoViewMerge.label"));
+
+		String title = NLS.bind(UIText.MergeTargetSelectionDialog_TitleMerge,
+				clonedRepositoryFile.getPath().toString());
+
+		SWTBotShell mergeDialog = bot.shell(title);
+		// TODO do some merge here
+		mergeDialog.close();
 	}
 }
