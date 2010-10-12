@@ -77,7 +77,7 @@ public class MergeResultDialog extends Dialog {
 	}
 
 	@Override
-	protected Control createDialogArea(final Composite parent) {
+	public Control createDialogArea(final Composite parent) {
 		final Composite composite = (Composite) super.createDialogArea(parent);
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 2;
@@ -163,14 +163,7 @@ public class MergeResultDialog extends Dialog {
 				return null;
 			}
 		});
-		getShell().setText(UIText.MergeResultDialog_mergeResult);
 		applyDialogFont(composite);
-		getShell().addDisposeListener(new DisposeListener() {
-			public void widgetDisposed(DisposeEvent e) {
-				if (objectReader != null)
-					objectReader.release();
-			}
-		});
 		GridDataFactory.fillDefaults().grab(true, true)
 				.align(SWT.FILL, SWT.FILL).span(2, 1)
 				.applyTo(viewer.getControl());
@@ -203,4 +196,15 @@ public class MergeResultDialog extends Dialog {
 		return result.toString();
 	}
 
+	@Override
+	protected void configureShell(Shell newShell) {
+		super.configureShell(newShell);
+		newShell.setText(UIText.MergeResultDialog_mergeResult);
+		newShell.addDisposeListener(new DisposeListener() {
+			public void widgetDisposed(DisposeEvent e) {
+				if (objectReader != null)
+					objectReader.release();
+			}
+		});
+	}
 }
