@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALzH////E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-10-13T09:44:13Z",
+      "side": 1,
+      "message": "Retrieving the commit list may block the UI. Use PlatformUI.getWorkbench().getProgressService().busyCursorWhile to call getRevCommits outside the UI thread.",
+      "revId": "6b39eb21cacb7b9406b0ed8a5c921e13d81f6325",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
