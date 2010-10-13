@@ -258,14 +258,14 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		Object selection = HandlerUtil.getActiveMenuSelection(event);
 		if (selection == null)
 			selection = HandlerUtil.getCurrentSelectionChecked(event);
-		if (selection instanceof IStructuredSelection)
-			return (IStructuredSelection) selection;
 		if (selection instanceof TextSelection) {
 			IResource resource = ResourceUtil.getResource(HandlerUtil
 					.getVariable(event, ISources.ACTIVE_EDITOR_INPUT_NAME));
 			if (resource != null)
 				return new StructuredSelection(resource);
 		}
+		if (selection instanceof IStructuredSelection)
+			return (IStructuredSelection) selection;
 		return StructuredSelection.EMPTY;
 	}
 
@@ -284,14 +284,14 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		Object selection = ctx.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
 		if (selection == null)
 			selection = ctx.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
-		if (selection instanceof IStructuredSelection)
-			return (IStructuredSelection) selection;
 		if (selection instanceof TextSelection) {
 			IResource resource = ResourceUtil.getResource(ctx
 					.getVariable(ISources.ACTIVE_EDITOR_INPUT_NAME));
 			if (resource != null)
 				return new StructuredSelection(resource);
 		}
+		if (selection instanceof IStructuredSelection)
+			return (IStructuredSelection) selection;
 		return StructuredSelection.EMPTY;
 	}
 
