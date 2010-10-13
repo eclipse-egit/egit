@@ -173,6 +173,13 @@ public class CommitCombo extends Composite {
 	}
 
 	/**
+	 * @return the number of items
+	 */
+	public int getItemCount() {
+		return commits.size();
+	}
+
+	/**
 	 * @return index of selected element
 	 */
 	public int getSelectedIndex() {
