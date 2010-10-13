@@ -1657,6 +1657,12 @@ public class UIText extends NLS {
 	public static String FileRevisionEditorInput_NameAndRevisionTitle;
 
 	/** */
+	public static String FindToolbar_changeto_id;
+
+	/** */
+	public static String FindToolbar_idMenuItem;
+
+	/** */
 	public static String FindToolbar_NextTooltip;
 
 	/** */
@@ -2253,6 +2259,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitFileDiffViewer_SelectOneCommitMessage;
+
+	/** */
+	public static String CommitGraphTable_CommitId;
 
 	/** */
 	public static String GitSynchronizeWizard_synchronize;

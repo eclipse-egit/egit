@@ -57,6 +57,8 @@ public class UIIcons {
 	public static final ImageDescriptor ELCL16_AUTHOR;
 	/** Committer icon */
 	public static final ImageDescriptor ELCL16_COMMITTER;
+	/** Id icon */
+	public static final ImageDescriptor ELCL16_ID;
 	/** Delete icon */
 	public static final ImageDescriptor ELCL16_DELETE;
 	/** Add icon */
@@ -173,6 +175,7 @@ public class UIIcons {
 		ELCL16_CLEAR = map("elcl16/clear.gif"); //$NON-NLS-1$
 		ELCL16_REFRESH = map("elcl16/refresh.gif"); //$NON-NLS-1$
 		ELCL16_SYNCED = map("elcl16/synced.gif"); //$NON-NLS-1$
+		ELCL16_ID = map("elcl16/sha1.gif"); //$NON-NLS-1$
 		CHECKBOX_ENABLED_CHECKED = map("checkboxes/enabled_checked.gif"); //$NON-NLS-1$
 		CHECKBOX_ENABLED_UNCHECKED = map("checkboxes/enabled_unchecked.gif"); //$NON-NLS-1$
 		CHECKBOX_DISABLED_CHECKED = map("checkboxes/disabled_checked.gif"); //$NON-NLS-1$
