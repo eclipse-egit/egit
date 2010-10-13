@@ -23,7 +23,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
-import org.eclipse.egit.ui.internal.repository.tree.LocalBranchesNode;
+import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -76,7 +76,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		touchAndSubmit(null);
 
 		RepositoriesViewLabelProvider provider = new RepositoriesViewLabelProvider();
-		LOCAL_BRANCHES = provider.getText(new LocalBranchesNode(
+		LOCAL_BRANCHES = provider.getText(new LocalNode(
 				new RepositoryNode(null, repo), repo));
 		TAGS = provider.getText(new TagsNode(new RepositoryNode(null, repo),
 				repo));
