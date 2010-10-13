@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALy3///RM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-09-30T13:17:25Z",
+      "side": 1,
+      "message": "It is generally better to use asyncExec(Runnable) instead of syncExec(Runnable). The work is being done asynchronously on a separate thread anyway so I see no hard requirement for this table population to be done immediately.\n\nPlease do change the code to not use Display.getDefault() (you can swap with getShell().getDisplay()) though.",
+      "revId": "c55be7166db9dd917c5689219d0f8ad52d7157a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3///Q8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
         "patchSetId": 1
@@ -20,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AAALy3///RI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-09-30T13:17:25Z",
+      "side": 1,
+      "message": "I believe we are on 3.5 now, correct? You can just call ArrayContentProvider.getInstance() instead then.",
+      "revId": "c55be7166db9dd917c5689219d0f8ad52d7157a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3///Q4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
         "patchSetId": 1
@@ -32,6 +66,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAALy3///RI\u003d",
+      "revId": "c55be7166db9dd917c5689219d0f8ad52d7157a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3///RQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateTagDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2010-09-30T13:17:25Z",
+      "side": 1,
+      "message": "Technically speaking, this isn\u0027t mandatory because an ArrayContentProvider actually takes both an array and a java.util.Collection. If you look at the implementation, we will call toArray() for you. So really, it is up to you if you want to call toArray() now or later, I just thought I would point it out for your information (about how ArrayContentProvider works).",
       "revId": "c55be7166db9dd917c5689219d0f8ad52d7157a7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
