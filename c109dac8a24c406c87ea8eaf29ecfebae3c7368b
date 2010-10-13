@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALy3//+4A\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-10-12T15:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALy3//+4Y\u003d",
+      "revId": "c109dac8a24c406c87ea8eaf29ecfebae3c7368b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3//+4U\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullFromUpstreamActionHandler.java",
         "patchSetId": 4
