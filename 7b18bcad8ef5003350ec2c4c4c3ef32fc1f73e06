@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAEn///+8\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/op/T0001_ConnectProviderOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-01-30T07:24:03Z",
+      "side": 1,
+      "message": "Due to the way Windows works, I\u0027d rather see us doing something close to what the JGit tests does, which includes delaying the cleanup of temporary directories so the GC has a better change of reclaiming unused file descriptors and memory mappins (if used).\n\nMaybe I should refactor that do avoid a CQ, so you do not need to fix that for this patch.",
+      "revId": "7b18bcad8ef5003350ec2c4c4c3ef32fc1f73e06",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAEn////A\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/op/T0001_ConnectProviderOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-01-30T07:24:03Z",
+      "side": 1,
+      "message": "The baseclass contains rmrf(). Use it instead",
+      "revId": "7b18bcad8ef5003350ec2c4c4c3ef32fc1f73e06",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
