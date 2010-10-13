@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALy3//+68\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2010-10-11T12:14:56Z",
+      "side": 1,
+      "message": "Now, as I see the resulting menu, it looks strange to me that a lot of other actions look like \"\u003cAction\u003e ....\" but only for Pull we have a full sentence. Especially because the latter part \"into current branch\" bring benefit. A pull will always merge into the current HEAD.\nSo in my eyes \"Pull ...\" would be a better solution.",
+      "revId": "d79a76644f09ade3d22e452c7a05768ad7313a9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
