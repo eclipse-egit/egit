@@ -2255,6 +2255,12 @@ public class UIText extends NLS {
 	public static String CommitActionHandler_repository;
 
 	/** */
+	public static String CommitFileDiffViewer_CanNotOpenCompareEditorTitle;
+
+	/** */
+	public static String CommitFileDiffViewer_MergeCommitMultiAncestorMessage;
+
+	/** */
 	public static String CommitFileDiffViewer_notContainedInCommit;
 
 	/** */
