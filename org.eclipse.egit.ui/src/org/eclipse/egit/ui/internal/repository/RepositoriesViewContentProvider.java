@@ -189,7 +189,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			}
 		}
 
-		case REMOTEBRANCHES: {
+		case REMOTETRACKINGBRANCHES: {
 			if (branchHierarchyMode) {
 				BranchHierarchyNode hierNode = new BranchHierarchyNode(node,
 						repo, new Path(Constants.R_REMOTES));

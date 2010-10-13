@@ -1864,7 +1864,7 @@ public class UIText extends NLS {
 	public static String RepositoriesViewLabelProvider_LocalBranchesNodetext;
 
 	/** */
-	public static String RepositoriesViewLabelProvider_RemoteBrancheNodetext;
+	public static String RepositoriesViewLabelProvider_RemoteTrackingBranchesNodetext;
 
 	/** */
 	public static String RepositoriesViewLabelProvider_SymbolicRefNodeText;

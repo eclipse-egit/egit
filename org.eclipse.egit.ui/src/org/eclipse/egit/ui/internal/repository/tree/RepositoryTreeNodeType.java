@@ -32,7 +32,7 @@ public enum RepositoryTreeNodeType {
 	BRANCHHIERARCHY(PlatformUI.getWorkbench().getSharedImages().getImage(
 			ISharedImages.IMG_OBJ_FOLDER)), //
 	/** */
-	REMOTEBRANCHES(PlatformUI.getWorkbench().getSharedImages().getImage(
+	REMOTETRACKINGBRANCHES(PlatformUI.getWorkbench().getSharedImages().getImage(
 			ISharedImages.IMG_OBJ_FOLDER)), //
 	/** */
 	TAGS(UIIcons.TAGS.createImage()), //

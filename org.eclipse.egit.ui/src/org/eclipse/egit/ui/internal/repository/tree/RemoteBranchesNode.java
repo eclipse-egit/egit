@@ -26,7 +26,7 @@ public class RemoteBranchesNode extends RepositoryTreeNode<Repository> {
 	 *            the {@link Repository}
 	 */
 	public RemoteBranchesNode(RepositoryTreeNode parent, Repository repository) {
-		super(parent, RepositoryTreeNodeType.REMOTEBRANCHES, repository,
+		super(parent, RepositoryTreeNodeType.REMOTETRACKINGBRANCHES, repository,
 				repository);
 	}
 

@@ -217,7 +217,7 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements ISty
 				// fall through
 			case LOCALBRANCHES:
 				// fall through
-			case REMOTEBRANCHES:
+			case REMOTETRACKINGBRANCHES:
 				// fall through
 			case BRANCHHIERARCHY:
 				// fall through
@@ -262,8 +262,8 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements ISty
 			return UIText.RepositoriesView_Branches_Nodetext;
 		case LOCALBRANCHES:
 			return UIText.RepositoriesViewLabelProvider_LocalBranchesNodetext;
-		case REMOTEBRANCHES:
-			return UIText.RepositoriesViewLabelProvider_RemoteBrancheNodetext;
+		case REMOTETRACKINGBRANCHES:
+			return UIText.RepositoriesViewLabelProvider_RemoteTrackingBranchesNodetext;
 		case BRANCHHIERARCHY:
 			IPath fullPath = (IPath) node.getObject();
 			return fullPath.lastSegment();
