@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAALy3//+38\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullFromUpstreamActionHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-10-12T15:37:37Z",
+      "side": 1,
+      "message": "Moved canMerge() to RepositoryActionHandler",
+      "parentUuid": "AAALy3//+4U\u003d",
+      "revId": "c109dac8a24c406c87ea8eaf29ecfebae3c7368b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3//+4Q\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullFromUpstreamActionHandler.java",
         "patchSetId": 4
@@ -65,6 +83,24 @@
       "writtenOn": "2010-10-12T14:37:59Z",
       "side": 1,
       "message": "In case of error the Job framework already sends an error popup and logs the error.",
+      "revId": "c109dac8a24c406c87ea8eaf29ecfebae3c7368b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3//+34\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullFromUpstreamActionHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-10-12T15:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALy3//+4Q\u003d",
       "revId": "c109dac8a24c406c87ea8eaf29ecfebae3c7368b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AAALy3//+30\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/MergeResultDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-10-12T15:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALy3//+4M\u003d",
+      "revId": "c109dac8a24c406c87ea8eaf29ecfebae3c7368b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALy3//+4I\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullResultDialog.java",
         "patchSetId": 4
@@ -99,6 +153,24 @@
       "writtenOn": "2010-10-12T14:37:59Z",
       "side": 1,
       "message": "Don\u0027t know if if this reuse of dialogs might cause problems.",
+      "revId": "c109dac8a24c406c87ea8eaf29ecfebae3c7368b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALy3//+3w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullResultDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-10-12T15:37:37Z",
+      "side": 1,
+      "message": "It did cause problems, and I had to adjust the other dialogs in order to fix these problems, but I think it is still a better solution than trying to re-implement the result display from scratch.",
+      "parentUuid": "AAALy3//+4I\u003d",
       "revId": "c109dac8a24c406c87ea8eaf29ecfebae3c7368b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
