@@ -5,15 +5,23 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Mathias Kinzler (SAP AG) - improve UI responsiveness
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
@@ -25,15 +33,15 @@ import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
@@ -67,11 +75,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
-import org.eclipse.ui.model.IWorkbenchAdapter;
-import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
@@ -91,10 +98,6 @@ public class CreateTagDialog extends TitleAreaDialog {
 	private ObjectId tagCommit;
 
 	private boolean overwriteTag;
-
-	private RevWalk revCommits;
-
-	private List<RevTag> existingTags;
 
 	private RevTag tag;
 
@@ -118,41 +121,6 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 	private final IInputValidator tagNameValidator;
 
-	static class TagInputList extends LabelProvider implements IWorkbenchAdapter {
-
-		private final List<RevTag> tagList;
-
-		public TagInputList(List<RevTag> tagList) {
-			this.tagList = tagList;
-		}
-
-		public Object[] getChildren(Object o) {
-			return tagList.toArray(new Object[] {});
-		}
-
-		public ImageDescriptor getImageDescriptor(Object object) {
-			return null;
-		}
-
-		public String getLabel(Object o) {
-			if (o instanceof RevTag)
-				return ((RevTag) o).getTagName();
-
-			return null;
-		}
-
-		public Object getParent(Object o) {
-			return null;
-		}
-
-		public Object getAdapter(Class adapter) {
-			if (adapter == IWorkbenchAdapter.class)
-				return this;
-
-			return null;
-		}
-	}
-
 	static class TagLabelProvider extends WorkbenchLabelProvider implements
 			ITableLabelProvider {
 
@@ -160,10 +128,16 @@ public class CreateTagDialog extends TitleAreaDialog {
 				.getResources());
 
 		public Image getColumnImage(Object element, int columnIndex) {
+			// initially, we just display a single String ("Loading...")
+			if (element instanceof String)
+				return null;
 			return fImageCache.createImage(UIIcons.TAG);
 		}
 
 		public String getColumnText(Object element, int columnIndex) {
+			// initially, we just display a single String ("Loading...")
+			if (element instanceof String)
+				return (String) element;
 			return ((RevTag) element).getTagName();
 		}
 
@@ -288,10 +262,30 @@ public class CreateTagDialog extends TitleAreaDialog {
 	}
 
 	@Override
+	public void create() {
+		super.create();
+		// start a job that fills the tag list lazily
+		Job job = new Job(UIText.CreateTagDialog_GetTagJobName) {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				final List<RevTag> tags = getRevTags();
+				PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						if (!tagViewer.getTable().isDisposed()) {
+							tagViewer.setInput(tags);
+							tagViewer.getTable().setEnabled(true);
+						}
+					}
+				});
+				return Status.OK_STATUS;
+			}
+		};
+		job.setSystem(true);
+		job.schedule();
+	}
+
+	@Override
 	protected Control createDialogArea(final Composite parent) {
-		existingTags = getRevTags();
-		if (commitId == null)
-			revCommits = getRevCommits();
 		initializeDialogUnits(parent);
 
 		setTitle(getTitle());
@@ -431,7 +425,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 	}
 
 	private void createAdvancedSection(final Composite composite) {
-		if (commitId!=null)
+		if (commitId != null)
 			return;
 		ExpandableComposite advanced = new ExpandableComposite(composite,
 				ExpandableComposite.TREE_NODE
@@ -456,13 +450,33 @@ public class CreateTagDialog extends TitleAreaDialog {
 		commitCombo.setLayoutData(GridDataFactory.fillDefaults().grab(true,
 				false).hint(300, SWT.DEFAULT).create());
 
-		for (RevCommit revCommit : revCommits)
-			commitCombo.add(revCommit);
-
 		advanced.setClient(advancedComposite);
 		advanced.addExpansionListener(new ExpansionAdapter() {
 			public void expansionStateChanged(ExpansionEvent e) {
-				composite.layout();
+				// fill the Combo lazily to improve UI responsiveness
+				if (((Boolean) e.data).booleanValue()
+						&& commitCombo.getItemCount() == 0) {
+					final Collection<RevCommit> commits = new ArrayList<RevCommit>();
+					try {
+						PlatformUI.getWorkbench().getProgressService()
+								.busyCursorWhile(new IRunnableWithProgress() {
+
+									public void run(IProgressMonitor monitor)
+											throws InvocationTargetException,
+											InterruptedException {
+										// TODO Auto-generated method stub
+										getRevCommits(commits);
+									}
+								});
+					} catch (InvocationTargetException e1) {
+						Activator.logError(e1.getMessage(), e1);
+					} catch (InterruptedException e1) {
+						// ignore here
+					}
+					for (RevCommit revCommit : commits)
+						commitCombo.add(revCommit);
+				}
+				composite.layout(true);
 			}
 		});
 	}
@@ -485,19 +499,19 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 		tagViewer = new TableViewer(table);
 		tagViewer.setLabelProvider(new TagLabelProvider());
-		tagViewer.setContentProvider(new WorkbenchContentProvider());
+		tagViewer.setContentProvider(ArrayContentProvider.getInstance());
 		tagViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				fillTagDialog();
 			}
 		});
-
-		tagViewer.setInput(new TagInputList(existingTags));
 		tagViewer.addFilter(new ViewerFilter() {
 
 			@Override
 			public boolean select(Viewer viewer, Object parentElement,
 					Object element) {
+				if (element instanceof String)
+					return true;
 				RevTag actTag = (RevTag) element;
 
 				if (tagNamePattern != null)
@@ -506,7 +520,12 @@ public class CreateTagDialog extends TitleAreaDialog {
 					return true;
 			}
 		});
-
+		// let's set the table inactive initially and display a "Loading..."
+		// message and fill the list asynchronously during create() in order to
+		// improve UI responsiveness
+		tagViewer
+				.setInput(new String[] { UIText.CreateTagDialog_LoadingMessageText });
+		tagViewer.getTable().setEnabled(false);
 		applyDialogFont(parent);
 	}
 
@@ -570,7 +589,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		tagMessageText.setText(null != message ? message : ""); //$NON-NLS-1$
 	}
 
-	private RevWalk getRevCommits() {
+	private void getRevCommits(Collection<RevCommit> commits) {
 		RevWalk revWalk = new RevWalk(repo);
 		revWalk.sort(RevSort.COMMIT_TIME_DESC, true);
 		revWalk.sort(RevSort.BOUNDARY, true);
@@ -583,8 +602,9 @@ public class CreateTagDialog extends TitleAreaDialog {
 			Activator.logError(UIText.TagAction_errorWhileGettingRevCommits, e);
 			setErrorMessage(UIText.TagAction_errorWhileGettingRevCommits);
 		}
-
-		return revWalk;
+		// do the walk to get the commits
+		for(RevCommit commit:revWalk)
+			commits.add(commit);
 	}
 
 	/**
@@ -600,7 +620,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 			} catch (IncorrectObjectTypeException e) {
 				// repo.getTags() returns also lightweight tags
 			} catch (IOException e) {
-				Activator.logError(UIText.TagAction_unableToResolveHeadObjectId, e);
+				Activator.logError(
+						UIText.TagAction_unableToResolveHeadObjectId, e);
 				setErrorMessage(UIText.TagAction_unableToResolveHeadObjectId);
 			}
 		}

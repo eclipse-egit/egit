@@ -2215,6 +2215,12 @@ public class UIText extends NLS {
 	public static String CreateTagDialog_CreateTagOnCommitTitle;
 
 	/** */
+	public static String CreateTagDialog_GetTagJobName;
+
+	/** */
+	public static String CreateTagDialog_LoadingMessageText;
+
+	/** */
 	public static String CreateTagDialog_Message;
 
 	/** */
