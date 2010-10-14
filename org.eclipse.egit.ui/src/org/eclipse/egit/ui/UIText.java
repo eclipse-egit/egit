@@ -352,10 +352,22 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_ShowAllBranchesMenuLabel;
 
 	/** */
+	public static String GitPreferenceRoot_CloningRepoGroupHeader;
+
+	/** */
 	public static String GitPreferenceRoot_DefaultRepoFolderLabel;
 
 	/** */
 	public static String GitPreferenceRoot_DefaultRepoFolderTooltip;
+
+	/** */
+	public static String GitPreferenceRoot_HistoryGroupHeader;
+
+	/** */
+	public static String GitPreferenceRoot_RemoteConnectionsGroupHeader;
+
+	/** */
+	public static String GitPreferenceRoot_RepoChangeScannerGroupHeader;
 
 	/** */
 	public static String GitProjectPropertyPage_LabelBranch;
