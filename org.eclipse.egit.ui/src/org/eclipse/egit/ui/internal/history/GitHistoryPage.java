@@ -29,7 +29,6 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.egit.core.ResourceList;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
@@ -161,8 +160,19 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	 *         FOLDER or PROJECT and we can show it; false otherwise.
 	 */
 	public static boolean canShowHistoryFor(final Object object) {
-		if (object instanceof ResourceList) {
-			final IResource[] array = ((ResourceList) object).getItems();
+		if (object instanceof IResource) {
+			return typeOk((IResource) object);
+		}
+		if (object instanceof IAdaptable) {
+			IResource resource = (IResource) ((IAdaptable) object)
+					.getAdapter(IResource.class);
+			return resource == null ? false : typeOk(resource);
+		}
+		if (object instanceof HistoryPageInput) {
+			HistoryPageInput in = (HistoryPageInput) object;
+			if (in.getRepository() != null)
+				return true;
+			final IResource[] array = ((HistoryPageInput) object).getItems();
 			if (array.length == 0)
 				return false;
 			for (final IResource r : array) {
@@ -170,19 +180,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 					return false;
 			}
 			return true;
-
 		}
-
-		if (object instanceof IAdaptable) {
-			IResource resource = (IResource) ((IAdaptable) object)
-					.getAdapter(IResource.class);
-			return resource == null ? false : typeOk(resource);
+		if (object instanceof Repository) {
+			return true;
 		}
-
-		if (object instanceof IResource) {
-			return typeOk((IResource) object);
-		}
-
 		return false;
 	}
 
@@ -579,8 +580,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 					int selectionSize = ((IStructuredSelection) getSelectionProvider()
 							.getSelection()).size();
-					int type = ((IResource) getInput()).getType();
-
+					int type = 0;
+					Object input = getInput();
+					if (input instanceof IResource)
+						type = ((IResource) input).getType();
 					if (type == IResource.FILE) {
 						if (selectionSize == 1)
 							popupMgr
@@ -970,12 +973,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	public Object getInput() {
-		final ResourceList r = (ResourceList) super.getInput();
+		final HistoryPageInput r = (HistoryPageInput) super.getInput();
 		if (r == null)
 			return null;
 		final IResource[] in = r.getItems();
-		if (in == null || in.length == 0)
-			return null;
+		if (in == null)
+			return r.getRepository();
 		if (in.length == 1)
 			return in[0];
 		return r;
@@ -984,15 +987,17 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	public boolean setInput(final Object o) {
 		final Object in;
 		if (o instanceof IResource)
-			in = new ResourceList(new IResource[] { (IResource) o });
-		else if (o instanceof ResourceList)
+			in = new HistoryPageInput(new IResource[] { (IResource) o });
+		else if (o instanceof HistoryPageInput)
 			in = o;
 		else if (o instanceof IAdaptable) {
 			IResource resource = (IResource) ((IAdaptable) o)
 					.getAdapter(IResource.class);
-			in = resource == null ? null : new ResourceList(
+			in = resource == null ? null : new HistoryPageInput(
 					new IResource[] { resource });
-		} else
+		} else if (o instanceof Repository)
+			in = new HistoryPageInput((Repository) o);
+		else
 			in = null;
 		return super.setInput(in);
 	}
@@ -1004,39 +1009,49 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		if (graph == null || super.getInput() == null)
 			return false;
 
-		final IResource[] in = ((ResourceList) super.getInput()).getItems();
-		if (in == null || in.length == 0)
+		final IResource[] in = ((HistoryPageInput) super.getInput()).getItems();
+		if (in != null && in.length == 0)
 			return false;
 
-		db = null;
+		db = ((HistoryPageInput) super.getInput()).getRepository();
 
-		final ArrayList<String> paths = new ArrayList<String>(in.length);
-		for (final IResource r : in) {
-			final RepositoryMapping map = RepositoryMapping.getMapping(r);
-			if (map == null)
-				continue;
+		final ArrayList<String> paths;
+		if (in != null) {
+			paths = new ArrayList<String>(in.length);
+			for (final IResource r : in) {
+				final RepositoryMapping map = RepositoryMapping.getMapping(r);
+				if (map == null)
+					continue;
 
-			if (db == null)
-				db = map.getRepository();
-			else if (db != map.getRepository())
-				return false;
+				if (db == null)
+					db = map.getRepository();
+				else if (db != map.getRepository())
+					return false;
 
-			if (showAllFilter == ShowFilter.SHOWALLFOLDER) {
-				final String name = map.getRepoRelativePath(r.getParent());
-				if (name != null && name.length() > 0)
-					paths.add(name);
-			} else if (showAllFilter == ShowFilter.SHOWALLPROJECT) {
-				final String name = map.getRepoRelativePath(r.getProject());
-				if (name != null && name.length() > 0)
-					paths.add(name);
-			} else if (showAllFilter == ShowFilter.SHOWALLREPO) {
-				// nothing
-			} else /* if (showAllFilter == ShowFilter.SHOWALLRESOURCE) */{
-				final String name = map.getRepoRelativePath(r);
-				if (name != null && name.length() > 0)
-					paths.add(name);
+				if (showAllFilter == ShowFilter.SHOWALLFOLDER) {
+					final String name = map.getRepoRelativePath(r.getParent());
+					if (name != null && name.length() > 0)
+						paths.add(name);
+				} else if (showAllFilter == ShowFilter.SHOWALLPROJECT) {
+					final String name = map.getRepoRelativePath(r.getProject());
+					if (name != null && name.length() > 0)
+						paths.add(name);
+				} else if (showAllFilter == ShowFilter.SHOWALLREPO) {
+					// nothing
+				} else /* if (showAllFilter == ShowFilter.SHOWALLRESOURCE) */{
+					final String name = map.getRepoRelativePath(r);
+					if (name != null && name.length() > 0)
+						paths.add(name);
+				}
 			}
+		} else {
+			paths = new ArrayList<String>(0);
 		}
+		// disable the filters if we have a Repository as input
+		showAllRepoVersionsAction.setEnabled(in!=null);
+		showAllProjectVersionsAction.setEnabled(in!=null);
+		showAllFolderVersionsAction.setEnabled(in!=null);
+		showAllResourceVersionsAction.setEnabled(in!=null);
 
 		if (db == null)
 			return false;
@@ -1226,11 +1241,15 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		// as it wrongly pollutes the navigation history
 		final String repositoryName = Activator.getDefault()
 				.getRepositoryUtil().getRepositoryName(db);
-		final ResourceList in = (ResourceList) super.getInput();
-		if (currentWalk == null || in == null || in.getItems().length == 0)
+		final HistoryPageInput in = (HistoryPageInput) super.getInput();
+		if (currentWalk == null || in == null
+				|| (in.getItems() != null && in.getItems().length == 0))
 			return ""; //$NON-NLS-1$
 
-		if (in.getItems().length == 1) {
+		if (in.getItems() == null)
+			return NLS.bind(UIText.GitHistoryPage_RepositoryNamePattern,
+					repositoryName);
+		else if (in.getItems().length == 1) {
 			IResource resource = in.getItems()[0];
 			final String type;
 			switch (resource.getType()) {
@@ -1258,7 +1277,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				b.append(' ');
 			}
 			return NLS.bind(NAME_PATTERN, new Object[] {
-					UIText.GitHistoryPage_MultiResourcesType, b.toString(), repositoryName });
+					UIText.GitHistoryPage_MultiResourcesType, b.toString(),
+					repositoryName });
 		}
 	}
 

@@ -7,11 +7,8 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.ui;
+package org.eclipse.egit.ui.internal.history;
 
-import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.core.ResourceList;
-import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.team.ui.history.HistoryPageSource;
 import org.eclipse.ui.part.Page;
 
@@ -24,17 +21,6 @@ public class GitHistoryPageSource extends HistoryPageSource {
 	}
 
 	public Page createPage(final Object object) {
-		final ResourceList input;
-
-		if (object instanceof ResourceList)
-			input = (ResourceList) object;
-		else if (object instanceof IResource)
-			input = new ResourceList(new IResource[] { (IResource) object });
-		else
-			input = new ResourceList(new IResource[0]);
-
-		final GitHistoryPage pg = new GitHistoryPage();
-		pg.setInput(input);
-		return pg;
+		return new GitHistoryPage();
 	}
 }

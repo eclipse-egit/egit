@@ -203,6 +203,13 @@
             </adapter>
          </factory>
          <factory
+               adaptableType="org.eclipse.jgit.lib.Repository"
+               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            <adapter
+                  type="org.eclipse.team.ui.history.IHistoryPageSource">
+            </adapter>
+         </factory>
+         <factory
 	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRoot"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
@@ -1308,6 +1315,24 @@
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewOpenHistory"
+               label="Open in &amp;History"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesViewCopyPath"
                label="%RepoViewCopyPath.label"
                style="push">
@@ -1645,6 +1670,12 @@
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.OpenHistoryCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewOpenHistory"
+            name="Open History">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.commandImages">
@@ -1771,6 +1802,10 @@
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewRemove"
             icon="icons/obj16/clear.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewOpenHistory"
+            icon="icons/obj16/history.gif">
       </image>
    </extension>
    <extension

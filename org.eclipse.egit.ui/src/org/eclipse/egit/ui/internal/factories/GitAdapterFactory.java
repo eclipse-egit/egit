@@ -15,7 +15,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IAdapterFactory;
-import org.eclipse.egit.ui.GitHistoryPageSource;
+import org.eclipse.egit.ui.internal.history.GitHistoryPageSource;
 import org.eclipse.egit.ui.internal.synchronize.mapping.GitModelWorkbenchAdapter;
 import org.eclipse.egit.ui.internal.synchronize.mapping.GitObjectMapping;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
