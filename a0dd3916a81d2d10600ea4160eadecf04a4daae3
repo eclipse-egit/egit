@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALzH///40\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/TestUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-10-14T14:08:38Z",
+      "side": 1,
+      "message": "Whitespace",
+      "revId": "a0dd3916a81d2d10600ea4160eadecf04a4daae3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///4Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/JobFamilies.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-10-14T14:08:38Z",
+      "side": 1,
+      "message": "Unnecessary empty lines",
+      "revId": "a0dd3916a81d2d10600ea4160eadecf04a4daae3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
