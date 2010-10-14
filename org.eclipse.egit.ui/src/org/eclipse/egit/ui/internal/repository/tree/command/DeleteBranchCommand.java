@@ -10,14 +10,15 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.op.DeleteBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
@@ -31,7 +32,6 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
@@ -105,10 +105,25 @@ public class DeleteBranchCommand extends
 								throws InvocationTargetException,
 								InterruptedException {
 							try {
-								for (RefNode refNode : nodes)
-									deleteBranch(refNode, refNode.getObject());
-							} catch (IOException ioe) {
-								throw new InvocationTargetException(ioe);
+								for (RefNode refNode : nodes) {
+									int result = deleteBranch(refNode,
+											refNode.getObject());
+									if (result == DeleteBranchOperation.REJECTED_CURRENT) {
+										throw new CoreException(
+												Activator
+														.createErrorStatus(
+																UIText.DeleteBranchCommand_CannotDeleteCheckedOutBranch,
+																null));
+									} else if (result == DeleteBranchOperation.REJECTED_UNMERGED) {
+										throw new CoreException(
+												Activator
+														.createErrorStatus(
+																UIText.DeleteBranchCommand_UnmergedData,
+																null));
+									}
+								}
+							} catch (CoreException ex) {
+								throw new InvocationTargetException(ex);
 							}
 						}
 					});
@@ -116,7 +131,6 @@ public class DeleteBranchCommand extends
 			Activator.handleError(
 					UIText.RepositoriesView_BranchDeletionFailureMessage,
 					e1.getCause(), true);
-			e1.printStackTrace();
 		} catch (InterruptedException e1) {
 			// ignore
 		}
@@ -124,16 +138,11 @@ public class DeleteBranchCommand extends
 		return null;
 	}
 
-	private void deleteBranch(final RefNode node, final Ref ref)
-			throws IOException {
-		RefUpdate op = node.getRepository().updateRef(ref.getName());
-		op.setRefLogMessage("branch deleted", //$NON-NLS-1$
-				false);
-		// TODO: This uses the force option always, so a warning pop-up is shown to the
-		// user; instead this should check if deletion can be performed without data
-		// loss and in this case the deletion should be done quietly; the warning pop-up
-		// should only be shown if the force option is really needed.
-		op.setForceUpdate(true);
-		op.delete();
+	private int deleteBranch(final RefNode node, final Ref ref)
+			throws CoreException {
+		DeleteBranchOperation dbop = new DeleteBranchOperation(node
+				.getRepository(), ref, true);
+		dbop.execute(null);
+		return dbop.getStatus();
 	}
 }

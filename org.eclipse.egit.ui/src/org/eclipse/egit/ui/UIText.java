@@ -1804,6 +1804,12 @@ public class UIText extends NLS {
 	public static String DecoratorPreferencesPage_iconsShowAssumeValid;
 
 	/** */
+	public static String DeleteBranchCommand_CannotDeleteCheckedOutBranch;
+
+	/** */
+	public static String DeleteBranchCommand_UnmergedData;
+
+	/** */
 	public static String IgnoreActionHandler_addToGitignore;
 
 	/** */
