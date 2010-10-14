@@ -27,6 +27,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -81,7 +82,6 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		addAndCommit(addedFile, ADDEDMESSAGE);
 		// TODO count the commits
 		commitCount = 3;
-		waitInUI();
 	}
 
 	@AfterClass
@@ -228,7 +228,6 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		String commitMessage = "The special commit";
 		int countBefore = getHistoryViewTable(PROJ1).rowCount();
 		touchAndSubmit(commitMessage);
-		waitInUI();
 		int countAfter = getHistoryViewTable(PROJ1).rowCount();
 		assertEquals("Wrong number of entries", countBefore + 1, countAfter);
 		assertEquals("Wrong comit message", commitMessage,
@@ -284,7 +283,6 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		// for some reason, checkboxwithlabel doesn't seem to work
 		dialog.bot().checkBox().deselect();
 		dialog.bot().button(IDialogConstants.FINISH_LABEL).click();
-		waitInUI();
 		assertNotNull(repo.resolve(Constants.R_HEADS + "NewBranch"));
 	}
 
@@ -313,7 +311,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		dialog.bot().textWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("New Tag message");
 		dialog.bot().button(IDialogConstants.OK_LABEL).click();
-		waitInUI();
+		TestUtil.joinJobs(JobFamilies.TAG);
 		assertNotNull(repo.resolve(Constants.R_TAGS + "NewTag"));
 	}
 
@@ -338,8 +336,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 
 		ContextMenuHelper.clickContextMenu(table,
 				UIText.GitHistoryPage_CheckoutMenuLabel);
-
-		waitInUI();
+		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		assertEquals(commit[0].getId().name(), repo.getBranch());
 	}
 

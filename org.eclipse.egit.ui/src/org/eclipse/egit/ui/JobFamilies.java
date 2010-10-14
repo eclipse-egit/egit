@@ -32,4 +32,9 @@ public class JobFamilies {
 	 * Push job
 	 */
 	public final static Object PUSH = new Object();
+
+	/**
+	 * Tag job
+	 */
+	public final static Object TAG = new Object();
 }
