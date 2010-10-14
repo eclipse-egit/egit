@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,13 +26,18 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryState;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPage;
@@ -252,14 +258,14 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		Object selection = HandlerUtil.getActiveMenuSelection(event);
 		if (selection == null)
 			selection = HandlerUtil.getCurrentSelectionChecked(event);
-		if (selection instanceof IStructuredSelection)
-			return (IStructuredSelection) selection;
 		if (selection instanceof TextSelection) {
 			IResource resource = ResourceUtil.getResource(HandlerUtil
 					.getVariable(event, ISources.ACTIVE_EDITOR_INPUT_NAME));
 			if (resource != null)
 				return new StructuredSelection(resource);
 		}
+		if (selection instanceof IStructuredSelection)
+			return (IStructuredSelection) selection;
 		return StructuredSelection.EMPTY;
 	}
 
@@ -278,14 +284,14 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		Object selection = ctx.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
 		if (selection == null)
 			selection = ctx.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
-		if (selection instanceof IStructuredSelection)
-			return (IStructuredSelection) selection;
 		if (selection instanceof TextSelection) {
 			IResource resource = ResourceUtil.getResource(ctx
 					.getVariable(ISources.ACTIVE_EDITOR_INPUT_NAME));
 			if (resource != null)
 				return new StructuredSelection(resource);
 		}
+		if (selection instanceof IStructuredSelection)
+			return (IStructuredSelection) selection;
 		return StructuredSelection.EMPTY;
 	}
 
@@ -414,4 +420,38 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		return HandlerUtil.getActivePartChecked(event);
 	}
 
+	/**
+	 * Checks if merge is possible:
+	 * <ul>
+	 * <li>HEAD must point to a branch</li>
+	 * <li>Repository State must be SAFE</li>
+	 * </ul>
+	 *
+	 * @param repository
+	 * @param event
+	 * @return a boolean indicating if merge is possible
+	 * @throws ExecutionException
+	 */
+	protected boolean canMerge(final Repository repository, ExecutionEvent event)
+			throws ExecutionException {
+		String message = null;
+		try {
+			Ref head = repository.getRef(Constants.HEAD);
+			if (head == null || !head.isSymbolic())
+				message = UIText.MergeAction_HeadIsNoBranch;
+			else if (!repository.getRepositoryState().equals(
+					RepositoryState.SAFE))
+				message = NLS.bind(UIText.MergeAction_WrongRepositoryState,
+						repository.getRepositoryState());
+		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
+			message = e.getMessage();
+		}
+
+		if (message != null) {
+			MessageDialog.openError(getShell(event),
+					UIText.MergeAction_CannotMerge, message);
+		}
+		return (message == null);
+	}
 }

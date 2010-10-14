@@ -1045,6 +1045,24 @@ public class UIText extends NLS {
 	public static String HistoryPreferencePage_title;
 
 	/** */
+	public static String PullCurrentBranchActionHandler_PullCanceledMessage;
+
+	/** */
+	public static String PullCurrentBranchActionHandler_PullCanceledTitle;
+
+	/** */
+	public static String PullCurrentBranchActionHandler_PullJobname;
+
+	/** */
+	public static String PullResultDialog_DialogTitle;
+
+	/** */
+	public static String PullResultDialog_FetchResultGroupHeader;
+
+	/** */
+	public static String PullResultDialog_MergeResultGroupHeader;
+
+	/** */
 	public static String PushAction_wrongURIDescription;
 
 	/** */
@@ -1786,6 +1804,12 @@ public class UIText extends NLS {
 	public static String DecoratorPreferencesPage_iconsShowAssumeValid;
 
 	/** */
+	public static String DeleteBranchCommand_CannotDeleteCheckedOutBranch;
+
+	/** */
+	public static String DeleteBranchCommand_UnmergedData;
+
+	/** */
 	public static String IgnoreActionHandler_addToGitignore;
 
 	/** */
@@ -1861,10 +1885,10 @@ public class UIText extends NLS {
 	public static String RepositoriesViewLabelProvider_BareRepositoryMessage;
 
 	/** */
-	public static String RepositoriesViewLabelProvider_LocalBranchesNodetext;
+	public static String RepositoriesViewLabelProvider_LocalNodetext;
 
 	/** */
-	public static String RepositoriesViewLabelProvider_RemoteBrancheNodetext;
+	public static String RepositoriesViewLabelProvider_RemoteTrackingNodetext;
 
 	/** */
 	public static String RepositoriesViewLabelProvider_SymbolicRefNodeText;
@@ -2197,6 +2221,12 @@ public class UIText extends NLS {
 	public static String CreateTagDialog_CreateTagOnCommitTitle;
 
 	/** */
+	public static String CreateTagDialog_GetTagJobName;
+
+	/** */
+	public static String CreateTagDialog_LoadingMessageText;
+
+	/** */
 	public static String CreateTagDialog_Message;
 
 	/** */
@@ -2229,6 +2259,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitActionHandler_repository;
+
+	/** */
+	public static String CommitFileDiffViewer_CanNotOpenCompareEditorTitle;
+
+	/** */
+	public static String CommitFileDiffViewer_MergeCommitMultiAncestorMessage;
 
 	/** */
 	public static String CommitFileDiffViewer_notContainedInCommit;

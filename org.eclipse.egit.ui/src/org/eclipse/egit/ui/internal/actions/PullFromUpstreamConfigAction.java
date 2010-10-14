@@ -8,26 +8,17 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.repository.tree;
-
-import org.eclipse.jgit.lib.Repository;
+package org.eclipse.egit.ui.internal.actions;
 
 /**
- * Represents the "Local Branches" node
+ * An action for pulling the currently checked branch
  */
-public class LocalBranchesNode extends RepositoryTreeNode<Repository> {
-
+public class PullFromUpstreamConfigAction extends RepositoryAction {
 	/**
-	 * Constructs the node.
 	 *
-	 * @param parent
-	 *            the parent node (may be null)
-	 * @param repository
-	 *            the {@link Repository}
 	 */
-	public LocalBranchesNode(RepositoryTreeNode parent, Repository repository) {
-		super(parent, RepositoryTreeNodeType.LOCALBRANCHES, repository,
-				repository);
+	public PullFromUpstreamConfigAction() {
+		super(ActionCommands.PULL_FROM_UPSTREAM_CONFIG,
+				new PullFromUpstreamActionHandler());
 	}
-
 }
