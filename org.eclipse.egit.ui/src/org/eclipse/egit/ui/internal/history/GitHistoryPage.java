@@ -35,6 +35,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.history.command.HistoryViewCommands;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.Action;
@@ -77,6 +78,8 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
@@ -140,6 +143,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private IAction showAllBranchesAction;
 
 	private boolean showAllBranches = false;
+
+	/** An error text to be shown instead of the control */
+	private StyledText errorText;
 
 	// we need to keep track of these actions so that we can
 	// dispose them when the page is disposed (the history framework
@@ -579,7 +585,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 					int selectionSize = ((IStructuredSelection) getSelectionProvider()
 							.getSelection()).size();
-					int type = ((IResource) getInput()).getType();
+
+					int type = 0;
+					Object actInput = getInput();
+					if (actInput instanceof IResource) {
+						type = ((IResource) actInput).getType();
+					}
 
 					if (type == IResource.FILE) {
 						if (selectionSize == 1)
@@ -724,7 +735,17 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	private Composite createMainPanel(final Composite parent) {
+		StackLayout layout = new StackLayout();
+		parent.setLayout(layout);
 		final Composite c = new Composite(parent, SWT.NULL);
+		layout.topControl = c;
+		// shown instead of the splitter if an error message was set
+		errorText = new StyledText(parent, SWT.NONE);
+		// use the same font as in message viewer
+		errorText.setFont(UIUtils
+				.getFont(UIPreferences.THEME_CommitMessageFont));
+		errorText.setText(UIText.CommitFileDiffViewer_SelectOneCommitMessage);
+
 		final GridLayout parentLayout = new GridLayout();
 		parentLayout.marginHeight = 0;
 		parentLayout.marginWidth = 0;
@@ -1001,8 +1022,14 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	public boolean inputSet() {
 		cancelRefreshJob();
 
-		if (graph == null || super.getInput() == null)
+		if (graph == null)
 			return false;
+
+		setErrorMessage(null);
+		if (super.getInput() == null) {
+			setErrorMessage(UIText.GitHistoryPage_NoInputMessage);
+			return false;
+		}
 
 		final IResource[] in = ((ResourceList) super.getInput()).getItems();
 		if (in == null || in.length == 0)
@@ -1018,8 +1045,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 			if (db == null)
 				db = map.getRepository();
-			else if (db != map.getRepository())
+			else if (db != map.getRepository()) {
+				super.setInput(null);
+				db = null;
+				setErrorMessage(UIText.GitHistoryPage_DifferentRepositoriesMessage);
 				return false;
+			}
 
 			if (showAllFilter == ShowFilter.SHOWALLFOLDER) {
 				final String name = map.getRepoRelativePath(r.getParent());
@@ -1126,6 +1157,18 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		job = rj;
 		schedule(rj);
 		return true;
+	}
+
+	private void setErrorMessage(String message) {
+		StackLayout layout = (StackLayout) getControl().getParent().getLayout();
+		if (message != null) {
+			errorText.setText(message);
+			layout.topControl = errorText;
+		} else {
+			errorText.setText(""); //$NON-NLS-1$
+			layout.topControl = getControl();
+		}
+		getControl().getParent().layout();
 	}
 
 	/**
@@ -1250,15 +1293,29 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			return NLS.bind(NAME_PATTERN, new Object[] { type, path,
 					repositoryName });
 		} else {
-			// can this happen at all? the generic history view can't
-			// handle multiple selection
+			// user has selected multiple resources and then hits Team->Show in
+			// History (the generic history view can not deal with multiple
+			// selection)
 			StringBuilder b = new StringBuilder();
-			for (final String p : pathFilters) {
-				b.append(p);
-				b.append(' ');
+			for (IResource res : in.getItems()) {
+				b.append(res.getFullPath());
+				if (res.getType() == IResource.FOLDER)
+					b.append('/');
+				// limit the total length
+				if (b.length() > 100) {
+					b.append("...  "); //$NON-NLS-1$
+					break;
+				}
+				b.append(", "); //$NON-NLS-1$
 			}
-			return NLS.bind(NAME_PATTERN, new Object[] {
-					UIText.GitHistoryPage_MultiResourcesType, b.toString(), repositoryName });
+			// trim off the last ", " (or "  " if total length exceeded)
+			if (b.length() > 2)
+				b.setLength(b.length() - 2);
+			String multiResourcePrefix = NLS.bind(
+					UIText.GitHistoryPage_MultiResourcesType, Integer
+							.valueOf(in.getItems().length));
+			return NLS.bind(NAME_PATTERN, new Object[] { multiResourcePrefix,
+					b.toString(), repositoryName });
 		}
 	}
 

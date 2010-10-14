@@ -25,6 +25,9 @@ public class UIText extends NLS {
 	public static String AbstractHistoryCommanndHandler_NoInputMessage;
 
 	/** */
+	public static String AbstractHistoryCommanndHandler_NoUniqueRepository;
+
+	/** */
 	public static String Activator_refreshFailed;
 
 	/** */
@@ -280,6 +283,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_CreateTagMenuLabel;
 
 	/** */
+	public static String GitHistoryPage_DifferentRepositoriesMessage;
+
+	/** */
 	public static String GitHistoryPage_errorLookingUpPath;
 
 	/** */
@@ -314,6 +320,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitHistoryPage_MultiResourcesType;
+
+	/** */
+	public static String GitHistoryPage_NoInputMessage;
 
 	/** */
 	public static String GitHistoryPage_OpenMenuLabel;

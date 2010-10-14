@@ -21,6 +21,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.egit.core.ResourceList;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
@@ -142,7 +143,21 @@ abstract class AbstractHistoryCommanndHandler extends AbstractHandler {
 	protected Repository getRepository(ExecutionEvent event)
 			throws ExecutionException {
 		Object input = getInput(event);
-		return RepositoryMapping.getMapping((IResource) input).getRepository();
+		Repository repo = null;
+		if (input instanceof ResourceList) {
+			for (IResource res : ((ResourceList) input).getItems()) {
+				Repository resourceRepo = RepositoryMapping.getMapping(res)
+						.getRepository();
+				if (repo == null)
+					repo = resourceRepo;
+				if (repo != resourceRepo)
+					throw new ExecutionException(
+							UIText.AbstractHistoryCommanndHandler_NoUniqueRepository);
+			}
+			return repo;
+		} else
+			return RepositoryMapping.getMapping((IResource) input)
+					.getRepository();
 	}
 
 	/**
