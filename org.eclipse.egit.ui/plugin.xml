@@ -2028,6 +2028,11 @@
             id="org.eclipse.egit.ui.history.OpenInTextEditorCommand"
             name="Open in Text Editor">
       </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.CherryPickHandler"
+            id="org.eclipse.egit.ui.history.CherryPick"
+            name="%CherryPickCommand.name">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">

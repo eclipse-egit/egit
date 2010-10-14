@@ -61,4 +61,7 @@ public class HistoryViewCommands {
 
 	/** Open in Text Editor */
 	public static final String OPEN_IN_TEXT_EDITOR = "org.eclipse.egit.ui.history.OpenInTextEditorCommand"; //$NON-NLS-1$
+
+	/** "cherry-pick" a commit */
+	public static final String CHERRYPICK = "org.eclipse.egit.ui.history.CherryPick"; //$NON-NLS-1$
 }
