@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.osgi.framework.BundleContext;
@@ -95,5 +96,15 @@ public class TestUtil {
 				sb.append(c);
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * Utility for waiting until the execution of jobs of a given
+	 * family has finished.
+	 * @param family
+	 * @throws InterruptedException
+	 */
+	public static void joinJobs(Object family) throws InterruptedException  {
+		Job.getJobManager().join(family, null);
 	}
 }
