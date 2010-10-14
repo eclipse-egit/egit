@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALzH///6w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/OpenInTextEditorHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T22:07:25Z",
+      "side": 1,
+      "message": "style nit: avoid braces around single line block",
+      "revId": "290e5abb94e343c80be092b0d309d2eda520e8a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
