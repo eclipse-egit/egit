@@ -592,10 +592,15 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 									.add(getCommandContributionItem(
 											HistoryViewCommands.COMPARE_VERSIONS,
 											UIText.GitHistoryPage_CompareWithEachOtherMenuLabel));
-						if (selectionSize > 0)
+						if (selectionSize > 0) {
 							popupMgr.add(getCommandContributionItem(
 									HistoryViewCommands.OPEN,
 									UIText.GitHistoryPage_OpenMenuLabel));
+							popupMgr
+									.add(getCommandContributionItem(
+											HistoryViewCommands.OPEN_IN_TEXT_EDITOR,
+											UIText.GitHistoryPage_OpenInTextEditorLabel));
+						}
 					}
 
 					if (selectionSize == 1) {
