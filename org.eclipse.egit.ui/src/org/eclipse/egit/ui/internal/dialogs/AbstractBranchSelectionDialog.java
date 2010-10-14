@@ -19,9 +19,9 @@ import java.util.List;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
-import org.eclipse.egit.ui.internal.repository.tree.LocalBranchesNode;
+import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
-import org.eclipse.egit.ui.internal.repository.tree.RemoteBranchesNode;
+import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
@@ -99,8 +99,8 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 			Repository repository, String refToMark) {
 		super(parentShell);
 		this.repo = repository;
-		localBranches = new LocalBranchesNode(null, this.repo);
-		remoteBranches = new RemoteBranchesNode(null, this.repo);
+		localBranches = new LocalNode(null, this.repo);
+		remoteBranches = new RemoteTrackingNode(null, this.repo);
 		tags = new TagsNode(null, this.repo);
 		this.refToMark = refToMark;
 	}

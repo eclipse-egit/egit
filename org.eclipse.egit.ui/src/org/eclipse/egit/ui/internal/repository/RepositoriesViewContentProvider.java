@@ -38,10 +38,10 @@ import org.eclipse.egit.ui.internal.repository.tree.ErrorNode;
 import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
-import org.eclipse.egit.ui.internal.repository.tree.LocalBranchesNode;
+import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
 import org.eclipse.egit.ui.internal.repository.tree.PushNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
-import org.eclipse.egit.ui.internal.repository.tree.RemoteBranchesNode;
+import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemotesNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
@@ -150,12 +150,12 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 		case BRANCHES: {
 			List<RepositoryTreeNode> nodes = new ArrayList<RepositoryTreeNode>();
-			nodes.add(new LocalBranchesNode(node, repo));
-			nodes.add(new RemoteBranchesNode(node, repo));
+			nodes.add(new LocalNode(node, repo));
+			nodes.add(new RemoteTrackingNode(node, repo));
 			return nodes.toArray();
 		}
 
-		case LOCALBRANCHES: {
+		case LOCAL: {
 			if (branchHierarchyMode) {
 				BranchHierarchyNode hierNode = new BranchHierarchyNode(node,
 						repo, new Path(Constants.R_HEADS));
@@ -189,7 +189,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			}
 		}
 
-		case REMOTEBRANCHES: {
+		case REMOTETRACKING: {
 			if (branchHierarchyMode) {
 				BranchHierarchyNode hierNode = new BranchHierarchyNode(node,
 						repo, new Path(Constants.R_REMOTES));

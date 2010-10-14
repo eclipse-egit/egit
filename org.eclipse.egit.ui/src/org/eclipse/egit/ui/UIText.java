@@ -1885,10 +1885,10 @@ public class UIText extends NLS {
 	public static String RepositoriesViewLabelProvider_BareRepositoryMessage;
 
 	/** */
-	public static String RepositoriesViewLabelProvider_LocalBranchesNodetext;
+	public static String RepositoriesViewLabelProvider_LocalNodetext;
 
 	/** */
-	public static String RepositoriesViewLabelProvider_RemoteBrancheNodetext;
+	public static String RepositoriesViewLabelProvider_RemoteTrackingNodetext;
 
 	/** */
 	public static String RepositoriesViewLabelProvider_SymbolicRefNodeText;
