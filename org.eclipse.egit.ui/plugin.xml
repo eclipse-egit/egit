@@ -290,14 +290,6 @@
             class="org.eclipse.egit.ui.internal.preferences.GitPreferenceRoot"
             id="org.eclipse.egit.ui.GitPreferences" />
 
-      <page name="%GitPreferences_HistoryPreferencePage_name"
-	    category="org.eclipse.egit.ui.GitPreferences"
-            class="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"
-	    id="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage" >
-	    <keywordReference
-		  id="org.eclipse.egit.ui.keyword.git">
-	    </keywordReference>
-	    </page>
       <page name="%GitPreferences_WindowCachePreferencePage_name"
 	    category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage"
@@ -306,15 +298,6 @@
 		  id="org.eclipse.egit.ui.keyword.git">
 	    </keywordReference>
       </page>
-      <page name="%GitPreferences_RefreshPreferences_name"
-	    category="org.eclipse.egit.ui.GitPreferences"
-            class="org.eclipse.egit.ui.internal.preferences.RefreshPreferencesPage"
-	    id="org.eclipse.egit.ui.internal.preferences.RefreshPreferencesPage" >
-	    <keywordReference
-		  id="org.eclipse.egit.ui.keyword.git"/>
-	    <keywordReference
-		  id="org.eclipse.egit.ui.keyword.refresh"/>
-	    </page>
 	  <page name="%GitPreferences_DecoratorPreferencePage_name"
 	    category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage"
@@ -328,15 +311,6 @@
          class="org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage"
          id="org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage"
          name="%ConfigurationPage.name">
-      <keywordReference
-            id="org.eclipse.egit.ui.keyword.git">
-      </keywordReference>
-   </page>
-   <page
-         category="org.eclipse.egit.ui.GitPreferences"
-         class="org.eclipse.egit.ui.internal.preferences.RemoteConnectionPreferencePage"
-         id="org.eclipse.egit.ui.page1"
-         name="Remote Connections">
       <keywordReference
             id="org.eclipse.egit.ui.keyword.git">
       </keywordReference>
@@ -2048,6 +2022,11 @@
             defaultHandler="org.eclipse.egit.ui.internal.history.command.CheckoutCommitHandler"
             id="org.eclipse.egit.ui.history.CheckoutCommand"
             name="%CheckoutCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.OpenInTextEditorHandler"
+            id="org.eclipse.egit.ui.history.OpenInTextEditorCommand"
+            name="Open in Text Editor">
       </command>
    </extension>
    <extension

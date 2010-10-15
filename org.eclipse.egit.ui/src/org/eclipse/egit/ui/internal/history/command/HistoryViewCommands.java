@@ -58,4 +58,7 @@ public class HistoryViewCommands {
 
 	/** "Open" or "Show Versions" (depending on the selection) */
 	public static final String SHOWVERSIONS = "org.eclipse.egit.ui.history.ShowVersions"; //$NON-NLS-1$
+
+	/** Open in Text Editor */
+	public static final String OPEN_IN_TEXT_EDITOR = "org.eclipse.egit.ui.history.OpenInTextEditorCommand"; //$NON-NLS-1$
 }

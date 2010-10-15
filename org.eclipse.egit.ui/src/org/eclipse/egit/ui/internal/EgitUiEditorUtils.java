@@ -61,6 +61,26 @@ public class EgitUiEditorUtils {
 	}
 
 	/**
+	 * Opens a text editor on a revision
+	 *
+	 * @param page
+	 *            the page
+	 * @param revision
+	 *            the revision
+	 * @param monitor
+	 *            a progress monitor, may be null
+	 * @throws CoreException
+	 *             upon failure
+	 */
+	public static void openTextEditor(IWorkbenchPage page,
+			IFileRevision revision, IProgressMonitor monitor)
+			throws CoreException {
+		FileRevisionEditorInput fileRevEditorInput = FileRevisionEditorInput
+				.createEditorInputFor(revision, monitor);
+		openEditor(page, fileRevEditorInput, "org.eclipse.ui.DefaultTextEditor"); //$NON-NLS-1$
+	}
+
+	/**
 	 * @param page
 	 * @param editorInput
 	 * @return the part
