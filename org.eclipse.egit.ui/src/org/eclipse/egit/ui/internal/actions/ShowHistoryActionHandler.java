@@ -11,7 +11,10 @@ package org.eclipse.egit.ui.internal.actions;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.core.ResourceList;
+import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.history.HistoryPageInput;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -28,8 +31,23 @@ public class ShowHistoryActionHandler extends RepositoryActionHandler {
 					.getActiveWorkbenchWindow().getActivePage().showView(
 							IHistoryView.VIEW_ID);
 			IResource[] resources = getSelectedResources(event);
-			ResourceList list = new ResourceList(resources);
-			view.showHistoryFor(list);
+			if (resources.length == 1) {
+				view.showHistoryFor(resources[0]);
+				return null;
+			}
+			// multiple resources: build a HistoryPageInput
+			Repository repo = null;
+			for (IResource res : resources) {
+				Repository actRepo = RepositoryMapping.getMapping(res)
+						.getRepository();
+				if (repo == null)
+					repo = actRepo;
+				if (repo != actRepo)
+					throw new ExecutionException(
+							UIText.AbstractHistoryCommanndHandler_NoUniqueRepository);
+			}
+			HistoryPageInput input = new HistoryPageInput(repo, resources);
+			view.showHistoryFor(input);
 		} catch (PartInitException e) {
 			throw new ExecutionException(e.getMessage(), e);
 		}

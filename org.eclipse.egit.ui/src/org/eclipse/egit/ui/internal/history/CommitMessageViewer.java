@@ -31,6 +31,8 @@ import org.eclipse.jface.text.DefaultTextDoubleClickStrategy;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.TextViewer;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -55,7 +57,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
-class CommitMessageViewer extends TextViewer implements ISelectionChangedListener{
+class CommitMessageViewer extends TextViewer implements
+		ISelectionChangedListener {
 	private final ListenerList navListeners = new ListenerList();
 
 	private final DateFormat fmt;
@@ -82,6 +85,8 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 
 	private TreeWalk walker;
 
+	private IPropertyChangeListener listener;
+
 	// the encoding for the currently processed file
 	private String currentEncoding = null;
 
@@ -99,8 +104,10 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		sys_linkColor = t.getDisplay().getSystemColor(SWT.COLOR_BLUE);
 		sys_darkgray = t.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
 		sys_hunkHeaderColor = t.getDisplay().getSystemColor(SWT.COLOR_BLUE);
-		sys_linesAddedColor = t.getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN);
-		sys_linesRemovedColor = t.getDisplay().getSystemColor(SWT.COLOR_DARK_RED);
+		sys_linesAddedColor = t.getDisplay().getSystemColor(
+				SWT.COLOR_DARK_GREEN);
+		sys_linesRemovedColor = t.getDisplay().getSystemColor(
+				SWT.COLOR_DARK_RED);
 
 		sys_linkCursor = t.getDisplay().getSystemCursor(SWT.CURSOR_HAND);
 
@@ -149,6 +156,28 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		setTextDoubleClickStrategy(new DefaultTextDoubleClickStrategy(),
 				IDocument.DEFAULT_CONTENT_TYPE);
 		activatePlugins();
+		listener = new IPropertyChangeListener() {
+
+			public void propertyChange(PropertyChangeEvent event) {
+				if (event.getProperty().equals(
+						UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP)) {
+					setWrap(((Boolean) event.getNewValue()).booleanValue());
+					return;
+				}
+				if (event.getProperty().equals(
+						UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL)) {
+					setFill(((Boolean) event.getNewValue()).booleanValue());
+					return;
+				}
+			}
+		};
+		Activator.getDefault().getPreferenceStore().addPropertyChangeListener(listener);
+	}
+
+	@Override
+	protected void handleDispose() {
+		Activator.getDefault().getPreferenceStore().removePropertyChangeListener(listener);
+		super.handleDispose();
 	}
 
 	void addCommitNavigationListener(final CommitNavigationListener l) {
@@ -175,7 +204,8 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 
 	private void format() {
 		if (commit == null) {
-			setDocument(new Document(UIText.CommitMessageViewer_SelectOneCommitMessage));
+			setDocument(new Document(
+					UIText.CommitMessageViewer_SelectOneCommitMessage));
 			return;
 		}
 
@@ -191,7 +221,7 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 
 		if (author != null) {
 			d.append(UIText.CommitMessageViewer_author);
-			d.append(": ");  //$NON-NLS-1$
+			d.append(": "); //$NON-NLS-1$
 			d.append(author.getName());
 			d.append(" <"); //$NON-NLS-1$
 			d.append(author.getEmailAddress());
@@ -202,7 +232,7 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 
 		if (committer != null) {
 			d.append(UIText.CommitMessageViewer_committer);
-			d.append(": ");  //$NON-NLS-1$
+			d.append(": "); //$NON-NLS-1$
 			d.append(committer.getName());
 			d.append(" <"); //$NON-NLS-1$
 			d.append(committer.getEmailAddress());
@@ -214,7 +244,7 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		for (int i = 0; i < commit.getParentCount(); i++) {
 			final RevCommit p = commit.getParent(i);
 			d.append(UIText.CommitMessageViewer_parent);
-			d.append(": ");  //$NON-NLS-1$
+			d.append(": "); //$NON-NLS-1$
 			addLink(d, styles, p);
 			d.append(" ("); //$NON-NLS-1$
 			d.append(p.getShortMessage());
@@ -225,7 +255,7 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		for (int i = 0; i < commit.getChildCount(); i++) {
 			final RevCommit p = commit.getChild(i);
 			d.append(UIText.CommitMessageViewer_child);
-			d.append(":  ");  //$NON-NLS-1$
+			d.append(":  "); //$NON-NLS-1$
 			addLink(d, styles, p);
 			d.append(" ("); //$NON-NLS-1$
 			d.append(p.getShortMessage());
@@ -254,7 +284,8 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 
 		Matcher matcher = p.matcher(msg);
 		while (matcher.find()) {
-			styles.add(new StyleRange(h0 + matcher.start(), matcher.end()-matcher.start(), null,  null, SWT.ITALIC));
+			styles.add(new StyleRange(h0 + matcher.start(), matcher.end()
+					- matcher.start(), null, null, SWT.ITALIC));
 		}
 
 		final StyleRange[] arr = new StyleRange[styles.size()];
@@ -268,13 +299,13 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		getTextWidget().setStyleRanges(arr);
 	}
 
-	private void makeGrayText(StringBuilder d,
-			ArrayList<StyleRange> styles) {
+	private void makeGrayText(StringBuilder d, ArrayList<StyleRange> styles) {
 		int p0 = 0;
-		for (int i = 0; i<styles.size(); ++i) {
+		for (int i = 0; i < styles.size(); ++i) {
 			StyleRange r = styles.get(i);
 			if (p0 < r.start) {
-				StyleRange nr = new StyleRange(p0, r.start  - p0, sys_darkgray, null);
+				StyleRange nr = new StyleRange(p0, r.start - p0, sys_darkgray,
+						null);
 				styles.add(i, nr);
 				p0 = r.start;
 			} else {
@@ -284,7 +315,8 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 			}
 		}
 		if (d.length() - 1 > p0) {
-			StyleRange nr = new StyleRange(p0, d.length() - p0, sys_darkgray, null);
+			StyleRange nr = new StyleRange(p0, d.length() - p0, sys_darkgray,
+					null);
 			styles.add(nr);
 		}
 	}
@@ -306,21 +338,22 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		final DiffFormatter diffFmt = new DiffFormatter(
 				new BufferedOutputStream(new ByteArrayOutputStream() {
 
-			@Override
-			public synchronized void write(byte[] b, int off, int len) {
-				super.write(b, off, len);
-				if (currentEncoding == null)
-					d.append(toString());
+					@Override
+					public synchronized void write(byte[] b, int off, int len) {
+						super.write(b, off, len);
+						if (currentEncoding == null)
+							d.append(toString());
 
-				else try {
-					d.append(toString(currentEncoding));
-				} catch (UnsupportedEncodingException e) {
-					d.append(toString());
-				}
-				reset();
-			}
+						else
+							try {
+								d.append(toString(currentEncoding));
+							} catch (UnsupportedEncodingException e) {
+								d.append(toString());
+							}
+						reset();
+					}
 
-		})) {
+				})) {
 			@Override
 			protected void writeHunkHeader(int aCur, int aEnd, int bCur,
 					int bEnd) throws IOException {
@@ -366,7 +399,8 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 			for (FileDiff diff : diffs) {
 				if (diff.getBlobs().length == 2) {
 					String path = diff.getPath();
-					currentEncoding = CompareUtils.getResourceEncoding(db, path);
+					currentEncoding = CompareUtils
+							.getResourceEncoding(db, path);
 					d.append(formatPathLine(path)).append("\n"); //$NON-NLS-1$
 					diff.outputDiff(d, db, diffFmt, true);
 					diffFmt.flush();
@@ -381,18 +415,17 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 
 	private String formatPathLine(String path) {
 		int n = 80 - path.length() - 2;
-		if (n < 0 )
+		if (n < 0)
 			return path;
 		final StringBuilder d = new StringBuilder();
 		int i = 0;
-		for (; i < n/2; i++)
+		for (; i < n / 2; i++)
 			d.append("-"); //$NON-NLS-1$
 		d.append(SPACE).append(path).append(SPACE);
 		for (; i < n - 1; i++)
 			d.append("-"); //$NON-NLS-1$
 		return d.toString();
 	}
-
 
 	static class ObjectLink extends StyleRange {
 		RevCommit targetCommit;
@@ -407,7 +440,8 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 
 		@Override
 		public boolean equals(Object object) {
-			return super.equals(object) && targetCommit.equals(((ObjectLink)object).targetCommit);
+			return super.equals(object)
+					&& targetCommit.equals(((ObjectLink) object).targetCommit);
 		}
 
 		@Override
@@ -416,12 +450,12 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		}
 	}
 
-	void setWrap(boolean wrap) {
+	private void setWrap(boolean wrap) {
 		format();
 		getTextWidget().setWordWrap(wrap);
 	}
 
-	void setFill(boolean fill) {
+	private void setFill(boolean fill) {
 		this.fill = fill;
 		format();
 	}
@@ -433,10 +467,10 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 	public void selectionChanged(SelectionChangedEvent event) {
 		ISelection selection = event.getSelection();
 		if (selection instanceof IStructuredSelection) {
-			IStructuredSelection sel = (IStructuredSelection)selection;
+			IStructuredSelection sel = (IStructuredSelection) selection;
 			Object obj = sel.getFirstElement();
 			if (obj instanceof FileDiff) {
-				String path = ((FileDiff)obj).getPath();
+				String path = ((FileDiff) obj).getPath();
 				findAndSelect(0, formatPathLine(path), true, true, false, false);
 			}
 		}

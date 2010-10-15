@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history.command;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,14 +19,19 @@ import org.eclipse.compare.CompareUI;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.ResourceList;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
+import org.eclipse.egit.ui.internal.history.HistoryPageInput;
+import org.eclipse.egit.ui.internal.repository.tree.FileNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -72,6 +78,37 @@ abstract class AbstractHistoryCommanndHandler extends AbstractHandler {
 			throw new ExecutionException(
 					UIText.AbstractHistoryCommanndHandler_NoInputMessage);
 		return (((IHistoryView) part).getHistoryPage().getInput());
+	}
+
+	protected IFile getFileInput(ExecutionEvent event)
+			throws ExecutionException {
+		IWorkbenchPart part = getPart(event);
+		if (!(part instanceof IHistoryView))
+			throw new ExecutionException(
+					UIText.AbstractHistoryCommanndHandler_NoInputMessage);
+		Object actInput = (((IHistoryView) part).getHistoryPage().getInput());
+		if (actInput instanceof IFile)
+			return (IFile) actInput;
+		return null;
+	}
+
+	protected File getLocalFileInput(ExecutionEvent event)
+			throws ExecutionException {
+		IWorkbenchPart part = getPart(event);
+		if (!(part instanceof IHistoryView))
+			throw new ExecutionException(
+					UIText.AbstractHistoryCommanndHandler_NoInputMessage);
+		Object actInput = (((IHistoryView) part).getHistoryPage().getInput());
+		if (actInput instanceof FileNode)
+			return ((FileNode) actInput).getObject();
+		return null;
+	}
+
+	protected String getRepoRelativePath(Repository repo, File file){
+		IPath workdirPath = new Path(repo.getWorkTree().getPath());
+		IPath filePath = new Path(file.getPath()).setDevice(null);
+		return filePath.removeFirstSegments(
+				workdirPath.segmentCount()).toString();
 	}
 
 	protected void openInCompare(ExecutionEvent event, CompareEditorInput input)
@@ -144,8 +181,8 @@ abstract class AbstractHistoryCommanndHandler extends AbstractHandler {
 			throws ExecutionException {
 		Object input = getInput(event);
 		Repository repo = null;
-		if (input instanceof ResourceList) {
-			for (IResource res : ((ResourceList) input).getItems()) {
+		if (input instanceof HistoryPageInput) {
+			for (IResource res : ((HistoryPageInput) input).getItems()) {
 				Repository resourceRepo = RepositoryMapping.getMapping(res)
 						.getRepository();
 				if (repo == null)
@@ -155,7 +192,9 @@ abstract class AbstractHistoryCommanndHandler extends AbstractHandler {
 							UIText.AbstractHistoryCommanndHandler_NoUniqueRepository);
 			}
 			return repo;
-		} else
+		} else if (input instanceof RepositoryTreeNode)
+			return ((RepositoryTreeNode) input).getRepository();
+		else
 			return RepositoryMapping.getMapping((IResource) input)
 					.getRepository();
 	}

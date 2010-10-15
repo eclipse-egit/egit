@@ -151,6 +151,9 @@ public class UIText extends NLS {
 	public static String SharingWizard_failed;
 
 	/** */
+	public static String GenerateHistoryJob_BuildingListMessage;
+
+	/** */
 	public static String GenerateHistoryJob_errorComputingHistory;
 
 	/** */
@@ -268,6 +271,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_CompareModeMenuLabel;
 
 	/** */
+	public static String GitHistoryPage_CompareWithCurrentHeadMenuLabel;
+
+	/** */
 	public static String GitHistoryPage_CompareWithEachOtherMenuLabel;
 
 	/** */
@@ -340,6 +346,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_RefreshMenuLabel;
 
 	/** */
+	public static String GitHistoryPage_RepositoryNamePattern;
+
+	/** */
 	public static String GitHistoryPage_ResetBaselineToHeadMenuLabel;
 
 	/** */
@@ -364,7 +373,13 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_ShowAllBranchesMenuLabel;
 
 	/** */
+	public static String GitPreferenceRoot_AllBranchesLabel;
+
+	/** */
 	public static String GitPreferenceRoot_CloningRepoGroupHeader;
+
+	/** */
+	public static String GitPreferenceRoot_CompareModeLabel;
 
 	/** */
 	public static String GitPreferenceRoot_DefaultRepoFolderLabel;

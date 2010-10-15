@@ -203,6 +203,20 @@
             </adapter>
          </factory>
          <factory
+               adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"
+               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            <adapter
+                  type="org.eclipse.team.ui.history.IHistoryPageSource">
+            </adapter>
+         </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.history.HistoryPageInput"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter
+               type="org.eclipse.team.ui.history.IHistoryPageSource">
+         </adapter>
+      </factory>
+         <factory
 	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRoot"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
@@ -1282,6 +1296,40 @@
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewOpenHistory"
+               label="Open in &amp;History"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <or>
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                     </iterate>
+                  </and>
+                  <and>
+                     <count
+                           value="+">
+                     </count>
+                     <iterate>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.FileNode">
+                           </instanceof>
+                        </or>
+                     </iterate></and>
+               </or>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesViewCopyPath"
                label="%RepoViewCopyPath.label"
                style="push">
@@ -1619,6 +1667,12 @@
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.OpenHistoryCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewOpenHistory"
+            name="Open History">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.commandImages">
@@ -1745,6 +1799,10 @@
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewRemove"
             icon="icons/obj16/clear.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewOpenHistory"
+            icon="icons/obj16/history.gif">
       </image>
    </extension>
    <extension

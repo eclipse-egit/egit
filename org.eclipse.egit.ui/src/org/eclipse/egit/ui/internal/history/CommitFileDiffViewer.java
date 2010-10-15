@@ -64,8 +64,6 @@ class CommitFileDiffViewer extends TableViewer {
 
 	private Clipboard clipboard;
 
-	private boolean compareMode;
-
 	private StyledText noInputText;
 
 	private final StackLayout stackLayout;
@@ -111,6 +109,9 @@ class CommitFileDiffViewer extends TableViewer {
 					return;
 				final IStructuredSelection iss = (IStructuredSelection) s;
 				final FileDiff d = (FileDiff) iss.getFirstElement();
+				boolean compareMode = Activator.getDefault()
+						.getPreferenceStore().getBoolean(
+								UIPreferences.RESOURCEHISTORY_COMPARE_MODE);
 				if (compareMode) {
 					if (d.getBlobs().length <= 2)
 						showTwoWayFileDiff(d);
@@ -262,9 +263,5 @@ class CommitFileDiffViewer extends TableViewer {
 		path.setText(UIText.HistoryPage_pathnameColumn);
 		path.setWidth(250);
 		layout.addColumnData(new ColumnWeightData(20, true));
-	}
-
-	public void setCompareMode(boolean compareMode) {
-		this.compareMode = compareMode;
 	}
 }
