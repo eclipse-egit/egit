@@ -101,7 +101,7 @@ public class GITFetchTaskFactory implements IFetchFactory {
 	// copied from FetchScriptGenerator to be independent from changes there
 	public static String PROP_FETCH_CACHE_LOCATION = "fetchCacheLocation"; //$NON-NLS-1$
 
-	public static String DEFAULT_FETCH_CACHE_LOCATION = "scmCache"; //$NON-NLS-1$
+	public static String DEFAULT_FETCH_CACHE_LOCATION = "${basedir}/scmCache"; //$NON-NLS-1$
 
 	private static void printArg(IAntScript script, String value) {
 		final Map<String, String> params = new HashMap<String, String>(1);
@@ -287,6 +287,9 @@ public class GITFetchTaskFactory implements IFetchFactory {
 		final String tag = (String) entryInfos
 				.get(IFetchFactory.KEY_ELEMENT_TAG);
 
+		// set required property defaults
+		printGitRepoBaseLocationDefault(script);
+
 		final String gitCopyTarget;
 		IPath locationToCheck = null;
 		final Map<String, String> params = new HashMap<String, String>(5);
@@ -368,6 +371,9 @@ public class GITFetchTaskFactory implements IFetchFactory {
 		final String path = (String) entryInfos.get(KEY_PATH);
 		final String tag = (String) entryInfos
 				.get(IFetchFactory.KEY_ELEMENT_TAG);
+
+		// set required property defaults
+		printGitRepoBaseLocationDefault(script);
 
 		// clone the Git repo to a local repo and checkout the tag
 		printCloneRepoAndCheckoutTagTasks(script, gitRepo, localGitRepo, tag,
