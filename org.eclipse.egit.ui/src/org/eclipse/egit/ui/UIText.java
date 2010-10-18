@@ -343,6 +343,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_RefreshMenuLabel;
 
 	/** */
+	public static String GitHistoryPage_RepositoryNamePattern;
+
+	/** */
 	public static String GitHistoryPage_ResetBaselineToHeadMenuLabel;
 
 	/** */
