@@ -14,8 +14,8 @@ import java.io.File;
 
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.BranchesNode;
-import org.eclipse.egit.ui.internal.repository.tree.LocalBranchesNode;
-import org.eclipse.egit.ui.internal.repository.tree.RemoteBranchesNode;
+import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
+import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemotesNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.SymbolicRefsNode;
@@ -34,7 +34,7 @@ public class GitRepositoriesViewTestUtils {
 		Repository repository = lookupRepository(repo);
 		RepositoryNode root = new RepositoryNode(null, repository);
 		BranchesNode branches = new BranchesNode(root, repository);
-		LocalBranchesNode localBranches = new LocalBranchesNode(branches,
+		LocalNode localBranches = new LocalNode(branches,
 				repository);
 
 		String rootText = labelProvider.getStyledText(root).getString();
@@ -64,7 +64,7 @@ public class GitRepositoriesViewTestUtils {
 		Repository repository = lookupRepository(repositoryFile);
 		RepositoryNode root = new RepositoryNode(null, repository);
 		BranchesNode branches = new BranchesNode(root, repository);
-		RemoteBranchesNode remoteBranches = new RemoteBranchesNode(branches,
+		RemoteTrackingNode remoteBranches = new RemoteTrackingNode(branches,
 				repository);
 
 		String rootText = labelProvider.getStyledText(root).getString();

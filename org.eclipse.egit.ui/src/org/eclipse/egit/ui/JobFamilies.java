@@ -9,8 +9,7 @@
 package org.eclipse.egit.ui;
 
 /**
- * Job families of EGit jobs. May be used in tests to join
- * job execution.
+ * Job families of EGit jobs. May be used in tests to join job execution.
  *
  */
 public class JobFamilies {
@@ -18,9 +17,19 @@ public class JobFamilies {
 	 * GenerateHistoryJob
 	 */
 	public final static Object GENERATE_HISTORY = new Object();
+
 	/**
 	 * Commit job
 	 */
 	public final static Object COMMIT = new Object();
 
+	/**
+	 * Checkout job
+	 */
+	public final static Object CHECKOUT = new Object();
+
+	/**
+	 * Push job
+	 */
+	public final static Object PUSH = new Object();
 }

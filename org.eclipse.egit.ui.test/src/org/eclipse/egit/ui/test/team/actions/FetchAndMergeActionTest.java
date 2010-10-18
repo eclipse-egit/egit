@@ -19,7 +19,7 @@ import java.io.File;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
-import org.eclipse.egit.ui.internal.repository.tree.RemoteBranchesNode;
+import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -58,7 +58,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 		bot.perspectiveById("org.eclipse.pde.ui.PDEPerspective").activate();
 		RepositoriesViewLabelProvider provider = new RepositoriesViewLabelProvider();
 		Repository repo = lookupRepository(childRepositoryFile);
-		REMOTE_BRANCHES = provider.getText(new RemoteBranchesNode(
+		REMOTE_BRANCHES = provider.getText(new RemoteTrackingNode(
 				new RepositoryNode(null, repo), repo));
 	}
 

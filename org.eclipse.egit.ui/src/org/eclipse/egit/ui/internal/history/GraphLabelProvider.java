@@ -34,6 +34,8 @@ class GraphLabelProvider extends BaseLabelProvider implements
 		final RevCommit c = (RevCommit) element;
 		if (columnIndex == 0)
 			return c.getShortMessage();
+		if (columnIndex == 3)
+			return c.getId().getName();
 
 		final PersonIdent author = authorOf(c);
 		if (author != null) {
