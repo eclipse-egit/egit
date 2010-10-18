@@ -31,6 +31,8 @@ import org.eclipse.jface.text.DefaultTextDoubleClickStrategy;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.TextViewer;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -81,6 +83,8 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 	private Repository db;
 
 	private TreeWalk walker;
+
+	private IPropertyChangeListener listener;
 
 	// the encoding for the currently processed file
 	private String currentEncoding = null;
@@ -149,6 +153,30 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		setTextDoubleClickStrategy(new DefaultTextDoubleClickStrategy(),
 				IDocument.DEFAULT_CONTENT_TYPE);
 		activatePlugins();
+		listener = new IPropertyChangeListener() {
+
+			public void propertyChange(PropertyChangeEvent event) {
+				if (event.getProperty().equals(
+						UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP)) {
+					setWrap(((Boolean) event.getNewValue()).booleanValue());
+					return;
+				}
+				if (event.getProperty().equals(
+						UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL)) {
+					setFill(((Boolean) event.getNewValue()).booleanValue());
+					return;
+				}
+			}
+		};
+		Activator.getDefault().getPreferenceStore().addPropertyChangeListener(
+				listener);
+	}
+
+	@Override
+	protected void handleDispose() {
+		Activator.getDefault().getPreferenceStore()
+				.removePropertyChangeListener(listener);
+		super.handleDispose();
 	}
 
 	void addCommitNavigationListener(final CommitNavigationListener l) {
@@ -416,12 +444,12 @@ class CommitMessageViewer extends TextViewer implements ISelectionChangedListene
 		}
 	}
 
-	void setWrap(boolean wrap) {
+	private void setWrap(boolean wrap) {
 		format();
 		getTextWidget().setWordWrap(wrap);
 	}
 
-	void setFill(boolean fill) {
+	private void setFill(boolean fill) {
 		this.fill = fill;
 		format();
 	}
