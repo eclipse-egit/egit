@@ -11,7 +11,10 @@ package org.eclipse.egit.ui.internal.actions;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.core.ResourceList;
+import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.history.HistoryPageInput;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -20,7 +23,6 @@ import org.eclipse.ui.PlatformUI;
  * An action to show the history for a resource.
  */
 public class ShowHistoryActionHandler extends RepositoryActionHandler {
-
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IHistoryView view;
 		try {
@@ -28,7 +30,24 @@ public class ShowHistoryActionHandler extends RepositoryActionHandler {
 					.getActiveWorkbenchWindow().getActivePage().showView(
 							IHistoryView.VIEW_ID);
 			IResource[] resources = getSelectedResources(event);
-			ResourceList list = new ResourceList(resources);
+			if (resources.length == 1) {
+				view.showHistoryFor(resources[0]);
+				return null;
+			}
+
+			Repository repo = null;
+			for (IResource res : resources) {
+				RepositoryMapping map = RepositoryMapping.getMapping(res);
+				if (repo == null)
+					repo = map.getRepository();
+				if (repo != map.getRepository())
+					// we need to make sure are resources are from the same
+					// Repository
+					throw new ExecutionException(
+							UIText.AbstractHistoryCommanndHandler_NoUniqueRepository);
+
+			}
+			HistoryPageInput list = new HistoryPageInput(repo, resources);
 			view.showHistoryFor(list);
 		} catch (PartInitException e) {
 			throw new ExecutionException(e.getMessage(), e);
