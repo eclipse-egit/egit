@@ -1117,6 +1117,32 @@
                name="SecondGroup">
          </separator>
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesView.ShowInHistoryCommand"
+               label="Show in History"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.FileNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesViewOpenInTextEditor"
                label="%RepoViewOpenInEditor.label"
                style="push">
@@ -1633,6 +1659,12 @@
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ShowInHistoryCommand"
+            id="org.eclipse.egit.ui.RepositoriesView.ShowInHistoryCommand"
+            name="Show in History">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.commandImages">
@@ -1759,6 +1791,10 @@
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewRemove"
             icon="icons/obj16/clear.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesView.ShowInHistoryCommand"
+            icon="icons/obj16/history.gif">
       </image>
    </extension>
    <extension

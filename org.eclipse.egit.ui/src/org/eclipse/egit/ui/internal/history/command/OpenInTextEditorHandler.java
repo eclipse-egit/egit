@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history.command;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,6 +27,7 @@ import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
@@ -38,37 +40,71 @@ public class OpenInTextEditorHandler extends AbstractHistoryCommanndHandler {
 		IStructuredSelection selection = getSelection(getPage());
 		if (selection.size() < 1)
 			return null;
-		Object input = getInput(event);
-		if (!(input instanceof IFile))
+		Object input = getPage().getInputInternal().getSingleFile();
+		if (input == null)
 			return null;
-		IFile resource = (IFile) input;
-		final RepositoryMapping map = RepositoryMapping.getMapping(resource);
-		final String gitPath = map.getRepoRelativePath(resource);
-		Iterator<?> it = selection.iterator();
 		boolean errorOccured = false;
 		List<ObjectId> ids = new ArrayList<ObjectId>();
-		while (it.hasNext()) {
-			RevCommit commit = (RevCommit) it.next();
-			IFileRevision rev = null;
-			try {
-				rev = CompareUtils.getFileRevision(gitPath, commit, map
-						.getRepository(), null);
-			} catch (IOException e) {
-				Activator.logError(NLS.bind(
-						UIText.GitHistoryPage_errorLookingUpPath, gitPath,
-						commit.getId()), e);
-				errorOccured = true;
-			}
-			if (rev != null) {
+		String gitPath = null;
+		if (input instanceof IFile) {
+			IFile resource = (IFile) input;
+			final RepositoryMapping map = RepositoryMapping
+					.getMapping(resource);
+			gitPath = map.getRepoRelativePath(resource);
+			Iterator<?> it = selection.iterator();
+			while (it.hasNext()) {
+				RevCommit commit = (RevCommit) it.next();
+				IFileRevision rev = null;
 				try {
-					EgitUiEditorUtils.openTextEditor(getPart(event).getSite()
-							.getPage(), rev, null);
-				} catch (CoreException e) {
-					Activator.logError(e.getMessage(), e);
+					rev = CompareUtils.getFileRevision(gitPath, commit, map
+							.getRepository(), null);
+				} catch (IOException e) {
+					Activator.logError(NLS.bind(
+							UIText.GitHistoryPage_errorLookingUpPath, gitPath,
+							commit.getId()), e);
 					errorOccured = true;
 				}
-			} else {
-				ids.add(commit.getId());
+				if (rev != null) {
+					try {
+						EgitUiEditorUtils.openTextEditor(getPart(event)
+								.getSite().getPage(), rev, null);
+					} catch (CoreException e) {
+						Activator.logError(e.getMessage(), e);
+						errorOccured = true;
+					}
+				} else {
+					ids.add(commit.getId());
+				}
+			}
+		}
+		if (input instanceof File) {
+			Repository repo = getRepository(event);
+			File fileInput = (File) input;
+			gitPath = getRepoRelativePath(repo, fileInput);
+			Iterator<?> it = selection.iterator();
+			while (it.hasNext()) {
+				RevCommit commit = (RevCommit) it.next();
+				IFileRevision rev = null;
+				try {
+					rev = CompareUtils.getFileRevision(gitPath, commit, repo,
+							null);
+				} catch (IOException e) {
+					Activator.logError(NLS.bind(
+							UIText.GitHistoryPage_errorLookingUpPath, gitPath,
+							commit.getId()), e);
+					errorOccured = true;
+				}
+				if (rev != null) {
+					try {
+						EgitUiEditorUtils.openTextEditor(getPart(event)
+								.getSite().getPage(), rev, null);
+					} catch (CoreException e) {
+						Activator.logError(e.getMessage(), e);
+						errorOccured = true;
+					}
+				} else {
+					ids.add(commit.getId());
+				}
 			}
 		}
 		if (errorOccured)
@@ -91,7 +127,8 @@ public class OpenInTextEditorHandler extends AbstractHistoryCommanndHandler {
 		if (page == null)
 			return false;
 		int size = getSelection(page).size();
-		return size >= 1
-				&& IFile.class.isAssignableFrom(page.getInput().getClass());
+		if (size == 0)
+			return false;
+		return page.getInputInternal().isSingleFile();
 	}
 }

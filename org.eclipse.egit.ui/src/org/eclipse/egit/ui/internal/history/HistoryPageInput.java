@@ -25,6 +25,8 @@ public class HistoryPageInput {
 
 	private final Repository repo;
 
+	private final Object singleFile;
+
 	/**
 	 * @param repository
 	 *            the {@link Repository}
@@ -35,6 +37,11 @@ public class HistoryPageInput {
 			final IResource[] resourceItems) {
 		this.repo = repository;
 		list = resourceItems;
+		if (resourceItems.length == 1
+				&& resourceItems[0].getType() == IResource.FILE)
+			singleFile = resourceItems[0];
+		else
+			singleFile = null;
 		files = null;
 	}
 
@@ -47,6 +54,10 @@ public class HistoryPageInput {
 	public HistoryPageInput(final Repository repository, final File[] fileItems) {
 		this.repo = repository;
 		list = null;
+		if (fileItems.length == 1 && fileItems[0].isFile())
+			singleFile = fileItems[0];
+		else
+			singleFile = null;
 		files = fileItems;
 	}
 
@@ -57,6 +68,7 @@ public class HistoryPageInput {
 	public HistoryPageInput(final Repository repository) {
 		this.repo = repository;
 		list = null;
+		singleFile = null;
 		files = null;
 	}
 
@@ -79,5 +91,21 @@ public class HistoryPageInput {
 	 */
 	public File[] getFileList() {
 		return files;
+	}
+
+	/**
+	 * @return the single File, either a {@link IResource} or {@link File}, or
+	 *         <code>null</code>
+	 */
+	public Object getSingleFile() {
+		return singleFile;
+	}
+
+	/**
+	 * @return <code>true</code> if this represents a single file (either as
+	 *         {@link IResource} or as {@link File})
+	 */
+	public boolean isSingleFile() {
+		return singleFile != null;
 	}
 }
