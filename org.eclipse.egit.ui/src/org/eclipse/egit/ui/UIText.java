@@ -256,6 +256,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_AllOfResourceTooltip;
 
 	/** */
+	public static String GitHistoryPage_cherryPickMenuItem;
+
+	/** */
 	public static String GitHistoryPage_compareMode;
 
 	/** */
