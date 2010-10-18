@@ -21,6 +21,8 @@ public enum GitTraceLocation implements ITraceLocation {
 
 	/** UI */
 	UI("/debug/ui"), //$NON-NLS-1$
+	/** HISTORYVIEW */
+	HISTORYVIEW("/debug/ui/historyview"), //$NON-NLS-1$
 	/** REPOSITORIESVIEW */
 	REPOSITORIESVIEW("/debug/ui/repositoriesview"), //$NON-NLS-1$
 	/** REPOSITORYCHANGESCANNER */
