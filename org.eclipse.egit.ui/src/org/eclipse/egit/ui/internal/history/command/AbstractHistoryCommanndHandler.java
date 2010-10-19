@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history.command;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +20,8 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -26,6 +29,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -66,7 +70,7 @@ abstract class AbstractHistoryCommanndHandler extends AbstractHandler {
 		return HandlerUtil.getActivePartChecked(event);
 	}
 
-	protected Object getInput(ExecutionEvent event) throws ExecutionException {
+	private Object getInput(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchPart part = getPart(event);
 		if (!(part instanceof IHistoryView))
 			throw new ExecutionException(
@@ -143,11 +147,18 @@ abstract class AbstractHistoryCommanndHandler extends AbstractHandler {
 	protected Repository getRepository(ExecutionEvent event)
 			throws ExecutionException {
 		Object input = getInput(event);
-		if (input instanceof HistoryPageInput) {
+		if (input instanceof HistoryPageInput)
 			return ((HistoryPageInput) input).getRepository();
-		} else
-			return RepositoryMapping.getMapping((IResource) input)
-					.getRepository();
+		if (input instanceof RepositoryTreeNode)
+			return ((RepositoryTreeNode) input).getRepository();
+		return RepositoryMapping.getMapping((IResource) input).getRepository();
+	}
+
+	protected String getRepoRelativePath(Repository repo, File file) {
+		IPath workdirPath = new Path(repo.getWorkTree().getPath());
+		IPath filePath = new Path(file.getPath()).setDevice(null);
+		return filePath.removeFirstSegments(workdirPath.segmentCount())
+				.toString();
 	}
 
 	/**
