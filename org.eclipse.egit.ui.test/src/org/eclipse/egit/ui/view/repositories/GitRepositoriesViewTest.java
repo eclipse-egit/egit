@@ -586,7 +586,10 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				tree, repositoryFile).expand();
 		SWTBotTreeItem masterNode = localBranchesItem.getNode("master");
 		masterNode.select();
-		ContextMenuHelper.clickContextMenu(tree, "Create Branch...");
+		ContextMenuHelper.clickContextMenu(tree, myUtil
+				.getPluginLocalizedValue("RepoViewCheckout.label"));
+		ContextMenuHelper.clickContextMenu(tree, myUtil
+				.getPluginLocalizedValue("RepoViewCreateBranch.label"));
 		SWTBotShell createBranchShell = bot
 				.shell(UIText.CreateBranchWizard_NewBranchTitle);
 		createBranchShell.bot().textWithId("BranchName").setText("abc");
@@ -595,11 +598,9 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		refreshAndWait();
 		// delete branch
 		localBranchesItem.getNode("abc").select();
-		ContextMenuHelper.clickContextMenu(tree, "Delete Branch...");
+		ContextMenuHelper.clickContextMenu(tree, myUtil
+				.getPluginLocalizedValue("RepoViewDeleteBranch.label"));
 
-		SWTBotShell deleteBranchDialog = bot
-				.shell(UIText.RepositoriesView_ConfirmDeleteTitle);
-		deleteBranchDialog.bot().button(IDialogConstants.OK_LABEL).click();
 		refreshAndWait();
 		SWTBotTreeItem[] items = myRepoViewUtil.getLocalBranchesItem(tree,
 				repositoryFile).getItems();
@@ -636,16 +637,8 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				repositoryFile).expand();
 		// delete both
 		localBranchesItem.select("abc", "123");
-		ContextMenuHelper.clickContextMenu(tree,
-				UIText.RepositoriesView_DeleteBranchMenu);
-
-		SWTBotShell deleteBranchDialog = bot
-				.shell(UIText.RepositoriesView_ConfirmDeleteTitle);
-		assertNotNull(deleteBranchDialog.bot().table(0).getTableItem(
-				"refs/heads/abc"));
-		assertNotNull(deleteBranchDialog.bot().table(0).getTableItem(
-				"refs/heads/123"));
-		deleteBranchDialog.bot().button(IDialogConstants.OK_LABEL).click();
+		ContextMenuHelper.clickContextMenu(tree, myUtil
+				.getPluginLocalizedValue("RepoViewDeleteBranch.label"));
 		refreshAndWait();
 
 		SWTBotTreeItem[] items = myRepoViewUtil.getLocalBranchesItem(tree,
