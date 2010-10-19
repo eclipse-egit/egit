@@ -203,6 +203,13 @@
             </adapter>
          </factory>
          <factory
+               adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode"
+               class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+            <adapter
+                  type="org.eclipse.team.ui.history.IHistoryPageSource">
+            </adapter>
+         </factory>
+         <factory
                adaptableType="org.eclipse.egit.ui.internal.history.HistoryPageInput"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
