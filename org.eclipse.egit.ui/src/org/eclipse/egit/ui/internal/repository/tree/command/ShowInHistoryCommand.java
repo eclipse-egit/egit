@@ -41,7 +41,8 @@ public class ShowInHistoryCommand extends
 		List<RepositoryTreeNode> selectedNodes = getSelectedNodes(event);
 		if (selectedNodes.size() == 1) {
 			RepositoryTreeNode selectedNode = selectedNodes.get(0);
-			if (selectedNode.getType() == RepositoryTreeNodeType.FILE
+			if (selectedNode.getType() == RepositoryTreeNodeType.REPO
+					|| selectedNode.getType() == RepositoryTreeNodeType.FILE
 					|| selectedNode.getType() == RepositoryTreeNodeType.FOLDER)
 				nodeToShow = selectedNode;
 			else
@@ -71,8 +72,6 @@ public class ShowInHistoryCommand extends
 							.getActivePage().showView(IHistoryView.VIEW_ID);
 					if (nodeToShow != null)
 						part.showHistoryFor(nodeToShow);
-					else if (fileList.isEmpty())
-						part.showHistoryFor(repoToShow);
 					else {
 						part.showHistoryFor(new HistoryPageInput(repoToShow,
 								fileList.toArray(new File[fileList.size()])));

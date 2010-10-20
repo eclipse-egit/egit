@@ -151,6 +151,9 @@ public class UIText extends NLS {
 	public static String SharingWizard_failed;
 
 	/** */
+	public static String GenerateHistoryJob_BuildingListMessage;
+
+	/** */
 	public static String GenerateHistoryJob_errorComputingHistory;
 
 	/** */

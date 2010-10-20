@@ -153,6 +153,8 @@ public class CompareUtils {
 	 *
 	 */
 	public static String getResourceEncoding(Repository db, String repoPath) {
+		if (db.isBare())
+			return null;
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
 		IPath absolutePath = new Path(db.getWorkTree().getAbsolutePath())
