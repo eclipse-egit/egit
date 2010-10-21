@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAALzH///8I\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/.classpath",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "we want egit to work with java 1.5 and eclipse 3.5.2",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///8E\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/.settings/org.eclipse.jdt.core.prefs",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "we want egit to work with java 1.5 and eclipse 3.5.2",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALzH///9M\u003d",
         "filename": "org.eclipse.egit.fetchfactory/META-INF/MANIFEST.MF",
         "patchSetId": 1
@@ -13,6 +47,40 @@
       "writtenOn": "2010-10-13T18:16:11Z",
       "side": 1,
       "message": "Does this need 3.6.1 or can it run with 3.6.0?",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///8A\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "in general we want egit to work with java 1.5 and eclipse 3.5.2",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH////s\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/OSGI-INF/l10n/bundle.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace, usually we don\u0027t have a blank line here, look at plugin.properties of other egit bundles",
       "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -36,6 +104,23 @@
     },
     {
       "key": {
+        "uuid": "AAALzH////o\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/build.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace, leave out the blank line",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALzH///9E\u003d",
         "filename": "org.eclipse.egit.fetchfactory/build.properties",
         "patchSetId": 1
@@ -47,6 +132,40 @@
       "writtenOn": "2010-10-13T18:16:11Z",
       "side": 1,
       "message": "Trailing white space again",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///78\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace and unusual blank line",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///74\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "style nit: leave out blank line, stick to a fixed license header",
       "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -70,6 +189,23 @@
     },
     {
       "key": {
+        "uuid": "AAALzH///70\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "typo: s/An \u003ccode\u003e/A \u003ccode\u003e/",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALzH///7A\u003d",
         "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
         "patchSetId": 1
@@ -81,6 +217,125 @@
       "writtenOn": "2010-10-13T21:43:34Z",
       "side": 1,
       "message": "missing period to end the sentence",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///68\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "it\u0027s not excplicitly stated if the generated script relies on native git command line or if it\u0027s using jgit.",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///7w\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "style nit: unnecessary blank line",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///7s\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "why do we need two constants with the same value?",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///7o\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "could we use \"repository\" to make this less cryptic ?",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///7k\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "could we use \"gitRepository\" instead? same question for next property",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///7g\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///7c\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "style nit: no braces around single line block",
       "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -104,6 +359,40 @@
     },
     {
       "key": {
+        "uuid": "AAALzH///7Y\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "typo: s/an/a/",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///7Q\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "inconsistent javadoc, tagName is missing\n\nI think it would make sense to describe the meaning of the parameters here (at least I don\u0027t understand what\u0027s going on here).",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALzH///84\u003d",
         "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
         "patchSetId": 1
@@ -115,6 +404,75 @@
       "writtenOn": "2010-10-13T18:16:11Z",
       "side": 1,
       "message": "This looks as if it were copied from the CVS one. Does HEAD make sense in a Git checkout anyway? The idea (behind CVS) was to not write out the \u0027default\u0027 one for everything that needed doing e.g. default to HEAD. Should Git default to \u0027master\u0027 here instead?",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///7U\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "HEAD is a symbolic link pointing to the tip of the currently checked out branch. \"master\" is the default branch similar to trunk in SVN but this is just convention, so probably this should be explicitly specified.",
+      "parentUuid": "AAALzH///8s\u003d",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///7M\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "style nit: avoid braces around single line block\n\nmore of these below",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///7I\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "style nit: avoid braces around single line block",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///7E\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "style nit: inconsistent camel case : repoSpecificEntry",
       "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
