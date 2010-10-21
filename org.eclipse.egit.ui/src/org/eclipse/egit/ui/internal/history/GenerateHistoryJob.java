@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.osgi.util.NLS;
 
 class GenerateHistoryJob extends Job {
 	private static final int BATCH_SIZE = 256;
@@ -39,6 +40,9 @@ class GenerateHistoryJob extends Job {
 	protected IStatus run(final IProgressMonitor monitor) {
 		IStatus status = Status.OK_STATUS;
 		try {
+			page.setErrorMessage(NLS.bind(
+					UIText.GenerateHistoryJob_BuildingListMessage,
+					page.getName()));
 			try {
 				for (;;) {
 					final int oldsz = allCommits.size();
@@ -61,6 +65,7 @@ class GenerateHistoryJob extends Job {
 				return Status.CANCEL_STATUS;
 			updateUI();
 		} finally {
+			page.setErrorMessage(null);
 			monitor.done();
 		}
 		return status;
