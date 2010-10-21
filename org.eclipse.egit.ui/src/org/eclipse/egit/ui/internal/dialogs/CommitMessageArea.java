@@ -14,7 +14,10 @@ package org.eclipse.egit.ui.internal.dialogs;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
@@ -47,7 +50,9 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -130,7 +135,14 @@ public class CommitMessageArea extends Composite {
 		AnnotationModel annotationModel = new AnnotationModel();
 		sourceViewer = new SourceViewer(this, null, null, true, SWT.MULTI
 				| SWT.V_SCROLL | SWT.WRAP);
-		getTextWidget().setIndent(2);
+		getTextWidget().setFont(UIUtils
+				.getFont(UIPreferences.THEME_CommitMessageEditorFont));
+
+		int endSpacing = 2;
+		int textWidth = getCharWidth() * 70 + endSpacing;
+		int textHeight = getLineHeight() * 10;
+		Point size = getTextWidget().computeSize(textWidth, textHeight);
+		getTextWidget().setSize(size);
 
 		createMarginPainter();
 
@@ -317,6 +329,17 @@ public class CommitMessageArea extends Composite {
 		sourceViewer.addPainter(marginPainter);
 	}
 
+	private int getCharWidth() {
+		GC gc = new GC(getTextWidget());
+		int charWidth = gc.getFontMetrics().getAverageCharWidth();
+		gc.dispose();
+		return charWidth;
+	}
+
+	private int getLineHeight() {
+		return getTextWidget().getLineHeight();
+	}
+
 	/**
 	 * @return widget
 	 */
@@ -352,6 +375,24 @@ public class CommitMessageArea extends Composite {
 	}
 
 	/**
+	 * Return the commit message, converting platform-specific line endings and
+	 * hard-wrapping the message.
+	 *
+	 * @return commit message
+	 */
+	public String getCommitMessage() {
+		String text = getText();
+		text = text.replaceAll(getTextWidget().getLineDelimiter(), "\n"); //$NON-NLS-1$
+		boolean shouldHardWrap = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.COMMITTING_HARD_WRAP_MESSAGE);
+		if (shouldHardWrap) {
+			text = wrap(text, 70);
+		}
+		return text;
+	}
+
+
+	/**
 	 * @return text
 	 */
 	public String getText() {
@@ -370,6 +411,55 @@ public class CommitMessageArea extends Composite {
 	 */
 	public boolean setFocus() {
 		return getTextWidget().setFocus();
+	}
+
+
+	/**
+	 * Wrap the text on the word boundaries to the specified line length using
+	 * <code>\n</code>. Leave existing line breaks alone.
+	 *
+	 * @param text
+	 *            the text to wrap
+	 * @param maxLineLength
+	 *            the maximum line length
+	 * @return wrapped text
+	 */
+	public static String wrap(final String text, final int maxLineLength) {
+		String[] chunks = text.split("\n"); //$NON-NLS-1$
+		StringBuilder wrappedText = new StringBuilder(text.length());
+
+		for (int chunkIndex = 0; chunkIndex < chunks.length; chunkIndex++) {
+			String chunk = chunks[chunkIndex];
+
+			String[] words = chunk.split(" "); //$NON-NLS-1$
+			int lineLength = 0;
+
+			for (int wordIndex = 0; wordIndex < words.length; wordIndex++) {
+				String word = words[wordIndex];
+
+				int wordLength = word.length();
+				int newLineLength = lineLength + wordLength + 1 /* the space */;
+				if (newLineLength > maxLineLength) {
+					/* don't break before a single long word */
+					if (lineLength != 0) {
+						wrappedText.append('\n');
+					}
+					lineLength = 0;
+				}
+				if (lineLength != 0) {
+					wrappedText.append(' ');
+					lineLength += 1;
+				}
+				wrappedText.append(word);
+				lineLength += wordLength;
+			}
+
+			if (chunkIndex != chunks.length - 1) {
+				wrappedText.append('\n');
+			}
+		}
+
+		return wrappedText.toString();
 	}
 
 }

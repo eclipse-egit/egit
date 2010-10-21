@@ -44,6 +44,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -71,12 +72,14 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -88,6 +91,7 @@ import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.history.IFileHistory;
 import org.eclipse.team.core.history.IFileHistoryProvider;
 import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
@@ -193,8 +197,9 @@ public class CommitDialog extends Dialog {
 		label.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).grab(true, false).create());
 
 		commitText = new CommitMessageArea(container, commitMessage);
+		Point size = commitText.getTextWidget().getSize();
 		commitText.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).grab(true, true)
-				.hint(600, 200).create());
+				.minSize(size).align(SWT.BEGINNING, SWT.FILL).create());
 		commitText.setText(commitMessage);
 
 		// allow to commit with ctrl-enter
@@ -239,6 +244,19 @@ public class CommitDialog extends Dialog {
 		});
 
 		committerHandler = UIUtils.addPreviousValuesContentProposalToText(committerText, COMMITTER_VALUES_PREF);
+
+		Link committingPreferencesLink = new Link(container, SWT.NONE);
+		committingPreferencesLink.setText(UIText.CommitDialog_ConfigureLink);
+		committingPreferencesLink.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String preferencePageId = "org.eclipse.egit.ui.internal.preferences.CommittingPreferencePage"; //$NON-NLS-1$
+				PreferenceDialog dialog = PreferencesUtil
+						.createPreferenceDialogOn(null, preferencePageId,
+								new String[] { preferencePageId }, null);
+				dialog.open();
+			}
+		});
 
 		amendingButton = new Button(container, SWT.CHECK);
 		if (amending) {
@@ -587,7 +605,7 @@ public class CommitDialog extends Dialog {
 	 * @return The message the user entered
 	 */
 	public String getCommitMessage() {
-		return commitMessage.replaceAll(Text.DELIMITER, "\n"); //$NON-NLS-1$;
+		return commitMessage;
 	}
 
 	/**
@@ -728,7 +746,7 @@ public class CommitDialog extends Dialog {
 
 	@Override
 	protected void okPressed() {
-		commitMessage = commitText.getText();
+		commitMessage = commitText.getCommitMessage();
 		author = authorText.getText().trim();
 		committer = committerText.getText().trim();
 		signedOff = signedOffButton.getSelection();
