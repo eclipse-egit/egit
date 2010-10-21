@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "AAALzH///8k\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2010-10-13T18:58:12Z",
+      "side": 1,
+      "message": "Actually, it needs to be 3.7M3 because of a change that went into PDE build just today. Thanks for bringing it up. I need to figure out the correct number.",
+      "parentUuid": "AAALzH///9M\u003d",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALzH///8A\u003d",
         "filename": "org.eclipse.egit.fetchfactory/META-INF/MANIFEST.MF",
         "patchSetId": 1
@@ -183,6 +201,24 @@
       "writtenOn": "2010-10-13T18:16:11Z",
       "side": 1,
       "message": "TYCHO-168 was marked fixed for 0.7.0 - do we still need it here?",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///8o\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2010-10-13T18:58:12Z",
+      "side": 1,
+      "message": "Copied it from the other POMs. Not sure. I\u0027m not an expert on this subject.",
+      "parentUuid": "AAALzH///9A\u003d",
       "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -359,6 +395,24 @@
     },
     {
       "key": {
+        "uuid": "AAALzH///8w\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2010-10-13T18:58:12Z",
+      "side": 1,
+      "message": "That\u0027s for storing on the local disc. We need to get rid of any chars that could cause issues if they are contained in folder names. Another option would be to use a hash of the URL. But that would make them unreadable in case someone wants to look at the cloned repos.",
+      "parentUuid": "AAALzH///88\u003d",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALzH///7Y\u003d",
         "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
         "patchSetId": 1
@@ -404,6 +458,24 @@
       "writtenOn": "2010-10-13T18:16:11Z",
       "side": 1,
       "message": "This looks as if it were copied from the CVS one. Does HEAD make sense in a Git checkout anyway? The idea (behind CVS) was to not write out the \u0027default\u0027 one for everything that needed doing e.g. default to HEAD. Should Git default to \u0027master\u0027 here instead?",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///8s\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2010-10-13T18:58:12Z",
+      "side": 1,
+      "message": "Yeah. It should likely be \"master\". But I\u0027m not an expert on that topic. Git also uses the term \"HEAD\" which doesn\u0027t help with reducing confusion on my side. ;)",
+      "parentUuid": "AAALzH///84\u003d",
       "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
