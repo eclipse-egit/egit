@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,16 +19,20 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.internal.storage.GitFileHistoryProvider;
 import org.eclipse.egit.core.op.AddToIndexOperation;
@@ -54,12 +57,10 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.GitIndex;
+import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.Tree;
-import org.eclipse.jgit.lib.TreeEntry;
-import org.eclipse.jgit.lib.GitIndex.Entry;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.swt.SWT;
@@ -138,6 +139,8 @@ public class CommitDialog extends Dialog {
 	}
 
 	ArrayList<CommitItem> items = new ArrayList<CommitItem>();
+
+	private Map<Repository, IndexDiff> indexDiffs;
 
 	private static final String COMMITTER_VALUES_PREF = "CommitDialog.committerValues"; //$NON-NLS-1$
 
@@ -530,6 +533,9 @@ public class CommitDialog extends Dialog {
 				} catch (CoreException e) {
 					Activator.logError(UIText.CommitDialog_ErrorAddingFiles, e);
 					return;
+				} catch (IOException e) {
+					Activator.logError(UIText.CommitDialog_ErrorAddingFiles, e);
+					return;
 				}
 			}
 		});
@@ -537,50 +543,58 @@ public class CommitDialog extends Dialog {
 		return menu;
 	}
 
-	private static String getFileStatus(IFile file) {
+	/** Retrieve file status from an already calculated IndexDiff
+	 * @param path
+	 * @param indexDiff
+	 * @return file status
+	 */
+	private static String getFileStatus(String path, IndexDiff indexDiff) {
 		String prefix = UIText.CommitDialog_StatusUnknown;
-
-		try {
-			RepositoryMapping repositoryMapping = RepositoryMapping
-					.getMapping(file.getProject());
-
-			Repository repo = repositoryMapping.getRepository();
-			GitIndex index = repo.getIndex();
-			Tree headTree = repo.mapTree(Constants.HEAD);
-
-			String repoPath = repositoryMapping.getRepoRelativePath(file);
-			TreeEntry headEntry = (headTree == null ? null : headTree.findBlobMember(repoPath));
-			boolean headExists = (headTree == null ? false : headTree.existsBlob(repoPath));
-
-			Entry indexEntry = index.getEntry(repoPath);
-			if (headEntry == null) {
+		if (indexDiff.getAdded().contains(path)) {
+			// added
+			if (indexDiff.getModified().contains(path))
+				prefix = UIText.CommitDialog_StatusAddedIndexDiff;
+			else
 				prefix = UIText.CommitDialog_StatusAdded;
-				if (indexEntry == null) {
-					prefix = UIText.CommitDialog_StatusUntracked;
-				}
-				else if (indexEntry.isModified(repositoryMapping.getWorkTree()))
-					prefix = UIText.CommitDialog_StatusAddedIndexDiff;
-			} else if (indexEntry == null) {
-				prefix = UIText.CommitDialog_StatusRemoved;
-			} else if (headExists
-					&& !headEntry.getId().equals(indexEntry.getObjectId())) {
+		} else if (indexDiff.getChanged().contains(path)) {
+			// changed
+			if (indexDiff.getModified().contains(path))
+				prefix = UIText.CommitDialog_StatusModifiedIndexDiff;
+			else
 				prefix = UIText.CommitDialog_StatusModified;
-
-				if (indexEntry.isModified(repositoryMapping.getWorkTree()))
-					prefix = UIText.CommitDialog_StatusModifiedIndexDiff;
-			} else if (!new File(repositoryMapping.getWorkTree(), indexEntry
-					.getName()).isFile()) {
-				prefix = UIText.CommitDialog_StatusRemovedNotStaged;
-			} else if (indexEntry.isModified(repositoryMapping.getWorkTree())) {
-				prefix = UIText.CommitDialog_StatusModifiedNotStaged;
-			}
-
-		} catch (Exception e) {
-			Activator.logError(UIText.CommitDialog_problemFindingFileStatus, e);
-			prefix = e.getMessage();
+		} else if (indexDiff.getUntracked().contains(path)) {
+			// untracked
+			prefix = UIText.CommitDialog_StatusUntracked;
+		} else if (indexDiff.getRemoved().contains(path)) {
+			// removed
+			prefix = UIText.CommitDialog_StatusRemoved;
+		} else if (indexDiff.getMissing().contains(path)) {
+			// missing
+			prefix = UIText.CommitDialog_StatusRemovedNotStaged;
+		} else if (indexDiff.getModified().contains(path)) {
+			// modified (and not changed!)
+			prefix = UIText.CommitDialog_StatusModifiedNotStaged;
 		}
-
 		return prefix;
+	}
+
+	/** Retrieve file status
+	 * @param file
+	 * @return file status
+	 * @throws IOException
+	 */
+	private static String getFileStatus(IFile file) throws IOException {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(file);
+		String path = mapping.getRepoRelativePath(file);
+		Repository repo = mapping.getRepository();
+		AdaptableFileTreeIterator fileTreeIterator =
+			new AdaptableFileTreeIterator(repo.getWorkTree(),
+					ResourcesPlugin.getWorkspace().getRoot());
+		IndexDiff indexDiff = new IndexDiff(repo, Constants.HEAD, fileTreeIterator);
+		Set<String> repositoryPaths = Collections.singleton(path);
+		indexDiff.setFilter(PathFilterGroup.createFromStrings(repositoryPaths));
+		indexDiff.diff();
+		return getFileStatus(path, indexDiff);
 	}
 
 	/**
@@ -785,11 +799,23 @@ public class CommitDialog extends Dialog {
 	public void setFileList(ArrayList<IFile> files) {
 		items.clear();
 		for (IFile file : files) {
+			RepositoryMapping repositoryMapping = RepositoryMapping.getMapping(file.getProject());
+			Repository repo = repositoryMapping.getRepository();
+			String path = repositoryMapping.getRepoRelativePath(file);
 			CommitItem item = new CommitItem();
-			item.status = getFileStatus(file);
+			item.status = getFileStatus(path, indexDiffs.get(repo));
 			item.file = file;
 			items.add(item);
 		}
+	}
+
+	/**
+	 * Set the index diffs which are the base for the file list
+	 * {@link CommitDialog#setFileList}
+	 * @param indexDiffs
+	 */
+	public void setIndexDiffs(Map<Repository, IndexDiff> indexDiffs) {
+		this.indexDiffs = indexDiffs;
 	}
 
 	@Override
