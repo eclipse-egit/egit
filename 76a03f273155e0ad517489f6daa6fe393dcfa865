@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALzH///9M\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-10-13T18:16:11Z",
+      "side": 1,
+      "message": "Does this need 3.6.1 or can it run with 3.6.0?",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///9I\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/OSGI-INF/l10n/bundle.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-10-13T18:16:11Z",
+      "side": 1,
+      "message": "Trailing whitespace here",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///9E\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/build.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-10-13T18:16:11Z",
+      "side": 1,
+      "message": "Trailing white space again",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///9A\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-10-13T18:16:11Z",
+      "side": 1,
+      "message": "TYCHO-168 was marked fixed for 0.7.0 - do we still need it here?",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///88\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-10-13T18:16:11Z",
+      "side": 1,
+      "message": "Why do we need to do this? This will get rid of common characters, like - _ . which may be perfectly valid as characters in a URL.",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzH///84\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-10-13T18:16:11Z",
+      "side": 1,
+      "message": "This looks as if it were copied from the CVS one. Does HEAD make sense in a Git checkout anyway? The idea (behind CVS) was to not write out the \u0027default\u0027 one for everything that needed doing e.g. default to HEAD. Should Git default to \u0027master\u0027 here instead?",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
