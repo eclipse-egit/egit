@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "AAALzH///7A\u003d",
+        "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-13T21:43:34Z",
+      "side": 1,
+      "message": "missing period to end the sentence",
+      "revId": "76a03f273155e0ad517489f6daa6fe393dcfa865",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALzH///88\u003d",
         "filename": "org.eclipse.egit.fetchfactory/src/org/eclipse/egit/fetchfactory/internal/GITFetchTaskFactory.java",
         "patchSetId": 1
