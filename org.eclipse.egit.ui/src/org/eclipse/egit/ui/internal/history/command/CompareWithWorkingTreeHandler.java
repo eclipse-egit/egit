@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history.command;
 
+import java.io.File;
 import java.util.Iterator;
 
 import org.eclipse.compare.ITypedElement;
@@ -19,7 +20,10 @@ import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 
 /**
@@ -32,7 +36,7 @@ public class CompareWithWorkingTreeHandler extends
 		if (selection.size() == 1) {
 			Iterator<?> it = selection.iterator();
 			RevCommit commit = (RevCommit) it.next();
-			Object input = getInput(event);
+			Object input = getPage().getInputInternal().getSingleFile();
 			if (input instanceof IFile) {
 				IFile file = (IFile) input;
 				final RepositoryMapping mapping = RepositoryMapping
@@ -45,6 +49,27 @@ public class CompareWithWorkingTreeHandler extends
 						right, null);
 				openInCompare(event, in);
 			}
+			if (input instanceof File) {
+				File file = (File) input;
+				// TODO can we create a ITypedElement from the local file?
+				Repository repo = getRepository(event);
+				RevCommit leftCommit;
+				try {
+					leftCommit = new RevWalk(repo).parseCommit(repo
+							.resolve(Constants.HEAD));
+				} catch (Exception e) {
+					throw new ExecutionException(e.getMessage(), e);
+				}
+				final String gitPath = getRepoRelativePath(repo, file);
+				ITypedElement left = CompareUtils.getFileRevisionTypedElement(
+						gitPath, leftCommit, repo);
+				ITypedElement right = CompareUtils.getFileRevisionTypedElement(
+						gitPath, commit, repo);
+				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+						left, right, null);
+				openInCompare(event, in);
+				return null;
+			}
 		}
 		return null;
 	}
@@ -55,7 +80,8 @@ public class CompareWithWorkingTreeHandler extends
 		if (page == null)
 			return false;
 		int size = getSelection(page).size();
-		return IFile.class.isAssignableFrom(page.getInput().getClass())
-				&& size == 1;
+		if (size != 1)
+			return false;
+		return page.getInputInternal().isSingleFile();
 	}
 }
