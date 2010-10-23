@@ -8,6 +8,8 @@ three for packaging.
 
   org.eclipse.egit.core/
 
+
+
     An Eclipse plugin providing an interface to org.eclipse.jgit
     and support routines to allow processing against the Eclipse
     workspace and resource APIs, rather than the standard Java
