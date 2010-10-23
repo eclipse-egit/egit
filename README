@@ -6,7 +6,7 @@ and LICENSE files for the complete licenses within each package.
 This package is actually composed of three major components plus
 three for packaging.
 
-  org.eclipse.egit.core/
+  org.eclipse.egit.core
 
     An Eclipse plugin providing an interface to org.eclipse.jgit
     and support routines to allow processing against the Eclipse
