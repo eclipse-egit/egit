@@ -247,7 +247,7 @@ public class RepositoryPropertySource implements IPropertySource {
 	private DisplayMode getCurrentMode() {
 		String actionText = changeModeAction.getAction().getText();
 		for (DisplayMode aMode : DisplayMode.values()) {
-			if (aMode.getText() == actionText)
+			if (aMode.getText().equals(actionText))
 				return aMode;
 		}
 		return null;
