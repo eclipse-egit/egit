@@ -67,6 +67,8 @@ import org.eclipse.ui.PlatformUI;
  */
 public class CommitActionHandler extends RepositoryActionHandler {
 
+	private Map<Repository, IndexDiff> indexDiffs;
+
 	private ArrayList<IFile> notIndexed;
 
 	private ArrayList<IFile> indexChanges;
@@ -164,7 +166,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 		CommitDialog commitDialog = new CommitDialog(getShell(event));
 		commitDialog.setAmending(amending);
 		commitDialog.setAmendAllowed(amendAllowed);
-		commitDialog.setFileList(files);
+		commitDialog.setFileList(files, indexDiffs);
 		commitDialog.setPreselectedFiles(getSelectedFiles(event));
 		commitDialog.setAuthor(author);
 		commitDialog.setCommitter(committer);
@@ -239,6 +241,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 		notTracked = new ArrayList<IFile>();
 		amending = false;
 		previousCommit = null;
+		indexDiffs = new HashMap<Repository, IndexDiff>();
 	}
 
 	/**
@@ -323,6 +326,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 
 			IndexDiff indexDiff = new IndexDiff(repository, Constants.HEAD, fileTreeIterator);
 			indexDiff.diff();
+			indexDiffs.put(repository, indexDiff);
 
 			for (IProject project : projects) {
 				includeList(project, indexDiff.getAdded(), indexChanges);
