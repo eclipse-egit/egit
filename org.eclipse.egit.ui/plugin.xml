@@ -86,7 +86,7 @@
                menubarPath="team.main/group5"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.PullFromUpstreamConfigAction"
-               definitionId="org.eclipse.egit.ui.team.PullFromUpstreamConfig"
+               definitionId="org.eclipse.egit.ui.team.Pull"
                icon="$nl$/icons/obj16/pull.gif"
                id="org.eclipse.egit.ui.team.PullCurrentBranchAction"
                label="%PullIntoCurrentBranchMenuLabel"
@@ -759,6 +759,9 @@
                            <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
                            </instanceof>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode">
+                           </instanceof>
                         </or>
                         <not>
                            <test
@@ -910,9 +913,6 @@
                   <iterate>
                      <or>
                         <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.LocalBranchesNode">
-                        </instanceof>
-                        <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
                         </instanceof>
                         <instanceof
@@ -920,6 +920,9 @@
                         </instanceof>
                         <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode">
                         </instanceof>
                      </or>
                   </iterate>
@@ -1984,6 +1987,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.ApplyPatchActionHandler"
             id="org.eclipse.egit.ui.team.ApplyPatch"
             name="%ApplyPatchCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.PullFromUpstreamActionHandler"
+            id="org.eclipse.egit.ui.team.Pull"
+            name="Pull">
       </command>
    </extension>
    <extension
