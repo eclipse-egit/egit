@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALzX///2g\u003d",
+        "filename": "org.eclipse.egit.core/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2010-10-23T06:53:50Z",
+      "side": 1,
+      "message": "This one is a white-space-only change, right?",
+      "revId": "f5c33a9068dc9babf9ae3102158d27cbcd8235a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
