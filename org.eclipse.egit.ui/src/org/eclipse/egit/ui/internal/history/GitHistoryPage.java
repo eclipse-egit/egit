@@ -401,8 +401,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 	void initAndStartRevWalk(boolean forceNewWalk) throws IllegalStateException {
 		cancelRefreshJob();
-		Repository db = input.getRepository();
 		AnyObjectId headId;
+		Repository db = input.getRepository();
 		try {
 			headId = db.resolve(Constants.HEAD);
 		} catch (IOException e) {
