@@ -17,9 +17,12 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 
 /**
  * Creates a branch using a simple dialog.
@@ -32,6 +35,19 @@ public class CreateBranchCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final RepositoryTreeNode node = getSelectedNodes(event).get(0);
+
+		if (node.getType() == RepositoryTreeNodeType.ADDITIONALREF) {
+			Ref ref = (Ref) node.getObject();
+			try {
+				RevCommit baseCommit = new RevWalk(node.getRepository())
+						.parseCommit(ref.getLeaf().getObjectId());
+				new WizardDialog(getShell(event), new CreateBranchWizard(node
+						.getRepository(), baseCommit)).open();
+			} catch (IOException e) {
+				Activator.handleError(e.getMessage(), e, true);
+			}
+			return null;
+		}
 		final Ref baseBranch;
 		if (node.getObject() instanceof Ref)
 			baseBranch = (Ref) node.getObject();

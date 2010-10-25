@@ -18,7 +18,7 @@ import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemotesNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
-import org.eclipse.egit.ui.internal.repository.tree.SymbolicRefsNode;
+import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.jgit.lib.Repository;
@@ -103,7 +103,7 @@ public class GitRepositoriesViewTestUtils {
 			File repositoryFile) throws Exception {
 		Repository repository = lookupRepository(repositoryFile);
 		RepositoryNode root = new RepositoryNode(null, repository);
-		SymbolicRefsNode symrefsnode = new SymbolicRefsNode(root, repository);
+		AdditionalRefsNode symrefsnode = new AdditionalRefsNode(root, repository);
 		SWTBotTreeItem rootItem = tree.getTreeItem(
 				labelProvider.getStyledText(root).getString()).expand();
 		SWTBotTreeItem symrefsitem = rootItem.getNode(labelProvider

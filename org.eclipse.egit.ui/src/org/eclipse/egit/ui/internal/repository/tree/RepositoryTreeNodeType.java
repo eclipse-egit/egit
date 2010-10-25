@@ -37,10 +37,10 @@ public enum RepositoryTreeNodeType {
 	/** */
 	TAGS(UIIcons.TAGS.createImage()), //
 	/** */
-	SYMBOLICREFS(PlatformUI.getWorkbench().getSharedImages().getImage(
+	ADDITIONALREFS(PlatformUI.getWorkbench().getSharedImages().getImage(
 			ISharedImages.IMG_OBJ_FOLDER)), //
 	/** */
-	SYMBOLICREF(PlatformUI.getWorkbench().getSharedImages().getImage(
+	ADDITIONALREF(PlatformUI.getWorkbench().getSharedImages().getImage(
 			ISharedImages.IMG_OBJ_FILE)), // TODO icon
 	/** */
 	TAG(UIIcons.TAG.createImage()), //
