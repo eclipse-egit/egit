@@ -391,6 +391,24 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_HistoryGroupHeader;
 
 	/** */
+	public static String GitPreferenceRoot_MergeGroupHeader;
+
+	/** */
+	public static String GitPreferenceRoot_MergeMode_0_Label;
+
+	/** */
+	public static String GitPreferenceRoot_MergeMode_1_Label;
+
+	/** */
+	public static String GitPreferenceRoot_MergeMode_2_Label;
+
+	/** */
+	public static String GitPreferenceRoot_MergeModeLabel;
+
+	/** */
+	public static String GitPreferenceRoot_MergeModeTooltip;
+
+	/** */
 	public static String GitPreferenceRoot_RemoteConnectionsGroupHeader;
 
 	/** */
@@ -2164,6 +2182,18 @@ public class UIText extends NLS {
 	public static String MergeAction_WrongRepositoryState;
 
 	/** */
+	public static String MergeModeDialog_DialogTitle;
+
+	/** */
+	public static String MergeModeDialog_DontAskAgainLabel;
+
+	/** */
+	public static String MergeModeDialog_MergeMode_1_Label;
+
+	/** */
+	public static String MergeModeDialog_MergeMode_2_Label;
+
+	/** */
 	public static String MergeResultDialog_couldNotFindCommit;
 
 	/** */
@@ -2466,6 +2496,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String ValidationUtils_PleaseEnterNameMessage;
+
+	/** */
+	public static String GitMergeEditorInput_LastHeadHeader;
+
+	/** */
+	public static String GitMergeEditorInput_WorkspaceHeader;
 
 	/** */
 	public static String GitModelIndex_index;
