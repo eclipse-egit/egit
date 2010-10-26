@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CreateTagDialog;
@@ -95,6 +96,12 @@ public class CreateTagCommand extends RepositoriesViewCommandHandler<RepositoryT
 				return Status.OK_STATUS;
 			}
 
+			@Override
+			public boolean belongsTo(Object family) {
+				if (family.equals(JobFamilies.TAG))
+					return true;
+				return super.belongsTo(family);
+			}
 		};
 
 		tagJob.setUser(true);
