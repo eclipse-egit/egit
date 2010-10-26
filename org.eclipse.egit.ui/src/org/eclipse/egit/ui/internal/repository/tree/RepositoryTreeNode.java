@@ -129,7 +129,7 @@ public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTree
 			// fall through
 		case BRANCHES:
 			// fall through
-		case SYMBOLICREFS:
+		case ADDITIONALREFS:
 			// fall through
 		case WORKINGDIR:
 			result = prime
@@ -141,7 +141,7 @@ public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTree
 			// fall through
 		case TAG:
 			// fall through
-		case SYMBOLICREF:
+		case ADDITIONALREF:
 			result = prime
 					* result
 					+ ((myObject == null) ? 0 : ((Ref) myObject).getName()
@@ -239,7 +239,7 @@ public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTree
 					otherNode.getObject().toString());
 		case REMOTES:
 			// fall through
-		case SYMBOLICREFS:
+		case ADDITIONALREFS:
 			// fall through
 		case TAGS:
 			// fall through
@@ -262,7 +262,7 @@ public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTree
 					((File) otherNode.getObject()).getName());
 		case TAG:
 			// fall through
-		case SYMBOLICREF:
+		case ADDITIONALREF:
 			// fall through
 		case REF:
 			return ((Ref) myObject).getName().compareTo(
@@ -297,7 +297,7 @@ public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTree
 			// fall through
 		case REMOTETRACKING:
 			// fall through
-		case SYMBOLICREFS:
+		case ADDITIONALREFS:
 			// fall through
 		case ERROR:
 			// fall through TODO fix this: Repository may be null
@@ -308,7 +308,7 @@ public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTree
 			// fall through
 		case TAG:
 			// fall through
-		case SYMBOLICREF:
+		case ADDITIONALREF:
 			return ((Ref) myObject).getName().equals(
 					((Ref) otherObject).getName());
 		case FOLDER:

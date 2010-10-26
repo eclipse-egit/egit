@@ -39,15 +39,15 @@ import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
+import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
+import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
 import org.eclipse.egit.ui.internal.repository.tree.PushNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
-import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
+import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemotesNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
-import org.eclipse.egit.ui.internal.repository.tree.SymbolicRefNode;
-import org.eclipse.egit.ui.internal.repository.tree.SymbolicRefsNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
@@ -68,7 +68,6 @@ import org.eclipse.ui.commands.ICommandService;
  */
 public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		IStateListener {
-
 	private final RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
 			.getDefault().getRepositoryCache();
 
@@ -256,20 +255,21 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			return refs.toArray();
 		}
 
-		case SYMBOLICREFS: {
+		case ADDITIONALREFS: {
 			List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
-
 			try {
 				for (Entry<String, Ref> refEntry : repo.getRefDatabase()
 						.getRefs(RefDatabase.ALL).entrySet()) {
-					if (refEntry.getValue().isSymbolic())
-						refs.add(new SymbolicRefNode(node, repo, refEntry
+					String name=refEntry.getKey();
+					if (!(name.startsWith(Constants.R_HEADS) || name.startsWith(Constants.R_TAGS)|| name.startsWith(Constants.R_REMOTES)))
+						refs.add(new AdditionalRefNode(node, repo, refEntry
 								.getValue()));
 				}
+				for (Ref r : repo.getRefDatabase().getAdditionalRefs())
+					refs.add(new AdditionalRefNode(node, repo, r));
 			} catch (IOException e) {
 				return handleException(e, node);
 			}
-
 			return refs.toArray();
 		}
 
@@ -294,7 +294,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 			nodeList.add(new BranchesNode(node, repo));
 			nodeList.add(new TagsNode(node, repo));
-			nodeList.add(new SymbolicRefsNode(node, repo));
+			nodeList.add(new AdditionalRefsNode(node, repo));
 			nodeList.add(new WorkingDirNode(node, repo));
 			nodeList.add(new RemotesNode(node, repo));
 
@@ -418,7 +418,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			// fall through
 		case ERROR:
 			// fall through
-		case SYMBOLICREF:
+		case ADDITIONALREF:
 			return null;
 
 		}
@@ -455,18 +455,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			return true;
 		case REPO:
 			return true;
-		case SYMBOLICREFS:
-			try {
-				for (Ref refEntry : repo.getRefDatabase().getRefs(
-						RefDatabase.ALL).values()) {
-					if (refEntry.isSymbolic())
-						return true;
-				}
-			} catch (IOException e) {
-				// true so that the node can be opened
-				return true;
-			}
-			return false;
+		case ADDITIONALREFS:
+			return true;
 		case TAGS:
 			try {
 				return !repo.getRefDatabase().getRefs(Constants.R_TAGS)

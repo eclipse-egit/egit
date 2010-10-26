@@ -40,8 +40,21 @@ public class RepositoriesViewPropertyTester extends PropertyTester {
 				return false;
 			Ref ref = (Ref) node.getObject();
 			try {
-				return ref.getName().equals(
-						node.getRepository().getFullBranch());
+				if (ref.getName().startsWith(Constants.R_REFS)) {
+					return ref.getName().equals(
+							node.getRepository().getFullBranch());
+				} else if (ref.getName().equals(Constants.HEAD))
+					return true;
+				else {
+					String leafname = ref.getLeaf().getName();
+					if (leafname.startsWith(Constants.R_REFS)
+							&& leafname.equals(
+									node.getRepository().getFullBranch()))
+						return true;
+					else
+						ref.getLeaf().getObjectId().equals(
+								node.getRepository().resolve(Constants.HEAD));
+				}
 			} catch (IOException e) {
 				return false;
 			}
@@ -63,8 +76,9 @@ public class RepositoriesViewPropertyTester extends PropertyTester {
 				} catch (URISyntaxException e2) {
 					return false;
 				}
-                // we need to have a fetch ref spec and a fetch URI
-				return !rconfig.getFetchRefSpecs().isEmpty() && !rconfig.getURIs().isEmpty();
+				// we need to have a fetch ref spec and a fetch URI
+				return !rconfig.getFetchRefSpecs().isEmpty()
+						&& !rconfig.getURIs().isEmpty();
 			}
 		}
 		if (property.equals("pushExists")) { //$NON-NLS-1$
@@ -78,8 +92,10 @@ public class RepositoriesViewPropertyTester extends PropertyTester {
 				} catch (URISyntaxException e2) {
 					return false;
 				}
-                // we need to have at least a push ref spec and any URI
-				return !rconfig.getPushRefSpecs().isEmpty() && (!rconfig.getPushURIs().isEmpty() || !rconfig.getURIs().isEmpty());
+				// we need to have at least a push ref spec and any URI
+				return !rconfig.getPushRefSpecs().isEmpty()
+						&& (!rconfig.getPushURIs().isEmpty() || !rconfig
+								.getURIs().isEmpty());
 			}
 		}
 		if (property.equals("canMerge")) { //$NON-NLS-1$

@@ -49,8 +49,6 @@ public class FindToolbarThread extends Thread {
 
 	boolean findInCommitter;
 
-	boolean findInId;
-
 	private volatile static int globalThreadIx = 0;
 
 	private int currentThreadIx;
@@ -198,15 +196,6 @@ public class FindToolbarThread extends Thread {
 								notFound = false;
 							}
 						}
-					}
-				}
-
-				if (findInId && notFound) {
-					String id = revision.getId().name();
-					if (id.indexOf(findPattern) != -1) {
-						totalMatches++;
-						findResults.add(i, revision);
-						notFound = false;
 					}
 				}
 
