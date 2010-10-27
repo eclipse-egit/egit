@@ -211,11 +211,11 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 					refName.append(ref.getLeaf().getName(),
 							StyledString.QUALIFIER_STYLER);
 					refName.append(" - ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
-					refName.append(ref.getLeaf().getObjectId().name(),
+					refName.append(ObjectId.toString(ref.getLeaf().getObjectId()),
 							StyledString.QUALIFIER_STYLER);
 				} else {
 					refName.append(" - ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
-					refName.append(ref.getObjectId().name(),
+					refName.append(ObjectId.toString(ref.getObjectId()),
 							StyledString.QUALIFIER_STYLER);
 
 				}
@@ -318,10 +318,10 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 				refName = refName
 						+ " - " //$NON-NLS-1$
 						+ ref.getLeaf().getName()
-						+ " - " + ref.getLeaf().getObjectId(); //$NON-NLS-1$
+						+ " - " + ObjectId.toString(ref.getLeaf().getObjectId()); //$NON-NLS-1$
 			} else {
 				refName = refName + " - " //$NON-NLS-1$
-						+ ref.getObjectId().name();
+						+ ObjectId.toString(ref.getObjectId());
 			}
 			if (node.getParent().getType() == RepositoryTreeNodeType.BRANCHHIERARCHY) {
 				int index = refName.lastIndexOf('/');
