@@ -181,12 +181,6 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 
 		RepositoryTreeNode node = (RepositoryTreeNode) element;
 
-		String label = getSimpleText(node);
-		if (label == null)
-			return new StyledString(element.toString());
-
-		StyledString text = new StyledString(label);
-
 		try {
 			switch (node.getType()) {
 			case REPO:
@@ -211,8 +205,8 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 					refName.append(ref.getLeaf().getName(),
 							StyledString.QUALIFIER_STYLER);
 					refName.append(" - ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
-					refName.append(ObjectId.toString(ref.getLeaf().getObjectId()),
-							StyledString.QUALIFIER_STYLER);
+					refName.append(ObjectId.toString(ref.getLeaf()
+							.getObjectId()), StyledString.QUALIFIER_STYLER);
 				} else {
 					refName.append(" - ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
 					refName.append(ObjectId.toString(ref.getObjectId()),
@@ -262,15 +256,18 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 				// fall through
 			case REF:
 				// fall through
-			case TAG:
-				// fall through
+			case TAG: {
+				String label = getSimpleText(node);
+				if (label != null)
+					return new StyledString(label);
+			}
 
 			}
 		} catch (IOException e) {
 			Activator.logError(e.getMessage(), e);
 		}
 
-		return text;
+		return null;
 
 	}
 
@@ -302,15 +299,19 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 			return UIText.RepositoriesViewLabelProvider_SymbolicRefNodeText;
 		case REMOTES:
 			return UIText.RepositoriesView_RemotesNodeText;
-		case REMOTE:
-			// fall through
-		case ERROR:
-			return (String) node.getObject();
 		case REF:
 			// fall through
-		case TAG:
-			// fall through
-		case ADDITIONALREF:
+		case TAG: {
+			Ref ref = (Ref) node.getObject();
+			// shorten the name
+			String refName = node.getRepository().shortenRefName(ref.getName());
+			if (node.getParent().getType() == RepositoryTreeNodeType.BRANCHHIERARCHY) {
+				int index = refName.lastIndexOf('/');
+				refName = refName.substring(index + 1);
+			}
+			return refName;
+		}
+		case ADDITIONALREF: {
 			Ref ref = (Ref) node.getObject();
 			// shorten the name
 			String refName = node.getRepository().shortenRefName(ref.getName());
@@ -323,11 +324,8 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 				refName = refName + " - " //$NON-NLS-1$
 						+ ObjectId.toString(ref.getObjectId());
 			}
-			if (node.getParent().getType() == RepositoryTreeNodeType.BRANCHHIERARCHY) {
-				int index = refName.lastIndexOf('/');
-				refName = refName.substring(index + 1);
-			}
 			return refName;
+		}
 		case WORKINGDIR:
 			if (node.getRepository().isBare())
 				return UIText.RepositoriesView_WorkingDir_treenode
@@ -336,9 +334,13 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 			else
 				return UIText.RepositoriesView_WorkingDir_treenode + " - " //$NON-NLS-1$
 						+ node.getRepository().getWorkTree().getAbsolutePath();
+		case REMOTE:
+			// fall through
 		case PUSH:
 			// fall through
 		case FETCH:
+			// fall through
+		case ERROR:
 			return (String) node.getObject();
 
 		}
