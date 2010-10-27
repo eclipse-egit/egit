@@ -873,7 +873,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			Activator.handleError(e.getMessage(), e.getCause(), true);
 			return false;
 		}
-
 		return true;
 	}
 
@@ -997,6 +996,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				return;
 			}
 			job = null;
+			if (currentWalk != null)
+				currentWalk.release();
+			currentWalk = null;
+			highlightFlag = null;
+			pathFilters = null;
 		}
 	}
 
