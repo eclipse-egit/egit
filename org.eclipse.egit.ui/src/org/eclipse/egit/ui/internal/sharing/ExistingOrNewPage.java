@@ -13,10 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -32,6 +30,9 @@ import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
+import org.eclipse.jface.viewers.CheckboxTreeViewer;
+import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -59,6 +60,7 @@ class ExistingOrNewPage extends WizardPage {
 	private final SharingWizard myWizard;
 	private Button button;
 	private Tree tree;
+	private CheckboxTreeViewer viewer;
 	private Text repositoryToCreate;
 	private IPath minumumPath;
 	private Text dotGitSegment;
@@ -75,31 +77,28 @@ class ExistingOrNewPage extends WizardPage {
 		Group g = new Group(parent, SWT.NONE);
 		g.setLayout(new GridLayout(3,false));
 		g.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
-		tree = new Tree(g, SWT.BORDER|SWT.MULTI|SWT.FULL_SELECTION);
+		tree = new Tree(g, SWT.BORDER|SWT.MULTI|SWT.FULL_SELECTION|SWT.CHECK);
+		viewer = new CheckboxTreeViewer(tree);
 		tree.setHeaderVisible(true);
 		tree.setLayout(new GridLayout());
 		tree.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).span(3,1).create());
-		tree.addSelectionListener(new SelectionAdapter() {
+		viewer.addCheckStateListener(new ICheckStateListener() {
 
-			public void widgetSelected(SelectionEvent e) {
-				TreeItem t = (TreeItem) e.item;
-				for(TreeItem ti : t.getItems())
-					tree.deselect(ti);
-				if (t.getParentItem() != null) {
-					tree.deselect(t.getParentItem());
-					for(TreeItem ti : t.getParentItem().getItems())
-						if (ti != t)
-							tree.deselect(ti);
-				}
-				Set<IProject> projects = new HashSet<IProject>();
-				for (TreeItem treeItem : tree.getSelection()) {
-					if (treeItem.getData() ==  null && treeItem.getParentItem() != null) {
-						treeItem = treeItem.getParentItem();
+			public void checkStateChanged(CheckStateChangedEvent event) {
+				if (event.getChecked()) {
+					ProjectAndRepo checkable = (ProjectAndRepo)event.getElement();
+					for (TreeItem ti : tree.getItems()) {
+						if (ti.getItemCount() > 0 ||
+								((ProjectAndRepo)ti.getData()).getRepo().equals("")) //$NON-NLS-1$
+							ti.setChecked(false);
+						for(TreeItem subTi : ti.getItems()) {
+							IProject project = ((ProjectAndRepo)subTi.getData()).getProject();
+							if (checkable.getProject() != null
+									&& !subTi.getData().equals(checkable)
+									&& checkable.getProject().equals(project))
+								subTi.setChecked(false);
+						}
 					}
-					final IProject project = (IProject) treeItem.getData();
-					if (projects.contains(project))
-							tree.deselect(treeItem);
-					projects.add(project);
 				}
 			}
 		});
@@ -113,32 +112,54 @@ class ExistingOrNewPage extends WizardPage {
 		c3.setText(UIText.ExistingOrNewPage_HeaderRepository);
 		c3.setWidth(200);
 		for (IProject project : myWizard.projects) {
-			TreeItem treeItem = new TreeItem(tree, SWT.NONE);
-			treeItem.setData(project);
-			treeItem.setText(0, project.getName());
-			treeItem.setText(1, project.getLocation().toOSString());
 			RepositoryFinder repositoryFinder = new RepositoryFinder(project);
-			Collection<RepositoryMapping> mappings;
 			try {
+				Collection<RepositoryMapping> mappings;
 				mappings = repositoryFinder.find(new NullProgressMonitor());
 				Iterator<RepositoryMapping> mi = mappings.iterator();
 				RepositoryMapping m = mi.hasNext() ? mi.next() : null;
 				if (m == null) {
 					// no mapping found, enable repository creation
+					TreeItem treeItem = new TreeItem(tree, SWT.NONE);
+					treeItem.setText(0, project.getName());
+					treeItem.setText(1, project.getLocation().toOSString());
 					treeItem.setText(2, ""); //$NON-NLS-1$
-				} else {
-					// at least one mapping found
+					treeItem.setData(
+							new ProjectAndRepo(project, "")); //$NON-NLS-1$
+				} else if (!mi.hasNext()){
+					// exactly one mapping found
+					TreeItem treeItem = new TreeItem(tree, SWT.NONE);
+					treeItem.setText(0, project.getName());
+					treeItem.setText(1, project.getLocation().toOSString());
 					fillTreeItemWithGitDirectory(m, treeItem, false);
+					treeItem.setData(new ProjectAndRepo(
+							project, treeItem.getText(2)));
+					treeItem.setChecked(true);
 				}
 
-				while (mi.hasNext()) {	// fill in additional mappings
-					m = mi.next();
+				else {
+					TreeItem treeItem = new TreeItem(tree, SWT.NONE);
+					treeItem.setText(0, project.getName());
+					treeItem.setText(1, project.getLocation().toOSString());
+					treeItem.setData(new ProjectAndRepo(null, null));
+
 					TreeItem treeItem2 = new TreeItem(treeItem, SWT.NONE);
-					treeItem2.setData(m.getContainer().getProject());
+					treeItem2.setText(0, project.getName());
 					fillTreeItemWithGitDirectory(m, treeItem2, true);
+					treeItem2.setData(new ProjectAndRepo(
+							project, treeItem2.getText(2)));
+					while (mi.hasNext()) {	// fill in additional mappings
+						m = mi.next();
+						treeItem2 = new TreeItem(treeItem, SWT.NONE);
+						treeItem2.setText(0, project.getName());
+						fillTreeItemWithGitDirectory(m, treeItem2, true);
+						treeItem2.setData(new ProjectAndRepo(m.getContainer()
+								.getProject(), treeItem2.getText(2)));
+					}
+					treeItem.setExpanded(true);
 				}
 			} catch (CoreException e) {
-				TreeItem treeItem2 = new TreeItem(treeItem, SWT.BOLD|SWT.ITALIC);
+				TreeItem treeItem2 = new TreeItem(tree, SWT.BOLD|SWT.ITALIC);
 				treeItem2.setText(e.getMessage());
 			}
 		}
@@ -183,6 +204,8 @@ class ExistingOrNewPage extends WizardPage {
 				}
 				for (TreeItem ti : tree.getSelection()) {
 					ti.setText(2, gitDir.toString());
+					((ProjectAndRepo)ti.getData()).repo = gitDir.toString();
+					ti.setChecked(true);
 				}
 				updateCreateOptions();
 				getContainer().updateButtons();
@@ -236,6 +259,8 @@ class ExistingOrNewPage extends WizardPage {
 		minumumPath = null;
 		IPath p = null;
 		for (TreeItem ti : tree.getSelection()) {
+			if (ti.getItemCount() > 0)
+				continue;
 			String path = ti.getText(2);
 			if (!path.equals("")) { //$NON-NLS-1$
 				p = null;
@@ -264,11 +289,12 @@ class ExistingOrNewPage extends WizardPage {
 
 	@Override
 	public boolean isPageComplete() {
-		if (tree.getSelectionCount() == 0)
+		if (viewer.getCheckedElements().length == 0)
 			return false;
-		for (TreeItem ti : tree.getSelection()) {
-			String path = ti.getText(2);
-			if (path.equals("")) { //$NON-NLS-1$
+		for (Object checkedElement : viewer.getCheckedElements()) {
+			String path = ((ProjectAndRepo)checkedElement).getRepo();
+			if (((ProjectAndRepo)checkedElement).getRepo() != null &&
+					path.equals("")) { //$NON-NLS-1$
 				return false;
 			}
 		}
@@ -280,16 +306,12 @@ class ExistingOrNewPage extends WizardPage {
 	 *         absolute path) for all projects selected by user
 	 */
 	public Map<IProject, File> getProjects() {
-		final TreeItem[] selection = tree.getSelection();
-		Map<IProject, File> ret = new HashMap<IProject, File>(selection.length);
-		for (int i = 0; i < selection.length; ++i) {
-			TreeItem treeItem = selection[i];
-			while (treeItem.getData() ==  null && treeItem.getParentItem() != null) {
-				treeItem = treeItem.getParentItem();
-			}
-
-			final IProject project = (IProject) treeItem.getData();
-			final IPath selectedRepo = Path.fromOSString(treeItem.getText(2));
+		final Object[] checkedElements = viewer.getCheckedElements();
+		Map<IProject, File> ret = new HashMap<IProject, File>(checkedElements.length);
+		for (Object ti : viewer.getCheckedElements()) {
+			final IProject project = ((ProjectAndRepo)ti).getProject();
+			String path = ((ProjectAndRepo)ti).getRepo();
+			final IPath selectedRepo = Path.fromOSString(path);
 			IPath localPathToRepo = selectedRepo;
 			if (!selectedRepo.isAbsolute()) {
 				localPathToRepo = project.getLocation().append(selectedRepo);
@@ -297,5 +319,23 @@ class ExistingOrNewPage extends WizardPage {
 			ret.put(project, localPathToRepo.toFile());
 		}
 		return ret;
+	}
+
+	private class ProjectAndRepo {
+		private IProject project;
+		private String repo;
+
+		public ProjectAndRepo(IProject project, String repo) {
+			this.project = project;
+			this.repo = repo;
+		}
+
+		public IProject getProject() {
+			return project;
+		}
+
+		public String getRepo() {
+			return repo;
+		}
 	}
 }
