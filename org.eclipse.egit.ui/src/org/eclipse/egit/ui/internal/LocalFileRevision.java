@@ -29,7 +29,7 @@ import org.eclipse.team.core.history.provider.FileRevision;
  * in the History View. As such, this class can be used to wrap either a local
  * file's IFileState or an IFile.
  */
-class LocalFileRevision extends FileRevision {
+public class LocalFileRevision extends FileRevision {
 	/*
 	 * Either one or the other of these fields is intended to be used.
 	 */
