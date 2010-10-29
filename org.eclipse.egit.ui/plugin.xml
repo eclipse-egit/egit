@@ -172,6 +172,14 @@
                label="%ShowRepositoryAction_label"
                menubarPath="team.main/group10">
          </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.MergeToolAction"
+               definitionId="org.eclipse.egit.ui.team.MergeTool"
+               icon="icons/obj16/mergetool.gif"
+               id="org.eclipse.egit.ui.internal.actions.MergeTool"
+               label="Merge Tool"
+               menubarPath="team.main/group4">
+         </action>
 	  </objectContribution>
    	  <objectContribution
          adaptable="true"
@@ -1993,6 +2001,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.PullFromUpstreamActionHandler"
             id="org.eclipse.egit.ui.team.Pull"
             name="Pull">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.MergeToolActionHandler"
+            id="org.eclipse.egit.ui.team.MergeTool"
+            name="Merge Tool">
       </command>
    </extension>
    <extension
