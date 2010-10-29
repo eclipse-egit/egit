@@ -15,6 +15,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.BooleanFieldEditor;
+import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -31,6 +32,17 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 		IWorkbenchPreferencePage {
 	private final static int GROUP_SPAN = 3;
+
+	private final static String[][] MERGE_MODE_NAMES_AND_VALUES = new String[3][2];
+
+	static {
+		MERGE_MODE_NAMES_AND_VALUES[0][0] = UIText.GitPreferenceRoot_MergeMode_0_Label;
+		MERGE_MODE_NAMES_AND_VALUES[0][1] = "0";//$NON-NLS-1$
+		MERGE_MODE_NAMES_AND_VALUES[1][0] = UIText.GitPreferenceRoot_MergeMode_1_Label;
+		MERGE_MODE_NAMES_AND_VALUES[1][1] = "1";//$NON-NLS-1$
+		MERGE_MODE_NAMES_AND_VALUES[2][0] = UIText.GitPreferenceRoot_MergeMode_2_Label;
+		MERGE_MODE_NAMES_AND_VALUES[2][1] = "2"; //$NON-NLS-1$
+	}
 
 	/**
 	 * The default constructor
@@ -117,6 +129,19 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 				UIText.RefreshPreferencesPage_RefreshOnlyWhenActive,
 				repoChangeScannerGroup));
 		updateMargins(repoChangeScannerGroup);
+
+		Group mergeGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
+		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
+				.applyTo(mergeGroup);
+		mergeGroup.setText(UIText.GitPreferenceRoot_MergeGroupHeader);
+		ComboFieldEditor mergeMode = new ComboFieldEditor(
+				UIPreferences.MERGE_MODE,
+				UIText.GitPreferenceRoot_MergeModeLabel,
+				MERGE_MODE_NAMES_AND_VALUES, mergeGroup);
+		mergeMode.getLabelControl(mergeGroup).setToolTipText(
+				UIText.GitPreferenceRoot_MergeModeTooltip);
+		addField(mergeMode);
+		updateMargins(mergeGroup);
 	}
 
 	private void updateMargins(Group group) {
