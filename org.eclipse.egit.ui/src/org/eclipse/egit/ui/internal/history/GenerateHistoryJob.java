@@ -31,7 +31,9 @@ class GenerateHistoryJob extends Job {
 	private long lastUpdateAt;
 
 	GenerateHistoryJob(final GitHistoryPage ghp, final SWTCommitList list) {
-		super(UIText.HistoryPage_refreshJob);
+		super(NLS.bind(UIText.HistoryPage_refreshJob, Activator.getDefault()
+				.getRepositoryUtil().getRepositoryName(
+						ghp.getInputInternal().getRepository())));
 		page = ghp;
 		allCommits = list;
 	}
@@ -41,8 +43,8 @@ class GenerateHistoryJob extends Job {
 		IStatus status = Status.OK_STATUS;
 		try {
 			page.setErrorMessage(NLS.bind(
-					UIText.GenerateHistoryJob_BuildingListMessage,
-					page.getName()));
+					UIText.GenerateHistoryJob_BuildingListMessage, page
+							.getName()));
 			try {
 				for (;;) {
 					final int oldsz = allCommits.size();
@@ -61,11 +63,14 @@ class GenerateHistoryJob extends Job {
 						UIText.GenerateHistoryJob_errorComputingHistory, e);
 			}
 
-			if (monitor.isCanceled())
+			if (monitor.isCanceled()) {
+				page.setErrorMessage(NLS
+						.bind(UIText.GenerateHistoryJob_CancelMessage, page
+								.getName()));
 				return Status.CANCEL_STATUS;
+			}
 			updateUI();
 		} finally {
-			page.setErrorMessage(null);
 			monitor.done();
 		}
 		return status;
