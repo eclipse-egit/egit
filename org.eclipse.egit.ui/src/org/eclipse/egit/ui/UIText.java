@@ -2318,10 +2318,16 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_CanNotOpenCompareEditorTitle;
 
 	/** */
+	public static String CommitFileDiffViewer_CompareMenuLabel;
+
+	/** */
 	public static String CommitFileDiffViewer_MergeCommitMultiAncestorMessage;
 
 	/** */
 	public static String CommitFileDiffViewer_notContainedInCommit;
+
+	/** */
+	public static String CommitFileDiffViewer_OpenInEditorMenuLabel;
 
 	/** */
 	public static String CommitFileDiffViewer_SelectOneCommitMessage;
