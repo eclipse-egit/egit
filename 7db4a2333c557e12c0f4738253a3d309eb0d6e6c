@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALzX///uA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/GitMergeEditorInput.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-10-27T11:52:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALzX///uk\u003d",
+      "revId": "7db4a2333c557e12c0f4738253a3d309eb0d6e6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALzX///ug\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/MergeModeDialog.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2010-10-26T22:43:33Z",
       "side": 1,
       "message": "missing license header",
+      "revId": "7db4a2333c557e12c0f4738253a3d309eb0d6e6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzX///t8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/merge/MergeModeDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-10-27T11:52:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALzX///ug\u003d",
       "revId": "7db4a2333c557e12c0f4738253a3d309eb0d6e6c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
