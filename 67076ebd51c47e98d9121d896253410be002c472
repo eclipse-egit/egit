@@ -16,6 +16,24 @@
       "revId": "67076ebd51c47e98d9121d896253410be002c472",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzX///s8\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-10-28T10:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALzX///tw\u003d",
+      "revId": "67076ebd51c47e98d9121d896253410be002c472",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
