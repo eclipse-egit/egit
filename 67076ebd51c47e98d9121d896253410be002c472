@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALzX///tw\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-27T15:03:37Z",
+      "side": 1,
+      "message": "really ? this looks like a copy\u0026paste mistake. I would expect MergeToolActionHandler here.",
+      "revId": "67076ebd51c47e98d9121d896253410be002c472",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
