@@ -57,7 +57,8 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 * @param selection
 	 * @return the projects hosting the selected resources
 	 */
-	private IProject[] getProjectsForSelectedResources(IStructuredSelection selection) {
+	private IProject[] getProjectsForSelectedResources(
+			IStructuredSelection selection) {
 		Set<IProject> ret = new HashSet<IProject>();
 		for (IResource resource : (IResource[]) getSelectedAdaptables(
 				selection, IResource.class))
@@ -76,6 +77,10 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		return getProjectsForSelectedResources(selection);
 	}
 
+	protected IProject[] getProjectsForSelectedResources() {
+		IStructuredSelection selection = getSelection();
+		return getProjectsForSelectedResources(selection);
+	}
 
 	/**
 	 * @param projects
@@ -120,7 +125,6 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		return getProjectsInRepositoryOfSelectedResources(selection);
 	}
 
-
 	/**
 	 * List the projects with selected resources, if all projects are connected
 	 * to a Git repository.
@@ -146,7 +150,6 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		}
 		return ret.toArray(new IProject[ret.size()]);
 	}
-
 
 	/**
 	 * Figure out which repository to use. All selected resources must map to
@@ -186,10 +189,11 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 *            selected
 	 * @param selection
 	 * @param shell
-	 * 			must be provided if warn = true
+	 *            must be provided if warn = true
 	 * @return repository for current project, or null
 	 */
-	private Repository getRepository(boolean warn, IStructuredSelection selection, Shell shell) {
+	private Repository getRepository(boolean warn,
+			IStructuredSelection selection, Shell shell) {
 		RepositoryMapping mapping = null;
 		for (IProject project : getSelectedProjects(selection)) {
 			RepositoryMapping repositoryMapping = RepositoryMapping
@@ -217,9 +221,6 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		final Repository repository = mapping.getRepository();
 		return repository;
 	}
-
-
-
 
 	/**
 	 * Figure out which repositories to use. All selected resources must map to
@@ -389,7 +390,6 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		}
 		return result.toArray(new IResource[result.size()]);
 	}
-
 
 	/**
 	 * @param event
