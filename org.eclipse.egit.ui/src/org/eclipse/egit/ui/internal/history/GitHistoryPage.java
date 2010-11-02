@@ -391,12 +391,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		viewMenuMgr.add(fillCommentAction);
 
 		graph.getControl().addMenuDetectListener(new MenuDetectListener() {
-
 			public void menuDetected(MenuDetectEvent e) {
-				// TODO Auto-generated method stub
 				popupMgr.add(showFilesAction);
 				popupMgr.add(showCommentAction);
-
 			}
 		});
 	}
