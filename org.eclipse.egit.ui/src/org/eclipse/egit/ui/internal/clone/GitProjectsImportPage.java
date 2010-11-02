@@ -47,6 +47,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -57,6 +58,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -78,6 +80,24 @@ import org.eclipse.ui.statushandlers.StatusManager;
  * WizardProjectsImportPage class from the org.eclipse.ui.ide bundle.
  */
 public class GitProjectsImportPage extends WizardPage {
+
+	private final class ProjectLabelProvider extends LabelProvider implements
+			IColorProvider {
+		public String getText(Object element) {
+			return ((ProjectRecord) element).getProjectLabel();
+		}
+
+		public Color getForeground(Object element) {
+			if (isProjectInWorkspace(((ProjectRecord) element).getProjectName()))
+				return PlatformUI.getWorkbench().getDisplay().getSystemColor(
+						SWT.COLOR_GRAY);
+			return null;
+		}
+
+		public Color getBackground(Object element) {
+			return null;
+		}
+	}
 
 	/**
 	 * The name of the folder containing metadata information for the workspace.
@@ -182,6 +202,10 @@ public class GitProjectsImportPage extends WizardPage {
 		projectsList.addCheckStateListener(new ICheckStateListener() {
 
 			public void checkStateChanged(CheckStateChangedEvent event) {
+				ProjectRecord element = (ProjectRecord) event.getElement();
+				if (isProjectInWorkspace(element.getProjectName())) {
+					projectsList.setChecked(element, false);
+				}
 				enableSelectAllButtons();
 			}
 		});
@@ -196,7 +220,7 @@ public class GitProjectsImportPage extends WizardPage {
 			}
 
 			public Object[] getElements(Object inputElement) {
-				return getValidProjects();
+				return selectedProjects;
 			}
 
 			public boolean hasChildren(Object element) {
@@ -224,11 +248,7 @@ public class GitProjectsImportPage extends WizardPage {
 			}
 		});
 
-		projectsList.setLabelProvider(new LabelProvider() {
-			public String getText(Object element) {
-				return ((ProjectRecord) element).getProjectLabel();
-			}
-		});
+		projectsList.setLabelProvider(new ProjectLabelProvider());
 
 		projectsList.setInput(this);
 		projectsList.setComparator(new ViewerComparator());
@@ -254,8 +274,11 @@ public class GitProjectsImportPage extends WizardPage {
 		selectAll.setText(UIText.WizardProjectsImportPage_selectAll);
 		selectAll.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				for (TreeItem item : projectsList.getTree().getItems())
-					projectsList.setChecked(item.getData(), true);
+				for (TreeItem item : projectsList.getTree().getItems()) {
+					ProjectRecord record = (ProjectRecord) item.getData();
+					if (!isProjectInWorkspace(record.getProjectName()))
+						projectsList.setChecked(item.getData(), true);
+				}
 				enableSelectAllButtons();
 				setPageComplete(true);
 			}
@@ -388,7 +411,7 @@ public class GitProjectsImportPage extends WizardPage {
 	}
 
 	private void enableSelectAllButtons() {
-		int itemCount = projectsList.getTree().getItemCount();
+		int itemCount = getValidProjects().length;
 		int selectionCount = projectsList.getCheckedLeafCount();
 		selectAll.setEnabled(itemCount > selectionCount && itemCount > 0);
 		deselectAll.setEnabled(selectionCount > 0);
