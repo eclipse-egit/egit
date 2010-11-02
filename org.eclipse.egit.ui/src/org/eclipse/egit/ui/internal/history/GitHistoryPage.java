@@ -41,6 +41,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -502,24 +503,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 	@Override
 	public void createControl(final Composite parent) {
-		GridData gd;
-
 		ourControl = createMainPanel(parent);
-		gd = new GridData();
-		gd.verticalAlignment = SWT.FILL;
-		gd.horizontalAlignment = SWT.FILL;
-		gd.grabExcessHorizontalSpace = true;
-		gd.grabExcessVerticalSpace = true;
-		ourControl.setLayoutData(gd);
-
-		gd = new GridData();
-		gd.verticalAlignment = SWT.FILL;
-		gd.horizontalAlignment = SWT.FILL;
-		gd.grabExcessHorizontalSpace = true;
-		gd.grabExcessVerticalSpace = true;
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(ourControl);
 		graphDetailSplit = new SashForm(ourControl, SWT.VERTICAL);
-		graphDetailSplit.setLayoutData(gd);
-
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(
+				graphDetailSplit);
 		graph = new CommitGraphTable(graphDetailSplit, getSite(), popupMgr);
 		revInfoSplit = new SashForm(graphDetailSplit, SWT.HORIZONTAL);
 		commentViewer = new CommitMessageViewer(revInfoSplit, getSite());
