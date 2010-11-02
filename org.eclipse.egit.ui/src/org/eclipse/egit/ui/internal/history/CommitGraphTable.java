@@ -11,16 +11,35 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.IParameter;
+import org.eclipse.core.commands.Parameterization;
+import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.core.commands.common.NotDefinedException;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.history.command.HistoryViewCommands;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.OpenEvent;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
@@ -34,6 +53,10 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.MenuDetectEvent;
+import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
@@ -45,6 +68,14 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.menus.CommandContributionItem;
+import org.eclipse.ui.menus.CommandContributionItemParameter;
+import org.eclipse.ui.part.IPageSite;
 
 class CommitGraphTable {
 	private static Font highlightFont() {
@@ -80,7 +111,14 @@ class CommitGraphTable {
 
 	private RevFlag highlight;
 
-	CommitGraphTable(final Composite parent) {
+	private HistoryPageInput input;
+
+	IAction copy;
+
+	MenuListener menuListener;
+
+	CommitGraphTable(final Composite parent, final IPageSite site,
+			final MenuManager menuMgr) {
 		nFont = UIUtils.getFont(UIPreferences.THEME_CommitGraphNormalFont);
 		hFont = highlightFont();
 
@@ -115,6 +153,73 @@ class CommitGraphTable {
 				clipboard.dispose();
 			}
 		});
+
+		final IAction selectAll = createStandardAction(ActionFactory.SELECT_ALL);
+		copy = createStandardAction(ActionFactory.COPY);
+
+		table.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				copy.setEnabled(canDoCopy());
+			}
+		});
+
+		getControl().addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {
+				site.getActionBars().setGlobalActionHandler(
+						ActionFactory.SELECT_ALL.getId(), null);
+				site.getActionBars().setGlobalActionHandler(
+						ActionFactory.COPY.getId(), null);
+				site.getActionBars().updateActionBars();
+			}
+
+			public void focusGained(FocusEvent e) {
+				site.getActionBars().setGlobalActionHandler(
+						ActionFactory.SELECT_ALL.getId(), selectAll);
+				site.getActionBars().setGlobalActionHandler(
+						ActionFactory.COPY.getId(), copy);
+				site.getActionBars().updateActionBars();
+			}
+		});
+
+		getTableView().addOpenListener(new IOpenListener() {
+			public void open(OpenEvent event) {
+				if (input == null || !input.isSingleFile()) {
+					return;
+				}
+
+				ICommandService srv = (ICommandService) site
+						.getService(ICommandService.class);
+				IHandlerService hsrv = (IHandlerService) site
+						.getService(IHandlerService.class);
+				Command cmd = srv.getCommand(HistoryViewCommands.SHOWVERSIONS);
+				Parameterization[] parms;
+				if (Activator.getDefault().getPreferenceStore().getBoolean(
+						UIPreferences.RESOURCEHISTORY_COMPARE_MODE)) {
+					try {
+						IParameter parm = cmd
+								.getParameter(HistoryViewCommands.COMPARE_MODE_PARAM);
+						parms = new Parameterization[] { new Parameterization(
+								parm, Boolean.TRUE.toString()) };
+					} catch (NotDefinedException e) {
+						Activator.handleError(e.getMessage(), e, true);
+						parms = null;
+					}
+				} else
+					parms = null;
+				ParameterizedCommand pcmd = new ParameterizedCommand(cmd, parms);
+				try {
+					hsrv.executeCommandInContext(pcmd, null, hsrv
+							.getCurrentState());
+				} catch (Exception e) {
+					Activator.handleError(e.getMessage(), e, true);
+				}
+			}
+		});
+
+		Control c = getControl();
+		c.setMenu(menuMgr.createContextMenu(c));
+		c.addMenuDetectListener(menuListener = new MenuListener(menuMgr,
+				getTableView(), site, copy));
 	}
 
 	Control getControl() {
@@ -134,12 +239,12 @@ class CommitGraphTable {
 		table.removePostSelectionChangedListener(l);
 	}
 
-	boolean canDoCopy() {
+	private boolean canDoCopy() {
 		return !table.getSelection().isEmpty();
 	}
 
 	@SuppressWarnings("unchecked")
-	void doCopy() {
+	private void doCopy() {
 		final ISelection s = table.getSelection();
 		if (s.isEmpty() || !(s instanceof IStructuredSelection))
 			return;
@@ -158,7 +263,9 @@ class CommitGraphTable {
 	}
 
 	void setInput(final RevFlag hFlag, final SWTCommitList list,
-			final SWTCommit[] asArray) {
+			final SWTCommit[] asArray, HistoryPageInput input) {
+		this.input = input;
+		menuListener.setInput(input);
 		final SWTCommitList oldList = allCommits;
 		highlight = hFlag;
 		allCommits = list;
@@ -252,4 +359,188 @@ class CommitGraphTable {
 		return table;
 	}
 
+	private IAction createStandardAction(final ActionFactory af) {
+		final String text = af.create(
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow()).getText();
+		IAction action = new Action() {
+
+			@Override
+			public String getActionDefinitionId() {
+				return af.getCommandId();
+			}
+
+			@Override
+			public String getId() {
+				return af.getId();
+			}
+
+			@Override
+			public String getText() {
+				return text;
+			}
+
+			@Override
+			public void run() {
+				if (af == ActionFactory.SELECT_ALL) {
+					table.getTable().selectAll();
+				}
+				if (af == ActionFactory.COPY) {
+					doCopy();
+				}
+			}
+		};
+		return action;
+	}
+
+	private final static class MenuListener implements MenuDetectListener {
+
+		private final MenuManager popupMgr;
+
+		private final ISelectionProvider selectionProvider;
+
+		private final IPageSite site;
+
+		private final IAction copyAction;
+
+		private HistoryPageInput input;
+
+		MenuListener(MenuManager menuManager,
+				ISelectionProvider selectionProvider, IPageSite site,
+				IAction copyAction) {
+			this.popupMgr = menuManager;
+			this.selectionProvider = selectionProvider;
+			this.site = site;
+			this.copyAction = copyAction;
+		}
+
+		public void setInput(HistoryPageInput input) {
+			this.input = input;
+		}
+
+		public void menuDetected(MenuDetectEvent e) {
+			popupMgr.removeAll();
+
+			int selectionSize = ((IStructuredSelection) selectionProvider
+					.getSelection()).size();
+
+			if (input.isSingleFile()) {
+				if (selectionSize == 1)
+					if (input.getSingleFile() instanceof IResource)
+						popupMgr
+								.add(getCommandContributionItem(
+										HistoryViewCommands.COMPARE_WITH_TREE,
+										UIText.GitHistoryPage_CompareWithWorkingTreeMenuMenuLabel));
+					else
+						popupMgr
+								.add(getCommandContributionItem(
+										HistoryViewCommands.COMPARE_WITH_TREE,
+										UIText.GitHistoryPage_CompareWithCurrentHeadMenu));
+				else if (selectionSize == 2)
+					popupMgr
+							.add(getCommandContributionItem(
+									HistoryViewCommands.COMPARE_VERSIONS,
+									UIText.GitHistoryPage_CompareWithEachOtherMenuLabel));
+				if (selectionSize > 0) {
+					popupMgr.add(getCommandContributionItem(
+							HistoryViewCommands.OPEN,
+							UIText.GitHistoryPage_OpenMenuLabel));
+					popupMgr.add(getCommandContributionItem(
+							HistoryViewCommands.OPEN_IN_TEXT_EDITOR,
+							UIText.GitHistoryPage_OpenInTextEditorLabel));
+				}
+			}
+
+			if (selectionSize == 1) {
+				popupMgr.add(new Separator());
+				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.CHECKOUT,
+						UIText.GitHistoryPage_CheckoutMenuLabel));
+				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.CREATE_BRANCH,
+						UIText.GitHistoryPage_CreateBranchMenuLabel));
+				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.CREATE_TAG,
+						UIText.GitHistoryPage_CreateTagMenuLabel));
+				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.CREATE_PATCH,
+						UIText.GitHistoryPage_CreatePatchMenuLabel));
+				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.CHERRYPICK,
+						UIText.GitHistoryPage_cherryPickMenuItem));
+				popupMgr.add(new Separator());
+
+				MenuManager resetManager = new MenuManager(
+						UIText.GitHistoryPage_ResetMenuLabel, UIIcons.RESET,
+						"Reset"); //$NON-NLS-1$
+
+				popupMgr.add(resetManager);
+
+				Map<String, String> parameters = new HashMap<String, String>();
+				parameters.put(HistoryViewCommands.RESET_MODE, "Soft"); //$NON-NLS-1$
+				resetManager.add(getCommandContributionItem(
+						HistoryViewCommands.RESET,
+						UIText.GitHistoryPage_ResetSoftMenuLabel, parameters));
+				parameters = new HashMap<String, String>();
+				parameters.put(HistoryViewCommands.RESET_MODE, "Mixed"); //$NON-NLS-1$
+				resetManager.add(getCommandContributionItem(
+						HistoryViewCommands.RESET,
+						UIText.GitHistoryPage_ResetMixedMenuLabel, parameters));
+				parameters = new HashMap<String, String>();
+				parameters.put(HistoryViewCommands.RESET_MODE, "Hard"); //$NON-NLS-1$
+				resetManager.add(getCommandContributionItem(
+						HistoryViewCommands.RESET,
+						UIText.GitHistoryPage_ResetHardMenuLabel, parameters));
+			}
+			popupMgr.add(new Separator());
+
+			MenuManager quickDiffManager = new MenuManager(
+					UIText.GitHistoryPage_QuickdiffMenuLabel, null, "Quickdiff"); //$NON-NLS-1$
+
+			popupMgr.add(quickDiffManager);
+
+			quickDiffManager.add(getCommandContributionItem(
+					HistoryViewCommands.SET_QUICKDIFF_BASELINE,
+					UIText.GitHistoryPage_SetAsBaselineMenuLabel));
+
+			Map<String, String> parameters = new HashMap<String, String>();
+			parameters.put(HistoryViewCommands.BASELINE_TARGET, "HEAD"); //$NON-NLS-1$
+			quickDiffManager.add(getCommandContributionItem(
+					HistoryViewCommands.RESET_QUICKDIFF_BASELINE,
+					UIText.GitHistoryPage_ResetBaselineToHeadMenuLabel,
+					parameters));
+
+			parameters = new HashMap<String, String>();
+			parameters.put(HistoryViewCommands.BASELINE_TARGET, "HEAD^1"); //$NON-NLS-1$
+			quickDiffManager.add(getCommandContributionItem(
+					HistoryViewCommands.RESET_QUICKDIFF_BASELINE,
+					UIText.GitHistoryPage_ResetBaselineToParentOfHeadMenuLabel,
+					parameters));
+
+			// copy and such after additions
+			popupMgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+			popupMgr.add(copyAction);
+			popupMgr.add(new Separator());
+
+		}
+
+		private CommandContributionItem getCommandContributionItem(
+				String commandId, String menuLabel) {
+			CommandContributionItemParameter parameter = new CommandContributionItemParameter(
+					site, commandId, commandId,
+					CommandContributionItem.STYLE_PUSH);
+			parameter.label = menuLabel;
+			return new CommandContributionItem(parameter);
+		}
+
+		private CommandContributionItem getCommandContributionItem(
+				String commandId, String menuLabel,
+				Map<String, String> parameters) {
+			CommandContributionItemParameter parameter = new CommandContributionItemParameter(
+					site, commandId, commandId,
+					CommandContributionItem.STYLE_PUSH);
+			parameter.label = menuLabel;
+			parameter.parameters = parameters;
+			return new CommandContributionItem(parameter);
+		}
+	}
 }
