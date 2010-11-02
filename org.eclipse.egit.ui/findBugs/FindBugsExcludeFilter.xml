@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<FindBugsFilter>
+     <!-- Silence MS_SHOULD_BE_FINAL here, enums cannot use final
+       -->
+     <Match>
+       <Class name="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType" />
+       <Bug pattern="MS_SHOULD_BE_FINAL" />
+     </Match>
+</FindBugsFilter>

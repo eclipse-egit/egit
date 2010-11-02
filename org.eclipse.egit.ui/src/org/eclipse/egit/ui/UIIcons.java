@@ -21,132 +21,132 @@ import org.eclipse.jface.resource.ImageDescriptor;
 public class UIIcons {
 
 	/** Decoration for resource in the index but not yet committed. */
-	public static final ImageDescriptor OVR_STAGED;
+	public final static ImageDescriptor OVR_STAGED;
 
 	/** Decoration for resource added to index but not yet committed. */
-	public static final ImageDescriptor OVR_STAGED_ADD;
+	public final static ImageDescriptor OVR_STAGED_ADD;
 
 	/** Decoration for resource removed from the index but not commit. */
-	public static final ImageDescriptor OVR_STAGED_REMOVE;
+	public final static ImageDescriptor OVR_STAGED_REMOVE;
 
 	/** Decoration for resource not being tracked by Git */
-	public static final ImageDescriptor OVR_UNTRACKED;
+	public final static ImageDescriptor OVR_UNTRACKED;
 
 	/** Decoration for tracked resource with a merge conflict.  */
-	public static final ImageDescriptor OVR_CONFLICT;
+	public final static ImageDescriptor OVR_CONFLICT;
 
 	/** Decoration for tracked resources that we want to ignore changes in. */
-	public static final ImageDescriptor OVR_ASSUMEVALID;
+	public final static ImageDescriptor OVR_ASSUMEVALID;
 
 	/** Decoration for tracked resources that are dirty. */
-	public static final ImageDescriptor OVR_DIRTY;
+	public final static ImageDescriptor OVR_DIRTY;
 
 	/** Find icon */
-	public static final ImageDescriptor ELCL16_FIND;
+	public final static ImageDescriptor ELCL16_FIND;
 	/** Compare / View icon */
-	public static final ImageDescriptor ELCL16_COMPARE_VIEW;
+	public final static ImageDescriptor ELCL16_COMPARE_VIEW;
 	/** Next arrow icon */
-	public static final ImageDescriptor ELCL16_NEXT;
+	public final static ImageDescriptor ELCL16_NEXT;
 	/** Previous arrow icon */
-	public static final ImageDescriptor ELCL16_PREVIOUS;
+	public final static ImageDescriptor ELCL16_PREVIOUS;
 	/** Commit icon */
-	public static final ImageDescriptor ELCL16_COMMIT;
+	public final static ImageDescriptor ELCL16_COMMIT;
 	/** Comments icon */
-	public static final ImageDescriptor ELCL16_COMMENTS;
+	public final static ImageDescriptor ELCL16_COMMENTS;
 	/** Author icon */
-	public static final ImageDescriptor ELCL16_AUTHOR;
+	public final static ImageDescriptor ELCL16_AUTHOR;
 	/** Committer icon */
-	public static final ImageDescriptor ELCL16_COMMITTER;
+	public final static ImageDescriptor ELCL16_COMMITTER;
 	/** Id icon */
-	public static final ImageDescriptor ELCL16_ID;
+	public final static ImageDescriptor ELCL16_ID;
 	/** Delete icon */
-	public static final ImageDescriptor ELCL16_DELETE;
+	public final static ImageDescriptor ELCL16_DELETE;
 	/** Add icon */
-	public static final ImageDescriptor ELCL16_ADD;
+	public final static ImageDescriptor ELCL16_ADD;
 	/** Trash icon */
-	public static final ImageDescriptor ELCL16_TRASH;
+	public final static ImageDescriptor ELCL16_TRASH;
 	/** Clear icon */
-	public static final ImageDescriptor ELCL16_CLEAR;
+	public final static ImageDescriptor ELCL16_CLEAR;
 	/** Refresh icon */
-	public static final ImageDescriptor ELCL16_REFRESH;
+	public final static ImageDescriptor ELCL16_REFRESH;
 	/** Linked with icon */
-	public static final ImageDescriptor ELCL16_SYNCED;
+	public final static ImageDescriptor ELCL16_SYNCED;
 
 	/** Enabled, checked, checkbox image */
-	public static final ImageDescriptor CHECKBOX_ENABLED_CHECKED;
+	public final static ImageDescriptor CHECKBOX_ENABLED_CHECKED;
 	/** Enabled, unchecked, checkbox image */
-	public static final ImageDescriptor CHECKBOX_ENABLED_UNCHECKED;
+	public final static ImageDescriptor CHECKBOX_ENABLED_UNCHECKED;
 	/** Disabled, checked, checkbox image */
-	public static final ImageDescriptor CHECKBOX_DISABLED_CHECKED;
+	public final static ImageDescriptor CHECKBOX_DISABLED_CHECKED;
 	/** Disabled, unchecked, checkbox image */
-	public static final ImageDescriptor CHECKBOX_DISABLED_UNCHECKED;
+	public final static ImageDescriptor CHECKBOX_DISABLED_UNCHECKED;
 	/** Edit configuration */
-	public static final ImageDescriptor EDITCONFIG;
+	public final static ImageDescriptor EDITCONFIG;
 	/** Create Patch Wizard banner */
-	public static final ImageDescriptor WIZBAN_CREATE_PATCH;
+	public final static ImageDescriptor WIZBAN_CREATE_PATCH;
 
 	/** Import Wizard banner */
-	public static final ImageDescriptor WIZBAN_IMPORT_REPO;
+	public final static ImageDescriptor WIZBAN_IMPORT_REPO;
 
 	/** Connect Wizard banner */
-	public static final ImageDescriptor WIZBAN_CONNECT_REPO;
+	public final static ImageDescriptor WIZBAN_CONNECT_REPO;
 
 	/** History view, select all version in same project */
-	public static ImageDescriptor FILTERPROJECT;
+	public final static ImageDescriptor FILTERPROJECT;
 
 	/** History view, select all version in same folder */
-	public static ImageDescriptor FILTERFOLDER;
+	public final static ImageDescriptor FILTERFOLDER;
 
 	/** History view, select all version of resource */
-	public static ImageDescriptor FILTERRESOURCE;
+	public final static ImageDescriptor FILTERRESOURCE;
 
 	/** Import button */
-	public static ImageDescriptor FETCH;
+	public final static ImageDescriptor FETCH;
 
 	/** Export button */
-	public static ImageDescriptor PUSH;
+	public final static ImageDescriptor PUSH;
 
 	/** Collapse all button */
-	public static ImageDescriptor COLLAPSEALL;
+	public final static ImageDescriptor COLLAPSEALL;
 
 	/** Repository tree node */
-	public static ImageDescriptor REPOSITORY;
+	public final static ImageDescriptor REPOSITORY;
 
 	/** New Repository button */
-	public static ImageDescriptor NEW_REPOSITORY;
+	public final static ImageDescriptor NEW_REPOSITORY;
 
 	/** Remote Repository tree node */
-	public static ImageDescriptor REMOTE_REPOSITORY;
+	public final static ImageDescriptor REMOTE_REPOSITORY;
 
 	/** Reset */
-	public static ImageDescriptor RESET;
+	public final static ImageDescriptor RESET;
 
 	/** Remote Repository tree node */
-	public static ImageDescriptor REMOTE_SPEC;
+	public final static ImageDescriptor REMOTE_SPEC;
 
 	/** Branches tree node */
-	public static ImageDescriptor BRANCHES;
+	public final static ImageDescriptor BRANCHES;
 
 	/** Checked-out decorator for branch */
-	public static ImageDescriptor OVR_CHECKEDOUT;
+	public final static ImageDescriptor OVR_CHECKEDOUT;
 
 	/** Tags icon */
-	public static ImageDescriptor TAGS;
+	public final static ImageDescriptor TAGS;
 
 	/** Tag icon */
-	public static ImageDescriptor TAG;
+	public final static ImageDescriptor TAG;
 
 	/** Branch icon */
-	public static ImageDescriptor BRANCH;
+	public final static ImageDescriptor BRANCH;
 
 	/** Clone Icon */
-	public static ImageDescriptor CLONEGIT;
+	public final static ImageDescriptor CLONEGIT;
 
 	/** Changeset Icon */
-	public static final ImageDescriptor CHANGESET;
+	public final static ImageDescriptor CHANGESET;
 
-	private static final URL base;
-
+	/** base URL */
+	public final static URL base;
 
 	static {
 		base = init();
