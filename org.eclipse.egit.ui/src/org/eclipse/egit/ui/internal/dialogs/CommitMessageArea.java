@@ -12,9 +12,13 @@
 package org.eclipse.egit.ui.internal.dialogs;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
@@ -47,7 +51,11 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -118,6 +126,7 @@ public class CommitMessageArea extends Composite {
 	}
 
 	private final SourceViewer sourceViewer;
+	private ModifyListener hardWrapModifyListener;
 
 	/**
 	 * @param parent
@@ -130,9 +139,18 @@ public class CommitMessageArea extends Composite {
 		AnnotationModel annotationModel = new AnnotationModel();
 		sourceViewer = new SourceViewer(this, null, null, true, SWT.MULTI
 				| SWT.V_SCROLL | SWT.WRAP);
-		getTextWidget().setIndent(2);
+		getTextWidget().setFont(UIUtils
+				.getFont(UIPreferences.THEME_CommitMessageEditorFont));
+
+		int endSpacing = 2;
+		int textWidth = getCharWidth() * 70 + endSpacing;
+		int textHeight = getLineHeight() * 7;
+		Point size = getTextWidget().computeSize(textWidth, textHeight);
+		getTextWidget().setSize(size);
 
 		createMarginPainter();
+
+		configureHardWrap();
 
 		final SourceViewerDecorationSupport support = configureAnnotationPreferences();
 		final IHandlerActivation handlerActivation = installQuickFixActionHandler();
@@ -151,6 +169,39 @@ public class CommitMessageArea extends Composite {
 				getHandlerService().deactivateHandler(handlerActivation);
 			}
 		});
+	}
+
+	private void configureHardWrap() {
+		if (shouldHardWrap()) {
+			if (hardWrapModifyListener == null) {
+				final StyledText textWidget = getTextWidget();
+
+				hardWrapModifyListener = new ModifyListener() {
+
+					private boolean active = true;
+
+					public void modifyText(ModifyEvent e) {
+						if (!active) {
+							return;
+						}
+						String lineDelimiter = textWidget.getLineDelimiter();
+						List<WrapEdit> wrapEdits = calculateWrapEdits(textWidget.getText(), 70, lineDelimiter);
+						// Prevent infinite loop because replaceTextRange causes a ModifyEvent
+						active = false;
+						for (WrapEdit wrapEdit : wrapEdits) {
+							textWidget.replaceTextRange(wrapEdit.getStart(), wrapEdit.getLength(), lineDelimiter);
+						}
+						active = true;
+					}
+				};
+				textWidget.addModifyListener(hardWrapModifyListener);
+			}
+		} else {
+			if (hardWrapModifyListener != null) {
+				getTextWidget().removeModifyListener(hardWrapModifyListener);
+				hardWrapModifyListener = null;
+			}
+		}
 	}
 
 	private void configureContextMenu() {
@@ -311,10 +362,29 @@ public class CommitMessageArea extends Composite {
 
 	private void createMarginPainter() {
 		MarginPainter marginPainter = new MarginPainter(sourceViewer);
-		marginPainter.setMarginRulerColumn(65);
+		marginPainter.setMarginRulerColumn(70);
 		marginPainter.setMarginRulerColor(Display.getDefault().getSystemColor(
 				SWT.COLOR_GRAY));
 		sourceViewer.addPainter(marginPainter);
+	}
+
+	private int getCharWidth() {
+		GC gc = new GC(getTextWidget());
+		int charWidth = gc.getFontMetrics().getAverageCharWidth();
+		gc.dispose();
+		return charWidth;
+	}
+
+	private int getLineHeight() {
+		return getTextWidget().getLineHeight();
+	}
+
+	/**
+	 * @return if the commit message should be hard-wrapped (preference)
+	 */
+	private static boolean shouldHardWrap() {
+		return Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.COMMIT_DIALOG_HARD_WRAP_MESSAGE);
 	}
 
 	/**
@@ -352,6 +422,24 @@ public class CommitMessageArea extends Composite {
 	}
 
 	/**
+	 * Return the commit message, converting platform-specific line endings.
+	 *
+	 * @return commit message
+	 */
+	public String getCommitMessage() {
+		String text = getText();
+		text = text.replaceAll(getTextWidget().getLineDelimiter(), "\n"); //$NON-NLS-1$
+		return text;
+	}
+
+	/**
+	 * Reconfigure this widget if a preference has changed.
+	 */
+	public void reconfigure() {
+		configureHardWrap();
+	}
+
+	/**
 	 * @return text
 	 */
 	public String getText() {
@@ -372,4 +460,95 @@ public class CommitMessageArea extends Composite {
 		return getTextWidget().setFocus();
 	}
 
+	/**
+	 * Calculate a list of {@link WrapEdit} which can be applied to the text to
+	 * get a new text that is wrapped at word boundaries. Existing line breaks
+	 * are left alone (text is not reflowed).
+	 *
+	 * @param text
+	 *            the text to calculate the wrap edits for
+	 * @param maxLineLength
+	 *            the maximum line length
+	 * @param lineDelimiter
+	 *            line delimiter used in text and for wrapping
+	 * @return a list of {@link WrapEdit} objects which specify how the text
+	 *         should be edited to obtain the wrapped text. Offsets of later
+	 *         edits are already adjusted for the fact that wrapping a line may
+	 *         shift the text backwards. So the list can just be iterated and
+	 *         each edit applied in order.
+	 */
+	public static List<WrapEdit> calculateWrapEdits(final String text, final int maxLineLength, final String lineDelimiter) {
+		List<WrapEdit> wrapEdits = new LinkedList<WrapEdit>();
+
+		int offset = 0;
+		int lineDelimiterLength = lineDelimiter.length();
+
+		String[] chunks = text.split(lineDelimiter, -1);
+		for (int chunkIndex = 0; chunkIndex < chunks.length; chunkIndex++) {
+			String chunk = chunks[chunkIndex];
+
+			String[] words = chunk.split(" ", -1); //$NON-NLS-1$
+			int lineLength = 0;
+
+			for (int wordIndex = 0; wordIndex < words.length; wordIndex++) {
+				String word = words[wordIndex];
+
+				int wordLength = word.length();
+				int newLineLength = lineLength + wordLength + 1 /* the space */;
+				if (newLineLength > maxLineLength) {
+					/* don't break before a single long word */
+					if (lineLength != 0) {
+						wrapEdits.add(new WrapEdit(offset, 1));
+						/* adjust for the shifting of text after the edit is applied */
+						offset += lineDelimiterLength;
+					}
+					lineLength = 0;
+				} else if (wordIndex != 0) {
+					lineLength += 1;
+					offset += 1;
+				}
+				offset += wordLength;
+				lineLength += wordLength;
+			}
+
+			if (chunkIndex != chunks.length - 1) {
+				offset += lineDelimiterLength;
+			}
+		}
+
+		return wrapEdits;
+	}
+
+	/**
+	 * Edit for replacing a space with a line delimiter to wrap a long line.
+	 */
+	public static class WrapEdit {
+		private int start;
+		private int length;
+
+		/**
+		 * @param start see {@link #getStart()}
+		 * @param length see {@link #getLength()}
+		 */
+		public WrapEdit(int start, int length) {
+			this.start = start;
+			this.length = length;
+		}
+
+		/**
+		 * @return character offset of where the edit should be applied on the
+		 *         text
+		 */
+		public int getStart() {
+			return start;
+		}
+
+		/**
+		 * @return number of characters which should be replaced by the line
+		 *         delimiter
+		 */
+		public int getLength() {
+			return length;
+		}
+	}
 }

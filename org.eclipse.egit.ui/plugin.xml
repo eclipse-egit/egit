@@ -328,7 +328,7 @@
 		  id="org.eclipse.egit.ui.keyword.git">
 	    </keywordReference>
       </page>
-   <page
+      <page
          category="org.eclipse.egit.ui.GitPreferences"
          class="org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage"
          id="org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage"
@@ -336,7 +336,16 @@
       <keywordReference
             id="org.eclipse.egit.ui.keyword.git">
       </keywordReference>
-   </page>
+      </page>
+      <page
+            category="org.eclipse.egit.ui.GitPreferences"
+            class="org.eclipse.egit.ui.internal.preferences.CommitDialogPreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.CommitDialogPreferencePage"
+            name="%GitPreferences_CommitDialogPreferencePage_name">
+         <keywordReference
+               id="org.eclipse.egit.ui.keyword.git">
+         </keywordReference>
+      </page>
    </extension>
 
    <extension point="org.eclipse.ui.propertyPages">
@@ -440,6 +449,15 @@
         <description>
         %Theme_UncommittedChangeFont_description
         </description>
+      </fontDefinition>
+      <fontDefinition
+            categoryId="org.eclipse.egit.ui.GitTheme"
+            defaultsTo="org.eclipse.jface.textfont"
+            id="org.eclipse.egit.ui.CommitMessageEditorFont"
+            label="%Theme_CommitMessageEditorFont_label">
+         <description>
+            %Theme_CommitMessageEditorFont_description
+         </description>
       </fontDefinition>
    </extension>
 

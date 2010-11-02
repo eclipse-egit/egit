@@ -1303,6 +1303,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_AddChangeIdTooltip;
 
 	/** */
+	public static String CommitDialog_ConfigureLink;
+
+	/** */
 	public static String ConfigurationEditorComponent_AddButton;
 
 	/** */
@@ -1790,6 +1793,15 @@ public class UIText extends NLS {
 
 	/** */
 	public static String BranchSelectionDialog_Rename;
+
+	/** */
+	public static String CommitDialogPreferencePage_title;
+
+	/** */
+	public static String CommitDialogPreferencePage_hardWrapMessage;
+
+	/** */
+	public static String CommitDialogPreferencePage_hardWrapMessageTooltip;
 
 	/** */
 	public static String Decorator_exceptionMessage;
