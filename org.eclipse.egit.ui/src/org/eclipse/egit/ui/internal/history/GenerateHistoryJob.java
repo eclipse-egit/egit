@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.osgi.util.NLS;
 
 class GenerateHistoryJob extends Job {
@@ -30,24 +31,34 @@ class GenerateHistoryJob extends Job {
 
 	private long lastUpdateAt;
 
+	private boolean trace;
+
 	GenerateHistoryJob(final GitHistoryPage ghp, final SWTCommitList list) {
 		super(NLS.bind(UIText.HistoryPage_refreshJob, Activator.getDefault()
 				.getRepositoryUtil().getRepositoryName(
 						ghp.getInputInternal().getRepository())));
 		page = ghp;
 		allCommits = list;
+		trace = GitTraceLocation.HISTORYVIEW.isActive();
 	}
 
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
 		IStatus status = Status.OK_STATUS;
 		try {
+			if (trace)
+				GitTraceLocation.getTrace().traceEntry(
+						GitTraceLocation.HISTORYVIEW.getLocation());
 			page.setErrorMessage(NLS.bind(
 					UIText.GenerateHistoryJob_BuildingListMessage, page
 							.getName()));
 			try {
 				for (;;) {
 					final int oldsz = allCommits.size();
+					if (trace)
+						GitTraceLocation.getTrace().trace(
+								GitTraceLocation.HISTORYVIEW.getLocation(),
+								"Filling commit list"); //$NON-NLS-1$
 					allCommits.fillTo(oldsz + BATCH_SIZE - 1);
 					if (monitor.isCanceled() || oldsz == allCommits.size())
 						break;
@@ -72,18 +83,30 @@ class GenerateHistoryJob extends Job {
 			updateUI();
 		} finally {
 			monitor.done();
+			if (trace)
+				GitTraceLocation.getTrace().traceExit(
+						GitTraceLocation.HISTORYVIEW.getLocation());
 		}
 		return status;
 	}
 
 	void updateUI() {
-		if (allCommits.size() == lastUpdateCnt)
-			return;
+		if (trace)
+			GitTraceLocation.getTrace().traceEntry(
+					GitTraceLocation.HISTORYVIEW.getLocation());
+		try {
+			if (allCommits.size() == lastUpdateCnt)
+				return;
 
-		final SWTCommit[] asArray = new SWTCommit[allCommits.size()];
-		allCommits.toArray(asArray);
-		page.showCommitList(this, allCommits, asArray);
-		lastUpdateCnt = allCommits.size();
+			final SWTCommit[] asArray = new SWTCommit[allCommits.size()];
+			allCommits.toArray(asArray);
+			page.showCommitList(this, allCommits, asArray);
+			lastUpdateCnt = allCommits.size();
+		} finally {
+			if (trace)
+				GitTraceLocation.getTrace().traceExit(
+						GitTraceLocation.HISTORYVIEW.getLocation());
+		}
 	}
 
 	@Override
