@@ -162,8 +162,13 @@ public class CompareUtils {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Determine the encoding used by Eclipse for the resource which belongs to
 	 * repoPath in the eclipse workspace or null if no resource is found
+=======
+	 * Determine the encoding used by eclipse for the resource which belongs to
+	 * repoPath to in the eclipse workspace or null if no resource is found
+>>>>>>> [historyView] Refactor menu contributions third part
 	 *
 	 * @param db
 	 *            the repository
@@ -191,7 +196,7 @@ public class CompareUtils {
 	 *
 	 * @param resource
 	 *            must be an instance of IEncodedStorage
-	 * @return the encoding used in Eclipse for the resource if found or null
+	 * @return the encoding used in eclipse for the resource if found or null
 	 */
 	public static String getResourceEncoding(IResource resource) {
 		// Get the encoding for the current version. As a matter of
