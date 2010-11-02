@@ -1,7 +1,7 @@
 # Main Debug Trace switch
 org.eclipse.egit.ui/debug = false
 # Trace location for HistoryView
-org.eclipse.egit.ui/historyview = false
+org.eclipse.egit.ui/debug/ui/historyview = false
 # General trace location for the EGit UI Plugin
 org.eclipse.egit.ui/debug/ui = false
 # Trace location for RepositoriesView
