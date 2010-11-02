@@ -27,9 +27,12 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.DefaultTextDoubleClickStrategy;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -48,6 +51,8 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Color;
@@ -56,6 +61,8 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.part.IPageSite;
 
 class CommitMessageViewer extends TextViewer implements
 		ISelectionChangedListener {
@@ -94,7 +101,7 @@ class CommitMessageViewer extends TextViewer implements
 
 	private static final String LF = "\n"; //$NON-NLS-1$
 
-	CommitMessageViewer(final Composite parent) {
+	CommitMessageViewer(final Composite parent, final IPageSite site) {
 		super(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
 		fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
 
@@ -171,8 +178,49 @@ class CommitMessageViewer extends TextViewer implements
 				}
 			}
 		};
+
+		final IAction selectAll = new Action() {
+			@Override
+			public void run() {
+				doOperation(ITextOperationTarget.SELECT_ALL);
+			}
+
+			@Override
+			public boolean isEnabled() {
+				return canDoOperation(ITextOperationTarget.SELECT_ALL);
+			}
+		};
+
+		final IAction copy = new Action() {
+			@Override
+			public void run() {
+				doOperation(ITextOperationTarget.COPY);
+			}
+
+			@Override
+			public boolean isEnabled() {
+				return canDoOperation(ITextOperationTarget.COPY);
+			}
+		};
 		Activator.getDefault().getPreferenceStore().addPropertyChangeListener(
 				listener);
+		getControl().addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {
+				site.getActionBars().setGlobalActionHandler(
+						ActionFactory.SELECT_ALL.getId(), null);
+				site.getActionBars().setGlobalActionHandler(
+						ActionFactory.COPY.getId(), null);
+				site.getActionBars().updateActionBars();
+			}
+
+			public void focusGained(FocusEvent e) {
+				site.getActionBars().setGlobalActionHandler(
+						ActionFactory.SELECT_ALL.getId(), selectAll);
+				site.getActionBars().setGlobalActionHandler(
+						ActionFactory.COPY.getId(), copy);
+				site.getActionBars().updateActionBars();
+			}
+		});
 	}
 
 	@Override
