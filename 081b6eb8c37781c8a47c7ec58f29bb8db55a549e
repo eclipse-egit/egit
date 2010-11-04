@@ -16,6 +16,24 @@
       "revId": "081b6eb8c37781c8a47c7ec58f29bb8db55a549e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzn///9k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-02T10:20:46Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "AAALzX///lI\u003d",
+      "revId": "081b6eb8c37781c8a47c7ec58f29bb8db55a549e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
