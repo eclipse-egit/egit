@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALzX///lE\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-30T22:20:20Z",
+      "side": 1,
+      "message": "looks like this is a separate change",
+      "revId": "d46af50f9312ce1c5b4491fc9104e976091bb7eb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzX///lM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-30T22:20:20Z",
+      "side": 1,
+      "message": "redundant \"to\": s/repoPath to/repoPath/",
+      "revId": "d46af50f9312ce1c5b4491fc9104e976091bb7eb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
