@@ -211,7 +211,7 @@ public abstract class GitRepositoriesViewTestBase extends
 		RefUpdate updateRef = myRepository.updateRef(newRefName);
 		Ref sourceBranch = myRepository.getRef("refs/heads/master");
 		ObjectId startAt = sourceBranch.getObjectId();
-		String startBranch = myRepository
+		String startBranch = Repository
 				.shortenRefName(sourceBranch.getName());
 		updateRef.setNewObjectId(startAt);
 		updateRef

@@ -198,7 +198,7 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 			case ADDITIONALREF:
 				Ref ref = (Ref) node.getObject();
 				// shorten the name
-				StyledString refName = new StyledString(node.getRepository()
+				StyledString refName = new StyledString(Repository
 						.shortenRefName(ref.getName()));
 				if (ref.isSymbolic()) {
 					refName.append(" - ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
@@ -304,7 +304,7 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 		case TAG: {
 			Ref ref = (Ref) node.getObject();
 			// shorten the name
-			String refName = node.getRepository().shortenRefName(ref.getName());
+			String refName = Repository.shortenRefName(ref.getName());
 			if (node.getParent().getType() == RepositoryTreeNodeType.BRANCHHIERARCHY) {
 				int index = refName.lastIndexOf('/');
 				refName = refName.substring(index + 1);
@@ -314,7 +314,7 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 		case ADDITIONALREF: {
 			Ref ref = (Ref) node.getObject();
 			// shorten the name
-			String refName = node.getRepository().shortenRefName(ref.getName());
+			String refName = Repository.shortenRefName(ref.getName());
 			if (ref.isSymbolic()) {
 				refName = refName
 						+ " - " //$NON-NLS-1$
