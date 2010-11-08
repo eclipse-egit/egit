@@ -163,6 +163,8 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 			public void open(OpenEvent event) {
 				RepositoryTreeNode node = (RepositoryTreeNode) ((IStructuredSelection) branchTree
 						.getSelection()).getFirstElement();
+				if (node == null)
+					return;
 				if (node.getType() != RepositoryTreeNodeType.REF
 						&& node.getType() != RepositoryTreeNodeType.TAG)
 					branchTree.setExpandedState(node, !branchTree
