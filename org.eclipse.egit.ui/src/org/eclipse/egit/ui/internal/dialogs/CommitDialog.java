@@ -562,7 +562,10 @@ public class CommitDialog extends Dialog {
 				prefix = UIText.CommitDialog_StatusModified;
 		} else if (indexDiff.getUntracked().contains(path)) {
 			// untracked
-			prefix = UIText.CommitDialog_StatusUntracked;
+			if (indexDiff.getRemoved().contains(path))
+				prefix = UIText.CommitDialog_StatusRemovedUntracked;
+			else
+				prefix = UIText.CommitDialog_StatusUntracked;
 		} else if (indexDiff.getRemoved().contains(path)) {
 			// removed
 			prefix = UIText.CommitDialog_StatusRemoved;

@@ -1297,6 +1297,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_StatusUntracked;
 
 	/** */
+	public static String CommitDialog_StatusRemovedUntracked;
+
+	/** */
 	public static String CommitDialog_AddChangeIdLabel;
 
 	/** */
