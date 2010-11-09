@@ -211,8 +211,7 @@ public abstract class GitRepositoriesViewTestBase extends
 		RefUpdate updateRef = myRepository.updateRef(newRefName);
 		Ref sourceBranch = myRepository.getRef("refs/heads/master");
 		ObjectId startAt = sourceBranch.getObjectId();
-		String startBranch = myRepository
-				.shortenRefName(sourceBranch.getName());
+		String startBranch = Repository.shortenRefName(sourceBranch.getName());
 		updateRef.setNewObjectId(startAt);
 		updateRef
 				.setRefLogMessage("branch: Created from " + startBranch, false); //$NON-NLS-1$
