@@ -2,6 +2,7 @@
  * Copyright (C) 2007, Dave Watson <dwatson@mimvista.com>
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,7 +11,9 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -22,15 +25,14 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
+import org.eclipse.jgit.dircache.DirCacheCheckout;
 import org.eclipse.jgit.errors.CheckoutConflictException;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.WorkDirCheckout;
 import org.eclipse.jgit.lib.RefUpdate.Result;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -73,8 +75,6 @@ public class BranchOperation implements IEGitOperation {
 
 	private RevTree oldTree;
 
-	private GitIndex index;
-
 	private RevTree newTree;
 
 	private RevCommit oldCommit;
@@ -99,30 +99,27 @@ public class BranchOperation implements IEGitOperation {
 
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
-			public void run(IProgressMonitor monitor) throws CoreException {
+			public void run(IProgressMonitor pm) throws CoreException {
 				IProject[] validProjects = ProjectUtil.getValidProjects(repository);
-				monitor.beginTask(NLS.bind(
-						CoreText.BranchOperation_performingBranch, refName), 6);
+				pm.beginTask(NLS.bind(
+						CoreText.BranchOperation_performingBranch, refName), 5);
 				lookupRefs();
-				monitor.worked(1);
+				pm.worked(1);
 
 				mapObjects();
-				monitor.worked(1);
+				pm.worked(1);
 
 				checkoutTree();
-				monitor.worked(1);
-
-				writeIndex();
-				monitor.worked(1);
+				pm.worked(1);
 
 				updateHeadRef();
-				monitor.worked(1);
+				pm.worked(1);
 
 				ProjectUtil.refreshValidProjects(validProjects, new SubProgressMonitor(
-						monitor, 1));
-				monitor.worked(1);
+						pm, 1));
+				pm.worked(1);
 
-				monitor.done();
+				pm.done();
 			}
 		};
 		// lock workspace to protect working tree changes
@@ -176,19 +173,14 @@ public class BranchOperation implements IEGitOperation {
 		}
 	}
 
-	private void writeIndex() throws TeamException {
-		try {
-			index.write();
-		} catch (IOException e) {
-			throw new TeamException(CoreText.BranchOperation_writingIndex, e);
-		}
-	}
-
 	private void checkoutTree() throws TeamException {
 		try {
-			new WorkDirCheckout(repository, repository.getWorkTree(),
-					repository.mapTree(oldTree), index, repository
-							.mapTree(newTree)).checkout();
+			DirCacheCheckout dirCacheCheckout = new DirCacheCheckout(
+					repository, oldTree, repository.lockDirCache(), newTree);
+			dirCacheCheckout.setFailOnConflict(true);
+			boolean result = dirCacheCheckout.checkout();
+			if (!result)
+				retryDelete(dirCacheCheckout);
 		} catch (CheckoutConflictException e) {
 			TeamException teamException = new TeamException(e.getMessage());
 			throw teamException;
@@ -197,14 +189,40 @@ public class BranchOperation implements IEGitOperation {
 		}
 	}
 
-	private void mapObjects() throws TeamException {
-		try {
-			oldTree = oldCommit.getTree();
-			index = repository.getIndex();
-			newTree = newCommit.getTree();
-		} catch (IOException e) {
-			throw new TeamException(CoreText.BranchOperation_mappingTrees, e);
+	private void retryDelete(DirCacheCheckout dirCacheCheckout) throws IOException {
+		List<String> files = dirCacheCheckout.getToBeDeleted();
+		for(String path:files) {
+			File file = new File(repository.getWorkTree(), path);
+			deleteFile(file);
 		}
+	}
+
+	/**
+	 * Deletes a file. Deletion is retried 10 times to avoid
+	 * failing deletion caused by concurrent read.
+	 * @param file
+	 * @throws IOException
+	 */
+	private void deleteFile(File file) throws IOException {
+		boolean deleted = false;
+		for(int i=0; i<10; i++) {
+			deleted = file.delete();
+			if (deleted)
+				break;
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// ignore
+			}
+		}
+		if (!deleted) {
+			throw new IOException(CoreText.BranchOperation_couldNotDelete + file.getPath());
+		}
+	}
+
+	private void mapObjects() {
+		oldTree = oldCommit.getTree();
+		newTree = newCommit.getTree();
 	}
 
 	private void lookupRefs() throws TeamException {
