@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALzX///k8\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-30T23:55:33Z",
+      "side": 1,
+      "message": "better use \"Commit Dialog\", we have another one named \"History View\"",
+      "revId": "81534d7c99e364f43bd3e305e85c830276443401",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzX///k4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-30T23:55:33Z",
+      "side": 1,
+      "message": "just use \"Preferences\"",
+      "revId": "81534d7c99e364f43bd3e305e85c830276443401",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALzX///k0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-10-30T23:55:33Z",
+      "side": 1,
+      "message": "Better use \"Commit Dialog\", this makes clear where the setting will be used",
+      "revId": "81534d7c99e364f43bd3e305e85c830276443401",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
