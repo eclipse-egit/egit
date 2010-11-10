@@ -111,15 +111,14 @@ public class DeleteBranchCommand extends
 									} else if (result == DeleteBranchOperation.REJECTED_UNMERGED) {
 										unmergedNodes.add(refNode);
 									}
-
-									if (!unmergedNodes.isEmpty()) {
-										MessageDialog messageDialog = new BranchMessageDialog(
-												shell, unmergedNodes);
-										if (messageDialog.open() == Window.OK) {
-											for (RefNode node : unmergedNodes) {
-												deleteBranch(node, node
-														.getObject(), true);
-											}
+								}
+								if (!unmergedNodes.isEmpty()) {
+									MessageDialog messageDialog = new BranchMessageDialog(
+											shell, unmergedNodes);
+									if (messageDialog.open() == Window.OK) {
+										for (RefNode node : unmergedNodes) {
+											deleteBranch(node,
+													node.getObject(), true);
 										}
 									}
 								}
