@@ -14,19 +14,17 @@
 
 package org.eclipse.egit.ui.internal.decorators;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.ContainerTreeIterator;
 import org.eclipse.egit.core.ContainerTreeIterator.ResourceEntry;
+import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -433,19 +431,7 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		treeWalk.addTree(new DirCacheIterator(repository.readDirCache()));
 
 		// Working directory
-		IProject project = resource.getProject();
-		IWorkspaceRoot workspaceRoot = resource.getWorkspace().getRoot();
-		File repoRoot = repository.getWorkTree();
-
-		if (project != null && project.getLocation() != null
-				&& repoRoot.equals(project.getLocation().toFile()))
-			treeWalk.addTree(new ContainerTreeIterator(project));
-		else if (repoRoot.equals(workspaceRoot.getLocation().toFile()))
-			treeWalk.addTree(new ContainerTreeIterator(workspaceRoot));
-		else
-			treeWalk.addTree(new AdaptableFileTreeIterator(repoRoot,
-					workspaceRoot));
-
+		treeWalk.addTree(IteratorService.createInitialIterator(repository));
 		return treeWalk;
 	}
 
