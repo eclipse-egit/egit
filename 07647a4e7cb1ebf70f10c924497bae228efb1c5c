@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL0H///2Q\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CloneOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-11-11T16:58:47Z",
+      "side": 1,
+      "message": "If null is a valid argument to DirCacheCheckout, can we document this?\n\nI\u0027ll open a bug.",
+      "revId": "07647a4e7cb1ebf70f10c924497bae228efb1c5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
