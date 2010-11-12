@@ -40,7 +40,6 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
-import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -75,6 +74,8 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 
 	private boolean assumeValid = false;
 
+	private boolean fileMode;
+
 	private Staged staged = Staged.NOT_STAGED;
 
 	private final boolean trace;
@@ -100,6 +101,9 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		try {
 			mapping = RepositoryMapping.getMapping(resource);
 			repository = mapping.getRepository();
+			fileMode = Boolean.valueOf(
+					repository.getConfig().getBoolean("core", null, //$NON-NLS-1$
+							"filemode", true)).booleanValue(); //$NON-NLS-1$
 			headId = repository.resolve(Constants.HEAD);
 
 			store = Activator.getDefault().getPreferenceStore();
@@ -205,17 +209,10 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 			assumeValid = true;
 		} else {
 			if (workspaceIterator != null
-					&& workspaceIterator.isModified(indexEntry, true, config_filemode(),
+					&& workspaceIterator.isModified(indexEntry, true, fileMode,
 							repository.getFS()))
 				dirty = true;
 		}
-	}
-
-	private boolean config_filemode() {
-		StoredConfig config = repository.getConfig();
-		Boolean filemode = Boolean.valueOf(config.getBoolean("core", null, //$NON-NLS-1$
-				"filemode", true)); //$NON-NLS-1$
-		return filemode.booleanValue();
 	}
 
 	private class RecursiveStateFilter extends TreeFilter {
