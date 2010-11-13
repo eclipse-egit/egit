@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL0H///zo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-11-12T21:22:25Z",
+      "side": 1,
+      "message": "If you added this to the CoreConfig object in JGit, you can instead do:\n\n  repository.getConfig().get(CoreConfig.KEY).getFileMode()\n\nand have it use a cached CoreConfig instance, which itself has cached the value of core.filemode.  Doing this allows the cached value to be evicted and rebuilt when any property in the configuration file changes, or if the underlying config file on disk is modified.  That makes EGit more responsive to updates.\n\nAlso, isn\u0027t:\n\n  Boolean.valueOf(exprOfTypePrimitiveBoolean).booleanValue())\n\nKind of pointless?  You are casting boolean to Boolean, and then casting back.  Uh.  WTF?",
+      "revId": "d48f26f1c83eec981405fbfad5bfce90bba6dc4c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
