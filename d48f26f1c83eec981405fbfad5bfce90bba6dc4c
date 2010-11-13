@@ -16,6 +16,24 @@
       "revId": "d48f26f1c83eec981405fbfad5bfce90bba6dc4c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0H///zg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-11-12T21:27:29Z",
+      "side": 1,
+      "message": "I\u0027ll file a new changeset for that then. It makes sense.",
+      "parentUuid": "AAAL0H///zo\u003d",
+      "revId": "d48f26f1c83eec981405fbfad5bfce90bba6dc4c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
