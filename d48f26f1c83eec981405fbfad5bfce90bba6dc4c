@@ -34,6 +34,24 @@
       "revId": "d48f26f1c83eec981405fbfad5bfce90bba6dc4c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0X////8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-11-13T11:32:03Z",
+      "side": 1,
+      "message": "This was done in mindless-drone-mode :)  I just moved the code to a place where it wouldn\u0027t be called very often.",
+      "parentUuid": "AAAL0H///zo\u003d",
+      "revId": "d48f26f1c83eec981405fbfad5bfce90bba6dc4c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
