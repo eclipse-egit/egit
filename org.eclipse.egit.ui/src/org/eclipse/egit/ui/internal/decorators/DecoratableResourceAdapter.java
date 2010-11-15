@@ -35,6 +35,7 @@ import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.CoreConfig;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -101,9 +102,7 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		try {
 			mapping = RepositoryMapping.getMapping(resource);
 			repository = mapping.getRepository();
-			fileMode = Boolean.valueOf(
-					repository.getConfig().getBoolean("core", null, //$NON-NLS-1$
-							"filemode", true)).booleanValue(); //$NON-NLS-1$
+			fileMode = repository.getConfig().get(CoreConfig.KEY).isFileMode();
 			headId = repository.resolve(Constants.HEAD);
 
 			store = Activator.getDefault().getPreferenceStore();
