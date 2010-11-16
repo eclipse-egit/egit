@@ -23,13 +23,12 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
+import org.eclipse.jgit.dircache.DirCacheCheckout;
 import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.WorkDirCheckout;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepository;
@@ -214,7 +213,6 @@ public class CloneOperation {
 		if (head == null || head.getObjectId() == null)
 			return;
 
-		final GitIndex index = new GitIndex(local);
 		final RevWalk rw = new RevWalk(local);
 		final RevCommit mapCommit;
 		try {
@@ -224,18 +222,20 @@ public class CloneOperation {
 		}
 
 		final RefUpdate u;
-		final WorkDirCheckout co;
 
 		u = local.updateRef(Constants.HEAD);
 		u.setNewObjectId(mapCommit.getId());
 		u.forceUpdate();
 
 		monitor.setTaskName(CoreText.CloneOperation_checkingOutFiles);
-		co = new WorkDirCheckout(local, local.getWorkTree(), index, local
-				.mapTree(mapCommit.getTree()));
-		co.checkout();
+		DirCacheCheckout dirCacheCheckout = new DirCacheCheckout(
+				local, null, local.lockDirCache(), mapCommit.getTree());
+		dirCacheCheckout.setFailOnConflict(true);
+		boolean result = dirCacheCheckout.checkout();
+		if (!result)
+			// this should never happen when writing in an empty folder
+			throw new IOException("Internal error occured on checking out files"); //$NON-NLS-1$
 		monitor.setTaskName(CoreText.CloneOperation_writingIndex);
-		index.write();
 	}
 
 	private static void delete(final File d) {

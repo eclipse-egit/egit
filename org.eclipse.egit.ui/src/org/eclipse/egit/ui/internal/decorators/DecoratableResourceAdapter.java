@@ -14,19 +14,17 @@
 
 package org.eclipse.egit.ui.internal.decorators;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.ContainerTreeIterator;
 import org.eclipse.egit.core.ContainerTreeIterator.ResourceEntry;
+import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -42,7 +40,6 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
-import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -77,6 +74,8 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 
 	private boolean assumeValid = false;
 
+	private boolean fileMode;
+
 	private Staged staged = Staged.NOT_STAGED;
 
 	private final boolean trace;
@@ -102,6 +101,9 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		try {
 			mapping = RepositoryMapping.getMapping(resource);
 			repository = mapping.getRepository();
+			fileMode = Boolean.valueOf(
+					repository.getConfig().getBoolean("core", null, //$NON-NLS-1$
+							"filemode", true)).booleanValue(); //$NON-NLS-1$
 			headId = repository.resolve(Constants.HEAD);
 
 			store = Activator.getDefault().getPreferenceStore();
@@ -207,17 +209,10 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 			assumeValid = true;
 		} else {
 			if (workspaceIterator != null
-					&& workspaceIterator.isModified(indexEntry, true, config_filemode(),
+					&& workspaceIterator.isModified(indexEntry, true, fileMode,
 							repository.getFS()))
 				dirty = true;
 		}
-	}
-
-	private boolean config_filemode() {
-		StoredConfig config = repository.getConfig();
-		Boolean filemode = Boolean.valueOf(config.getBoolean("core", null, //$NON-NLS-1$
-				"filemode", true)); //$NON-NLS-1$
-		return filemode.booleanValue();
 	}
 
 	private class RecursiveStateFilter extends TreeFilter {
@@ -433,19 +428,7 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		treeWalk.addTree(new DirCacheIterator(repository.readDirCache()));
 
 		// Working directory
-		IProject project = resource.getProject();
-		IWorkspaceRoot workspaceRoot = resource.getWorkspace().getRoot();
-		File repoRoot = repository.getWorkTree();
-
-		if (project != null && project.getLocation() != null
-				&& repoRoot.equals(project.getLocation().toFile()))
-			treeWalk.addTree(new ContainerTreeIterator(project));
-		else if (repoRoot.equals(workspaceRoot.getLocation().toFile()))
-			treeWalk.addTree(new ContainerTreeIterator(workspaceRoot));
-		else
-			treeWalk.addTree(new AdaptableFileTreeIterator(repoRoot,
-					workspaceRoot));
-
+		treeWalk.addTree(IteratorService.createInitialIterator(repository));
 		return treeWalk;
 	}
 

@@ -266,7 +266,7 @@ public class TestRepository {
 			startBranch = refName;
 		else
 			startBranch = startAt.name();
-		startBranch = repository.shortenRefName(startBranch);
+		startBranch = Repository.shortenRefName(startBranch);
 		updateRef.setNewObjectId(startAt);
 		updateRef
 				.setRefLogMessage("branch: Created from " + startBranch, false); //$NON-NLS-1$

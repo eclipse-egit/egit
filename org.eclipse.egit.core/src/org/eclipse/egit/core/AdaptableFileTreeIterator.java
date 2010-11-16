@@ -79,11 +79,10 @@ public class AdaptableFileTreeIterator extends FileTreeIterator {
 	public AbstractTreeIterator createSubtreeIterator(ObjectReader repo)
 			throws IncorrectObjectTypeException, IOException {
 		final File currentFile = ((FileEntry) current()).getFile();
-		final IContainer[] containers = root
-				.findContainersForLocationURI(currentFile.toURI());
-		if (containers.length > 0)
-			return new ContainerTreeIterator(this, containers[0]);
-		else
-			return new AdaptableFileTreeIterator(this, currentFile, root);
+		IContainer container = IteratorService.findContainer(root, currentFile);
+		if (container != null)
+			return new ContainerTreeIterator(this, container);
+		return new AdaptableFileTreeIterator(this, currentFile, root);
 	}
+
 }
