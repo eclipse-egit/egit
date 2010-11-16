@@ -12,11 +12,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
-import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea.WrapEdit;
+import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
+import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea.WrapEdit;
 import org.junit.Test;
 
-public class CommitMessageAreaTest {
+public class SpellcheckableMessageAreaTest {
 
 	@Test
 	public void dontWrapShortText() {
@@ -130,7 +130,7 @@ public class CommitMessageAreaTest {
 
 	private static String wrap(String text, String lineDelimiter) {
 		StringBuilder sb = new StringBuilder(text);
-		List<WrapEdit> wrapEdits = CommitMessageArea.calculateWrapEdits(text, 70,
+		List<WrapEdit> wrapEdits = SpellcheckableMessageArea.calculateWrapEdits(text, 70,
 				lineDelimiter);
 		for (WrapEdit wrapEdit : wrapEdits) {
 			sb.replace(wrapEdit.getStart(),

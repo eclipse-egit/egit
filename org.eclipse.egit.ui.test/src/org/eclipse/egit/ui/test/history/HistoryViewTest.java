@@ -308,7 +308,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		SWTBotShell dialog = bot.shell(UIText.CreateTagDialog_NewTag);
 		dialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
 				.setText("NewTag");
-		dialog.bot().textWithLabel(UIText.CreateTagDialog_tagMessage)
+		dialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("New Tag message");
 		dialog.bot().button(IDialogConstants.OK_LABEL).click();
 		TestUtil.joinJobs(JobFamilies.TAG);

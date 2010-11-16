@@ -263,8 +263,8 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		bot.shell("Create new tag").bot().activeShell();
 		bot.text(0).setFocus();
 		bot.text(0).setText(tagName);
-		bot.text(1).setFocus();
-		bot.text(1).setText(tagName);
+		bot.styledText(0).setFocus();
+		bot.styledText(0).setText(tagName);
 		bot.button(IDialogConstants.OK_LABEL).click();
 	}
 
