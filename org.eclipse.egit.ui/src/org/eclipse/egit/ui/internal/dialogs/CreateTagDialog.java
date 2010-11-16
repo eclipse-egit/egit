@@ -105,7 +105,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 	private Text tagNameText;
 
-	private Text tagMessageText;
+	private SpellchecableMessageArea tagMessageText;
 
 	private Button overwriteButton;
 
@@ -376,7 +376,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 		new Label(left, SWT.WRAP).setText(UIText.CreateTagDialog_tagMessage);
 
-		tagMessageText = new Text(left, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+		tagMessageText = new SpellchecableMessageArea(left, tagMessage);
 		tagMessageText.setLayoutData(GridDataFactory.fillDefaults().minSize(50,
 				50).grab(true, true).create());
 
@@ -398,7 +398,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 			}
 		});
 
-		tagMessageText.addModifyListener(new ModifyListener() {
+		tagMessageText.getTextWidget().addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				validateInput();
 			}
