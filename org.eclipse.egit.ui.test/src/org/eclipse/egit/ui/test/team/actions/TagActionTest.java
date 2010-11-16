@@ -99,7 +99,7 @@ public class TagActionTest extends LocalRepositoryTestCase {
 				"AnotherTag");
 		assertFalse("Ok should be disabled", tagDialog.bot().button(
 				IDialogConstants.OK_LABEL).isEnabled());
-		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagMessage)
+		tagDialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("Here's the message text");
 		tagDialog.bot().button(IDialogConstants.OK_LABEL).click();
 		waitInUI();
@@ -127,7 +127,7 @@ public class TagActionTest extends LocalRepositoryTestCase {
 				"MessageChangeTag");
 		assertFalse("Ok should be disabled", tagDialog.bot().button(
 				IDialogConstants.OK_LABEL).isEnabled());
-		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagMessage)
+		tagDialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("Here's the first message");
 		tagDialog.bot().button(IDialogConstants.OK_LABEL).click();
 		waitInUI();
@@ -138,17 +138,17 @@ public class TagActionTest extends LocalRepositoryTestCase {
 				.getTableItem("MessageChangeTag").select();
 		assertFalse("Ok should be disabled", tagDialog.bot().button(
 				IDialogConstants.OK_LABEL).isEnabled());
-		String oldText = tagDialog.bot().textWithLabel(
+		String oldText = tagDialog.bot().styledTextWithLabel(
 				UIText.CreateTagDialog_tagMessage).getText();
 		assertEquals("Wrong message text", "Here's the first message", oldText);
 		tagDialog.bot().checkBox(UIText.CreateTagDialog_overwriteTag).click();
-		tagDialog.bot().textWithLabel(UIText.CreateTagDialog_tagMessage)
+		tagDialog.bot().styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText("New message");
 		tagDialog.bot().button(IDialogConstants.OK_LABEL).click();
 		tagDialog = openTagDialog();
 		tagDialog.bot().tableWithLabel(UIText.CreateTagDialog_existingTags)
 				.getTableItem("MessageChangeTag").select();
-		String newText = tagDialog.bot().textWithLabel(
+		String newText = tagDialog.bot().styledTextWithLabel(
 				UIText.CreateTagDialog_tagMessage).getText();
 		assertEquals("Wrong message text", "New message", newText);
 		tagDialog.close();

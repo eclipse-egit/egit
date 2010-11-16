@@ -178,7 +178,8 @@ public class GitRepositoriesViewTagHandlingTest extends
 		waitInUI();
 		createDialog.bot().textWithLabel(UIText.CreateTagDialog_tagName)
 				.setText(name);
-		createDialog.bot().textWithLabel(UIText.CreateTagDialog_tagMessage)
+		createDialog.bot()
+				.styledTextWithLabel(UIText.CreateTagDialog_tagMessage)
 				.setText(message);
 		waitInUI();
 		createDialog.bot().button(IDialogConstants.OK_LABEL).click();
