@@ -345,6 +345,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		};
 		actionsToDispose.add(compareModeAction);
 
+		BooleanPrefAction reuseCompareEditorAction = new BooleanPrefAction(
+				UIPreferences.RESOURCEHISTORY_REUSE_EDITOR,
+				UIText.GitHistoryPage_ReuseCompareEditorMenuLabel) {
+			@Override
+			void apply(boolean value) {
+				// nothing, just switch the preference
+			}
+		};
+		actionsToDispose.add(reuseCompareEditorAction);
+
 		compareModeAction.setImageDescriptor(UIIcons.ELCL16_COMPARE_VIEW);
 		compareModeAction.setToolTipText(UIText.GitHistoryPage_compareMode);
 
@@ -385,6 +395,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		viewMenuMgr.add(showAllResourceVersionsAction);
 		viewMenuMgr.add(new Separator());
 		viewMenuMgr.add(compareModeAction);
+		viewMenuMgr.add(reuseCompareEditorAction);
 		viewMenuMgr.add(showAllBranchesAction);
 
 		final IAction showCommentAction = createShowComment();

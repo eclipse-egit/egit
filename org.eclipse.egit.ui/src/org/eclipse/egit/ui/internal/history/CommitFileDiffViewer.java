@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.history;
 import java.io.IOException;
 import java.util.Iterator;
 
+import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -343,10 +344,13 @@ class CommitFileDiffViewer extends TableViewer {
 		else
 			next = CompareUtils.getFileRevisionTypedElement(p, c, db, d
 					.getBlobs()[1]);
-
 		in = new GitCompareFileRevisionEditorInput(next, base, null);
-		CompareUtils.openInCompare(site.getWorkbenchWindow().getActivePage(),
-				in);
+		if (Activator.getDefault().getPreferenceStore().getBoolean(
+				UIPreferences.RESOURCEHISTORY_REUSE_EDITOR))
+			CompareUtils.openInCompare(site.getWorkbenchWindow().getActivePage(),
+					in);
+		else
+			CompareUI.openCompareEditor(in);
 
 	}
 

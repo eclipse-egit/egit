@@ -39,6 +39,8 @@ public class UIPreferences {
 	/** */
 	public final static String RESOURCEHISTORY_COMPARE_MODE = "resourcehistory_compare_mode"; //$NON-NLS-1$
 	/** */
+	public final static String RESOURCEHISTORY_REUSE_EDITOR = "resourcehistory_reuse_editor"; //$NON-NLS-1$
+	/** */
 	public final static String FINDTOOLBAR_IGNORE_CASE = "findtoolbar_ignore_case"; //$NON-NLS-1$
 	/** */
 	public final static String FINDTOOLBAR_COMMIT_ID = "findtoolbar_commit_id"; //$NON-NLS-1$
