@@ -25,28 +25,16 @@ import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree;
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelObjectContainer;
 
-class GitCommitMapping extends GitObjectMapping {
+class GitContainerMapping extends GitObjectMapping {
 
 	private final GitModelObject[] children;
 
-	public GitCommitMapping(GitModelCommit gitCommit) {
+	public GitContainerMapping(GitModelObjectContainer gitCommit) {
 		super(gitCommit);
 		children = gitCommit.getChildren();
-	}
-
-	public GitCommitMapping(GitModelCache gitCache) {
-		super(gitCache);
-		children = gitCache.getChildren();
-	}
-
-	public GitCommitMapping(GitModelWorkingTree workingTree) {
-		super(workingTree);
-		children = workingTree.getChildren();
 	}
 
 	@Override
