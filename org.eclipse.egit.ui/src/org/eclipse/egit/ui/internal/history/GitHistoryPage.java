@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -960,7 +961,14 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				}
 
 				if (showAllFilter == ShowFilter.SHOWALLFOLDER) {
-					final String path = map.getRepoRelativePath(r.getParent());
+					final String path;
+					// if the resource's parent is the workspace root, we will
+					// get nonsense from map.getRepoRelativePath(), so we
+					// check here and use the project instead
+					if (r.getParent() instanceof IWorkspaceRoot)
+						path = map.getRepoRelativePath(r.getProject());
+					else
+						path = map.getRepoRelativePath(r.getParent());
 					if (path != null && path.length() > 0)
 						paths.add(path);
 				} else if (showAllFilter == ShowFilter.SHOWALLPROJECT) {
