@@ -19,7 +19,11 @@ things.
   git does better. Some tests have been performed using both Cygwin and MSYS git.
   Both have issues that we need both feedback and patches for.
 
-INSTALLATION INSTRUCTIONS
+AUTOMATED INSTALLATION INSTRUCTIONS
+
+- Find installation instructions on http://www.eclipse.org/egit/download/
+
+MANUAL INSTALLATION INSTRUCTIONS
 
 - Delete any old versions of the plugin in the <eclipse-path>/plugins/org.eclipse.egit.*
 - Start eclipse
@@ -33,15 +37,20 @@ INSTALLATION INSTRUCTIONS
   explorer and choosing File/Export. Then select Deployable plug-ins and 
   fragments and choose the Next button. Set Directory to the top of your
   installation directory (NOT the plugins directory). Select Finish. After 
-  that restart Eclipse. You can associate a project withe Eclipse using the
+  that restart Eclipse. You can associate a project with Eclipse using the
   Team>Share menu in the context menu when a project is selected.
 
 DEBUGGING INSTRUCTIONS
+
 - Select the org.eclipse.egit.ui project, and using the context menu select
   Run As(or Debug As) / Eclipse Application. Make sure the application runs
   using JDK 1.6 (or JDK1.5.0_11 or newer) if you have any problems.
 
-There may be errors in the <workspace>/.metadata/.log or even on stdout that can help
-you track down and problem. When reporting errors include stack traces and the commit
-id or the version your plugin is built from, or the version of the plugin if it does
-not contain a date.
+REPORTING BUGS
+
+- There may be errors in the <workspace>/.metadata/.log or even on stdout that can help
+  you track down and problem. When reporting errors include stack traces and the commit
+  id or the version your plugin is built from, or the version of the plugin if it does
+  not contain a date.
+  
+- Check http://www.eclipse.org/egit/support/ to find information about reporting bugs.   
