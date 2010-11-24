@@ -169,7 +169,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 				getHistoryViewTable(PROJ1, SECONDFOLDER).rowCount());
 		assertEquals("Wrong number of commits", 1,
 				getHistoryViewTable(PROJ1, SECONDFOLDER, ADDEDFILE).rowCount());
-		assertEquals("Wrong number of commits", commitCount,
+		assertEquals("Wrong number of commits", 1,
 				getHistoryViewTable(PROJ2).rowCount());
 	}
 
