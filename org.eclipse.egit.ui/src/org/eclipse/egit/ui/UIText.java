@@ -277,6 +277,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_CompareModeMenuLabel;
 
 	/** */
+	public static String GitHistoryPage_ReuseCompareEditorMenuLabel;
+
+	/** */
 	public static String GitHistoryPage_CompareWithCurrentHeadMenu;
 
 	/** */

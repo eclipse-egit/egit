@@ -27,10 +27,14 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -45,6 +49,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IReusableEditor;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 
 /**
  * A collection of helper methods useful for comparing content
@@ -297,10 +302,46 @@ public class CompareUtils {
 		return null;
 	}
 
+	/**
+	 * Action to toggle the team 'reuse compare editor' preference
+	 */
+	public static class ReuseCompareEditorAction extends Action implements
+			IPreferenceChangeListener, IWorkbenchAction {
+		IEclipsePreferences node = new InstanceScope().getNode(TEAM_UI_PLUGIN);
+
+		/**
+		 * Default constructor
+		 */
+		public ReuseCompareEditorAction() {
+			node.addPreferenceChangeListener(this);
+			setText(UIText.GitHistoryPage_ReuseCompareEditorMenuLabel);
+			setChecked(CompareUtils.isReuseOpenEditor());
+		}
+
+		public void run() {
+			CompareUtils.setReuseOpenEditor(isChecked());
+		}
+
+		public void dispose() {
+			// stop listening
+			node.removePreferenceChangeListener(this);
+		}
+
+		public void preferenceChange(PreferenceChangeEvent event) {
+			setChecked(isReuseOpenEditor());
+
+		}
+	}
+
 	private static boolean isReuseOpenEditor() {
 		boolean defaultReuse = new DefaultScope().getNode(TEAM_UI_PLUGIN)
 				.getBoolean(REUSE_COMPARE_EDITOR_PREFID, false);
 		return new InstanceScope().getNode(TEAM_UI_PLUGIN).getBoolean(
 				REUSE_COMPARE_EDITOR_PREFID, defaultReuse);
+	}
+
+	private static void setReuseOpenEditor(boolean value) {
+		new InstanceScope().getNode(TEAM_UI_PLUGIN).putBoolean(
+				REUSE_COMPARE_EDITOR_PREFID, value);
 	}
 }
