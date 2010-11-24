@@ -20,6 +20,7 @@ import java.util.Set;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.HandlerEvent;
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -39,6 +40,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -52,6 +54,27 @@ import org.eclipse.ui.ide.ResourceUtil;
  * A helper class for Team Actions on Git controlled projects
  */
 abstract class RepositoryActionHandler extends AbstractHandler {
+
+	/**
+	 * Register for selection changes if git toolbar is active
+	 */
+	public RepositoryActionHandler() {
+		// TODO skip this when git toolbar is not active
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		if (activeWorkbenchWindow != null) {
+			activeWorkbenchWindow.getSelectionService()
+					.addPostSelectionListener(new ISelectionListener() {
+						// we need to notify the toolbar about enablement
+						// changes (context menus work without this)
+						public void selectionChanged(IWorkbenchPart part,
+								ISelection selection) {
+							fireHandlerChanged(new HandlerEvent(
+									RepositoryActionHandler.this, true, false));
+						}
+					});
+		}
+	}
 
 	/**
 	 * @param selection
@@ -279,10 +302,13 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		if (activeWorkbenchWindow == null) // During Eclipse shutdown there is
 			// no active window
 			return StructuredSelection.EMPTY;
+		Object selection = activeWorkbenchWindow.getSelectionService()
+				.getSelection();
 		IHandlerService hsr = (IHandlerService) activeWorkbenchWindow
 				.getService(IHandlerService.class);
 		IEvaluationContext ctx = hsr.getCurrentState();
-		Object selection = ctx.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
+		if (selection == null)
+			selection = ctx.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
 		if (selection == null)
 			selection = ctx.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
 		if (selection instanceof TextSelection) {
