@@ -2539,7 +2539,14 @@ public class UIText extends NLS {
 	/** */
 	public static String GitModelWorkingTree_workingTree;
 
+	/** */
+	public static String GitModelWorkingFile_localVersion;
+
+	/** */
+	public static String GitModelWorkingFile_cachedVersion;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
+
 }
