@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL0n///4Q\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-24T08:22:20Z",
+      "side": 1,
+      "message": "Please add signed-off.",
+      "revId": "8d9e54894ae9d2b662fccf8d03f2688d2cc79023",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///4k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-24T08:22:20Z",
+      "side": 1,
+      "message": "There seems to be a minor formatting issue (missing tab). Please make sure to format with the formatter settings checked into the project.",
+      "revId": "8d9e54894ae9d2b662fccf8d03f2688d2cc79023",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///4o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-24T08:22:20Z",
+      "side": 1,
+      "message": "For code readability, I\u0027d prefer to import IWorkbenchAction and get rid of the \"ActionFactory.\" prefix",
+      "revId": "8d9e54894ae9d2b662fccf8d03f2688d2cc79023",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///4g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-24T08:22:20Z",
+      "side": 1,
+      "message": "Please import IWorkbenchAction and get rid of the \"ActionFactory.\" prefix. This will also shorten the line somewhat.",
+      "revId": "8d9e54894ae9d2b662fccf8d03f2688d2cc79023",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///4c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-24T08:22:20Z",
+      "side": 1,
+      "message": "See above (import IWorkbenchAction)",
+      "revId": "8d9e54894ae9d2b662fccf8d03f2688d2cc79023",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///4U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1272,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-24T08:22:20Z",
+      "side": 1,
+      "message": "Please import IWorkbenchAction (see above).",
+      "revId": "8d9e54894ae9d2b662fccf8d03f2688d2cc79023",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///4Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-24T08:22:20Z",
+      "side": 1,
+      "message": "A tab seems to be missing. Please format with the code formatter settings checked into the project.",
+      "revId": "8d9e54894ae9d2b662fccf8d03f2688d2cc79023",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
