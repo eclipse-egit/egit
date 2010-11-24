@@ -9,8 +9,7 @@
 package org.eclipse.egit.ui.internal.synchronize.model;
 
 import static org.eclipse.compare.structuremergeviewer.Differencer.RIGHT;
-import static org.eclipse.jgit.lib.FileMode.MISSING;
-import static org.eclipse.jgit.lib.FileMode.TREE;
+import static org.eclipse.egit.ui.internal.CompareUtils.isCachedEntry;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -93,7 +92,7 @@ public class GitModelCache extends GitModelObjectContainer {
 					GitModelObjectContainer modelParent, RevCommit commit,
 					ObjectId repoId, ObjectId cacheId, String name)
 					throws IOException {
-				return new GitModelBlob(modelParent, commit, repoId, repoId,
+				return new GitModelCacheFile(modelParent, commit, repoId,
 						cacheId, name);
 			}
 		});
@@ -171,7 +170,7 @@ public class GitModelCache extends GitModelObjectContainer {
 		if (cacheEntry == null)
 			return null;
 
-		if (shouldIncludeEntry(tw)) {
+		if (isCachedEntry(tw, BASE_NTH, REMOTE_NTH)) {
 			String path = new String(tw.getRawPath());
 			ObjectId repoId = tw.getObjectId(BASE_NTH);
 			ObjectId cacheId = tw.getObjectId(REMOTE_NTH);
@@ -184,16 +183,6 @@ public class GitModelCache extends GitModelObjectContainer {
 		}
 
 		return null;
-	}
-
-	private boolean shouldIncludeEntry(TreeWalk tw) {
-		final int mHead = tw.getRawMode(BASE_NTH);
-		final int mCache = tw.getRawMode(REMOTE_NTH);
-
-		return mHead == MISSING.getBits() // initial add to cache
-				|| mCache == MISSING.getBits() // removed from cache
-				|| (mHead != mCache || (mCache != TREE.getBits() && !tw
-						.idEqual(BASE_NTH, REMOTE_NTH))); // modified
 	}
 
 	private GitModelObject handleCacheTree(ObjectId repoId, ObjectId cacheId,

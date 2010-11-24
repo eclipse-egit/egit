@@ -7,9 +7,15 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
+ *    Dariusz Luksza -
  *    Stefan Lay (SAP AG) - initial implementation
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
+
+import static org.eclipse.jgit.lib.Constants.HEAD;
+import static org.eclipse.jgit.lib.FileMode.MISSING;
+import static org.eclipse.jgit.lib.FileMode.TREE;
+import static org.eclipse.jgit.treewalk.filter.TreeFilter.ANY_DIFF;
 
 import java.io.IOException;
 
@@ -28,19 +34,23 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.util.OpenStrategy;
+import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
+import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
@@ -101,10 +111,9 @@ public class CompareUtils {
 						getName(gitPath), commit));
 
 		try {
-			IFileRevision nextFile = getFileRevision(gitPath, commit, db,
-					blobId);
-			if (nextFile != null)
-				right = new FileRevisionTypedElement(nextFile);
+			IFileRevision nextFile = getFileRevision(gitPath, commit, db, blobId);
+				if (nextFile != null)
+					right = new FileRevisionTypedElement(nextFile);
 		} catch (IOException e) {
 			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
 					gitPath, commit.getId()), e);
@@ -344,4 +353,55 @@ public class CompareUtils {
 		new InstanceScope().getNode(TEAM_UI_PLUGIN).putBoolean(
 				REUSE_COMPARE_EDITOR_PREFID, value);
 	}
+
+	/**
+	 * Creates {@link ITypedElement} of file that was cached
+	 *
+	 * @param gitPath
+	 * @param db
+	 * @return {@link ITypedElement} instance for given cached file or
+	 *         {@code null} if file isn't cached
+	 */
+	public static ITypedElement getFileCachedRevisionTypedElement(final String gitPath,
+			final Repository db) {
+		try {
+			ObjectId headId = db.getRef(HEAD).getObjectId();
+
+			TreeWalk w = new TreeWalk(db);
+			w.setRecursive(true);
+			w.addTree(new DirCacheIterator(db.readDirCache()));
+			w.addTree(new RevWalk(db).parseTree(headId));
+
+			w.setFilter(AndTreeFilter.create(ANY_DIFF, PathFilter.create(gitPath)));
+
+			// check if file is cached
+			if (w.next() && isCachedEntry(w, 1, 2)) {
+				return new FileRevisionTypedElement(GitFileRevision.inIndex(db, gitPath));
+			}
+		} catch (IOException e) {
+			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
+					gitPath), e);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Checks does actual element in {@link TreeWalk} is cached or not
+	 *
+	 * @param tw
+	 * @param baseNth
+	 * @param remoteNth
+	 * @return {@code true} if actual entry in {@link TreeWalk} is cached
+	 */
+	public static boolean isCachedEntry(TreeWalk tw, int baseNth, int remoteNth) {
+		final int mHead = tw.getRawMode(baseNth);
+		final int mCache = tw.getRawMode(remoteNth);
+
+		return mHead == MISSING.getBits() // initial add to cache
+				|| mCache == MISSING.getBits() // removed from cache
+				|| (mHead != mCache || (mCache != TREE.getBits() && !tw
+						.idEqual(baseNth, remoteNth))); // modified
+	}
+
 }
