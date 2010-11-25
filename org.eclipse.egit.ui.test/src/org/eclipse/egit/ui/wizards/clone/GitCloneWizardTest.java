@@ -11,10 +11,12 @@
 package org.eclipse.egit.ui.wizards.clone;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Platform;
@@ -23,6 +25,8 @@ import org.eclipse.egit.ui.common.GitImportRepoWizard;
 import org.eclipse.egit.ui.common.RepoPropertiesPage;
 import org.eclipse.egit.ui.common.RepoRemoteBranchesPage;
 import org.eclipse.egit.ui.common.WorkingCopyPage;
+import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
@@ -31,9 +35,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import java.io.File;
-import java.io.IOException;
 
 public class GitCloneWizardTest extends EGitTestCase {
 
@@ -226,9 +227,12 @@ public class GitCloneWizardTest extends EGitTestCase {
 		assertTrue(refs >= 4);
 		// and a known file in the working dir
 		assertTrue(new File(destRepo, SampleTestRepository.A_txt_name).exists());
-		assertFalse(repository.getIndex().isChanged());
-		assertFalse(repository.getIndex().getEntry(SampleTestRepository.A_txt_name).isModified(
-				destRepo));
+		DirCacheEntry fileEntry = null;
+		DirCache dc = repository.lockDirCache();
+		fileEntry = dc.getEntry(SampleTestRepository.A_txt_name);
+		dc.unlock();
+		// check that we have the file in the index
+		assertNotNull(fileEntry);
 		// No project have been imported
 		assertEquals(0,
 				ResourcesPlugin.getWorkspace().getRoot().getProjects().length);

@@ -72,7 +72,7 @@ public abstract class GitRepositoriesViewTestBase extends
 	protected final static String viewName = myUtil.getPluginLocalizedValue("GitRepositoriesView_name");
 
 	// the human readable Git category
-	private final static String gitCategory = myUtil.getPluginLocalizedValue("GitCategory_name");;
+	private final static String gitCategory = myUtil.getPluginLocalizedValue("GitCategory_name");
 
 	/**
 	 * remove all configured repositories from the view
