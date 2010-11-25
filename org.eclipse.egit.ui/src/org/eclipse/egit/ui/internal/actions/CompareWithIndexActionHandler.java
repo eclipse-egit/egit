@@ -9,8 +9,9 @@
 
 package org.eclipse.egit.ui.internal.actions;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.IContentChangeListener;
@@ -26,7 +27,12 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.EditableRevision;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
-import org.eclipse.jgit.lib.GitIndex;
+import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.dircache.DirCacheEditor;
+import org.eclipse.jgit.dircache.DirCacheEntry;
+import org.eclipse.jgit.dircache.DirCacheEditor.PathEdit;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectInserter;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
@@ -66,10 +72,12 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 		final RepositoryMapping mapping = RepositoryMapping.getMapping(baseFile
 				.getProject());
 		final Repository repository = mapping.getRepository();
-		String gitPath = mapping.getRepoRelativePath(baseFile);
+		final String gitPath = mapping.getRepoRelativePath(baseFile);
 
-		GitIndex index = repository.getIndex();
-		if (index.getEntry(gitPath) == null) {
+		DirCache dc = repository.lockDirCache();
+		final DirCacheEntry entry = dc.getEntry(gitPath);
+		dc.unlock();
+		if (entry == null) {
 			// the file cannot be found in the index
 			return new GitCompareFileRevisionEditorInput.EmptyTypedElement(NLS
 					.bind(UIText.CompareWithIndexAction_FileNotInIndex,
@@ -82,16 +90,54 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 		IContentChangeListener listener = new IContentChangeListener() {
 			public void contentChanged(IContentChangeNotifier source) {
 				final byte[] newContent = next.getModifiedContent();
+				DirCache cache = null;
 				try {
-					final GitIndex index = repository.getIndex();
-					final File file = new File(baseFile.getLocation()
-							.toString());
-					index.add(mapping.getWorkTree(), file, newContent);
-					index.write();
+					cache = repository.lockDirCache();
+					DirCacheEditor editor = cache.editor();
+					editor.add(new PathEdit(gitPath) {
+						@Override
+						public void apply(DirCacheEntry ent) {
+							ent.copyMetaData(entry);
+
+							ObjectInserter inserter = repository
+									.newObjectInserter();
+							ent.copyMetaData(entry);
+							ent.setLength(newContent.length);
+							ent.setLastModified(System.currentTimeMillis());
+							InputStream in = new ByteArrayInputStream(
+									newContent);
+							try {
+								ent.setObjectId(inserter.insert(
+										Constants.OBJ_BLOB, newContent.length,
+										in));
+								inserter.flush();
+							} catch (IOException ex) {
+								throw new RuntimeException(ex);
+							} finally {
+								try {
+									in.close();
+								} catch (IOException e) {
+									// ignore here
+								}
+							}
+						}
+					});
+					try {
+						editor.commit();
+					} catch (RuntimeException e) {
+						if (e.getCause() instanceof IOException)
+							throw (IOException) e.getCause();
+						else
+							throw e;
+					}
+
 				} catch (IOException e) {
 					Activator.handleError(
 							UIText.CompareWithIndexAction_errorOnAddToIndex, e,
 							true);
+				} finally {
+					if (cache != null)
+						cache.unlock();
 				}
 			}
 		};
