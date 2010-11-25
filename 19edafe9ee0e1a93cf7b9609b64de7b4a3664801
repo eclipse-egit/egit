@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL0n///0I\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-25T09:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL0n///1E\u003d",
+      "revId": "19edafe9ee0e1a93cf7b9609b64de7b4a3664801",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL0n///1A\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2010-11-24T23:41:10Z",
       "side": 1,
       "message": "you should mention that these problems will be fixed in subsequent changes",
+      "revId": "19edafe9ee0e1a93cf7b9609b64de7b4a3664801",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///0E\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-25T09:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL0n///1A\u003d",
       "revId": "19edafe9ee0e1a93cf7b9609b64de7b4a3664801",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL0n///0c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-25T09:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL0n///08\u003d",
+      "revId": "19edafe9ee0e1a93cf7b9609b64de7b4a3664801",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL0n///04\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseResultDialog.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2010-11-24T23:41:10Z",
       "side": 1,
       "message": "couldn\u0027t it happen that we hide some problems here by ignoring the exception ?",
+      "revId": "19edafe9ee0e1a93cf7b9609b64de7b4a3664801",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///0Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/rebase/RebaseResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-25T09:20:40Z",
+      "side": 1,
+      "message": "Tthe whole purpose of this code is to render a diff so that the user gets some idea what the current commit would change, and they get an error message if that fails.",
+      "parentUuid": "AAAL0n///04\u003d",
       "revId": "19edafe9ee0e1a93cf7b9609b64de7b4a3664801",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL0n///0U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RebaseCurrentRefCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-25T09:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL0n///00\u003d",
+      "revId": "19edafe9ee0e1a93cf7b9609b64de7b4a3664801",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL0n///0w\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RebaseCurrentRefCommand.java",
         "patchSetId": 1
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL0n///0Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RebaseCurrentRefCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-25T09:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL0n///0w\u003d",
+      "revId": "19edafe9ee0e1a93cf7b9609b64de7b4a3664801",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL0n///0s\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RebaseCurrentRefCommand.java",
         "patchSetId": 1
@@ -115,6 +223,24 @@
       "writtenOn": "2010-11-24T23:41:10Z",
       "side": 1,
       "message": "unnecessary blank line",
+      "revId": "19edafe9ee0e1a93cf7b9609b64de7b4a3664801",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///0M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RebaseCurrentRefCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-11-25T09:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL0n///0s\u003d",
       "revId": "19edafe9ee0e1a93cf7b9609b64de7b4a3664801",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
