@@ -275,6 +275,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 		bot.shell(UIText.CommitDialog_CommitChanges).bot().activeShell();
 		bot.styledText(0).setText("test commit");
+		bot.button(UIText.CommitDialog_SelectAll).click();
 		bot.button(UIText.CommitDialog_Commit).click();
 	}
 

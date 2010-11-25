@@ -418,7 +418,8 @@ public class CommitDialog extends Dialog {
 			// pre-emptively check any preselected files
 			for (IFile selectedFile : preselectedFiles) {
 				for (CommitItem item : items) {
-					if (item.file.equals(selectedFile)) {
+					if (item.file.equals(selectedFile) &&
+							!item.status.equals(UIText.CommitDialog_StatusUntracked)) {
 						filesViewer.setChecked(item, true);
 						break;
 					}
