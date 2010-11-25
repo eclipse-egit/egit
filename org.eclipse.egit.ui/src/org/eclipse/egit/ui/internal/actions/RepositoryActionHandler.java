@@ -2,6 +2,7 @@
  * Copyright (C) 2007, Dave Watson <dwatson@mimvista.com>
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -43,6 +44,7 @@ import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.handlers.IHandlerService;
@@ -52,6 +54,19 @@ import org.eclipse.ui.ide.ResourceUtil;
  * A helper class for Team Actions on Git controlled projects
  */
 abstract class RepositoryActionHandler extends AbstractHandler {
+
+	private IStructuredSelection mySelection;
+
+	/**
+	 * Set the selection when used by {@link RepositoryAction} as
+	 * {@link IWorkbenchWindowActionDelegate}
+	 *
+	 * @param selection
+	 *            the new selection
+	 */
+	public void setSelection(ISelection selection) {
+		mySelection = convertSelection(null, selection);
+	}
 
 	/**
 	 * @param selection
@@ -274,18 +289,32 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 * @return the current selection
 	 */
 	protected IStructuredSelection getSelection() {
-		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow();
-		if (activeWorkbenchWindow == null) // During Eclipse shutdown there is
-			// no active window
+		// if the selection was set explicitly, use it
+		if (mySelection != null)
+			return mySelection;
+		return convertSelection(getEvaluationContext(), null);
+	}
+
+	private IStructuredSelection convertSelection(IEvaluationContext aContext,
+			Object aSelection) {
+		IEvaluationContext ctx;
+		if (aContext == null && aSelection == null)
 			return StructuredSelection.EMPTY;
-		IHandlerService hsr = (IHandlerService) activeWorkbenchWindow
-				.getService(IHandlerService.class);
-		IEvaluationContext ctx = hsr.getCurrentState();
-		Object selection = ctx.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
-		if (selection == null)
-			selection = ctx.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
+		else
+			ctx = aContext;
+		Object selection;
+		if (aSelection == null && ctx != null) {
+			selection = ctx.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
+			if (selection == null)
+				selection = ctx
+						.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
+		} else if (aSelection != null) {
+			selection = aSelection;
+		} else
+			return StructuredSelection.EMPTY;
 		if (selection instanceof TextSelection) {
+			if (ctx == null)
+				ctx = getEvaluationContext();
 			IResource resource = ResourceUtil.getResource(ctx
 					.getVariable(ISources.ACTIVE_EDITOR_INPUT_NAME));
 			if (resource != null)
@@ -294,6 +323,19 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		if (selection instanceof IStructuredSelection)
 			return (IStructuredSelection) selection;
 		return StructuredSelection.EMPTY;
+	}
+
+	private IEvaluationContext getEvaluationContext() {
+		IEvaluationContext ctx;
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		// no active window during Eclipse shutdown
+		if (activeWorkbenchWindow == null)
+			return null;
+		IHandlerService hsr = (IHandlerService) activeWorkbenchWindow
+				.getService(IHandlerService.class);
+		ctx = hsr.getCurrentState();
+		return ctx;
 	}
 
 	/**
