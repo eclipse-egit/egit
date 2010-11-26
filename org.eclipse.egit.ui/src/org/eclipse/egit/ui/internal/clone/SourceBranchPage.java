@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.op.ListRemoteOperation;
+import org.eclipse.egit.core.securestorage.EGitCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
@@ -45,6 +46,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -75,6 +77,8 @@ class SourceBranchPage extends WizardPage {
 	private Button unselectB;
 
 	private CheckboxTableViewer refsViewer;
+
+	private EGitCredentials credentials;
 
 	SourceBranchPage() {
 		super(SourceBranchPage.class.getName());
@@ -164,6 +168,10 @@ class SourceBranchPage extends WizardPage {
 		revalidate(selection);
 	}
 
+	public void setCredentials(EGitCredentials credentials) {
+		this.credentials = credentials;
+	}
+
 	/**
 	 * Check internal state for page completion status. This method should be
 	 * called only when all necessary data from previous form is available.
@@ -233,6 +241,11 @@ class SourceBranchPage extends WizardPage {
 			int timeout = Activator.getDefault().getPreferenceStore().getInt(
 					UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 			listRemoteOp = new ListRemoteOperation(db, uri, timeout);
+			if (credentials != null) {
+				listRemoteOp
+						.setCredentialsProvider(new UsernamePasswordCredentialsProvider(
+								credentials.getUser(), credentials.getPassword()));
+			}
 			getContainer().run(true, true, new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor)
 						throws InvocationTargetException, InterruptedException {
