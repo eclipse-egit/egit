@@ -33,8 +33,10 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.team.ui.mapping.ISynchronizationCompareInput;
 import org.eclipse.team.ui.mapping.SaveableComparison;
-
-abstract class GitModelObjectContainer extends GitModelObject implements
+/**
+ * An abstract class for all container models in change set.
+ */
+public abstract class GitModelObjectContainer extends GitModelObject implements
 		ISynchronizationCompareInput {
 
 	private int kind = -1;
@@ -43,12 +45,28 @@ abstract class GitModelObjectContainer extends GitModelObject implements
 
 	private GitModelObject[] children;
 
+	/**
+	 * Base commit connected with this container
+	 */
 	protected final RevCommit baseCommit;
 
+	/**
+	 * Remote commit connected with this container
+	 */
 	protected final RevCommit remoteCommit;
 
+	/**
+	 * Ancestor commit connected with this container
+	 */
 	protected final RevCommit ancestorCommit;
 
+	/**
+	 *
+	 * @param parent instance of parent object
+	 * @param commit commit connected with this container
+	 * @param direction indicate change direction
+	 * @throws IOException
+	 */
 	protected GitModelObjectContainer(GitModelObject parent, RevCommit commit,
 			int direction) throws IOException {
 		super(parent);
@@ -183,8 +201,22 @@ abstract class GitModelObjectContainer extends GitModelObject implements
 		return false;
 	}
 
+	/**
+	 * This method is used for lazy loading list of containrer's children
+	 *
+	 * @return list of children in this container
+	 */
 	protected abstract GitModelObject[] getChildrenImpl();
 
+	/**
+	 *
+	 * @param tw instance of {@link TreeWalk} that should be used
+	 * @param ancestorNth
+	 * @param baseNth
+	 * @param actualNth
+	 * @return {@link GitModelObject} instance of given parameters
+	 * @throws IOException
+	 */
 	protected GitModelObject getModelObject(TreeWalk tw, int ancestorNth,
 			int baseNth, int actualNth) throws IOException {
 		String objName = tw.getNameString();
