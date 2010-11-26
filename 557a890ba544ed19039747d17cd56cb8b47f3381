@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL0n///vY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareWithIndexActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-11-26T10:50:56Z",
+      "side": 1,
+      "message": "This type of code screams to be in a utility method or available via some higher level API (org.eclipse.jgit.api).. for now this is OK.",
+      "revId": "557a890ba544ed19039747d17cd56cb8b47f3381",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
