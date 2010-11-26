@@ -52,5 +52,5 @@ REPORTING BUGS
   you track down and problem. When reporting errors include stack traces and the commit
   id or the version your plugin is built from, or the version of the plugin if it does
   not contain a date.
-  
-- Check http://www.eclipse.org/egit/support/ to find information about reporting bugs.   
+
+- Check http://www.eclipse.org/egit/support/ to find information about reporting bugs.
