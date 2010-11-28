@@ -166,7 +166,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	/** Overall composite hosting all of our controls. */
-	private Composite ourControl;
+	private Composite topControl;
+
+	/** Overall composite hosting the controls that displays the history. */
+	private Composite historyControl;
 
 	/** Split between {@link #graph} and {@link #revInfoSplit}. */
 	private SashForm graphDetailSplit;
@@ -541,16 +544,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation());
 
-		ourControl = createMainPanel(parent);
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(ourControl);
-		graphDetailSplit = new SashForm(ourControl, SWT.VERTICAL);
+		historyControl = createMainPanel(parent);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(historyControl);
+		graphDetailSplit = new SashForm(historyControl, SWT.VERTICAL);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(
 				graphDetailSplit);
 		graph = new CommitGraphTable(graphDetailSplit, getSite(), popupMgr);
 		revInfoSplit = new SashForm(graphDetailSplit, SWT.HORIZONTAL);
 		commentViewer = new CommitMessageViewer(revInfoSplit, getSite());
 		fileViewer = new CommitFileDiffViewer(revInfoSplit, getSite());
-		findToolbar = new FindToolbar(ourControl);
+		findToolbar = new FindToolbar(historyControl);
 
 		layoutSashForm(graphDetailSplit,
 				UIPreferences.RESOURCEHISTORY_GRAPH_SPLIT);
@@ -628,12 +631,14 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	private Composite createMainPanel(final Composite parent) {
+		topControl = new Composite(parent, SWT.NONE);
 		StackLayout layout = new StackLayout();
-		parent.setLayout(layout);
-		final Composite c = new Composite(parent, SWT.NULL);
+		topControl.setLayout(layout);
+
+		final Composite c = new Composite(topControl, SWT.NULL);
 		layout.topControl = c;
 		// shown instead of the splitter if an error message was set
-		errorText = new StyledText(parent, SWT.NONE);
+		errorText = new StyledText(topControl, SWT.NONE);
 		// use the same font as in message viewer
 		errorText.setFont(UIUtils
 				.getFont(UIPreferences.THEME_CommitMessageFont));
@@ -675,7 +680,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			((GridData) findToolbar.getLayoutData()).heightHint = 0;
 			findToolbar.clear();
 		}
-		ourControl.layout();
+		historyControl.layout();
 	}
 
 	private void attachCommitSelectionChanged() {
@@ -828,7 +833,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 	@Override
 	public Control getControl() {
-		return ourControl;
+		return topControl;
 	}
 
 	@Override
@@ -1029,16 +1034,15 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 					GitTraceLocation.HISTORYVIEW.getLocation(), message);
 		getHistoryPageSite().getShell().getDisplay().asyncExec(new Runnable() {
 			public void run() {
-				StackLayout layout = (StackLayout) getControl().getParent()
-						.getLayout();
+				StackLayout layout = (StackLayout) topControl.getLayout();
 				if (message != null) {
 					errorText.setText(message);
 					layout.topControl = errorText;
 				} else {
 					errorText.setText(""); //$NON-NLS-1$
-					layout.topControl = getControl();
+					layout.topControl = historyControl;
 				}
-				getControl().getParent().layout();
+				topControl.layout();
 			}
 		});
 		if (trace)
