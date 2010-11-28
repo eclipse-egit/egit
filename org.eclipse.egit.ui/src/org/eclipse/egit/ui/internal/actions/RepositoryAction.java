@@ -2,6 +2,7 @@
  * Copyright (C) 2007, Dave Watson <dwatson@mimvista.com>
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,14 +25,21 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.services.IServiceLocator;
 
 /**
- * A helper class for Team Actions on Git controlled projects
+ * A helper class for Team Actions on Git controlled projects.
+ * <p>
+ * This implements {@link IObjectActionDelegate} so that it can be used on the
+ * Team menu and {@link IWorkbenchWindowActionDelegate} so that it works in the
+ * command group.
  */
 public abstract class RepositoryAction extends AbstractHandler implements
-		IObjectActionDelegate {
+		IObjectActionDelegate, IWorkbenchWindowActionDelegate {
 	private ISelection mySelection;
 
 	/**
@@ -42,7 +50,7 @@ public abstract class RepositoryAction extends AbstractHandler implements
 	/**
 	 * The part as set in {@link #setActivePart(IAction, IWorkbenchPart)}
 	 */
-	protected IWorkbenchPart part;
+	protected IServiceLocator serviceLocator;
 
 	private final RepositoryActionHandler handler;
 
@@ -56,15 +64,15 @@ public abstract class RepositoryAction extends AbstractHandler implements
 	}
 
 	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
-		part = targetPart;
+		serviceLocator = targetPart.getSite();
 	}
 
 	public void run(IAction action) {
 
-		ICommandService srv = (ICommandService) part.getSite().getService(
-				ICommandService.class);
-		IHandlerService hsrv = (IHandlerService) part.getSite().getService(
-				IHandlerService.class);
+		ICommandService srv = (ICommandService) serviceLocator
+				.getService(ICommandService.class);
+		IHandlerService hsrv = (IHandlerService) serviceLocator
+				.getService(IHandlerService.class);
 		Command command = srv.getCommand(commandId);
 
 		ExecutionEvent event = hsrv.createExecutionEvent(command, null);
@@ -82,12 +90,13 @@ public abstract class RepositoryAction extends AbstractHandler implements
 
 	public final void selectionChanged(IAction action, ISelection selection) {
 		mySelection = selection;
+		handler.setSelection(mySelection);
 		action.setEnabled(isEnabled());
 	}
 
 	public final Object execute(ExecutionEvent event) throws ExecutionException {
-		ICommandService srv = (ICommandService) part.getSite().getService(
-				ICommandService.class);
+		ICommandService srv = (ICommandService) serviceLocator
+				.getService(ICommandService.class);
 		Command command = srv.getCommand(commandId);
 		try {
 			return command.executeWithChecks(event);
@@ -106,5 +115,9 @@ public abstract class RepositoryAction extends AbstractHandler implements
 	@Override
 	public final boolean isEnabled() {
 		return handler.isEnabled();
+	}
+
+	public void init(IWorkbenchWindow window) {
+		this.serviceLocator = window;
 	}
 }
