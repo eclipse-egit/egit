@@ -489,8 +489,8 @@
 	    </menu>
 		<action
         class="org.eclipse.egit.ui.internal.actions.FetchAction"
-        disabledIcon="icons/toolbar/fetchd.png"
-        icon="icons/toolbar/fetche.png"
+        definitionId="org.eclipse.egit.ui.team.Fetch"
+        icon="icons/obj16/fetch.gif"
         id="org.eclipse.egit.ui.actionfetch"
         label="%FetchAction_label"
         menubarPath="org.eclipse.egit.ui.gitmenu/repo"
@@ -500,8 +500,8 @@
 		</action>
 		<action
         class="org.eclipse.egit.ui.internal.actions.PushAction"
-        disabledIcon="icons/toolbar/pushd.png"
-        icon="icons/toolbar/pushe.png"
+        definitionId="org.eclipse.egit.ui.team.Push"
+        icon="icons/obj16/push.gif"
         id="org.eclipse.egit.ui.actionpush"
         label="%PushAction_label"
         menubarPath="org.eclipse.egit.ui.gitmenu/repo"
@@ -510,38 +510,38 @@
         tooltip="%PushAction_tooltip">
 		</action>
 		<action
-		       class="org.eclipse.egit.ui.internal.actions.BranchAction"
-		       disabledIcon="icons/toolbar/checkoutd.png"
-		       icon="icons/toolbar/checkoute.png"
-		       id="org.eclipse.egit.ui.actionbranch"
-		       label="%BranchAction_label"
-		       style="push"
-		       menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
-		       toolbarPath="Normal/additions"
-		       tooltip="%BranchAction_tooltip">
+        class="org.eclipse.egit.ui.internal.actions.ResetAction"
+        definitionId="org.eclipse.egit.ui.team.Reset"
+        icon="icons/obj16/reset.gif"
+        id="org.eclipse.egit.ui.actionreset"
+        label="%ResetAction_label"
+        menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
+        style="push"
+        toolbarPath="Normal/additions"
+        tooltip="%ResetAction_tooltip">
 		</action>
-		<action
-		       class="org.eclipse.egit.ui.internal.actions.CommitAction"
-		       disabledIcon="icons/toolbar/commitd.png"
-		       icon="icons/toolbar/commite.png"
-		       id="org.eclipse.egit.ui.actioncommit"
-		       label="%CommitAction_label"
-		       style="push"
-		       menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
-		       toolbarPath="Normal/additions"
-		       tooltip="%CommitAction_tooltip">
-		</action>
-		<action
-		       class="org.eclipse.egit.ui.internal.actions.ResetAction"
-		       disabledIcon="icons/toolbar/resetd.png"
-		       icon="icons/toolbar/resete.png"
-		       id="org.eclipse.egit.ui.actionreset"
-		       label="%ResetAction_label"
-		       style="push"
-		       menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
-		       toolbarPath="Normal/additions"
-		       tooltip="%ResetAction_tooltip">
-		</action>
+  <action
+        class="org.eclipse.egit.ui.internal.actions.BranchAction"
+        definitionId="org.eclipse.egit.ui.team.Branch"
+        icon="icons/obj16/branch_obj.gif"
+        id="org.eclipse.egit.ui.actionbranch"
+        label="%BranchAction_label"
+        menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
+        style="push"
+        toolbarPath="Normal/additions"
+        tooltip="%BranchAction_tooltip">
+  </action>
+  <action
+        class="org.eclipse.egit.ui.internal.actions.CommitAction"
+        definitionId="org.eclipse.egit.ui.team.Commit"
+        icon="icons/obj16/commit.gif"
+        id="org.eclipse.egit.ui.actioncommit"
+        label="%CommitAction_label"
+        menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
+        style="push"
+        toolbarPath="Normal/additions"
+        tooltip="%CommitAction_tooltip">
+  </action>
       </actionSet>
    </extension>
    <extension
