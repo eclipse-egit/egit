@@ -761,7 +761,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		public String getText(Object element) {
 			final PreviewDecoration decoration = getDecoration(element);
-			final StringBuffer buffer = new StringBuffer();
+			final StringBuilder buffer = new StringBuilder();
 			final String prefix = decoration.getPrefix();
 			if (prefix != null)
 				buffer.append(prefix);
@@ -958,7 +958,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		}
 
 		public String getPrefix() {
-			StringBuffer sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			for (Iterator<String> iter = prefixes.iterator(); iter.hasNext();) {
 				sb.append(iter.next());
 			}
@@ -966,7 +966,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		}
 
 		public String getSuffix() {
-			StringBuffer sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			for (Iterator<String> iter = suffixes.iterator(); iter.hasNext();) {
 				sb.append(iter.next());
 			}

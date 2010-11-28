@@ -455,9 +455,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 		 */
 		public static void decorate(IDecoration decoration, String format,
 				Map<String, String> bindings) {
-			StringBuffer prefix = new StringBuffer();
-			StringBuffer suffix = new StringBuffer();
-			StringBuffer output = prefix;
+			StringBuilder prefix = new StringBuilder();
+			StringBuilder suffix = new StringBuilder();
+			StringBuilder output = prefix;
 
 			int length = format.length();
 			int start = -1;
