@@ -32,7 +32,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -161,17 +160,6 @@ public class RemoveCommand extends
 				for (RepositoryNode node : selectedNodes) {
 					util.removeDir(node.getRepository().getDirectory());
 				}
-				Display.getDefault().asyncExec(new Runnable() {
-					public void run() {
-						RepositoriesView view;
-						try {
-							view = getView(event);
-							view.getCommonViewer().refresh();
-						} catch (ExecutionException e) {
-							Activator.logError(e.getMessage(), e);
-						}
-					}
-				});
 
 				if (delete) {
 					try {
