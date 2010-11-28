@@ -254,7 +254,7 @@ public class CommitDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				String preferencePageId = "org.eclipse.egit.ui.internal.preferences.CommitDialogPreferencePage"; //$NON-NLS-1$
 				PreferenceDialog dialog = PreferencesUtil
-						.createPreferenceDialogOn(null, preferencePageId,
+						.createPreferenceDialogOn(getShell(), preferencePageId,
 								new String[] { preferencePageId }, null);
 				dialog.open();
 				commitText.reconfigure();
