@@ -93,7 +93,7 @@ public class GitModelCache extends GitModelObjectContainer {
 					GitModelObjectContainer modelParent, RevCommit commit,
 					ObjectId repoId, ObjectId cacheId, String name)
 					throws IOException {
-				return new GitModelBlob(modelParent, commit, repoId, repoId,
+				return new GitModelCacheFile(modelParent, commit, repoId,
 						cacheId, name);
 			}
 		});
