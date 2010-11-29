@@ -24,7 +24,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  com.jcraft.jsch;bundle-version="[0.1.37,0.2.0)",
  org.eclipse.ui.navigator;bundle-version="[3.3.0,4.0.0)",
  org.eclipse.ui.forms;bundle-version="[3.3.0,4.0.0)",
- org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)"
+ org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)",
+ org.eclipse.equinox.security;bundle-version="[1.0.0,2.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.eclipse.egit.core;version="[0.10.0,0.11.0)",
@@ -32,6 +33,7 @@ Import-Package: org.eclipse.egit.core;version="[0.10.0,0.11.0)",
  org.eclipse.egit.core.internal.util;version="[0.10.0,0.11.0)",
  org.eclipse.egit.core.op;version="[0.10.0,0.11.0)",
  org.eclipse.egit.core.project;version="[0.10.0,0.11.0)",
+ org.eclipse.egit.core.securestorage;version="[0.10.0,0.11.0)",
  org.eclipse.egit.core.synchronize;version="[0.10.0,0.11.0)",
  org.eclipse.egit.core.synchronize.dto;version="[0.10.0,0.11.0)",
  org.eclipse.jgit.api;version="[0.10.0,0.11.0)",
