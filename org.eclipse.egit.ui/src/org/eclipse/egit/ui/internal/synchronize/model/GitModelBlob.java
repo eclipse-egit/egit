@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -39,11 +40,15 @@ public class GitModelBlob extends GitModelCommit {
 
 	private final IPath location;
 
-	private final String gitPath;
-
 	private static final GitModelObject[] empty = new GitModelObject[0];
 
 	private GitCompareInput compareInput;
+
+	/**
+	 * Git repository relative path of file associated with this
+	 * {@link GitModelBlob}
+	 */
+	protected final String gitPath;
 
 	/**
 	 *
@@ -120,6 +125,36 @@ public class GitModelBlob extends GitModelCommit {
 		compareInput.prepareInput(configuration, monitor);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this)
+			return true;
+
+		if (obj instanceof GitModelBlob) {
+			GitModelBlob objBlob = (GitModelBlob) obj;
+
+			boolean equalsRemoteId;
+			ObjectId objRemoteId = objBlob.remoteId;
+			if (objRemoteId != null)
+				equalsRemoteId = objRemoteId.equals(remoteId);
+			else
+				equalsRemoteId = baseCommit == null;
+
+			return objBlob.baseId.equals(baseId) && equalsRemoteId;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = baseId.hashCode();
+		if (remoteId != null)
+			result ^= remoteId.hashCode();
+
+		return result;
+	}
+
 	private void createCompareInput() {
 		if (compareInput == null) {
 			ComparisonDataSource baseData = new ComparisonDataSource(
@@ -128,8 +163,23 @@ public class GitModelBlob extends GitModelCommit {
 					remoteCommit, remoteId);
 			ComparisonDataSource ancestorData = new ComparisonDataSource(
 					ancestorCommit, ancestorId);
-			compareInput = new GitCompareInput(getRepository(), ancestorData,
-					baseData, remoteData, gitPath);
+			compareInput = getCompareInput(baseData, remoteData, ancestorData);
 		}
 	}
+
+	/**
+	 * Returns specific instance of {@link GitCompareInput} for particular
+	 * compare input.
+	 *
+	 * @param baseData
+	 * @param remoteData
+	 * @param ancestorData
+	 * @return Git specific {@link ICompareInput}
+	 */
+	protected GitCompareInput getCompareInput(ComparisonDataSource baseData,
+			ComparisonDataSource remoteData, ComparisonDataSource ancestorData) {
+		return new GitCompareInput(getRepository(), ancestorData, baseData,
+				remoteData, gitPath);
+	}
+
 }

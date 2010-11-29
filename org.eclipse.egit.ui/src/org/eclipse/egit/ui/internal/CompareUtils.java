@@ -7,6 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
+ *    Dariusz Luksza - add getFileCachedRevisionTypedElement(String, Repository)
  *    Stefan Lay (SAP AG) - initial implementation
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
@@ -28,14 +29,16 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.util.OpenStrategy;
+import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
@@ -102,9 +105,9 @@ public class CompareUtils {
 
 		try {
 			IFileRevision nextFile = getFileRevision(gitPath, commit, db,
-					blobId);
-			if (nextFile != null)
-				right = new FileRevisionTypedElement(nextFile);
+							blobId);
+				if (nextFile != null)
+					right = new FileRevisionTypedElement(nextFile);
 		} catch (IOException e) {
 			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
 					gitPath, commit.getId()), e);
@@ -344,4 +347,34 @@ public class CompareUtils {
 		new InstanceScope().getNode(TEAM_UI_PLUGIN).putBoolean(
 				REUSE_COMPARE_EDITOR_PREFID, value);
 	}
+
+	/**
+	 * Creates {@link ITypedElement} of file that was cached
+	 *
+	 * @param gitPath
+	 * @param db
+	 * @return {@link ITypedElement} instance for given cached file or
+	 *         {@code null} if file isn't cached
+	 */
+	public static ITypedElement getFileCachedRevisionTypedElement(String gitPath,
+			Repository db) {
+		try {
+			DirCache dc = db.lockDirCache();
+			DirCacheEntry entry = dc.getEntry(gitPath);
+			dc.unlock();
+
+			// check if file is staged
+			if (entry != null) {
+				return new FileRevisionTypedElement(GitFileRevision.inIndex(db, gitPath));
+			}
+		} catch (IOException e) {
+			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
+					gitPath), e);
+		}
+
+		return new GitCompareFileRevisionEditorInput.EmptyTypedElement(NLS
+				.bind(UIText.CompareWithIndexAction_FileNotInIndex,
+						gitPath.substring(gitPath.lastIndexOf("/")) + 1)); //$NON-NLS-1$
+	}
+
 }

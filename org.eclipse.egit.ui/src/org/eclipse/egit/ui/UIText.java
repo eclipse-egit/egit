@@ -2114,6 +2114,12 @@ public class UIText extends NLS {
 	public static String GitCompareFileRevisionEditorInput_RevisionLabel;
 
 	/** */
+	public static String GitCompareFileRevisionEditorInput_LocalVersion;
+
+	/** */
+	public static String GitCompareFileRevisionEditorInput_StagedVersion;
+
+	/** */
 	public static String GitCreateGeneralProjectPage_DirLabel;
 
 	/** */
@@ -2654,4 +2660,5 @@ public class UIText extends NLS {
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
+
 }
