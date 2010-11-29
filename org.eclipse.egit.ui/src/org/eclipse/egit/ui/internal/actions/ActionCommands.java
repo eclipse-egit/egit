@@ -14,6 +14,9 @@ package org.eclipse.egit.ui.internal.actions;
  * Commands wrapped by actions for menu contributions
  */
 public class ActionCommands {
+	/** Add to index action command id */
+	public static final String ADD_TO_INDEX = "org.eclipse.egit.ui.team.AddToIndex"; //$NON-NLS-1$
+
 	/** "Apply patch" action command id */
 	public static final String APPLY_PATCH = "org.eclipse.egit.ui.team.ApplyPatch"; //$NON-NLS-1$
 

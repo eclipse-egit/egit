@@ -9,6 +9,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +44,17 @@ public class AddToIndexOperation implements IEGitOperation {
 	 */
 	public AddToIndexOperation(final Collection<? extends IResource> rsrcs) {
 		rsrcList = rsrcs;
+	}
+
+	/**
+	 * Create a new operation to add files to the Git index
+	 *
+	 * @param resources
+	 *            array of {@link IResource}s which should be added to the
+	 *            relevant Git repositories.
+	 */
+	public AddToIndexOperation(IResource[] resources) {
+		rsrcList = Arrays.asList(resources);
 	}
 
 	/* (non-Javadoc)
