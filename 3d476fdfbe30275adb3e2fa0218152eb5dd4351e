@@ -16,6 +16,24 @@
       "revId": "3d476fdfbe30275adb3e2fa0218152eb5dd4351e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///+4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellchecableMessageArea.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-11-16T22:14:43Z",
+      "side": 1,
+      "message": "No, this is a typo;)\n\nDone",
+      "parentUuid": "AAAL0n////A\u003d",
+      "revId": "3d476fdfbe30275adb3e2fa0218152eb5dd4351e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
