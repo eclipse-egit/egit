@@ -150,8 +150,8 @@ public class GitModelRepository extends GitModelObject {
 			}
 
 			if (includeLocal) {
-				result.add(new GitModelCache(this, dstCommit));
-				result.add(new GitModelWorkingTree(this, dstCommit));
+				result.add(new GitModelCache(this, srcCommit));
+				result.add(new GitModelWorkingTree(this, srcCommit));
 			}
 		} catch (IOException e) {
 			Activator.logError(e.getMessage(), e);
