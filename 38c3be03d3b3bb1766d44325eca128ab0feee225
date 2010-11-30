@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL0n///qI\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/securestorage/EGitSecureStoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-29T23:04:37Z",
+      "side": 1,
+      "message": "missing blank line",
+      "revId": "38c3be03d3b3bb1766d44325eca128ab0feee225",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///qE\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/securestorage/EGitSecureStoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-29T23:04:37Z",
+      "side": 1,
+      "message": "unnecessary blank line",
+      "revId": "38c3be03d3b3bb1766d44325eca128ab0feee225",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///qA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/securestorage/EGitSecureStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-29T23:04:37Z",
+      "side": 1,
+      "message": "missing blank line",
+      "revId": "38c3be03d3b3bb1766d44325eca128ab0feee225",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///p8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/securestorage/UserPasswordCredentials.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-29T23:04:37Z",
+      "side": 1,
+      "message": "missing blank line",
+      "revId": "38c3be03d3b3bb1766d44325eca128ab0feee225",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///p4\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-29T23:04:37Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "38c3be03d3b3bb1766d44325eca128ab0feee225",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///p0\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-29T23:04:37Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "38c3be03d3b3bb1766d44325eca128ab0feee225",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///pw\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1703,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-29T23:04:37Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "38c3be03d3b3bb1766d44325eca128ab0feee225",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///ps\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/credentials/EGitCredentialsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-29T23:04:37Z",
+      "side": 1,
+      "message": "missing blank line",
+      "revId": "38c3be03d3b3bb1766d44325eca128ab0feee225",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///po\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/credentials/EGitCredentialsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-29T23:04:37Z",
+      "side": 1,
+      "message": "s/sent/shown/",
+      "revId": "38c3be03d3b3bb1766d44325eca128ab0feee225",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///pk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/credentials/LoginDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-29T23:04:37Z",
+      "side": 1,
+      "message": "missing blank line",
+      "revId": "38c3be03d3b3bb1766d44325eca128ab0feee225",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///pg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/credentials/LoginDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-29T23:04:37Z",
+      "side": 1,
+      "message": "we don\u0027t use braces around single line blocks",
+      "revId": "38c3be03d3b3bb1766d44325eca128ab0feee225",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///pc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ChangeCredentialsCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-29T23:04:37Z",
+      "side": 1,
+      "message": "unnecessary blank line",
+      "revId": "38c3be03d3b3bb1766d44325eca128ab0feee225",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///o4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ChangeCredentialsCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-29T23:04:37Z",
+      "side": 1,
+      "message": "The key for the externalized text has Push in its name, since this command is not related to push this key should be renamed to \n\"ChangeCredentialsCommand_writingToSecureStoreFailed\"",
+      "revId": "38c3be03d3b3bb1766d44325eca128ab0feee225",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
