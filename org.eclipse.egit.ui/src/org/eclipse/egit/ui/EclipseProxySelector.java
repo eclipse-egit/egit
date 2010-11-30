@@ -15,6 +15,7 @@ import java.net.Proxy;
 import java.net.ProxySelector;
 import java.net.SocketAddress;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,15 +43,19 @@ class EclipseProxySelector extends ProxySelector {
 				type = IProxyData.HTTP_PROXY_TYPE;
 			else if ("https".equals(uri.getScheme())) //$NON-NLS-1$
 				type = IProxyData.HTTPS_PROXY_TYPE;
-
-			final IProxyData data = service.getProxyDataForHost(host, type);
-			if (data != null) {
-				if (IProxyData.HTTP_PROXY_TYPE.equals(data.getType()))
-					addProxy(r, Proxy.Type.HTTP, data);
-				else if (IProxyData.HTTPS_PROXY_TYPE.equals(data.getType()))
-					addProxy(r, Proxy.Type.HTTP, data);
-				else if (IProxyData.SOCKS_PROXY_TYPE.equals(data.getType()))
-					addProxy(r, Proxy.Type.SOCKS, data);
+			try {
+				URI queryUri = new URI(type, "//" + host, null); //$NON-NLS-1$
+				final IProxyData[] dataArray = service.select(queryUri);
+				for (IProxyData data : dataArray) {
+					if (IProxyData.HTTP_PROXY_TYPE.equals(data.getType()))
+						addProxy(r, Proxy.Type.HTTP, data);
+					else if (IProxyData.HTTPS_PROXY_TYPE.equals(data.getType()))
+						addProxy(r, Proxy.Type.HTTP, data);
+					else if (IProxyData.SOCKS_PROXY_TYPE.equals(data.getType()))
+						addProxy(r, Proxy.Type.SOCKS, data);
+				}
+			} catch (URISyntaxException e) {
+				// just add nothing to r
 			}
 		}
 		if (r.isEmpty())
