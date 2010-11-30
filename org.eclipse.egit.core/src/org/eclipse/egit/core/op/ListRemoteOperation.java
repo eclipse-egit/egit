@@ -20,6 +20,7 @@ import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.Connection;
+import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
 
@@ -34,6 +35,8 @@ public class ListRemoteOperation {
 	private final int timeout;
 
 	private Map<String, Ref> remoteRefsMap;
+
+	private CredentialsProvider credentialsProvider;
 
 	/**
 	 * Create listing operation for specified local repository (needed by
@@ -77,6 +80,14 @@ public class ListRemoteOperation {
 	}
 
 	/**
+	 * Sets a credentials provider
+	 * @param credentialsProvider
+	 */
+	public void setCredentialsProvider(CredentialsProvider credentialsProvider) {
+		this.credentialsProvider = credentialsProvider;
+	}
+
+	/**
 	 * @param pm
 	 *            the monitor to be used for reporting progress and responding
 	 *            to cancellation. The monitor is never <code>null</code>
@@ -89,6 +100,8 @@ public class ListRemoteOperation {
 		Connection connection = null;
 		try {
 			transport = Transport.open(localDb, uri);
+			if (credentialsProvider != null)
+				transport.setCredentialsProvider(credentialsProvider);
 			transport.setTimeout(this.timeout);
 
 			if (pm != null)
