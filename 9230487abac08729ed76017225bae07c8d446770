@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL0n///uQ\u003d",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-11-26T17:12:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL0n///uw\u003d",
+      "revId": "9230487abac08729ed76017225bae07c8d446770",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL0n///uo\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/securestorage/EGitCredentials.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2010-11-26T16:38:55Z",
       "side": 1,
       "message": "maybe we find a more generic name here like \"UserPasswordCredentials\"",
+      "revId": "9230487abac08729ed76017225bae07c8d446770",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///uM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/securestorage/EGitCredentials.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-11-26T17:12:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL0n///uo\u003d",
       "revId": "9230487abac08729ed76017225bae07c8d446770",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL0n///uE\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-11-26T17:12:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL0n///uk\u003d",
+      "revId": "9230487abac08729ed76017225bae07c8d446770",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL0n///ug\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
         "patchSetId": 2
@@ -81,6 +135,24 @@
       "writtenOn": "2010-11-26T16:38:55Z",
       "side": 1,
       "message": "we don\u0027t use braces around single line blocks",
+      "revId": "9230487abac08729ed76017225bae07c8d446770",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///uA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-11-26T17:12:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL0n///ug\u003d",
       "revId": "9230487abac08729ed76017225bae07c8d446770",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
