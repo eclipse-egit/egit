@@ -1,4 +1,5 @@
 /*******************************************************************************
+ * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
@@ -8,11 +9,13 @@
  *******************************************************************************/
 package org.eclipse.egit.core.test;
 
-import static org.junit.Assert.assertNotNull;
-
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Pattern;
@@ -20,6 +23,7 @@ import java.util.regex.Pattern;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.op.DisconnectProviderOperation;
@@ -31,17 +35,21 @@ import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.dircache.DirCacheEditor;
+import org.eclipse.jgit.dircache.DirCacheEntry;
+import org.eclipse.jgit.dircache.DirCacheEditor.PathEdit;
 import org.eclipse.jgit.errors.UnmergedPathException;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.GitIndex;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectInserter;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.Tree;
-import org.eclipse.jgit.lib.GitIndex.Entry;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.treewalk.TreeWalk;
 
 /**
  * Helper class for creating and filling a test repository
@@ -228,10 +236,61 @@ public class TestRepository {
 	 * @throws IOException
 	 */
 	public void track(File file) throws IOException {
-		GitIndex index = repository.getIndex();
-		Entry entry = index.add(repository.getWorkTree(), file);
-		entry.setAssumeValid(false);
-		index.write();
+		DirCache dc = repository.lockDirCache();
+		try {
+			String repoPath = getRepoRelativePath(new Path(file.getPath())
+					.toString());
+			FileInputStream fis = new FileInputStream(file);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] buffer = new byte[100];
+			try {
+				int size = fis.read(buffer);
+				while (size > 0) {
+					bos.write(buffer, 0, size);
+					size = fis.read(buffer);
+				}
+			} finally {
+				fis.close();
+				bos.close();
+			}
+
+			final byte[] newContent = bos.toByteArray();
+			DirCacheEditor editor = dc.editor();
+			editor.add(new PathEdit(repoPath) {
+				@Override
+				public void apply(DirCacheEntry ent) {
+					ent.setFileMode(FileMode.REGULAR_FILE);
+					ent.setAssumeValid(false);
+					ObjectInserter inserter = repository.newObjectInserter();
+					ent.setLength(newContent.length);
+					ent.setLastModified(System.currentTimeMillis());
+					InputStream in = new ByteArrayInputStream(newContent);
+					try {
+						ent.setObjectId(inserter.insert(Constants.OBJ_BLOB,
+								newContent.length, in));
+						inserter.flush();
+					} catch (IOException ex) {
+						throw new RuntimeException(ex);
+					} finally {
+						try {
+							in.close();
+						} catch (IOException e) {
+							// ignore here
+						}
+					}
+				}
+			});
+			try {
+				editor.commit();
+			} catch (RuntimeException e) {
+				if (e.getCause() instanceof IOException)
+					throw (IOException) e.getCause();
+				else
+					throw e;
+			}
+		} finally {
+			dc.unlock();
+		}
 	}
 
 	/**
@@ -301,16 +360,58 @@ public class TestRepository {
 	 * Adds the given file to the index
 	 *
 	 * @param file
+	 * @throws CoreException
 	 * @throws IOException
 	 */
-	public void addToIndex(IFile file) throws IOException {
-		GitIndex index = repository.getIndex();
-		Entry entry = index.getEntry(getRepoRelativePath(file.getLocation()
-				.toOSString()));
-		assertNotNull(entry);
-		if (entry.isModified(repository.getWorkTree()))
-			entry.update(new File(repository.getWorkTree(), entry.getName()));
-		index.write();
+	public void addToIndex(IFile file) throws CoreException, IOException {
+		DirCache dc = repository.lockDirCache();
+		try {
+			String repoPath = getRepoRelativePath(file.getLocation()
+					.toOSString());
+			InputStream fis = file.getContents();
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] buffer = new byte[100];
+			try {
+				int size = fis.read(buffer);
+				while (size > 0) {
+					bos.write(buffer, 0, size);
+					size = fis.read(buffer);
+				}
+			} finally {
+				fis.close();
+				bos.close();
+			}
+
+			final byte[] newContent = bos.toByteArray();
+			dc.editor().add(new PathEdit(repoPath) {
+				@Override
+				public void apply(DirCacheEntry ent) {
+
+					ent.setFileMode(FileMode.REGULAR_FILE);
+
+					ObjectInserter inserter = repository.newObjectInserter();
+					ent.setLength(newContent.length);
+					ent.setLastModified(System.currentTimeMillis());
+					InputStream in = new ByteArrayInputStream(newContent);
+					try {
+						ent.setObjectId(inserter.insert(Constants.OBJ_BLOB,
+								newContent.length, in));
+						inserter.flush();
+					} catch (IOException ex) {
+						throw new RuntimeException(ex);
+					} finally {
+						try {
+							in.close();
+						} catch (IOException e) {
+							// ignore here
+						}
+					}
+
+				}
+			});
+		} finally {
+			dc.unlock();
+		}
 	}
 
 	/**
@@ -375,16 +476,21 @@ public class TestRepository {
 	 * @throws IOException
 	 */
 	public boolean inHead(String path) throws IOException {
-		Tree headTree = repository.mapTree(Constants.HEAD);
-		String repoPath = getRepoRelativePath(path);
-		boolean headExists = headTree.existsBlob(repoPath);
-		return headExists;
+		ObjectId headId = repository.resolve(Constants.HEAD);
+		RevWalk rw = new RevWalk(repository);
+		TreeWalk tw = null;
+		try {
+			tw = TreeWalk.forPath(repository, path, rw.parseTree(headId));
+			return tw != null;
+		} finally {
+			rw.release();
+			rw.dispose();
+			if (tw != null)
+				tw.release();
+		}
 	}
 
 	public boolean inIndex(String path) throws IOException {
-//		String repoPath = getRepoRelativePath(path);
-//		GitIndex index = repository.getIndex();
-//		return index.getEntry(repoPath) != null;
 		String repoPath = getRepoRelativePath(path);
 		DirCache dc = DirCache.read(repository.getIndexFile(), repository.getFS());
 
