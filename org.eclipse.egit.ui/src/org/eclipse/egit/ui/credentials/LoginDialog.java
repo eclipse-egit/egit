@@ -16,6 +16,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -26,13 +27,17 @@ import org.eclipse.swt.widgets.Text;
  * This class implements a login dialog asking for user and password for a given
  * URI.
  */
-public class LoginDialog extends Dialog {
+class LoginDialog extends Dialog {
 
 	private Text user;
 
 	private Text password;
 
+	private Button storeCheckbox;
+
 	private UserPasswordCredentials credentials;
+
+	private boolean storeInSecureStore;
 
 	private final URIish uri;
 
@@ -40,7 +45,7 @@ public class LoginDialog extends Dialog {
 
 	private boolean changeCredentials = false;
 
-	private LoginDialog(Shell shell, URIish uri) {
+	LoginDialog(Shell shell, URIish uri) {
 		super(shell);
 		this.uri = uri;
 		isUserSet = uri.getUser() != null && uri.getUser().length() > 0;
@@ -73,6 +78,13 @@ public class LoginDialog extends Dialog {
 		password = new Text(composite, SWT.PASSWORD | SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(password);
 
+		Label storeLabel = new Label(composite, SWT.NONE);
+		storeLabel.setText(UIText.LoginDialog_storeInSecureStore);
+		storeCheckbox = new Button(composite, SWT.CHECK);
+		storeCheckbox.setSelection(true);
+		if (changeCredentials)
+			storeCheckbox.setEnabled(false);
+
 		if (isUserSet)
 			password.setFocus();
 		else
@@ -81,46 +93,26 @@ public class LoginDialog extends Dialog {
 		return composite;
 	}
 
-	/**
-	 * The method shows a login dialog for a given URI. The user field is taken
-	 * from the URI if a user is present in the URI. In this case the user is
-	 * not editable.
-	 *
-	 * @param parent
-	 * @param uri
-	 * @return credentials, <code>null</code> if the user canceled the dialog.
-	 */
-	public static UserPasswordCredentials login(Shell parent, URIish uri) {
-		LoginDialog dialog = new LoginDialog(parent, uri);
-		if (dialog.open() == OK)
-			return dialog.credentials;
-		return null;
+	UserPasswordCredentials getCredentials() {
+		return credentials;
 	}
 
-	/**
-	 * The method shows a change credentials dialog for a given URI. The user
-	 * field is taken from the URI if a user is present in the URI. In this case
-	 * the user is not editable.
-	 *
-	 * @param parent
-	 * @param uri
-	 * @return credentials, <code>null</code> if the user canceled the dialog.
-	 */
-	public static UserPasswordCredentials changeCredentials(Shell parent,
-			URIish uri) {
-		LoginDialog dialog = new LoginDialog(parent, uri);
-		dialog.changeCredentials = true;
-		if (dialog.open() == OK)
-			return dialog.credentials;
-		return null;
+	boolean getStoreInSecureStore() {
+		return storeInSecureStore;
 	}
 
 	@Override
 	protected void okPressed() {
-		if (user.getText().length() > 0)
+		if (user.getText().length() > 0) {
 			credentials = new UserPasswordCredentials(user.getText(),
 					password.getText());
+			storeInSecureStore = storeCheckbox.getSelection();
+		}
 		super.okPressed();
+	}
+
+	void setChangeCredentials(boolean changeCredentials) {
+		this.changeCredentials = changeCredentials;
 	}
 
 }

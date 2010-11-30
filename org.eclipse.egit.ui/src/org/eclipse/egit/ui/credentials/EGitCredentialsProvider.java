@@ -83,7 +83,7 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 			public void run() {
 				Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();
-				aRef.set(LoginDialog.login(shell, uri));
+				aRef.set(LoginService.login(shell, uri));
 			}
 		});
 		return aRef.get();
