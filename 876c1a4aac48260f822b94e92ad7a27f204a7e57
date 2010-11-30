@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL0n///sE\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/securestorage/EGitSecureStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-28T23:05:47Z",
+      "side": 1,
+      "message": "add a blank line after the copyright statements to match our license header template",
+      "revId": "876c1a4aac48260f822b94e92ad7a27f204a7e57",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///sA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/securestorage/EGitSecureStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-28T23:05:47Z",
+      "side": 1,
+      "message": "add a blank line after the copyright statements to match our license header template",
+      "revId": "876c1a4aac48260f822b94e92ad7a27f204a7e57",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///r8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/securestorage/UserPasswordCredentials.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-28T23:05:47Z",
+      "side": 1,
+      "message": "add a blank line after the copyright statements to match our license header template",
+      "revId": "876c1a4aac48260f822b94e92ad7a27f204a7e57",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///r4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/credentials/EGitCredentialsProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-28T23:05:47Z",
+      "side": 1,
+      "message": "add a blank line after the copyright statements to match our license header template",
+      "revId": "876c1a4aac48260f822b94e92ad7a27f204a7e57",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///ro\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/credentials/EGitCredentialsProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-28T23:05:47Z",
+      "side": 1,
+      "message": "better: s/sent/shown/",
+      "revId": "876c1a4aac48260f822b94e92ad7a27f204a7e57",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///r0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/credentials/LoginDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-28T23:05:47Z",
+      "side": 1,
+      "message": "add a blank line after the copyright statements to match our license header template",
+      "revId": "876c1a4aac48260f822b94e92ad7a27f204a7e57",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
