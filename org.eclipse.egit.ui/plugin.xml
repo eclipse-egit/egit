@@ -1295,6 +1295,31 @@
                </and>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewChangeCredentials"
+               label="%RepoViewChangeCredentialsLabel"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.PushNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.FetchNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
          <separator
                name="FirstSeparator"
                visible="true">
@@ -1669,6 +1694,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.PushConfiguredRemoteCommand"
             id="org.eclipse.egit.ui.RepositoriesViewPushConfigured"
             name="%SimplePushCommand">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ChangeCredentialsCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewChangeCredentials"
+            name="%ChangeCredentialsCommand">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
