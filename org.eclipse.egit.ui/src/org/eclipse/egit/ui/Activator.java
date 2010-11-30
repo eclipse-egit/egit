@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -44,6 +45,7 @@ import org.eclipse.jgit.events.IndexChangedListener;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RepositoryEvent;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.SshSessionFactory;
 import org.eclipse.jsch.core.IJSchService;
 import org.eclipse.osgi.service.debug.DebugOptions;
@@ -187,6 +189,11 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		setupRepoChangeScanner();
 		setupRepoIndexRefresh();
 		setupFocusHandling();
+		setupCredentialsProvider();
+	}
+
+	private void setupCredentialsProvider() {
+		CredentialsProvider.setDefault(new EGitCredentialsProvider());
 	}
 
 	static boolean isActive() {
