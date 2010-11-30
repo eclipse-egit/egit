@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL0n///uI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/securestorage/EGitCredentials.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-11-26T17:12:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL0n///us\u003d",
+      "revId": "9230487abac08729ed76017225bae07c8d446770",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL0n///uk\u003d",
         "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
         "patchSetId": 2
