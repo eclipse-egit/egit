@@ -8,17 +8,13 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
-import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.credentials.LoginDialog;
+import org.eclipse.egit.ui.credentials.LoginService;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
-import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jgit.transport.URIish;
 
 /**
@@ -39,21 +35,7 @@ public class ChangeCredentialsCommand extends
 			Activator.error(e.getMessage(), e);
 			return null;
 		}
-		UserPasswordCredentials credentials = LoginDialog.changeCredentials(getShell(event), uri);
-		if (credentials == null)
-			return null;
-		try {
-			Activator.getDefault().getSecureStore()
-					.putCredentials(uri, credentials);
-		} catch (StorageException e) {
-			Activator.error(
-					UIText.ChangeCredentialsCommand_writingToSecureStoreFailed,
-					e);
-		} catch (IOException e) {
-			Activator.error(
-					UIText.ChangeCredentialsCommand_writingToSecureStoreFailed,
-					e);
-		}
+		LoginService.changeCredentials(getShell(event), uri);
 		return null;
 	}
 }
