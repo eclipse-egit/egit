@@ -32,6 +32,7 @@ import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
@@ -65,6 +66,8 @@ public class CloneOperation {
 
 	private FetchResult fetchResult;
 
+	private CredentialsProvider credentialsProvider;
+
 	/**
 	 * Create a new clone operation.
 	 *
@@ -97,6 +100,14 @@ public class CloneOperation {
 		this.branch = branch;
 		this.remoteName = remoteName;
 		this.timeout = timeout;
+	}
+
+	/**
+	 * Sets a credentials provider
+	 * @param credentialsProvider
+	 */
+	public void setCredentialsProvider(CredentialsProvider credentialsProvider) {
+		this.credentialsProvider = credentialsProvider;
 	}
 
 	/**
@@ -198,6 +209,8 @@ public class CloneOperation {
 	private void doFetch(final IProgressMonitor monitor)
 			throws NotSupportedException, TransportException {
 		final Transport tn = Transport.open(local, remoteConfig);
+		if (credentialsProvider != null)
+			tn.setCredentialsProvider(credentialsProvider);
 		tn.setTimeout(this.timeout);
 		try {
 			final EclipseGitProgressTransformer pm;

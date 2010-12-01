@@ -124,6 +124,9 @@ public class UIText extends NLS {
 	public static String WizardProjectsImportPage_CreateProjectsTask;
 
 	/** */
+	public static String SecureStoreUtils_writingCredentialsFailed;
+
+	/** */
 	public static String SelectRemoteNamePage_ConfigureFetch_button;
 
 	/** */
@@ -218,9 +221,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitCloneWizard_errorCannotCreate;
-
-	/** */
-	public static String GitCloneWizard_writeToSecureStoreFailed;
 
 	/** */
 	public static String GitDecoratorPreferencePage_bindingRepositoryNameFlag;
