@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL0n///j8\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-12-01T15:22:12Z",
+      "side": 1,
+      "message": "Authentication? Authentification sounds German :)",
+      "revId": "c85caa0b43207778942de3b082909ce57c6f2310",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///j4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/credentials/LoginService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2010-12-01T15:22:12Z",
+      "side": 1,
+      "message": "We should look at creating a EGitCoreActivator and EGitUIActivator or something like EGitCore and EGitUI to simplify access to the activators.",
+      "revId": "c85caa0b43207778942de3b082909ce57c6f2310",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
