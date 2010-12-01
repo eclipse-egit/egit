@@ -8,19 +8,20 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.credentials.LoginService;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jgit.transport.URIish;
 
 /**
- * Change credentials command
+ * Clear credentials command
  */
-public class ChangeCredentialsCommand extends
+public class ClearCredentialsCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode<String>> {
 
 	/**
@@ -35,8 +36,11 @@ public class ChangeCredentialsCommand extends
 			Activator.handleError(e.getMessage(), e, true);
 			return null;
 		}
-
-		LoginService.changeCredentials(getShell(event), uri);
+		try {
+			org.eclipse.egit.core.Activator.getDefault().getSecureStore().clearCredentials(uri);
+		} catch (IOException e) {
+			Activator.handleError(UIText.ClearCredentialsCommand_clearingCredentialsFailed, e, true);
+		}
 		return null;
 	}
 }

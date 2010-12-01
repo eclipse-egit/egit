@@ -601,6 +601,9 @@ public class UIText extends NLS {
 	public static String RepositorySearchDialog_SomeDirectoriesHiddenMessage;
 
 	/** */
+	public static String ClearCredentialsCommand_clearingCredentialsFailed;
+
+	/** */
 	public static String ChangeCredentialsCommand_writingToSecureStoreFailed;
 
 	/** */
@@ -2528,7 +2531,16 @@ public class UIText extends NLS {
 	public static String LoginDialog_repository;
 
 	/** */
+	public static String LoginDialog_storeInSecureStore;
+
+	/** */
 	public static String LoginDialog_user;
+
+	/** */
+	public static String LoginService_readingCredentialsFailed;
+
+	/** */
+	public static String LoginService_storingCredentialsFailed;
 
 	/** */
 	public static String NewRemoteWizard_CheckingUriTaskName;
