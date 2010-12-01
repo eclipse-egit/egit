@@ -1,4 +1,5 @@
 /*******************************************************************************
+ * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
@@ -7,8 +8,6 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 package org.eclipse.egit.core.test;
-
-import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,6 +19,7 @@ import java.util.regex.Pattern;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.op.DisconnectProviderOperation;
@@ -27,21 +27,21 @@ import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.errors.UnmergedPathException;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.Tree;
-import org.eclipse.jgit.lib.GitIndex.Entry;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.treewalk.TreeWalk;
 
 /**
  * Helper class for creating and filling a test repository
@@ -228,10 +228,13 @@ public class TestRepository {
 	 * @throws IOException
 	 */
 	public void track(File file) throws IOException {
-		GitIndex index = repository.getIndex();
-		Entry entry = index.add(repository.getWorkTree(), file);
-		entry.setAssumeValid(false);
-		index.write();
+		String repoPath = getRepoRelativePath(new Path(file.getPath())
+				.toString());
+		try {
+			new Git(repository).add().addFilepattern(repoPath).call();
+		} catch (NoFilepatternException e) {
+			throw new IOException(e.getMessage());
+		}
 	}
 
 	/**
@@ -301,16 +304,16 @@ public class TestRepository {
 	 * Adds the given file to the index
 	 *
 	 * @param file
+	 * @throws CoreException
 	 * @throws IOException
 	 */
-	public void addToIndex(IFile file) throws IOException {
-		GitIndex index = repository.getIndex();
-		Entry entry = index.getEntry(getRepoRelativePath(file.getLocation()
-				.toOSString()));
-		assertNotNull(entry);
-		if (entry.isModified(repository.getWorkTree()))
-			entry.update(new File(repository.getWorkTree(), entry.getName()));
-		index.write();
+	public void addToIndex(IFile file) throws CoreException, IOException {
+		String repoPath = getRepoRelativePath(file.getLocation().toOSString());
+		try {
+			new Git(repository).add().addFilepattern(repoPath).call();
+		} catch (NoFilepatternException e) {
+			throw new IOException(e.getMessage());
+		}
 	}
 
 	/**
@@ -375,16 +378,21 @@ public class TestRepository {
 	 * @throws IOException
 	 */
 	public boolean inHead(String path) throws IOException {
-		Tree headTree = repository.mapTree(Constants.HEAD);
-		String repoPath = getRepoRelativePath(path);
-		boolean headExists = headTree.existsBlob(repoPath);
-		return headExists;
+		ObjectId headId = repository.resolve(Constants.HEAD);
+		RevWalk rw = new RevWalk(repository);
+		TreeWalk tw = null;
+		try {
+			tw = TreeWalk.forPath(repository, path, rw.parseTree(headId));
+			return tw != null;
+		} finally {
+			rw.release();
+			rw.dispose();
+			if (tw != null)
+				tw.release();
+		}
 	}
 
 	public boolean inIndex(String path) throws IOException {
-//		String repoPath = getRepoRelativePath(path);
-//		GitIndex index = repository.getIndex();
-//		return index.getEntry(repoPath) != null;
 		String repoPath = getRepoRelativePath(path);
 		DirCache dc = DirCache.read(repository.getIndexFile(), repository.getFS());
 
