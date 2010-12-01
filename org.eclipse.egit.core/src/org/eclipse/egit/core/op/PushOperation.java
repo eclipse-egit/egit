@@ -19,6 +19,7 @@ import org.eclipse.jgit.errors.NoRemoteRepositoryException;
 import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
@@ -44,6 +45,8 @@ public class PushOperation {
 	private final int timeout;
 
 	private PushOperationResult operationResult;
+
+	private CredentialsProvider credentialsProvider;
 
 	/**
 	 * Create push operation for provided specification.
@@ -72,6 +75,14 @@ public class PushOperation {
 		this.dryRun = dryRun;
 		this.rc = rc;
 		this.timeout = timeout;
+	}
+
+	/**
+	 * Sets a credentials provider
+	 * @param credentialsProvider
+	 */
+	public void setCredentialsProvider(CredentialsProvider credentialsProvider) {
+		this.credentialsProvider = credentialsProvider;
 	}
 
 	/**
@@ -143,6 +154,8 @@ public class PushOperation {
 					continue;
 				}
 				transport = Transport.open(localDb, uri);
+				if (credentialsProvider != null)
+					transport.setCredentialsProvider(credentialsProvider);
 				transport.setTimeout(this.timeout);
 
 				if (rc != null)
