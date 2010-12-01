@@ -1348,6 +1348,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_StatusAddedIndexDiff;
 
 	/** */
+	public static String CommitDialog_StatusAssumeUnchaged;
+
+	/** */
 	public static String CommitDialog_StatusModified;
 
 	/** */

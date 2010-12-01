@@ -419,7 +419,8 @@ public class CommitDialog extends Dialog {
 			for (IFile selectedFile : preselectedFiles) {
 				for (CommitItem item : items) {
 					if (item.file.equals(selectedFile) &&
-							!item.status.equals(UIText.CommitDialog_StatusUntracked)) {
+							!item.status.equals(UIText.CommitDialog_StatusUntracked) &&
+							!item.status.equals(UIText.CommitDialog_StatusAssumeUnchaged)) {
 						filesViewer.setChecked(item, true);
 						break;
 					}
@@ -569,7 +570,9 @@ public class CommitDialog extends Dialog {
 	 */
 	private static String getFileStatus(String path, IndexDiff indexDiff) {
 		String prefix = UIText.CommitDialog_StatusUnknown;
-		if (indexDiff.getAdded().contains(path)) {
+		if (indexDiff.getAssumeUnchanged().contains(path)) {
+			prefix = UIText.CommitDialog_StatusAssumeUnchaged;
+		} else if (indexDiff.getAdded().contains(path)) {
 			// added
 			if (indexDiff.getModified().contains(path))
 				prefix = UIText.CommitDialog_StatusAddedIndexDiff;
