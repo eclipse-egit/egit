@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL0n///lU\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-01T10:06:57Z",
+      "side": 1,
+      "message": "I think we should clean that up in a different way: \n\nAFAIK we do no longer have a difference between \"add to index\" and \"track\", so I think we should delete the track() here and replace it by addToIndex().\n\nIn addition we could use the jgit AddCommand to heavily simplify this class.",
+      "revId": "08dba069d75d724ddf133b6be69607f19ab33e45",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
