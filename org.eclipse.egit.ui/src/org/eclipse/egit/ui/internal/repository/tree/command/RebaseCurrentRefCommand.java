@@ -32,7 +32,6 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -81,14 +80,6 @@ public class RebaseCurrentRefCommand extends
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					rebase.execute(monitor);
-					// TODO for the time being, we will abort immediately once
-					// we have found a conflict
-					RebaseResult result = rebase.getResult();
-					if (result.getStatus() == org.eclipse.jgit.api.RebaseResult.Status.STOPPED) {
-						abortedDueToConflict.set(true);
-						new RebaseOperation(repository, Operation.ABORT)
-								.execute(monitor);
-					}
 				} catch (final CoreException e) {
 					try {
 						new RebaseOperation(repository, Operation.ABORT)
