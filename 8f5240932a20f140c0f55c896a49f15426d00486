@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL0n///jE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/SecureStoreUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-01T21:16:12Z",
+      "side": 1,
+      "message": "unnecessary blank line",
+      "revId": "8f5240932a20f140c0f55c896a49f15426d00486",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///jA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RepositorySelectionPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-01T21:16:12Z",
+      "side": 1,
+      "message": "why deferring string externalization ?",
+      "revId": "8f5240932a20f140c0f55c896a49f15426d00486",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
