@@ -42,6 +42,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
@@ -85,6 +86,8 @@ public class RepositorySelectionPage extends WizardPage {
 
 	private Text passText;
 
+	private Button storeCheckbox;
+
 	private Combo scheme;
 
 	private Text portText;
@@ -112,6 +115,8 @@ public class RepositorySelectionPage extends WizardPage {
 	private String user;
 
 	private String password;
+
+	private boolean storeInSecureStore = true;
 
 	/**
 	 * Transport protocol abstraction
@@ -557,6 +562,20 @@ public class RepositorySelectionPage extends WizardPage {
 				password = passText.getText();
 			}
 		});
+
+		newLabel(g, UIText.RepositorySelectionPage_storeInSecureStore);
+		storeCheckbox = new Button(g, SWT.CHECK);
+		storeCheckbox.setSelection(storeInSecureStore);
+		storeCheckbox.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				storeInSecureStore = storeCheckbox.getSelection();
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				storeInSecureStore = storeCheckbox.getSelection();
+			}
+		});
+
 		return g;
 	}
 
@@ -876,6 +895,13 @@ public class RepositorySelectionPage extends WizardPage {
 				&& (password == null || password.length() == 0))
 			return null;
 		return new UserPasswordCredentials(user, password);
+	}
+
+	/**
+	 * @return true if credentials should be stored
+	 */
+	public boolean getStoreInSecureStore() {
+		return this.storeInSecureStore;
 	}
 
 	private void setEnabledRecursively(final Control control,

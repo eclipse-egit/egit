@@ -94,6 +94,8 @@ public class EGitSecureStore {
 	 */
 	public void clearCredentials(URIish uri) throws IOException {
 		String pathName = calcNodePath(uri);
+		if (!preferences.nodeExists(pathName))
+			return;
 		ISecurePreferences node = preferences.node(pathName);
 		node.removeNode();
 		node.flush();
