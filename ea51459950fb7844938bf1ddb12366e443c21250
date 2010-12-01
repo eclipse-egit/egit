@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL0n///m4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/credentials/LoginDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-30T16:54:36Z",
+      "side": 1,
+      "message": "Why is the checkbox disabled when changing credentials ?\nMaybe a user wants to change credentials just for a single operation ...",
+      "revId": "ea51459950fb7844938bf1ddb12366e443c21250",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///nM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/credentials/LoginService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-30T16:54:36Z",
+      "side": 1,
+      "message": "missing javadoc",
+      "revId": "ea51459950fb7844938bf1ddb12366e443c21250",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///nI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/credentials/LoginService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-11-30T16:54:36Z",
+      "side": 1,
+      "message": "unnecessary blank line",
+      "revId": "ea51459950fb7844938bf1ddb12366e443c21250",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
