@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -340,7 +341,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 	}
 
 
-	private void includeList(IProject project, HashSet<String> added,
+	private void includeList(IProject project, Set<String> added,
 			ArrayList<IFile> category) {
 		String repoRelativePath = RepositoryMapping.getMapping(project)
 				.getRepoRelativePath(project);
