@@ -16,6 +16,24 @@
       "revId": "08dba069d75d724ddf133b6be69607f19ab33e45",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///kM\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-12-01T14:33:43Z",
+      "side": 1,
+      "message": "Good hint with the AddCommand, that\u0027s in. As for removing track(), I\u0027m reluctant as the use of track() and addToIndes() is wildly mixed all over the tests, and the parameter is File here and IFile there, so we need some bigger refactoring here.",
+      "parentUuid": "AAAL0n///lU\u003d",
+      "revId": "08dba069d75d724ddf133b6be69607f19ab33e45",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
