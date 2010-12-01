@@ -22,9 +22,9 @@ import org.eclipse.egit.ui.UIText;
  *
  * @see AssumeUnchangedOperation
  */
-public class AssumeUnchanged extends AbstractResourceOperationAction {
+public class AssumeUnchangedAction extends AbstractResourceOperationAction {
 	protected IEGitOperation createOperation(final List<IResource> sel) {
-		return sel.isEmpty() ? null : new AssumeUnchangedOperation(sel);
+		return sel.isEmpty() ? null : new AssumeUnchangedOperation(sel, true);
 	}
 
 	@Override
