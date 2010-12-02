@@ -26,6 +26,7 @@ import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.push.PushConfiguredRemoteAction;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.Eclipse;
@@ -128,6 +129,11 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		if (testDirectory.exists())
 			deleteRecursive(testDirectory);
 		testDirectory.mkdir();
+		// we don't want to clone into <user_home> but into our test directory
+		File repoRoot = new File(testDirectory, "RepositoryRoot");
+		repoRoot.mkdir();
+		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore().setValue(
+				UIPreferences.DEFAULT_REPO_DIR, repoRoot.getPath());
 	}
 
 	@AfterClass
