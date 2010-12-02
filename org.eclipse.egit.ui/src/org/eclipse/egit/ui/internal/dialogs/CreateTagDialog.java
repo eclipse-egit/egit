@@ -162,6 +162,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		this.branchName = branchName;
 		this.commitId = null;
 		this.repo = repo;
+		setHelpAvailable(false);
 	}
 
 	/**
@@ -178,6 +179,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		this.branchName = null;
 		this.commitId = commitId;
 		this.repo = repo;
+		setHelpAvailable(false);
 	}
 
 	/**

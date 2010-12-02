@@ -90,6 +90,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 	public AbstractBranchSelectionDialog(Shell parentShell,
 			Repository repository) {
 		this(parentShell, repository, null);
+		setHelpAvailable(false);
 	}
 
 	/**
@@ -109,6 +110,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		remoteBranches = new RemoteTrackingNode(null, this.repo);
 		tags = new TagsNode(null, this.repo);
 		this.refToMark = refToMark;
+		setHelpAvailable(false);
 	}
 
 	/**

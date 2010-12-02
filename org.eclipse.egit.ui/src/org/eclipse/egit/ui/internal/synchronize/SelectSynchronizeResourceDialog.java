@@ -68,6 +68,7 @@ public class SelectSynchronizeResourceDialog extends TitleAreaDialog {
 		this.repoName = repoDirectory.getParentFile().getName()
 				+ File.separator + repoDirectory.getName();
 		this.syncRepos = syncRepos;
+		setHelpAvailable(false);
 	}
 
 	/**
