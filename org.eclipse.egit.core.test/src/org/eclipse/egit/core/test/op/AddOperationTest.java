@@ -23,7 +23,6 @@ import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,22 +33,18 @@ public class AddOperationTest extends GitTestCase {
 
 	TestRepository testRepository;
 
-	Repository repository;
-
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
 		gitDir = new File(project.getProject()
 				.getLocationURI().getPath(), Constants.DOT_GIT);
 		testRepository = new TestRepository(gitDir);
-		repository = testRepository.getRepository();
 		testRepository.connect(project.getProject());
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		testRepository.dispose();
-		repository = null;
 		super.tearDown();
 	}
 
