@@ -453,6 +453,7 @@ public class RepositoryPropertySource implements IPropertySource {
 			myConfig = config;
 			setShellStyle(getShellStyle() | SWT.SHELL_TRIM);
 			myTitle = title;
+			setHelpAvailable(false);
 		}
 
 		@Override
