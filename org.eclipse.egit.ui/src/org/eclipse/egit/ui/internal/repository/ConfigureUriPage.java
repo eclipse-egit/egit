@@ -118,6 +118,7 @@ public class ConfigureUriPage extends WizardPage {
 					SelectUriWizard slwz = new SelectUriWizard(false, uriText
 							.getText());
 					WizardDialog dlg = new WizardDialog(getShell(), slwz);
+					dlg.setHelpAvailable(false);
 					if (dlg.open() == Window.OK) {
 						URIish uri = slwz.getUri();
 						credentials = slwz.getCredentials();
@@ -174,6 +175,7 @@ public class ConfigureUriPage extends WizardPage {
 					SelectUriWizard selectWizard = new SelectUriWizard(false);
 					WizardDialog dlg = new WizardDialog(getShell(),
 							selectWizard);
+					dlg.setHelpAvailable(false);
 					if (dlg.open() == Window.OK) {
 						URIish uri = selectWizard.getUri();
 						if (uri.equals(myUri) || myUris.contains(uri)) {
