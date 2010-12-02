@@ -35,6 +35,7 @@ class PushResultDialog extends TitleAreaDialog {
 		this.localDb = localDb;
 		this.result = result;
 		this.destinationString = destinationString;
+		setHelpAvailable(false);
 	}
 
 	@Override
