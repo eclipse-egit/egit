@@ -119,7 +119,7 @@ public class CommitOperation implements IEGitOperation {
 			monitor = m;
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
-			public void run(IProgressMonitor monitor) throws CoreException {
+			public void run(IProgressMonitor actMonitor) throws CoreException {
 				final Date commitDate = new Date();
 				final TimeZone timeZone = TimeZone.getDefault();
 				final PersonIdent authorIdent = RawParseUtils.parsePersonIdent(author);
@@ -157,13 +157,13 @@ public class CommitOperation implements IEGitOperation {
 
 				else if (amending || filesToCommit != null
 						&& filesToCommit.length > 0) {
-					monitor.beginTask(
+					actMonitor.beginTask(
 							CoreText.CommitOperation_PerformingCommit,
 							filesToCommit.length * 2);
-					monitor.setTaskName(CoreText.CommitOperation_PerformingCommit);
+					actMonitor.setTaskName(CoreText.CommitOperation_PerformingCommit);
 					HashMap<Repository, Tree> treeMap = new HashMap<Repository, Tree>();
 					try {
-						if (!prepareTrees(filesToCommit, treeMap, monitor)) {
+						if (!prepareTrees(filesToCommit, treeMap, actMonitor)) {
 							// reread the indexes, they were changed in memory
 							for (Repository repo : treeMap.keySet())
 								repo.getIndex().read();
@@ -176,7 +176,7 @@ public class CommitOperation implements IEGitOperation {
 
 					try {
 						doCommits(message, treeMap);
-						monitor.worked(filesToCommit.length);
+						actMonitor.worked(filesToCommit.length);
 					} catch (IOException e) {
 						throw new TeamException(
 								CoreText.CommitOperation_errorCommittingChanges,

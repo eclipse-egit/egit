@@ -81,7 +81,7 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 				rsrcList.size() * 200);
 		try {
 			for (IResource resource : rsrcList) {
-				assumeValid(resource, assumeUnchanged);
+				assumeValid(resource);
 				monitor.worked(200);
 			}
 
@@ -114,7 +114,7 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 		return new MultiRule(rsrcList.toArray(new IResource[rsrcList.size()]));
 	}
 
-	private void assumeValid(final IResource resource, boolean assumeUnchanged) throws CoreException {
+	private void assumeValid(final IResource resource) throws CoreException {
 		final IProject proj = resource.getProject();
 		final GitProjectData pd = GitProjectData.get(proj);
 		if (pd == null)
