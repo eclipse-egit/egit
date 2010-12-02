@@ -97,6 +97,7 @@ public class GitCreatePatchWizard extends Wizard {
 		WizardDialog dialog = new WizardDialog(part.getSite().getShell(),
 				wizard);
 		dialog.setMinimumPageSize(INITIAL_WIDTH, INITIAL_HEIGHT);
+		dialog.setHelpAvailable(false);
 		dialog.open();
 	}
 

@@ -27,8 +27,10 @@ public class PushCommand extends RepositoriesViewCommandHandler<RepositoryNode> 
 		RepositoryNode node = getSelectedNodes(event).get(0);
 
 		try {
-			new WizardDialog(getShell(event),
-					new PushWizard(node.getRepository())).open();
+			WizardDialog dlg = new WizardDialog(getShell(event),
+					new PushWizard(node.getRepository()));
+			dlg.setHelpAvailable(false);
+			dlg.open();
 		} catch (URISyntaxException e1) {
 			Activator.handleError(e1.getMessage(), e1, true);
 		}
