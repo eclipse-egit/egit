@@ -238,6 +238,7 @@ class ExistingOrNewPage extends WizardPage {
 
 		tree.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				tree.select((TreeItem)e.item);
 				updateCreateOptions();
 			}
 		});
