@@ -39,7 +39,6 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.variants.IResourceVariant;
-import org.eclipse.team.core.variants.ResourceVariantByteStore;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,8 +50,6 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 	private IProject iProject;
 
 	private TestRepository testRepo;
-
-	private ResourceVariantByteStore store;
 
 	@Before
 	public void createGitRepository() throws Exception {
@@ -87,7 +84,7 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 
 		// given
 		GitResourceVariantTree grvt = new GitTestResourceVariantTree(dataSet,
-				store);
+				null);
 
 		// then
 		assertEquals(1, grvt.roots().length);
@@ -117,7 +114,7 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 
 		// given
 		GitResourceVariantTree grvt = new GitTestResourceVariantTree(dataSet,
-				store);
+				null);
 
 		// then
 		IResource[] roots = grvt.roots();
