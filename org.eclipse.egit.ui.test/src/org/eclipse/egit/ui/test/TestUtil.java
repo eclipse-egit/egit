@@ -83,19 +83,21 @@ public class TestUtil {
 				myBundle = location.getLocalization(Activator.getDefault()
 						.getBundle(), Locale.getDefault().toString());
 		}
+		if (myBundle != null) {
+			String raw = myBundle.getString(key);
 
-		String raw = myBundle.getString(key);
+			if (keepAmpersands || raw.indexOf(AMPERSAND) < 0)
+				return raw;
 
-		if (keepAmpersands || raw.indexOf(AMPERSAND) < 0)
-			return raw;
-
-		StringBuilder sb = new StringBuilder(raw.length());
-		for (int i = 0; i < raw.length(); i++) {
-			char c = raw.charAt(i);
-			if (c != AMPERSAND)
-				sb.append(c);
+			StringBuilder sb = new StringBuilder(raw.length());
+			for (int i = 0; i < raw.length(); i++) {
+				char c = raw.charAt(i);
+				if (c != AMPERSAND)
+					sb.append(c);
+			}
+			return sb.toString();
 		}
-		return sb.toString();
+		return null;
 	}
 
 	/**
