@@ -29,7 +29,7 @@ class FileDiffLabelProvider extends BaseLabelProvider implements
 			.getImage(ISharedImages.IMG_OBJ_FILE);
 
 	public String getColumnText(final Object element, final int columnIndex) {
-		if (columnIndex == 1) {
+		if (columnIndex == 0) {
 			final FileDiff c = (FileDiff) element;
 			return c.getPath();
 		}
