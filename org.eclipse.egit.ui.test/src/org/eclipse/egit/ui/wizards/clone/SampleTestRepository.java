@@ -126,16 +126,17 @@ public class SampleTestRepository {
 	}
 
 	private String randomAciiString() {
-		String randstring = "";
+		StringBuilder randstring = new StringBuilder("");
 		Random rand = new Random();
 		int strlen = rand.nextInt(20) + 10;
-		for (int i = 0; i < strlen; i++) {
+		for (int i = 0, j = 0; i < strlen; i++) {
 			if (rand.nextInt(2) == 1)
-				randstring += "" + (char) (rand.nextInt(26) + 97);
+				j = 97;
 			else
-				randstring += "" + (char) (rand.nextInt(26) + 65);
+				j = 65;
+			randstring.append((char) (rand.nextInt(26) + j));
 		}
-		return randstring;
+		return randstring.toString();
 	}
 
 	private void serve() throws IOException {

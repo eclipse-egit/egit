@@ -69,8 +69,6 @@ public class RepositoryMapping {
 		final IPath gLoc = Path.fromOSString(gitDir.getAbsolutePath())
 				.removeTrailingSeparator();
 		final IPath gLocParent = gLoc.removeLastSegments(1);
-		String p;
-		int cnt;
 
 		container = mappedContainer;
 		containerPath = container.getProjectRelativePath().toPortableString();
@@ -84,13 +82,13 @@ public class RepositoryMapping {
 			else
 				gitdirPath = remainder.toPortableString().substring(device.length());
 		} else if (gLocParent.isPrefixOf(cLoc)) {
-			cnt = cLoc.segmentCount() - cLoc.matchingFirstSegments(gLocParent);
-			p = "";  //$NON-NLS-1$
+			int cnt = cLoc.segmentCount() - cLoc.matchingFirstSegments(gLocParent);
+			StringBuilder p = new StringBuilder("");  //$NON-NLS-1$
 			while (cnt-- > 0) {
-				p += "../";  //$NON-NLS-1$
+				p.append("../");  //$NON-NLS-1$
 			}
-			p += gLoc.segment(gLoc.segmentCount() - 1);
-			gitdirPath = p;
+			p.append(gLoc.segment(gLoc.segmentCount() - 1));
+			gitdirPath = p.toString();
 		} else {
 			gitdirPath = gLoc.toPortableString();
 		}
