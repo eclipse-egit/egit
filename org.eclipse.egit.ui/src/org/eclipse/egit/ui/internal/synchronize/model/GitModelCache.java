@@ -179,7 +179,7 @@ public class GitModelCache extends GitModelObjectContainer {
 			if (path.split("/").length > 1) //$NON-NLS-1$
 				return handleCacheTree(repoId, cacheId, path);
 
-			return fileFactory.createFileModel(this, remoteCommit, repoId,
+			return fileFactory.createFileModel(this, baseCommit, repoId,
 					cacheId, path);
 		}
 
@@ -201,7 +201,7 @@ public class GitModelCache extends GitModelObjectContainer {
 		String pathKey = path.split("/")[0]; //$NON-NLS-1$
 		GitModelCacheTree cacheTree = cacheTreeMap.get(pathKey);
 		if (cacheTree == null) {
-			cacheTree = new GitModelCacheTree(this, remoteCommit, repoId,
+			cacheTree = new GitModelCacheTree(this, baseCommit, repoId,
 					cacheId, pathKey, fileFactory);
 			cacheTreeMap.put(pathKey, cacheTree);
 		}

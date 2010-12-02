@@ -71,14 +71,14 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 			int direction) throws IOException {
 		super(parent);
 		kind = direction;
-		remoteCommit = commit;
-		ancestorCommit = calculateAncestor(remoteCommit);
+		baseCommit = commit;
+		ancestorCommit = calculateAncestor(baseCommit);
 
-		RevCommit[] parents = remoteCommit.getParents();
+		RevCommit[] parents = baseCommit.getParents();
 		if (parents != null && parents.length > 0)
-			baseCommit = remoteCommit.getParent(0);
+			remoteCommit = baseCommit.getParent(0);
 		else {
-			baseCommit = null;
+			remoteCommit = null;
 		}
 	}
 
@@ -134,7 +134,7 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 	@Override
 	public String getName() {
 		if (name == null)
-			name = remoteCommit.getShortMessage();
+			name = baseCommit.getShortMessage();
 
 		return name;
 	}
@@ -232,20 +232,20 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 		int objectType = tw.getFileMode(actualNth).getObjectType();
 
 		if (objectType == Constants.OBJ_BLOB)
-			return new GitModelBlob(this, getRemoteCommit(), objAncestorId,
+			return new GitModelBlob(this, getBaseCommit(), objAncestorId,
 					objBaseId, objRemoteId, objName);
 		else if (objectType == Constants.OBJ_TREE)
-			return new GitModelTree(this, getRemoteCommit(), objAncestorId,
+			return new GitModelTree(this, getBaseCommit(), objAncestorId,
 					objBaseId, objRemoteId, objName);
 
 		return null;
 	}
 
 	private void calculateKind() {
-		ObjectId base = baseCommit != null ? baseCommit.getId() : zeroId();
-		if (base.equals(zeroId()))
+		ObjectId remote = remoteCommit != null ? remoteCommit.getId() : zeroId();
+		if (remote.equals(zeroId()))
 			kind = kind | ADDITION;
-		else if (remoteCommit.equals(zeroId()))
+		else if (baseCommit.equals(zeroId()))
 			kind = kind | DELETION;
 		else
 			kind = kind | CHANGE;

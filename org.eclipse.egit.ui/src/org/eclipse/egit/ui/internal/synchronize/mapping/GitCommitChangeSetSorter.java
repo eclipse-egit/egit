@@ -35,8 +35,8 @@ public class GitCommitChangeSetSorter extends ViewerSorter {
 			return 2;
 
 		if (e1 instanceof GitModelCommit && e2 instanceof GitModelCommit) {
-			RevCommit rc1 = ((GitModelCommit) e1).getRemoteCommit();
-			RevCommit rc2 = ((GitModelCommit) e2).getRemoteCommit();
+			RevCommit rc1 = ((GitModelCommit) e1).getBaseCommit();
+			RevCommit rc2 = ((GitModelCommit) e2).getBaseCommit();
 
 			return rc2.getCommitTime() - rc1.getCommitTime();
 		}
