@@ -225,8 +225,7 @@ class CloneDestinationPage extends WizardPage {
 	private void checkPage() {
 		final String dstpath = directoryText.getText();
 		if (dstpath.length() == 0) {
-			setErrorMessage(NLS.bind(UIText.CloneDestinationPage_fieldRequired,
-					UIText.CloneDestinationPage_promptDirectory));
+			setErrorMessage(UIText.CloneDestinationPage_errorDirectoryRequired);
 			setPageComplete(false);
 			return;
 		}
@@ -247,14 +246,12 @@ class CloneDestinationPage extends WizardPage {
 		}
 		if (!availableRefs.isEmpty()
 				&& initialBranch.getSelectionIndex() < 0) {
-			setErrorMessage(NLS.bind(UIText.CloneDestinationPage_fieldRequired,
-					UIText.CloneDestinationPage_promptInitialBranch));
+			setErrorMessage(UIText.CloneDestinationPage_errorInitialBranchRequired);
 			setPageComplete(false);
 			return;
 		}
 		if (remoteText.getText().length() == 0) {
-			setErrorMessage(NLS.bind(UIText.CloneDestinationPage_fieldRequired,
-					UIText.CloneDestinationPage_promptRemoteName));
+			setErrorMessage(UIText.CloneDestinationPage_errorRemoteNameRequired);
 			setPageComplete(false);
 			return;
 		}
