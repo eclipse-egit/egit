@@ -110,13 +110,13 @@ public class OpenInTextEditorHandler extends AbstractHistoryCommanndHandler {
 		if (errorOccured)
 			Activator.showError(UIText.GitHistoryPage_openFailed, null);
 		if (ids.size() > 0) {
-			String idList = ""; //$NON-NLS-1$
+			StringBuilder idList = new StringBuilder(""); //$NON-NLS-1$
 			for (ObjectId objectId : ids)
-				idList += objectId.getName() + " "; //$NON-NLS-1$
+				idList.append(objectId.getName()).append(' ');
 			MessageDialog.openError(getPart(event).getSite().getShell(),
 					UIText.GitHistoryPage_fileNotFound, NLS.bind(
 							UIText.GitHistoryPage_notContainedInCommits,
-							gitPath, idList));
+							gitPath, idList.toString()));
 		}
 		return null;
 	}
