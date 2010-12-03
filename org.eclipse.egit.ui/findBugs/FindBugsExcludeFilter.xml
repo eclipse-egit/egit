@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <FindBugsFilter>
+     <!-- Silence SF_SWITCH_FALLTHROUGH, we want this fall-through
+       -->
+     <Match>
+       <Class name="org.eclipse.egit.ui.internal.decorators.DecoratableResourceAdapter" />
+       <Method name="&lt;init&gt;" params="org.eclipse.core.resources.IResource" returns="void" />
+       <Bug pattern="SF_SWITCH_FALLTHROUGH" />
+     </Match>
      <!-- Silence MS_SHOULD_BE_FINAL here, enums cannot use final
        -->
      <Match>
