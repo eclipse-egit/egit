@@ -395,7 +395,7 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 						.setTaskName(NLS
 								.bind(
 										UIText.RepositorySearchDialog_RepositoriesFound_message,
-										new Integer(strings.size())));
+										Integer.valueOf(strings.size())));
 				if (!lookForNestedRepositories)
 					return;
 			} else if (child.isDirectory()) {
