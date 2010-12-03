@@ -2,6 +2,7 @@
  * Copyright (C) 2007, Dave Watson <dwatson@mimvista.com>
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.core.resources.IProject;
@@ -23,15 +23,15 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
+import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.dircache.DirCacheBuilder;
+import org.eclipse.jgit.dircache.DirCacheCheckout;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
-import org.eclipse.jgit.lib.WorkDirCheckout;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
@@ -65,8 +65,6 @@ public class ResetOperation implements IEGitOperation {
 	private final ResetType type;
 
 	private RevCommit commit;
-	private RevTree newTree;
-	private GitIndex index;
 
 	/**
 	 * Construct a {@link ResetOperation}
@@ -116,7 +114,7 @@ public class ResetOperation implements IEGitOperation {
 
 	private void reset(IProgressMonitor monitor) throws CoreException {
 		monitor.beginTask(NLS.bind(CoreText.ResetOperation_performingReset,
-				type.toString().toLowerCase(), refName), 7);
+				type.toString().toLowerCase(), refName), 3);
 
 		IProject[] validProjects = null;
 		if (type == ResetType.HARD)
@@ -135,11 +133,7 @@ public class ResetOperation implements IEGitOperation {
 
 		switch (type) {
 		case HARD:
-			readIndex();
-			monitor.worked(1);
 			checkoutIndex();
-			monitor.worked(1);
-			writeIndex();
 			monitor.worked(1);
 			if (merging)
 				resetMerge();
@@ -153,9 +147,7 @@ public class ResetOperation implements IEGitOperation {
 		case MIXED:
 			// Change the
 			resetIndex();
-			monitor.worked(1);
-			writeIndex();
-			monitor.worked(3);
+			monitor.worked(2);
 			if (merging)
 				resetMerge();
 			monitor.worked(1);
@@ -163,9 +155,8 @@ public class ResetOperation implements IEGitOperation {
 
 		case SOFT:
 			// only change the ref
-			monitor.worked(5);
+			monitor.worked(3);
 		}
-
 		monitor.done();
 	}
 
@@ -218,44 +209,37 @@ public class ResetOperation implements IEGitOperation {
 		}
 	}
 
-	private void readIndex() throws TeamException {
-		try {
-			newTree = commit.getTree();
-			index = repository.getIndex();
-		} catch (IOException e) {
-			throw new TeamException(CoreText.ResetOperation_readingIndex, e);
-		}
-	}
-
 	private void resetIndex() throws TeamException {
+		DirCache dc = null;
 		try {
-			newTree = commit.getTree();
-			index = repository.getIndex();
-			// FIXME: reads index twice
-			index.readTree(repository.mapTree(newTree));
+			dc = repository.lockDirCache();
+			dc.clear();
+			DirCacheBuilder dcb = dc.builder();
+			dcb.addTree(new byte[0], 0, repository.newObjectReader(), commit
+					.getTree());
+			dcb.commit();
 		} catch (IOException e) {
 			throw new TeamException(CoreText.ResetOperation_readingIndex, e);
-		}
-	}
-
-	private void writeIndex() throws CoreException {
-		try {
-			index.write();
-		} catch (IOException e) {
-			throw new TeamException(CoreText.ResetOperation_writingIndex, e);
+		} finally {
+			if (dc != null)
+				dc.unlock();
 		}
 	}
 
 	private void checkoutIndex() throws TeamException {
-		final File parentFile = repository.getWorkTree();
+		DirCache dc = null;
 		try {
-			WorkDirCheckout workDirCheckout =
-				new WorkDirCheckout(repository, parentFile, index, repository.mapTree(newTree));
-			workDirCheckout.setFailOnConflict(false);
-			workDirCheckout.checkout();
+			dc = repository.lockDirCache();
+			DirCacheCheckout checkout = new DirCacheCheckout(repository, dc,
+					commit.getTree());
+			checkout.setFailOnConflict(false);
+			checkout.checkout();
 		} catch (IOException e) {
 			throw new TeamException(
 					CoreText.ResetOperation_mappingTreeForCommit, e);
+		} finally {
+			if (dc != null)
+				dc.unlock();
 		}
 	}
 }
