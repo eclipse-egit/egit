@@ -91,7 +91,8 @@ public abstract class RepositoryAction extends AbstractHandler implements
 	public final void selectionChanged(IAction action, ISelection selection) {
 		mySelection = selection;
 		handler.setSelection(mySelection);
-		action.setEnabled(isEnabled());
+		if (action != null)
+			action.setEnabled(isEnabled());
 	}
 
 	public final Object execute(ExecutionEvent event) throws ExecutionException {
