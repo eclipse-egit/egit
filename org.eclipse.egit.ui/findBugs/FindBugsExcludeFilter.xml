@@ -7,6 +7,12 @@
        <Method name="&lt;init&gt;" params="org.eclipse.core.resources.IResource" returns="void" />
        <Bug pattern="SF_SWITCH_FALLTHROUGH" />
      </Match>
+     <!-- Silence CN_IMPLEMENTS_CLONE_BUT_NOT_CLONEABLE
+       -->
+     <Match>
+       <Class name="org.eclipse.egit.ui.internal.decorators.DecoratableResourceAdapter$RecursiveStateFilter" />
+       <Bug pattern="CN_IMPLEMENTS_CLONE_BUT_NOT_CLONEABLE" />
+     </Match>
      <!-- Silence MS_SHOULD_BE_FINAL here, enums cannot use final
        -->
      <Match>
