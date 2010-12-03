@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL0n///dk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-03T00:06:48Z",
+      "side": 0,
+      "message": "by removing the code above you end up with two identical statements in a row, replace that by monitor.worked(2) ?",
+      "revId": "cc8c842bd630dadc3670469fba283cd8f0b0e803",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
