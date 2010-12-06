@@ -60,4 +60,9 @@ public class GitLocalCompareInput extends GitCompareInput {
 		return getFileCachedRevisionTypedElement(gitPath, repo);
 	}
 
+	@Override
+	public ITypedElement getAncestor() {
+		return getRight();
+	}
+
 }
