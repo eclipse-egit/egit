@@ -49,6 +49,16 @@ public class GitModelCacheTree extends GitModelTree {
 		cacheTreeMap = new HashMap<String, GitModelObject>();
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
 	void addChild(ObjectId repoId, ObjectId cacheId, String path)
 			throws IOException {
 		String[] entrys = path.split("/"); //$NON-NLS-1$
