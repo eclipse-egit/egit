@@ -120,6 +120,16 @@ public class GitModelBlob extends GitModelCommit {
 		compareInput.prepareInput(configuration, monitor);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
 	private void createCompareInput() {
 		if (compareInput == null) {
 			ComparisonDataSource baseData = new ComparisonDataSource(
