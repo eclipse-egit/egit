@@ -272,7 +272,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		SWTBotShell shell = bot.shell(
 				UIText.RepositorySearchDialog_AddGitRepositories).activate();
 		shell.bot().textWithLabel(UIText.RepositorySearchDialog_directory)
-				.setText(testDirectory.getPath());
+				.setText(getTestDirectory().getPath());
 		shell.bot().button(UIText.RepositorySearchDialog_Search).click();
 		shell.bot().button(IDialogConstants.OK_LABEL).click();
 		refreshAndWait();
@@ -320,7 +320,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 				.click();
 		SWTBotShell shell = bot.shell(UIText.NewRepositoryWizard_WizardTitle)
 				.activate();
-		IPath newPath = new Path(testDirectory.getPath())
+		IPath newPath = new Path(getTestDirectory().getPath())
 				.append("NewRepository");
 		shell.bot().textWithLabel(UIText.CreateRepositoryPage_DirectoryLabel)
 				.setText(newPath.toOSString());
@@ -337,7 +337,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 								.getPluginLocalizedValue("RepoViewCreateRepository.tooltip"))
 				.click();
 		shell = bot.shell(UIText.NewRepositoryWizard_WizardTitle).activate();
-		newPath = new Path(testDirectory.getPath()).append("bare").append(
+		newPath = new Path(getTestDirectory().getPath()).append("bare").append(
 				"NewBareRepository");
 		shell.bot().textWithLabel(UIText.CreateRepositoryPage_DirectoryLabel)
 				.setText(newPath.toOSString());

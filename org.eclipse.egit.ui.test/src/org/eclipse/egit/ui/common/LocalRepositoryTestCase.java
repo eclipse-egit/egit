@@ -100,7 +100,7 @@ import org.junit.BeforeClass;
 public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	// the temporary directory
-	protected static File testDirectory;
+	private static File testDirectory;
 
 	protected static final String REPO1 = "FirstRepository";
 
@@ -120,6 +120,10 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	protected static final String FOLDER = "folder";
 
+	public static File getTestDirectory() {
+		return testDirectory;
+	}
+	
 	@BeforeClass
 	public static void beforeClassBase() throws Exception {
 		deleteAllProjects();

@@ -55,7 +55,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		remoteRepositoryFile = createRemoteRepository(repositoryFile);
 		// now let's clone the remote repository
 		URIish uri = new URIish("file:///" + remoteRepositoryFile.getPath());
-		File workdir = new File(testDirectory, "ClonedRepo");
+		File workdir = new File(getTestDirectory(), "ClonedRepo");
 
 		CloneOperation op = new CloneOperation(uri, true, null, workdir,
 				"refs/heads/master", "origin", 0);
@@ -65,7 +65,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 
 		// now let's clone the remote repository
 		uri = new URIish(remoteRepositoryFile.getPath());
-		workdir = new File(testDirectory, "ClonedRepo2");
+		workdir = new File(getTestDirectory(), "ClonedRepo2");
 
 		op = new CloneOperation(uri, true, null, workdir, "refs/heads/master",
 				"origin", 0);

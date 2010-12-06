@@ -63,7 +63,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		remoteRepositoryFile = createRemoteRepository(repositoryFile);
 		// now let's clone the remote repository
 		final URIish uri = new URIish(remoteRepositoryFile.getPath());
-		final File workdir = new File(testDirectory, "Cloned");
+		final File workdir = new File(getTestDirectory(), "Cloned");
 
 		CloneOperation op = new CloneOperation(uri, true, null, workdir,
 				"refs/heads/master", "origin", 0);
