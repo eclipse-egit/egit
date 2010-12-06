@@ -82,9 +82,14 @@ public class HistoryTest extends GitTestCase {
 
 	private File createFile(String name, String content) throws IOException {
 		File f = new File(workDir, name);
-		FileWriter fileWriter = new FileWriter(f);
-		fileWriter.write(content);
-		fileWriter.close();
+		FileWriter fileWriter = null;
+		try {
+			fileWriter = new FileWriter(f);
+			fileWriter.write(content);
+		} finally {
+			if (fileWriter != null)
+				fileWriter.close();
+		}
 		return f;
 	}
 
