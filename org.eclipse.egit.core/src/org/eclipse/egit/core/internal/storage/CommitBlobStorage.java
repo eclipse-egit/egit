@@ -10,7 +10,7 @@ package org.eclipse.egit.core.internal.storage;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.internal.Utils;
+import org.eclipse.egit.core.Utils;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
