@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
+import static java.util.Arrays.copyOf;
 import static org.eclipse.compare.structuremergeviewer.Differencer.ADDITION;
 import static org.eclipse.compare.structuremergeviewer.Differencer.CHANGE;
 import static org.eclipse.compare.structuremergeviewer.Differencer.DELETION;
@@ -127,7 +128,7 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 		if (children == null)
 			children = getChildrenImpl();
 
-		return children;
+		return copyOf(children, children.length);
 
 	}
 
