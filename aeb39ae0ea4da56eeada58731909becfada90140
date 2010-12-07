@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL03///+U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitCombo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2010-12-07T17:54:46Z",
+      "side": 1,
+      "message": "Instead of hard-coding 8, you should take an ObjectReader and use its abbreviate method to get the short string, in case you need more than 8 digits to disambiguate an object.\n\nOf course that requires doing disk IO, so it might not be a good idea within the event thread.",
+      "revId": "aeb39ae0ea4da56eeada58731909becfada90140",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
