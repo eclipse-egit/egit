@@ -36,6 +36,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchSite;
@@ -166,30 +167,14 @@ public class RemoveCommand extends
 						for (RepositoryNode node : selectedNodes) {
 							Repository repo = node.getRepository();
 							if (!repo.isBare())
-								deleteRecursive(repo.getWorkTree());
-							deleteRecursive(repo.getDirectory());
+								FileUtils.recursiveDeleteRepeated(repo.getWorkTree());
+							FileUtils.recursiveDeleteRepeated(repo.getDirectory());
 						}
 					} catch (IOException e) {
 						return Activator.createErrorStatus(e.getMessage(), e);
 					}
 				}
 				return Status.OK_STATUS;
-			}
-
-			private void deleteRecursive(File fileToDelete) throws IOException {
-				if (fileToDelete == null)
-					return;
-				if (fileToDelete.exists()) {
-					if (fileToDelete.isDirectory()) {
-						for (File file : fileToDelete.listFiles()) {
-							deleteRecursive(file);
-						}
-					}
-					if (!fileToDelete.delete())
-						throw new IOException(NLS.bind(
-								UIText.RemoveCommand_DeleteFailureMessage,
-								fileToDelete.getAbsolutePath()));
-				}
 			}
 		};
 

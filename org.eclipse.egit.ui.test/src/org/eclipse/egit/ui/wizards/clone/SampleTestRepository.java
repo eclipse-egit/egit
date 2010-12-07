@@ -11,7 +11,6 @@ package org.eclipse.egit.ui.wizards.clone;
 import static org.junit.Assert.assertFalse;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Random;
 
@@ -22,6 +21,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.Daemon;
+import org.eclipse.jgit.util.FileUtils;
 
 /**
  * Creates an on disk sample repository with some generated content and starts a
@@ -152,22 +152,13 @@ public class SampleTestRepository {
 	 * property <code>test-repo-no-cleanup</code> is defined the test data will
 	 * be left on disk for analysis.
 	 *
-	 * @throws FileNotFoundException
+	 * @throws IOException
 	 *             deletion of test repository failed
 	 */
-	public void shutDown() throws FileNotFoundException {
+	public void shutDown() throws IOException {
 		d.stop();
 		if (!System.getProperties().contains("test-repo-no-cleanup"))
-			delete(trash);
-	}
-
-	private void delete(File f) throws FileNotFoundException {
-		if (f.isDirectory()) {
-			for (File c : f.listFiles())
-				delete(c);
-		}
-		if (!f.delete())
-			throw new FileNotFoundException("Failed to delete file: " + f);
+			FileUtils.recursiveDeleteRepeated(trash);
 	}
 
 }

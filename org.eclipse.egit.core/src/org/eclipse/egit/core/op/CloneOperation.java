@@ -38,6 +38,7 @@ import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -136,7 +137,11 @@ public class CloneOperation {
 				closeLocal();
 			}
 		} catch (final Exception e) {
-			delete(workdir);
+			try {
+				FileUtils.recursiveDelete(workdir);
+			} catch (IOException ioe) {
+				throw new InvocationTargetException(ioe);
+			}
 			if (monitor.isCanceled())
 				throw new InterruptedException();
 			else
@@ -249,16 +254,5 @@ public class CloneOperation {
 			// this should never happen when writing in an empty folder
 			throw new IOException("Internal error occured on checking out files"); //$NON-NLS-1$
 		monitor.setTaskName(CoreText.CloneOperation_writingIndex);
-	}
-
-	private static void delete(final File d) {
-		if (d.isDirectory()) {
-			final File[] items = d.listFiles();
-			if (items != null) {
-				for (final File c : items)
-					delete(c);
-			}
-		}
-		d.delete();
 	}
 }
