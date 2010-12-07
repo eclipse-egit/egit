@@ -12,16 +12,15 @@ package org.eclipse.egit.ui.common;
 import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertText;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
 
 import java.io.File;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.clone.GitCloneWizard;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.swt.finder.waits.Conditions;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 
 public class WorkingCopyPage {
 
@@ -48,13 +47,17 @@ public class WorkingCopyPage {
 				Activator.getDefault().getRepositoryUtil()
 						.getConfiguredRepositories().contains(targetDir));
 
+		SWTBotShell dialogShell = bot.shell("Import Projects from Git");
+		SWTBotTable table = dialogShell.bot().table();
+		int expectedRowCount = table.rowCount() + 1;
 		bot.button("Finish").click();
+		
+		// wait until clone operation finished.
+		// wizard executes clone operation using getContainer.run
+		// wait until the repository table gets an additional entry
+		bot.waitUntil(Conditions.tableHasRows(table, expectedRowCount), 20000);
 
-		try {
-			Job.getJobManager().join(GitCloneWizard.CLONE_JOB_FAMILY, new NullProgressMonitor());
-		} catch (Exception e) {
-			fail( "Unable to join cloning job");
-		}
+
 		// depending on the timing, the clone job may already be run
 		// but the repository is not yet added to our list, of
 		// repositories. Wait until that happend.
