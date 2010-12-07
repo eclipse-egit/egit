@@ -21,7 +21,7 @@ public class Utils {
 	 * @return a shortened ObjectId (first 6 digits)
 	 */
 	public static String getShortObjectId(ObjectId id) {
-		return id.getName().substring(0, 6);
+		return id.abbreviate(6).name();
 	}
 
 }
