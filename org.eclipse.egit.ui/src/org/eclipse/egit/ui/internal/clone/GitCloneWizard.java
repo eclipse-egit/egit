@@ -14,6 +14,7 @@
 package org.eclipse.egit.ui.internal.clone;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,6 +40,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -112,26 +114,14 @@ public class GitCloneWizard extends Wizard {
 					&& MessageDialog.openQuestion(getShell(),
 							UIText.GitCloneWizard_abortingCloneTitle,
 							UIText.GitCloneWizard_abortingCloneMsg)) {
-				deleteRecursively(new File(alreadyClonedInto));
+				try {
+					FileUtils.recursiveDeleteRepeated(test);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
 			}
 		}
 		return true;
-	}
-
-	private void deleteRecursively(File f) {
-		File[] children = f.listFiles();
-		if (children != null)
-			for (File i : children) {
-				if (i.isDirectory()) {
-					deleteRecursively(i);
-				} else {
-					if (!i.delete()) {
-						i.deleteOnExit();
-					}
-				}
-			}
-		if (!f.delete())
-			f.deleteOnExit();
 	}
 
 	@Override

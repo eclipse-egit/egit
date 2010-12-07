@@ -21,6 +21,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectInserter;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.IO;
 import org.eclipse.jgit.util.SystemReader;
 import org.junit.After;
@@ -47,13 +48,13 @@ public abstract class GitTestCase {
 		project = new TestProject(true);
 		gitDir = new File(project.getProject().getWorkspace().getRoot()
 				.getRawLocation().toFile(), Constants.DOT_GIT);
-		testUtils.deleteRecursive(gitDir);
+		FileUtils.recursiveDeleteRepeated(gitDir);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		project.dispose();
-		testUtils.deleteRecursive(gitDir);
+		FileUtils.recursiveDeleteRepeated(gitDir);
 	}
 
 	protected ObjectId createFile(Repository repository, IProject actProject, String name, String content) throws IOException {
@@ -72,11 +73,14 @@ public abstract class GitTestCase {
 		}
 	}
 
-	protected ObjectId createFileCorruptShort(Repository repository, IProject actProject, String name, String content) throws IOException {
+	protected ObjectId createFileCorruptShort(Repository repository,
+			IProject actProject, String name, String content)
+			throws IOException {
 		ObjectId id = createFile(repository, actProject, name, content);
-		File file = new File(repository.getDirectory(), "objects/" + id.name().substring(0,2) + "/" + id.name().substring(2));
+		File file = new File(repository.getDirectory(), "objects/"
+				+ id.name().substring(0, 2) + "/" + id.name().substring(2));
 		byte[] readFully = IO.readFully(file);
-		file.delete();
+		FileUtils.delete(file);
 		FileOutputStream fileOutputStream = new FileOutputStream(file);
 		byte[] truncatedData = new byte[readFully.length - 1];
 		System.arraycopy(readFully, 0, truncatedData, 0, truncatedData.length);
