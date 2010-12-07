@@ -84,7 +84,7 @@ public abstract class GitRepositoriesViewTestBase extends
 
 	protected static File createProjectAndCommitToRepository() throws Exception {
 
-		File gitDir = new File(new File(testDirectory, REPO1),
+		File gitDir = new File(new File(getTestDirectory(), REPO1),
 				Constants.DOT_GIT);
 		gitDir.mkdir();
 		Repository myRepository = lookupRepository(gitDir);
@@ -165,7 +165,7 @@ public abstract class GitRepositoriesViewTestBase extends
 			throws Exception {
 		Repository myRepository = org.eclipse.egit.core.Activator.getDefault()
 				.getRepositoryCache().lookupRepository(repositoryDir);
-		File gitDir = new File(testDirectory, REPO2);
+		File gitDir = new File(getTestDirectory(), REPO2);
 		Repository myRemoteRepository = lookupRepository(gitDir);
 		myRemoteRepository.create();
 

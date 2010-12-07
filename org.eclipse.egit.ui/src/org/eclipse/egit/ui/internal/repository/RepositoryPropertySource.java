@@ -71,7 +71,7 @@ public class RepositoryPropertySource implements IPropertySource {
 
 	private final PropertySheetPage myPage;
 
-	private final StoredConfig userHomeConfig;
+	private final FileBasedConfig userHomeConfig;
 
 	private final StoredConfig repositoryConfig;
 
@@ -344,16 +344,10 @@ public class RepositoryPropertySource implements IPropertySource {
 		}
 		case USER: {
 			prefix = USER_ID_PREFIX;
-			String location = ""; //$NON-NLS-1$
-			if (userHomeConfig instanceof FileBasedConfig) {
-				location = ((FileBasedConfig) userHomeConfig).getFile()
-						.getAbsolutePath();
-			}
+			String location = userHomeConfig.getFile().getAbsolutePath();
 			category = NLS
-					.bind(
-							UIText.RepositoryPropertySource_GlobalConfigurationCategory,
+					.bind(UIText.RepositoryPropertySource_GlobalConfigurationCategory,
 							location);
-
 			config = userHomeConfig;
 			break;
 		}

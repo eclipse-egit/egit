@@ -113,7 +113,7 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider
 	}
 
 	private String getAbbreviatedId(GitModelCommit commit) {
-		RevCommit remoteCommit = commit.getRemoteCommit();
+		RevCommit remoteCommit = commit.getBaseCommit();
 		ObjectReader reader = commit.getRepository().newObjectReader();
 		ObjectId commitId = remoteCommit.getId();
 		AbbreviatedObjectId shortId;
