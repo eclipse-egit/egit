@@ -29,6 +29,7 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.history.IFileHistory;
 import org.eclipse.team.core.history.IFileHistoryProvider;
@@ -57,7 +58,7 @@ public class HistoryTest extends GitTestCase {
 		super.setUp();
 
 		// ensure we are working on an empty repository
-		testUtils.deleteRecursive(gitDir);
+		FileUtils.delete(gitDir, FileUtils.RECURSIVE | FileUtils.RETRY);
 		thisGit = new FileRepository(gitDir);
 		workDir = thisGit.getWorkTree();
 		thisGit.create();
