@@ -100,6 +100,8 @@ public class UIPreferences {
 	public static final String DEFAULT_REPO_DIR = "default_repository_dir"; //$NON-NLS-1$
 	/** */
 	public static final String MERGE_MODE = "merge_mode"; //$NON-NLS-1$
+	/** */
+	public static final String REBASE_HIDE_CONFIRM = "rebase_hide_confirm"; //$NON-NLS-1$
 
 	/**
 	 * Converts a persisted String separated with commas to an integer array

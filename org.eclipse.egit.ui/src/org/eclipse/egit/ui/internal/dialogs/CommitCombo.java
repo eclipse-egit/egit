@@ -150,7 +150,7 @@ public class CommitCombo extends Composite {
 		Assert.isNotNull(revCommit);
 		checkWidget();
 
-		String shortSha1 = revCommit.getName().substring(0, 8);
+		String shortSha1 = revCommit.abbreviate(8).name();
 		String message = shortSha1 + ": " + revCommit.getShortMessage(); //$NON-NLS-1$
 		combo.add(message);
 		commits.add(new ComboCommitEnt(revCommit.getId(), message));

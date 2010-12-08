@@ -11,7 +11,6 @@
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -32,7 +31,6 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -52,7 +50,6 @@ public class RebaseCurrentRefCommand extends
 
 		RepositoryTreeNode node = getSelectedNodes(event).get(0);
 
-		final AtomicBoolean abortedDueToConflict = new AtomicBoolean();
 		final Repository repository = node.getRepository();
 
 		Ref ref;
@@ -81,14 +78,6 @@ public class RebaseCurrentRefCommand extends
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					rebase.execute(monitor);
-					// TODO for the time being, we will abort immediately once
-					// we have found a conflict
-					RebaseResult result = rebase.getResult();
-					if (result.getStatus() == org.eclipse.jgit.api.RebaseResult.Status.STOPPED) {
-						abortedDueToConflict.set(true);
-						new RebaseOperation(repository, Operation.ABORT)
-								.execute(monitor);
-					}
 				} catch (final CoreException e) {
 					try {
 						new RebaseOperation(repository, Operation.ABORT)
@@ -123,23 +112,7 @@ public class RebaseCurrentRefCommand extends
 						}
 					});
 				} else if (result.isOK()) {
-					Display.getDefault().asyncExec(new Runnable() {
-						public void run() {
-							// don't get the shell from the event, as this is
-							// asynchronous
-							Shell shell = PlatformUI.getWorkbench()
-									.getActiveWorkbenchWindow().getShell();
-							if (abortedDueToConflict.get())
-								MessageDialog
-										.openError(
-												shell,
-												UIText.RebaseCurrentRefCommand_AbortedDialogTitle,
-												UIText.RebaseCurrentRefCommand_AbortedDialogMessage);
-							else
-								new RebaseResultDialog(shell, repository,
-										rebase.getResult()).open();
-						}
-					});
+					RebaseResultDialog.show(rebase.getResult(), repository);
 				}
 			}
 		});

@@ -76,7 +76,7 @@ public class AdaptableFileTreeIteratorTest extends GitTestCase {
 
 		assertTrue(treeWalk.next());
 
-		final WorkingTreeIterator iterator = treeWalk.getTree(1,
+		final WorkingTreeIterator iterator = treeWalk.getTree(0,
 				WorkingTreeIterator.class);
 		assertTrue(iterator instanceof ContainerTreeIterator);
 	}
