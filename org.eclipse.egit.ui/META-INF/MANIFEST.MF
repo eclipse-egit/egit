@@ -55,6 +55,7 @@ Import-Package: org.eclipse.egit.core;version="[0.10.0,0.11.0)",
  org.eclipse.jgit.util;version="[0.10.0,0.11.0)",
  org.eclipse.jgit.util.io;version="[0.10.0,0.11.0)"
 Export-Package: org.eclipse.egit.ui;version="0.10.0",
+ org.eclipse.egit.ui.extensions,
  org.eclipse.egit.ui.internal;version="0.10.0";x-internal:=true,
  org.eclipse.egit.ui.internal.actions;version="0.10.0";x-internal:=true,
  org.eclipse.egit.ui.internal.clone;version="0.10.0";x-internal:=true,

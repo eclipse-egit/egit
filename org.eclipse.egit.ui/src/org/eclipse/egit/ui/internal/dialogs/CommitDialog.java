@@ -30,7 +30,11 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.GitProvider;
@@ -40,6 +44,7 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
+import org.eclipse.egit.ui.extensions.ICommitDialogExtender;
 import org.eclipse.egit.ui.internal.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.jface.dialogs.Dialog;
@@ -150,6 +155,7 @@ public class CommitDialog extends Dialog {
 
 	private static final String SHOW_UNTRACKED_PREF = "CommitDialog.showUntracked"; //$NON-NLS-1$
 
+	private static final String DIALOG_EP_ID = "org.eclipse.egit.ui.commitDialog"; //$NON-NLS-1$
 
 	/**
 	 * @param parentShell
@@ -187,6 +193,9 @@ public class CommitDialog extends Dialog {
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
+
+		loadExtensions();
+
 		Composite container = (Composite) super.createDialogArea(parent);
 		parent.getShell().setText(UIText.CommitDialog_CommitChanges);
 
@@ -431,6 +440,37 @@ public class CommitDialog extends Dialog {
 		applyDialogFont(container);
 		container.pack();
 		return container;
+	}
+
+	private void loadExtensions() {
+		IConfigurationElement[] config = Platform.getExtensionRegistry()
+				.getConfigurationElementsFor(DIALOG_EP_ID);
+		try {
+			for (IConfigurationElement e : config) {
+				final Object o = e.createExecutableExtension("commitDialog"); //$NON-NLS-1$
+				if (o instanceof ICommitDialogExtender) {
+					ISafeRunnable runnable = new ISafeRunnable() {
+						public void handleException(Throwable exception) {
+						}
+
+						public void run() throws Exception {
+							StringBuilder sb = new StringBuilder();
+
+							sb.append(commitMessage);
+							sb.append(((ICommitDialogExtender) o)
+									.getCommitMessage());
+							sb.append(System
+									.getProperty(Platform.PREF_LINE_SEPARATOR));
+
+							commitMessage = sb.toString();
+						}
+					};
+					SafeRunner.run(runnable);
+				}
+			}
+		} catch (CoreException ex) {
+		}
+
 	}
 
 	private void saveOriginalChangeId() {
