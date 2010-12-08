@@ -26,7 +26,6 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -35,7 +34,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.Repository;
@@ -56,7 +54,6 @@ import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -115,12 +112,7 @@ class CommitFileDiffViewer extends TableViewer {
 				.getFont(UIPreferences.THEME_CommitMessageFont));
 		noInputText.setText(UIText.CommitFileDiffViewer_SelectOneCommitMessage);
 
-		rawTable.setHeaderVisible(true);
 		rawTable.setLinesVisible(true);
-
-		final TableLayout layout = new TableLayout();
-		rawTable.setLayout(layout);
-		createColumns(rawTable, layout);
 
 		setLabelProvider(new FileDiffLabelProvider());
 		setContentProvider(new FileDiffContentProvider());
@@ -389,12 +381,5 @@ class CommitFileDiffViewer extends TableViewer {
 
 		clipboard.setContents(new Object[] { r.toString() },
 				new Transfer[] { TextTransfer.getInstance() }, DND.CLIPBOARD);
-	}
-
-	private void createColumns(final Table rawTable, final TableLayout layout) {
-		final TableColumn path = new TableColumn(rawTable, SWT.NONE);
-		path.setResizable(true);
-		path.setText(UIText.HistoryPage_pathnameColumn);
-		layout.addColumnData(new ColumnWeightData(1, true));
 	}
 }
