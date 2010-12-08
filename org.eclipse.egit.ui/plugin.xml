@@ -1490,6 +1490,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewRebase"
+               icon="icons/obj16/rebase.gif"
                label="Rebase"
                style="push">
             <visibleWhen
@@ -1520,6 +1521,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewRebaseWithDialog"
+               icon="icons/obj16/rebase.gif"
                label="Rebase..."
                style="push">
             <visibleWhen
@@ -1542,6 +1544,7 @@
             </visibleWhen>
          </command>
          <menu
+               icon="icons/obj16/rebase.gif"
                label="Rebase">
             <command
                   commandId="org.eclipse.egit.ui.RepositoriesViewAbortRebase"
