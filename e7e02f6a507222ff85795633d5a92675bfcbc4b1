@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL03///3s\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/RepoPropertiesPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///3o\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/RepoPropertiesPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///3k\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/RepoPropertiesPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///3g\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/RepoPropertiesPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///3c\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///3Q\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTestBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///3Y\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTestBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///3U\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTestBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///3M\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTestBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///3I\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTestBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "typo: s/have/has/",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///3E\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/SampleTestRepository.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///3A\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/SampleTestRepository.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///28\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/SampleTestRepository.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///24\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/SampleTestRepository.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T15:39:47Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
