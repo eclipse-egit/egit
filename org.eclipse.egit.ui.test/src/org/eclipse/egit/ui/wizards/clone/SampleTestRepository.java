@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import org.eclipse.jgit.junit.TestRepository;
+import org.eclipse.jgit.junit.http.SimpleHttpServer;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.revwalk.RevBlob;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -57,11 +58,13 @@ public class SampleTestRepository {
 	 */
 	public static final String A_txt_name = "A_txt";
 
-	private static final File trash = new File("trash");
+	private static final File trash = new File("target/trash");
 
 	private final TestRepository<FileRepository> src;
 
 	private Daemon d;
+
+	private SimpleHttpServer httpServer;
 
 	private String uri;
 
@@ -70,6 +73,8 @@ public class SampleTestRepository {
 	private RevCommit A, B, C;
 
 	private RevTag v1_0, v2_0;
+
+	private final boolean serveHttp;
 
 	public String getUri() {
 		return uri;
@@ -81,13 +86,19 @@ public class SampleTestRepository {
 	 *
 	 * @param n
 	 *            hint how many random commits should be generated
+	 * @param
+	 * 			  serveHttp 
 	 *
 	 * @throws Exception
 	 */
-	public SampleTestRepository(int n) throws Exception {
+	public SampleTestRepository(int n, boolean serveHttp) throws Exception {
+		this.serveHttp = serveHttp;
 		src = createRepository();
 		generateSampleData(n);
-		serve();
+		if (serveHttp)
+			serveHttp();
+		else
+			serve();
 	}
 
 	private TestRepository<FileRepository> createRepository() throws Exception {
@@ -147,16 +158,25 @@ public class SampleTestRepository {
 				+ Constants.DOT_GIT;
 	}
 
+	private void serveHttp() throws Exception{
+		httpServer = new SimpleHttpServer(src.getRepository());
+		httpServer.start();
+		uri = httpServer.getUri().toString();
+	}
+
 	/**
 	 * Stop the git daemon and delete test data from disk. If the system
 	 * property <code>test-repo-no-cleanup</code> is defined the test data will
 	 * be left on disk for analysis.
 	 *
-	 * @throws FileNotFoundException
+	 * @throws Exception
 	 *             deletion of test repository failed
 	 */
-	public void shutDown() throws FileNotFoundException {
-		d.stop();
+	public void shutDown() throws Exception {
+		if (serveHttp)
+			httpServer.stop();
+		else
+			d.stop();
 		if (!System.getProperties().contains("test-repo-no-cleanup"))
 			delete(trash);
 	}
