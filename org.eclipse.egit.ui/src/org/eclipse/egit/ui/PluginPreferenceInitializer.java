@@ -69,6 +69,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.REFESH_ON_INDEX_CHANGE, true);
 		store.setDefault(UIPreferences.REFESH_ONLY_WHEN_ACTIVE, true);
 		store.setDefault(UIPreferences.DEFAULT_REPO_DIR, FS.DETECTED.userHome().getPath());
+		store.setDefault(UIPreferences.REBASE_HIDE_CONFIRM, false);
 	}
 
 }

@@ -1541,6 +1541,29 @@
                </and>
             </visibleWhen>
          </command>
+         <menu
+               label="Rebase">
+            <command
+                  commandId="org.eclipse.egit.ui.RepositoriesViewAbortRebase"
+                  label="Abort"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <and>
+                           <test
+                                 property="GitRepository.canAbortRebase">
+                           </test>
+                        </and>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+            </command>
+         </menu>
       </menuContribution>
       <menuContribution
             locationURI="toolbar:org.eclipse.egit.ui.RepositoriesView">
@@ -2026,7 +2049,7 @@
             class="org.eclipse.egit.ui.internal.repository.tree.RepositoriesViewPropertyTester"
             id="org.eclipse.egit.ui.RepositoryTester"
             namespace="GitRepository"
-            properties="isBare,isSafe,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,isRebasing"
+            properties="isBare,isSafe,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase"
             type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
       </propertyTester>
    </extension>

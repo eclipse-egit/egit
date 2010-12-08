@@ -413,6 +413,12 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_DefaultRepoFolderTooltip;
 
 	/** */
+	public static String GitPreferenceRoot_HideConfirmationGroup;
+
+	/** */
+	public static String GitPreferenceRoot_HideRebaseConfirmationField;
+
+	/** */
 	public static String GitPreferenceRoot_HistoryGroupHeader;
 
 	/** */
@@ -479,10 +485,22 @@ public class UIText extends NLS {
 	public static String RebaseCurrentRefCommand_RebasingCurrentJobName;
 
 	/** */
+	public static String RebaseResultDialog_AbortButton;
+
+	/** */
+	public static String RebaseResultDialog_AbortRebaseRadioText;
+
+	/** */
+	public static String RebaseResultDialog_ActionGroupTitle;
+
+	/** */
 	public static String RebaseResultDialog_CommitIdLabel;
 
 	/** */
 	public static String RebaseResultDialog_CommitMessageLabel;
+
+	/** */
+	public static String RebaseResultDialog_ConflictListFailureMessage;
 
 	/** */
 	public static String RebaseResultDialog_DetailsGroup;
@@ -500,7 +518,19 @@ public class UIText extends NLS {
 	public static String RebaseResultDialog_DiffDetailsLabel;
 
 	/** */
+	public static String RebaseResultDialog_DoNothingRadioText;
+
+	/** */
+	public static String RebaseResultDialog_MergeButton;
+
+	/** */
+	public static String RebaseResultDialog_StartMergeRadioText;
+
+	/** */
 	public static String RebaseResultDialog_StatusLabel;
+
+	/** */
+	public static String RebaseResultDialog_ToggleShowButton;
 
 	/** */
 	public static String RebaseTargetSelectionDialog_DialogMessage;

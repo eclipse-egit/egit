@@ -142,6 +142,15 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 				UIText.GitPreferenceRoot_MergeModeTooltip);
 		addField(mergeMode);
 		updateMargins(mergeGroup);
+
+		Group confirmGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
+		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
+				.applyTo(confirmGroup);
+		confirmGroup.setText(UIText.GitPreferenceRoot_HideConfirmationGroup);
+		addField(new BooleanFieldEditor(UIPreferences.REBASE_HIDE_CONFIRM,
+				UIText.GitPreferenceRoot_HideRebaseConfirmationField,
+				confirmGroup));
+		updateMargins(confirmGroup);
 	}
 
 	private void updateMargins(Group group) {
