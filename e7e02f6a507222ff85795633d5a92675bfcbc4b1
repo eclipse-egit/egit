@@ -245,6 +245,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL03///2E\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTestBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-12-08T16:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL03///3M\u003d",
+      "revId": "e7e02f6a507222ff85795633d5a92675bfcbc4b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL03///3I\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTestBase.java",
         "patchSetId": 3
