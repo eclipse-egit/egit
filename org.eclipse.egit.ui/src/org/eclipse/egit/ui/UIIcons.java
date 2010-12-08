@@ -72,6 +72,8 @@ public class UIIcons {
 	public final static ImageDescriptor ELCL16_REFRESH;
 	/** Linked with icon */
 	public final static ImageDescriptor ELCL16_SYNCED;
+	/** Amend icon */
+	public final static ImageDescriptor ELCL16_AMEND;
 
 	/** Enabled, checked, checkbox image */
 	public final static ImageDescriptor CHECKBOX_ENABLED_CHECKED;
@@ -180,6 +182,7 @@ public class UIIcons {
 		ELCL16_REFRESH = map("elcl16/refresh.gif"); //$NON-NLS-1$
 		ELCL16_SYNCED = map("elcl16/synced.gif"); //$NON-NLS-1$
 		ELCL16_ID = map("elcl16/sha1.gif"); //$NON-NLS-1$
+		ELCL16_AMEND = map("elcl16/amend.gif"); //$NON-NLS-1$
 		CHECKBOX_ENABLED_CHECKED = map("checkboxes/enabled_checked.gif"); //$NON-NLS-1$
 		CHECKBOX_ENABLED_UNCHECKED = map("checkboxes/enabled_unchecked.gif"); //$NON-NLS-1$
 		CHECKBOX_DISABLED_CHECKED = map("checkboxes/disabled_checked.gif"); //$NON-NLS-1$
