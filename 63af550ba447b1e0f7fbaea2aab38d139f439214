@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL03///8Y\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T00:40:37Z",
+      "side": 1,
+      "message": "typo s/swith/switch/",
+      "revId": "63af550ba447b1e0f7fbaea2aab38d139f439214",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL03///8c\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1566,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-08T00:40:37Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "63af550ba447b1e0f7fbaea2aab38d139f439214",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
