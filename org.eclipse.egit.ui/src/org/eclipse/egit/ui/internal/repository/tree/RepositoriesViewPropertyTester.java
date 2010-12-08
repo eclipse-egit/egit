@@ -116,9 +116,9 @@ public class RepositoriesViewPropertyTester extends PropertyTester {
 			}
 		}
 
-		if (property.equals("isRebasing")) //$NON-NLS-1$
+		if (property.equals("canAbortRebase")) //$NON-NLS-1$
 			switch (node.getRepository().getRepositoryState()) {
-			case REBASING_MERGE:
+			case REBASING_INTERACTIVE:
 				return true;
 			default:
 				return false;
