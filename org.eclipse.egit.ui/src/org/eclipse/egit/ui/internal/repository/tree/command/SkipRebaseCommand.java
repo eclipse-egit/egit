@@ -14,14 +14,14 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
 
 /**
- * Implements "Abort Rebase"
+ * Implements "Skip Rebase"
  */
-public class AbortRebaseCommand extends AbstractRebaseCommand {
+public class SkipRebaseCommand extends AbstractRebaseCommand {
 	/**
 	 * Default constructor
 	 */
-	public AbortRebaseCommand() {
-		super(Operation.ABORT, UIText.AbortRebaseCommand_JobName,
-				UIText.AbortRebaseCommand_CancelDialogMessage);
+	public SkipRebaseCommand() {
+		super(Operation.SKIP, UIText.SkipRebaseCommand_JobName,
+				UIText.SkipRebaseCommand_CancelDialogMessage);
 	}
 }
