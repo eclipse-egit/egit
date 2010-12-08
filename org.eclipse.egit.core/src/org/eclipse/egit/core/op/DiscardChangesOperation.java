@@ -158,7 +158,7 @@ public class DiscardChangesOperation implements IEGitOperation {
 		DirCache dc = repository.lockDirCache();
 		DirCacheEntry entry = dc.getEntry(resRelPath);
 		File file = new File(res.getLocationURI());
-		DirCacheCheckout.checkoutEntry(repository, file, entry, true);
+		DirCacheCheckout.checkoutEntry(repository, file, entry);
 		dc.unlock();
 	}
 
