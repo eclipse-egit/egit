@@ -24,6 +24,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.WorkingTreeOptions;
@@ -66,11 +67,13 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	 * iteration the paths will be automatically generated to match the proper
 	 * repository paths for this container's children.
 	 *
+	 * @param repository
+	 *            repository the given base is mapped to
 	 * @param base
 	 *            the part of the workspace the iterator will walk over.
 	 */
-	public ContainerTreeIterator(final IContainer base) {
-		super(computePrefix(base), WorkingTreeOptions.createDefaultInstance());
+	public ContainerTreeIterator(final Repository repository, final IContainer base) {
+		super(computePrefix(base), repository.getConfig().get(WorkingTreeOptions.KEY));
 		node = base;
 		init(entries());
 	}
@@ -83,11 +86,13 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	 * During the iteration the paths will be automatically generated to match
 	 * the proper repository paths for this container's children.
 	 *
+	 * @param repository
+	 *            repository the given base is mapped to
 	 * @param root
 	 *            the workspace root to walk over.
 	 */
-	public ContainerTreeIterator(final IWorkspaceRoot root) {
-		super("", WorkingTreeOptions.createDefaultInstance());  //$NON-NLS-1$
+	public ContainerTreeIterator(final Repository repository, final IWorkspaceRoot root) {
+		super("", repository.getConfig().get(WorkingTreeOptions.KEY));  //$NON-NLS-1$
 		node = root;
 		init(entries());
 	}

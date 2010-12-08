@@ -35,7 +35,6 @@ import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.CoreConfig;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -75,8 +74,6 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 
 	private boolean assumeValid = false;
 
-	private boolean fileMode;
-
 	private Staged staged = Staged.NOT_STAGED;
 
 	private final boolean trace;
@@ -102,7 +99,6 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 		try {
 			mapping = RepositoryMapping.getMapping(resource);
 			repository = mapping.getRepository();
-			fileMode = repository.getConfig().get(CoreConfig.KEY).isFileMode();
 			headId = repository.resolve(Constants.HEAD);
 
 			store = Activator.getDefault().getPreferenceStore();
@@ -208,7 +204,7 @@ class DecoratableResourceAdapter implements IDecoratableResource {
 			assumeValid = true;
 		} else {
 			if (workspaceIterator != null
-					&& workspaceIterator.isModified(indexEntry, true, fileMode))
+					&& workspaceIterator.isModified(indexEntry, true))
 				dirty = true;
 		}
 	}

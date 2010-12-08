@@ -38,8 +38,8 @@ public class IteratorService {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IContainer container = findContainer(root, repository.getWorkTree());
 		if (container != null)
-			return new ContainerTreeIterator(container);
-		return new AdaptableFileTreeIterator(repository.getWorkTree(), root);
+			return new ContainerTreeIterator(repository, container);
+		return new AdaptableFileTreeIterator(repository, root);
 	}
 
 	/**

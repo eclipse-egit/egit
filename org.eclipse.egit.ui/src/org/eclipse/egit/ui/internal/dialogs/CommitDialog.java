@@ -612,9 +612,8 @@ public class CommitDialog extends Dialog {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(file);
 		String path = mapping.getRepoRelativePath(file);
 		Repository repo = mapping.getRepository();
-		AdaptableFileTreeIterator fileTreeIterator =
-			new AdaptableFileTreeIterator(repo.getWorkTree(),
-					ResourcesPlugin.getWorkspace().getRoot());
+		AdaptableFileTreeIterator fileTreeIterator = new AdaptableFileTreeIterator(
+				repo, ResourcesPlugin.getWorkspace().getRoot());
 		IndexDiff indexDiff = new IndexDiff(repo, Constants.HEAD, fileTreeIterator);
 		Set<String> repositoryPaths = Collections.singleton(path);
 		indexDiff.setFilter(PathFilterGroup.createFromStrings(repositoryPaths));

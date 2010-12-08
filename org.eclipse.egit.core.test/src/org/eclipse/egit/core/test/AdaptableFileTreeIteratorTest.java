@@ -34,8 +34,6 @@ public class AdaptableFileTreeIteratorTest extends GitTestCase {
 
 	private Repository repository;
 
-	private File repositoryRoot;
-
 	private File file;
 
 	@Before
@@ -43,7 +41,6 @@ public class AdaptableFileTreeIteratorTest extends GitTestCase {
 		super.setUp();
 
 		repository = new FileRepository(gitDir);
-		repositoryRoot = repository.getWorkTree();
 		repository.create();
 
 		file = new File(project.getProject().getLocation().toFile(), "a.txt");
@@ -62,7 +59,7 @@ public class AdaptableFileTreeIteratorTest extends GitTestCase {
 				.getRoot();
 
 		final TreeWalk treeWalk = new TreeWalk(repository);
-		treeWalk.addTree(new AdaptableFileTreeIterator(repositoryRoot, root));
+		treeWalk.addTree(new AdaptableFileTreeIterator(repository, root));
 		treeWalk.setRecursive(true);
 
 		final IFile eclipseFile = project.getProject().getFile(file.getName());
