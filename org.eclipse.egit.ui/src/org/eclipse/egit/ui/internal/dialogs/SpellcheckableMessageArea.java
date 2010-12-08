@@ -27,6 +27,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.commands.ActionHandler;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.ITextOperationTarget;
@@ -46,7 +47,9 @@ import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.custom.ViewForm;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
@@ -57,8 +60,11 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.ActiveShellExpression;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.PlatformUI;
@@ -133,14 +139,42 @@ public class SpellcheckableMessageArea extends Composite {
 	 * @param initialText
 	 */
 	public SpellcheckableMessageArea(Composite parent, String initialText) {
-		super(parent, SWT.BORDER);
+		super(parent, SWT.NONE);
 		setLayout(new FillLayout());
 
+		Composite composite = new Composite(this, SWT.BORDER);
+
+		GridLayout layout = new GridLayout(2, true);
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+		layout.verticalSpacing = 0;
+		layout.horizontalSpacing = 0;
+		composite.setLayout(layout);
+
+		ViewForm viewForm = new ViewForm(composite, SWT.FLAT);
+        viewForm.marginHeight = 0;
+        viewForm.marginWidth = 0;
+        viewForm.verticalSpacing = 0;
+        viewForm.setBorderVisible(false);
+        viewForm.setLayoutData(GridDataFactory.fillDefaults().span(2,1).create());
+
+        ToolBar toolBar = new ToolBar(viewForm, SWT.FLAT | SWT.WRAP);
+        configureToolbar(toolBar);
+	    viewForm.setTopRight(toolBar);
+
+	    CLabel label = new CLabel(viewForm, SWT.NONE);
+	    label.setText("Message"); //$NON-NLS-1$
+	    viewForm.setTopLeft(label);
+
+	    Label separator = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+	    separator.setLayoutData(GridDataFactory.fillDefaults().span(2,1).create());
+
 		AnnotationModel annotationModel = new AnnotationModel();
-		sourceViewer = new SourceViewer(this, null, null, true, SWT.MULTI
+		sourceViewer = new SourceViewer(composite, null, null, true, SWT.MULTI
 				| SWT.V_SCROLL | SWT.WRAP);
 		getTextWidget().setFont(UIUtils
 				.getFont(UIPreferences.THEME_CommitMessageEditorFont));
+		sourceViewer.getTextWidget().setLayoutData(GridDataFactory.fillDefaults().grab(true, true).span(2, 1).create());
 
 		int endSpacing = 2;
 		int textWidth = getCharWidth() * 70 + endSpacing;
@@ -169,6 +203,16 @@ public class SpellcheckableMessageArea extends Composite {
 				getHandlerService().deactivateHandler(handlerActivation);
 			}
 		});
+
+	}
+
+	/**
+	 * Configure entries in the toolbar
+	 *
+	 * @param toolbar
+	 */
+	protected void configureToolbar(ToolBar toolbar) {
+		// by default do nothing
 	}
 
 	private void configureHardWrap() {
@@ -551,4 +595,5 @@ public class SpellcheckableMessageArea extends Composite {
 			return length;
 		}
 	}
+
 }
