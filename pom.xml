@@ -65,7 +65,7 @@
     <tycho-version>0.10.0</tycho-version>
     <platform-version-name>galileo</platform-version-name>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.updatesite/target/site</jgit-site>
-    <jetty-site>http://download.eclipse.org/jetty/7.1.1.v20100517/repository/</jetty-site>
+    <jetty-site>http://download.eclipse.org/jetty/7.1.6.v20100715/repository/</jetty-site>
     <eclipse-site>http://download.eclipse.org/releases/${platform-version-name}</eclipse-site>
     <swtbot-site>http://download.eclipse.org/technology/swtbot/${platform-version-name}/dev-build/update-site</swtbot-site>
     <wikitext-site>http://download.eclipse.org/tools/mylyn/update/weekly</wikitext-site>
