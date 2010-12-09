@@ -77,6 +77,8 @@ public class RebaseResultDialog extends MessageDialog {
 
 	private Button startMergeButton;
 
+	private Button skipCommitButton;
+
 	private Button abortRebaseButton;
 
 	private Button doNothingButton;
@@ -200,6 +202,10 @@ public class RebaseResultDialog extends MessageDialog {
 
 		startMergeButton = new Button(actionGroup, SWT.RADIO);
 		startMergeButton.setText(UIText.RebaseResultDialog_StartMergeRadioText);
+
+		skipCommitButton = new Button(actionGroup, SWT.RADIO);
+		skipCommitButton.setText(UIText.RebaseResultDialog_SkipCommitButton);
+
 		abortRebaseButton = new Button(actionGroup, SWT.RADIO);
 		abortRebaseButton
 				.setText(UIText.RebaseResultDialog_AbortRebaseRadioText);
@@ -277,18 +283,27 @@ public class RebaseResultDialog extends MessageDialog {
 				}
 				CompareUI.openCompareEditor(input);
 				return;
+			} else if (skipCommitButton.getSelection()) {
+				// skip the rebase
+				try {
+					final RebaseOperation op = new RebaseOperation(repo,
+							Operation.SKIP);
+					op.execute(null);
+
+					show(op.getResult(), repo);
+				} catch (CoreException e) {
+					Activator.handleError(e.getMessage(), e, true);
+				}
 			} else if (abortRebaseButton.getSelection()) {
 				// abort the rebase
-				if (result.getStatus() == Status.STOPPED) {
-					try {
-						final RebaseOperation op = new RebaseOperation(repo,
-								Operation.ABORT);
-						op.execute(null);
+				try {
+					final RebaseOperation op = new RebaseOperation(repo,
+							Operation.ABORT);
+					op.execute(null);
 
-						show(op.getResult(), repo);
-					} catch (CoreException e) {
-						Activator.handleError(e.getMessage(), e, true);
-					}
+					show(op.getResult(), repo);
+				} catch (CoreException e) {
+					Activator.handleError(e.getMessage(), e, true);
 				}
 			} else if (doNothingButton.getSelection()) {
 				// nothing

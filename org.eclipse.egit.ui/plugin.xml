@@ -1375,6 +1375,55 @@
                      </count>
                      <iterate>
                         <and>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                           </instanceof>
+                           <test
+                                 property="GitRepository.canAbortRebase">
+                           </test>
+                        </and>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.RepositoriesViewContinueRebase"
+                  label="&amp;Continue"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <and>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                           </instanceof>
+                           <test
+                                 property="GitRepository.canAbortRebase">
+                           </test>
+                        </and>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="org.eclipse.egit.ui.RepositoriesViewSkipRebase"
+                  label="&amp;Skip"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <and>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                           </instanceof>
                            <test
                                  property="GitRepository.canAbortRebase">
                            </test>
@@ -1956,6 +2005,18 @@
             id="org.eclipse.egit.ui.RepositoriesViewAbortRebase"
             name="Abort Rebase">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.SkipRebaseCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewSkipRebase"
+            name="Skip Rebase">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ContinueRebaseCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewContinueRebase"
+            name="Continue Rebase">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.commandImages">
@@ -2094,6 +2155,14 @@
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewAbortRebase"
             icon="icons/elcl16/progress_stop.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewContinueRebase"
+            icon="icons/elcl16/continue.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewSkipRebase"
+            icon="icons/elcl16/skip.gif">
       </image>
    </extension>
    <extension

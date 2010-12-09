@@ -9,6 +9,7 @@
 package org.eclipse.egit.ui.internal.merge;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import org.eclipse.egit.ui.internal.EditableRevision;
 import org.eclipse.egit.ui.internal.LocalFileRevision;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput.EmptyTypedElement;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.Constants;
@@ -53,6 +55,8 @@ import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.eclipse.jgit.util.IO;
+import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.team.core.Team;
@@ -170,6 +174,11 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			String target;
 			if (repo.getRepositoryState().equals(RepositoryState.MERGING))
 				target = Constants.MERGE_HEAD;
+			else if (repo.getRepositoryState().equals(
+					RepositoryState.REBASING_INTERACTIVE))
+				target = readFile(repo.getDirectory(),
+						RebaseCommand.REBASE_MERGE + File.separatorChar
+								+ RebaseCommand.STOPPED_SHA);
 			else
 				target = Constants.ORIG_HEAD;
 			ObjectId mergeHead = repo.resolve(target);
@@ -425,5 +434,14 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			}
 		};
 		return child;
+	}
+
+	private String readFile(File directory, String fileName) throws IOException {
+		byte[] content = IO.readFully(new File(directory, fileName));
+		// strip off the last LF
+		int end = content.length;
+		while (0 < end && content[end - 1] == '\n')
+			end--;
+		return RawParseUtils.decode(content, 0, end);
 	}
 }
