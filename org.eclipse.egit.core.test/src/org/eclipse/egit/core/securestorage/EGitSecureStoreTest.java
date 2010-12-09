@@ -28,6 +28,7 @@ import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.equinox.security.storage.provider.IProviderHints;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.util.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -153,7 +154,8 @@ public class EGitSecureStoreTest {
 		String secureStorePath = ResourcesPlugin.getWorkspace().getRoot()
 				.getLocation().append("testSecureStore").toOSString();
 		File file = new File(secureStorePath);
-		testUtils.deleteRecursive(file);
+		if (file.exists())
+			FileUtils.delete(file, FileUtils.RECURSIVE | FileUtils.RETRY);
 		URL url = file.toURI().toURL();
 		secureStoreForTest = SecurePreferencesFactory.open(url, options);
 		secureStoreForTest.node("/GIT").removeNode();

@@ -34,6 +34,7 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.launching.JavaRuntime;
+import org.eclipse.jgit.util.FileUtils;
 import org.osgi.framework.Bundle;
 
 public class TestProject {
@@ -136,8 +137,11 @@ public class TestProject {
 		waitForIndexer();
 		if (project.exists())
 			project.delete(true, true, null);
-		else
-			testUtils.deleteRecursive(new File(location));
+		else {
+			File f = new File(location);
+			if (f.exists())
+				FileUtils.delete(f, FileUtils.RECURSIVE | FileUtils.RETRY);
+		}
 	}
 
 	private IFolder createBinFolder() throws CoreException {

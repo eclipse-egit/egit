@@ -14,7 +14,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
@@ -25,6 +24,7 @@ import org.eclipse.egit.core.op.IgnoreOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.util.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,8 +48,7 @@ public class IgnoreOperationTest extends GitTestCase {
 		File rootFile = root.getRawLocation().toFile();
 		File ignoreFile = new File(rootFile, Constants.GITIGNORE_FILENAME);
 		if (ignoreFile.exists()) {
-			if (!ignoreFile.delete())
-				throw new IOException(ignoreFile + " in use or undeletable");
+			FileUtils.delete(ignoreFile, FileUtils.RETRY);
 			assert !ignoreFile.exists();
 		}
 		super.tearDown();

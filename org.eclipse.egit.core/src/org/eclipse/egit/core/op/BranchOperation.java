@@ -36,6 +36,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 
@@ -193,31 +194,7 @@ public class BranchOperation implements IEGitOperation {
 		List<String> files = dirCacheCheckout.getToBeDeleted();
 		for(String path:files) {
 			File file = new File(repository.getWorkTree(), path);
-			deleteFile(file);
-		}
-	}
-
-	/**
-	 * Deletes a file. Deletion is retried 10 times to avoid
-	 * failing deletion caused by concurrent read.
-	 * @param file
-	 * @throws IOException
-	 */
-	private void deleteFile(File file) throws IOException {
-		boolean deleted = false;
-		for(int i=0; i<10; i++) {
-			deleted = file.delete();
-			if (deleted)
-				break;
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// ignore
-			}
-		}
-		if (!deleted) {
-			throw new IOException(NLS.bind(
-					CoreText.BranchOperation_couldNotDelete, file.getPath()));
+			FileUtils.delete(file, FileUtils.RECURSIVE | FileUtils.RETRY);
 		}
 	}
 

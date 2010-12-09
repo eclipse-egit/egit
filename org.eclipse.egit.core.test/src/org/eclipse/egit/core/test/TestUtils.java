@@ -23,55 +23,13 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jgit.util.FS;
+import org.eclipse.jgit.util.FileUtils;
 
 public class TestUtils {
 
 	public final static String AUTHOR = "The Author <The.author@some.com>";
 
 	public final static String COMMITTER = "The Commiter <The.committer@some.com>";
-
-	/**
-	 * This method deletes a file / subtree
-	 *
-	 * @param d
-	 *            file / folder to delete
-	 * @throws IOException
-	 *             if file can not be deleted
-	 */
-	public void deleteRecursive(File d) throws IOException {
-		if (!d.exists())
-			return;
-
-		File[] files = d.listFiles();
-		if (files != null) {
-			for (int i = 0; i < files.length; ++i) {
-				if (files[i].isDirectory())
-					deleteRecursive(files[i]);
-				else
-					deleteFile(files[i]);
-			}
-		}
-		deleteFile(d);
-		assert !d.exists();
-	}
-
-	private void deleteFile(File file) throws IOException{
-		boolean deleted = false;
-		for (int i = 0; i < 10; i++) {
-			if (file.delete()) {
-				deleted = true;
-				break;
-			}
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// ignore
-			}
-			System.out.println(">>> retried deleting " + file.getAbsolutePath());
-		}
-		if (!deleted)
-			throw new IOException("Retried 10 times. Could not delete " + file.getAbsolutePath());
-	}
 
 	/**
 	 * Create a "temporary" directory
@@ -87,7 +45,7 @@ public class TestUtils {
 		File rootDir = new File(userHome, "EGitCoreTestTempDir");
 		File result = new File(rootDir, name);
 		if (result.exists())
-			deleteRecursive(result);
+			FileUtils.delete(result, FileUtils.RECURSIVE | FileUtils.RETRY);
 		return result;
 	}
 
@@ -100,7 +58,7 @@ public class TestUtils {
 		File userHome = FS.DETECTED.userHome();
 		File rootDir = new File(userHome, "EGitCoreTestTempDir");
 		if (rootDir.exists())
-			deleteRecursive(rootDir);
+			FileUtils.delete(rootDir, FileUtils.RECURSIVE | FileUtils.RETRY);
 	}
 
 	/**
@@ -190,7 +148,7 @@ public class TestUtils {
 		}
 		File testFile = new File(parentFile, projectName);
 		if (testFile.exists())
-			deleteRecursive(testFile);
+			FileUtils.delete(testFile, FileUtils.RECURSIVE | FileUtils.RETRY);
 
 		IProjectDescription desc = ResourcesPlugin.getWorkspace()
 				.newProjectDescription(projectName);
