@@ -277,6 +277,7 @@ public class CommitDialog extends Dialog {
 			public void widgetSelected(SelectionEvent arg0) {
 				if (!amendingButton.getSelection()) {
 					originalChangeId = null;
+					authorText.setText(author);
 				}
 				else {
 					saveOriginalChangeId();
@@ -288,8 +289,8 @@ public class CommitDialog extends Dialog {
 						commitText.setText(curText
 								+ previousCommitMessage.replaceAll(
 										"\n", Text.DELIMITER)); //$NON-NLS-1$
-						authorText.setText(previousAuthor);
 					}
+					authorText.setText(previousAuthor);
 				}
 				refreshChangeIdText();
 			}
