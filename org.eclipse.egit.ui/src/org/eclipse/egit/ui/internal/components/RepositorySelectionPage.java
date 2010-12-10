@@ -312,7 +312,7 @@ public class RepositorySelectionPage extends WizardPage {
 		this.uri = new URIish();
 		this.sourceSelection = sourceSelection;
 
-		String preset = null;
+		String preset = presetUri;
 		if (presetUri == null) {
 			Clipboard clippy = new Clipboard(Display.getCurrent());
 			String text = (String) clippy.getContents(TextTransfer
