@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL1X///9s\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-12T09:26:58Z",
+      "side": 1,
+      "message": "Gerrit cannit find this id. Will Gerrit be able to handle a note\nwith a correction?",
+      "revId": "f13c3e11c9ba9ee661148646d53c3b9e93915667",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
