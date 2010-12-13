@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL0n///pY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-11-29T22:42:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL0n///rU\u003d",
+      "revId": "5f3240ba69f5619c0cb8c7e07e5a03453bfcf223",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL0n///rM\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2010-11-29T14:27:08Z",
       "side": 1,
       "message": "This code does not work if a file is checked-in and is changed in the working dir, but not in the index. Then the method isCachedEntry  returns false and as a consequence later on the comparison is done with the base commit, which is the parent of head.\n\nIf a file is in head and has no staged changes then it **is** in the index and GitFileRevision.inIndex(db, gitPath) returns a meaningful value. We should do the same here as in CompareWithIndexActionHandler. There the method getHeadTypedElement does a check if the file exists in the index. If not, it returns a GitCompareFileRevisionEditorInput.EmptyTypedElement with the text \"{0} not in index\", if yes, it uses GitFileRevision.inIndex.",
+      "revId": "5f3240ba69f5619c0cb8c7e07e5a03453bfcf223",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///pQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-11-29T22:42:07Z",
+      "side": 1,
+      "message": "In my humble opinion this is proper behavior. When you have locally changed file (and you didn\u0027t stage any changes for it before) it should compare against latest commit not version in cache/index, because it does \"not exists\".\n\nThe behavior that you proposed can be miss leading for end user.",
+      "parentUuid": "AAAL0n///rM\u003d",
       "revId": "5f3240ba69f5619c0cb8c7e07e5a03453bfcf223",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL0n///pM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-11-29T22:42:07Z",
+      "side": 1,
+      "message": "I\u0027ll rename it (or remove it) when we agree on what we should show in right hand side editor in compare view, wen we are comparing locally changed file that doesn\u0027t have staged changes.",
+      "parentUuid": "AAAL0n///rQ\u003d",
+      "revId": "5f3240ba69f5619c0cb8c7e07e5a03453bfcf223",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL0n///rI\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2010-11-29T14:27:08Z",
       "side": 1,
       "message": "In Compare With Index and the corresponding compare edior we use the term \"Index\", in the node of the synchronize view we use \"Staged\".\n\nTo be consistent I would say that we should use \"staged version\" here.",
+      "revId": "5f3240ba69f5619c0cb8c7e07e5a03453bfcf223",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL0n///pU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2010-11-29T22:42:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL0n///rI\u003d",
       "revId": "5f3240ba69f5619c0cb8c7e07e5a03453bfcf223",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
