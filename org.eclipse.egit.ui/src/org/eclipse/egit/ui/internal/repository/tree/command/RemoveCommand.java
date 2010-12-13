@@ -167,8 +167,11 @@ public class RemoveCommand extends
 						for (RepositoryNode node : selectedNodes) {
 							Repository repo = node.getRepository();
 							if (!repo.isBare())
-								FileUtils.delete(repo.getWorkTree(), FileUtils.RECURSIVE | FileUtils.RETRY);
-							FileUtils.delete(repo.getDirectory(), FileUtils.RECURSIVE | FileUtils.RETRY);
+								FileUtils.delete(repo.getWorkTree(),
+										FileUtils.RECURSIVE | FileUtils.RETRY);
+							FileUtils.delete(repo.getDirectory(),
+									FileUtils.RECURSIVE | FileUtils.RETRY
+											| FileUtils.SKIP_MISSING);
 						}
 					} catch (IOException e) {
 						return Activator.createErrorStatus(e.getMessage(), e);
