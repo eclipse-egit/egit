@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL0n///g4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/GitCacheCompareInput.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2010-12-02T09:59:56Z",
+      "side": 1,
+      "message": "This returns the parent of the HEAD commit but not the HEAD commit.",
+      "revId": "7521da97d9910bcf8b8b68483cae7d9cc3489ce0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
