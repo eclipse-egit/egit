@@ -30,7 +30,7 @@ public class SecureStoreUtils {
 	 */
 	public static boolean storeCredentials(UserPasswordCredentials credentials,
 			URIish uri) {
-		if (credentials != null) {
+		if (credentials != null && uri != null) {
 			try {
 				org.eclipse.egit.core.Activator.getDefault().getSecureStore()
 						.putCredentials(uri, credentials);
