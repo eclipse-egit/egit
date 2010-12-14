@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.StringTokenizer;
 
 import org.eclipse.core.filesystem.EFS;
@@ -34,6 +35,7 @@ import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.push.PushConfiguredRemoteAction;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -318,8 +320,9 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		Repository myRepository = lookupRepository(repositoryDir);
 		URIish uri = new URIish("file:///" + myRepository.getDirectory());
 		File workdir = new File(testDirectory, CHILDREPO);
+		Ref master = myRepository.getRef("refs/heads/master");
 		CloneOperation clop = new CloneOperation(uri, true, null, workdir,
-				"refs/heads/master", "origin", 0);
+				master, "origin", 0);
 		clop.run(null);
 		return new File(workdir, Constants.DOT_GIT);
 	}
@@ -503,4 +506,12 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		display.post(evt);
 	}
 
+	protected static Collection<Ref> getRemoteRefs(URIish uri) throws Exception {
+		final Repository db = new FileRepository(new File("/tmp")); //$NON-NLS-1$
+		int timeout = 20;
+		ListRemoteOperation listRemoteOp = new ListRemoteOperation(db, uri,
+				timeout);
+		listRemoteOp.run(null);
+		return listRemoteOp.getRemoteRefs();
+	}
 }
