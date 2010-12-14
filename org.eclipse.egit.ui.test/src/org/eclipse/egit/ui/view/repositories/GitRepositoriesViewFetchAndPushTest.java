@@ -14,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.Collection;
 
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.Activator;
@@ -21,6 +22,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.push.PushConfiguredRemoteAction;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.URIish;
@@ -57,8 +59,16 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		URIish uri = new URIish("file:///" + remoteRepositoryFile.getPath());
 		File workdir = new File(getTestDirectory(), "ClonedRepo");
 
+		Collection<Ref> remoteRefs = getRemoteRefs(uri);
+		Ref myref = null;
+		for (Ref ref : remoteRefs) {
+			if (ref.getName().equals("refs/heads/master")) {
+				myref = ref;
+				break;
+			}
+		}
 		CloneOperation op = new CloneOperation(uri, true, null, workdir,
-				"refs/heads/master", "origin", 0);
+				myref, "origin", 0);
 		op.run(null);
 
 		clonedRepositoryFile = new File(workdir, Constants.DOT_GIT);
@@ -67,7 +77,15 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		uri = new URIish(remoteRepositoryFile.getPath());
 		workdir = new File(getTestDirectory(), "ClonedRepo2");
 
-		op = new CloneOperation(uri, true, null, workdir, "refs/heads/master",
+		remoteRefs = getRemoteRefs(uri);
+		myref = null;
+		for (Ref ref : remoteRefs) {
+			if (ref.getName().equals("refs/heads/master")) {
+				myref = ref;
+				break;
+			}
+		}
+		op = new CloneOperation(uri, true, null, workdir, myref,
 				"origin", 0);
 		op.run(null);
 

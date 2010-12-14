@@ -37,6 +37,7 @@ import org.eclipse.egit.core.test.DualRepositoryTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
@@ -101,8 +102,9 @@ public class PushOperationTest extends DualRepositoryTestCase {
 		// let's clone repository1 to repository2
 		URIish uri = new URIish("file:///"
 				+ repository1.getRepository().getDirectory().toString());
+		Ref master = repository1.getRepository().getRef("refs/heads/master");
 		CloneOperation clop = new CloneOperation(uri, true, null, workdir2,
-				"refs/heads/master", "origin", 0);
+				master, "origin", 0);
 		clop.run(null);
 
 		repository2 = new TestRepository(new FileRepository(new File(workdir2,
