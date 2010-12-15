@@ -172,7 +172,7 @@ public class GitCloneWizardTest extends GitCloneWizardTestBase {
 
 	@Test
 	public void canCloneARemoteRepo() throws Exception {
-		File destRepo = new File(ResourcesPlugin.getWorkspace()
+		destRepo = new File(ResourcesPlugin.getWorkspace()
 				.getRoot().getLocation().toFile(), "test1");
 
 		importWizard.openWizard();
@@ -182,7 +182,6 @@ public class GitCloneWizardTest extends GitCloneWizardTestBase {
 				.nextToRemoteBranches(r.getUri());
 
 		cloneRepo(destRepo, remoteBranches);
-
 	}
 
 	@Test
@@ -198,7 +197,7 @@ public class GitCloneWizardTest extends GitCloneWizardTestBase {
 
 	@Test
 	public void alteringSomeParametersDuringClone() throws Exception {
-		File destRepo = new File(ResourcesPlugin.getWorkspace()
+		destRepo = new File(ResourcesPlugin.getWorkspace()
 				.getRoot().getLocation().toFile(), "test2");
 
 		importWizard.openWizard();
