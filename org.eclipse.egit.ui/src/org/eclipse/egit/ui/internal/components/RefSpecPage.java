@@ -22,6 +22,7 @@ import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.push.PushWizard;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -112,6 +113,12 @@ public class RefSpecPage extends WizardPage {
 	 */
 	public void setCredentials(UserPasswordCredentials credentials) {
 		this.credentials = credentials;
+	}
+
+	@Override
+	public void performHelp() {
+		if (this.getWizard() instanceof PushWizard)
+			PushWizard.openCheatSheet();
 	}
 
 	public void createControl(Composite parent) {

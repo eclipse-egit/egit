@@ -46,6 +46,7 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.cheatsheets.OpenCheatSheetAction;
 
 /**
  * Wizard allowing user to specify all needed data to push to another repository
@@ -54,6 +55,8 @@ import org.eclipse.ui.PlatformUI;
  * Push operation is performed upon successful completion of this wizard.
  */
 public class PushWizard extends Wizard {
+	private static final String PUSH_CHEATSHEET = "org.eclipse.egit.cheatsheets.push"; //$NON-NLS-1$
+
 	private static String getURIsString(final Collection<URIish> uris) {
 		final StringBuilder sb = new StringBuilder();
 		boolean first = true;
@@ -154,6 +157,13 @@ public class PushWizard extends Wizard {
 		repoPage.saveUriInPrefs();
 
 		return true;
+	}
+
+	/**
+	 * Display the push wizard's cheat sheet
+	 */
+	public static void openCheatSheet() {
+		new OpenCheatSheetAction(PUSH_CHEATSHEET).run();
 	}
 
 	@Override
