@@ -37,6 +37,13 @@
             contentFile="$nl$/cheatsheets/clone.xml">
          <description>%cheatsheet.clone.desc</description>
       </cheatsheet>
+      <cheatsheet
+            name="%cheatsheet.push.name"
+            id="org.eclipse.egit.cheatsheets.push"
+            category="org.eclipse.egit.cheatsheets"
+            contentFile="$nl$/cheatsheets/push.xml">
+         <description>%cheatsheet.push.desc</description>
+      </cheatsheet>
    </extension>
 
 </plugin>

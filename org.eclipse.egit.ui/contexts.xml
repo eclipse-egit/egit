@@ -7,4 +7,10 @@
 			serialization="org.eclipse.ui.cheatsheets.openCheatSheet(cheatSheetId=org.eclipse.egit.cheatsheets.clone)"
 			label="Cloning a Git Repository" />
 	</context>
+	<context id="PushWizard" title="Push To Another Repository">
+		<description>To be guided through this wizard start the cheat sheet 'Pushing to another Git Repository' below.</description>
+		<command
+			serialization="org.eclipse.ui.cheatsheets.openCheatSheet(cheatSheetId=org.eclipse.egit.cheatsheets.push)"
+			label="Pushing to another Git Repository" />
+	</context>
 </contexts>
