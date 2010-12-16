@@ -109,6 +109,13 @@ class SourceBranchPage extends WizardPage {
 		return availableRefs.size() == refsViewer.getCheckedElements().length;
 	}
 
+	@Override
+	public void performHelp() {
+		if(this.getWizard() instanceof GitCloneWizard) {
+			GitCloneWizard.openCheatSheet();
+		}
+	}
+
 	public void createControl(final Composite parent) {
 		final Composite panel = new Composite(parent, SWT.NULL);
 		final GridLayout layout = new GridLayout();
