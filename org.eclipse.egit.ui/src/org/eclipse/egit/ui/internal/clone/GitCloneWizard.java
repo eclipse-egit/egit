@@ -42,6 +42,7 @@ import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.ui.cheatsheets.OpenCheatSheetAction;
 
 /**
  * Import Git Repository Wizard. A front end to a git clone operation.
@@ -52,6 +53,8 @@ public class GitCloneWizard extends Wizard {
 	 * Job family of the Clone Repository job.
 	 */
 	public static final Object CLONE_JOB_FAMILY = new Object();
+
+	private static final String CLONE_CHEATSHEET = "org.eclipse.egit.cheatsheets.clone"; //$NON-NLS-1$
 
 	private RepositorySelectionPage cloneSource;
 
@@ -148,6 +151,13 @@ public class GitCloneWizard extends Wizard {
 		} finally {
 			setWindowTitle(UIText.GitCloneWizard_title);
 		}
+	}
+
+	/**
+	 * Display the clone wizard's cheat sheet
+	 */
+	public static void openCheatSheet() {
+		new OpenCheatSheetAction(CLONE_CHEATSHEET).run();
 	}
 
 	boolean performClone() {

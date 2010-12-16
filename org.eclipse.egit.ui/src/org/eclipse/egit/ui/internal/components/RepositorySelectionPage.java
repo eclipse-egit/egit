@@ -26,6 +26,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
+import org.eclipse.egit.ui.internal.clone.GitCloneWizard;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;
@@ -384,6 +385,12 @@ public class RepositorySelectionPage extends WizardPage {
 	 */
 	public boolean selectionEquals(final RepositorySelection s) {
 		return selection.equals(s);
+	}
+
+	@Override
+	public void performHelp() {
+		if (this.getWizard() instanceof GitCloneWizard)
+			GitCloneWizard.openCheatSheet();
 	}
 
 	public void createControl(final Composite parent) {
