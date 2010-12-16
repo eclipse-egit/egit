@@ -32,29 +32,32 @@
 		<h1 id="Tasks">Tasks</h1>
 		<h2 id="Creating_Repositories">Creating Repositories</h2>
 		<h3 id="Creating_a_new_empty_Git_Repository">Creating a new empty Git Repository</h3>
-		<p>You can create a project first and share it afterwards. The Share Project Wizard supports creation of Git repositories  (see
+		<p>You can create a project first and share it afterwards. The Share Project Wizard supports creation of Git repositories  (see 
 			<a href="http://wiki.eclipse.org/EGit/User_Guide/Sharing#Adding_a_project_to_version_control" title="EGit/User Guide/Sharing#Adding_a_project_to_version_control" target="egit_external">Adding a project to version control</a>).
 		</p>
-		<p>You can also create a new empty Git Repository from the Git Repositories View (see
+		<p>You can also create a new empty Git Repository from the Git Repositories View (see 
 			<a href="Creating_a_Repository" title="EGit/User_Guide#Creating_a_Repository">Creating a Repository</a>).
 		</p>
 		<h3 id="Creating_a_Git_Repository_for_multiple_Projects">Creating a Git Repository for multiple Projects</h3>
 		<p>You may first create multiple projects under a common directory and then create a common repository for all projects in one go: </p>
 		<ul>
 			<li>create the Eclipse projects e.g. a, b, c under a common directory e.g. <span style="font-family:monospace;">/repos/examples/</span> </li>
-			<li>select all projects a, b, c - from context menu click
+			<li>select all projects a, b, c - from context menu click 
 				<b>Team &gt; Share Project &gt; Git</b>
 			</li>
-			<li>press
+			<li>press 
 				<b>Next</b>
 			</li>
 			<li>select all projects a, b, c </li>
 			<li>the wizard automatically moves up the default repository location to the parent folder <span style="font-family:monospace;">/repos/examples/</span> since multiple projects have been selected </li>
-			<li>click
-				<b>Create Repository</b> and
+			<li>click 
+				<b>Create Repository</b> and 
 				<b>Finish</b>
 			</li>
 		</ul>
+		<p>
+			<br/>
+		</p>
 		<h2 id="Starting_from_existing_Git_Repositories">Starting from existing Git Repositories</h2>
 		<p>In order to work with the content of a Git repository in the Eclipse workbench, the contained files and folders must be imported as projects. In principle, this import can be done using the generic "New Project" or "Import..." wizards, since the working directory of a Git Repository is just a normal directory in the local file system. However, the newly created projects would still have to be shared manually with Git. The "Import Projects from Git" wizards integrates project import and sharing and also offers some extra convenience.</p>
 		<h3 id="Starting_the_import_wizard">Starting the import wizard</h3>
@@ -75,13 +78,13 @@
 			<li>Add an existing repository from your local file system</li>
 		</ol>
 		<h4 id="Cloning_a_Repository">Cloning a Repository</h4>
-		<p>The  first option is used if you start with a remote repository. The clone operation will copy that repository to your local file system. To start the Clone Wizard click
-			<b>Clone...</b>. The Clone Wizard is described in more detail in
+		<p>The  first option is used if you start with a remote repository. The clone operation will copy that repository to your local file system. To start the Clone Wizard click 
+			<b>Clone...</b>. The Clone Wizard is described in more detail in 
 			<a href="Cloning_Remote_Repositories" title="EGit/User_Guide#Cloning_Remote_Repositories">Cloning Remote Repositories</a>. Upon successful completion of the clone operation, the newly cloned repository appears in the list automatically.
 		</p>
 		<h4 id="Adding_a_Repository">Adding a Repository</h4>
-		<p>The second option is useful if you already have a repository in your local file system, for example because you have cloned it earlier, you created it from scratch or you copied it from somewhere else. Click
-			<b>Add...</b>; and select a directory in the local file system. Press
+		<p>The second option is useful if you already have a repository in your local file system, for example because you have cloned it earlier, you created it from scratch or you copied it from somewhere else. Click 
+			<b>Add...</b>; and select a directory in the local file system. Press 
 			<b>Search</b> to trigger a scan for Git repositories contained in this directory. If Git repositories are found, they will be listed and you can select repositories to add :
 		</p>
 		<p>
@@ -92,7 +95,7 @@
 			<img border="0" src="images/Egit-0.9-import-projects-filled-list.png"/>
 		</p>
 		<h3 id="Selecting_a_Repository_from_the_List">Selecting a Repository from the List</h3>
-		<p>You can now select a repository and click
+		<p>You can now select a repository and click 
 			<b>Next</b>. On the following wizard page, you will have to decide:
 		</p>
 		<ul>
@@ -107,7 +110,7 @@
 		<h4 id="Import_Existing_Projects">Import Existing Projects</h4>
 		<p>If this radio button is selected, the wizard will scan the local file system for <tt>.project</tt> files and display the projects found for being imported. This is the most comfortable solution and should be used if <tt>.project</tt> files are checked into the Repository.</p>
 		<h5 id="Limiting_the_Scope_for_Project_Import">Limiting the Scope for Project Import</h5>
-		<p>In this case, the directory tree at the bottom is active. You can limit the search for <tt>.project</tt> files by selecting a folder in this tree, otherwise the complete working directory of the repository will be scanned. On the next page, a list of the found projects (if any) will be shown. This is very similar to the generic
+		<p>In this case, the directory tree at the bottom is active. You can limit the search for <tt>.project</tt> files by selecting a folder in this tree, otherwise the complete working directory of the repository will be scanned. On the next page, a list of the found projects (if any) will be shown. This is very similar to the generic 
 			<b>Import Existing Projects</b> wizard, but has some additional filtering capabilities:
 		</p>
 		<p>
@@ -119,7 +122,7 @@
 		<h4 id="Import_as_General_Project">Import as General Project</h4>
 		<p>This option can be helpful when there are neither <tt>.project</tt> files available nor a suitable "New Project" wizard applies to the content of the Git Repository. If chosen, the wizard will generate a <tt>.project</tt> file and point the project to a folder of the Repository's working directory. The result is a "General Project".</p>
 		<p>By default, the newly generated project will point to the working directory of the Repository. By selecting some folder from the directory tree at the bottom, you can have the project generated for that folder.</p>
-		<p>Click
+		<p>Click 
 			<b>Next</b> to open a simple dialog for entering a name and a directory for the new project:
 		</p>
 		<p>
@@ -137,48 +140,55 @@
 			<img border="0" src="images/Egit-0.9-import-projects-share-manually.png"/>
 		</p>
 		<h4 id="Do_Not_Share_New_Projects">Do Not Share New Projects</h4>
-		<p>This may be helpful if for some reason you want to share projects manually.</p>
+		<p>This may be helpful if for some reason you want to share projects manually.
+
+			<br/>
+			<br/>
+		</p>
 		<h2 id="Working_with_remote_Repositories">Working with remote Repositories</h2>
 		<h3 id="Cloning_Remote_Repositories">Cloning Remote Repositories</h3>
 		<p>Using the Git Clone Wizard you may clone remote repositories using different transport protocols. </p>
-		<p>The wizard can be started from the "Import Projects from Git" wizard using
+		<p>The wizard can be started from the "Import Projects from Git" wizard using 
 
 			<br/>
 
 			<b>Import... &gt; Git &gt; Projects from Git &gt; Next &gt; Clone...</b>
 		</p>
-		<p>or from the "Git Repositories View" (described in
-			<a href="Managing_Repositories" title="EGit/User_Guide#Managing_Repositories">Managing Repositories</a>) using the
-			<b>Clone a Git Repository</b> toolbar button.
+		<p>or from the "Git Repositories View" (described in 
+			<a href="Managing_Repositories" title="EGit/User_Guide#Managing_Repositories">Managing Repositories</a>) using the 
+			<b>Clone a Git Repository</b> toolbar button or view menu. 
 		</p>
 		<h4 id="Repository_Selection">Repository Selection</h4>
 		<p>On the first page of the wizard enter the location of the remote repository: </p>
 		<p>
-			<img border="0" src="images/Egit-0.9-clone-wizard-url-page.png"/>
+			<img border="0" src="images/Egit-0.9-clone-wizard-url-page.png"/> 
 		</p>
 		<ul>
 			<li>
-				<b>URI</b> - The complete URI of the remote repository or the path on the file system. This field is automatically synchronized with the other fields.
-				<br/>Note that you can use the
-				<b>Local file...</b> button to browse for a local directory and that the URI field offers content assist by offering previously used values
+				<b>URI</b> - The complete URI of the remote repository or the path on the file system. This field is automatically synchronized with the other fields. 
+				<br/>Note that you can use the 
+				<b>Local file...</b> button to browse for a local directory and that the URI field offers content assist by offering previously used values 
 			</li>
 			<li>
-				<b>Host</b> - The name of the remote host or empty if cloning from the file system.
+				<b>Host</b> - The name of the remote host or empty if cloning from the file system. 
 			</li>
 			<li>
-				<b>Repository Path</b> - Path to the remote repository or on the file system.
+				<b>Repository Path</b> - Path to the remote repository or on the file system. 
 			</li>
 			<li>
-				<b>Protocol</b> - One of the protocols described below.
+				<b>Protocol</b> - One of the protocols described below. 
 			</li>
 			<li>
-				<b>Port</b> - Port number.
+				<b>Port</b> - Port number. 
 			</li>
 			<li>
-				<b>User</b> - The user name used for authentication.
+				<b>User</b> - The user name used for authentication. 
 			</li>
 			<li>
 				<b>Password</b> The password used for authentication.
+			</li>
+			<li>
+				<b>Store in Secure Store</b> Whether the password is saved in the Eclipse secure store.
 			</li>
 		</ul>
 		<p>The following protocols are supported: </p>
@@ -187,31 +197,39 @@
 				<b>file</b> - File system access to the repository.
 			</li>
 			<li>
-				<b>ftp</b> -
-				<a href="http://tools.ietf.org/html/rfc959" target="egit_external">File Transfer Protocol</a>
+				<b>ftp</b> - 
+				<a href="http://tools.ietf.org/html/rfc959" target="egit_external">File Transfer Protocol</a> 
 			</li>
 			<li>
-				<b>git</b> - The most efficient built-in git protocol (default port 9418). This protocol doesn't provide authentication. Typically used for anonymous read access to the repository.
+				<b>git</b> - The most efficient built-in git protocol (default port 9418). This protocol doesn't provide authentication. Typically used for anonymous read access to the repository. 
 			</li>
 			<li>
-				<b>http</b> -
-				<a href="http://tools.ietf.org/html/rfc2616" target="egit_external">Hypertext Transfer Protocol</a> can be tunneled through firewalls.
+				<b>http</b> - 
+				<a href="http://tools.ietf.org/html/rfc2616" target="egit_external">Hypertext Transfer Protocol</a> can be tunneled through firewalls. 
 			</li>
 			<li>
-				<b>https</b> -
-				<a href="http://tools.ietf.org/html/rfc2818" target="egit_external">Hypertext Transfer Protocol Secure</a> can be tunneled through firewalls.
+				<b>https</b> - 
+				<a href="http://tools.ietf.org/html/rfc2818" target="egit_external">Hypertext Transfer Protocol Secure</a> can be tunneled through firewalls. 
 			</li>
 			<li>
-				<b>sftp</b> -
-				<a href="http://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol" target="egit_external">SSH File Transfer Protocol</a>
+				<b>sftp</b> - 
+				<a href="http://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol" target="egit_external">SSH File Transfer Protocol</a> 
 			</li>
 			<li>
-				<b>ssh</b> - Git over
+				<b>ssh</b> - Git over 
 				<a href="http://tools.ietf.org/html/rfc4251" target="egit_external">secure shell (SSH)</a> protocol. Typically used for authenticated write access to the repository.
 			</li>
 		</ul>
 		<p>
-			<b>Note:</b> EGit 0.9 does not yet support authentication via HTTP or HTTPS protocol.
+			<b>New:</b> Support for authentication via HTTP or HTTPS protocol is introduced with EGit 0.10.
+
+			<br/>
+
+			<b>Note:</b> If you are behind a firewall you may need to configure your proxy settings (
+			<b>Preferences &gt; General &gt; Network Connections</b>). Many HTTP proxies are configured to block URLs containing a username (and/or password) like e.g. 
+			<a href="http://fred:topsecret@egit.eclipse.org/egit.git" target="egit_external">http://fred:topsecret@egit.eclipse.org/egit.git</a> hence it's recommended to use the 
+			<i>user</i>, 
+			<i>password</i> fields at the bottom of the wizard page, the credentials will be transmitted as HTTP headers.
 		</p>
 		<h4 id="Branch_Selection">Branch Selection</h4>
 		<p>On the next page choose which branches shall be cloned from the remote repository: </p>
@@ -221,22 +239,25 @@
 		<h4 id="Local_Destination">Local Destination</h4>
 		<p>On the next page define where you want to store the repository on the local file system and define some initial settings. </p>
 		<p>
-			<img border="0" src="images/Egit-0.9-clone-wizard-destination-page.png"/>
+			<img border="0" src="images/Egit-0.9-clone-wizard-destination-page.png"/> 
 		</p>
 		<ul>
 			<li>
-				<b>Directory</b> - The directory which will contain the Git repository. It will be created by the wizard if it does not yet exist.
+				<b>Directory</b> - The directory which will contain the Git repository. It will be created by the wizard if it does not yet exist. 
 			</li>
 			<li>
-				<b>Initial branch</b> - Choose here which local branch will be created and initially checked out.
+				<b>Initial branch</b> - Choose here which local branch will be created and initially checked out. 
 			</li>
 			<li>
 				<b>Remote name</b> - Define a name for the remote repository. The default is "origin".
 			</li>
 		</ul>
+		<p>
+			<br/>
+		</p>
 		<h3 id="Pushing_to_other_Repositories">Pushing to other Repositories</h3>
 		<h4 id="Direct_Push">Direct Push</h4>
-		<p>The easiest way for pushing is to use
+		<p>The easiest way for pushing is to use 
 			<a href="Tasks.html#Direct_Fetch_and_Push_Support">Direct Push Support</a> on a Push Specification of a Remote.
 		</p>
 		<h4 id="Push_Wizard">Push Wizard</h4>
@@ -248,10 +269,10 @@
 		</p>
 		<h5 id="Push_URI">Push URI</h5>
 		<ul>
-			<li>If you already configured a Push Specification in the Repositories View you may also select it here using the drop-down list under
+			<li>If you already configured a Push Specification in the Repositories View you may also select it here using the drop-down list under 
 				<b>Configured remote repositories</b>.
 			</li>
-			<li>Otherwise click
+			<li>Otherwise click 
 				<b>Custom URI</b> and enter the URI of the upstream repository you want to push to.
 			</li>
 		</ul>
@@ -259,7 +280,7 @@
 			<img border="0" src="images/Egit-0.9-push-wizard-destination-page.png"/>
 		</p>
 		<h5 id="Push_Ref_Specifications">Push Ref Specifications</h5>
-		<p>Click
+		<p>Click 
 			<b>Next</b>
 
 			<br/>
@@ -272,66 +293,66 @@
 		<p>
 			<img border="0" src="images/Egit-0.9-push-wizard-ssh-passphrase.png"/>
 		</p>
-		<p>Click
+		<p>Click 
 			<b>Add all branches spec</b>
 		</p>
 		<p>
 			<img border="0" src="images/Egit-0.9-push-wizard-refspec-allbranches.png"/>
 		</p>
 		<p>This is a convenient way to declare that you want to map your local branch names to the same branch names on the upstream repository you want to push changes to. </p>
-		<p>Click
+		<p>Click 
 			<b>Add all tags spec</b> to map local tags 1:1 to tags in the repository you want to push to.
 		</p>
 		<p>If you want to map local branches to those in the upstream repository in a different way you may define more detailed mapping specifications in the following way</p>
 		<ul>
 			<li>enter source and destination ref or select already existing branches from the drop-down lists</li>
-			<li>click
+			<li>click 
 				<b>Add spec</b>
 			</li>
 		</ul>
-		<p>This will transfer the newly defined mapping to the list
+		<p>This will transfer the newly defined mapping to the list 
 			<b>Specifications for push</b>
 		</p>
 		<p>
 			<b>Other common push specs:</b>
 		</p>
 		<ul>
-			<li>You may e.g. map <tt>refs/heads/*</tt> to <tt>refs/heads/joe/*</tt> if you want to name the branches you push to according to your nickname
+			<li>You may e.g. map <tt>refs/heads/*</tt> to <tt>refs/heads/joe/*</tt> if you want to name the branches you push to according to your nickname 
 				<i>joe</i>. This is useful if multiple users want to publish their local branches on personal branches in a jointly used public repository.
 			</li>
 			<li>Another usual mapping is to map the source ref <tt>HEAD</tt> to the destination <tt>refs/heads/master</tt>. This means you want to map your current <tt>HEAD</tt> (which might currently point e.g. to any local topic branch) to the upstream master branch.</li>
 		</ul>
 		<h5 id="Delete_Ref_Specifications">Delete Ref Specifications</h5>
-		<p>To delete a ref in the destination repository select the ref to be deleted from the drop-down list
+		<p>To delete a ref in the destination repository select the ref to be deleted from the drop-down list 
 			<b>Remote ref to delete</b>
-			and click
-			<b>Add spec</b>. This will create a corresponding entry in the
+			and click 
+			<b>Add spec</b>. This will create a corresponding entry in the 
 			<b>Specifications for push</b> list. Alternatively you may type in the specification for the refs to be deleted, this may also use wildcards. Pushing Delete Ref Specifications will delete the matching Refs in the destination repository.
 		</p>
 		<p>
 			<img border="0" src="images/Egit-0.9-push-wizard-delete-refspec.png"/>
 		</p>
 		<h5 id="Conflicting_Push_Ref_Specifications">Conflicting Push Ref Specifications</h5>
-		<p>If you add multiple conflicting Push Ref Specifications they will be marked in red, solve this by removing or editing the conflicting specs. It is also possible to edit the specs in-place in the list
+		<p>If you add multiple conflicting Push Ref Specifications they will be marked in red, solve this by removing or editing the conflicting specs. It is also possible to edit the specs in-place in the list 
 			<b>Specifications for push</b>
 		</p>
 		<p>
 			<img border="0" src="images/Egit-0.9-push-wizard-refspec-conflict.png"/>
 		</p>
 		<h5 id="Push_Confirmation">Push Confirmation</h5>
-		<p>Click
+		<p>Click 
 			<b>Next</b>
 		</p>
 		<p>This will open the Push Confirmation dialog showing a preview which changes will be pushed to the destination repository.
-			If this does not match your expectation click
-			<b>Back</b> and correct your push specs accordingly.
+			If this does not match your expectation click 
+			<b>Back</b> and correct your push specs accordingly. 
 		</p>
 		<ul>
 			<li>For ref updates the range of commits to be pushed will be shown in the format <tt>
 				<b>&lt;SHA1-from&gt;..&lt;SHA1-to&gt;</b></tt> e.g. <tt>
 				<b>d97f5a2e..adfdbfd2</b></tt> means all commits between <tt>
 				<b>d97f5a2e</b></tt> and <tt>
-				<b>adfdbfd2</b></tt> will be pushed.
+				<b>adfdbfd2</b></tt> will be pushed. 
 			</li>
 			<li>For refs which do not yet exist in the destination repository <tt>
 				<b>&#91;new branch&#93;</b></tt> or <tt>
@@ -345,15 +366,15 @@
 			<img border="0" src="images/Egit-0.9-push-wizard-confirm-push.png"/>
 		</p>
 		<ul>
-			<li>Select the
+			<li>Select the 
 				<b>Push only if remote refs don't change in the mean time</b> check box if you want to be sure that what you see in this preview is also what you get when pushing these changes out.
 			</li>
-			<li>Select the
+			<li>Select the 
 				<b>Show final report dialog only when it differs from this confirmation report</b> check box if you only want to get a report after executing the push if the result differs from this preview.
 			</li>
 		</ul>
 		<h5 id="Push_Result_Report">Push Result Report</h5>
-		<p>Click
+		<p>Click 
 			<b>Finish</b>
 		</p>
 		<p>Depending on the options you have chosen a push result report dialog is shown</p>
@@ -361,14 +382,17 @@
 			<img border="0" src="images/Egit-0.9-push-wizard-push-result.png"/>
 		</p>
 		<p>In the box at the bottom the push confirmation message from the remote server is displayed.
-			In case of any errors you will find the error message from the remote server here. To see the message for
+			In case of any errors you will find the error message from the remote server here. To see the message for 
 			a given list entry simply select it in the list.</p>
-		<p>Click
+		<p>Click 
 			<b>Ok</b> to close the dialog.
+
+			<br/>
+			<br/>
 		</p>
 		<h3 id="Fetching_from_other_Repositories">Fetching from other Repositories</h3>
 		<h4 id="Direct_Fetch">Direct Fetch</h4>
-		<p>The easiest way for fetching is to use
+		<p>The easiest way for fetching is to use 
 			<a href="Tasks.html#Direct_Fetch_and_Push_Support">Direct Fetch Support</a> on a Fetch Specification of a Remote.
 		</p>
 		<h4 id="Fetch_Wizard">Fetch Wizard</h4>
@@ -379,7 +403,7 @@
 			<b>Team &gt; Fetch...</b>
 		</p>
 		<ul>
-			<li>If you already configured a Fetch Specification in the Repositories View you may also select it here using the drop-down list under
+			<li>If you already configured a Fetch Specification in the Repositories View you may also select it here using the drop-down list under 
 				<b>Configured remote repositories</b>.
 			</li>
 		</ul>
@@ -387,7 +411,7 @@
 			<img border="0" src="images/Egit-0.9-fetch-wizard-source-page.png"/>
 		</p>
 		<ul>
-			<li>Otherwise click
+			<li>Otherwise click 
 				<b>Custom URI</b> and enter the URI of the upstream repository you want to fetch changes from.
 			</li>
 		</ul>
@@ -395,11 +419,11 @@
 			<img border="0" src="images/Egit-0.9-fetch-wizard-source-url-page.png"/>
 		</p>
 		<h5 id="Fetch_Ref_Specifications">Fetch Ref Specifications</h5>
-		<p>Click
+		<p>Click 
 			<b>Next</b>
 
 			<br/>
-			Click
+			Click 
 			<b>Add all branches spec</b>
 		</p>
 		<p>
@@ -407,9 +431,9 @@
 		</p>
 		<p>This is a convenient way to declare that you want to map the branch names in the upstream repository you want to fetch changes from 1:1 to the same local branch names. </p>
 		<ul>
-			<li>Click in the edit field
-				<b>Destination Ref</b> and replace the path segment
-				<i>choose_remote_name</i> with a symbolic name for the upstream repository you are going to fetch from.
+			<li>Click in the edit field 
+				<b>Destination Ref</b> and replace the path segment 
+				<i>choose_remote_name</i> with a symbolic name for the upstream repository you are going to fetch from. 
 			</li>
 			<li>The default remote name for the repository your repository has been cloned from is <tt>
 				<b>origin</b></tt>. The master of this remote maps by default from <tt>
@@ -420,34 +444,34 @@
 				<b>refs/heads/*</b></tt> to the following tracking branches <tt>
 				<b>refs/remotes/joe/*</b></tt>.
 			</li>
-			<li>Deselect
+			<li>Deselect 
 				<b>Force Update</b> if you want to allow fast-forward updates only, select this option if you also want to allow non-fast-forward changes.
 			</li>
-			<li>Click
+			<li>Click 
 				<b>Force Update all Refs</b> to set the force update option on all specs
 			</li>
-			<li>Click
-				<b>Remove all specs</b> to remove all specs from the list
+			<li>Click 
+				<b>Remove all specs</b> to remove all specs from the list 
 				<b>Specifications for fetch</b>
 			</li>
 		</ul>
 		<ul>
-			<li>Click
+			<li>Click 
 				<b>Add all tags spec</b> to map tags tags in the repository you want to fetch from 1:1 to local tags.
 			</li>
 		</ul>
 		<p>If you want to map branches or tags in the upstream repository to local branches in a different way you may define more detailed mapping specifications in the following way</p>
 		<ul>
 			<li>enter source (ref in source repository) and destination ref (tracking branch or tag in local repository) or select already existing branches from the drop-down lists</li>
-			<li>click
+			<li>click 
 				<b>Add spec</b>
 			</li>
 		</ul>
-		<p>This will transfer the newly defined mapping to the list
+		<p>This will transfer the newly defined mapping to the list 
 			<b>Specifications for fetch</b>
 		</p>
 		<h5 id="Fetch_Result_Report">Fetch Result Report</h5>
-		<p>Click
+		<p>Click 
 			<b>Finish</b>
 		</p>
 		<p>
@@ -459,7 +483,7 @@
 				<b>&lt;SHA1-from&gt;..&lt;SHA1-to&gt;</b></tt> e.g. <tt>
 				<b>d97f5a2e..adfdbfd2</b></tt> means all commits between <tt>
 				<b>d97f5a2e</b></tt> and <tt>
-				<b>adfdbfd2</b></tt> have been fetched.
+				<b>adfdbfd2</b></tt> have been fetched. 
 			</li>
 			<li>For refs which didn't exist before in the local repository <tt>
 				<b>&#91;new branch&#93;</b></tt> or <tt>
@@ -469,50 +493,55 @@
 				<b>&#91;deleted&#93;</b></tt> is shown.
 			</li>
 		</ul>
+		<p>
+			<br/>
+		</p>
 		<h3 id="Pulling_New_Changes_from_Upstream_Repositories">Pulling New Changes from Upstream Repositories</h3>
-		<p>This is not yet fully available. </p>
-		<p>In cases where fast-forward merges are sufficient (full merge is not yet implemented) you may run pull in EGit in the following way:</p>
+		<p>Pull is available since EGit 0.10:</p>
 		<ul>
-			<li>
-				<a href="Tasks.html#Fetching_from_other_Repositories">Fetch changes</a> from upstream repository
+			<li>click 
+				<b>Team &gt; Pull</b> to pull new changes from the upstream branch your local branch is tracking
 			</li>
+			<li>whenever you create a local branch based on a remote tracking branch EGit configures a tracking relationship so that subsequent pulls will fetch and merge the changes from the tracked upstream branch.</li>
 			<li>
-				<a href="Tasks.html#Check-out_of_Branches_and_Tags">Checkout the branch</a> you want to pull the upstream changes into
+				<b>pull --rebase</b> is not yet supported by EGit 
 			</li>
-			<li>
-				<a href="Tasks.html#Merging_a_branch_or_a_tag_into_the_current_branch">Merge</a> the branch or tag you want to integrate into your current branch
-			</li>
+			<li>ad-hoc selection of the upstream branch to pull from is not yet supported by EGit</li>
 		</ul>
 		<p>Available alternatives currently include: </p>
 		<ul>
-			<li>run
-				<b>git pull</b> from outside eclipse (but
-				<a href="http://marc.info/?l=git&amp;m=123924844219075" target="egit_external">beware on Windows</a>)
+			<li>run 
+				<b>git pull</b> from outside eclipse (but 
+				<a href="http://marc.info/?l=git&amp;m=123924844219075" target="egit_external">beware on Windows</a>) 
 			</li>
-			<li>if you did no local change or want to discard your local changes, use
+			<li>if you did no local change or want to discard your local changes, use 
 				<b>Team &gt; Reset...</b>
 			</li>
 		</ul>
+		<p>
+			<br/>
+			<br/>
+		</p>
 		<h2 id="Inspecting_the_state_of_the_Repository">Inspecting the state of the Repository</h2>
 		<h3 id="Label_Decorations">Label Decorations</h3>
 		<p>Label decorations show Git specific information on resources under Git version control. They appear in all views showing model objects, like Package Explorer, Project Explorer, Navigator, Hierarchy View. </p>
 		<p>The Git label decorations can be switched on globally in the Preference Menu (
-			<b>Window &gt; Preferences</b>) under
-			<b>General &gt; Appearance &gt; Label Decorations</b>.
+			<b>Window &gt; Preferences</b>) under 
+			<b>General &gt; Appearance &gt; Label Decorations</b>. 
 		</p>
-		<p>More detailed settings can be done in the Preferences under
-			<b>Team &gt; Git &gt; Label Decorations</b>.
+		<p>More detailed settings can be done in the Preferences under 
+			<b>Team &gt; Git &gt; Label Decorations</b>. 
 		</p>
 		<p>There are two different types of label decorations: text decorations and icon decorations. </p>
 		<h4 id="Text_Decorations">Text Decorations</h4>
-		<p>Text decorations appear on the left or right side of the text label. They can be configured on the Preferences dialog under
-			<b>Team &gt; Git &gt; Label Decorations</b> on the tab
+		<p>Text decorations appear on the left or right side of the text label. They can be configured on the Preferences dialog under 
+			<b>Team &gt; Git &gt; Label Decorations</b> on the tab 
 			<b>Text Decorations</b>. For example, the default for a dirty resource is a <tt>
-			<b>&gt;</b></tt> on the left side of its name.
+			<b>&gt;</b></tt> on the left side of its name. 
 		</p>
 		<p>These are the default settings: </p>
 		<p>
-			<img border="0" src="images/01-TextDecorations.png"/>
+			<img border="0" src="images/01-TextDecorations.png"/> 
 		</p>
 		<p>For files and folders there are the variables <tt>"name"</tt>, <tt>"dirty"</tt> and <tt>"staged"</tt>. <tt>"Dirty"</tt> and <tt>"staged"</tt> are flags; if they are true, the text after the colon is displayed.</p>
 		<p>For projects there are the additional variables <tt>"repository"</tt> and <tt>"branch"</tt>. The <tt>"repository"</tt> variable displays the name of the repository.</p>
@@ -526,53 +555,57 @@
 			<img border="0" src="images/03-ExampleDecoration.png"/>
 		</p>
 		<h4 id="Icon_Decorations">Icon Decorations</h4>
-		<p>Icon decorations appear on the lower right corner of the icon displayed in front of the label. They can be configured on the Preferences dialog under
-			<b>Team &gt; Git &gt; Label Decorations</b> on the tab
-			<b>Icon Decorations</b>.
+		<p>Icon decorations appear on the lower right corner of the icon displayed in front of the label. They can be configured on the Preferences dialog under 
+			<b>Team &gt; Git &gt; Label Decorations</b> on the tab 
+			<b>Icon Decorations</b>. 
 		</p>
 		<p>These are the default decorations: </p>
 		<p>
-			<img border="0" src="images/02-IconDecorations.png"/>
+			<img border="0" src="images/02-IconDecorations.png"/> 
 		</p>
 		<ul>
 			<li>
-				<b>dirty (folder)</b> - At least one file below the folder is dirty; that means that it has changes in the working tree that are neither in the index nor in the repository.
+				<b>dirty (folder)</b> - At least one file below the folder is dirty; that means that it has changes in the working tree that are neither in the index nor in the repository. 
 			</li>
 			<li>
-				<b>tracked</b> - The resource is known to the Git repository and hence under version control.
+				<b>tracked</b> - The resource is known to the Git repository and hence under version control. 
 			</li>
 			<li>
-				<b>untracked</b> - The resource is not known to the Git repository and will not be version controlled until it is explicitly added.
+				<b>untracked</b> - The resource is not known to the Git repository and will not be version controlled until it is explicitly added. 
 			</li>
 			<li>
-				<b>ignored</b> - The resource is ignored by the Git team provider. The preference settings under
-				<b>Team &gt; Ignored Resources</b>, "derived" flag and settings from <tt>.gitignore</tt> files are taken into account.
+				<b>ignored</b> - The resource is ignored by the Git team provider. The preference settings under 
+				<b>Team &gt; Ignored Resources</b>, "derived" flag and settings from <tt>.gitignore</tt> files are taken into account. 
 			</li>
 			<li>
-				<b>dirty</b> - The resource has changes in the working tree that are neither in the index nor in the repository.
+				<b>dirty</b> - The resource has changes in the working tree that are neither in the index nor in the repository. 
 			</li>
 			<li>
-				<b>staged</b> - The resource has changes which have been added to the index. Note that adding changes to the index is currently possible only in the commit dialog via the context menu of a resource.
+				<b>staged</b> - The resource has changes which have been added to the index. Note that adding changes to the index is currently possible only in the commit dialog via the context menu of a resource. 
 			</li>
 			<li>
-				<b>partially-staged</b> - The resource has changes which are added to the index and additional changes in the working tree that neither reached the index nor have been committed to the repository.
+				<b>partially-staged</b> - The resource has changes which are added to the index and additional changes in the working tree that neither reached the index nor have been committed to the repository. 
 			</li>
 			<li>
-				<b>added</b> - The resource has not yet reached any commit in the repository but has been freshly added to the Git repository in order to be tracked in future.
+				<b>added</b> - The resource has not yet reached any commit in the repository but has been freshly added to the Git repository in order to be tracked in future. 
 			</li>
 			<li>
-				<b>removed</b> - The resource is staged for removal from the Git repository.
+				<b>removed</b> - The resource is staged for removal from the Git repository. 
 			</li>
 			<li>
-				<b>conflict</b> - A merge conflict exists for the file.
+				<b>conflict</b> - A merge conflict exists for the file. 
 			</li>
 			<li>
-				<b>assume-valid</b> - The resource has the "assume unchanged" flag. This means that Git stops checking the working tree files for possible modifications, so you need to manually unset the bit to tell Git when you change the working tree file. Also see
+				<b>assume-valid</b> - The resource has the "assume unchanged" flag. This means that Git stops checking the working tree files for possible modifications, so you need to manually unset the bit to tell Git when you change the working tree file. Also see 
 				<a href="Reference.html#Menu_Actions">Assume unchanged action</a>.
 			</li>
 		</ul>
 		<h3 id="Commit_Dialog">Commit Dialog</h3>
-		<p>A summary of the status of all modified tracked files is displayed on the commit dialog. By double clicking a file the changes to be committed will be displayed in a compare dialog. As EGit currently always commits the content of the working tree (corresponding to git commit -a on the command line) the compare dialog will compare the working tree with the last commit.</p>
+		<p>A summary of the status of all modified tracked files is displayed on the commit dialog. By double clicking a file the changes to be committed will be displayed in a compare dialog. As EGit currently always commits the content of the working tree (corresponding to git commit -a on the command line) the compare dialog will compare the working tree with the last commit.
+
+			<br/>
+			<br/>
+		</p>
 		<h3 id="Comparing_Content">Comparing Content</h3>
 		<p>In daily work you will often want to see the changes between your last commit, the index, and the current working tree. </p>
 		<p>
@@ -582,92 +615,98 @@
 		<h4 id="Compare_working_tree_with_last_commit">Compare working tree with last commit</h4>
 		<p>The difference between a file in the current working directory and in the last commit in the current branch can be viewed from the context menu "Compare With" -&gt; "HEAD revision". This feature is also available in the Commit dialog. Double clicking on an entry in the Commit dialog opens a compare dialog. </p>
 		<h4 id="Comparing_Working_Tree_with_Index">Comparing Working Tree with Index</h4>
-		<p>The difference between a file in the current working directory and in the index can be viewed from the context menu
-			<b>Compare With &gt; Git Index</b>.
+		<p>The difference between a file in the current working directory and in the index can be viewed from the context menu 
+			<b>Compare With &gt; Git Index</b>. 
 		</p>
 		<h4 id="Comparing_Working_Tree_with_Any_Commit">Comparing Working Tree with Any Commit</h4>
 		<ul>
 			<li>Select a file in the package explorer </li>
-			<li>from the context menu select
-				<b>Show in &gt; History</b> or
+			<li>from the context menu select 
+				<b>Show in &gt; History</b> or 
 				<b>Compare With &gt; History...</b>
 			</li>
 			<li>in the commit graph select a commit </li>
-			<li>from the context menu select
-				<b>Compare with working tree</b>
+			<li>from the context menu select 
+				<b>Compare with working tree</b> 
 			</li>
 			<li>this will open a compare dialog showing the changes between the selected commit and the current working tree</li>
 		</ul>
 		<h4 id="Comparing_Two_Commits_with_Each_Other">Comparing Two Commits with Each Other</h4>
 		<ul>
 			<li>Select a file in the package explorer </li>
-			<li>from the context menu select
-				<b>Show in &gt; History</b> or
+			<li>from the context menu select 
+				<b>Show in &gt; History</b> or 
 				<b>Compare With &gt; History...</b>
 			</li>
 			<li>in the commit graph select two commits </li>
-			<li>from the context menu select
-				<b>Compare with each other</b>
+			<li>from the context menu select 
+				<b>Compare with each other</b> 
 			</li>
 			<li>this will open a compare dialog showing the changes between the two selected commits</li>
 		</ul>
 		<h4 id="Comparing_Index_with_HEAD_or_Any_Other_Commit">Comparing Index with HEAD or Any Other Commit</h4>
 		<p>This feature is not implemented yet.</p>
-		<h3 id="Comparing_with_Branches_.28Synchronize.29">Comparing with Branches (Synchronize)</h3>
-		<p>The difference between two branches can be viewed from project's context menu
-			<b>Team &gt; Synchronize</b>. If the git repository contains multiple Eclipse projects it is enough to select one project, the
-			<b>Synchronization view</b> will include all other projects. It is critical to have all important files/projects imported into Eclipse because the
-			<b>Synchronization view</b> can only dispatch and show files that are known as a resource in Eclipse any other files will
-			<b>never</b> appear in the
-			<b>Synchronization view</b>.
+		<p>
+			<br/>
 		</p>
-		<p>After launching
-			<b>Synchronize</b> action the
-			<b>Synchronization dialog</b> will appear.
+		<h3 id="Comparing_with_Branches_.28Synchronize.29">Comparing with Branches (Synchronize)</h3>
+		<p>The difference between two branches can be viewed from project's context menu 
+			<b>Team &gt; Synchronize</b>. If the git repository contains multiple Eclipse projects it is enough to select one project, the 
+			<b>Synchronization view</b> will include all other projects. It is critical to have all important files/projects imported into Eclipse because the 
+			<b>Synchronization view</b> can only dispatch and show files that are known as a resource in Eclipse any other files will 
+			<b>never</b> appear in the 
+			<b>Synchronization view</b>. 
+		</p>
+		<p>After launching 
+			<b>Synchronize</b> action the 
+			<b>Synchronization dialog</b> will appear. 
 		</p>
 		<p>
 			<img border="0" src="images/Synchronize-dialog.jpg"/>
 		</p>
 		<p>Here you can select two branches that should be compared. By checking "include local uncommited changed files" you can include locally made changes and currently staged files in comparison (currently this is not supported by ChangeSet implementation).</p>
-		<p>It is also possible to compare multiple repositories at once. In this case for each repository the
+		<p>It is also possible to compare multiple repositories at once. In this case for each repository the 
 			<b>Synchronize dialog</b> will appear and you could select a different configuration for each repository.
 		</p>
 		<h3 id="Quickdiff">Quickdiff</h3>
-		<p>Instead of using a compare editor you can enable quick diff support and see the changes within the text editor.
+		<p>Instead of using a compare editor you can enable quick diff support and see the changes within the text editor. 
 
-			<br/>This feature can be enabled via the
-			<b>General &gt; Editors &gt; Text Editors &gt; Quick Diff</b> preference page:
+			<br/>This feature can be enabled via the 
+			<b>General &gt; Editors &gt; Text Editors &gt; Quick Diff</b> preference page: 
 		</p>
 		<p>
-			<img border="0" src="images/04-QuickDiffPreferences.png"/>
+			<img border="0" src="images/04-QuickDiffPreferences.png"/> 
 		</p>
 		<p>The difference annotation will then be displayed on the left hand side of the editor: </p>
 		<p>
-			<img border="0" src="images/05-QuickDiffInEditor.png"/>
+			<img border="0" src="images/05-QuickDiffInEditor.png"/> 
 		</p>
 		<p>If you move your mouse over the annotation you see the content of the version you are comparing to: </p>
 		<p>
-			<img border="0" src="images/06-QuickDiffInEditorPopup.png"/>
+			<img border="0" src="images/06-QuickDiffInEditorPopup.png"/> 
 		</p>
 		<p>Per default, the comparison is against the HEAD. You can determine the version you are comparing to, the so-called quickdiff baseline, from the context menu of a commit in the history view (
-			<b>Show in &gt; History</b>). There are three menu entries:
+			<b>Show in &gt; History</b>). There are three menu entries: 
 		</p>
 		<ul>
 			<li>
 				<b>Quick Diff -&gt; Reset baseline to first parent of HEAD</b> - Compare against the first commit before HEAD.
 			</li>
 			<li>
-				<b>Quick Diff -&gt; Reset baseline to HEAD</b> - Compare against HEAD.
+				<b>Quick Diff -&gt; Reset baseline to HEAD</b> - Compare against HEAD. 
 			</li>
 			<li>
 				<b>Quick Diff -&gt; Set as baseline</b> - Compare against the selected commit
 			</li>
 		</ul>
+		<p>
+			<br/>
+		</p>
 		<h3 id="View_Diff_for_a_Commit">View Diff for a Commit</h3>
 		<p>To display the diff for a given commit </p>
 		<ul>
-			<li>from context menu in package explorer select
-				<b>Team &gt; Show in Resource History</b>
+			<li>from context menu in package explorer select 
+				<b>Team &gt; Show in Resource History</b> 
 			</li>
 			<li>select the commit you want to inspect </li>
 			<li>the history view will display the diff in the lower left pane</li>
@@ -676,17 +715,20 @@
 		<p>
 			<img border="0" src="images/EGit-0.7-ViewDiffInResourceHistory.png"/>
 		</p>
+		<p>
+			<br/>
+		</p>
 		<h2 id="Committing_Changes">Committing Changes</h2>
 		<p>Modifications to a project under git version control are persisted in the git history through commits. Starting from the state checked out from the git repository modify your project until you have reached a state you are satisfied with and then commit all these changes into the repository as one single commit. Each commit represents a well defined snapshot of all the files stored in the repository. </p>
 		<h3 id="Modifying_the_content">Modifying the content</h3>
 		<p>To modify a project which is already shared with Git modify or delete files either within Eclipse or directly in the file system. There is no need to tell Git in advance about these operations. New files which should be version-controlled have to be explicitly put under Git version control :</p>
 		<ul>
-			<li>click
-				<b>Team &gt; Add</b> in the file's context menu
+			<li>click 
+				<b>Team &gt; Add</b> in the file's context menu 
 			</li>
 		</ul>
-		<p>Alternatively you may display untracked files in the Commit dialog and check the
-			<b>Show untracked Files</b> checkbox to select them for inclusion into the commit.
+		<p>Alternatively you may display untracked files in the Commit dialog and check the 
+			<b>Show untracked Files</b> checkbox to select them for inclusion into the commit. 
 		</p>
 		<p>Label decorators e.g. in the Package Explorer View show </p>
 		<ul>
@@ -694,8 +736,8 @@
 			<li>files which have been added (marked with "+") </li>
 			<li>modified files (marked with "&gt;" in front of the filename)</li>
 		</ul>
-		<p>For details see
-			<a href="Tasks.html#Label_Decorations">Label Decorations</a>.
+		<p>For details see 
+			<a href="Tasks.html#Label_Decorations">Label Decorations</a>. 
 		</p>
 		<p>Here is an example in the Package Explorer for</p>
 		<ul>
@@ -709,20 +751,20 @@
 			<img border="0" src="images/Egit-0.9-label-decorators.png"/>
 		</p>
 		<h3 id="Committing">Committing</h3>
-		<p>To commit a change click
-			<b>Team &gt; Commit...</b> in the context menu of a resource in the project.
+		<p>To commit a change click 
+			<b>Team &gt; Commit...</b> in the context menu of a resource in the project. 
 		</p>
 		<p>Git tracks all changes made to the entire repository capturing the modifications of all version-controlled files in that repository not regarding if these files reside in the same Eclipse project or not. </p>
-		<p>Once you have triggered the commit the
-			<b>Commit Dialog</b> will pop-up
+		<p>Once you have triggered the commit the 
+			<b>Commit Dialog</b> will pop-up 
 		</p>
 		<p>
-			<img border="0" src="images/Egit-0.9-commit-dialog.png"/>
+			<img border="0" src="images/Egit-0.9-commit-dialog.png"/> 
 		</p>
 		<h4 id="Commit_Message">Commit Message</h4>
 		<p>In the Commit Dialog you specify the commit message describing the change. </p>
-		<p>It is good practice to start the message with a short first line summarizing the change followed by a blank line and then the message body. In order to ensure that also git command line tools can format these messages nicely the lines shouldn't be formatted too wide (this is indicated by a grey vertical line). The commit message text is checked for errors by the Eclipse spell checker. The spell checker can be configured via the Eclipse
-			<b>Preferences &gt; General &gt; Editors &gt; Text Editors &gt; Spelling</b>. Click
+		<p>It is good practice to start the message with a short first line summarizing the change followed by a blank line and then the message body. In order to ensure that also git command line tools can format these messages nicely the lines shouldn't be formatted too wide (this is indicated by a grey vertical line). The commit message text is checked for errors by the Eclipse spell checker. The spell checker can be configured via the Eclipse 
+			<b>Preferences &gt; General &gt; Editors &gt; Text Editors &gt; Spelling</b>. Click 
 			<b>Ctrl - 1</b> to open quick fixes which may help to fix the spelling errors.
 		</p>
 		<p>
@@ -742,22 +784,22 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 </pre>
 		<p>The semantics of these tags are project or tool specific</p>
 		<ul>
-			<li>If there is an entry in a but tracking system for the change to be committed it is a good idea to add it here as a bug tag</li>
+			<li>If there is an entry in a bug tracking system for the change to be committed it is a good idea to add it here as a bug tag</li>
 			<li>
-				<a href="http://code.google.com/p/gerrit/" target="egit_external">Gerrit Code Review</a> uses the
-				<i>Change-Id:</i> footer to correlate different patchsets of a change evolving during the review process towards the finally accepted patch. To generate a Gerrit Change-Id click
+				<a href="http://code.google.com/p/gerrit/" target="egit_external">Gerrit Code Review</a> uses the 
+				<i>Change-Id:</i> footer to correlate different patchsets of a change evolving during the review process towards the finally accepted patch. To generate a Gerrit Change-Id click 
 				<b>Compute Change-Id for Gerrit Code Review</b>; the ID will be generated on commit, until then a null Change-Id is shown as a placeholder.
 			</li>
-			<li>The
-				<i>Signed-off-by:</i> footer is used by many projects to create a formal track record of declarations that the signing author contributed the changes under the project's license and IP rules. This way the IP provenance of a project's evolving code base can be captured on a technical level. See e.g. the
-				<a href="http://elinux.org/Developer_Certificate_Of_Origin" target="egit_external">Developer Certificate Of Origin</a> used by the Linux kernel project.
+			<li>The 
+				<i>Signed-off-by:</i> footer is used by many projects to create a formal track record of declarations that the signing author contributed the changes under the project's license and IP rules. This way the IP provenance of a project's evolving code base can be captured on a technical level. See e.g. the 
+				<a href="http://elinux.org/Developer_Certificate_Of_Origin" target="egit_external">Developer Certificate Of Origin</a> used by the Linux kernel project. 
 			</li>
 		</ul>
 		<p>Additionally this dialog controls which of the changes will be included in the commit. If you clear the checkbox in front of a file, the changes to this file will not be included in the commit. The local file in your eclipse workspace will still contain the modifications giving you the chance to commit these changes with a subsequent commit. This feature is often used to separate modifications done to a set of files into different commits. </p>
 		<p>
-			<b>One example:</b> Imagine since the last commit you have fixed a bug in A.java and you have added a new method to B.java. These two modifications are logically independent from each other hence you may want to commit them in two independant commits. In this case you initate the commit, deselect B.java from the set of committed files and specify a commit message describing only the bugfix in A.java. After a succesfull first commit you just call commit again and the upcoming dialog will present you the remaining changes in B.java. Now you specify a commit message describing the addition of the method and finish the second commit.
+			<b>One example:</b> Imagine since the last commit you have fixed a bug in A.java and you have added a new method to B.java. These two modifications are logically independent from each other hence you may want to commit them in two independant commits. In this case you initate the commit, deselect B.java from the set of committed files and specify a commit message describing only the bugfix in A.java. After a succesfull first commit you just call commit again and the upcoming dialog will present you the remaining changes in B.java. Now you specify a commit message describing the addition of the method and finish the second commit. 
 		</p>
-		<p>New files you added to the project which have not been explicitly added to version control (see "Modifying the content") will be listed in the commit dialog if you select the checkbox "Show untracked Files". If you select the checkbox in front of these files in the list they will be added to the repository and committed once you press the commit button. Files which are excluded by the team ignore list or a <tt>.gitignore</tt> file or which are derived (e.g. the bin folder in java projects) will not be shown here. If you have no other changes in your repository than such untracked files the checkbox
+		<p>New files you added to the project which have not been explicitly added to version control (see "Modifying the content") will be listed in the commit dialog if you select the checkbox "Show untracked Files". If you select the checkbox in front of these files in the list they will be added to the repository and committed once you press the commit button. Files which are excluded by the team ignore list or a <tt>.gitignore</tt> file or which are derived (e.g. the bin folder in java projects) will not be shown here. If you have no other changes in your repository than such untracked files the checkbox 
 			<b>Show untracked Files</b> is selected by default.
 		</p>
 		<h4 id="Amending_Commits">Amending Commits</h4>
@@ -766,22 +808,22 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<b>Note:</b> do not amend commits if they have already been published to a shared repository since this may disturb others if they already based their changes on the published change.
 		</p>
 		<p>
-			<b>Amend example:</b>
+			<b>Amend example:</b> 
 
-			<br/>Imagine you have committed a change to a file containing a typo
+			<br/>Imagine you have committed a change to a file containing a typo 
 		</p>
 		<p>
-			<img border="0" src="images/EGit-Typo.png"/>
+			<img border="0" src="images/EGit-Typo.png"/> 
 		</p>
 		<p>After committing the change you detect a typo. In order to correct this typo and the corresponding commit you just fix the typo in the source file </p>
 		<p>
-			<img border="0" src="images/EGit-Corrected.png"/>
+			<img border="0" src="images/EGit-Corrected.png"/> 
 		</p>
-		<p>then open the Commit Dialog again and select the option
-			<b>Amend previous commit</b>.
+		<p>then open the Commit Dialog again and select the option 
+			<b>Amend previous commit</b>. 
 		</p>
 		<p>
-			<img border="0" src="images/Egit-0.9-commit-dialog-amend.png"/>
+			<img border="0" src="images/Egit-0.9-commit-dialog-amend.png"/> 
 		</p>
 		<p>The commit message of your previous commit (the one you want to replace) is filled into the "Commit Message" field. This gives you the chance not only to correct errors in the content of the version-controlled files but to also correct errors (e.g. typos) in the commit message describing your change. </p>
 		<p>As an alternative to amending you could just commit the corrected version as a subsequent commit. But the first commit containing the typo is of no use to anybody and in order not to clutter the history of your project with unneeded commits you may decide to amend the commit. </p>
@@ -790,12 +832,12 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<h3 id="Reverting_changes_in_the_working_tree">Reverting changes in the working tree</h3>
 		<h4 id="Replace_with_File_in_Git_Index">Replace with File in Git Index</h4>
 		<p>Changes which are not yet committed and not yet staged can be reverted for a set of selected files.
-			Select the file(s) in the Package Explorer or an analogous view and click
+			Select the file(s) in the Package Explorer or an analogous view and click 
 			<b>Replace With &gt; File in Git Index</b>.
 		</p>
 		<h4 id="Replace_with_HEAD">Replace with HEAD</h4>
-		<p>This feature is currently not available on single file level. You can use
-			<b>Reset to</b> with option
+		<p>This feature is currently not available on single file level. You can use 
+			<b>Reset to</b> with option 
 			<b>hard</b> to forcefully reset the entire working tree of your repository back to the state of the HEAD commit (See "Resetting your current HEAD" below). This operation will revert all changes in the working tree and the index. You can't do it on a selected set of files using EGit yet.
 		</p>
 		<h3 id="Resetting_your_current_HEAD">Resetting your current HEAD</h3>
@@ -813,40 +855,43 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			</li>
 		</ul>
 		<h4 id="Reset_to_specific_branch_or_tag">Reset to specific branch or tag</h4>
-		<p>Select
+		<p>Select 
 			<b>Team -&gt; Reset...</b> on a project. This opens a dialog where you can select a branch or a tag.
 		</p>
 		<h4 id="Reset_to_a_specific_commit">Reset to a specific commit</h4>
-		<p>Select a commit in the History view and open the context menu.  Here you find the entries
-			<b>Hard reset</b>,
-			<b>Mixed reset</b> and
+		<p>Select a commit in the History view and open the context menu.  Here you find the entries 
+			<b>Hard reset</b>, 
+			<b>Mixed reset</b> and 
 			<b>Soft reset</b>.
 		</p>
 		<h4 id="Revert_all_local_and_staged_changes">Revert all local and staged changes</h4>
-		<p>This can be done as a special case of reset. If you reset to the current HEAD (normally the last commit on your branch) with the option
+		<p>This can be done as a special case of reset. If you reset to the current HEAD (normally the last commit on your branch) with the option 
 			<b>hard</b> you overwrite the working tree and the index with the content of the HEAD. You can do this in three ways:
 		</p>
 		<ul>
-			<li>Select
-				<b>Team &gt; Reset...</b> on a project. In the dialog select HEAD or your current branch and switch the radio button to
+			<li>Select 
+				<b>Team &gt; Reset...</b> on a project. In the dialog select HEAD or your current branch and switch the radio button to 
 				<b>hard</b>.
 			</li>
-			<li>Right click and select
-				<b>Reset...</b> on any branch or tag in the Repositories view. This opens a dialog which lets you decide on the reset type. Choose
+			<li>Right click and select 
+				<b>Reset...</b> on any branch or tag in the Repositories view. This opens a dialog which lets you decide on the reset type. Choose 
 				<b>hard</b> here.
 			</li>
-			<li>Open the context menu on the HEAD commit in the history view and select
+			<li>Open the context menu on the HEAD commit in the history view and select 
 				<b>Hard Reset</b>.
 			</li>
 		</ul>
+		<p>
+			<br/>
+		</p>
 		<h2 id="Branching">Branching</h2>
 		<h3 id="Branching_in_the_Repositories_View">Branching in the Repositories View</h3>
-		<p>The Repositories View
+		<p>The Repositories View 
 			<a href="Tasks.html#Branch_and_Tag_Support">supports</a> the following branching actions:
 		</p>
 		<ul>
 			<li>
-				<a href="Tasks.html#Check-out_of_Branches_and_Tags">Checkout of branches</a>
+				<a href="Tasks.html#Check-out_of_Branches_and_Tags">Checkout branches</a>
 			</li>
 			<li>
 				<a href="Tasks.html#Creation_and_Deletion_of_Branches">Creation and deletion of branches</a>
@@ -868,36 +913,47 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<h4 id="Creating_a_New_Local_Branch">Creating a New Local Branch</h4>
 		<ul>
 			<li>Select the branch your new branch should be based on</li>
-			<li>Click
+			<li>Click 
 				<b>New Branch</b>
 			</li>
-			<li>Enter the branch name and click
+			<li>Enter the branch name and click 
 				<b>OK</b>
 			</li>
 		</ul>
+		<p>
+			<b>Note:</b> If you create a local branch based on a remote tracking branch a tracking relationship will be configured automatically. When this local branch is checked out a subsequent 
+			<b>Pull</b> operation will pull new changes into the local branch from the remote tracking branch configured to be tracked by this local branch. You may view and edit this configuration in the 
+			<a href="Tasks.html#Repository_Configuration">repository configuration</a>.
+		</p>
 		<h4 id="Renaming_an_Existing_Branch">Renaming an Existing Branch</h4>
 		<ul>
 			<li>Select the branch you want to rename</li>
-			<li>Click
+			<li>Click 
 				<b>Rename</b>
 			</li>
-			<li>Enter the new branch name and click
+			<li>Enter the new branch name and click 
 				<b>OK</b>
 			</li>
 		</ul>
 		<h4 id="Checking_out_a_Branch">Checking out a Branch</h4>
 		<ul>
 			<li>Select the branch you want to check out</li>
-			<li>Click
+			<li>Click 
 				<b>Checkout</b>
 			</li>
 		</ul>
+		<p>
+			<br/>
+		</p>
 		<h3 id="Branching_in_the_History_View">Branching in the History View</h3>
-		<p>In history view a new branch can be created based on a given commit: select a commit in the history view and execute
+		<p>In history view a new branch can be created based on a given commit: select a commit in the history view and execute 
 			<b>Create Branch...</b> on the context menu. A dialog for branch creation appears:
 		</p>
 		<p>
 			<img border="0" src="images/CreateBranch.png"/>
+		</p>
+		<p>
+			<br/>
 		</p>
 		<h2 id="Merging">Merging</h2>
 		<p>A merge incorporates changes from named commits (since the time their histories diverged from the current branch) into the current branch. </p>
@@ -909,7 +965,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		</ul>
 		<h4 id="Starting_merge_from_the_team_menu">Starting merge from the team menu</h4>
 		<p>In the Package Explorer or Navigator, open the context menu on a project node.
-			Select
+			Select 
 			<b>Team &gt; Merge...</b>
 		</p>
 		<p>Now the merge dialog opens:</p>
@@ -918,15 +974,20 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		</p>
 		<p>On the dialog, select a branch or a tag you want to merge with your current branch. </p>
 		<h4 id="Starting_merge_from_the_Git_Repositories_View">Starting merge from the Git Repositories View</h4>
-		<p>You can trigger a merge from any branch and tag node and from the repository node if you have checked out a local branch. See
-			<a href="Tasks.html#Merging_a_Branch_or_a_Tag">Merging a Branch or a Tag</a> for further details.
+		<p>You can trigger a merge from any branch and tag node and from the repository node if you have checked out a local branch. See 
+			<a href="Tasks.html#Merging_a_Branch_or_a_Tag">Merging a Branch or a Tag</a> for further details. 
 		</p>
 		<h4 id="Possible_merge_results">Possible merge results</h4>
 		<p>After pressing the Merge button, the following scenarios can occur:</p>
 		<ul>
-			<li>Already up to date: Your current branch points to a commit that has the selected branch or tag as predecessor. In this case nothing is changed.</li>
-			<li>Fast-forward:  Your current branch points to a commit that is a predecessor of the selected branch or tag.  In this case your branch is moved and points to the selected branch or tag; this new HEAD is checked out to the working tree. Fast-forward is very common when working with remote repositories: When a remote tracking branch is updated, the merge with the corresponding branch generally is a fast-forward. You can perform a pull by fetching the remote branch (e.g. origin/master) and merging it into the corresponding local branch (e.g. master).</li>
-			<li>Real merge: When neither of the conditions above apply egit triggers a merge of the commits. There are two possible outcomes: If no conflicts occur the current branch will point to a newly created merge commit; if conflicts occur the conflicting files will be marked with label decorators (see
+			<li>
+				<i>Already up to date</i>: Your current branch points to a commit that has the selected branch or tag as predecessor. In this case nothing is changed.
+			</li>
+			<li>
+				<i>Fast-forward</i>:  Your current branch points to a commit that is a predecessor of the selected branch or tag.  In this case your branch is moved and points to the selected branch or tag; this new HEAD is checked out to the working tree. Fast-forward is very common when working with remote repositories: When a remote tracking branch is updated, the merge with the corresponding branch generally is a fast-forward. You can perform a pull by fetching the remote branch (e.g. origin/master) and merging it into the corresponding local branch (e.g. master).
+			</li>
+			<li>
+				<i>Real merge</i>: When neither of the conditions above apply egit triggers a merge of the commits. There are two possible outcomes: If no conflicts occur the current branch will point to a newly created merge commit; if conflicts occur the conflicting files will be marked with label decorators (see 
 				<a href="Tasks.html#Resolving_a_merge_conflict">Resolving a merge conflict</a> for further actions in case of merge conflicts).
 			</li>
 		</ul>
@@ -939,17 +1000,49 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>On the second line you see the new HEAD commit in case of a successful merge (Already-up-to-date, Fast-forward or Merged).</p>
 		<p>In the table you see the commits which were merged.</p>
 		<h3 id="Resolving_a_merge_conflict">Resolving a merge conflict</h3>
-		<p>A merge can result in conflicts which require user action. This is the case when the content of files cannot be merged automatically. These conflicts are marked with a label decoration in the navigation tree. The merge conflicts in the content of files are presented with textual conflict markers (see
+		<p>A merge can result in conflicts which require user action. This is the case when the content of files cannot be merged automatically. These conflicts are marked with a label decoration in the navigation tree. The merge conflicts in the content of files are presented with textual conflict markers (see 
 			<a href="http://www.kernel.org/pub/software/scm/git/docs/git-merge.html#_how_conflicts_are_presented" target="egit_external">http://www.kernel.org/pub/software/scm/git/docs/git-merge.html#_how_conflicts_are_presented</a> for more details).
 		</p>
+		<p>
+			<img border="0" src="images/Egit-0.10-merge-conflict.png"/>
+		</p>
+		<h4 id="Using_Merge_Tool">Using Merge Tool</h4>
+		<ul>
+			<li>select the top level resource showing the red conflict label decorator</li>
+			<li>click 
+				<b>Team &gt; Merge Tool</b>
+			</li>
+			<li>select the merge mode 
+				<i>Use HEAD (the last local version) of conflicting files" and click '''OK</i>'
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-0.10-select-merge-mode.png"/>
+		</p>
+		<ul>
+			<li>the merge editor opens showing the working tree version in the left pane and the version to be merged in the right pane</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-0.10-merge-tool.png"/>
+		</p>
+		<ul>
+			<li>edit the working tree version until you are happy with it</li>
+			<li>
+				<b>Team &gt; Add</b> the merged resource to mark the conflict as resolved
+			</li>
+			<li>commit the merge commit via 
+				<b>Team &gt; Commit</b>
+			</li>
+		</ul>
+		<h4 id="Manual_conflict_resolution">Manual conflict resolution</h4>
 		<p>To resolve a conflict you have to do the following steps:</p>
 		<ul>
 			<li>Navigate to the conflicting resource</li>
 			<li>Edit the content of the conflicting resource</li>
-			<li>Tell EGit that the conflict is resolved with
+			<li>Tell EGit that the conflict is resolved with 
 				<b>Team &gt; Add</b>
 			</li>
-			<li>Commit the conflict resolution with
+			<li>Commit the conflict resolution with 
 				<b>Team &gt; Commit</b>
 			</li>
 		</ul>
@@ -959,13 +1052,13 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<img border="0" src="images/Conflicts.png"/>
 		</p>
 		<h4 id="Editing_conflicting_files">Editing conflicting files</h4>
-		<p>In the file content, the area where a pair of conflicting changes happened is marked with markers &lt;&lt;&lt;&lt;&lt;&lt;&lt;, =======, and &gt;&gt;&gt;&gt;&gt;&gt;&gt;. The part before the ======= is typically your side, and the part afterwards is typically their side (see
-			<a href="http://www.kernel.org/pub/software/scm/git/docs/git-merge.html#_how_conflicts_are_presented" target="egit_external">http://www.kernel.org/pub/software/scm/git/docs/git-merge.html#_how_conflicts_are_presented</a> for more details).
+		<p>In the file content, the area where a pair of conflicting changes happened is marked with markers &lt;&lt;&lt;&lt;&lt;&lt;&lt;, =======, and &gt;&gt;&gt;&gt;&gt;&gt;&gt;. The part before the ======= is typically your side, and the part afterwards is typically their side (see 
+			<a href="http://www.kernel.org/pub/software/scm/git/docs/git-merge.html#_how_conflicts_are_presented" target="egit_external">http://www.kernel.org/pub/software/scm/git/docs/git-merge.html#_how_conflicts_are_presented</a> for more details). 
 		</p>
 		<p>Open the file in an editor, edit the content and save the editor.</p>
 		<p>Note that this step is not mandatory. EGit does not check the content to decide if a conflict is resolved. The next step is the relevant one.</p>
 		<h4 id="Adding_conflict_resolution_to_the_git_index">Adding conflict resolution to the git index</h4>
-		<p>Once you are finished with editing a file select
+		<p>Once you are finished with editing a file select 
 			<b>Team &gt; Add</b> to add the conflict resolution to the git index. You can do it on a folder or the whole project to resolve all conflicts at once.
 		</p>
 		<p>When you have resolved all conflicts the textual repository label decoration changes to "Merged". There are no conflict markers anymore.</p>
@@ -974,7 +1067,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		</p>
 		<h4 id="Committing_a_merge">Committing a merge</h4>
 		<p>When the repository is in state "Merged" (as is indicated with the textual label decorator "|Conflicts" attached to the repository name) the merge can finally be committed.</p>
-		<p>Select
+		<p>Select 
 			<b>Team &gt; Commit...</b> anywhere in the navigation tree. The commit dialog opens with a slightly different look compared to a normal commit:
 		</p>
 		<ul>
@@ -984,15 +1077,232 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<li>it is not possible to uncheck the checkboxes. This guarantees that all resolved conflicts are committed.</li>
 		</ul>
 		<p>After pressing the "Commit" Button the merge is completed.</p>
-		<h3 id="Aborting_merge">Aborting merge</h3>
+		<h3 id="Aborting_Merge">Aborting Merge</h3>
 		<p>If a merge resulted in conflicts you can abort the merge with a hard reset to the current branch. This can be done in state "Conflicts" and in state "Merged", i.e. before and after you have resolved the conflicts. </p>
-		<p>The hard reset can be done from the team menu, the Git Repositories View and the History View. See [
+		<p>The hard reset can be done from the team menu, the Git Repositories View or the History View. See [
 			<a href="Tasks.html#Revert_all_local_and_staged_changes">Revert all local and staged changes</a> for more details.
+		</p>
+		<p>
+			<br/>
+		</p>
+		<h2 id="Rebasing">Rebasing</h2>
+		<h3 id="Rebase_Introduction">Rebase Introduction</h3>
+		<p>Rebase applies a chain of commits onto a given commit. A typical scenario is the development of some feature on a "topic" branch which was created from a "master" branch at some point in time. When "master" is updated with changes e.g. from other developers while "topic" is still under development, it may become necessary to incorporate these changes into "topic".
+			<br/> 
+		</p>
+		<p>Let's assume we start development on "topic" by creating the "topic" branch from master. At this point, both "master" and "topic" point to commit "E". When the first commit ("A") is added to "topic", the commit history of the repository looks like this:
+			<br/> 
+		</p>
+		<pre>          A topic
+         /
+    D---E master
+</pre>
+		<p> 
+			Now, let's assume that there were some more commits on "topic" and as well some more commits on "master" (for example, "master" may track some remote repository and there were some changes in that remote repository that have been pulled into "master"):
+			<br/> 
+		</p>
+		<pre>          A---B---C topic
+         /
+    D---E---F---G master
+</pre>
+		<p> 
+			Now, in order to incorporate the changes in "master" into "topic", a Rebase of "topic" onto "master" would produce
+			<br/> 
+		</p>
+		<pre>                  A'--B'--C' topic
+                 /
+    D---E---F---G master
+</pre>
+		<p> 
+
+			<br/> Technically, the sequence of commits that are contained in "topic" but not in "master" are applied (that is, cherry-picked) on top of "master" one by one.
+			<br/> 
+		</p>
+		<p>Note that the commits A, B, C are neither lost nor changed, instead a new chain of commits A', B', C' with the same changes and commit messages as the original commits (but different commit IDs) will be created. The old commits A, B, C are still around in the object database but not visible anymore as they are no longer reachable from any branch. A', B', C' are different from the old ones as they now also contain changes F and G.</p>
+		<h3 id="Rebase.2C_A_Simple_Example">Rebase, A Simple Example</h3>
+		<p>Let's have a look at some simple example: we have a text file "FamousWords.txt" which initially might have some content like </p>
+		<pre>Chapter 1
+Once upon a time...
+
+Chapter 2
+To be or not to be
+</pre>
+		<p> 
+			Now, in "topic", two commits are created, the first one adding a French translation to Chapter 2, and another one adding a German translation: </p>
+		<p>After first change in "topic":
+			<br/> 
+		</p>
+		<pre>Chapter 1
+Once upon a time...
+
+Chapter 2
+To be or not to be
+Ètre ou non ètre pas
+
+</pre>
+		<p> 
+			After second change in "topic":
+			<br/> 
+		</p>
+		<pre>Chapter 1
+Once upon a time...
+
+Chapter 2
+To be or not to be
+Ètre ou non ètre pas
+Sein oder nicht sein
+</pre>
+		<p> 
+			At the same time, the file was changed in "master" by adding two commits adding French and German translations to Chapter 1:
+			<br/> 
+		</p>
+		<pre>Chapter 1
+Once upon a time...
+Il était une fois
+Es war einmal
+
+Chapter 2
+To be or not to be
+</pre>
+		<p> 
+			The commit history looks like this: </p>
+		<p>
+			<img border="0" src="images/EGit-0.10-MergeDemoHistory.png"/> 
+		</p>
+		<p>Now, if "topic" is rebased onto "master", the two changes in topic are applied in the same sequence as they were applied during the evolution of "topic". </p>
+		<p>The result is a merged version of "FamousWords.txt":
+			<br/>
+		</p>
+		<pre>Chapter 1
+Once upon a time...
+Il était une fois
+Es war einmal
+
+Chapter 2
+To be or not to be
+Ètre ou non ètre pas
+Sein oder nicht sein
+
+</pre>
+		<p>and a commit history with the commit history of "topic" on top of the current "master":
+			<br/> 
+		</p>
+		<p>
+			<img border="0" src="images/EGit-0.10-MergeDemoHistoryAfterRebase.png"/>
+		</p>
+		<h3 id="The_Real_World:_Rebase_Conflicts">The Real World: Rebase Conflicts</h3>
+		<p>Up to now, we have assumed that the changes in "topic" can be auto-merged into "master". In the real world, however, it may happend that you encounter conflicts during rebase. Now, if a commit that is to be cherry-picked contains changes that conflict with changes in "master", the rebase operation is interrupted after applying the conflicting change; the conflicts are visualized in the usual way (with conflict markers) and the user gets a chance to decide whether to</p>
+		<ul>
+			<li>resolve these conflicts manually,</li>
+			<li>skip the current commit, or </li>
+			<li>abort the rebase completely</li>
+		</ul>
+		<p>If 
+			<b>Resolve Conflicts</b> is chosen, and the conflicts have been resolved manually, the changes must be "Added", and then rebase can be resumed, i.e. the next commit in the chain will be applied.
+		</p>
+		<p>If 
+			<b>Skip</b> was chosen, the conflicting changes will be reverted and the next commit in the chain will be applied.
+		</p>
+		<p>If 
+			<b>Abort</b> was chosen, the rebase operation will be completely rolled back, returning the Repository into its original state before the rebase was started.
+			This process is repeated until the last commit was applied successfully or skipped. Finally, the "topic" branch will be changed to point to the last commit.
+		</p>
+		<p>To understand "Skip" better, let's look back to the introduction above. If we assume that commit "B" causes some conflicts with the current "master", the user might decide to simply skip "B"; the new commit history after the rebase would then look like this:</p>
+		<pre>                  A'--C' topic
+                 /
+    D---E---F---G master
+</pre>
+		<h3 id="Starting_Rebase">Starting Rebase</h3>
+		<p>Rebase is available in the Git Repositories View. On Repository nodes, 
+			<b>Rebase...</b> opens a dialog asking the user to select a branch that is not checked out; the currently checked out branch will then be rebased onto the selected branch. On "Branch" nodes (both Local and Remote Tracking branches, but not on the currently checked out branch), 
+			<b>Rebase</b> immediately rebases the currently checked out branch onto the selected branch:
+		</p>
+		<p>
+			<img border="0" src="images/EGit-0.10-StartRebaseFromRepoView.png"/>
+		</p>
+		<h3 id="Rebase_Confirmation_Dialog">Rebase Confirmation Dialog</h3>
+		<p>If Rebase was successful, a confirmation dialog will be displayed; this dialog can be suppressed by ticking a checkbox; a preference on the Git preference page allows to make the dialogs appear again. If the dialog is suppressed, an "Information" message is written to the Eclipse log instead.</p>
+		<h3 id="Rebase_Conflicts">Rebase Conflicts</h3>
+		<p>If a conflict occurs during rebase, a dialog is shown giving some information about the commit that caused the conflict. By selecting a radio button, you can decide whether to</p>
+		<ul>
+			<li>Start the Merge Tool to resolve the conflicts manually</li>
+			<li>Skip the current commit</li>
+			<li>Abort the rebase altogether</li>
+			<li>Do nothing (return to the workbench), this is equivalent to hitting "Escape":</li>
+		</ul>
+		<p>
+			<img border="0" src="images/EGit-0.10-RebaseConflictDialog.png"/>
+		</p>
+		<p>Unless "Skip" or "Abort" was chosen in the dialog, the conflicts must be resolved manually by editing the conflicting files. When done with editing, the files must be declared as being resolved by "Adding" them to the index.</p>
+		<p>After all conflicts have been resolved, Rebase can be resumed by right-clicking on the Repository node in the Git Repositories View and selecting Rebase &gt; Continue.</p>
+		<p>The "Skip" and "Abort" options are also available from the Git Repositories View by right-clicking on the Repository node and selecting Rebase &gt; Skip and Rebase &gt; Abort, respectively.</p>
+		<p>The Merge Tool can also be started from the corresponding entry in the Team menu.</p>
+		<h3 id="Aborting_Rebase">Aborting Rebase</h3>
+		<p>As long as the Repository is in "Rebasing" state, the user can always abort the rebase in the Git Repositories View using the menu action "Rebase &gt; Abort" which is available on the Repository node.</p>
+		<h3 id="Rebase_Limitation">Rebase Limitation</h3>
+		<p>In EGit 0.10 rebase is not yet able to handle all possible version graphs. If the graph is too complicated rebase will abort with an error message. As a workaround until these more complex graphs are also supported by EGit's rebase you may instead use native git from the command line.</p>
+		<h2 id="Cherry_Picking">Cherry Picking</h2>
+		<h3 id="Cherry-pick_Introduction">Cherry-pick Introduction</h3>
+		<p>A given commit 
+			<i>C'' on branch ''stable-1.0</i> contains a set of changes you would like to integrate in your current development on branch 
+			<i>master</i>. 
+		</p>
+		<pre>                  A--B--C--D stable-1.0
+                 /
+    D---E---F---G master HEAD
+</pre>
+		<p>Cherry-pick the commit 
+			<i>C'' to create a new commit ''C' '' on top of the head commit of the currently checked out branch ''master</i>. 
+			<i>C' '' will then contain the changes performed in ''C</i> applied onto the HEAD of the currently checked out branch 
+			<i>master</i>.
+		</p>
+		<pre>                  A--B--C--D stable-1.0
+                 /
+    D---E---F---G--C' master HEAD
+</pre>
+		<h3 id="Cherry-pick_Example">Cherry-pick Example</h3>
+		<p>You are currently working on branch "feature2" (HEAD). There is a commit "feature 1" in another branch.
+			<br/>
+			You want to integrate the changes performed by commit "feature 1" into your current development on branch "feature 2".
+		</p>
+		<ul>
+			<li>In the History View select commit "feature 1" and click 
+				<b>Cherry-pick</b>:
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/CherryPick1.png"/>
+		</p>
+		<ul>
+			<li>As result you get a new commit "feature 1" at the tip of your current branch "feature" containing the changes of "feature 1":</li>
+		</ul>
+		<p>
+			<img border="0" src="images/CherryPick2.png"/>
+		</p>
+		<ul>
+			<li>Cherry-picking can encounter conflicts. In this case conflict markers are rendered into the affected sources:</li>
+		</ul>
+		<p>
+			<img border="0" src="images/CherryPick3.png"/>
+		</p>
+		<ul>
+			<li>Resolve the conflicts by editing the corresponding sources as described in 
+				<a href="Tasks.html#Resolving_a_merge_conflict">Resolving a merge conflict</a> 
+			</li>
+			<li>
+				<b>Team &gt; Add</b> the files you edited to mark the conflicts resolved 
+			</li>
+			<li>Commit the changes using 
+				<b>Team &gt; Commit</b>
+			</li>
+		</ul>
+		<p>
+			<br/>
 		</p>
 		<h2 id="Tagging">Tagging</h2>
 		<h3 id="Creating_a_Tag">Creating a Tag</h3>
 		<ul>
-			<li>Select
+			<li>Select 
 				<b>Team &gt; Tag...</b> from the project context menu.
 			</li>
 		</ul>
@@ -1003,11 +1313,11 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<li>Enter the tag name</li>
 			<li>Enter the tag message</li>
 			<li>Optionally select the commit you want to tag (default is HEAD)</li>
-			<li>Click
+			<li>Click 
 				<b>OK</b> to create the annotated tag
 			</li>
 		</ul>
-		<p>Tags can also be created in the history view: select a commit and execute
+		<p>Tags can also be created in the history view: select a commit and execute 
 			<b>Create Tag...</b> in the context menu. The tag will be created on the selected commit:
 		</p>
 		<p>
@@ -1018,12 +1328,12 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<ul>
 			<li>If you didn't yet push this out just replace the tag and you are done.</li>
 			<li>
-				<b>If it's already published you shouldn't replace the tag</b> but use a new name since otherwise you have to tell everybody who got the old tag to replace it manually with your updated one. This is because, Git does not (and it should not) change tags behind users back. So if somebody already got the old tag, doing a git pull on your tree shouldn't just make them overwrite the old one.}}
+				<b>If it's already published you shouldn't replace the tag</b> but use a new name since otherwise you have to tell everybody who got the old tag to replace it manually with your updated one. This is because, Git does not (and it should not) change tags behind users back. So if somebody already got the old tag, doing a git pull on your tree shouldn't just make them overwrite the old one.
 			</li>
 		</ul>
 		<p>So if your old tag wasn't yet pushed you may correct it in the following way :</p>
 		<ul>
-			<li>Select
+			<li>Select 
 				<b>Team &gt; Tag...</b> from the project context menu.
 			</li>
 		</ul>
@@ -1033,17 +1343,20 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<ul>
 			<li>Select the tag you want to replace from the list of existing tags</li>
 			<li>or start typing any part of the tag you look for into the Tag Name field, this will filter the list of existing tags to those tags which contain the string you are typing, then select the tag you want to replace</li>
-			<li>Mark the checkbox
+			<li>Mark the checkbox 
 				<b>Force replace existing tag</b>
 			</li>
-			<li>Change the tag and press
+			<li>Change the tag and press 
 				<b>OK</b>
 			</li>
 		</ul>
 		<h3 id="Light-weight_and_Signed_Tags">Light-weight and Signed Tags</h3>
 		<p>Light-weight and signed tags are not yet supported by EGit, use command line <tt>
 			<b>git tag</b></tt> or <tt>
-			<b>git tag -s</b></tt> as a workaround
+			<b>git tag -s</b></tt> instead.
+		</p>
+		<p>
+			<br/>
 		</p>
 		<h2 id="Patches">Patches</h2>
 		<h3 id="Creating_Patches">Creating Patches</h3>
@@ -1069,11 +1382,11 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		</p>
 		<p>The name of the patch file is created from the first line of the commit message.</p>
 		<p>On the second page you can change the patch format. </p>
-		<p>Currently there is one check box:
-			<b>Export in git patch format</b>.
+		<p>Currently there is one check box: 
+			<b>Export in git patch format</b>. 
 		</p>
 		<ul>
-			<li>If you do not check it (this is the default) the patch can be applied with the eclipse
+			<li>If you do not check it (this is the default) the patch can be applied with the eclipse 
 				<b>Apply Patch...</b> wizard. The paths are relative to the eclipse projects and do not contain prefixes (like <tt>
 				<b>git format-patch --no-prefix</b></tt> on the git command line).
 			</li>
@@ -1082,8 +1395,11 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			</li>
 		</ul>
 		<h3 id="Applying_Patches">Applying Patches</h3>
-		<p>Currently it s not possible to apply patches in git format. It is possible to apply patches using the standard eclipse format using
+		<p>Currently it s not possible to apply patches in git format. It is possible to apply patches using the standard eclipse format using 
 			<b>Team &gt; Apply Patch...</b>.
+		</p>
+		<p>
+			<br/>
 		</p>
 		<h2 id="Managing_Repositories">Managing Repositories</h2>
 		<p>The "Git Repositories View" is the primary UI element to facilitate working with multiple Repositories simultaneously (i.e. within one Eclipse Workspace).</p>
@@ -1103,7 +1419,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 
 			<br/>
 
-			<b>Show In... &gt; Git Repositories</b> or
+			<b>Show In... &gt; Git Repositories</b> or 
 			<b>Team &gt; Show in Repositories View</b>
 		</p>
 		<p>on any resource to open the view.</p>
@@ -1116,34 +1432,34 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<li>Adding a Repository by pasting a Git Repository path to the view</li>
 		</ol>
 		<h4 id="Adding_a_Repository_manually">Adding a Repository manually</h4>
-		<p>You can add a Repository from your local file system to the Git Repositories View without cloning it. This can be helpful if you are setting up a new Eclipse workspace and want to re-use your Git Repositories. Use the
+		<p>You can add a Repository from your local file system to the Git Repositories View without cloning it. This can be helpful if you are setting up a new Eclipse workspace and want to re-use your Git Repositories. Use the 
 			<b>Add an existing Git Repository</b> button from the view's toolbar:
 		</p>
 		<p>
 			<img border="0" src="images/RepoMgrAddRepositoryIcon.png"/>
 		</p>
-		<p>A dialog will appear prompting you for a directory of your local file system. After selecting the correct directory, you can hit the
-			<b>Search</b> button to see a list of Git Repositories in this directory. You can then select some or all found Repositories and add them to the view using
+		<p>A dialog will appear prompting you for a directory of your local file system. After selecting the correct directory, you can hit the 
+			<b>Search</b> button to see a list of Git Repositories in this directory. You can then select some or all found Repositories and add them to the view using 
 			<b>OK</b>:
 		</p>
 		<p>
 			<img border="0" src="images/RepoMgrSearchDialog.png"/>
 		</p>
 		<h4 id="Cloning_a_Repository_2">Cloning a Repository</h4>
-		<p>In order to clone a Repository, refer to
+		<p>In order to clone a Repository, refer to 
 			<a href="Tasks.html#Cloning_a_Repository">Cloning remote Repositories</a>. After a successful clone operation, the newly cloned Repository should appear in the Git Repositories View automatically.
 		</p>
-		<p>You can also use the
+		<p>You can also use the 
 			<b>Clone a Git Repository</b> button from the view's toolbar to start the Clone wizard:
 		</p>
 		<p>
 			<img border="0" src="images/RepoMgrCloneRepositoryIcon.png"/>
 		</p>
-		<p>Please refer to
+		<p>Please refer to 
 			<a href="Tasks.html#Cloning_a_Repository">Cloning remote Repositories</a> about how to use the wizard.
 		</p>
 		<h4 id="Creating_a_Repository">Creating a Repository</h4>
-		<p>You can create a new, empty repository on the local file system. This is useful if you later on want to create one or more new projects below this repository. Another usecase is to create a new bare repository where you can push to. Use the
+		<p>You can create a new, empty repository on the local file system. This is useful if you later on want to create one or more new projects below this repository. Another usecase is to create a new bare repository where you can push to. Use the 
 			<b>Create a new Git Repository</b> button from the view's toolbar:
 		</p>
 		<p>
@@ -1153,20 +1469,42 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>
 			<img border="0" src="images/RepoMgrCreateRepositoryDialog.png"/>
 		</p>
-		<p>If you select the checkbox
+		<p>If you select the checkbox 
 			<b>Create as Bare Repository</b> the new repository will not have a working directory. You then can only add content by pushing changes from another repository.
 		</p>
-		<h4 id="Adding_a_Repository_using_copy_and_paste">Adding a Repository using copy and paste</h4>
+		<h4 id="Adding_a_Repository_using_Copy_and_Paste">Adding a Repository using Copy and Paste</h4>
 		<p>As a shortcut, it is also possible to paste the local file system path of a Git repository from the clipboard into this view. In order to do so, copy the path of a Git repository (the full path of its <code>.git</code> folder) to the clipboard, then open the context menu on the view panel:</p>
 		<p>
 			<img border="0" src="images/RepoMgrPasteRepositoryPath.png"/>
 		</p>
-		<p>or click
+		<p>or click 
 			<b>Edit &gt; Paste</b> from the main menu (or the corresponding keyboard shortcut). If the clipboard content is not suitable, an error popup will be displayed, otherwise the added Repository should appear automatically.
 		</p>
 		<p>After the view has been populated with some repositories, it should look like this:</p>
 		<p>
 			<img border="0" src="images/RepoMgrViewWithRepos.png"/>
+		</p>
+		<h3 id="Removing_Repositories">Removing Repositories</h3>
+		<h4 id="Removing_a_Repository_from_the_Repositories_View">Removing a Repository from the Repositories View</h4>
+		<p>In order to remove a repository from the Repositories View select a repository and click "Remove Repository" </p>
+		<p>
+			<img border="0" src="images/Egit-0.10-RemoveRepository.png"/>
+		</p>
+		<h4 id="Deleting_a_Repository">Deleting a Repository</h4>
+		<p>In order to delete a repository, select it in the Repositories View and click "Delete Repository".</p>
+		<p>
+			<img border="0" src="images/Egit-0.10-DeleteRepository.png"/>
+		</p>
+		<p>Then confirm that you want to delete the repository</p>
+		<p>
+			<img border="0" src="images/Egit-0.10-ConfirmRepositoryDeletion.png"/>
+		</p>
+		<p>and decide if you want to delete projects contained in the repository from the Eclipse workspace.</p>
+		<p>
+			<img border="0" src="images/Egit-0.10-ConfirmProjectRemoval.png"/>
+		</p>
+		<p>
+			<br/>
 		</p>
 		<h3 id="Structure_of_the_Git_Repositories_View">Structure of the Git Repositories View</h3>
 		<p>The following screenshot shows the topmost two levels of the Git Repositories View:</p>
@@ -1183,11 +1521,11 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>
 			<img border="0" src="images/RepoMgrImportNodes.png"/>
 		</p>
-		<p>The rationale for offering the
-			<b>Import Projects...</b> action on several nodes  is that some of the wizards used for importing projects can take the file system directory into account, for example the
+		<p>The rationale for offering the 
+			<b>Import Projects...</b> action on several nodes  is that some of the wizards used for importing projects can take the file system directory into account, for example the 
 			<b>Import Existing Projects</b> wizard. If the import is started from the "Repository" or the "Working Directory" node, the working directory of the repository is set as context, otherwise the directory corresponding to the currently selected "Folder" node.
 		</p>
-		<p>The details of project import are discussed in
+		<p>The details of project import are discussed in 
 			<a href="Tasks.html#Use_the_New_Projects_Wizard">Use the New Projects Wizard</a>.
 		</p>
 		<h4 id="Branch_and_Tag_Support">Branch and Tag Support</h4>
@@ -1206,22 +1544,22 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>You can change the source branch using the drop-down. By default, the newly created branch will be checked out after creation. Deselect the corresponding checkbox on the wizard if you don't want this to happen.</p>
 		<p>Branch deletion is done using the corresponding context menu entry.</p>
 		<h5 id="Merging_a_Branch_or_a_Tag">Merging a Branch or a Tag</h5>
-		<p>You can trigger a merge from any branch and tag node and from the repository node if you have checked out a local branch. See
+		<p>You can trigger a merge from any branch and tag node and from the repository node if you have checked out a local branch. See 
 			<a href="Tasks.html#Merging">Merging</a> for further details of the merging features.
 		</p>
 		<ul>
-			<li>When you select any branch node other than the currently checked out branch or any tag node, use
-				<b>Merge</b> to directly trigger a merge into the currently checked out branch.
+			<li>When you select any branch node other than the currently checked out branch or any tag node, use 
+				<b>Merge</b> to directly trigger a merge into the currently checked out branch. 
 			</li>
 		</ul>
 		<ul>
-			<li>When you select the repository node or the currently checked out branch, use
-				<b>Merge...</b> to open the merge dialog. The merge dialog is described at
+			<li>When you select the repository node or the currently checked out branch, use 
+				<b>Merge...</b> to open the merge dialog. The merge dialog is described at 
 				<a href="Tasks.html#Merging_a_branch_or_a_tag_into_the_current_branch">Merging a branch or a tag into the current branch</a>.
 			</li>
 		</ul>
 		<h5 id="Synchronizing_with_a_Branch_or_a_Tag">Synchronizing with a Branch or a Tag</h5>
-		<p>You can perform a comparison of the changes in your HEAD with the changes done in any other branch or tag. Right click and select
+		<p>You can perform a comparison of the changes in your HEAD with the changes done in any other branch or tag. Right click and select 
 			<b>Synchronize...</b> on any branch or tag. Then the eclipse synchronize view opens which contains a representation of the changes that are contained in your HEAD but not on the other branch or tag (outgoing change) or vice versa (incoming change). Please refer to the documentation of the synchronize feature for further details.
 		</p>
 		<h5 id="Determining_the_Checked-out_Branch">Determining the Checked-out Branch</h5>
@@ -1230,8 +1568,8 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<img border="0" src="images/RepoMgrCheckedOutBranch.png"/>
 		</p>
 		<h5 id="Resetting_to_a_Branch_or_a_Tag">Resetting to a Branch or a Tag</h5>
-		<p>Right click and select
-			<b>Reset...</b> on any branch or tag. This opens a dialog which lets you decide on the reset type. See
+		<p>Right click and select 
+			<b>Reset...</b> on any branch or tag. This opens a dialog which lets you decide on the reset type. See 
 			<a href="Tasks.html#Resetting_your_current_HEAD">Resetting you current HEAD</a> for further details.
 		</p>
 		<h5 id=".22Detached.22_HEAD">"Detached" HEAD</h5>
@@ -1241,23 +1579,23 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>
 			<img border="0" src="images/RepoMgrOpenTextEditor.png"/>
 		</p>
-		<p>Also, on all file and folder nodes as well as on the "Repository" node, an option is offered to copy the (file-system specific) path to the clipboard. This is sometimes useful when the path is needed, for example to open a directory using a file browser or to copy and paste Repositories between view instances (see above about how to add Repositories to the view). The
-			<b>Copy to Clipboard</b> action is also available using
+		<p>Also, on all file and folder nodes as well as on the "Repository" node, an option is offered to copy the (file-system specific) path to the clipboard. This is sometimes useful when the path is needed, for example to open a directory using a file browser or to copy and paste Repositories between view instances (see above about how to add Repositories to the view). The 
+			<b>Copy to Clipboard</b> action is also available using 
 			<b>Edit &gt; Copy</b> (or the corresponding keyboard shortcut).
 		</p>
 		<h4 id="Repository_Configuration">Repository Configuration</h4>
-		<p>Integration with the generic "Properties" view in Eclipse allows to view and edit the Git Configuration (global and repository-specific configuration). If the "Properties" view is open, it is updated automatically when a "Repository" node is selected. For convenience, an
+		<p>Integration with the generic "Properties" view in Eclipse allows to view and edit the Git Configuration (global and repository-specific configuration). If the "Properties" view is open, it is updated automatically when a "Repository" node is selected. For convenience, an 
 			<b>Open Properties view</b> action is provided in the context menu:
 		</p>
 		<p>
 			<img border="0" src="images/RepoMgrPropertiesView.png"/>
 		</p>
-		<p>With a drop down box (left red box in the screen shot) you can switch between the display of the Repository Configutarion, the Global Configuration and a view which aggregates both. If the view displays the Repository Configutarion or the Global Configuration you can open an editor dialog with the
-			<b>Edit</b> button (right red box in the screen shot). The editor dialog has the same functionality as the preference page
+		<p>With a drop down box (left red box in the screen shot) you can switch between the display of the Repository Configutarion, the Global Configuration and a view which aggregates both. If the view displays the Repository Configutarion or the Global Configuration you can open an editor dialog with the 
+			<b>Edit</b> button (right red box in the screen shot). The editor dialog has the same functionality as the preference page 
 			<b>Team &gt; Git &gt; Configuration</b>.
 		</p>
 		<h4 id="Remote_Repositories">Remote Repositories</h4>
-		<p>The "Remotes" node allows for browsing and editing Remote configurations. Each Remote configuration has a name and either a Push Specification, a Fetch Specification, or both. If a "Remote Configuration" node or any of its children is selected, the
+		<p>The "Remotes" node allows for browsing and editing Remote configurations. Each Remote configuration has a name and either a Push Specification, a Fetch Specification, or both. If a "Remote Configuration" node or any of its children is selected, the 
 			<b>Properties</b> view will show a summary of the Remote configuration. In this example: there is a Remote configuration named "origin" which only has a Fetch Specification, but no Push Specification:
 		</p>
 		<p>
@@ -1271,12 +1609,12 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		</p>
 		<p>Note that the fetch or push operation will be executed immediately in an asynchronous job; on completion you will get a confirmation pop-up displaying the fetch result.</p>
 		<p>The "Fetch" node contains a so called fetch specification and the "Push" node contains a so called push specification.</p>
-		<p>A default fetch specification is created when the repository is cloned. You can edit the fetch specification with the menu entry
-			<b>Configure Fetch...</b>. This opens a wizard. On the first page you can edit the Fetch URI. Ob the second page you can determine the fetch ref specifications, see
+		<p>A default fetch specification is created when the repository is cloned. You can edit the fetch specification with the menu entry 
+			<b>Configure Fetch...</b>. This opens a wizard. On the first page you can edit the Fetch URI. Ob the second page you can determine the fetch ref specifications, see 
 			<a href="Tasks.html#Fetch_Ref_Specifications">Fetch Ref Specifications</a>.
 		</p>
-		<p>You can create or edit a push specification with the menu entry
-			<b>Configure Push...</b>. This opens a wizard. On the first page you can edit the Push URIs. If a fetch is specified the fetch URI is automatically included into the push specification and no additional Push URI is needed. On the second page you can determine the push ref specifications, see
+		<p>You can create or edit a push specification with the menu entry 
+			<b>Configure Push...</b>. This opens a wizard. On the first page you can edit the Push URIs. If a fetch is specified the fetch URI is automatically included into the push specification and no additional Push URI is needed. On the second page you can determine the push ref specifications, see 
 			<a href="Tasks.html#Push_Ref_Specifications">Push Ref Specifications</a>.
 		</p>
 		<h5 id="Adding_a_Remote_Configuration">Adding a Remote Configuration</h5>
@@ -1284,28 +1622,28 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>
 			<img border="0" src="images/RepoMgrNewRemote.png"/>
 		</p>
-		<p>If the
+		<p>If the 
 			<b>Configure Fetch</b> checkbox was selected, the next wizard page will ask for the URI of the Repository to fetch from:
 		</p>
 		<p>
 			<img border="0" src="images/Egit-0.9-repo-view-createRemoteWizardFetch.png"/>
 		</p>
-		<p>Click
+		<p>Click 
 			<b>Change...</b> to open a dialog that allows you to select a URI.
-			The next step is to define the Remote Specification for the fetch URI. See
+			The next step is to define the Remote Specification for the fetch URI. See 
 			<a href="Tasks.html#Fetch_Ref_Specifications">Fetch Ref Specifications</a> about the details.
 		</p>
-		<p>If the
-			<b>Configure Push</b> checkbox was selected, the next wizard page will ask for the URIs of the repositories to push to. This is actually a list, as you can push to multiple repositories at once. Click
-			<b>Add....</b> to add URIs to the list using the same dialog as above. You can remove URIs by marking them in the list and hitting
+		<p>If the 
+			<b>Configure Push</b> checkbox was selected, the next wizard page will ask for the URIs of the repositories to push to. This is actually a list, as you can push to multiple repositories at once. Click 
+			<b>Add....</b> to add URIs to the list using the same dialog as above. You can remove URIs by marking them in the list and hitting 
 			<b>Remove</b>.
-			This step is completely optional if there is already a fetch URI defined. In this case, the fetch URI will also be used for push. If at least one push URI is defined in this steps, it will override the fetch URI. In this example, there is already a fetch URI, so the
+			This step is completely optional if there is already a fetch URI defined. In this case, the fetch URI will also be used for push. If at least one push URI is defined in this steps, it will override the fetch URI. In this example, there is already a fetch URI, so the 
 			<b>Next</b> button is enabled, even though there is no Push URI in the list:
 		</p>
 		<p>
 			<img border="0" src="images/Egit-0.9-repo-view-createRemoteWizardPush.png"/>
 		</p>
-		<p>The next step is to define the Remote Specification for the push URIs. See
+		<p>The next step is to define the Remote Specification for the push URIs. See 
 			<a href="Tasks.html#Push_Ref_Specifications">Push Ref Specifications</a> about the details.
 		</p>
 		<p>Upon completion, the new Remote configuration will be visible:</p>
@@ -1315,28 +1653,28 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<h5 id="Changing_Remote_Configurations">Changing Remote Configurations</h5>
 		<p>It is also possible to add, remove, or change Fetch/Push Specifications for an existing Remote configuration using the context menu.</p>
 		<h3 id="Refresh">Refresh</h3>
-		<p>The view is auto-refreshed periodically. The
+		<p>The view is auto-refreshed periodically. The 
 			<b>Refresh</b> button in the toolbar allows to trigger an immediate refresh:
 		</p>
 		<p>
 			<img border="0" src="images/RepoMgrRefresh.png"/>
 		</p>
 		<h3 id="Link_with_Selection">Link with Selection</h3>
-		<p>If the
+		<p>If the 
 			<b>Link with selection</b> toggle is enabled, the file or folder corresponding to the current workbench selection will be displayed automatically:
 		</p>
 		<p>
 			<img border="0" src="images/RepoMgrLinkWithSelection.png"/>
 		</p>
 		<h3 id="Link_with_Editor">Link with Editor</h3>
-		<p>If the
+		<p>If the 
 			<b>Link with editor</b> toggle is enabled, the file or folder corresponding to the currently active editor will be displayed automatically:
 		</p>
 		<p>
 			<img border="0" src="images/RepoMgrLinkWithEditor.png"/>
 		</p>
 		<h3 id="Hierarchical_Branch_Layout">Hierarchical Branch Layout</h3>
-		<p>If the
+		<p>If the 
 			<b>Hierarchical Branch Layout</b> toggle is enabled, branches will be shown in a hierarchical layout using slash (/) as hierarchy separator:
 		</p>
 		<p>
@@ -1349,7 +1687,10 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<img border="0" src="images/RepoMgrBareRepository.png"/>
 		</p>
 		<h3 id="Removing_Repositories_from_the_Git_Repositories_View">Removing Repositories from the Git Repositories View</h3>
-		<p>This is offered as a menu action on the "Repository" node. Note that this does not delete the Repository, but just removes the node from the view. If there are projects in the workspace which are located in the working directory of the Repository, the user will be prompted to confirm deletion of these projects from the Eclipse workspace.</p><hr/>
+		<p>This is offered as a menu action on the "Repository" node. Note that this does not delete the Repository, but just removes the node from the view. If there are projects in the workspace which are located in the working directory of the Repository, the user will be prompted to confirm deletion of these projects from the Eclipse workspace.</p>
+		<p>
+			<br/>
+		</p><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left">

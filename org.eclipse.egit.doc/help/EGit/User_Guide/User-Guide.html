@@ -27,17 +27,18 @@
 		</table><hr/>
 		<h1 id="Getting_Started">Getting Started</h1>
 		<h2 id="Overview">Overview</h2>
-		<p>If you're new to Git or distributed version control systems generally, then you might want to read
-			<a href="../../EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" title="EGit/Git For Eclipse Users">Git for Eclipse Users</a> first. If you need more details and background read the
-			<a href="http://book.git-scm.com" target="egit_external">Git Community Book</a> or
+		<p>If you're new to Git or distributed version control systems generally, then you might want to read 
+			<a href="../../EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" title="EGit/Git For Eclipse Users">Git for Eclipse Users</a> first. If you need more details and background read the 
+			<a href="http://book.git-scm.com" target="egit_external">Git Community Book</a> or 
 			<a href="http://progit.org/book/" target="egit_external">Git Pro</a>.
 		</p>
 		<h2 id="Basic_Tutorial:_Adding_a_project_to_version_control">Basic Tutorial: Adding a project to version control</h2>
+		<h3 id="Configuration">Configuration</h3>
 		<ul>
-			<li>First you need to tell Git about yourself, click
+			<li>First you need to tell Git about yourself, click 
 				<b>Preferences &gt; Team &gt; Git &gt; Configuration</b>
 			</li>
-			<li>Click
+			<li>Click 
 				<b>New Entry</b> and enter the key value pairs <code>user.email</code> and <code>user.name</code>
 			</li>
 			<li>This information is stored in <code>~/.gitconfig</code> and will be used by Git to identify who did change the history of the repository whenever you are the user logged on to your computer.</li>
@@ -48,92 +49,102 @@
 		<p>
 			<img border="0" src="images/Egit-0.9-getstarted-name.png"/>
 		</p>
+		<h3 id="Create_Repository">Create Repository</h3>
 		<ul>
 			<li>Create a new Java project <code>HelloWorld</code> </li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-project.png"/>
+			<img border="0" src="images/Egit-0.9-getstarted-project.png"/> 
 		</p>
 		<ul>
-			<li>Select the project, click
-				<b>File &gt; Team &gt; Share Project</b>
+			<li>Select the project, click 
+				<b>File &gt; Team &gt; Share Project</b> 
 			</li>
-			<li>Select repository type
-				<b>Git</b> and click
+			<li>Select repository type 
+				<b>Git</b> and click 
 				<b>Next</b>
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-share.png"/>
+			<img border="0" src="images/Egit-0.9-getstarted-share.png"/> 
 		</p>
 		<ul>
 			<li>To configure the Git repository select the new project <code>HelloWorld</code> </li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-create-project.png"/>
+			<img border="0" src="images/Egit-0.9-getstarted-create-project.png"/> 
 		</p>
 		<ul>
-			<li>Click
-				<b>Create</b> to initialize a new Git repository for the <code>HelloWorld</code> project. If your project already resides in the working tree of an exisiting Git repository the repository is chosen automatically.
+			<li>Click 
+				<b>Create Repository</b> to initialize a new Git repository for the <code>HelloWorld</code> project. If your project already resides in the working tree of an exisiting Git repository the repository is chosen automatically. 
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-project-created.png"/>
+			<img border="0" src="images/Egit-0.9-getstarted-project-created.png"/> 
 		</p>
 		<ul>
-			<li>Click
-				<b>Finish</b> to close the wizard.
+			<li>Click 
+				<b>Finish</b> to close the wizard. 
 			</li>
-			<li>The decorator text "&#91;master&#93;" behind the project shows that this project is tracked in a repository on the master branch and the question mark decorators show that the <code>.classpath</code> and <code>.project</code> and the <code>.settings</code> files are not yet under version control </li>
+			<li>The decorator text "&#91;master&#93;" behind the project shows that this project is tracked in a repository on the 
+				<i>master</i> branch and the question mark decorators show that the <code>.classpath</code> and <code>.project</code> and the <code>.settings</code> files are not yet under version control 
+			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-shared-project.png"/>
+			<img border="0" src="images/Egit-0.9-getstarted-shared-project.png"/> 
 		</p>
+		<h3 id="Track_Changes">Track Changes</h3>
 		<ul>
-			<li>Click
-				<b>Team &gt; Add</b> on the project node
+			<li>Click 
+				<b>Team &gt; Add</b> on the project node 
 			</li>
-			<li>The plus decorators show that now the project's files have been added to version control </li>
+			<li>The 
+				<i>+</i> decorators show that now the project's files have been added to version control 
+			</li>
 		</ul>
 		<ul>
 			<li>Create a file <code>.gitignore</code> in the project folder with the following content</li>
 		</ul>
-		<pre>bin
+		<pre>bin 
 </pre>
 		<ul>
 			<li>This excludes the <code>bin</code> folder from Git's list of tracked files. </li>
 			<li>Add <code>.gitignore</code> to version control. </li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-ignore-added.png"/>
+			<img border="0" src="images/Egit-0.9-getstarted-ignore-added.png"/> 
 		</p>
 		<ul>
-			<li>Click
+			<li>Click 
 				<b>Team &gt; Commit</b> in the project context menu
 			</li>
-			<li>Enter a commit message explaining your change, the first line (followed by an empty line) will become the short log for this commit. By default the author and committer are taken from the .gitconfig file in your home directory. </li>
-			<li>You may check the checkbox "Add Signed-off-by" to add a Signed-off-by tag. </li>
+			<li>Enter a commit message explaining your change, the first line (followed by an empty line) will become the short log for this commit. By default the author and committer are taken from the <code>.gitconfig</code> file in your home directory. </li>
+			<li>You may click 
+				<b>Add Signed-off-by</b> to add a 
+				<i>Signed-off-by:</i> tag. 
+			</li>
 			<li>If you are committing the change of another author you may alter the author field to give the name and email address of the author. </li>
-			<li>Click
-				<b>Commit</b> to commit your first change.
+			<li>Click 
+				<b>Commit</b> to commit your first change. 
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-commit.png"/>
+			<img border="0" src="images/Egit-0.9-getstarted-commit.png"/> 
 		</p>
 		<ul>
 			<li>Note that the decorators of the committed files changed. </li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-commited.png"/>
+			<img border="0" src="images/Egit-0.9-getstarted-commited.png"/> 
 		</p>
+		<h3 id="Inspect_History">Inspect History</h3>
 		<ul>
-			<li>Click
-				<b>Show In &gt; History</b> from the context menu to inspect the history of a resource
+			<li>Click 
+				<b>Show In &gt; History</b> from the context menu to inspect the history of a resource 
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-history1.png"/>
+			<img border="0" src="images/Egit-0.9-getstarted-history1.png"/> 
 		</p>
 		<ul>
 			<li>Create a new Java class <code>Hello.java</code> and implement it </li>
@@ -142,13 +153,13 @@
 			<li>The resource history should now show 2 commits for this class</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-application.png"/>
+			<img border="0" src="images/Egit-0.9-getstarted-application.png"/> 
 		</p>
 		<p>
 			<img border="0" src="images/Egit-0.9-getstarted-history2.png"/>
 		</p>
 		<ul>
-			<li>Click the
+			<li>Click the 
 				<b>Compare Mode</b> toggle button in the History View
 			</li>
 			<li>Double click <code>src/Hello.java</code> in the Resource History View to open your last committed change in the Compare View </li>
@@ -157,12 +168,17 @@
 			<img border="0" src="images/Egit-0.9-getstarted-compare.png"/>
 		</p>
 		<p>
+			<br/>
+
 			<b>Congratulations, you just have mastered your first project using Git !</b>
+
+			<br/>
+			<br/>
 		</p>
 		<h2 id="Github_Tutorial">Github Tutorial</h2>
 		<h3 id="Create_Local_Repository">Create Local Repository</h3>
 		<ul>
-			<li>follow
+			<li>follow 
 				<a href="http://wiki.eclipse.org/EGit/User_Guide/Getting_Started" title="EGit/User Guide/Getting Started" target="egit_external">EGit/User Guide/Getting Started</a> to create a new local repository (with your content instead of the demo project)
 			</li>
 		</ul>
@@ -171,85 +187,102 @@
 			<li>create a new repository at GitHub</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.6-001-CreateRepoAtGithub.png"/>
+			<img border="0" src="images/Egit-0.10-github-create-repo.png"/> 
 		</p>
+		<p>On the next screen you can see the URLs you may use to access your fresh new repository:</p>
 		<ul>
-			<li>you get a fresh clone URL for this new repository</li>
-		</ul>
-		<p>
-			<img border="0" src="images/Egit-0.6-002-CloneUrl.png"/>
-		</p>
-		<h3 id="Eclipse_SSH_Configuration">Eclipse SSH Configuration</h3>
-		<ul>
-			<li>Click
-				<b>Window &gt; Preferences</b> and ensure that your SSH2 home is configured correctly (usually this is <tt>~/.ssh</tt>) and contains your SSH2 keys (upload your public key to your GitHub account settings)
+			<li>click 
+				<b>SSH</b> to choose the 
+				<i>SSH protocol</i>. It can be used for read and write access
+			</li>
+			<li>click 
+				<b>HTTP</b> to choose the 
+				<i>HTTP protocol</i>. It can also be used for read and write access.
+			</li>
+			<li>click 
+				<b>Git Read-Only</b> to choose the anonymous 
+				<i>git protocol</i> for cloning. It's the most efficient protocol git supports. Since the 
+				<i>git protocol</i> doesn't support authentication it's usually used to provide efficient read-only access to public repositories.
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.6-003-SshPreferences.png"/>
+			<img border="0" src="images/Egit-0.10-github-cloneurl.png"/>
+		</p>
+		<h3 id="Eclipse_SSH_Configuration">Eclipse SSH Configuration</h3>
+		<ul>
+			<li>Open the Eclipse 
+				<b>Preferences</b> and ensure that your SSH2 home is configured correctly (usually this is <tt>~/.ssh</tt>) and contains your SSH2 keys 
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-0.10-ssh-preferences.png"/> 
 		</p>
 		<ul>
-			<li>if you don't have SSH keys yet you may generate them on the second tab
-				<b>Key Management</b> of this dialog, use a good pass phrase to protect your private key, for more details see
+			<li>if you don't have SSH keys yet you may generate them on the second tab 
+				<b>Key Management</b> of this dialog, use a good pass phrase to protect your private key, for more details see 
 				<a href="http://help.github.com/working-with-key-passphrases/" target="egit_external">"working with key passphrases"</a>
+			</li>
+			<li>upload your public SSH key to your 
+				<a href="https://github.com/account" target="egit_external">GitHub account settings</a>
 			</li>
 		</ul>
 		<h3 id="Push_Upstream">Push Upstream</h3>
 		<ul>
-			<li>Select your new Eclipse project and click
-				<b>Team &gt; Push...</b>.
+			<li>Click 
+				<b>Team &gt; Push...</b> and copy and paste the SSH URL of your new github repository
 			</li>
-			<li>Enter
-				<b>Your GitHub Clone URL</b> and your GitHub password (with the free github accounts do not enter a password but leave this field blank), leave the user as <tt>git</tt>.
+			<li>If you are behind a firewall which doesn't allow SSH traffic use the github HTTPS URL instead and provide your github user and password instead of using the uploaded public SSH key. To store your credentials into the Eclipse secure store click 
+				<b>Store in Secure Store</b>. 
+			</li>
+			<li>
+				<b>Note:</b> many HTTP proxies are configured to block HTTP URLs containing a user name, since disclosing a user name in an HTTP URL is considered a security risk. In that case remove the username from the HTTP URL and only provide it in the user field. It will be sent as an HTTP header.
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.6-004-PushDialog.png"/>
+			<img border="0" src="images/Egit-0.10-github-pushurl.png"/>
 		</p>
 		<ul>
-			<li>Click
+			<li>Click 
 				<b>Next</b> and on first connection accept GitHub's host key.
 			</li>
 		</ul>
-		<p>
-			<img border="0" src="images/Egit-0.6-005-AcceptHostKey.png"/>
-		</p>
 		<ul>
-			<li>Enter your SSH key's passphrase.</li>
+			<li>Enter your SSH key's passphrase and click 
+				<b>OK</b>.
+			</li>
 		</ul>
-		<p>
-			<img border="0" src="images/Egit-0.6-006-PassPhrase.png"/>
-		</p>
 		<ul>
-			<li>Click
+			<li>On the next wizard page click 
 				<b>Add all branches spec</b> to map your local branch names 1:1 to the same branch names in the destination repository.
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.6-007-PushRefSpecifications.png"/>
+			<img border="0" src="images/Egit-0.10-github-push-refspec.png"/> 
 		</p>
 		<ul>
-			<li>Click
+			<li>Click 
 				<b>Next</b>. The push confirmation dialog will show a preview of the changes that will be pushed to the destination repository.
-			</li>
-			<li>Click
-				<b>Finish</b> to confirm that you want to push these changes.
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.6-008-PushConfirmation.png"/>
+			<img border="0" src="images/Egit-0.10-github-push-preview.png"/>
 		</p>
+		<ul>
+			<li>Click 
+				<b>Finish</b> to confirm that you want to push these changes.
+			</li>
+		</ul>
 		<ul>
 			<li>The next dialog reports the result of the push operation.</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.6-009-PushResult.png"/>
+			<img border="0" src="images/Egit-0.10-github-pushresult.png"/>
 		</p>
 		<ul>
 			<li>Point your browser at your GitHub repository to see that your new repository content has arrived</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.6-010-PushResultOnGithub.png"/>
+			<img border="0" src="images/Egit-0.10-github-pushed-repo.png"/>
 		</p><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>

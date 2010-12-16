@@ -32,75 +32,183 @@
 		<h1 id="Reference">Reference</h1>
 		<h2 id="Menus">Menus</h2>
 		<h3 id="Project_Context_Menu">Project Context Menu</h3>
-		<p>On project nodes in navigation views (Navigator, Package Explorer etc.) the following Git actions are available for projects shared with the Git team provider:
+		<p>On project nodes in navigation views (Navigator, Package Explorer etc.) the following
+			Git actions are available for projects shared with the Git team provider:
 
-			<br/>
-			<img border="0" src="images/Egit-0.9-project-menu.png"/>
+			<br/> 
+			<img border="0" src="images/Egit-0.10-project-menu.png"/>
 		</p>
 		<h3 id="Resource_Context_Menu">Resource Context Menu</h3>
 		<p>On resource nodes (files and folders) in navigation views the following Git actions are available for projects shared with the Git team provider:
 
+			<br/> 
+			<img border="0" src="images/Egit-0.10-resource-menu.png"/>
+		</p>
+		<h3 id="Repositories_View_Menus">Repositories View Menus</h3>
+		<p>In the Repositories View the menu depends on the node type which is selected 
 			<br/>
-			<img border="0" src="images/Egit-0.9-resource-menu.png"/>
+
+			<img border="0" src="images/Egit-0.10-repoview.png"/>
+		</p>
+		<p>Menu on repository nodes:
+			<br/>
+
+			<img border="0" src="images/Egit-0.10-repoview-repomenu.png"/>
+		</p>
+		<p>Menu on branche nodes:
+			<br/>
+
+			<img border="0" src="images/Egit-0.10-repoview-branchmenu.png"/>
+		</p>
+		<p>Menu on tag nodes:
+			<br/>
+
+			<img border="0" src="images/Egit-0.10-repoview-tagmenu.png"/>
+		</p>
+		<p>Menu on Reference nodes:
+			<br/>
+
+			<img border="0" src="images/Egit-0.10-repoview-refmenu.png"/>
+		</p>
+		<p>Menu on Fetch Configuration nodes:
+			<br/>
+
+			<img border="0" src="images/Egit-0.10-repoview-fetchmenu.png"/>
+		</p>
+		<p>Menu on Push Configuration nodes:
+			<br/>
+
+			<img border="0" src="images/Egit-0.10-repoview-pushmenu.png"/>
+		</p>
+		<p>Menu on Working Tree nodes:
+			<br/>
+
+			<img border="0" src="images/Egit-0.10-repoview-worktreemenu.png"/>
+		</p>
+		<h3 id="History_View_Menus">History View Menus</h3>
+		<p>Menu on entries in the History View's commit list
+			<br/>
+
+			<img border="0" src="images/Egit-0.10-history-commitmenu.png"/>
 		</p>
 		<h3 id="Menu_Actions">Menu Actions</h3>
 		<ul>
 			<li>
-				<a href="Tasks.html#Committing_Changes">Commit...</a>
-			</li>
-			<li>
-				<a href="Tasks.html#Pushing_to_other_Repositories">Push...</a>
-			</li>
-			<li>
-				<a href="Tasks.html#Fetching_from_other_Repositories">Fetch From...</a>
-			</li>
-			<li>
-				<a href="Tasks.html#Comparing_with_Branches_.28Synchronize.29">Synchronize...</a>
-			</li>
-			<li>
-				<a href="Tasks.html#Merging">Merge...</a>
-			</li>
-			<li>
-				<a href="Tasks.html#Branching">Branch...</a>
-			</li>
-			<li>
-				<a href="Tasks.html#Tagging">Tag...</a>
-			</li>
-			<li>
-				<a href="Tasks.html#Resetting_your_current_HEAD">Reset...</a>
-			</li>
-			<li>
-				<a href="Tasks.html#Applying_Patches">Apply Patch...</a>
-			</li>
-			<li>
-				<b>Ignore</b>: action to add files to .gitignore.
-			</li>
-			<li>
-				<b>Add</b>:
+				<a href="User-Guide.html#Track_Changes">Add</a> -
 				<ul>
-					<li>Adds changes present in the working tree to the git index, also known as staging changes. </li>
-					<li>Puts newly created resources under git version control (Git does not automatically start tracking resources).</li>
-					<li>Resolves conflicts.</li>
+					<li>Add changes present in the working tree to the git index, also known as staging changes. </li>
+					<li>Put newly created resources under git version control (Git does not automatically start tracking resources).</li>
+					<li>
+						<a href="Tasks.html#Adding_conflict_resolution_to_the_git_index">Resolve conflicts</a>.
+					</li>
 				</ul>
 			</li>
 			<li>
-				<b>Assume unchanged</b>: Resources can be flagged "assume unchanged". This means that Git stops checking the working tree files for possible modifications, so you need to manually unset the bit to tell Git when you change the working tree file. This setting can be switched on with the menu action
-				<b>Team &gt; Assume unchanged</b> (or on the command line with <tt>git update-index --assume-unchanged</tt>). Currently it can only be switched back on the command line with <tt>git update-index --no-assume-unchanged</tt>.
+				<a href="Tasks.html#Applying_Patches">Apply Patch</a> - Apply a patch.
 			</li>
 			<li>
-				<b>Untrack</b>: Removes resources from git version control. If you want to delete the resource from the working tree click also
+				<b>Assume unchanged</b> - Resources can be flagged "assume unchanged". This means that Git stops checking the working tree files for possible modifications, so you need to manually unset the bit to tell Git when you change the working tree file. This setting can be switched on with the menu action 
+				<b>Team &gt; Assume unchanged</b> and switched back with the menu action 
+				<b>Team &gt; No Assume unchanged</b>.
+			</li>
+			<li>
+				<a href="Tasks.html#Branching">Branch</a>, 
+				<a href="Reference.html#Create_Branch...">Create Branch</a> - Checkout a branch or create a branch.
+			</li>
+			<li>
+				<b>Change Credentials</b> - Change logon credentials of a Fetch or Push Specification, credentials are stored per URL in the Eclipse Secure Store.
+			</li>
+			<li>
+				<b>Checkout</b> - Checkout a 
+				<a href="Tasks.html#Check-out_of_Branches_and_Tags">Branch, Tag</a>, 
+				<a href="Reference.html#Checkout">Commit</a> or Reference.
+			</li>
+			<li>
+				<a href="Tasks.html#Cherry_Picking">Cherry-pick</a> - Cherry-pick a single commit onto the tip of the currently checked out branch.
+			</li>
+			<li>
+				<b>Clear Credentials</b> - Clear logon credentials of a Fetch or Push Specification, credentials are stored per URL in the Eclipse Secure Store.
+			</li>
+			<li>
+				<a href="Tasks.html#Committing_Changes">Commit</a> - Commit changes.
+			</li>
+			<li>
+				<b>Delete Fetch</b> - Delete a Fetch Specification.
+			</li>
+			<li>
+				<b>Delete Push</b> - Delete a Push Specification.
+			</li>
+			<li>
+				<a href="Tasks.html#Direct_Fetch_and_Push_Support">Configure Fetch</a> - Configure a Fetch Specification.
+			</li>
+			<li>
+				<a href="Tasks.html#Direct_Fetch_and_Push_Support">Configure Push</a> - Configure a Push Specification.
+			</li>
+			<li>
+				<a href="Tasks.html#Creation_and_Deletion_of_Branches">Delete Branch</a> - Delete a branch.
+			</li>
+			<li>
+				<a href="Tasks.html#Deleting_a_Repository">Delete Repository</a> - Delete a repository.
+			</li>
+			<li>
+				<b>Disconnect</b> - Disconnect the attached Git Team Provider from this project. The git repository still exists but is no longer integrated with Eclipse.
+			</li>
+			<li>
+				<a href="Tasks.html#Fetching_from_other_Repositories">Fetch From</a> - Fetch changes from remote repositories.
+			</li>
+			<li>
+				<a href="Reference.html#Git_Ignore">Ignore</a> - Add files to .gitignore so that git ignores them.
+			</li>
+			<li>
+				<a href="Tasks.html#Method_for_importing_Projects">Import Projects</a> - Import projects into the Eclipse workbench.
+			</li>
+			<li>
+				<a href="Tasks.html#Merging">Merge</a> - Merge branches.
+			</li>
+			<li>
+				<a href="Tasks.html#Using_Merge_Tool">Merge Tool</a> - Resolve conflicts using the Merge Tool.
+			</li>
+			<li>
+				<a href="Tasks.html#Repository_Configuration">Open Properties View</a> - View and edit the repository configuration.
+			</li>
+			<li>
+				<a href="Tasks.html#Pulling_New_Changes_from_Upstream_Repositories">Pull</a> - Pull changes from remote branch tracked by currently checked out local branch.
+			</li>
+			<li>
+				<a href="Tasks.html#Pushing_to_other_Repositories">Push</a> - Push changes to another repository.
+			</li>
+			<li>
+				<a href="Tasks.html#Rebasing">Rebase</a> - Rebase a branch onto another one.
+			</li>
+			<li>
+				<a href="Tasks.html#Removing_a_Repository_from_the_Repositories_View">Remove Repository</a> - Remove a repository from the Repositories View.
+			</li>
+			<li>
+				<a href="Tasks.html#Renaming_an_Existing_Branch">Rename Branch</a> - Rename a branch.
+			</li>
+			<li>
+				<a href="Tasks.html#Resetting_your_current_HEAD">Reset</a> - Reset the current HEAD, Index or Working Tree.
+			</li>
+			<li>
+				<a href="Reference.html#History_View">Show in History</a> - Show the selected resource in the History View.
+			</li>
+			<li>
+				<a href="Tasks.html#Managing_Repositories">Show in Repositories View</a> - Show the selected resource in the Repositories View.
+			</li>
+			<li>
+				<a href="Tasks.html#Comparing_with_Branches_.28Synchronize.29">Synchronize</a> - Synchronize local and remote branches with each other.
+			</li>
+			<li>
+				<a href="Tasks.html#Tagging">Tag</a> - Create, delete tags.
+			</li>
+			<li>
+				<b>Untrack</b> - Remove resources from git version control. If you want to delete the resource from the working tree click also 
 				<b>Delete</b> in the resource's context menu.
 			</li>
-			<li>
-				<a href="Tasks.html#Managing_Repositories">Show in Repositories View</a> : shows the selected resource in the Repositories View.
-			</li>
-			<li>
-				<a href="Reference.html#History_View">Show in History</a>: shows the selected resource in the History View.
-			</li>
-			<li>
-				<b>Disconnect</b>: Disconnects the attached git team provider from this project. The git repository still exists but is no longer integrated with Eclipse.
-			</li>
 		</ul>
+		<p>
+			<br/>
+		</p>
 		<h2 id="Git_Perspective_and_Views">Git Perspective and Views</h2>
 		<h3 id="Git_Perspective">Git Perspective</h3>
 		<p>
@@ -108,7 +216,7 @@
 		</p>
 		<h3 id="Git_Repositories_View">Git Repositories View</h3>
 		<p>
-			<b>Window &gt; Open View &gt; Git &gt; Git Repositories</b> opens the Git Repositories view which is explained in detail
+			<b>Window &gt; Open View &gt; Git &gt; Git Repositories</b> opens the Git Repositories view which is explained in detail 
 			<a href="Tasks.html#Managing_Repositories">here</a>.
 		</p>
 		<h3 id="History_View">History View</h3>
@@ -126,24 +234,24 @@
 		<h4 id="Opening_the_History_View">Opening the History View</h4>
 		<p>The History view can be opened by </p>
 		<ul>
-			<li>Right-clicking
+			<li>Right-clicking 
 				<b>Show In &gt; History View</b> on any resource under Git version control in the explorer (not available in all Perspectives)
 			</li>
-			<li>Right-clicking
+			<li>Right-clicking 
 				<b>Team &gt; Show in History</b> on any resource under Git version control in the explorer
 			</li>
-			<li>Clicking
-				<b>Window &gt; Show View &gt; Other...</b>, then
+			<li>Clicking 
+				<b>Window &gt; Show View &gt; Other...</b>, then 
 				<b>Team &gt; History</b>
 			</li>
 		</ul>
-		<p>Once the view is open, you can activate the
+		<p>Once the view is open, you can activate the 
 			<b>Link with Selection</b> button to keep the input of the view in sync with the selection in the explorer automatically.
 		</p>
 		<h4 id="Organization_of_the_History_View">Organization of the History View</h4>
 		<p>The History view is organized in several panes: </p>
 		<p>
-			<img border="0" src="images/Egit-0.9-history-view.png"/>
+			<img border="0" src="images/Egit-0.9-history-view.png"/> 
 		</p>
 		<p>The upper pane is the Commit Graph displaying the commit log (or commit history) in reverse chronological order (newest commit on top). Below the commit graph, there are by default two panes: on the left side, the Revision Comment area, which shows the commit message and a textual Diff of the file or files in the commit, and on the right side, the Revision Detail area, which shows a table of the files that were changed by the commit.</p>
 		<p>The first column of this table describes the nature of the change for each file:</p>
@@ -159,8 +267,8 @@
 			</dd>
 		</dl>
 		<p>The content of the lower panes depends on the selection in the upper pane and is updated automatically when this selection changes.</p>
-		<p>Both lower panes can be switched on and and off separately by right-clicking anywhere in the upper pane and selecting
-			<b>Show Revision Comment</b> and
+		<p>Both lower panes can be switched on and and off separately by right-clicking anywhere in the upper pane and selecting 
+			<b>Show Revision Comment</b> and 
 			<b>Show Revision Details</b>, respectively.
 		</p>
 		<p>Above the Commit Graph, the current input is visualized. The input is always a workspace resource, either a project, a folder, or a file. After the type of the input, the path is shown, followed by the name of the Repository containing the resource in square brackets.</p>
@@ -183,27 +291,27 @@
 			There can be forks, which correspond to a branch operation, and joins, which correspond to a merge operation. In our example, there was a branch "experimental" created after the commit with branch "beforeSplit", and the same file was changed both in the "master" and in the "experimental" branch. The last commit is a merge commit where the content of the "experimental" branch was merged with the "master" branch.</p>
 		<p>The exact change can be inspected by marking a commit and looking at the Revision Comment area. When scrolling down in the Revision Comment area, a textual diff for the changes will be visible, in our example it says that the content of Project1/f1/file1.txt was changed from "modified" to "modified in master". When selecting the next commit (which corresponds to the "experimental" branch), a similar diff would be displayed, saying that the content of that file was changed from "modified" to "modified in experimental". The newest commit is the result of merging "experimental" into "master". Accordingly, the new commit has two ancestors and the "master" and "experimental" lines are joined again.</p>
 		<h5 id="Displaying_and_Comparing_versions_of_a_File">Displaying and Comparing versions of a File</h5>
-		<p>If the current input is already a file, right-clicking
-			<b>Open</b> on a commit will open an editor with the file content corresponding to the currently selected commit. If the file does not exist in the selected commit, an error message will be displayed. Clicking
+		<p>If the current input is already a file, right-clicking 
+			<b>Open</b> on a commit will open an editor with the file content corresponding to the currently selected commit. If the file does not exist in the selected commit, an error message will be displayed. Clicking 
 			<b>Compare with working tree</b> will open a compare editor comparing the file content of the currently selected commit with the file content in the workspace.
 		</p>
 		<p>
 			<img border="0" src="images/Egit-0.9-history-view-openAndCompare.png"/>
 		</p>
-		<p>The
-			<b>Open</b> and
-			<b>Compare with working tree</b> actions can also be executed by double-clicking on a commit: if the "Compare Mode" toolbar button (see below) is down,
-			<b>Compare with working tree</b> will be executed, otherwise
+		<p>The 
+			<b>Open</b> and 
+			<b>Compare with working tree</b> actions can also be executed by double-clicking on a commit: if the "Compare Mode" toolbar button (see below) is down, 
+			<b>Compare with working tree</b> will be executed, otherwise 
 			<b>Open</b>.
 		</p>
-		<p>It is possible to compare the file contents of two commits by selecting the two commits and right-clicking on
+		<p>It is possible to compare the file contents of two commits by selecting the two commits and right-clicking on 
 			<b>Compare with Each Other</b>.
 		</p>
-		<p>Furthermore, it is possible to select any number of commits and right-click
+		<p>Furthermore, it is possible to select any number of commits and right-click 
 			<b>Open</b> to see all versions of the file corresponding to the selected commits (one editor will be opened per version).
 		</p>
-		<p>If the current input is not a file, then there won't be menu actions for
-			<b>Open</b> and
+		<p>If the current input is not a file, then there won't be menu actions for 
+			<b>Open</b> and 
 			<b>Compare</b>. However, it is possible to double-click on an entry the Revision Detail area. If compare mode is active, a compare editor will be openend showing the changes for the file being double-clicked in the currently selected commit (i.e. a diff of the file content in the currently selected commit against the file content of this commit's ancestor). If compare mode is not active, an editor with the file content corresponding to the currently selected commit is shown.
 		</p>
 		<p>
@@ -312,6 +420,9 @@
 		<p>Only available when right-clicking on the Revision Comment area. If active, the comments will be auto-wrapped to fill the display area, otherwise the wrapping of the commit message will be used.</p>
 		<h5 id="Fill_Paragraphs">Fill Paragraphs</h5>
 		<p>Only available when right-clicking on the Revision Comment area. If active, the commit message will be displayed without unnecessary line breaks.</p>
+		<p>
+			<br/>
+		</p>
 		<h3 id="Synchronize_View">Synchronize View</h3>
 		<p>A Git synchronization launched using the Team &gt; Synchronize menu command will appear in the Synchronize view. This view allows you to inspect the differences between the resources in the local workspace and a local or remote tracking branch. Alternatively you may compare a local and a remote tracking branch. Comparison of two remote tracking branches as well as menu commands on the Synchronize View are not yet available in this EGit version and will be provided in a future release.</p>
 		<p>Here is what the Git Synchronize View looks like:</p>
@@ -331,7 +442,7 @@
 			</tr>
 			<tr>
 				<td>
-					<img border="0" src="images/Egit-0.9-synchronize-incoming-add.png"/>
+					<img border="0" src="images/Egit-0.9-synchronize-incoming-add.png"/> 
 				</td>
 				<td>An incoming addition means that a resource has been added to the target branch.</td>
 			</tr>
@@ -402,13 +513,16 @@
 			<dt>Java Model: displays a Java based model (similar to what appears in the Package Explorer).</dt>
 			<dt>Change Sets: displays a Change Set based model. This model shows incoming changes grouped by commit comment which is handy for seeing who released what and why. For outgoing changes, you can create Change Sets for grouping related changes together. Grouping is performed using various commands in the context menu.</dt>
 		</dl>
-		<p>In addition to to the models, there is also a
+		<p>In addition to to the models, there is also a 
 			<b>Flat Presentation</b> which displays all the out-of-sync elements as top level elements.
 		</p>
 		<h4 id="Navigation">Navigation</h4>
 		<p>The Synchronize view provides toolbar actions for navigating through the changes in the view. These actions not only navigate between files but also go from change to change within a file.</p>
 		<p>
 			<img border="0" src="images/Egit-0.9-synchronize-navigation.png"/>
+		</p>
+		<p>
+			<br/>
 		</p>
 		<h2 id="Git_URLs">Git URLs</h2>
 		<p>Git URLs in general consist of transport protocol scheme, address of the remote server and the repository path within the remote server and for some authenticating protocols also the user ID.</p>
@@ -418,49 +532,52 @@
 				<b>file</b> - Direct file system access to the repository.
 			</li>
 			<li>
-				<b>git</b> - The most efficient built-in git protocol (default port 9418). This protocol doesn't provide authentication. Typically used for anonymous read access to the repository.
+				<b>git</b> - The most efficient built-in git protocol (default port 9418). This protocol doesn't provide authentication. Typically used for anonymous read access to the repository. 
 			</li>
 			<li>
-				<b>ssh</b> - Git over
-				<a href="http://tools.ietf.org/html/rfc4251" target="egit_external">secure shell (SSH)</a> protocol. Typically used for authenticated write access to the repository.
+				<b>ssh</b> - Git over 
+				<a href="http://tools.ietf.org/html/rfc4251" target="egit_external">secure shell (SSH)</a> protocol. Typically used for authenticated write access to the repository. 
 			</li>
 			<li>
-				<b>http</b> -
-				<a href="http://tools.ietf.org/html/rfc2616" target="egit_external">Hypertext Transfer Protocol</a> can be tunneled through firewalls.
+				<b>http</b> - 
+				<a href="http://tools.ietf.org/html/rfc2616" target="egit_external">Hypertext Transfer Protocol</a> can be tunneled through firewalls. 
 			</li>
 			<li>
-				<b>https</b> -
-				<a href="http://tools.ietf.org/html/rfc2818" target="egit_external">Hypertext Transfer Protocol Secure</a> can be tunneled through firewalls.
+				<b>https</b> - 
+				<a href="http://tools.ietf.org/html/rfc2818" target="egit_external">Hypertext Transfer Protocol Secure</a> can be tunneled through firewalls. 
 			</li>
 			<li>
-				<b>ftp</b> -
-				<a href="http://tools.ietf.org/html/rfc959" target="egit_external">File Transfer Protocol</a>
+				<b>ftp</b> - 
+				<a href="http://tools.ietf.org/html/rfc959" target="egit_external">File Transfer Protocol</a> 
 			</li>
 			<li>
-				<b>sftp</b> -
-				<a href="http://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol" target="egit_external">SSH File Transfer Protocol</a>
+				<b>sftp</b> - 
+				<a href="http://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol" target="egit_external">SSH File Transfer Protocol</a> 
 			</li>
 		</ul>
 		<p>
-			<b>Note:</b> EGit 0.9 does not yet support authentication via HTTP or HTTPS protocol.
+			<b>Note:</b> EGit 0.9 does not yet support authentication via HTTP or HTTPS protocol. 
 		</p>
 		<p>Git URLs are used when </p>
 		<ul>
 			<li>
-				<a href="Tasks.html#Cloning_Remote_Repositories">cloning repositories</a>
+				<a href="Tasks.html#Cloning_Remote_Repositories">cloning repositories</a> 
 			</li>
 			<li>
-				<a href="Tasks.html#Fetching_from_other_Repositories">fetching</a> changes from another repository
+				<a href="Tasks.html#Fetching_from_other_Repositories">fetching</a> changes from another repository 
 			</li>
 			<li>
 				<a href="Tasks.html#Pushing_to_other_Repositories">pushing</a> changes to another repository
 			</li>
 		</ul>
+		<p>
+			<br/>
+		</p>
 		<h2 id="Git_References">Git References</h2>
-		<p>Git References are also known shortly as
-			<b>Refs</b>.
+		<p>Git References are also known shortly as 
+			<b>Refs</b>. 
 
-			<br/>They comprise
+			<br/>They comprise 
 		</p>
 		<ul>
 			<li>branches </li>
@@ -473,7 +590,7 @@
 			<li>Remote tracking branches start with "refs/remotes/". Remote tracking branches proxy branches located in a remote repository so that their state at the time of the last transport operation can be queried also when no connection to the repository is available (offline).</li>
 			<li>Tags start with "refs/tags/"</li>
 		</ul>
-		<p>Ref names can be abbreviated as long as the abbreviated form is unique.
+		<p>Ref names can be abbreviated as long as the abbreviated form is unique. 
 
 			<br/>E.g.
 		</p>
@@ -482,14 +599,14 @@
 			<li>"origin/master" is short for "refs/remotes/origin/master"</li>
 			<li>"v1.0.1" is short for "refs/tags/v1.0.1"</li>
 		</ul>
-		<p>For a complete list for Ref names and the order of precedence if multiple references have the same shorthand form see the section "Specifying Revisions" section of
+		<p>For a complete list for Ref names and the order of precedence if multiple references have the same shorthand form see the section "Specifying Revisions" section of 
 			<a href="http://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html" target="egit_external">git rev-parse</a>.
 		</p>
 		<h2 id="Refspecs">Refspecs</h2>
-		<p>A "refspec" is used by fetch and push operations to describe the mapping between remote
-			<a href="Reference.html#Git_References">Ref</a> and local
-			<a href="Reference.html#Git_References">Ref</a>. Semantically they define how local branches or tags are mapped to branches or tags in a remote repository. In native git they are combined with a colon in the format &lt;src&gt;:&lt;dst&gt;, preceded by an optional plus sign, + to denote forced update. In EGit they can be displayed and also edited in tabular form in the
-			<a href="Tasks.html#Push_Ref_Specifications">Push Ref Specification</a> and the
+		<p>A "refspec" is used by fetch and push operations to describe the mapping between remote 
+			<a href="Reference.html#Git_References">Ref</a> and local 
+			<a href="Reference.html#Git_References">Ref</a>. Semantically they define how local branches or tags are mapped to branches or tags in a remote repository. In native git they are combined with a colon in the format &lt;src&gt;:&lt;dst&gt;, preceded by an optional plus sign, + to denote forced update. In EGit they can be displayed and also edited in tabular form in the 
+			<a href="Tasks.html#Push_Ref_Specifications">Push Ref Specification</a> and the 
 			<a href="Tasks.html#Fetch_Ref_Specifications">Fetch Ref Specification</a> dialogs.
 		</p>
 		<h2 id="Remotes">Remotes</h2>
@@ -503,14 +620,14 @@
 				<a href="Tasks.html#Remote_Repositories">Defining Remotes in the Repositories View</a>
 			</li>
 		</ul>
-		<p>A Remote first of all defines a
-			<b>name</b> for the repository whose branches you track, this is important since you may want to track branches from different repositories so the name helps to understand what repository a certain operation is dealing with. In addition
-			<a href="Reference.html#Refspecs">Refspecs</a> specified for a given Remote define a
-			<b>mapping of branches and tags</b> in your local repository to branches and tags in the remote repository. You may want to use different mappings for inbound or outbound transport operations hence there are
+		<p>A Remote first of all defines a 
+			<b>name</b> for the repository whose branches you track, this is important since you may want to track branches from different repositories so the name helps to understand what repository a certain operation is dealing with. In addition 
+			<a href="Reference.html#Refspecs">Refspecs</a> specified for a given Remote define a 
+			<b>mapping of branches and tags</b> in your local repository to branches and tags in the remote repository. You may want to use different mappings for inbound or outbound transport operations hence there are 
 			<a href="Tasks.html#Cloning_Remote_Repositories">editors</a> to define Fetch and Push Configurations available in EGit.
 		</p>
 		<h2 id="Git_Ignore">Git Ignore</h2>
-		<p><code>.gitignore</code> files located in the working tree specify files that intentionally should not be tracked by git. They only concern files that are not yet tracked by git. In order to ignore uncommitted changes in already tracked files refer to the
+		<p><code>.gitignore</code> files located in the working tree specify files that intentionally should not be tracked by git. They only concern files that are not yet tracked by git. In order to ignore uncommitted changes in already tracked files refer to the 
 			<a href="Reference.html#Menu_Actions">assume unchanged action</a>.
 		</p>
 		<p>Each line in <code>.gitignore</code> files defines a pattern. Git checks ignore patterns following the hierarchy of the working tree from highest to lowest. Patterns defined in higher level <code>.gitignore</code> files are overridden by those defined in lower levels.
@@ -518,25 +635,56 @@
 		<p>Pattern format definition:</p>
 		<ul>
 			<li>blank lines are ignored</li>
-			<li>lines starting with
+			<li>lines starting with 
 				<b>#</b> serve as comments
 			</li>
-			<li>the optional prefix
+			<li>the optional prefix 
 				<b>!</b> negates the pattern. Files excluded by a matching previous pattern become included again. Patterns ending with a slash only match directories but not files or symbolic links.
 			</li>
 			<li>patterns not containing a slash are treated as shell glob patterns matched against the path relative to the location of the .gitignore file</li>
-			<li>git treats patterns as shell globs as defined in
+			<li>git treats patterns as shell globs as defined in 
 				<a href="http://www.kernel.org/doc/man-pages/online/pages/man3/fnmatch.3.html" target="egit_external">fnmatch(3)</a>
 			</li>
-			<li>wildcards in patterns do not match
+			<li>wildcards in patterns do not match 
 				<b>/</b> in path names
 			</li>
 			<li>a leading slash matches the beginning of a pathname</li>
 		</ul>
-		<p>The EGit
-			<b>Ignore</b>
+		<p>The EGit 
+			<b>Ignore</b> 
 			<a href="Reference.html#Menu_Actions">menu action</a> adds the selected resource to the <code>.gitignore</code> file in the resource's parent directory. To enter other ignore patterns use a text editor.
-		</p><hr/>
+		</p>
+		<h2 id="Git_Fetch_Factory_for_PDE_Build">Git Fetch Factory for PDE Build</h2>
+		<p>As part of EGit's PDE Tools, there's a PDE Build fetch factory for Git included in the 
+			<b>org.eclipse.egit.fetchfactory</b> plug-in.
+		</p>
+		<p>The map file file format: 
+			<b>type@id,
+				<a href="version">version</a>=GIT,args
+			</b>
+		</p>
+		<p>Where 
+			<b>args</b> is a comma-separated list of key-value pairs.
+		</p>
+		<p>Accepted 
+			<b>args</b> include:
+		</p>
+		<ul>
+			<li>
+				<b>tag*</b> - mandatory Git tag
+			</li>
+			<li>
+				<b>repo*</b> - mandatory repo location
+			</li>
+			<li>path - optional path relative to repo which points to the element (otherwise it's assumed that the element is at the repository root)</li>
+			<li>prebuilt - optional boolean value indicating that the path points to a pre-built bundle in the repository</li>
+		</ul>
+		<p>Fetching is implemented as a three-step process:</p>
+		<ul>
+			<li>The repository is cloned to local disc. If it already exists, it is assumed that it was previously cloned and just new commits will be fetched</li>
+			<li>The specified tag will be checked out in the local clone</li>
+			<li>The content of the path will be copied to the final build location</li>
+		</ul><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left">
