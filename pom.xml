@@ -20,7 +20,7 @@
 
   <groupId>org.eclipse.egit</groupId>
   <artifactId>egit-parent</artifactId>
-  <version>0.10.1</version>
+  <version>0.10.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>EGit Parent (Incubation)</name>
@@ -61,7 +61,7 @@
   </licenses>
 
   <properties>
-    <egit-version>0.10.1</egit-version>
+    <egit-version>0.10.2-SNAPSHOT</egit-version>
     <tycho-version>0.10.0</tycho-version>
     <platform-version-name>galileo</platform-version-name>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.updatesite/target/site</jgit-site>
