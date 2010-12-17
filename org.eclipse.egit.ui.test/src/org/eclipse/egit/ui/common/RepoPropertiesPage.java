@@ -13,9 +13,11 @@ import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertEnabled;
 import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertNotEnabled;
 import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertText;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCheckBox;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 
 public class RepoPropertiesPage {
@@ -44,6 +46,18 @@ public class RepoPropertiesPage {
 	public void appendToURI(String toAppend) {
 		SWTBotText uri = uri();
 		uri.setText(uri.getText() + toAppend);
+	}
+
+	public void setPushDestination(String destination) {
+		SWTBotCombo destinationCombo = bot.comboBox();
+		String[] items = destinationCombo.items();
+		for (int i = 0; i < items.length; i++) {
+			if (items[i].startsWith(destination)) {
+				destinationCombo.setSelection(i);
+				return;
+			}
+		}
+		fail("ould not find destination " + destination);
 	}
 
 	@SuppressWarnings("boxing")
