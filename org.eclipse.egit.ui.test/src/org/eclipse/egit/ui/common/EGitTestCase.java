@@ -28,11 +28,15 @@ public abstract class EGitTestCase {
 
 	protected static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 	protected static final TestUtil util = new TestUtil();
+	private static volatile boolean welcomePageClosed = false;
 
 	@BeforeClass
 	public static void closeWelcomePage() {
+		if (welcomePageClosed)
+			return;
 		try {
 			bot.viewByTitle("Welcome").close();
+			welcomePageClosed = true;
 		} catch (WidgetNotFoundException e) {
 			// somebody else probably closed it, lets not feel bad about it.
 		}
