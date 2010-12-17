@@ -10,14 +10,11 @@ package org.eclipse.egit.ui.internal.history.command;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.core.op.ResetOperation.ResetType;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.job.JobUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -64,19 +61,8 @@ public class ResetHandler extends AbstractHistoryCommanndHandler {
 			break;
 		}
 
-		Job job = new Job(jobName) {
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				try {
-					new ResetOperation(repo, commit.getName(), resetType)
-							.execute(null);
-				} catch (CoreException e) {
-					return e.getStatus();
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		job.schedule();
+		ResetOperation operation = new ResetOperation(repo, commit.getName(), resetType);
+		JobUtil.scheduleUserJob(operation, jobName, JobFamilies.RESET);
 		return null;
 	}
 }
