@@ -16,15 +16,13 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.core.op.ResetOperation.ResetType;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.job.JobUtil;
 import org.eclipse.egit.ui.internal.repository.SelectResetTypePage;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -91,25 +89,7 @@ public class ResetCommand extends
 											node.getRepository(), node
 													.getObject().getName(),
 											resetType);
-									Job job = new Job(jobname) {
-										@Override
-										protected IStatus run(
-												IProgressMonitor actMonitor) {
-											try {
-												operation.execute(actMonitor);
-											} catch (CoreException e) {
-												return Activator
-														.createErrorStatus(e
-																.getStatus()
-																.getMessage(),
-																e);
-											}
-											return Status.OK_STATUS;
-										}
-									};
-									job.setRule(operation.getSchedulingRule());
-									job.setUser(true);
-									job.schedule();
+									JobUtil.scheduleUserJob(operation, jobname, JobFamilies.RESET);
 								}
 							});
 				} catch (InvocationTargetException ite) {

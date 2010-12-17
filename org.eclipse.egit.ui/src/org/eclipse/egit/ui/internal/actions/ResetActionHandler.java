@@ -12,17 +12,12 @@ package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.core.op.ResetOperation.ResetType;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog;
+import org.eclipse.egit.ui.internal.job.JobUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
@@ -54,22 +49,7 @@ public class ResetActionHandler extends RepositoryActionHandler {
 			String jobname = NLS.bind(UIText.ResetAction_reset, refName);
 			final ResetOperation operation = new ResetOperation(repository,
 					refName, type);
-			Job job = new Job(jobname) {
-				@Override
-				protected IStatus run(IProgressMonitor monitor) {
-					try {
-						operation.execute(monitor);
-						GitLightweightDecorator.refresh();
-					} catch (CoreException e) {
-						return Activator.createErrorStatus(e.getStatus()
-								.getMessage(), e);
-					}
-					return Status.OK_STATUS;
-				}
-			};
-			job.setRule(operation.getSchedulingRule());
-			job.setUser(true);
-			job.schedule();
+			JobUtil.scheduleUserJob(operation, jobname, JobFamilies.RESET);
 		}
 		return null;
 	}
