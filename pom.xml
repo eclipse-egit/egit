@@ -63,37 +63,25 @@
   <properties>
     <egit-version>0.11.0-SNAPSHOT</egit-version>
     <tycho-version>0.10.0</tycho-version>
-    <platform-version-name>galileo</platform-version-name>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.updatesite/target/site</jgit-site>
     <jetty-site>http://download.eclipse.org/jetty/7.1.6.v20100715/repository/</jetty-site>
-    <eclipse-site>http://download.eclipse.org/releases/${platform-version-name}</eclipse-site>
-    <swtbot-site>http://download.eclipse.org/technology/swtbot/${platform-version-name}/dev-build/update-site</swtbot-site>
     <wikitext-site>http://download.eclipse.org/tools/mylyn/update/weekly</wikitext-site>
   </properties>
 
   <profiles>
     <profile>
-      <id>platform-ganymede</id>
-      <activation>
-        <property>
-          <name>platform-version-name</name>
-          <value>ganymede</value>
-        </property>
-      </activation>
-      <properties>
-        <platform-version>[3.4,3.5)</platform-version>
-      </properties>
-    </profile>
-    <profile>
       <id>platform-galileo</id>
       <activation>
+        <activeByDefault>true</activeByDefault>
         <property>
           <name>platform-version-name</name>
           <value>galileo</value>
         </property>
       </activation>
       <properties>
+        <eclipse-site>http://download.eclipse.org/releases/galileo</eclipse-site>
         <platform-version>[3.5,3.6)</platform-version>
+        <swtbot-site>http://download.eclipse.org/technology/swtbot/galileo/dev-build/update-site</swtbot-site>
       </properties>
     </profile>
     <profile>
@@ -105,7 +93,23 @@
         </property>
       </activation>
       <properties>
+        <eclipse-site>http://download.eclipse.org/releases/helios</eclipse-site>
         <platform-version>[3.6,3.7)</platform-version>
+        <swtbot-site>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site</swtbot-site>
+      </properties>
+    </profile>
+    <profile>
+      <id>platform-indigo</id>
+      <activation>
+        <property>
+          <name>platform-version-name</name>
+          <value>indigo</value>
+        </property>
+      </activation>
+      <properties>
+        <eclipse-site>http://download.eclipse.org/releases/indigo</eclipse-site>
+        <platform-version>[3.7,3.8)</platform-version>
+        <swtbot-site>http://download.eclipse.org/technology/swtbot/indigo/dev-build/update-site</swtbot-site>
       </properties>
     </profile>
   </profiles>
@@ -132,7 +136,7 @@
       <url>${jgit-site}</url>
     </repository>
     <repository>
-      <id>ganymede</id>
+      <id>eclipse-platform</id>
       <layout>p2</layout>
       <url>${eclipse-site}</url>
     </repository>
