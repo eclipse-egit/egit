@@ -114,7 +114,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 				GitCloneWizard cloneWizard = new GitCloneWizard();
 				cloneWizard.setCallerRunsCloneOperation(true);
 				WizardDialog dlg = new WizardDialog(getShell(), cloneWizard);
-				dlg.setHelpAvailable(false);
+				dlg.setHelpAvailable(true);
 				if (dlg.open() == Window.OK)
 					cloneWizard.runCloneOperation(getContainer());
 				checkPage();

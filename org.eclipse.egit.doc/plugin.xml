@@ -24,5 +24,26 @@
             content="$nl$/intro/tutorialsExtensionContent.xml">
       </configExtension>
    </extension>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <category
+            name="%cheatsheet.category"
+            id="org.eclipse.egit.cheatsheets">
+      </category>
+      <cheatsheet
+            name="%cheatsheet.clone.name"
+            id="org.eclipse.egit.cheatsheets.clone"
+            category="org.eclipse.egit.cheatsheets"
+            contentFile="$nl$/cheatsheets/clone.xml">
+         <description>%cheatsheet.clone.desc</description>
+      </cheatsheet>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml"
+            plugin="org.eclipse.egit.ui">
+      </contexts>
+   </extension>
 
 </plugin>
