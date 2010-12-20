@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright (C) 2010, Philipp Thun <philipp.thun@sap.com>
+
+   All rights reserved. This program and the accompanying materials
+   are made available under the terms of the Eclipse Public License v1.0
+   which accompanies this distribution, and is available at
+   http://www.eclipse.org/legal/epl-v10.html
+-->
 <cheatsheet title="Cloning a Git Repository">
 	<intro>
 		<description>
@@ -14,19 +22,21 @@
 		<command required="false" serialization="org.eclipse.egit.ui.RepositoriesViewClone" />
 	</item>
 	<item
-		href="/org.eclipse.egit.doc/help/EGit/User_Guide/Working-with-remote-Repositories.html#Repository_Selection"
+		href="/org.eclipse.egit.doc/help/EGit/User_Guide/Tasks.html#Repository_Selection"
 		title="Repository Selection" dialog="true">
 		<description>
 			<b>Enter the repository location.</b><br /><br />
 			If you already have a <b>repository URI</b> in your clipboard, i.e. copied from a gitweb, github, wiki or any other page, it will be automatically entered into the URI field. The other fields (i.e. Host, Repository path, Protocol, Port) will then be automatically filled.<br /><br />
 			In case cloning requires <b>authentication</b> (which is not the case for many repositories), enter your credentials into the User and Password fields.<br /><br />
-			For a complete description of all fields as well as the supported protocols, see the referenced <b>documentation.</b>
+			For a complete description of all fields as well as the supported protocols, see the referenced <b>documentation</b> (click on help icon on top of this section).<br /><br />
+			<b>Click Next</b>
 		</description>
 	</item>
 	<item title="Branch Selection" dialog="true">
 		<description>
 			<b>Choose branches to be cloned from the repository.</b><br /><br />
-			By default all available branches are checked.
+			By default all available branches are checked.<br /><br />
+			<b>Click Next</b>
 		</description>
 	</item>
 	<item title="Local Destination" dialog="true">
