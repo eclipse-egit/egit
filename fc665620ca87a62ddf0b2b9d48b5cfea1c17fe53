@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL1n///88\u003d",
+        "filename": "org.eclipse.egit.doc/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-14T18:00:14Z",
+      "side": 1,
+      "message": "Do I have to specify bundle-version and/or resolution here?",
+      "revId": "fc665620ca87a62ddf0b2b9d48b5cfea1c17fe53",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///8g\u003d",
+        "filename": "org.eclipse.egit.doc/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-16T14:24:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL1n///88\u003d",
+      "revId": "fc665620ca87a62ddf0b2b9d48b5cfea1c17fe53",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
