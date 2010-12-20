@@ -112,7 +112,7 @@
       <properties>
         <eclipse-site>http://download.eclipse.org/releases/indigo</eclipse-site>
         <platform-version>[3.7,3.8)</platform-version>
-        <swtbot-site>http://download.eclipse.org/technology/swtbot/indigo/dev-build/update-site</swtbot-site>
+        <swtbot-site>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site</swtbot-site>
       </properties>
     </profile>
   </profiles>
