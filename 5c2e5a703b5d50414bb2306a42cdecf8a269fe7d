@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL13///3o\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-12-20T08:42:37Z",
+      "side": 1,
+      "message": "Use [3.4.0,4.0.0)",
+      "parentUuid": "AAAL13///7s\u003d",
+      "revId": "5c2e5a703b5d50414bb2306a42cdecf8a269fe7d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
