@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAL13///7s\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-16T19:28:40Z",
+      "side": 1,
+      "message": "Not sure if this is the correct version...",
+      "revId": "5c2e5a703b5d50414bb2306a42cdecf8a269fe7d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL13///3o\u003d",
         "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
         "patchSetId": 5
@@ -14,6 +31,59 @@
       "side": 1,
       "message": "Use [3.4.0,4.0.0)",
       "parentUuid": "AAAL13///7s\u003d",
+      "revId": "5c2e5a703b5d50414bb2306a42cdecf8a269fe7d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///3E\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-20T10:34:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL13///3o\u003d",
+      "revId": "5c2e5a703b5d50414bb2306a42cdecf8a269fe7d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///7o\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2522,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-16T19:28:40Z",
+      "side": 1,
+      "message": "Ideally the contexts.xml file would also be packaged into the egit.doc plugin. But unfortunately I did not manage to get this working...",
+      "revId": "5c2e5a703b5d50414bb2306a42cdecf8a269fe7d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///3A\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2522,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-20T10:34:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL13///7o\u003d",
       "revId": "5c2e5a703b5d50414bb2306a42cdecf8a269fe7d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
