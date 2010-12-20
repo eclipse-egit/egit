@@ -3,6 +3,7 @@
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,26 +24,26 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
-import org.eclipse.jgit.dircache.DirCacheCheckout;
-import org.eclipse.jgit.errors.CheckoutConflictException;
+import org.eclipse.jgit.api.CheckoutCommand;
+import org.eclipse.jgit.api.CheckoutResult;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.CheckoutResult.Status;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.RefUpdate.Result;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 
 /**
- * This class implements checkouts of a specific revision. A check
- * is made that this can be done without data loss.
+ * This class implements checkouts of a specific revision. A check is made that
+ * this can be done without data loss.
  */
 public class BranchOperation implements IEGitOperation {
 
@@ -52,10 +53,14 @@ public class BranchOperation implements IEGitOperation {
 
 	private final ObjectId commitId;
 
+	private CheckoutResult result;
+
 	/**
 	 * Construct a {@link BranchOperation} object for a {@link Ref}.
+	 *
 	 * @param repository
-	 * @param refName Name of git ref to checkout
+	 * @param refName
+	 *            Name of git ref to checkout
 	 */
 	public BranchOperation(Repository repository, String refName) {
 		this.repository = repository;
@@ -65,6 +70,7 @@ public class BranchOperation implements IEGitOperation {
 
 	/**
 	 * Construct a {@link BranchOperation} object for a commit.
+	 *
 	 * @param repository
 	 * @param commit
 	 */
@@ -74,19 +80,6 @@ public class BranchOperation implements IEGitOperation {
 		this.commitId = commit;
 	}
 
-	private RevTree oldTree;
-
-	private RevTree newTree;
-
-	private RevCommit oldCommit;
-
-	private RevCommit newCommit;
-
-
-
-	/* (non-Javadoc)
-	 * @see org.eclipse.egit.core.op.IEGitOperation#execute(org.eclipse.core.runtime.IProgressMonitor)
-	 */
 	public void execute(IProgressMonitor m) throws CoreException {
 		IProgressMonitor monitor;
 		if (m == null)
@@ -94,30 +87,35 @@ public class BranchOperation implements IEGitOperation {
 		else
 			monitor = m;
 
-		if (refName !=null && !refName.startsWith(Constants.R_REFS))
+		if (refName != null && !refName.startsWith(Constants.R_REFS))
 			throw new TeamException(NLS.bind(
 					CoreText.BranchOperation_CheckoutOnlyBranchOrTag, refName));
 
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
 			public void run(IProgressMonitor pm) throws CoreException {
-				IProject[] validProjects = ProjectUtil.getValidProjects(repository);
+				IProject[] validProjects = ProjectUtil
+						.getValidProjects(repository);
 				pm.beginTask(NLS.bind(
-						CoreText.BranchOperation_performingBranch, refName), 5);
-				lookupRefs();
-				pm.worked(1);
+						CoreText.BranchOperation_performingBranch, refName), 1);
 
-				mapObjects();
-				pm.worked(1);
+				CheckoutCommand co = new Git(repository).checkout();
+				co.setName(getTarget());
 
-				checkoutTree();
+				try {
+					co.call();
+				} catch (JGitInternalException e) {
+					throw new CoreException(Activator.error(e.getMessage(), e));
+				} catch (GitAPIException e) {
+					throw new CoreException(Activator.error(e.getMessage(), e));
+				} finally {
+					BranchOperation.this.result = co.getResult();
+				}
+				if (result.getStatus() == Status.NONDELETED)
+					retryDelete(result.getUndeletedList());
 				pm.worked(1);
-
-				updateHeadRef();
-				pm.worked(1);
-
-				ProjectUtil.refreshValidProjects(validProjects, new SubProgressMonitor(
-						pm, 1));
+				ProjectUtil.refreshValidProjects(validProjects,
+						new SubProgressMonitor(pm, 1));
 				pm.worked(1);
 
 				pm.done();
@@ -127,102 +125,36 @@ public class BranchOperation implements IEGitOperation {
 		ResourcesPlugin.getWorkspace().run(action, monitor);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.egit.core.op.IEGitOperation#getSchedulingRule()
-	 */
 	public ISchedulingRule getSchedulingRule() {
 		return ResourcesPlugin.getWorkspace().getRoot();
 	}
 
-	private void updateHeadRef() throws TeamException {
-		boolean detach = false;
-		// in case of a non-local branch or a tag,
-		// we "detach" HEAD, i.e. point it to the
-		// underlying commit instead of to the Ref
-		if (refName == null || !refName.startsWith(Constants.R_HEADS))
-			detach = true;
-		try {
-			RefUpdate u = repository.updateRef(Constants.HEAD, detach);
-			Result res;
-			if (detach) {
-				u.setNewObjectId(newCommit.getId());
-				// using forceUpdate instead of update avoids
-				// the merge tests which would otherwise make
-				// this fail
-				u.setRefLogMessage(NLS.bind(
-						CoreText.BranchOperation_checkoutMovingTo, newCommit
-								.getId().name()), false);
-				res = u.forceUpdate();
-			} else {
-				u.setRefLogMessage(NLS.bind(
-						CoreText.BranchOperation_checkoutMovingTo, refName),
-						false);
-				res = u.link(refName);
-			}
-			switch (res) {
-			case NEW:
-			case FORCED:
-			case NO_CHANGE:
-			case FAST_FORWARD:
+	/**
+	 * @return the result of the operation
+	 */
+	public CheckoutResult getResult() {
+		return result;
+	}
+
+	private String getTarget() {
+		if (refName != null)
+			return refName;
+		return commitId.name();
+	}
+
+	void retryDelete(List<File> fileList) {
+		// try to delete, but for a short time only
+		long startTime = System.currentTimeMillis();
+		for (File fileToDelete : fileList) {
+			if (System.currentTimeMillis() - startTime > 1000)
 				break;
-			default:
-				throw new IOException(u.getResult().name());
-			}
-		} catch (IOException e) {
-			throw new TeamException(NLS.bind(
-					CoreText.BranchOperation_updatingHeadToRef, refName), e);
+			if (fileToDelete.exists())
+				try {
+					FileUtils.delete(fileToDelete, FileUtils.RETRY
+							| FileUtils.RECURSIVE);
+				} catch (IOException e) {
+					// ignore here
+				}
 		}
 	}
-
-	private void checkoutTree() throws TeamException {
-		try {
-			DirCacheCheckout dirCacheCheckout = new DirCacheCheckout(
-					repository, oldTree, repository.lockDirCache(), newTree);
-			dirCacheCheckout.setFailOnConflict(true);
-			boolean result = dirCacheCheckout.checkout();
-			if (!result)
-				retryDelete(dirCacheCheckout);
-		} catch (CheckoutConflictException e) {
-			TeamException teamException = new TeamException(e.getMessage());
-			throw teamException;
-		} catch (IOException e) {
-			throw new TeamException(CoreText.BranchOperation_checkoutProblem, e);
-		}
-	}
-
-	private void retryDelete(DirCacheCheckout dirCacheCheckout) throws IOException {
-		List<String> files = dirCacheCheckout.getToBeDeleted();
-		for(String path:files) {
-			File file = new File(repository.getWorkTree(), path);
-			FileUtils.delete(file, FileUtils.RECURSIVE | FileUtils.RETRY);
-		}
-	}
-
-	private void mapObjects() {
-		oldTree = oldCommit.getTree();
-		newTree = newCommit.getTree();
-	}
-
-	private void lookupRefs() throws TeamException {
-		RevWalk walk = new RevWalk(repository);
-		try {
-			if (refName != null) {
-				newCommit = walk.parseCommit(repository.resolve(refName));
-			}
-			if (commitId != null) {
-				newCommit = walk.parseCommit(commitId);
-			}
-		} catch (IOException e) {
-			throw new TeamException(NLS.bind(
-					CoreText.BranchOperation_mappingCommit, refName), e);
-		}
-
-		try {
-			oldCommit = walk.parseCommit(repository.resolve(Constants.HEAD));
-		} catch (IOException e) {
-			throw new TeamException(CoreText.BranchOperation_mappingCommitHead,
-					e);
-		}
-	}
-
 }
