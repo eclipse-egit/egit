@@ -16,12 +16,15 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.Eclipse;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.SWTBot;
+import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotRadio;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
@@ -121,11 +124,12 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		// fire action
 		bot.button(IDialogConstants.OK_LABEL).click();
 
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+
 		// wait for synchronization process finish
-		bot.sleep(1000);
+		waitUntilTreeHasNodeWithText(syncViewTree, "test commit");
 
 		// then
-		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		assertEquals(1, syncViewTree.getAllItems().length);
 	}
 
@@ -154,14 +158,36 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		// fire action
 		bot.button(IDialogConstants.OK_LABEL).click();
 
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+
 		// wait for synchronization process finish
-		bot.sleep(1000);
+		waitUntilTreeHasNodeWithText(syncViewTree, "test commit");
 
 		// then
-		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		assertEquals(1, syncViewTree.getAllItems().length);
 	}
 
+	private void waitUntilTreeHasNodeWithText(final SWTBotTree tree,
+			final String text) {
+		bot.waitUntil(new ICondition() {
+
+			public boolean test() throws Exception {
+				for (SWTBotTreeItem item : tree.getAllItems())
+					if (item.getText().startsWith(text))
+						return true;
+				return false;
+			}
+
+			public void init(SWTBot bot2) {
+				// empty
+			}
+
+			public String getFailureMessage() {
+				return null;
+			}
+		}, 10000);
+	}
+	
 	// this test always fails with cause:
 	// Timeout after: 5000 ms.: Could not find context menu with text:
 	// Synchronize
@@ -243,7 +269,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		coreTreeItem.collapse();
 	}
 
-	private void resetRepository(String projectName) {
+	private void resetRepository(String projectName) throws Exception {
 		showDialog(projectName, "Team", "Reset...");
 
 		bot.shell(UIText.ResetCommand_WizardTitle).bot().activeShell();
@@ -254,10 +280,10 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		bot.shell(UIText.ResetTargetSelectionDialog_ResetQuestion).bot()
 				.activeShell();
 		bot.button("Yes").click();
-
+		TestUtil.joinJobs(JobFamilies.RESET);
 	}
 
-	private void createTag(String projectName, String tagName) {
+	private void createTag(String projectName, String tagName) throws Exception {
 		showDialog(projectName, "Team", "Tag...");
 
 		bot.shell("Create new tag").bot().activeShell();
@@ -266,17 +292,20 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		bot.styledText(0).setFocus();
 		bot.styledText(0).setText(tagName);
 		bot.button(IDialogConstants.OK_LABEL).click();
+		TestUtil.joinJobs(JobFamilies.TAG);
 	}
 
 	private void makeChangesAndCommit(String projectName) throws Exception {
 		changeFilesInProject();
-
+		Thread.sleep(1000); // wait 1 s to get different time stamps
+							// can be removed when commit is based on DirCache
 		showDialog(projectName, "Team", UIText.CommitAction_commit);
 
 		bot.shell(UIText.CommitDialog_CommitChanges).bot().activeShell();
 		bot.styledText(0).setText("test commit");
 		bot.button(UIText.CommitDialog_SelectAll).click();
 		bot.button(UIText.CommitDialog_Commit).click();
+		TestUtil.joinJobs(JobFamilies.COMMIT);
 	}
 
 	private void showDialog(String projectName, String... cmd) {
