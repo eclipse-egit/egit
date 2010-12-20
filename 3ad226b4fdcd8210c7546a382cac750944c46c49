@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AAAL13///84\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-16T11:27:22Z",
+      "side": 1,
+      "message": "Is this the correct bundle-version?",
+      "revId": "3ad226b4fdcd8210c7546a382cac750944c46c49",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL13///8Y\u003d",
         "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
         "patchSetId": 2
