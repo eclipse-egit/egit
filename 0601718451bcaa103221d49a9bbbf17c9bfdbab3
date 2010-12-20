@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL13///2w\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/clone.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-20T14:45:57Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "0601718451bcaa103221d49a9bbbf17c9bfdbab3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///2o\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/clone.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-20T14:45:57Z",
+      "side": 1,
+      "message": "style nit: period at the end shouldn\u0027t be bold\n\nWhere is this documentation referenced ? Shouldn\u0027t that be linked directly from here ?\n\nAfter filling out URL page it should be mentioned that \"Next\" has to be clicked to advance to the next wizard page.",
+      "revId": "0601718451bcaa103221d49a9bbbf17c9bfdbab3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///2k\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/clone.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-20T14:45:57Z",
+      "side": 1,
+      "message": "It should be mentioned that \"Next\" has to be clicked to advance to the next wizard page.",
+      "revId": "0601718451bcaa103221d49a9bbbf17c9bfdbab3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///2s\u003d",
+        "filename": "org.eclipse.egit.doc/contexts.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-20T14:45:57Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "0601718451bcaa103221d49a9bbbf17c9bfdbab3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
