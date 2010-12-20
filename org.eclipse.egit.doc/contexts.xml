@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<contexts>
+	<context id="GitCloneWizard" title="Clone Git Repository">
+		<description>To be guided through this wizard start the cheat sheet 'Cloning a Git Repository' below.</description>
+		<command
+			serialization="org.eclipse.ui.cheatsheets.openCheatSheet(cheatSheetId=org.eclipse.egit.cheatsheets.clone)"
+			label="Cloning a Git Repository" />
+	</context>
+</contexts>

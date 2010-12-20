@@ -53,6 +53,8 @@ public class GitCloneWizard extends Wizard {
 	 */
 	public static final Object CLONE_JOB_FAMILY = new Object();
 
+	private static final String HELP_CONTEXT = "org.eclipse.egit.ui.GitCloneWizard"; //$NON-NLS-1$
+
 	private RepositorySelectionPage cloneSource;
 
 	private SourceBranchPage validSource;
@@ -73,6 +75,7 @@ public class GitCloneWizard extends Wizard {
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 		setNeedsProgressMonitor(true);
 		cloneSource = new RepositorySelectionPage(true, null);
+		cloneSource.setHelpContext(HELP_CONTEXT);
 		validSource = new SourceBranchPage() {
 
 			@Override
@@ -84,6 +87,7 @@ public class GitCloneWizard extends Wizard {
 				super.setVisible(visible);
 			}
 		};
+		validSource.setHelpContext(HELP_CONTEXT);
 		cloneDestination = new CloneDestinationPage() {
 			@Override
 			public void setVisible(boolean visible) {
@@ -94,6 +98,7 @@ public class GitCloneWizard extends Wizard {
 				super.setVisible(visible);
 			}
 		};
+		cloneDestination.setHelpContext(HELP_CONTEXT);
 	}
 
 	/**
