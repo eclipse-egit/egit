@@ -12,25 +12,13 @@ package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.op.BranchOperation;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
-import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.window.Window;
+import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.osgi.util.NLS;
 
 /**
  * Action for selecting a branch and checking it out.
  *
- * @see BranchOperation
+ * @see BranchOperationUI
  */
 public class BranchActionHandler extends RepositoryActionHandler {
 
@@ -38,40 +26,7 @@ public class BranchActionHandler extends RepositoryActionHandler {
 		final Repository repository = getRepository(true, event);
 		if (repository == null)
 			return null;
-
-		if (!repository.getRepositoryState().canCheckout()) {
-			MessageDialog.openError(getShell(event),
-					UIText.BranchAction_cannotCheckout, NLS.bind(
-							UIText.BranchAction_repositoryState, repository
-									.getRepositoryState().getDescription()));
-			return null;
-		}
-
-		BranchSelectionDialog dialog = new BranchSelectionDialog(
-				getShell(event), repository);
-		if (dialog.open() != Window.OK) {
-			return null;
-		}
-
-		final String refName = dialog.getRefName();
-
-		String jobname = NLS.bind(UIText.BranchAction_checkingOut, refName);
-		Job job = new Job(jobname) {
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				try {
-					new BranchOperation(repository, refName).execute(monitor);
-				} catch (CoreException e) {
-					return Activator.createErrorStatus(
-							UIText.BranchAction_branchFailed, e);
-				} finally {
-					GitLightweightDecorator.refresh();
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		job.setUser(true);
-		job.schedule();
+		new BranchOperationUI(repository).start();
 		return null;
 	}
 
