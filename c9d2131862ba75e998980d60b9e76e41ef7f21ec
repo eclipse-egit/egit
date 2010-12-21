@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2H///9A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T15:58:49Z",
+      "side": 1,
+      "message": "could be more explicit :\n\n{0} does not exist in the working tree",
+      "revId": "c9d2131862ba75e998980d60b9e76e41ef7f21ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
