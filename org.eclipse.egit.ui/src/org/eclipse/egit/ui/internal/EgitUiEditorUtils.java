@@ -10,13 +10,19 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IStorage;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.egit.ui.Activator;
@@ -30,6 +36,8 @@ import org.eclipse.ui.IEditorRegistry;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.editors.text.EditorsUI;
+import org.eclipse.ui.ide.FileStoreEditorInput;
 import org.eclipse.ui.ide.IDE;
 
 /**
@@ -116,6 +124,39 @@ public class EgitUiEditorUtils {
 			} else {
 				return page.openEditor(editorInput,
 						"org.eclipse.ui.DefaultTextEditor"); //$NON-NLS-1$
+			}
+		}
+	}
+
+	/**
+	 * Looks up a resource for the given file and opens an editor on it. A text
+	 * editor is opened if the file is not contained in the workspace.
+	 *
+	 * @param file
+	 *            File to open an editor for. {@code file} must exist.
+	 * @param page
+	 */
+	public static void openEditor(File file, IWorkbenchPage page) {
+		if (!file.exists())
+			return;
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IFile[] files = root.findFilesForLocationURI(file.toURI());
+		if (files.length > 0) {
+			try {
+				IDE.openEditor(page, files[0], OpenStrategy.activateOnOpen());
+			} catch (PartInitException e) {
+				Activator.handleError(UIText.EgitUiEditorUtils_openFailed, e,
+						true);
+			}
+		} else {
+			IFileStore store = EFS.getLocalFileSystem().getStore(
+					new Path(file.getAbsolutePath()));
+			try {
+				IDE.openEditor(page, new FileStoreEditorInput(store),
+						EditorsUI.DEFAULT_TEXT_EDITOR_ID);
+			} catch (PartInitException e) {
+				Activator.handleError(UIText.EgitUiEditorUtils_openFailed, e,
+						true);
 			}
 		}
 	}
