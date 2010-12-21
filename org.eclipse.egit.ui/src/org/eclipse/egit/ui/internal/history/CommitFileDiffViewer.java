@@ -8,12 +8,14 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
@@ -79,6 +81,8 @@ class CommitFileDiffViewer extends TableViewer {
 	private IAction copy;
 
 	private IAction open;
+
+	private IAction openWorkingTreeVersion;
 
 	private IAction compare;
 
@@ -165,8 +169,26 @@ class CommitFileDiffViewer extends TableViewer {
 				if (s.isEmpty() || !(s instanceof IStructuredSelection))
 					return;
 				final IStructuredSelection iss = (IStructuredSelection) s;
-				for (Iterator<FileDiff> it = iss.iterator();; it.hasNext()) {
+				for (Iterator<FileDiff> it = iss.iterator(); it.hasNext();) {
 					openFileInEditor(it.next());
+				}
+			}
+		};
+
+		openWorkingTreeVersion = new Action(
+				UIText.CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel) {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void run() {
+				final ISelection s = getSelection();
+				if (s.isEmpty() || !(s instanceof IStructuredSelection))
+					return;
+				final IStructuredSelection iss = (IStructuredSelection) s;
+				for (Iterator<FileDiff> it = iss.iterator(); it.hasNext();) {
+					String relativePath = it.next().getPath();
+					String path = new Path(db.getWorkTree().getAbsolutePath())
+							.append(relativePath).toOSString();
+					openFileInEditor(path);
 				}
 			}
 		};
@@ -193,6 +215,7 @@ class CommitFileDiffViewer extends TableViewer {
 		};
 
 		mgr.add(open);
+		mgr.add(openWorkingTreeVersion);
 		mgr.add(compare);
 
 		mgr.add(new Separator());
@@ -228,6 +251,7 @@ class CommitFileDiffViewer extends TableViewer {
 		selectAll.setEnabled(!allSelected);
 		copy.setEnabled(!sel.isEmpty());
 		open.setEnabled(!sel.isEmpty());
+		openWorkingTreeVersion.setEnabled(!sel.isEmpty());
 		compare.setEnabled(sel.size() == 1);
 	}
 
@@ -285,6 +309,18 @@ class CommitFileDiffViewer extends TableViewer {
 			}
 			super.inputChanged(input, oldInput);
 		}
+	}
+
+	private void openFileInEditor(String filePath) {
+		IWorkbenchWindow window = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		File file = new File(filePath);
+		if (!file.exists()) {
+			String message = NLS.bind(UIText.CommitFileDiffViewer_FileDoesNotExist, filePath);
+			Activator.showError(message, null);
+		}
+		IWorkbenchPage page = window.getActivePage();
+		EgitUiEditorUtils.openEditor(file, page);
 	}
 
 	private void openFileInEditor(FileDiff d) {

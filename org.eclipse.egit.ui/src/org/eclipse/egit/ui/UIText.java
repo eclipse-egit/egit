@@ -356,9 +356,6 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_notContainedInCommits;
 
 	/** */
-	public static String GitHistoryPage_openFailed;
-
-	/** */
 	public static String GitHistoryPage_MultiResourcesType;
 
 	/** */
@@ -366,6 +363,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitHistoryPage_NoInputMessage;
+
+	/** */
+	public static String GitHistoryPage_openFailed;
 
 	/** */
 	public static String GitHistoryPage_OpenMenuLabel;
@@ -2508,6 +2508,9 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_CompareMenuLabel;
 
 	/** */
+	public static String CommitFileDiffViewer_FileDoesNotExist;
+
+	/** */
 	public static String CommitFileDiffViewer_MergeCommitMultiAncestorMessage;
 
 	/** */
@@ -2710,6 +2713,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitModelWorkingTree_workingTree;
+
+	/** */
+	public static String CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel;
+
+	/** */
+	public static String EgitUiEditorUtils_openFailed;
 
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
