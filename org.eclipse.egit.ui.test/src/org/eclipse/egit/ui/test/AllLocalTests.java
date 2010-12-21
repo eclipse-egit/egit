@@ -16,6 +16,7 @@ import org.eclipse.egit.ui.test.team.actions.AllTeamActionTests;
 import org.eclipse.egit.ui.test.trace.TraceConfigurationDialogTest;
 import org.eclipse.egit.ui.view.repositories.AllRepositoriesViewTests;
 import org.eclipse.egit.ui.view.synchronize.SynchronizeViewTest;
+import org.eclipse.egit.ui.wizards.clone.GitCloneWizardHttpTest;
 import org.eclipse.egit.ui.wizards.clone.GitCloneWizardTest;
 import org.eclipse.egit.ui.wizards.share.SharingWizardTest;
 import org.junit.runner.RunWith;
@@ -26,6 +27,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses( { AllRepositoriesViewTests.class, 	//
 		GlobalConfigurationPageTest.class,			//
 		GitCloneWizardTest.class,                   //
+		GitCloneWizardHttpTest.class,               //
 		SharingWizardTest.class,					//
 		AllTeamActionTests.class,                   //
 		HistoryViewTest.class,                      //
