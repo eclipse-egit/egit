@@ -12,6 +12,7 @@ import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
@@ -20,13 +21,18 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 class PushResultDialog extends TitleAreaDialog {
+	private static final int CONFIGURE = 99;
+
 	private final Repository localDb;
 
 	private final PushOperationResult result;
 
 	private final String destinationString;
+
+	private boolean hideConfigure = false;
 
 	PushResultDialog(final Shell parentShell, final Repository localDb,
 			final PushOperationResult result, final String destinationString) {
@@ -40,8 +46,27 @@ class PushResultDialog extends TitleAreaDialog {
 
 	@Override
 	protected void createButtonsForButtonBar(final Composite parent) {
+		if (!hideConfigure)
+			createButton(parent, CONFIGURE, "Configure", false); //$NON-NLS-1$ TODO
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
 				true);
+	}
+
+	@Override
+	protected void buttonPressed(int buttonId) {
+		super.buttonPressed(buttonId);
+		if (buttonId == CONFIGURE) {
+			super.buttonPressed(IDialogConstants.OK_ID);
+			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+
+				public void run() {
+					SimplePushWizard wiz = SimplePushWizard.getWizard(localDb,
+							null);
+					new WizardDialog(PlatformUI.getWorkbench().getDisplay()
+							.getActiveShell(), wiz).open();
+				}
+			});
+		}
 	}
 
 	@Override
@@ -77,5 +102,9 @@ class PushResultDialog extends TitleAreaDialog {
 			}
 		}
 		return messages.toString();
+	}
+
+	public void showConfigureButton(boolean show) {
+		this.hideConfigure = !show;
 	}
 }

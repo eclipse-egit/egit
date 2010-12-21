@@ -92,6 +92,13 @@
                label="%PullIntoCurrentBranchMenuLabel"
                menubarPath="team.main/group2">
          </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.SimplePushAction"
+               icon="icons/obj16/push.gif"
+               id="org.eclipse.egit.ui.team.SimplePush"
+               label="Push to Upstream"
+               menubarPath="team.main/group1">
+         </action>
      </objectContribution>
      <objectContribution
             adaptable="true"
@@ -1233,6 +1240,27 @@
                name="##Repo-1">
          </separator>
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewPushConfigured"
+               icon="icons/obj16/push.gif"
+               label="Push to Upstream"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesViewPush"
                icon="icons/obj16/push.gif"
                label="%RepoViewPush.label"
@@ -2370,6 +2398,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.MergeToolActionHandler"
             id="org.eclipse.egit.ui.team.MergeTool"
             name="Merge Tool">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.SimplePushActionHandler"
+            id="org.eclipse.egit.ui.team.SimplePush"
+            name="PushUpstream">
       </command>
    </extension>
    <extension
