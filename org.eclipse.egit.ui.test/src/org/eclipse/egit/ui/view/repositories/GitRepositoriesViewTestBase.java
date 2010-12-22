@@ -33,8 +33,9 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
-import org.eclipse.egit.ui.internal.push.PushConfiguredRemoteAction;
+import org.eclipse.egit.ui.internal.push.PushConfiguredRemoteOperation;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
 import org.eclipse.egit.ui.test.Eclipse;
@@ -46,6 +47,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -182,10 +184,13 @@ public abstract class GitRepositoriesViewTestBase extends
 
 		myRepository.getConfig().save();
 		// and push
-		PushConfiguredRemoteAction pa = new PushConfiguredRemoteAction(
-				myRepository, "push");
+		PushConfiguredRemoteOperation pa = new PushConfiguredRemoteOperation(
+				myRepository,
+				new RemoteConfig(myRepository.getConfig(), "push"),
+				org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+						.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT));
+		pa.execute(null);
 
-		pa.run(null, false);
 		TestUtil.joinJobs(JobFamilies.PUSH);
 		try {
 			// delete the stable branch again

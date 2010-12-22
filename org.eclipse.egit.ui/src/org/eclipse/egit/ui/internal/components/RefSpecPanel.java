@@ -9,7 +9,6 @@
 package org.eclipse.egit.ui.internal.components;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -23,12 +22,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.fieldassist.ComboContentAdapter;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.ControlDecoration;
@@ -50,6 +46,14 @@ import org.eclipse.jface.viewers.IElementComparer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.FetchConnection;
+import org.eclipse.jgit.transport.RefSpec;
+import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.jgit.transport.Transport;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -75,14 +79,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.fieldassist.ContentAssistCommandAdapter;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.FetchConnection;
-import org.eclipse.jgit.transport.RefSpec;
-import org.eclipse.jgit.transport.RemoteConfig;
-import org.eclipse.jgit.transport.Transport;
 
 /**
  * This class provides universal panel for editing list of {@link RefSpec} -
@@ -262,7 +258,7 @@ public class RefSpecPanel {
 
 	private Repository localDb;
 
-	private String remoteName;
+	private RemoteConfig remoteConfig;
 
 	private Set<String> localRefNames = Collections.emptySet();
 
@@ -307,7 +303,7 @@ public class RefSpecPanel {
 	 * <p>
 	 * Panel is created with an empty model, with no provided assistant. It
 	 * can't be used by user until
-	 * {@link #setAssistanceData(Repository, Collection, String)} method is
+	 * {@link #setAssistanceData(Repository, Collection, RemoteConfig)} method is
 	 * called, and to this time is disabled.
 	 *
 	 * @param parent
@@ -361,17 +357,12 @@ public class RefSpecPanel {
 	 *            collection of remote refs as advertised by remote repository.
 	 *            Typically they are collected by {@link FetchConnection}
 	 *            implementation.
-	 * @param remoteName
-	 *            optional name for remote configuration, if edited
-	 *            specification list is related to this remote configuration.
-	 *            Can be null. When not null, panel is filled with default
-	 *            fetch/push specifications for this remote configuration.
+	 * @param config
 	 */
 	public void setAssistanceData(final Repository localRepo,
-			final Collection<Ref> remoteRefs, final String remoteName) {
+			final Collection<Ref> remoteRefs, RemoteConfig config) {
 		this.localDb = localRepo;
-		this.remoteName = remoteName;
-
+        this.remoteConfig = config;
 		final List<RefContentProposal> remoteProposals = createContentProposals(
 				remoteRefs, null);
 		remoteProposalProvider.setProposals(remoteProposals);
@@ -409,36 +400,26 @@ public class RefSpecPanel {
 			validateDeleteCreationPanel();
 		}
 
-		try {
-			if (remoteName == null)
-				predefinedConfigured = Collections.emptyList();
-			else {
-				final RemoteConfig rc = new RemoteConfig(localDb.getConfig(),
-						remoteName);
-				if (pushSpecs)
-					predefinedConfigured = rc.getPushRefSpecs();
-				else
-					predefinedConfigured = rc.getFetchRefSpecs();
-				for (final RefSpec spec : predefinedConfigured)
-					addRefSpec(spec);
-			}
-		} catch (URISyntaxException e) {
-			predefinedConfigured = null;
-			ErrorDialog.openError(panel.getShell(),
-					UIText.RefSpecPanel_errorRemoteConfigTitle,
-					UIText.RefSpecPanel_errorRemoteConfigDescription,
-					new Status(IStatus.ERROR, Activator.getPluginId(), 0, e
-							.getMessage(), e));
+		if (remoteConfig == null)
+			predefinedConfigured = Collections.emptyList();
+		else {
+			if (pushSpecs)
+				predefinedConfigured = remoteConfig.getPushRefSpecs();
+			else
+				predefinedConfigured = remoteConfig.getFetchRefSpecs();
+			for (final RefSpec spec : predefinedConfigured)
+				addRefSpec(spec);
 		}
+
 		updateAddPredefinedButton(addConfiguredButton, predefinedConfigured);
 		if (pushSpecs)
 			predefinedBranches = Transport.REFSPEC_PUSH_ALL;
 		else {
 			final String r;
-			if (remoteName == null)
+			if (remoteConfig == null)
 				r = UIText.RefSpecPanel_refChooseRemoteName;
 			else
-				r = remoteName;
+				r = remoteConfig.getName();
 			predefinedBranches = new RefSpec("refs/heads/*:refs/remotes/" //$NON-NLS-1$
 					+ r + "/*"); //$NON-NLS-1$
 		}
@@ -1387,8 +1368,8 @@ public class RefSpecPanel {
 					return;
 				}
 			}
-			if (remoteName != null && src.startsWith(Constants.R_HEADS)) {
-				final String newDst = Constants.R_REMOTES + remoteName + '/'
+			if (remoteConfig != null && src.startsWith(Constants.R_HEADS)) {
+				final String newDst = Constants.R_REMOTES + remoteConfig + '/'
 						+ src.substring(Constants.R_HEADS.length());
 				creationDstCombo.setText(newDst);
 			}

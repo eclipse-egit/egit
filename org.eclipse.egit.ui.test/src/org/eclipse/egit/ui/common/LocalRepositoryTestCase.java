@@ -37,7 +37,7 @@ import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.internal.push.PushConfiguredRemoteAction;
+import org.eclipse.egit.ui.internal.push.PushConfiguredRemoteOperation;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
@@ -48,6 +48,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.FileUtils;
@@ -294,10 +295,13 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 		myRepository.getConfig().save();
 		// and push
-		PushConfiguredRemoteAction pa = new PushConfiguredRemoteAction(
-				myRepository, "push");
+		PushConfiguredRemoteOperation pa = new PushConfiguredRemoteOperation(
+				myRepository,
+				new RemoteConfig(myRepository.getConfig(), "push"),
+				org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+						.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT));
 
-		pa.run(null, false);
+		pa.execute(null);
 
 		try {
 			// delete the stable branch again

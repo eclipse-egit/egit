@@ -1106,6 +1106,9 @@ public class UIText extends NLS {
 	public static String RefSpecPage_annotatedTagsNoTags;
 
 	/** */
+	public static String RefSpecPage_InitializingMessage;
+
+	/** */
 	public static String QuickDiff_failedLoading;
 
 	/** */
