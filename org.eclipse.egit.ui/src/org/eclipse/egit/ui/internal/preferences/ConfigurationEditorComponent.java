@@ -407,8 +407,11 @@ public class ConfigurationEditorComponent {
 			editableConfig.load();
 			tv.setInput(editableConfig);
 			if (editableConfig instanceof FileBasedConfig) {
-				location.setText(((FileBasedConfig) editableConfig).getFile()
-						.getPath());
+				FileBasedConfig fileConfig = (FileBasedConfig) editableConfig;
+				if (fileConfig.getFile() != null)
+					location.setText(fileConfig.getFile().getPath());
+				else
+					location.setText(UIText.ConfigurationEditorComponent_NoConfigLocationKnown);
 			}
 		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, true);
