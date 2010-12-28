@@ -59,7 +59,7 @@ public class GlobalConfigurationPageTest {
 	@BeforeClass
 	public static void beforeClass() throws Exception {
 		EGitTestCase.closeWelcomePage();
-		config = SystemReader.getInstance().openUserConfig(FS.DETECTED);
+		config = SystemReader.getInstance().openUserConfig(null, FS.DETECTED);
 		config.load();
 	}
 
