@@ -14,9 +14,9 @@ import java.text.SimpleDateFormat;
 
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.graphics.Image;
 
 class GraphLabelProvider extends BaseLabelProvider implements
 		ITableLabelProvider {
@@ -37,7 +37,7 @@ class GraphLabelProvider extends BaseLabelProvider implements
 		if (columnIndex == 0)
 			return c.getShortMessage();
 		if (columnIndex == 3)
-			return c.getId().getName();
+			return c.getId().abbreviate(8).name();
 		if (columnIndex == 1 || columnIndex == 2) {
 			final PersonIdent author = authorOf(c);
 			if (author != null) {
