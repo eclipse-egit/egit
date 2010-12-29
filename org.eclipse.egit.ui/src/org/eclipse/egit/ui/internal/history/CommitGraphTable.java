@@ -300,8 +300,8 @@ class CommitGraphTable {
 		final TableColumn commitId = new TableColumn(rawTable, SWT.NONE);
 		commitId.setResizable(true);
 		commitId.setText(UIText.CommitGraphTable_CommitId);
-		commitId.setWidth(100);
-		layout.addColumnData(new ColumnWeightData(5, true));
+		commitId.setWidth(50);
+		layout.addColumnData(new ColumnWeightData(3, true));
 
 		final TableColumn committer = new TableColumn(rawTable, SWT.NONE);
 		committer.setResizable(true);
