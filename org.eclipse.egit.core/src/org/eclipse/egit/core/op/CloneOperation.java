@@ -193,9 +193,9 @@ public class CloneOperation {
 		if (allSelected) {
 			remoteConfig.addFetchRefSpec(wcrs);
 		} else {
-			for (final Ref ref : selectedBranches)
-				if (wcrs.matchSource(ref))
-					remoteConfig.addFetchRefSpec(wcrs.expandFromSource(ref));
+			for (final Ref selectedRef : selectedBranches)
+				if (wcrs.matchSource(selectedRef))
+					remoteConfig.addFetchRefSpec(wcrs.expandFromSource(selectedRef));
 		}
 
 		// we're setting up for a clone with a checkout
