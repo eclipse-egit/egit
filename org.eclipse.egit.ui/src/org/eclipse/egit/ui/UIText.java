@@ -884,6 +884,45 @@ public class UIText extends NLS {
 	public static String RefContentProposal_unknownObject;
 
 	/** */
+	public static String RefSpecDialog_AutoSuggestCheckbox;
+
+	/** */
+	public static String RefSpecDialog_BrowseDestinationButton;
+
+	/** */
+	public static String RefSpecDialog_BrowseSourceButton;
+
+	/** */
+	public static String RefSpecDialog_DestinationLabel;
+
+	/** */
+	public static String RefSpecDialog_FetchMessage;
+
+	/** */
+	public static String RefSpecDialog_FetchTitle;
+
+	/** */
+	public static String RefSpecDialog_ForceUpdateCheckbox;
+
+	/** */
+	public static String RefSpecDialog_GettingRemoteRefsMonitorMessage;
+
+	/** */
+	public static String RefSpecDialog_PushMessage;
+
+	/** */
+	public static String RefSpecDialog_PushTitle;
+
+	/** */
+	public static String RefSpecDialog_SourceLabel;
+
+	/** */
+	public static String RefSpecDialog_SpecificationLabel;
+
+	/** */
+	public static String RefSpecDialog_WindowTitle;
+
+	/** */
 	public static String RefSpecPanel_refChooseSome;
 
 	/** */
@@ -1694,6 +1733,9 @@ public class UIText extends NLS {
 	public static String CreateRepositoryPage_PleaseUseAbsoluePathMessage;
 
 	/** */
+	public static String PushResultDialog_ConfigureButton;
+
+	/** */
 	public static String PushResultTable_columnStatusRepo;
 
 	/** */
@@ -1760,6 +1802,102 @@ public class UIText extends NLS {
 	public static String PushResultTable_statusOkNewTag;
 
 	/** */
+	public static String PushUriPage_AddPushUriButton;
+
+	/** */
+	public static String PushUriPage_AddRefSpecButton;
+
+	/** */
+	public static String PushUriPage_BranchLabel;
+
+	/** */
+	public static String PushUriPage_ChangeCommonUriButton;
+
+	/** */
+	public static String PushUriPage_ChangePushUriButton;
+
+	/** */
+	public static String PushUriPage_ChangeRefSpecButton;
+
+	/** */
+	public static String PushUriPage_CommonUriLabel;
+
+	/** */
+	public static String PushUriPage_CommonUriMessage;
+
+	/** */
+	public static String PushUriPage_ConfigurePushMessage;
+
+	/** */
+	public static String PushUriPage_ConfigurePushTitle;
+
+	/** */
+	public static String PushUriPage_CopyRefSpecButton;
+
+	/** */
+	public static String PushUriPage_DeleteCommonUriButton;
+
+	/** */
+	public static String PushUriPage_DeletePushUriButton;
+
+	/** */
+	public static String PushUriPage_DeleteRefSpecButton;
+
+	/** */
+	public static String PushUriPage_DetachedHeadMessage;
+
+	/** */
+	public static String PushUriPage_DryRunButton;
+
+	/** */
+	public static String PushUriPage_EditAdvancedButton;
+
+	/** */
+	public static String PushUriPage_EmptyClipboardMessage;
+
+	/** */
+	public static String PushUriPage_InavlidRefWindowTitle;
+
+	/** */
+	public static String PushUriPage_InvalidRefMessage;
+
+	/** */
+	public static String PushUriPage_NotASpecMessage;
+
+	/** */
+	public static String PushUriPage_NotASpecWindowTitle;
+
+	/** */
+	public static String PushUriPage_NothingToPasteWindowTitle;
+
+	/** */
+	public static String PushUriPage_PasteRefSpecButton;
+
+	/** */
+	public static String PushUriPage_PushAfterFinishCheckbox;
+
+	/** */
+	public static String PushUriPage_PushUrisLabel;
+
+	/** */
+	public static String PushUriPage_PushUrisMessage;
+
+	/** */
+	public static String PushUriPage_RefSpecGroupHeader;
+
+	/** */
+	public static String PushUriPage_RefSpecLabel;
+
+	/** */
+	public static String PushUriPage_RemoteLabel;
+
+	/** */
+	public static String PushUriPage_RepsitoryLabel;
+
+	/** */
+	public static String PushUriPage_URIGroupHeader;
+
+	/** */
 	public static String ResultDialog_title;
 
 	/** */
@@ -1782,6 +1920,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String FetchConfiguredRemoteAction_TransportErrorDuringFetchMessage;
+
+	/** */
+	public static String FetchResultDialog_ConfigureButton;
 
 	/** */
 	public static String FetchResultDialog_labelEmptyResult;
@@ -1836,6 +1977,84 @@ public class UIText extends NLS {
 
 	/** */
 	public static String FetchResultTable_statusUpToDate;
+
+	/** */
+	public static String FetchUriPage_AddSpecButton;
+
+	/** */
+	public static String FetchUriPage_BranchLabel;
+
+	/** */
+	public static String FetchUriPage_ChangeSpecButton;
+
+	/** */
+	public static String FetchUriPage_ChangeUriButton;
+
+	/** */
+	public static String FetchUriPage_ConfigureFetchURIsMessage;
+
+	/** */
+	public static String FetchUriPage_ConfigureFetchURIsTitle;
+
+	/** */
+	public static String FetchUriPage_CopySpecButton;
+
+	/** */
+	public static String FetchUriPage_DeleteSpecButton;
+
+	/** */
+	public static String FetchUriPage_DeleteUriButton;
+
+	/** */
+	public static String FetchUriPage_DetachedHeadMessage;
+
+	/** */
+	public static String FetchUriPage_DryRunButton;
+
+	/** */
+	public static String FetchUriPage_EditAdvancedButton;
+
+	/** */
+	public static String FetchUriPage_EmptyClipboardMessage;
+
+	/** */
+	public static String FetchUriPage_FetchAfterFinishCheckbox;
+
+	/** */
+	public static String FetchUriPage_InvalidRefMessage;
+
+	/** */
+	public static String FetchUriPage_InvalidRefWindowTitle;
+
+	/** */
+	public static String FetchUriPage_NotARefSpecMessage;
+
+	/** */
+	public static String FetchUriPage_NotARefSpecWindowTitle;
+
+	/** */
+	public static String FetchUriPage_NothingToPasteWindowTitle;
+
+	/** */
+	public static String FetchUriPage_PasteSpecButton;
+
+	/** */
+	public static String FetchUriPage_RefSpecGroupHeader;
+
+	/** */
+	public static String FetchUriPage_RefSpecLabel;
+
+	/** */
+	public static String FetchUriPage_RemoteLabel;
+
+	/** */
+	public static String FetchUriPage_RepositoryLabel;
+
+	/** */
+	public static String FetchUriPage_URIGroupHeader;
+
+	/** */
+	public static String FetchUriPage_UriLabel;
 
 	/** */
 	public static String FetchWizard_cantSaveMessage;
@@ -1938,6 +2157,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String BranchSelectionDialog_Rename;
+
+	/** */
+	public static String BrowseRefDialog_SelectARefWindowTitle;
 
 	/** */
 	public static String CommitDialogPreferencePage_title;
@@ -2683,6 +2905,18 @@ public class UIText extends NLS {
 
 	/** */
 	public static String SelectUriWiazrd_Title;
+
+	/** */
+	public static String SimpleConfigureFetchWizard_ConfigureFetchNoBranchTitle;
+
+	/** */
+	public static String SimpleConfigureFetchWizard_ConfigureFetchWithBranchTitle;
+
+	/** */
+	public static String SimpleConfigurePushWizard_ConfigurePushWindowTitleNoBranch;
+
+	/** */
+	public static String SimpleConfigurePushWizard_ConfigurePushWithBranch;
 
 	/** */
 	public static String SkipRebaseCommand_CancelDialogMessage;
