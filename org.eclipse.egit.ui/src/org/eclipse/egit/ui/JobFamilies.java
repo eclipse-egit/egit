@@ -34,6 +34,11 @@ public class JobFamilies {
 	public final static Object PUSH = new Object();
 
 	/**
+	 * Fetch job
+	 */
+	public final static Object FETCH = new Object();
+
+	/**
 	 * Repositories View refresh
 	 */
 	public final static Object REPO_VIEW_REFRESH = new Object();

@@ -10,160 +10,200 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.op.PushOperation;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.EclipseGitProgressTransformer;
+import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.core.op.PushOperationResult;
-import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.job.JobUtil;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jgit.errors.NotSupportedException;
+import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.RefSpec;
+import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.RemoteConfig;
-import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * Push to a remote as configured
+ * Push operation: pushing from local repository to one or many remote ones.
  */
-public class PushConfiguredRemoteAction {
+public class PushConfiguredRemoteAction extends JobChangeAdapter implements
+		IEGitOperation {
+	private static final int WORK_UNITS_PER_TRANSPORT = 10;
 
-	private final Repository repository;
+	private final Repository localDb;
 
-	private final String remoteName;
+	private final RemoteConfig rc;
+
+	private boolean dryRun = false;
+
+	private final int timeout;
+
+	private PushOperationResult operationResult;
+
+	private CredentialsProvider credentialsProvider;
 
 	/**
-	 * The default constructor
+	 * Create push operation for provided specification.
 	 *
-	 * @param repository
-	 *            a {@link Repository}
-	 * @param remoteName
-	 *            the name of a remote as configured for fetching
+	 * @param localDb
+	 *            local repository
+	 * @param rc
+	 *            remote configuration
+	 * @param timeout
+	 *            the timeout in seconds (0 for no timeout)
 	 */
-	public PushConfiguredRemoteAction(Repository repository, String remoteName) {
-		this.repository = repository;
-		this.remoteName = remoteName;
+	public PushConfiguredRemoteAction(final Repository localDb,
+			final RemoteConfig rc, int timeout) {
+		this.localDb = localDb;
+		this.rc = rc;
+		this.timeout = timeout;
 	}
 
 	/**
-	 * Runs this action
+	 * Sets a credentials provider
+	 *
+	 * @param credentialsProvider
+	 */
+	public void setCredentialsProvider(CredentialsProvider credentialsProvider) {
+		this.credentialsProvider = credentialsProvider;
+	}
+
+	/**
+	 * @param dryRun
+	 */
+	public void setDryRun(boolean dryRun) {
+		this.dryRun = dryRun;
+	}
+
+	/**
+	 * @return push operation result.
+	 */
+	public PushOperationResult getOperationResult() {
+		if (operationResult == null)
+			throw new IllegalStateException(CoreText.OperationNotYetExecuted);
+		return operationResult;
+	}
+
+	/**
+	 * Execute operation and store result. Operation is executed independently
+	 * on each remote repository.
 	 * <p>
 	 *
-	 * @param shell
-	 *            a shell may be null; if provided, a pop up will be displayed
-	 *            indicating the fetch result
-	 * @param dryRun
+	 * @param actMonitor
+	 *            the monitor to be used for reporting progress and responding
+	 *            to cancellation. The monitor is never <code>null</code>
 	 *
 	 */
-	public void run(final Shell shell, boolean dryRun) {
-		RemoteConfig config;
-		PushOperationSpecification spec;
-		Exception pushException = null;
-		final PushOperation op;
-		try {
-			config = new RemoteConfig(repository.getConfig(), remoteName);
-			// config.getPushURIs returns a unmodifiable list
-			List<URIish> pushURIs = new ArrayList<URIish>();
-			pushURIs.addAll(config.getPushURIs());
-			if (pushURIs.isEmpty() && !config.getURIs().isEmpty())
-				pushURIs.add(config.getURIs().get(0));
-			if (pushURIs.isEmpty()) {
-				throw new IOException(NLS.bind(
-						UIText.PushConfiguredRemoteAction_NoUrisMessage,
-						remoteName));
-			}
-			final Collection<RefSpec> pushSpecs = config.getPushRefSpecs();
-			if (pushSpecs.isEmpty()) {
-				throw new IOException(NLS.bind(
-						UIText.PushConfiguredRemoteAction_NoSpecDefined,
-						remoteName));
-			}
-			final Collection<RemoteRefUpdate> updates = Transport
-					.findRemoteRefUpdatesFor(repository, pushSpecs, null);
-			if (updates.isEmpty()) {
-				throw new IOException(
-						NLS.bind(
-								UIText.PushConfiguredRemoteAction_NoUpdatesFoundMessage,
-								remoteName));
-			}
+	public void execute(IProgressMonitor actMonitor) {
+		if (operationResult != null)
+			throw new IllegalStateException(CoreText.OperationAlreadyExecuted);
 
-			spec = new PushOperationSpecification();
-			for (final URIish uri : pushURIs)
-				spec.addURIRefUpdates(uri,
-						ConfirmationPage.copyUpdates(updates));
-			int timeout = Activator.getDefault().getPreferenceStore().getInt(
-					UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-			op = new PushOperation(repository, spec, dryRun, config, timeout);
+		List<URIish> urisToPush = new ArrayList<URIish>();
+		urisToPush.addAll(rc.getPushURIs());
+		if (urisToPush.isEmpty() && !rc.getURIs().isEmpty())
+			urisToPush.add(rc.getURIs().get(0));
 
-		} catch (URISyntaxException e) {
-			pushException = e;
-			return;
-		} catch (IOException e) {
-			pushException = e;
-			return;
-		} finally {
-			if (pushException != null)
-				Activator.handleError(pushException.getMessage(),
-						pushException, shell != null);
-		}
+		IProgressMonitor monitor;
+		if (actMonitor == null)
+			monitor = new NullProgressMonitor();
+		else
+			monitor = actMonitor;
 
-		final Job job = new Job(
-				"Push to " + repository.getDirectory().getParentFile().getName() + " - " + remoteName) { //$NON-NLS-1$ //$NON-NLS-2$
+		final int totalWork = urisToPush.size() * WORK_UNITS_PER_TRANSPORT;
+		if (dryRun)
+			monitor.beginTask(CoreText.PushOperation_taskNameDryRun, totalWork);
+		else
+			monitor.beginTask(CoreText.PushOperation_taskNameNormalRun,
+					totalWork);
 
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				try {
-					op.run(monitor);
-					final PushOperationResult res = op.getOperationResult();
-					if (shell != null) {
-						PlatformUI.getWorkbench().getDisplay().asyncExec(
-								new Runnable() {
-									public void run() {
-										final Dialog dialog = new PushResultDialog(
-												shell, repository, res,
-												repository.getDirectory()
-														.getParentFile()
-														.getName()
-														+ " - " + remoteName); //$NON-NLS-1$
-										dialog.open();
-									}
-								});
-					}
-					return Status.OK_STATUS;
-				} catch (InvocationTargetException e) {
-					return new Status(IStatus.ERROR, Activator.getPluginId(), e
-							.getCause().getMessage(), e);
+		operationResult = new PushOperationResult();
+
+		for (final URIish uri : urisToPush) {
+			final SubProgressMonitor subMonitor = new SubProgressMonitor(
+					monitor, WORK_UNITS_PER_TRANSPORT,
+					SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
+			Transport transport = null;
+			try {
+				if (monitor.isCanceled()) {
+					operationResult.addOperationResult(uri,
+							CoreText.PushOperation_resultCancelled);
+					continue;
 				}
+				transport = Transport.open(localDb, uri);
+				if (credentialsProvider != null)
+					transport.setCredentialsProvider(credentialsProvider);
+				transport.setTimeout(this.timeout);
+
+				if (rc != null)
+					transport.applyConfig(rc);
+				transport.setDryRun(dryRun);
+				final EclipseGitProgressTransformer gitSubMonitor = new EclipseGitProgressTransformer(
+						subMonitor);
+				final PushResult pr = transport.push(gitSubMonitor, null);
+				operationResult.addOperationResult(uri, pr);
+				monitor.worked(WORK_UNITS_PER_TRANSPORT);
+			} catch (final TransportException e) {
+				operationResult.addOperationResult(uri, NLS.bind(
+						CoreText.PushOperation_resultTransportError, e
+								.getMessage()));
+			} catch (final NotSupportedException e) {
+				operationResult.addOperationResult(uri, NLS.bind(
+						CoreText.PushOperation_resultNotSupported, e
+								.getMessage()));
+			} finally {
+				if (transport != null) {
+					transport.close();
+				}
+				// Dirty trick to get things always working.
+				subMonitor.beginTask("", WORK_UNITS_PER_TRANSPORT); //$NON-NLS-1$
+				subMonitor.done();
+				subMonitor.done();
 			}
+		}
+		monitor.done();
+	}
 
-			@Override
-			public boolean belongsTo(Object family) {
-				if (family.equals(JobFamilies.PUSH))
-					return true;
-				return super.belongsTo(family);
+	/**
+	 *
+	 */
+	public void start() {
+		String jobName = NLS.bind(
+				CoreText.PushConfiguredRemoteAction_PushJobName, Activator
+						.getDefault().getRepositoryUtil().getRepositoryName(
+								localDb), rc.getName());
+		JobUtil.scheduleUserJob(this, jobName, JobFamilies.PUSH, this);
+	}
+
+	public void done(IJobChangeEvent event) {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				final Dialog dialog = new PushResultDialog(PlatformUI
+						.getWorkbench().getDisplay().getActiveShell(), localDb,
+						getOperationResult(), Activator.getDefault()
+								.getRepositoryUtil().getRepositoryName(localDb)
+								+ " - " + rc.getName()); //$NON-NLS-1$
+				dialog.open();
 			}
+		});
+	}
 
-
-
-		};
-
-		job.setUser(true);
-		job.schedule();
+	public ISchedulingRule getSchedulingRule() {
+		return ResourcesPlugin.getWorkspace().getRoot();
 	}
 }
