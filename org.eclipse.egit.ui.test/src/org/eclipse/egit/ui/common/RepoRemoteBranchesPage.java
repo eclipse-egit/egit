@@ -14,24 +14,25 @@ import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertNotEnabled;
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.widgetIsEnabled;
 
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
 public class RepoRemoteBranchesPage {
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
 	public void assertRemoteBranches(String... branches) {
-		SWTBotTable table = bot.table();
-		bot.waitUntil(widgetIsEnabled(table), 20000);
+		SWTBotTree tree = bot.tree();
+		bot.waitUntil(widgetIsEnabled(tree), 20000);
 		for (String branch : branches) {
-			table.getTableItem(branch);
+			tree.getTreeItem(branch);
 		}
 	}
 
 	public void selectBranches(String... branches) {
-		SWTBotTable table = bot.table();
-		bot.waitUntil(widgetIsEnabled(table));
+		SWTBotTree tree = bot.tree();
+		bot.waitUntil(widgetIsEnabled(tree));
 		for (String branch : branches) {
-			table.getTableItem(branch).check();
+			tree.getTreeItem(branch).check();
 		}
 	}
 
@@ -41,13 +42,13 @@ public class RepoRemoteBranchesPage {
 	}
 
 	public void deselectAllBranches() {
-		SWTBotTable table = bot.table();
+		SWTBotTree tree = bot.tree();
 
-		bot.waitUntil(widgetIsEnabled(table));
+		bot.waitUntil(widgetIsEnabled(tree));
 
-		int rowCount = table.rowCount();
-		for (int i = 0; i < rowCount; i++) {
-			table.getTableItem(i).uncheck();
+		SWTBotTreeItem[] items = tree.getAllItems();
+		for (int i = 0; i < items.length; i++) {
+			items[i].uncheck();
 		}
 	}
 
