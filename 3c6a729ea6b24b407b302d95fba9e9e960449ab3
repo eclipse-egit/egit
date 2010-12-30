@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2X///4Q\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2010-12-30T08:30:18Z",
+      "side": 1,
+      "message": "Please add bug 333203",
+      "revId": "3c6a729ea6b24b407b302d95fba9e9e960449ab3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
