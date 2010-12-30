@@ -806,6 +806,9 @@ public class UIText extends NLS {
 	public static String RepositorySelectionPage_uriChoice;
 
 	/** */
+	public static String RepositorySelectionPage_UriMustNotHaveTrailingSpacesMessage;
+
+	/** */
 	public static String SoftResetToRevisionAction_softReset;
 
 	/** */
