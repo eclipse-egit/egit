@@ -64,4 +64,7 @@ public class HistoryViewCommands {
 
 	/** "cherry-pick" a commit */
 	public static final String CHERRYPICK = "org.eclipse.egit.ui.history.CherryPick"; //$NON-NLS-1$
+
+	/** "cherry-pick" a commit */
+	public static final String REVERT = "org.eclipse.egit.ui.history.Revert"; //$NON-NLS-1$
 }

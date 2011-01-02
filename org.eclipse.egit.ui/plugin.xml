@@ -2465,6 +2465,11 @@
             name="Open in Text Editor">
       </command>
       <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.RevertHandler"
+            id="org.eclipse.egit.ui.history.Revert"
+            name="%RevertCommand.name">
+      </command>
+      <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.CherryPickHandler"
             id="org.eclipse.egit.ui.history.CherryPick"
             name="%CherryPickCommand.name">
