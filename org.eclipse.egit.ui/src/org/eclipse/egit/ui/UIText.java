@@ -404,6 +404,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_revertMenuItem;
 
 	/** */
+	public static String GitHistoryPage_mergeMenuItem;
+
+	/** */
 	public static String GitHistoryPage_SetAsBaselineMenuLabel;
 
 	/** */
