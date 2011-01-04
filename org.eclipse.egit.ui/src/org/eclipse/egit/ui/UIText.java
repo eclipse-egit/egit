@@ -401,6 +401,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_ResetSoftMenuLabel;
 
 	/** */
+	public static String GitHistoryPage_revertMenuItem;
+
+	/** */
 	public static String GitHistoryPage_SetAsBaselineMenuLabel;
 
 	/** */
