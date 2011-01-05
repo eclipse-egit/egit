@@ -148,7 +148,7 @@ class GitDocument extends Document implements RefsChangedListener {
 				setResolved(null, null, null, ""); //$NON-NLS-1$
 				String msg = NLS
 						.bind(UIText.GitDocument_errorLoadTree, new Object[] {
-								treeId, baseline, resource, repository });
+								treeId.getName(), baseline, resource, repository });
 				Activator.logError(msg, new Throwable());
 				setResolved(null, null, null, ""); //$NON-NLS-1$
 				return;
@@ -158,7 +158,7 @@ class GitDocument extends Document implements RefsChangedListener {
 				setResolved(null, null, null, ""); //$NON-NLS-1$
 				String msg = NLS
 						.bind(UIText.GitDocument_errorLoadTree, new Object[] {
-								treeId, baseline, resource, repository });
+								treeId.getName(), baseline, resource, repository });
 				Activator.logError(msg, new Throwable());
 				setResolved(null, null, null, ""); //$NON-NLS-1$
 				return;
