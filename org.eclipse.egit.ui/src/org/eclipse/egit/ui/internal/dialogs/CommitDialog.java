@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -30,13 +31,16 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.internal.storage.GitFileHistoryProvider;
 import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.ICommitMessageProvider;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
@@ -100,6 +104,11 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
  * selected portion of the tree are shown.
  */
 public class CommitDialog extends Dialog {
+
+	/**
+	 * Constant for the extension point for the commit message provider
+	 */
+	private static final String COMMIT_MESSAGE_PROVIDER_ID = "org.eclipse.egit.ui.commitMessageProvider"; //$NON-NLS-1$
 
 	static class CommitLabelProvider extends WorkbenchLabelProvider implements
 			ITableLabelProvider {
@@ -202,7 +211,7 @@ public class CommitDialog extends Dialog {
 		int minHeight = commitText.getTextWidget().getLineHeight() * 3;
 		commitText.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).grab(true, true)
 				.hint(size).minSize(size.x, minHeight).align(SWT.FILL, SWT.FILL).create());
-		commitText.setText(commitMessage);
+		commitText.setText(calculateCommitMessage());
 
 		// allow to commit with ctrl-enter
 		commitText.getTextWidget().addKeyListener(new KeyAdapter() {
@@ -432,6 +441,39 @@ public class CommitDialog extends Dialog {
 		applyDialogFont(container);
 		container.pack();
 		return container;
+	}
+
+	/**
+	 * @return the calculated commit message
+	 */
+	protected String calculateCommitMessage() {
+		String calculatedCommitMessage = commitMessage;
+
+		Set<IResource> resources = new HashSet<IResource>();
+		for (CommitItem item : items) {
+			IResource resource = item.file.getProject();
+			resources.add(resource);
+		}
+
+		IConfigurationElement[] config = Platform.getExtensionRegistry()
+				.getConfigurationElementsFor(COMMIT_MESSAGE_PROVIDER_ID);
+		for (IConfigurationElement e : config) {
+			Object provider;
+			try {
+				provider = e.createExecutableExtension("class");//$NON-NLS-1$
+				if (provider instanceof ICommitMessageProvider) {
+					if (!"".equals(calculatedCommitMessage)){ //$NON-NLS-1$
+						calculatedCommitMessage += Text.DELIMITER;
+					}
+					calculatedCommitMessage += ((ICommitMessageProvider) provider).getMessage(resources.toArray(new IResource[0])) ;
+				}else{
+					Activator.logWarning(UIText.CommitDialog_WrongTypeOfCommitMessageProvider, null);
+				}
+			} catch (CoreException coreException) {
+				Activator.error(coreException.getLocalizedMessage(), coreException);
+			}
+		}
+		return calculatedCommitMessage;
 	}
 
 	private void saveOriginalChangeId() {
