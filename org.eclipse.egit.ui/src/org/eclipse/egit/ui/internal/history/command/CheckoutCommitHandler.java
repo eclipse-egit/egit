@@ -30,15 +30,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -46,12 +38,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -59,76 +45,13 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Check out of a commit.
  */
 public class CheckoutCommitHandler extends AbstractHistoryCommanndHandler {
-	private static final class BranchMessageDialog extends MessageDialog {
-		private final List<RefNode> nodes;
+	private static final class BranchMessageDialog extends AmbiguosBranchDialog {
 
-		TableViewer branchesList;
-
-		RefNode selected;
-
-		private BranchMessageDialog(Shell parentShell, List<RefNode> nodes) {
-			super(parentShell, UIText.CheckoutHandler_SelectBranchTitle, null,
-					UIText.CheckoutHandler_SelectBranchMessage,
-					MessageDialog.QUESTION, new String[] {
-							IDialogConstants.OK_LABEL,
-							IDialogConstants.CANCEL_LABEL }, 0);
-			this.nodes = nodes;
+		public BranchMessageDialog(Shell parentShell, List<RefNode> nodes) {
+			super(parentShell, nodes, UIText.CheckoutHandler_SelectBranchTitle, UIText.CheckoutHandler_SelectBranchMessage);
 		}
 
-		@Override
-		protected Control createCustomArea(Composite parent) {
-			Composite area = new Composite(parent, SWT.NONE);
-			area.setLayoutData(new GridData(GridData.FILL_BOTH));
-			area.setLayout(new FillLayout());
-
-			branchesList = new TableViewer(area, SWT.SINGLE | SWT.H_SCROLL
-					| SWT.V_SCROLL | SWT.BORDER);
-			branchesList.setContentProvider(ArrayContentProvider.getInstance());
-			branchesList.setLabelProvider(new BranchLabelProvider());
-			branchesList.setInput(nodes);
-			branchesList
-					.addSelectionChangedListener(new ISelectionChangedListener() {
-
-						public void selectionChanged(SelectionChangedEvent event) {
-							getButton(OK).setEnabled(
-									!event.getSelection().isEmpty());
-						}
-					});
-			return area;
-		}
-
-		@Override
-		protected void buttonPressed(int buttonId) {
-			if (buttonId == OK)
-				selected = (RefNode) ((IStructuredSelection) branchesList
-						.getSelection()).getFirstElement();
-			super.buttonPressed(buttonId);
-		}
-
-		@Override
-		public void create() {
-			super.create();
-			getButton(OK).setEnabled(false);
-		}
-
-		public RefNode getSelectedNode() {
-			return selected;
-		}
 	}
-
-	private static final class BranchLabelProvider extends LabelProvider {
-		@Override
-		public String getText(Object element) {
-			RefNode refNode = (RefNode) element;
-			return refNode.getObject().getName();
-		}
-
-		@Override
-		public Image getImage(Object element) {
-			return RepositoryTreeNodeType.REF.getIcon();
-		}
-	}
-
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		PlotCommit commit = (PlotCommit) getSelection(getPage()).getFirstElement();
 		Repository repo = getRepository(event);
