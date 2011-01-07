@@ -67,4 +67,7 @@ public class HistoryViewCommands {
 
 	/** reverte a commit */
 	public static final String REVERT = "org.eclipse.egit.ui.history.Revert"; //$NON-NLS-1$
+
+	/** merge with branch/tag/commit */
+	public static final String MERGE = "org.eclipse.egit.ui.history.Merge"; //$NON-NLS-1$
 }

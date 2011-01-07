@@ -404,6 +404,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_revertMenuItem;
 
 	/** */
+	public static String GitHistoryPage_mergeMenuItem;
+
+	/** */
 	public static String GitHistoryPage_SetAsBaselineMenuLabel;
 
 	/** */
@@ -663,6 +666,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CheckoutHandler_SelectBranchTitle;
+
+	/** */
+	public static String MergeHandler_SelectBranchMessage;
+
+	/** */
+	public static String MergeHandler_SelectBranchTitle;
 
 	/** */
 	public static String CompareWithIndexAction_FileNotInIndex;
