@@ -8,10 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history.command;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -29,13 +26,10 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
@@ -53,34 +47,18 @@ public class CheckoutCommitHandler extends AbstractHistoryCommanndHandler {
 
 	}
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		PlotCommit commit = (PlotCommit) getSelection(getPage()).getFirstElement();
+		RevCommit commit = (RevCommit) getSelection(getPage()).getFirstElement();
 		Repository repo = getRepository(event);
-		List<Ref> availableBranches = new ArrayList<Ref>();
 
 		final BranchOperation op;
 
-		try {
-			Map<String, Ref> localBranches = repo.getRefDatabase().getRefs(
-					Constants.R_HEADS);
-			for (Ref branch : localBranches.values()) {
-				if (branch.getLeaf().getObjectId().equals(commit.getId())) {
-					availableBranches.add(branch);
-				}
-			}
-		} catch (IOException e) {
-			// ignore here
-		}
+		List<RefNode> nodes = getRefNodes(commit, repo, Constants.R_HEADS);
 
-		if (availableBranches.isEmpty())
+		if (nodes.isEmpty())
 			op = new BranchOperation(repo, commit.getId());
-		else if (availableBranches.size() == 1)
-			op = new BranchOperation(repo, availableBranches.get(0).getName());
+		else if (nodes.size() == 1)
+			op = new BranchOperation(repo, nodes.get(0).getObject().getName());
 		else {
-			List<RefNode> nodes = new ArrayList<RefNode>();
-			RepositoryNode repoNode = new RepositoryNode(null, repo);
-			for (Ref ref : availableBranches) {
-				nodes.add(new RefNode(repoNode, repo, ref));
-			}
 			BranchMessageDialog dlg = new BranchMessageDialog(HandlerUtil
 					.getActiveShellChecked(event), nodes);
 			if (dlg.open() == Window.OK) {
