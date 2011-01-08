@@ -2479,6 +2479,11 @@
             id="org.eclipse.egit.ui.history.Merge"
             name="%MergeCommand.name">
       </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.RebaseCurrentHandler"
+            id="org.eclipse.egit.ui.history.RebaseCurrent"
+            name="%RevertCommand.name">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
