@@ -27,11 +27,14 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.util.FS;
@@ -80,7 +83,8 @@ public class RepositoryUtil {
 	 * <li>Tags take precedence over branches</li>
 	 * <li>Local branches take preference over remote branches</li>
 	 * <li>Newer references take precedence over older ones where time stamps
-	 * are available</li>
+	 * are available. Use commiter time stamp from commit if no stamp can be
+	 * found on the tag</li>
 	 * <li>If there are still ambiguities, the reference name with the highest
 	 * lexicographic value will be returned</li>
 	 * </ul>
@@ -123,16 +127,28 @@ public class RepositoryUtil {
 				Map<String, Ref> tags = repository.getRefDatabase().getRefs(
 						Constants.R_TAGS);
 				for (Ref tagRef : tags.values()) {
-					RevTag tag = rw.parseTag(repository.resolve(tagRef.getName()));
-					if (tag.getObject().name().equals(commitId)) {
-						Date timestamp;
-						if (tag.getTaggerIdent() != null) {
-							timestamp = tag.getTaggerIdent().getWhen();
-						} else {
-							timestamp = null;
+					RevObject any = rw.parseAny(repository.resolve(tagRef.getName()));
+					if (any instanceof RevTag) {
+						RevTag tag = (RevTag) any;
+						if (tag.getObject().name().equals(commitId)) {
+							Date timestamp;
+							if (tag.getTaggerIdent() != null) {
+								timestamp = tag.getTaggerIdent().getWhen();
+							} else {
+								try {
+									RevCommit commit = rw.parseCommit(tag.getObject());
+									timestamp = commit.getCommitterIdent().getWhen();
+								} catch (IncorrectObjectTypeException e) {
+									// not referencing a comit.
+									timestamp = null;
+								}
+							}
+							tagMap.put(tagRef.getName(), timestamp);
 						}
-						tagMap.put(tagRef.getName(), timestamp);
-					}
+					} else if (any instanceof RevCommit) {
+						RevCommit commit = ((RevCommit)any);
+						tagMap.put(tagRef.getName(), commit.getCommitterIdent().getWhen());
+					} // else ignore here
 				}
 			} catch (IOException e) {
 				// ignore here
