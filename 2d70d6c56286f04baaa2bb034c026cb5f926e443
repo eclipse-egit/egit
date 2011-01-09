@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2X///l4\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T23:37:55Z",
+      "side": 1,
+      "message": "I think we want all footers in last paragraph, also add colon\n\ns/Bug 333480\\n\\n/Bug: 333480\\n/",
+      "revId": "2d70d6c56286f04baaa2bb034c026cb5f926e443",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
