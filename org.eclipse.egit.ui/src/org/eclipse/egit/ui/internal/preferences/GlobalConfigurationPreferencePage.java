@@ -13,13 +13,18 @@ package org.eclipse.egit.ui.internal.preferences;
 import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -32,14 +37,24 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 		IWorkbenchPreferencePage {
 	private FileBasedConfig userConfig;
 
-	private boolean isDirty;
+	private FileBasedConfig sysConfig;
 
-	private ConfigurationEditorComponent editor;
+	private boolean userIsDirty;
+
+	private boolean sysIsDirty;
+
+	private ConfigurationEditorComponent userConfigEditor;
+
+	private ConfigurationEditorComponent sysConfigEditor;
 
 	@Override
 	protected Control createContents(Composite parent) {
 
-		editor = new ConfigurationEditorComponent(parent, userConfig, true) {
+		Composite composite = SWTUtils.createHVFillComposite(parent,
+				SWTUtils.MARGINS_NONE);
+		TabFolder tabFolder = new TabFolder(composite, SWT.NONE);
+		tabFolder.setLayoutData(SWTUtils.createHVFillGridData());
+		userConfigEditor = new ConfigurationEditorComponent(tabFolder, userConfig, true) {
 			@Override
 			protected void setErrorMessage(String message) {
 				GlobalConfigurationPreferencePage.this.setErrorMessage(message);
@@ -47,12 +62,32 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 
 			@Override
 			protected void setDirty(boolean dirty) {
-				isDirty = dirty;
+				userIsDirty = dirty;
 				updateApplyButton();
 			}
 		};
-		Control result = editor.createContents();
+		sysConfigEditor = new ConfigurationEditorComponent(tabFolder, sysConfig, true) {
+			@Override
+			protected void setErrorMessage(String message) {
+				GlobalConfigurationPreferencePage.this.setErrorMessage(message);
+			}
+
+			@Override
+			protected void setDirty(boolean dirty) {
+				sysIsDirty = dirty;
+				updateApplyButton();
+			}
+		};
+		Control result = userConfigEditor.createContents();
 		Dialog.applyDialogFont(result);
+		TabItem userTabItem = new TabItem(tabFolder, SWT.FILL);
+		userTabItem.setControl(result);
+		userTabItem.setText(UIText.GlobalConfigurationPreferencePage_userSettingTabTitle);
+		result = sysConfigEditor.createContents();
+		Dialog.applyDialogFont(result);
+		TabItem sysTabItem = new TabItem(tabFolder, SWT.FILL);
+		sysTabItem.setControl(result);
+		sysTabItem.setText(UIText.GlobalConfigurationPreferencePage_systemSettingTabTitle);
 		return result;
 	}
 
@@ -66,26 +101,36 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	@Override
 	protected void updateApplyButton() {
 		if (getApplyButton() != null)
-			getApplyButton().setEnabled(isDirty);
+			getApplyButton().setEnabled(userIsDirty || sysIsDirty);
 	}
 
 	@Override
 	public boolean performOk() {
-		if (isDirty)
+		boolean ok = true;
+		if (userIsDirty) {
 			try {
-				editor.save();
-				return super.performOk();
+				userConfigEditor.save();
 			} catch (IOException e) {
 				Activator.handleError(e.getMessage(), e, true);
-				return false;
+				ok = false;
 			}
-		return super.performOk();
+		}
+		if (sysIsDirty) {
+			try {
+				sysConfigEditor.save();
+			} catch (IOException e) {
+				Activator.handleError(e.getMessage(), e, true);
+				ok = false;
+			}
+		}
+		return ok;
 	}
 
 	@Override
 	protected void performDefaults() {
 		try {
-			editor.restore();
+			userConfigEditor.restore();
+			sysConfigEditor.restore();
 		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, true);
 		}
@@ -93,7 +138,9 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	}
 
 	public void init(IWorkbench workbench) {
+		if (sysConfig == null)
+			sysConfig = SystemReader.getInstance().openSystemConfig(null, FS.DETECTED);
 		if (userConfig == null)
-			userConfig = SystemReader.getInstance().openUserConfig(FS.DETECTED);
+			userConfig = SystemReader.getInstance().openUserConfig(null, FS.DETECTED); // no inherit here!
 	}
 }

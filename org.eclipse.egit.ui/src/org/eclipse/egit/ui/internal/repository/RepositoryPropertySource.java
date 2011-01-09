@@ -63,6 +63,8 @@ public class RepositoryPropertySource implements IPropertySource {
 
 	static final String EDITACTIONID = "Edit"; //$NON-NLS-1$
 
+	private static final String SYSTEM_ID_PREFIX = "system"; //$NON-NLS-1$
+
 	private static final String USER_ID_PREFIX = "user"; //$NON-NLS-1$
 
 	private static final String REPO_ID_PREFIX = "repo"; //$NON-NLS-1$
@@ -70,6 +72,8 @@ public class RepositoryPropertySource implements IPropertySource {
 	private static final String EFFECTIVE_ID_PREFIX = "effe"; //$NON-NLS-1$
 
 	private final PropertySheetPage myPage;
+
+	private final FileBasedConfig systemConfig;
 
 	private final FileBasedConfig userHomeConfig;
 
@@ -94,7 +98,8 @@ public class RepositoryPropertySource implements IPropertySource {
 		myPage = page;
 
 		effectiveConfig = repository.getConfig();
-		userHomeConfig = SystemReader.getInstance().openUserConfig(FS.DETECTED);
+		systemConfig = SystemReader.getInstance().openSystemConfig(null, FS.DETECTED);
+		userHomeConfig = SystemReader.getInstance().openUserConfig(systemConfig, FS.DETECTED);
 
 		if (effectiveConfig instanceof FileBasedConfig) {
 			File configFile = ((FileBasedConfig) effectiveConfig).getFile();
@@ -190,6 +195,9 @@ public class RepositoryPropertySource implements IPropertySource {
 					switch (getCurrentMode()) {
 					case EFFECTIVE:
 						return;
+					case SYSTEM:
+						config = systemConfig;
+						break;
 					case USER:
 						config = userHomeConfig;
 						break;
@@ -308,6 +316,7 @@ public class RepositoryPropertySource implements IPropertySource {
 
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		try {
+			systemConfig.load();
 			userHomeConfig.load();
 			repositoryConfig.load();
 			effectiveConfig.load();
@@ -351,6 +360,15 @@ public class RepositoryPropertySource implements IPropertySource {
 			config = userHomeConfig;
 			break;
 		}
+		case SYSTEM: {
+			prefix = SYSTEM_ID_PREFIX;
+			String location = systemConfig.getFile().getAbsolutePath();
+			category = NLS
+					.bind(UIText.RepositoryPropertySource_GlobalConfigurationCategory,
+							location);
+			config = systemConfig;
+			break;
+		}
 		default:
 			return new IPropertyDescriptor[0];
 		}
@@ -379,7 +397,9 @@ public class RepositoryPropertySource implements IPropertySource {
 	public Object getPropertyValue(Object id) {
 		String actId = ((String) id);
 		Object value = null;
-		if (actId.startsWith(USER_ID_PREFIX)) {
+		if (actId.startsWith(SYSTEM_ID_PREFIX)) {
+			value = getValueFromConfig(systemConfig, actId.substring(4));
+		} else if (actId.startsWith(USER_ID_PREFIX)) {
 			value = getValueFromConfig(userHomeConfig, actId.substring(4));
 		} else if (actId.startsWith(REPO_ID_PREFIX)) {
 			value = getValueFromConfig(repositoryConfig, actId.substring(4));
@@ -413,6 +433,8 @@ public class RepositoryPropertySource implements IPropertySource {
 	private enum DisplayMode {
 		/* The effective configuration as obtained from the repository */
 		EFFECTIVE(UIText.RepositoryPropertySource_EffectiveConfigurationAction),
+		/* System wide configuration */
+		SYSTEM(UIText.RepositoryPropertySource_SystemConfigurationMenu),
 		/* The user specific configuration */
 		USER(UIText.RepositoryPropertySource_GlobalConfigurationMenu),
 		/* The repository specific configuration */
