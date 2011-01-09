@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2X///ko\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RevertHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-09T23:35:10Z",
+      "side": 1,
+      "message": "this is a misleading variable name, how about \"revert\" ?",
+      "revId": "f8a7988ecacae782032c75e0a5040c41f0195bcc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
