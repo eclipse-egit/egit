@@ -70,4 +70,7 @@ public class HistoryViewCommands {
 
 	/** merge with branch/tag/commit */
 	public static final String MERGE = "org.eclipse.egit.ui.history.Merge"; //$NON-NLS-1$
+
+	/** rebase on top of commit */
+	public static final String REBASECURRENT = "org.eclipse.egit.ui.history.RebaseCurrent"; //$NON-NLS-1$
 }
