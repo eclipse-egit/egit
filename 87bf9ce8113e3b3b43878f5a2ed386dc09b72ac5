@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2H///7s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-12-22T13:07:13Z",
+      "side": 1,
+      "message": "BranchOperation locks resources and thus should not execute in UI thread.",
+      "revId": "87bf9ce8113e3b3b43878f5a2ed386dc09b72ac5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///7o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2010-12-22T13:07:13Z",
+      "side": 1,
+      "message": "Execute BranchOperation using getContainer.run",
+      "revId": "87bf9ce8113e3b3b43878f5a2ed386dc09b72ac5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
