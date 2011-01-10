@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2X///iw\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/BranchAndResetActionTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-10T12:00:32Z",
+      "side": 1,
+      "message": "this fails on filesystems which don\u0027t block file deletion when FileInputStream is open since the delete() call above already succeeds",
+      "revId": "56add8ed19e89f24c48f2d02c42460df3fe45353",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
