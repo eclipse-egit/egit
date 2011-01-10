@@ -665,6 +665,12 @@ public class UIText extends NLS {
 	public static String CheckoutHandler_SelectBranchTitle;
 
 	/** */
+	public static String CherryPickOperation_Failed;
+
+	/** */
+	public static String CherryPickOperation_InternalError;
+
+	/** */
 	public static String CompareWithIndexAction_FileNotInIndex;
 
 	/** */
@@ -2683,6 +2689,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RenameBranchCommand_WrongNameMessage;
+
+	/** */
+	public static String RevertOperation_Failed;
+
+	/** */
+	public static String RevertOperation_InternalError;
 
 	/** */
 	public static String SelectSynchronizeResourceDialog_header;
