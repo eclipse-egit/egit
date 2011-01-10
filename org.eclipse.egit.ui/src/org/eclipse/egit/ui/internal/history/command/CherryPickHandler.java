@@ -14,7 +14,7 @@ package org.eclipse.egit.ui.internal.history.command;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.jgit.api.CherryPickCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;
@@ -35,10 +35,10 @@ public class CherryPickHandler extends AbstractHistoryCommanndHandler {
 			cherryPick = git.cherryPick().include(commit.getId());
 			newHead = cherryPick.call();
 		} catch (Exception e) {
-			throw new ExecutionException(CoreText.CherryPickOperation_InternalError, e);
+			throw new ExecutionException(UIText.CherryPickOperation_InternalError, e);
 		}
 		if (newHead == null)
-			throw new ExecutionException(CoreText.CherryPickOperation_Failed);
+			throw new ExecutionException(UIText.CherryPickOperation_Failed);
 		return null;
 	}
 }
