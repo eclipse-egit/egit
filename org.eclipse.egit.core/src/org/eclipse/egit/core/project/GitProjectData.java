@@ -431,7 +431,7 @@ public class GitProjectData {
 		r = getProject().findMember(m.getContainerPath());
 		if (r instanceof IContainer) {
 			c = (IContainer) r;
-		} else {
+		} else if (r != null) {
 			c = (IContainer) r.getAdapter(IContainer.class);
 		}
 
