@@ -119,7 +119,7 @@ public class IgnoreOperationTest extends GitTestCase {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		File rootFile = root.getRawLocation().toFile();
 		File ignoreFile = new File(rootFile, Constants.GITIGNORE_FILENAME);
-		String content = testUtils.slurpAndClose(ignoreFile.toURL()
+		String content = testUtils.slurpAndClose(ignoreFile.toURI().toURL()
 				.openStream());
 		assertEquals("/" + project.getProject().getName() + "\n", content);
 		assertTrue(operation.isGitignoreOutsideWSChanged());
