@@ -191,6 +191,7 @@ public class ConfigurationEditorComponent {
 					}
 				}
 			});
+			openEditor.setEnabled(((FileBasedConfig) editableConfig).getFile()!= null);
 		}
 		tv = new TreeViewer(main, SWT.SINGLE | SWT.FULL_SELECTION | SWT.BORDER);
 		Tree tree = tv.getTree();
