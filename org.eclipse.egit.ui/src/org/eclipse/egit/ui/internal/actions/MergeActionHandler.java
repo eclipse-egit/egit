@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.MergeOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.MergeTargetSelectionDialog;
 import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -46,7 +47,7 @@ public class MergeActionHandler extends RepositoryActionHandler {
 
 		if (!canMerge(repository, event))
 			return null;
-
+		BasicConfigurationDialog.show();
 		MergeTargetSelectionDialog mergeTargetSelectionDialog = new MergeTargetSelectionDialog(
 				getShell(event), repository);
 		if (mergeTargetSelectionDialog.open() == IDialogConstants.OK_ID) {
