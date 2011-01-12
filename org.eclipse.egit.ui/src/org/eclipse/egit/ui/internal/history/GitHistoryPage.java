@@ -1045,7 +1045,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				return false;
 			}
 
-			this.name = calcluateName(input);
+			this.name = calculateName(input);
 
 			// disable the filters if we have a Repository as input
 			boolean filtersActive = inResources != null || inFiles != null;
@@ -1277,7 +1277,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		return this.input;
 	}
 
-	private static String calcluateName(HistoryPageInput in) {
+	private static String calculateName(HistoryPageInput in) {
 		// we always visualize the current input in the form
 		// <type>: <path> [<respository name>]
 		// in order to give the user an understanding which context
