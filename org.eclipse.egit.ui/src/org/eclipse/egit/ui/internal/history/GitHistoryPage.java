@@ -945,7 +945,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			try {
 				initAndStartRevWalk(true);
 			} catch (IllegalStateException e) {
-				Activator.handleError(e.getMessage(), e.getCause(), true);
+				Activator.handleError(e.getMessage(), e, true);
 				return false;
 			}
 
