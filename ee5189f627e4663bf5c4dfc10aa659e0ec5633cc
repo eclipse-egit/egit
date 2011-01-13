@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///+s\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-01-12T21:35:13Z",
+      "side": 1,
+      "message": "At the moment, we don\u0027t see such tags anywhere else in Egit, so I guess we should not fill the tagMap here (perhaps we should add a TODO to consider these once we have tags in the tag dialog and history view).",
+      "revId": "ee5189f627e4663bf5c4dfc10aa659e0ec5633cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
