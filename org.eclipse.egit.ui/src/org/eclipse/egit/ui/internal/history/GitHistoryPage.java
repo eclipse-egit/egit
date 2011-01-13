@@ -95,25 +95,383 @@ import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 /** Graphical commit history viewer. */
 public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
+
+	/** actions used in GitHistoryPage **/
+	private static class GitHistoryPageActions {
+
+		private abstract class BooleanPrefAction extends Action implements
+				IPropertyChangeListener, IWorkbenchAction {
+			private final String prefName;
+
+			BooleanPrefAction(final String pn, final String text) {
+				setText(text);
+				prefName = pn;
+				historyPage.store.addPropertyChangeListener(this);
+				setChecked(historyPage.store.getBoolean(prefName));
+			}
+
+			public void run() {
+				historyPage.store.setValue(prefName, isChecked());
+				if (historyPage.store.needsSaving()) {
+					try {
+						historyPage.store.save();
+					} catch (IOException e) {
+						Activator.handleError(e.getMessage(), e, false);
+					}
+				}
+			}
+
+			abstract void apply(boolean value);
+
+			public void propertyChange(final PropertyChangeEvent event) {
+				if (prefName.equals(event.getProperty())) {
+					setChecked(historyPage.store.getBoolean(prefName));
+					apply(isChecked());
+				}
+			}
+
+			public void dispose() {
+				// stop listening
+				historyPage.store.removePropertyChangeListener(this);
+			}
+		}
+
+		private class ShowFilterAction extends Action {
+			private final ShowFilter filter;
+
+			ShowFilterAction(ShowFilter filter, ImageDescriptor icon,
+					String menuLabel, String toolTipText) {
+				super(null, IAction.AS_CHECK_BOX);
+				this.filter = filter;
+				setImageDescriptor(icon);
+				setText(menuLabel);
+				setToolTipText(toolTipText);
+			}
+
+			@Override
+			public void run() {
+				String oldName = historyPage.getName();
+				String oldDescription = historyPage.getDescription();
+				if (!isChecked()) {
+					if (historyPage.showAllFilter == filter) {
+						historyPage.showAllFilter = ShowFilter.SHOWALLRESOURCE;
+						showAllResourceVersionsAction.setChecked(true);
+						historyPage.initAndStartRevWalk(false);
+					}
+				}
+				if (isChecked() && historyPage.showAllFilter != filter) {
+					historyPage.showAllFilter = filter;
+					if (this != showAllRepoVersionsAction)
+						showAllRepoVersionsAction.setChecked(false);
+					if (this != showAllProjectVersionsAction)
+						showAllProjectVersionsAction.setChecked(false);
+					if (this != showAllFolderVersionsAction)
+						showAllFolderVersionsAction.setChecked(false);
+					if (this != showAllResourceVersionsAction)
+						showAllResourceVersionsAction.setChecked(false);
+					historyPage.initAndStartRevWalk(false);
+				}
+				historyPage.firePropertyChange(historyPage, P_NAME, oldName,
+						historyPage.getName());
+				// even though this is currently ending nowhere (see bug
+				// 324386), we
+				// still create the event
+				historyPage.firePropertyChange(historyPage, P_DESCRIPTION,
+						oldDescription, historyPage.getDescription());
+				Activator
+						.getDefault()
+						.getPreferenceStore()
+						.setValue(PREF_SHOWALLFILTER,
+								historyPage.showAllFilter.toString());
+			}
+
+			@Override
+			public String toString() {
+				return "ShowFilter[" + filter.toString() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		}
+
+		List<IWorkbenchAction> actionsToDispose;
+
+		BooleanPrefAction wrapCommentAction;
+
+		BooleanPrefAction fillCommentAction;
+
+		IAction findAction;
+
+		IAction refreshAction;
+
+		BooleanPrefAction showCommentAction;
+
+		BooleanPrefAction showFilesAction;
+
+		IWorkbenchAction compareModeAction;
+
+		IWorkbenchAction showAllBranchesAction;
+
+		IWorkbenchAction reuseCompareEditorAction;
+
+		ShowFilterAction showAllRepoVersionsAction;
+
+		ShowFilterAction showAllProjectVersionsAction;
+
+		ShowFilterAction showAllFolderVersionsAction;
+
+		ShowFilterAction showAllResourceVersionsAction;
+
+		private GitHistoryPage historyPage;
+
+		GitHistoryPageActions(GitHistoryPage historyPage) {
+			actionsToDispose = new ArrayList<IWorkbenchAction>();
+			this.historyPage = historyPage;
+			createActions();
+		}
+
+		private void createActions() {
+			createFindToolbarAction();
+			createRefreshAction();
+			createFilterActions();
+			createCompareModeAction();
+			createReuseCompareEditorAction();
+			createShowAllBranchesAction();
+			createShowCommentAction();
+			createShowFilesAction();
+			createWrapCommentAction();
+			createFillCommentAction();
+
+			wrapCommentAction.setEnabled(showCommentAction.isChecked());
+			fillCommentAction.setEnabled(showCommentAction.isChecked());
+		}
+
+		private void createFindToolbarAction() {
+			findAction = new Action(UIText.GitHistoryPage_FindMenuLabel,
+					UIIcons.ELCL16_FIND) {
+				public void run() {
+					historyPage.store.setValue(
+							UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR,
+							isChecked());
+					if (historyPage.store.needsSaving()) {
+						try {
+							historyPage.store.save();
+						} catch (IOException e) {
+							Activator.handleError(e.getMessage(), e, false);
+						}
+					}
+					historyPage.layout();
+				}
+			};
+			findAction
+					.setChecked(historyPage.store
+							.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR));
+			findAction.setToolTipText(UIText.GitHistoryPage_FindTooltip);
+		}
+
+		private void createRefreshAction() {
+			refreshAction = new Action(UIText.GitHistoryPage_RefreshMenuLabel,
+					UIIcons.ELCL16_REFRESH) {
+				@Override
+				public void run() {
+					historyPage.refresh();
+				}
+			};
+		}
+
+		private void createFilterActions() {
+			showAllRepoVersionsAction = new ShowFilterAction(
+					ShowFilter.SHOWALLREPO, UIIcons.REPOSITORY,
+					UIText.GitHistoryPage_AllInRepoMenuLabel,
+					UIText.GitHistoryPage_AllInRepoTooltip);
+
+			showAllProjectVersionsAction = new ShowFilterAction(
+					ShowFilter.SHOWALLPROJECT, UIIcons.FILTERPROJECT,
+					UIText.GitHistoryPage_AllInProjectMenuLabel,
+					UIText.GitHistoryPage_AllInProjectTooltip);
+
+			showAllFolderVersionsAction = new ShowFilterAction(
+					ShowFilter.SHOWALLFOLDER, UIIcons.FILTERFOLDER,
+					UIText.GitHistoryPage_AllInParentMenuLabel,
+					UIText.GitHistoryPage_AllInParentTooltip);
+
+			showAllResourceVersionsAction = new ShowFilterAction(
+					ShowFilter.SHOWALLRESOURCE, UIIcons.FILTERRESOURCE,
+					UIText.GitHistoryPage_AllOfResourceMenuLabel,
+					UIText.GitHistoryPage_AllOfResourceTooltip);
+
+			showAllRepoVersionsAction
+					.setChecked(historyPage.showAllFilter == showAllRepoVersionsAction.filter);
+			showAllProjectVersionsAction
+					.setChecked(historyPage.showAllFilter == showAllProjectVersionsAction.filter);
+			showAllFolderVersionsAction
+					.setChecked(historyPage.showAllFilter == showAllFolderVersionsAction.filter);
+			showAllResourceVersionsAction
+					.setChecked(historyPage.showAllFilter == showAllResourceVersionsAction.filter);
+		}
+
+		private void createCompareModeAction() {
+			compareModeAction = new BooleanPrefAction(
+					UIPreferences.RESOURCEHISTORY_COMPARE_MODE,
+					UIText.GitHistoryPage_CompareModeMenuLabel) {
+				@Override
+				void apply(boolean value) {
+					// nothing, just switch the preference
+				}
+			};
+			compareModeAction.setImageDescriptor(UIIcons.ELCL16_COMPARE_VIEW);
+			compareModeAction.setToolTipText(UIText.GitHistoryPage_compareMode);
+			actionsToDispose.add(compareModeAction);
+		}
+
+		private void createReuseCompareEditorAction() {
+			reuseCompareEditorAction = new CompareUtils.ReuseCompareEditorAction();
+			actionsToDispose.add(reuseCompareEditorAction);
+		}
+
+		private void createShowAllBranchesAction() {
+			showAllBranchesAction = new BooleanPrefAction(
+					UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES,
+					UIText.GitHistoryPage_ShowAllBranchesMenuLabel) {
+
+				@Override
+				void apply(boolean value) {
+					historyPage.refresh();
+				}
+			};
+			showAllBranchesAction.setImageDescriptor(UIIcons.BRANCH);
+			showAllBranchesAction
+					.setToolTipText(UIText.GitHistoryPage_showAllBranches);
+			actionsToDispose.add(showAllBranchesAction);
+		}
+
+		private void createShowCommentAction() {
+			showCommentAction = new BooleanPrefAction(
+					UIPreferences.RESOURCEHISTORY_SHOW_REV_COMMENT,
+					UIText.ResourceHistory_toggleRevComment) {
+				void apply(final boolean value) {
+					historyPage.layout();
+					wrapCommentAction.setEnabled(isChecked());
+					fillCommentAction.setEnabled(isChecked());
+				}
+			};
+			actionsToDispose.add(showCommentAction);
+		}
+
+		private void createShowFilesAction() {
+			showFilesAction = new BooleanPrefAction(
+					UIPreferences.RESOURCEHISTORY_SHOW_REV_DETAIL,
+					UIText.ResourceHistory_toggleRevDetail) {
+				void apply(final boolean value) {
+					historyPage.layout();
+				}
+			};
+			actionsToDispose.add(showFilesAction);
+		}
+
+		private void createWrapCommentAction() {
+			wrapCommentAction = new BooleanPrefAction(
+					UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP,
+					UIText.ResourceHistory_toggleCommentWrap) {
+				void apply(boolean wrap) {
+					// nothing, just set the Preference
+				}
+			};
+			wrapCommentAction.apply(wrapCommentAction.isChecked());
+			actionsToDispose.add(wrapCommentAction);
+		}
+
+		private void createFillCommentAction() {
+			fillCommentAction = new BooleanPrefAction(
+					UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL,
+					UIText.ResourceHistory_toggleCommentFill) {
+				void apply(boolean fill) {
+					// nothing, just set the Preference
+				}
+			};
+			fillCommentAction.apply(fillCommentAction.isChecked());
+			actionsToDispose.add(fillCommentAction);
+		}
+	}
+
 	private static final String POPUP_ID = "org.eclipse.egit.ui.historyPageContributions"; //$NON-NLS-1$
 
 	private static final String DESCRIPTION_PATTERN = "{0} - {1}"; //$NON-NLS-1$
 
 	private static final String NAME_PATTERN = "{0}: {1} [{2}]"; //$NON-NLS-1$
 
-	/** Wrap comment */
-	private IAction wrapCommentAction;
+	private static final String PREF_SHOWALLFILTER = "org.eclipse.egit.ui.githistorypage.showallfilter"; //$NON-NLS-1$
 
-	/** Fill comment */
-	private IAction fillCommentAction;
+	enum ShowFilter {
+		SHOWALLRESOURCE, SHOWALLFOLDER, SHOWALLPROJECT, SHOWALLREPO,
+	}
+
+	private ShowFilter showAllFilter = ShowFilter.SHOWALLRESOURCE;
+
+	private GitHistoryPageActions actions;
+
+	private void initActions() {
+		try {
+			showAllFilter = ShowFilter.valueOf(Activator.getDefault()
+					.getPreferenceStore().getString(PREF_SHOWALLFILTER));
+		} catch (IllegalArgumentException e) {
+			showAllFilter = ShowFilter.SHOWALLRESOURCE;
+		}
+
+		actions = new GitHistoryPageActions(this);
+		setupToolBar();
+		setupViewMenu();
+
+		graph.getControl().addMenuDetectListener(new MenuDetectListener() {
+			public void menuDetected(MenuDetectEvent e) {
+				popupMgr.add(actions.showFilesAction);
+				popupMgr.add(actions.showCommentAction);
+			}
+		});
+	}
+
+	private void setupToolBar() {
+		IToolBarManager mgr = getSite().getActionBars().getToolBarManager();
+		mgr.add(actions.findAction);
+		mgr.add(new Separator());
+		mgr.add(actions.showAllRepoVersionsAction);
+		mgr.add(actions.showAllProjectVersionsAction);
+		mgr.add(actions.showAllFolderVersionsAction);
+		mgr.add(actions.showAllResourceVersionsAction);
+		mgr.add(new Separator());
+		mgr.add(actions.compareModeAction);
+		mgr.add(actions.showAllBranchesAction);
+	}
+
+	private void setupViewMenu() {
+		IMenuManager viewMenuMgr = getSite().getActionBars().getMenuManager();
+		viewMenuMgr.add(actions.refreshAction);
+
+		viewMenuMgr.add(new Separator());
+		IMenuManager showSubMenuMgr = new MenuManager(
+				UIText.GitHistoryPage_ShowSubMenuLabel);
+		viewMenuMgr.add(showSubMenuMgr);
+		showSubMenuMgr.add(actions.showAllBranchesAction);
+		showSubMenuMgr.add(actions.findAction);
+		showSubMenuMgr.add(actions.showFilesAction);
+		showSubMenuMgr.add(actions.showCommentAction);
+
+		IMenuManager filterSubMenuMgr = new MenuManager(
+				UIText.GitHistoryPage_FilterSubMenuLabel);
+		viewMenuMgr.add(filterSubMenuMgr);
+		filterSubMenuMgr.add(actions.showAllRepoVersionsAction);
+		filterSubMenuMgr.add(actions.showAllProjectVersionsAction);
+		filterSubMenuMgr.add(actions.showAllFolderVersionsAction);
+		filterSubMenuMgr.add(actions.showAllResourceVersionsAction);
+
+		viewMenuMgr.add(new Separator());
+		viewMenuMgr.add(actions.compareModeAction);
+		viewMenuMgr.add(actions.reuseCompareEditorAction);
+
+		viewMenuMgr.add(new Separator());
+		viewMenuMgr.add(actions.wrapCommentAction);
+		viewMenuMgr.add(actions.fillCommentAction);
+	}
 
 	/** An error text to be shown instead of the control */
 	private StyledText errorText;
-
-	// we need to keep track of these actions so that we can
-	// dispose them when the page is disposed (the history framework
-	// does not do this for us)
-	private final List<IWorkbenchAction> actionsToDispose = new ArrayList<IWorkbenchAction>();
 
 	private final IPersistentPreferenceStore store = (IPersistentPreferenceStore) Activator
 			.getDefault().getPreferenceStore();
@@ -218,74 +576,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	 */
 	private List<String> pathFilters;
 
-	private static final String PREF_SHOWALLFILTER = "org.eclipse.egit.ui.githistorypage.showallfilter"; //$NON-NLS-1$
-
-	enum ShowFilter {
-		SHOWALLRESOURCE, SHOWALLFOLDER, SHOWALLPROJECT, SHOWALLREPO,
-	}
-
-	class ShowFilterAction extends Action {
-		private final ShowFilter filter;
-
-		ShowFilterAction(ShowFilter filter, ImageDescriptor icon,
-				String menuLabel, String toolTipText) {
-			super(null, IAction.AS_CHECK_BOX);
-			this.filter = filter;
-			setImageDescriptor(icon);
-			setText(menuLabel);
-			setToolTipText(toolTipText);
-		}
-
-		@Override
-		public void run() {
-			String oldName = getName();
-			String oldDescription = GitHistoryPage.this.getDescription();
-			if (!isChecked()) {
-				if (showAllFilter == filter) {
-					showAllFilter = ShowFilter.SHOWALLRESOURCE;
-					showAllResourceVersionsAction.setChecked(true);
-					initAndStartRevWalk(false);
-				}
-			}
-			if (isChecked() && showAllFilter != filter) {
-				showAllFilter = filter;
-				if (this != showAllRepoVersionsAction)
-					showAllRepoVersionsAction.setChecked(false);
-				if (this != showAllProjectVersionsAction)
-					showAllProjectVersionsAction.setChecked(false);
-				if (this != showAllFolderVersionsAction)
-					showAllFolderVersionsAction.setChecked(false);
-				if (this != showAllResourceVersionsAction)
-					showAllResourceVersionsAction.setChecked(false);
-				initAndStartRevWalk(false);
-			}
-			GitHistoryPage.this.firePropertyChange(GitHistoryPage.this, P_NAME,
-					oldName, getName());
-			// even though this is currently ending nowhere (see bug 324386), we
-			// still create the event
-			GitHistoryPage.this.firePropertyChange(GitHistoryPage.this,
-					P_DESCRIPTION, oldDescription, GitHistoryPage.this
-							.getDescription());
-			Activator.getDefault().getPreferenceStore().setValue(
-					PREF_SHOWALLFILTER, showAllFilter.toString());
-		}
-
-		@Override
-		public String toString() {
-			return "ShowFilter[" + filter.toString() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
-		}
-	}
-
-	private ShowFilter showAllFilter = ShowFilter.SHOWALLRESOURCE;
-
-	private ShowFilterAction showAllRepoVersionsAction;
-
-	private ShowFilterAction showAllProjectVersionsAction;
-
-	private ShowFilterAction showAllFolderVersionsAction;
-
-	private ShowFilterAction showAllResourceVersionsAction;
-
 	/**
 	 * The default constructor
 	 */
@@ -296,138 +586,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 					GitTraceLocation.HISTORYVIEW.getLocation());
 	}
 
-	private void initActions() {
-		IAction findAction = createFindToolbarAction();
-		IAction refreshAction = new Action(
-				UIText.GitHistoryPage_RefreshMenuLabel, UIIcons.ELCL16_REFRESH) {
-			@Override
-			public void run() {
-				refresh();
-			}
-		};
-		try {
-			showAllFilter = ShowFilter.valueOf(Activator.getDefault()
-					.getPreferenceStore().getString(PREF_SHOWALLFILTER));
-		} catch (IllegalArgumentException e) {
-			showAllFilter = ShowFilter.SHOWALLRESOURCE;
-		}
-
-		showAllRepoVersionsAction = new ShowFilterAction(
-				ShowFilter.SHOWALLREPO, UIIcons.REPOSITORY,
-				UIText.GitHistoryPage_AllInRepoMenuLabel,
-				UIText.GitHistoryPage_AllInRepoTooltip);
-
-		showAllProjectVersionsAction = new ShowFilterAction(
-				ShowFilter.SHOWALLPROJECT, UIIcons.FILTERPROJECT,
-				UIText.GitHistoryPage_AllInProjectMenuLabel,
-				UIText.GitHistoryPage_AllInProjectTooltip);
-
-		showAllFolderVersionsAction = new ShowFilterAction(
-				ShowFilter.SHOWALLFOLDER, UIIcons.FILTERFOLDER,
-				UIText.GitHistoryPage_AllInParentMenuLabel,
-				UIText.GitHistoryPage_AllInParentTooltip);
-
-		showAllResourceVersionsAction = new ShowFilterAction(
-				ShowFilter.SHOWALLRESOURCE, UIIcons.FILTERRESOURCE,
-				UIText.GitHistoryPage_AllOfResourceMenuLabel,
-				UIText.GitHistoryPage_AllOfResourceTooltip);
-
-		showAllRepoVersionsAction
-				.setChecked(showAllFilter == showAllRepoVersionsAction.filter);
-		showAllProjectVersionsAction
-				.setChecked(showAllFilter == showAllProjectVersionsAction.filter);
-		showAllFolderVersionsAction
-				.setChecked(showAllFilter == showAllFolderVersionsAction.filter);
-		showAllResourceVersionsAction
-				.setChecked(showAllFilter == showAllResourceVersionsAction.filter);
-
-		BooleanPrefAction compareModeAction = new BooleanPrefAction(
-				UIPreferences.RESOURCEHISTORY_COMPARE_MODE,
-				UIText.GitHistoryPage_CompareModeMenuLabel) {
-			@Override
-			void apply(boolean value) {
-				// nothing, just switch the preference
-			}
-		};
-		actionsToDispose.add(compareModeAction);
-
-		CompareUtils.ReuseCompareEditorAction reuseCompareEditorAction = new CompareUtils.ReuseCompareEditorAction();
-		actionsToDispose.add(reuseCompareEditorAction);
-
-		compareModeAction.setImageDescriptor(UIIcons.ELCL16_COMPARE_VIEW);
-		compareModeAction.setToolTipText(UIText.GitHistoryPage_compareMode);
-
-		BooleanPrefAction showAllBranchesAction = new BooleanPrefAction(
-				UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES,
-				UIText.GitHistoryPage_ShowAllBranchesMenuLabel) {
-
-			@Override
-			void apply(boolean value) {
-				refresh();
-			}
-		};
-		actionsToDispose.add(showAllBranchesAction);
-
-		showAllBranchesAction.setImageDescriptor(UIIcons.BRANCH);
-		showAllBranchesAction
-				.setToolTipText(UIText.GitHistoryPage_showAllBranches);
-
-		final IAction showCommentAction = createShowComment();
-		final IAction showFilesAction = createShowFiles();
-
-		wrapCommentAction = createCommentWrap();
-		fillCommentAction = createCommentFill();
-
-		wrapCommentAction.setEnabled(showCommentAction.isChecked());
-		fillCommentAction.setEnabled(showCommentAction.isChecked());
-
-		IToolBarManager mgr = getSite().getActionBars().getToolBarManager();
-		mgr.add(findAction);
-		mgr.add(new Separator());
-		mgr.add(showAllRepoVersionsAction);
-		mgr.add(showAllProjectVersionsAction);
-		mgr.add(showAllFolderVersionsAction);
-		mgr.add(showAllResourceVersionsAction);
-		mgr.add(new Separator());
-		mgr.add(compareModeAction);
-		mgr.add(showAllBranchesAction);
-
-		IMenuManager viewMenuMgr = getSite().getActionBars().getMenuManager();
-		viewMenuMgr.add(refreshAction);
-
-		viewMenuMgr.add(new Separator());
-		IMenuManager showSubMenuMgr = new MenuManager(
-				UIText.GitHistoryPage_ShowSubMenuLabel);
-		viewMenuMgr.add(showSubMenuMgr);
-		showSubMenuMgr.add(showAllBranchesAction);
-		showSubMenuMgr.add(findAction);
-		showSubMenuMgr.add(showFilesAction);
-		showSubMenuMgr.add(showCommentAction);
-
-		IMenuManager filterSubMenuMgr = new MenuManager(
-				UIText.GitHistoryPage_FilterSubMenuLabel);
-		viewMenuMgr.add(filterSubMenuMgr);
-		filterSubMenuMgr.add(showAllRepoVersionsAction);
-		filterSubMenuMgr.add(showAllProjectVersionsAction);
-		filterSubMenuMgr.add(showAllFolderVersionsAction);
-		filterSubMenuMgr.add(showAllResourceVersionsAction);
-
-		viewMenuMgr.add(new Separator());
-		viewMenuMgr.add(compareModeAction);
-		viewMenuMgr.add(reuseCompareEditorAction);
-
-		viewMenuMgr.add(new Separator());
-		viewMenuMgr.add(wrapCommentAction);
-		viewMenuMgr.add(fillCommentAction);
-
-		graph.getControl().addMenuDetectListener(new MenuDetectListener() {
-			public void menuDetected(MenuDetectEvent e) {
-				popupMgr.add(showFilesAction);
-				popupMgr.add(showCommentAction);
-			}
-		});
-	}
-
 	void initAndStartRevWalk(boolean forceNewWalk) throws IllegalStateException {
 		try {
 			if (trace)
@@ -436,20 +594,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 			cancelRefreshJob();
 			Repository db = input.getRepository();
-			AnyObjectId headId;
-			try {
-				headId = db.resolve(Constants.HEAD);
-			} catch (IOException e) {
-				throw new IllegalStateException(NLS.bind(
-						UIText.GitHistoryPage_errorParsingHead, Activator
-								.getDefault().getRepositoryUtil()
-								.getRepositoryName(db)));
-			}
-			if (headId == null)
-				throw new IllegalStateException(NLS.bind(
-						UIText.GitHistoryPage_errorParsingHead, Activator
-								.getDefault().getRepositoryUtil()
-								.getRepositoryName(db)));
+			AnyObjectId headId = resolveHead(db);
 
 			List<String> paths = buildFilterPaths(input.getItems(), input
 					.getFileList(), db);
@@ -461,80 +606,122 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				// not dispose of the SWTWalk, even if HEAD was reset to
 				// HEAD^1 and the old HEAD commit should not be visible.
 				//
-				currentHeadId = headId;
-				if (currentWalk != null)
-					currentWalk.release();
-				currentWalk = new SWTWalk(db);
-				currentWalk.sort(RevSort.COMMIT_TIME_DESC, true);
-				currentWalk.sort(RevSort.BOUNDARY, true);
-				highlightFlag = currentWalk.newFlag("highlight"); //$NON-NLS-1$
+				createNewWalk(db, headId);
 			} else {
 				currentWalk.reset();
 			}
+			setWalkStartPoints(db, headId);
 
-			try {
-				if (store
-						.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES)) {
-					markStartAllRefs(Constants.R_HEADS);
-					markStartAllRefs(Constants.R_REMOTES);
-				} else
-					currentWalk.markStart(currentWalk.parseCommit(headId));
-			} catch (IOException e) {
-				throw new IllegalStateException(NLS.bind(
-						UIText.GitHistoryPage_errorReadingHeadCommit, headId,
-						db.getDirectory().getAbsolutePath()), e);
-			}
+			final TreeWalk fileWalker = setupFileViewer(db, paths);
+			setupCommentViewer(db, fileWalker);
 
-			final TreeWalk fileWalker = new TreeWalk(db);
-			fileWalker.setRecursive(true);
-			if (paths.size() > 0) {
-				pathFilters = paths;
-				currentWalk.setTreeFilter(AndTreeFilter.create(PathFilterGroup
-						.createFromStrings(paths), TreeFilter.ANY_DIFF));
-				fileWalker.setFilter(currentWalk.getTreeFilter().clone());
-
-			} else {
-				pathFilters = null;
-				currentWalk.setTreeFilter(TreeFilter.ALL);
-				fileWalker.setFilter(TreeFilter.ANY_DIFF);
-			}
-			fileViewer.setTreeWalk(db, fileWalker);
-			fileViewer.refresh();
-			fileViewer.addSelectionChangedListener(commentViewer);
-			commentViewer.setTreeWalk(fileWalker);
-			commentViewer.setDb(db);
-			commentViewer.refresh();
-
-			final SWTCommitList list;
-			list = new SWTCommitList(graph.getControl().getDisplay());
-			list.source(currentWalk);
-			final GenerateHistoryJob rj = new GenerateHistoryJob(this, list);
-			rj.addJobChangeListener(new JobChangeAdapter() {
-				@Override
-				public void done(final IJobChangeEvent event) {
-					final Control graphctl = graph.getControl();
-					if (job != rj || graphctl.isDisposed())
-						return;
-					graphctl.getDisplay().asyncExec(new Runnable() {
-						public void run() {
-							if (job == rj)
-								job = null;
-						}
-					});
-				}
-			});
-			job = rj;
-			if (trace)
-				GitTraceLocation.getTrace().trace(
-						GitTraceLocation.HISTORYVIEW.getLocation(),
-						"Scheduling GenerateHistoryJob"); //$NON-NLS-1$
-			schedule(rj);
+			scheduleNewGenerateHistoryJob();
 		} finally {
 			if (trace)
 				GitTraceLocation.getTrace().traceExit(
 						GitTraceLocation.HISTORYVIEW.getLocation());
 
 		}
+	}
+
+	private AnyObjectId resolveHead(Repository db) {
+		AnyObjectId headId;
+		try {
+			headId = db.resolve(Constants.HEAD);
+		} catch (IOException e) {
+			throw new IllegalStateException(NLS.bind(
+					UIText.GitHistoryPage_errorParsingHead, Activator
+							.getDefault().getRepositoryUtil()
+							.getRepositoryName(db)));
+		}
+		if (headId == null)
+			throw new IllegalStateException(NLS.bind(
+					UIText.GitHistoryPage_errorParsingHead, Activator
+							.getDefault().getRepositoryUtil()
+							.getRepositoryName(db)));
+		return headId;
+	}
+
+	private void createNewWalk(Repository db, AnyObjectId headId) {
+		currentHeadId = headId;
+		if (currentWalk != null)
+			currentWalk.release();
+		currentWalk = new SWTWalk(db);
+		currentWalk.sort(RevSort.COMMIT_TIME_DESC, true);
+		currentWalk.sort(RevSort.BOUNDARY, true);
+		highlightFlag = currentWalk.newFlag("highlight"); //$NON-NLS-1$
+	}
+
+	private void setWalkStartPoints(Repository db, AnyObjectId headId) {
+		try {
+			if (store
+					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES)) {
+				markStartAllRefs(Constants.R_HEADS);
+				markStartAllRefs(Constants.R_REMOTES);
+			} else
+				currentWalk.markStart(currentWalk.parseCommit(headId));
+		} catch (IOException e) {
+			throw new IllegalStateException(NLS.bind(
+					UIText.GitHistoryPage_errorReadingHeadCommit, headId,
+					db.getDirectory().getAbsolutePath()), e);
+		}
+	}
+
+	private void setupCommentViewer(Repository db, final TreeWalk fileWalker) {
+		commentViewer.setTreeWalk(fileWalker);
+		commentViewer.setDb(db);
+		commentViewer.refresh();
+	}
+
+	private TreeWalk setupFileViewer(Repository db, List<String> paths) {
+		final TreeWalk fileWalker = createFileWalker(db, paths);
+		fileViewer.setTreeWalk(db, fileWalker);
+		fileViewer.refresh();
+		fileViewer.addSelectionChangedListener(commentViewer);
+		return fileWalker;
+	}
+
+	private TreeWalk createFileWalker(Repository db, List<String> paths) {
+		final TreeWalk fileWalker = new TreeWalk(db);
+		fileWalker.setRecursive(true);
+		if (paths.size() > 0) {
+			pathFilters = paths;
+			currentWalk.setTreeFilter(AndTreeFilter.create(PathFilterGroup
+					.createFromStrings(paths), TreeFilter.ANY_DIFF));
+			fileWalker.setFilter(currentWalk.getTreeFilter().clone());
+
+		} else {
+			pathFilters = null;
+			currentWalk.setTreeFilter(TreeFilter.ALL);
+			fileWalker.setFilter(TreeFilter.ANY_DIFF);
+		}
+		return fileWalker;
+	}
+
+	private void scheduleNewGenerateHistoryJob() {
+		final SWTCommitList list = new SWTCommitList(graph.getControl().getDisplay());
+		list.source(currentWalk);
+		final GenerateHistoryJob rj = new GenerateHistoryJob(this, list);
+		rj.addJobChangeListener(new JobChangeAdapter() {
+			@Override
+			public void done(final IJobChangeEvent event) {
+				final Control graphctl = graph.getControl();
+				if (job != rj || graphctl.isDisposed())
+					return;
+				graphctl.getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						if (job == rj)
+							job = null;
+					}
+				});
+			}
+		});
+		job = rj;
+		if (trace)
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.HISTORYVIEW.getLocation(),
+					"Scheduling GenerateHistoryJob"); //$NON-NLS-1$
+		schedule(rj);
 	}
 
 	/**
@@ -725,80 +912,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		});
 	}
 
-	private IAction createFindToolbarAction() {
-		final IAction r = new Action(UIText.GitHistoryPage_FindMenuLabel,
-				UIIcons.ELCL16_FIND) {
-			public void run() {
-				store.setValue(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR,
-						isChecked());
-				if (store.needsSaving()) {
-					try {
-						store.save();
-					} catch (IOException e) {
-						Activator.handleError(e.getMessage(), e, false);
-					}
-				}
-				layout();
-			}
-		};
-		r.setChecked(store
-				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR));
-		r.setToolTipText(UIText.GitHistoryPage_FindTooltip);
-		return r;
-	}
-
-	private IAction createCommentWrap() {
-		final BooleanPrefAction a = new BooleanPrefAction(
-				UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP,
-				UIText.ResourceHistory_toggleCommentWrap) {
-			void apply(boolean wrap) {
-				// nothing, just set the Preference
-			}
-		};
-		a.apply(a.isChecked());
-		actionsToDispose.add(a);
-		return a;
-	}
-
-	private IAction createCommentFill() {
-		final BooleanPrefAction a = new BooleanPrefAction(
-				UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL,
-				UIText.ResourceHistory_toggleCommentFill) {
-			void apply(boolean fill) {
-				// nothing, just set the Preference
-			}
-		};
-		a.apply(a.isChecked());
-		actionsToDispose.add(a);
-		return a;
-	}
-
-	private IAction createShowComment() {
-		BooleanPrefAction a = new BooleanPrefAction(
-				UIPreferences.RESOURCEHISTORY_SHOW_REV_COMMENT,
-				UIText.ResourceHistory_toggleRevComment) {
-			void apply(final boolean value) {
-				layout();
-				wrapCommentAction.setEnabled(isChecked());
-				fillCommentAction.setEnabled(isChecked());
-			}
-		};
-		actionsToDispose.add(a);
-		return a;
-	}
-
-	private IAction createShowFiles() {
-		BooleanPrefAction a = new BooleanPrefAction(
-				UIPreferences.RESOURCEHISTORY_SHOW_REV_DETAIL,
-				UIText.ResourceHistory_toggleRevDetail) {
-			void apply(final boolean value) {
-				layout();
-			}
-		};
-		actionsToDispose.add(a);
-		return a;
-	}
-
 	public void dispose() {
 		trace = GitTraceLocation.HISTORYVIEW.isActive();
 		if (trace)
@@ -811,9 +924,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		}
 
 		// dispose of the actions (the history framework doesn't do this for us)
-		for (IWorkbenchAction action : actionsToDispose)
+		for (IWorkbenchAction action : actions.actionsToDispose)
 			action.dispose();
-		actionsToDispose.clear();
+		actions.actionsToDispose.clear();
 		cancelRefreshJob();
 		if (popupMgr != null) {
 			for (final IContributionItem i : popupMgr.getItems()) {
@@ -932,15 +1045,15 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				return false;
 			}
 
-			this.name = calcluateName(input);
+			this.name = calculateName(input);
 
 			// disable the filters if we have a Repository as input
 			boolean filtersActive = inResources != null || inFiles != null;
-			showAllRepoVersionsAction.setEnabled(filtersActive);
-			showAllProjectVersionsAction.setEnabled(filtersActive);
+			actions.showAllRepoVersionsAction.setEnabled(filtersActive);
+			actions.showAllProjectVersionsAction.setEnabled(filtersActive);
 			// the repository itself has no notion of projects
-			showAllFolderVersionsAction.setEnabled(inResources != null);
-			showAllResourceVersionsAction.setEnabled(filtersActive);
+			actions.showAllFolderVersionsAction.setEnabled(inResources != null);
+			actions.showAllResourceVersionsAction.setEnabled(filtersActive);
 
 			try {
 				initAndStartRevWalk(true);
@@ -1164,7 +1277,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		return this.input;
 	}
 
-	private static String calcluateName(HistoryPageInput in) {
+	private static String calculateName(HistoryPageInput in) {
 		// we always visualize the current input in the form
 		// <type>: <path> [<respository name>]
 		// in order to give the user an understanding which context
@@ -1282,42 +1395,4 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		}
 		return NLS.bind(DESCRIPTION_PATTERN, getName(), filterHint);
 	}
-
-	private abstract class BooleanPrefAction extends Action implements
-			IPropertyChangeListener, IWorkbenchAction {
-		private final String prefName;
-
-		BooleanPrefAction(final String pn, final String text) {
-			setText(text);
-			prefName = pn;
-			store.addPropertyChangeListener(this);
-			setChecked(store.getBoolean(prefName));
-		}
-
-		public void run() {
-			store.setValue(prefName, isChecked());
-			if (store.needsSaving()) {
-				try {
-					store.save();
-				} catch (IOException e) {
-					Activator.handleError(e.getMessage(), e, false);
-				}
-			}
-		}
-
-		abstract void apply(boolean value);
-
-		public void propertyChange(final PropertyChangeEvent event) {
-			if (prefName.equals(event.getProperty())) {
-				setChecked(store.getBoolean(prefName));
-				apply(isChecked());
-			}
-		}
-
-		public void dispose() {
-			// stop listening
-			store.removePropertyChangeListener(this);
-		}
-	}
-
 }
