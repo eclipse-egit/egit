@@ -39,6 +39,7 @@ import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -47,13 +48,13 @@ import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevSort;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -121,11 +122,13 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 	private final IInputValidator tagNameValidator;
 
+	private final RevWalk rw;
+
 	static class TagLabelProvider extends WorkbenchLabelProvider implements
 			ITableLabelProvider {
 
-		private final ResourceManager fImageCache = new LocalResourceManager(JFaceResources
-				.getResources());
+		private final ResourceManager fImageCache = new LocalResourceManager(
+				JFaceResources.getResources());
 
 		public Image getColumnImage(Object element, int columnIndex) {
 			// initially, we just display a single String ("Loading...")
@@ -138,7 +141,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 			// initially, we just display a single String ("Loading...")
 			if (element instanceof String)
 				return (String) element;
-			return ((RevTag) element).getTagName();
+			return ((Ref) element).getName().substring(10);
 		}
 
 		public void dispose() {
@@ -162,6 +165,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		this.branchName = branchName;
 		this.commitId = null;
 		this.repo = repo;
+		this.rw = new RevWalk(repo);
 		setHelpAvailable(false);
 	}
 
@@ -179,6 +183,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		this.branchName = null;
 		this.commitId = commitId;
 		this.repo = repo;
+		this.rw = new RevWalk(repo);
 		setHelpAvailable(false);
 	}
 
@@ -233,11 +238,10 @@ public class CreateTagDialog extends TitleAreaDialog {
 	private String getTitle() {
 		String title = ""; //$NON-NLS-1$
 		if (branchName != null) {
-			title = NLS.bind(
-					UIText.CreateTagDialog_questionNewTagTitle, branchName);
+			title = NLS.bind(UIText.CreateTagDialog_questionNewTagTitle,
+					branchName);
 		} else if (commitId != null) {
-			title = NLS.bind(
-					UIText.CreateTagDialog_CreateTagOnCommitTitle,
+			title = NLS.bind(UIText.CreateTagDialog_CreateTagOnCommitTitle,
 					CompareUtils.truncatedRevision(commitId.getName()));
 		}
 		return title;
@@ -270,20 +274,33 @@ public class CreateTagDialog extends TitleAreaDialog {
 		Job job = new Job(UIText.CreateTagDialog_GetTagJobName) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				final List<RevTag> tags = getRevTags();
-				PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-					public void run() {
-						if (!tagViewer.getTable().isDisposed()) {
-							tagViewer.setInput(tags);
-							tagViewer.getTable().setEnabled(true);
-						}
-					}
-				});
+
+				try {
+					final List<Ref> tags = getRevTags();
+					PlatformUI.getWorkbench().getDisplay().asyncExec(
+							new Runnable() {
+								public void run() {
+									if (!tagViewer.getTable().isDisposed()) {
+										tagViewer.setInput(tags);
+										tagViewer.getTable().setEnabled(true);
+									}
+								}
+							});
+				} catch (IOException e) {
+					setErrorMessage(UIText.CreateTagDialog_ExceptionRetrievingTagsMessage);
+					return Activator.createErrorStatus(e.getMessage(), e);
+				}
 				return Status.OK_STATUS;
 			}
 		};
 		job.setSystem(true);
 		job.schedule();
+	}
+
+	@Override
+	public boolean close() {
+		rw.dispose();
+		return super.close();
 	}
 
 	@Override
@@ -295,7 +312,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 		Composite composite = (Composite) super.createDialogArea(parent);
 
-		final SashForm mainForm = new SashForm(composite, SWT.HORIZONTAL | SWT.FILL);
+		final SashForm mainForm = new SashForm(composite, SWT.HORIZONTAL
+				| SWT.FILL);
 		mainForm.setLayoutData(GridDataFactory.fillDefaults().grab(true, true)
 				.create());
 
@@ -355,7 +373,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		GridData data = new GridData(GridData.GRAB_HORIZONTAL
 				| GridData.HORIZONTAL_ALIGN_FILL
 				| GridData.VERTICAL_ALIGN_CENTER);
-		data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH/2);
+		data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH / 2);
 		label.setLayoutData(data);
 		label.setFont(left.getFont());
 
@@ -466,7 +484,6 @@ public class CreateTagDialog extends TitleAreaDialog {
 									public void run(IProgressMonitor monitor)
 											throws InvocationTargetException,
 											InterruptedException {
-										// TODO Auto-generated method stub
 										getRevCommits(commits);
 									}
 								});
@@ -504,7 +521,7 @@ public class CreateTagDialog extends TitleAreaDialog {
 		tagViewer.setContentProvider(ArrayContentProvider.getInstance());
 		tagViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
-				fillTagDialog();
+				fillTagDialog(event.getSelection());
 			}
 		});
 		tagViewer.addFilter(new ViewerFilter() {
@@ -514,10 +531,10 @@ public class CreateTagDialog extends TitleAreaDialog {
 					Object element) {
 				if (element instanceof String)
 					return true;
-				RevTag actTag = (RevTag) element;
+				Ref actTag = (Ref) element;
 
 				if (tagNamePattern != null)
-					return tagNamePattern.matcher(actTag.getTagName()).find();
+					return tagNamePattern.matcher(actTag.getName()).find();
 				else
 					return true;
 			}
@@ -555,13 +572,25 @@ public class CreateTagDialog extends TitleAreaDialog {
 		}
 	}
 
-	private void fillTagDialog() {
-		IStructuredSelection selection = (IStructuredSelection) tagViewer
-				.getSelection();
+	private void fillTagDialog(ISelection actSelection) {
+		IStructuredSelection selection = (IStructuredSelection) actSelection;
 		Object firstSelected = selection.getFirstElement();
 
-		if (firstSelected instanceof RevTag) {
-			tag = (RevTag) firstSelected;
+		if (firstSelected instanceof Ref) {
+			RevObject any;
+			try {
+				any = rw
+						.parseAny(repo.resolve(((Ref) firstSelected).getName()));
+			} catch (IOException e) {
+				Activator.handleError(e.getMessage(), e, true);
+				return;
+			}
+			if (any instanceof RevTag)
+				tag = (RevTag) any;
+			else {
+				setErrorMessage(UIText.CreateTagDialog_LightweightTagMessage);
+				return;
+			}
 
 			if (!overwriteButton.isEnabled()) {
 				String tagMessageValue = tag.getFullMessage();
@@ -605,28 +634,17 @@ public class CreateTagDialog extends TitleAreaDialog {
 			setErrorMessage(UIText.TagAction_errorWhileGettingRevCommits);
 		}
 		// do the walk to get the commits
-		for(RevCommit commit:revWalk)
+		for (RevCommit commit : revWalk)
 			commits.add(commit);
 	}
 
 	/**
 	 * @return the annotated tags
+	 * @throws IOException
 	 */
-	private List<RevTag> getRevTags() {
-		Collection<Ref> revTags = repo.getTags().values();
-		List<RevTag> tags = new ArrayList<RevTag>();
-		RevWalk walk = new RevWalk(repo);
-		for (Ref ref : revTags) {
-			try {
-				tags.add(walk.parseTag(repo.resolve(ref.getName())));
-			} catch (IncorrectObjectTypeException e) {
-				// repo.getTags() returns also lightweight tags
-			} catch (IOException e) {
-				Activator.logError(
-						UIText.TagAction_unableToResolveHeadObjectId, e);
-				setErrorMessage(UIText.TagAction_unableToResolveHeadObjectId);
-			}
-		}
-		return tags;
+	private List<Ref> getRevTags() throws IOException {
+		List<Ref> result = new ArrayList<Ref>();
+		result.addAll(repo.getRefDatabase().getRefs(Constants.R_TAGS).values());
+		return result;
 	}
 }
