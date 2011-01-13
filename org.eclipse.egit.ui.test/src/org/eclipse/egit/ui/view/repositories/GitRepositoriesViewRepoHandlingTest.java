@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
@@ -302,7 +303,6 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		SWTBotText pathText = shell.bot().text(0);
 		pathText.setText(pathText.getText() + "Cloned");
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
-		waitInUI();
 		refreshAndWait();
 		assertHasClonedRepo();
 	}
@@ -351,16 +351,8 @@ public class GitRepositoriesViewRepoHandlingTest extends
 
 	private void assertHasClonedRepo() throws Exception {
 		final SWTBotTree tree = getOrOpenView().bot().tree();
-		final SWTBotTreeItem[] items = tree.getAllItems();
-		boolean found = false;
-		for (SWTBotTreeItem item : items) {
-			if (item.getText().startsWith(
-					repositoryFile.getParentFile().getName() + "Cloned")) {
-				found = true;
-				break;
-			}
-		}
-		assertTrue("Tree should have item with correct text", found);
+		String text = repositoryFile.getParentFile().getName() + "Cloned";
+		TestUtil.waitUntilTreeHasNodeWithText(bot, tree, text, 10000);
 	}
 
 }
