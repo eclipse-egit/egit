@@ -438,6 +438,8 @@ public class CommitDialog extends Dialog {
 		int changeIdOffset = findOffsetOfChangeIdLine(previousCommitMessage);
 		if (changeIdOffset > 0) {
 			int endOfChangeId = findNextEOL(changeIdOffset, previousCommitMessage);
+			if (endOfChangeId < 0)
+				endOfChangeId = previousCommitMessage.length()-1;
 			int sha1Offset = changeIdOffset + "\nChange-Id: I".length(); //$NON-NLS-1$
 			try {
 				originalChangeId = ObjectId.fromString(previousCommitMessage.substring(sha1Offset, endOfChangeId));
