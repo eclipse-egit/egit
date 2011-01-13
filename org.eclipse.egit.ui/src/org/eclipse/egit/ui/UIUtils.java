@@ -40,7 +40,7 @@ public class UIUtils {
 	 * these activate the content assist; alphanumeric,
 	 * space plus some expected special chars
 	 */
-	private static final char[] VALUE_HELP_ACTIVATIONCHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123457890*@ <>".toCharArray(); //$NON-NLS-1$
+	public static final char[] VALUE_HELP_ACTIVATIONCHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123457890*@ <>".toCharArray(); //$NON-NLS-1$
 
 	/**
 	 * Handles a "previously used values" content assist.
