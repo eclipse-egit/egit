@@ -12,9 +12,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.IEGitOperation;
-import org.eclipse.egit.ui.Activator;
 
 /**
  * Utility class for scheduling jobs
@@ -30,14 +30,26 @@ public class JobUtil {
 	 */
 	public static void scheduleUserJob(final IEGitOperation op, String jobName,
 			final Object jobFamily) {
+		scheduleUserJob(op, jobName, jobFamily, null);
+	}
+
+	/**
+	 * Schedule a user job that executes an EGit operation
+	 *
+	 * @param op
+	 * @param jobName
+	 * @param jobFamily
+	 * @param jobChangeListener
+	 */
+	public static void scheduleUserJob(final IEGitOperation op, String jobName,
+			final Object jobFamily, IJobChangeListener jobChangeListener) {
 		Job job = new Job(jobName) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					op.execute(monitor);
 				} catch (CoreException e) {
-					return Activator.createErrorStatus(e.getStatus()
-							.getMessage(), e);
+					return e.getStatus();
 				}
 				return Status.OK_STATUS;
 			}
@@ -51,6 +63,8 @@ public class JobUtil {
 		};
 		job.setRule(op.getSchedulingRule());
 		job.setUser(true);
+		if (jobChangeListener != null)
+			job.addJobChangeListener(jobChangeListener);
 		job.schedule();
 	}
 }

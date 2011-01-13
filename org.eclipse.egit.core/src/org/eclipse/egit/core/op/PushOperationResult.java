@@ -36,7 +36,7 @@ public class PushOperationResult {
 	/**
 	 * Construct empty push operation result.
 	 */
-	PushOperationResult() {
+	public PushOperationResult() {
 		this.urisEntries = new LinkedHashMap<URIish, Entry>();
 	}
 

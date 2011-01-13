@@ -25,6 +25,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -221,10 +222,11 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		objid = objid.substring(0, 7);
 		touchAndSubmit(null);
 		// push from other repository
+		RemoteConfig config = new RemoteConfig(repository.getConfig(), "origin");
 		PushConfiguredRemoteAction action = new PushConfiguredRemoteAction(
-				repository, "origin");
+				repository, config, 0);
 
-		action.run(bot.activeShell().widget, false);
+		action.start();
 
 		destinationString = clonedRepositoryFile2.getParentFile().getName()
 				+ " - " + "origin";
