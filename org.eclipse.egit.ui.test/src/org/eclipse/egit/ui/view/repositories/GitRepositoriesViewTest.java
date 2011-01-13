@@ -237,7 +237,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// wizard directory should be .git
 		assertEquals(Constants.DOT_GIT, wizardNode);
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		waitInUI();
+		shell.bot().label("Import Projects"); // wait for import projects page
 		assertTrue(shell.bot().tree().getAllItems().length == 0);
 		shell.bot().button(IDialogConstants.BACK_LABEL).click();
 		// go to project with .project
@@ -600,6 +600,9 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		createBranchShell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		refreshAndWait();
 		// delete branch
+		// lookup node again. Widget might have changed due to refresh
+		localBranchesItem = myRepoViewUtil.getLocalBranchesItem(
+				tree, repositoryFile).expand();
 		localBranchesItem.getNode("abc").select();
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("RepoViewDeleteBranch.label"));
