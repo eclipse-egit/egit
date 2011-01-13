@@ -1859,10 +1859,16 @@ public class UIText extends NLS {
 	public static String FetchAction_wrongURIMessage;
 
 	/** */
+	public static String FetchConfiguredRemoteAction_FetchJobName;
+
+	/** */
 	public static String FetchConfiguredRemoteAction_NoSpecsDefinedMessage;
 
 	/** */
 	public static String FetchConfiguredRemoteAction_NoUrisDefinedMessage;
+
+	/** */
+	public static String FetchConfiguredRemoteAction_TransportErrorDuringFetchMessage;
 
 	/** */
 	public static String FetchResultDialog_labelEmptyResult;

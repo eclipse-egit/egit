@@ -48,6 +48,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.FileUtils;
@@ -299,10 +300,11 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 		myRepository.getConfig().save();
 		// and push
+		RemoteConfig config = new RemoteConfig(myRepository.getConfig(), "push");
 		PushConfiguredRemoteAction pa = new PushConfiguredRemoteAction(
-				myRepository, "push");
+				myRepository, config, 0);
 
-		pa.run(null, false);
+		pa.execute(null);
 
 		try {
 			// delete the stable branch again

@@ -210,6 +210,9 @@ public class CoreText extends NLS {
 	public static String ProjectUtil_refreshing;
 
 	/** */
+	public static String PushConfiguredRemoteAction_PushJobName;
+
+	/** */
 	public static String PushOperation_resultCancelled;
 
 	/** */

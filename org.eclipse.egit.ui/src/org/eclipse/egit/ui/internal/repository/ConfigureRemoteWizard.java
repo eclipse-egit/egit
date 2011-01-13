@@ -67,7 +67,6 @@ public class ConfigureRemoteWizard extends Wizard {
 								configureFetchUriPage.getUri()
 										.toPrivateString());
 						monitor.beginTask(taskName, IProgressMonitor.UNKNOWN);
-						configureFetchSpecPage.setConfigName(myRemoteName);
 						configureFetchSpecPage
 								.setSelection(new RepositorySelection(
 										configureFetchUriPage.getUri(), null));
@@ -97,7 +96,6 @@ public class ConfigureRemoteWizard extends Wizard {
 										.toPrivateString());
 						monitor.beginTask(taskName, IProgressMonitor.UNKNOWN);
 						// use the first URI
-						configurePushSpecPage.setConfigName(myRemoteName);
 						configurePushSpecPage
 								.setSelection(new RepositorySelection(
 										configurePushUriPage.getAllUris()

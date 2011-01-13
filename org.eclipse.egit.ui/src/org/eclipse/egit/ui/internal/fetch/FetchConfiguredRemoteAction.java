@@ -10,16 +10,22 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.fetch;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
+import org.eclipse.egit.core.op.FetchOperationResult;
+import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.job.JobUtil;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.errors.TransportException;
@@ -28,116 +34,120 @@ import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 /**
  * Fetches from a remote as configured
  */
-public class FetchConfiguredRemoteAction {
-
+public class FetchConfiguredRemoteAction extends JobChangeAdapter implements
+		IEGitOperation {
 	private final Repository repository;
 
-	private final String remoteName;
+	private final RemoteConfig remote;
+
+	private FetchOperationResult operationResult;
+
+	private boolean dryRun;
+
+	private final int timeout;
 
 	/**
-	 * The default constructor
-	 *
 	 * @param repository
 	 *            a {@link Repository}
-	 * @param remoteName
-	 *            the name of a remote as configured for fetching
+	 * @param config
+	 *            the {@link RemoteConfig} to fetch from
+	 * @param timeout
 	 */
-	public FetchConfiguredRemoteAction(Repository repository, String remoteName) {
+	public FetchConfiguredRemoteAction(Repository repository,
+			RemoteConfig config, int timeout) {
 		this.repository = repository;
-		this.remoteName = remoteName;
+		this.remote = config;
+		this.timeout = timeout;
 	}
 
 	/**
-	 * Runs this action
-	 * <p>
-	 *
-	 * @param shell
-	 *            a shell may be null; if provided, a pop up will be displayed
-	 *            indicating the fetch result; if Exceptions occur, these will
-	 *            be displayed
-	 *
+	 * @param dryRun
 	 */
-	public void run(final Shell shell) {
-		final RemoteConfig config;
-		Exception prepareException = null;
-		final Transport transport;
-		try {
-			config = new RemoteConfig(repository.getConfig(), remoteName);
-			if (config.getURIs().isEmpty()) {
-				throw new IOException(
-						NLS.bind(
-								UIText.FetchConfiguredRemoteAction_NoUrisDefinedMessage,
-								remoteName));
-			}
-			if (config.getFetchRefSpecs().isEmpty()) {
-				throw new IOException(
-						NLS.bind(
-								UIText.FetchConfiguredRemoteAction_NoSpecsDefinedMessage,
-								remoteName));
-			}
-			transport = Transport.open(repository, config);
-		} catch (URISyntaxException e) {
-			prepareException = e;
-			return;
-		} catch (IOException e) {
-			prepareException = e;
-			return;
-		} finally {
-			if (prepareException != null)
-				Activator.handleError(prepareException.getMessage(),
-						prepareException, shell != null);
+	public void setDryRun(boolean dryRun) {
+		this.dryRun = dryRun;
+	}
+
+	public void execute(IProgressMonitor monitor) throws CoreException {
+		if (operationResult != null)
+			throw new IllegalStateException(CoreText.OperationAlreadyExecuted);
+
+		if (remote.getURIs().isEmpty()) {
+			// TODO should we check this here?
+			IStatus error = Activator.createErrorStatus(NLS.bind(
+					UIText.FetchConfiguredRemoteAction_NoUrisDefinedMessage,
+					remote.getName()), null);
+			throw new CoreException(error);
 		}
 
-		Job job = new Job(
-				"Fetch from " + repository.getDirectory().getParentFile().getName() + " - " + remoteName) { //$NON-NLS-1$ //$NON-NLS-2$
+		IProgressMonitor actMonitor = monitor;
+		if (actMonitor == null)
+			actMonitor = new NullProgressMonitor();
 
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				final FetchResult result;
-				Exception fetchException = null;
-				try {
-					result = transport.fetch(new EclipseGitProgressTransformer(
-							monitor), config.getFetchRefSpecs());
-				} catch (final NotSupportedException e) {
-					fetchException = e;
-					return new Status(IStatus.ERROR, Activator.getPluginId(),
-							UIText.FetchWizard_fetchNotSupported, e);
-				} catch (final TransportException e) {
-					if (monitor.isCanceled())
-						return Status.CANCEL_STATUS;
-					fetchException = e;
-					return new Status(IStatus.ERROR, Activator.getPluginId(),
-							UIText.FetchWizard_transportError, e);
-				} finally {
-					if (fetchException != null)
-						Activator.handleError(fetchException.getMessage(),
-								fetchException, shell != null);
-				}
-				if (shell != null) {
-					PlatformUI.getWorkbench().getDisplay().asyncExec(
-							new Runnable() {
-								public void run() {
-									Dialog dialog = new FetchResultDialog(
-											shell, repository, result,
-											repository.getDirectory()
-													.getParentFile().getName()
-													+ " - " + remoteName); //$NON-NLS-1$
-									dialog.open();
-								}
-							});
-				}
-				return Status.OK_STATUS;
+		try {
+			final Transport transport = Transport.open(repository, remote);
+			transport.setDryRun(dryRun);
+			transport.setTimeout(timeout);
+			FetchResult fetchRes = transport.fetch(
+					new EclipseGitProgressTransformer(actMonitor), remote
+							.getFetchRefSpecs());
+			operationResult = new FetchOperationResult(remote.getURIs().get(0),
+					fetchRes);
+		} catch (final NotSupportedException e) {
+			throw new CoreException(Activator.createErrorStatus(e.getMessage(),
+					e));
+		} catch (final TransportException e) {
+			if (actMonitor.isCanceled())
+				throw new CoreException(Status.CANCEL_STATUS);
+			String errorMessage = NLS
+					.bind(
+							UIText.FetchConfiguredRemoteAction_TransportErrorDuringFetchMessage,
+							e.getMessage());
+			operationResult = new FetchOperationResult(remote.getURIs().get(0),
+					errorMessage);
+		}
+	}
+
+	public ISchedulingRule getSchedulingRule() {
+		return null;
+	}
+
+	/**
+	 * Start asynchronously
+	 */
+	public void start() {
+		String jobName = NLS.bind(
+				UIText.FetchConfiguredRemoteAction_FetchJobName, repository
+						.getDirectory().getParentFile().getName(), remote
+						.getName());
+		JobUtil.scheduleUserJob(this, jobName, JobFamilies.FETCH, this);
+	}
+
+	/**
+	 * @return the result, null if {@link #equals(Object)} was not yet executed
+	 */
+	public FetchOperationResult getOperationResult() {
+		return operationResult;
+	}
+
+	@Override
+	public void done(IJobChangeEvent event) {
+		if (event.getResult().getSeverity() == IStatus.CANCEL) {
+			return;
+		}
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				String repoName = Activator.getDefault().getRepositoryUtil()
+						.getRepositoryName(repository);
+				Dialog dialog = new FetchResultDialog(PlatformUI.getWorkbench()
+						.getDisplay().getActiveShell(), repository,
+						operationResult, repoName + " - " + remote.getName()); //$NON-NLS-1$
+				dialog.open();
 			}
-
-		};
-
-		job.setUser(true);
-		job.schedule();
+		});
 	}
 }
