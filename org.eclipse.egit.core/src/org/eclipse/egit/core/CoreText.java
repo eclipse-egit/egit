@@ -16,6 +16,13 @@ import org.eclipse.osgi.util.NLS;
  */
 public class CoreText extends NLS {
 
+	/**
+	 * Do not in-line this into the static initializer as the
+	 * "Find Broken Externalized Strings" tool will not be
+	 * able to find the corresponding bundle file.
+	 */
+	private static final String BUNDLE_NAME = "org.eclipse.egit.core.coretext"; //$NON-NLS-1$
+
 	/** */
 	public static String Activator_ReconfigureWindowCacheError;
 
@@ -71,9 +78,6 @@ public class CoreText extends NLS {
 	public static String DiscardChangesOperation_repoNotFound;
 
 	/** */
-	public static String DiscardChangesOperation_writeIndexFailed;
-
-	/** */
 	public static String DisconnectProviderOperation_disconnecting;
 
 	/** */
@@ -83,31 +87,7 @@ public class CoreText extends NLS {
 	public static String BlobStorage_errorReadingBlob;
 
 	/** */
-	public static String BranchOperation_checkoutMovingTo;
-
-	/** */
 	public static String BranchOperation_CheckoutOnlyBranchOrTag;
-
-	/** */
-	public static String BranchOperation_checkoutProblem;
-
-	/** */
-	public static String BranchOperation_couldNotDelete;
-
-	/** */
-	public static String BranchOperation_mappingCommit;
-
-	/** */
-	public static String BranchOperation_mappingCommitHead;
-
-	/** */
-	public static String BranchOperation_mappingTrees;
-
-	/** */
-	public static String BranchOperation_updatingHeadToRef;
-
-	/** */
-	public static String BranchOperation_writingIndex;
 
 	/** */
 	public static String UntrackOperation_adding;
@@ -131,13 +111,7 @@ public class CoreText extends NLS {
 	public static String GitFileHistory_noHeadRevisionAvailable;
 
 	/** */
-	public static String GitProjectData_lazyResolveFailed;
-
-	/** */
 	public static String GitProjectData_mappedResourceGone;
-
-	/** */
-	public static String GitProjectData_cannotReadHEAD;
 
 	/** */
 	public static String GitProjectData_failedFindingRepoMapping;
@@ -150,9 +124,6 @@ public class CoreText extends NLS {
 
 	/** */
 	public static String GitProjectData_saveFailed;
-
-	/** */
-	public static String GitProjectData_notifyChangedFailed;
 
 	/** */
 	public static String RepositoryFinder_finding;
@@ -186,9 +157,6 @@ public class CoreText extends NLS {
 
 	/** */
 	public static String ResetOperation_updatingFailed;
-
-	/** */
-	public static String ResetOperation_writingIndex;
 
 	/** */
 	public static String MergeOperation_InternalError;
@@ -227,9 +195,6 @@ public class CoreText extends NLS {
 	public static String CreateLocalBranchOperation_CreatingBranchMessage;
 
 	/** */
-	public static String CreateLocalBranchOperation_NoBranchMessage;
-
-	/** */
 	public static String IndexFileRevision_errorLookingUpPath;
 
 	/** */
@@ -266,9 +231,6 @@ public class CoreText extends NLS {
 	public static String AddToIndexOperation_failed;
 
 	/** */
-	public static String TrackOperation_writingIndex;
-
-	/** */
 	public static String BranchOperation_performingBranch;
 
 	/** */
@@ -291,9 +253,6 @@ public class CoreText extends NLS {
 
 	/** */
 	public static String GitResourceVariantTree_fetchingVariant;
-
-	/** */
-	public static String GitResourceVariantTree_couldNotFetchMembersOf;
 
 	/** */
 	public static String GitBranchResourceVariantTreeSubscriber_gitRepository;
@@ -320,8 +279,7 @@ public class CoreText extends NLS {
 	public static String IgnoreOperation_updatingFailed;
 
 	static {
-		initializeMessages("org.eclipse.egit.core.coretext", //$NON-NLS-1$
-				CoreText.class);
+		initializeMessages(BUNDLE_NAME,	CoreText.class);
 	}
 
 }
