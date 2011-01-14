@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///7U\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-01-14T13:01:15Z",
+      "side": 1,
+      "message": "1) When would getCause return null?\n\n2) Why drop the exeption message and use the cause\u0027 message?",
+      "revId": "9ceaada15b6170f48bfaeec8730e26dcc9faf731",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///7A\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-01-14T13:30:03Z",
+      "side": 1,
+      "message": "ok for 1) getCause can return null (even though the field cause is never null).\n\n2) But e.getMessage also contains information, so I believe that message should be reported and e passed to error,  just like GitAPIException is handled.",
+      "parentUuid": "AAAL2n///7I\u003d",
+      "revId": "9ceaada15b6170f48bfaeec8730e26dcc9faf731",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
