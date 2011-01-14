@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import org.eclipse.egit.ui.internal.components.RefContentProposal;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -25,6 +26,8 @@ import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.resource.FontRegistry;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -37,8 +40,8 @@ import org.eclipse.ui.PlatformUI;
  */
 public class UIUtils {
 	/**
-	 * these activate the content assist; alphanumeric,
-	 * space plus some expected special chars
+	 * these activate the content assist; alphanumeric, space plus some expected
+	 * special chars
 	 */
 	private static final char[] VALUE_HELP_ACTIVATIONCHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123457890*@ <>".toCharArray(); //$NON-NLS-1$
 
@@ -90,7 +93,19 @@ public class UIUtils {
 	}
 
 	/**
-	 * @param id see {@link FontRegistry#get(String)}
+	 * Used for
+	 * {@link UIUtils#addRefContentProposalToText(Text, Repository, IRefListProvider)}
+	 */
+	public interface IRefListProvider {
+		/**
+		 * @return the List of {@link Ref}s to propose
+		 */
+		public List<Ref> getRefList();
+	}
+
+	/**
+	 * @param id
+	 *            see {@link FontRegistry#get(String)}
 	 * @return the font
 	 */
 	public static Font getFont(final String id) {
@@ -99,7 +114,8 @@ public class UIUtils {
 	}
 
 	/**
-	 * @param id see {@link FontRegistry#getBold(String)}
+	 * @param id
+	 *            see {@link FontRegistry#getBold(String)}
 	 * @return the font
 	 */
 	public static Font getBoldFont(final String id) {
@@ -108,16 +124,20 @@ public class UIUtils {
 	}
 
 	/**
-	 * Adds little bulb decoration to given control. Bulb will appear in top left
-	 * corner of control after giving focus for this control.
+	 * Adds little bulb decoration to given control. Bulb will appear in top
+	 * left corner of control after giving focus for this control.
 	 *
 	 * After clicking on bulb image text from <code>tooltip</code> will appear.
 	 *
-	 * @param control instance of {@link Control} object with should be decorated
-	 * @param tooltip text value which should appear after clicking on bulb image.
+	 * @param control
+	 *            instance of {@link Control} object with should be decorated
+	 * @param tooltip
+	 *            text value which should appear after clicking on bulb image.
 	 */
-	public static void addBulbDecorator(final Control control, final String tooltip) {
-		ControlDecoration dec = new ControlDecoration(control, SWT.TOP | SWT.LEFT);
+	public static void addBulbDecorator(final Control control,
+			final String tooltip) {
+		ControlDecoration dec = new ControlDecoration(control, SWT.TOP
+				| SWT.LEFT);
 
 		dec.setImage(FieldDecorationRegistry.getDefault().getFieldDecoration(
 				FieldDecorationRegistry.DEC_CONTENT_PROPOSAL).getImage());
@@ -277,4 +297,90 @@ public class UIUtils {
 		};
 	}
 
+	/**
+	 * Adds a content proposal for {@link Ref}s (branches, tags...) to a text
+	 * field
+	 *
+	 * @param textField
+	 *            the text field
+	 * @param repository
+	 *            the repository
+	 * @param refListProvider
+	 *            provides the {@link Ref}s to show in the proposal
+	 */
+	public static final void addRefContentProposalToText(final Text textField,
+			final Repository repository, final IRefListProvider refListProvider) {
+		KeyStroke stroke;
+		try {
+			stroke = KeyStroke.getInstance("M1+SPACE"); //$NON-NLS-1$
+			UIUtils.addBulbDecorator(textField, NLS.bind(
+					UIText.UIUtils_PressShortcutMessage, stroke.format()));
+		} catch (ParseException e1) {
+			Activator.handleError(e1.getMessage(), e1, false);
+			stroke = null;
+			UIUtils.addBulbDecorator(textField,
+					UIText.UIUtils_StartTypingForPreviousValuesMessage);
+		}
+
+		IContentProposalProvider cp = new IContentProposalProvider() {
+			public IContentProposal[] getProposals(String contents, int position) {
+				List<IContentProposal> resultList = new ArrayList<IContentProposal>();
+
+				// make the simplest possible pattern check: allow "*"
+				// for multiple characters
+				String patternString = contents;
+				// ignore spaces in the beginning
+				while (patternString.length() > 0
+						&& patternString.charAt(0) == ' ') {
+					patternString = patternString.substring(1);
+				}
+
+				// we quote the string as it may contain spaces
+				// and other stuff colliding with the Pattern
+				patternString = Pattern.quote(patternString);
+
+				patternString = patternString.replaceAll("\\x2A", ".*"); //$NON-NLS-1$ //$NON-NLS-2$
+
+				// make sure we add a (logical) * at the end
+				if (!patternString.endsWith(".*")) { //$NON-NLS-1$
+					patternString = patternString + ".*"; //$NON-NLS-1$
+				}
+
+				// let's compile a case-insensitive pattern (assumes ASCII only)
+				Pattern pattern;
+				try {
+					pattern = Pattern.compile(patternString,
+							Pattern.CASE_INSENSITIVE);
+				} catch (PatternSyntaxException e) {
+					pattern = null;
+				}
+
+				List<Ref> proposals = refListProvider.getRefList();
+
+				if (proposals != null)
+					for (final Ref ref : proposals) {
+						final String shortenedName = Repository
+								.shortenRefName(ref.getName());
+						if (pattern != null
+								&& !pattern.matcher(ref.getName()).matches()
+								&& !pattern.matcher(shortenedName).matches())
+							continue;
+
+						IContentProposal propsal = new RefContentProposal(
+								repository, ref);
+						resultList.add(propsal);
+					}
+
+				return resultList.toArray(new IContentProposal[resultList
+						.size()]);
+			}
+		};
+
+		ContentProposalAdapter adapter = new ContentProposalAdapter(textField,
+				new TextContentAdapter(), cp, stroke,
+				UIUtils.VALUE_HELP_ACTIVATIONCHARS);
+		// set the acceptance style to always replace the complete content
+		adapter
+				.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+	}
 }
