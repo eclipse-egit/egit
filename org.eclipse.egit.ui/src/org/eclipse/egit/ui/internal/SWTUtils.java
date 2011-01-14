@@ -1,5 +1,7 @@
 /*******************************************************************************
  * Copyright (c) 2000, 2005 IBM Corporation and others.
+ * Copyright (c) 2011 Matthias Sohn <matthias.sohn@sap.com>
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,9 +16,14 @@ package org.eclipse.egit.ui.internal;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.resource.CompositeImageDescriptor;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -597,4 +604,34 @@ public class SWTUtils {
 			return Dialog.convertWidthInCharsToPixels(fFontMetrics, chars);
 		}
 	}
+
+	/**
+	 * Decorates the image with the given overlay
+	 * @param image
+	 * @param overlay
+	 * @return the decorated image
+	 */
+	public static Image getDecoratedImage(final Image image, final ImageDescriptor overlay) {
+		Image decoratedImage;
+		// create one
+		CompositeImageDescriptor cd = new CompositeImageDescriptor() {
+
+			@Override
+			protected Point getSize() {
+				Rectangle bounds = image.getBounds();
+				return new Point(bounds.width, bounds.height);
+			}
+
+			@Override
+			protected void drawCompositeImage(int width, int height) {
+				drawImage(image.getImageData(), 0, 0);
+				drawImage(overlay.getImageData(), 0, 0);
+
+			}
+		};
+		decoratedImage = cd.createImage();
+
+		return decoratedImage;
+	}
+
 }
