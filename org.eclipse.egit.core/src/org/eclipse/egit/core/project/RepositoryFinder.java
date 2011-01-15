@@ -117,7 +117,6 @@ public class RepositoryFinder {
 				if (c.isLinked() || c instanceof IProject) {
 					File p = fsLoc.getParentFile();
 					while (p != null) {
-						// TODO is this the right location?
 						if (GitTraceLocation.CORE.isActive())
 							GitTraceLocation.getTrace().trace(
 									GitTraceLocation.CORE.getLocation(),
@@ -137,16 +136,20 @@ public class RepositoryFinder {
 				children = c.members();
 				if (children != null && children.length > 0) {
 					final int scale = 100 / children.length;
-					for (int k = 0; k < children.length; k++) {
+					final int WORKED_GRANULARITY = 10;
+					int k;
+					for (k = 0; k < children.length; k++) {
 						final IResource o = children[k];
 						if (o instanceof IContainer
 								&& !o.getName().equals(Constants.DOT_GIT)) {
 							find(new SubProgressMonitor(m, scale),
 									(IContainer) o);
 						} else {
-							m.worked(scale);
+							if (k > 0 && k % WORKED_GRANULARITY == 0)
+								m.worked(scale);
 						}
 					}
+					m.worked((children.length - k) % WORKED_GRANULARITY);
 				}
 			}
 		} finally {
