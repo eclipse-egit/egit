@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///20\u003d",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-16T21:08:14Z",
+      "side": 1,
+      "message": "wrong syntax for package dependency version specification:\n\ns/bundle-version/version/",
+      "revId": "ee05f3e732ce1f20fbcece13ac37cb6ec31a7edd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
