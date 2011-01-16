@@ -38,6 +38,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -312,17 +313,18 @@ public class CommitActionHandler extends RepositoryActionHandler {
 		}
 
 		monitor.beginTask(UIText.CommitActionHandler_calculatingChanges,
-				repositories.size());
+				repositories.size() * 1000);
 		for (Map.Entry<Repository, HashSet<IProject>> entry : repositories
 				.entrySet()) {
 			Repository repository = entry.getKey();
-			monitor.subTask(NLS.bind(UIText.CommitActionHandler_repository,
-					repository.getDirectory().getPath()));
+			EclipseGitProgressTransformer jgitMonitor = new EclipseGitProgressTransformer(monitor);
 			HashSet<IProject> projects = entry.getValue();
 
 			IndexDiff indexDiff = new IndexDiff(repository, Constants.HEAD,
 					IteratorService.createInitialIterator(repository));
-			indexDiff.diff();
+			indexDiff.diff(jgitMonitor, NLS.bind(
+					UIText.CommitActionHandler_repository, repository
+							.getDirectory().getPath()));
 			indexDiffs.put(repository, indexDiff);
 
 			for (IProject project : projects) {
@@ -335,7 +337,6 @@ public class CommitActionHandler extends RepositoryActionHandler {
 			}
 			if (monitor.isCanceled())
 				throw new OperationCanceledException();
-			monitor.worked(1);
 		}
 		monitor.done();
 	}
