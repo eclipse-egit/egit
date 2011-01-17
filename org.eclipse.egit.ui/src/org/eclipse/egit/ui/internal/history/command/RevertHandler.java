@@ -15,6 +15,7 @@ package org.eclipse.egit.ui.internal.history.command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RevertCommand;
@@ -26,6 +27,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
  */
 public class RevertHandler extends AbstractHistoryCommanndHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		BasicConfigurationDialog.show();
 		RevCommit commit = (RevCommit) getSelection(getPage()).getFirstElement();
 		RevCommit newHead;
 		Repository repo = getRepository(event);
