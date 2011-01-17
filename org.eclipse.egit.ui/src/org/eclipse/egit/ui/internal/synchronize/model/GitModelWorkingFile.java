@@ -10,6 +10,7 @@ package org.eclipse.egit.ui.internal.synchronize.model;
 
 import java.io.IOException;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.ui.internal.synchronize.compare.ComparisonDataSource;
 import org.eclipse.egit.ui.internal.synchronize.compare.GitCompareInput;
 import org.eclipse.egit.ui.internal.synchronize.compare.GitLocalCompareInput;
@@ -18,9 +19,9 @@ import org.eclipse.jgit.revwalk.RevCommit;
 
 class GitModelWorkingFile extends GitModelBlob {
 
-	public GitModelWorkingFile(GitModelObjectContainer parent,
-			RevCommit commit, ObjectId repoId, String name) throws IOException {
-		super(parent, commit, repoId, repoId, null, name);
+	public GitModelWorkingFile(GitModelObjectContainer parent, IPath location,
+			RevCommit commit, ObjectId repoId) throws IOException {
+		super(parent, location, commit, repoId, repoId, null);
 	}
 
 	@Override

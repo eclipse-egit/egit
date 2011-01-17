@@ -12,6 +12,7 @@ import static org.eclipse.jgit.treewalk.filter.TreeFilter.ANY_DIFF;
 
 import java.io.IOException;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.ObjectId;
@@ -38,11 +39,11 @@ public class GitModelWorkingTree extends GitModelCache {
 			throws IOException {
 		super(parent, commit, new FileModelFactory() {
 			public GitModelBlob createFileModel(
-					GitModelObjectContainer modelParent, RevCommit modelCommit,
-					ObjectId repoId, ObjectId cacheId, String name)
+					GitModelObjectContainer modelParent, IPath location,
+					RevCommit modelCommit, ObjectId repoId, ObjectId cacheId)
 					throws IOException {
-				return new GitModelWorkingFile(modelParent, modelCommit,
-						repoId, name);
+				return new GitModelWorkingFile(modelParent, location,
+						modelCommit, repoId);
 			}
 		});
 	}

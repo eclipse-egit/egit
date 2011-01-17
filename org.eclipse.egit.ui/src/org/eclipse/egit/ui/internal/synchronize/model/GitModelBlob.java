@@ -38,8 +38,6 @@ public class GitModelBlob extends GitModelCommit {
 
 	private final ObjectId ancestorId;
 
-	private final IPath location;
-
 	private static final GitModelObject[] empty = new GitModelObject[0];
 
 	private GitCompareInput compareInput;
@@ -54,24 +52,24 @@ public class GitModelBlob extends GitModelCommit {
 	 *
 	 * @param parent
 	 *            parent of this object
+	 * @param location
+	 *            blob location
 	 * @param commit
-	 *            remote commit
+	 *            blob location remote commit
 	 * @param ancestorId
 	 *            common ancestor id
 	 * @param baseId
 	 *            id of base object variant
 	 * @param remoteId
 	 *            id of remote object variants
-	 * @param name
-	 *            human readable blob name (file name)
 	 * @throws IOException
 	 */
-	public GitModelBlob(GitModelObjectContainer parent, RevCommit commit,
-			ObjectId ancestorId, ObjectId baseId, ObjectId remoteId, String name)
+	public GitModelBlob(GitModelObjectContainer parent, IPath location, RevCommit commit,
+			ObjectId ancestorId, ObjectId baseId, ObjectId remoteId)
 			throws IOException {
 		// only direction is important for us, therefore we mask rest of bits in kind
-		super(parent, commit, parent.getKind() & (LEFT | RIGHT));
-		this.name = name;
+		super(parent, location, commit, parent.getKind() & (LEFT | RIGHT));
+		this.name = location.lastSegment();
 		this.baseId = baseId;
 		this.remoteId = remoteId;
 		this.ancestorId = ancestorId;
@@ -88,11 +86,6 @@ public class GitModelBlob extends GitModelCommit {
 	@Override
 	public String getName() {
 		return name;
-	}
-
-	@Override
-	public IPath getLocation() {
-		return location;
 	}
 
 	@Override

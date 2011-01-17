@@ -28,6 +28,8 @@ public abstract class GitModelObject extends PlatformObject {
 
 	private final GitModelObject parent;
 
+	private final IPath location;
+
 	/**
 	 * Creates root of Git ChangeSet model.
 	 *
@@ -69,7 +71,9 @@ public abstract class GitModelObject extends PlatformObject {
 	/**
 	 * @return location of resource associated with particular model object
 	 */
-	public abstract IPath getLocation();
+	public IPath getLocation() {
+		return location;
+	}
 
 	/**
 	 * Answers if model object may have children.
@@ -83,9 +87,11 @@ public abstract class GitModelObject extends PlatformObject {
 	 *
 	 * @param parent
 	 *            of particular model object
+	 * @param location object location
 	 */
-	protected GitModelObject(GitModelObject parent) {
+	protected GitModelObject(GitModelObject parent, IPath location) {
 		this.parent = parent;
+		this.location = location;
 	}
 
 	/**

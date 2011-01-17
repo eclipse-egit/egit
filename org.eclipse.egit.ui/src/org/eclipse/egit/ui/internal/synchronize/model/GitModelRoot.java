@@ -21,6 +21,8 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
  */
 public class GitModelRoot {
 
+	private GitModelObject[] children;
+
 	private final GitSynchronizeDataSet gsds;
 
 	/**
@@ -41,22 +43,26 @@ public class GitModelRoot {
 	 * @return children
 	 */
 	public GitModelObject[] getChildren() {
-		List<GitModelObject> restult = new ArrayList<GitModelObject>();
-		try {
-			if (gsds.size() == 1) {
-				GitSynchronizeData gsd = gsds.iterator().next();
-				GitModelRepository repoModel = new GitModelRepository(gsd);
+		if (children == null) {
+			List<GitModelObject> restult = new ArrayList<GitModelObject>();
+			try {
+				if (gsds.size() == 1) {
+					GitSynchronizeData gsd = gsds.iterator().next();
+					GitModelRepository repoModel = new GitModelRepository(gsd);
 
-				for (GitModelObject obj : repoModel.getChildren())
-					restult.add(obj);
-			} else
-				for (GitSynchronizeData data : gsds)
+					for (GitModelObject obj : repoModel.getChildren())
+						restult.add(obj);
+				} else
+					for (GitSynchronizeData data : gsds)
 						restult.add(new GitModelRepository(data));
-		} catch (IOException e) {
+			} catch (IOException e) {
 				Activator.logError(e.getMessage(), e);
+			}
+
+			children = restult.toArray(new GitModelObject[restult.size()]);
 		}
 
-		return restult.toArray(new GitModelObject[restult.size()]);
+		return children;
 	}
 
 }

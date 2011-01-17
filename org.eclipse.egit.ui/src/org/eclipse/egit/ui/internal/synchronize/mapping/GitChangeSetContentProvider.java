@@ -44,6 +44,11 @@ public class GitChangeSetContentProvider extends SynchronizationContentProvider 
 	}
 
 	@Override
+	public Object[] getChildren(Object parent) {
+		return modelRoot.getChildren();
+	}
+
+	@Override
 	protected ITreeContentProvider getDelegateContentProvider() {
 		if (provider == null)
 			provider = new WorkbenchContentProvider();
