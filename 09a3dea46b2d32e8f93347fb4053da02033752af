@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///xs\u003d",
+        "filename": "org.eclipse.egit.mylyn-feature/feature.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-17T21:56:26Z",
+      "side": 1,
+      "message": "I would expect this to be part of the main egit p2 repo (not pde)",
+      "revId": "09a3dea46b2d32e8f93347fb4053da02033752af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///xk\u003d",
+        "filename": "org.eclipse.egit.mylyn-feature/feature.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-17T21:56:26Z",
+      "side": 1,
+      "message": "why do we need this dependency ?\nthat doesn\u0027t look like it\u0027s Galileo compatible...",
+      "revId": "09a3dea46b2d32e8f93347fb4053da02033752af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///xg\u003d",
+        "filename": "org.eclipse.egit.mylyn-feature/feature.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-17T21:56:26Z",
+      "side": 1,
+      "message": "shouldn\u0027t this have .qualifier ?",
+      "revId": "09a3dea46b2d32e8f93347fb4053da02033752af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///xw\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-17T21:56:26Z",
+      "side": 1,
+      "message": "in all other egit and jgit bundles we use package dependencies on jgit and egit with version range [0.11,0.12)",
+      "revId": "09a3dea46b2d32e8f93347fb4053da02033752af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///xc\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-17T21:56:26Z",
+      "side": 1,
+      "message": "missing version specifier 0.11.0.qualifier",
+      "revId": "09a3dea46b2d32e8f93347fb4053da02033752af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///xY\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-17T21:56:26Z",
+      "side": 1,
+      "message": "missing version specifier 0.11.0.qualifier",
+      "revId": "09a3dea46b2d32e8f93347fb4053da02033752af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
