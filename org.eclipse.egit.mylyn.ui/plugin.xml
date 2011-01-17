@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+<!--
+   <extension
+         point="org.eclipse.egit.ui.commitDialog">
+      <dialog
+            commitDialog="org.eclipse.mylyn.internal.team.git.commit.CommitDialogExtender">
+      </dialog>
+   </extension>
+-->
+</plugin>
