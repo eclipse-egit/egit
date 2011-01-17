@@ -311,7 +311,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 			projects.add(project);
 		}
 
-		monitor.beginTask(UIText.CommitActionHandler_caculatingChanges,
+		monitor.beginTask(UIText.CommitActionHandler_calculatingChanges,
 				repositories.size());
 		for (Map.Entry<Repository, HashSet<IProject>> entry : repositories
 				.entrySet()) {

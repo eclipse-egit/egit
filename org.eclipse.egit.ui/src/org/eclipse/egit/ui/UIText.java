@@ -2487,7 +2487,7 @@ public class UIText extends NLS {
 	public static String CommitAction_MergeHeadErrorTitle;
 
 	/** */
-	public static String CommitActionHandler_caculatingChanges;
+	public static String CommitActionHandler_calculatingChanges;
 
 	/** */
 	public static String CommitActionHandler_repository;
