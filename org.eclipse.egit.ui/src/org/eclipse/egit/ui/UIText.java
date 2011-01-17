@@ -1421,6 +1421,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_AddChangeIdTooltip;
 
 	/** */
+	public static String CommitDialog_WrongTypeOfCommitMessageProvider;
+
+	/** */
 	public static String CommitDialog_ConfigureLink;
 
 	/** */
