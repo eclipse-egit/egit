@@ -452,6 +452,9 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_RepoChangeScannerGroupHeader;
 
 	/** */
+	public static String GitPreferenceRoot_ShowInitialConfigDialogCheckbox;
+
+	/** */
 	public static String GitProjectPropertyPage_LabelBranch;
 
 	/** */
@@ -1887,6 +1890,21 @@ public class UIText extends NLS {
 
 	/** */
 	public static String WindowCachePreferencePage_packedGitMMAP;
+
+	/** */
+	public static String BasicConfigurationDialog_DialogMessage;
+
+	/** */
+	public static String BasicConfigurationDialog_DialogTitle;
+
+	/** */
+	public static String BasicConfigurationDialog_UserEmailLabel;
+
+	/** */
+	public static String BasicConfigurationDialog_UserNameLabel;
+
+	/** */
+	public static String BasicConfigurationDialog_WindowTitle;
 
 	/** */
 	public static String BranchAction_branchFailed;
