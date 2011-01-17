@@ -228,7 +228,11 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 			objBaseId = ObjectId.zeroId();
 
 		ObjectId objRemoteId = tw.getObjectId(actualNth);
-		ObjectId objAncestorId = tw.getObjectId(ancestorNth);
+		ObjectId objAncestorId;
+		if (ancestorNth > -1)
+			objAncestorId = tw.getObjectId(ancestorNth);
+		else
+			objAncestorId = ObjectId.zeroId();
 		int objectType = tw.getFileMode(actualNth).getObjectType();
 
 		if (objectType == Constants.OBJ_BLOB)
