@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL1X///84\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-13T05:33:12Z",
+      "side": 1,
+      "message": "1) I think the extension should be able to manipulate the message in any way, not just append to it.\n\n2) Do not append a line separator if one is already present.\n\n3) At this level we might want the platform neutral line separator. We want that in the final commit message, so do not assume we know anything about how the dialog represents the message internally, My suspision is that extensions are likely to get this wrong if we require the use of the platform line separator.",
+      "revId": "c5d1131301df209f99a72c974b9b9622bef3d851",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
