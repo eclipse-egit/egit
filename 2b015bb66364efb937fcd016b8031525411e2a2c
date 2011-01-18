@@ -243,6 +243,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2H///34\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 108
+      },
+      "writtenOn": "2010-12-23T09:35:23Z",
+      "side": 1,
+      "message": "same as above",
+      "parentUuid": "AAAL2H///4o\u003d",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2H///4k\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
         "patchSetId": 5
