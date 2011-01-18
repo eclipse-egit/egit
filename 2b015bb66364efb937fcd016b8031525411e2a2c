@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2H///3w\u003d",
+        "filename": "org.eclipse.egilt.mylyn/.settings/org.eclipse.jdt.core.prefs",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 108
+      },
+      "writtenOn": "2010-12-23T09:35:23Z",
+      "side": 1,
+      "message": "What are the settings?",
+      "parentUuid": "AAAL2H///4s\u003d",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2H///3E\u003d",
         "filename": "org.eclipse.egilt.mylyn/.settings/org.eclipse.jdt.core.prefs",
         "patchSetId": 5
@@ -224,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2H///30\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 108
+      },
+      "writtenOn": "2010-12-23T09:35:23Z",
+      "side": 1,
+      "message": "This I don\u0027t understand",
+      "parentUuid": "AAAL2H///4k\u003d",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2H///5E\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
         "patchSetId": 5
@@ -241,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2H///4I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 108
+      },
+      "writtenOn": "2010-12-23T09:35:23Z",
+      "side": 1,
+      "message": "The interface i use need an array of IResource not IProject. So its clearer to use the correct type. I am not sure why mylyn uses IResource instead of IProject. I haven\u0027t seen any config options to configure commit templates on resource base.",
+      "parentUuid": "AAAL2H///5E\u003d",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2H///4U\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
         "patchSetId": 5
@@ -252,6 +306,24 @@
       "writtenOn": "2010-12-23T09:14:52Z",
       "side": 1,
       "message": "what if the ICommitMessageProvider returns null?",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///4A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 108
+      },
+      "writtenOn": "2010-12-23T09:35:23Z",
+      "side": 1,
+      "message": "I think that isn\u0027t possible. Mylyn has a fallback on workspace base. There is always a commit template.\nBut I can add a null check in the implementation of the ICommitMessageProvider",
+      "parentUuid": "AAAL2H///4U\u003d",
       "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
