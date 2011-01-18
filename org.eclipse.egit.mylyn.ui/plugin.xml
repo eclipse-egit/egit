@@ -7,4 +7,10 @@
             class="org.eclipse.egit.internal.mylyn.ui.commit.MylynCommitMessageProvider">
       </commitMessageProvider>
    </extension>
+   <extension
+         point="org.eclipse.mylyn.team.ui.changeSets">
+      <activeChangeSetProvider
+            class="org.eclipse.egit.internal.ui.changesets.GitActiveChangeSetProvider">
+      </activeChangeSetProvider>
+   </extension>
 </plugin>
