@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///10\u003d",
+        "filename": "org.eclipse.egit.mylyn/META-INF/MANIFEST.MF",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "align with EGit version",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///1s\u003d",
+        "filename": "org.eclipse.egit.mylyn/META-INF/MANIFEST.MF",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "resources seems not to be used",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///1E\u003d",
+        "filename": "org.eclipse.egit.mylyn/META-INF/MANIFEST.MF",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///1s\u003d",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///2U\u003d",
+        "filename": "org.eclipse.egit.mylyn/plugin.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "Should we use .mylyn in the extension point id to make the difference between EGit and the Mylyn extension more clear?",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///18\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "Should be named EGitMylynPlugin like all other EGit classes",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///2M\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "whitespace nit",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///2E\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "whitespace nit",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///2A\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "Should use proper plugin id",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///14\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/internal/MylynCommitMessageProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "Would put the SupressWarnings in a more narrow scope to only hide the use of ContextChangeSet",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///1c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "Please use EgitMylynPlugin to handle errors in this bundle",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
