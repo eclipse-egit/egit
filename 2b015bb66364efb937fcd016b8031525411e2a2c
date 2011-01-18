@@ -54,6 +54,142 @@
     },
     {
       "key": {
+        "uuid": "AAAL2H///48\u003d",
+        "filename": "org.eclipse.egilt.mylyn/src/org/eclipse/egilt/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "style nitpick: extra whitspace",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///44\u003d",
+        "filename": "org.eclipse.egilt.mylyn/src/org/eclipse/egilt/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "style nit-pick: trailng whitespace",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///40\u003d",
+        "filename": "org.eclipse.egilt.mylyn/src/org/eclipse/egilt/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///4w\u003d",
+        "filename": "org.eclipse.egilt.mylyn/src/org/eclipse/egilt/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///4g\u003d",
+        "filename": "org.eclipse.egilt.mylyn/src/org/eclipse/egilt/mylyn/internal/MylynCommitMessageProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "extra whitespace,\ncopyright to yourself or employer",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///4c\u003d",
+        "filename": "org.eclipse.egilt.mylyn/src/org/eclipse/egilt/mylyn/internal/MylynCommitMessageProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "trailing whitespace\nwe don\u0027d use the @author tag",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///4Y\u003d",
+        "filename": "org.eclipse.egilt.mylyn/src/org/eclipse/egilt/mylyn/internal/MylynCommitMessageProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///5I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "1:something is missing here.\n\n2:We generally assign copyright to either the author or employer, depending on what is most appropriate.",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2H///4o\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
         "patchSetId": 5
@@ -65,6 +201,40 @@
       "writtenOn": "2010-12-23T09:14:52Z",
       "side": 1,
       "message": "We don\u0027t use the @author tag",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///4k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "...with platform specific line endings\ncan return null",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///5E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "Why are only projects included in the resources set? If only projects can be included, the type should be IProject, right?",
       "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -100,6 +270,23 @@
       "side": 1,
       "message": "MylynCommitMessageProvider.getMessage has two occurrences of \"return null\"...",
       "parentUuid": "AAAL2H///4A\u003d",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///5A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "No exception of the extension is of the wrong type?",
       "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
