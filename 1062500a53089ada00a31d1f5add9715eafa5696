@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n///1I\u003d",
+        "filename": "org.eclipse.egit.mylyn/META-INF/MANIFEST.MF",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///10\u003d",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n///1s\u003d",
         "filename": "org.eclipse.egit.mylyn/META-INF/MANIFEST.MF",
         "patchSetId": 11
@@ -54,6 +72,129 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n///1w\u003d",
+        "filename": "org.eclipse.egit.mylyn/META-INF/MANIFEST.MF",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "Bundle-Localization: plugin is missing in order to get the properties resolved",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///1A\u003d",
+        "filename": "org.eclipse.egit.mylyn/META-INF/MANIFEST.MF",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///1w\u003d",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///2Y\u003d",
+        "filename": "org.eclipse.egit.mylyn/META-INF/MANIFEST.MF",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "We should take care to split API vs non-API. Please export internal packages as x-internal.",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///08\u003d",
+        "filename": "org.eclipse.egit.mylyn/META-INF/MANIFEST.MF",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///2Y\u003d",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///1k\u003d",
+        "filename": "org.eclipse.egit.mylyn/plugin.properties",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "You\u0027re not Shawn",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///04\u003d",
+        "filename": "org.eclipse.egit.mylyn/plugin.properties",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///1k\u003d",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///00\u003d",
+        "filename": "org.eclipse.egit.mylyn/plugin.properties",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///1g\u003d",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n///2U\u003d",
         "filename": "org.eclipse.egit.mylyn/plugin.xml",
         "patchSetId": 11
@@ -65,6 +206,24 @@
       "writtenOn": "2011-01-17T13:41:32Z",
       "side": 1,
       "message": "Should we use .mylyn in the extension point id to make the difference between EGit and the Mylyn extension more clear?",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///0w\u003d",
+        "filename": "org.eclipse.egit.mylyn/plugin.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "As it\u0027s part of egit.ui, the id fits.",
+      "parentUuid": "AAAL2n///2U\u003d",
       "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -88,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n///0s\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///18\u003d",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n///2M\u003d",
         "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/EgitMylynPlugin.java",
         "patchSetId": 11
@@ -99,6 +276,59 @@
       "writtenOn": "2011-01-17T13:41:32Z",
       "side": 1,
       "message": "whitespace nit",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///0c\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///2M\u003d",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///2I\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "whitespace nit",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///0o\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///2I\u003d",
       "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -122,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n///0k\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///2E\u003d",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n///2A\u003d",
         "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/EgitMylynPlugin.java",
         "patchSetId": 11
@@ -133,6 +381,24 @@
       "writtenOn": "2011-01-17T13:41:32Z",
       "side": 1,
       "message": "Should use proper plugin id",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///0g\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///2A\u003d",
       "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -156,11 +422,116 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n///0Y\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egit/mylyn/internal/MylynCommitMessageProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///14\u003d",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///1o\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "We should mark this as internal ext point for now, i don\u0027t see the maturity for this to be API yet",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///0U\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///1o\u003d",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///2Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "Javadoc reference to internal classes?",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///0Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T16:49:45Z",
+      "side": 1,
+      "message": "Doesn\u0027t matter, class will be internal anyway before 1.0",
+      "parentUuid": "AAAL2n///2Q\u003d",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n///1c\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
         "patchSetId": 11
       },
       "lineNbr": 496,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-17T13:41:32Z",
+      "side": 1,
+      "message": "Please use EgitMylynPlugin to handle errors in this bundle",
+      "revId": "1062500a53089ada00a31d1f5add9715eafa5696",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///1Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 502,
       "author": {
         "id": 74
       },
