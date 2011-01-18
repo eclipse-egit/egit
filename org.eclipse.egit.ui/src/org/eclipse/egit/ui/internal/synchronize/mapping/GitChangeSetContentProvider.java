@@ -8,6 +8,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.mapping;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
@@ -19,6 +22,7 @@ import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
 import org.eclipse.egit.core.synchronize.GitSubscriberResourceMappingContext;
 import org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelObjectContainer;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelRoot;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.team.core.mapping.ISynchronizationContext;
@@ -35,10 +39,15 @@ public class GitChangeSetContentProvider extends SynchronizationContentProvider 
 
 	private GitModelRoot modelRoot;
 
+	private Map<Object, ResourceTraversal[]> travelsalCache = new HashMap<Object, ResourceTraversal[]>();
+
 	@Override
 	public boolean hasChildren(Object element) {
 		if (element instanceof GitModelBlob)
 			return false;
+
+		if (element instanceof GitModelObjectContainer)
+			return ((GitModelObjectContainer) element).getChildren().length > 0;
 
 		return super.hasChildren(element);
 	}
@@ -70,12 +79,17 @@ public class GitChangeSetContentProvider extends SynchronizationContentProvider 
 	protected ResourceTraversal[] getTraversals(
 			ISynchronizationContext context, Object object) {
 		if (object instanceof IAdaptable) {
+			if (travelsalCache.containsKey(object))
+				return travelsalCache.get(object);
+
 			ResourceMapping rm = getResourceMapping(object);
 			GitSubscriberMergeContext ctx = (GitSubscriberMergeContext) getContext();
 			ResourceMappingContext rmCtx = new GitSubscriberResourceMappingContext(
 					ctx.getSyncData());
 			try {
-				return rm.getTraversals(rmCtx, new NullProgressMonitor());
+				ResourceTraversal[] traversals = rm.getTraversals(rmCtx, new NullProgressMonitor());
+				travelsalCache.put(object, traversals);
+				return traversals;
 			} catch (CoreException e) {
 				Activator.logError(e.getMessage(), e);
 			}
@@ -94,6 +108,12 @@ public class GitChangeSetContentProvider extends SynchronizationContentProvider 
 			provider.dispose();
 
 		super.dispose();
+	}
+
+	@Override
+	protected void refresh() {
+		travelsalCache.clear();
+		super.refresh();
 	}
 
 }
