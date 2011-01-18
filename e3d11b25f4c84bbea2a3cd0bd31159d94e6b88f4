@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2X////0\u003d",
+        "filename": "org.eclipse.egilt.mylyn/META-INF/MANIFEST.MF",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 15
+      },
+      "writtenOn": "2010-12-24T07:47:01Z",
+      "side": 1,
+      "message": "Should be org.eclipse.egit.mylyn",
+      "revId": "e3d11b25f4c84bbea2a3cd0bd31159d94e6b88f4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X////w\u003d",
+        "filename": "org.eclipse.egilt.mylyn/META-INF/MANIFEST.MF",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 15
+      },
+      "writtenOn": "2010-12-24T07:47:01Z",
+      "side": 1,
+      "message": "Should this follow the version ranges of other EGit bundles? [3.4.0,4.0.0)",
+      "revId": "e3d11b25f4c84bbea2a3cd0bd31159d94e6b88f4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
