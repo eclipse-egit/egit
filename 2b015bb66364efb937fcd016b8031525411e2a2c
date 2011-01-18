@@ -1,0 +1,126 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2H///4Q\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "Is this all that is needed for Mylyn?\n\ntrailing whitespace",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///4s\u003d",
+        "filename": "org.eclipse.egilt.mylyn/.settings/org.eclipse.jdt.core.prefs",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "Use same setting as the rest of the egit projects",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///3E\u003d",
+        "filename": "org.eclipse.egilt.mylyn/.settings/org.eclipse.jdt.core.prefs",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-24T00:37:40Z",
+      "side": 1,
+      "message": "See those projects\u0027 .settings",
+      "parentUuid": "AAAL2H///3w\u003d",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///4o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "We don\u0027t use the @author tag",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///4U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-23T09:14:52Z",
+      "side": 1,
+      "message": "what if the ICommitMessageProvider returns null?",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///3M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-24T00:37:40Z",
+      "side": 1,
+      "message": "MylynCommitMessageProvider.getMessage has two occurrences of \"return null\"...",
+      "parentUuid": "AAAL2H///4A\u003d",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///3I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-24T00:37:40Z",
+      "side": 1,
+      "message": "if (provider instanceof ICommitMessageProvider) {\n   ....\n}\n// no else",
+      "parentUuid": "AAAL2H///4E\u003d",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
