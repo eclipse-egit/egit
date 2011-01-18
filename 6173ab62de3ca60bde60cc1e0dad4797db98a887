@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2X///mk\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "Git also can define commit templates. What\u0027s the intended relationship to Mylyn commit templates ? See git configuration parameter commit.template in [1].\n\n[1] http://www.kernel.org/pub/software/scm/git/docs/git-config.html",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///nc\u003d",
+        "filename": "org.eclipse.egit.mylyn/META-INF/MANIFEST.MF",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "typo in package name: s/egilt/egit/",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///nY\u003d",
+        "filename": "org.eclipse.egit.mylyn/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "this is not egit ui but mylyn integration \n\nGit Team Provider (Mylyn Integration) (Incubation)",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///ms\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egilt/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "typo in package name s/egilt/egit/",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///nU\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egilt/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///nQ\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egilt/mylyn/EgitMylynPlugin.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///nM\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egilt/mylyn/internal/MylynCommitMessageProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "style nit: unnecessary 2nd blank line",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///mo\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egilt/mylyn/internal/MylynCommitMessageProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "typo in package name s/egilt/egit/",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///nI\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egilt/mylyn/internal/MylynCommitMessageProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "typo: s/integartion/integration/",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///nE\u003d",
+        "filename": "org.eclipse.egit.mylyn/src/org/eclipse/egilt/mylyn/internal/MylynCommitMessageProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "if we always pass true here, what will happen if we are offline and cannot access the task repository currently ?",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///nA\u003d",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageProvider.exsd",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "I am not sure if this generic copyright note is ok",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///m8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "don\u0027t attribute copyright to Eclipse Egit Team, instead use your name and email or your company\n\nstyle nit: avoid 2nd unnecessary blank line",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///m4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "typo: s/Primarily/Primary/",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///m0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use author tags",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///mw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-08T22:58:07Z",
+      "side": 1,
+      "message": "this line looks a bit long, use code formatting options as specified in contributor guide and configured in project preferences\n\nstyle nit: there is an unnecessary blank before the semicolon",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
