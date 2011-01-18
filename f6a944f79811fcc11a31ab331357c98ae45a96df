@@ -1,0 +1,311 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2H///+U\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "start commit message with a short (\u003c70 chars) summary line followed by a blank line otherwise its not nicely formatted by git command line tools.\n\nstyle nit: trailing whitespace",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///+Q\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "style nits: trailing whitespace, inconsistent indentation",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///+M\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///+o\u003d",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageProvider.exsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "missing license header\n\nPDE\u0027s extension point schema editor in helios can\u0027t open this and fails with a NPE",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///90\u003d",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageProvider.exsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "missing documentation",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///+k\u003d",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageProvider.exsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace\n\nmissing extension point documentation",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///+g\u003d",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageProvider.exsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace\n\nmissing extension point documentation",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///+c\u003d",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageProvider.exsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace\n\nmissing extension point documentation",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///+Y\u003d",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageProvider.exsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace\n\nmissing extension point documentation",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///+I\u003d",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageProvider.exsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "missing extension point documentation",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///+E\u003d",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageProvider.exsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "missing extension point documentation",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///+A\u003d",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageProvider.exsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "missing extension point documentation",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///98\u003d",
+        "filename": "org.eclipse.egit.ui/schema/commitMessageProvider.exsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "missing extension point documentation",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///+0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///+s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "should be rather a link",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///+w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "Primalary ? Sounds like a typo.",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///94\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T00:34:09Z",
+      "side": 1,
+      "message": "use StringBuilder to concatenate strings",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///8o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-21T16:30:20Z",
+      "side": 1,
+      "message": "you are right, FindBugs was complaining so I blindly copied that complaint here without using my brain",
+      "parentUuid": "AAAL2H///9k\u003d",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
