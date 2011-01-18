@@ -653,6 +653,18 @@ public class UIText extends NLS {
 	public static String CherryPickOperation_InternalError;
 
 	/** */
+	public static String CompareTargetSelectionDialog_CompareButton;
+
+	/** */
+	public static String CompareTargetSelectionDialog_CompareMessage;
+
+	/** */
+	public static String CompareTargetSelectionDialog_CompareTitle;
+
+	/** */
+	public static String CompareTargetSelectionDialog_WindowTitle;
+
+	/** */
 	public static String CompareWithIndexAction_FileNotInIndex;
 
 	/** */
