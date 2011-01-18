@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAL2X///ns\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-01-08T08:46:14Z",
+      "side": 1,
+      "message": "newline",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///no\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-01-08T08:46:14Z",
+      "side": 1,
+      "message": "newline",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///nk\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-01-08T08:46:14Z",
+      "side": 1,
+      "message": "newline",
+      "revId": "6173ab62de3ca60bde60cc1e0dad4797db98a887",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2X///mk\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
