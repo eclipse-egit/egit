@@ -291,6 +291,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2H///9k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 108
+      },
+      "writtenOn": "2010-12-21T10:15:56Z",
+      "side": 1,
+      "message": "mhh...I think the Java compiler use a StringBuilder internally",
+      "parentUuid": "AAAL2H///94\u003d",
+      "revId": "f6a944f79811fcc11a31ab331357c98ae45a96df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2H///8o\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
         "patchSetId": 1
