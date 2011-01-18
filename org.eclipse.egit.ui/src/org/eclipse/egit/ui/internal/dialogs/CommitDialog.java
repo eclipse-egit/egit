@@ -276,7 +276,6 @@ public class CommitDialog extends Dialog {
 		if (amending) {
 			amendingButton.setSelection(amending);
 			amendingButton.setEnabled(false); // if already set, don't allow any changes
-			commitText.setText(previousCommitMessage);
 			authorText.setText(previousAuthor);
 			saveOriginalChangeId();
 		} else if (!amendAllowed) {
@@ -294,12 +293,8 @@ public class CommitDialog extends Dialog {
 					saveOriginalChangeId();
 					if (!alreadyAdded) {
 						alreadyAdded = true;
-						String curText = commitText.getText();
-						if (curText.length() > 0)
-							curText += Text.DELIMITER;
-						commitText.setText(curText
-								+ previousCommitMessage.replaceAll(
-										"\n", Text.DELIMITER)); //$NON-NLS-1$
+						commitText.setText(previousCommitMessage.replaceAll(
+								"\n", Text.DELIMITER)); //$NON-NLS-1$
 					}
 					authorText.setText(previousAuthor);
 				}
@@ -449,6 +444,15 @@ public class CommitDialog extends Dialog {
 	 * @return the calculated commit message
 	 */
 	private String calculateCommitMessage() {
+		if(commitMessage != null) {
+			// special case for merge
+			return commitMessage;
+		}
+
+		if (amending) {
+			return previousCommitMessage;
+		}
+
 		String calculatedCommitMessage = null;
 
 		Set<IResource> resources = new HashSet<IResource>();
@@ -460,7 +464,12 @@ public class CommitDialog extends Dialog {
 			ICommitMessageProvider messageProvider = getCommitMessageProvider();
 			if(messageProvider != null) {
 				IResource[] resourcesArray = resources.toArray(new IResource[0]);
-				calculatedCommitMessage = messageProvider.getMessage(resourcesArray);
+
+				if (messageProvider.getMessage(resourcesArray) != null) {
+					calculatedCommitMessage = messageProvider.getMessage(resourcesArray);
+				} else {
+					calculatedCommitMessage = ""; //$NON-NLS-1$
+				}
 			}
 		} catch (CoreException coreException) {
 			Activator.error(coreException.getLocalizedMessage(),
@@ -693,7 +702,7 @@ public class CommitDialog extends Dialog {
 		this.commitMessage = s;
 	}
 
-	private String commitMessage = ""; //$NON-NLS-1$
+	private String commitMessage = null;
 	private String author = null;
 	private String committer = null;
 	private String previousAuthor = null;
