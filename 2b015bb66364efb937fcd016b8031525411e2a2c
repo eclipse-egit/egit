@@ -208,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2H///38\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 108
+      },
+      "writtenOn": "2010-12-23T09:35:23Z",
+      "side": 1,
+      "message": "oh...that is new for me. I will fix this later. But this informations aren\u0027t clearly in the ContributorGuide.",
+      "parentUuid": "AAAL2H///5I\u003d",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2H///4o\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/ICommitMessageProvider.java",
         "patchSetId": 5
@@ -359,6 +377,24 @@
       "writtenOn": "2010-12-23T09:14:52Z",
       "side": 1,
       "message": "No exception of the extension is of the wrong type?",
+      "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2H///4E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 108
+      },
+      "writtenOn": "2010-12-23T09:35:23Z",
+      "side": 1,
+      "message": "??? I throw a CoreException!",
+      "parentUuid": "AAAL2H///5A\u003d",
       "revId": "2b015bb66364efb937fcd016b8031525411e2a2c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
