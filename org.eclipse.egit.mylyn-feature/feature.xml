@@ -18,26 +18,26 @@
    </license>
 
    <url>
-      <update label="%updateSiteName" url="http://download.eclipse.org/egit/pde/updates"/>
-      <discovery label="%updateSiteName" url="http://download.eclipse.org/egit/pde/updates"/>
+      <update label="%updateSiteName" url="http://download.eclipse.org/egit/updates"/>
+      <discovery label="%updateSiteName" url="http://download.eclipse.org/egit/updates"/>
    </url>
 
    <requires>
-      <import plugin="org.eclipse.egit.core" version="0.11.0" match="compatible"/>
-      <import plugin="org.eclipse.team.core"/>
-      <import plugin="org.eclipse.jface"/>
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.ui.navigator.resources"/>
-      <import plugin="org.eclipse.ui.workbench"/>
+      <import plugin="org.eclipse.egit.core" version="0.11.0" match="compatible"/>
+      <import plugin="org.eclipse.egit.ui" version="0.11.0" match="compatible"/>
+      <import plugin="org.eclipse.jface"/>
+      <import plugin="org.eclipse.jgit" version="0.11.0" match="compatible"/>
       <import plugin="org.eclipse.mylyn.monitor.core" version="3.0.0" match="compatible"/>
       <import plugin="org.eclipse.mylyn.tasks.core" version="3.0.0" match="compatible"/>
       <import plugin="org.eclipse.mylyn.tasks.ui" version="3.0.0" match="compatible"/>
       <import plugin="org.eclipse.mylyn.team.ui" version="3.0.0" match="compatible"/>
       <import plugin="org.eclipse.mylyn.resources.ui" version="3.0.0" match="compatible"/>
       <import plugin="org.eclipse.mylyn.context.core" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.egit.ui" version="0.11.0" match="compatible"/>
-      <import plugin="org.eclipse.jgit" version="0.11.0" match="compatible"/>
+      <import plugin="org.eclipse.team.core"/>
+      <import plugin="org.eclipse.ui.navigator.resources"/>
+      <import plugin="org.eclipse.ui.workbench"/>
    </requires>
 
    <plugin

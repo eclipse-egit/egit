@@ -7,15 +7,15 @@
       plugin="org.eclipse.egit">
 
    <description url="http://www.eclipse.org/egit/">
-     %description
+      %description
    </description>
 
    <copyright>
-     %copyright
+      %copyright
    </copyright>
 
    <license url="%licenseURL">
-     %license
+      %license
    </license>
 
    <url>
@@ -32,6 +32,13 @@
 
    <plugin
          id="org.eclipse.egit.ui.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.egit.mylyn.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
