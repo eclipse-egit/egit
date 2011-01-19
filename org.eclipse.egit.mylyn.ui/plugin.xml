@@ -7,4 +7,15 @@
             class="org.eclipse.egit.internal.mylyn.ui.commit.MylynCommitMessageProvider">
       </commitMessageProvider>
    </extension>
+   
+   <extension point="org.eclipse.core.runtime.adapters">
+    <factory adaptableType="org.eclipse.egit.ui.internal.history.SWTCommit"
+             class="org.eclipse.egit.internal.mylyn.ui.commit.TaskReferenceFactory">
+       <adapter type="org.eclipse.mylyn.team.ui.AbstractTaskReference"/>
+    </factory>
+	<factory adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit"
+             class="org.eclipse.egit.internal.mylyn.ui.commit.TaskReferenceFactory">
+       <adapter type="org.eclipse.mylyn.team.ui.AbstractTaskReference"/>
+    </factory>
+   </extension>
 </plugin>
