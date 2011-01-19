@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///tQ\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-19T00:09:17Z",
+      "side": 1,
+      "message": "typo: s/ambigous/ambiguous/",
+      "revId": "d3a58730dc63e7f90686ba86b5400c776961b4ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///tM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AmbigousBranchDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-19T00:09:17Z",
+      "side": 1,
+      "message": "typo: s/Ambigous/Ambiguous/",
+      "revId": "d3a58730dc63e7f90686ba86b5400c776961b4ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
