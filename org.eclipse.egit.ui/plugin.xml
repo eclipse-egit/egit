@@ -2171,6 +2171,14 @@
             commandId="org.eclipse.egit.ui.RepositoriesViewSkipRebase"
             icon="icons/elcl16/skip.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.history.Merge"
+            icon="icons/obj16/merge.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.history.RebaseCurrent"
+            icon="icons/obj16/rebase.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -2489,7 +2497,7 @@
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.RebaseCurrentHandler"
             id="org.eclipse.egit.ui.history.RebaseCurrent"
-            name="%RevertCommand.name">
+            name="%RebaseCurrentCommand.name">
       </command>
    </extension>
    <extension
