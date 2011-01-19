@@ -674,7 +674,7 @@ public class CommitDialog extends Dialog {
 		IndexDiff indexDiff = new IndexDiff(repo, Constants.HEAD, fileTreeIterator);
 		Set<String> repositoryPaths = Collections.singleton(path);
 		indexDiff.setFilter(PathFilterGroup.createFromStrings(repositoryPaths));
-		indexDiff.diff();
+		indexDiff.diff(null, 0, 0, ""); //$NON-NLS-1$
 		return getFileStatus(path, indexDiff);
 	}
 
