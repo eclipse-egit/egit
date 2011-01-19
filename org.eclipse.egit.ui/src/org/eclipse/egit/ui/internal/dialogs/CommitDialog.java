@@ -14,7 +14,6 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -194,7 +193,7 @@ public class CommitDialog extends Dialog {
 	/**
 	 * A collection of files that should be already checked in the table.
 	 */
-	private Collection<IFile> preselectedFiles = Collections.emptyList();
+	private Set<IFile> preselectedFiles = Collections.emptySet();
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
@@ -405,9 +404,10 @@ public class CommitDialog extends Dialog {
 
 		filesViewer = new CheckboxTableViewer(resourcesTable);
 		filesViewer.setContentProvider(ArrayContentProvider.getInstance());
+		filesViewer.setUseHashlookup(true);
 		filesViewer.setLabelProvider(new CommitLabelProvider());
 		filesViewer.addFilter(new CommitItemFilter());
-		filesViewer.setInput(items);
+		filesViewer.setInput(items.toArray());
 		filesViewer.getTable().setMenu(getContextMenu());
 		if (!allowToChangeSelection) {
 			amendingButton.setSelection(false);
@@ -427,15 +427,11 @@ public class CommitDialog extends Dialog {
 			filesViewer.setAllChecked(true);
 		}
 		else {
-			// pre-emptively check any preselected files
-			for (IFile selectedFile : preselectedFiles) {
-				for (CommitItem item : items) {
-					if (item.file.equals(selectedFile) &&
-							!item.status.equals(UIText.CommitDialog_StatusUntracked) &&
-							!item.status.equals(UIText.CommitDialog_StatusAssumeUnchaged)) {
-						filesViewer.setChecked(item, true);
-						break;
-					}
+			for (CommitItem item : items) {
+				if (preselectedFiles.contains(item.file) &&
+						item.status != UIText.CommitDialog_StatusUntracked &&
+						item.status != UIText.CommitDialog_StatusAssumeUnchaged) {
+					filesViewer.setChecked(item, true);
 				}
 			}
 		}
@@ -733,7 +729,7 @@ public class CommitDialog extends Dialog {
 	 *            the files to be checked in the dialog's table, must not be
 	 *            <code>null</code>
 	 */
-	public void setPreselectedFiles(Collection<IFile> preselectedFiles) {
+	public void setPreselectedFiles(Set<IFile> preselectedFiles) {
 		Assert.isNotNull(preselectedFiles);
 		this.preselectedFiles = preselectedFiles;
 	}
@@ -872,13 +868,13 @@ public class CommitDialog extends Dialog {
 	}
 
 	/**
-	 * Set the total list of changed resources, including additions and
+	 * Set the total set of changed resources, including additions and
 	 * removals
 	 *
 	 * @param files potentially affected by a new commit
 	 * @param indexDiffs IndexDiffs of the related repositories
 	 */
-	public void setFileList(ArrayList<IFile> files, Map<Repository, IndexDiff> indexDiffs) {
+	public void setFiles(Set<IFile> files, Map<Repository, IndexDiff> indexDiffs) {
 		items.clear();
 		for (IFile file : files) {
 			RepositoryMapping repositoryMapping = RepositoryMapping.getMapping(file.getProject());
