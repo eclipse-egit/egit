@@ -42,9 +42,9 @@ public class SelectSynchronizeResourceDialog extends TitleAreaDialog {
 
 	private String srcRef;
 
-	private boolean shouldIncluldeLocal;
-
 	private final String repoName;
+
+	private boolean shouldIncludeLocal = true;
 
 	private final List<SyncRepoEntity> syncRepos;
 
@@ -97,7 +97,7 @@ public class SelectSynchronizeResourceDialog extends TitleAreaDialog {
 	 *         in comparison
 	 */
 	public boolean shouldIncludeLocal() {
-		return shouldIncluldeLocal;
+		return shouldIncludeLocal;
 	}
 
 	@Override
@@ -110,8 +110,26 @@ public class SelectSynchronizeResourceDialog extends TitleAreaDialog {
 				| GridData.VERTICAL_ALIGN_CENTER);
 		data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH / 2);
 
-		new Label(composite, SWT.WRAP)
-				.setText(UIText.SelectSynchronizeResourceDialog_srcRef);
+		shouldIncludeLocalButton = new Button(composite, SWT.CHECK | SWT.WRAP);
+		shouldIncludeLocalButton
+				.setText(UIText.SelectSynchronizeResourceDialog_includeUncommitedChanges);
+		shouldIncludeLocalButton.setSelection(true);
+
+		final Label srcRefLabel = new Label(composite, SWT.WRAP);
+		srcRefLabel.setText(UIText.SelectSynchronizeResourceDialog_srcRef);
+		srcRefLabel.setEnabled(false);
+
+		shouldIncludeLocalButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				boolean includeLocal = shouldIncludeLocalButton.getSelection();
+				srcRefCombo.setEnabled(!includeLocal);
+				srcRefLabel.setEnabled(!includeLocal);
+				if (includeLocal)
+					srcRefCombo.setDefaultValue(
+							UIText.SynchronizeWithAction_localRepoName, HEAD);
+			}
+		});
 
 		srcRefCombo = new RemoteSelectionCombo(composite, syncRepos,
 				UIText.RemoteSelectionCombo_sourceName,
@@ -120,20 +138,7 @@ public class SelectSynchronizeResourceDialog extends TitleAreaDialog {
 		srcRefCombo.setLayoutData(data);
 		srcRefCombo.setLayoutData(GridDataFactory.fillDefaults().grab(true,
 				false).create());
-
-		shouldIncludeLocalButton = new Button(composite, SWT.CHECK | SWT.WRAP);
-		shouldIncludeLocalButton
-				.setText(UIText.SelectSynchronizeResourceDialog_includeUncommitedChanges);
-		shouldIncludeLocalButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				boolean includeLocal = shouldIncludeLocalButton.getSelection();
-				srcRefCombo.setEnabled(!includeLocal);
-				if (includeLocal)
-					srcRefCombo.setDefaultValue(
-							UIText.SynchronizeWithAction_localRepoName, HEAD);
-			}
-		});
+		srcRefCombo.setEnabled(false);
 
 		new Label(composite, SWT.WRAP)
 				.setText(UIText.SelectSynchronizeResourceDialog_dstRef);
@@ -171,7 +176,7 @@ public class SelectSynchronizeResourceDialog extends TitleAreaDialog {
 		if (buttonId == IDialogConstants.OK_ID) {
 			dstRef = dstRefCombo.getValue();
 			srcRef = srcRefCombo.getValue();
-			shouldIncluldeLocal = shouldIncludeLocalButton.getSelection();
+			shouldIncludeLocal = shouldIncludeLocalButton.getSelection();
 		}
 		super.buttonPressed(buttonId);
 	}
