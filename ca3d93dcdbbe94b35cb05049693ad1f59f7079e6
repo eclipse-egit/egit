@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2X///kE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommanndHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-10T00:13:41Z",
+      "side": 1,
+      "message": "typo: s/ambiguos/ambiguous/",
+      "revId": "ca3d93dcdbbe94b35cb05049693ad1f59f7079e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///kA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommanndHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-10T00:13:41Z",
+      "side": 1,
+      "message": "missing double quote ? \"refs/heads/\"",
+      "revId": "ca3d93dcdbbe94b35cb05049693ad1f59f7079e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///j4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommanndHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-10T00:13:41Z",
+      "side": 1,
+      "message": "if refPrefix would be \"refs/remotes/origin/\" would this still yield local branches ?",
+      "revId": "ca3d93dcdbbe94b35cb05049693ad1f59f7079e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2X///j8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommanndHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-10T00:13:41Z",
+      "side": 1,
+      "message": "style nit: no braces around single line block",
+      "revId": "ca3d93dcdbbe94b35cb05049693ad1f59f7079e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
