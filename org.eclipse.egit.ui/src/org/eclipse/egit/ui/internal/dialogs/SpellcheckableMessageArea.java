@@ -450,7 +450,8 @@ public class SpellcheckableMessageArea extends Composite {
 	 * @param text
 	 */
 	public void setText(String text) {
-		getTextWidget().setText(text);
+		if (text != null)
+			getTextWidget().setText(text);
 	}
 
 	/**
