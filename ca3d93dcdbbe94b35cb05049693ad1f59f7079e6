@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n///3Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommanndHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-01-15T23:42:27Z",
+      "side": 1,
+      "message": "This works as before. The code has just been moved. \nWill fix.",
+      "parentUuid": "AAAL2X///j4\u003d",
+      "revId": "ca3d93dcdbbe94b35cb05049693ad1f59f7079e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2X///j8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommanndHandler.java",
         "patchSetId": 2
