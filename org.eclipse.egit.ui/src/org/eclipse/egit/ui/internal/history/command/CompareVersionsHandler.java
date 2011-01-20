@@ -16,13 +16,18 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
+import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Compare the file contents of two commits.
@@ -35,7 +40,9 @@ public class CompareVersionsHandler extends AbstractHistoryCommanndHandler {
 			RevCommit commit1 = (RevCommit) it.next();
 			RevCommit commit2 = (RevCommit) it.next();
 
-			Object input = getPage().getInputInternal().getSingleFile();
+			Object input = getPage().getInputInternal().getSingleItem();
+			Repository repository = getPage().getInputInternal()
+					.getRepository();
 			if (input instanceof IFile) {
 				IFile resource = (IFile) input;
 				final RepositoryMapping map = RepositoryMapping
@@ -51,8 +58,7 @@ public class CompareVersionsHandler extends AbstractHistoryCommanndHandler {
 				CompareEditorInput in = new GitCompareFileRevisionEditorInput(
 						base, next, null);
 				openInCompare(event, in);
-			}
-			if (input instanceof File) {
+			} else if (input instanceof File) {
 				File fileInput = (File) input;
 				Repository repo = getRepository(event);
 				final String gitPath = getRepoRelativePath(repo, fileInput);
@@ -64,7 +70,30 @@ public class CompareVersionsHandler extends AbstractHistoryCommanndHandler {
 				CompareEditorInput in = new GitCompareFileRevisionEditorInput(
 						base, next, null);
 				openInCompare(event, in);
+			} else if (input instanceof IResource) {
+				CompareTreeView view;
+				try {
+					view = (CompareTreeView) PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getActivePage()
+							.showView(CompareTreeView.ID);
+					view.setInput((IResource) input, commit1.getId().name(),
+							commit2.getId().name());
+				} catch (PartInitException e) {
+					Activator.handleError(e.getMessage(), e, true);
+				}
+			} else if (input == null) {
+				CompareTreeView view;
+				try {
+					view = (CompareTreeView) PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getActivePage()
+							.showView(CompareTreeView.ID);
+					view.setInput(repository, commit1.getId().name(), commit2
+							.getId().name());
+				} catch (PartInitException e) {
+					Activator.handleError(e.getMessage(), e, true);
+				}
 			}
+
 		}
 		return null;
 	}
@@ -74,9 +103,6 @@ public class CompareVersionsHandler extends AbstractHistoryCommanndHandler {
 		GitHistoryPage page = getPage();
 		if (page == null)
 			return false;
-		int size = getSelection(page).size();
-		if (size != 2)
-			return false;
-		return page.getInputInternal().isSingleFile();
+		return getSelection(page).size() == 2;
 	}
 }

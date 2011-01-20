@@ -610,6 +610,14 @@
             id="org.eclipse.egit.ui.GitCategory"
             name="%GitCategory_name">
       </category>
+      <view
+            category="org.eclipse.egit.ui.GitCategory"
+            class="org.eclipse.egit.ui.internal.dialogs.CompareTreeView"
+            icon="icons/obj16/gitrepository.gif"
+            id="org.eclipse.egit.ui.CompareTreeView"
+            name="Git Tree Compare"
+            restorable="false">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
