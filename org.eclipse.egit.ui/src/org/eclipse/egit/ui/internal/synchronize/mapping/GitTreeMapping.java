@@ -25,7 +25,7 @@ class GitTreeMapping extends GitObjectMapping {
 
 	private final GitModelTree tree;
 
-	private static final IWorkspaceRoot root = ResourcesPlugin.getWorkspace()
+	private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace()
 			.getRoot();
 
 	protected GitTreeMapping(GitModelTree object) {
@@ -56,10 +56,10 @@ class GitTreeMapping extends GitObjectMapping {
 	}
 
 	private IResource[] getResources(GitModelBlob modelBlob) {
-		IFile file = root.getFileForLocation(modelBlob.getLocation());
+		IFile file = ROOT.getFileForLocation(modelBlob.getLocation());
 
 		if (file == null)
-			file = root.getFile(modelBlob.getLocation());
+			file = ROOT.getFile(modelBlob.getLocation());
 
 		return new IResource[] { file };
 	}
