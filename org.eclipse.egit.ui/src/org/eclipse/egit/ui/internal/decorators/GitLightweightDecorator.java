@@ -14,7 +14,7 @@
 
 package org.eclipse.egit.ui.internal.decorators;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,6 +33,7 @@ import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.internal.util.ExceptionCollector;
 import org.eclipse.egit.core.project.GitProjectData;
@@ -89,6 +90,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 * decorator
 	 */
 	public static final String DECORATOR_ID = "org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator"; //$NON-NLS-1$
+
+	private static final QualifiedName DECORATABLE_RESOURCE_KEY = new QualifiedName(
+			DECORATOR_ID, "decoratableResource"); //$NON-NLS-1$
 
 	/**
 	 * Bit-mask describing interesting changes for IResourceChangeListener
@@ -190,13 +194,35 @@ public class GitLightweightDecorator extends LabelProvider implements
 		if (resource == null)
 			return;
 
-		// Don't decorate if the workbench is not running
-		if (!PlatformUI.isWorkbenchRunning())
+		// Don't decorate if UI plugin is not running
+		final Activator activator = Activator.getDefault();
+		if (activator == null)
 			return;
 
-		// Don't decorate if UI plugin is not running
-		Activator activator = Activator.getDefault();
-		if (activator == null)
+		try {
+			// Check for prepared decoration
+			final IDecoratableResource decoratableResource = (IDecoratableResource) resource
+					.getSessionProperty(DECORATABLE_RESOURCE_KEY);
+			if (decoratableResource != null) {
+				//System.out.println("apply prepared decoration for element=" + element); //$NON-NLS-1$
+				final DecorationHelper helper = new DecorationHelper(
+						activator.getPreferenceStore());
+				// Apply prepared decoration
+				helper.decorate(decoration, decoratableResource);
+				// Clear session property
+				resource.setSessionProperty(DECORATABLE_RESOURCE_KEY, null);
+				return;
+			}
+		} catch (CoreException e) {
+			handleException(resource, new CoreException(new Status(
+					IStatus.ERROR, Activator.getPluginId(), e.getMessage(), e)));
+			// TODO question: is it redundant to wrap a CoreException into a
+			// CoreException?
+			return;
+		}
+
+		// Don't decorate if the workbench is not running
+		if (!PlatformUI.isWorkbenchRunning())
 			return;
 
 		// Don't decorate the workspace root
@@ -206,9 +232,11 @@ public class GitLightweightDecorator extends LabelProvider implements
 		// Don't decorate non-existing resources
 		if (!resource.exists() && !resource.isPhantom())
 			return;
+
 		// Don't decorate ignored resources (e.g. bin folder content)
 		if (Team.isIgnoredHint(resource))
 			return;
+
 		// Make sure we're dealing with a project under Git revision control
 		final RepositoryMapping mapping = RepositoryMapping
 				.getMapping(resource);
@@ -219,15 +247,76 @@ public class GitLightweightDecorator extends LabelProvider implements
 		if (mapping.getRepoRelativePath(resource) == null)
 			return;
 
-		try {
-			DecorationHelper helper = new DecorationHelper(activator
-					.getPreferenceStore());
-			helper.decorate(decoration,
-					new DecoratableResourceAdapter(resource));
-		} catch (IOException e) {
-			handleException(resource, new CoreException(new Status(
-					IStatus.ERROR, Activator.getPluginId(), e.getMessage(), e)));
+		//System.out.println("queue decoration request for element=" + element); //$NON-NLS-1$
+		// Add decoration request to the queue
+		GitDecoratorJob.getJobForRepository(
+				mapping.getGitDirAbsolutePath().toString())
+		// TODO question: is the absolute git dir path a good (i.e.
+		// unique) key?
+				.addDecorationRequest(element);
+	}
+
+	/**
+	 * @param elements
+	 */
+	public static void processDecoration(final Object[] elements) {
+		final GitLightweightDecorator decorator = (GitLightweightDecorator) Activator
+				.getDefault().getWorkbench().getDecoratorManager()
+				.getBaseLabelProvider(DECORATOR_ID);
+		if (decorator != null)
+			decorator.prepareDecoration(elements);
+		// TODO else: can this happen? if yes, write log
+	}
+
+	/**
+	 * @param elements
+	 */
+	public void prepareDecoration(final Object[] elements) {
+		if (elements == null)
+			return;
+
+		final IResource[] resources = new IResource[elements.length];
+		for (int i = 0; i < elements.length; i++) {
+			if (elements[i] != null)
+				resources[i] = getResource(elements[i]);
 		}
+
+		// Calculate resource decorations
+		final IDecoratableResource[] decoratableResources = DecoratableResourceHelper
+				.createDecoratableResources(resources);
+
+		// Store decoration result in session property for each resource
+		final ArrayList<Object> elementList = new ArrayList<Object>();
+		for (int i = 0; i < decoratableResources.length; i++) {
+			try {
+				if (decoratableResources[i] != null) {
+					resources[i].setSessionProperty(DECORATABLE_RESOURCE_KEY,
+							decoratableResources[i]);
+					elementList.add(elements[i]);
+				} else {
+					if (resources[i] != null)
+						handleException(resources[i],
+								new CoreException(new Status(IStatus.ERROR,
+										Activator.getPluginId(),
+										"Resource could not be decorated"))); //$NON-NLS-1$ // TODO externalize string
+				}
+			} catch (CoreException e) {
+				handleException(resources[i], new CoreException(new Status(
+						IStatus.ERROR, Activator.getPluginId(), e.getMessage(),
+						e)));
+				// TODO question: is it redundant to wrap a CoreException into a
+				// CoreException?
+			}
+		}
+
+		// Re-trigger decoration process (in UI thread)
+		final LabelProviderChangedEvent event = new LabelProviderChangedEvent(
+				this, elementList.toArray(new Object[elementList.size()]));
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				fireLabelProviderChanged(event);
+			}
+		});
 	}
 
 	/**
