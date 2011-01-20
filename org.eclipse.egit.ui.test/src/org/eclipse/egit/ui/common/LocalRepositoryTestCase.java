@@ -133,13 +133,18 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		File userHome = FS.DETECTED.userHome();
 		testDirectory = new File(userHome, "LocalRepositoriesTests");
 		if (testDirectory.exists())
-			FileUtils.delete(testDirectory, FileUtils.RECURSIVE | FileUtils.RETRY);
+			FileUtils.delete(testDirectory, FileUtils.RECURSIVE
+					| FileUtils.RETRY);
 		testDirectory.mkdir();
 		// we don't want to clone into <user_home> but into our test directory
 		File repoRoot = new File(testDirectory, "RepositoryRoot");
 		repoRoot.mkdir();
-		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore().setValue(
-				UIPreferences.DEFAULT_REPO_DIR, repoRoot.getPath());
+		// make sure the default directory for Repos is not the user home
+		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.DEFAULT_REPO_DIR, repoRoot.getPath());
+		// suppress the configuration dialog
+		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+				.setValue(UIPreferences.SHOW_INITIAL_CONFIG_DIALOG, false);
 	}
 
 	@AfterClass

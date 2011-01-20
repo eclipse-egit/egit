@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.core.commands.AbstractHandler;
@@ -26,12 +27,15 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
+import org.eclipse.egit.ui.internal.repository.tree.RefNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.team.ui.history.IHistoryPage;
@@ -127,5 +131,35 @@ abstract class AbstractHistoryCommanndHandler extends AbstractHandler {
 			return (IStructuredSelection) pageSelection;
 		} else
 			return new StructuredSelection();
+	}
+
+	/**
+	 * Utility to get a list of Refs from a commit in order to handle ambiguous
+	 * selections when a Ref is preferred over a commit.
+	 *
+	 * @param commit
+	 * @param repo
+	 * @param refPrefix
+	 *            e.g. "refs/heads/" or ""
+	 * @return a list of RefNodes
+	 */
+	protected List<RefNode> getRefNodes(RevCommit commit, Repository repo, String refPrefix) {
+		List<Ref> availableBranches = new ArrayList<Ref>();
+		List<RefNode> nodes = new ArrayList<RefNode>();
+		try {
+			Map<String, Ref> branches = repo.getRefDatabase().getRefs(
+					refPrefix);
+			for (Ref branch : branches.values()) {
+				if (branch.getLeaf().getObjectId().equals(commit.getId()))
+					availableBranches.add(branch);
+			}
+			RepositoryNode repoNode = new RepositoryNode(null, repo);
+			for (Ref ref : availableBranches)
+				nodes.add(new RefNode(repoNode, repo, ref));
+
+		} catch (IOException e) {
+			// ignore here
+		}
+		return nodes;
 	}
 }

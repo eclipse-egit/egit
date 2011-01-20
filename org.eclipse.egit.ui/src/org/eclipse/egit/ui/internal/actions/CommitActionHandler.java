@@ -45,6 +45,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
+import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -90,6 +91,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 			return null;
 		}
 
+		BasicConfigurationDialog.show();
 		resetState();
 		final IProject[] projects = getProjectsInRepositoryOfSelectedResources(event);
 		try {
@@ -311,7 +313,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 			projects.add(project);
 		}
 
-		monitor.beginTask(UIText.CommitActionHandler_caculatingChanges,
+		monitor.beginTask(UIText.CommitActionHandler_calculatingChanges,
 				repositories.size());
 		for (Map.Entry<Repository, HashSet<IProject>> entry : repositories
 				.entrySet()) {
