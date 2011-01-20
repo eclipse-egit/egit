@@ -25,6 +25,8 @@ import org.eclipse.team.ui.mapping.ISynchronizationCompareInput;
  */
 public class GitLocalCompareInput extends GitCompareInput {
 
+	private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace().getRoot();
+
 	/**
 	 * Creates {@link GitLocalCompareInput}
 	 *
@@ -48,10 +50,9 @@ public class GitLocalCompareInput extends GitCompareInput {
 	}
 
 	public ITypedElement getLeft() {
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		String absoluteFilePath = repo.getWorkTree().getAbsolutePath()
 				+ "/" + gitPath; //$NON-NLS-1$
-		IFile file = root.getFileForLocation(new Path(absoluteFilePath));
+		IFile file = ROOT.getFileForLocation(new Path(absoluteFilePath));
 
 		return new LocalResourceTypedElement(file);
 	}
