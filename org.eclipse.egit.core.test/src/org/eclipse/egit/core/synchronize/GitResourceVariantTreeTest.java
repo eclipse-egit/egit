@@ -10,22 +10,14 @@ package org.eclipse.egit.core.synchronize;
 
 import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.eclipse.jgit.lib.Constants.MASTER;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.io.File;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
@@ -36,9 +28,7 @@ import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.team.core.variants.IResourceVariant;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -181,95 +171,4 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 		assertNull(grvt.getResourceVariant(mainJava.getResource()));
 	}
 
-	/**
-	 * Check if getResourceVariant() does return the same resource that was
-	 * committed. Passes only when it is run as a single test, not as a part of
-	 * largest test suite
-	 *
-	 * @throws Exception
-	 */
-	@Test
-	public void shoulReturnSameResourceVariant() throws Exception {
-		// when
-		String fileName = "Main.java";
-		File file = testRepo.createFile(iProject, fileName);
-		testRepo.appendContentAndCommit(iProject, file, "class Main {}",
-				"initial commit");
-		IFile mainJava = testRepo.getIFile(iProject, file);
-		GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, MASTER,
-				false);
-		GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
-
-		// given
-		GitResourceVariantTree grvt = new GitRemoteResourceVariantTree(dataSet);
-
-		// then
-		IResourceVariant actual = grvt.getResourceVariant(mainJava);
-		assertNotNull(actual);
-		assertEquals(fileName, actual.getName());
-
-		InputStream actualIn = actual.getStorage(new NullProgressMonitor())
-				.getContents();
-		byte[] actualByte = getBytesAndCloseStream(actualIn);
-		InputStream expectedIn = mainJava.getContents();
-		byte[] expectedByte = getBytesAndCloseStream(expectedIn);
-		assertArrayEquals(expectedByte, actualByte);
-	}
-
-	/**
-	 * Create and commit Main.java file in master branch, then create branch
-	 * "test" checkout nearly created branch and modify Main.java file.
-	 * getResourceVariant() should obtain Main.java file content from "master"
-	 * branch. Passes only when it is run as a single test, not as a part of
-	 * largest test suite
-	 *
-	 * @throws Exception
-	 */
-	@Test
-	public void shouldReturnDifferentResourceVariant() throws Exception {
-		// when
-		String fileName = "Main.java";
-		File file = testRepo.createFile(iProject, fileName);
-		testRepo.appendContentAndCommit(iProject, file, "class Main {}",
-				"initial commit");
-		IFile mainJava = testRepo.getIFile(iProject, file);
-
-		testRepo.createAndCheckoutBranch(Constants.R_HEADS + Constants.MASTER,
-				Constants.R_HEADS + "test");
-		testRepo.appendContentAndCommit(iProject, file, "// test",
-				"first commit");
-		GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, MASTER,
-				false);
-		GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
-
-		// given
-		GitResourceVariantTree grvt = new GitRemoteResourceVariantTree(dataSet);
-
-		// then
-		IResourceVariant actual = grvt.getResourceVariant(mainJava);
-		assertNotNull(actual);
-		assertEquals(fileName, actual.getName());
-
-		InputStream actualIn = actual.getStorage(new NullProgressMonitor())
-				.getContents();
-		byte[] actualByte = getBytesAndCloseStream(actualIn);
-		InputStream expectedIn = mainJava.getContents();
-		byte[] expectedByte = getBytesAndCloseStream(expectedIn);
-
-		// assert arrays not equals
-		if (Arrays.equals(expectedByte, actualByte))
-			fail();
-		else
-			assertTrue(true);
-	}
-
-	private byte[] getBytesAndCloseStream(InputStream stream) throws Exception {
-		try {
-			byte[] actualByte = new byte[stream.available()];
-			stream.read(actualByte);
-			return actualByte;
-		} finally {
-			stream.close();
-		}
-	}
 }
