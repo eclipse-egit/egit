@@ -15,9 +15,10 @@ package org.eclipse.egit.internal.mylyn.ui.commit;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.ICommitMessageProvider;
-import org.eclipse.mylyn.internal.team.ui.FocusedTeamUiPlugin;
+import org.eclipse.mylyn.context.core.ContextCore;
+import org.eclipse.mylyn.context.core.IInteractionContext;
+import org.eclipse.mylyn.internal.team.ui.ContextChangeSet;
 import org.eclipse.mylyn.tasks.core.ITask;
-import org.eclipse.mylyn.tasks.core.ITaskActivityManager;
 import org.eclipse.mylyn.tasks.ui.TasksUi;
 
 
@@ -32,16 +33,31 @@ public class MylynCommitMessageProvider implements ICommitMessageProvider {
 	 * @return the mylyn commit message template defined in the preferences
 	 */
 	public String getMessage(IResource[] resources) {
-		String message = "";
-		ITaskActivityManager tam = TasksUi.getTaskActivityManager();
-		ITask task = tam.getActiveTask();
-		if(task == null)
+		String message = "";		
+		if (resources == null)
 			return message;
-		// generate the comment based on the active mylyn task
-		String template = FocusedTeamUiPlugin.getDefault().getPreferenceStore().getString(FocusedTeamUiPlugin.COMMIT_TEMPLATE);
-		FocusedTeamUiPlugin.getDefault().getCommitTemplateManager().generateComment(task, template);
-		message = FocusedTeamUiPlugin.getDefault().getCommitTemplateManager().generateComment(task, template);
+		ITask task = getCurrentTask();
+		if (task == null)
+			return message;
+		boolean checkTaskRepository = true;
+		message = ContextChangeSet.getComment(checkTaskRepository, task,
+				resources);		
+		
 		return message;
 	}
 
+	/**
+	* @return the currently activated task or <code>null</code> if no task is
+	*         activated
+	*/
+	protected ITask getCurrentTask() {
+		return TasksUi.getTaskActivityManager().getActiveTask();
+	}
+
+	/**
+	* @return the activecontext or <code>null</code> if no activecontext exists
+	*/
+	protected IInteractionContext getActiveContext() {
+		return ContextCore.getContextManager().getActiveContext();
+	}
 }
