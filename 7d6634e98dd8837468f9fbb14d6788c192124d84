@@ -16,6 +16,23 @@
       "revId": "7d6634e98dd8837468f9fbb14d6788c192124d84",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///nE\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-01-20T07:07:10Z",
+      "side": 1,
+      "message": "Please refer to Change-Id or Commit id. I\u0027m not sure how long 2271\nwill be available as a reference and it certainly is not online.",
+      "revId": "7d6634e98dd8837468f9fbb14d6788c192124d84",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
