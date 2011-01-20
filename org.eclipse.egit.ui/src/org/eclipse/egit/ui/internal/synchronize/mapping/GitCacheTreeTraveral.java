@@ -24,6 +24,8 @@ import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
  */
 class GitCacheTreeTraveral extends ResourceTraversal {
 
+	private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace().getRoot();
+
 	public GitCacheTreeTraveral(GitModelCacheTree cacheTree) {
 		super(getResources(cacheTree),
 				IResource.DEPTH_INFINITE, IResource.NONE);
@@ -31,16 +33,15 @@ class GitCacheTreeTraveral extends ResourceTraversal {
 
 	private static IResource[] getResources(GitModelCacheTree cacheTree) {
 		List<IResource> result = new ArrayList<IResource>();
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 
 		for (GitModelObject object : cacheTree.getChildren()) {
 			IPath location = object.getLocation();
 
 			IResource resource;
 			if (object.isContainer())
-				resource = root.getContainerForLocation(location);
+				resource = ROOT.getContainerForLocation(location);
 			else
-				resource = root.getFileForLocation(location);
+				resource = ROOT.getFileForLocation(location);
 
 			result.add(resource);
 		}

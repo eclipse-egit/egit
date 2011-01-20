@@ -11,9 +11,6 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
-import java.io.IOException;
-
-import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -29,12 +26,7 @@ class GitBaseResourceVariantTree extends GitResourceVariantTree {
 	@Override
 	protected RevCommit getRevCommit(GitSynchronizeData gsd)
 			throws TeamException {
-		try {
-			return RevUtils.getCommonAncestor(gsd.getRepository(), gsd
-					.getSrcRevCommit(), gsd.getDstRevCommit());
-		} catch (IOException e) {
-			throw new TeamException(e.getMessage(), e);
-		}
+		return gsd.getCommonAncestorRev();
 	}
 
 }

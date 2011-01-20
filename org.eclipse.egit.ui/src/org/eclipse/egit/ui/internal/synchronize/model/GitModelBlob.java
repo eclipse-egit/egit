@@ -69,7 +69,8 @@ public class GitModelBlob extends GitModelCommit {
 	public GitModelBlob(GitModelObjectContainer parent, RevCommit commit,
 			ObjectId ancestorId, ObjectId baseId, ObjectId remoteId, String name)
 			throws IOException {
-		// only direction is important for us, therefore we mask rest of bits in kind
+		// only direction is important for us, therefore we mask rest of bits in
+		// kind
 		super(parent, commit, parent.getKind() & (LEFT | RIGHT));
 		this.name = name;
 		this.baseId = baseId;
@@ -162,7 +163,7 @@ public class GitModelBlob extends GitModelCommit {
 			ComparisonDataSource remoteData = new ComparisonDataSource(
 					remoteCommit, remoteId);
 			ComparisonDataSource ancestorData = new ComparisonDataSource(
-					ancestorCommit, ancestorId);
+					getAncestorCommit(), ancestorId);
 			compareInput = getCompareInput(baseData, remoteData, ancestorData);
 		}
 	}
