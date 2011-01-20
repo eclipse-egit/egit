@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///nU\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-19T23:32:16Z",
+      "side": 1,
+      "message": "if you give the changeid instead of #2276, gerrit will render a hyperlink",
+      "revId": "7d6634e98dd8837468f9fbb14d6788c192124d84",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
