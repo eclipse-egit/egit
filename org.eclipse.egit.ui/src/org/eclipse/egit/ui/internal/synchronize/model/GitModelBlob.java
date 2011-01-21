@@ -56,6 +56,7 @@ public class GitModelBlob extends GitModelCommit {
 	 *            parent of this object
 	 * @param commit
 	 *            remote commit
+	 * @param ancestorCommit TODO
 	 * @param ancestorId
 	 *            common ancestor id
 	 * @param baseId
@@ -67,11 +68,11 @@ public class GitModelBlob extends GitModelCommit {
 	 * @throws IOException
 	 */
 	public GitModelBlob(GitModelObjectContainer parent, RevCommit commit,
-			ObjectId ancestorId, ObjectId baseId, ObjectId remoteId, String name)
+			RevCommit ancestorCommit, ObjectId ancestorId, ObjectId baseId, ObjectId remoteId, String name)
 			throws IOException {
 		// only direction is important for us, therefore we mask rest of bits in
 		// kind
-		super(parent, commit, parent.getKind() & (LEFT | RIGHT));
+		super(parent, commit, ancestorCommit, parent.getKind() & (LEFT | RIGHT));
 		this.name = name;
 		this.baseId = baseId;
 		this.remoteId = remoteId;
@@ -163,7 +164,7 @@ public class GitModelBlob extends GitModelCommit {
 			ComparisonDataSource remoteData = new ComparisonDataSource(
 					remoteCommit, remoteId);
 			ComparisonDataSource ancestorData = new ComparisonDataSource(
-					getAncestorCommit(), ancestorId);
+					ancestorCommit, ancestorId);
 			compareInput = getCompareInput(baseData, remoteData, ancestorData);
 		}
 	}

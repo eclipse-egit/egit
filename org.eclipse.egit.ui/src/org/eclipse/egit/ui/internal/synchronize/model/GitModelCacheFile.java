@@ -20,7 +20,7 @@ class GitModelCacheFile extends GitModelBlob {
 
 	public GitModelCacheFile(GitModelObjectContainer parent, RevCommit commit,
 			ObjectId repoId, ObjectId cacheId, String name) throws IOException {
-		super(parent, commit, repoId, repoId, cacheId, name);
+		super(parent, commit, null, repoId, repoId, cacheId, name);
 	}
 
 	@Override

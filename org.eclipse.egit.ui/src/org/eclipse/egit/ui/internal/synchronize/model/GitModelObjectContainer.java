@@ -194,14 +194,15 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 	/**
 	 *
 	 * @param tw instance of {@link TreeWalk} that should be used
+	 * @param ancestorCommit TODO
 	 * @param ancestorNth
 	 * @param baseNth
 	 * @param actualNth
 	 * @return {@link GitModelObject} instance of given parameters
 	 * @throws IOException
 	 */
-	protected GitModelObject getModelObject(TreeWalk tw, int ancestorNth,
-			int baseNth, int actualNth) throws IOException {
+	protected GitModelObject getModelObject(TreeWalk tw, RevCommit ancestorCommit,
+			int ancestorNth, int baseNth, int actualNth) throws IOException {
 		String objName = tw.getNameString();
 
 		ObjectId objBaseId;
@@ -219,11 +220,11 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 		int objectType = tw.getFileMode(actualNth).getObjectType();
 
 		if (objectType == Constants.OBJ_BLOB)
-			return new GitModelBlob(this, getBaseCommit(), objAncestorId,
-					objBaseId, objRemoteId, objName);
+			return new GitModelBlob(this, getBaseCommit(), ancestorCommit,
+					objAncestorId, objBaseId, objRemoteId, objName);
 		else if (objectType == Constants.OBJ_TREE)
-			return new GitModelTree(this, getBaseCommit(), objAncestorId,
-					objBaseId, objRemoteId, objName);
+			return new GitModelTree(this, getBaseCommit(), ancestorCommit,
+					objAncestorId, objBaseId, objRemoteId, objName);
 
 		return null;
 	}
