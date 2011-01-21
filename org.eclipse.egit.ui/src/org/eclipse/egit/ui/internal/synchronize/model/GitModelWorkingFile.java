@@ -20,7 +20,7 @@ class GitModelWorkingFile extends GitModelBlob {
 
 	public GitModelWorkingFile(GitModelObjectContainer parent,
 			RevCommit commit, ObjectId repoId, String name) throws IOException {
-		super(parent, commit, repoId, repoId, null, name);
+		super(parent, commit, null, repoId, repoId, null, name);
 	}
 
 	@Override
