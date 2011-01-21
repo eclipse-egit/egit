@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///ow\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-19T21:57:32Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly braces around single line blocks",
+      "revId": "a6c2dc8c69c5785a723729753a60bdebe0840191",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///o4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-19T21:57:32Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly braces around single line blocks",
+      "revId": "a6c2dc8c69c5785a723729753a60bdebe0840191",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
