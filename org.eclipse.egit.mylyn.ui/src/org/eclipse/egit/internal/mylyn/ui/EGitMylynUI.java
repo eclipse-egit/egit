@@ -18,7 +18,7 @@ import org.osgi.framework.BundleContext;
  */
 public class EGitMylynUI extends AbstractUIPlugin {
 
-	// The plug-in ID
+	/** The Plug-in ID */
 	public static final String PLUGIN_ID = "org.eclipse.egit.mylyn.ui"; //$NON-NLS-1$
 
 	// The shared instance
