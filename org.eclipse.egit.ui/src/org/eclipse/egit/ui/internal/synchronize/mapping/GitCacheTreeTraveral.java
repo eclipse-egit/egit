@@ -43,7 +43,8 @@ class GitCacheTreeTraveral extends ResourceTraversal {
 			else
 				resource = ROOT.getFileForLocation(location);
 
-			result.add(resource);
+			if (resource != null)
+				result.add(resource);
 		}
 
 		return result.toArray(new IResource[result.size()]);
