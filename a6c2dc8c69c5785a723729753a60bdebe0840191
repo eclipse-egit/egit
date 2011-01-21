@@ -33,6 +33,23 @@
       "revId": "a6c2dc8c69c5785a723729753a60bdebe0840191",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///tI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-18T23:47:26Z",
+      "side": 1,
+      "message": "This will break when there is no EGit-Mylyn Bridge installed as this method returns null in that case instead of an empty string.",
+      "revId": "a6c2dc8c69c5785a723729753a60bdebe0840191",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
