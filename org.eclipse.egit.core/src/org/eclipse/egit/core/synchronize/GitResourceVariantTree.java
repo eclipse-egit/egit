@@ -27,17 +27,12 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
-import org.eclipse.jgit.errors.CorruptObjectException;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
-import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.variants.IResourceVariant;
@@ -183,15 +178,11 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 		}
 	}
 
-	private TreeWalk initializeTreeWalk(Repository repo, String path)
-			throws CorruptObjectException {
+	private TreeWalk initializeTreeWalk(Repository repo, String path) {
 		TreeWalk tw = new TreeWalk(repo);
 		tw.reset();
-		int ignoreNth = tw.addTree(new FileTreeIterator(repo));
 
-		TreeFilter pathFilter = PathFilter.create(path);
-		TreeFilter ignoreFilter = new NotIgnoredFilter(ignoreNth);
-		tw.setFilter(AndTreeFilter.create(pathFilter, ignoreFilter));
+		tw.setFilter(PathFilter.create(path));
 
 		return tw;
 	}

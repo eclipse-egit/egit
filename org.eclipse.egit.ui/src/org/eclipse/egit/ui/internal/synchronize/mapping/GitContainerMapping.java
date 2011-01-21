@@ -49,10 +49,7 @@ class GitContainerMapping extends GitObjectMapping {
 			IPath location = child.getLocation();
 
 			if (child.isContainer()) {
-				IContainer container = ROOT.getProject(child.getName());
-				if (container == null)
-					container = ROOT.getFolder(location.makeRelativeTo(ROOT
-							.getLocation()));
+				IContainer container = ROOT.getContainerForLocation(location);
 
 				if (container == null)
 					continue;
