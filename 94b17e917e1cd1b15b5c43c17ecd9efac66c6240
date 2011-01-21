@@ -16,6 +16,23 @@
       "revId": "94b17e917e1cd1b15b5c43c17ecd9efac66c6240",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///ls\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynCommitMessageProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-20T16:05:57Z",
+      "side": 1,
+      "message": "whitespace nit",
+      "revId": "94b17e917e1cd1b15b5c43c17ecd9efac66c6240",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
