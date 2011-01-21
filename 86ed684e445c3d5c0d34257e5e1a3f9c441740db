@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///t8\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2011-01-18T14:45:50Z",
+      "side": 1,
+      "message": "Can you add \"Bug: 123\" here representing the bug?",
+      "revId": "86ed684e445c3d5c0d34257e5e1a3f9c441740db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
