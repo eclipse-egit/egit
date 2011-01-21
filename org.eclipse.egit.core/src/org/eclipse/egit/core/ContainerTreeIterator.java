@@ -16,8 +16,15 @@ import java.io.InputStream;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.egit.core.internal.util.ExceptionCollector;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.Constants;
@@ -48,6 +55,15 @@ import org.eclipse.team.core.Team;
  * @see org.eclipse.jgit.treewalk.TreeWalk
  */
 public class ContainerTreeIterator extends WorkingTreeIterator {
+
+	private static final QualifiedName LENGTH_RESOURCE_KEY = new QualifiedName(
+			Activator.getPluginId(), "fileLength"); //$NON-NLS-1$
+
+	private static ExceptionCollector exceptions = new ExceptionCollector(
+			CoreText.ContainerTreeIterator_exceptionMessage,
+			Activator.getPluginId(), IStatus.WARNING, Activator.getDefault()
+					.getLog());
+
 	private static String computePrefix(final IContainer base) {
 		final RepositoryMapping rm = RepositoryMapping.getMapping(base);
 		if (rm == null)
@@ -74,6 +90,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	 */
 	public ContainerTreeIterator(final Repository repository, final IContainer base) {
 		super(computePrefix(base), repository.getConfig().get(WorkingTreeOptions.KEY));
+		registerRCL();
 		node = base;
 		init(entries());
 	}
@@ -93,6 +110,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	 */
 	public ContainerTreeIterator(final Repository repository, final IWorkspaceRoot root) {
 		super("", repository.getConfig().get(WorkingTreeOptions.KEY));  //$NON-NLS-1$
+		registerRCL();
 		node = root;
 		init(entries());
 	}
@@ -115,6 +133,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	public ContainerTreeIterator(final WorkingTreeIterator p,
 			final IContainer base) {
 		super(p);
+		registerRCL();
 		node = base;
 		init(entries());
 	}
@@ -160,7 +179,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	}
 
 	private boolean isEntryIgnoredByTeamProvider(IResource resource) {
-		if (resource instanceof IWorkspaceRoot)
+		if (resource.getType() == IResource.ROOT)
 			return false;
 		if (Team.isIgnoredHint(resource))
 			return true;
@@ -220,10 +239,38 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		@Override
 		public long getLength() {
 			if (length < 0) {
-				if (rsrc instanceof IFile)
-					length = asFile().length();
-				else
+				if (rsrc.getType() == IResource.FILE) {
+					Object sessionProperty = null;
+					try {
+						sessionProperty = rsrc
+								.getSessionProperty(LENGTH_RESOURCE_KEY);
+					} catch (CoreException e) {
+						// Ignore
+					}
+					if (sessionProperty != null) {
+						try {
+							length = ((Long) sessionProperty).longValue();
+						} catch (ClassCastException cce) {
+							// Remove corrupted property
+							try {
+								rsrc.setSessionProperty(LENGTH_RESOURCE_KEY,
+										null);
+							} catch (CoreException ce) {
+								exceptions.handleException(ce);
+							}
+						}
+					} else {
+						length = asFile().length();
+						try {
+							rsrc.setSessionProperty(LENGTH_RESOURCE_KEY,
+									new Long(length));
+						} catch (CoreException e) {
+							// Ignore
+						}
+					}
+				} else {
 					length = 0;
+				}
 			}
 			return length;
 		}
@@ -235,7 +282,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 
 		@Override
 		public InputStream openInputStream() throws IOException {
-			if (rsrc instanceof IFile) {
+			if (rsrc.getType() == IResource.FILE) {
 				try {
 					return ((IFile) rsrc).getContents(true);
 				} catch (CoreException err) {
@@ -259,5 +306,29 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		private File asFile() {
 			return ((IFile) rsrc).getLocation().toFile();
 		}
+	}
+
+	private static final IResourceChangeListener rcl = new RCL();
+
+	private static class RCL implements IResourceChangeListener {
+
+		// Remove properties if resources change
+		public void resourceChanged(IResourceChangeEvent event) {
+			IResourceDelta[] deltas = event.getDelta().getAffectedChildren();
+			for (IResourceDelta delta : deltas) {
+				try {
+					IResource resource = delta.getResource();
+					if (resource.getType() == IResource.FILE)
+						resource.setSessionProperty(LENGTH_RESOURCE_KEY, null);
+				} catch (CoreException e) {
+					exceptions.handleException(e);
+				}
+			}
+		}
+	}
+
+	private static void registerRCL() {
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(rcl,
+				IResourceChangeEvent.POST_CHANGE);
 	}
 }
