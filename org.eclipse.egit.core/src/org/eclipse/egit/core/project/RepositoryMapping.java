@@ -26,16 +26,22 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.RepositoryProvider;
 
 /**
- * This class keeps track
+ * This class provides means to map resources, projects and repositories
  */
 public class RepositoryMapping {
 	static boolean isInitialKey(final String key) {
 		return key.endsWith(".gitdir");  //$NON-NLS-1$
 	}
 
-	private final String containerPath;
+	private final String containerPathString;
 
-	private final String gitdirPath;
+	private IPath containerPath;
+
+	private final String gitDirPathString;
+
+	private IPath gitDirPath;
+
+	private IPath gitDirAbsolutePath;
 
 	private Repository db;
 
@@ -52,8 +58,8 @@ public class RepositoryMapping {
 	public RepositoryMapping(final Properties p, final String initialKey) {
 		final int dot = initialKey.lastIndexOf('.');
 
-		containerPath = initialKey.substring(0, dot);
-		gitdirPath = p.getProperty(initialKey);
+		containerPathString = initialKey.substring(0, dot);
+		gitDirPathString = p.getProperty(initialKey);
 	}
 
 	/**
@@ -71,16 +77,18 @@ public class RepositoryMapping {
 		final IPath gLocParent = gLoc.removeLastSegments(1);
 
 		container = mappedContainer;
-		containerPath = container.getProjectRelativePath().toPortableString();
+		containerPathString = container.getProjectRelativePath()
+				.toPortableString();
 
 		if (cLoc.isPrefixOf(gLoc)) {
 			int matchingSegments = gLoc.matchingFirstSegments(cLoc);
 			IPath remainder = gLoc.removeFirstSegments(matchingSegments);
 			String device = remainder.getDevice();
 			if (device == null)
-				gitdirPath = remainder.toPortableString();
+				gitDirPathString = remainder.toPortableString();
 			else
-				gitdirPath = remainder.toPortableString().substring(device.length());
+				gitDirPathString = remainder.toPortableString().substring(
+						device.length());
 		} else if (gLocParent.isPrefixOf(cLoc)) {
 			int cnt = cLoc.segmentCount() - cLoc.matchingFirstSegments(gLocParent);
 			StringBuilder p = new StringBuilder("");  //$NON-NLS-1$
@@ -88,9 +96,9 @@ public class RepositoryMapping {
 				p.append("../");  //$NON-NLS-1$
 			}
 			p.append(gLoc.segment(gLoc.segmentCount() - 1));
-			gitdirPath = p.toString();
+			gitDirPathString = p.toString();
 		} else {
-			gitdirPath = gLoc.toPortableString();
+			gitDirPathString = gLoc.toPortableString();
 		}
 	}
 
@@ -98,11 +106,15 @@ public class RepositoryMapping {
 	 * @return the container path corresponding to git repository
 	 */
 	public IPath getContainerPath() {
-		return Path.fromPortableString(containerPath);
+		if (containerPath == null)
+			containerPath = Path.fromPortableString(containerPathString);
+		return containerPath;
 	}
 
 	IPath getGitDirPath() {
-		return Path.fromPortableString(gitdirPath);
+		if (gitDirPath == null)
+			gitDirPath = Path.fromPortableString(gitDirPathString);
+		return gitDirPath;
 	}
 
 	/**
@@ -159,13 +171,13 @@ public class RepositoryMapping {
 	}
 
 	synchronized void store(final Properties p) {
-		p.setProperty(containerPath + ".gitdir", gitdirPath);  //$NON-NLS-1$
+		p.setProperty(containerPathString + ".gitdir", gitDirPathString); //$NON-NLS-1$
 	}
 
 	public String toString() {
 		return "RepositoryMapping[" //$NON-NLS-1$
-				+ containerPath + " -> " //$NON-NLS-1$
-				+ gitdirPath + "]"; //$NON-NLS-1$
+				+ containerPathString + " -> " //$NON-NLS-1$
+				+ gitDirPathString + "]"; //$NON-NLS-1$
 	}
 
 	/**
@@ -218,13 +230,16 @@ public class RepositoryMapping {
 	 * @return the name of the .git directory
 	 */
 	public String getGitDir() {
-		return gitdirPath;
+		return gitDirPathString;
 	}
 
 	/**
 	 * @return The GIT DIR absolute path
 	 */
 	public IPath getGitDirAbsolutePath() {
-		return container.getLocation().append(getGitDirPath());
+		if (gitDirAbsolutePath == null)
+			gitDirAbsolutePath = container.getLocation()
+					.append(getGitDirPath());
+		return gitDirAbsolutePath;
 	}
 }
