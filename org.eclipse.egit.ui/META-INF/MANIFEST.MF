@@ -74,4 +74,5 @@ Export-Package: org.eclipse.egit.ui;version="0.11.0",
  org.eclipse.egit.ui.internal.repository.tree.command;version="0.11.0";x-internal:=true,
  org.eclipse.egit.ui.internal.sharing;version="0.11.0";x-internal:=true,
  org.eclipse.egit.ui.internal.synchronize;version="0.11.0";x-internal:=true,
+ org.eclipse.egit.ui.internal.synchronize.model;version="0.11.0";x-friends:="org.eclipse.egit.mylyn.ui",
  org.eclipse.egit.ui.internal.trace;version="0.11.0";x-internal:=true
