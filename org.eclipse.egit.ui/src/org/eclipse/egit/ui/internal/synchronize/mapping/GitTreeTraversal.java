@@ -103,13 +103,11 @@ class GitTreeTraversal extends ResourceTraversal {
 
 				IResource resource = null;
 				if (objectType == Constants.OBJ_BLOB)
-					resource = ROOT.getFileForLocation(childPath);
+					resource = ROOT.getFile(childPath.makeRelativeTo(ROOT.getLocation()));
 				else if (objectType == Constants.OBJ_TREE) {
 					resource = ROOT.getProject(name);
 					if (resource == null)
 						resource = ROOT.getFolder(childPath.makeRelativeTo(ROOT.getLocation()));
-
-					resource = ROOT.getContainerForLocation(childPath);
 				}
 
 				if (resource != null)

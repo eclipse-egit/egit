@@ -123,10 +123,12 @@ abstract class GitResourceVariant implements IResourceVariant {
 			IPath location = new Path(repo.getWorkTree() + File.separator
 					+ path);
 
-			if (isContainer())
-				resource = workspaceRoot.getContainerForLocation(location);
-			else
-				resource = workspaceRoot.getFileForLocation(location);
+			if (isContainer()) {
+				resource = workspaceRoot.getProject(location.lastSegment());
+				if (resource == null)
+					resource = workspaceRoot.getFolder(location);
+			} else
+				resource = workspaceRoot.getFile(location.makeRelativeTo(workspaceRoot.getLocation()));
 
 			if (resource != null)
 				fullPath = resource.getFullPath();
