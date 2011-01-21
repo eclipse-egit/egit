@@ -23,6 +23,8 @@ public class GitModelRoot {
 
 	private final GitSynchronizeDataSet gsds;
 
+	private GitModelObject[] children;
+
 	/**
 	 * @param gsds
 	 */
@@ -41,6 +43,13 @@ public class GitModelRoot {
 	 * @return children
 	 */
 	public GitModelObject[] getChildren() {
+		if (children == null)
+			children = getChildrenImpl();
+
+		return children;
+	}
+
+	private GitModelObject[] getChildrenImpl() {
 		List<GitModelObject> restult = new ArrayList<GitModelObject>();
 		try {
 			if (gsds.size() == 1) {
