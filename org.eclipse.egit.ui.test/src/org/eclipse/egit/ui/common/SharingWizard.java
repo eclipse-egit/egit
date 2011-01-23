@@ -14,17 +14,15 @@ package org.eclipse.egit.ui.common;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
 public class SharingWizard {
 
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
-	public ExistingOrNewPage openWizard(String projectName) {
+	public ExistingOrNewPage openWizard(String ... projectNames) {
 		SWTBotTree tree = bot.viewByTitle("Package Explorer").bot().tree();
 
-		final SWTBotTreeItem item = tree.getTreeItem(projectName);
-		item.select();
+		tree.select(projectNames);
 		ContextMenuHelper.clickContextMenu(tree, "Team", "Share Project...");
 
 		bot.table().getTableItem("Git").select();
