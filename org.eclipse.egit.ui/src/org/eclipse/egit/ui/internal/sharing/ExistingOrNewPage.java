@@ -35,8 +35,13 @@ import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTree;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -259,6 +264,32 @@ class ExistingOrNewPage extends WizardPage {
 				treeItem2.setText(0, path.toString());
 			}
 			treeItem2.setText(2, relativePath.toString());
+			try {
+				IProject project = m.getContainer().getProject();
+				FileRepository repo = new FileRepository(m.getGitDirAbsolutePath().toFile());
+				File workTree = repo.getWorkTree();
+				IPath workTreePath = Path.fromOSString(workTree.getAbsolutePath());
+				if (workTreePath.isPrefixOf(project.getLocation())) {
+					IPath makeRelativeTo = project.getLocation().makeRelativeTo(workTreePath);
+					String repoRelativePath = makeRelativeTo.append("/.project").toPortableString(); //$NON-NLS-1$
+					ObjectId headComitId = repo.resolve(Constants.HEAD);
+					if (headComitId != null) {
+						// Not an empty repo
+						RevWalk revWalk = new RevWalk(repo);
+						RevCommit headCommit = revWalk.parseCommit(headComitId);
+						RevTree headTree = headCommit.getTree();
+						TreeWalk projectInRepo = TreeWalk.forPath(repo, repoRelativePath, headTree);
+						if (projectInRepo != null) {
+							// the .project file is tracked by this repo
+							treeItem2.setChecked(true);
+						}
+						revWalk.dispose();
+					}
+				}
+				repo.close();
+			} catch (IOException e1) {
+				Activator.logError("Failed to detect which repository to use", e1); //$NON-NLS-1$
+			}
 		}
 	}
 
