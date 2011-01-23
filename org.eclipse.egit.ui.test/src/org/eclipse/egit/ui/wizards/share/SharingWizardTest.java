@@ -46,6 +46,7 @@ public class SharingWizardTest {
 	private static final String projectName0 = "TestProject";
 	private static final String projectName1 = "TestProject1";
 	private static final String projectName2 = "TestProject2";
+	private static final String projectName3 = "TestProject3";
 
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
@@ -85,6 +86,7 @@ public class SharingWizardTest {
 		erase(projectName0);
 		erase(projectName1);
 		erase(projectName2);
+		erase(projectName3);
 		ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
 				IResource.DEPTH_INFINITE, null);
 		new Eclipse().reset();
@@ -158,14 +160,20 @@ public class SharingWizardTest {
 				createProject(projectName2), ".git"));
 		repo2.create();
 		repo2.close();
+		FileRepository repo3 = new FileRepository(new File(
+				createProject(projectName3), ".git"));
+		repo3.create();
+		repo3.close();
 		ExistingOrNewPage existingOrNewPage = sharingWizard.openWizard(
-				projectName1, projectName2);
+				projectName1, projectName2, projectName3);
 
 		// initial state
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		String projectPath1 = workspace.getRoot().getProject(projectName1)
 				.getLocation().toOSString();
 		String projectPath2 = workspace.getRoot().getProject(projectName2)
+				.getLocation().toOSString();
+		String projectPath3 = workspace.getRoot().getProject(projectName3)
 				.getLocation().toOSString();
 		existingOrNewPage.assertContents(
 				new Row[] {
@@ -174,7 +182,13 @@ public class SharingWizardTest {
 						new Row(false, projectName2, projectPath2, "", new Row[] {
 								new Row(false, ".", "", ".git"),
 								new Row(false, "..", "", ".." + File.separator
-										+ ".git"), }) }, "");
+										+ ".git")}),
+						new Row(false, projectName3, projectPath3, "", new Row[] {
+								new Row(false, ".", "", ".git"),
+								new Row(false, "..", "", ".." + File.separator
+										+ ".git")
+						})}, "");
+						
 		bot.tree().getAllItems()[1].getItems()[0].check();
 		existingOrNewPage.assertEnabling(false, false, true);
 		bot.button("Finish").click();
