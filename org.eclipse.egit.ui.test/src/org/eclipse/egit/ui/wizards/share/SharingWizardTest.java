@@ -28,6 +28,13 @@ import org.eclipse.egit.ui.common.ExistingOrNewPage;
 import org.eclipse.egit.ui.common.ExistingOrNewPage.Row;
 import org.eclipse.egit.ui.common.SharingWizard;
 import org.eclipse.egit.ui.test.Eclipse;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
+import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.api.errors.NoFilepatternException;
+import org.eclipse.jgit.api.errors.NoHeadException;
+import org.eclipse.jgit.api.errors.NoMessageException;
+import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.storage.file.FileRepository;
@@ -46,6 +53,7 @@ public class SharingWizardTest {
 	private static final String projectName0 = "TestProject";
 	private static final String projectName1 = "TestProject1";
 	private static final String projectName2 = "TestProject2";
+	private static final String projectName3 = "TestProject3";
 
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
@@ -85,6 +93,7 @@ public class SharingWizardTest {
 		erase(projectName0);
 		erase(projectName1);
 		erase(projectName2);
+		erase(projectName3);
 		ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
 				IResource.DEPTH_INFINITE, null);
 		new Eclipse().reset();
@@ -149,7 +158,9 @@ public class SharingWizardTest {
 
 	@Test
 	public void shareProjectWithAlreadyCreatedRepos() throws IOException,
-			InterruptedException {
+			InterruptedException, NoFilepatternException, NoHeadException,
+			NoMessageException, ConcurrentRefUpdateException,
+			JGitInternalException, WrongRepositoryStateException {
 		FileRepository repo1 = new FileRepository(new File(
 				createProject(projectName1), "../.git"));
 		repo1.create();
@@ -158,14 +169,24 @@ public class SharingWizardTest {
 				createProject(projectName2), ".git"));
 		repo2.create();
 		repo2.close();
+		FileRepository repo3 = new FileRepository(new File(
+				createProject(projectName3), ".git"));
+		repo3.create();
+		Git git = new Git(repo3);
+		git.add().addFilepattern(".").call();
+		git.commit().setAuthor("A U Thior", "au.thor@example.com").setMessage("Created Project 3").call();
+		repo3.close();
+
 		ExistingOrNewPage existingOrNewPage = sharingWizard.openWizard(
-				projectName1, projectName2);
+				projectName1, projectName2, projectName3);
 
 		// initial state
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		String projectPath1 = workspace.getRoot().getProject(projectName1)
 				.getLocation().toOSString();
 		String projectPath2 = workspace.getRoot().getProject(projectName2)
+				.getLocation().toOSString();
+		String projectPath3 = workspace.getRoot().getProject(projectName3)
 				.getLocation().toOSString();
 		existingOrNewPage.assertContents(
 				new Row[] {
@@ -174,7 +195,13 @@ public class SharingWizardTest {
 						new Row(false, projectName2, projectPath2, "", new Row[] {
 								new Row(false, ".", "", ".git"),
 								new Row(false, "..", "", ".." + File.separator
-										+ ".git"), }) }, "");
+										+ ".git")}),
+						new Row(false, projectName3, projectPath3, "", new Row[] {
+								new Row(true, ".", "", ".git"),
+								new Row(false, "..", "", ".." + File.separator
+										+ ".git")
+						})}, "");
+						
 		bot.tree().getAllItems()[1].getItems()[0].check();
 		existingOrNewPage.assertEnabling(false, false, true);
 		bot.button("Finish").click();
