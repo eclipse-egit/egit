@@ -41,19 +41,6 @@
                menubarPath="team.main/group11">
          </action>
          <action
-               class="org.eclipse.egit.ui.internal.actions.FetchAction"
-               definitionId="org.eclipse.egit.ui.team.Fetch"
-               icon="$nl$/icons/obj16/fetch.gif"
-               id="org.eclipse.egit.ui.internal.actions.FetchAction"
-               label="%FetchAction_label"
-               menubarPath="team.main/group2"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.PushAction"
-               icon="$nl$/icons/obj16/push.gif"
-               id="org.eclipse.egit.ui.internal.actions.PushAction"
-               label="%PushAction_label"
-               menubarPath="team.main/group1"/>
-         <action
                class="org.eclipse.egit.ui.internal.actions.ResetAction"
                icon="$nl$/icons/obj16/reset.gif"
                id="org.eclipse.egit.ui.internal.actions.ResetAction"
@@ -92,6 +79,22 @@
                id="org.eclipse.egit.ui.team.PullCurrentBranchAction"
                label="%PullIntoCurrentBranchMenuLabel"
                menubarPath="team.main/group2">
+         </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.SimplePushAction"
+               definitionId="org.eclipse.egit.ui.team.SimplePush"
+               icon="icons/obj16/push.gif"
+               id="org.eclipse.egit.ui.team.SimplePush"
+               label="Push to Upstream"
+               menubarPath="team.main/group1">
+         </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.SimpleFetchAction"
+               definitionId="org.eclipse.egit.ui.team.SimpleFetch"
+               icon="icons/obj16/fetch.gif"
+               id="org.eclipse.egit.ui.team.SimpleFetch"
+               label="Fetch from Upstream"
+               menubarPath="team.main/group1">
          </action>
      </objectContribution>
      <objectContribution
@@ -1248,6 +1251,48 @@
                name="##Repo-1">
          </separator>
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewPushConfigured"
+               icon="icons/obj16/push.gif"
+               label="Push to Upstream"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewFetchConfigured"
+               icon="icons/obj16/fetch.gif"
+               label="Fetch from Upstream"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesViewPush"
                icon="icons/obj16/push.gif"
                label="%RepoViewPush.label"
@@ -2187,6 +2232,22 @@
             commandId="org.eclipse.egit.ui.history.RebaseCurrent"
             icon="icons/obj16/rebase.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.Fetch"
+            icon="icons/obj16/fetch.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.ConfigureUpstreamFetch"
+            icon="icons/obj16/fetch.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.ConfigureUpstreamPush"
+            icon="icons/obj16/push.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.Push"
+            icon="icons/obj16/push.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -2394,6 +2455,28 @@
             id="org.eclipse.egit.ui.team.MergeTool"
             name="Merge Tool">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.SimplePushActionHandler"
+            id="org.eclipse.egit.ui.team.SimplePush"
+            name="PushUpstream">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.SimpleFetchActionHandler"
+            id="org.eclipse.egit.ui.team.SimpleFetch"
+            name="FetchUpstream">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.actions.ConfigureFetchActionHandler"
+            id="org.eclipse.egit.ui.ConfigureUpstreamFetch"
+            name="Configure Upstream Fetch">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.actions.ConfigurePushActionHandler"
+            id="org.eclipse.egit.ui.ConfigureUpstreamPush"
+            name="Configure Upstream Push">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
@@ -2553,5 +2636,126 @@
             </iterate>
          </activeWhen>
       </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               id="team.main"
+               label="Te&amp;am">
+            <separator
+                  name="group1"
+                  visible="true">
+            </separator>
+            <separator
+                  name="org.eclipse.egit.ui.remoteSeparator"
+                  visible="true">
+            </separator>
+            <menu
+                  label="Remote">
+               <command
+                     commandId="org.eclipse.egit.ui.team.Fetch"
+                     label="%FetchAction_label"
+                     style="push">
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.team.Push"
+                     label="Push To..."
+                     style="push">
+               </command>
+               <separator
+                     name="org.eclipse.egit.ui.remote.group1"
+                     visible="true">
+               </separator>
+               <command
+                     commandId="org.eclipse.egit.ui.ConfigureUpstreamFetch"
+                     label="Configure Fetch from Upstream..."
+                     style="push">
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.ConfigureUpstreamPush"
+                     label="Configure Push to Upstream..."
+                     style="push">
+               </command>
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <adapt
+                              type="org.eclipse.core.resources.IProject">
+                        </adapt>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+            </menu>
+            <separator
+                  name="applyPatchGroup"
+                  visible="false">
+            </separator>
+            <separator
+                  name="group2"
+                  visible="true">
+            </separator>
+            <separator
+                  name="group3"
+                  visible="true">
+            </separator>
+            <separator
+                  name="group4"
+                  visible="true">
+            </separator>
+            <separator
+                  name="group5"
+                  visible="true">
+            </separator>
+            <separator
+                  name="group6"
+                  visible="true">
+            </separator>
+            <separator
+                  name="group7"
+                  visible="true">
+            </separator>
+            <separator
+                  name="group8"
+                  visible="true">
+            </separator>
+            <separator
+                  name="group9"
+                  visible="true">
+            </separator>
+            <separator
+                  name="group10"
+                  visible="true">
+            </separator>
+            <separator
+                  name="targetGroup"
+                  visible="true">
+            </separator>
+            <separator
+                  name="projectGroup"
+                  visible="true">
+            </separator>
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <count
+                        value="+">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt type="org.eclipse.core.resources.IResource">
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </menu>
+      </menuContribution>
    </extension>
 </plugin>
