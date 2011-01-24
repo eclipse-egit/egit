@@ -35,6 +35,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
@@ -74,25 +75,35 @@ public class RemoveCommand extends
 			Activator.handleError(e.getMessage(), e, true);
 			return;
 		}
-
+		boolean deleteWorkingDir = false;
 		if (delete) {
-			String title = UIText.RemoveCommand_DeleteConfirmTitle;
 			if (selectedNodes.size() > 1) {
-				String message = NLS.bind(
-						UIText.RemoveCommand_DeleteConfirmSingleMessage,
-						Integer.valueOf(selectedNodes.size()));
-				if (!MessageDialog.openConfirm(getShell(event), title, message))
-					return;
+				return;
 			} else if (selectedNodes.size() == 1) {
-				String name = org.eclipse.egit.core.Activator.getDefault()
-						.getRepositoryUtil()
-						.getRepositoryName(selectedNodes.get(0).getObject());
-				String message = NLS.bind(
-						UIText.RemoveCommand_DeleteConfirmMultiMessage, name);
-				if (!MessageDialog.openConfirm(getShell(event), title, message))
-					return;
+				Repository repository = selectedNodes.get(0).getObject();
+				if (repository.isBare()) {
+					// simple confirm dialog
+					String title = UIText.RemoveCommand_ConfirmDeleteBareRepositoryTitle;
+					String message = NLS
+							.bind(
+									UIText.RemoveCommand_ConfirmDeleteBareRepositoryMessage,
+									repository.getDirectory().getPath());
+					if (!MessageDialog.openConfirm(getShell(event), title,
+							message))
+						return;
+				} else {
+					// confirm dialog with check box
+					// "delete also working directory"
+					DeleteRepositoryConfirmDialog dlg = new DeleteRepositoryConfirmDialog(
+							getShell(event), repository);
+					if (dlg.open() != Window.OK)
+						return;
+					deleteWorkingDir = dlg.shouldDeleteWorkingDir();
+				}
 			}
 		}
+
+		final boolean deleteWorkDir = deleteWorkingDir;
 
 		Job job = new Job("Remove Repositories Job") { //$NON-NLS-1$
 
@@ -166,7 +177,7 @@ public class RemoveCommand extends
 					try {
 						for (RepositoryNode node : selectedNodes) {
 							Repository repo = node.getRepository();
-							if (!repo.isBare())
+							if (!repo.isBare() && deleteWorkDir)
 								FileUtils.delete(repo.getWorkTree(),
 										FileUtils.RECURSIVE | FileUtils.RETRY);
 							FileUtils.delete(repo.getDirectory(),

@@ -1603,7 +1603,7 @@
                   checkEnabled="false">
                <and>
                   <count
-                        value="+">
+                        value="1">
                   </count>
                   <iterate>
                      <instanceof
