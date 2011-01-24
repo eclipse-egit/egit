@@ -27,15 +27,13 @@ import org.eclipse.jgit.treewalk.TreeWalk;
  */
 public class GitModelTree extends GitModelCommit {
 
-	private final String name;
-
 	private final ObjectId baseId;
 
 	private final ObjectId remoteId;
 
 	private final ObjectId ancestorId;
 
-	private IPath location;
+	private final IPath location;
 
 	/**
 	 * @param parent
@@ -50,24 +48,24 @@ public class GitModelTree extends GitModelCommit {
 	 *            id of base tree
 	 * @param remoteId
 	 *            this tree id
-	 * @param name
-	 *            name resource associated with this tree
+	 * @param location
+	 *            location of tree
 	 * @throws IOException
 	 */
 	public GitModelTree(GitModelObjectContainer parent, RevCommit commit,
 			RevCommit ancestorCommit, ObjectId ancestorId, ObjectId baseId,
-			ObjectId remoteId, String name) throws IOException {
+			ObjectId remoteId, IPath location) throws IOException {
 		// only direction is important for us, therefore we mask rest of bits in kind
 		super(parent, commit, ancestorCommit, parent.getKind() & (LEFT | RIGHT));
-		this.name = name;
 		this.baseId = baseId;
 		this.remoteId = remoteId;
 		this.ancestorId = ancestorId;
+		this.location = location;
 	}
 
 	@Override
 	public String getName() {
-		return name;
+		return location.lastSegment();
 	}
 
 	/**
@@ -91,9 +89,6 @@ public class GitModelTree extends GitModelCommit {
 
 	@Override
 	public IPath getLocation() {
-		if (location == null)
-			location = getParent().getLocation().append(name);
-
 		return location;
 	}
 

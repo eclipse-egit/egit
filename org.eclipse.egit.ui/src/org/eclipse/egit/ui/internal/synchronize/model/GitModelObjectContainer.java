@@ -24,6 +24,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -128,9 +129,7 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 	}
 
 	@Override
-	public IPath getLocation() {
-		return getParent().getLocation();
-	}
+	public abstract IPath getLocation();
 
 	public ITypedElement getAncestor() {
 		return null;
@@ -203,7 +202,7 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 	 */
 	protected GitModelObject getModelObject(TreeWalk tw, RevCommit ancestorCommit,
 			int ancestorNth, int baseNth, int actualNth) throws IOException {
-		String objName = tw.getNameString();
+		IPath path = new Path(getLocation() + "/" +tw.getPathString()); //$NON-NLS-1$
 
 		ObjectId objBaseId;
 		if (baseNth > -1)
@@ -221,10 +220,10 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 
 		if (objectType == Constants.OBJ_BLOB)
 			return new GitModelBlob(this, getBaseCommit(), ancestorCommit,
-					objAncestorId, objBaseId, objRemoteId, objName);
+					objAncestorId, objBaseId, objRemoteId, path);
 		else if (objectType == Constants.OBJ_TREE)
 			return new GitModelTree(this, getBaseCommit(), ancestorCommit,
-					objAncestorId, objBaseId, objRemoteId, objName);
+					objAncestorId, objBaseId, objRemoteId, path);
 
 		return null;
 	}
