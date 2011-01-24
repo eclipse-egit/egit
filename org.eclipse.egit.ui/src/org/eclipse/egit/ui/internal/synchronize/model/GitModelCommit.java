@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.compare.structuremergeviewer.Differencer;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -64,6 +66,11 @@ public class GitModelCommit extends GitModelObjectContainer implements
 	protected GitModelCommit(GitModelObject parent, RevCommit commit,
 			int direction) throws IOException {
 		super(parent, commit, direction);
+	}
+
+	@Override
+	public IPath getLocation() {
+		return new Path(getRepository().getWorkTree().toString());
 	}
 
 	@Override
