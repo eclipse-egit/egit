@@ -60,6 +60,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 	 */
 	public GitCreateProjectViaWizardWizard(Repository repository, String path) {
 		super();
+		setNeedsProgressMonitor(true);
 		previousProjects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
 		myRepository = repository;
@@ -85,7 +86,8 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 
 			@Override
 			public void setVisible(boolean visible) {
-				setProjectsList(mySelectionPage.getPath());
+				if (visible)
+					setProjectsList(mySelectionPage.getPath());
 				super.setVisible(visible);
 			}
 		};
