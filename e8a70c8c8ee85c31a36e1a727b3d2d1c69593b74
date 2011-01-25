@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///ps\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-19T21:51:57Z",
+      "side": 1,
+      "message": "import version range [0.11,0.12) instead",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///po\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-19T21:51:57Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///pk\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-19T21:51:57Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace (more occurrences below)",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///pg\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-19T21:51:57Z",
+      "side": 1,
+      "message": "missing javadoc for public class",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///pU\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-19T21:51:57Z",
+      "side": 1,
+      "message": "nit: we don\u0027t use curly braces around single line blocks",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
