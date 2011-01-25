@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n///pc\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-19T21:48:49Z",
+      "side": 1,
+      "message": "White space issue.",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n///pg\u003d",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
         "patchSetId": 1
@@ -81,6 +98,57 @@
       "writtenOn": "2011-01-19T21:51:57Z",
       "side": 1,
       "message": "nit: we don\u0027t use curly braces around single line blocks",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///pY\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-19T21:48:49Z",
+      "side": 1,
+      "message": "White space issue.",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///pQ\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-19T21:48:49Z",
+      "side": 1,
+      "message": "White space issue.",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///pM\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-19T21:48:49Z",
+      "side": 1,
+      "message": "White space issue.",
       "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
