@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///WU\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-25T15:52:30Z",
+      "side": 1,
+      "message": "something went wrong with this id",
+      "revId": "46bdf498055ad816ddebf97ab00b91f487500f0d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
