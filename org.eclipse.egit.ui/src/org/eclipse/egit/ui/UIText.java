@@ -1487,6 +1487,18 @@ public class UIText extends NLS {
 	public static String CommitDialog_ConfigureLink;
 
 	/** */
+	public static String ConfigurationChecker_checkHomeDirectory;
+
+	/** */
+	public static String ConfigurationChecker_checkConfiguration;
+
+	/** */
+	public static String ConfigurationChecker_doNotShowAgain;
+
+	/** */
+	public static String ConfigurationChecker_homeNotSet;
+
+	/** */
 	public static String ConfigurationEditorComponent_AddButton;
 
 	/** */
