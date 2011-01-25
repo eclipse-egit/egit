@@ -117,8 +117,7 @@ class CommitGraphTable {
 
 	MenuListener menuListener;
 
-	CommitGraphTable(final Composite parent, final IPageSite site,
-			final MenuManager menuMgr) {
+	CommitGraphTable(Composite parent){
 		nFont = UIUtils.getFont(UIPreferences.THEME_CommitGraphNormalFont);
 		hFont = highlightFont();
 
@@ -154,7 +153,6 @@ class CommitGraphTable {
 			}
 		});
 
-		final IAction selectAll = createStandardAction(ActionFactory.SELECT_ALL);
 		copy = createStandardAction(ActionFactory.COPY);
 
 		table.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -162,7 +160,12 @@ class CommitGraphTable {
 				copy.setEnabled(canDoCopy());
 			}
 		});
+	}
 
+	CommitGraphTable(final Composite parent, final IPageSite site,
+			final MenuManager menuMgr) {
+         this(parent);
+ 		final IAction selectAll = createStandardAction(ActionFactory.SELECT_ALL);
 		getControl().addFocusListener(new FocusListener() {
 			public void focusLost(FocusEvent e) {
 				site.getActionBars().setGlobalActionHandler(
@@ -269,7 +272,8 @@ class CommitGraphTable {
 	void setInput(final RevFlag hFlag, final SWTCommitList list,
 			final SWTCommit[] asArray, HistoryPageInput input) {
 		this.input = input;
-		menuListener.setInput(input);
+		if (menuListener != null)
+			menuListener.setInput(input);
 		final SWTCommitList oldList = allCommits;
 		highlight = hFlag;
 		allCommits = list;
