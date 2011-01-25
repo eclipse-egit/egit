@@ -692,6 +692,9 @@ public class UIText extends NLS {
 	public static String CompareTreeView_EqualFilesTooltip;
 
 	/** */
+	public static String CompareTreeView_IndexVersionText;
+
+	/** */
 	public static String CompareTreeView_ItemNotFoundInVersionMessage;
 
 	/** */
