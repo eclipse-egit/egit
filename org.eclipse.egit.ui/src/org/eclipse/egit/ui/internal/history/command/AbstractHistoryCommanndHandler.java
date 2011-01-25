@@ -20,6 +20,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -77,7 +78,25 @@ abstract class AbstractHistoryCommanndHandler extends AbstractHandler {
 			return ((HistoryPageInput) input).getRepository();
 		if (input instanceof RepositoryTreeNode)
 			return ((RepositoryTreeNode) input).getRepository();
-		return RepositoryMapping.getMapping((IResource) input).getRepository();
+		if (input instanceof IResource) {
+			RepositoryMapping mapping = RepositoryMapping
+					.getMapping((IResource) input);
+			if (mapping != null)
+				return mapping.getRepository();
+		}
+		if (input instanceof IAdaptable) {
+			IResource resource = (IResource) ((IAdaptable) input)
+					.getAdapter(IResource.class);
+			if (resource != null) {
+				RepositoryMapping mapping = RepositoryMapping
+						.getMapping(resource);
+				if (mapping != null)
+					return mapping.getRepository();
+			}
+
+		}
+		throw new ExecutionException(
+				UIText.AbstractHistoryCommanndHandler_CouldNotGetRepositoryMessage);
 	}
 
 	protected String getRepoRelativePath(Repository repo, File file) {

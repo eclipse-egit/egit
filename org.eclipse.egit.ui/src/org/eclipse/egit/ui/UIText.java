@@ -29,6 +29,9 @@ public class UIText extends NLS {
 	public static String AbortRebaseCommand_JobName;
 
 	/** */
+	public static String AbstractHistoryCommanndHandler_CouldNotGetRepositoryMessage;
+
+	/** */
 	public static String AbstractHistoryCommanndHandler_NoInputMessage;
 
 	/** */
