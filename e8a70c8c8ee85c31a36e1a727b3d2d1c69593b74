@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n///os\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-19T21:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///ps\u003d",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n///po\u003d",
         "filename": "org.eclipse.egit.mylyn.ui/plugin.xml",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2011-01-19T21:51:57Z",
       "side": 1,
       "message": "style nit: trailing whitespace",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///oo\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-19T21:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///po\u003d",
       "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n///ok\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-19T21:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///pk\u003d",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n///pc\u003d",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2011-01-19T21:48:49Z",
       "side": 1,
       "message": "White space issue.",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///og\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-19T21:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///pc\u003d",
       "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n///oc\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-19T21:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///pg\u003d",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n///pU\u003d",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2011-01-19T21:51:57Z",
       "side": 1,
       "message": "nit: we don\u0027t use curly braces around single line blocks",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///oY\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-19T21:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///pU\u003d",
       "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n///oU\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-19T21:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///pY\u003d",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n///pQ\u003d",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
         "patchSetId": 1
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n///oQ\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-19T21:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///pQ\u003d",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n///pM\u003d",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
         "patchSetId": 1
@@ -149,6 +293,24 @@
       "writtenOn": "2011-01-19T21:48:49Z",
       "side": 1,
       "message": "White space issue.",
+      "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///oM\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-01-19T21:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n///pM\u003d",
       "revId": "e8a70c8c8ee85c31a36e1a727b3d2d1c69593b74",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
