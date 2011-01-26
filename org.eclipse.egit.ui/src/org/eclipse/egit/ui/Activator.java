@@ -204,6 +204,8 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	static boolean isActive() {
 		final AtomicBoolean ret = new AtomicBoolean();
 		final Display display = PlatformUI.getWorkbench().getDisplay();
+		if (display.isDisposed())
+			return false;
 		display.syncExec(new Runnable() {
 			public void run() {
 				ret.set(display.getActiveShell() != null);
