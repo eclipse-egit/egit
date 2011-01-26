@@ -231,10 +231,10 @@ public class PushOperationTest extends DualRepositoryTestCase {
 		spec.addURIRefUpdates(remote, refUpdates);
 
 		PushOperation pop = new PushOperation(repository1.getRepository(),
-				spec, false, null, 0);
+				spec, false, 0);
 		pop.run(null);
 
-		pop = new PushOperation(repository1.getRepository(), spec, false, null, 0);
+		pop = new PushOperation(repository1.getRepository(), spec, false, 0);
 		try {
 			pop.run(null);
 			fail("Expected Exception not thrown");
@@ -264,7 +264,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 		spec.addURIRefUpdates(remote, refUpdates);
 		// now we can construct the push operation
 		PushOperation pop = new PushOperation(repository1.getRepository(),
-				spec, false, null, 0);
+				spec, false, 0);
 		return pop;
 	}
 

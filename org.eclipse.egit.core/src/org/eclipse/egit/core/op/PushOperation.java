@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
+ * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,21 +10,23 @@
 package org.eclipse.egit.core.op;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
-import org.eclipse.jgit.errors.NoRemoteRepositoryException;
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TransportException;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
+import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.PushResult;
+import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
-import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.RemoteRefUpdate.Status;
 import org.eclipse.osgi.util.NLS;
@@ -50,35 +53,46 @@ public class PushOperation {
 
 	/**
 	 * Create push operation for provided specification.
-	 * <p>
-	 * Operation is not performed within constructor,
-	 * {@link #run(IProgressMonitor)} method must be called for that.
 	 *
 	 * @param localDb
 	 *            local repository.
 	 * @param specification
 	 *            specification of ref updates for remote repositories.
-	 * @param rc
-	 *            optional remote config to apply on used transports. May be
-	 *            null.
 	 * @param dryRun
 	 *            true if push operation should just check for possible result
 	 *            and not really update remote refs, false otherwise - when push
 	 *            should act normally.
-	 * @param timeout the timeout in seconds (0 for no timeout)
+	 * @param timeout
+	 *            the timeout in seconds (0 for no timeout)
 	 */
 	public PushOperation(final Repository localDb,
 			final PushOperationSpecification specification,
-			final boolean dryRun, final RemoteConfig rc, int timeout) {
+			final boolean dryRun, int timeout) {
 		this.localDb = localDb;
 		this.specification = specification;
+		this.dryRun = dryRun;
+		this.rc = null;
+		this.timeout = timeout;
+	}
+
+	/**
+	 * Creates a push operation for a remote configuration.
+	 *
+	 * @param localDb
+	 * @param rc
+	 * @param dryRun
+	 * @param timeout
+	 */
+	public PushOperation(final Repository localDb, final RemoteConfig rc,
+			final boolean dryRun, int timeout) {
+		this.localDb = localDb;
+		this.specification = null;
 		this.dryRun = dryRun;
 		this.rc = rc;
 		this.timeout = timeout;
 	}
 
 	/**
-	 * Sets a credentials provider
 	 * @param credentialsProvider
 	 */
 	public void setCredentialsProvider(CredentialsProvider credentialsProvider) {
@@ -86,7 +100,7 @@ public class PushOperation {
 	}
 
 	/**
-	 * @return push operation result.
+	 * @return push operation result
 	 */
 	public PushOperationResult getOperationResult() {
 		if (operationResult == null)
@@ -95,45 +109,46 @@ public class PushOperation {
 	}
 
 	/**
-	 * @return operation specification, as provided in constructor.
+	 * @return operation specification, as provided in constructor (may be
+	 *         <code>null</code>)
 	 */
 	public PushOperationSpecification getSpecification() {
 		return specification;
 	}
 
 	/**
-	 * Execute operation and store result. Operation is executed independently
-	 * on each remote repository.
-	 * <p>
-	 *
 	 * @param actMonitor
-	 *            the monitor to be used for reporting progress and responding
-	 *            to cancellation. The monitor is never <code>null</code>
-	 *
+	 *            may be <code>null</code> if progress monitoring is not desired
 	 * @throws InvocationTargetException
-	 *             Cause of this exceptions may include
-	 *             {@link TransportException}, {@link NotSupportedException} or
-	 *             some unexpected {@link RuntimeException}.
+	 *             not really used: failure is communicated via the result (see
+	 *             {@link #getOperationResult()})
 	 */
-	public void run(IProgressMonitor actMonitor) throws InvocationTargetException {
+	public void run(IProgressMonitor actMonitor)
+			throws InvocationTargetException {
 
 		if (operationResult != null)
 			throw new IllegalStateException(CoreText.OperationAlreadyExecuted);
 
-		for (URIish uri : this.specification.getURIs()) {
-			for (RemoteRefUpdate update : this.specification.getRefUpdates(uri))
-				if (update.getStatus() != Status.NOT_ATTEMPTED)
-					throw new IllegalStateException(
-							CoreText.RemoteRefUpdateCantBeReused);
-		}
+		if (this.specification != null)
+			for (URIish uri : this.specification.getURIs()) {
+				for (RemoteRefUpdate update : this.specification
+						.getRefUpdates(uri))
+					if (update.getStatus() != Status.NOT_ATTEMPTED)
+						throw new IllegalStateException(
+								CoreText.RemoteRefUpdateCantBeReused);
+			}
 		IProgressMonitor monitor;
 		if (actMonitor == null)
 			monitor = new NullProgressMonitor();
 		else
 			monitor = actMonitor;
 
-		final int totalWork = specification.getURIsNumber()
-				* WORK_UNITS_PER_TRANSPORT;
+		final int totalWork;
+		if (specification != null)
+			totalWork = specification.getURIsNumber()
+					* WORK_UNITS_PER_TRANSPORT;
+		else
+			totalWork = 1;
 		if (dryRun)
 			monitor.beginTask(CoreText.PushOperation_taskNameDryRun, totalWork);
 		else
@@ -141,52 +156,90 @@ public class PushOperation {
 					totalWork);
 
 		operationResult = new PushOperationResult();
+		Git git = new Git(localDb);
 
-		for (final URIish uri : specification.getURIs()) {
-			final SubProgressMonitor subMonitor = new SubProgressMonitor(
-					monitor, WORK_UNITS_PER_TRANSPORT,
-					SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
-			Transport transport = null;
+		if (specification != null)
+			for (final URIish uri : specification.getURIs()) {
+				final SubProgressMonitor subMonitor = new SubProgressMonitor(
+						monitor, WORK_UNITS_PER_TRANSPORT,
+						SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
+
+				try {
+					List<RefSpec> specs = new ArrayList<RefSpec>(3);
+					for (RemoteRefUpdate update : specification
+							.getRefUpdates(uri)) {
+						RefSpec spec = new RefSpec();
+						spec = spec.setSourceDestination(update.getSrcRef(),
+								update.getRemoteName());
+						spec = spec.setForceUpdate(update.isForceUpdate());
+						specs.add(spec);
+					}
+					if (monitor.isCanceled()) {
+						operationResult.addOperationResult(uri,
+								CoreText.PushOperation_resultCancelled);
+						continue;
+					}
+
+					final EclipseGitProgressTransformer gitSubMonitor = new EclipseGitProgressTransformer(
+							subMonitor);
+
+					try {
+						Iterable<PushResult> results = git.push().setRemote(
+								uri.toPrivateString()).setRefSpecs(specs)
+								.setDryRun(dryRun).setTimeout(timeout)
+								.setProgressMonitor(gitSubMonitor)
+								.setCredentialsProvider(credentialsProvider)
+								.call();
+						for (PushResult result : results) {
+							operationResult.addOperationResult(result.getURI(),
+									result);
+							specification.addURIRefUpdates(result.getURI(),
+									result.getRemoteUpdates());
+						}
+					} catch (JGitInternalException e) {
+						String errorMessage = e.getCause() != null ? e
+								.getCause().getMessage() : e.getMessage();
+						String userMessage = NLS
+								.bind(
+										CoreText.PushOperation_InternalExceptionOccuredMessage,
+										errorMessage);
+						operationResult.addOperationResult(uri, userMessage);
+					} catch (InvalidRemoteException e) {
+						operationResult.addOperationResult(uri, e.getMessage());
+					}
+
+					monitor.worked(WORK_UNITS_PER_TRANSPORT);
+				} finally {
+					// Dirty trick to get things always working.
+					subMonitor.beginTask("", WORK_UNITS_PER_TRANSPORT); //$NON-NLS-1$
+					subMonitor.done();
+					subMonitor.done();
+				}
+			}
+		else {
+			final EclipseGitProgressTransformer gitMonitor = new EclipseGitProgressTransformer(
+					monitor);
 			try {
-				if (monitor.isCanceled()) {
-					operationResult.addOperationResult(uri,
-							CoreText.PushOperation_resultCancelled);
-					continue;
+				Iterable<PushResult> results = git.push().setRemote(
+						rc.getName()).setDryRun(dryRun).setTimeout(timeout)
+						.setProgressMonitor(gitMonitor).setCredentialsProvider(
+								credentialsProvider).call();
+				for (PushResult result : results) {
+					operationResult.addOperationResult(result.getURI(), result);
 				}
-				transport = Transport.open(localDb, uri);
-				if (credentialsProvider != null)
-					transport.setCredentialsProvider(credentialsProvider);
-				transport.setTimeout(this.timeout);
-
-				if (rc != null)
-					transport.applyConfig(rc);
-				transport.setDryRun(dryRun);
-				final EclipseGitProgressTransformer gitSubMonitor = new EclipseGitProgressTransformer(
-						subMonitor);
-				final PushResult pr = transport.push(gitSubMonitor,
-						specification.getRefUpdates(uri));
-				operationResult.addOperationResult(uri, pr);
-				monitor.worked(WORK_UNITS_PER_TRANSPORT);
-			} catch (final NoRemoteRepositoryException e) {
-				operationResult.addOperationResult(uri, NLS.bind(
-						CoreText.PushOperation_resultNoServiceError, e
-								.getMessage()));
-			} catch (final TransportException e) {
-				operationResult.addOperationResult(uri, NLS.bind(
-						CoreText.PushOperation_resultTransportError, e
-								.getMessage()));
-			} catch (final NotSupportedException e) {
-				operationResult.addOperationResult(uri, NLS.bind(
-						CoreText.PushOperation_resultNotSupported, e
-								.getMessage()));
-			} finally {
-				if (transport != null) {
-					transport.close();
-				}
-				// Dirty trick to get things always working.
-				subMonitor.beginTask("", WORK_UNITS_PER_TRANSPORT); //$NON-NLS-1$
-				subMonitor.done();
-				subMonitor.done();
+			} catch (JGitInternalException e) {
+				String errorMessage = e.getCause() != null ? e.getCause()
+						.getMessage() : e.getMessage();
+				String userMessage = NLS.bind(
+						CoreText.PushOperation_InternalExceptionOccuredMessage,
+						errorMessage);
+				URIish uri = rc.getPushURIs().isEmpty() ? rc.getURIs().get(0)
+						: rc.getPushURIs().get(0);
+				operationResult.addOperationResult(uri, userMessage);
+			} catch (InvalidRemoteException e) {
+				URIish uri = rc.getPushURIs().isEmpty() ? rc.getURIs().get(0)
+						: rc.getPushURIs().get(0);
+				operationResult.addOperationResult(uri, e.getMessage());
 			}
 		}
 		monitor.done();
