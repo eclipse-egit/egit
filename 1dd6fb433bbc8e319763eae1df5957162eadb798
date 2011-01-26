@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///O0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-26T16:03:59Z",
+      "side": 1,
+      "message": "I think we should sort outside the loop since then we only have to do it once",
+      "revId": "1dd6fb433bbc8e319763eae1df5957162eadb798",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///Os\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-26T16:03:59Z",
+      "side": 1,
+      "message": "ordering could be improved to show most interesting states on top",
+      "revId": "1dd6fb433bbc8e319763eae1df5957162eadb798",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///Ow\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-26T16:03:59Z",
+      "side": 1,
+      "message": "typo: wrong resource key",
+      "revId": "1dd6fb433bbc8e319763eae1df5957162eadb798",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
