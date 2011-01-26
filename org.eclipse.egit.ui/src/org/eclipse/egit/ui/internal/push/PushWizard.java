@@ -221,7 +221,7 @@ public class PushWizard extends Wizard {
 			}
 			int timeout = Activator.getDefault().getPreferenceStore().getInt(
 					UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-			return new PushOperation(localDb, spec, false, config, timeout);
+			return new PushOperation(localDb, spec, false, timeout);
 		} catch (final IOException e) {
 			ErrorDialog.openError(getShell(),
 					UIText.PushWizard_cantPrepareUpdatesTitle,

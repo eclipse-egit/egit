@@ -195,8 +195,7 @@ class ConfirmationPage extends WizardPage {
 				spec.addURIRefUpdates(uri, copyUpdates(updates));
 			int timeout = Activator.getDefault().getPreferenceStore().getInt(
 					UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-			operation = new PushOperation(local, spec, true,
-					displayedRepoSelection.getConfig(), timeout);
+			operation = new PushOperation(local, spec, true, timeout);
 			if (credentials != null)
 				operation.setCredentialsProvider(new UsernamePasswordCredentialsProvider(
 						credentials.getUser(), credentials.getPassword()));
