@@ -41,6 +41,8 @@ import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.waits.Conditions;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -78,6 +80,7 @@ public class SharingWizardTest {
 
 	private static String createProject(String projectName) {
 		bot.menu("File").menu("New").menu("Project...").click();
+		SWTBotShell createProjectDialogShell = bot.shell("New Project");
 		bot.tree().getTreeItem("General").expand().getNode("Project").select();
 		bot.button("Next >").click();
 
@@ -85,6 +88,7 @@ public class SharingWizardTest {
 
 		String path = bot.textWithLabel("Location:").getText();
 		bot.button("Finish").click();
+		bot.waitUntil(Conditions.shellCloses(createProjectDialogShell), 10000);
 		return path;
 	}
 
