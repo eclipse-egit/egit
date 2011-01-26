@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///es\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-22T22:53:49Z",
+      "side": 1,
+      "message": "typo: s/introduce/introduced/",
+      "revId": "c316279c89daf927e513ae94372920905ed58f67",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///eo\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-22T22:53:49Z",
+      "side": 1,
+      "message": "I don\u0027t understand this sentence, could you provide more details about what problem you are fixing here ?",
+      "revId": "c316279c89daf927e513ae94372920905ed58f67",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///ew\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-22T22:53:49Z",
+      "side": 1,
+      "message": "fix TODO ...",
+      "revId": "c316279c89daf927e513ae94372920905ed58f67",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
