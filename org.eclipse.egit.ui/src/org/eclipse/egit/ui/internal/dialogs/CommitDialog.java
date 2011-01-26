@@ -4,6 +4,7 @@
  * Copyright (C) 2007, Robin Rosenberg <me@lathund.dewire.com>
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2007, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -47,6 +48,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
 import org.eclipse.egit.ui.internal.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
+import org.eclipse.egit.ui.internal.dialogs.CommitItem.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -119,7 +121,7 @@ public class CommitDialog extends Dialog {
 
 			switch (columnIndex) {
 			case 0:
-				return item.status;
+				return item.status.getText();
 
 			case 1:
 				return item.file.getProject().getName() + ": " //$NON-NLS-1$
@@ -142,10 +144,10 @@ public class CommitDialog extends Dialog {
 		public boolean select(Viewer viewer, Object parentElement,
 				Object element) {
 			boolean result = true;
-			if (!showUntracked || !allowToChangeSelection){
+			if (!showUntracked || !allowToChangeSelection) {
 				if (element instanceof CommitItem) {
-					CommitItem item = (CommitItem)element;
-					if (item.status.equals(UIText.CommitDialog_StatusUntracked))
+					CommitItem item = (CommitItem) element;
+					if (item.status == Status.UNTRACKED)
 						result = false;
 				}
 			}
@@ -426,8 +428,8 @@ public class CommitDialog extends Dialog {
 			for (IFile selectedFile : preselectedFiles) {
 				for (CommitItem item : items) {
 					if (item.file.equals(selectedFile) &&
-							!item.status.equals(UIText.CommitDialog_StatusUntracked) &&
-							!item.status.equals(UIText.CommitDialog_StatusAssumeUnchaged)) {
+							item.status != Status.UNTRACKED &&
+							item.status != Status.ASSUME_UNCHANGED) {
 						filesViewer.setChecked(item, true);
 						break;
 					}
@@ -632,39 +634,38 @@ public class CommitDialog extends Dialog {
 	 * @param indexDiff
 	 * @return file status
 	 */
-	private static String getFileStatus(String path, IndexDiff indexDiff) {
-		String prefix = UIText.CommitDialog_StatusUnknown;
+	private static Status getFileStatus(String path, IndexDiff indexDiff) {
 		if (indexDiff.getAssumeUnchanged().contains(path)) {
-			prefix = UIText.CommitDialog_StatusAssumeUnchaged;
+			return Status.ASSUME_UNCHANGED;
 		} else if (indexDiff.getAdded().contains(path)) {
 			// added
 			if (indexDiff.getModified().contains(path))
-				prefix = UIText.CommitDialog_StatusAddedIndexDiff;
+				return Status.ADDED_INDEX_DIFF;
 			else
-				prefix = UIText.CommitDialog_StatusAdded;
+				return Status.ADDED;
 		} else if (indexDiff.getChanged().contains(path)) {
 			// changed
 			if (indexDiff.getModified().contains(path))
-				prefix = UIText.CommitDialog_StatusModifiedIndexDiff;
+				return Status.MODIFIED_INDEX_DIFF;
 			else
-				prefix = UIText.CommitDialog_StatusModified;
+				return Status.MODIFIED;
 		} else if (indexDiff.getUntracked().contains(path)) {
 			// untracked
 			if (indexDiff.getRemoved().contains(path))
-				prefix = UIText.CommitDialog_StatusRemovedUntracked;
+				return Status.REMOVED_UNTRACKED;
 			else
-				prefix = UIText.CommitDialog_StatusUntracked;
+				return Status.UNTRACKED;
 		} else if (indexDiff.getRemoved().contains(path)) {
 			// removed
-			prefix = UIText.CommitDialog_StatusRemoved;
+			return Status.REMOVED;
 		} else if (indexDiff.getMissing().contains(path)) {
 			// missing
-			prefix = UIText.CommitDialog_StatusRemovedNotStaged;
+			return Status.REMOVED_NOT_STAGED;
 		} else if (indexDiff.getModified().contains(path)) {
 			// modified (and not changed!)
-			prefix = UIText.CommitDialog_StatusModifiedNotStaged;
+			return Status.MODIFIED_NOT_STAGED;
 		}
-		return prefix;
+		return Status.UNKNOWN;
 	}
 
 	/** Retrieve file status
@@ -672,7 +673,7 @@ public class CommitDialog extends Dialog {
 	 * @return file status
 	 * @throws IOException
 	 */
-	private static String getFileStatus(IFile file) throws IOException {
+	private static Status getFileStatus(IFile file) throws IOException {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(file);
 		String path = mapping.getRepoRelativePath(file);
 		Repository repo = mapping.getRepository();
@@ -749,7 +750,7 @@ public class CommitDialog extends Dialog {
 
 		private CommitItem.Order order;
 
-		private boolean reversed;
+		private Boolean reversed;
 
 		public HeaderSelectionListener(CommitItem.Order order) {
 			this.order = order;
@@ -757,18 +758,37 @@ public class CommitDialog extends Dialog {
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			TableColumn column = (TableColumn)e.widget;
+			TableColumn column = (TableColumn) e.widget;
 			Table table = column.getParent();
 
 			if (column == table.getSortColumn()) {
-				reversed = !reversed;
-			} else {
-				reversed = false;
+				int currentDirection = table.getSortDirection();
+				switch (currentDirection) {
+				case SWT.NONE:
+					reversed = Boolean.FALSE;
+					break;
+				case SWT.UP:
+					reversed = Boolean.TRUE;
+					break;
+				case SWT.DOWN:
+					// fall through
+				default:
+					reversed = null;
+					break;
+				}
+			} else
+				reversed = Boolean.FALSE;
+
+			if (reversed == null) {
+				table.setSortColumn(null);
+				table.setSortDirection(SWT.NONE);
+				filesViewer.setComparator(null);
+				return;
 			}
 			table.setSortColumn(column);
 
 			Comparator<CommitItem> comparator;
-			if (reversed) {
+			if (reversed.booleanValue()) {
 				comparator = order.descending();
 				table.setSortDirection(SWT.DOWN);
 			} else {
@@ -790,9 +810,8 @@ public class CommitDialog extends Dialog {
 			if (commitItem == null) {
 				return;
 			}
-			if (commitItem.status.equals(UIText.CommitDialog_StatusUntracked)) {
+			if (commitItem.status == Status.UNTRACKED)
 				return;
-			}
 
 			IProject project = commitItem.file.getProject();
 			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
@@ -885,10 +904,12 @@ public class CommitDialog extends Dialog {
 	 * @param files potentially affected by a new commit
 	 * @param indexDiffs IndexDiffs of the related repositories
 	 */
-	public void setFileList(ArrayList<IFile> files, Map<Repository, IndexDiff> indexDiffs) {
+	public void setFileList(ArrayList<IFile> files,
+			Map<Repository, IndexDiff> indexDiffs) {
 		items.clear();
 		for (IFile file : files) {
-			RepositoryMapping repositoryMapping = RepositoryMapping.getMapping(file.getProject());
+			RepositoryMapping repositoryMapping = RepositoryMapping
+					.getMapping(file.getProject());
 			Repository repo = repositoryMapping.getRepository();
 			String path = repositoryMapping.getRepoRelativePath(file);
 			CommitItem item = new CommitItem();
@@ -896,6 +917,23 @@ public class CommitDialog extends Dialog {
 			item.file = file;
 			items.add(item);
 		}
+		// initially, we sort by status plus project plus path
+		Collections.sort(items, new Comparator<CommitItem>() {
+			public int compare(CommitItem o1, CommitItem o2) {
+				int diff = o1.status.ordinal() - o2.status.ordinal();
+				if (diff != 0)
+					return diff;
+				diff = o1.file.getProject().getName().compareTo(
+						o2.file.getProject().getName());
+				if (diff != 0)
+					return diff;
+				return o1.file
+				.getProjectRelativePath()
+				.toString()
+				.compareTo(
+						o2.file.getProjectRelativePath().toString());
+			}
+		});
 	}
 
 	@Override
@@ -1046,9 +1084,45 @@ public class CommitDialog extends Dialog {
 }
 
 class CommitItem {
-	String status;
+	Status status;
 
 	IFile file;
+
+	/** The ordinal of this {@link Enum} is used to provide the "native" sorting of the list */
+	public static enum Status {
+		/** */
+		ADDED(UIText.CommitDialog_StatusAdded),
+		/** */
+		MODIFIED(UIText.CommitDialog_StatusModified),
+		/** */
+		REMOVED(UIText.CommitDialog_StatusRemoved),
+		/** */
+		ADDED_INDEX_DIFF(UIText.CommitDialog_StatusAddedIndexDiff),
+		/** */
+		MODIFIED_INDEX_DIFF(UIText.CommitDialog_StatusModifiedIndexDiff),
+		/** */
+		MODIFIED_NOT_STAGED(UIText.CommitDialog_StatusModifiedNotStaged),
+		/** */
+		REMOVED_NOT_STAGED(UIText.CommitDialog_StatusRemovedNotStaged),
+		/** */
+		UNTRACKED(UIText.CommitDialog_StatusUntracked),
+		/** */
+		REMOVED_UNTRACKED(UIText.CommitDialog_StatusRemovedUntracked),
+		/** */
+		ASSUME_UNCHANGED(UIText.CommitDialog_StatusAssumeUnchaged),
+		/** */
+		UNKNOWN(UIText.CommitDialog_StatusUnknown);
+
+		public String getText() {
+			return myText;
+		}
+
+		private final String myText;
+
+		private Status(String text) {
+			myText = text;
+		}
+	}
 
 	public static enum Order implements Comparator<CommitItem> {
 		ByStatus() {
@@ -1062,8 +1136,12 @@ class CommitItem {
 		ByFile() {
 
 			public int compare(CommitItem o1, CommitItem o2) {
-				return o1.file.getProjectRelativePath().toString().
-					compareTo(o2.file.getProjectRelativePath().toString());
+				int diff = o1.file.getProject().getName().compareTo(
+						o2.file.getProject().getName());
+				if (diff != 0)
+					return diff;
+				return o1.file.getProjectRelativePath().toString().compareTo(
+						o2.file.getProjectRelativePath().toString());
 			}
 
 		};
