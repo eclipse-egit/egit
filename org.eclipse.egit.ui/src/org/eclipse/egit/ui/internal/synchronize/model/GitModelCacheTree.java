@@ -44,7 +44,7 @@ public class GitModelCacheTree extends GitModelTree {
 	public GitModelCacheTree(GitModelObjectContainer parent, RevCommit commit,
 			ObjectId repoId, ObjectId cacheId, String name,
 			FileModelFactory factory) throws IOException {
-		super(parent, commit, repoId, repoId, cacheId, name);
+		super(parent, commit, null, repoId, repoId, cacheId, name);
 		this.factory = factory;
 		cacheTreeMap = new HashMap<String, GitModelObject>();
 	}
