@@ -247,9 +247,9 @@ class ExistingOrNewPage extends WizardPage {
 		setControl(g);
 	}
 
-	private void fillTreeItemWithGitDirectory(RepositoryMapping m, TreeItem treeItem2, boolean isAlternative) {
+	private void fillTreeItemWithGitDirectory(RepositoryMapping m, TreeItem treeItem, boolean isAlternative) {
 		if (m.getGitDir() == null)
-			treeItem2.setText(2, UIText.ExistingOrNewPage_SymbolicValueEmptyMapping);
+			treeItem.setText(2, UIText.ExistingOrNewPage_SymbolicValueEmptyMapping);
 		else {
 			IPath container = m.getContainerPath();
 			if (!container.isEmpty())
@@ -262,9 +262,9 @@ class ExistingOrNewPage extends WizardPage {
 					path = Path.fromPortableString("."); //$NON-NLS-1$
 				else
 					path = withoutLastSegment;
-				treeItem2.setText(0, path.toString());
+				treeItem.setText(0, path.toString());
 			}
-			treeItem2.setText(2, relativePath.toString());
+			treeItem.setText(2, relativePath.toOSString());
 			try {
 				IProject project = m.getContainer().getProject();
 				FileRepository repo = new FileRepository(m.getGitDirAbsolutePath().toFile());
@@ -282,7 +282,7 @@ class ExistingOrNewPage extends WizardPage {
 						TreeWalk projectInRepo = TreeWalk.forPath(repo, repoRelativePath, headTree);
 						if (projectInRepo != null) {
 							// the .project file is tracked by this repo
-							treeItem2.setChecked(true);
+							treeItem.setChecked(true);
 						}
 						revWalk.dispose();
 					}
