@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Map.Entry;
 
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
@@ -475,8 +476,11 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 		boolean dirty = false;
 		if (oldValues.keySet().containsAll(newValues.keySet())
 				&& newValues.keySet().containsAll(oldValues.keySet())) {
-			for (String key : oldValues.keySet()) {
-				if (!oldValues.get(key).equals(newValues.get(key))) {
+			for (Entry<String, String> oldValueEntry : oldValues.entrySet()) {
+				String key = oldValueEntry.getKey();
+				// don't in-line key here, as it would disquiet findbugs
+				String newValue = newValues.get(key);
+				if (!oldValueEntry.getValue().equals(newValue)) {
 					dirty = true;
 					break;
 				}

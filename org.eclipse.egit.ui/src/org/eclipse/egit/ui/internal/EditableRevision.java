@@ -203,4 +203,13 @@ public class EditableRevision extends FileRevisionTypedElement implements
 		fChangeNotifier.fireContentChanged();
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
 }
