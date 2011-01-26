@@ -19,7 +19,6 @@ import org.eclipse.egit.ui.internal.dialogs.NonDeletedFilesTree;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -42,8 +41,6 @@ public class BranchResultDialog extends MessageDialog {
 	private final CheckoutResult result;
 
 	private final Repository repository;
-
-	TreeViewer tv;
 
 	/**
 	 * @param result
