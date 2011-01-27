@@ -15,7 +15,6 @@ import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
@@ -41,27 +40,28 @@ import org.eclipse.ui.PlatformUI;
  * file as found in the working directory and the version in the selected ref.
  */
 public class CompareWithRefActionHandler extends RepositoryActionHandler {
-
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		final IResource resource = getSelectedResources(event)[0];
-		final RepositoryMapping mapping = RepositoryMapping.getMapping(resource
-				.getProject());
-		if (mapping == null || mapping.getRepository() == null)
+		final Repository repo = getRepository(true, event);
+		// assert all resources map to the same repository
+		if (repo == null)
 			return null;
-		final Repository repo = mapping.getRepository();
+		final IResource[] resources = getSelectedResources(event);
 
 		CompareTargetSelectionDialog dlg = new CompareTargetSelectionDialog(
-				getShell(event), repo, resource.getFullPath().toString());
+				getShell(event), repo, resources.length == 1 ? resources[0]
+						.getFullPath().toString() : null);
 		if (dlg.open() == Window.OK) {
 
-			if (resource instanceof IFile) {
-				final IFile baseFile = (IFile) resource;
+			if (resources.length == 1 && resources[0] instanceof IFile) {
+				final IFile baseFile = (IFile) resources[0];
 
 				final ITypedElement base = new FileRevisionTypedElement(
 						new LocalFileRevision(baseFile));
 
 				final ITypedElement next;
 				try {
+					RepositoryMapping mapping = RepositoryMapping
+							.getMapping(resources[0]);
 					next = getElementForRef(mapping.getRepository(), mapping
 							.getRepoRelativePath(baseFile), dlg.getRefName());
 				} catch (IOException e) {
@@ -75,15 +75,13 @@ public class CompareWithRefActionHandler extends RepositoryActionHandler {
 						base, next, null);
 				in.getCompareConfiguration().setRightLabel(dlg.getRefName());
 				CompareUI.openCompareEditor(in);
-			}
-
-			if (resource instanceof IContainer) {
+			} else {
 				CompareTreeView view;
 				try {
 					view = (CompareTreeView) PlatformUI.getWorkbench()
 							.getActiveWorkbenchWindow().getActivePage()
 							.showView(CompareTreeView.ID);
-					view.setInput(resource, dlg.getRefName());
+					view.setInput(resources, dlg.getRefName());
 				} catch (PartInitException e) {
 					Activator.handleError(e.getMessage(), e, true);
 				}
@@ -109,14 +107,6 @@ public class CompareWithRefActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		final IResource[] selectedResources = getSelectedResources();
-		if (selectedResources.length != 1)
-			return false;
-
-		final IResource resource = selectedResources[0];
-		final RepositoryMapping mapping = RepositoryMapping.getMapping(resource
-				.getProject());
-		return mapping != null;
+		return getRepository() != null;
 	}
-
 }

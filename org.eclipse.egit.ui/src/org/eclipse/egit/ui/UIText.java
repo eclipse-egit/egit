@@ -695,10 +695,22 @@ public class UIText extends NLS {
 	public static String CompareTreeView_EqualFilesTooltip;
 
 	/** */
+	public static String CompareTreeView_IndexVersionText;
+
+	/** */
 	public static String CompareTreeView_ItemNotFoundInVersionMessage;
 
 	/** */
+	public static String CompareTreeView_MultipleResourcesHeaderText;
+
+	/** */
+	public static String CompareTreeView_NoDifferencesFoundMessage;
+
+	/** */
 	public static String CompareTreeView_NoInputText;
+
+	/** */
+	public static String CompareTreeView_RepositoryRootName;
 
 	/** */
 	public static String CompareTreeView_WorkspaceVersionText;
