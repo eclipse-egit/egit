@@ -33,6 +33,8 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -178,7 +180,7 @@ class ExistingOrNewPage extends WizardPage {
 				try {
 					Repository repository = new FileRepository(gitDir);
 					repository.create();
-					for (IProject project : getProjects().keySet()) {
+					for (IProject project : getProjects(false).keySet()) {
 						// If we don't refresh the project directories right
 						// now we won't later know that a .git directory
 						// exists within it and we won't mark the .git
@@ -341,13 +343,25 @@ class ExistingOrNewPage extends WizardPage {
 	}
 
 	/**
-	 * @return map between project and repository root directory (converted to an
-	 *         absolute path) for all projects selected by user
+	 * @param checked
+	 *            pass true to get the checked elements, false to get the
+	 *            selected elements
+	 * @return map between project and repository root directory (converted to
+	 *         an absolute path) for all projects selected by user
 	 */
-	public Map<IProject, File> getProjects() {
-		final Object[] checkedElements = viewer.getCheckedElements();
-		Map<IProject, File> ret = new HashMap<IProject, File>(checkedElements.length);
-		for (Object ti : viewer.getCheckedElements()) {
+	public Map<IProject, File> getProjects(boolean checked) {
+		final Object[] elements;
+		if (checked)
+			elements = viewer.getCheckedElements();
+		else {
+			ISelection selection = viewer.getSelection();
+			if (selection instanceof IStructuredSelection)
+				elements = ((IStructuredSelection) selection).toArray();
+			else
+				elements = new Object[0];
+		}
+		Map<IProject, File> ret = new HashMap<IProject, File>(elements.length);
+		for (Object ti : elements) {
 			final IProject project = ((ProjectAndRepo)ti).getProject();
 			String path = ((ProjectAndRepo)ti).getRepo();
 			final IPath selectedRepo = Path.fromOSString(path);
