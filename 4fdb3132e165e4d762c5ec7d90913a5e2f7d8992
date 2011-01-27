@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///VA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareWithIndexActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:15:47Z",
+      "side": 1,
+      "message": "Lines 56-71 shouldn\u0027t be indented while they are inside if statement from in line 55?",
+      "revId": "4fdb3132e165e4d762c5ec7d90913a5e2f7d8992",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///U8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:15:47Z",
+      "side": 1,
+      "message": "Please revert this formatting change",
+      "revId": "4fdb3132e165e4d762c5ec7d90913a5e2f7d8992",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///U4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:15:47Z",
+      "side": 1,
+      "message": "Please revert this formatting change",
+      "revId": "4fdb3132e165e4d762c5ec7d90913a5e2f7d8992",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///U0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:15:47Z",
+      "side": 1,
+      "message": "Please revert this formatting change",
+      "revId": "4fdb3132e165e4d762c5ec7d90913a5e2f7d8992",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///Uw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:15:47Z",
+      "side": 1,
+      "message": "Please revert this formatting change",
+      "revId": "4fdb3132e165e4d762c5ec7d90913a5e2f7d8992",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///Us\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:15:47Z",
+      "side": 1,
+      "message": "Please revert this formatting change",
+      "revId": "4fdb3132e165e4d762c5ec7d90913a5e2f7d8992",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
