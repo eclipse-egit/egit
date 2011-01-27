@@ -16,6 +16,7 @@ import static org.eclipse.compare.structuremergeviewer.Differencer.RIGHT;
 import static org.eclipse.jgit.lib.ObjectId.zeroId;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ITypedElement;
@@ -36,6 +37,8 @@ import org.eclipse.team.ui.mapping.SaveableComparison;
  */
 public abstract class GitModelObjectContainer extends GitModelObject implements
 		ISynchronizationCompareInput {
+
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm"); //$NON-NLS-1$
 
 	private int kind = -1;
 
@@ -116,8 +119,16 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 
 	@Override
 	public String getName() {
-		if (name == null)
-			name = baseCommit.getShortMessage();
+		if (name == null) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("["); //$NON-NLS-1$
+			sb.append(baseCommit.getAuthorIdent().getName());
+			sb.append("] ("); //$NON-NLS-1$
+			sb.append(DATE_FORMAT.format(baseCommit.getAuthorIdent().getWhen()));
+			sb.append(") "); //$NON-NLS-1$
+			sb.append(baseCommit.getShortMessage());
+			name = sb.toString();
+		}
 
 		return name;
 	}
