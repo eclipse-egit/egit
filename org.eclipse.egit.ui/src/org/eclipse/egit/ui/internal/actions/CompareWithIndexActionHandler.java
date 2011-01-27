@@ -55,6 +55,7 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 
 		if (resources.length == 1 && resources[0] instanceof IFile) {
 			final IFile baseFile = (IFile) resources[0];
+
 			final ITypedElement base = SaveableCompareEditorInput
 					.createFileElement(baseFile);
 

@@ -195,6 +195,12 @@
                label="Merge Tool"
                menubarPath="team.main/group4">
          </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.CompareWithCommitAction"
+               id="org.eclipse.egit.ui.internal.actions.CompareWithCommitAction"
+               label="Commit..."
+               menubarPath="compareWithMenu/gitCompareWithGroup">
+         </action>
 	  </objectContribution>
    	  <objectContribution
          adaptable="true"
