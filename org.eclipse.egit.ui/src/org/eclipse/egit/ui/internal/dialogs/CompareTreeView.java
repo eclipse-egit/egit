@@ -28,9 +28,11 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -68,6 +70,7 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -75,8 +78,8 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -103,6 +106,9 @@ import org.eclipse.ui.part.ViewPart;
  * and folders is used based on {@link PathNode} instances.
  */
 public class CompareTreeView extends ViewPart {
+	/** The "magic" right-side version to compare with the index */
+	public static final String INDEX_VERSION = "%%%INDEX%%%"; //$NON-NLS-1$
+
 	/** The View ID */
 	public static final String ID = "org.eclipse.egit.ui.CompareTreeView"; //$NON-NLS-1$
 
@@ -416,7 +422,8 @@ public class CompareTreeView extends ViewPart {
 	 * @param input
 	 *            the {@link IResource} from which to build the tree
 	 * @param rightVersion
-	 *            a {@link Ref} name or {@link RevCommit} id
+	 *            a {@link Ref} name or {@link RevCommit} id or
+	 *            {@link #INDEX_VERSION}
 	 */
 	public void setInput(final IResource input, String rightVersion) {
 		this.input = input;
@@ -435,7 +442,8 @@ public class CompareTreeView extends ViewPart {
 	 * @param leftVersion
 	 *            a {@link Ref} name or {@link RevCommit} id
 	 * @param rightVersion
-	 *            a {@link Ref} name or {@link RevCommit} id
+	 *            a {@link Ref} name or {@link RevCommit} id or
+	 *            {@link #INDEX_VERSION}
 	 */
 	public void setInput(final IResource input, String leftVersion,
 			String rightVersion) {
@@ -476,7 +484,8 @@ public class CompareTreeView extends ViewPart {
 		else {
 			String name;
 			if (input instanceof IResource)
-				name = ((IResource) input).getFullPath().toString();
+				name = ((IResource) input).getFullPath().makeAbsolute()
+						.toString();
 			else if (input instanceof Repository)
 				name = Activator.getDefault().getRepositoryUtil()
 						.getRepositoryName(((Repository) input));
@@ -484,12 +493,20 @@ public class CompareTreeView extends ViewPart {
 				throw new IllegalStateException();
 			if (leftVersion == null)
 				setContentDescription(NLS
-						.bind(UIText.CompareTreeView_ComparingWorkspaceVersionDescription,
-								name, rightVersion));
+						.bind(
+								UIText.CompareTreeView_ComparingWorkspaceVersionDescription,
+								name,
+								rightVersion.equals(INDEX_VERSION) ? UIText.CompareTreeView_IndexVersionText
+										: rightVersion));
 			else
-				setContentDescription(NLS.bind(
-						UIText.CompareTreeView_ComparingTwoVersionDescription,
-						new String[] { leftVersion, name, rightVersion }));
+				setContentDescription(NLS
+						.bind(
+								UIText.CompareTreeView_ComparingTwoVersionDescription,
+								new String[] {
+										leftVersion,
+										name,
+										rightVersion.equals(INDEX_VERSION) ? UIText.CompareTreeView_IndexVersionText
+												: rightVersion }));
 		}
 	}
 
@@ -542,7 +559,7 @@ public class CompareTreeView extends ViewPart {
 		RevWalk rw = new RevWalk(repo);
 		try {
 			ObjectId commitId = repo.resolve(rightVersion);
-			rightCommit = rw.parseCommit(commitId);
+			rightCommit = commitId != null ? rw.parseCommit(commitId) : null;
 			if (leftVersion == null)
 				leftCommit = null;
 			else {
@@ -599,6 +616,7 @@ public class CompareTreeView extends ViewPart {
 			IProgressMonitor monitor) throws InterruptedException, IOException {
 		monitor.beginTask(UIText.CompareTreeView_AnalyzingRepositoryTaskText,
 				IProgressMonitor.UNKNOWN);
+		boolean useIndex = rightVersion.equals(INDEX_VERSION);
 		rightOnly.clear();
 		equalIds.clear();
 		leftVersionMap.clear();
@@ -606,16 +624,25 @@ public class CompareTreeView extends ViewPart {
 		rightPathsWithChildren.clear();
 		leftOnly.clear();
 		leftPathsWithChildren.clear();
+		boolean checkIgnored = false;
 		TreeWalk tw = new TreeWalk(repository);
 		try {
 			int leftTreeIndex;
-			if (leftCommit == null)
-				leftTreeIndex = tw.addTree(new FileTreeIterator(repository));
+			if (leftCommit == null) {
+				checkIgnored = true;
+				leftTreeIndex = tw.addTree(new AdaptableFileTreeIterator(
+						repository, ResourcesPlugin.getWorkspace().getRoot()));
+			}
 			else
 				leftTreeIndex = tw.addTree(new CanonicalTreeParser(null,
 						repository.newObjectReader(), leftCommit.getTree()));
-			int rightTreeIndex = tw.addTree(new CanonicalTreeParser(null,
-					repository.newObjectReader(), rightCommit.getTree()));
+			int rightTreeIndex;
+			if (!useIndex)
+				rightTreeIndex = tw.addTree(new CanonicalTreeParser(null,
+						repository.newObjectReader(), rightCommit.getTree()));
+			else
+				rightTreeIndex = tw.addTree(new DirCacheIterator(repository
+						.readDirCache()));
 			if (resource instanceof IResource) {
 				String relPath = repositoryMapping
 						.getRepoRelativePath((IResource) resource);
@@ -634,15 +661,26 @@ public class CompareTreeView extends ViewPart {
 						rightTreeIndex, AbstractTreeIterator.class);
 				AbstractTreeIterator leftVersionIterator = tw.getTree(
 						leftTreeIndex, AbstractTreeIterator.class);
+				if (checkIgnored
+						&& leftVersionIterator != null
+						&& ((WorkingTreeIterator) leftVersionIterator)
+								.isEntryIgnored())
+					continue;
 				if (rightVersionIterator != null && leftVersionIterator != null) {
 					monitor.setTaskName(leftVersionIterator
 							.getEntryPathString());
 					IPath currentPath = new Path(leftVersionIterator
 							.getEntryPathString());
-					rightVersionMap.put(currentPath, GitFileRevision.inCommit(
-							repository, rightCommit, leftVersionIterator
-									.getEntryPathString(), tw
-									.getObjectId(rightTreeIndex)));
+					if (!useIndex)
+						rightVersionMap.put(currentPath, GitFileRevision
+								.inCommit(repository, rightCommit,
+										leftVersionIterator
+												.getEntryPathString(), tw
+												.getObjectId(rightTreeIndex)));
+					else
+						rightVersionMap.put(currentPath, GitFileRevision
+								.inIndex(repository, leftVersionIterator
+										.getEntryPathString()));
 					if (leftCommit != null)
 						leftVersionMap.put(currentPath, GitFileRevision
 								.inCommit(repository, leftCommit,
@@ -696,10 +734,19 @@ public class CompareTreeView extends ViewPart {
 					IPath currentPath = new Path(rightVersionIterator
 							.getEntryPathString());
 					rightOnly.add(currentPath);
-					rightVersionMap.put(currentPath, GitFileRevision.inCommit(
-							repository, rightCommit, rightVersionIterator
-									.getEntryPathString(), tw
-									.getObjectId(rightTreeIndex)));
+
+
+					if (!useIndex)
+						rightVersionMap.put(currentPath, GitFileRevision
+								.inCommit(repository, rightCommit,
+										rightVersionIterator
+												.getEntryPathString(), tw
+												.getObjectId(rightTreeIndex)));
+					else
+						rightVersionMap.put(currentPath, GitFileRevision
+								.inIndex(repository, rightVersionIterator
+										.getEntryPathString()));
+
 					while (currentPath.segmentCount() > 0) {
 						currentPath = currentPath.removeLastSegments(1);
 						if (!rightPathsWithChildren.add(currentPath))
