@@ -76,8 +76,8 @@ public class CompareVersionsHandler extends AbstractHistoryCommanndHandler {
 					view = (CompareTreeView) PlatformUI.getWorkbench()
 							.getActiveWorkbenchWindow().getActivePage()
 							.showView(CompareTreeView.ID);
-					view.setInput((IResource) input, commit1.getId().name(),
-							commit2.getId().name());
+					view.setInput(new IResource[] { (IResource) input },
+							commit1.getId().name(), commit2.getId().name());
 				} catch (PartInitException e) {
 					Activator.handleError(e.getMessage(), e, true);
 				}
