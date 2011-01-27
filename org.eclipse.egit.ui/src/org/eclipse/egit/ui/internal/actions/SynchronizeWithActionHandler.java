@@ -79,6 +79,7 @@ public class SynchronizeWithActionHandler extends RepositoryActionHandler {
 		List<SyncRepoEntity> syncRepoEntitys = new ArrayList<SyncRepoEntity>();
 
 		syncRepoEntitys.add(getLocalSyncRepo(repo));
+		syncRepoEntitys.add(getTagsSyncRepo(repo));
 		for (RemoteConfig rc : remoteConfigs)
 			syncRepoEntitys.add(getRemoteSyncRepo(refDatabase, rc));
 
@@ -95,9 +96,9 @@ public class SynchronizeWithActionHandler extends RepositoryActionHandler {
 		SyncRepoEntity local = new SyncRepoEntity(
 				UIText.SynchronizeWithAction_localRepoName);
 		for (String ref : allRefs) {
-			if (!ref.startsWith(Constants.R_REMOTES)) {
-				String name = ref.substring(ref.lastIndexOf('/') + 1);
-				local.addRef(new SyncRefEntity(name, ref));
+			if (!ref.startsWith(Constants.R_REMOTES)
+					&& !ref.startsWith(Constants.R_TAGS)) {
+				local.addRef(createSyncRrepoEntity(ref));
 			}
 		}
 		return local;
@@ -109,12 +110,26 @@ public class SynchronizeWithActionHandler extends RepositoryActionHandler {
 		Collection<Ref> remoteRefs = getRemoteRef(refDatabase, rc.getName());
 
 		for (Ref ref : remoteRefs) {
-			String refName = ref.getName();
-			String refHumanName = refName
-					.substring(refName.lastIndexOf('/') + 1);
-			syncRepoEnt.addRef(new SyncRefEntity(refHumanName, refName));
+			syncRepoEnt.addRef(createSyncRrepoEntity(ref.getName()));
 		}
 		return syncRepoEnt;
+	}
+
+	private SyncRepoEntity getTagsSyncRepo(Repository repo) {
+		Set<String> allRefs = repo.getAllRefs().keySet();
+		SyncRepoEntity local = new SyncRepoEntity(
+				UIText.SynchronizeWithAction_tagsName);
+		for (String ref : allRefs) {
+			if (ref.startsWith(Constants.R_TAGS)) {
+				local.addRef(createSyncRrepoEntity(ref));
+			}
+		}
+		return local;
+	}
+
+	private SyncRefEntity createSyncRrepoEntity(String ref) {
+		String name = ref.substring(ref.lastIndexOf('/') + 1);
+		return new SyncRefEntity(name, ref);
 	}
 
 	private Collection<Ref> getRemoteRef(RefDatabase refDb, String remoteName)

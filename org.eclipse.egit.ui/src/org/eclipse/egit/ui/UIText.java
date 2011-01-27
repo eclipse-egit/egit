@@ -2802,6 +2802,9 @@ public class UIText extends NLS {
 	public static String SynchronizeWithAction_localRepoName;
 
 	/** */
+	public static String SynchronizeWithAction_tagsName;
+
+	/** */
 	public static String ValidationUtils_CanNotResolveRefMessage;
 
 	/** */
