@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///eg\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-22T22:59:07Z",
+      "side": 1,
+      "message": "typo s/INonIgnoderFilter were/NonIgnoredFilter was/",
+      "revId": "709bcae7bc6a994dc5065dd6b333a335fed7c493",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///ec\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-22T22:59:07Z",
+      "side": 1,
+      "message": "typo: remove first \"we\"",
+      "revId": "709bcae7bc6a994dc5065dd6b333a335fed7c493",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///eY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitFolderResourceVariant.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-22T22:59:07Z",
+      "side": 1,
+      "message": "should be mentioned in commit message",
+      "revId": "709bcae7bc6a994dc5065dd6b333a335fed7c493",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
