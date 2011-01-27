@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.compare.structuremergeviewer.Differencer;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -71,6 +73,11 @@ public class GitModelCommit extends GitModelObjectContainer implements
 		super(parent, commit, direction);
 
 		this.ancestorCommit = ancestorCommit;
+	}
+
+	@Override
+	public IPath getLocation() {
+		return new Path(getRepository().getWorkTree().toString());
 	}
 
 	@Override

@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.synchronize.model;
 
 import java.io.IOException;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.ObjectId;
@@ -37,10 +38,10 @@ public class GitModelWorkingTree extends GitModelCache {
 		super(parent, commit, new FileModelFactory() {
 			public GitModelBlob createFileModel(
 					GitModelObjectContainer modelParent, RevCommit modelCommit,
-					ObjectId repoId, ObjectId cacheId, String name)
+					ObjectId repoId, ObjectId cacheId, IPath location)
 					throws IOException {
 				return new GitModelWorkingFile(modelParent, modelCommit,
-						repoId, name);
+						repoId, location);
 			}
 		});
 	}
