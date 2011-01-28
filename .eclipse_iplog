@@ -3,7 +3,7 @@
 	license = Eclipse Public License v1.0
 
 [review]
-	url = http://egit.eclipse.org/r/r/
+	url = http://egit.eclipse.org/r/
 
 [consumes "technology.jgit"]
 	name = JGit
