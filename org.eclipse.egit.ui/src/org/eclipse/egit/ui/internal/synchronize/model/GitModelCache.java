@@ -174,7 +174,7 @@ public class GitModelCache extends GitModelObjectContainer {
 			return null;
 
 		if (shouldIncludeEntry(tw)) {
-			IPath path = new Path(tw.getPathString());
+			IPath path = getLocation().append(tw.getPathString());
 			ObjectId repoId = tw.getObjectId(BASE_NTH);
 			ObjectId cacheId = tw.getObjectId(REMOTE_NTH);
 
