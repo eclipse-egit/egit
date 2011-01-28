@@ -26,6 +26,7 @@ import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.ConfigurationChecker;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
@@ -65,6 +66,7 @@ public class GitImportWizard extends Wizard implements ProjectCreator,
 				.getProjects();
 		selectRepoPage.setWizard(this);
 		setNeedsProgressMonitor(true);
+		ConfigurationChecker.checkConfiguration();
 	}
 
 	@Override
