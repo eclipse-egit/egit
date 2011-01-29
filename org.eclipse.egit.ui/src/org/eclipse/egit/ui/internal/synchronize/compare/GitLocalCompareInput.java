@@ -54,6 +54,9 @@ public class GitLocalCompareInput extends GitCompareInput {
 				+ "/" + gitPath; //$NON-NLS-1$
 		IFile file = ROOT.getFileForLocation(new Path(absoluteFilePath));
 
+		if (file == null)
+			return new LocalNonWorkspaceTypedElement(absoluteFilePath);
+
 		return new LocalResourceTypedElement(file);
 	}
 
