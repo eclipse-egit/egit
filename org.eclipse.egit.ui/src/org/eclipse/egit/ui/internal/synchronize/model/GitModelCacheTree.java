@@ -26,7 +26,7 @@ public class GitModelCacheTree extends GitModelTree {
 
 	private final FileModelFactory factory;
 
-	private final Map<IPath, GitModelObject> cacheTreeMap;
+	private final Map<String, GitModelObject> cacheTreeMap;
 
 	/**
 	 * @param parent
@@ -47,7 +47,7 @@ public class GitModelCacheTree extends GitModelTree {
 			FileModelFactory factory) throws IOException {
 		super(parent, commit, null, repoId, repoId, cacheId, location);
 		this.factory = factory;
-		cacheTreeMap = new HashMap<IPath, GitModelObject>();
+		cacheTreeMap = new HashMap<String, GitModelObject>();
 	}
 
 	@Override
@@ -60,20 +60,29 @@ public class GitModelCacheTree extends GitModelTree {
 		return super.hashCode();
 	}
 
-	void addChild(ObjectId repoId, ObjectId cacheId, IPath path)
+	void addChild(ObjectId repoId, ObjectId cacheId, String path)
 			throws IOException {
-		if (path.getFileExtension() == null) {
+		String pathKey;
+		int firstSlash = path.indexOf("/"); //$NON-NLS-1$
+		if (firstSlash > -1)
+			pathKey = path.substring(0, firstSlash);
+		else
+			pathKey = path;
+
+		IPath fullPath = getLocation().append(pathKey);
+		if (path.contains("/")) { //$NON-NLS-1$
 			GitModelCacheTree cacheEntry = (GitModelCacheTree) cacheTreeMap
-					.get(path);
+					.get(pathKey);
 			if (cacheEntry == null) {
 				cacheEntry = new GitModelCacheTree(this, baseCommit, repoId,
-						cacheId, path, factory);
-				cacheTreeMap.put(path, cacheEntry);
+						cacheId, fullPath, factory);
+				cacheTreeMap.put(pathKey, cacheEntry);
 			}
-			cacheEntry.addChild(repoId, cacheId, path);
+			cacheEntry.addChild(repoId, cacheId,
+					path.substring(firstSlash + 1));
 		} else
-			cacheTreeMap.put(path, factory.createFileModel(this,
-					baseCommit, repoId, cacheId, path));
+			cacheTreeMap.put(pathKey, factory.createFileModel(this,
+					baseCommit, repoId, cacheId, fullPath));
 	}
 
 	@Override
