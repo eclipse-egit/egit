@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///V0\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:08:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly brackets in single line blocks",
+      "revId": "86b76b49fe6c75410523421e0fcf31d40b2d546e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///Vw\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:08:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly brackets in single line blocks",
+      "revId": "86b76b49fe6c75410523421e0fcf31d40b2d546e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///Vs\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:08:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly brackets in single line blocks",
+      "revId": "86b76b49fe6c75410523421e0fcf31d40b2d546e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///Vo\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:08:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly brackets in single line blocks",
+      "revId": "86b76b49fe6c75410523421e0fcf31d40b2d546e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///Vg\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:08:15Z",
+      "side": 1,
+      "message": "In deed it should be logged, and way it isn\u0027t?",
+      "revId": "86b76b49fe6c75410523421e0fcf31d40b2d546e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///Vk\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:08:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly brackets in single line blocks",
+      "revId": "86b76b49fe6c75410523421e0fcf31d40b2d546e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///Vc\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:08:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly brackets in single line blocks",
+      "revId": "86b76b49fe6c75410523421e0fcf31d40b2d546e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///VY\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:08:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly brackets in single line blocks",
+      "revId": "86b76b49fe6c75410523421e0fcf31d40b2d546e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///VU\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:08:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly brackets in single line blocks",
+      "revId": "86b76b49fe6c75410523421e0fcf31d40b2d546e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///VQ\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:08:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly brackets in single line blocks",
+      "revId": "86b76b49fe6c75410523421e0fcf31d40b2d546e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///VM\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:08:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly brackets in single line blocks",
+      "revId": "86b76b49fe6c75410523421e0fcf31d40b2d546e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///VI\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-25T18:08:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly brackets in single line blocks",
+      "revId": "86b76b49fe6c75410523421e0fcf31d40b2d546e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
