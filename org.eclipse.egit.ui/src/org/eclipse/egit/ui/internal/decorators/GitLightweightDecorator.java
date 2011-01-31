@@ -264,7 +264,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 					decoratableResource);
 			// Set (new) 'refreshed' timestamp
 			resource.setSessionProperty(REFRESHED_KEY,
-					new Long(System.currentTimeMillis()));
+					Long.valueOf(System.currentTimeMillis()));
 		} catch (IOException e) {
 			handleException(resource, new CoreException(new Status(
 					IStatus.ERROR, Activator.getPluginId(), e.getMessage(), e)));
@@ -756,7 +756,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 			try {
 				// Set (new) 'refresh' timestamp
 				root.setSessionProperty(REFRESH_KEY,
-						new Long(System.currentTimeMillis()));
+						Long.valueOf(System.currentTimeMillis()));
 			} catch (CoreException e) {
 				handleException(root, e);
 			}

@@ -246,7 +246,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 					} else {
 						length = asFile().length();
 						try {
-							rsrc.setSessionProperty(FILE_LENGTH_KEY, new Long(
+							rsrc.setSessionProperty(FILE_LENGTH_KEY, Long.valueOf(
 									length));
 						} catch (CoreException e) {
 							// Ignore
