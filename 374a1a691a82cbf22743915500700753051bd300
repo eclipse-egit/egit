@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n//+94\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-31T09:01:02Z",
+      "side": 1,
+      "message": "Here we want to get a \"root node\" (\u0027a\u0027 in yours example) to check it was already created or we should create it. Then we add a child to this node (child format is b/c/f.txt, and inside addChild() we do exactly the same.\r\n\r\nYes we can use here substring(0, indexOf(\"/\")) instead of splitting.",
+      "parentUuid": "AAAL2n//++Q\u003d",
+      "revId": "374a1a691a82cbf22743915500700753051bd300",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n//++M\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCache.java",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2011-01-31T07:19:50Z",
       "side": 1,
       "message": "path.substring(lastSlash+1) maybe better here.",
+      "revId": "374a1a691a82cbf22743915500700753051bd300",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+90\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-31T09:01:02Z",
+      "side": 1,
+      "message": "True, we can extract this value.",
+      "parentUuid": "AAAL2n//++M\u003d",
       "revId": "374a1a691a82cbf22743915500700753051bd300",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
