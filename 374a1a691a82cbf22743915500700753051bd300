@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n//++U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-01-31T07:19:50Z",
+      "side": 1,
+      "message": "isn\u0027t it faster to ask for path.indexOf(\u0027/\u0027)? We don\u0027t need all these substrings beeing created and we can stop after the first occurence.",
+      "revId": "374a1a691a82cbf22743915500700753051bd300",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//++Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-01-31T07:19:50Z",
+      "side": 1,
+      "message": "Is that correct? On a file \u0027a/b/c/f.txt\u0027 wont this path.split..[0] construct return only \u0027a\u0027 (instead of \u0027a/b/c\u0027 what I expect is what you want). Maybe its better to work with lastIndexOf(\u0027/\u0027) and substring().\nlastSlash \u003d path.lastIndexOf(\u0027/\u0027);\nif (lastSlash\u003e-1) pathKey \u003d path.substring(0, lastSlash);",
+      "revId": "374a1a691a82cbf22743915500700753051bd300",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//++M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-01-31T07:19:50Z",
+      "side": 1,
+      "message": "path.substring(lastSlash+1) maybe better here.",
+      "revId": "374a1a691a82cbf22743915500700753051bd300",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//++I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCacheTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-01-31T07:19:50Z",
+      "side": 1,
+      "message": "Same argument as in last file: you are only interested in the location of the last slash ... I guess indexOf+substring would be faster.",
+      "revId": "374a1a691a82cbf22743915500700753051bd300",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
