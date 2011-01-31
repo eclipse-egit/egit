@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///Fw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-27T19:45:31Z",
+      "side": 1,
+      "message": "This code is somehow connected with topic of change?\r\n\r\nI suppose not, because even when it is commented the non-workspace files and folders appears in sync-view",
+      "revId": "2e0f2ed8a6636df833925a741d55a98e3e517132",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
