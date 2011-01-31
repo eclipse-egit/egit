@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n//+/0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/GitLocalCompareInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-29T12:49:50Z",
+      "side": 1,
+      "message": "When we create IFile object for non-workspace file method exist() returns false. Can we somehow bypass this?",
+      "revId": "1e107b24c0fbf772d928cfd92c4db9457d6af512",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
