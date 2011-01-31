@@ -24,7 +24,6 @@ import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.SWTBot;
-import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotRadio;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -89,11 +88,12 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 		// fire action
 		bot.button(IDialogConstants.OK_LABEL).click();
-		bot.sleep(1000);
 
-		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-		bot.waitUntil(Conditions.treeHasRows(syncViewTree, 1), 10000);
+
+		// wait for synchronization process finish
+		waitUntilTreeHasNodeWithText(syncViewTree,
+				UIText.GitModelWorkingTree_workingTree);
 
 		SWTBotTreeItem[] syncItems = syncViewTree.getAllItems();
 		assertEquals(UIText.GitModelWorkingTree_workingTree,
