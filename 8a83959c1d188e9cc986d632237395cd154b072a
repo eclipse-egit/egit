@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///Ao\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/factories/GitAdapterFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-28T18:41:53Z",
+      "side": 1,
+      "message": "If you replace this line with those:\r\n\r\nIFile res \u003d root.getFileForLocation(obj.getLocation());\r\nif (res \u003d\u003d null)\r\n\tres \u003d root.getFile(obj.getLocation());\r\nreturn res;\r\n\r\nYou will get an default icon for non-workspace files ;)",
+      "revId": "8a83959c1d188e9cc986d632237395cd154b072a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
