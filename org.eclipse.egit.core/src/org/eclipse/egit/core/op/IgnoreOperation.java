@@ -37,7 +37,6 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.team.core.Team;
 
 /**
  * IgnoreOperation adds resources to a .gitignore file
@@ -74,10 +73,8 @@ public class IgnoreOperation implements IEGitOperation {
 				// NB This does the same thing in
 				// DecoratableResourceAdapter, but neither currently
 				// consult .gitignore
+				addIgnore(monitor, resource);
 
-				if (!Team.isIgnoredHint(resource)) {
-					addIgnore(monitor, resource);
-				}
 				monitor.worked(1);
 			}
 			monitor.done();
