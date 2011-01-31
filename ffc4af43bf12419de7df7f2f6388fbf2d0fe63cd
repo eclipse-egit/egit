@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///Y4\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-24T16:30:24Z",
+      "side": 1,
+      "message": "please give your name without \"_\" and with proper case : s/ilya_ivanov/Ilya Ivanov/ as this is meant for the human reader",
+      "revId": "ffc4af43bf12419de7df7f2f6388fbf2d0fe63cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///Y0\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-24T16:30:24Z",
+      "side": 1,
+      "message": "- why do you switch from package dependency to bundle dependency ?\n- why do you switch version range ?",
+      "revId": "ffc4af43bf12419de7df7f2f6388fbf2d0fe63cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///Yw\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/MylynCommitMessageProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-24T16:30:24Z",
+      "side": 1,
+      "message": "how is this related to your change ?",
+      "revId": "ffc4af43bf12419de7df7f2f6388fbf2d0fe63cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
