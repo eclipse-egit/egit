@@ -103,6 +103,24 @@
       "revId": "374a1a691a82cbf22743915500700753051bd300",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+9w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCacheTree.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-01-31T09:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//++I\u003d",
+      "revId": "374a1a691a82cbf22743915500700753051bd300",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
