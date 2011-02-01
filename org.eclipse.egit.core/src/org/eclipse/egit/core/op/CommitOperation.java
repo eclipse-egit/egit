@@ -14,7 +14,7 @@ package org.eclipse.egit.core.op;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
@@ -79,9 +79,9 @@ public class CommitOperation implements IEGitOperation {
 	// needed for amending
 	private Repository[] repos;
 
-	private ArrayList<IFile> notIndexed;
+	private Collection<IFile> notIndexed;
 
-	private ArrayList<IFile> notTracked;
+	private Collection<IFile> notTracked;
 
 	private boolean createChangeId;
 
@@ -100,8 +100,8 @@ public class CommitOperation implements IEGitOperation {
 	 * @param message
 	 *            the commit message
 	 */
-	public CommitOperation(IFile[] filesToCommit, ArrayList<IFile> notIndexed,
-			ArrayList<IFile> notTracked, String author, String committer,
+	public CommitOperation(IFile[] filesToCommit, Collection<IFile> notIndexed,
+			Collection<IFile> notTracked, String author, String committer,
 			String message) {
 		this.filesToCommit = filesToCommit;
 		this.notIndexed = notIndexed;
