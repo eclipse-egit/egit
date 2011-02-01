@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n//+4w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T07:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+6c\u003d",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n//+6Y\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2011-01-31T21:30:17Z",
       "side": 1,
       "message": "maybe better call this \"deletedPaths\" instead of \"rightOnly\" ?",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+4s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T07:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+6Y\u003d",
       "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n//+4o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T07:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+68\u003d",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n//+6g\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2011-01-31T21:30:17Z",
       "side": 1,
       "message": "why these funny steps for the int values ?",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+4k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T07:06:44Z",
+      "side": 1,
+      "message": "No particular reason. It may be easier to put something in between later.",
+      "parentUuid": "AAAL2n//+6g\u003d",
       "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n//+4g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T07:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+6k\u003d",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n//+64\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2011-01-31T21:30:17Z",
       "side": 1,
       "message": "style nit: no braces",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+4c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T07:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+64\u003d",
       "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -156,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n//+4U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T07:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+6w\u003d",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n//+6U\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
         "patchSetId": 2
@@ -208,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n//+4M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T07:06:44Z",
+      "side": 1,
+      "message": "renamed left... to base... and right... to compare...",
+      "parentUuid": "AAAL2n//+6Q\u003d",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n//+6o\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
         "patchSetId": 2
@@ -219,6 +363,24 @@
       "writtenOn": "2011-01-31T21:30:17Z",
       "side": 1,
       "message": "style nit: no braces",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+4I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T07:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+6o\u003d",
       "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
