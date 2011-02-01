@@ -54,6 +54,8 @@ import org.eclipse.ui.PlatformUI;
  * Push operation is performed upon successful completion of this wizard.
  */
 public class PushWizard extends Wizard {
+	private static final String HELP_CONTEXT = "org.eclipse.egit.ui.PushWizard"; //$NON-NLS-1$
+
 	private static String getURIsString(final Collection<URIish> uris) {
 		final StringBuilder sb = new StringBuilder();
 		boolean first = true;
@@ -88,6 +90,7 @@ public class PushWizard extends Wizard {
 		final List<RemoteConfig> remotes = RemoteConfig
 				.getAllRemoteConfigs(localDb.getConfig());
 		repoPage = new RepositorySelectionPage(false, remotes, null);
+		repoPage.setHelpContext(HELP_CONTEXT);
 		refSpecPage = new RefSpecPage(localDb, true) {
 			@Override
 			public void setVisible(boolean visible) {
@@ -98,6 +101,7 @@ public class PushWizard extends Wizard {
 				super.setVisible(visible);
 			}
 		};
+		refSpecPage.setHelpContext(HELP_CONTEXT);
 		confirmPage = new ConfirmationPage(localDb) {
 			@Override
 			public void setVisible(boolean visible) {
@@ -109,6 +113,7 @@ public class PushWizard extends Wizard {
 				super.setVisible(visible);
 			}
 		};
+		confirmPage.setHelpContext(HELP_CONTEXT);
 		// TODO use/create another cool icon
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 		setNeedsProgressMonitor(true);
