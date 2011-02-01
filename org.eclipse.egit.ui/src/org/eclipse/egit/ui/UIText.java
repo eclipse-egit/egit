@@ -2838,6 +2838,12 @@ public class UIText extends NLS {
 	public static String ValidationUtils_PleaseEnterNameMessage;
 
 	/** */
+	public static String GitMergeEditorInput_CalculatingDiffTaskName;
+
+	/** */
+	public static String GitMergeEditorInput_CheckingResourcesTaskName;
+
+	/** */
 	public static String GitMergeEditorInput_MergeEditorTitle;
 
 	/** */
