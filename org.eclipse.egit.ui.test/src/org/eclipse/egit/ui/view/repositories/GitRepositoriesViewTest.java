@@ -303,7 +303,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		waitInUI();
 		assertProjectExistence(PROJ2, true);
-		// TODO assertProjecIsShared currently failing
+		assertProjectIsShared(PROJ2, true);
 	}
 
 	@Test

@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.clone;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
@@ -42,14 +43,14 @@ public class ProjectUtils {
 	 *            the workings sets to add the created projects to, may be null
 	 *            or empty
 	 * @param monitor
-	 * @throws CoreException
-	 * @throws OperationCanceledException
+	 * @throws InvocationTargetException
+	 * @throws InterruptedException
 	 */
 	public static void createProjects(
 			final Set<ProjectRecord> projectsToCreate,
 			final Repository repository,
 			final IWorkingSet[] selectedWorkingSets, IProgressMonitor monitor)
-			throws CoreException, OperationCanceledException {
+			throws InvocationTargetException, InterruptedException {
 		IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
 			public void run(IProgressMonitor actMonitor) throws CoreException {
 				IWorkingSetManager workingSetManager = PlatformUI
@@ -79,7 +80,13 @@ public class ProjectUtils {
 				}
 			}
 		};
-		ResourcesPlugin.getWorkspace().run(wsr, monitor);
+		try {
+			ResourcesPlugin.getWorkspace().run(wsr, monitor);
+		} catch (OperationCanceledException e) {
+			throw new InterruptedException();
+		} catch (CoreException e) {
+			throw new InvocationTargetException(e);
+		}
 	}
 
 	private static IProject createExistingProject(final ProjectRecord record,
