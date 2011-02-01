@@ -485,6 +485,15 @@ public class UIText extends NLS {
 	public static String GitProjectPropertyPage_ValueUnbornBranch;
 
 	/** */
+	public static String GitProjectPropertyPage_RepositoryConfigurationGroup;
+
+	/** */
+	public static String GitProjectPropertyPage_AddChangeIdLabel;
+
+	/** */
+	public static String GitProjectPropertyPage_AddChangeIdTooltip;
+
+	/** */
 	public static String GitProjectsImportPage_NoProjectsMessage;
 
 	/** */
@@ -1488,12 +1497,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitDialog_StatusRemovedUntracked;
-
-	/** */
-	public static String CommitDialog_AddChangeIdLabel;
-
-	/** */
-	public static String CommitDialog_AddChangeIdTooltip;
 
 	/** */
 	public static String CommitDialog_WrongTypeOfCommitMessageProvider;
