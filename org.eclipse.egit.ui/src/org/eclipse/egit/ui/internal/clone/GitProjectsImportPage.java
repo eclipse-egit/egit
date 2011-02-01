@@ -26,21 +26,10 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CachedCheckboxTreeViewer;
@@ -56,7 +45,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -70,9 +58,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IWorkingSet;
-import org.eclipse.ui.IWorkingSetManager;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.PatternFilter;
 import org.eclipse.ui.dialogs.WorkingSetGroup;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -498,114 +484,6 @@ public class GitProjectsImportPage extends WizardPage {
 	}
 
 	/**
-	 * Create the selected projects
-	 * @param repository
-	 *
-	 * @return boolean <code>true</code> if all project creations were
-	 *         successful.
-	 */
-	boolean createProjects(final Repository repository) {
-		final Set<ProjectRecord> selected = getCheckedProjects();
-		WorkspaceModifyOperation op = new WorkspaceModifyOperation() {
-			protected void execute(IProgressMonitor monitor)
-					throws InvocationTargetException, InterruptedException {
-				try {
-					monitor.beginTask("", selected.size()); //$NON-NLS-1$
-					if (monitor.isCanceled()) {
-						throw new OperationCanceledException();
-					}
-					for (ProjectRecord projectRecord : selected) {
-						IProject project = createExistingProject(projectRecord,
-								new SubProgressMonitor(monitor, 1));
-						ConnectProviderOperation cpo = new ConnectProviderOperation(
-								project, repository.getDirectory());
-						try {
-							cpo.execute(new NullProgressMonitor());
-						} catch (CoreException e) {
-							throw new InvocationTargetException(e);
-						}
-					}
-				} finally {
-					monitor.done();
-				}
-			}
-		};
-		// run the new project creation operation
-		try {
-			getContainer().run(true, true, op);
-		} catch (InterruptedException e) {
-			return false;
-		} catch (InvocationTargetException e) {
-			// one of the steps resulted in a core exception
-			Throwable t = e.getTargetException();
-			Activator.handleError(UIText.WizardProjectImportPage_errorMessage,
-					t, true);
-			return false;
-		}
-		addProjectsToWorkingSet(selected);
-		return true;
-	}
-
-	private void addProjectsToWorkingSet(Set<ProjectRecord> selected) {
-		IWorkingSetManager workingSetManager = PlatformUI.getWorkbench()
-				.getWorkingSetManager();
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		for (ProjectRecord projectRecord : selected) {
-			IWorkingSet[] selectedWorkingSets = workingSetGroup
-					.getSelectedWorkingSets();
-			String projectName = projectRecord.getProjectName();
-			IProject project = root.getProject(projectName);
-			workingSetManager.addToWorkingSets(project, selectedWorkingSets);
-		}
-	}
-
-	/**
-	 * Create the project described in record. If it is successful return true.
-	 *
-	 * @param record
-	 * @param monitor
-	 * @return boolean <code>true</code> if successful
-	 * @throws InvocationTargetException
-	 * @throws InterruptedException
-	 */
-	private IProject createExistingProject(final ProjectRecord record,
-			IProgressMonitor monitor) throws InvocationTargetException,
-			InterruptedException {
-		String projectName = record.getProjectName();
-		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		final IProject project = workspace.getRoot().getProject(projectName);
-		if (record.description == null) {
-			// error case
-			record.description = workspace.newProjectDescription(projectName);
-			IPath locationPath = new Path(record.projectSystemFile
-					.getAbsolutePath());
-
-			// If it is under the root use the default location
-			if (Platform.getLocation().isPrefixOf(locationPath)) {
-				record.description.setLocation(null);
-			} else {
-				record.description.setLocation(locationPath);
-			}
-		} else {
-			record.description.setName(projectName);
-		}
-
-		try {
-			monitor.beginTask(
-					UIText.WizardProjectsImportPage_CreateProjectsTask, 100);
-			project.create(record.description, new SubProgressMonitor(monitor,
-					30));
-			project.open(IResource.BACKGROUND_REFRESH, new SubProgressMonitor(
-					monitor, 50));
-			return project;
-		} catch (CoreException e) {
-			throw new InvocationTargetException(e);
-		} finally {
-			monitor.done();
-		}
-	}
-
-	/**
 	 * Method used for test suite.
 	 *
 	 * @return CheckboxTreeViewer the viewer containing all the projects found
@@ -672,12 +550,19 @@ public class GitProjectsImportPage extends WizardPage {
 	/**
 	 * @return All the currently checked projects in the projectsList tree
 	 */
-	private Set<ProjectRecord> getCheckedProjects() {
+	public Set<ProjectRecord> getCheckedProjects() {
 		HashSet<ProjectRecord> ret = new HashSet<ProjectRecord>();
 		for (Object selected : projectsList.getCheckedElements())
 			ret.add((ProjectRecord) selected);
 
 		return ret;
+	}
+
+	/**
+	 * @return the selected working sets (may be empty)
+	 */
+	public IWorkingSet[] getSelectedWorkingSets() {
+		return workingSetGroup.getSelectedWorkingSets();
 	}
 
 	private void checkPageComplete() {
