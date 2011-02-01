@@ -108,10 +108,6 @@ public class UIPreferences {
 	/** */
 	public static final String SHOW_HOME_DIR_WARNING = "show_home_drive_warning"; //$NON-NLS-1$
 	/** */
-	public static final String TREE_COMPARE_ADDED_ONLY = "CompareTreeView_ShowAddedOnly"; //$NON-NLS-1$
-	/** */
-	public static final String TREE_COMPARE_DELETED_ONLY = "CompareTreeView_ShowDeletedOnly"; //$NON-NLS-1$
-	/** */
 	public static final String TREE_COMPARE_SHOW_EQUALS = "CompareTreeView_ShowEquals"; //$NON-NLS-1$
 
 	/**

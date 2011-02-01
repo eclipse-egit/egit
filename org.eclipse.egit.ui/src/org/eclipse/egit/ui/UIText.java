@@ -674,9 +674,6 @@ public class UIText extends NLS {
 	public static String CompareTargetSelectionDialog_WindowTitle;
 
 	/** */
-	public static String CompareTreeView_AddedOnlyTooltip;
-
-	/** */
 	public static String CompareTreeView_AnalyzingRepositoryTaskText;
 
 	/** */
@@ -687,9 +684,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CompareTreeView_ComparingWorkspaceVersionDescription;
-
-	/** */
-	public static String CompareTreeView_DeletedOnlyTooltip;
 
 	/** */
 	public static String CompareTreeView_EqualFilesTooltip;
