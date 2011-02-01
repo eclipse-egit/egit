@@ -11,6 +11,8 @@
 package org.eclipse.egit.ui.view.repositories;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -18,7 +20,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
@@ -213,8 +217,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				.getPluginLocalizedValue("ImportProjectsCommand"));
 		SWTBotShell shell = bot.shell(wizardTitle);
 		bot.radio(UIText.GitSelectWizardPage_ImportExistingButton).click();
-		// auto share
-		bot.radio(UIText.GitSelectWizardPage_AutoShareButton).click();
 		TableCollection selected = shell.bot().tree().selection();
 		String wizardNode = selected.get(0, 0);
 		// wizard directory should be working dir
@@ -250,6 +252,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		waitInUI();
 		assertProjectExistence(PROJ1, true);
+		assertProjectIsShared(PROJ1, true);
 	}
 
 	@Test
@@ -269,8 +272,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		shell = bot.shell(wizardTitle);
 		// try import existing project first
 		bot.radio(UIText.GitSelectWizardPage_ImportExistingButton).click();
-		// auto share
-		bot.radio(UIText.GitSelectWizardPage_AutoShareButton).click();
 		TableCollection selected = shell.bot().tree().selection();
 		String wizardNode = selected.get(0, 0);
 		// wizard directory should be PROJ2
@@ -302,6 +303,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		waitInUI();
 		assertProjectExistence(PROJ2, true);
+		// TODO assertProjecIsShared currently failing
 	}
 
 	@Test
@@ -321,8 +323,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		shell = bot.shell(wizardTitle);
 		// try import existing project first
 		bot.radio(UIText.GitSelectWizardPage_ImportExistingButton).click();
-		// auto share
-		bot.radio(UIText.GitSelectWizardPage_AutoShareButton).click();
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
 		waitInUI();
 		shell.bot().tree().getAllItems()[0].check();
@@ -344,6 +344,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		waitInUI();
 		assertProjectExistence(PROJ1, true);
 		assertProjectInWorkingSet(workingSetName, PROJ1);
+		assertProjectIsShared(PROJ1, true);
 	}
 
 	private void assertProjectInWorkingSet(String workingSetName,
@@ -358,6 +359,18 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		IProject project = (IProject) elements[0].getAdapter(IProject.class);
 		assertEquals("Wrong project in working set", projectName, project
 				.getName());
+	}
+	
+	private void assertProjectIsShared(String projectName,
+			boolean shouldBeShared) {
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
+				projectName);
+		RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+		if (shouldBeShared) {
+			assertNotNull(mapping);
+			assertNotNull(mapping.getRepository());
+		} else
+			assertNull(mapping);
 	}
 
 	@Test

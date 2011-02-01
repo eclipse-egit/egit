@@ -2375,22 +2375,13 @@ public class UIText extends NLS {
 	public static String GitSelectRepositoryPage_PleaseSelectMessage;
 
 	/** */
-	public static String GitSelectWizardPage_AutoShareButton;
-
-	/** */
 	public static String GitSelectWizardPage_ImportAsGeneralButton;
 
 	/** */
 	public static String GitSelectWizardPage_ImportExistingButton;
 
 	/** */
-	public static String GitSelectWizardPage_NoShareButton;
-
-	/** */
 	public static String GitSelectWizardPage_ProjectCreationHeader;
-
-	/** */
-	public static String GitSelectWizardPage_SharingProjectsHeader;
 
 	/** */
 	public static String GitSelectWizardPage_UseNewProjectsWizardButton;
