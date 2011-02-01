@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL13///2U\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-20T15:10:37Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///2A\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-20T15:10:37Z",
+      "side": 1,
+      "message": "there is no help icon in the push wizard ...",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///18\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-20T15:10:37Z",
+      "side": 1,
+      "message": "this link seems to be broken",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///14\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-20T15:10:37Z",
+      "side": 1,
+      "message": "link seems to be broken",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///1w\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-20T15:10:37Z",
+      "side": 1,
+      "message": "that\u0027s misleading, you should explain how the mapping will look like (branches are mapped so that they have identical names).",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///1s\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-20T15:10:37Z",
+      "side": 1,
+      "message": "better: (which points to the currently checked out branch)",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///10\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-20T15:10:37Z",
+      "side": 1,
+      "message": "that\u0027s cryptic and doesn\u0027t explain that this pushes to the review queue for the master branch",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///1o\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-20T15:10:37Z",
+      "side": 1,
+      "message": "style nit: [new branch] should be in quotes",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///1k\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-20T15:10:37Z",
+      "side": 1,
+      "message": "typo: s/errors you will the/errors the/",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
