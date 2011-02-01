@@ -16,6 +16,24 @@
       "revId": "9c7df5fca6edf6de48ddcc928c80d71aad1143ee",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+34\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T07:07:38Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+6s\u003d",
+      "revId": "9c7df5fca6edf6de48ddcc928c80d71aad1143ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
