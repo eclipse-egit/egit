@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n//+6c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T21:30:17Z",
+      "side": 1,
+      "message": "maybe better call this \"addedPaths\" instead of \"leftOnlyPaths\" ?",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+6Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T21:30:17Z",
+      "side": 1,
+      "message": "maybe better call this \"deletedPaths\" instead of \"rightOnly\" ?",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+68\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T21:30:17Z",
+      "side": 1,
+      "message": "typo: s/abd/and/",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+6g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T21:30:17Z",
+      "side": 1,
+      "message": "why these funny steps for the int values ?",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+6k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T21:30:17Z",
+      "side": 1,
+      "message": "style nit: no braces",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+64\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T21:30:17Z",
+      "side": 1,
+      "message": "style nit: no braces",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+60\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T21:30:17Z",
+      "side": 1,
+      "message": "style nit: no braces",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+6w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T21:30:17Z",
+      "side": 1,
+      "message": "style nit: no braces",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+6U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T21:30:17Z",
+      "side": 1,
+      "message": "any example what unknown could be ?",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+6Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T21:30:17Z",
+      "side": 1,
+      "message": "are there better names than left and right here ?",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+6o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T21:30:17Z",
+      "side": 1,
+      "message": "style nit: no braces",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
