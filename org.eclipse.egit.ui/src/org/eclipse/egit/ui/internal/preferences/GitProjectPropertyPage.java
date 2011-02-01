@@ -18,20 +18,26 @@ import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PropertyPage;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
 
 /**
  * Property page to be shown in project properties, if project is shared using
- * git provider. Currently there aren't any modifiable element.
+ * git provider.
  */
 public class GitProjectPropertyPage extends PropertyPage {
+
+	private static final String GERRIT = "gerrit"; //$NON-NLS-1$
+	private static final String ADD_CHANGE_ID = "addChangeId"; //$NON-NLS-1$
 
 	private Text gitDir;
 
@@ -43,12 +49,10 @@ public class GitProjectPropertyPage extends PropertyPage {
 
 	private Text workDir;
 
+	private Button changeIdButton;
+
 	@Override
 	protected Control createContents(Composite parent) {
-		// this page just shows read-only information to the user, no
-		// default/apply buttons needed
-		noDefaultAndApplyButton();
-
 		final Composite composite = new Composite(parent, SWT.NULL);
 
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -66,7 +70,61 @@ public class GitProjectPropertyPage extends PropertyPage {
 		id = createLabeledReadOnlyText(composite, UIText.GitProjectPropertyPage_LabelId);
 		state = createLabeledReadOnlyText(composite, UIText.GitProjectPropertyPage_LabelState);
 
-		// Get the project that is the source of this property page
+		Repository repository = getRepository();
+
+		if (repository != null) {
+			try {
+				fillValues(repository);
+			} catch (IOException e) {
+				if (GitTraceLocation.UI.isActive())
+					GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
+			}
+		}
+
+		changeIdButton = new Button(composite, SWT.CHECK);
+		changeIdButton.setText(UIText.CommitDialog_AddChangeIdLabel);
+		changeIdButton.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).span(2, 1).create());
+		changeIdButton.setToolTipText(UIText.CommitDialog_AddChangeIdTooltip);
+		if (repository != null) {
+			StoredConfig config = repository.getConfig();
+			boolean addChangeId = config.getBoolean(GERRIT, ADD_CHANGE_ID, false);
+			changeIdButton.setSelection(addChangeId);
+		}
+
+		return composite;
+	}
+
+	@Override
+	public boolean performOk() {
+		Repository repository = getRepository();
+		if (repository != null) {
+			StoredConfig config = repository.getConfig();
+			boolean addChangeId = changeIdButton.getSelection();
+			if (addChangeId) {
+				config.setBoolean(GERRIT, null, ADD_CHANGE_ID, true);
+			} else {
+				config.unset(GERRIT, null, ADD_CHANGE_ID);
+				if (config.getNames(GERRIT).isEmpty()) {
+					config.unsetSection(GERRIT, null);
+				}
+			}
+			try {
+				config.save();
+			} catch (IOException e) {
+				if (GitTraceLocation.UI.isActive()) {
+					GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Get the project that is the source of this property page.
+	 *
+	 * @return the repository
+	 */
+	private Repository getRepository() {
 		IProject project = null;
 		final IAdaptable element = getElement();
 		if (element instanceof IProject) {
@@ -80,17 +138,7 @@ public class GitProjectPropertyPage extends PropertyPage {
 
 		Repository repository = RepositoryMapping.getMapping(project)
 				.getRepository();
-
-		if (repository != null) {
-			try {
-				fillValues(repository);
-			} catch (IOException e) {
-				if (GitTraceLocation.UI.isActive())
-					GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
-			}
-		}
-
-		return composite;
+		return repository;
 	}
 
 	private void fillValues(Repository repository) throws IOException {

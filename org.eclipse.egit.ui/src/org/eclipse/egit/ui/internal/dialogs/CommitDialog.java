@@ -186,7 +186,6 @@ public class CommitDialog extends Dialog {
 	Text committerText;
 	Button amendingButton;
 	Button signedOffButton;
-	Button changeIdButton;
 	Button showUntrackedButton;
 
 	CheckboxTableViewer filesViewer;
@@ -336,20 +335,7 @@ public class CommitDialog extends Dialog {
 			}
 		});
 
-		changeIdButton = new Button(container, SWT.CHECK);
-		changeIdButton.setText(UIText.CommitDialog_AddChangeIdLabel);
-		changeIdButton.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).span(2, 1).create());
-		changeIdButton.setToolTipText(UIText.CommitDialog_AddChangeIdTooltip);
-		changeIdButton.addSelectionListener(new SelectionListener() {
-
-			public void widgetSelected(SelectionEvent e) {
-				refreshChangeIdText();
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// empty
-			}
-		});
+		refreshChangeIdText();
 
 		showUntrackedButton = new Button(container, SWT.CHECK);
 		showUntrackedButton.setText(UIText.CommitDialog_ShowUntrackedFiles);
@@ -376,11 +362,9 @@ public class CommitDialog extends Dialog {
 		commitText.getTextWidget().addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateSignedOffButton();
-				updateChangeIdButton();
 			}
 		});
 		updateSignedOffButton();
-		updateChangeIdButton();
 
 		Table resourcesTable = new Table(container, SWT.H_SCROLL | SWT.V_SCROLL
 				| SWT.FULL_SELECTION | SWT.MULTI | SWT.CHECK | SWT.BORDER);
@@ -527,18 +511,6 @@ public class CommitDialog extends Dialog {
 			curText += Text.DELIMITER;
 
 		signedOffButton.setSelection(curText.indexOf(getSignedOff() + Text.DELIMITER) != -1);
-	}
-
-	private void updateChangeIdButton() {
-		String curText = commitText.getText();
-		if (!curText.endsWith(Text.DELIMITER))
-			curText += Text.DELIMITER;
-
-		boolean hasId = curText.indexOf(Text.DELIMITER + "Change-Id: ") != -1; //$NON-NLS-1$
-		if (hasId) {
-			changeIdButton.setSelection(true);
-			createChangeId = true;
-		}
 	}
 
 	private String getSignedOff() {
@@ -911,6 +883,7 @@ public class CommitDialog extends Dialog {
 			RepositoryMapping repositoryMapping = RepositoryMapping
 					.getMapping(file.getProject());
 			Repository repo = repositoryMapping.getRepository();
+			createChangeId |= repo.getConfig().getBoolean("gerrit", "addChangeId", false);  //$NON-NLS-1$//$NON-NLS-2$
 			String path = repositoryMapping.getRepoRelativePath(file);
 			CommitItem item = new CommitItem();
 			item.status = getFileStatus(path, indexDiffs.get(repo));
@@ -1060,7 +1033,6 @@ public class CommitDialog extends Dialog {
 	}
 
 	private void refreshChangeIdText() {
-		createChangeId = changeIdButton.getSelection();
 		String text = commitText.getText().replaceAll(Text.DELIMITER, "\n"); //$NON-NLS-1$
 		if (createChangeId) {
 			String changedText = ChangeIdUtil.insertId(text,
