@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL13///zQ\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-20T17:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL13///2U\u003d",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL13///2A\u003d",
         "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2010-12-20T15:10:37Z",
       "side": 1,
       "message": "there is no help icon in the push wizard ...",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///zE\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-20T17:16:50Z",
+      "side": 1,
+      "message": "Done\r\n\r\nIt was only available in the wizard that opened from the repositories view. Now it\u0027s also there when using the context menu on a project.",
+      "parentUuid": "AAAL13///2A\u003d",
       "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL13///zA\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-20T17:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL13///18\u003d",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL13///14\u003d",
         "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2010-12-20T15:10:37Z",
       "side": 1,
       "message": "link seems to be broken",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///y8\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-20T17:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL13///14\u003d",
       "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL13///y4\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-20T17:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL13///1w\u003d",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL13///1s\u003d",
         "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2010-12-20T15:10:37Z",
       "side": 1,
       "message": "better: (which points to the currently checked out branch)",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///y0\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-20T17:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL13///1s\u003d",
       "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL13///yw\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-20T17:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL13///10\u003d",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL13///1o\u003d",
         "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
         "patchSetId": 3
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL13///ys\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-20T17:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL13///1o\u003d",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL13///1k\u003d",
         "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
         "patchSetId": 3
@@ -149,6 +293,24 @@
       "writtenOn": "2010-12-20T15:10:37Z",
       "side": 1,
       "message": "typo: s/errors you will the/errors the/",
+      "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL13///yo\u003d",
+        "filename": "org.eclipse.egit.doc/cheatsheets/push.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2010-12-20T17:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL13///1k\u003d",
       "revId": "2d47321290914547ca135087fc9b3f7f7b105ed0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
