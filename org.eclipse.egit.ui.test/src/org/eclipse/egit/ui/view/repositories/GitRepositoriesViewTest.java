@@ -11,8 +11,6 @@
 package org.eclipse.egit.ui.view.repositories;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -20,9 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
@@ -362,75 +358,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		IProject project = (IProject) elements[0].getAdapter(IProject.class);
 		assertEquals("Wrong project in working set", projectName, project
 				.getName());
-	}
-
-	@Test
-	public void testImportWizardGeneralProjectManualShareCancel()
-			throws Exception {
-		deleteAllProjects();
-		assertProjectExistence(PROJ2, false);
-		SWTBotTree tree = getOrOpenView().bot().tree();
-		String wizardTitle = NLS.bind(
-				UIText.GitCreateProjectViaWizardWizard_WizardTitle,
-				repositoryFile.getPath());
-		// start wizard from PROJ2
-		myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand().getNode(
-				PROJ2).select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("ImportProjectsCommand"));
-		SWTBotShell shell = bot.shell(wizardTitle);
-		shell = bot.shell(wizardTitle);
-		// import as general
-		bot.radio(UIText.GitSelectWizardPage_ImportAsGeneralButton).click();
-		// share manual
-		bot.radio(UIText.GitSelectWizardPage_InteractiveShareButton).click();
-		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		assertEquals(PROJ2, shell.bot().textWithLabel(
-				UIText.GitCreateGeneralProjectPage_ProjectNameLabel).getText());
-		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		assertEquals(PROJ2, shell.bot().table().getTableItem(0).getText(0));
-		// cancel -> not share
-		shell.bot().button(IDialogConstants.CANCEL_LABEL).click();
-		waitInUI();
-		assertProjectExistence(PROJ2, true);
-		RepositoryMapping mapping = RepositoryMapping
-				.getMapping(ResourcesPlugin.getWorkspace().getRoot()
-						.getProject(PROJ2));
-		assertNull(mapping);
-	}
-
-	@Test
-	public void testImportWizardGeneralProjectManualShareOk() throws Exception {
-		deleteAllProjects();
-		assertProjectExistence(PROJ2, false);
-		SWTBotTree tree = getOrOpenView().bot().tree();
-		String wizardTitle = NLS.bind(
-				UIText.GitCreateProjectViaWizardWizard_WizardTitle,
-				repositoryFile.getPath());
-		// start wizard from PROJ2
-		myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand().getNode(
-				PROJ2).select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("ImportProjectsCommand"));
-		SWTBotShell shell = bot.shell(wizardTitle);
-		shell = bot.shell(wizardTitle);
-		// import as general
-		bot.radio(UIText.GitSelectWizardPage_ImportAsGeneralButton).click();
-		// share manual
-		bot.radio(UIText.GitSelectWizardPage_InteractiveShareButton).click();
-		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		assertEquals(PROJ2, shell.bot().textWithLabel(
-				UIText.GitCreateGeneralProjectPage_ProjectNameLabel).getText());
-		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		assertEquals(PROJ2, shell.bot().table().getTableItem(0).getText(0));
-		// finish -> share
-		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
-		waitInUI();
-		assertProjectExistence(PROJ2, true);
-		RepositoryMapping mapping = RepositoryMapping
-				.getMapping(ResourcesPlugin.getWorkspace().getRoot()
-						.getProject(PROJ2));
-		assertNotNull(mapping);
 	}
 
 	@Test
