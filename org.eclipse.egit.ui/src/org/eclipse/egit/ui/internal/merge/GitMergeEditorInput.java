@@ -13,9 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareEditorInput;
@@ -24,14 +22,13 @@ import org.eclipse.compare.structuremergeviewer.DiffNode;
 import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.compare.structuremergeviewer.IDiffContainer;
 import org.eclipse.compare.structuremergeviewer.IDiffElement;
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -54,12 +51,13 @@ import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.eclipse.jgit.treewalk.filter.OrTreeFilter;
+import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.jgit.util.IO;
 import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.team.core.Team;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -81,8 +79,6 @@ public class GitMergeEditorInput extends CompareEditorInput {
 
 	private final IResource[] resources;
 
-	private DiffNode compareResult;
-
 	/**
 	 * @param useWorkspace
 	 *            if <code>true</code>, use the workspace content (i.e. the
@@ -102,177 +98,129 @@ public class GitMergeEditorInput extends CompareEditorInput {
 	@Override
 	protected Object prepareInput(IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException {
-		final Set<IFile> files = new HashSet<IFile>();
-		List<IContainer> folders = new ArrayList<IContainer>();
-		Set<IProject> projects = new HashSet<IProject>();
-
-		// collect all projects and sort the selected
-		// resources into files and folders; skip
-		// ignored resources
-		for (IResource res : resources) {
-			projects.add(res.getProject());
-			if (Team.isIgnoredHint(res))
-				continue;
-			if (res.getType() == IResource.FILE)
-				files.add((IFile) res);
-			else
-				folders.add((IContainer) res);
-		}
-
-		if (monitor.isCanceled())
-			throw new InterruptedException();
-
 		// make sure all resources belong to the same repository
-		Repository repo = null;
-		for (IProject project : projects) {
-			RepositoryMapping map = RepositoryMapping.getMapping(project);
-			if (repo != null && repo != map.getRepository())
+		RevWalk rw = null;
+		try {
+			monitor.beginTask(
+					UIText.GitMergeEditorInput_CheckingResourcesTaskName,
+					IProgressMonitor.UNKNOWN);
+			List<String> filterPaths = new ArrayList<String>();
+			Repository repo = null;
+			for (IResource resource : resources) {
+				RepositoryMapping map = RepositoryMapping.getMapping(resource
+						.getProject());
+				if (repo != null && repo != map.getRepository())
+					throw new InvocationTargetException(
+							new IllegalStateException(
+									UIText.AbstractHistoryCommanndHandler_NoUniqueRepository));
+				filterPaths.add(map.getRepoRelativePath(resource));
+				repo = map.getRepository();
+			}
+
+			if (repo == null)
 				throw new InvocationTargetException(
 						new IllegalStateException(
 								UIText.AbstractHistoryCommanndHandler_NoUniqueRepository));
-			repo = map.getRepository();
-		}
 
-		if (repo == null)
-			throw new InvocationTargetException(new IllegalStateException(
-					UIText.AbstractHistoryCommanndHandler_NoUniqueRepository));
+			if (monitor.isCanceled())
+				throw new InterruptedException();
 
-		if (monitor.isCanceled())
-			throw new InterruptedException();
+			rw = new RevWalk(repo);
 
-		// collect all file children of the selected folders
-		IResourceVisitor fileCollector = new IResourceVisitor() {
-			public boolean visit(IResource resource) throws CoreException {
-				if (Team.isIgnoredHint(resource))
-					return false;
-				if (resource.getType() == IResource.FILE) {
-					files.add((IFile) resource);
-				}
-				return true;
-			}
-		};
-
-		for (IContainer cont : folders) {
+			// get the "right" side (MERGE_HEAD for merge, ORIG_HEAD for rebase)
+			final RevCommit rightCommit;
 			try {
-				cont.accept(fileCollector);
-			} catch (CoreException e) {
-				// ignore here
+				String target;
+				if (repo.getRepositoryState().equals(RepositoryState.MERGING))
+					target = Constants.MERGE_HEAD;
+				else if (repo.getRepositoryState().equals(
+						RepositoryState.REBASING_INTERACTIVE))
+					target = readFile(repo.getDirectory(),
+							RebaseCommand.REBASE_MERGE + File.separatorChar
+									+ RebaseCommand.STOPPED_SHA);
+				else
+					target = Constants.ORIG_HEAD;
+				ObjectId mergeHead = repo.resolve(target);
+				if (mergeHead == null)
+					throw new IOException(NLS.bind(
+							UIText.ValidationUtils_CanNotResolveRefMessage,
+							target));
+				rightCommit = rw.parseCommit(mergeHead);
+			} catch (IOException e) {
+				throw new InvocationTargetException(e);
 			}
-		}
 
-		if (monitor.isCanceled())
-			throw new InterruptedException();
+			// we need the HEAD, also to determine the common
+			// ancestor
+			final RevCommit headCommit;
+			try {
+				ObjectId head = repo.resolve(Constants.HEAD);
+				if (head == null)
+					throw new IOException(NLS.bind(
+							UIText.ValidationUtils_CanNotResolveRefMessage,
+							Constants.HEAD));
+				headCommit = rw.parseCommit(head);
+			} catch (IOException e) {
+				throw new InvocationTargetException(e);
+			}
 
-		// our root node
-		this.compareResult = new DiffNode(Differencer.CONFLICTING);
+			final String fullBranch;
+			try {
+				fullBranch = repo.getFullBranch();
+			} catch (IOException e) {
+				throw new InvocationTargetException(e);
+			}
 
-		final RevWalk rw = new RevWalk(repo);
+			// try to obtain the common ancestor
+			List<RevCommit> startPoints = new ArrayList<RevCommit>();
+			rw.setRevFilter(RevFilter.MERGE_BASE);
+			startPoints.add(rightCommit);
+			startPoints.add(headCommit);
+			RevCommit ancestorCommit;
+			try {
+				rw.markStart(startPoints);
+				ancestorCommit = rw.next();
+			} catch (Exception e) {
+				ancestorCommit = null;
+			}
 
-		// get the "right" side (MERGE_HEAD for merge, ORIG_HEAD for rebase)
-		final RevCommit rightCommit;
-		try {
-			String target;
-			if (repo.getRepositoryState().equals(RepositoryState.MERGING))
-				target = Constants.MERGE_HEAD;
-			else if (repo.getRepositoryState().equals(
-					RepositoryState.REBASING_INTERACTIVE))
-				target = readFile(repo.getDirectory(),
-						RebaseCommand.REBASE_MERGE + File.separatorChar
-								+ RebaseCommand.STOPPED_SHA);
+			if (monitor.isCanceled())
+				throw new InterruptedException();
+
+			// set the labels
+			CompareConfiguration config = getCompareConfiguration();
+			config.setRightLabel(NLS.bind(LABELPATTERN, rightCommit
+					.getShortMessage(), rightCommit.name()));
+
+			if (!useWorkspace)
+				config.setLeftLabel(NLS.bind(LABELPATTERN, headCommit
+						.getShortMessage(), headCommit.name()));
 			else
-				target = Constants.ORIG_HEAD;
-			ObjectId mergeHead = repo.resolve(target);
-			if (mergeHead == null)
-				throw new IOException(NLS.bind(
-						UIText.ValidationUtils_CanNotResolveRefMessage, target));
-			rightCommit = rw.parseCommit(mergeHead);
-		} catch (IOException e) {
-			throw new InvocationTargetException(e);
-		}
+				config.setLeftLabel(UIText.GitMergeEditorInput_WorkspaceHeader);
 
-		// we need the HEAD, also to determine the common
-		// ancestor
-		final RevCommit headCommit;
-		try {
-			ObjectId head = repo.resolve(Constants.HEAD);
-			if (head == null)
-				throw new IOException(NLS.bind(
-						UIText.ValidationUtils_CanNotResolveRefMessage,
-						Constants.HEAD));
-			headCommit = rw.parseCommit(head);
-		} catch (IOException e) {
-			throw new InvocationTargetException(e);
-		}
+			if (ancestorCommit != null)
+				config.setAncestorLabel(NLS.bind(LABELPATTERN, ancestorCommit
+						.getShortMessage(), ancestorCommit.name()));
 
-		final String fullBranch;
-		try {
-			fullBranch = repo.getFullBranch();
-		} catch (IOException e) {
-			throw new InvocationTargetException(e);
-		}
+			// set title and icon
+			setTitle(NLS.bind(UIText.GitMergeEditorInput_MergeEditorTitle,
+					new Object[] {
+							Activator.getDefault().getRepositoryUtil()
+									.getRepositoryName(repo),
+							rightCommit.getShortMessage(), fullBranch }));
 
-		// try to obtain the common ancestor
-		List<RevCommit> startPoints = new ArrayList<RevCommit>();
-		rw.setRevFilter(RevFilter.MERGE_BASE);
-		startPoints.add(rightCommit);
-		startPoints.add(headCommit);
-		RevCommit ancestorCommit;
-		try {
-			rw.markStart(startPoints);
-			ancestorCommit = rw.next();
-		} catch (Exception e) {
-			ancestorCommit = null;
-		}
-
-		if (monitor.isCanceled())
-			throw new InterruptedException();
-
-		// set the labels
-		CompareConfiguration config = getCompareConfiguration();
-		config.setRightLabel(NLS.bind(LABELPATTERN, rightCommit
-				.getShortMessage(), rightCommit.name()));
-
-		if (!useWorkspace)
-			config.setLeftLabel(NLS.bind(LABELPATTERN, headCommit
-					.getShortMessage(), headCommit.name()));
-		else
-			config.setLeftLabel(UIText.GitMergeEditorInput_WorkspaceHeader);
-
-		if (ancestorCommit != null)
-			config.setAncestorLabel(NLS.bind(LABELPATTERN, ancestorCommit
-					.getShortMessage(), ancestorCommit.name()));
-
-		// set title and icon
-		setTitle(NLS.bind(UIText.GitMergeEditorInput_MergeEditorTitle,
-				new Object[] {
-						Activator.getDefault().getRepositoryUtil()
-								.getRepositoryName(repo),
-						rightCommit.getShortMessage(), fullBranch }));
-
-		// now we calculate the nodes containing the compare information
-		try {
-			for (IFile file : files) {
-				if (monitor.isCanceled())
-					throw new InterruptedException();
-
-				monitor.setTaskName(file.getFullPath().toString());
-
-				RepositoryMapping map = RepositoryMapping.getMapping(file);
-				String gitPath = map.getRepoRelativePath(file);
-				if (gitPath == null)
-					continue;
-
-				// ignore everything in .git
-				if (gitPath.startsWith(Constants.DOT_GIT))
-					continue;
-
-				fileToDiffNode(file, gitPath, map, this.compareResult,
-						rightCommit, headCommit, ancestorCommit, rw, monitor);
+			// build the nodes
+			try {
+				return buildDiffContainer(repo, rightCommit, headCommit,
+						ancestorCommit, filterPaths, rw, monitor);
+			} catch (IOException e) {
+				throw new InvocationTargetException(e);
 			}
-		} catch (IOException e) {
-			throw new InvocationTargetException(e);
+		} finally {
+			if (rw != null)
+				rw.dispose();
+			monitor.done();
 		}
-		return compareResult;
 	}
 
 	@Override
@@ -288,118 +236,154 @@ public class GitMergeEditorInput extends CompareEditorInput {
 		// we do NOT dispose the images, as these are shared
 	}
 
-	private void fileToDiffNode(final IFile file, String gitPath,
-			RepositoryMapping map, IDiffContainer root, RevCommit rightCommit,
-			RevCommit headCommit, RevCommit ancestorCommit, RevWalk rw,
+	private IDiffContainer buildDiffContainer(Repository repository,
+			RevCommit rightCommit, RevCommit headCommit,
+			RevCommit ancestorCommit, List<String> filterPaths, RevWalk rw,
 			IProgressMonitor monitor) throws IOException, InterruptedException {
 
-		if (monitor.isCanceled())
-			throw new InterruptedException();
+		monitor.setTaskName(UIText.GitMergeEditorInput_CalculatingDiffTaskName);
+		IDiffContainer result = new DiffNode(Differencer.CONFLICTING);
 
-		TreeWalk tw = new TreeWalk(map.getRepository());
-
-		List<String> paths = new ArrayList<String>();
-		paths.add(map.getRepoRelativePath(file));
-		tw.setFilter(PathFilterGroup.createFromStrings(paths));
-
-		int dcindex = tw.addTree(new DirCacheIterator(map.getRepository()
-				.readDirCache()));
-		int ftindex = tw.addTree(new FileTreeIterator(map.getRepository()));
-		int rtindex = tw.addTree(rw.parseTree(map.getRepository().resolve(
-				Constants.HEAD)));
-
-		tw.setRecursive(tw.getFilter().shouldBeRecursive());
-		tw.next();
-
-		DirCacheIterator dit = tw.getTree(dcindex, DirCacheIterator.class);
-
-		final DirCacheEntry indexEntry = dit == null ? null : dit
-				.getDirCacheEntry();
-
-		boolean conflicting = indexEntry != null && indexEntry.getStage() > 0;
-
-		AbstractTreeIterator rt = tw.getTree(rtindex,
-				AbstractTreeIterator.class);
-
-		FileTreeIterator fit = tw.getTree(ftindex, FileTreeIterator.class);
-		if (fit != null && fit.isEntryIgnored())
-			return;
-		// compare local file against HEAD to see if it was modified
-		boolean modified = fit != null && rt != null
-				&& !fit.getEntryObjectId().equals(rt.getEntryObjectId());
-
-		// if this is neither conflicting nor changed, we skip it
-		if (!conflicting && !modified)
-			return;
-
-		ITypedElement right;
-		if (conflicting)
-			right = CompareUtils.getFileRevisionTypedElement(gitPath,
-					rightCommit, map.getRepository());
-		else
-			right = CompareUtils.getFileRevisionTypedElement(gitPath,
-					headCommit, map.getRepository());
-
-		// can this really happen?
-		if (right instanceof EmptyTypedElement)
-			return;
-
-		IFileRevision rev;
-		// if the file is not conflicting (as it was auto-merged)
-		// we will show the auto-merged (local) version
-		if (!conflicting || useWorkspace)
-			rev = new LocalFileRevision(file);
-		else
-			rev = GitFileRevision.inCommit(map.getRepository(), headCommit,
-					gitPath, null);
-
-		EditableRevision leftEditable = new EditableRevision(rev) {
-			@Override
-			public void setContent(final byte[] newContent) {
-				try {
-					run(false, false, new IRunnableWithProgress() {
-						public void run(IProgressMonitor myMonitor)
-								throws InvocationTargetException,
-								InterruptedException {
-							try {
-								file.setContents(new ByteArrayInputStream(
-										newContent), false, true, myMonitor);
-							} catch (CoreException e) {
-								throw new InvocationTargetException(e);
-							}
-						}
-					});
-				} catch (InvocationTargetException e) {
-					Activator.handleError(e.getTargetException().getMessage(),
-							e.getTargetException(), true);
-				} catch (InterruptedException e) {
-					// ignore here
-				}
-			}
-		};
-		// make sure we don't need a round trip later
+		TreeWalk tw = new TreeWalk(repository);
 		try {
-			leftEditable.cacheContents(monitor);
-		} catch (CoreException e) {
-			throw new IOException(e.getMessage());
+			// filter by selected resources
+			if (filterPaths.size() > 1) {
+				List<TreeFilter> suffixFilters = new ArrayList<TreeFilter>();
+				for (String filterPath : filterPaths)
+					suffixFilters.add(PathFilter.create(filterPath));
+				TreeFilter otf = OrTreeFilter.create(suffixFilters);
+				tw.setFilter(otf);
+			} else if (filterPaths.size() > 0)
+				tw.setFilter(PathFilter.create(filterPaths.get(0)));
+
+			tw.setRecursive(true);
+
+			int dirCacheIndex = tw.addTree(new DirCacheIterator(repository
+					.readDirCache()));
+			int fileTreeIndex = tw.addTree(new FileTreeIterator(repository));
+			int repositoryTreeIndex = tw.addTree(rw.parseTree(repository
+					.resolve(Constants.HEAD)));
+
+			while (tw.next()) {
+				if (monitor.isCanceled())
+					throw new InterruptedException();
+
+				String gitPath = tw.getPathString();
+				monitor.setTaskName(gitPath);
+				DirCacheIterator dit = tw.getTree(dirCacheIndex,
+						DirCacheIterator.class);
+
+				final DirCacheEntry dirCacheEntry = dit == null ? null : dit
+						.getDirCacheEntry();
+
+				boolean conflicting = dirCacheEntry != null
+						&& dirCacheEntry.getStage() > 0;
+
+				AbstractTreeIterator rt = tw.getTree(repositoryTreeIndex,
+						AbstractTreeIterator.class);
+
+				FileTreeIterator fit = tw.getTree(fileTreeIndex,
+						FileTreeIterator.class);
+				if (fit == null || fit.isEntryIgnored())
+					continue;
+				// compare local file against HEAD to see if it was modified
+				boolean modified = rt != null
+						&& !fit.getEntryObjectId()
+								.equals(rt.getEntryObjectId());
+
+				// if this is neither conflicting nor changed, we skip it
+				if (!conflicting && !modified)
+					continue;
+
+				ITypedElement right;
+				if (conflicting)
+					right = CompareUtils.getFileRevisionTypedElement(gitPath,
+							rightCommit, repository);
+				else
+					right = CompareUtils.getFileRevisionTypedElement(gitPath,
+							headCommit, repository);
+
+				// can this really happen?
+				if (right instanceof EmptyTypedElement)
+					continue;
+
+				IFileRevision rev;
+				// if the file is not conflicting (as it was auto-merged)
+				// we will show the auto-merged (local) version
+
+				IPath locationPath = new Path(fit.getEntryFile().getPath());
+				final IFile file = ResourcesPlugin.getWorkspace().getRoot()
+						.getFileForLocation(locationPath);
+				if (file == null)
+					// TODO in the future, we should be able to show a version
+					// for a non-workspace file as well
+					continue;
+				if (!conflicting || useWorkspace)
+					rev = new LocalFileRevision(file);
+				else
+					rev = GitFileRevision.inCommit(repository, headCommit,
+							gitPath, null);
+
+				EditableRevision leftEditable = new EditableRevision(rev) {
+					@Override
+					public void setContent(final byte[] newContent) {
+						try {
+							run(false, false, new IRunnableWithProgress() {
+								public void run(IProgressMonitor myMonitor)
+										throws InvocationTargetException,
+										InterruptedException {
+									try {
+										file.setContents(
+												new ByteArrayInputStream(
+														newContent), false,
+												true, myMonitor);
+									} catch (CoreException e) {
+										throw new InvocationTargetException(e);
+									}
+								}
+							});
+						} catch (InvocationTargetException e) {
+							Activator
+									.handleError(e.getTargetException()
+											.getMessage(), e
+											.getTargetException(), true);
+						} catch (InterruptedException e) {
+							// ignore here
+						}
+					}
+				};
+				// make sure we don't need a round trip later
+				try {
+					leftEditable.cacheContents(monitor);
+				} catch (CoreException e) {
+					throw new IOException(e.getMessage());
+				}
+
+				int kind = Differencer.NO_CHANGE;
+				if (conflicting)
+					kind = Differencer.CONFLICTING;
+				else if (modified)
+					kind = Differencer.PSEUDO_CONFLICT;
+
+				DiffNode fileParent = getFileParent(result, file);
+
+				ITypedElement anc;
+				if (ancestorCommit != null)
+					anc = CompareUtils.getFileRevisionTypedElement(gitPath,
+							ancestorCommit, repository);
+				else
+					anc = null;
+				// we get an ugly black icon if we have an EmptyTypedElement
+				// instead of null
+				if (anc instanceof EmptyTypedElement)
+					anc = null;
+				// create the node as child
+				new DiffNode(fileParent, kind, anc, leftEditable, right);
+			}
+			return result;
+		} finally {
+			tw.release();
 		}
-
-		int kind = Differencer.NO_CHANGE;
-		if (conflicting)
-			kind = Differencer.CONFLICTING;
-		else if (modified)
-			kind = Differencer.PSEUDO_CONFLICT;
-
-		DiffNode fileParent = getFileParent(root, file);
-
-		ITypedElement anc;
-		if (ancestorCommit != null)
-			anc = CompareUtils.getFileRevisionTypedElement(gitPath,
-					ancestorCommit, map.getRepository());
-		else
-			anc = null;
-		// create the node as child
-		new DiffNode(fileParent, kind, anc, leftEditable, right);
 	}
 
 	private DiffNode getFileParent(IDiffContainer root, IFile file) {
