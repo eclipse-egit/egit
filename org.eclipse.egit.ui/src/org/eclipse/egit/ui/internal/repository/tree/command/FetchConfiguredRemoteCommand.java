@@ -16,31 +16,56 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.fetch.FetchConfiguredRemoteAction;
+import org.eclipse.egit.ui.internal.fetch.SimpleConfigureFetchDialog;
 import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.RemoteConfig;
 
 /**
  * Fetches from the remote
  */
 public class FetchConfiguredRemoteCommand extends
-		RepositoriesViewCommandHandler<FetchNode> {
+		RepositoriesViewCommandHandler<RepositoryTreeNode> {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		FetchNode node = getSelectedNodes(event).get(0);
-		RemoteNode remote = (RemoteNode) node.getParent();
+		RepositoryTreeNode treeNode = getSelectedNodes(event).get(0);
+		if (treeNode instanceof FetchNode) {
+			FetchNode node = (FetchNode) treeNode;
+			RemoteNode remote = (RemoteNode) node.getParent();
 
-		RemoteConfig config;
-		try {
-			config = new RemoteConfig(node.getRepository().getConfig(), remote
-					.getObject());
-		} catch (URISyntaxException e) {
-			throw new ExecutionException(e.getMessage());
+			try {
+				RemoteConfig config = new RemoteConfig(node.getRepository()
+						.getConfig(), remote.getObject());
+				new FetchConfiguredRemoteAction(node.getRepository(), config,
+						Activator.getDefault().getPreferenceStore().getInt(
+								UIPreferences.REMOTE_CONNECTION_TIMEOUT))
+						.start();
+			} catch (URISyntaxException e) {
+				Activator.handleError(e.getMessage(), e, true);
+			}
+		} else if (treeNode instanceof RepositoryNode) {
+			Repository repository = treeNode.getRepository();
+			RemoteConfig config = SimpleConfigureFetchDialog
+					.getConfiguredRemote(repository);
+			if (config == null) {
+				MessageDialog
+						.openInformation(
+								getShell(event),
+								UIText.SimpleFetchActionHandler_NothingToFetchDialogTitle,
+								UIText.SimpleFetchActionHandler_NothingToFetchDialogMessage);
+				return null;
+			}
+			FetchConfiguredRemoteAction op = new FetchConfiguredRemoteAction(
+					repository, config, Activator.getDefault()
+							.getPreferenceStore().getInt(
+									UIPreferences.REMOTE_CONNECTION_TIMEOUT));
+			op.start();
 		}
-		new FetchConfiguredRemoteAction(node.getRepository(), config,
-				Activator.getDefault().getPreferenceStore().getInt(
-						UIPreferences.REMOTE_CONNECTION_TIMEOUT)).start();
-
 		return null;
 	}
 }

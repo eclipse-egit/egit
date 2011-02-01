@@ -1,19 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Mathias Kinzler (SAP AG) - initial implementation
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -33,6 +30,7 @@ import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.PushResult;
+import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
@@ -40,10 +38,14 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * Push operation: pushing from local repository to one or many remote ones.
+ * Push to a {@link RemoteConfig}
  */
 public class PushConfiguredRemoteAction extends JobChangeAdapter implements
 		IEGitOperation {
+	/** The default RefSpec */
+	public static final RefSpec DEFAULT_PUSH_REF_SPEC = new RefSpec(
+			"refs/heads/*:refs/heads/*"); //$NON-NLS-1$
+
 	private static final int WORK_UNITS_PER_TRANSPORT = 10;
 
 	private final Repository localDb;
@@ -150,9 +152,13 @@ public class PushConfiguredRemoteAction extends JobChangeAdapter implements
 					transport.setCredentialsProvider(credentialsProvider);
 				transport.setTimeout(this.timeout);
 
-				if (rc != null)
-					transport.applyConfig(rc);
+				// default: if not refSpec, update all branches
+				if (rc.getPushRefSpecs().isEmpty())
+					rc.addPushRefSpec(DEFAULT_PUSH_REF_SPEC);
+
+				transport.applyConfig(rc);
 				transport.setDryRun(dryRun);
+
 				final EclipseGitProgressTransformer gitSubMonitor = new EclipseGitProgressTransformer(
 						subMonitor);
 				final PushResult pr = transport.push(gitSubMonitor, null);
@@ -180,7 +186,7 @@ public class PushConfiguredRemoteAction extends JobChangeAdapter implements
 	}
 
 	/**
-	 *
+	 * Run asynchronously
 	 */
 	public void start() {
 		String jobName = NLS.bind(
@@ -204,6 +210,6 @@ public class PushConfiguredRemoteAction extends JobChangeAdapter implements
 	}
 
 	public ISchedulingRule getSchedulingRule() {
-		return ResourcesPlugin.getWorkspace().getRoot();
+		return null;
 	}
 }
