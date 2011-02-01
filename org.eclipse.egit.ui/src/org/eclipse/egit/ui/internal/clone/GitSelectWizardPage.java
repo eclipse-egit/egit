@@ -62,9 +62,6 @@ public class GitSelectWizardPage extends WizardPage {
 	// see also remarks in GitCreateProjectViaWizardWizard
 
 	/** */
-	public static final int ACTION_DIALOG_SHARE = 0;
-
-	/** */
 	public static final int ACTION_AUTO_SHARE = 1;
 
 	/** */
@@ -81,8 +78,6 @@ public class GitSelectWizardPage extends WizardPage {
 	Button generalWizard;
 
 	Button actionAutoShare;
-
-	Button actionDialogShare;
 
 	Button actionNothing;
 
@@ -186,11 +181,6 @@ public class GitSelectWizardPage extends WizardPage {
 		actionAutoShare.setText(UIText.GitSelectWizardPage_AutoShareButton);
 		actionAutoShare.addSelectionListener(sl);
 
-		actionDialogShare = new Button(afterImportAction, SWT.RADIO);
-		actionDialogShare
-				.setText(UIText.GitSelectWizardPage_InteractiveShareButton);
-		actionDialogShare.addSelectionListener(sl);
-
 		actionNothing = new Button(afterImportAction, SWT.RADIO);
 		actionNothing.setText(UIText.GitSelectWizardPage_NoShareButton);
 		actionNothing.addSelectionListener(sl);
@@ -224,9 +214,6 @@ public class GitSelectWizardPage extends WizardPage {
 		switch (previousAct) {
 		case ACTION_AUTO_SHARE:
 			actionAutoShare.setSelection(true);
-			break;
-		case ACTION_DIALOG_SHARE:
-			actionDialogShare.setSelection(true);
 			break;
 		case ACTION_NO_SHARE:
 			actionNothing.setSelection(true);
@@ -306,8 +293,6 @@ public class GitSelectWizardPage extends WizardPage {
 	public int getActionSelection() {
 		if (actionAutoShare.getSelection())
 			return ACTION_AUTO_SHARE;
-		if (actionDialogShare.getSelection())
-			return ACTION_DIALOG_SHARE;
 		if (actionNothing.getSelection())
 			return ACTION_NO_SHARE;
 		return -1;
