@@ -48,7 +48,6 @@ import org.eclipse.swt.widgets.Group;
  * (automatic/manual/no share)
  */
 public class GitSelectWizardPage extends WizardPage {
-
 	/** */
 	public static final int EXISTING_PROJECTS_WIZARD = 0;
 
@@ -63,17 +62,19 @@ public class GitSelectWizardPage extends WizardPage {
 
 	private final String PREF_WIZ = getName() + "WizardSel"; //$NON-NLS-1$
 
-	Button importExisting;
+	private Button importExisting;
 
-	Button newProjectWizard;
+	private Button newProjectWizard;
 
-	Button generalWizard;
+	private Button generalWizard;
 
 	private TreeViewer tv;
 
 	private final Repository initialRepository;
 
 	private final String initialPath;
+
+	private int wizardSelection = EXISTING_PROJECTS_WIZARD;
 
 	/**
 	 * Default constructor
@@ -132,10 +133,17 @@ public class GitSelectWizardPage extends WizardPage {
 		main.setLayout(new GridLayout(1, false));
 
 		SelectionListener sl = new SelectionAdapter() {
-
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				tv.getTree().setEnabled(!newProjectWizard.getSelection());
+				if (importExisting.getSelection())
+					wizardSelection = EXISTING_PROJECTS_WIZARD;
+				else if (newProjectWizard.getSelection())
+					wizardSelection = NEW_WIZARD;
+				else if (generalWizard.getSelection())
+					wizardSelection = GENERAL_WIZARD;
+				else
+					wizardSelection = EXISTING_PROJECTS_WIZARD;
 				checkPage();
 			}
 		};
@@ -159,13 +167,12 @@ public class GitSelectWizardPage extends WizardPage {
 		generalWizard.addSelectionListener(sl);
 
 		IDialogSettings settings = Activator.getDefault().getDialogSettings();
-		int previousWiz;
 		try {
-			previousWiz = settings.getInt(PREF_WIZ);
+			wizardSelection = settings.getInt(PREF_WIZ);
 		} catch (NumberFormatException e) {
-			previousWiz = EXISTING_PROJECTS_WIZARD;
+			wizardSelection = EXISTING_PROJECTS_WIZARD;
 		}
-		switch (previousWiz) {
+		switch (wizardSelection) {
 		case EXISTING_PROJECTS_WIZARD:
 			importExisting.setSelection(true);
 			break;
@@ -236,13 +243,7 @@ public class GitSelectWizardPage extends WizardPage {
 	 * @return the wizard selection
 	 */
 	public int getWizardSelection() {
-		if (importExisting.getSelection())
-			return EXISTING_PROJECTS_WIZARD;
-		if (newProjectWizard.getSelection())
-			return NEW_WIZARD;
-		if (generalWizard.getSelection())
-			return GENERAL_WIZARD;
-		return -1;
+		return wizardSelection;
 	}
 
 	/**

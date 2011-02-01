@@ -13,16 +13,19 @@ package org.eclipse.egit.ui.internal.clone;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
@@ -32,22 +35,17 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.NewProjectAction;
-import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 /**
  * A wizard used to import existing projects from a {@link Repository}
  */
-public class GitCreateProjectViaWizardWizard extends Wizard implements
-		ProjectCreator {
-
+public class GitCreateProjectViaWizardWizard extends Wizard {
 	private final Repository myRepository;
 
 	private final String myGitDir;
-
-	private final IProject[] previousProjects;
 
 	private GitSelectWizardPage mySelectionPage;
 
@@ -61,10 +59,9 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 	 */
 	public GitCreateProjectViaWizardWizard(Repository repository, String path) {
 		super();
-		previousProjects = ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects();
 		myRepository = repository;
 		myGitDir = path;
+		setNeedsProgressMonitor(true);
 		setWindowTitle(NLS.bind(
 				UIText.GitCreateProjectViaWizardWizard_WizardTitle,
 				myRepository.getDirectory().getPath()));
@@ -83,7 +80,6 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 		};
 		addPage(myCreateGeneralProjectPage);
 		myProjectsImportPage = new GitProjectsImportPage() {
-
 			@Override
 			public void setVisible(boolean visible) {
 				setProjectsList(mySelectionPage.getPath());
@@ -95,9 +91,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 
 	@Override
 	public IWizardPage getNextPage(IWizardPage page) {
-
 		if (page == mySelectionPage) {
-
 			switch (mySelectionPage.getWizardSelection()) {
 			case GitSelectWizardPage.EXISTING_PROJECTS_WIZARD:
 				return myProjectsImportPage;
@@ -105,11 +99,8 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 				return null;
 			case GitSelectWizardPage.GENERAL_WIZARD:
 				return myCreateGeneralProjectPage;
-
 			}
-
 			return super.getNextPage(page);
-
 		} else if (page == myCreateGeneralProjectPage
 				|| page == myProjectsImportPage) {
 			return null;
@@ -128,17 +119,15 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 			return myCreateGeneralProjectPage.isPageComplete();
 		}
 		return super.canFinish();
-
 	}
 
 	@Override
 	public boolean performFinish() {
-
 		try {
 			getContainer().run(true, true, new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor)
 						throws InvocationTargetException, InterruptedException {
-						importProjects();
+					importProjects(monitor);
 				}
 			});
 		} catch (InvocationTargetException e) {
@@ -152,113 +141,105 @@ public class GitCreateProjectViaWizardWizard extends Wizard implements
 			return false;
 		}
 		return true;
-
 	}
 
-	/**
-	 *
-	 */
-	public void importProjects() {
-
-		// TODO progress monitoring and cancellation
-		Display.getDefault().syncExec(new Runnable() {
-
-			public void run() {
-
-				switch (mySelectionPage.getWizardSelection()) {
-				case GitSelectWizardPage.EXISTING_PROJECTS_WIZARD:
-					try {
-						ProjectUtils.createProjects(myProjectsImportPage
-								.getCheckedProjects(), myRepository,
-								myProjectsImportPage.getSelectedWorkingSets(),
-								new NullProgressMonitor());
-					} catch (OperationCanceledException e) {
-						return;
-					} catch (CoreException e) {
-						Activator.handleError(e.getMessage(), e, true);
-					}
-					break;
-				case GitSelectWizardPage.NEW_WIZARD:
+	private void importProjects(IProgressMonitor monitor)
+			throws InvocationTargetException, InterruptedException {
+		switch (mySelectionPage.getWizardSelection()) {
+		case GitSelectWizardPage.EXISTING_PROJECTS_WIZARD: {
+			final Set<ProjectRecord> projectsToCreate = new HashSet<ProjectRecord>();
+			final List<IWorkingSet> workingSets = new ArrayList<IWorkingSet>();
+			// get the data from the page in the UI thread
+			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+				public void run() {
+					projectsToCreate.addAll(myProjectsImportPage
+							.getCheckedProjects());
+					IWorkingSet[] workingSetArray = myProjectsImportPage
+							.getSelectedWorkingSets();
+					workingSets.addAll(Arrays.asList(workingSetArray));
+				}
+			});
+			ProjectUtils.createProjects(projectsToCreate, myRepository,
+					workingSets.toArray(new IWorkingSet[workingSets.size()]),
+					monitor);
+			break;
+		}
+		case GitSelectWizardPage.NEW_WIZARD: {
+			final List<IProject> previousProjects = Arrays
+					.asList(ResourcesPlugin.getWorkspace().getRoot()
+							.getProjects());
+			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+				public void run() {
 					new NewProjectAction(PlatformUI.getWorkbench()
 							.getActiveWorkbenchWindow()).run();
-					break;
-				case GitSelectWizardPage.GENERAL_WIZARD:
-					try {
-						final String projectName = myCreateGeneralProjectPage
-								.getProjectName();
-						final boolean defaultLocation = myCreateGeneralProjectPage
-								.isDefaultLocation();
-						getContainer().run(true, false,
-								new WorkspaceModifyOperation() {
-
-									@Override
-									protected void execute(
-											IProgressMonitor monitor)
-											throws CoreException,
-											InvocationTargetException,
-											InterruptedException {
-
-										final IProjectDescription desc = ResourcesPlugin
-												.getWorkspace()
-												.newProjectDescription(
-														projectName);
-										if (!defaultLocation)
-											desc
-													.setLocation(new Path(
-															myGitDir));
-
-										IProject prj = ResourcesPlugin
-												.getWorkspace().getRoot()
-												.getProject(desc.getName());
-										prj.create(desc, monitor);
-										prj.open(monitor);
-
-										ResourcesPlugin.getWorkspace()
-												.getRoot().refreshLocal(
-														IResource.DEPTH_ONE,
-														monitor);
-
-										File repoDir = myRepository.getDirectory();
-										ConnectProviderOperation cpo = new ConnectProviderOperation(prj, repoDir);
-										cpo.execute(new NullProgressMonitor());
-
-
-									}
-								});
-					} catch (InvocationTargetException e1) {
-						Activator.handleError(e1.getMessage(), e1
-								.getTargetException(), true);
-					} catch (InterruptedException e1) {
-						Activator.handleError(e1.getMessage(), e1, true);
+				}
+			});
+			IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
+				public void run(IProgressMonitor actMonitor)
+						throws CoreException {
+					IProject[] currentProjects = ResourcesPlugin.getWorkspace()
+							.getRoot().getProjects();
+					for (IProject current : currentProjects) {
+						if (!previousProjects.contains(current)) {
+							ConnectProviderOperation cpo = new ConnectProviderOperation(
+									current, myRepository.getDirectory());
+							cpo.execute(actMonitor);
+						}
 					}
-					break;
 
 				}
+			};
+			try {
+				ResourcesPlugin.getWorkspace().run(wsr, monitor);
+			} catch (CoreException e) {
+				throw new InvocationTargetException(e);
 			}
-		});
-	}
-
-	public IProject[] getAddedProjects() {
-
-		IProject[] currentProjects = ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects();
-
-		List<IProject> newProjects = new ArrayList<IProject>();
-
-		for (IProject current : currentProjects) {
-			boolean found = false;
-			for (IProject previous : previousProjects) {
-				if (previous.equals(current)) {
-					found = true;
-					break;
-				}
-			}
-			if (!found) {
-				newProjects.add(current);
-			}
+			break;
 		}
+		case GitSelectWizardPage.GENERAL_WIZARD: {
+			final String[] projectName = new String[1];
+			final boolean[] defaultLocation = new boolean[1];
+			// get the data from the page in the UI thread
+			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+				public void run() {
+					projectName[0] = myCreateGeneralProjectPage
+							.getProjectName();
+					defaultLocation[0] = myCreateGeneralProjectPage
+							.isDefaultLocation();
+				}
+			});
 
-		return newProjects.toArray(new IProject[0]);
+			try {
+				IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
+					public void run(IProgressMonitor actMonitor)
+							throws CoreException {
+						final IProjectDescription desc = ResourcesPlugin
+								.getWorkspace().newProjectDescription(
+										projectName[0]);
+						if (!defaultLocation[0])
+							desc.setLocation(new Path(myGitDir));
+
+						IProject prj = ResourcesPlugin.getWorkspace().getRoot()
+								.getProject(desc.getName());
+						prj.create(desc, actMonitor);
+						prj.open(actMonitor);
+
+						ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
+								IResource.DEPTH_ONE, actMonitor);
+
+						File repoDir = myRepository.getDirectory();
+						ConnectProviderOperation cpo = new ConnectProviderOperation(
+								prj, repoDir);
+						cpo.execute(new NullProgressMonitor());
+					}
+				};
+				ResourcesPlugin.getWorkspace().run(wsr, monitor);
+
+			} catch (CoreException e) {
+				throw new InvocationTargetException(e);
+			}
+			break;
+		}
+		}
 	}
-
 }
