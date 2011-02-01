@@ -121,6 +121,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n//+4Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T07:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+60\u003d",
+      "revId": "69e2a6befedf03e9ba7c2c98ad952b8c27c26c05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n//+6w\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
         "patchSetId": 2
