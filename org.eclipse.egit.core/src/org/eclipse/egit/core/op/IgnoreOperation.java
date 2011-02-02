@@ -35,7 +35,12 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.treewalk.FileTreeIterator;
+import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.WorkingTreeIterator;
+import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -73,8 +78,8 @@ public class IgnoreOperation implements IEGitOperation {
 				// NB This does the same thing in
 				// DecoratableResourceAdapter, but neither currently
 				// consult .gitignore
-				addIgnore(monitor, resource);
-
+				if (!isIgnored(resource))
+					addIgnore(monitor, resource);
 				monitor.worked(1);
 			}
 			monitor.done();
@@ -84,6 +89,25 @@ public class IgnoreOperation implements IEGitOperation {
 			throw new CoreException(Activator.error(
 					CoreText.IgnoreOperation_error, e));
 		}
+	}
+
+	private boolean isIgnored(IResource resource) throws IOException {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+		Repository repository = mapping.getRepository();
+		String path = mapping.getRepoRelativePath(resource);
+		TreeWalk walk = new TreeWalk(repository);
+		walk.addTree(new FileTreeIterator(repository));
+		walk.setFilter(PathFilter.create(path));
+		while (walk.next()) {
+			WorkingTreeIterator workingTreeIterator = walk.getTree(0,
+					WorkingTreeIterator.class);
+			if (walk.getPathString().equals(path)) {
+				return workingTreeIterator.isEntryIgnored();
+			}
+			if (workingTreeIterator.getEntryFileMode().equals(FileMode.TREE))
+				walk.enterSubtree();
+		}
+		return false;
 	}
 
 	/**
