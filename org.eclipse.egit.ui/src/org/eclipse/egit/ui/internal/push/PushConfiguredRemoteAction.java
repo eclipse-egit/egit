@@ -142,7 +142,6 @@ public class PushConfiguredRemoteAction {
 			}
 
 
-
 		};
 
 		job.setUser(true);
