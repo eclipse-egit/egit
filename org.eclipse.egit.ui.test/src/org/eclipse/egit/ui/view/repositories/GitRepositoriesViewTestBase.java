@@ -34,7 +34,7 @@ import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
-import org.eclipse.egit.ui.internal.push.PushConfiguredRemoteAction;
+import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
 import org.eclipse.egit.ui.test.Eclipse;
@@ -46,6 +46,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -69,10 +70,12 @@ public abstract class GitRepositoriesViewTestBase extends
 	private SWTBotView viewbot;
 
 	// the human-readable view name
-	protected final static String viewName = myUtil.getPluginLocalizedValue("GitRepositoriesView_name");
+	protected final static String viewName = myUtil
+			.getPluginLocalizedValue("GitRepositoriesView_name");
 
 	// the human readable Git category
-	private final static String gitCategory = myUtil.getPluginLocalizedValue("GitCategory_name");
+	private final static String gitCategory = myUtil
+			.getPluginLocalizedValue("GitCategory_name");
 
 	/**
 	 * remove all configured repositories from the view
@@ -89,7 +92,7 @@ public abstract class GitRepositoriesViewTestBase extends
 		gitDir.mkdir();
 		Repository myRepository = lookupRepository(gitDir);
 		myRepository.create();
-		
+
 		// TODO Bug: for some reason, this seems to be required
 		myRepository.getConfig().setString(ConfigConstants.CONFIG_CORE_SECTION,
 				null, ConfigConstants.CONFIG_KEY_REPO_FORMAT_VERSION, "0");
@@ -182,10 +185,9 @@ public abstract class GitRepositoriesViewTestBase extends
 
 		myRepository.getConfig().save();
 		// and push
-		PushConfiguredRemoteAction pa = new PushConfiguredRemoteAction(
-				myRepository, "push");
-
-		pa.run(null, false);
+		RemoteConfig config = new RemoteConfig(myRepository.getConfig(), "push");
+		PushOperationUI pa = new PushOperationUI(myRepository, config, 0, false);
+		pa.execute(null);
 		TestUtil.joinJobs(JobFamilies.PUSH);
 		try {
 			// delete the stable branch again

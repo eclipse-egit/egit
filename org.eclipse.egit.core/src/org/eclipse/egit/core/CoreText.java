@@ -213,6 +213,9 @@ public class CoreText extends NLS {
 	public static String PushOperation_InternalExceptionOccuredMessage;
 
 	/** */
+	public static String PushConfiguredRemoteAction_PushJobName;
+
+	/** */
 	public static String PushOperation_resultCancelled;
 
 	/** */
