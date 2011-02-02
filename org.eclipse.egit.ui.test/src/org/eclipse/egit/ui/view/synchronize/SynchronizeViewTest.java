@@ -182,7 +182,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 			public boolean test() throws Exception {
 				for (SWTBotTreeItem item : tree.getAllItems())
-					if (item.getText().startsWith(text))
+					if (item.getText().contains(text))
 						return true;
 				return false;
 			}
