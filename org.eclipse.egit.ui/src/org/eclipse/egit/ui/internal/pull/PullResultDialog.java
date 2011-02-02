@@ -17,7 +17,9 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.PullResult;
+import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
+import org.eclipse.jgit.api.RebaseResult.Status;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.osgi.util.NLS;
@@ -28,6 +30,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Display the result of a pull.
@@ -88,11 +93,34 @@ public class PullResultDialog extends Dialog {
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(
 				mergeResultGroup);
 		MergeResult mRes = result.getMergeResult();
+		RebaseResult rRes = result.getRebaseResult();
 		if (mRes != null
 				&& mRes.getMergeStatus() != MergeStatus.ALREADY_UP_TO_DATE) {
 			MergeResultDialog dlg = new MergeResultDialog(getParentShell(),
-					repo, result.getMergeResult());
+					repo, mRes);
 			dlg.createDialogArea(mergeResultGroup);
+		} else if (rRes != null && rRes.getStatus() != Status.UP_TO_DATE) {
+			switch (rRes.getStatus()) {
+			case OK:
+				// fall through
+			case FAST_FORWARD:
+				// fall through
+			case UP_TO_DATE:
+				// fall through
+			case ABORTED:
+				break;
+			case STOPPED:
+				Label errorLabel = new Label(mergeResultGroup, SWT.NONE);
+				errorLabel.setImage(PlatformUI.getWorkbench().getSharedImages()
+						.getImage(ISharedImages.IMG_OBJS_ERROR_TSK));
+				Text errorText = new Text(mergeResultGroup, SWT.READ_ONLY);
+				errorText.setText(UIText.PullResultDialog_RebaseStoppedMessage);
+				break;
+			}
+			Label statusLabel = new Label(mergeResultGroup, SWT.NONE);
+			statusLabel.setText(UIText.PullResultDialog_RebaseStatusLabel);
+			Text statusText = new Text(mergeResultGroup, SWT.READ_ONLY);
+			statusText.setText(rRes.getStatus().name());
 		} else {
 			Label noResult = new Label(mergeResultGroup, SWT.NONE);
 			noResult
