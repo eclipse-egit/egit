@@ -523,22 +523,22 @@
         tooltip="%PullIntoCurrentBranch.tooltip">
   </action>
 		<action
-        class="org.eclipse.egit.ui.internal.actions.FetchAction"
-        definitionId="org.eclipse.egit.ui.team.Fetch"
+        class="org.eclipse.egit.ui.internal.actions.SimpleFetchAction"
+        definitionId="org.eclipse.egit.ui.team.SimpleFetch"
         icon="icons/obj16/fetch.gif"
         id="org.eclipse.egit.ui.actionfetch"
-        label="%FetchAction_label"
+        label="%FetchFromUpstreamAction.label"
         menubarPath="org.eclipse.egit.ui.gitmenu/repo"
         style="push"
         toolbarPath="org.eclipse.egit.ui"
         tooltip="%FetchAction_tooltip">
 		</action>
 		<action
-        class="org.eclipse.egit.ui.internal.actions.PushAction"
-        definitionId="org.eclipse.egit.ui.team.Push"
+        class="org.eclipse.egit.ui.internal.actions.SimplePushAction"
+        definitionId="org.eclipse.egit.ui.team.SimplePush"
         icon="icons/obj16/push.gif"
         id="org.eclipse.egit.ui.actionpush"
-        label="%PushAction_label"
+        label="%PushToUpstreamAction.label"
         menubarPath="org.eclipse.egit.ui.gitmenu/repo"
         style="push"
         toolbarPath="org.eclipse.egit.ui"
@@ -2471,6 +2471,28 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.MergeToolActionHandler"
             id="org.eclipse.egit.ui.team.MergeTool"
             name="%MergeToolCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.SimplePushActionHandler"
+            id="org.eclipse.egit.ui.team.SimplePush"
+            name="%PushUpstreamCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.SimpleFetchActionHandler"
+            id="org.eclipse.egit.ui.team.SimpleFetch"
+            name="%FetchUpstreamCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.actions.ConfigureFetchActionHandler"
+            id="org.eclipse.egit.ui.ConfigureUpstreamFetch"
+            name="%ConfigureUpstreamFetchCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.actions.ConfigurePushActionHandler"
+            id="org.eclipse.egit.ui.ConfigureUpstreamPush"
+            name="%ConfigureUpstreamPushCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
