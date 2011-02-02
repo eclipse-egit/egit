@@ -8,10 +8,9 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.fetch;
+package org.eclipse.egit.ui.internal.push;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -20,28 +19,31 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.egit.core.op.FetchOperation;
+import org.eclipse.egit.core.op.PushOperation;
+import org.eclipse.egit.core.op.PushOperationResult;
+import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
-import org.eclipse.jgit.transport.TagOpt;
-import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 
 /**
- * UI Wrapper for {@link FetchOperation}
+ * UI Wrapper for {@link PushOperation}
  */
-public class FetchOperationUI {
+public class PushOperationUI {
+	/** The default RefSpec */
+	public static final RefSpec DEFAULT_PUSH_REF_SPEC = new RefSpec(
+			"refs/heads/*:refs/heads/*"); //$NON-NLS-1$
+
 	private final Repository repository;
 
-	private final FetchOperation op;
+	private final PushOperation op;
 
-	private final String sourceString;
+	private final String destinationString;
 
 	/**
 	 * @param repository
@@ -50,27 +52,32 @@ public class FetchOperationUI {
 	 * @param dryRun
 	 *
 	 */
-	public FetchOperationUI(Repository repository, RemoteConfig config,
+	public PushOperationUI(Repository repository, RemoteConfig config,
 			int timeout, boolean dryRun) {
 		this.repository = repository;
-		op = new FetchOperation(repository, config, timeout, dryRun);
-		sourceString = NLS.bind("{0} - {1}", repository.getDirectory() //$NON-NLS-1$
+		op = new PushOperation(repository, config, dryRun, timeout);
+		destinationString = NLS.bind("{0} - {1}", repository.getDirectory() //$NON-NLS-1$
 				.getParentFile().getName(), config.getName());
 
 	}
 
 	/**
 	 * @param repository
-	 * @param uri
-	 * @param specs
+	 * @param spec
 	 * @param timeout
 	 * @param dryRun
 	 */
-	public FetchOperationUI(Repository repository, URIish uri,
-			List<RefSpec> specs, int timeout, boolean dryRun) {
+	public PushOperationUI(Repository repository,
+			PushOperationSpecification spec, int timeout, boolean dryRun) {
 		this.repository = repository;
-		op = new FetchOperation(repository, uri, specs, timeout, dryRun);
-		sourceString = uri.toPrivateString();
+		op = new PushOperation(repository, spec, dryRun, timeout);
+		if (spec.getURIsNumber() == 1)
+			destinationString = spec.getURIs().iterator().next()
+					.toPrivateString();
+		else
+			destinationString = NLS.bind(
+					UIText.PushOperationUI_MultiRepositoriesDestinationString,
+					Integer.valueOf(spec.getURIsNumber()));
 	}
 
 	/**
@@ -81,20 +88,14 @@ public class FetchOperationUI {
 	}
 
 	/**
-	 * @param tagOpt
-	 */
-	public void setTagOpt(TagOpt tagOpt) {
-		op.setTagOpt(tagOpt);
-	}
-
-	/**
 	 * Executes this directly, without showing a confirmation dialog
 	 *
 	 * @param monitor
 	 * @return the result of the operation
 	 * @throws CoreException
 	 */
-	public FetchResult execute(IProgressMonitor monitor) throws CoreException {
+	public PushOperationResult execute(IProgressMonitor monitor)
+			throws CoreException {
 		try {
 			op.run(monitor);
 			return op.getOperationResult();
@@ -109,8 +110,8 @@ public class FetchOperationUI {
 	 * completion
 	 */
 	public void start() {
-		Job job = new Job(NLS.bind(UIText.FetchOperationUI_FetchJobName,
-				sourceString)) {
+		Job job = new Job(NLS.bind(UIText.PushOperationUI_PushJobName,
+				destinationString)) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
@@ -134,8 +135,8 @@ public class FetchOperationUI {
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent event) {
-				FetchResultDialog.show(repository, op.getOperationResult(),
-						sourceString);
+				PushResultDialog.show(repository, op.getOperationResult(),
+						destinationString);
 			}
 		});
 	}
@@ -143,7 +144,7 @@ public class FetchOperationUI {
 	/**
 	 * @return the string denoting the remote source
 	 */
-	public String getSourceString(){
-		return sourceString;
+	public String getDestinationString() {
+		return destinationString;
 	}
 }
