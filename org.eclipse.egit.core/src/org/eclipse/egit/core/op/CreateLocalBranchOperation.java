@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import java.io.IOException;
+
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -18,8 +20,10 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 
@@ -36,19 +40,24 @@ public class CreateLocalBranchOperation implements IEGitOperation {
 
 	private final RevCommit commit;
 
+	private final UpstreamConfig upstreamConfig;
+
 	/**
 	 * @param repository
 	 * @param name
 	 *            the name for the new local branch (without prefix)
 	 * @param ref
 	 *            the branch or tag to base the new branch upon
+	 * @param config
+	 *            how to do the upstream configuration
 	 */
 	public CreateLocalBranchOperation(Repository repository, String name,
-			Ref ref) {
+			Ref ref, UpstreamConfig config) {
 		this.name = name;
 		this.repository = repository;
 		this.ref = ref;
 		this.commit = null;
+		this.upstreamConfig = config;
 	}
 
 	/**
@@ -64,6 +73,7 @@ public class CreateLocalBranchOperation implements IEGitOperation {
 		this.repository = repository;
 		this.ref = null;
 		this.commit = commit;
+		this.upstreamConfig = null;
 	}
 
 	public void execute(IProgressMonitor m) throws CoreException {
@@ -82,16 +92,30 @@ public class CreateLocalBranchOperation implements IEGitOperation {
 				actMonitor.beginTask(taskName, 1);
 				Git git = new Git(repository);
 				try {
-					if (ref != null)
-						git.branchCreate().setName(name).setStartPoint(ref.getName())
-								.setUpstreamMode(SetupUpstreamMode.TRACK)
-								.call();
+					if (upstreamConfig != null
+							&& upstreamConfig != UpstreamConfig.NONE)
+						git.branchCreate().setName(name).setStartPoint(
+								ref.getName()).setUpstreamMode(
+								SetupUpstreamMode.TRACK).call();
 					else
 						git.branchCreate().setName(name).setStartPoint(commit)
 								.setUpstreamMode(SetupUpstreamMode.NOTRACK)
 								.call();
 				} catch (Exception e) {
 					throw new CoreException(Activator.error(e.getMessage(), e));
+				}
+
+				if (UpstreamConfig.REBASE == upstreamConfig) {
+					// set "branch.<name>.rebase" to "true"
+					StoredConfig config = repository.getConfig();
+					config.setBoolean(ConfigConstants.CONFIG_BRANCH_SECTION,
+							name, ConfigConstants.CONFIG_KEY_REBASE, true);
+					try {
+						config.save();
+					} catch (IOException e) {
+						throw new CoreException(Activator.error(e.getMessage(),
+								e));
+					}
 				}
 				actMonitor.worked(1);
 				actMonitor.done();
@@ -103,5 +127,17 @@ public class CreateLocalBranchOperation implements IEGitOperation {
 
 	public ISchedulingRule getSchedulingRule() {
 		return ResourcesPlugin.getWorkspace().getRoot();
+	}
+
+	/**
+	 * Describes how to configure the upstream branch
+	 */
+	public static enum UpstreamConfig {
+		/** Rebase */
+		REBASE(),
+		/** Merge */
+		MERGE(),
+		/** No configuration */
+		NONE();
 	}
 }

@@ -12,16 +12,16 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
-import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
+import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -117,22 +117,12 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 			}
 		});
 		newButton.addSelectionListener(new SelectionAdapter() {
-
 			public void widgetSelected(SelectionEvent e) {
-				// check what Ref the user selected if any
-				Ref ref = refFromDialog();
-
-				InputDialog labelDialog = getRefNameInputDialog(NLS.bind(
-						UIText.BranchSelectionDialog_QuestionNewBranchMessage,
-						ref.getName(), Constants.R_HEADS), Constants.R_HEADS,
-						null);
-
-				if (labelDialog.open() == Window.OK) {
-					String newRefName = labelDialog.getValue();
-					CreateLocalBranchOperation cbop = new CreateLocalBranchOperation(
-							repo, newRefName, ref);
+				CreateBranchWizard wiz = new CreateBranchWizard(repo,
+						refFromDialog());
+				if (new WizardDialog(getShell(), wiz).open() == Window.OK) {
+					String newRefName = wiz.getNewBranchName();
 					try {
-						cbop.execute(null);
 						branchTree.refresh();
 						markRef(Constants.R_HEADS + newRefName);
 					} catch (Throwable e1) {
@@ -147,10 +137,6 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 
 		super.createButtonsForButtonBar(parent);
 		getButton(Window.OK).setText(UIText.BranchSelectionDialog_OkCheckout);
-		// createButton(parent, IDialogConstants.OK_ID,
-		// UIText.BranchSelectionDialog_OkCheckout, true);
-		// createButton(parent, IDialogConstants.CANCEL_ID,
-		// IDialogConstants.CANCEL_LABEL, false);
 
 		// can't advance without a selection
 		getButton(Window.OK).setEnabled(!branchTree.getSelection().isEmpty());
