@@ -29,16 +29,18 @@ public class FetchConfiguredRemoteCommand extends
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		FetchNode node = getSelectedNodes(event).get(0);
 		RemoteNode remote = (RemoteNode) node.getParent();
+
+		RemoteConfig config;
 		try {
-			RemoteConfig config = new RemoteConfig(node.getRepository()
-					.getConfig(), remote.getObject());
-			int timeout = Activator.getDefault().getPreferenceStore().getInt(
-					UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-			new FetchOperationUI(node.getRepository(), config, timeout, false)
-					.start();
+			config = new RemoteConfig(node.getRepository().getConfig(), remote
+					.getObject());
 		} catch (URISyntaxException e) {
-			throw new ExecutionException(e.getMessage(), e);
+			throw new ExecutionException(e.getMessage());
 		}
+		new FetchOperationUI(node.getRepository(), config, Activator
+				.getDefault().getPreferenceStore().getInt(
+						UIPreferences.REMOTE_CONNECTION_TIMEOUT), false)
+				.start();
 		return null;
 	}
 }
