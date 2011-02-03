@@ -2655,6 +2655,12 @@ public class UIText extends NLS {
 	public static String GitBranchSynchronizeWizardPage_deselectAll;
 
 	/** */
+	public static String GitLightweightDecorator_AsynchronousDecorationError;
+
+	/** */
+	public static String GitLightweightDecorator_ResourceError;
+
+	/** */
 	public static String GitTraceConfigurationDialog_ApplyButton;
 
 	/** */
