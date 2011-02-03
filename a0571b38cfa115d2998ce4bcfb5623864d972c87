@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n//+4A\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T08:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+50\u003d",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n//+6I\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/SimpleConfigurePushDialog.java",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n//+3w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/SimpleConfigurePushDialog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T08:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+6I\u003d",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n//+6E\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/SimpleConfigurePushDialog.java",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2011-01-31T22:23:06Z",
       "side": 1,
       "message": "either add javadoc or remove it completely",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+3s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/SimpleConfigurePushDialog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T08:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+6E\u003d",
       "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n//+3c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T08:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+5w\u003d",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n//+58\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 8
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n//+3k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T08:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL2n//+58\u003d",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n//+54\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 8
@@ -115,6 +205,24 @@
       "writtenOn": "2011-01-31T22:23:06Z",
       "side": 1,
       "message": "did you want to add a parameter here ? Or is this trailing whitespace",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+3g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T08:24:05Z",
+      "side": 1,
+      "message": "Oops, Parameter of course... Done.",
+      "parentUuid": "AAAL2n//+54\u003d",
       "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
