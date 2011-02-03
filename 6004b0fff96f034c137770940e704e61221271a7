@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n//+vo\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "remove this new line",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+vk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "this line should be inside if (oldList !\u003d list), or outside?\r\nIf inside, please add brackets otherwise remove indentation.",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+vg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "please remove brackets since we don\u0027t use brackets for single line statements",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+vc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "please remove brackets",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+vY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "please remove brackets",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+vU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "please remove brackets",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+vQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "please remove brackets",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+vM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "one empty line between methods is enough ;)",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+vI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "brackets, once again ;)",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+vE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "remove brackets",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+vA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "remove brackets",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+u4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "please remove empty line",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+u8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "this method looks exactly the same as getAncestorTag(), maybe you can extract common code into private method?",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+u0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-03T14:19:28Z",
+      "side": 1,
+      "message": "remove brackets",
+      "revId": "6004b0fff96f034c137770940e704e61221271a7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
