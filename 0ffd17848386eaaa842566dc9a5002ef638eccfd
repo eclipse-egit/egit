@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n///jo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-21T10:19:55Z",
+      "side": 1,
+      "message": "I would put a comment here, this looks weird",
+      "revId": "0ffd17848386eaaa842566dc9a5002ef638eccfd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///js\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitDecoratorJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-21T10:19:55Z",
+      "side": 1,
+      "message": "remove this commented out debug code",
+      "revId": "0ffd17848386eaaa842566dc9a5002ef638eccfd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///jw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-21T10:19:55Z",
+      "side": 1,
+      "message": "remove this line, we don\u0027t want println and also no commented out code",
+      "revId": "0ffd17848386eaaa842566dc9a5002ef638eccfd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///jk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-21T10:19:55Z",
+      "side": 1,
+      "message": "I think this is ok",
+      "revId": "0ffd17848386eaaa842566dc9a5002ef638eccfd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n///j0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-21T10:19:55Z",
+      "side": 1,
+      "message": "when running the egit ui tests I hit this case many times, if this happens frequently either this points to a bug or we should not throw an error but instead only write a trace if debug trace is on, also the path of the resource should be given, otherwise this stack trace is quite useless to understand the cause\n\n!ENTRY org.eclipse.egit.ui 4 0 2011-01-21 11:02:57.596\n!MESSAGE Errors occurred while applying Git decorations to resources.\n!STACK 1\norg.eclipse.core.runtime.CoreException: Resource could not be decorated\n\tat org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.prepareDecoration(GitLightweightDecorator.java:299)\n\tat org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.processDecoration(GitLightweightDecorator.java:267)\n\tat org.eclipse.egit.ui.internal.decorators.GitDecoratorJob.run(GitDecoratorJob.java:60)\n\tat org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)\n!SUBENTRY 1 org.eclipse.egit.ui 4 0 2011-01-21 11:02:57.596\n!MESSAGE Resource could not be decorated",
+      "revId": "0ffd17848386eaaa842566dc9a5002ef638eccfd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
