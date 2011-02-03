@@ -51,6 +51,8 @@ import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
+import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
 import org.eclipse.jgit.treewalk.filter.OrTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
@@ -246,30 +248,41 @@ public class GitMergeEditorInput extends CompareEditorInput {
 
 		TreeWalk tw = new TreeWalk(repository);
 		try {
-			// filter by selected resources
-			if (filterPaths.size() > 1) {
-				List<TreeFilter> suffixFilters = new ArrayList<TreeFilter>();
-				for (String filterPath : filterPaths)
-					suffixFilters.add(PathFilter.create(filterPath));
-				TreeFilter otf = OrTreeFilter.create(suffixFilters);
-				tw.setFilter(otf);
-			} else if (filterPaths.size() > 0)
-				tw.setFilter(PathFilter.create(filterPaths.get(0)));
-
-			tw.setRecursive(true);
-
 			int dirCacheIndex = tw.addTree(new DirCacheIterator(repository
 					.readDirCache()));
 			int fileTreeIndex = tw.addTree(new FileTreeIterator(repository));
 			int repositoryTreeIndex = tw.addTree(rw.parseTree(repository
 					.resolve(Constants.HEAD)));
 
+			// skip ignored resources
+			NotIgnoredFilter notIgnoredFilter = new NotIgnoredFilter(
+					fileTreeIndex);
+			// filter by selected resources
+			if (filterPaths.size() > 1) {
+				List<TreeFilter> suffixFilters = new ArrayList<TreeFilter>();
+				for (String filterPath : filterPaths)
+					suffixFilters.add(PathFilter.create(filterPath));
+				TreeFilter otf = OrTreeFilter.create(suffixFilters);
+				tw.setFilter(AndTreeFilter.create(otf, notIgnoredFilter));
+			} else if (filterPaths.size() > 0)
+				tw.setFilter(AndTreeFilter.create(PathFilter.create(filterPaths
+						.get(0)), notIgnoredFilter));
+			else
+				tw.setFilter(notIgnoredFilter);
+
+			tw.setRecursive(true);
+
 			while (tw.next()) {
 				if (monitor.isCanceled())
 					throw new InterruptedException();
-
 				String gitPath = tw.getPathString();
 				monitor.setTaskName(gitPath);
+
+				FileTreeIterator fit = tw.getTree(fileTreeIndex,
+						FileTreeIterator.class);
+				if (fit == null)
+					continue;
+
 				DirCacheIterator dit = tw.getTree(dirCacheIndex,
 						DirCacheIterator.class);
 
@@ -282,10 +295,6 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				AbstractTreeIterator rt = tw.getTree(repositoryTreeIndex,
 						AbstractTreeIterator.class);
 
-				FileTreeIterator fit = tw.getTree(fileTreeIndex,
-						FileTreeIterator.class);
-				if (fit == null || fit.isEntryIgnored())
-					continue;
 				// compare local file against HEAD to see if it was modified
 				boolean modified = rt != null
 						&& !fit.getEntryObjectId()
