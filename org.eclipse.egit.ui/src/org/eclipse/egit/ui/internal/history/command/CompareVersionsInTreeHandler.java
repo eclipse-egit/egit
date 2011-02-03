@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,18 +18,22 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
+import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
-import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 /**
- * Compare the file contents of two commits.
+ * Compare the file contents of two commits in the {@link CompareTreeView}.
  */
-public class CompareVersionsHandler extends AbstractHistoryCommanndHandler {
+public class CompareVersionsInTreeHandler extends
+		AbstractHistoryCommanndHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = getSelection(getPage());
 		if (selection.size() == 2) {
@@ -40,6 +44,8 @@ public class CompareVersionsHandler extends AbstractHistoryCommanndHandler {
 			Object input = getPage().getInputInternal().getSingleItem();
 			Repository repository = getPage().getInputInternal()
 					.getRepository();
+			// IFile and File just for compatibility; the action should not be
+			// available in this case in the UI
 			if (input instanceof IFile) {
 				IFile resource = (IFile) input;
 				final RepositoryMapping map = RepositoryMapping
@@ -68,13 +74,27 @@ public class CompareVersionsHandler extends AbstractHistoryCommanndHandler {
 						base, next, null);
 				openInCompare(event, in);
 			} else if (input instanceof IResource) {
-				GitCompareEditorInput compareInput = new GitCompareEditorInput(
-						commit1.name(), commit2.name(), (IResource) input);
-				openInCompare(event, compareInput);
+				CompareTreeView view;
+				try {
+					view = (CompareTreeView) PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getActivePage()
+							.showView(CompareTreeView.ID);
+					view.setInput(new IResource[] { (IResource) input },
+							commit1.getId().name(), commit2.getId().name());
+				} catch (PartInitException e) {
+					Activator.handleError(e.getMessage(), e, true);
+				}
 			} else if (input == null) {
-				GitCompareEditorInput compareInput = new GitCompareEditorInput(
-						commit1.name(), commit2.name(), repository);
-				openInCompare(event, compareInput);
+				CompareTreeView view;
+				try {
+					view = (CompareTreeView) PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow().getActivePage()
+							.showView(CompareTreeView.ID);
+					view.setInput(repository, commit1.getId().name(), commit2
+							.getId().name());
+				} catch (PartInitException e) {
+					Activator.handleError(e.getMessage(), e, true);
+				}
 			}
 		}
 		return null;
