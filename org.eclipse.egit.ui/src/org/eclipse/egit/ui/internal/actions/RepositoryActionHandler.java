@@ -210,7 +210,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	private Repository getRepository(boolean warn,
 			IStructuredSelection selection, Shell shell) {
 		RepositoryMapping mapping = null;
-		for (IProject project : getSelectedProjects(selection)) {
+		for (IProject project : getProjectsForSelectedResources(selection)) {
 			RepositoryMapping repositoryMapping = RepositoryMapping
 					.getMapping(project);
 			if (mapping == null)
