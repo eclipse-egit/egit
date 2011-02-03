@@ -29,6 +29,9 @@ public class HistoryViewCommands {
 	/** "Compare with each other" */
 	public static final String COMPARE_VERSIONS = "org.eclipse.egit.ui.history.CompareVersions"; //$NON-NLS-1$
 
+	/** "Compare in Tree Compare" */
+	public static final String COMPARE_VERSIONS_IN_TREE = "org.eclipse.egit.ui.history.CompareVersionsInTree"; //$NON-NLS-1$
+
 	/** "Compare with working tree" */
 	public static final String COMPARE_WITH_TREE = "org.eclipse.egit.ui.history.CompareWithWorkingTree"; //$NON-NLS-1$
 

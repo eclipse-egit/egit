@@ -2326,6 +2326,21 @@ public class UIText extends NLS {
 	public static String Disconnect_disconnect;
 
 	/** */
+	public static String GitCompareEditorInput_CompareResourcesTaskName;
+
+	/** */
+	public static String GitCompareEditorInput_EditorTitle;
+
+	/** */
+	public static String GitCompareEditorInput_EditorTitleMultipleResources;
+
+	/** */
+	public static String GitCompareEditorInput_EditorTitleSingleResource;
+
+	/** */
+	public static String GitCompareEditorInput_ResourcesInDifferentReposMessagge;
+
+	/** */
 	public static String GitCompareFileRevisionEditorInput_CompareInputTitle;
 
 	/** */
@@ -2688,6 +2703,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitGraphTable_Committer;
+
+	/** */
+	public static String CommitGraphTable_CompareWithEachOtherInTreeMenuLabel;
 
 	/** */
 	public static String GitSynchronizeWizard_synchronize;

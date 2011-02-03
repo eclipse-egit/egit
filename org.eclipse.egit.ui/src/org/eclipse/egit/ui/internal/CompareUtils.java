@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jgit.dircache.DirCache;
@@ -283,7 +284,7 @@ public class CompareUtils {
 		for (int i = 0; i < editorRefs.length; i++) {
 			IEditorPart part = editorRefs[i].getEditor(false);
 			if (part != null
-					&& (part.getEditorInput() instanceof GitCompareFileRevisionEditorInput)
+					&& (part.getEditorInput() instanceof GitCompareFileRevisionEditorInput || part.getEditorInput() instanceof GitCompareEditorInput)
 					&& part instanceof IReusableEditor
 					&& part.getEditorInput().equals(input)) {
 				return part;

@@ -2545,6 +2545,11 @@
             name="%CompareCommand.name">
       </command>
       <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.CompareVersionsInTreeHandler"
+            id="org.eclipse.egit.ui.history.CompareVersionsInTree"
+            name="Compare in Tree">
+      </command>
+      <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.CompareWithWorkingTreeHandler"
             id="org.eclipse.egit.ui.history.CompareWithWorkingTree"
             name="%CompareWithWorkTreeCommand.name">
