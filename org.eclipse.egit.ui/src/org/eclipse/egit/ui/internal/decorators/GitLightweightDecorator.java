@@ -34,7 +34,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.QualifiedName;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.internal.util.ExceptionCollector;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryChangeListener;
@@ -216,6 +215,32 @@ public class GitLightweightDecorator extends LabelProvider implements
 		if (!resource.exists() && !resource.isPhantom())
 			return;
 
+		try {
+			final Long refreshed = (Long) resource
+					.getSessionProperty(REFRESHED_KEY);
+			if (refreshed != null) {
+				// Stored decoratable resource is available
+				final Long refresh = (Long) resource.getWorkspace().getRoot()
+						.getSessionProperty(REFRESH_KEY);
+				if (refresh == null
+						|| refresh.longValue() <= refreshed.longValue()) {
+					// Stored decoratable resource is up-to-date
+					final IDecoratableResource decoratableResource = (IDecoratableResource) resource
+							.getSessionProperty(DECORATABLE_RESOURCE_KEY);
+					if (decoratableResource != null) {
+						// Use stored decoratable resource
+						final DecorationHelper helper = new DecorationHelper(
+								activator.getPreferenceStore());
+						helper.decorate(decoration, decoratableResource);
+						return;
+					}
+				}
+			}
+		} catch (CoreException e) {
+			handleException(resource, e);
+			return;
+		}
+
 		// Don't decorate ignored resources (e.g. bin folder content)
 		if (Team.isIgnoredHint(resource))
 			return;
@@ -230,47 +255,82 @@ public class GitLightweightDecorator extends LabelProvider implements
 		if (mapping.getRepoRelativePath(resource) == null)
 			return;
 
-		try {
-			IDecoratableResource decoratableResource = null;
-			final DecorationHelper helper = new DecorationHelper(
-					activator.getPreferenceStore());
+		// No (up-to-date) stored decoratable resource is available, thus
+		// decoration request is added to the queue
+		GitDecoratorJob.getJobForRepository(
+				mapping.getGitDirAbsolutePath().toString())
+				.addDecorationRequest(element);
+	}
 
-			final Long refreshed = (Long) resource
-					.getSessionProperty(REFRESHED_KEY);
-			if (refreshed != null) {
-				// Stored decoratable resource is available
-				final IWorkspaceRoot root = resource.getWorkspace().getRoot();
-				final Long refresh = (Long) root
-						.getSessionProperty(REFRESH_KEY);
-				if (refresh == null
-						|| refresh.longValue() < refreshed.longValue()) {
-					// Stored decoratable resource is up-to-date
-					decoratableResource = (IDecoratableResource) resource
-							.getSessionProperty(DECORATABLE_RESOURCE_KEY);
-					if (decoratableResource != null) {
-						// Use stored decoratable resource
-						helper.decorate(decoration, decoratableResource);
-						return;
+	/**
+	 * Process decoration requests for the given list of elements
+	 *
+	 * @param elements
+	 *            the list of elements to be decorated
+	 */
+	static void processDecoration(final Object[] elements) {
+		final GitLightweightDecorator decorator = (GitLightweightDecorator) Activator
+				.getDefault().getWorkbench().getDecoratorManager()
+				.getBaseLabelProvider(DECORATOR_ID);
+		if (decorator != null)
+			decorator.prepareDecoration(elements);
+		else
+			exceptions
+					.handleException(new CoreException(
+							Activator
+									.createErrorStatus(UIText.GitLightweightDecorator_AsynchronousDecorationError)));
+	}
+
+	private void prepareDecoration(final Object[] elements) {
+		if (elements == null)
+			return;
+
+		final IResource[] resources = new IResource[elements.length];
+		for (int i = 0; i < elements.length; i++) {
+			if (elements[i] != null)
+				resources[i] = getResource(elements[i]);
+		}
+
+		try {
+			// Calculate resource decorations
+			IDecoratableResource[] decoratableResources = DecoratableResourceHelper
+					.createDecoratableResources(resources);
+
+			// Store decoration result in session property for each resource
+			for (int i = 0; i < decoratableResources.length; i++) {
+				try {
+					if (decoratableResources[i] != null) {
+						// Store decoratable resource in session
+						resources[i].setSessionProperty(
+								DECORATABLE_RESOURCE_KEY,
+								decoratableResources[i]);
+						// Set (new) 'refreshed' timestamp
+						resources[i].setSessionProperty(REFRESHED_KEY,
+								Long.valueOf(System.currentTimeMillis()));
+					} else {
+						if (resources[i] != null)
+							handleException(
+									resources[i],
+									new CoreException(
+											Activator
+													.createErrorStatus(UIText.GitLightweightDecorator_ResourceError)));
 					}
+				} catch (CoreException e) {
+					handleException(resources[i], e);
 				}
 			}
-
-			// No (up-to-date) stored decoratable resource is available
-			decoratableResource = new DecoratableResourceAdapter(resource);
-			helper.decorate(decoration, decoratableResource);
-
-			// Store decoratable resource in session
-			resource.setSessionProperty(DECORATABLE_RESOURCE_KEY,
-					decoratableResource);
-			// Set (new) 'refreshed' timestamp
-			resource.setSessionProperty(REFRESHED_KEY,
-					Long.valueOf(System.currentTimeMillis()));
 		} catch (IOException e) {
-			handleException(resource, new CoreException(new Status(
-					IStatus.ERROR, Activator.getPluginId(), e.getMessage(), e)));
-		} catch (CoreException e) {
-			handleException(resource, e);
+			exceptions
+					.handleException(new CoreException(
+							Activator
+									.createErrorStatus(
+											UIText.GitLightweightDecorator_AsynchronousDecorationError,
+											e)));
+			return;
 		}
+
+		// Re-trigger decoration process (in UI thread)
+		fireLabelEvent(new LabelProviderChangedEvent(this));
 	}
 
 	/**
