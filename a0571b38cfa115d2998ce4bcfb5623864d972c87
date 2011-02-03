@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n//+50\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T22:23:06Z",
+      "side": 1,
+      "message": "use empty lines to separate paragraphs",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+6I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/SimpleConfigurePushDialog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T22:23:06Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+6E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/SimpleConfigurePushDialog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T22:23:06Z",
+      "side": 1,
+      "message": "either add javadoc or remove it completely",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+6A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/SimpleConfigurePushDialog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T22:23:06Z",
+      "side": 1,
+      "message": "formatting looks strange here",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+5w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T22:23:06Z",
+      "side": 1,
+      "message": "I think this is a typo s/not found in remote Repository/not found in local repository/\n\non Fetch the remote tracking branch is in the local repository",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+58\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T22:23:06Z",
+      "side": 1,
+      "message": "typo: s/on/in/",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL2n//+54\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-01-31T22:23:06Z",
+      "side": 1,
+      "message": "did you want to add a parameter here ? Or is this trailing whitespace",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
