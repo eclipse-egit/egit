@@ -18,13 +18,16 @@ import java.util.Collection;
 
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.push.PushConfiguredRemoteAction;
+import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -125,6 +128,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 				destinationString);
 
 		// first time: expect new branch
+		TestUtil.joinJobs(JobFamilies.PUSH);
 		SWTBotShell confirmed = bot.shell(dialogTitle);
 		SWTBotTable table = confirmed.bot().table();
 		int rowCount = table.rowCount();
@@ -221,16 +225,12 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		objid = objid.substring(0, 7);
 		touchAndSubmit(null);
 		// push from other repository
-		PushConfiguredRemoteAction action = new PushConfiguredRemoteAction(
-				repository, "origin");
-
-		action.run(bot.activeShell().widget, false);
-
-		destinationString = clonedRepositoryFile2.getParentFile().getName()
-				+ " - " + "origin";
+		RemoteConfig config = new RemoteConfig(repository.getConfig(), "origin");
+		PushOperationUI op =new PushOperationUI(repository, config, 0, false);
+		op.start();
 
 		String pushdialogTitle = NLS.bind(UIText.ResultDialog_title,
-				destinationString);
+				op.getDestinationString());
 
 		bot.shell(pushdialogTitle).close();
 
@@ -243,6 +243,7 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("SimpleFetchCommand"));
 
+		TestUtil.joinJobs(JobFamilies.FETCH);
 		confirm = bot.shell(dialogTitle);
 		SWTBotTable table = confirm.bot().table();
 		boolean found = false;

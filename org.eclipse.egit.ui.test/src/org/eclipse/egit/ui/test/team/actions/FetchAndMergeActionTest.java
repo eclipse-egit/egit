@@ -134,8 +134,10 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
 		String menuString = util.getPluginLocalizedValue("FetchAction_label");
+		String submenuString = util
+				.getPluginLocalizedValue("RemoteSubMenu.label");
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
-				menuString);
+				submenuString, menuString);
 		SWTBotShell dialog = bot.shell(UIText.FetchWizard_windowTitleDefault);
 		return dialog;
 	}
