@@ -56,6 +56,7 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.utils.TableCollection;
+import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -305,6 +306,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 	public void testCreateBranch() throws Exception {
 		SWTBotShell dialog = openBranchDialog();
 		dialog.bot().button(UIText.BranchSelectionDialog_NewBranch).click();
+		bot.waitUntilWidgetAppears(Conditions.shellIsActive(UIText.BranchSelectionDialog_QuestionNewBranchTitle));
 		SWTBotShell branchNameDialog = bot
 				.shell(UIText.BranchSelectionDialog_QuestionNewBranchTitle);
 		branchNameDialog.bot().text().setText("master");
@@ -350,6 +352,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 	public void testRenameBranch() throws Exception {
 		SWTBotShell dialog = openBranchDialog();
 		dialog.bot().button(UIText.BranchSelectionDialog_NewBranch).click();
+		bot.waitUntilWidgetAppears(Conditions.shellIsActive(UIText.BranchSelectionDialog_QuestionNewBranchTitle));
 		SWTBotShell branchNameDialog = bot
 				.shell(UIText.BranchSelectionDialog_QuestionNewBranchTitle);
 		branchNameDialog.bot().text().setText("master");
