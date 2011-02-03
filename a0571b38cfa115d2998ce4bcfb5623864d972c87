@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL2n//+3o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/SimpleConfigurePushDialog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-01T08:24:05Z",
+      "side": 1,
+      "message": "I verified that this is the formatting the configured code formatter produces.",
+      "parentUuid": "AAAL2n//+6A\u003d",
+      "revId": "a0571b38cfa115d2998ce4bcfb5623864d972c87",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL2n//+5w\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 8
