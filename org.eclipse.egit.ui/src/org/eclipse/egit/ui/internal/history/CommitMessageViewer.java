@@ -18,6 +18,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,10 +46,16 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.RawText;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -305,13 +315,65 @@ class CommitMessageViewer extends TextViewer implements
 		for (int i = 0; i < commit.getChildCount(); i++) {
 			final RevCommit p = commit.getChild(i);
 			d.append(UIText.CommitMessageViewer_child);
-			d.append(":  "); //$NON-NLS-1$
+			d.append(": "); //$NON-NLS-1$
 			addLink(d, styles, p);
 			d.append(" ("); //$NON-NLS-1$
 			d.append(p.getShortMessage());
 			d.append(")"); //$NON-NLS-1$
 			d.append(LF);
 		}
+
+		d.append(UIText.CommitMessageViewer_branches);
+		d.append(": "); //$NON-NLS-1$
+		for (Iterator<Ref> i = getBranches().iterator(); i.hasNext(); ) {
+			Ref head = i.next();
+			RevCommit p;
+			try {
+				p = new RevWalk(db).parseCommit(head.getObjectId());
+				addLink(d, formatHeadRef(head), styles, p);
+				if (i.hasNext()) {
+					d.append(", "); //$NON-NLS-1$
+				}
+			} catch (MissingObjectException e) {
+				Activator.logError(e.getMessage(), e);
+			} catch (IncorrectObjectTypeException e) {
+				Activator.logError(e.getMessage(), e);
+			} catch (IOException e) {
+				Activator.logError(e.getMessage(), e);
+			}
+		}
+		d.append(LF);
+
+		d.append(UIText.CommitMessageViewer_tags);
+		d.append(": "); //$NON-NLS-1$
+		d.append(getTagsString());
+		d.append(LF);
+
+		d.append(UIText.CommitMessageViewer_follows);
+		d.append(": "); //$NON-NLS-1$
+		try {
+			Ref tag  = getAncestorTag();
+			if (tag != null) {
+				RevCommit p = new RevWalk(db).parseCommit(tag.getObjectId());
+				addLink(d, formatTagRef(tag), styles, p);
+			}
+		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
+		}
+		d.append(LF);
+
+		d.append(UIText.CommitMessageViewer_precedes);
+		d.append(": "); //$NON-NLS-1$
+		try {
+			Ref tag  = getChildTag();
+			if (tag != null) {
+				RevCommit p = new RevWalk(db).parseCommit(tag.getObjectId());
+				addLink(d, formatTagRef(tag), styles, p);
+			}
+		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
+		}
+		d.append(LF);
 
 		makeGrayText(d, styles);
 		d.append(LF);
@@ -349,6 +411,41 @@ class CommitMessageViewer extends TextViewer implements
 		getTextWidget().setStyleRanges(arr);
 	}
 
+	private String getTagsString() {
+		StringBuilder sb = new StringBuilder();
+		Map<String, Ref> tagsMap = db.getTags();
+		for (String tagName : tagsMap.keySet()) {
+			ObjectId peeledId = tagsMap.get(tagName).getPeeledObjectId();
+			if (peeledId != null && peeledId.equals(commit)) {
+				if (sb.length() > 0) {
+					sb.append(", "); //$NON-NLS-1$
+				}
+				sb.append(tagName);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	private String formatHeadRef(Ref ref) {
+		final String name = ref.getName();
+		if (name.startsWith(Constants.R_HEADS)) {
+			return name.substring(Constants.R_HEADS.length());
+		} else if (name.startsWith(Constants.R_REMOTES)) {
+			return name.substring(Constants.R_REMOTES.length());
+		}
+		return name;
+	}
+
+	private String formatTagRef(Ref ref) {
+		final String name = ref.getName();
+		if (name.startsWith(Constants.R_TAGS)) {
+			return name.substring(Constants.R_TAGS.length());
+		}
+		return name;
+	}
+
+
 	private void makeGrayText(StringBuilder d, ArrayList<StyleRange> styles) {
 		int p0 = 0;
 		for (int i = 0; i < styles.size(); ++i) {
@@ -371,16 +468,21 @@ class CommitMessageViewer extends TextViewer implements
 		}
 	}
 
-	private void addLink(final StringBuilder d,
+	private void addLink(final StringBuilder d, String linkLabel,
 			final ArrayList<StyleRange> styles, final RevCommit to) {
 		final ObjectLink sr = new ObjectLink();
 		sr.targetCommit = to;
 		sr.foreground = sys_linkColor;
 		sr.underline = true;
 		sr.start = d.length();
-		d.append(to.getId().name());
+		d.append(linkLabel);
 		sr.length = d.length() - sr.start;
 		styles.add(sr);
+	}
+
+	private void addLink(final StringBuilder d,
+			final ArrayList<StyleRange> styles, final RevCommit to) {
+		addLink(d, to.getId().name(), styles, to);
 	}
 
 	private void addDiff(final StringBuilder d,
@@ -525,6 +627,106 @@ class CommitMessageViewer extends TextViewer implements
 			}
 		}
 
+	}
+
+	private Ref getAncestorTag() throws IOException {
+		RevWalk revWalk = new RevWalk(db);
+
+		Map<String, Ref> tagsMap = db.getTags();
+		Ref tagRef = null;
+
+		for (String tagName : tagsMap.keySet()) {
+			// both RevCommits must be allocated using same RevWalk instance,
+			// otherwise isMergedInto returns wrong result!
+			RevCommit current = revWalk.parseCommit(commit);
+			RevCommit newTag = revWalk.parseCommit(tagsMap.get(tagName).getObjectId());
+
+			if (newTag.getId().equals(commit)) {
+				continue;
+			}
+
+			if (revWalk.isMergedInto(newTag, current)) {
+				if (tagRef != null) {
+					RevCommit oldTag = revWalk.parseCommit(tagRef.getObjectId());
+
+					// if oldTag is ancestor of newTag, taking new one
+					if (revWalk.isMergedInto(oldTag, newTag)) {
+						tagRef = tagsMap.get(tagName);
+					}
+				} else {
+					tagRef = tagsMap.get(tagName);
+				}
+			}
+
+		}
+
+
+		return tagRef;
+	}
+
+	private Ref getChildTag() throws IOException {
+		RevWalk revWalk = new RevWalk(db);
+
+		Map<String, Ref> tagsMap = db.getTags();
+		Ref tagRef = null;
+
+		for (String tagName : tagsMap.keySet()) {
+			// both RevCommits must be allocated using same RevWalk instance,
+			// otherwise isMergedInto returns wrong result!
+			RevCommit current = revWalk.parseCommit(commit);
+			RevCommit newTag = revWalk.parseCommit(tagsMap.get(tagName).getObjectId());
+
+			if (newTag.getId().equals(commit)) {
+				continue;
+			}
+
+			if (revWalk.isMergedInto(current, newTag)) {
+				if (tagRef != null) {
+					RevCommit oldTag = revWalk.parseCommit(tagRef.getObjectId());
+
+					// if oldTag is child of newTag, taking new one
+					if (revWalk.isMergedInto(newTag, oldTag)) {
+						tagRef = tagsMap.get(tagName);
+					}
+				} else {
+					tagRef = tagsMap.get(tagName);
+				}
+			}
+
+		}
+
+		return tagRef;
+	}
+
+	/**
+	 * @return List of heads from those current commit is reachable
+	 */
+	private List<Ref> getBranches() {
+		RevWalk revWalk = new RevWalk(db);
+		List<Ref> result = new ArrayList<Ref>();
+
+		try {
+			Map<String, Ref> refsMap = new HashMap<String, Ref>();
+			refsMap.putAll(db.getRefDatabase().getRefs(Constants.R_HEADS));
+			// add remote heads to search
+			refsMap.putAll(db.getRefDatabase().getRefs(Constants.R_REMOTES));
+
+			for (String headName : refsMap.keySet()) {
+				RevCommit headCommit = revWalk.parseCommit(refsMap.get(headName).getObjectId());
+				// the base RevCommit also must be allocated using same RevWalk instance,
+				// otherwise isMergedInto returns wrong result!
+				RevCommit base = revWalk.parseCommit(commit);
+
+				if (revWalk.isMergedInto(base, headCommit)) {
+					// commit is reachable from this head
+					result.add(refsMap.get(headName));
+				}
+			}
+		} catch (IOException e) {
+			// skip exception
+		}
+
+		return result;
 	}
 
 }
