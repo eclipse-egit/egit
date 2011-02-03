@@ -268,8 +268,14 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				if (monitor.isCanceled())
 					throw new InterruptedException();
 
+				FileTreeIterator fit = tw.getTree(fileTreeIndex,
+						FileTreeIterator.class);
+				if (fit == null || fit.isEntryIgnored())
+					continue;
+
 				String gitPath = tw.getPathString();
 				monitor.setTaskName(gitPath);
+
 				DirCacheIterator dit = tw.getTree(dirCacheIndex,
 						DirCacheIterator.class);
 
@@ -282,10 +288,6 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				AbstractTreeIterator rt = tw.getTree(repositoryTreeIndex,
 						AbstractTreeIterator.class);
 
-				FileTreeIterator fit = tw.getTree(fileTreeIndex,
-						FileTreeIterator.class);
-				if (fit == null || fit.isEntryIgnored())
-					continue;
 				// compare local file against HEAD to see if it was modified
 				boolean modified = rt != null
 						&& !fit.getEntryObjectId()
