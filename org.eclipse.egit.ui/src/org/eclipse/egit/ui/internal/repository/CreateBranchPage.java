@@ -73,7 +73,7 @@ class CreateBranchPage extends WizardPage {
 
 	private Composite warningComposite;
 
-	private UpstreamConfig upstreamConfig = UpstreamConfig.REBASE;
+	private UpstreamConfig upstreamConfig;
 
 	private final UpstreamConfig defaultUpstreamConfig;
 
@@ -102,8 +102,8 @@ class CreateBranchPage extends WizardPage {
 		this.myBaseCommit = null;
 		this.myValidator = ValidationUtils.getRefNameInputValidator(
 				myRepository, Constants.R_HEADS, true);
-		this.defaultUpstreamConfig = getDefaultUpstreamConfig(repo, baseRef
-				.getName());
+		this.upstreamConfig = this.defaultUpstreamConfig = getDefaultUpstreamConfig(
+				repo, baseRef.getName());
 		setTitle(UIText.CreateBranchPage_Title);
 		setMessage(UIText.CreateBranchPage_ChooseBranchAndNameMessage);
 	}
@@ -125,7 +125,7 @@ class CreateBranchPage extends WizardPage {
 		this.myBaseCommit = baseCommit;
 		this.myValidator = ValidationUtils.getRefNameInputValidator(
 				myRepository, Constants.R_HEADS, true);
-		this.defaultUpstreamConfig = UpstreamConfig.NONE;
+		this.upstreamConfig = this.defaultUpstreamConfig = UpstreamConfig.NONE;
 		setTitle(UIText.CreateBranchPage_Title);
 		setMessage(UIText.CreateBranchPage_ChooseNameMessage);
 	}
@@ -305,11 +305,10 @@ class CreateBranchPage extends WizardPage {
 			nameText.setText(myBaseRef
 					.substring(myBaseRef.lastIndexOf('/') + 1));
 			nameText.selectAll();
-			checkPage();
-		} else {
+		} else
 			// in any case, we will have to enter the name
 			setPageComplete(false);
-		}
+		checkPage();
 		// add the listener just now to avoid unneeded checkPage()
 		nameText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -322,7 +321,7 @@ class CreateBranchPage extends WizardPage {
 		setErrorMessage(null);
 		try {
 			GridData gd = (GridData) warningComposite.getLayoutData();
-			gd.exclude = branchCombo.getText().startsWith(Constants.R_REMOTES);
+			gd.exclude = !branchCombo.getText().startsWith(Constants.R_HEADS);
 			warningComposite.setVisible(!gd.exclude);
 
 			gd = (GridData) upstreamConfigGroup.getLayoutData();
