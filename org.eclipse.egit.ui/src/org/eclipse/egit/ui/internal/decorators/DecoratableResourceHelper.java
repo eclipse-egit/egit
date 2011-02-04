@@ -99,8 +99,10 @@ class DecoratableResourceHelper {
 				i = resourcePaths.indexOf(treeWalk.getPathString());
 				if (i != -1) {
 					try {
-						decoratableResources[i] = decorateResource(
-								new DecoratableResource(resources[i]), treeWalk);
+						if (decoratableResources[i] == null)
+							decoratableResources[i] = decorateResource(
+									new DecoratableResource(resources[i]),
+									treeWalk);
 					} catch (IOException e) {
 						// Ignore - decoratableResources[i] is null
 					}
