@@ -58,6 +58,7 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.utils.TableCollection;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.swtbot.swt.finder.widgets.TimeoutException;
@@ -306,12 +307,13 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		SWTBotShell dialog = openBranchDialog();
 		dialog.bot().button(UIText.BranchSelectionDialog_NewBranch).click();
 		SWTBotShell branchNameDialog = bot
-				.shell(UIText.BranchSelectionDialog_QuestionNewBranchTitle);
-		branchNameDialog.bot().text().setText("master");
-		assertFalse(branchNameDialog.bot().button(IDialogConstants.OK_LABEL)
+				.shell(UIText.CreateBranchWizard_NewBranchTitle);
+		SWTBotText branchName = bot.textWithId("BranchName");
+		branchName.setText("master");
+		assertFalse(branchNameDialog.bot().button(IDialogConstants.FINISH_LABEL)
 				.isEnabled());
-		branchNameDialog.bot().text().setText("NewBranch");
-		branchNameDialog.bot().button(IDialogConstants.OK_LABEL).click();
+		branchName.setText("NewBranch");
+		branchNameDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
 
 		assertEquals("New Branch should be selected", "NewBranch", bot.tree()
 				.selection().get(0, 0));
@@ -351,12 +353,13 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		SWTBotShell dialog = openBranchDialog();
 		dialog.bot().button(UIText.BranchSelectionDialog_NewBranch).click();
 		SWTBotShell branchNameDialog = bot
-				.shell(UIText.BranchSelectionDialog_QuestionNewBranchTitle);
-		branchNameDialog.bot().text().setText("master");
-		assertFalse(branchNameDialog.bot().button(IDialogConstants.OK_LABEL)
+				.shell(UIText.CreateBranchWizard_NewBranchTitle);
+		SWTBotText branchName = bot.textWithId("BranchName");
+		branchName.setText("master");
+		assertFalse(branchNameDialog.bot().button(IDialogConstants.FINISH_LABEL)
 				.isEnabled());
-		branchNameDialog.bot().text().setText("Unrenamed");
-		branchNameDialog.bot().button(IDialogConstants.OK_LABEL).click();
+		branchName.setText("Unrenamed");
+		branchNameDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
 
 		assertEquals("New Branch should be selected", "Unrenamed", bot.tree()
 				.selection().get(0, 0));
