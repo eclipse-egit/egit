@@ -13,11 +13,11 @@ import org.eclipse.egit.ui.internal.actions.DiscardChangesActionHandler.Replace;
 /**
  * Checkout all selected dirty files.
  */
-public class DiscardChangesAction extends RepositoryAction {
+public class CheckoutResourcesFromHEADAction extends RepositoryAction {
 	/**
 	 *
 	 */
-	public DiscardChangesAction() {
-		super(ActionCommands.DISCARD_CHANGES_ACTION, new DiscardChangesActionHandler(Replace.INDEX));
+	public CheckoutResourcesFromHEADAction() {
+		super(ActionCommands.CHECKOUT_FROM_HEAD_ACTION, new DiscardChangesActionHandler(Replace.HEAD));
 	}
 }

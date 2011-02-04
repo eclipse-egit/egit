@@ -166,6 +166,11 @@
                label="%DiscardChangesAction_label"
                menubarPath="replaceWithMenu/gitReplaceWithGroup"/>
          <action
+			   class="org.eclipse.egit.ui.internal.actions.CheckoutResourcesFromHEADAction"
+			   id="org.eclipse.egit.ui.internal.actions.CheckoutResourcesFromHEADAction"
+			   label="%CheckoutResourcesFromHEAD_label"
+			   menubarPath="replaceWithMenu/gitReplaceWithGroup"/>
+		 <action
                class="org.eclipse.egit.ui.internal.actions.ApplyPatchAction"
                definitionId="org.eclipse.egit.ui.team.ApplyPatch"
                enablesFor="*"
