@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,19 +8,26 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize;
 
+import static org.eclipse.egit.ui.UIIcons.EXPAND_ALL;
+import static org.eclipse.egit.ui.UIText.GitActionContributor_ExpandAll;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.ADD_TO_INDEX;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.COMMIT_ACTION;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.IGNORE_ACTION;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.PUSH_ACTION;
 import static org.eclipse.egit.ui.internal.synchronize.model.SupportedContextActionsHelper.canPush;
+import static org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration.NAVIGATE_GROUP;
+import static org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration.P_TOOLBAR_MENU;
+import static org.eclipse.ui.ISources.ACTIVE_MENU_SELECTION_NAME;
+import static org.eclipse.ui.menus.CommandContributionItem.STYLE_PUSH;
 
 import org.eclipse.core.expressions.IEvaluationContext;
+import org.eclipse.egit.ui.internal.synchronize.action.ExpandAllModelAction;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.egit.ui.internal.synchronize.model.SupportedContextActionsHelper;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration;
 import org.eclipse.team.ui.synchronize.ModelSynchronizeParticipantActionGroup;
-import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -66,17 +73,26 @@ class GitActionContributor extends ModelSynchronizeParticipantActionGroup {
 	private CommandContributionItem createItem(String itemAction) {
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		CommandContributionItemParameter itemParam = new CommandContributionItemParameter(
-				workbench, null, itemAction, CommandContributionItem.STYLE_PUSH);
+				workbench, null, itemAction, STYLE_PUSH);
 
 		IWorkbenchWindow activeWorkbenchWindow = workbench
 				.getActiveWorkbenchWindow();
 		IHandlerService hsr = (IHandlerService) activeWorkbenchWindow
 				.getService(IHandlerService.class);
 		IEvaluationContext ctx = hsr.getCurrentState();
-		ctx.addVariable(ISources.ACTIVE_MENU_SELECTION_NAME, getContext()
-				.getSelection());
+		ctx.addVariable(ACTIVE_MENU_SELECTION_NAME, getContext().getSelection());
 
 		return new CommandContributionItem(itemParam);
+	}
+
+	@Override
+	public void initialize(ISynchronizePageConfiguration configuration) {
+		super.initialize(configuration);
+
+		ExpandAllModelAction expandAllAction = new ExpandAllModelAction(
+				GitActionContributor_ExpandAll, configuration);
+		expandAllAction.setImageDescriptor(EXPAND_ALL);
+		appendToGroup(P_TOOLBAR_MENU, NAVIGATE_GROUP, expandAllAction);
 	}
 
 }

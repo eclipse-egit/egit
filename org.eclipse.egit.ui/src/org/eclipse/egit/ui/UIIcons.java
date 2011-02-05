@@ -152,6 +152,9 @@ public class UIIcons {
 	/** Gerrit Icon */
 	public final static ImageDescriptor GERRIT;
 
+	/** Expand all icon */
+	public final static ImageDescriptor EXPAND_ALL;
+
 	/** base URL */
 	public final static URL base;
 
@@ -207,6 +210,7 @@ public class UIIcons {
 		RESET = map("obj16/reset.gif"); //$NON-NLS-1$
 		CHANGESET = map("obj16/changelog_obj.gif"); //$NON-NLS-1$
 		GERRIT = map("obj16/gerrit_obj.gif"); //$NON-NLS-1$
+		EXPAND_ALL = map("wizban/expandall.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
