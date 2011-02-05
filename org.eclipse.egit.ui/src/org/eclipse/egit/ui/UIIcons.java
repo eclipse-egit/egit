@@ -148,6 +148,9 @@ public class UIIcons {
 	/** Changeset Icon */
 	public final static ImageDescriptor CHANGESET;
 
+	/** Expand all icon */
+	public final static ImageDescriptor EXPAND_ALL;
+
 	/** base URL */
 	public final static URL base;
 
@@ -202,6 +205,7 @@ public class UIIcons {
 		CLONEGIT = map("obj16/cloneGit.gif"); //$NON-NLS-1$
 		RESET = map("obj16/reset.gif"); //$NON-NLS-1$
 		CHANGESET = map("obj16/changelog_obj.gif"); //$NON-NLS-1$
+		EXPAND_ALL = map("wizban/expandall.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {

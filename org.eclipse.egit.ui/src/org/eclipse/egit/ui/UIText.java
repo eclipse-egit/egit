@@ -3190,6 +3190,9 @@ public class UIText extends NLS {
 	/** */
 	public static String EgitUiEditorUtils_openFailed;
 
+	/** */
+	public static String GitActionContributor_ExpandAll;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
