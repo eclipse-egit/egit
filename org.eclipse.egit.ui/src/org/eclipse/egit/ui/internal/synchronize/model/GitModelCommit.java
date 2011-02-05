@@ -85,23 +85,12 @@ public class GitModelCommit extends GitModelObjectContainer implements
 		if (obj == this)
 			return true;
 
-		if (obj instanceof GitModelCommit) {
+		if (obj instanceof GitModelCommit && !(obj instanceof GitModelTree)
+				&& !(obj instanceof GitModelBlob)) {
 			GitModelCommit objCommit = (GitModelCommit) obj;
 
-			boolean equalsBaseCommit;
-			RevCommit objBaseCommit = objCommit.getBaseCommit();
-			if (objBaseCommit != null)
-				equalsBaseCommit = objBaseCommit.equals(baseCommit);
-			else
-				equalsBaseCommit = baseCommit == null;
-
-			// it is impossible to have different common ancestor commit if
-			// remote and base commit are equal, therefore we don't compare
-			// common ancestor's
-
-			return equalsBaseCommit
-					&& objCommit.getRemoteCommit().equals(remoteCommit)
-					&& objCommit.getLocation().equals(getLocation());
+			return objCommit.getBaseCommit().equals(baseCommit)
+					&& objCommit.getParent().equals(getParent());
 		}
 
 		return false;
@@ -109,7 +98,12 @@ public class GitModelCommit extends GitModelObjectContainer implements
 
 	@Override
 	public int hashCode() {
-		return baseCommit.hashCode();
+		return baseCommit.hashCode() ^ getParent().hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return "ModelCommit[" + baseCommit.getId() + "]"; //$NON-NLS-1$//$NON-NLS-2$
 	}
 
 	@Override

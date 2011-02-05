@@ -32,9 +32,11 @@ public class GitModelBlob extends GitModelCommit {
 
 	private final IPath location;
 
-	private final ObjectId baseId;
+	/** {@link ObjectId} of base variant */
+	protected final ObjectId baseId;
 
-	private final ObjectId remoteId;
+	/** {@link ObjectId} of remove variant */
+	protected final ObjectId remoteId;
 
 	private final ObjectId ancestorId;
 
@@ -129,7 +131,8 @@ public class GitModelBlob extends GitModelCommit {
 		if (obj == this)
 			return true;
 
-		if (obj instanceof GitModelBlob) {
+		if (obj instanceof GitModelBlob && !(obj instanceof GitModelCacheFile)
+				&& !(obj instanceof GitModelWorkingFile)) {
 			GitModelBlob objBlob = (GitModelBlob) obj;
 
 			boolean equalsRemoteId;
@@ -137,9 +140,10 @@ public class GitModelBlob extends GitModelCommit {
 			if (objRemoteId != null)
 				equalsRemoteId = objRemoteId.equals(remoteId);
 			else
-				equalsRemoteId = baseCommit == null;
+				equalsRemoteId = remoteId == null;
 
-			return objBlob.baseId.equals(baseId) && equalsRemoteId;
+			return objBlob.baseId.equals(baseId) && equalsRemoteId
+					&& objBlob.location.equals(location);
 		}
 
 		return false;
@@ -147,11 +151,16 @@ public class GitModelBlob extends GitModelCommit {
 
 	@Override
 	public int hashCode() {
-		int result = baseId.hashCode();
+		int result = baseId.hashCode() ^ location.hashCode();
 		if (remoteId != null)
 			result ^= remoteId.hashCode();
 
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "ModelBlob[objectId=" + baseId + ", location=" + getLocation() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	private void createCompareInput() {

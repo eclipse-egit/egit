@@ -52,6 +52,32 @@ public class GitModelWorkingTree extends GitModelCache {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (obj == this)
+			return true;
+
+		if (obj instanceof GitModelWorkingTree) {
+			GitModelCache left = (GitModelCache) obj;
+			return left.baseCommit.equals(baseCommit)
+					&& left.getParent().equals(getParent());
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		// increase hash code value for 31 to distinguish GitModelCashe from
+		// GitModelWorkingTree
+		return 31 + baseCommit.hashCode() ^ getParent().hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return "ModelWorkingTree"; //$NON-NLS-1$
+	}
+
+	@Override
 	protected TreeWalk createAndConfigureTreeWalk() throws IOException {
 		TreeWalk tw = createTreeWalk();
 		tw.setRecursive(true);
