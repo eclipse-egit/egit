@@ -14,7 +14,10 @@ package org.eclipse.egit.ui.internal.synchronize;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
@@ -57,7 +60,11 @@ public class GitSynchronizeWizard extends Wizard {
 				Activator.logError(e.getMessage(), e);
 			}
 
-		new GitSynchronize(gsdSet);
+		Set<IProject> selectedProjects
+				 = page.getSelectedProjects();
+		GitModelSynchronize.launch(gsdSet, selectedProjects
+				.toArray(new IResource[selectedProjects
+				.size()]));
 
 		return true;
 	}

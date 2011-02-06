@@ -2317,13 +2317,6 @@
    <extension
          point="org.eclipse.team.ui.synchronizeParticipants">
       <participant
-            class="org.eclipse.egit.ui.internal.synchronize.GitSubscriberParticipant"
-            id="org.eclipse.egit.ui.synchronizeParticipant"
-            icon="icons/obj16/gitrepository.gif"
-            name="%Synchronize_Name"
-            persistent="false">
-      </participant>
-      <participant
             class="org.eclipse.egit.ui.internal.synchronize.GitModelSynchronizeParticipant"
             id="org.eclipse.egit.ui.modelCompareParticipant"
             name="%Synchronize_Name"
