@@ -166,7 +166,7 @@ public class GitImportWizard extends Wizard implements IImportWizard {
 			final File[] repoDir = new File[1];
 			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 				public void run() {
-					repoDir[1] = selectRepoPage.getRepository().getDirectory();
+					repoDir[0] = selectRepoPage.getRepository().getDirectory();
 				}
 			});
 			final List<IProject> previousProjects = Arrays
@@ -201,7 +201,7 @@ public class GitImportWizard extends Wizard implements IImportWizard {
 		}
 		case GitSelectWizardPage.GENERAL_WIZARD: {
 			final String[] projectName = new String[1];
-			final boolean[] defaultLocation = new boolean[0];
+			final boolean[] defaultLocation = new boolean[1];
 			final String[] path = new String[1];
 			final File[] repoDir = new File[1];
 			// get the data from the page in the UI thread
@@ -210,8 +210,8 @@ public class GitImportWizard extends Wizard implements IImportWizard {
 					projectName[0] = createGeneralProjectPage.getProjectName();
 					defaultLocation[0] = createGeneralProjectPage
 							.isDefaultLocation();
-					path[1] = importWithDirectoriesPage.getPath();
-					repoDir[1] = selectRepoPage.getRepository().getDirectory();
+					path[0] = importWithDirectoriesPage.getPath();
+					repoDir[0] = selectRepoPage.getRepository().getDirectory();
 				}
 			});
 			try {
@@ -228,7 +228,7 @@ public class GitImportWizard extends Wizard implements IImportWizard {
 						prj.create(desc, actMonitor);
 						prj.open(actMonitor);
 						ConnectProviderOperation cpo = new ConnectProviderOperation(
-								prj, repoDir[1]);
+								prj, repoDir[0]);
 						cpo.execute(new NullProgressMonitor());
 
 						ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
