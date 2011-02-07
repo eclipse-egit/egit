@@ -615,6 +615,12 @@
             id="org.eclipse.egit.ui.command.configureTrace"
             name="%ConfigureTraceCommand.name">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.commands.shared.FetchChangeFromGerritCommand"
+            id="org.eclipse.egit.ui.FetchGerritChange"
+            name="%FetchFromGerritCommand.name">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -1344,6 +1350,24 @@
                   <iterate
                         ifEmpty="false"
                         operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.FetchGerritChange"
+               label="%FetchFromGerritCommand.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
                      <instanceof
                            value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                      </instanceof>
@@ -2265,6 +2289,10 @@
             commandId="org.eclipse.egit.ui.team.Push"
             icon="icons/obj16/push.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.FetchGerritChange"
+            icon="icons/obj16/gerrit_obj.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -2691,6 +2719,11 @@
                <command
                      commandId="org.eclipse.egit.ui.team.Fetch"
                      label="%FetchAction_label"
+                     style="push">
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.FetchGerritChange"
+                     label="%FetchFromGerritCommand.label"
                      style="push">
                </command>
                <command
