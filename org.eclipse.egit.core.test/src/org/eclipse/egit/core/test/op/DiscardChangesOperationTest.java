@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.op.DiscardChangesOperation;
+import org.eclipse.egit.core.op.ReplaceFromIndexOperation;
 import org.eclipse.egit.core.test.DualRepositoryTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Constants;
@@ -93,7 +94,7 @@ public class DiscardChangesOperationTest extends DualRepositoryTestCase {
 		contents = testUtils.slurpAndClose(file.getContents());
 		assertEquals("Changed", contents);
 
-		DiscardChangesOperation dcop = new DiscardChangesOperation(
+		DiscardChangesOperation dcop = new ReplaceFromIndexOperation(
 				new IResource[] { file });
 		dcop.execute(new NullProgressMonitor());
 
