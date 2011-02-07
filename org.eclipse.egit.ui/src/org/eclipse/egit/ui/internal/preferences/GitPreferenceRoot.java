@@ -62,9 +62,17 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 	@Override
 	protected void createFieldEditors() {
 		Composite main = getFieldEditorParent();
+
+		Group initialGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
+		initialGroup.setText(UIText.GitPreferenceRoot_InitialConfiguration);
+		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
+				.applyTo(initialGroup);
 		addField(new BooleanFieldEditor(
 				UIPreferences.SHOW_INITIAL_CONFIG_DIALOG,
-				UIText.GitPreferenceRoot_ShowInitialConfigDialogCheckbox, main));
+				UIText.GitPreferenceRoot_ShowInitialConfigDialogCheckbox,
+				initialGroup));
+		updateMargins(initialGroup);
+
 		Group cloningGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		cloningGroup.setText(UIText.GitPreferenceRoot_CloningRepoGroupHeader);
 		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)

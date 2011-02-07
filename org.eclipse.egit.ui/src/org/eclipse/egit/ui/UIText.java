@@ -430,6 +430,9 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_HistoryGroupHeader;
 
 	/** */
+	public static String GitPreferenceRoot_InitialConfiguration;
+
+	/** */
 	public static String GitPreferenceRoot_MergeGroupHeader;
 
 	/** */
