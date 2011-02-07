@@ -615,6 +615,12 @@
             id="org.eclipse.egit.ui.command.configureTrace"
             name="%ConfigureTraceCommand.name">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.commands.shared.FetchChangeFromGerritCommand"
+            id="org.eclipse.egit.ui.FetchGerritChange"
+            name="%FetchFromGerritCommand.name">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -1371,6 +1377,24 @@
                               property="GitRepository.canMerge">
                         </test>
                      </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.FetchGerritChange"
+               label="%FetchFromGerritCommand.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
                   </iterate>
                </and>
             </visibleWhen>
@@ -2265,6 +2289,10 @@
             commandId="org.eclipse.egit.ui.team.Push"
             icon="icons/obj16/push.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.FetchGerritChange"
+            icon="icons/obj16/gerrit_obj.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -2496,24 +2524,14 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.SimplePushActionHandler"
-            id="org.eclipse.egit.ui.team.SimplePush"
-            name="%PushUpstreamCommand.name">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.actions.SimpleFetchActionHandler"
-            id="org.eclipse.egit.ui.team.SimpleFetch"
-            name="%FetchUpstreamCommand.name">
-      </command>
-      <command
             defaultHandler="org.eclipse.egit.ui.internal.actions.ConfigureFetchActionHandler"
-            id="org.eclipse.egit.ui.ConfigureUpstreamFetch"
+            id="org.eclipse.egit.ui.team.ConfigureFetch"
             name="%ConfigureUpstreamFetchCommand.name">
       </command>
       <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.actions.ConfigurePushActionHandler"
-            id="org.eclipse.egit.ui.ConfigureUpstreamPush"
+            id="org.eclipse.egit.ui.team.ConfigurePush"
             name="%ConfigureUpstreamPushCommand.name">
       </command>
    </extension>
@@ -2735,6 +2753,11 @@
                      </iterate>
                   </and>
                </visibleWhen>
+               <command
+                     commandId="org.eclipse.egit.ui.FetchGerritChange"
+                     label="%FetchFromGerritCommand.label"
+                     style="push">
+               </command>
             </menu>
             <separator
                   name="applyPatchGroup"
