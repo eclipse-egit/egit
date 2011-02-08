@@ -217,6 +217,10 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 		else
 			objAncestorId = ObjectId.zeroId();
 		int objectType = tw.getFileMode(actualNth).getObjectType();
+		if (objectType == Constants.OBJ_BAD)
+			objectType = tw.getFileMode(baseNth).getObjectType();
+		if (objectType == Constants.OBJ_BAD && ancestorNth > -1)
+			objectType = tw.getFileMode(ancestorNth).getObjectType();
 
 		if (objectType == Constants.OBJ_BLOB)
 			return new GitModelBlob(this, getBaseCommit(), ancestorCommit,
