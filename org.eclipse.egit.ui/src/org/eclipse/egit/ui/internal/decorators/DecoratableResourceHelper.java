@@ -201,8 +201,7 @@ class DecoratableResourceHelper {
 			decoratableResource.dirty = false;
 			decoratableResource.assumeValid = true;
 		} else {
-			if (workspaceIterator != null
-					&& workspaceIterator.isModified(indexEntry, true))
+			if (workspaceIterator.isModified(indexEntry, true))
 				decoratableResource.dirty = true;
 		}
 		return decoratableResource;
