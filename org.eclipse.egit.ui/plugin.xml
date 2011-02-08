@@ -2384,6 +2384,23 @@
             icon="$nl$/icons/obj16/changelog_obj.gif"
             modelProviderId="org.eclipse.egit.ui.changeSetModel"/>
    </extension>
+   <extension point="org.eclipse.ui.navigator.viewer">
+       <viewer viewerId="org.eclipse.egit.ui.compareSynchronization">
+           <popupMenu
+                allowsPlatformContributions="false"
+                id="org.eclipse.egit.ui.compareSynchronizationMenu">
+             <insertionPoint name="gitActions" separator="true"/>
+             <insertionPoint name="file"/>
+             <insertionPoint name="file-bottom"/>
+             <insertionPoint name="edit" separator="true"/>
+             <insertionPoint name="synchronize"/>
+             <insertionPoint name="navigate" separator="true"/>
+             <insertionPoint name="modelTeam" separator="true"/>
+             <insertionPoint name="sort" separator="true"/>
+			 <insertionPoint name="additions" separator="true"/>
+          </popupMenu>
+       </viewer>
+   </extension>
    <extension
          name="%TeamMenuCommandsLabel"
          point="org.eclipse.ui.commands">

@@ -79,6 +79,8 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 				ModelSynchronizeParticipant.P_VISIBLE_MODEL_PROVIDER,
 				GitChangeSetModelProvider.ID);
 		super.initializeConfiguration(configuration);
+
+		configuration.addActionContribution(new GitActionContributor());
 	}
 
 	@Override
