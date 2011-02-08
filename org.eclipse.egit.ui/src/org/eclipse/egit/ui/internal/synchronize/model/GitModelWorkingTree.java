@@ -57,8 +57,8 @@ public class GitModelWorkingTree extends GitModelCache {
 		tw.setRecursive(true);
 
 		Repository repo = getRepository();
-		dirCacheIteratorNth = tw.addTree(new DirCacheIterator(repo.readDirCache()));
 		int ftIndex = tw.addTree(new FileTreeIterator(repo));
+		int dirCacheIteratorNth = tw.addTree(new DirCacheIterator(repo.readDirCache()));
 		IndexDiffFilter idf = new IndexDiffFilter(dirCacheIteratorNth, ftIndex, true);
 		tw.setFilter(idf);
 
