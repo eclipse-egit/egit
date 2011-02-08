@@ -26,6 +26,7 @@ import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.jgit.dircache.DirCacheCheckout;
 import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.errors.TransportException;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
@@ -200,7 +201,7 @@ public class CloneOperation {
 
 		// we're setting up for a clone with a checkout
 		config.setBoolean(
-				"core", null, "bare", false); //$NON-NLS-1$ //$NON-NLS-2$
+				ConfigConstants.CONFIG_CORE_SECTION, null, ConfigConstants.CONFIG_KEY_BARE, false);
 
 		remoteConfig.update(config);
 
@@ -210,8 +211,8 @@ public class CloneOperation {
 			String branchName = ref.getName().substring(Constants.R_HEADS.length());
 
 			// setup the default remote branch for branchName
-			config.setString("branch", branchName, "remote", remoteName); //$NON-NLS-1$ //$NON-NLS-2$
-			config.setString("branch", branchName, "merge", ref.getName()); //$NON-NLS-1$ //$NON-NLS-2$
+			config.setString(ConfigConstants.CONFIG_BRANCH_SECTION, branchName, ConfigConstants.CONFIG_KEY_REMOTE, remoteName);
+			config.setString(ConfigConstants.CONFIG_BRANCH_SECTION, branchName, ConfigConstants.CONFIG_KEY_MERGE, ref.getName());
 		}
 		config.save();
 	}
