@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///8Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2011-02-08T00:06:59Z",
+      "side": 1,
+      "message": "This should be refactored into a command and out of the wizard.",
+      "revId": "93e541a9fcacd91f3ea80f52f0f200d0b011cbdb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
