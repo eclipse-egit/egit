@@ -611,7 +611,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 			} catch (IOException e) {
 				Activator.handleError(e.getMessage(), e, true);
 			}
-			if (buttonId == OK)
+			if (buttonId == OK) {
 				try {
 					new ProgressMonitorDialog(getShell()).run(false, true,
 							new IRunnableWithProgress() {
@@ -621,8 +621,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 									int timeout = Activator
 											.getDefault()
 											.getPreferenceStore()
-											.getInt(
-													UIPreferences.REMOTE_CONNECTION_TIMEOUT);
+											.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 									PushOperationUI op = new PushOperationUI(
 											repository, config, timeout, false);
 									op.start();
@@ -633,6 +632,9 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 				} catch (InterruptedException e) {
 					Activator.handleError(e.getMessage(), e, true);
 				}
+			}
+			okPressed();
+			return;
 		}
 		super.buttonPressed(buttonId);
 	}
