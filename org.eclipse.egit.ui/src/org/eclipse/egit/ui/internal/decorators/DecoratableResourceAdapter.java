@@ -349,10 +349,11 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			treeWalk.addTree(new EmptyTreeIterator());
 
 		// Index
-		treeWalk.addTree(new DirCacheIterator(repository.readDirCache()));
+		treeWalk.addTree(new DirCacheIterator(DecoratableResourceHelper.getDirCache(repository)));
 
 		// Working directory
 		treeWalk.addTree(IteratorService.createInitialIterator(repository));
 		return treeWalk;
 	}
+
 }
