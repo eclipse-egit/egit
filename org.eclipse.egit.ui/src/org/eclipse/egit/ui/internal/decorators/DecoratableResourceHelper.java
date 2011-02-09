@@ -33,7 +33,7 @@ import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
  *
  * @see IDecoratableResource
  */
-class DecoratableResourceHelper {
+public class DecoratableResourceHelper {
 
 	static final int T_HEAD = 0;
 
@@ -41,8 +41,19 @@ class DecoratableResourceHelper {
 
 	static final int T_WORKSPACE = 2;
 
-	static IDecoratableResource[] createDecoratableResources(
+	/**
+	 * Creates a list of decoratable resources for the given list of resources
+	 *
+	 * @param resources
+	 *            the list of resources to be decorated
+	 * @return the list of decoratable resources
+	 * @throws IOException
+	 */
+	public static IDecoratableResource[] createDecoratableResources(
 			final IResource[] resources) throws IOException {
+		if (resources == null)
+			return null;
+
 		// Use first (available) resource to get repository mapping
 		int i = 0;
 		while (resources[i] == null) {
