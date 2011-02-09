@@ -1612,6 +1612,9 @@ public class UIText extends NLS {
 	public static String GlobalConfigurationPreferencePage_userSettingTabTitle;
 
 	/** */
+	public static String GlobalConfigurationPreferencePage_repositorySettingTabTitle;
+
+	/** */
 	public static String ConfigureRemoteWizard_WizardTitle_Change;
 
 	/** */
