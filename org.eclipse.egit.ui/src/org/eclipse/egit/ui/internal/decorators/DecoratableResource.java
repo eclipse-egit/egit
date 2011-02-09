@@ -15,53 +15,53 @@ import org.eclipse.core.resources.IResource;
  *
  * @see IDecoratableResource
  */
-class DecoratableResource implements IDecoratableResource {
+public class DecoratableResource implements IDecoratableResource {
 
 	/**
 	 * Resource to be decorated
 	 */
-	IResource resource = null;
+	protected IResource resource = null;
 
 	/**
 	 * Name of the repository of the resource
 	 */
-	String repositoryName = null;
+	protected String repositoryName = null;
 
 	/**
 	 * Current branch of the resource
 	 */
-	String branch = null;
+	protected String branch = null;
 
 	/**
 	 * Flag indicating whether or not the resource is tracked
 	 */
-	boolean tracked = false;
+	protected boolean tracked = false;
 
 	/**
 	 * Flag indicating whether or not the resource is ignored
 	 */
-	boolean ignored = false;
+	protected boolean ignored = false;
 
 	/**
 	 * Flag indicating whether or not the resource has changes that are not
 	 * staged
 	 */
-	boolean dirty = false;
+	protected boolean dirty = false;
 
 	/**
 	 * Staged state of the resource
 	 */
-	Staged staged = Staged.NOT_STAGED;
+	protected Staged staged = Staged.NOT_STAGED;
 
 	/**
 	 * Flag indicating whether or not the resource has merge conflicts
 	 */
-	boolean conflicts = false;
+	protected boolean conflicts = false;
 
 	/**
 	 * Flag indicating whether or not the resource is assumed valid
 	 */
-	boolean assumeValid = false;
+	protected boolean assumeValid = false;
 
 	/**
 	 * Constructs a new decoratable resource
@@ -72,7 +72,7 @@ class DecoratableResource implements IDecoratableResource {
 	 * @param resource
 	 *            resource to be decorated
 	 */
-	DecoratableResource(IResource resource) {
+	protected DecoratableResource(IResource resource) {
 		this.resource = resource;
 	}
 

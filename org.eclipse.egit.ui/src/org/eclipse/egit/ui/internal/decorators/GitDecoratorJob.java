@@ -38,7 +38,7 @@ public class GitDecoratorJob extends Job {
 	 * @param gitDir
 	 *            the .git directory's full path used as unique identifier of a
 	 *            repository
-	 * @return GitDecoratorJob the job dedicated for the given repository
+	 * @return the job dedicated for the given repository
 	 */
 	public static synchronized GitDecoratorJob getJobForRepository(
 			final String gitDir) {
