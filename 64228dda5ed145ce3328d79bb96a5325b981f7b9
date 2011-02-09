@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL2n//+yM\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2011-02-02T06:55:08Z",
+      "side": 1,
+      "message": "The key you use should be mentioned in the commit message.\n\nI like this approach, because its similar to the commit-msg hook that Gerrit comes with; you install it in your repository and it always updates your commits.  The downside is, the hook fires even if you don\u0027t want a Change-Id in your message.\n\nBut I\u0027m not sure that is a problem.  I think if your upstream is using Gerrit Code Review, you probably just always want the Change-Id automatically inserted in any commit you make in this repository.  At least that\u0027s my use case.  :-)",
+      "revId": "64228dda5ed145ce3328d79bb96a5325b981f7b9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
