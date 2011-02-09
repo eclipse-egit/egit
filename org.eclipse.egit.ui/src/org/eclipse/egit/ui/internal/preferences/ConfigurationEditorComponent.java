@@ -92,6 +92,8 @@ public class ConfigurationEditorComponent {
 
 	private final boolean useDialogFont;
 
+	private Composite contents;
+
 	private Text valueText;
 
 	private Button changeValue;
@@ -401,7 +403,15 @@ public class ConfigurationEditorComponent {
 		});
 
 		initControlsFromConfig();
-		return main;
+		contents = main;
+		return contents;
+	}
+
+	/**
+	 * @return the composite containing all the controls
+	 */
+	public Composite getContents() {
+		return contents;
 	}
 
 	private boolean isWriteable(final File f) {
