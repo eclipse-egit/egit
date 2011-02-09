@@ -2807,21 +2807,6 @@
                   name="projectGroup"
                   visible="true">
             </separator>
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
-                  <count
-                        value="+">
-                  </count>
-                  <iterate
-                        ifEmpty="false"
-                        operator="and">
-                     <adapt type="org.eclipse.core.resources.IResource">
-                     </adapt>
-                  </iterate>
-               </with>
-            </visibleWhen>
          </menu>
       </menuContribution>
    </extension>
