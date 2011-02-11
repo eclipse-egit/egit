@@ -34,20 +34,43 @@
 		</p>
 		<h2 id="Basic_Tutorial:_Adding_a_project_to_version_control">Basic Tutorial: Adding a project to version control</h2>
 		<h3 id="Configuration">Configuration</h3>
+		<h4 id="Identifying_yourself">Identifying yourself</h4>
+		<p>Whenever the history of the repository is changed (technically, whenever a commit is created), Git keeps track of the user who created that commit. The identification consists of a name (typically a person's name) and an e-mail address. This information is stored in file <code>~/.gitconfig</code> under dedicated keys.
+			<br/> 
+		</p>
+		<p>EGit will ask you for this information when you create your first commit. By default, this dialog is shown only once until you create a new workspace or tick the checkbox "Show initial configuration dialog" on the Git Preference page: </p>
+		<p>
+			<img border="0" src="images/Egit-0.11-initialConfigurationDialog.png"/> 
+		</p>
+		<p>You can also untick "Don't show this dialog again" if you want to see it again later.</p>
+		<p>Instead of using this dialog, you can always change this information using the Git configuration:
+			<br/> 
+		</p>
 		<ul>
-			<li>First you need to tell Git about yourself, click 
-				<b>Preferences &gt; Team &gt; Git &gt; Configuration</b>
+			<li>Click 
+				<b>Preferences &gt; Team &gt; Git &gt; Configuration</b> 
 			</li>
 			<li>Click 
 				<b>New Entry</b> and enter the key value pairs <code>user.email</code> and <code>user.name</code>
+				<br/>
 			</li>
-			<li>This information is stored in <code>~/.gitconfig</code> and will be used by Git to identify who did change the history of the repository whenever you are the user logged on to your computer.</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-email.png"/>
+			<img border="0" src="images/Egit-0.9-getstarted-email.png"/> 
 		</p>
 		<p>
 			<img border="0" src="images/Egit-0.9-getstarted-name.png"/>
+		</p>
+		<h4 id="Setting_up_the_Home_Directory_on_Windows">Setting up the Home Directory on Windows</h4>
+		<p>Add the environment variable <code>HOME</code> to your user variables. EGit needs this path for looking up the user configuration (.gitconfig).
+<code>			HOME</code> should point to your home directory e.g. <code>C:\Users\Tom</code>. 
+			<b>Ensure correct case!</b> E.g. <code>C:\users</code> instead of <code>C:\Users</code> can cause follow-up problems! 
+		</p>
+		<p>If the <code>HOME</code> variable is not defined the home directory will be calculated by concatenating <code>HOMEDRIVE</code> and <code>HOMEPATH</code>. </p>
+		<p>If both <code>HOME</code> and <code>HOMEDRIVE</code> are not defined <code>HOMESHARE</code> will be used.</p>
+		<p>EGit shows a warning if <code>HOME</code> is not defined:</p>
+		<p>
+			<img border="0" src="images/Egit_no_home.png"/>
 		</p>
 		<h3 id="Create_Repository">Create Repository</h3>
 		<ul>
@@ -99,24 +122,28 @@
 				<b>Team &gt; Add</b> on the project node 
 			</li>
 			<li>The 
-				<i>+</i> decorators show that now the project's files have been added to version control 
+				<i>+</i> decorators show that now the project's files have been added to version control
 			</li>
 		</ul>
 		<ul>
-			<li>Create a file <code>.gitignore</code> in the project folder with the following content</li>
+			<li>Mark the "bin" folder as "ignored by Git", either by right-clicking on it and selecting 
+				<b>Team &gt; Ignore</b> or by creating a file <code>.gitignore</code> in the project folder with the following content
+			</li>
 		</ul>
-		<pre>bin 
+		<pre>/bin 
 </pre>
 		<ul>
 			<li>This excludes the <code>bin</code> folder from Git's list of tracked files. </li>
-			<li>Add <code>.gitignore</code> to version control. </li>
+			<li>Add <code>.gitignore</code> to version control (
+				<b>Team &gt; Add</b>):
+			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-ignore-added.png"/> 
+			<img border="0" src="images/Egit-0.11-getstarted-ignore-added.png"/> 
 		</p>
 		<ul>
 			<li>Click 
-				<b>Team &gt; Commit</b> in the project context menu
+				<b>Team &gt; Commit</b> in the project context menu 
 			</li>
 			<li>Enter a commit message explaining your change, the first line (followed by an empty line) will become the short log for this commit. By default the author and committer are taken from the <code>.gitconfig</code> file in your home directory. </li>
 			<li>You may click 
@@ -125,26 +152,26 @@
 			</li>
 			<li>If you are committing the change of another author you may alter the author field to give the name and email address of the author. </li>
 			<li>Click 
-				<b>Commit</b> to commit your first change. 
+				<b>Commit</b> to commit your first change.
 			</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.9-getstarted-commit.png"/> 
 		</p>
 		<ul>
-			<li>Note that the decorators of the committed files changed. </li>
+			<li>Note that the decorators of the committed files changed.</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-commited.png"/> 
+			<img border="0" src="images/Egit-0.9-getstarted-commited.png"/>
 		</p>
 		<h3 id="Inspect_History">Inspect History</h3>
 		<ul>
 			<li>Click 
-				<b>Show In &gt; History</b> from the context menu to inspect the history of a resource 
+				<b>Team &gt; Show in History</b> from the context menu to inspect the history of a resource
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-history1.png"/> 
+			<img border="0" src="images/Egit-0.11-getstarted-history1.png"/> 
 		</p>
 		<ul>
 			<li>Create a new Java class <code>Hello.java</code> and implement it </li>
@@ -156,22 +183,20 @@
 			<img border="0" src="images/Egit-0.9-getstarted-application.png"/> 
 		</p>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-history2.png"/>
+			<img border="0" src="images/Egit-0.11-getstarted-history2.png"/> 
 		</p>
 		<ul>
 			<li>Click the 
-				<b>Compare Mode</b> toggle button in the History View
+				<b>Compare Mode</b> toggle button in the History View 
 			</li>
-			<li>Double click <code>src/Hello.java</code> in the Resource History View to open your last committed change in the Compare View </li>
+			<li>Double click <code>src/Hello.java</code> in the Resource list of the History View to open your last committed change in the Compare View</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-getstarted-compare.png"/>
+			<img border="0" src="images/Egit-0.11-getstarted-compare.png"/> 
 		</p>
 		<p>
-			<br/>
-
-			<b>Congratulations, you just have mastered your first project using Git !</b>
-
+			<br/> 
+			<b>Congratulations, you just have mastered your first project using Git&nbsp;!</b> 
 			<br/>
 			<br/>
 		</p>
@@ -229,7 +254,7 @@
 		<h3 id="Push_Upstream">Push Upstream</h3>
 		<ul>
 			<li>Click 
-				<b>Team &gt; Push...</b> and copy and paste the SSH URL of your new github repository
+				<b>Team &gt; Remote &gt; Push...</b> and copy and paste the SSH URL of your new github repository 
 			</li>
 			<li>If you are behind a firewall which doesn't allow SSH traffic use the github HTTPS URL instead and provide your github user and password instead of using the uploaded public SSH key. To store your credentials into the Eclipse secure store click 
 				<b>Store in Secure Store</b>. 
@@ -239,7 +264,7 @@
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.10-github-pushurl.png"/>
+			<img border="0" src="images/Egit-0.10-github-pushurl.png"/> 
 		</p>
 		<ul>
 			<li>Click 
@@ -265,7 +290,7 @@
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.10-github-push-preview.png"/>
+			<img border="0" src="images/Egit-0.10-github-push-preview.png"/> 
 		</p>
 		<ul>
 			<li>Click 
@@ -276,7 +301,7 @@
 			<li>The next dialog reports the result of the push operation.</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.10-github-pushresult.png"/>
+			<img border="0" src="images/Egit-0.10-github-pushresult.png"/> 
 		</p>
 		<ul>
 			<li>Point your browser at your GitHub repository to see that your new repository content has arrived</li>

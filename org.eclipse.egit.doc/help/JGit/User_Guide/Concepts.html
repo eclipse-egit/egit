@@ -38,13 +38,12 @@
 		<p>To build a repository, you invoke flavors of 
 			<b>RepositoryBuilder</b>.
 		</p>
-		<p>&lt;source lang="java"&gt;
-			FileRepositoryBuilder builder = new RepositoryBuilder();
-			Repository repository = builder.setGitDir("/my/git/directory")
-			.readEnvironment() // scan environment GIT_* variables
-			.findGitDir() // scan up the file system tree
-			.build();
-			&lt;/source&gt;</p>
+		<pre>FileRepositoryBuilder builder = new RepositoryBuilder();
+Repository repository = builder.setGitDir("/my/git/directory")
+.readEnvironment() // scan environment GIT_* variables
+.findGitDir() // scan up the file system tree
+.build();
+</pre>
 		<h3 id="Git_Objects">Git Objects</h3>
 		<p>All objects are represented by a SHA-1 id in the Git object model. In JGit, this is represented by the 
 			<b>AnyObjectId</b> and 
@@ -74,22 +73,19 @@
 			</li>
 		</ul>
 		<p>To resolve an object from a repository, simply pass in the right revision string.</p>
-		<p>&lt;source lang="java"&gt;
-			ObjectId head = repository.resolve("HEAD");
-			&lt;/source&gt;</p>
+		<pre>ObjectId head = repository.resolve("HEAD");
+</pre>
 		<h3 id="Ref">Ref</h3>
 		<p>A ref is a variable that holds a single object identifier. The object identifier can be any valid Git object (blob, tree, commit, tag).</p>
 		<p>For example, to query for the reference to head, you can simply call</p>
-		<p>&lt;source lang="java"&gt;
-			Ref HEAD = repository.getRef("refs/heads/master");
-			&lt;/source&gt;</p>
+		<pre>Ref HEAD = repository.getRef("refs/heads/master");
+</pre>
 		<h3 id="RevWalk">RevWalk</h3>
 		<p>A 
 			<b>RevWalk</b> walks a commit graph and produces the matching commits in order.
 		</p>
-		<p>&lt;source lang="java"&gt;
-			RevWalk walk = new RevWalk(repository);
-			&lt;/source&gt;</p>
+		<pre>RevWalk walk = new RevWalk(repository);
+</pre>
 		<p>TODO talk about filters</p>
 		<h3 id="RevCommit">RevCommit</h3>
 		<p>A 
@@ -98,10 +94,9 @@
 		<p>To parse a commit, simply use a 
 			<b>RevWalk</b> instance:
 		</p>
-		<p>&lt;source lang="java"&gt;
-			RevWalk walk = new RevWalk(repository);
-			RevCommit commit = walk.parseCommit(objectIdOfCommit);
-			&lt;/source&gt;</p>
+		<pre>RevWalk walk = new RevWalk(repository);
+RevCommit commit = walk.parseCommit(objectIdOfCommit);
+</pre>
 		<h3 id="RevTag">RevTag</h3>
 		<p>A 
 			<b>RevTag</b> represents a tag in the Git object model.
@@ -109,10 +104,9 @@
 		<p>To parse a tag, simply use a 
 			<b>RevWalk</b> instance:
 		</p>
-		<p>&lt;source lang="java"&gt;
-			RevWalk walk = new RevWalk(repository);
-			RevTag tag = walk.parseTag(objectIdOfTag);
-			&lt;/source&gt;</p>
+		<pre>RevWalk walk = new RevWalk(repository);
+RevTag tag = walk.parseTag(objectIdOfTag);
+</pre>
 		<h3 id="RevTree">RevTree</h3>
 		<p>A 
 			<b>RevTree</b> represents a tree in the Git object model.
@@ -120,10 +114,9 @@
 		<p>To parse a commit, simply use a 
 			<b>RevWalk</b> instance:
 		</p>
-		<p>&lt;source lang="java"&gt;
-			RevWalk walk = new RevWalk(repository);
-			RevTree tree = walk.parseTree(objectIdOfTree);
-			&lt;/source&gt;</p><hr/>
+		<pre>RevWalk walk = new RevWalk(repository);
+RevTree tree = walk.parseTree(objectIdOfTree);
+</pre><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left">

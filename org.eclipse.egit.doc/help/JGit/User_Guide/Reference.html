@@ -41,11 +41,10 @@
 			<li>addFilepattern()</li>
 		</ul>
 		<p>Here's a quick example of how to add a set of files to the index using the porcelain API.</p>
-		<p>&lt;source lang="java"&gt;
-			Git git = new Git(db);
-			AddCommand add = git.add();
-			add.addFilepattern("someDirectory").call();
-			&lt;/source&gt;</p>
+		<pre>Git git = new Git(db);
+AddCommand add = git.add();
+add.addFilepattern("someDirectory").call();
+</pre>
 		<h3 id="CommitCommand_.28git-commit.29">CommitCommand (git-commit)</h3>
 		<p>CommitCommand allows you to perform commits and has options available via its setter methods.</p>
 		<ul>
@@ -54,11 +53,10 @@
 			<li>setAll()</li>
 		</ul>
 		<p>Here's a quick example of how to commit using the porcelain API.</p>
-		<p>&lt;source lang="java"&gt;
-			Git git = new Git(db);
-			CommitCommand commit = git.commit();
-			commit.setMessage("initial commit").call();
-			&lt;/source&gt;</p>
+		<pre>Git git = new Git(db);
+CommitCommand commit = git.commit();
+commit.setMessage("initial commit").call();
+</pre>
 		<h3 id="TagCommand_.28git-tag.29">TagCommand (git-tag)</h3>
 		<p>TagCommand supports a variety of tagging options through its setter methods.</p>
 		<ul>
@@ -70,11 +68,10 @@
 			<li>setSigned() - not supported yet, will throw exception</li>
 		</ul>
 		<p>Here's a quick example of how to tag a commit using the porcelain API.</p>
-		<p>&lt;source lang="java"&gt;
-			Git git = new Git(db);
-			RevCommit commit = git.commit().setMessage("initial commit").call();
-			RevTag tag = git.tag().setName("tag").call();
-			&lt;/source&gt;</p>
+		<pre>Git git = new Git(db);
+RevCommit commit = git.commit().setMessage("initial commit").call();
+RevTag tag = git.tag().setName("tag").call();
+</pre>
 		<h3 id="LogCommand_.28git-log.29">LogCommand (git-log)</h3>
 		<p>LogCommand allows you to easily walk a commit graph.</p>
 		<ul>
@@ -82,10 +79,9 @@
 			<li>addRange(AnyObjectId since, AnyObjectId until)</li>
 		</ul>
 		<p>Here's a quick example of how get some log messages.</p>
-		<p>&lt;source lang="java"&gt;
-			Git git = new Git(db);
-			LogCommand log = git.log().call();
-			&lt;/source&gt;</p>
+		<pre>Git git = new Git(db);
+LogCommand log = git.log().call();
+</pre>
 		<h3 id="MergeCommand_.28git-merge.29">MergeCommand (git-merge)</h3>
 		<p>TODO</p><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">

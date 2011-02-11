@@ -36,7 +36,7 @@
 			Git actions are available for projects shared with the Git team provider:
 
 			<br/> 
-			<img border="0" src="images/Egit-0.10-project-menu.png"/>
+			<img border="0" src="images/Egit-0.11-project-menu.png"/>
 		</p>
 		<h3 id="Resource_Context_Menu">Resource Context Menu</h3>
 		<p>On resource nodes (files and folders) in navigation views the following Git actions are available for projects shared with the Git team provider:
@@ -53,9 +53,9 @@
 		<p>Menu on repository nodes:
 			<br/>
 
-			<img border="0" src="images/Egit-0.10-repoview-repomenu.png"/>
+			<img border="0" src="images/Egit-0.11-repoview-repomenu.png"/>
 		</p>
-		<p>Menu on branche nodes:
+		<p>Menu on branch nodes:
 			<br/>
 
 			<img border="0" src="images/Egit-0.10-repoview-branchmenu.png"/>
@@ -91,115 +91,160 @@
 
 			<img border="0" src="images/Egit-0.10-history-commitmenu.png"/>
 		</p>
+		<h3 id="Git_Workbench_Toolbar_and_Git_Workbench_Menu">Git Workbench Toolbar and Git Workbench Menu</h3>
+		<p>In order to ease use of the most frequently used Git actions the 
+			<b>Git Command Group</b> can be activated to show a Git Workbench Toolbar and/or Menu
+		</p>
+		<ul>
+			<li>right-click in the workbench toolbar area and click 
+				<b>Customize perspective...</b>
+			</li>
+			<li>in the tab 
+				<b>Command Groups Availability</b> click 
+				<b>Git</b>, this will enable both the Git workbench toolbar and menu
+			</li>
+			<li>in the tabs 
+				<b>Toolbar Visibility</b> and 
+				<b>Menu Visibility</b> you may configure which actions should appear in the Git Workbench toolbar and menu
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-0.11-workbench-toolbar.png"/>
+
+			<br/>
+			<br/>
+		</p>
+		<p>
+			<img border="0" src="images/Egit-0.11-workbench-menu.png"/>
+
+			<br/>
+			<br/>
+		</p>
 		<h3 id="Menu_Actions">Menu Actions</h3>
 		<ul>
 			<li>
-				<a href="User-Guide.html#Track_Changes">Add</a> -
+				<a href="User-Guide.html#Track_Changes">Add</a>
 				<ul>
 					<li>Add changes present in the working tree to the git index, also known as staging changes. </li>
-					<li>Put newly created resources under git version control (Git does not automatically start tracking resources).</li>
+					<li>Put newly created resources under git version control (Git does not automatically start tracking resources). </li>
 					<li>
-						<a href="Tasks.html#Adding_conflict_resolution_to_the_git_index">Resolve conflicts</a>.
+						<a href="Tasks.html#Adding_conflict_resolution_to_the_git_index">Resolve conflicts</a>. 
 					</li>
 				</ul>
 			</li>
 			<li>
-				<a href="Tasks.html#Applying_Patches">Apply Patch</a> - Apply a patch.
+				<a href="Tasks.html#Applying_Patches">Apply Patch</a> - Apply a patch. 
 			</li>
 			<li>
 				<b>Assume unchanged</b> - Resources can be flagged "assume unchanged". This means that Git stops checking the working tree files for possible modifications, so you need to manually unset the bit to tell Git when you change the working tree file. This setting can be switched on with the menu action 
 				<b>Team &gt; Assume unchanged</b> and switched back with the menu action 
-				<b>Team &gt; No Assume unchanged</b>.
+				<b>Team &gt; No Assume unchanged</b>. 
 			</li>
 			<li>
 				<a href="Tasks.html#Branching">Branch</a>, 
-				<a href="Reference.html#Create_Branch...">Create Branch</a> - Checkout a branch or create a branch.
+				<a href="Reference.html#Create_Branch...">Create Branch</a> - Checkout a branch or create a branch. 
 			</li>
 			<li>
-				<b>Change Credentials</b> - Change logon credentials of a Fetch or Push Specification, credentials are stored per URL in the Eclipse Secure Store.
+				<b>Change Credentials</b> - Change logon credentials of a Fetch or Push Specification, credentials are stored per URL in the Eclipse Secure Store. 
 			</li>
 			<li>
 				<b>Checkout</b> - Checkout a 
 				<a href="Tasks.html#Check-out_of_Branches_and_Tags">Branch, Tag</a>, 
-				<a href="Reference.html#Checkout">Commit</a> or Reference.
+				<a href="Reference.html#Checkout">Commit</a> or Reference. 
 			</li>
 			<li>
-				<a href="Tasks.html#Cherry_Picking">Cherry-pick</a> - Cherry-pick a single commit onto the tip of the currently checked out branch.
+				<a href="Tasks.html#Cherry_Picking">Cherry-pick</a> - Cherry-pick a single commit onto the tip of the currently checked out branch. 
 			</li>
 			<li>
-				<b>Clear Credentials</b> - Clear logon credentials of a Fetch or Push Specification, credentials are stored per URL in the Eclipse Secure Store.
+				<b>Clear Credentials</b> - Clear logon credentials of a Fetch or Push Specification, credentials are stored per URL in the Eclipse Secure Store. 
 			</li>
 			<li>
-				<a href="Tasks.html#Committing_Changes">Commit</a> - Commit changes.
+				<a href="Tasks.html#Committing_Changes">Commit</a> - Commit changes. 
 			</li>
 			<li>
-				<b>Delete Fetch</b> - Delete a Fetch Specification.
+				<b>Delete Fetch</b> - Delete a Fetch Specification. 
 			</li>
 			<li>
-				<b>Delete Push</b> - Delete a Push Specification.
+				<b>Delete Push</b> - Delete a Push Specification. 
 			</li>
 			<li>
-				<a href="Tasks.html#Direct_Fetch_and_Push_Support">Configure Fetch</a> - Configure a Fetch Specification.
+				<a href="Tasks.html#Direct_Fetch_and_Push_Support">Configure Fetch</a> - Configure a Fetch Specification. 
 			</li>
 			<li>
-				<a href="Tasks.html#Direct_Fetch_and_Push_Support">Configure Push</a> - Configure a Push Specification.
+				<a href="Tasks.html#Direct_Fetch_and_Push_Support">Configure Push</a> - Configure a Push Specification. 
 			</li>
 			<li>
-				<a href="Tasks.html#Creation_and_Deletion_of_Branches">Delete Branch</a> - Delete a branch.
+				<a href="Tasks.html#Creation_and_Deletion_of_Branches">Delete Branch</a> - Delete a branch. 
 			</li>
 			<li>
-				<a href="Tasks.html#Deleting_a_Repository">Delete Repository</a> - Delete a repository.
+				<a href="Tasks.html#Deleting_a_Repository">Delete Repository</a> - Delete a repository. 
 			</li>
 			<li>
-				<b>Disconnect</b> - Disconnect the attached Git Team Provider from this project. The git repository still exists but is no longer integrated with Eclipse.
+				<b>Disconnect</b> - Disconnect the attached Git Team Provider from this project. The git repository still exists but is no longer integrated with Eclipse. 
 			</li>
 			<li>
-				<a href="Tasks.html#Fetching_from_other_Repositories">Fetch From</a> - Fetch changes from remote repositories.
+				<a href="Reference.html#Git_Ignore">Ignore</a> - Add files to .gitignore so that git ignores them. 
 			</li>
 			<li>
-				<a href="Reference.html#Git_Ignore">Ignore</a> - Add files to .gitignore so that git ignores them.
+				<a href="#Method_for_importing_Projects">Import Projects</a> - Import projects into the Eclipse workbench. 
 			</li>
 			<li>
-				<a href="Tasks.html#Method_for_importing_Projects">Import Projects</a> - Import projects into the Eclipse workbench.
+				<a href="Tasks.html#Merging">Merge</a> - Merge branches. 
 			</li>
 			<li>
-				<a href="Tasks.html#Merging">Merge</a> - Merge branches.
+				<a href="Tasks.html#Using_Merge_Tool">Merge Tool</a> - Resolve conflicts using the Merge Tool. 
 			</li>
 			<li>
-				<a href="Tasks.html#Using_Merge_Tool">Merge Tool</a> - Resolve conflicts using the Merge Tool.
+				<a href="Tasks.html#Repository_Configuration">Open Properties View</a> - View and edit the repository configuration. 
 			</li>
 			<li>
-				<a href="Tasks.html#Repository_Configuration">Open Properties View</a> - View and edit the repository configuration.
+				<a href="#Pulling_New_Changes_from_Upstream_Repositories">Pull</a> - Pull changes from remote branch tracked by currently checked out local branch. 
 			</li>
 			<li>
-				<a href="Tasks.html#Pulling_New_Changes_from_Upstream_Repositories">Pull</a> - Pull changes from remote branch tracked by currently checked out local branch.
+				<i>'Remote &gt; '</i>
+				<a href="Tasks.html#Fetching_from_other_Repositories">Fetch From</a> - Fetch changes from a remote repository 
 			</li>
 			<li>
-				<a href="Tasks.html#Pushing_to_other_Repositories">Push</a> - Push changes to another repository.
+				<b>Remote &gt;</b> 
+				<a href="Tasks.html#Fetching_a_change_from_a_Gerrit_Code_Review_Server">Fetch from Gerrit</a> - Fetch changed from a Gerrit Code Review Server 
 			</li>
 			<li>
-				<a href="Tasks.html#Rebasing">Rebase</a> - Rebase a branch onto another one.
+				<b>Remote &gt;</b> 
+				<a href="Tasks.html#Pushing_to_other_Repositories">Push</a> - Push changes to other repositories
+				<br/> 
 			</li>
 			<li>
-				<a href="Tasks.html#Removing_a_Repository_from_the_Repositories_View">Remove Repository</a> - Remove a repository from the Repositories View.
+				<b>Remote &gt;</b> 
+				<a href="Tasks.html#Configuring_upstream_fetch">Configure Fetch from Upstream</a> - Configure Upstream for automated fetch 
 			</li>
 			<li>
-				<a href="Tasks.html#Renaming_an_Existing_Branch">Rename Branch</a> - Rename a branch.
+				<b>Remote &gt;</b> 
+				<a href="Tasks.html#Configuring_upstream_push">Configure Push to Upstream</a> - Configure upstream for automated push
+				<br/> 
 			</li>
 			<li>
-				<a href="Tasks.html#Resetting_your_current_HEAD">Reset</a> - Reset the current HEAD, Index or Working Tree.
+				<a href="Tasks.html#Rebasing">Rebase</a> - Rebase a branch onto another one. 
 			</li>
 			<li>
-				<a href="Reference.html#History_View">Show in History</a> - Show the selected resource in the History View.
+				<a href="Tasks.html#Removing_a_Repository_from_the_Repositories_View">Remove Repository</a> - Remove a repository from the Repositories View. 
 			</li>
 			<li>
-				<a href="Tasks.html#Managing_Repositories">Show in Repositories View</a> - Show the selected resource in the Repositories View.
+				<a href="Tasks.html#Renaming_an_Existing_Branch">Rename Branch</a> - Rename a branch. 
 			</li>
 			<li>
-				<a href="Tasks.html#Comparing_with_Branches_.28Synchronize.29">Synchronize</a> - Synchronize local and remote branches with each other.
+				<a href="Tasks.html#Resetting_your_current_HEAD">Reset</a> - Reset the current HEAD, Index or Working Tree. 
 			</li>
 			<li>
-				<a href="Tasks.html#Tagging">Tag</a> - Create, delete tags.
+				<a href="Reference.html#History_View">Show in History</a> - Show the selected resource in the History View. 
+			</li>
+			<li>
+				<a href="Tasks.html#Managing_Repositories">Show in Repositories View</a> - Show the selected resource in the Repositories View. 
+			</li>
+			<li>
+				<a href="Tasks.html#Comparing_with_Branches_.28Synchronize.29">Synchronize</a> - Synchronize local and remote branches with each other. 
+			</li>
+			<li>
+				<a href="Tasks.html#Tagging">Tag</a> - Create, delete tags. 
 			</li>
 			<li>
 				<b>Untrack</b> - Remove resources from git version control. If you want to delete the resource from the working tree click also 
@@ -304,15 +349,16 @@
 			<b>Compare with working tree</b> will be executed, otherwise 
 			<b>Open</b>.
 		</p>
-		<p>It is possible to compare the file contents of two commits by selecting the two commits and right-clicking on 
-			<b>Compare with Each Other</b>.
+		<p>It is possible to compare the contents of two commits filtered by the current input by selecting the two commits and right-clicking on 
+			<b>Compare with each other</b>. If the current input is not a file, there is an additional menu action 
+			<b>Compare with each other in Tree</b>. The first action opens an Eclipse compare editor, the second opens the 
+			<a href="Reference.html#Git_Tree_Compare_View">Git Tree Compare View</a>.
 		</p>
 		<p>Furthermore, it is possible to select any number of commits and right-click 
 			<b>Open</b> to see all versions of the file corresponding to the selected commits (one editor will be opened per version).
 		</p>
 		<p>If the current input is not a file, then there won't be menu actions for 
-			<b>Open</b> and 
-			<b>Compare</b>. However, it is possible to double-click on an entry the Revision Detail area. If compare mode is active, a compare editor will be openend showing the changes for the file being double-clicked in the currently selected commit (i.e. a diff of the file content in the currently selected commit against the file content of this commit's ancestor). If compare mode is not active, an editor with the file content corresponding to the currently selected commit is shown.
+			<b>Open</b>. However, it is possible to double-click on an entry the Revision Detail area. If compare mode is active, a compare editor will be openend showing the changes for the file being double-clicked in the currently selected commit (i.e. a diff of the file content in the currently selected commit against the file content of this commit's ancestor). If compare mode is not active, an editor with the file content corresponding to the currently selected commit is shown.
 		</p>
 		<p>
 			<img border="0" src="images/Egit-0.9-history-view-openAndCompareFromDetails.png"/>
@@ -403,12 +449,20 @@
 		<p>Creates a tag on the currently selected commit. A dialog will be shown asking for a tag name and a tag message.</p>
 		<h5 id="Create_Patch...">Create Patch...</h5>
 		<p>This action is not available on the very first commit of a Repository. It will create a patch containing the changes of the currently selected commit compared to that commit's predecessor. A dialog will be shown asking whether the patch should be created as file or in the clipboard and whether to use the Git patch format of the generic patch format.</p>
+		<h5 id="Cherry_Pick">Cherry Pick</h5>
+		<p>Applies the change introduced by the selected commit on top of the currently checked out commit.</p>
+		<h5 id="Revert_Commit">Revert Commit</h5>
+		<p>Reverts the changes that the selected commit introduces by creating a new commit on top of the currently checked out commit.</p>
+		<h5 id="Merge">Merge</h5>
+		<p>Merges the selected commit into the currently checked out branch.</p>
+		<h5 id="Rebase_on_top_of">Rebase on top of</h5>
+		<p>Rebases the currently checked out branch on top of the selected commit.</p>
 		<h5 id="Reset_.3E_Soft.2FMixed.2FHard">Reset &gt; Soft/Mixed/Hard</h5>
 		<p>This action resets the Repository containing the current input to the currently selected commit. Depending on the choice of the sub-menu, a soft, mixed, or hard reset will be performed.</p>
 		<h5 id="Quickdiff_.3E_Reset_Quickdiff_Basline_to_HEAD">Quickdiff &gt; Reset Quickdiff Basline to HEAD</h5>
 		<h5 id="Quickdiff_.3E_Reset_Quickdiff_Basline_to_first_parent_of_HEAD">Quickdiff &gt; Reset Quickdiff Basline to first parent of HEAD</h5>
 		<p>These two actions set the quickdiff basline for the repository to HEAD or to the parent of HEAD. These actions are always available, even if more than one commit is selected.</p>
-		<h5 id="Quickdiff_.3E_Set_as_Baseline_.3D">Quickdiff &gt; Set as Baseline =</h5>
+		<h5 id="Quickdiff_.3E_Set_as_Baseline">Quickdiff &gt; Set as Baseline</h5>
 		<p>This action is only available if a single commit is selected; it will st the quickdiff baseline for the repository to the selected commit.</p>
 		<h5 id="Copy">Copy</h5>
 		<p>Copies the IDs of the currently selected commit or commits into the clipboard.</p>
@@ -524,6 +578,20 @@
 		<p>
 			<br/>
 		</p>
+		<h3 id="Git_Tree_Compare_View">Git Tree Compare View</h3>
+		<p>This view will be opened by some of the 
+			<b>Compare With</b> actions (see 
+			<a href="Tasks.html#Comparing_Content">Comparing Content</a>). When started from a resource (e.g. a project or folder), it will look similar to the resources in the workspace. However, the usual icons on the files will be replaced with icons showing the change state (added, deleted, changed, or unchanged). 
+		</p>
+		<p>The changes can be browsed and a double-click on a file will open a compare editor for this file (this only makes sense on "changed" files, in case of added or deleted files, one side of the compare editor will be empty, whereas unchanged files will show the same content on both sides of the editor): </p>
+		<p>
+			<img border="0" src="images/Egit-0.11-GitTreeCompareView.png"/> 
+		</p>
+		<p>It is possible to hide unchanged files by clicking the "Hide files with equal content" button in the toolbar.</p>
+		<p>The Git Tree Compare View can also be started without having workspace resources as starting point (for example by comparing two commits in the history view when the input of the history view is a Repository and not a workspace resource). In this case, the complete content of the Repository is shown and both projects and folders appear as simple "folder" icons:</p>
+		<p>
+			<img border="0" src="images/Egit-0.11-GitTreeCompareViewRepo.png"/>
+		</p>
 		<h2 id="Git_URLs">Git URLs</h2>
 		<p>Git URLs in general consist of transport protocol scheme, address of the remote server and the repository path within the remote server and for some authenticating protocols also the user ID.</p>
 		<p>EGit supports the following protocols</p>
@@ -576,29 +644,50 @@
 		<h2 id="Git_References">Git References</h2>
 		<p>Git References are also known shortly as 
 			<b>Refs</b>. 
-
 			<br/>They comprise 
 		</p>
 		<ul>
 			<li>branches </li>
 			<li>remote-tracking branches </li>
-			<li>tags </li>
+			<li>tags</li>
 		</ul>
 		<p>They all are named with a path using '/' as path separator and are starting with "refs". </p>
 		<ul>
-			<li>Local branches start with "refs/heads/"</li>
-			<li>Remote tracking branches start with "refs/remotes/". Remote tracking branches proxy branches located in a remote repository so that their state at the time of the last transport operation can be queried also when no connection to the repository is available (offline).</li>
+			<li>Local branches start with "refs/heads/" </li>
+			<li>Remote tracking branches start with "refs/remotes/". Remote tracking branches proxy branches located in a remote repository so that their state at the time of the last transport operation can be queried also when no connection to the repository is available (offline). </li>
 			<li>Tags start with "refs/tags/"</li>
 		</ul>
 		<p>Ref names can be abbreviated as long as the abbreviated form is unique. 
-
-			<br/>E.g.
+			<br/>E.g. 
 		</p>
 		<ul>
-			<li>"master" is short for "refs/heads/master"</li>
-			<li>"origin/master" is short for "refs/remotes/origin/master"</li>
+			<li>"master" is short for "refs/heads/master" </li>
+			<li>"origin/master" is short for "refs/remotes/origin/master" </li>
 			<li>"v1.0.1" is short for "refs/tags/v1.0.1"</li>
 		</ul>
+		<p>There is also a number of "reserved" names for Refs that are useful for certain scenarios: </p>
+		<table style="width: 538px; height: 63px;" border="1" cellpadding="1" cellspacing="1">
+			<tr>
+				<td>
+					<b>Ref Name</b>
+				</td>
+				<td>
+					<b>Remark</b>
+				</td>
+			</tr>
+			<tr>
+				<td>HEAD </td>
+				<td>Points to the currently checkout out commit</td>
+			</tr>
+			<tr>
+				<td>FETCH_HEAD </td>
+				<td>Points to the result of the last fetch operation</td>
+			</tr>
+			<tr>
+				<td>ORIG_HEAD </td>
+				<td>Points to the commit that was checked out before a merge or rebse operation was started</td>
+			</tr>
+		</table>
 		<p>For a complete list for Ref names and the order of precedence if multiple references have the same shorthand form see the section "Specifying Revisions" section of 
 			<a href="http://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html" target="egit_external">git rev-parse</a>.
 		</p>
@@ -607,8 +696,22 @@
 			<a href="Reference.html#Git_References">Ref</a> and local 
 			<a href="Reference.html#Git_References">Ref</a>. Semantically they define how local branches or tags are mapped to branches or tags in a remote repository. In native git they are combined with a colon in the format &lt;src&gt;:&lt;dst&gt;, preceded by an optional plus sign, + to denote forced update. In EGit they can be displayed and also edited in tabular form in the 
 			<a href="Tasks.html#Push_Ref_Specifications">Push Ref Specification</a> and the 
-			<a href="Tasks.html#Fetch_Ref_Specifications">Fetch Ref Specification</a> dialogs.
+			<a href="Tasks.html#Fetch_Ref_Specifications">Fetch Ref Specification</a> and other dialogs. 
 		</p>
+		<p>The "left-hand" side of a RefSpec is called source and the "right-hand" side is called destination. Depending on whether the RefSpec is used for fetch or for push, the semantics of source and destination differ: for a Push RefSpec, the source denotes a Ref in the source Repository and the destination denotes a Ref in the target Repository. </p>
+		<h3 id="Push_Refspecs">Push Refspecs</h3>
+		<p>A typical example for a Push RefSpec could be </p>
+		<pre>HEAD:refs/heads/master
+</pre>
+		<p> 
+			This means that the currently checked out branch (as signified by the HEAD Reference, see 
+			<a href="Reference.html#Git_References">Git References</a>) will be pushed into the master branch of the remote repository.
+		</p>
+		<h3 id="Fetch_Refspecs">Fetch Refspecs</h3>
+		<p>A typical example for a Fetch RefSpec could be</p>
+		<pre>refs/heads/*:refs/remotes/origin/*
+</pre>
+		<p>This means that all branches from the remote repository will be fetched into the corresponding remote tracking branches of the local repository.</p>
 		<h2 id="Remotes">Remotes</h2>
 		<p>Remotes are used to manage the repositories ("remotes") whose branches you track from your repository.</p>
 		<p>In EGit Remotes are defined when </p>
