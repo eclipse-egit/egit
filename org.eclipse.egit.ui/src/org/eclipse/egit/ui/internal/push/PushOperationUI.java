@@ -10,7 +10,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -25,10 +28,13 @@ import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.jgit.transport.Transport;
+import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -41,9 +47,19 @@ public class PushOperationUI {
 
 	private final Repository repository;
 
-	private final PushOperation op;
+	private final int timeout;
+
+	private final boolean dryRun;
 
 	private final String destinationString;
+
+	private final RemoteConfig config;
+
+	private PushOperationSpecification spec;
+
+	private CredentialsProvider credentialsProvider;
+
+	private PushOperation op;
 
 	/**
 	 * @param repository
@@ -55,10 +71,12 @@ public class PushOperationUI {
 	public PushOperationUI(Repository repository, RemoteConfig config,
 			int timeout, boolean dryRun) {
 		this.repository = repository;
-		op = new PushOperation(repository, config, dryRun, timeout);
+		this.spec = null;
+		this.config = config;
+		this.timeout = timeout;
+		this.dryRun = dryRun;
 		destinationString = NLS.bind("{0} - {1}", repository.getDirectory() //$NON-NLS-1$
 				.getParentFile().getName(), config.getName());
-
 	}
 
 	/**
@@ -70,7 +88,10 @@ public class PushOperationUI {
 	public PushOperationUI(Repository repository,
 			PushOperationSpecification spec, int timeout, boolean dryRun) {
 		this.repository = repository;
-		op = new PushOperation(repository, spec, dryRun, timeout);
+		this.spec = spec;
+		this.config = null;
+		this.timeout = timeout;
+		this.dryRun = dryRun;
 		if (spec.getURIsNumber() == 1)
 			destinationString = spec.getURIs().iterator().next()
 					.toPrivateString();
@@ -84,7 +105,7 @@ public class PushOperationUI {
 	 * @param credentialsProvider
 	 */
 	public void setCredentialsProvider(CredentialsProvider credentialsProvider) {
-		op.setCredentialsProvider(credentialsProvider);
+		this.credentialsProvider = credentialsProvider;
 	}
 
 	/**
@@ -96,6 +117,42 @@ public class PushOperationUI {
 	 */
 	public PushOperationResult execute(IProgressMonitor monitor)
 			throws CoreException {
+		if (spec == null) {
+			// we don't use the configuration directly, as it may contain
+			// unsaved changes and as we may need
+			// to add the default push RefSpec here
+			spec = new PushOperationSpecification();
+
+			List<URIish> urisToPush = new ArrayList<URIish>();
+			for (URIish uri : config.getPushURIs())
+				urisToPush.add(uri);
+			if (urisToPush.isEmpty() && !config.getURIs().isEmpty())
+				urisToPush.add(config.getURIs().get(0));
+
+			List<RefSpec> pushRefSpecs = new ArrayList<RefSpec>();
+			pushRefSpecs.addAll(config.getPushRefSpecs());
+			if (pushRefSpecs.isEmpty())
+				// default push to all branches
+				pushRefSpecs.add(DEFAULT_PUSH_REF_SPEC);
+
+			for (URIish uri : urisToPush) {
+				try {
+					spec.addURIRefUpdates(uri, Transport.open(repository, uri)
+							.findRemoteRefUpdatesFor(pushRefSpecs));
+				} catch (NotSupportedException e) {
+					throw new CoreException(Activator.createErrorStatus(e
+							.getCause().getMessage(), e.getCause()));
+				} catch (IOException e) {
+					throw new CoreException(Activator.createErrorStatus(e
+							.getCause().getMessage(), e.getCause()));
+				}
+			}
+		}
+
+		op = new PushOperation(repository, spec, dryRun, timeout);
+		if (credentialsProvider != null)
+			op.setCredentialsProvider(credentialsProvider);
+
 		try {
 			op.run(monitor);
 			return op.getOperationResult();
@@ -125,7 +182,7 @@ public class PushOperationUI {
 
 			@Override
 			public boolean belongsTo(Object family) {
-				if (JobFamilies.FETCH.equals(family))
+				if (JobFamilies.PUSH.equals(family))
 					return true;
 				return super.belongsTo(family);
 			}
@@ -135,8 +192,12 @@ public class PushOperationUI {
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent event) {
-				PushResultDialog.show(repository, op.getOperationResult(),
-						destinationString);
+				if (event.getResult().isOK())
+					PushResultDialog.show(repository, op.getOperationResult(),
+							destinationString);
+				else
+					Activator.handleError(event.getResult().getMessage(), event
+							.getResult().getException(), true);
 			}
 		});
 	}

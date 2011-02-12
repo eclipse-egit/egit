@@ -1041,6 +1041,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 					GitTraceLocation.HISTORYVIEW.getLocation(), message);
 		getHistoryPageSite().getShell().getDisplay().asyncExec(new Runnable() {
 			public void run() {
+				if (topControl.isDisposed())
+					return;
 				StackLayout layout = (StackLayout) topControl.getLayout();
 				if (message != null) {
 					errorText.setText(message);

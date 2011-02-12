@@ -113,12 +113,26 @@ perl -pi~ -e '
 		$seen_version = 0;
 		$old_argv = $ARGV;
 	}
+	if ($seen_version < 4) {
+		$seen_version++ if (!/<\?xml/ &&
+		s/(version=")[^"]*(")/${1}'"$OSGI_V"'${2}/);
+	}
+	s/(feature="org.eclipse.egit.core" version=")[^"]*(")/${1}'"$EGIT_V"'${2}/;
+	s/(feature="org.eclipse.egit.ui" version=")[^"]*(")/${1}'"$EGIT_V"'${2}/;
+	s/(feature="org.eclipse.jgit" version=")[^"]*(")/${1}'"$JGIT_V"'${2}/;
+	' org.eclipse.egit.mylyn-feature/feature.xml
+
+perl -pi~ -e '
+	if ($ARGV ne $old_argv) {
+		$seen_version = 0;
+		$old_argv = $ARGV;
+	}
 	if (!$seen_version) {
 		$seen_version = 1 if (!/<\?xml/ &&
 		s/(version=")[^"]*(")/${1}'"$OSGI_V"'${2}/);
 	}
 	s/(feature="org.eclipse.jgit" version=")[^"]*(")/${1}'"$JGIT_V"'${2}/;
-	' org.eclipse.egit-feature/feature.xml
+	' $(git ls-files | grep feature.xml)
 
 perl -pi~ -e '
 	s{<(version)>[^<\$]*</\1>}{<${1}>'"$POM_V"'</${1}>};
@@ -129,11 +143,34 @@ perl -pi~ -e '
 		$seen_version = 0;
 		$old_argv = $ARGV;
 	}
+	if (!$seen_version) {
+		$seen_version = 1 if
+		s{<(version)>[^<\$]*</\1>}{<${1}>'"$POM_V"'</${1}>};
+	}
+	s{<(egit-version)>[^<\$]*</\1>}{<${1}>'"$POM_V"'</${1}>};
+	' pom.xml
+	
+perl -pi~ -e '
+	if ($ARGV ne $old_argv) {
+		$seen_version = 0;
+		$old_argv = $ARGV;
+	}
 	if ($seen_version < 2) {
 		$seen_version++ if
 		s{<(version)>[^<\$]*</\1>}{<${1}>'"$POM_V"'</${1}>};
 	}
 	' org.eclipse.egit-updatesite/pom.xml
+
+perl -pi~ -e '
+	if ($ARGV ne $old_argv) {
+		$seen_version = 0;
+		$old_argv = $ARGV;
+	}
+	if ($seen_version < 3) {
+		$seen_version++ if
+		s{<(version)>[^<\$]*</\1>}{<${1}>'"$POM_V"'</${1}>};
+	}
+	' org.eclipse.egit.ui.test/pom.xml
 
 perl -pi~ -e '
 	if ($ARGV ne $old_argv) {

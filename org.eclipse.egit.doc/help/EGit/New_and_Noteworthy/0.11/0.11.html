@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 0.11 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 0.11 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bugs-Closed.html" title="Bugs Closed">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bugs Closed</td>
+			</tr>
+		</table><hr/>
+		<h1 id="Feature">Feature</h1>
+		<h2 id="Fetch_Change_from_Gerrit">Fetch Change from Gerrit</h2>
+		<p>
+			<img border="0" src="images/Egit-0.11-fetchChangeFromGerritDialog.png"/>
+		</p>
+		<p>A new wizard provides convenient fetching of changes from Gerrit</p>
+		<h2 id="Actions_for_Push_and_Fetch_using_upstream_configuration">Actions for Push and Fetch using upstream configuration</h2>
+		<p>A couple of new actions (
+			<b>Team &gt; Push to Upstream</b> and 
+			<b>Team &gt; Fetch from Upstream</b>) allows to directly push to and fetch from the remote stored in the upstream configuration of the currently checked out branch without the need to go through a wizard each time. 
+		</p>
+		<p>
+			<img border="0" src="images/Egit-0.11-project-menu.png"/>
+		</p>
+		<h2 id="Simplified_Wizards_for_Configuration_of_Fetch_and_Push">Simplified Wizards for Configuration of Fetch and Push</h2>
+		<p>Simplified Fetch and Push Wizards were implemented which also behave much closer to fetch and push in c git.</p>
+		<p>
+			<img border="0" src="images/Egit-0.11-ConfigureFetchFromUpstream.png"/>
+		</p>
+		<p>
+			<img border="0" src="images/Egit-0.11-ConfigurePushToUpstream.png"/>
+		</p>
+		<h2 id="History_View">History View</h2>
+		<p>
+			<img border="0" src="images/Egit-0.11-history-actions.png"/>
+		</p>
+		<ul>
+			<li>Merge and Rebase can now be triggered from the History View</li>
+			<li>A Revert action was implemented in the History View</li>
+			<li>The commit message pane in the history view now shows links to navigate to next Tags / Branches reachable from the selected commit</li>
+			<li>
+				<b>Open Corresponding Task'' and '''Add to Task Context</b> actions provide integration with Mylyn's task handling
+			</li>
+		</ul>
+		<h2 id="Compare">Compare</h2>
+		<ul>
+			<li>Comparison of trees was added so that 
+				<b>Compare with...</b> actions now also work on folders and projects.
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-0.11-GitTreeCompareView.png"/>
+		</p>
+		<ul>
+			<li>
+				<b>Compare with Commit...</b> was added
+			</li>
+			<li>
+				<b>Compare with Branch or Tag...</b> was added
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-0.11-CompareWithMenu.png"/>
+		</p>
+		<h2 id="EGit_Mylyn_Integration:_Commit_Dialog">EGit Mylyn Integration: Commit Dialog</h2>
+		<p>The commit dialog is now integrated with Mylyn to populate it with active task information.</p>
+		<p>
+			<img border="0" src="images/Egit-mylyn.png"/>
+		</p>
+		<h2 id="EGit_Mylyn_Integration:_History_View">EGit Mylyn Integration: History View</h2>
+		<p>The history view is integrated with Mylyn via the 
+			<b>Add to Task Context</b> or 
+			<b>Open Corresponding Task</b> actions
+		</p>
+		<p>
+			<img border="0" src="images/Egit-mylyn-historyview.png"/>
+		</p>
+		<h2 id="Performance_Improvements">Performance Improvements</h2>
+		<p>The following operations are now much faster:</p>
+		<ul>
+			<li>synchronize</li>
+			<li>decoration of Eclipse resources</li>
+			<li>opening commit dialog</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bugs-Closed.html" title="Bugs Closed">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bugs Closed</td>
+			</tr>
+		</table>
+	</body>
+</html>

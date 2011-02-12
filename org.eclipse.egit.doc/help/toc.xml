@@ -4,7 +4,10 @@
 		<topic href="help/EGit/User_Guide/User-Guide.html" label="Getting Started">
 			<topic href="help/EGit/User_Guide/User-Guide.html#Overview" label="Overview"></topic>
 			<topic href="help/EGit/User_Guide/User-Guide.html#Basic_Tutorial:_Adding_a_project_to_version_control" label="Basic Tutorial: Adding a project to version control">
-				<topic href="help/EGit/User_Guide/User-Guide.html#Configuration" label="Configuration"></topic>
+				<topic href="help/EGit/User_Guide/User-Guide.html#Configuration" label="Configuration">
+					<topic href="help/EGit/User_Guide/User-Guide.html#Identifying_yourself" label="Identifying yourself"></topic>
+					<topic href="help/EGit/User_Guide/User-Guide.html#Setting_up_the_Home_Directory_on_Windows" label="Setting up the Home Directory on Windows"></topic>
+				</topic>
 				<topic href="help/EGit/User_Guide/User-Guide.html#Create_Repository" label="Create Repository"></topic>
 				<topic href="help/EGit/User_Guide/User-Guide.html#Track_Changes" label="Track Changes"></topic>
 				<topic href="help/EGit/User_Guide/User-Guide.html#Inspect_History" label="Inspect History"></topic>
@@ -34,17 +37,13 @@
 					<topic href="help/EGit/User_Guide/Tasks.html#Adding_a_Repository" label="Adding a Repository"></topic>
 				</topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Selecting_a_Repository_from_the_List" label="Selecting a Repository from the List"></topic>
-				<topic href="help/EGit/User_Guide/Tasks.html#Method_for_importing_Projects" label="Method for importing Projects">
+				<topic href="help/EGit/User_Guide/Tasks.html#Importing_projects" label="Importing projects"></topic>
+				<topic href="help/EGit/User_Guide/Tasks.html#Wizard_for_project_import" label="Wizard for project import">
 					<topic href="help/EGit/User_Guide/Tasks.html#Import_Existing_Projects" label="Import Existing Projects">
 						<topic href="help/EGit/User_Guide/Tasks.html#Limiting_the_Scope_for_Project_Import" label="Limiting the Scope for Project Import"></topic>
 					</topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Use_the_New_Projects_Wizard" label="Use the New Projects Wizard"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Import_as_General_Project" label="Import as General Project"></topic>
-				</topic>
-				<topic href="help/EGit/User_Guide/Tasks.html#Method_for_Sharing_Imported_Projects" label="Method for Sharing Imported Projects">
-					<topic href="help/EGit/User_Guide/Tasks.html#Try_to_Share_Newly_Created_Projects_Automatically" label="Try to Share Newly Created Projects Automatically"></topic>
-					<topic href="help/EGit/User_Guide/Tasks.html#Share_New_Projects_Interactively" label="Share New Projects Interactively"></topic>
-					<topic href="help/EGit/User_Guide/Tasks.html#Do_Not_Share_New_Projects" label="Do Not Share New Projects"></topic>
 				</topic>
 			</topic>
 			<topic href="help/EGit/User_Guide/Tasks.html#Working_with_remote_Repositories" label="Working with remote Repositories">
@@ -54,6 +53,9 @@
 					<topic href="help/EGit/User_Guide/Tasks.html#Local_Destination" label="Local Destination"></topic>
 				</topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Pushing_to_other_Repositories" label="Pushing to other Repositories">
+					<topic href="help/EGit/User_Guide/Tasks.html#Pushing_to_upstream" label="Pushing to upstream">
+						<topic href="help/EGit/User_Guide/Tasks.html#Configuring_upstream_push" label="Configuring upstream push"></topic>
+					</topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Direct_Push" label="Direct Push"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Push_Wizard" label="Push Wizard">
 						<topic href="help/EGit/User_Guide/Tasks.html#Push_URI" label="Push URI"></topic>
@@ -65,13 +67,17 @@
 					</topic>
 				</topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Fetching_from_other_Repositories" label="Fetching from other Repositories">
+					<topic href="help/EGit/User_Guide/Tasks.html#Fetching_from_upstream" label="Fetching from upstream">
+						<topic href="help/EGit/User_Guide/Tasks.html#Configuring_upstream_fetch" label="Configuring upstream fetch"></topic>
+					</topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Direct_Fetch" label="Direct Fetch"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Fetch_Wizard" label="Fetch Wizard">
 						<topic href="help/EGit/User_Guide/Tasks.html#Fetch_Ref_Specifications" label="Fetch Ref Specifications"></topic>
 						<topic href="help/EGit/User_Guide/Tasks.html#Fetch_Result_Report" label="Fetch Result Report"></topic>
 					</topic>
 				</topic>
-				<topic href="help/EGit/User_Guide/Tasks.html#Pulling_New_Changes_from_Upstream_Repositories" label="Pulling New Changes from Upstream Repositories"></topic>
+				<topic href="help/EGit/User_Guide/Tasks.html#Pulling_New_Changes_from_Upstream_Branch.3Cbr.3E" label="Pulling New Changes from Upstream Branch&lt;br&quot;"></topic>
+				<topic href="help/EGit/User_Guide/Tasks.html#Fetching_a_change_from_a_Gerrit_Code_Review_Server" label="Fetching a change from a Gerrit Code Review Server"></topic>
 			</topic>
 			<topic href="help/EGit/User_Guide/Tasks.html#Inspecting_the_state_of_the_Repository" label="Inspecting the state of the Repository">
 				<topic href="help/EGit/User_Guide/Tasks.html#Label_Decorations" label="Label Decorations">
@@ -80,15 +86,23 @@
 				</topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Commit_Dialog" label="Commit Dialog"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Comparing_Content" label="Comparing Content">
+					<topic href="help/EGit/User_Guide/Tasks.html#Compare_editor_and_Git_Tree_Compare_View" label="Compare editor and Git Tree Compare View"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Compare_working_tree_with_last_commit" label="Compare working tree with last commit"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Comparing_Working_Tree_with_Index" label="Comparing Working Tree with Index"></topic>
-					<topic href="help/EGit/User_Guide/Tasks.html#Comparing_Working_Tree_with_Any_Commit" label="Comparing Working Tree with Any Commit"></topic>
-					<topic href="help/EGit/User_Guide/Tasks.html#Comparing_Two_Commits_with_Each_Other" label="Comparing Two Commits with Each Other"></topic>
+					<topic href="help/EGit/User_Guide/Tasks.html#Comparing_Working_Tree_with_a_branch_or_tag" label="Comparing Working Tree with a branch or tag"></topic>
+					<topic href="help/EGit/User_Guide/Tasks.html#Comparing_Working_Tree_with_Any_Commit" label="Comparing Working Tree with Any Commit">
+						<topic href="help/EGit/User_Guide/Tasks.html#From_the_project_explorer:" label="From the project explorer:"></topic>
+						<topic href="help/EGit/User_Guide/Tasks.html#From_the_history_view_.28files_only.29:" label="From the history view (files only):"></topic>
+					</topic>
+					<topic href="help/EGit/User_Guide/Tasks.html#Comparing_Two_Commits" label="Comparing Two Commits"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Comparing_Index_with_HEAD_or_Any_Other_Commit" label="Comparing Index with HEAD or Any Other Commit"></topic>
 				</topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Comparing_with_Branches_.28Synchronize.29" label="Comparing with Branches (Synchronize)"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Quickdiff" label="Quickdiff"></topic>
-				<topic href="help/EGit/User_Guide/Tasks.html#View_Diff_for_a_Commit" label="View Diff for a Commit"></topic>
+				<topic href="help/EGit/User_Guide/Tasks.html#Inspecting_Commits" label="Inspecting Commits">
+					<topic href="help/EGit/User_Guide/Tasks.html#View_Diff_for_a_Commit" label="View Diff for a Commit"></topic>
+					<topic href="help/EGit/User_Guide/Tasks.html#Showing_the_contents_of_a_Commit" label="Showing the contents of a Commit"></topic>
+				</topic>
 			</topic>
 			<topic href="help/EGit/User_Guide/Tasks.html#Committing_Changes" label="Committing Changes">
 				<topic href="help/EGit/User_Guide/Tasks.html#Modifying_the_content" label="Modifying the content"></topic>
@@ -102,6 +116,7 @@
 					<topic href="help/EGit/User_Guide/Tasks.html#Replace_with_File_in_Git_Index" label="Replace with File in Git Index"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Replace_with_HEAD" label="Replace with HEAD"></topic>
 				</topic>
+				<topic href="help/EGit/User_Guide/Tasks.html#Reverting_changes_introduced_by_a_specific_commit" label="Reverting changes introduced by a specific commit"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Resetting_your_current_HEAD" label="Resetting your current HEAD">
 					<topic href="help/EGit/User_Guide/Tasks.html#Reset_to_specific_branch_or_tag" label="Reset to specific branch or tag"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Reset_to_a_specific_commit" label="Reset to a specific commit"></topic>
@@ -109,13 +124,14 @@
 				</topic>
 			</topic>
 			<topic href="help/EGit/User_Guide/Tasks.html#Branching" label="Branching">
-				<topic href="help/EGit/User_Guide/Tasks.html#Branching_in_the_Repositories_View" label="Branching in the Repositories View"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Branching_Dialog" label="Branching Dialog">
 					<topic href="help/EGit/User_Guide/Tasks.html#Creating_a_New_Local_Branch" label="Creating a New Local Branch"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Renaming_an_Existing_Branch" label="Renaming an Existing Branch"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Checking_out_a_Branch" label="Checking out a Branch"></topic>
 				</topic>
+				<topic href="help/EGit/User_Guide/Tasks.html#Branching_in_the_Repositories_View" label="Branching in the Repositories View"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Branching_in_the_History_View" label="Branching in the History View"></topic>
+				<topic href="help/EGit/User_Guide/Tasks.html#Branch_Creation_Dialog" label="Branch Creation Dialog"></topic>
 			</topic>
 			<topic href="help/EGit/User_Guide/Tasks.html#Merging" label="Merging">
 				<topic href="help/EGit/User_Guide/Tasks.html#Merging_a_branch_or_a_tag_into_the_current_branch" label="Merging a branch or a tag into the current branch">
@@ -152,6 +168,7 @@
 			<topic href="help/EGit/User_Guide/Tasks.html#Tagging" label="Tagging">
 				<topic href="help/EGit/User_Guide/Tasks.html#Creating_a_Tag" label="Creating a Tag"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Replacing_an_Existing_Tag" label="Replacing an Existing Tag"></topic>
+				<topic href="help/EGit/User_Guide/Tasks.html#Deletion_of_tags" label="Deletion of tags"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Light-weight_and_Signed_Tags" label="Light-weight and Signed Tags"></topic>
 			</topic>
 			<topic href="help/EGit/User_Guide/Tasks.html#Patches" label="Patches">
@@ -178,12 +195,14 @@
 					<topic href="help/EGit/User_Guide/Tasks.html#Branch_and_Tag_Support" label="Branch and Tag Support">
 						<topic href="help/EGit/User_Guide/Tasks.html#Check-out_of_Branches_and_Tags" label="Check-out of Branches and Tags"></topic>
 						<topic href="help/EGit/User_Guide/Tasks.html#Creation_and_Deletion_of_Branches" label="Creation and Deletion of Branches"></topic>
+						<topic href="help/EGit/User_Guide/Tasks.html#Rebasing_2" label="Rebasing"></topic>
 						<topic href="help/EGit/User_Guide/Tasks.html#Merging_a_Branch_or_a_Tag" label="Merging a Branch or a Tag"></topic>
 						<topic href="help/EGit/User_Guide/Tasks.html#Synchronizing_with_a_Branch_or_a_Tag" label="Synchronizing with a Branch or a Tag"></topic>
 						<topic href="help/EGit/User_Guide/Tasks.html#Determining_the_Checked-out_Branch" label="Determining the Checked-out Branch"></topic>
 						<topic href="help/EGit/User_Guide/Tasks.html#Resetting_to_a_Branch_or_a_Tag" label="Resetting to a Branch or a Tag"></topic>
 						<topic href="help/EGit/User_Guide/Tasks.html#.22Detached.22_HEAD" label="&quot;Detached&quot; HEAD"></topic>
 					</topic>
+					<topic href="help/EGit/User_Guide/Tasks.html#Inspecting_References" label="Inspecting References"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Browsing_the_Working_Directory" label="Browsing the Working Directory"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Repository_Configuration" label="Repository Configuration"></topic>
 					<topic href="help/EGit/User_Guide/Tasks.html#Remote_Repositories" label="Remote Repositories">
@@ -199,6 +218,10 @@
 				<topic href="help/EGit/User_Guide/Tasks.html#Bare_Repositories" label="Bare Repositories"></topic>
 				<topic href="help/EGit/User_Guide/Tasks.html#Removing_Repositories_from_the_Git_Repositories_View" label="Removing Repositories from the Git Repositories View"></topic>
 			</topic>
+			<topic href="help/EGit/User_Guide/Tasks.html#Working_with_Tasks" label="Working with Tasks">
+				<topic href="help/EGit/User_Guide/Tasks.html#Installation" label="Installation"></topic>
+				<topic href="help/EGit/User_Guide/Tasks.html#Commit_Message_Template" label="Commit Message Template"></topic>
+			</topic>
 		</topic>
 		<topic href="help/EGit/User_Guide/Reference.html" label="Reference">
 			<topic href="help/EGit/User_Guide/Reference.html#Menus" label="Menus">
@@ -206,6 +229,7 @@
 				<topic href="help/EGit/User_Guide/Reference.html#Resource_Context_Menu" label="Resource Context Menu"></topic>
 				<topic href="help/EGit/User_Guide/Reference.html#Repositories_View_Menus" label="Repositories View Menus"></topic>
 				<topic href="help/EGit/User_Guide/Reference.html#History_View_Menus" label="History View Menus"></topic>
+				<topic href="help/EGit/User_Guide/Reference.html#Git_Workbench_Toolbar_and_Git_Workbench_Menu" label="Git Workbench Toolbar and Git Workbench Menu"></topic>
 				<topic href="help/EGit/User_Guide/Reference.html#Menu_Actions" label="Menu Actions"></topic>
 			</topic>
 			<topic href="help/EGit/User_Guide/Reference.html#Git_Perspective_and_Views" label="Git Perspective and Views">
@@ -237,10 +261,14 @@
 						<topic href="help/EGit/User_Guide/Reference.html#Create_Branch..." label="Create Branch..."></topic>
 						<topic href="help/EGit/User_Guide/Reference.html#Create_Tag..." label="Create Tag..."></topic>
 						<topic href="help/EGit/User_Guide/Reference.html#Create_Patch..." label="Create Patch..."></topic>
+						<topic href="help/EGit/User_Guide/Reference.html#Cherry_Pick" label="Cherry Pick"></topic>
+						<topic href="help/EGit/User_Guide/Reference.html#Revert_Commit" label="Revert Commit"></topic>
+						<topic href="help/EGit/User_Guide/Reference.html#Merge" label="Merge"></topic>
+						<topic href="help/EGit/User_Guide/Reference.html#Rebase_on_top_of" label="Rebase on top of"></topic>
 						<topic href="help/EGit/User_Guide/Reference.html#Reset_.3E_Soft.2FMixed.2FHard" label="Reset &quot; Soft/Mixed/Hard"></topic>
 						<topic href="help/EGit/User_Guide/Reference.html#Quickdiff_.3E_Reset_Quickdiff_Basline_to_HEAD" label="Quickdiff &quot; Reset Quickdiff Basline to HEAD"></topic>
 						<topic href="help/EGit/User_Guide/Reference.html#Quickdiff_.3E_Reset_Quickdiff_Basline_to_first_parent_of_HEAD" label="Quickdiff &quot; Reset Quickdiff Basline to first parent of HEAD"></topic>
-						<topic href="help/EGit/User_Guide/Reference.html#Quickdiff_.3E_Set_as_Baseline_.3D" label="Quickdiff &quot; Set as Baseline ="></topic>
+						<topic href="help/EGit/User_Guide/Reference.html#Quickdiff_.3E_Set_as_Baseline" label="Quickdiff &quot; Set as Baseline"></topic>
 						<topic href="help/EGit/User_Guide/Reference.html#Copy" label="Copy"></topic>
 						<topic href="help/EGit/User_Guide/Reference.html#Show_Revision_Comment" label="Show Revision Comment"></topic>
 						<topic href="help/EGit/User_Guide/Reference.html#Show_Revision_Details" label="Show Revision Details"></topic>
@@ -254,10 +282,14 @@
 					<topic href="help/EGit/User_Guide/Reference.html#Models" label="Models"></topic>
 					<topic href="help/EGit/User_Guide/Reference.html#Navigation" label="Navigation"></topic>
 				</topic>
+				<topic href="help/EGit/User_Guide/Reference.html#Git_Tree_Compare_View" label="Git Tree Compare View"></topic>
 			</topic>
 			<topic href="help/EGit/User_Guide/Reference.html#Git_URLs" label="Git URLs"></topic>
 			<topic href="help/EGit/User_Guide/Reference.html#Git_References" label="Git References"></topic>
-			<topic href="help/EGit/User_Guide/Reference.html#Refspecs" label="Refspecs"></topic>
+			<topic href="help/EGit/User_Guide/Reference.html#Refspecs" label="Refspecs">
+				<topic href="help/EGit/User_Guide/Reference.html#Push_Refspecs" label="Push Refspecs"></topic>
+				<topic href="help/EGit/User_Guide/Reference.html#Fetch_Refspecs" label="Fetch Refspecs"></topic>
+			</topic>
 			<topic href="help/EGit/User_Guide/Reference.html#Remotes" label="Remotes"></topic>
 			<topic href="help/EGit/User_Guide/Reference.html#Git_Ignore" label="Git Ignore"></topic>
 			<topic href="help/EGit/User_Guide/Reference.html#Git_Fetch_Factory_for_PDE_Build" label="Git Fetch Factory for PDE Build"></topic>
@@ -305,33 +337,31 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/0.10/0.10.html" label="EGit 0.10 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/0.10/0.10.html" label="Pull Support"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/0.10/Rebase-Support.html" label="Rebase Support"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/0.10/Cherry-pick-Support.html" label="Cherry-pick Support"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/0.10/Merge-Tool.html" label="Merge Tool"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/0.10/Synchronize-View-Local-Changes-in-Changeset-Mode.html" label="Synchronize View - Local Changes in Changeset Mode"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/0.10/HTTP-Authentication.html" label="HTTP Authentication"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/0.10/Repositories-View-Improvements.html" label="Repositories View Improvements">
-			<topic href="help/EGit/New_and_Noteworthy/0.10/Repositories-View-Improvements.html#Drag_and_Drop_Support" label="Drag and Drop Support"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/0.10/Repositories-View-Improvements.html#Support_for_References" label="Support for References"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/0.11/0.11.html" label="EGit 0.11 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/0.11/0.11.html" label="Feature">
+			<topic href="help/EGit/New_and_Noteworthy/0.11/0.11.html#Fetch_Change_from_Gerrit" label="Fetch Change from Gerrit"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/0.11/0.11.html#Actions_for_Push_and_Fetch_using_upstream_configuration" label="Actions for Push and Fetch using upstream configuration"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/0.11/0.11.html#Simplified_Wizards_for_Configuration_of_Fetch_and_Push" label="Simplified Wizards for Configuration of Fetch and Push"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/0.11/0.11.html#History_View" label="History View"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/0.11/0.11.html#Compare" label="Compare"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/0.11/0.11.html#EGit_Mylyn_Integration:_Commit_Dialog" label="EGit Mylyn Integration: Commit Dialog"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/0.11/0.11.html#EGit_Mylyn_Integration:_History_View" label="EGit Mylyn Integration: History View"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/0.11/0.11.html#Performance_Improvements" label="Performance Improvements"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/0.10/History-View-Enhancements.html" label="History View Enhancements"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/0.10/Auto-wrapping-Commit-Messages.html" label="Auto-wrapping Commit Messages"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/0.10/PDE-Build-Fetch-Factory.html" label="PDE Build Fetch Factory"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/0.10/Bugs-Closed.html" label="Bugs Closed"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/0.10/Commits.html" label="Commits"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/0.10/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/0.11/Bugs-Closed.html" label="Bugs Closed"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/0.11/Commits.html" label="Commits"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/0.11/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/0.10/0.10.html" label="JGit 0.10 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/0.10/0.10.html" label="Histogram Diff"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/0.10/HTTP-basic-and-digest-authentication.html" label="HTTP basic and digest authentication"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/0.10/Performance-New-IndexDiffFilter.html" label="Performance: New IndexDiffFilter"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/0.10/Git-Porcelain-API-Updates.html" label="Git Porcelain API Updates"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/0.10/User-Guide.html" label="User Guide"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/0.10/Bugs-Closed.html" label="Bugs Closed"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/0.10/Commits.html" label="Commits"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/0.10/Updating-This-Document.html" label="Updating This Document"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/0.11/0.11.html" label="JGit 0.11 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/0.11/0.11.html" label="Git Porcelain API Updates"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/0.11/Features.html" label="Features">
+			<topic href="help/JGit/New_and_Noteworthy/0.11/Features.html#Support_for_self_signed_certificate_.28HTTPS.29" label="Support for self signed certificate (HTTPS)"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/0.11/Features.html#Note_Support" label="Note Support"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/0.11/Features.html#Configuration" label="Configuration"></topic>
+		</topic>
+		<topic href="help/JGit/New_and_Noteworthy/0.11/Bugs-Closed.html" label="Bugs Closed"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/0.11/Commits.html" label="Commits"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/0.11/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>

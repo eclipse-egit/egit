@@ -55,6 +55,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.util.NLS;
@@ -646,8 +647,12 @@ class CommitMessageViewer extends TextViewer implements
 			// both RevCommits must be allocated using same RevWalk instance,
 			// otherwise isMergedInto returns wrong result!
 			RevCommit current = revWalk.parseCommit(commit);
-			RevCommit newTag = revWalk.parseCommit(tagsMap.get(tagName).getObjectId());
-
+			Ref ref = tagsMap.get(tagName);
+			// tags can point to any object, we only want tags pointing at commits
+			RevObject any = revWalk.peel(revWalk.parseAny(ref.getObjectId()));
+			if (!(any instanceof RevCommit))
+				continue;
+			RevCommit newTag = (RevCommit) any;
 			if (newTag.getId().equals(commit))
 				continue;
 
@@ -658,9 +663,9 @@ class CommitMessageViewer extends TextViewer implements
 
 					// both oldTag and newTag satisfy search criteria, so taking the closest one
 					if (isMergedInto(revWalk, oldTag, newTag, searchDescendant))
-						tagRef = tagsMap.get(tagName);
+						tagRef = ref;
 				} else
-					tagRef = tagsMap.get(tagName);
+					tagRef = ref;
 			}
 		}
 

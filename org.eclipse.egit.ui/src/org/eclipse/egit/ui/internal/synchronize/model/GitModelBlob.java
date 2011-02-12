@@ -8,8 +8,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
+import static org.eclipse.compare.structuremergeviewer.Differencer.ADDITION;
+import static org.eclipse.compare.structuremergeviewer.Differencer.CHANGE;
+import static org.eclipse.compare.structuremergeviewer.Differencer.DELETION;
 import static org.eclipse.compare.structuremergeviewer.Differencer.LEFT;
 import static org.eclipse.compare.structuremergeviewer.Differencer.RIGHT;
+import static org.eclipse.jgit.lib.ObjectId.zeroId;
 
 import java.io.IOException;
 
@@ -115,6 +119,24 @@ public class GitModelBlob extends GitModelCommit {
 	public ITypedElement getRight() {
 		createCompareInput();
 		return compareInput.getRight();
+	}
+
+	@Override
+	public int getKind() {
+		if (kind != LEFT && kind != RIGHT)
+			return kind;
+
+		int changeKind;
+		if (zeroId().equals(remoteId))
+			changeKind = DELETION;
+		else if (zeroId().equals(ancestorId))
+			changeKind = ADDITION;
+		else
+			changeKind = CHANGE;
+
+		kind |= changeKind;
+
+		return kind;
 	}
 
 	@Override
