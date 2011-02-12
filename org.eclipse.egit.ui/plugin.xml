@@ -216,6 +216,48 @@
                label="%CompareWithRevisionAction_label"
                menubarPath="compareWithMenu/gitCompareWithGroup"/>
       </objectContribution>
+    <objectContribution
+            adaptable="true"
+            objectClass="org.eclipse.egit.core.GitFileRevisionReference"
+            id="org.eclipse.egit.ui.CommitFileContributions">
+
+        <action
+            class="org.eclipse.egit.ui.internal.actions.CompareSelectedWithParentAction"
+            enablesFor="1"
+            id="org.eclipse.egit.ui.internal.actions.CompareSelectedWithParentAction"
+            label="%CompareSelectionWithParentAction_label">
+        </action>
+        <action
+            class="org.eclipse.egit.ui.internal.actions.OpenFileAtRevisionAction"
+            enablesFor="1"
+            id="org.eclipse.egit.ui.internal.actions.OpenFileAtRevisionAction"
+            label="%OpenFileSelectedVersionAction_label">
+        </action>
+        <action
+            class="org.eclipse.egit.ui.internal.actions.CompareSelectedWithHeadAction"
+            enablesFor="1"
+            id="org.eclipse.egit.ui.internal.actions.CompareSelectedWithHeadAction"
+            label="%CompareSelectionWithHeadAction_label">
+        </action>
+        <action
+            class="org.eclipse.egit.ui.internal.actions.OpenFileAtHeadRevisionAction"
+            enablesFor="1"
+            id="org.eclipse.egit.ui.internal.actions.OpenFileAtHeadRevisionAction"
+            label="%OpenFileHeadVersionAction_label">
+        </action>
+        <action
+            class="org.eclipse.egit.ui.internal.actions.CompareSelectedWithWorkspaceAction"
+            enablesFor="1"
+            id="org.eclipse.egit.ui.internal.actions.CompareSelectedWithWorkspaceAction"
+            label="%CompareSelectedWithWorkspaceAction_label">
+        </action>
+        <action
+            class="org.eclipse.egit.ui.internal.actions.OpenWorkspaceVersionAction"
+            enablesFor="1"
+            id="org.eclipse.egit.ui.internal.actions.OpenWorkspaceVersionAction"
+            label="%OpenWorkspaceVersionAction_label">
+        </action>
+    </objectContribution>
    </extension>
 
    <extension
