@@ -2303,6 +2303,13 @@
             properties="isBare,isSafe,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase"
             type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
       </propertyTester>
+      <propertyTester
+            class="org.eclipse.egit.ui.internal.ResourcePropertyTester"
+            id="org.eclipse.egit.ui.ResourceTester"
+            namespace="GitResource"
+            properties="isShared"
+            type="org.eclipse.core.resources.IResource">
+      </propertyTester>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.linkHelper">
@@ -2769,9 +2776,14 @@
                            value="1">
                      </count>
                      <iterate>
-                        <adapt
-                              type="org.eclipse.core.resources.IProject">
-                        </adapt>
+                        <and>
+                           <adapt
+                                 type="org.eclipse.core.resources.IProject">
+                           </adapt>
+                           <test
+                                 property="GitResource.isShared">
+                           </test>
+                        </and>
                      </iterate>
                   </and>
                </visibleWhen>
