@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///v0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GlobalConfigurationPreferencePage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-02-14T15:03:49Z",
+      "side": 1,
+      "message": "The above lines are indented with spaces (but should be with tabs).",
+      "revId": "709e66b214fcb775c0c6d787041e97fa3ce3ef9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
