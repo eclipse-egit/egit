@@ -5,6 +5,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Google Inc.
  * Copyright (C) 2008, Tor Arne Vestbø <torarnv@gmail.com>
+ * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -242,7 +244,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 		}
 
 		// Don't decorate ignored resources (e.g. bin folder content)
-		if (Team.isIgnoredHint(resource))
+		// we don't check this on projects, though, as these are imported
+		// and thus inherently not ignored (see bug 336744)
+		if (!(resource instanceof IProject) && Team.isIgnoredHint(resource))
 			return;
 
 		// Make sure we're dealing with a project under Git revision control
