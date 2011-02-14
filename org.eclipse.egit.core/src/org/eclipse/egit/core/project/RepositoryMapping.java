@@ -19,6 +19,7 @@ import java.util.Properties;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.GitProvider;
@@ -224,6 +225,24 @@ public class RepositoryMapping {
 			return null;
 
 		return ((GitProvider)rp).getData().getRepositoryMapping(resource);
+	}
+
+	/**
+	 * Finds a RepositoryMapping related to a given repository
+	 *
+	 * @param repository
+	 * @return a RepositoryMapping related to repository. Null if no
+	 *         RepositoryMapping exists.
+	 */
+	public static RepositoryMapping findRepositoryMapping(Repository repository) {
+		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
+				.getProjects();
+		for (IProject project : projects) {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+			if (mapping != null && mapping.getRepository() == repository)
+				return mapping;
+		}
+		return null;
 	}
 
 	/**
