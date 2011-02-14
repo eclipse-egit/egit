@@ -16,6 +16,24 @@
       "revId": "d0bf56b7292aab1a3190967045c686b0dc1b29c9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///wc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-02-14T09:19:02Z",
+      "side": 1,
+      "message": "This is result of cgit merge algorithm, I didn\u0027t check results of merging in non-confliting files. I\u0027ll remove this line and push a new patch",
+      "parentUuid": "AAAL23///wo\u003d",
+      "revId": "d0bf56b7292aab1a3190967045c686b0dc1b29c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
