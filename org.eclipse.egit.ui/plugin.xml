@@ -2789,6 +2789,34 @@
                </visibleWhen>
             </menu>
             <separator
+                  name="org.eclipse.egit.ui.branchSeparator">
+            </separator>
+            <menu
+                  label="%SwitchToMenu.label">
+               <dynamic
+                     class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
+                     id="org.eclipse.egit.ui.switchToMenu">
+               </dynamic>
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <and>
+                           <adapt
+                                 type="org.eclipse.core.resources.IProject">
+                           </adapt>
+                           <test
+                                 property="GitResource.isShared">
+                           </test>
+                        </and>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+            </menu>
+            <separator
                   name="applyPatchGroup"
                   visible="false">
             </separator>
