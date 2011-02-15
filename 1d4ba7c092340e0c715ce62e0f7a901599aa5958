@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL1X////I\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-11T18:01:26Z",
+      "side": 1,
+      "message": "Let this utility remain internal. The move is not even mentioned in the commit message. This should be a separate commit if done at all.",
+      "revId": "1d4ba7c092340e0c715ce62e0f7a901599aa5958",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL1X////A\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-11T18:01:26Z",
+      "side": 1,
+      "message": "The inversion of logic is not mentioned in the commit message.",
+      "revId": "1d4ba7c092340e0c715ce62e0f7a901599aa5958",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL1X///+8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-12-11T18:01:26Z",
+      "side": 1,
+      "message": "Use roots.clone() instead, here and elsewhere",
+      "revId": "1d4ba7c092340e0c715ce62e0f7a901599aa5958",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
