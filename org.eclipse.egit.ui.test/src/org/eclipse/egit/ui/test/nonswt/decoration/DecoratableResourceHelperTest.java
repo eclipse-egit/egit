@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -91,6 +92,8 @@ public class DecoratableResourceHelperTest extends LocalDiskRepositoryTestCase {
 		project.delete(true, true, null);
 
 		repository.close();
+
+		Activator.getDefault().getRepositoryCache().clear();
 
 		recursiveDelete(gitDir);
 	}
@@ -214,6 +217,7 @@ public class DecoratableResourceHelperTest extends LocalDiskRepositoryTestCase {
 		// file
 		git.checkout().setCreateBranch(true).setName("first_topic").call();
 		write(f, "SomethingElse");
+		project.refreshLocal(IResource.DEPTH_INFINITE, null);
 		git.add().addFilepattern(".").call();
 		RevCommit commitOnFirstTopicBranch = git.commit()
 				.setMessage("Commit on first topic branch").call();
@@ -223,6 +227,7 @@ public class DecoratableResourceHelperTest extends LocalDiskRepositoryTestCase {
 		git.checkout().setName("master").call();
 		git.checkout().setCreateBranch(true).setName("second_topic").call();
 		write(f, "SomethingDifferent");
+		project.refreshLocal(IResource.DEPTH_INFINITE, null);
 		git.add().addFilepattern(".").call();
 		git.commit().setMessage("Commit on second topic branch").call();
 
