@@ -238,7 +238,7 @@ public class FetchGerritChangePage extends WizardPage {
 		for (String aUri : uris)
 			uriCombo.add(aUri);
 		uriCombo.select(0);
-
+		refText.setFocus();
 		Dialog.applyDialogFont(main);
 		setControl(main);
 	}
