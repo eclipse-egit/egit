@@ -58,7 +58,7 @@ class RemoteSelectionCombo extends Composite {
 				.grab(true, false).hint(150, SWT.DEFAULT).create());
 		myRefLabel = new Label(remoteComposite, SWT.NONE);
 		myRefLabel.setText(remoteLabel);
-		remotesCombo = new Combo(remoteComposite, SWT.NONE);
+		remotesCombo = new Combo(remoteComposite, SWT.NONE | SWT.READ_ONLY);
 		remotesCombo.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, false).create());
 		for (SyncRepoEntity syncRepoEnt : syncRepos) {
@@ -79,7 +79,7 @@ class RemoteSelectionCombo extends Composite {
 				.grab(true, false).hint(150, SWT.DEFAULT).create());
 		Label ref = new Label(refsComposite, SWT.NONE);
 		ref.setText(refLabel);
-		refsCombo = new Combo(refsComposite, SWT.NONE);
+		refsCombo = new Combo(refsComposite, SWT.NONE | SWT.READ_ONLY);
 		refsCombo.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, false).create());
 	}
