@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
+import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
 import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
@@ -72,11 +73,15 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 
 	private final RepositoryTreeNode<Repository> tags;
 
+	private final RepositoryTreeNode<Repository> references;
+
 	private boolean showLocalBranches = true;
 
 	private boolean showRemoteBranches = true;
 
 	private boolean showTags = true;
+
+	private boolean showReferences = true;
 
 	/**
 	 * Construct a dialog to select a branch.
@@ -109,6 +114,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		localBranches = new LocalNode(null, this.repo);
 		remoteBranches = new RemoteTrackingNode(null, this.repo);
 		tags = new TagsNode(null, this.repo);
+		references = new AdditionalRefsNode(null, this.repo);
 		this.refToMark = refToMark;
 		setHelpAvailable(false);
 	}
@@ -209,6 +215,8 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 			roots.add(remoteBranches);
 		if (showTags)
 			roots.add(tags);
+		if (showReferences)
+			roots.add(references);
 
 		branchTree.setInput(roots);
 
@@ -297,9 +305,9 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 			return null;
 		RepositoryTreeNode node = (RepositoryTreeNode) sel.getFirstElement();
 		if (node.getType() == RepositoryTreeNodeType.REF
-				|| node.getType() == RepositoryTreeNodeType.TAG) {
+				|| node.getType() == RepositoryTreeNodeType.TAG
+				|| node.getType() == RepositoryTreeNodeType.ADDITIONALREF)
 			return ((Ref) node.getObject()).getName();
-		}
 		return null;
 	}
 
@@ -337,11 +345,13 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 	 * @param showLocalBranches show/hide the local branches root
 	 * @param showRemoteBranches show/hide the remote branches root
 	 * @param showTags show/hide the tag root
+	 * @param showReferences show/hide the references root
 	 */
 	protected void setRootsToShow(boolean showLocalBranches,
-			boolean showRemoteBranches, boolean showTags) {
+			boolean showRemoteBranches, boolean showTags, boolean showReferences) {
 		this.showLocalBranches = showLocalBranches;
 		this.showRemoteBranches = showRemoteBranches;
 		this.showTags = showTags;
+		this.showReferences = showReferences;
 	}
 }

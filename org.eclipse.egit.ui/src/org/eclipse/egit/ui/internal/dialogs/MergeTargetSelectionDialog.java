@@ -36,6 +36,7 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 		// the current branch by reading the configuration and use the other
 		// super constructor
 		super(parentShell, repo);
+		setRootsToShow(true, true, true, false);
 	}
 
 	@Override
