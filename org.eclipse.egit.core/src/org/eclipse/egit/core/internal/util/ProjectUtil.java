@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -120,6 +121,28 @@ public class ProjectUtil {
 			monitor.done();
 		}
 
+	}
+
+	/**
+	 * The method retrieves all accessible projects related to the given
+	 * repository
+	 *
+	 * @param repository
+	 * @return list of projects
+	 */
+	public static IProject[] getProjects(Repository repository) {
+		List<IProject> result = new ArrayList<IProject>();
+		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
+				.getProjects();
+		for (IProject project : projects) {
+			if (project.isAccessible()) {
+				RepositoryMapping mapping = RepositoryMapping
+						.getMapping(project);
+				if (mapping != null && mapping.getRepository() == repository)
+					result.add(project);
+			}
+		}
+		return result.toArray(new IProject[result.size()]);
 	}
 
 }
