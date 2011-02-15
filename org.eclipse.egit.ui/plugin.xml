@@ -1274,6 +1274,27 @@
                name="##Repo-1">
          </separator>
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewCommit"
+               icon="icons/obj16/commit.gif"
+               label="%RepoViewCommit.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesViewPushConfigured"
                icon="icons/obj16/push.gif"
                label="%PushToUpstreamCommand.label"
@@ -1889,6 +1910,12 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CommitCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewCommit"
+            name="%CommitCommand">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.RenameBranchCommand"
             id="org.eclipse.egit.ui.RepositoriesViewRenameBranch"
             name="%RenameBranchCommand">
@@ -2128,6 +2155,10 @@
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewFetch"
             icon="icons/obj16/fetch.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewCommit"
+            icon="icons/obj16/commit.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewClone"
