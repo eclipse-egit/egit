@@ -49,6 +49,7 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 	 */
 	public BranchSelectionDialog(Shell parentShell, Repository repo) {
 		super(parentShell, repo);
+		setRootsToShow(true, true, true, false);
 	}
 
 	private InputDialog getRefNameInputDialog(String prompt,
