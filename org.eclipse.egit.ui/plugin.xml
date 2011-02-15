@@ -2381,7 +2381,7 @@
            </or>
          </enablement>
          <commonSorter
-               class="org.eclipse.egit.ui.internal.synchronize.mapping.GitCommitChangeSetSorter"/>
+               class="org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetSorter"/>
        </navigatorContent>
    </extension>
    <extension
