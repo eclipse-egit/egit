@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.synchronize.mapping;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache;
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelTree;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
@@ -49,6 +50,13 @@ public class GitChangeSetSorter extends ViewerSorter {
 
 		if (e2 instanceof GitModelCache)
 			return 2;
+
+		if ((e1 instanceof GitModelTree && e1 instanceof GitModelTree) ||
+				(e1 instanceof GitModelBlob && e1 instanceof GitModelBlob))
+			return super.compare(viewer, e1, e2);
+
+		if (e1 instanceof GitModelTree && e2 instanceof GitModelCommit)
+			return 1;
 
 		if (e1 instanceof GitModelCommit && e2 instanceof GitModelCommit) {
 			RevCommit rc1 = ((GitModelCommit) e1).getBaseCommit();
