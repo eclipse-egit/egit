@@ -63,9 +63,11 @@
   <properties>
     <egit-version>0.12.0-SNAPSHOT</egit-version>
     <tycho-version>0.10.0</tycho-version>
+    <mockito-version>1.8.4</mockito-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.updatesite/target/site</jgit-site>
     <jetty-site>http://download.eclipse.org/jetty/7.1.6.v20100715/repository/</jetty-site>
     <wikitext-site>http://download.eclipse.org/tools/mylyn/update/weekly</wikitext-site>
+    <orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/S20110124210048/repository</orbit-site>
   </properties>
 
   <profiles>
@@ -158,6 +160,11 @@
       <layout>p2</layout>
       <url>${jetty-site}</url>
     </repository>
+    <repository>
+      <id>orbit</id>
+      <layout>p2</layout>
+      <url>${orbit-site}</url>
+    </repository>
   </repositories>
 
   <pluginRepositories>
@@ -184,6 +191,7 @@
         <version>${tycho-version}</version>
         <configuration>
           <resolver>p2</resolver>
+          <pomDependencies>consider</pomDependencies>
         </configuration>
       </plugin>
     </plugins>
@@ -265,5 +273,13 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito-version}</version>
+    </dependency>
+  </dependencies>
 </project>
 
