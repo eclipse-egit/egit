@@ -37,7 +37,8 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 	 */
 	public BranchHierarchyNode(RepositoryTreeNode parent,
 			Repository repository, IPath path) {
-		super(parent, RepositoryTreeNodeType.BRANCHHIERARCHY, repository, path);
+		// path must end with /
+		super(parent, RepositoryTreeNodeType.BRANCHHIERARCHY, repository, path.addTrailingSeparator());
 	}
 
 	/**
@@ -83,7 +84,7 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 	private List<IPath> getPathList() throws IOException {
 		List<IPath> result = new ArrayList<IPath>();
 		Map<String, Ref> refsMap = getRepository().getRefDatabase().getRefs(
-				getObject().toPortableString());
+				getObject().toPortableString()); // getObject() returns path ending with /
 		for (Map.Entry<String, Ref> entry : refsMap.entrySet()) {
 			if (entry.getValue().isSymbolic())
 				continue;
