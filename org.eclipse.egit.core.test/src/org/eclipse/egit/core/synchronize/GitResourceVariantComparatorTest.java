@@ -10,12 +10,10 @@ package org.eclipse.egit.core.synchronize;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.easymock.EasyMock.anyObject;
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
 import static org.eclipse.jgit.lib.Constants.HEAD;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -91,13 +89,11 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 				null);
 
 		// given
-		IResource local = createMock(IResource.class);
-		expect(local.exists()).andReturn(false);
-		replay(local);
+		IResource local = mock(IResource.class);
+		when(local.exists()).thenReturn(false);
 
 		// then
 		assertFalse(grvc.compare(local, null));
-		verify(local);
 	}
 
 	@Test
@@ -108,15 +104,13 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 				null);
 
 		// given
-		IResource local = createMock(IResource.class);
-		expect(local.exists()).andReturn(false);
-		replay(local);
+		IResource local = mock(IResource.class);
+		when(local.exists()).thenReturn(false);
 		IResourceVariant remote = new GitFolderResourceVariant(repo, null,
 				ObjectId.zeroId(), "./");
 
 		// then
 		assertFalse(grvc.compare(local, remote));
-		verify(local);
 	}
 
 	/**
@@ -132,17 +126,14 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 				null);
 
 		// given
-		IFile local = createMock(IFile.class);
-		expect(local.exists()).andReturn(true);
-		replay(local);
+		IFile local = mock(IFile.class);
+		when(local.exists()).thenReturn(true);
 
-		IResourceVariant remote = createMock(IResourceVariant.class);
-		expect(remote.isContainer()).andReturn(true);
-		replay(remote);
+		IResourceVariant remote = mock(IResourceVariant.class);
+		when(remote.isContainer()).thenReturn(true);
 
 		// then
 		assertFalse(grvc.compare(local, remote));
-		verify(local, remote);
 	}
 
 	/**
@@ -159,12 +150,10 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 				null);
 
 		// given
-		IPath localPath = createMock(IPath.class);
-		replay(localPath);
-		IContainer local = createMock(IContainer.class);
-		expect(local.exists()).andReturn(true).times(2);
-		expect(local.getFullPath()).andReturn(localPath);
-		replay(local);
+		IPath localPath = mock(IPath.class);
+		IContainer local = mock(IContainer.class);
+		when(local.exists()).thenReturn(true);
+		when(local.getFullPath()).thenReturn(localPath);
 
 		File file = testRepo.createFile(iProject, "test" + File.separator
 				+ "keep");
@@ -177,7 +166,6 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 
 		// then
 		assertFalse(grvc.compare(local, remote));
-		verify(local, localPath);
 	}
 
 	/**
@@ -202,17 +190,15 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 		String path = Repository.stripWorkDir(repo.getWorkTree(), file);
 		IPath iPath = new Path(File.separator + path);
 
-		IContainer local = createMock(IContainer.class);
-		expect(local.exists()).andReturn(true).times(2);
-		expect(local.getFullPath()).andReturn(iPath).anyTimes();
-		replay(local);
+		IContainer local = mock(IContainer.class);
+		when(local.exists()).thenReturn(true);
+		when(local.getFullPath()).thenReturn(iPath);
 
 		GitFolderResourceVariant remote = new GitFolderResourceVariant(repo, null,
 				commit.getTree(), path);
 
 		// then
 		assertTrue(grvc.compare(local, remote));
-		verify(local);
 	}
 
 	/**
@@ -234,27 +220,23 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 				dataSet);
 
 		// given
-		IFile local = createMock(IFile.class);
-		expect(local.exists()).andReturn(true);
-		expect(local.getProject()).andReturn(project.getProject()).anyTimes();
-		expect(local.getContents()).andReturn(
+		IFile local = mock(IFile.class);
+		when(local.exists()).thenReturn(true);
+		when(local.getProject()).thenReturn(project.getProject());
+		when(local.getContents()).thenReturn(
 				new ByteArrayInputStream(longContent));
-		replay(local);
 
-		IStorage storage = createMock(IStorage.class);
-		expect(storage.getContents()).andReturn(
+		IStorage storage = mock(IStorage.class);
+		when(storage.getContents()).thenReturn(
 				new ByteArrayInputStream(shortContent));
-		replay(storage);
 
-		IResourceVariant remote = createMock(IResourceVariant.class);
-		expect(remote.isContainer()).andReturn(false);
-		expect(remote.getStorage((IProgressMonitor) anyObject())).andReturn(
-				storage).anyTimes();
-		replay(remote);
+		IResourceVariant remote = mock(IResourceVariant.class);
+		when(remote.isContainer()).thenReturn(false);
+		when(remote.getStorage(any(IProgressMonitor.class))).thenReturn(
+				storage);
 
 		// then
 		assertFalse(grvc.compare(local, remote));
-		verify(local, remote, storage);
 	}
 
 	/**
@@ -276,27 +258,23 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 				dataSet);
 
 		// given
-		IFile local = createMock(IFile.class);
-		expect(local.exists()).andReturn(true);
-		expect(local.getProject()).andReturn(project.getProject());
-		expect(local.getContents()).andReturn(
+		IFile local = mock(IFile.class);
+		when(local.exists()).thenReturn(true);
+		when(local.getProject()).thenReturn(project.getProject());
+		when(local.getContents()).thenReturn(
 				new ByteArrayInputStream(localContent));
-		replay(local);
 
-		IStorage storage = createMock(IStorage.class);
-		expect(storage.getContents()).andReturn(
+		IStorage storage = mock(IStorage.class);
+		when(storage.getContents()).thenReturn(
 				new ByteArrayInputStream(remoteContent));
-		replay(storage);
 
-		IResourceVariant remote = createMock(IResourceVariant.class);
-		expect(remote.isContainer()).andReturn(false);
-		expect(remote.getStorage((IProgressMonitor) anyObject())).andReturn(
-				storage).anyTimes();
-		replay(remote);
+		IResourceVariant remote = mock(IResourceVariant.class);
+		when(remote.isContainer()).thenReturn(false);
+		when(remote.getStorage(any(IProgressMonitor.class))).thenReturn(
+				storage);
 
 		// then
 		assertFalse(grvc.compare(local, remote));
-		verify(local, remote);
 	}
 
 	/**
@@ -320,27 +298,23 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 				dataSet);
 
 		// given
-		IFile local = createMock(IFile.class);
-		expect(local.exists()).andReturn(true);
-		expect(local.getProject()).andReturn(project.getProject());
-		expect(local.getContents()).andReturn(
+		IFile local = mock(IFile.class);
+		when(local.exists()).thenReturn(true);
+		when(local.getProject()).thenReturn(project.getProject());
+		when(local.getContents()).thenReturn(
 				new ByteArrayInputStream(localContent));
-		replay(local);
 
-		IStorage storage = createMock(IStorage.class);
-		expect(storage.getContents()).andReturn(
+		IStorage storage = mock(IStorage.class);
+		when(storage.getContents()).thenReturn(
 				new ByteArrayInputStream(remoteContent));
-		replay(storage);
 
-		IResourceVariant remote = createMock(IResourceVariant.class);
-		expect(remote.isContainer()).andReturn(false);
-		expect(remote.getStorage((IProgressMonitor) anyObject())).andReturn(
-				storage).anyTimes();
-		replay(remote);
+		IResourceVariant remote = mock(IResourceVariant.class);
+		when(remote.isContainer()).thenReturn(false);
+		when(remote.getStorage(any(IProgressMonitor.class))).thenReturn(
+				storage);
 
 		// then
 		assertFalse(grvc.compare(local, remote));
-		verify(local, remote);
 	}
 
 	/**
@@ -368,27 +342,23 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 				dataSet);
 
 		// given
-		IFile local = createMock(IFile.class);
-		expect(local.exists()).andReturn(true);
-		expect(local.getProject()).andReturn(project.getProject());
-		expect(local.getContents()).andReturn(
+		IFile local = mock(IFile.class);
+		when(local.exists()).thenReturn(true);
+		when(local.getProject()).thenReturn(project.getProject());
+		when(local.getContents()).thenReturn(
 				new ByteArrayInputStream(localContent));
-		replay(local);
 
-		IStorage storage = createMock(IStorage.class);
-		expect(storage.getContents()).andReturn(
+		IStorage storage = mock(IStorage.class);
+		when(storage.getContents()).thenReturn(
 				new ByteArrayInputStream(remoteContent));
-		replay(storage);
 
-		IResourceVariant remote = createMock(IResourceVariant.class);
-		expect(remote.isContainer()).andReturn(false);
-		expect(remote.getStorage((IProgressMonitor) anyObject())).andReturn(
-				storage).anyTimes();
-		replay(remote);
+		IResourceVariant remote = mock(IResourceVariant.class);
+		when(remote.isContainer()).thenReturn(false);
+		when(remote.getStorage(any(IProgressMonitor.class))).thenReturn(
+				storage);
 
 		// then
 		assertFalse(grvc.compare(local, remote));
-		verify(local, remote, storage);
 	}
 
 	/**
@@ -409,27 +379,23 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 				dataSet);
 
 		// given
-		IFile local = createMock(IFile.class);
-		expect(local.exists()).andReturn(true);
-		expect(local.getProject()).andReturn(project.getProject());
-		expect(local.getContents()).andReturn(
+		IFile local = mock(IFile.class);
+		when(local.exists()).thenReturn(true);
+		when(local.getProject()).thenReturn(project.getProject());
+		when(local.getContents()).thenReturn(
 				new ByteArrayInputStream(localContent));
-		replay(local);
 
-		IStorage storage = createMock(IStorage.class);
-		expect(storage.getContents()).andReturn(
+		IStorage storage = mock(IStorage.class);
+		when(storage.getContents()).thenReturn(
 				new ByteArrayInputStream(remoteContent));
-		replay(storage);
 
-		IResourceVariant remote = createMock(IResourceVariant.class);
-		expect(remote.isContainer()).andReturn(false);
-		expect(remote.getStorage((IProgressMonitor) anyObject())).andReturn(
-				storage).anyTimes();
-		replay(remote);
+		IResourceVariant remote = mock(IResourceVariant.class);
+		when(remote.isContainer()).thenReturn(false);
+		when(remote.getStorage(any(IProgressMonitor.class))).thenReturn(
+				storage);
 
 		// then
 		assertTrue(grvc.compare(local, remote));
-		verify(local, remote);
 	}
 
 	/**
@@ -453,27 +419,23 @@ public class GitResourceVariantComparatorTest extends GitTestCase {
 				dataSet);
 
 		// given
-		IFile local = createMock(IFile.class);
-		expect(local.exists()).andReturn(true);
-		expect(local.getProject()).andReturn(project.getProject());
-		expect(local.getContents()).andReturn(
+		IFile local = mock(IFile.class);
+		when(local.exists()).thenReturn(true);
+		when(local.getProject()).thenReturn(project.getProject());
+		when(local.getContents()).thenReturn(
 				new ByteArrayInputStream(localContent));
-		replay(local);
 
-		IStorage storage = createMock(IStorage.class);
-		expect(storage.getContents()).andReturn(
+		IStorage storage = mock(IStorage.class);
+		when(storage.getContents()).thenReturn(
 				new ByteArrayInputStream(remoteContent));
-		replay(storage);
 
-		IResourceVariant remote = createMock(IResourceVariant.class);
-		expect(remote.isContainer()).andReturn(false);
-		expect(remote.getStorage((IProgressMonitor) anyObject())).andReturn(
-				storage).anyTimes();
-		replay(remote);
+		IResourceVariant remote = mock(IResourceVariant.class);
+		when(remote.isContainer()).thenReturn(false);
+		when(remote.getStorage(any(IProgressMonitor.class))).thenReturn(
+				storage);
 
 		// then
 		assertTrue(grvc.compare(local, remote));
-		verify(local, remote, storage);
 	}
 
 	/* ==================================================
