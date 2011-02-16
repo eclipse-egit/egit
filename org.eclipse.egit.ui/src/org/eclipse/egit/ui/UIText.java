@@ -2197,6 +2197,9 @@ public class UIText extends NLS {
 	public static String BranchSelectionDialog_ErrorCouldNotCreateNewRef;
 
 	/** */
+	public static String BranchSelectionDialog_ErrorCouldNotDeleteRef;
+
+	/** */
 	public static String BranchSelectionDialog_ErrorCouldNotRenameRef;
 
 	/** */
@@ -2219,6 +2222,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String BranchSelectionDialog_Rename;
+
+	/** */
+	public static String BranchSelectionDialog_Delete;
 
 	/** */
 	public static String CommitDialogPreferencePage_title;
