@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///nM\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2814,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2011-02-16T17:45:02Z",
+      "side": 1,
+      "message": "whitespace nit",
+      "revId": "037f01045f65e785c9e5b321659362705420a8cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///nI\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2815,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2011-02-16T17:45:02Z",
+      "side": 1,
+      "message": "whitespace nit",
+      "revId": "037f01045f65e785c9e5b321659362705420a8cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
