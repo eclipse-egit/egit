@@ -8,19 +8,19 @@
 
    <extension point="org.eclipse.ui.importWizards">
       <category name="%Git_clone_category"
-	    id="org.eclipse.egit.ui.internal.clone.gitclonecategory"/>
+        id="org.eclipse.egit.ui.internal.clone.gitclonecategory"/>
       <wizard name="%Git_clone_wizard"
-	    icon="icons/obj16/import_obj.gif"
-	    class="org.eclipse.egit.ui.internal.clone.GitImportWizard"
-	    id="org.eclipse.egit.ui.internal.clone.GitCloneWizard"
-	    category="org.eclipse.egit.ui.internal.clone.gitclonecategory">
-	    <description>%Git_clone_description</description>
+        icon="icons/obj16/import_obj.gif"
+        class="org.eclipse.egit.ui.internal.clone.GitImportWizard"
+        id="org.eclipse.egit.ui.internal.clone.GitCloneWizard"
+        category="org.eclipse.egit.ui.internal.clone.gitclonecategory">
+        <description>%Git_clone_description</description>
       </wizard>
    </extension>
 
    <extension point="org.eclipse.team.ui.configurationWizards">
       <wizard name="%SharingWizard_name"
-	    icon="icons/etool16/newconnect_wiz.gif"
+        icon="icons/etool16/newconnect_wiz.gif"
             class="org.eclipse.egit.ui.internal.sharing.SharingWizard"
             id="org.eclipse.egit.ui.internal.sharing.SharingWizard">
       </wizard>
@@ -166,6 +166,11 @@
                label="%DiscardChangesAction_label"
                menubarPath="replaceWithMenu/gitReplaceWithGroup"/>
          <action
+               class="org.eclipse.egit.ui.internal.actions.CheckoutResourcesFromHEADAction"
+               id="org.eclipse.egit.ui.internal.actions.CheckoutResourcesFromHEADAction"
+               label="%CheckoutResourcesFromHEAD_label"
+               menubarPath="replaceWithMenu/gitReplaceWithGroup"/>
+         <action
                class="org.eclipse.egit.ui.internal.actions.ApplyPatchAction"
                definitionId="org.eclipse.egit.ui.team.ApplyPatch"
                enablesFor="*"
@@ -204,8 +209,8 @@
                label="%CompareWithCommitAction.label"
                menubarPath="compareWithMenu/gitCompareWithGroup">
          </action>
-	  </objectContribution>
-   	  <objectContribution
+      </objectContribution>
+         <objectContribution
          adaptable="true"
          id="org.eclipse.egit.ui.fileContributions"
          objectClass="org.eclipse.core.resources.IFile">
@@ -228,7 +233,7 @@
             </adapter>
          </factory>
          <factory
-	       adaptableType="org.eclipse.core.resources.IResource"
+           adaptableType="org.eclipse.core.resources.IResource"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
                   type="org.eclipse.team.ui.history.IHistoryPageSource">
@@ -249,43 +254,43 @@
             </adapter>
          </factory>
          <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRoot"
+           adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRoot"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
                   type="org.eclipse.ui.model.IWorkbenchAdapter"/>
          </factory>
          <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRepository"
+           adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelRepository"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
                   type="org.eclipse.ui.model.IWorkbenchAdapter"/>
          </factory>
          <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit"
+           adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
                   type="org.eclipse.ui.model.IWorkbenchAdapter"/>
          </factory>
          <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCache"
+           adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelCache"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
                   type="org.eclipse.ui.model.IWorkbenchAdapter"/>
          </factory>
          <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree"
+           adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
                   type="org.eclipse.ui.model.IWorkbenchAdapter"/>
          </factory>
          <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelTree"
+           adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelTree"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
                   type="org.eclipse.ui.model.IWorkbenchAdapter"/>
          </factory>
          <factory
-	       adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob"
+           adaptableType="org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob"
                class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
             <adapter
                   type="org.eclipse.ui.model.IWorkbenchAdapter"/>
@@ -337,20 +342,20 @@
             id="org.eclipse.egit.ui.GitPreferences" />
 
       <page name="%GitPreferences_WindowCachePreferencePage_name"
-	    category="org.eclipse.egit.ui.GitPreferences"
+        category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage"
-	    id="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage" >
-	    <keywordReference
-		  id="org.eclipse.egit.ui.keyword.git">
-	    </keywordReference>
+        id="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage" >
+        <keywordReference
+          id="org.eclipse.egit.ui.keyword.git">
+        </keywordReference>
       </page>
-	  <page name="%GitPreferences_DecoratorPreferencePage_name"
-	    category="org.eclipse.egit.ui.GitPreferences"
+      <page name="%GitPreferences_DecoratorPreferencePage_name"
+        category="org.eclipse.egit.ui.GitPreferences"
             class="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage"
-	    id="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage" >
-	    <keywordReference
-		  id="org.eclipse.egit.ui.keyword.git">
-	    </keywordReference>
+        id="org.eclipse.egit.ui.internal.preferences.GitDecoratorPreferencePage" >
+        <keywordReference
+          id="org.eclipse.egit.ui.keyword.git">
+        </keywordReference>
       </page>
       <page
          category="org.eclipse.egit.ui.GitPreferences"
@@ -377,26 +382,26 @@
             name="%Git"
             class="org.eclipse.egit.ui.internal.preferences.GitProjectPropertyPage"
             id="org.eclipse.egit.ui.preferences.GitProjectPropertyPage">
-	    <enabledWhen>
-		<adapt type="org.eclipse.core.resources.IProject">
-			<test
-				property="org.eclipse.core.resources.projectPersistentProperty"
-				args="org.eclipse.team.core.repository, org.eclipse.egit.core.GitProvider">
-			</test>
-		</adapt>
-	    </enabledWhen>
+        <enabledWhen>
+        <adapt type="org.eclipse.core.resources.IProject">
+            <test
+                property="org.eclipse.core.resources.projectPersistentProperty"
+                args="org.eclipse.team.core.repository, org.eclipse.egit.core.GitProvider">
+            </test>
+        </adapt>
+        </enabledWhen>
       </page>
    </extension>
 
    <extension point="org.eclipse.ui.keywords">
-	  <keyword
-			id="org.eclipse.egit.ui.keyword.git"
-			label="%GitKeyword_label">
-	  </keyword>
-	  <keyword
-			id="org.eclipse.egit.ui.keyword.refresh"
-			label="%GitKeyword_Refresh_label">
-	  </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.keyword.git"
+            label="%GitKeyword_label">
+      </keyword>
+      <keyword
+            id="org.eclipse.egit.ui.keyword.refresh"
+            label="%GitKeyword_Refresh_label">
+      </keyword>
    </extension>
 
    <extension point="org.eclipse.ui.decorators">
@@ -448,7 +453,7 @@
             %Theme_CommitMessageFont_description
          </description>
       </fontDefinition>
-	<colorDefinition
+    <colorDefinition
         id="org.eclipse.egit.ui.UncommittedChangeForegroundColor"
         categoryId="org.eclipse.egit.ui.GitTheme"
         label="%Theme_UncommittedChangeForegroundColor_label"
@@ -495,14 +500,14 @@
       </referenceprovider>
    </extension>
    <extension
-	 point="org.eclipse.ui.actionSets">
+     point="org.eclipse.ui.actionSets">
       <actionSet
-	    description="%GitActions_description"
-	    id="org.eclipse.egit.ui.gitaction"
-	    label="%GitActions_label"
-	    visible="false"
-	    >
-	    <menu
+        description="%GitActions_description"
+        id="org.eclipse.egit.ui.gitaction"
+        label="%GitActions_label"
+        visible="false"
+        >
+        <menu
            id="org.eclipse.egit.ui.gitmenu"
            label="%GitMenu_label"
            path="additions"
@@ -510,7 +515,7 @@
         <separator
               name="repositoryGroup">
         </separator>
-	    </menu>
+        </menu>
   <action
         class="org.eclipse.egit.ui.internal.actions.PullFromUpstreamConfigAction"
         definitionId="org.eclipse.egit.ui.team.Pull"
@@ -522,7 +527,7 @@
         toolbarPath="org.eclipse.egit.ui"
         tooltip="%PullIntoCurrentBranch.tooltip">
   </action>
-		<action
+        <action
         class="org.eclipse.egit.ui.internal.actions.SimpleFetchAction"
         definitionId="org.eclipse.egit.ui.team.SimpleFetch"
         icon="icons/obj16/fetch.gif"
@@ -532,8 +537,8 @@
         style="push"
         toolbarPath="org.eclipse.egit.ui"
         tooltip="%FetchAction_tooltip">
-		</action>
-		<action
+        </action>
+        <action
         class="org.eclipse.egit.ui.internal.actions.SimplePushAction"
         definitionId="org.eclipse.egit.ui.team.SimplePush"
         icon="icons/obj16/push.gif"
@@ -543,8 +548,8 @@
         style="push"
         toolbarPath="org.eclipse.egit.ui"
         tooltip="%PushAction_tooltip">
-		</action>
-		<action
+        </action>
+        <action
         class="org.eclipse.egit.ui.internal.actions.ResetAction"
         definitionId="org.eclipse.egit.ui.team.Reset"
         icon="icons/obj16/reset.gif"
@@ -554,7 +559,7 @@
         style="push"
         toolbarPath="Normal/additions"
         tooltip="%ResetAction_tooltip">
-		</action>
+        </action>
   <action
         class="org.eclipse.egit.ui.internal.actions.BranchAction"
         definitionId="org.eclipse.egit.ui.team.Branch"
