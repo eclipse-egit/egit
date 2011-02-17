@@ -111,6 +111,11 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 		addField(new BooleanFieldEditor(
 				UIPreferences.RESOURCEHISTORY_SHOW_REV_DETAIL,
 				UIText.ResourceHistory_toggleRevDetail, historyGroup));
+		addField(new IntegerFieldEditor(UIPreferences.HISTORY_MAX_NUM_COMMITS,
+				UIText.ResourceHistory_MaxNumCommitsInList, historyGroup));
+		addField(new BooleanFieldEditor(
+				UIPreferences.HISTORY_SHOW_TAG_SEQUENCE,
+				UIText.ResourceHistory_ShowTagSequence, historyGroup));
 		updateMargins(historyGroup);
 
 		Group remoteConnectionsGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
