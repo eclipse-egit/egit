@@ -285,166 +285,28 @@ class CommitMessageViewer extends TextViewer implements
 			return;
 		}
 
-		final boolean trace = GitTraceLocation.HISTORYVIEW.isActive();
-		if (trace)
-			GitTraceLocation.getTrace().traceEntry(
-					GitTraceLocation.HISTORYVIEW.getLocation());
-
 		final List<StyleRange> styles = new ArrayList<StyleRange>();
 		final StringBuilder d = new StringBuilder();
-
-		final PersonIdent author = commit.getAuthorIdent();
-		final PersonIdent committer = commit.getCommitterIdent();
-		d.append(UIText.CommitMessageViewer_commit);
-		d.append(SPACE);
-		d.append(commit.getId().name());
-		d.append(LF);
-
-		if (author != null) {
-			d.append(UIText.CommitMessageViewer_author);
-			d.append(": "); //$NON-NLS-1$
-			d.append(author.getName());
-			d.append(" <"); //$NON-NLS-1$
-			d.append(author.getEmailAddress());
-			d.append("> "); //$NON-NLS-1$
-			d.append(fmt.format(author.getWhen()));
-			d.append(LF);
-		}
-
-		if (committer != null) {
-			d.append(UIText.CommitMessageViewer_committer);
-			d.append(": "); //$NON-NLS-1$
-			d.append(committer.getName());
-			d.append(" <"); //$NON-NLS-1$
-			d.append(committer.getEmailAddress());
-			d.append("> "); //$NON-NLS-1$
-			d.append(fmt.format(committer.getWhen()));
-			d.append(LF);
-		}
-
-		for (int i = 0; i < commit.getParentCount(); i++) {
-			final RevCommit p = commit.getParent(i);
-			d.append(UIText.CommitMessageViewer_parent);
-			d.append(": "); //$NON-NLS-1$
-			addLink(d, styles, p);
-			d.append(" ("); //$NON-NLS-1$
-			d.append(p.getShortMessage());
-			d.append(")"); //$NON-NLS-1$
-			d.append(LF);
-		}
-
-		for (int i = 0; i < commit.getChildCount(); i++) {
-			final RevCommit p = commit.getChild(i);
-			d.append(UIText.CommitMessageViewer_child);
-			d.append(": "); //$NON-NLS-1$
-			addLink(d, styles, p);
-			d.append(" ("); //$NON-NLS-1$
-			d.append(p.getShortMessage());
-			d.append(")"); //$NON-NLS-1$
-			d.append(LF);
-		}
-
-		List<Ref> branches = getBranches();
-		if (!branches.isEmpty()) {
-			d.append(UIText.CommitMessageViewer_branches);
-			d.append(": "); //$NON-NLS-1$
-			for (Iterator<Ref> i = branches.iterator(); i.hasNext();) {
-				Ref head = i.next();
-				RevCommit p;
-				try {
-					p = new RevWalk(db).parseCommit(head.getObjectId());
-					addLink(d, formatHeadRef(head), styles, p);
-					if (i.hasNext())
-						d.append(", "); //$NON-NLS-1$
-				} catch (MissingObjectException e) {
-					Activator.logError(e.getMessage(), e);
-				} catch (IncorrectObjectTypeException e) {
-					Activator.logError(e.getMessage(), e);
-				} catch (IOException e) {
-					Activator.logError(e.getMessage(), e);
-				}
-			}
-			d.append(LF);
-		}
-
-		String tagsString = getTagsString();
-		if (tagsString.length() > 0) {
-			d.append(UIText.CommitMessageViewer_tags);
-			d.append(": "); //$NON-NLS-1$
-			d.append(tagsString);
-			d.append(LF);
-		}
-
+		// we do the formatting asynchronously
 		try {
-			Ref followingTag = getNextTag(false);
-			if (followingTag != null) {
-				d.append(UIText.CommitMessageViewer_follows);
-				d.append(": "); //$NON-NLS-1$
-				RevCommit p = new RevWalk(db).parseCommit(followingTag
-						.getObjectId());
-				addLink(d, formatTagRef(followingTag), styles, p);
-				d.append(LF);
-			}
-		} catch (IOException e) {
-			Activator.logError(e.getMessage(), e);
+			PlatformUI.getWorkbench().getProgressService().busyCursorWhile(
+					new IRunnableWithProgress() {
+						public void run(IProgressMonitor monitor)
+								throws InvocationTargetException,
+								InterruptedException {
+							format(styles, d, monitor);
+						}
+					});
+
+		} catch (InvocationTargetException e) {
+			Activator.handleError(NLS.bind(
+					UIText.CommitMessageViewer_errorGettingFileDifference,
+					commit.getId()), e.getTargetException(), false);
+		} catch (InterruptedException e) {
+			// ignore here, the list of differences will simply be
+			// incomplete
 		}
-
-		try {
-			Ref precedingTag = getNextTag(true);
-			if (precedingTag != null) {
-				d.append(UIText.CommitMessageViewer_precedes);
-				d.append(": "); //$NON-NLS-1$
-				RevCommit p = new RevWalk(db).parseCommit(precedingTag
-						.getObjectId());
-				addLink(d, formatTagRef(precedingTag), styles, p);
-				d.append(LF);
-			}
-		} catch (IOException e) {
-			Activator.logError(e.getMessage(), e);
-		}
-
-		makeGrayText(d, styles);
-		d.append(LF);
-		String msg = commit.getFullMessage();
-		Pattern p = Pattern.compile("\n([A-Z](?:[A-Za-z]+-)+by: [^\n]+)"); //$NON-NLS-1$
-		if (fill) {
-			Matcher spm = p.matcher(msg);
-			if (spm.find()) {
-				String subMsg = msg.substring(0, spm.end());
-				msg = subMsg.replaceAll("([\\w.,; \t])\n(\\w)", "$1 $2") //$NON-NLS-1$ //$NON-NLS-2$
-						+ msg.substring(spm.end());
-			}
-		}
-		int h0 = d.length();
-		d.append(msg);
-		d.append(LF);
-
-		Matcher matcher = p.matcher(msg);
-		while (matcher.find()) {
-			styles.add(new StyleRange(h0 + matcher.start(), matcher.end()
-					- matcher.start(), null, null, SWT.ITALIC));
-		}
-
-		// build the asynchronously to ensure UI responsiveness
-		if (!currentDiffs.isEmpty() && commit.getParentCount() == 1)
-			try {
-				PlatformUI.getWorkbench().getProgressService().busyCursorWhile(
-						new IRunnableWithProgress() {
-							public void run(IProgressMonitor monitor)
-									throws InvocationTargetException,
-									InterruptedException {
-								buildDiffs(d, styles, monitor, trace);
-							}
-						});
-			} catch (InvocationTargetException e) {
-				Activator.handleError(NLS.bind(
-						UIText.CommitMessageViewer_errorGettingFileDifference,
-						commit.getId()), e.getTargetException(), false);
-			} catch (InterruptedException e) {
-				// ignore here, the list of differences will simply be
-				// incomplete
-			}
-
+		// now we're back in the UI thread and update the control
 		final StyleRange[] arr = new StyleRange[styles.size()];
 		styles.toArray(arr);
 		Arrays.sort(arr, new Comparator<StyleRange>() {
@@ -454,10 +316,6 @@ class CommitMessageViewer extends TextViewer implements
 		});
 		setDocument(new Document(d.toString()));
 		getTextWidget().setStyleRanges(arr);
-
-		if (trace)
-			GitTraceLocation.getTrace().traceExit(
-					GitTraceLocation.HISTORYVIEW.getLocation());
 	}
 
 	private String getTagsString() {
@@ -705,16 +563,21 @@ class CommitMessageViewer extends TextViewer implements
 	 * @param searchDescendant
 	 *            if <code>false</code>, will search for tagged revision in
 	 *            ancestors
+	 * @param monitor
 	 * @return {@link Ref} or <code>null</code> if no tag found
 	 * @throws IOException
+	 * @throws InterruptedException
 	 */
-	private Ref getNextTag(boolean searchDescendant) throws IOException {
+	private Ref getNextTag(boolean searchDescendant, IProgressMonitor monitor)
+			throws IOException, InterruptedException {
 		RevWalk revWalk = new RevWalk(db);
 
 		Map<String, Ref> tagsMap = db.getTags();
 		Ref tagRef = null;
 
 		for (String tagName : tagsMap.keySet()) {
+			if (monitor.isCanceled())
+				throw new InterruptedException();
 			// both RevCommits must be allocated using same RevWalk instance,
 			// otherwise isMergedInto returns wrong result!
 			RevCommit current = revWalk.parseCommit(commit);
@@ -790,5 +653,163 @@ class CommitMessageViewer extends TextViewer implements
 			// skip exception
 		}
 		return result;
+	}
+
+	private void format(final List<StyleRange> styles, final StringBuilder d,
+			IProgressMonitor monitor) throws InterruptedException,
+			InvocationTargetException {
+		boolean trace = GitTraceLocation.HISTORYVIEW.isActive();
+		if (trace)
+			GitTraceLocation.getTrace().traceEntry(
+					GitTraceLocation.HISTORYVIEW.getLocation());
+		monitor
+				.setTaskName(UIText.CommitMessageViewer_FormattingMessageTaskName);
+		final PersonIdent author = commit.getAuthorIdent();
+		final PersonIdent committer = commit.getCommitterIdent();
+		d.append(UIText.CommitMessageViewer_commit);
+		d.append(SPACE);
+		d.append(commit.getId().name());
+		d.append(LF);
+
+		if (author != null) {
+			d.append(UIText.CommitMessageViewer_author);
+			d.append(": "); //$NON-NLS-1$
+			d.append(author.getName());
+			d.append(" <"); //$NON-NLS-1$
+			d.append(author.getEmailAddress());
+			d.append("> "); //$NON-NLS-1$
+			d.append(fmt.format(author.getWhen()));
+			d.append(LF);
+		}
+
+		if (committer != null) {
+			d.append(UIText.CommitMessageViewer_committer);
+			d.append(": "); //$NON-NLS-1$
+			d.append(committer.getName());
+			d.append(" <"); //$NON-NLS-1$
+			d.append(committer.getEmailAddress());
+			d.append("> "); //$NON-NLS-1$
+			d.append(fmt.format(committer.getWhen()));
+			d.append(LF);
+		}
+
+		for (int i = 0; i < commit.getParentCount(); i++) {
+			final RevCommit p = commit.getParent(i);
+			d.append(UIText.CommitMessageViewer_parent);
+			d.append(": "); //$NON-NLS-1$
+			addLink(d, styles, p);
+			d.append(" ("); //$NON-NLS-1$
+			d.append(p.getShortMessage());
+			d.append(")"); //$NON-NLS-1$
+			d.append(LF);
+		}
+
+		for (int i = 0; i < commit.getChildCount(); i++) {
+			final RevCommit p = commit.getChild(i);
+			d.append(UIText.CommitMessageViewer_child);
+			d.append(": "); //$NON-NLS-1$
+			addLink(d, styles, p);
+			d.append(" ("); //$NON-NLS-1$
+			d.append(p.getShortMessage());
+			d.append(")"); //$NON-NLS-1$
+			d.append(LF);
+		}
+
+		List<Ref> branches = getBranches();
+		if (!branches.isEmpty()) {
+			d.append(UIText.CommitMessageViewer_branches);
+			d.append(": "); //$NON-NLS-1$
+			for (Iterator<Ref> i = branches.iterator(); i.hasNext();) {
+				Ref head = i.next();
+				RevCommit p;
+				try {
+					p = new RevWalk(db).parseCommit(head.getObjectId());
+					addLink(d, formatHeadRef(head), styles, p);
+					if (i.hasNext())
+						d.append(", "); //$NON-NLS-1$
+				} catch (MissingObjectException e) {
+					Activator.logError(e.getMessage(), e);
+				} catch (IncorrectObjectTypeException e) {
+					Activator.logError(e.getMessage(), e);
+				} catch (IOException e) {
+					Activator.logError(e.getMessage(), e);
+				}
+			}
+			d.append(LF);
+		}
+
+		String tagsString = getTagsString();
+		if (tagsString.length() > 0) {
+			d.append(UIText.CommitMessageViewer_tags);
+			d.append(": "); //$NON-NLS-1$
+			d.append(tagsString);
+			d.append(LF);
+		}
+
+		if (Activator.getDefault().getPreferenceStore().getBoolean(
+				UIPreferences.HISTORY_SHOW_TAG_SEQUENCE)) {
+			try {
+				monitor
+						.setTaskName(UIText.CommitMessageViewer_GettingPreviousTagTaskName);
+				Ref followingTag = getNextTag(false, monitor);
+				if (followingTag != null) {
+					d.append(UIText.CommitMessageViewer_follows);
+					d.append(": "); //$NON-NLS-1$
+					RevCommit p = new RevWalk(db).parseCommit(followingTag
+							.getObjectId());
+					addLink(d, formatTagRef(followingTag), styles, p);
+					d.append(LF);
+				}
+			} catch (IOException e) {
+				Activator.logError(e.getMessage(), e);
+			}
+
+			try {
+				monitor
+						.setTaskName(UIText.CommitMessageViewer_GettingNextTagTaskName);
+				Ref precedingTag = getNextTag(true, monitor);
+				if (precedingTag != null) {
+					d.append(UIText.CommitMessageViewer_precedes);
+					d.append(": "); //$NON-NLS-1$
+					RevCommit p = new RevWalk(db).parseCommit(precedingTag
+							.getObjectId());
+					addLink(d, formatTagRef(precedingTag), styles, p);
+					d.append(LF);
+				}
+			} catch (IOException e) {
+				Activator.logError(e.getMessage(), e);
+			}
+		}
+
+		makeGrayText(d, styles);
+		d.append(LF);
+		String msg = commit.getFullMessage();
+		Pattern p = Pattern.compile("\n([A-Z](?:[A-Za-z]+-)+by: [^\n]+)"); //$NON-NLS-1$
+		if (fill) {
+			Matcher spm = p.matcher(msg);
+			if (spm.find()) {
+				String subMsg = msg.substring(0, spm.end());
+				msg = subMsg.replaceAll("([\\w.,; \t])\n(\\w)", "$1 $2") //$NON-NLS-1$ //$NON-NLS-2$
+						+ msg.substring(spm.end());
+			}
+		}
+		int h0 = d.length();
+		d.append(msg);
+		d.append(LF);
+
+		Matcher matcher = p.matcher(msg);
+		while (matcher.find()) {
+			styles.add(new StyleRange(h0 + matcher.start(), matcher.end()
+					- matcher.start(), null, null, SWT.ITALIC));
+		}
+
+		// build the list of file diffs asynchronously to ensure UI
+		// responsiveness
+		if (!currentDiffs.isEmpty() && commit.getParentCount() == 1)
+			buildDiffs(d, styles, monitor, trace);
+
+		if (trace)
+			GitTraceLocation.getTrace().traceExit(
+					GitTraceLocation.HISTORYVIEW.getLocation());
 	}
 }
