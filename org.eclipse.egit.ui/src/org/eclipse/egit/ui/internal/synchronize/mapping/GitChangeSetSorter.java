@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.mapping;
 
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree;
@@ -16,12 +17,27 @@ import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
- * Sorter that order commits in Git Change Set by commit time;
+ * Ensure proper ordering of nodes in Git Change Set.
+ *
+ * Working Tree node will be always first in Change Set, then comes node with
+ * Staged changes, after that will be shown list of commits ordered by commit
+ * date.
+ *
+ * Elements that represents files will be always put after container elements
+ * (like commit or folder). In other cases elements will be sorted in
+ * alphabetical order.
+ *
  */
-public class GitCommitChangeSetSorter extends ViewerSorter {
+public class GitChangeSetSorter extends ViewerSorter {
 
 	@Override
 	public int compare(Viewer viewer, Object e1, Object e2) {
+		if (e1 instanceof GitModelBlob && !(e2 instanceof GitModelBlob))
+			return 1;
+
+		if (e2 instanceof GitModelBlob && !(e1 instanceof GitModelBlob))
+			return -1;
+
 		if (e1 instanceof GitModelWorkingTree)
 			return -1;
 
