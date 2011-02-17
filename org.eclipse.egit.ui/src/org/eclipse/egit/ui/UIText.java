@@ -1717,6 +1717,9 @@ public class UIText extends NLS {
 	public static String CommitMessageViewer_BuildDiffTaskName;
 
 	/** */
+	public static String CommitMessageViewer_CanNotRenderDiffMessage;
+
+	/** */
 	public static String CommitMessageViewer_tags;
 
 	/** */
