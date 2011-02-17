@@ -10,7 +10,6 @@ package org.eclipse.egit.ui.test;
 
 import org.eclipse.egit.ui.dialogs.commit.SpellcheckableMessageAreaTest;
 import org.eclipse.egit.ui.httpauth.PushTest;
-import org.eclipse.egit.ui.internal.synchronize.model.AllGitModelTests;
 import org.eclipse.egit.ui.prefpages.configuration.GlobalConfigurationPageTest;
 import org.eclipse.egit.ui.test.history.HistoryViewTest;
 import org.eclipse.egit.ui.test.team.actions.AllTeamActionTests;
@@ -35,8 +34,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		PushTest.class,
 		SpellcheckableMessageAreaTest.class,
 		TraceConfigurationDialogTest.class,
-		SynchronizeViewTest.class,
-		AllGitModelTests.class })
+		SynchronizeViewTest.class })
 public class AllLocalTests {
 	// empty class, don't need anything here
 }
