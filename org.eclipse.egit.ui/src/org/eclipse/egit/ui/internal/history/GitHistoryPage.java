@@ -1152,8 +1152,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			}
 			setWalkStartPoints(db, headId);
 
-			final TreeWalk fileWalker = setupFileViewer(db, paths);
-			setupCommentViewer(db, fileWalker);
+			setupFileViewer(db, paths);
+			setupCommentViewer(db);
 
 			scheduleNewGenerateHistoryJob();
 		} finally {
@@ -1288,9 +1288,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		}
 	}
 
-	private void setupCommentViewer(Repository db, final TreeWalk fileWalker) {
-		commentViewer.setTreeWalk(fileWalker);
-		commentViewer.setDb(db);
+	private void setupCommentViewer(Repository db) {
+		commentViewer.setRepository(db);
 		commentViewer.refresh();
 	}
 

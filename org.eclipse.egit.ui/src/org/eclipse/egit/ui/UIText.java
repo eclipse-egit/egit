@@ -1699,6 +1699,12 @@ public class UIText extends NLS {
 	public static String CommitMessageViewer_branches;
 
 	/** */
+	public static String CommitMessageViewer_BuildDiffListTaskName;
+
+	/** */
+	public static String CommitMessageViewer_BuildDiffTaskName;
+
+	/** */
 	public static String CommitMessageViewer_tags;
 
 	/** */
