@@ -542,6 +542,7 @@ class CommitMessageViewer extends TextViewer implements
 
 	private void setWrap(boolean wrap) {
 		getTextWidget().setWordWrap(wrap);
+		format();
 	}
 
 	private void setFill(boolean fill) {
