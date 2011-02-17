@@ -396,7 +396,6 @@ public class CommitDialog extends Dialog {
 
 		TableColumn resourceCol = new TableColumn(resourcesTable, SWT.LEFT);
 		resourceCol.setText(UIText.CommitDialog_File);
-		resourceCol.setWidth(415);
 		resourceCol.addSelectionListener(new HeaderSelectionListener(CommitItem.Order.ByFile));
 
 		filesViewer = new CheckboxTableViewer(resourcesTable);
@@ -434,6 +433,7 @@ public class CommitDialog extends Dialog {
 		}
 
 		applyDialogFont(container);
+		resourceCol.pack();
 		container.pack();
 		return container;
 	}
