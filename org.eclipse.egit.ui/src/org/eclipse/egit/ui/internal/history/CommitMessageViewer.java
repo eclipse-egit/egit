@@ -398,6 +398,11 @@ class CommitMessageViewer extends TextViewer implements
 		if (trace)
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation());
+		if (commit.getParentCount() != 1) {
+			d.append(UIText.CommitMessageViewer_CanNotRenderDiffMessage);
+			return;
+		}
+
 		try {
 			monitor.beginTask(UIText.CommitMessageViewer_BuildDiffListTaskName,
 					currentDiffs.size());
@@ -805,7 +810,7 @@ class CommitMessageViewer extends TextViewer implements
 
 		// build the list of file diffs asynchronously to ensure UI
 		// responsiveness
-		if (!currentDiffs.isEmpty() && commit.getParentCount() == 1)
+		if (!currentDiffs.isEmpty())
 			buildDiffs(d, styles, monitor, trace);
 
 		if (trace)
