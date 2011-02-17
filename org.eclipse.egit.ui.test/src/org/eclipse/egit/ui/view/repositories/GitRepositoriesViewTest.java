@@ -36,6 +36,7 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.utils.TableCollection;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
@@ -323,7 +324,13 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		shell = bot.shell(wizardTitle);
 		// try import existing project first
 		bot.radio(UIText.GitSelectWizardPage_ImportExistingButton).click();
-		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
+		SWTBotButton button = shell.bot().button(IDialogConstants.NEXT_LABEL);
+		// Set focus on the next button. If this is not done, Wizard Framework restores
+		// the focus to the "Import as &General Project" radio button. Setting the focus on
+		// the radio button selects the button and causes the test to fail.
+		// See also SWTBot Bug 337465
+		button.setFocus();
+		button.click();
 		waitInUI();
 		shell.bot().tree().getAllItems()[0].check();
 		// add to working set
