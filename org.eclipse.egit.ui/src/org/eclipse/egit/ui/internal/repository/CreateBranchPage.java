@@ -96,11 +96,12 @@ class CreateBranchPage extends WizardPage {
 	public CreateBranchPage(Repository repo, Ref baseRef) {
 		super(CreateBranchPage.class.getName());
 		this.myRepository = repo;
-		this.myBaseRef = baseRef.getName();
+		this.myBaseRef = baseRef != null ? baseRef.getName() : null;
 		this.myBaseCommit = null;
 		this.myValidator = ValidationUtils.getRefNameInputValidator(
 				myRepository, Constants.R_HEADS, true);
-		this.upstreamConfig = getDefaultUpstreamConfig(repo, baseRef.getName());
+		this.upstreamConfig = baseRef != null ? getDefaultUpstreamConfig(repo,
+				baseRef.getName()) : UpstreamConfig.NONE;
 		setTitle(UIText.CreateBranchPage_Title);
 		setMessage(UIText.CreateBranchPage_ChooseBranchAndNameMessage);
 	}
@@ -113,7 +114,7 @@ class CreateBranchPage extends WizardPage {
 	 * @param repo
 	 *            the repository
 	 * @param baseCommit
-	 *            the commit to base the new branch on, must not be null
+	 *            the commit to base the new branch on, may be null
 	 */
 	public CreateBranchPage(Repository repo, RevCommit baseCommit) {
 		super(CreateBranchPage.class.getName());

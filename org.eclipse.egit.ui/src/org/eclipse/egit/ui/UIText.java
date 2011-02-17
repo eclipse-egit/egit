@@ -3257,6 +3257,12 @@ public class UIText extends NLS {
 	public static String SkipRebaseCommand_JobName;
 
 	/** */
+	public static String SwitchToMenu_NewBranchMenuLabel;
+
+	/** */
+	public static String SwitchToMenu_OtherMenuLabel;
+
+	/** */
 	public static String SynchronizeWithAction_localRepoName;
 
 	/** */
