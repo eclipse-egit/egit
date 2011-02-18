@@ -105,7 +105,7 @@ class CommitMessageViewer extends TextViewer implements
 	private static final Cursor SYS_LINK_CURSOR = PlatformUI.getWorkbench()
 			.getDisplay().getSystemCursor(SWT.CURSOR_HAND);
 
-	private static final DateFormat fmt = new SimpleDateFormat(
+	private final DateFormat fmt = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
 
 	private final Cursor sys_normalCursor;
