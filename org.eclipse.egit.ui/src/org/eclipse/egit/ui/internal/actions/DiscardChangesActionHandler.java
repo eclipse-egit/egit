@@ -29,6 +29,16 @@ import org.eclipse.jgit.lib.RepositoryState;
  */
 public class DiscardChangesActionHandler extends RepositoryActionHandler {
 
+	private DiscardChangesOperation.ReplaceType type;
+
+	/**
+	 * Constructs DiscardChangesActionHandler
+	 * @param type
+	 */
+	public DiscardChangesActionHandler(DiscardChangesOperation.ReplaceType type) {
+		this.type = type;
+	}
+
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		boolean performAction = MessageDialog.openConfirm(getShell(event),
@@ -36,8 +46,8 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 				UIText.DiscardChangesAction_confirmActionMessage);
 		if (!performAction)
 			return null;
-		final DiscardChangesOperation operation = new DiscardChangesOperation(
-				getSelectedResources(event));
+
+		final DiscardChangesOperation operation = new DiscardChangesOperation(type, getSelectedResources(event));
 		String jobname = UIText.DiscardChangesAction_discardChanges;
 		Job job = new Job(jobname) {
 			@Override

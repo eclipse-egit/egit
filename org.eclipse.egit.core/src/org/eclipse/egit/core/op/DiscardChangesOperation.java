@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2010, Roland Grunberg <rgrunber@redhat.com>
- *
+ * Copyright (C) 2011, Ilya Ivanov <ilya.ivanov@intland.com>
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,6 +13,7 @@
 package org.eclipse.egit.core.op;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +38,17 @@ import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheCheckout;
+import org.eclipse.jgit.dircache.DirCacheEditor;
+import org.eclipse.jgit.dircache.DirCacheEditor.PathEdit;
 import org.eclipse.jgit.dircache.DirCacheEntry;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -53,11 +63,43 @@ public class DiscardChangesOperation implements IEGitOperation {
 	ISchedulingRule schedulingRule;
 
 	/**
+	 * Resource replacing variants
+	 */
+	public static enum ReplaceType {
+		/**
+		 * Using file version in Index
+		 */
+		INDEX,
+
+		/**
+		 * Using file version in HEAD revision
+		 */
+		HEAD
+	}
+
+	private ReplaceType type;
+
+	/**
 	 * Construct a {@link DiscardChangesOperation} object.
+	 *
+	 * By default, files are replaced with what's in the index
 	 *
 	 * @param files
 	 */
 	public DiscardChangesOperation(IResource[] files) {
+		this.files = files;
+		this.type = ReplaceType.INDEX;
+		schedulingRule = calcRefreshRule(files);
+	}
+
+	/**
+	 * Construct a {@link DiscardChangesOperation} object.
+	 *
+	 * @param type
+	 * @param files
+	 */
+	public DiscardChangesOperation(ReplaceType type, IResource[] files) {
+		this.type = type;
 		this.files = files;
 		schedulingRule = calcRefreshRule(files);
 	}
@@ -72,7 +114,7 @@ public class DiscardChangesOperation implements IEGitOperation {
 	private static ISchedulingRule calcRefreshRule(IResource[] resources) {
 		List<ISchedulingRule> rules = new ArrayList<ISchedulingRule>();
 		IResourceRuleFactory ruleFactory = ResourcesPlugin.getWorkspace()
-				.getRuleFactory();
+		.getRuleFactory();
 		for (IResource resource : resources) {
 			ISchedulingRule rule = ruleFactory.refreshRule(resource);
 			if (rule != null)
@@ -120,7 +162,7 @@ public class DiscardChangesOperation implements IEGitOperation {
 				errorOccured = true;
 				String message = NLS.bind(
 						CoreText.DiscardChangesOperation_discardFailed, res
-								.getFullPath());
+						.getFullPath());
 				Activator.logError(message, e);
 			}
 		}
@@ -145,26 +187,83 @@ public class DiscardChangesOperation implements IEGitOperation {
 	private static Repository getRepository(IResource resource) {
 		IProject project = resource.getProject();
 		RepositoryMapping repositoryMapping = RepositoryMapping
-				.getMapping(project);
+		.getMapping(project);
 		if (repositoryMapping != null)
 			return repositoryMapping.getRepository();
 		else
 			return null;
 	}
 
-	private void discardChange(IResource res, Repository repository)
-			throws IOException {
+	/**
+	 * @param res
+	 * @param repository
+	 * @throws IOException
+	 */
+	public void discardChange(IResource res, Repository repository) throws IOException {
 		String resRelPath = RepositoryMapping.getMapping(res)
-				.getRepoRelativePath(res);
+		.getRepoRelativePath(res);
 		DirCache dc = repository.lockDirCache();
-		try {
-			DirCacheEntry entry = dc.getEntry(resRelPath);
-			if (entry != null) {
-				File file = new File(res.getLocationURI());
-				DirCacheCheckout.checkoutEntry(repository, file, entry);
+		switch (type) {
+		case INDEX:
+			try {
+				DirCacheEntry entry = dc.getEntry(resRelPath);
+				if (entry != null) {
+					File file = new File(res.getLocationURI());
+					DirCacheCheckout.checkoutEntry(repository, file, entry);
+				}
+			} finally {
+				dc.unlock();
 			}
-		} finally {
-			dc.unlock();
+			break;
+		case HEAD:
+			File f = new File(res.getLocationURI());
+
+			RevCommit commit = new RevWalk(repository).parseCommit(repository.getRef(
+					Constants.HEAD).getObjectId());
+
+			TreeWalk w = TreeWalk.forPath(repository, resRelPath, commit.getTree());
+
+			if (w == null)
+				return;	// git doesn't know such resource path
+
+			final ObjectId blobId = w.getObjectId(0);
+			ObjectLoader ol = repository.open(blobId);
+			final long blobSize = ol.getSize();
+
+			File parentDir = f.getParentFile();
+			File tmpFile = File.createTempFile("._" + f.getName(), null, parentDir); //$NON-NLS-1$
+			FileOutputStream channel = new FileOutputStream(tmpFile);
+			try {
+				ol.copyTo(channel);
+			} finally {
+				channel.close();
+			}
+
+			if (!tmpFile.renameTo(f)) {
+				// Rename failed. Let's delete the file and try again
+				FileUtils.delete(f);
+				if (!tmpFile.renameTo(f))
+					throw new IOException(CoreText.ReplaceWithHeadOperation_WritingError + f.getPath());
+			}
+
+			try {
+				DirCacheEditor dcEdit = dc.editor();
+
+				dcEdit.add(new PathEdit(resRelPath) {
+					public void apply(DirCacheEntry ent) {
+						ent.setObjectId(blobId);
+						ent.setLength(blobSize);
+					}
+				});
+				dcEdit.commit();
+			} catch (Exception e) {
+				throw new IOException(CoreText.ReplaceWithHeadOperation_IndexError + f.getPath());
+			} finally {
+				dc.unlock();
+			}
+			break;
+		default:
+			break;
 		}
 	}
 

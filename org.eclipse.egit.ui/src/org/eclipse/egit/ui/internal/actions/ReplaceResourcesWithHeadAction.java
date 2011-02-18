@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Roland Grunberg <rgrunber@redhat.com>
+ * Copyright (C) 2011, Ilya Ivanov <ilya.ivanov@intland.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,11 +13,10 @@ import org.eclipse.egit.core.op.DiscardChangesOperation.ReplaceType;
 /**
  * Checkout all selected dirty files.
  */
-public class DiscardChangesAction extends RepositoryAction {
-	/**
-	 *
-	 */
-	public DiscardChangesAction() {
-		super(ActionCommands.DISCARD_CHANGES_ACTION, new DiscardChangesActionHandler(ReplaceType.INDEX));
+public class ReplaceResourcesWithHeadAction extends RepositoryAction {
+
+	/***/
+	public ReplaceResourcesWithHeadAction() {
+		super(ActionCommands.CHECKOUT_FROM_HEAD_ACTION, new DiscardChangesActionHandler(ReplaceType.HEAD));
 	}
 }

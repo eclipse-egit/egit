@@ -159,6 +159,12 @@ public class CoreText extends NLS {
 	public static String ResetOperation_updatingFailed;
 
 	/** */
+	public static String ReplaceWithHeadOperation_WritingError;
+
+	/** */
+	public static String ReplaceWithHeadOperation_IndexError;
+
+	/** */
 	public static String MergeOperation_InternalError;
 
 	/** */
