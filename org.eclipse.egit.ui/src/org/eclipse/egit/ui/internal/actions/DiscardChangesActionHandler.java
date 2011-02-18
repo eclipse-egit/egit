@@ -18,6 +18,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.DiscardChangesOperation;
+import org.eclipse.egit.core.op.ReplaceWithHeadOperation;
+import org.eclipse.egit.core.op.ReplaceWithIndexOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -29,6 +31,31 @@ import org.eclipse.jgit.lib.RepositoryState;
  */
 public class DiscardChangesActionHandler extends RepositoryActionHandler {
 
+	/**
+	 * Resource replacing variants
+	 */
+	public static enum Replace {
+		/**
+		 * Using file version in Index
+		 */
+		INDEX,
+
+		/**
+		 * Using file version in HEAD revision
+		 */
+		HEAD
+	}
+
+	private Replace replace;
+
+	/**
+	 * Constructs DiscardChangesActionHandler
+	 * @param replaceType
+	 */
+	public DiscardChangesActionHandler(Replace replaceType) {
+		this.replace = replaceType;
+	}
+
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		boolean performAction = MessageDialog.openConfirm(getShell(event),
@@ -36,8 +63,20 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 				UIText.DiscardChangesAction_confirmActionMessage);
 		if (!performAction)
 			return null;
-		final DiscardChangesOperation operation = new DiscardChangesOperation(
-				getSelectedResources(event));
+
+		final DiscardChangesOperation operation;
+		switch (replace) {
+		case INDEX:
+			operation = new ReplaceWithIndexOperation(getSelectedResources(event));
+			break;
+		case HEAD:
+			operation = new ReplaceWithHeadOperation(getSelectedResources(event));
+			break;
+		default:
+			// should never happen
+			return null;
+		}
+
 		String jobname = UIText.DiscardChangesAction_discardChanges;
 		Job job = new Job(jobname) {
 			@Override

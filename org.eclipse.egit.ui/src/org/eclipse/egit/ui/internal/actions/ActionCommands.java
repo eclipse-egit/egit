@@ -50,6 +50,9 @@ public class ActionCommands {
 	/** "Discard changes" action command id */
 	public static final String DISCARD_CHANGES_ACTION = "org.eclipse.egit.ui.team.Discard"; //$NON-NLS-1$
 
+	/** "Checkout From HEAD" action command id */
+	public static final String CHECKOUT_FROM_HEAD_ACTION = "org.eclipse.egit.ui.team.CheckoutHEAD"; //$NON-NLS-1$
+
 	/** "Fetch" action command id */
 	public static final String FETCH_ACTION = "org.eclipse.egit.ui.team.Fetch"; //$NON-NLS-1$
 
