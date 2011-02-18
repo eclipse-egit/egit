@@ -39,6 +39,8 @@ import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.errors.UnmergedPathException;
 import org.eclipse.jgit.lib.CommitBuilder;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.FileMode;
+import org.eclipse.jgit.lib.FileTreeEntry;
 import org.eclipse.jgit.lib.GitIndex;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectInserter;
@@ -274,6 +276,12 @@ public class CommitOperation implements IEGitOperation {
 				TreeEntry newMember = projTree.findBlobMember(repoRelativePath);
 
 				newMember.setId(idxEntry.getObjectId());
+				if (newMember instanceof FileTreeEntry)
+					((FileTreeEntry) newMember).setExecutable(
+							(idxEntry.getModeBits() &
+									FileMode.EXECUTABLE_FILE.getBits())
+							== FileMode.EXECUTABLE_FILE.getBits());
+
 				// TODO is this the right Location?
 				if (GitTraceLocation.CORE.isActive())
 					GitTraceLocation.getTrace().trace(
