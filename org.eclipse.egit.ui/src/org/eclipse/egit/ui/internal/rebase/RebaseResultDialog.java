@@ -39,8 +39,8 @@ import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
+import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.RebaseResult.Status;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.lib.Repository;
@@ -48,6 +48,8 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -83,6 +85,8 @@ public class RebaseResultDialog extends MessageDialog {
 
 	private Button doNothingButton;
 
+	private Group nextStepsGroup;
+
 	/**
 	 * @param result
 	 *            the result to show
@@ -110,6 +114,23 @@ public class RebaseResultDialog extends MessageDialog {
 		});
 	}
 
+	private static String getTitle(Status status) {
+		switch (status) {
+		case OK:
+			return UIText.RebaseResultDialog_SuccessfullyFinished;
+		case ABORTED:
+			return UIText.RebaseResultDialog_Aborted;
+		case STOPPED:
+			return UIText.RebaseResultDialog_Stopped;
+		case UP_TO_DATE:
+			return UIText.RebaseResultDialog_UpToDate;
+		case FAST_FORWARD:
+			return UIText.RebaseResultDialog_FastForward;
+		default:
+			throw new IllegalStateException(status.name());
+		}
+	}
+
 	/**
 	 * @param shell
 	 * @param repository
@@ -117,9 +138,8 @@ public class RebaseResultDialog extends MessageDialog {
 	 */
 	private RebaseResultDialog(Shell shell, Repository repository,
 			RebaseResult result) {
-		super(shell, UIText.RebaseResultDialog_DialogTitle, INFO, NLS.bind(
-				UIText.RebaseResultDialog_StatusLabel, result.getStatus()
-						.name()), MessageDialog.INFORMATION,
+		super(shell, UIText.RebaseResultDialog_DialogTitle, INFO,
+				getTitle(result.getStatus()), MessageDialog.INFORMATION,
 				new String[] { IDialogConstants.OK_LABEL }, 0);
 		setShellStyle(getShellStyle() | SWT.SHELL_TRIM);
 		this.repo = repository;
@@ -170,6 +190,11 @@ public class RebaseResultDialog extends MessageDialog {
 				if (dc.getEntry(i).getStage() > 0)
 					conflictPaths.add(dc.getEntry(i).getPathString());
 			}
+			if (conflictPaths.size() > 0) {
+				message = NLS.bind(UIText.RebaseResultDialog_Conflicting,
+						conflictPaths.size());
+				messageLabel.setText(message);
+			}
 		} catch (IOException e) {
 			// the file list will be empty
 			conflictListFailure = true;
@@ -200,17 +225,78 @@ public class RebaseResultDialog extends MessageDialog {
 		actionGroup.setText(UIText.RebaseResultDialog_ActionGroupTitle);
 		actionGroup.setLayout(new GridLayout(1, false));
 
+		nextStepsGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(nextStepsGroup);
+		nextStepsGroup.setText(UIText.RebaseResultDialog_NextSteps);
+		nextStepsGroup.setLayout(new GridLayout(1, false));
+		final TextViewer nextSteps = new TextViewer(nextStepsGroup, SWT.MULTI
+				| SWT.BORDER | SWT.READ_ONLY);
+		GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT, 60)
+				.applyTo(nextSteps.getControl());
+		nextSteps.getTextWidget().setText(
+				UIText.RebaseResultDialog_NextStepsAfterResolveConflicts);
+
 		startMergeButton = new Button(actionGroup, SWT.RADIO);
 		startMergeButton.setText(UIText.RebaseResultDialog_StartMergeRadioText);
+		startMergeButton.addSelectionListener(new SelectionListener() {
+
+			public void widgetSelected(SelectionEvent e) {
+				nextSteps
+						.getTextWidget()
+						.setText(
+								UIText.RebaseResultDialog_NextStepsAfterResolveConflicts);
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// nothing
+			}
+
+		});
 
 		skipCommitButton = new Button(actionGroup, SWT.RADIO);
 		skipCommitButton.setText(UIText.RebaseResultDialog_SkipCommitButton);
+		skipCommitButton.addSelectionListener(new SelectionListener() {
+
+			public void widgetSelected(SelectionEvent e) {
+				nextSteps.getTextWidget().setText(""); //$NON-NLS-1$
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// nothing
+			}
+
+		});
 
 		abortRebaseButton = new Button(actionGroup, SWT.RADIO);
 		abortRebaseButton
 				.setText(UIText.RebaseResultDialog_AbortRebaseRadioText);
+		abortRebaseButton.addSelectionListener(new SelectionListener() {
+
+			public void widgetSelected(SelectionEvent e) {
+				nextSteps.getTextWidget().setText(""); //$NON-NLS-1$
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// nothing
+			}
+
+		});
+
 		doNothingButton = new Button(actionGroup, SWT.RADIO);
 		doNothingButton.setText(UIText.RebaseResultDialog_DoNothingRadioText);
+		doNothingButton.addSelectionListener(new SelectionListener() {
+
+			public void widgetSelected(SelectionEvent e) {
+				nextSteps.getTextWidget().setText(
+						UIText.RebaseResultDialog_NextStepsDoNothing);
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// nothing
+			}
+
+		});
+
 		startMergeButton.setSelection(true);
 
 		commitGroup.pack();
