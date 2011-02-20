@@ -12,6 +12,7 @@ import static org.eclipse.egit.ui.test.ContextMenuHelper.clickContextMenu;
 import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.eclipse.jgit.lib.Constants.MASTER;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 
@@ -25,6 +26,7 @@ import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotRadio;
@@ -176,6 +178,67 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 		// then
 		assertEquals(1, syncViewTree.getAllItems().length);
+	}
+
+	@Test public void shouldOpenCompareEditorInGitChangeSet() throws Exception {
+		// given
+		resetRepository(PROJ1);
+		createTag(PROJ1, "compare1");
+		changeFilesInProject();
+		showDialog(PROJ1, "Team", "Synchronize...");
+
+		// when
+		bot.shell("Synchronize repository: " + REPO1 + File.separator + ".git")
+				.activate();
+
+		bot.comboBox(2)
+				.setSelection(UIText.SynchronizeWithAction_tagsName);
+		bot.comboBox(3).setSelection("compare1");
+
+		// fire action
+		bot.button(IDialogConstants.OK_LABEL).click();
+
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+		// expand all nodes
+		syncViewTree.getAllItems()[0].collapse().doubleClick();
+		// try to open compare editor for FILE1
+		syncViewTree.getAllItems()[0].getItems()[0].getNode(FOLDER)
+				.getNode(FILE1).doubleClick();
+
+		// then
+		SWTBot compare = bot.editorByTitle(FILE1).bot();
+		assertNotNull(compare);
+	}
+
+	@Test public void shouldOpenCompareEditorInWorkspaceModel() throws Exception {
+		// given
+		resetRepository(PROJ1);
+		createTag(PROJ1, "compare2");
+		changeFilesInProject();
+		showDialog(PROJ1, "Team", "Synchronize...");
+
+		// when
+		bot.shell("Synchronize repository: " + REPO1 + File.separator + ".git")
+				.activate();
+
+		bot.comboBox(2)
+				.setSelection(UIText.SynchronizeWithAction_tagsName);
+		bot.comboBox(3).setSelection("compare2");
+
+		// fire action
+		bot.button(IDialogConstants.OK_LABEL).click();
+
+		SWTBotView syncView = bot.viewByTitle("Synchronize");
+		syncView.toolbarDropDownButton("Show File System Resources").click()
+				.menuItem("Workspace").click();
+		SWTBotTree syncViewTree = syncView.bot().tree();
+		// try to open compare editor for FILE1
+		syncViewTree.getAllItems()[0].expand().getItems()[0].expand()
+				.getItems()[0].doubleClick();
+
+		// then
+		SWTBot compare = bot.editorByTitle(FILE1).bot();
+		assertNotNull(compare);
 	}
 
 	@Test
