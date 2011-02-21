@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///aQ\u003d",
+        "filename": "pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-02-21T22:28:25Z",
+      "side": 1,
+      "message": "we should replace that with the dependency from orbit as soon as a stable build is available containing the version we need.",
+      "revId": "aabcc25cd814d69bea1827ce0d857265f705ad5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
