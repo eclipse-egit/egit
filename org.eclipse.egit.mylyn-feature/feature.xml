@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.egit.mylyn"
       label="%featureName"
-      version="0.11.2.qualifier"
+      version="0.11.3"
       provider-name="%providerName">
 
    <description url="http://www.eclipse.org/egit/">
@@ -25,10 +25,10 @@
    <requires>
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.egit.core" version="0.11.2" match="compatible"/>
-      <import plugin="org.eclipse.egit.ui" version="0.11.2" match="compatible"/>
+      <import plugin="org.eclipse.egit.core" version="0.11.3" match="compatible"/>
+      <import plugin="org.eclipse.egit.ui" version="0.11.3" match="compatible"/>
       <import plugin="org.eclipse.jface"/>
-      <import plugin="org.eclipse.jgit" version="0.11.2" match="compatible"/>
+      <import plugin="org.eclipse.jgit" version="0.11.3" match="compatible"/>
       <import plugin="org.eclipse.mylyn.monitor.core" version="3.0.0" match="compatible"/>
       <import plugin="org.eclipse.mylyn.tasks.core" version="3.0.0" match="compatible"/>
       <import plugin="org.eclipse.mylyn.tasks.ui" version="3.0.0" match="compatible"/>
