@@ -52,4 +52,9 @@ public class JobFamilies {
 	 * Reset job
 	 */
 	public static final Object RESET = new Object();
+
+	/**
+	 * Format job
+	 */
+	public static Object FORMAT_COMMIT_INFO;
 }

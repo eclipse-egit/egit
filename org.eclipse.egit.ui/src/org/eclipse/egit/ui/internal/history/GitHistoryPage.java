@@ -573,7 +573,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				graphDetailSplit);
 		graph = new CommitGraphTable(graphDetailSplit, getSite(), popupMgr);
 		revInfoSplit = new SashForm(graphDetailSplit, SWT.HORIZONTAL);
-		commentViewer = new CommitMessageViewer(revInfoSplit, getSite());
+		commentViewer = new CommitMessageViewer(revInfoSplit, getSite(), getPartSite());
 		fileViewer = new CommitFileDiffViewer(revInfoSplit, getSite());
 		findToolbar = new FindToolbar(historyControl);
 
@@ -1396,11 +1396,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		schedule(rj);
 	}
 
-	private void schedule(final Job j) {
+	private IWorkbenchPartSite getPartSite() {
 		final IWorkbenchPart part = getHistoryPageSite().getPart();
 		IWorkbenchPartSite site = null;
 		if (part != null)
 			site = part.getSite();
+		return site;
+	}
+
+	private void schedule(final Job j) {
+		IWorkbenchPartSite site = getPartSite();
 		if (site != null) {
 			final IWorkbenchSiteProgressService p;
 			p = (IWorkbenchSiteProgressService) site

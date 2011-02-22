@@ -2173,6 +2173,9 @@ public class UIText extends NLS {
 	public static String FindToolbar_PreviousTooltip;
 
 	/** */
+	public static String FormatJob_buildingCommitInfo;
+
+	/** */
 	public static String WindowCachePreferencePage_title;
 
 	/** */
