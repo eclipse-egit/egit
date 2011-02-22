@@ -88,7 +88,7 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 		this.remoteCommit = remoteDataSource.getRevCommit();
 		this.ancestorCommit = ancestroDataSource.getRevCommit();
 		this.name = gitPath.lastIndexOf('/') < 0 ? gitPath : gitPath
-				.substring(gitPath.lastIndexOf('/'));
+				.substring(gitPath.lastIndexOf('/') + 1);
 	}
 
 	public String getName() {
@@ -115,12 +115,12 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 
 	public ITypedElement getLeft() {
 		return CompareUtils.getFileRevisionTypedElement(gitPath, baseCommit,
-				repo, remoteId);
+				repo, baseId);
 	}
 
 	public ITypedElement getRight() {
 		return CompareUtils.getFileRevisionTypedElement(gitPath, remoteCommit,
-				repo, baseId);
+				repo, remoteId);
 	}
 
 	public void addCompareInputChangeListener(

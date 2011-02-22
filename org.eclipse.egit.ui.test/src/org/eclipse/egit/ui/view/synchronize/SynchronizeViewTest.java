@@ -13,8 +13,10 @@ import static org.eclipse.egit.ui.UIText.SynchronizeWithAction_tagsName;
 import static org.eclipse.egit.ui.test.ContextMenuHelper.clickContextMenu;
 import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.eclipse.jgit.lib.Constants.MASTER;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -35,6 +37,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -44,6 +47,7 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotRadio;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarDropDownButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.team.internal.ui.synchronize.RefreshParticipantJob;
@@ -54,6 +58,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class SynchronizeViewTest extends LocalRepositoryTestCase {
+
+	private static final String INITIAL_TAG = "initial-tag";
 
 	@Test
 	public void shouldReturnNoChanges() throws Exception {
@@ -157,19 +163,13 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		launchSynchronization(null, null, SynchronizeWithAction_tagsName,
 				"compare1", true);
 
-		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-		// expand all nodes
-		syncViewTree.getAllItems()[0].collapse().doubleClick();
-		// try to open compare editor for FILE1
-		syncViewTree.getAllItems()[0].getItems()[0].getNode(FOLDER)
-				.getNode(FILE1).doubleClick();
-
 		// then
-		SWTBot compare = bot.editorByTitle(FILE1).bot();
+		SWTBot compare = getCompareEditorForFileInGitChangeSet(FILE1);
 		assertNotNull(compare);
 	}
 
-	@Test public void shouldOpenCompareEditorInWorkspaceModel() throws Exception {
+	@Test public void shouldOpenCompareEditorInWorkspaceModel()
+			throws Exception {
 		// given
 		resetRepository(PROJ1);
 		createTag(PROJ1, "compare2");
@@ -180,18 +180,12 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		launchSynchronization(null, null, SynchronizeWithAction_tagsName,
 				"compare2", true);
 
-		SWTBotTree syncViewTree = setPresentationModel("Workspace").tree();
-		// try to open compare editor for FILE1
-		syncViewTree.getAllItems()[0].expand().getItems()[0].expand()
-				.getItems()[0].doubleClick();
-
 		// then
-		SWTBot compare = bot.editorByTitle(FILE1).bot();
+		SWTBot compare = getCompareEditorForFileInWorkspaceModel().bot();
 		assertNotNull(compare);
 	}
 
-	@Test
-	public void shouldListFileDeletedChange() throws Exception {
+	@Test public void shouldListFileDeletedChange() throws Exception {
 		// given
 		resetRepository(PROJ1);
 		createTag(PROJ1, "base");
@@ -240,6 +234,75 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		assertEquals("test.txt", fileTree.getText());
 		fileTree = folderTree.getItems()[1];
 		assertEquals("test2.txt", fileTree.getText());
+	}
+
+	@Test public void shouldExchangeCompareEditorSidesBetweenIncomingAndOutgoingChangesInGitChangeSet()
+			throws Exception {
+		// given
+		String tagName = "exchangeCompareSidesInGitChangeSet";
+		resetRepository(PROJ1);
+		createTag(PROJ1, tagName);
+		changeFilesInProject();
+		commit(PROJ1);
+		showDialog(PROJ1, "Team", "Synchronize...");
+
+		// compare HEAD against tag
+		launchSynchronization(SynchronizeWithAction_localRepoName, HEAD,
+				SynchronizeWithAction_tagsName, tagName, false);
+		SWTBot outgoingCompare = getCompareEditorForFileInGitChangeSet(FILE1);
+		// save left value from compare editor
+		String outgoingLeft = outgoingCompare.styledText(0).getText();
+		// save right value from compare editor
+		String outgoingRight = outgoingCompare.styledText(1).getText();
+
+		// when
+		// compare tag against HEAD
+		showDialog(PROJ1, "Team", "Synchronize...");
+		launchSynchronization(SynchronizeWithAction_tagsName, tagName,
+				SynchronizeWithAction_localRepoName, HEAD, false);
+
+		// then
+		SWTBot incomingComp = getCompareEditorForFileInGitChangeSet(FILE1);
+		// right side from compare editor should be equal with left
+		assertThat(outgoingLeft, equalTo(incomingComp.styledText(1).getText()));
+		// left side from compare editor should be equal with right
+		assertThat(outgoingRight, equalTo(incomingComp.styledText(0).getText()));
+	}
+
+	@Test public void shouldExchangeCompareEditorSidesBetweenIncomingAndOutgoingChangesInWorkspaceModel()
+			throws Exception {
+		// given
+		String tagName = "exchangeCompareSidesInWorkspace";
+		resetRepository(PROJ1);
+		createTag(PROJ1, tagName);
+		changeFilesInProject();
+		commit(PROJ1);
+		showDialog(PROJ1, "Team", "Synchronize...");
+
+		// compare HEAD against tag
+		launchSynchronization(SynchronizeWithAction_localRepoName, HEAD,
+				SynchronizeWithAction_tagsName, tagName, false);
+		SWTBotEditor compEditor = getCompareEditorForFileInWorkspaceModel();
+		SWTBot outgoingCompare = compEditor.bot();
+		// save left value from compare editor
+		String outgoingLeft = outgoingCompare.styledText(0).getText();
+		// save right value from compare editor
+		String outgoingRight = outgoingCompare.styledText(1).getText();
+
+		// when
+		// compare tag against HEAD
+		showDialog(PROJ1, "Team", "Synchronize...");
+		launchSynchronization(SynchronizeWithAction_tagsName, tagName,
+				SynchronizeWithAction_localRepoName, HEAD, false);
+
+		// then
+		SWTBot incomingComp = getCompareEditorForFileInWorkspaceModel().bot();
+		String incomingLeft = incomingComp.styledText(0).getText();
+		String incomingRight = incomingComp.styledText(1).getText();
+		// right side from compare editor should be equal with left
+		assertThat(outgoingLeft, equalTo(incomingRight));
+		// left side from compare editor should be equal with right
+		assertThat(outgoingRight, equalTo(incomingLeft));
 	}
 
 	private void waitUntilTreeHasNodeWithText(final SWTBotTree tree,
@@ -315,6 +378,11 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		createChildRepository(repositoryFile);
 		Activator.getDefault().getRepositoryUtil()
 				.addConfiguredRepository(repositoryFile);
+
+		bot.perspectiveById("org.eclipse.jdt.ui.JavaPerspective").activate();
+		bot.viewByTitle("Package Explorer").show();
+
+		createTag(PROJ1, INITIAL_TAG);
 	}
 
 	@AfterClass
@@ -323,11 +391,8 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	}
 
 	private void changeFilesInProject() throws Exception {
-		SWTBot packageExplorerBot = bot.viewByTitle("Package Explorer").bot();
-		packageExplorerBot.activeShell();
-		SWTBotTree tree = packageExplorerBot.tree();
-
-		SWTBotTreeItem coreTreeItem = tree.getAllItems()[0];
+		SWTBot packageExlBot = bot.viewByTitle("Package Explorer").bot();
+		SWTBotTreeItem coreTreeItem = selectProject(PROJ1, packageExlBot.tree());
 		SWTBotTreeItem rootNode = coreTreeItem.expand().getNode(0)
 				.expand().select();
 		rootNode.getNode(0).select().doubleClick();
@@ -348,6 +413,11 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		showDialog(projectName, "Team", "Reset...");
 
 		bot.shell(UIText.ResetCommand_WizardTitle).bot().activeShell();
+
+		SWTBotTreeItem tagsNode = bot.tree().getTreeItem("Tags");
+		tagsNode.expand();
+		tagsNode.getNode(INITIAL_TAG).select();
+
 		bot.radio(UIText.ResetTargetSelectionDialog_ResetTypeHardButton)
 				.click();
 		bot.button(UIText.ResetTargetSelectionDialog_ResetButton).click();
@@ -358,7 +428,8 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		TestUtil.joinJobs(JobFamilies.RESET);
 	}
 
-	private void createTag(String projectName, String tagName) throws Exception {
+	private static void createTag(String projectName, String tagName)
+			throws Exception {
 		showDialog(projectName, "Team", "Tag...");
 
 		bot.shell("Create new tag").bot().activeShell();
@@ -394,8 +465,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		TestUtil.joinJobs(JobFamilies.COMMIT);
 	}
 
-	private void showDialog(String projectName, String... cmd) {
-		bot.activeView();
+	private static void showDialog(String projectName, String... cmd) {
 		SWTBot packageExplorerBot = bot.viewByTitle("Package Explorer").bot();
 		packageExplorerBot.activeShell();
 		SWTBotTree tree = packageExplorerBot.tree();
@@ -405,14 +475,22 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		// the project. Also the repository and branch name are added as a
 		// suffix ('[<repo name> <branch name>]' suffix). To bypass this
 		// decoration we use here this loop.
+		selectProject(projectName, tree);
+
+		clickContextMenu(tree, cmd);
+	}
+
+	private static SWTBotTreeItem selectProject(String projectName,
+			SWTBotTree tree) {
 		for (SWTBotTreeItem item : tree.getAllItems()) {
 			if (item.getText().contains(projectName)) {
 				item.select();
-				break;
+				return item;
 			}
 		}
 
-		clickContextMenu(tree, cmd);
+		throw new RuntimeException("Poject with name " + projectName +
+				" was not found in given tree");
 	}
 
 	private void launchSynchronization(String srcRepo, String srcRef,
@@ -481,10 +559,13 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 	}
 
-	private SWTBot setPresentationModel(String model) {
+	private SWTBot setPresentationModel(String model) throws Exception {
 		SWTBotView syncView = bot.viewByTitle("Synchronize");
-		syncView.toolbarDropDownButton("Show File System Resources").click()
-				.menuItem(model).click();
+		SWTBotToolbarDropDownButton dropDown = syncView
+				.toolbarDropDownButton("Show File System Resources");
+		dropDown.menuItem(model).click();
+		// hide drop down
+		dropDown.pressShortcut(KeyStroke.getInstance("ESC"));
 
 		return syncView.bot();
 	}
@@ -520,6 +601,27 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 				.getBytes(firstProject.getDefaultCharset())), false, null);
 
 		new ConnectProviderOperation(firstProject, gitDir).execute(null);
+	}
+
+	private SWTBot getCompareEditorForFileInGitChangeSet(String fileName) {
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+		// expand all nodes
+		syncViewTree.getAllItems()[0].collapse().doubleClick();
+		// try to open compare editor for fileName
+		syncViewTree.getAllItems()[0].getItems()[0].getNode(FOLDER)
+				.getNode(fileName).doubleClick();
+
+		return bot.editorByTitle(fileName).bot();
+	}
+
+	private SWTBotEditor getCompareEditorForFileInWorkspaceModel()
+			throws Exception {
+		SWTBotTree syncViewTree = setPresentationModel("Workspace").tree();
+		// try to open compare editor for FILE1
+		syncViewTree.getAllItems()[0].expand().getItems()[0].expand()
+				.getItems()[0].doubleClick();
+
+		return bot.editorByTitle(FILE1);
 	}
 
 }
