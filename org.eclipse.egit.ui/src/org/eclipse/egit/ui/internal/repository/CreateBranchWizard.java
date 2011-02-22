@@ -43,7 +43,7 @@ public class CreateBranchWizard extends Wizard {
 	 * @param repository
 	 *            the repository
 	 * @param baseCommit
-	 *            the base commit, must not be null
+	 *            the base commit, may be null
 	 */
 	public CreateBranchWizard(Repository repository, RevCommit baseCommit) {
 		myPage = new CreateBranchPage(repository, baseCommit);
