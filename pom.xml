@@ -173,6 +173,12 @@
            http://jira.codehaus.org/browse/MFINDBUGS-122
            remove this when this version is released -->
       <id>codehaus.snapshots</id>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
       <url>http://snapshots.repository.codehaus.org/</url>
     </pluginRepository>
   </pluginRepositories>
