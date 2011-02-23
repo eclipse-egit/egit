@@ -61,12 +61,14 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 	private static final String INITIAL_TAG = "initial-tag";
 
+	private static final String EMPTY_PROJECT = "EmptyProject";
+	private static final String EMPTY_REPOSITORY = "EmptyRepository";
+
 	@Test
 	public void shouldReturnNoChanges() throws Exception {
 		// given
-		resetRepository(PROJ1);
+		resetRepositoryToCreateInitialTag(PROJ1);
 		changeFilesInProject();
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
 		launchSynchronization(SynchronizeWithAction_localRepoName, HEAD,
@@ -77,32 +79,18 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		assertEquals(0, syncViewTree.getAllItems().length);
 	}
 
-	// this test fails when is run inside eclipse with Maven POM editor
 	@Test
 	public void shouldReturnListOfChanges() throws Exception {
 		// given
-		resetRepository(PROJ1);
+		resetRepositoryToCreateInitialTag(PROJ1);
 		changeFilesInProject();
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
-		bot.shell("Synchronize repository: " + REPO1 + File.separator + ".git")
-				.activate();
+		launchSynchronization(null, null, SynchronizeWithAction_localRepoName,
+				HEAD, true);
 
-		// include local changes are enabled by default
-		bot.comboBox(2)
-				.setSelection(UIText.SynchronizeWithAction_localRepoName);
-		bot.comboBox(3).setSelection(MASTER);
-
-		// fire action
-		bot.button(IDialogConstants.OK_LABEL).click();
-
+		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-
-		// wait for synchronization process finish
-		waitUntilTreeHasNodeWithText(syncViewTree,
-				UIText.GitModelWorkingTree_workingTree);
-
 		SWTBotTreeItem[] syncItems = syncViewTree.getAllItems();
 		assertEquals(UIText.GitModelWorkingTree_workingTree,
 				syncItems[0].getText());
@@ -111,57 +99,42 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	@Test
 	public void shouldCompareBranchAgainstTag() throws Exception {
 		// given
-		resetRepository(PROJ1);
-		createTag(PROJ1, "v0.0");
+		resetRepositoryToCreateInitialTag(PROJ1);
 		makeChangesAndCommit(PROJ1);
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
-		launchSynchronization(SynchronizeWithAction_tagsName, "v0.0",
+		launchSynchronization(SynchronizeWithAction_tagsName, INITIAL_TAG,
 				SynchronizeWithAction_localRepoName, HEAD, false);
 
-		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-
-		// wait for synchronization process finish
-		waitUntilTreeHasNodeWithText(syncViewTree, "test commit");
-
 		// then
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		assertEquals(1, syncViewTree.getAllItems().length);
 	}
 
 	@Test
 	public void shouldCompareTagAgainstTag() throws Exception {
 		// given
-		resetRepository(PROJ1);
+		resetRepositoryToCreateInitialTag(PROJ1);
+		makeChangesAndCommit(PROJ1);
 		createTag(PROJ1, "v0.1");
-		makeChangesAndCommit(PROJ1);
-		createTag(PROJ1, "v0.2");
-		makeChangesAndCommit(PROJ1);
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
-		launchSynchronization(SynchronizeWithAction_tagsName, "v0.1",
-				SynchronizeWithAction_tagsName, "v0.2", false);
-
-		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-
-		// wait for synchronization process finish
-		waitUntilTreeHasNodeWithText(syncViewTree, "test commit");
+		launchSynchronization(SynchronizeWithAction_tagsName, INITIAL_TAG,
+				SynchronizeWithAction_tagsName, "v0.1", false);
 
 		// then
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		assertEquals(1, syncViewTree.getAllItems().length);
 	}
 
 	@Test public void shouldOpenCompareEditorInGitChangeSet() throws Exception {
 		// given
-		resetRepository(PROJ1);
-		createTag(PROJ1, "compare1");
+		resetRepositoryToCreateInitialTag(PROJ1);
 		changeFilesInProject();
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
 		launchSynchronization(null, null, SynchronizeWithAction_tagsName,
-				"compare1", true);
+				INITIAL_TAG, true);
 
 		// then
 		SWTBot compare = getCompareEditorForFileInGitChangeSet(FILE1, true);
@@ -171,14 +144,12 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	@Test public void shouldOpenCompareEditorInWorkspaceModel()
 			throws Exception {
 		// given
-		resetRepository(PROJ1);
-		createTag(PROJ1, "compare2");
+		resetRepositoryToCreateInitialTag(PROJ1);
 		changeFilesInProject();
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
 		launchSynchronization(null, null, SynchronizeWithAction_tagsName,
-				"compare2", true);
+				INITIAL_TAG, true);
 
 		// then
 		SWTBot compare = getCompareEditorForFileInWorkspaceModel(true).bot();
@@ -187,14 +158,12 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 	@Test public void shouldListFileDeletedChange() throws Exception {
 		// given
-		resetRepository(PROJ1);
-		createTag(PROJ1, "base");
+		resetRepositoryToCreateInitialTag(PROJ1);
 		deleteFileAndCommit(PROJ1);
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
 		launchSynchronization(null, null, SynchronizeWithAction_tagsName,
-				"base", true);
+				INITIAL_TAG, true);
 
 		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
@@ -214,10 +183,10 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	@Test public void shouldSynchronizeInEmptyRepository() throws Exception {
 		// given
 		createEmptyRepository();
-		showDialog("EmptyProject", "Team", "Synchronize...");
 
 		// when
-		launchSynchronization("EmptyRepository", null, null, null, null, true);
+		launchSynchronization(EMPTY_REPOSITORY, EMPTY_PROJECT, null, null,
+				null, null, true);
 
 		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
@@ -231,24 +200,20 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		folderTree.expand();
 		assertEquals(2, folderTree.getItems().length);
 		SWTBotTreeItem fileTree = folderTree.getItems()[0];
-		assertEquals("test.txt", fileTree.getText());
+		assertEquals(FILE1, fileTree.getText());
 		fileTree = folderTree.getItems()[1];
-		assertEquals("test2.txt", fileTree.getText());
+		assertEquals(FILE2, fileTree.getText());
 	}
 
 	@Test public void shouldExchangeCompareEditorSidesBetweenIncomingAndOutgoingChangesInGitChangeSet()
 			throws Exception {
 		// given
-		String tagName = "exchangeCompareSidesInGitChangeSet";
-		resetRepository(PROJ1);
-		createTag(PROJ1, tagName);
-		changeFilesInProject();
-		commit(PROJ1);
-		showDialog(PROJ1, "Team", "Synchronize...");
+		resetRepositoryToCreateInitialTag(PROJ1);
+		makeChangesAndCommit(PROJ1);
 
 		// compare HEAD against tag
 		launchSynchronization(SynchronizeWithAction_localRepoName, HEAD,
-				SynchronizeWithAction_tagsName, tagName, false);
+				SynchronizeWithAction_tagsName, INITIAL_TAG, false);
 		SWTBot outgoingCompare = getCompareEditorForFileInGitChangeSet(FILE1,
 				false);
 		// save left value from compare editor
@@ -258,8 +223,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 		// when
 		// compare tag against HEAD
-		showDialog(PROJ1, "Team", "Synchronize...");
-		launchSynchronization(SynchronizeWithAction_tagsName, tagName,
+		launchSynchronization(SynchronizeWithAction_tagsName, INITIAL_TAG,
 				SynchronizeWithAction_localRepoName, HEAD, false);
 
 		// then
@@ -274,16 +238,12 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	@Test public void shouldExchangeCompareEditorSidesBetweenIncomingAndOutgoingChangesInWorkspaceModel()
 			throws Exception {
 		// given
-		String tagName = "exchangeCompareSidesInWorkspace";
-		resetRepository(PROJ1);
-		createTag(PROJ1, tagName);
-		changeFilesInProject();
-		commit(PROJ1);
-		showDialog(PROJ1, "Team", "Synchronize...");
+		resetRepositoryToCreateInitialTag(PROJ1);
+		makeChangesAndCommit(PROJ1);
 
 		// compare HEAD against tag
 		launchSynchronization(SynchronizeWithAction_localRepoName, HEAD,
-				SynchronizeWithAction_tagsName, tagName, false);
+				SynchronizeWithAction_tagsName, INITIAL_TAG, false);
 		SWTBotEditor compEditor = getCompareEditorForFileInWorkspaceModel(false);
 		SWTBot outgoingCompare = compEditor.bot();
 		// save left value from compare editor
@@ -293,8 +253,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 		// when
 		// compare tag against HEAD
-		showDialog(PROJ1, "Team", "Synchronize...");
-		launchSynchronization(SynchronizeWithAction_tagsName, tagName,
+		launchSynchronization(SynchronizeWithAction_tagsName, INITIAL_TAG,
 				SynchronizeWithAction_localRepoName, HEAD, false);
 
 		// then
@@ -306,27 +265,6 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		assertThat(outgoingLeft, equalTo(incomingRight));
 		// left side from compare editor should be equal with right
 		assertThat(outgoingRight, equalTo(incomingLeft));
-	}
-
-	private void waitUntilTreeHasNodeWithText(final SWTBotTree tree,
-			final String text) {
-		bot.waitUntil(new ICondition() {
-
-			public boolean test() throws Exception {
-				for (SWTBotTreeItem item : tree.getAllItems())
-					if (item.getText().contains(text))
-						return true;
-				return false;
-			}
-
-			public void init(SWTBot bot2) {
-				// empty
-			}
-
-			public String getFailureMessage() {
-				return null;
-			}
-		}, 10000);
 	}
 
 	// this test always fails with cause:
@@ -412,7 +350,8 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		coreTreeItem.collapse();
 	}
 
-	private void resetRepository(String projectName) throws Exception {
+	private void resetRepositoryToCreateInitialTag(String projectName)
+			throws Exception {
 		showDialog(projectName, "Team", "Reset...");
 
 		bot.shell(UIText.ResetCommand_WizardTitle).bot().activeShell();
@@ -498,12 +437,15 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 	private void launchSynchronization(String srcRepo, String srcRef,
 			String dstRepo, String dstRef, boolean includeLocal) {
-		launchSynchronization(REPO1, srcRepo, srcRef, dstRepo, dstRef,
+		launchSynchronization(REPO1, PROJ1, srcRepo, srcRef, dstRepo, dstRef,
 				includeLocal);
 	}
 
-	private void launchSynchronization(String repo, String srcRepo,
-			String srcRef, String dstRepo, String dstRef, boolean includeLocal) {
+	private void launchSynchronization(String repo, String projectName,
+			String srcRepo, String srcRef, String dstRepo, String dstRef,
+			boolean includeLocal) {
+		showDialog(projectName, "Team", "Synchronize...");
+
 		bot.shell("Synchronize repository: " + repo + File.separator + ".git")
 				.activate();
 
@@ -575,7 +517,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 	// based on LocalRepositoryTestCase#createProjectAndCommitToRepository(String)
 	private void createEmptyRepository() throws Exception {
-		File gitDir = new File(new File(getTestDirectory(), "EmptyRepository"),
+		File gitDir = new File(new File(getTestDirectory(), EMPTY_REPOSITORY),
 				Constants.DOT_GIT);
 		gitDir.mkdir();
 		Repository myRepository = new FileRepository(gitDir);
@@ -583,14 +525,14 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 		// we need to commit into master first
 		IProject firstProject = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject("EmptyProject");
+				.getProject(EMPTY_PROJECT);
 
 		if (firstProject.exists())
 			firstProject.delete(true, null);
 		IProjectDescription desc = ResourcesPlugin.getWorkspace()
-				.newProjectDescription("EmptyProject");
+				.newProjectDescription(EMPTY_PROJECT);
 		desc.setLocation(new Path(new File(myRepository.getWorkTree(),
-				"EmptyProject").getPath()));
+				EMPTY_PROJECT).getPath()));
 		firstProject.create(desc, null);
 		firstProject.open(null);
 
