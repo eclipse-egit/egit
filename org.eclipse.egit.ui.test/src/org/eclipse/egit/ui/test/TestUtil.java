@@ -144,20 +144,51 @@ public class TestUtil {
 	}
 
 	/**
-	 * Waits until the given tree has a node whose label starts with text
+	 * Waits until the given tree has a node whose label contains text
 	 * @param bot
 	 * @param tree
 	 * @param text
 	 * @param timeout
 	 * @throws TimeoutException
 	 */
-	public static void waitUntilTreeHasNodeWithText(SWTBot bot, final SWTBotTree tree,
-			final String text, long timeout) throws TimeoutException {
+	public static void waitUntilTreeHasNodeContainsText(SWTBot bot,
+			final SWTBotTree tree, final String text, long timeout)
+			throws TimeoutException {
 		bot.waitUntil(new ICondition() {
 
 			public boolean test() throws Exception {
 				for (SWTBotTreeItem item : tree.getAllItems())
-					if (item.getText().startsWith(text))
+					if (item.getText().contains(text))
+						return true;
+				return false;
+			}
+
+			public void init(SWTBot bot2) {
+				// empty
+			}
+
+			public String getFailureMessage() {
+				return null;
+			}
+		}, timeout);
+	}
+
+	/**
+	 * Waits until the given tree item has a node whose label contains text
+	 * @param bot
+	 * @param treeItem
+	 * @param text
+	 * @param timeout
+	 * @throws TimeoutException
+	 */
+	public static void waitUntilTreeHasNodeContainsText(SWTBot bot,
+			final SWTBotTreeItem treeItem, final String text, long timeout)
+			throws TimeoutException {
+		bot.waitUntil(new ICondition() {
+
+			public boolean test() throws Exception {
+				for (SWTBotTreeItem item : treeItem.getItems())
+					if (item.getText().contains(text))
 						return true;
 				return false;
 			}
