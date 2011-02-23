@@ -119,8 +119,9 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		item = myRepoViewUtil.getLocalBranchesItem(tree, repositoryFile)
 				.expand().getNode("stable").doubleClick();
 		refreshAndWait();
-		waitInUI();
+		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		String contentStable = getTestFileContent();
+		
 		assertTrue("Content of master and stable should differ", !contentMaster
 				.equals(contentStable));
 	}
