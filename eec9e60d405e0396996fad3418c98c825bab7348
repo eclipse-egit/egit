@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///R0\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/CompareActionsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-02-23T15:35:07Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "eec9e60d405e0396996fad3418c98c825bab7348",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
