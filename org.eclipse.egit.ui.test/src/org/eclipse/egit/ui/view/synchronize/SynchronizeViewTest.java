@@ -8,9 +8,19 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.view.synchronize;
 
+import static org.eclipse.egit.ui.UIText.CommitAction_commit;
+import static org.eclipse.egit.ui.UIText.CommitDialog_Commit;
+import static org.eclipse.egit.ui.UIText.CommitDialog_CommitChanges;
+import static org.eclipse.egit.ui.UIText.CommitDialog_SelectAll;
+import static org.eclipse.egit.ui.UIText.GitModelWorkingTree_workingTree;
+import static org.eclipse.egit.ui.UIText.ResetCommand_WizardTitle;
+import static org.eclipse.egit.ui.UIText.ResetTargetSelectionDialog_ResetButton;
+import static org.eclipse.egit.ui.UIText.ResetTargetSelectionDialog_ResetQuestion;
+import static org.eclipse.egit.ui.UIText.ResetTargetSelectionDialog_ResetTypeHardButton;
 import static org.eclipse.egit.ui.UIText.SynchronizeWithAction_localRepoName;
 import static org.eclipse.egit.ui.UIText.SynchronizeWithAction_tagsName;
 import static org.eclipse.egit.ui.test.ContextMenuHelper.clickContextMenu;
+import static org.eclipse.egit.ui.test.TestUtil.waitUntilTreeHasNodeContainsText;
 import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.eclipse.jgit.lib.Constants.MASTER;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -45,6 +55,7 @@ import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
+import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotRadio;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarDropDownButton;
@@ -61,12 +72,17 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 	private static final String INITIAL_TAG = "initial-tag";
 
+	private static final String TEST_COMMIT_MSG = "test commit";
+
+	private static final String EMPTY_PROJECT = "EmptyProject";
+
+	private static final String EMPTY_REPOSITORY = "EmptyRepository";
+
 	@Test
 	public void shouldReturnNoChanges() throws Exception {
 		// given
-		resetRepository(PROJ1);
+		resetRepositoryToCreateInitialTag(PROJ1);
 		changeFilesInProject();
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
 		launchSynchronization(SynchronizeWithAction_localRepoName, HEAD,
@@ -77,136 +93,104 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		assertEquals(0, syncViewTree.getAllItems().length);
 	}
 
-	// this test fails when is run inside eclipse with Maven POM editor
 	@Test
 	public void shouldReturnListOfChanges() throws Exception {
 		// given
-		resetRepository(PROJ1);
+		resetRepositoryToCreateInitialTag(PROJ1);
 		changeFilesInProject();
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
-		bot.shell("Synchronize repository: " + REPO1 + File.separator + ".git")
-				.activate();
+		launchSynchronization(null, null, SynchronizeWithAction_localRepoName,
+				HEAD, true);
 
-		// include local changes are enabled by default
-		bot.comboBox(2)
-				.setSelection(UIText.SynchronizeWithAction_localRepoName);
-		bot.comboBox(3).setSelection(MASTER);
-
-		// fire action
-		bot.button(IDialogConstants.OK_LABEL).click();
-
+		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-
-		// wait for synchronization process finish
-		waitUntilTreeHasNodeWithText(syncViewTree,
-				UIText.GitModelWorkingTree_workingTree);
-
 		SWTBotTreeItem[] syncItems = syncViewTree.getAllItems();
-		assertEquals(UIText.GitModelWorkingTree_workingTree,
-				syncItems[0].getText());
+		assertEquals(GitModelWorkingTree_workingTree, syncItems[0].getText());
 	}
 
 	@Test
 	public void shouldCompareBranchAgainstTag() throws Exception {
 		// given
-		resetRepository(PROJ1);
-		createTag(PROJ1, "v0.0");
+		resetRepositoryToCreateInitialTag(PROJ1);
 		makeChangesAndCommit(PROJ1);
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
-		launchSynchronization(SynchronizeWithAction_tagsName, "v0.0",
+		launchSynchronization(SynchronizeWithAction_tagsName, INITIAL_TAG,
 				SynchronizeWithAction_localRepoName, HEAD, false);
 
-		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-
-		// wait for synchronization process finish
-		waitUntilTreeHasNodeWithText(syncViewTree, "test commit");
-
 		// then
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		assertEquals(1, syncViewTree.getAllItems().length);
 	}
 
 	@Test
 	public void shouldCompareTagAgainstTag() throws Exception {
 		// given
-		resetRepository(PROJ1);
+		resetRepositoryToCreateInitialTag(PROJ1);
+		makeChangesAndCommit(PROJ1);
 		createTag(PROJ1, "v0.1");
-		makeChangesAndCommit(PROJ1);
-		createTag(PROJ1, "v0.2");
-		makeChangesAndCommit(PROJ1);
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
-		launchSynchronization(SynchronizeWithAction_tagsName, "v0.1",
-				SynchronizeWithAction_tagsName, "v0.2", false);
-
-		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-
-		// wait for synchronization process finish
-		waitUntilTreeHasNodeWithText(syncViewTree, "test commit");
+		launchSynchronization(SynchronizeWithAction_tagsName, INITIAL_TAG,
+				SynchronizeWithAction_tagsName, "v0.1", false);
 
 		// then
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		assertEquals(1, syncViewTree.getAllItems().length);
 	}
 
 	@Test public void shouldOpenCompareEditorInGitChangeSet() throws Exception {
 		// given
-		resetRepository(PROJ1);
-		createTag(PROJ1, "compare1");
+		resetRepositoryToCreateInitialTag(PROJ1);
 		changeFilesInProject();
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
 		launchSynchronization(null, null, SynchronizeWithAction_tagsName,
-				"compare1", true);
+				INITIAL_TAG, true);
 
 		// then
-		SWTBot compare = getCompareEditorForFileInGitChangeSet(FILE1, true);
+		SWTBot compare = getCompareEditorForFileInGitChangeSet(FILE1, true)
+				.bot();
 		assertNotNull(compare);
 	}
 
 	@Test public void shouldOpenCompareEditorInWorkspaceModel()
 			throws Exception {
 		// given
-		resetRepository(PROJ1);
-		createTag(PROJ1, "compare2");
+		resetRepositoryToCreateInitialTag(PROJ1);
 		changeFilesInProject();
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
 		launchSynchronization(null, null, SynchronizeWithAction_tagsName,
-				"compare2", true);
+				INITIAL_TAG, true);
 
 		// then
-		SWTBot compare = getCompareEditorForFileInWorkspaceModel(true).bot();
+		SWTBot compare = getCompareEditorForFileInWorkspaceModel().bot();
 		assertNotNull(compare);
 	}
 
 	@Test public void shouldListFileDeletedChange() throws Exception {
 		// given
-		resetRepository(PROJ1);
-		createTag(PROJ1, "base");
+		resetRepositoryToCreateInitialTag(PROJ1);
 		deleteFileAndCommit(PROJ1);
-		showDialog(PROJ1, "Team", "Synchronize...");
 
 		// when
 		launchSynchronization(null, null, SynchronizeWithAction_tagsName,
-				"base", true);
+				INITIAL_TAG, true);
 
 		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		assertEquals(1, syncViewTree.getAllItems().length);
-		SWTBotTreeItem commitTree = syncViewTree.getAllItems()[0];
-		commitTree.expand();
-		SWTBotTreeItem projectTree = commitTree.getItems()[0];
-		projectTree.expand();
+
+		SWTBotTreeItem commitTree = waitForNodeWithText(syncViewTree,
+				TEST_COMMIT_MSG);
+		SWTBotTreeItem projectTree = waitForNodeWithText(commitTree, PROJ1);
 		assertEquals(1, projectTree.getItems().length);
-		SWTBotTreeItem folderTree = projectTree.getItems()[0];
-		folderTree.expand();
+
+		SWTBotTreeItem folderTree = waitForNodeWithText(projectTree, FOLDER);
 		assertEquals(1, folderTree.getItems().length);
+
 		SWTBotTreeItem fileTree = folderTree.getItems()[0];
 		assertEquals("test.txt", fileTree.getText());
 	}
@@ -214,57 +198,55 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	@Test public void shouldSynchronizeInEmptyRepository() throws Exception {
 		// given
 		createEmptyRepository();
-		showDialog("EmptyProject", "Team", "Synchronize...");
 
 		// when
-		launchSynchronization("EmptyRepository", null, null, null, null, true);
+		launchSynchronization(EMPTY_REPOSITORY, EMPTY_PROJECT, null, null,
+				null, null, true);
 
 		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+		SWTBotTreeItem commitTree = waitForNodeWithText(syncViewTree,
+				GitModelWorkingTree_workingTree);
 		assertEquals(1, syncViewTree.getAllItems().length);
-		SWTBotTreeItem commitTree = syncViewTree.getAllItems()[0];
-		commitTree.expand();
-		SWTBotTreeItem projectTree = commitTree.getItems()[0];
-		projectTree.expand();
+		SWTBotTreeItem projectTree = waitForNodeWithText(commitTree,
+				EMPTY_PROJECT);
 		assertEquals(2, projectTree.getItems().length);
-		SWTBotTreeItem folderTree = projectTree.getItems()[0];
-		folderTree.expand();
+
+		SWTBotTreeItem folderTree = waitForNodeWithText(projectTree, FOLDER);
 		assertEquals(2, folderTree.getItems().length);
+
 		SWTBotTreeItem fileTree = folderTree.getItems()[0];
-		assertEquals("test.txt", fileTree.getText());
+		assertEquals(FILE1, fileTree.getText());
 		fileTree = folderTree.getItems()[1];
-		assertEquals("test2.txt", fileTree.getText());
+		assertEquals(FILE2, fileTree.getText());
 	}
 
 	@Test public void shouldExchangeCompareEditorSidesBetweenIncomingAndOutgoingChangesInGitChangeSet()
 			throws Exception {
 		// given
-		String tagName = "exchangeCompareSidesInGitChangeSet";
-		resetRepository(PROJ1);
-		createTag(PROJ1, tagName);
-		changeFilesInProject();
-		commit(PROJ1);
-		showDialog(PROJ1, "Team", "Synchronize...");
+		resetRepositoryToCreateInitialTag(PROJ1);
+		makeChangesAndCommit(PROJ1);
 
 		// compare HEAD against tag
 		launchSynchronization(SynchronizeWithAction_localRepoName, HEAD,
-				SynchronizeWithAction_tagsName, tagName, false);
-		SWTBot outgoingCompare = getCompareEditorForFileInGitChangeSet(FILE1,
-				false);
+				SynchronizeWithAction_tagsName, INITIAL_TAG, false);
+		SWTBotEditor outgoingCompare = getCompareEditorForFileInGitChangeSet(
+				FILE1, false);
+		SWTBot outgoingCompareBot = outgoingCompare.bot();
 		// save left value from compare editor
-		String outgoingLeft = outgoingCompare.styledText(0).getText();
+		String outgoingLeft = outgoingCompareBot.styledText(0).getText();
 		// save right value from compare editor
-		String outgoingRight = outgoingCompare.styledText(1).getText();
+		String outgoingRight = outgoingCompareBot.styledText(1).getText();
+		outgoingCompare.close();
 
 		// when
 		// compare tag against HEAD
-		showDialog(PROJ1, "Team", "Synchronize...");
-		launchSynchronization(SynchronizeWithAction_tagsName, tagName,
+		launchSynchronization(SynchronizeWithAction_tagsName, INITIAL_TAG,
 				SynchronizeWithAction_localRepoName, HEAD, false);
 
 		// then
-		SWTBot incomingComp = getCompareEditorForFileInGitChangeSet(FILE1,
-				false);
+		SWTBot incomingComp = getCompareEditorForFileInGitChangeSet(
+				FILE1, false).bot();
 		// right side from compare editor should be equal with left
 		assertThat(outgoingLeft, equalTo(incomingComp.styledText(1).getText()));
 		// left side from compare editor should be equal with right
@@ -274,31 +256,27 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	@Test public void shouldExchangeCompareEditorSidesBetweenIncomingAndOutgoingChangesInWorkspaceModel()
 			throws Exception {
 		// given
-		String tagName = "exchangeCompareSidesInWorkspace";
-		resetRepository(PROJ1);
-		createTag(PROJ1, tagName);
-		changeFilesInProject();
-		commit(PROJ1);
-		showDialog(PROJ1, "Team", "Synchronize...");
+		resetRepositoryToCreateInitialTag(PROJ1);
+		makeChangesAndCommit(PROJ1);
 
 		// compare HEAD against tag
 		launchSynchronization(SynchronizeWithAction_localRepoName, HEAD,
-				SynchronizeWithAction_tagsName, tagName, false);
-		SWTBotEditor compEditor = getCompareEditorForFileInWorkspaceModel(false);
+				SynchronizeWithAction_tagsName, INITIAL_TAG, false);
+		SWTBotEditor compEditor = getCompareEditorForFileInWorkspaceModel();
 		SWTBot outgoingCompare = compEditor.bot();
 		// save left value from compare editor
 		String outgoingLeft = outgoingCompare.styledText(0).getText();
 		// save right value from compare editor
 		String outgoingRight = outgoingCompare.styledText(1).getText();
+		compEditor.close();
 
 		// when
 		// compare tag against HEAD
-		showDialog(PROJ1, "Team", "Synchronize...");
-		launchSynchronization(SynchronizeWithAction_tagsName, tagName,
+		launchSynchronization(SynchronizeWithAction_tagsName, INITIAL_TAG,
 				SynchronizeWithAction_localRepoName, HEAD, false);
 
 		// then
-		SWTBot incomingComp = getCompareEditorForFileInWorkspaceModel(false)
+		SWTBot incomingComp = getCompareEditorForFileInWorkspaceModel()
 				.bot();
 		String incomingLeft = incomingComp.styledText(0).getText();
 		String incomingRight = incomingComp.styledText(1).getText();
@@ -306,27 +284,6 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		assertThat(outgoingLeft, equalTo(incomingRight));
 		// left side from compare editor should be equal with right
 		assertThat(outgoingRight, equalTo(incomingLeft));
-	}
-
-	private void waitUntilTreeHasNodeWithText(final SWTBotTree tree,
-			final String text) {
-		bot.waitUntil(new ICondition() {
-
-			public boolean test() throws Exception {
-				for (SWTBotTreeItem item : tree.getAllItems())
-					if (item.getText().contains(text))
-						return true;
-				return false;
-			}
-
-			public void init(SWTBot bot2) {
-				// empty
-			}
-
-			public String getFailureMessage() {
-				return null;
-			}
-		}, 10000);
 	}
 
 	// this test always fails with cause:
@@ -412,21 +369,20 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		coreTreeItem.collapse();
 	}
 
-	private void resetRepository(String projectName) throws Exception {
+	private void resetRepositoryToCreateInitialTag(String projectName)
+			throws Exception {
 		showDialog(projectName, "Team", "Reset...");
 
-		bot.shell(UIText.ResetCommand_WizardTitle).bot().activeShell();
+		bot.shell(ResetCommand_WizardTitle).bot().activeShell();
 
 		SWTBotTreeItem tagsNode = bot.tree().getTreeItem("Tags");
 		tagsNode.expand();
 		tagsNode.getNode(INITIAL_TAG).select();
 
-		bot.radio(UIText.ResetTargetSelectionDialog_ResetTypeHardButton)
-				.click();
-		bot.button(UIText.ResetTargetSelectionDialog_ResetButton).click();
+		bot.radio(ResetTargetSelectionDialog_ResetTypeHardButton).click();
+		bot.button(ResetTargetSelectionDialog_ResetButton).click();
 
-		bot.shell(UIText.ResetTargetSelectionDialog_ResetQuestion).bot()
-				.activeShell();
+		bot.shell(ResetTargetSelectionDialog_ResetQuestion).bot().activeShell();
 		bot.button("Yes").click();
 		TestUtil.joinJobs(JobFamilies.RESET);
 	}
@@ -459,12 +415,12 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	}
 
 	private void commit(String projectName) throws InterruptedException {
-		showDialog(projectName, "Team", UIText.CommitAction_commit);
+		showDialog(projectName, "Team", CommitAction_commit);
 
-		bot.shell(UIText.CommitDialog_CommitChanges).bot().activeShell();
-		bot.styledText(0).setText("test commit");
-		bot.button(UIText.CommitDialog_SelectAll).click();
-		bot.button(UIText.CommitDialog_Commit).click();
+		bot.shell(CommitDialog_CommitChanges).bot().activeShell();
+		bot.styledText(0).setText(TEST_COMMIT_MSG);
+		bot.button(CommitDialog_SelectAll).click();
+		bot.button(CommitDialog_Commit).click();
 		TestUtil.joinJobs(JobFamilies.COMMIT);
 	}
 
@@ -498,12 +454,15 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 	private void launchSynchronization(String srcRepo, String srcRef,
 			String dstRepo, String dstRef, boolean includeLocal) {
-		launchSynchronization(REPO1, srcRepo, srcRef, dstRepo, dstRef,
+		launchSynchronization(REPO1, PROJ1, srcRepo, srcRef, dstRepo, dstRef,
 				includeLocal);
 	}
 
-	private void launchSynchronization(String repo, String srcRepo,
-			String srcRef, String dstRepo, String dstRef, boolean includeLocal) {
+	private void launchSynchronization(String repo, String projectName,
+			String srcRepo, String srcRef, String dstRepo, String dstRef,
+			boolean includeLocal) {
+		showDialog(projectName, "Team", "Synchronize...");
+
 		bot.shell("Synchronize repository: " + repo + File.separator + ".git")
 				.activate();
 
@@ -575,7 +534,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 	// based on LocalRepositoryTestCase#createProjectAndCommitToRepository(String)
 	private void createEmptyRepository() throws Exception {
-		File gitDir = new File(new File(getTestDirectory(), "EmptyRepository"),
+		File gitDir = new File(new File(getTestDirectory(), EMPTY_REPOSITORY),
 				Constants.DOT_GIT);
 		gitDir.mkdir();
 		Repository myRepository = new FileRepository(gitDir);
@@ -583,14 +542,14 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 		// we need to commit into master first
 		IProject firstProject = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject("EmptyProject");
+				.getProject(EMPTY_PROJECT);
 
 		if (firstProject.exists())
 			firstProject.delete(true, null);
 		IProjectDescription desc = ResourcesPlugin.getWorkspace()
-				.newProjectDescription("EmptyProject");
+				.newProjectDescription(EMPTY_PROJECT);
 		desc.setLocation(new Path(new File(myRepository.getWorkTree(),
-				"EmptyProject").getPath()));
+				EMPTY_PROJECT).getPath()));
 		firstProject.create(desc, null);
 		firstProject.open(null);
 
@@ -606,33 +565,58 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		new ConnectProviderOperation(firstProject, gitDir).execute(null);
 	}
 
-	private SWTBot getCompareEditorForFileInGitChangeSet(String fileName,
-			boolean waitForWorkingTree) {
+	private SWTBotEditor getCompareEditorForFileInGitChangeSet(String fileName,
+			boolean includeLocalChanges) {
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-		if (waitForWorkingTree)
-			// wait for tree showing node "<working tree>"
-			syncViewTree.getTreeItem(UIText.GitModelWorkingTree_workingTree);
-		// expand all nodes
-		syncViewTree.getAllItems()[0].collapse().doubleClick();
-		// try to open compare editor for fileName
-		syncViewTree.getAllItems()[0].getItems()[0].getNode(FOLDER)
-				.getNode(fileName).doubleClick();
 
-		return bot.editorByTitle(fileName).bot();
+		SWTBotTreeItem rootTree;
+		if (includeLocalChanges)
+			rootTree = waitForNodeWithText(syncViewTree,
+					GitModelWorkingTree_workingTree);
+		else
+			rootTree = waitForNodeWithText(syncViewTree, TEST_COMMIT_MSG);
+
+		SWTBotTreeItem projNode = waitForNodeWithText(rootTree, PROJ1);
+		SWTBotTreeItem folderNode = waitForNodeWithText(projNode, FOLDER);
+		waitForNodeWithText(folderNode, fileName).doubleClick();
+
+		SWTBotEditor editor = bot.editorByTitle(fileName);
+		editor.toTextEditor().setFocus();
+
+		return editor;
 	}
 
-	private SWTBotEditor getCompareEditorForFileInWorkspaceModel(
-			boolean waitForProject)
+	private SWTBotTreeItem waitForNodeWithText(SWTBotTree tree, String name) {
+		waitUntilTreeHasNodeContainsText(bot, tree, name, 10000);
+		return getTreeItemContainingText(tree.getAllItems(), name).expand();
+	}
+
+	private SWTBotTreeItem waitForNodeWithText(SWTBotTreeItem tree, String name) {
+		waitUntilTreeHasNodeContainsText(bot, tree, name, 10000);
+		return getTreeItemContainingText(tree.getItems(), name).expand();
+	}
+
+	private SWTBotTreeItem getTreeItemContainingText(SWTBotTreeItem[] items,
+			String text) {
+		for (SWTBotTreeItem item : items)
+			if (item.getText().contains(text))
+				return item;
+
+		throw new WidgetNotFoundException(
+					"Tree item elment containing text: test commit was not found");
+	}
+
+	private SWTBotEditor getCompareEditorForFileInWorkspaceModel()
 			throws Exception {
 		SWTBotTree syncViewTree = setPresentationModel("Workspace").tree();
-		// try to open compare editor for FILE1
-		if (waitForProject)
-			TestUtil.waitUntilTreeHasNodeWithText(bot, syncViewTree, "> " +
-					PROJ1, 10000);
-		syncViewTree.getAllItems()[0].expand().getItems()[0].expand()
-				.getItems()[0].doubleClick();
+		SWTBotTreeItem projectTree = waitForNodeWithText(syncViewTree, PROJ1);
+		SWTBotTreeItem folderTree = waitForNodeWithText(projectTree, FOLDER);
+		waitForNodeWithText(folderTree, FILE1).doubleClick();
 
-		return bot.editorByTitle(FILE1);
+		SWTBotEditor editor = bot.editorByTitle(FILE1);
+		editor.toTextEditor().setFocus();
+
+		return editor;
 	}
 
 }

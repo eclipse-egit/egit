@@ -352,7 +352,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 	private void assertHasClonedRepo() throws Exception {
 		final SWTBotTree tree = getOrOpenView().bot().tree();
 		String text = repositoryFile.getParentFile().getName() + "Cloned";
-		TestUtil.waitUntilTreeHasNodeWithText(bot, tree, text, 10000);
+		TestUtil.waitUntilTreeHasNodeContainsText(bot, tree, text, 10000);
 	}
 
 }
