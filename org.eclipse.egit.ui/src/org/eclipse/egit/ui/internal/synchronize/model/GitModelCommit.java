@@ -114,15 +114,15 @@ public class GitModelCommit extends GitModelObjectContainer implements
 		try {
 			RevTree actualTree = baseCommit.getTree();
 
-			int actualNth = tw.addTree(actualTree);
-			int baseNth = -1;
+			int baseNth = tw.addTree(actualTree);
+			int remoteNth = -1;
 			if (remoteCommit != null)
-				baseNth = tw.addTree(remoteCommit.getTree());
+				remoteNth = tw.addTree(remoteCommit.getTree());
 			int ancestorNth = tw.addTree(ancestorCommit.getTree());
 
 			while (tw.next()) {
 				GitModelObject obj = getModelObject(tw, ancestorCommit, ancestorNth,
-						baseNth, actualNth);
+						remoteNth, baseNth);
 				if (obj != null)
 					result.add(obj);
 			}
