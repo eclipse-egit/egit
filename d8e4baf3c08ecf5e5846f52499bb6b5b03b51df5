@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///Tg\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-02-23T14:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL23///Uc\u003d",
+      "revId": "d8e4baf3c08ecf5e5846f52499bb6b5b03b51df5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///TY\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-02-23T14:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL23///UY\u003d",
+      "revId": "d8e4baf3c08ecf5e5846f52499bb6b5b03b51df5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
