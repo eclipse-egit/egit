@@ -57,4 +57,9 @@ public class JobFamilies {
 	 * Pull job
 	 */
 	public final static Object PULL = new Object();
+
+	/**
+	 * Format job
+	 */
+	public static Object FORMAT_COMMIT_INFO;
 }
