@@ -87,6 +87,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		registerRCL();
 		node = base;
 		init(entries());
+		initRootIterator(repository);
 	}
 
 	/**
@@ -107,6 +108,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		registerRCL();
 		node = root;
 		init(entries());
+		initRootIterator(repository);
 	}
 
 	/**
@@ -130,6 +132,9 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		registerRCL();
 		node = base;
 		init(entries());
+		Repository repository = RepositoryMapping.getMapping(base)
+				.getRepository();
+		initRootIterator(repository);
 	}
 
 	@Override
