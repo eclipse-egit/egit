@@ -77,6 +77,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		super(computePrefix(base), repository.getConfig().get(WorkingTreeOptions.KEY));
 		node = base;
 		init(entries());
+		initRootIterator(repository);
 	}
 
 	/**
@@ -96,6 +97,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		super("", repository.getConfig().get(WorkingTreeOptions.KEY));  //$NON-NLS-1$
 		node = root;
 		init(entries());
+		initRootIterator(repository);
 	}
 
 	/**
@@ -118,6 +120,9 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		super(p);
 		node = base;
 		init(entries());
+		Repository repository = RepositoryMapping.getMapping(base)
+				.getRepository();
+		initRootIterator(repository);
 	}
 
 	@Override
