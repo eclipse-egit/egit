@@ -14,6 +14,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.fetch.FetchResultDialog;
 import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.PullResult;
@@ -127,6 +128,12 @@ public class PullResultDialog extends Dialog {
 					.setText(UIText.PullResultDialog_MergeAlreadyUpToDateMessage);
 		}
 		return main;
+	}
+
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
+				true);
 	}
 
 	@Override
