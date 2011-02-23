@@ -187,10 +187,8 @@ public class DecoratableResourceHelper {
 		if (resourceEntry == null)
 			return null;
 
-		if (workspaceIterator.isEntryIgnored()) {
+		if (workspaceIterator.isEntryIgnored())
 			decoratableResource.ignored = true;
-			return decoratableResource;
-		}
 
 		final int mHead = treeWalk.getRawMode(T_HEAD);
 		final int mIndex = treeWalk.getRawMode(T_INDEX);
@@ -198,6 +196,9 @@ public class DecoratableResourceHelper {
 		if (mHead == FileMode.MISSING.getBits()
 				&& mIndex == FileMode.MISSING.getBits())
 			return decoratableResource;
+		else
+			// tracked files are never ignored
+			decoratableResource.ignored = false;
 
 		decoratableResource.tracked = true;
 
