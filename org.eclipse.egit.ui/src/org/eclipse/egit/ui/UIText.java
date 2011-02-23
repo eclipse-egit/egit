@@ -1333,13 +1333,25 @@ public class UIText extends NLS {
 	public static String HistoryPage_findbar_notFound;
 
 	/** */
-	public static String PullCurrentBranchActionHandler_PullCanceledMessage;
+	public static String PullOperationUI_BranchNotConfiguredForPullMessage;
 
 	/** */
-	public static String PullCurrentBranchActionHandler_PullCanceledTitle;
+	public static String PullOperationUI_NoLocalBranchMessage;
 
 	/** */
-	public static String PullCurrentBranchActionHandler_PullJobname;
+	public static String PullOperationUI_PullCanceledWindowTitle;
+
+	/** */
+	public static String PullOperationUI_PullErrorWindowTitle;
+
+	/** */
+	public static String PullOperationUI_PullingTaskName;
+
+	/** */
+	public static String PullOperationUI_PullOperationCanceledMessage;
+
+	/** */
+	public static String PullOperationUI_UnexpectedExceptionGettingBranchMessage;
 
 	/** */
 	public static String PullResultDialog_DialogTitle;

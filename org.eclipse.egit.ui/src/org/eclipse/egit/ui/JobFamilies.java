@@ -52,4 +52,9 @@ public class JobFamilies {
 	 * Reset job
 	 */
 	public static final Object RESET = new Object();
+
+	/**
+	 * Pull job
+	 */
+	public final static Object PULL = new Object();
 }
