@@ -199,6 +199,8 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		bot.button(IDialogConstants.OK_LABEL).click();
 
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+		// wait for tree showing node "<working tree>"
+		syncViewTree.getTreeItem(UIText.GitModelWorkingTree_workingTree);
 		// expand all nodes
 		syncViewTree.getAllItems()[0].collapse().doubleClick();
 		// try to open compare editor for FILE1
@@ -233,6 +235,8 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 				.menuItem("Workspace").click();
 		SWTBotTree syncViewTree = syncView.bot().tree();
 		// try to open compare editor for FILE1
+
+		TestUtil.waitUntilTreeHasNodeWithText(bot, syncViewTree, "> " + PROJ1, 10000);
 		syncViewTree.getAllItems()[0].expand().getItems()[0].expand()
 				.getItems()[0].doubleClick();
 
