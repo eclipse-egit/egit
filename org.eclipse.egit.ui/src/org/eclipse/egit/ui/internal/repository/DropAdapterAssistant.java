@@ -62,6 +62,8 @@ public class DropAdapterAssistant extends CommonDropAdapterAssistant {
 		// check that all paths are valid repository paths
 		String[] folders = (String[]) FileTransfer.getInstance().nativeToJava(
 				transferData);
+		if (folders == null)
+			return Status.CANCEL_STATUS;
 		for (String folder : folders) {
 			File repoFile = new File(folder);
 			if (FileKey.isGitRepository(repoFile, FS.DETECTED)) {
