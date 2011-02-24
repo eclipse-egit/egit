@@ -32,16 +32,20 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 	private final Repository repository;
 
 	private boolean shouldDelete = false;
+	private boolean shouldRemoveProjects = false;
+	private int numberOfProjects = 0;
 
 	/**
 	 * @param parentShell
 	 * @param repository
+	 * @param numberOfProjects
 	 */
 	public DeleteRepositoryConfirmDialog(Shell parentShell,
-			Repository repository) {
+			Repository repository, int numberOfProjects) {
 		super(parentShell);
 		setHelpAvailable(false);
 		this.repository = repository;
+		this.numberOfProjects = numberOfProjects;
 	}
 
 	@Override
@@ -55,10 +59,16 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 		if (repository.isBare())
 			return main;
 		final Button deleteWorkDir = new Button(main, SWT.CHECK);
+		final Button removeProjects = new Button(main, SWT.CHECK);
 		deleteWorkDir.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				shouldDelete = deleteWorkDir.getSelection();
+				removeProjects.setEnabled(!shouldDelete);
+				if (shouldDelete && numberOfProjects > 0) {
+					removeProjects.setSelection(true);
+					shouldRemoveProjects = true;
+				}
 			}
 		});
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(deleteWorkDir);
@@ -67,6 +77,20 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 						.bind(
 								UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox,
 								repository.getWorkTree().getPath()));
+		if (numberOfProjects > 0) {
+			removeProjects.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					shouldRemoveProjects = removeProjects.getSelection();
+				}
+			});
+			GridDataFactory.fillDefaults().grab(true, false).applyTo(removeProjects);
+			removeProjects
+				.setText(NLS
+						.bind(UIText.RepositoriesView_ConfirmProjectDeletion_Question,
+								Integer.valueOf(numberOfProjects)));
+		} else
+			removeProjects.setVisible(false);
 		return main;
 	}
 
@@ -93,5 +117,12 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 	 */
 	public boolean shouldDeleteWorkingDir() {
 		return shouldDelete;
+	}
+
+	/**
+	 * @return if the working directory should be deleted
+	 */
+	public boolean shouldRemoveProjects() {
+		return shouldRemoveProjects;
 	}
 }

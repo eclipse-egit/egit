@@ -76,6 +76,8 @@ public class RemoveCommand extends
 			return;
 		}
 		boolean deleteWorkingDir = false;
+		boolean removeProjects = false;
+		final List<IProject> projectsToDelete = findProjectsToDelete(selectedNodes);
 		if (delete) {
 			if (selectedNodes.size() > 1) {
 				return;
@@ -95,61 +97,49 @@ public class RemoveCommand extends
 					// confirm dialog with check box
 					// "delete also working directory"
 					DeleteRepositoryConfirmDialog dlg = new DeleteRepositoryConfirmDialog(
-							getShell(event), repository);
+							getShell(event), repository, projectsToDelete.size());
 					if (dlg.open() != Window.OK)
 						return;
 					deleteWorkingDir = dlg.shouldDeleteWorkingDir();
+					removeProjects = dlg.shouldRemoveProjects();
 				}
 			}
 		}
+		else {
+			if (!projectsToDelete.isEmpty()) {
+				final boolean[] confirmedCanceled = new boolean[] { false,
+						false };
+				Display.getDefault().syncExec(new Runnable() {
+
+					public void run() {
+						try {
+							confirmedCanceled[0] = confirmProjectDeletion(
+									projectsToDelete, event);
+						} catch (OperationCanceledException e) {
+							confirmedCanceled[1] = true;
+						}
+					}
+				});
+				if (confirmedCanceled[1])
+					return;
+				removeProjects = confirmedCanceled[0];
+			}
+		}
+
 
 		final boolean deleteWorkDir = deleteWorkingDir;
+		final boolean removeProj = removeProjects;
 
 		Job job = new Job("Remove Repositories Job") { //$NON-NLS-1$
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				final List<IProject> projectsToDelete = new ArrayList<IProject>();
 
 				monitor
 						.setTaskName(UIText.RepositoriesView_DeleteRepoDeterminProjectsMessage);
 
-				for (RepositoryNode node : selectedNodes) {
-					if (node.getRepository().isBare())
-						continue;
-					File workDir = node.getRepository().getWorkTree();
-					final IPath wdPath = new Path(workDir.getAbsolutePath());
-					for (IProject prj : ResourcesPlugin.getWorkspace()
-							.getRoot().getProjects()) {
-						if (monitor.isCanceled())
-							return Status.OK_STATUS;
-						if (wdPath.isPrefixOf(prj.getLocation())) {
-							projectsToDelete.add(prj);
-						}
-					}
-				}
 
-				final boolean[] confirmedCanceled = new boolean[] { false,
-						false };
-
-				if (!projectsToDelete.isEmpty()) {
-					Display.getDefault().syncExec(new Runnable() {
-
-						public void run() {
-							try {
-								confirmedCanceled[0] = confirmProjectDeletion(
-										projectsToDelete, event);
-							} catch (OperationCanceledException e) {
-								confirmedCanceled[1] = true;
-							}
-						}
-					});
-				}
-				if (confirmedCanceled[1]) {
-					// canceled: return
-					return Status.OK_STATUS;
-				}
-				if (confirmedCanceled[0]) {
+				if (removeProj) {
 					// confirmed deletion
 					IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
 
@@ -194,6 +184,23 @@ public class RemoveCommand extends
 		};
 
 		service.schedule(job);
+	}
+
+	private List<IProject> findProjectsToDelete(final List<RepositoryNode> selectedNodes) {
+		final List<IProject> projectsToDelete = new ArrayList<IProject>();
+		for (RepositoryNode node : selectedNodes) {
+			if (node.getRepository().isBare())
+				continue;
+			File workDir = node.getRepository().getWorkTree();
+			final IPath wdPath = new Path(workDir.getAbsolutePath());
+			for (IProject prj : ResourcesPlugin.getWorkspace()
+					.getRoot().getProjects()) {
+				if (wdPath.isPrefixOf(prj.getLocation())) {
+					projectsToDelete.add(prj);
+				}
+			}
+		}
+		return projectsToDelete;
 	}
 
 	@SuppressWarnings("boxing")
