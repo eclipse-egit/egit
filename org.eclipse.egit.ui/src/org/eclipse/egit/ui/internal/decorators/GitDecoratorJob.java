@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 
 /**
  * Job decorating Git resources asynchronously
@@ -81,8 +82,18 @@ public class GitDecoratorJob extends Job {
 				elements = elementList.toArray(new Object[elementList.size()]);
 				elementList.clear();
 			}
-			// Call GitLightweightDecorator to process the decoration requests
-			GitLightweightDecorator.processDecoration(elements);
+			try {
+				// Call GitLightweightDecorator to process the decoration
+				// requests
+				GitLightweightDecorator.processDecoration(elements);
+			} catch (Exception e) {
+				// Exceptions can be caused by concurrent threads and thus
+				// should be ignored
+				if (GitTraceLocation.DECORATION.isActive())
+					GitTraceLocation.getTrace().trace(
+							GitTraceLocation.DECORATION.getLocation(),
+							"An error occurred during resource decoration", e); //$NON-NLS-1$
+			}
 		}
 		return Status.OK_STATUS;
 	}
