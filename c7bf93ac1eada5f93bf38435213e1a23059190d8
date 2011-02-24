@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///U8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelObjectContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-02-23T13:04:39Z",
+      "side": 1,
+      "message": "The usage of a static import is here in inconsistent with ObjectId.zeroId() above and below.",
+      "revId": "c7bf93ac1eada5f93bf38435213e1a23059190d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
