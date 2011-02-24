@@ -113,6 +113,55 @@ public class CommitOperation implements IEGitOperation {
 		this.message = message;
 	}
 
+	/**
+	 * The finally entered commit message.
+	 *
+	 * @return The commit message.
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+	/**
+	 * All files that will be committed.
+	 *
+	 * @return Array of files what will be committed.
+	 */
+	public IFile[] getFilesToCommit() {
+		return filesToCommit;
+	}
+
+	/**
+	 * Get all not indexed files for this commit.
+	 *
+	 * @return Not indexed files.
+	 */
+	public Collection<IFile> getNotIndexedFiles() {
+		return this.notIndexed;
+	}
+
+	/**
+	 * Get all not tracked files for this commit.
+	 *
+	 * @return Not tracked files.
+	 */
+	public Collection<IFile> getNotTrackedFiles() {
+		return this.notTracked;
+	}
+
+	/**
+	 * Redefines which files should be committed.
+	 *
+	 * @param filesToCommit Files to commit.
+	 * @param notIndexed Not indexed files.
+	 * @param notTracked Not tracked files.
+	 */
+	public void setNewFilesToCommit(IFile[] filesToCommit, Collection<IFile> notIndexed, Collection<IFile> notTracked) {
+		this.filesToCommit = filesToCommit;
+		this.notIndexed = notIndexed;
+		this.notTracked = notTracked;
+	}
+
 	public void execute(IProgressMonitor m) throws CoreException {
 		IProgressMonitor monitor;
 		if (m == null)

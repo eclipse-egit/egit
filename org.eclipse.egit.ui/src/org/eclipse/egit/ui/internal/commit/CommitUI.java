@@ -21,9 +21,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,9 +35,11 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
@@ -43,6 +47,7 @@ import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.CommitObserver;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
@@ -144,6 +149,22 @@ public class CommitUI  {
 			return;
 		}
 
+		// add commit observer
+		List<CommitObserver> commitObserver = new ArrayList<CommitObserver>();
+		IConfigurationElement[] rawExtensions = Platform.getExtensionRegistry().getConfigurationElementsFor(
+			"org.eclipse.egit.ui.commitObserver"); //$NON-NLS-1$
+		for (IConfigurationElement extension : rawExtensions) {
+			try {
+				Object executableExtension = extension.createExecutableExtension("providerClass"); //$NON-NLS-1$
+				if (executableExtension instanceof CommitObserver) {
+					commitObserver.add( (CommitObserver)executableExtension );
+				}
+
+			} catch (CoreException e) {
+				// continue without using this commit observer
+			}
+		}
+
 		Repository repository = null;
 		Repository mergeRepository = null;
 		amendAllowed = repos.length == 1;
@@ -229,6 +250,27 @@ public class CommitUI  {
 		commitOperation.setCommitAll(isMergedResolved);
 		if (isMergedResolved)
 			commitOperation.setRepos(repos);
+
+		// Finalize commit observer
+		boolean commitObserverConfirmed = true;
+		for(CommitObserver co: commitObserver) {
+			boolean commitAccepted = co.finaliceCommit(commitOperation);
+			commitObserverConfirmed &= commitAccepted;
+
+			if( !commitObserverConfirmed ) {
+				String refuseReason = co.getRefuseReason();
+				if( refuseReason != null ) {
+					MessageDialog.openWarning(this.shell,
+							"Commit Canceled", //$NON-NLS-1$
+							refuseReason);
+				}
+				break;
+			}
+		}
+		if( !commitObserverConfirmed ) {
+			return;
+		}
+
 		String jobname = UIText.CommitAction_CommittingChanges;
 		Job job = new Job(jobname) {
 			@Override
