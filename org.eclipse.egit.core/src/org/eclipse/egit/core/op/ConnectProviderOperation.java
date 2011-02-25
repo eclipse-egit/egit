@@ -118,6 +118,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 					try {
 						projectData.setRepositoryMappings(Arrays.asList(actualMapping));
 						projectData.store();
+						GitProjectData.add(project, projectData);
 					} catch (CoreException ce) {
 						try {
 							GitProjectData.delete(project);
@@ -145,7 +146,6 @@ public class ConnectProviderOperation implements IEGitOperation {
 					}
 					RepositoryProvider
 							.map(project, GitProvider.class.getName());
-					projectData = GitProjectData.get(project);
 					project.refreshLocal(IResource.DEPTH_INFINITE,
 							new SubProgressMonitor(monitor, 50));
 					monitor.worked(10);

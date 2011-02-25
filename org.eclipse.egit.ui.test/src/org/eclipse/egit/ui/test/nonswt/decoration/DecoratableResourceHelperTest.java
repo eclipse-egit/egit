@@ -71,6 +71,7 @@ public class DecoratableResourceHelperTest extends LocalDiskRepositoryTestCase {
 		GitProjectData projectData = new GitProjectData(project);
 		projectData.setRepositoryMappings(Collections.singleton(mapping));
 		projectData.store();
+		GitProjectData.add(project, projectData);
 
 		RepositoryProvider.map(project, GitProvider.class.getName());
 
