@@ -24,7 +24,7 @@ public interface ICommitMessageProvider {
 	/**
 	 * @param resources
 	 * @return the message the CommitDialog should use as default message or
-	 * <code>null</code> if this provider cannot provde a commit message
+	 * <code>null</code> if this provider cannot provide a commit message
 	 */
 	public String getMessage(IResource[] resources);
 }
