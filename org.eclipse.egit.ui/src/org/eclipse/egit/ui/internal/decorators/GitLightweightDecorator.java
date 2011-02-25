@@ -222,6 +222,10 @@ public class GitLightweightDecorator extends LabelProvider implements
 		if (!resource.exists() && !resource.isPhantom())
 			return;
 
+		IDecoratableResource decoratableResource = null;
+		final DecorationHelper helper = new DecorationHelper(
+				activator.getPreferenceStore());
+
 		try {
 			final Boolean notDecoratable = (Boolean) resource
 					.getSessionProperty(NOT_DECORATABLE_KEY);
@@ -229,13 +233,11 @@ public class GitLightweightDecorator extends LabelProvider implements
 				// Resource is not decoratable, do not try again
 				return;
 
-			final IDecoratableResource decoratableResource = (IDecoratableResource) resource
+			decoratableResource = (IDecoratableResource) resource
 					.getSessionProperty(DECORATABLE_RESOURCE_KEY);
 			boolean decorated = false;
 			if (decoratableResource != null) {
 				// Use stored decoratable resource (even when it is outdated)
-				final DecorationHelper helper = new DecorationHelper(
-						activator.getPreferenceStore());
 				helper.decorate(decoration, decoratableResource);
 				decorated = true;
 			}
@@ -270,6 +272,23 @@ public class GitLightweightDecorator extends LabelProvider implements
 		// Cannot decorate linked resources
 		if (mapping.getRepoRelativePath(resource) == null)
 			return;
+
+		// Project nodes are decorated with temporary information (repository
+		// name and current branch)
+		if (resource.getType() == IResource.PROJECT) {
+			try {
+				decoratableResource = DecoratableResourceHelper
+						.createTemporaryDecoratableResource(resource
+								.getProject());
+				helper.decorate(decoration, decoratableResource);
+			} catch (IOException e) {
+				handleException(
+						resource,
+						new CoreException(Activator.createErrorStatus(
+								UIText.Decorator_exceptionMessage, e)));
+				return;
+			}
+		}
 
 		// No (up-to-date) stored decoratable resource is available, thus
 		// decoration request is added to the queue
