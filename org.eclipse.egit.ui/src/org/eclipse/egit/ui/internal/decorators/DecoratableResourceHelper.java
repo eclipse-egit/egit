@@ -13,11 +13,13 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.ContainerTreeIterator;
 import org.eclipse.egit.core.ContainerTreeIterator.ResourceEntry;
 import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.decorators.IDecoratableResource.Staged;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEntry;
@@ -25,7 +27,9 @@ import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -126,6 +130,29 @@ public class DecoratableResourceHelper {
 				}
 			}
 		return decoratableResources;
+	}
+
+	/**
+	 * Creates a temporary decoratable resource for the given project
+	 *
+	 * This temporary decoratable resource only contains the name of the
+	 * repository and the current branch.
+	 *
+	 * @param project
+	 *            the project to be decorated
+	 * @return the decoratable resource
+	 * @throws IOException
+	 */
+	static IDecoratableResource createTemporaryDecoratableResource(
+			final IProject project) throws IOException {
+		final DecoratableResource decoratableResource = new DecoratableResource(
+				project);
+		final Repository repository = RepositoryMapping.getMapping(project)
+				.getRepository();
+		decoratableResource.repositoryName = getRepositoryName(repository);
+		decoratableResource.branch = getShortBranch(repository);
+		decoratableResource.tracked = true;
+		return decoratableResource;
 	}
 
 	static DirCache getDirCache(Repository repository) throws IOException {
@@ -232,5 +259,33 @@ public class DecoratableResourceHelper {
 				decoratableResource.dirty = true;
 		}
 		return decoratableResource;
+	}
+
+	static String getRepositoryName(Repository repository) {
+		String repoName = Activator.getDefault().getRepositoryUtil()
+				.getRepositoryName(repository);
+		RepositoryState state = repository.getRepositoryState();
+		if (state != RepositoryState.SAFE)
+			return repoName + '|' + state.getDescription();
+		else
+			return repoName;
+	}
+
+	static String getShortBranch(Repository repository) throws IOException {
+		Ref head = repository.getRef(Constants.HEAD);
+		if (head != null && !head.isSymbolic()) {
+			String refString = Activator
+					.getDefault()
+					.getRepositoryUtil()
+					.mapCommitToRef(repository, repository.getFullBranch(),
+							false);
+			if (refString != null) {
+				return repository.getFullBranch().substring(0, 7)
+						+ "... (" + refString + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+			} else
+				return repository.getFullBranch().substring(0, 7) + "..."; //$NON-NLS-1$
+		}
+
+		return repository.getBranch();
 	}
 }
