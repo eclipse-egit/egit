@@ -470,6 +470,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	/** Last HEAD */
 	private AnyObjectId currentHeadId;
 
+	/** Repository of the last input*/
+	private Repository currentRepo;
+
 	/**
 	 * Highlight flag that can be applied to commits to make them stand out.
 	 * <p>
@@ -960,7 +963,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			actions.showAllResourceVersionsAction.setEnabled(filtersActive);
 
 			try {
-				initAndStartRevWalk(true);
+				initAndStartRevWalk(false);
 			} catch (IllegalStateException e) {
 				Activator.handleError(e.getMessage(), e, true);
 				return false;
@@ -1196,23 +1199,31 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			List<String> paths = buildFilterPaths(input.getItems(), input
 					.getFileList(), db);
 
-			if (forceNewWalk || pathChange(pathFilters, paths)
-					|| currentWalk == null || !headId.equals(currentHeadId)) {
+			boolean pathChange = pathChange(pathFilters, paths);
+			boolean headChange = !headId.equals(currentHeadId);
+			boolean repoChange = false;
+			if (!db.equals(currentRepo))
+			{
+				repoChange = true;
+				currentRepo = db;
+			}
+			if (forceNewWalk || pathChange
+					|| currentWalk == null || headChange || repoChange) {
 				// TODO Do not dispose SWTWalk just because HEAD changed
 				// In theory we should be able to update the graph and
 				// not dispose of the SWTWalk, even if HEAD was reset to
 				// HEAD^1 and the old HEAD commit should not be visible.
 				//
 				createNewWalk(db, headId);
-			} else {
-				currentWalk.reset();
-			}
-			setWalkStartPoints(db, headId);
+				setWalkStartPoints(db, headId);
 
-			setupFileViewer(db, paths);
-			setupCommentViewer(db);
+				setupFileViewer(db, paths);
+				setupCommentViewer(db);
 
-			scheduleNewGenerateHistoryJob();
+				scheduleNewGenerateHistoryJob();
+			} else
+				// needed for context menu and double click
+				graph.setHistoryPageInput(input);
 		} finally {
 			if (trace)
 				GitTraceLocation.getTrace().traceExit(
