@@ -71,6 +71,12 @@ class GenerateHistoryJob extends Job {
 										.getName()));
 						return Status.CANCEL_STATUS;
 					}
+					if (allCommits.size() == 0) {
+						page.setErrorMessage(NLS.bind(
+								UIText.GenerateHistoryJob_NoCommits,
+								page.getName()));
+						break;
+					}
 					if (maxCommits > 0 && allCommits.size() > maxCommits)
 						incomplete = true;
 					if (incomplete || oldsz == allCommits.size())

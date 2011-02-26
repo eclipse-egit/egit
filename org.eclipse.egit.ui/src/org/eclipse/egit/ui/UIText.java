@@ -172,6 +172,9 @@ public class UIText extends NLS {
 	public static String GenerateHistoryJob_errorComputingHistory;
 
 	/** */
+	public static String GenerateHistoryJob_NoCommits;
+
+	/** */
 	public static String EGitCredentialsProvider_errorReadingCredentials;
 
 	/** */
