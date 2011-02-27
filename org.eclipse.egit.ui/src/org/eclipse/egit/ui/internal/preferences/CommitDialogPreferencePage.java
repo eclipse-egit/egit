@@ -21,6 +21,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 public class CommitDialogPreferencePage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
 
+
 	/** */
 	public CommitDialogPreferencePage() {
 		super(GRID);
@@ -44,5 +45,15 @@ public class CommitDialogPreferencePage extends FieldEditorPreferencePage
 				getFieldEditorParent());
 		hardWrap.getDescriptionControl(getFieldEditorParent()).setToolTipText(UIText.CommitDialogPreferencePage_hardWrapMessageTooltip);
 		addField(hardWrap);
+
+		BooleanFieldEditor createChangeId = new BooleanFieldEditor(
+				UIPreferences.COMMIT_DIALOG_CREATE_CHANGE_ID,
+				UIText.CommitDialogPreferencePage_createChangeId,
+				getFieldEditorParent());
+		createChangeId
+				.getDescriptionControl(getFieldEditorParent())
+				.setToolTipText(
+						UIText.CommitDialogPreferencePage_createChangeIdTooltip);
+		addField(createChangeId);
 	}
 }
