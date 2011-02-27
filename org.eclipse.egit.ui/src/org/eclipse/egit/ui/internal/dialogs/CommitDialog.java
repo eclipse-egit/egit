@@ -313,22 +313,13 @@ public class CommitDialog extends Dialog {
 
 		signedOffButton = new Button(container, SWT.CHECK);
 		signedOffButton.setSelection(signedOff);
+		refreshSignedOffBy();
 		signedOffButton.setText(UIText.CommitDialog_AddSOB);
 		signedOffButton.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).span(2, 1).create());
 
 		signedOffButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent arg0) {
-				String curText = commitText.getText();
-				if (signedOffButton.getSelection()) {
-					// add signed off line
-					commitText.setText(signOff(curText));
-				} else {
-					// remove signed off line
-					curText = replaceSignOff(curText, getSignedOff(), ""); //$NON-NLS-1$
-					if (curText.endsWith(Text.DELIMITER + Text.DELIMITER))
-						curText = curText.substring(0, curText.length() - Text.DELIMITER.length());
-					commitText.setText(curText);
-				}
+				refreshSignedOffBy();
 			}
 
 			public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -706,7 +697,11 @@ public class CommitDialog extends Dialog {
 	private String author = null;
 	private String committer = null;
 	private String previousAuthor = null;
-	private boolean signedOff = false;
+
+	private boolean signedOff = org.eclipse.egit.ui.Activator.getDefault()
+			.getPreferenceStore()
+			.getBoolean(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY);
+
 	private boolean amending = false;
 	private boolean amendAllowed = true;
 	private boolean showUntracked = true;
@@ -1077,6 +1072,24 @@ public class CommitDialog extends Dialog {
 						+ text.substring(endOfChangeId);
 				cleanedText = cleanedText.replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
 				commitText.setText(cleanedText);
+			}
+		}
+	}
+
+	private void refreshSignedOffBy() {
+		String curText = commitText.getText();
+		if (signedOffButton.getSelection()) {
+			// add signed off line
+			commitText.setText(signOff(curText));
+		} else {
+			// remove signed off line
+			String s = getSignedOff();
+			if (s != null) {
+				curText = replaceSignOff(curText, s, ""); //$NON-NLS-1$
+				if (curText.endsWith(Text.DELIMITER + Text.DELIMITER))
+					curText = curText.substring(0, curText.length()
+							- Text.DELIMITER.length());
+				commitText.setText(curText);
 			}
 		}
 	}
