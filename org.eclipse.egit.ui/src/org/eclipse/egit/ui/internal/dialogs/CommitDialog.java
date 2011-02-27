@@ -42,6 +42,7 @@ import org.eclipse.egit.core.internal.storage.GitFileHistoryProvider;
 import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.ICommitMessageProvider;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
@@ -350,6 +351,10 @@ public class CommitDialog extends Dialog {
 			}
 		});
 
+		changeIdButton.setSelection( org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.COMMIT_DIALOG_CREATE_CHANGE_ID));
+		refreshChangeIdText();
+
 		showUntrackedButton = new Button(container, SWT.CHECK);
 		showUntrackedButton.setText(UIText.CommitDialog_ShowUntrackedFiles);
 		showUntrackedButton.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).span(2, 1).create());
@@ -378,6 +383,7 @@ public class CommitDialog extends Dialog {
 				updateChangeIdButton();
 			}
 		});
+
 		updateSignedOffButton();
 		updateChangeIdButton();
 
