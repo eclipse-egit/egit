@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.egit.internal.mylyn.ui;
 
+import org.eclipse.egit.internal.mylyn.ui.tasks.TaskActivationListener;
+import org.eclipse.mylyn.tasks.core.ITaskActivationListener;
+import org.eclipse.mylyn.tasks.core.ITaskActivityManager;
+import org.eclipse.mylyn.tasks.ui.TasksUi;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -23,6 +27,9 @@ public class EGitMylynUI extends AbstractUIPlugin {
 
 	// The shared instance
 	private static EGitMylynUI plugin;
+	
+	private static ITaskActivationListener listener;	
+	private static ITaskActivityManager manager;
 
 	/*
 	 * (non-Javadoc)
@@ -31,6 +38,10 @@ public class EGitMylynUI extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		
+		manager = TasksUi.getTaskActivityManager();
+		listener = new TaskActivationListener();
+		manager.addActivationListener(listener);
 	}
 
 	/*
