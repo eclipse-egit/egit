@@ -50,6 +50,7 @@ public class FetchActionHandler extends RepositoryActionHandler {
 	}
 
 	public boolean isEnabled() {
-		return getRepository() != null;
+		return getRepository() != null
+				&& !getRepository().getAllRefs().isEmpty();
 	}
 }

@@ -51,6 +51,7 @@ public class PushActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return getRepository() != null;
+		return getRepository() != null
+				&& !getRepository().getAllRefs().isEmpty();
 	}
 }
