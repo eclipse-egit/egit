@@ -16,6 +16,24 @@
       "revId": "e9320a7d35a01307035a83e2e48d7d93288f5615",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///58\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2011-02-28T10:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL3H///70\u003d",
+      "revId": "e9320a7d35a01307035a83e2e48d7d93288f5615",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
