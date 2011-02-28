@@ -52,7 +52,7 @@ public class SynchronizeWithActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return containsHead();
 	}
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
