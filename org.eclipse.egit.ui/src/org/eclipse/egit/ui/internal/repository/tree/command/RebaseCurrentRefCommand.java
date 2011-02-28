@@ -7,6 +7,8 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Dariusz Luksza (dariusz@luksza.org) - disable command when HEAD cannot be
+ *    										resolved
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
@@ -23,6 +25,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -72,13 +75,25 @@ public class RebaseCurrentRefCommand extends
 					.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
 			if (selection instanceof IStructuredSelection) {
 				IStructuredSelection sel = (IStructuredSelection) selection;
-				if (sel.getFirstElement() instanceof RefNode)
-					setBaseEnabled(((RefNode) ((IStructuredSelection) selection)
-							.getFirstElement()).getRepository()
-							.getRepositoryState() == RepositoryState.SAFE);
+				if (sel.getFirstElement() instanceof RepositoryTreeNode) {
+					Repository repo = ((RepositoryTreeNode) ((IStructuredSelection) selection)
+							.getFirstElement()).getRepository();
+					boolean isSafe = repo.getRepositoryState() == RepositoryState.SAFE;
+
+					setBaseEnabled(isSafe && hasHead(repo));
+				}
 				return;
 			}
 		}
 		setBaseEnabled(true);
 	}
+
+	private boolean hasHead(Repository repo) {
+		try {
+			return repo.getRef(Constants.HEAD).getObjectId() != null;
+		} catch (IOException e) {
+			return false;
+		}
+	}
+
 }
