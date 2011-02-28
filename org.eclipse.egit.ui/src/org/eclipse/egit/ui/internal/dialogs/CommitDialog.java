@@ -108,12 +108,6 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
  */
 public class CommitDialog extends Dialog {
 
-
-	/**
-	* Constant for the extension point for the commit message provider
-	*/
-	private static final String COMMIT_MESSAGE_PROVIDER_ID = "org.eclipse.egit.ui.commitMessageProvider"; //$NON-NLS-1$
-
 	static class CommitLabelProvider extends WorkbenchLabelProvider implements
 			ITableLabelProvider {
 		public String getColumnText(Object obj, int columnIndex) {
@@ -139,6 +133,107 @@ public class CommitDialog extends Dialog {
 		}
 	}
 
+	class HeaderSelectionListener extends SelectionAdapter {
+
+		private CommitItem.Order order;
+
+		private Boolean reversed;
+
+		public HeaderSelectionListener(CommitItem.Order order) {
+			this.order = order;
+		}
+
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			TableColumn column = (TableColumn) e.widget;
+			Table table = column.getParent();
+
+			if (column == table.getSortColumn()) {
+				int currentDirection = table.getSortDirection();
+				switch (currentDirection) {
+				case SWT.NONE:
+					reversed = Boolean.FALSE;
+					break;
+				case SWT.UP:
+					reversed = Boolean.TRUE;
+					break;
+				case SWT.DOWN:
+					// fall through
+				default:
+					reversed = null;
+					break;
+				}
+			} else
+				reversed = Boolean.FALSE;
+
+			if (reversed == null) {
+				table.setSortColumn(null);
+				table.setSortDirection(SWT.NONE);
+				filesViewer.setComparator(null);
+				return;
+			}
+			table.setSortColumn(column);
+
+			Comparator<CommitItem> comparator;
+			if (reversed.booleanValue()) {
+				comparator = order.descending();
+				table.setSortDirection(SWT.DOWN);
+			} else {
+				comparator = order;
+				table.setSortDirection(SWT.UP);
+			}
+
+			filesViewer.setComparator(new CommitViewerComparator(comparator));
+		}
+
+	}
+
+	class CommitItemSelectionListener extends SelectionAdapter {
+
+		public void widgetDefaultSelected(SelectionEvent e) {
+			IStructuredSelection selection = (IStructuredSelection) filesViewer.getSelection();
+
+			CommitItem commitItem = (CommitItem) selection.getFirstElement();
+			if (commitItem == null) {
+				return;
+			}
+			if (commitItem.status == Status.UNTRACKED)
+				return;
+
+			IProject project = commitItem.file.getProject();
+			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+			if (mapping == null) {
+				return;
+			}
+			Repository repository = mapping.getRepository();
+
+			try {
+				ObjectId id = repository.resolve(Constants.HEAD);
+				if (id == null
+						|| repository.open(id, Constants.OBJ_COMMIT).getType() != Constants.OBJ_COMMIT) {
+					return;
+				}
+			} catch (IOException e1) {
+				return;
+			}
+
+			GitProvider provider = (GitProvider) RepositoryProvider.getProvider(project);
+			GitFileHistoryProvider fileHistoryProvider = (GitFileHistoryProvider) provider.getFileHistoryProvider();
+
+			IFileHistory fileHistory = fileHistoryProvider.getFileHistoryFor(commitItem.file, IFileHistoryProvider.SINGLE_REVISION, null);
+
+			IFileRevision baseFile = fileHistory.getFileRevisions()[0];
+			IFileRevision nextFile = fileHistoryProvider.getWorkspaceFileRevision(commitItem.file);
+
+			ITypedElement base = new FileRevisionTypedElement(baseFile);
+			ITypedElement next = new FileRevisionTypedElement(nextFile);
+
+			GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(next, base, null);
+			CompareUI.openCompareDialog(input);
+		}
+
+	}
+
 	private final class CommitItemFilter extends ViewerFilter {
 		@Override
 		public boolean select(Viewer viewer, Object parentElement,
@@ -155,7 +250,10 @@ public class CommitDialog extends Dialog {
 		}
 	}
 
-	ArrayList<CommitItem> items = new ArrayList<CommitItem>();
+	/**
+	* Constant for the extension point for the commit message provider
+	*/
+	private static final String COMMIT_MESSAGE_PROVIDER_ID = "org.eclipse.egit.ui.commitMessageProvider"; //$NON-NLS-1$
 
 	private static final String COMMITTER_VALUES_PREF = "CommitDialog.committerValues"; //$NON-NLS-1$
 
@@ -163,12 +261,254 @@ public class CommitDialog extends Dialog {
 
 	private static final String SHOW_UNTRACKED_PREF = "CommitDialog.showUntracked"; //$NON-NLS-1$
 
+	SpellcheckableMessageArea commitText;
+
+	Text authorText;
+
+	Text committerText;
+
+	Button amendingButton;
+
+	Button signedOffButton;
+
+	Button changeIdButton;
+
+	Button showUntrackedButton;
+
+	CheckboxTableViewer filesViewer;
+
+	ObjectId originalChangeId;
+
+	ArrayList<CommitItem> items = new ArrayList<CommitItem>();
+
+	private String commitMessage = null;
+
+	private String previousCommitMessage = ""; //$NON-NLS-1$
+
+	private String author = null;
+
+	private String previousAuthor = null;
+
+	private String committer = null;
+
+	/**
+	 * A collection of files that should be already checked in the table.
+	 */
+	private Set<IFile> preselectedFiles = Collections.emptySet();
+
+	private ArrayList<IFile> selectedFiles = new ArrayList<IFile>();
+
+	private boolean signedOff = org.eclipse.egit.ui.Activator.getDefault()
+	.getPreferenceStore()
+	.getBoolean(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY);
+
+	private boolean amending = false;
+
+	private boolean amendAllowed = true;
+
+	private boolean showUntracked = true;
+
+	private boolean createChangeId = false;
+
+	private boolean allowToChangeSelection = true;
+
+	private IPreviousValueProposalHandler authorHandler;
+
+	private IPreviousValueProposalHandler committerHandler;
 
 	/**
 	 * @param parentShell
 	 */
 	public CommitDialog(Shell parentShell) {
 		super(parentShell);
+	}
+
+	/**
+	 * @return The message the user entered
+	 */
+	public String getCommitMessage() {
+		return commitMessage;
+	}
+
+	/**
+	 * Preset a commit message. This might be for amending a commit.
+	 * @param s the commit message
+	 */
+	public void setCommitMessage(String s) {
+		this.commitMessage = s;
+	}
+
+	/**
+	 * Pre-select suggested set of resources to commit
+	 *
+	 * @param items
+	 */
+	public void setSelectedFiles(IFile[] items) {
+		Collections.addAll(selectedFiles, items);
+	}
+
+	/**
+	 * @return the resources selected by the user to commit.
+	 */
+	public IFile[] getSelectedFiles() {
+		return selectedFiles.toArray(new IFile[0]);
+	}
+
+	/**
+	 * Sets the files that should be checked in this table.
+	 *
+	 * @param preselectedFiles
+	 *            the files to be checked in the dialog's table, must not be
+	 *            <code>null</code>
+	 */
+	public void setPreselectedFiles(Set<IFile> preselectedFiles) {
+		Assert.isNotNull(preselectedFiles);
+		this.preselectedFiles = preselectedFiles;
+	}
+
+	/**
+	 * Set the total set of changed resources, including additions and
+	 * removals
+	 *
+	 * @param files potentially affected by a new commit
+	 * @param indexDiffs IndexDiffs of the related repositories
+	 */
+	public void setFiles(Set<IFile> files, Map<Repository, IndexDiff> indexDiffs) {
+		items.clear();
+		for (IFile file : files) {
+			RepositoryMapping repositoryMapping = RepositoryMapping
+					.getMapping(file.getProject());
+			Repository repo = repositoryMapping.getRepository();
+			String path = repositoryMapping.getRepoRelativePath(file);
+			CommitItem item = new CommitItem();
+			item.status = getFileStatus(path, indexDiffs.get(repo));
+			item.file = file;
+			items.add(item);
+		}
+		// initially, we sort by status plus project plus path
+		Collections.sort(items, new Comparator<CommitItem>() {
+			public int compare(CommitItem o1, CommitItem o2) {
+				int diff = o1.status.ordinal() - o2.status.ordinal();
+				if (diff != 0)
+					return diff;
+				diff = o1.file.getProject().getName().compareTo(
+						o2.file.getProject().getName());
+				if (diff != 0)
+					return diff;
+				return o1.file
+				.getProjectRelativePath()
+				.toString()
+				.compareTo(
+						o2.file.getProjectRelativePath().toString());
+			}
+		});
+	}
+
+	/**
+	 * @return The author to set for the commit
+	 */
+	public String getAuthor() {
+		return author;
+	}
+
+	/**
+	 * Pre-set author for the commit
+	 *
+	 * @param author
+	 */
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	/**
+	 * @return The committer to set for the commit
+	 */
+	public String getCommitter() {
+		return committer;
+	}
+
+	/**
+	 * Pre-set committer for the commit
+	 *
+	 * @param committer
+	 */
+	public void setCommitter(String committer) {
+		this.committer = committer;
+	}
+
+	/**
+	 * Pre-set the previous author if amending the commit
+	 *
+	 * @param previousAuthor
+	 */
+	public void setPreviousAuthor(String previousAuthor) {
+		this.previousAuthor = previousAuthor;
+	}
+
+	/**
+	 * @return whether to auto-add a signed-off line to the message
+	 */
+	public boolean isSignedOff() {
+		return signedOff;
+	}
+
+	/**
+	 * Pre-set whether a signed-off line should be included in the commit
+	 * message.
+	 *
+	 * @param signedOff
+	 */
+	public void setSignedOff(boolean signedOff) {
+		this.signedOff = signedOff;
+	}
+
+	/**
+	 * @return whether the last commit is to be amended
+	 */
+	public boolean isAmending() {
+		return amending;
+	}
+
+	/**
+	 * Pre-set whether the last commit is going to be amended
+	 *
+	 * @param amending
+	 */
+	public void setAmending(boolean amending) {
+		this.amending = amending;
+	}
+
+	/**
+	 * Set the message from the previous commit for amending.
+	 *
+	 * @param string
+	 */
+	public void setPreviousCommitMessage(String string) {
+		this.previousCommitMessage = string;
+	}
+
+	/**
+	 * Set whether the previous commit may be amended
+	 *
+	 * @param amendAllowed
+	 */
+	public void setAmendAllowed(boolean amendAllowed) {
+		this.amendAllowed = amendAllowed;
+	}
+
+	/**
+	 * Set whether is is allowed to change the set of selected files
+	 * @param allowToChangeSelection
+	 */
+	public void setAllowToChangeSelection(boolean allowToChangeSelection) {
+		this.allowToChangeSelection = allowToChangeSelection;
+	}
+
+	/**
+	 * @return true if a Change-Id line for Gerrit should be created
+	 */
+	public boolean getCreateChangeId() {
+		return createChangeId;
 	}
 
 	@Override
@@ -180,23 +520,6 @@ public class CommitDialog extends Dialog {
 		createButton(parent, IDialogConstants.CANCEL_ID,
 				IDialogConstants.CANCEL_LABEL, false);
 	}
-
-	SpellcheckableMessageArea commitText;
-	Text authorText;
-	Text committerText;
-	Button amendingButton;
-	Button signedOffButton;
-	Button changeIdButton;
-	Button showUntrackedButton;
-
-	CheckboxTableViewer filesViewer;
-
-	ObjectId originalChangeId;
-
-	/**
-	 * A collection of files that should be already checked in the table.
-	 */
-	private Set<IFile> preselectedFiles = Collections.emptySet();
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
@@ -470,7 +793,6 @@ public class CommitDialog extends Dialog {
 			return ""; //$NON-NLS-1$
 	}
 
-
 	private ICommitMessageProvider getCommitMessageProvider()
 			throws CoreException {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
@@ -513,14 +835,6 @@ public class CommitDialog extends Dialog {
 		return message.indexOf("\nChange-Id: I"); //$NON-NLS-1$
 	}
 
-	private void updateSignedOffButton() {
-		String curText = commitText.getText();
-		if (!curText.endsWith(Text.DELIMITER))
-			curText += Text.DELIMITER;
-
-		signedOffButton.setSelection(curText.indexOf(getSignedOff() + Text.DELIMITER) != -1);
-	}
-
 	private void updateChangeIdButton() {
 		String curText = commitText.getText();
 		if (!curText.endsWith(Text.DELIMITER))
@@ -530,6 +844,28 @@ public class CommitDialog extends Dialog {
 		if (hasId) {
 			changeIdButton.setSelection(true);
 			createChangeId = true;
+		}
+	}
+
+	private void refreshChangeIdText() {
+		createChangeId = changeIdButton.getSelection();
+		String text = commitText.getText().replaceAll(Text.DELIMITER, "\n"); //$NON-NLS-1$
+		if (createChangeId) {
+			String changedText = ChangeIdUtil.insertId(text,
+					originalChangeId != null ? originalChangeId : ObjectId.zeroId(), true);
+			if (!text.equals(changedText)) {
+				changedText = changedText.replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
+				commitText.setText(changedText);
+			}
+		} else {
+			int changeIdOffset = findOffsetOfChangeIdLine(text);
+			if (changeIdOffset > 0) {
+				int endOfChangeId = findNextEOL(changeIdOffset, text);
+				String cleanedText = text.substring(0, changeIdOffset)
+						+ text.substring(endOfChangeId);
+				cleanedText = cleanedText.replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
+				commitText.setText(cleanedText);
+			}
 		}
 	}
 
@@ -565,6 +901,32 @@ public class CommitDialog extends Dialog {
 		// get the last line
 		lastIndexOfLineBreak = output.lastIndexOf(Text.DELIMITER);
 		return lastIndexOfLineBreak == -1 ? output : output.substring(lastIndexOfLineBreak + breakLength, output.length());
+	}
+
+	private void updateSignedOffButton() {
+		String curText = commitText.getText();
+		if (!curText.endsWith(Text.DELIMITER))
+			curText += Text.DELIMITER;
+
+		signedOffButton.setSelection(curText.indexOf(getSignedOff() + Text.DELIMITER) != -1);
+	}
+
+	private void refreshSignedOffBy() {
+		String curText = commitText.getText();
+		if (signedOffButton.getSelection()) {
+			// add signed off line
+			commitText.setText(signOff(curText));
+		} else {
+			// remove signed off line
+			String s = getSignedOff();
+			if (s != null) {
+				curText = replaceSignOff(curText, s, ""); //$NON-NLS-1$
+				if (curText.endsWith(Text.DELIMITER + Text.DELIMITER))
+					curText = curText.substring(0, curText.length()
+							- Text.DELIMITER.length());
+				commitText.setText(curText);
+			}
+		}
 	}
 
 	private String replaceSignOff(String input, String oldSignOff, String newSignOff) {
@@ -621,6 +983,24 @@ public class CommitDialog extends Dialog {
 		return menu;
 	}
 
+	/** Retrieve file status
+	 * @param file
+	 * @return file status
+	 * @throws IOException
+	 */
+	private static Status getFileStatus(IFile file) throws IOException {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(file);
+		String path = mapping.getRepoRelativePath(file);
+		Repository repo = mapping.getRepository();
+		AdaptableFileTreeIterator fileTreeIterator = new AdaptableFileTreeIterator(
+				repo, ResourcesPlugin.getWorkspace().getRoot());
+		IndexDiff indexDiff = new IndexDiff(repo, Constants.HEAD, fileTreeIterator);
+		Set<String> repositoryPaths = Collections.singleton(path);
+		indexDiff.setFilter(PathFilterGroup.createFromStrings(repositoryPaths));
+		indexDiff.diff(null, 0, 0, ""); //$NON-NLS-1$
+		return getFileStatus(path, indexDiff);
+	}
+
 	/** Retrieve file status from an already calculated IndexDiff
 	 * @param path
 	 * @param indexDiff
@@ -658,189 +1038,6 @@ public class CommitDialog extends Dialog {
 			return Status.MODIFIED_NOT_STAGED;
 		}
 		return Status.UNKNOWN;
-	}
-
-	/** Retrieve file status
-	 * @param file
-	 * @return file status
-	 * @throws IOException
-	 */
-	private static Status getFileStatus(IFile file) throws IOException {
-		RepositoryMapping mapping = RepositoryMapping.getMapping(file);
-		String path = mapping.getRepoRelativePath(file);
-		Repository repo = mapping.getRepository();
-		AdaptableFileTreeIterator fileTreeIterator = new AdaptableFileTreeIterator(
-				repo, ResourcesPlugin.getWorkspace().getRoot());
-		IndexDiff indexDiff = new IndexDiff(repo, Constants.HEAD, fileTreeIterator);
-		Set<String> repositoryPaths = Collections.singleton(path);
-		indexDiff.setFilter(PathFilterGroup.createFromStrings(repositoryPaths));
-		indexDiff.diff(null, 0, 0, ""); //$NON-NLS-1$
-		return getFileStatus(path, indexDiff);
-	}
-
-	/**
-	 * @return The message the user entered
-	 */
-	public String getCommitMessage() {
-		return commitMessage;
-	}
-
-	/**
-	 * Preset a commit message. This might be for amending a commit.
-	 * @param s the commit message
-	 */
-	public void setCommitMessage(String s) {
-		this.commitMessage = s;
-	}
-
-	private String commitMessage = null;
-	private String author = null;
-	private String committer = null;
-	private String previousAuthor = null;
-
-	private boolean signedOff = org.eclipse.egit.ui.Activator.getDefault()
-			.getPreferenceStore()
-			.getBoolean(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY);
-
-	private boolean amending = false;
-	private boolean amendAllowed = true;
-	private boolean showUntracked = true;
-	private boolean createChangeId = false;
-	private boolean allowToChangeSelection = true;
-
-	private ArrayList<IFile> selectedFiles = new ArrayList<IFile>();
-	private String previousCommitMessage = ""; //$NON-NLS-1$
-	private IPreviousValueProposalHandler authorHandler;
-	private IPreviousValueProposalHandler committerHandler;
-
-
-	/**
-	 * Pre-select suggested set of resources to commit
-	 *
-	 * @param items
-	 */
-	public void setSelectedFiles(IFile[] items) {
-		Collections.addAll(selectedFiles, items);
-	}
-
-	/**
-	 * @return the resources selected by the user to commit.
-	 */
-	public IFile[] getSelectedFiles() {
-		return selectedFiles.toArray(new IFile[0]);
-	}
-
-	/**
-	 * Sets the files that should be checked in this table.
-	 *
-	 * @param preselectedFiles
-	 *            the files to be checked in the dialog's table, must not be
-	 *            <code>null</code>
-	 */
-	public void setPreselectedFiles(Set<IFile> preselectedFiles) {
-		Assert.isNotNull(preselectedFiles);
-		this.preselectedFiles = preselectedFiles;
-	}
-
-	class HeaderSelectionListener extends SelectionAdapter {
-
-		private CommitItem.Order order;
-
-		private Boolean reversed;
-
-		public HeaderSelectionListener(CommitItem.Order order) {
-			this.order = order;
-		}
-
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			TableColumn column = (TableColumn) e.widget;
-			Table table = column.getParent();
-
-			if (column == table.getSortColumn()) {
-				int currentDirection = table.getSortDirection();
-				switch (currentDirection) {
-				case SWT.NONE:
-					reversed = Boolean.FALSE;
-					break;
-				case SWT.UP:
-					reversed = Boolean.TRUE;
-					break;
-				case SWT.DOWN:
-					// fall through
-				default:
-					reversed = null;
-					break;
-				}
-			} else
-				reversed = Boolean.FALSE;
-
-			if (reversed == null) {
-				table.setSortColumn(null);
-				table.setSortDirection(SWT.NONE);
-				filesViewer.setComparator(null);
-				return;
-			}
-			table.setSortColumn(column);
-
-			Comparator<CommitItem> comparator;
-			if (reversed.booleanValue()) {
-				comparator = order.descending();
-				table.setSortDirection(SWT.DOWN);
-			} else {
-				comparator = order;
-				table.setSortDirection(SWT.UP);
-			}
-
-			filesViewer.setComparator(new CommitViewerComparator(comparator));
-		}
-
-	}
-
-	class CommitItemSelectionListener extends SelectionAdapter {
-
-		public void widgetDefaultSelected(SelectionEvent e) {
-			IStructuredSelection selection = (IStructuredSelection) filesViewer.getSelection();
-
-			CommitItem commitItem = (CommitItem) selection.getFirstElement();
-			if (commitItem == null) {
-				return;
-			}
-			if (commitItem.status == Status.UNTRACKED)
-				return;
-
-			IProject project = commitItem.file.getProject();
-			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
-			if (mapping == null) {
-				return;
-			}
-			Repository repository = mapping.getRepository();
-
-			try {
-				ObjectId id = repository.resolve(Constants.HEAD);
-				if (id == null
-						|| repository.open(id, Constants.OBJ_COMMIT).getType() != Constants.OBJ_COMMIT) {
-					return;
-				}
-			} catch (IOException e1) {
-				return;
-			}
-
-			GitProvider provider = (GitProvider) RepositoryProvider.getProvider(project);
-			GitFileHistoryProvider fileHistoryProvider = (GitFileHistoryProvider) provider.getFileHistoryProvider();
-
-			IFileHistory fileHistory = fileHistoryProvider.getFileHistoryFor(commitItem.file, IFileHistoryProvider.SINGLE_REVISION, null);
-
-			IFileRevision baseFile = fileHistory.getFileRevisions()[0];
-			IFileRevision nextFile = fileHistoryProvider.getWorkspaceFileRevision(commitItem.file);
-
-			ITypedElement base = new FileRevisionTypedElement(baseFile);
-			ITypedElement next = new FileRevisionTypedElement(nextFile);
-
-			GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(next, base, null);
-			CompareUI.openCompareDialog(input);
-		}
-
 	}
 
 	@Override
@@ -893,44 +1090,6 @@ public class CommitDialog extends Dialog {
 		super.okPressed();
 	}
 
-	/**
-	 * Set the total set of changed resources, including additions and
-	 * removals
-	 *
-	 * @param files potentially affected by a new commit
-	 * @param indexDiffs IndexDiffs of the related repositories
-	 */
-	public void setFiles(Set<IFile> files, Map<Repository, IndexDiff> indexDiffs) {
-		items.clear();
-		for (IFile file : files) {
-			RepositoryMapping repositoryMapping = RepositoryMapping
-					.getMapping(file.getProject());
-			Repository repo = repositoryMapping.getRepository();
-			String path = repositoryMapping.getRepoRelativePath(file);
-			CommitItem item = new CommitItem();
-			item.status = getFileStatus(path, indexDiffs.get(repo));
-			item.file = file;
-			items.add(item);
-		}
-		// initially, we sort by status plus project plus path
-		Collections.sort(items, new Comparator<CommitItem>() {
-			public int compare(CommitItem o1, CommitItem o2) {
-				int diff = o1.status.ordinal() - o2.status.ordinal();
-				if (diff != 0)
-					return diff;
-				diff = o1.file.getProject().getName().compareTo(
-						o2.file.getProject().getName());
-				if (diff != 0)
-					return diff;
-				return o1.file
-				.getProjectRelativePath()
-				.toString()
-				.compareTo(
-						o2.file.getProjectRelativePath().toString());
-			}
-		});
-	}
-
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (IDialogConstants.SELECT_ALL_ID == buttonId) {
@@ -942,156 +1101,9 @@ public class CommitDialog extends Dialog {
 		super.buttonPressed(buttonId);
 	}
 
-	/**
-	 * @return The author to set for the commit
-	 */
-	public String getAuthor() {
-		return author;
-	}
-
-	/**
-	 * Pre-set author for the commit
-	 *
-	 * @param author
-	 */
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	/**
-	 * @return The committer to set for the commit
-	 */
-	public String getCommitter() {
-		return committer;
-	}
-
-	/**
-	 * Pre-set committer for the commit
-	 *
-	 * @param committer
-	 */
-	public void setCommitter(String committer) {
-		this.committer = committer;
-	}
-
-	/**
-	 * Pre-set the previous author if amending the commit
-	 *
-	 * @param previousAuthor
-	 */
-	public void setPreviousAuthor(String previousAuthor) {
-		this.previousAuthor = previousAuthor;
-	}
-
-	/**
-	 * @return whether to auto-add a signed-off line to the message
-	 */
-	public boolean isSignedOff() {
-		return signedOff;
-	}
-
-	/**
-	 * Pre-set whether a signed-off line should be included in the commit
-	 * message.
-	 *
-	 * @param signedOff
-	 */
-	public void setSignedOff(boolean signedOff) {
-		this.signedOff = signedOff;
-	}
-
-	/**
-	 * @return whether the last commit is to be amended
-	 */
-	public boolean isAmending() {
-		return amending;
-	}
-
-	/**
-	 * Pre-set whether the last commit is going to be amended
-	 *
-	 * @param amending
-	 */
-	public void setAmending(boolean amending) {
-		this.amending = amending;
-	}
-
-	/**
-	 * Set the message from the previous commit for amending.
-	 *
-	 * @param string
-	 */
-	public void setPreviousCommitMessage(String string) {
-		this.previousCommitMessage = string;
-	}
-
-	/**
-	 * Set whether the previous commit may be amended
-	 *
-	 * @param amendAllowed
-	 */
-	public void setAmendAllowed(boolean amendAllowed) {
-		this.amendAllowed = amendAllowed;
-	}
-
-	/**
-	 * Set whether is is allowed to change the set of selected files
-	 * @param allowToChangeSelection
-	 */
-	public void setAllowToChangeSelection(boolean allowToChangeSelection) {
-		this.allowToChangeSelection = allowToChangeSelection;
-	}
-
 	@Override
 	protected int getShellStyle() {
 		return super.getShellStyle() | SWT.RESIZE;
-	}
-
-	/**
-	 * @return true if a Change-Id line for Gerrit should be created
-	 */
-	public boolean getCreateChangeId() {
-		return createChangeId;
-	}
-
-	private void refreshChangeIdText() {
-		createChangeId = changeIdButton.getSelection();
-		String text = commitText.getText().replaceAll(Text.DELIMITER, "\n"); //$NON-NLS-1$
-		if (createChangeId) {
-			String changedText = ChangeIdUtil.insertId(text,
-					originalChangeId != null ? originalChangeId : ObjectId.zeroId(), true);
-			if (!text.equals(changedText)) {
-				changedText = changedText.replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
-				commitText.setText(changedText);
-			}
-		} else {
-			int changeIdOffset = findOffsetOfChangeIdLine(text);
-			if (changeIdOffset > 0) {
-				int endOfChangeId = findNextEOL(changeIdOffset, text);
-				String cleanedText = text.substring(0, changeIdOffset)
-						+ text.substring(endOfChangeId);
-				cleanedText = cleanedText.replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
-				commitText.setText(cleanedText);
-			}
-		}
-	}
-
-	private void refreshSignedOffBy() {
-		String curText = commitText.getText();
-		if (signedOffButton.getSelection()) {
-			// add signed off line
-			commitText.setText(signOff(curText));
-		} else {
-			// remove signed off line
-			String s = getSignedOff();
-			if (s != null) {
-				curText = replaceSignOff(curText, s, ""); //$NON-NLS-1$
-				if (curText.endsWith(Text.DELIMITER + Text.DELIMITER))
-					curText = curText.substring(0, curText.length()
-							- Text.DELIMITER.length());
-				commitText.setText(curText);
-			}
-		}
 	}
 
 }
