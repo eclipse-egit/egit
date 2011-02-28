@@ -1754,6 +1754,7 @@
                      <instanceof
                            value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                      </instanceof>
+                     <test property="GitRepository.pushExist" />
                   </iterate>
                </and>
             </visibleWhen>
@@ -1776,6 +1777,7 @@
                            value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                      </instanceof>
                   </iterate>
+                  <test property="GitRepository.fetchExist" />
                </and>
             </visibleWhen>
          </command>
@@ -1797,6 +1799,7 @@
                            value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                      </instanceof>
                   </iterate>
+                  <test property="GitRepository.pushExist" />
                </and>
             </visibleWhen>
          </command>
@@ -1818,6 +1821,7 @@
                            value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                      </instanceof>
                   </iterate>
+                  <test property="GitRepository.fetchExist" />
                </and>
             </visibleWhen>
          </command>
@@ -1836,6 +1840,7 @@
                            value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                      </instanceof>
                   </iterate>
+                  <test property="GitRepository.fetchExist" />
                </and>
             </visibleWhen>
          </command>
@@ -1860,6 +1865,7 @@
                         </test>
                      </and>
                   </iterate>
+                  <test property="GitRepository.fetchExist" />
                </and>
             </visibleWhen>
          </command>
@@ -1883,6 +1889,7 @@
                         <test
                               property="GitRepository.canMerge">
                         </test>
+                        <test property="GitRepository.containsHead" />
                         <or>
                            <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
@@ -1917,6 +1924,7 @@
                         <test
                               property="GitRepository.canMerge">
                         </test>
+                        <test property="GitRepository.containsHead" />
                         <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                         </instanceof>
@@ -2039,6 +2047,7 @@
             <visibleWhen
                   checkEnabled="false">
                <and>
+                  <test property="GitRepository.containsHead" />
                   <count
                         value="+">
                   </count>
@@ -2818,7 +2827,7 @@
             class="org.eclipse.egit.ui.internal.repository.tree.RepositoriesViewPropertyTester"
             id="org.eclipse.egit.ui.RepositoryTester"
             namespace="GitRepository"
-            properties="isBare,isSafe,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase"
+            properties="isBare,isSafe,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,containsHead"
             type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
       </propertyTester>
       <propertyTester

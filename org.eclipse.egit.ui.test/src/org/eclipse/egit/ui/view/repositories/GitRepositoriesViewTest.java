@@ -170,15 +170,18 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 	 */
 	@Test
 	public void testContextMenuRepository() throws Exception {
-		// We just check if the dialogs open, the actual fetch and push
+		// We just check if the dialogs open, the actual commit and import projects
 		// is tested elsewhere
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		SWTBotTreeItem item = myRepoViewUtil.getRootItem(tree, repositoryFile);
 		item.select();
-		assertClickOpens(tree, myUtil.getPluginLocalizedValue("FetchCommand"),
-				UIText.FetchWizard_windowTitleDefault);
-		assertClickOpens(tree, myUtil.getPluginLocalizedValue("PushCommand"),
-				UIText.PushWizard_windowTitleDefault);
+		assertClickOpens(tree,
+				myUtil.getPluginLocalizedValue("RepoViewCommit.label"),
+				UIText.CommitDialog_CommitChanges);
+		assertClickOpens(tree,
+				myUtil.getPluginLocalizedValue("RepoViewImportProjects.label"),
+				NLS.bind(UIText.GitCreateProjectViaWizardWizard_WizardTitle,
+						repositoryFile));
 	}
 
 	/**
