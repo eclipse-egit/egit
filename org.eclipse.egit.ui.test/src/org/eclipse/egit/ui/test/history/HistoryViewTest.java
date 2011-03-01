@@ -322,7 +322,28 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 
 		final SWTBotTable table = getHistoryViewTable(PROJ1);
 		// check out the second line
-		table.getTableItem(1).select();
+		final RevCommit[] commit = checkoutLine(table, 1);
+		assertEquals(commit[0].getId().name(), repo.getBranch());
+	}
+
+	@Test
+	public void testShowAllBranches() throws Exception {
+		toggleShowAllBranchesButton(true);
+		final SWTBotTable table = getHistoryViewTable(PROJ1);
+		int commits = getHistoryViewTable(PROJ1).rowCount();
+		checkoutLine(table, 1);
+
+		toggleShowAllBranchesButton(false);
+		assertEquals("Wrong number of commits", commits - 1,
+				getHistoryViewTable(PROJ1).rowCount());
+		toggleShowAllBranchesButton(true);
+		assertEquals("Wrong number of commits", commits,
+				getHistoryViewTable(PROJ1).rowCount());
+	}
+
+	private RevCommit[] checkoutLine(final SWTBotTable table, int line)
+			throws InterruptedException {
+		table.getTableItem(line).select();
 		final RevCommit[] commit = new RevCommit[1];
 
 		Display.getDefault().syncExec(new Runnable() {
@@ -337,7 +358,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		ContextMenuHelper.clickContextMenu(table,
 				UIText.GitHistoryPage_CheckoutMenuLabel);
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
-		assertEquals(commit[0].getId().name(), repo.getBranch());
+		return commit;
 	}
 
 	/**
@@ -348,5 +369,16 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	 */
 	private static void ensureTableItemLoaded(TableItem item) {
 		item.setText(item.getText()); // TODO: is there a better solution?
+	}
+
+	private void toggleShowAllBranchesButton(boolean checked) throws Exception{
+		getHistoryViewTable(PROJ1);
+		SWTBotView view = bot
+				.viewById("org.eclipse.team.ui.GenericHistoryView");
+		SWTBotToolbarToggleButton showAllBranches = (SWTBotToolbarToggleButton) view
+				.toolbarButton(UIText.GitHistoryPage_showAllBranches);
+		boolean isChecked = showAllBranches.isChecked();
+		if(isChecked && !checked || !isChecked && checked)
+			showAllBranches.click();
 	}
 }
