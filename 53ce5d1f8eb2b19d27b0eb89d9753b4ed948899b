@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3H///2o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-01T15:36:28Z",
+      "side": 1,
+      "message": "\"pathChange\" doesn\u0027t sound boolean to me, I would prefer \"pathChanged\", same for the other boolean variables",
+      "revId": "53ce5d1f8eb2b19d27b0eb89d9753b4ed948899b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///2s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-01T15:36:28Z",
+      "side": 1,
+      "message": "typo: s/allBrancheChange/allBranchesChange/",
+      "revId": "53ce5d1f8eb2b19d27b0eb89d9753b4ed948899b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///2k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-01T15:36:28Z",
+      "side": 1,
+      "message": "style nit: “{“ should come after if statement on the same line\n\n if (!db.equals(currentRepo)) {\n ...\n }",
+      "revId": "53ce5d1f8eb2b19d27b0eb89d9753b4ed948899b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
