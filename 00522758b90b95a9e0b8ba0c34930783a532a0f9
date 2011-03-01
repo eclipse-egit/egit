@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3H///3c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-03-01T09:46:07Z",
+      "side": 1,
+      "message": "This is different from the initialization of createChangeId, but I like it more because here it is clearer what the default is.\n\nWe should change the initialization of createChangeId later on in order to improve consistency.",
+      "revId": "00522758b90b95a9e0b8ba0c34930783a532a0f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
