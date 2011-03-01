@@ -473,6 +473,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	/** Repository of the last input*/
 	private Repository currentRepo;
 
+	private boolean currentShowAllBranches;
+
 	/**
 	 * Highlight flag that can be applied to commits to make them stand out.
 	 * <p>
@@ -1199,16 +1201,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			List<String> paths = buildFilterPaths(input.getItems(), input
 					.getFileList(), db);
 
-			boolean pathChange = pathChange(pathFilters, paths);
-			boolean headChange = !headId.equals(currentHeadId);
-			boolean repoChange = false;
-			if (!db.equals(currentRepo))
-			{
-				repoChange = true;
-				currentRepo = db;
-			}
-			if (forceNewWalk || pathChange
-					|| currentWalk == null || headChange || repoChange) {
+			if (forceNewWalk || shouldRedraw(db, headId, paths)) {
 				// TODO Do not dispose SWTWalk just because HEAD changed
 				// In theory we should be able to update the graph and
 				// not dispose of the SWTWalk, even if HEAD was reset to
@@ -1230,6 +1223,25 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 						GitTraceLocation.HISTORYVIEW.getLocation());
 
 		}
+	}
+
+	private boolean shouldRedraw(Repository db, AnyObjectId headId, List<String> paths) {
+		boolean pathChanged = pathChanged(pathFilters, paths);
+		boolean headChanged = !headId.equals(currentHeadId);
+		boolean repoChanged = false;
+
+		boolean allBranchesChanged = currentShowAllBranches != store
+			.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES);
+		currentShowAllBranches = store
+			.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES);
+
+		if (!db.equals(currentRepo)) {
+			repoChanged = true;
+			currentRepo = db;
+		}
+
+		return pathChanged
+			|| currentWalk == null || headChanged || repoChanged || allBranchesChanged;
 	}
 
 	private AnyObjectId resolveHead(Repository db, boolean acceptNull) {
@@ -1325,7 +1337,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		return paths;
 	}
 
-	private boolean pathChange(final List<String> o, final List<String> n) {
+	private boolean pathChanged(final List<String> o, final List<String> n) {
 		if (o == null)
 			return !n.isEmpty();
 		return !o.equals(n);
