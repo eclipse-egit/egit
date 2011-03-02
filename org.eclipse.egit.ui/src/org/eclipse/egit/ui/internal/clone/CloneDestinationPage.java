@@ -337,7 +337,7 @@ class CloneDestinationPage extends WizardPage {
 		initialBranch.setInput(branches);
 		if (head != null && branches.contains(head))
 			initialBranch.setSelection(new StructuredSelection(head));
-		else
+		else if (branches.size() > 0)
 			initialBranch
 					.setSelection(new StructuredSelection(branches.get(0)));
 		checkPage();
