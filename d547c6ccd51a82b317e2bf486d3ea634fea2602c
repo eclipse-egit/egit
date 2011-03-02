@@ -16,6 +16,24 @@
       "revId": "d547c6ccd51a82b317e2bf486d3ea634fea2602c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///y8\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-03-02T14:32:33Z",
+      "side": 1,
+      "message": "Done. I had also thought about this.",
+      "parentUuid": "AAAL3H///zM\u003d",
+      "revId": "d547c6ccd51a82b317e2bf486d3ea634fea2602c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
