@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3H///zM\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-02T13:49:22Z",
+      "side": 1,
+      "message": "I think this sentence is the opposite of what the change does to the displayed menu entry\n\nstyle nit: trailing whitespace",
+      "revId": "d547c6ccd51a82b317e2bf486d3ea634fea2602c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
