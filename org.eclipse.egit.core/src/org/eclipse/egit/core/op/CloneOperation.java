@@ -175,7 +175,7 @@ public class CloneOperation {
 		local = new FileRepository(gitdir);
 		local.create();
 
-		if (ref.getName().startsWith(Constants.R_HEADS)) {
+		if (ref != null && ref.getName().startsWith(Constants.R_HEADS)) {
 			final RefUpdate head = local.updateRef(Constants.HEAD);
 			head.disableRefLog();
 			head.link(ref.getName());
@@ -207,7 +207,7 @@ public class CloneOperation {
 
 		// branch is like 'Constants.R_HEADS + branchName', we need only
 		// the 'branchName' part
-		if (ref.getName().startsWith(Constants.R_HEADS)) {
+		if (ref != null && ref.getName().startsWith(Constants.R_HEADS)) {
 			String branchName = ref.getName().substring(Constants.R_HEADS.length());
 
 			// setup the default remote branch for branchName
@@ -233,6 +233,8 @@ public class CloneOperation {
 	}
 
 	private void doCheckout(final IProgressMonitor monitor) throws IOException {
+		if (ref == null)
+			return;
 		final Ref head = fetchResult.getAdvertisedRef(ref.getName());
 		if (head == null || head.getObjectId() == null)
 			return;
