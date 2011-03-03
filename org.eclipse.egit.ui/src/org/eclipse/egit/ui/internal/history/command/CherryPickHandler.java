@@ -24,7 +24,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 /**
  * Executes the CherryPick
  */
-public class CherryPickHandler extends AbstractHistoryCommanndHandler {
+public class CherryPickHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RevCommit commit = (RevCommit) getSelection(getPage()).getFirstElement();
 		RevCommit newHead;

@@ -44,7 +44,7 @@ import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
  * If a single version is selected, open it, otherwise open several versions of
  * the file content.
  */
-public class ShowVersionsHandler extends AbstractHistoryCommanndHandler {
+public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		boolean compareMode = Boolean.TRUE.toString().equals(
 				event.getParameter(HistoryViewCommands.COMPARE_MODE_PARAM));

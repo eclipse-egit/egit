@@ -23,7 +23,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * "Reset" with parameter (hard, mixed, soft).
  */
-public class ResetHandler extends AbstractHistoryCommanndHandler {
+public class ResetHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repo = getRepository(event);
 		final RevCommit commit = (RevCommit) getSelection(getPage())

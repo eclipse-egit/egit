@@ -29,7 +29,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 /**
  * Compare the file contents of two commits.
  */
-public class CompareVersionsHandler extends AbstractHistoryCommanndHandler {
+public class CompareVersionsHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = getSelection(getPage());
 		if (selection.size() == 2) {

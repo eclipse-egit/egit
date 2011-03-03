@@ -50,7 +50,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * Common helper methods for the history command handlers
  */
-abstract class AbstractHistoryCommanndHandler extends AbstractHandler {
+abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 	protected IWorkbenchPart getPart(ExecutionEvent event)
 			throws ExecutionException {
 		return HandlerUtil.getActivePartChecked(event);

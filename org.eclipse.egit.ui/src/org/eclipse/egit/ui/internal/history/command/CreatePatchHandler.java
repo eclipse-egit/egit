@@ -21,7 +21,7 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
 /**
  * Create a patch based on a commit.
  */
-public class CreatePatchHandler extends AbstractHistoryCommanndHandler {
+public class CreatePatchHandler extends AbstractHistoryCommandHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = getSelection(getPage());

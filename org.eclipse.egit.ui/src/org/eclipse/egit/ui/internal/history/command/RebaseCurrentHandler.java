@@ -26,7 +26,7 @@ import org.eclipse.osgi.util.NLS;
 /**
  * Executes the Rebase
  */
-public class RebaseCurrentHandler extends AbstractHistoryCommanndHandler {
+public class RebaseCurrentHandler extends AbstractHistoryCommandHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 

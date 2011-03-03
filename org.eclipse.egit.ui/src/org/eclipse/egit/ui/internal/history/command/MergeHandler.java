@@ -46,7 +46,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * Executes the Merge
  */
-public class MergeHandler extends AbstractHistoryCommanndHandler {
+public class MergeHandler extends AbstractHistoryCommandHandler {
 	private static final class BranchMessageDialog extends AmbiguousBranchDialog {
 
 		public BranchMessageDialog(Shell parentShell, List<RefNode> nodes) {

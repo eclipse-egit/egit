@@ -30,7 +30,7 @@ import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
  * Compare the file content of a commit with the working tree
  */
 public class CompareWithWorkingTreeHandler extends
-		AbstractHistoryCommanndHandler {
+		AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = getSelection(getPage());
 		if (selection.size() == 1) {

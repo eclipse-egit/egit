@@ -33,7 +33,7 @@ import org.eclipse.ui.PlatformUI;
  * Compare the file contents of two commits in the {@link CompareTreeView}.
  */
 public class CompareVersionsInTreeHandler extends
-		AbstractHistoryCommanndHandler {
+		AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = getSelection(getPage());
 		if (selection.size() == 2) {

@@ -22,7 +22,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 /**
  * "Set quickdiff baseline" to selected commit.
  */
-public class SetQuickdiffBaselineHandler extends AbstractHistoryCommanndHandler {
+public class SetQuickdiffBaselineHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repo = getRepository(event);
 		String baseline = ((RevCommit) getSelection(getPage()).getFirstElement())

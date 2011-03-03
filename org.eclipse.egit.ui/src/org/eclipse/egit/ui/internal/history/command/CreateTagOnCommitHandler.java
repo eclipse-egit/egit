@@ -27,7 +27,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * Create a tag based on a commit.
  */
-public class CreateTagOnCommitHandler extends AbstractHistoryCommanndHandler {
+public class CreateTagOnCommitHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		PlotCommit commit = (PlotCommit) getSelection(getPage()).getFirstElement();
 		final Repository repo = getRepository(event);

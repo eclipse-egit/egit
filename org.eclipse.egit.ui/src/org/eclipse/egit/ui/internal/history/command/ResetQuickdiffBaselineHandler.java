@@ -20,7 +20,7 @@ import org.eclipse.jgit.lib.Repository;
  * "Reset quickdiff baseline" with parameter (HEAD, or HEAD^1)
  */
 public class ResetQuickdiffBaselineHandler extends
-		AbstractHistoryCommanndHandler {
+		AbstractHistoryCommandHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 

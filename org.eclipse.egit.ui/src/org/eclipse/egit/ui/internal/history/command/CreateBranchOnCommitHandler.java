@@ -22,7 +22,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * Create a branch based on a commit.
  */
-public class CreateBranchOnCommitHandler extends AbstractHistoryCommanndHandler {
+public class CreateBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		PlotCommit commit = (PlotCommit) getSelection(getPage()).getFirstElement();
 		Repository repo = getRepository(event);
