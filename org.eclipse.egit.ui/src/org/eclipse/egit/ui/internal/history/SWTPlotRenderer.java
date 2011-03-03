@@ -1,7 +1,8 @@
 /*******************************************************************************
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
- *
+ * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2011, Matthias Sohn <matthias.sohn@sap.com>*
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,7 +10,14 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.egit.ui.internal.history.SWTCommitList.SWTLane;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.revplot.AbstractPlotRenderer;
+import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
@@ -18,10 +26,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.themes.ColorUtil;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.revplot.AbstractPlotRenderer;
-import org.eclipse.jgit.revplot.PlotCommit;
 
 class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 	private final Color sys_blue;
@@ -37,6 +41,10 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 	private final Color sys_green;
 
 	private final Color sys_white;
+
+	private final Map<String, Point> labelCoordinates = new HashMap<String, Point>();
+
+	private int textHeight;
 
 	GC g;
 
@@ -65,6 +73,8 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		cellY = event.y;
 		cellFG = g.getForeground();
 		cellBG = g.getBackground();
+		if (textHeight == 0)
+			textHeight = g.stringExtent("/").y; //$NON-NLS-1$
 
 		final TableItem ti = (TableItem) event.item;
 		paintCommit((PlotCommit<SWTLane>) ti.getData(), event.height);
@@ -159,6 +169,7 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 
 		if (peeledColor != null)
 			peeledColor.dispose();
+		labelCoordinates.put(name, new Point(x, x + textsz.x));
 		return 8 + textsz.x;
 	}
 
@@ -166,4 +177,28 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		return myLane != null ? myLane.color : sys_black;
 	}
 
+	/**
+	 * Obtain the horizontal span of {@link Ref} label in pixels
+	 *
+	 * For example, let's assume the SWTCommit has two {@link Ref}s (see
+	 * {@link SWTCommit#getRef(int)}, which are rendered as two labels. The
+	 * first label may span from 15 to 54 pixels in x direction, while the
+	 * second one may span from 58 to 76 pixels.
+	 *
+	 * This can be used to determine if the mouse is positioned over a label.
+	 *
+	 * @param ref
+	 * @return a Point where x and y designate the start and end x position of
+	 *         the label
+	 */
+	public Point getRefHSpan(Ref ref) {
+		return labelCoordinates.get(ref.getName());
+	}
+
+	/**
+	 * @return text height in pixel
+	 */
+	public int getTextHeight() {
+		return textHeight;
+	}
 }
