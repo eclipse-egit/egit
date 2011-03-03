@@ -224,6 +224,12 @@ public class GitLightweightDecorator extends LabelProvider implements
 		if (!resource.exists() && !resource.isPhantom())
 			return;
 
+		// Make sure we're dealing with a project under Git revision control
+		final RepositoryMapping mapping = RepositoryMapping
+				.getMapping(resource);
+		if (mapping == null)
+			return;
+
 		IDecoratableResource decoratableResource = null;
 		final DecorationHelper helper = new DecorationHelper(
 				activator.getPreferenceStore());
@@ -268,12 +274,6 @@ public class GitLightweightDecorator extends LabelProvider implements
 
 		// Don't decorate ignored resources (e.g. bin folder content)
 		if (Team.isIgnoredHint(resource))
-			return;
-
-		// Make sure we're dealing with a project under Git revision control
-		final RepositoryMapping mapping = RepositoryMapping
-				.getMapping(resource);
-		if (mapping == null)
 			return;
 
 		// Cannot decorate linked resources
