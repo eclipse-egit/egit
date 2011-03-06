@@ -256,7 +256,7 @@ class ExistingOrNewPage extends WizardPage {
 			IPath container = m.getContainerPath();
 			if (!container.isEmpty())
 				container = Path.fromOSString("."); //$NON-NLS-1$
-			IPath relativePath = container.append(m.getGitDir());
+			IPath relativePath = m.getGitDirAbsolutePath();
 			if (isAlternative) {
 				IPath withoutLastSegment = relativePath.removeLastSegments(1);
 				IPath path;
