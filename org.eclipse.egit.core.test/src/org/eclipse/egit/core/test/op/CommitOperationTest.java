@@ -74,7 +74,7 @@ public class CommitOperationTest extends GitTestCase {
 		resources.add(project.getProject().getFolder("zar"));
 		new AddToIndexOperation(resources).execute(null);
 		project.getProject().getFile("zar/b.txt").delete(true, null);
-		assert !project.getProject().getFile("bar/b.txt").exists();
+		assert !project.getProject().getFile("zar/b.txt").exists();
 
 		IFile[] filesToCommit = new IFile[] { project.getProject().getFile("zar/b.txt") };
 		commitOperation = new CommitOperation(filesToCommit, Arrays.asList(filesToCommit), null, TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
