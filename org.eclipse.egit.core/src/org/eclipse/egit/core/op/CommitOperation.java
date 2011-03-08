@@ -336,7 +336,7 @@ public class CommitOperation implements IEGitOperation {
 					commitMessage = commitMessage.replaceAll("\nChange-Id: I0000000000000000000000000000000000000000\n", "\nChange-Id: I" + changeId.getName() + "\n");  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 			}
 			CommitBuilder commit = new CommitBuilder();
-			commit.setTreeId(tree.getTreeId());
+			commit.setTreeId(tree.getId());
 			commit.setParentIds(parentIds);
 			commit.setMessage(commitMessage);
 			commit.setAuthor(new PersonIdent(authorIdent, commitDate,
