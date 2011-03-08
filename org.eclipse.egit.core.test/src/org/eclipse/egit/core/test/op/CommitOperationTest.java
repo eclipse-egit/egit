@@ -232,7 +232,7 @@ public class CommitOperationTest extends GitTestCase {
 				EMPTY_FILE_LIST, Arrays.asList(filesToCommit),
 				TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
 		commitOperation.execute(null);
-
+		Thread.sleep(1100); // TODO: remove when GitIndex is no longer used
 		testUtils.changeContentOfFile(project.getProject(), fileA,
 				"new content of A");
 		testUtils.changeContentOfFile(project.getProject(), fileB,
@@ -261,7 +261,7 @@ public class CommitOperationTest extends GitTestCase {
 				EMPTY_FILE_LIST, Arrays.asList(filesToCommit),
 				TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
 		commitOperation.execute(null);
-
+		Thread.sleep(1100); // TODO: remove when GitIndex is no longer used
 		testUtils.changeContentOfFile(project.getProject(), fileA,
 				"new content of A");
 		testUtils.changeContentOfFile(project.getProject(), fileB,
