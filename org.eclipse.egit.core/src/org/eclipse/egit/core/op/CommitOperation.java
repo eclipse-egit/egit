@@ -11,12 +11,11 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
 import java.util.TimeZone;
 
 import org.eclipse.core.resources.IFile;
@@ -28,32 +27,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.CoreText;
-import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.errors.UnmergedPathException;
-import org.eclipse.jgit.lib.CommitBuilder;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.FileTreeEntry;
-import org.eclipse.jgit.lib.GitIndex;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
 import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.Tree;
-import org.eclipse.jgit.lib.TreeEntry;
-import org.eclipse.jgit.lib.GitIndex.Entry;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.jgit.util.RawParseUtils;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 
 /**
@@ -74,9 +60,6 @@ public class CommitOperation implements IEGitOperation {
 	private boolean amending = false;
 
 	private boolean commitAll = false;
-
-	// needed for amending
-	private RevCommit previousCommit;
 
 	// needed for amending
 	private Repository[] repos;
@@ -131,14 +114,14 @@ public class CommitOperation implements IEGitOperation {
 						Git git = new Git(repo);
 						try {
 							git.commit()
-									.setAll(true)
-									.setAuthor(
-											new PersonIdent(authorIdent,
-													commitDate, timeZone))
-									.setCommitter(
-											new PersonIdent(committerIdent,
-													commitDate, timeZone))
-									.setMessage(message).call();
+							.setAll(true)
+							.setAuthor(
+									new PersonIdent(authorIdent,
+											commitDate, timeZone))
+											.setCommitter(
+													new PersonIdent(committerIdent,
+															commitDate, timeZone))
+															.setMessage(message).call();
 						} catch (NoHeadException e) {
 							throw new TeamException(e.getLocalizedMessage(), e);
 						} catch (NoMessageException e) {
@@ -163,23 +146,21 @@ public class CommitOperation implements IEGitOperation {
 							CoreText.CommitOperation_PerformingCommit,
 							filesToCommit.length * 2);
 					actMonitor.setTaskName(CoreText.CommitOperation_PerformingCommit);
-					HashMap<Repository, Tree> treeMap = new HashMap<Repository, Tree>();
+
+					List repositories = new ArrayList <Repository>();
 					try {
-						if (!prepareTrees(filesToCommit, treeMap, actMonitor)) {
-							// reread the indexes, they were changed in memory
-							for (Repository repo : treeMap.keySet())
-								repo.getIndex().read();
-							return;
-						}
-					} catch (IOException e) {
+						prepareTrees(filesToCommit, repositories, actMonitor);
+					} catch (Exception e) {
 						throw new TeamException(
 								CoreText.CommitOperation_errorPreparingTrees, e);
 					}
 
 					try {
-						doCommits(message, treeMap);
+						System.out.println(notIndexed);
+						System.out.println(notTracked);
+						doCommits(message, repositories);
 						actMonitor.worked(filesToCommit.length);
-					} catch (IOException e) {
+					} catch (Exception e) {
 						throw new TeamException(
 								CoreText.CommitOperation_errorCommittingChanges,
 								e);
@@ -198,220 +179,61 @@ public class CommitOperation implements IEGitOperation {
 		return ResourcesPlugin.getWorkspace().getRoot();
 	}
 
-	private boolean prepareTrees(IFile[] selectedItems,
-			HashMap<Repository, Tree> treeMap, IProgressMonitor monitor)
-			throws IOException, UnsupportedEncodingException {
-		if (selectedItems.length == 0) {
-			// amending commit - need to put something into the map
-			for (Repository repo : repos) {
-				treeMap.put(repo, repo.mapTree(Constants.HEAD));
-			}
-		}
+	private boolean prepareTrees(IFile[] selectedItems, List repositories, IProgressMonitor monitor)
+	throws NoFilepatternException {
 
 		for (IFile file : selectedItems) {
-
 			if (monitor.isCanceled())
 				return false;
 			monitor.worked(1);
 
 			IProject project = file.getProject();
 			RepositoryMapping repositoryMapping = RepositoryMapping
-					.getMapping(project);
-			Repository repository = repositoryMapping.getRepository();
-			Tree projTree = treeMap.get(repository);
-			if (projTree == null) {
-				projTree = repository.mapTree(Constants.HEAD);
-				if (projTree == null)
-					projTree = new Tree(repository);
-				treeMap.put(repository, projTree);
-				// TODO is this the right Location?
-				if (GitTraceLocation.CORE.isActive())
-					GitTraceLocation.getTrace().trace(
-							GitTraceLocation.CORE.getLocation(),
-							"Orig tree id: " + projTree.getId()); //$NON-NLS-1$
-			}
-			GitIndex index = repository.getIndex();
+			.getMapping(project);
 			String repoRelativePath = repositoryMapping
-					.getRepoRelativePath(file);
-			String string = repoRelativePath;
+			.getRepoRelativePath(file);
+			Repository repository = repositoryMapping.getRepository();
+			repositories.add(repository);
+			Git git = new Git(repository);
+			if(notIndexed.contains(file))
+				continue;
 
-			TreeEntry treeMember = projTree.findBlobMember(repoRelativePath);
-			// we always want to delete it from the current tree, since if it's
-			// updated, we'll add it again
-			Tree treeWithDeletedEntry = null;
-			if (treeMember != null) {
-				treeWithDeletedEntry = treeMember.getParent();
-				treeMember.delete();
-			}
-
-			Entry idxEntry = index.getEntry(string);
-			if (notIndexed.contains(file)) {
-				File thisfile = new File(repositoryMapping.getWorkTree(),
-						string);
-				if (!thisfile.isFile()) {
-					index.remove(repositoryMapping.getWorkTree(), thisfile);
-					// TODO is this the right Location?
-					if (GitTraceLocation.CORE.isActive())
-						GitTraceLocation.getTrace().trace(
-								GitTraceLocation.CORE.getLocation(),
-								"Phantom file, so removing from index"); //$NON-NLS-1$
-					while (treeWithDeletedEntry != null && treeWithDeletedEntry.memberCount() == 0) {
-						Tree toDelete = treeWithDeletedEntry;
-						treeWithDeletedEntry = treeWithDeletedEntry.getParent();
-						toDelete.delete();
-					}
-					continue;
-				} else {
-					idxEntry.update(thisfile);
-				}
-			}
-			if (notTracked.contains(file)) {
-				idxEntry = index.add(repositoryMapping.getWorkTree(), new File(
-						repositoryMapping.getWorkTree(), repoRelativePath));
-
-			}
-
-			if (idxEntry != null) {
-				projTree.addFile(repoRelativePath);
-				TreeEntry newMember = projTree.findBlobMember(repoRelativePath);
-
-				newMember.setId(idxEntry.getObjectId());
-				if (newMember instanceof FileTreeEntry)
-					((FileTreeEntry) newMember).setExecutable(
-							(idxEntry.getModeBits() &
-									FileMode.EXECUTABLE_FILE.getBits())
-							== FileMode.EXECUTABLE_FILE.getBits());
-
-				// TODO is this the right Location?
-				if (GitTraceLocation.CORE.isActive())
-					GitTraceLocation.getTrace().trace(
-							GitTraceLocation.CORE.getLocation(),
-							"New member id for " + repoRelativePath //$NON-NLS-1$
-									+ ": " + newMember.getId() + " idx id: " //$NON-NLS-1$ //$NON-NLS-2$
-									+ idxEntry.getObjectId());
-			}
+			git.add().addFilepattern(repoRelativePath).call();
 		}
+
 		return true;
 	}
 
-	private void doCommits(String actMessage,
-			HashMap<Repository, Tree> treeMap) throws IOException,
-			TeamException {
+	private void doCommits(String actMessage, List <Repository> repositories) throws IOException,
+	NoHeadException, NoMessageException, ConcurrentRefUpdateException, JGitInternalException, WrongRepositoryStateException {
 
 		String commitMessage = actMessage;
-		final Date commitDate = new Date();
-		final TimeZone timeZone = TimeZone.getDefault();
-
 		final PersonIdent authorIdent = RawParseUtils.parsePersonIdent(author);
 		final PersonIdent committerIdent = RawParseUtils.parsePersonIdent(committer);
 
-		for (java.util.Map.Entry<Repository, Tree> entry : treeMap.entrySet()) {
-			Tree tree = entry.getValue();
-			Repository repo = tree.getRepository();
-			repo.getIndex().write();
-			writeTreeWithSubTrees(tree);
+		for (Repository repo : repositories) {
+			Git git = new Git(repo);
+			CommitCommand command = git.commit();
+			command.setAmend(amending);
+			command.setAuthor(authorIdent);
+			command.setCommitter(committerIdent);
 
-			ObjectId currentHeadId = repo.resolve(Constants.HEAD);
-			ObjectId[] parentIds;
-			if (amending) {
-				RevCommit[] parents = previousCommit.getParents();
-				parentIds = new ObjectId[parents.length];
-				for (int i = 0; i < parents.length; i++)
-					parentIds[i] = parents[i].getId();
-			} else {
-				if (currentHeadId != null)
-					parentIds = new ObjectId[] { currentHeadId };
-				else
-					parentIds = new ObjectId[0];
-			}
 			if (createChangeId) {
-				ObjectId parentId;
-				if (parentIds.length > 0)
-					parentId = parentIds[0];
-				else
-					parentId = null;
-				ObjectId changeId = ChangeIdUtil.computeChangeId(tree.getId(), parentId, authorIdent, committerIdent, commitMessage);
-				commitMessage = ChangeIdUtil.insertId(commitMessage, changeId);
-				if (changeId != null)
-					commitMessage = commitMessage.replaceAll("\nChange-Id: I0000000000000000000000000000000000000000\n", "\nChange-Id: I" + changeId.getName() + "\n");  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-			}
-			CommitBuilder commit = new CommitBuilder();
-			commit.setTreeId(tree.getTreeId());
-			commit.setParentIds(parentIds);
-			commit.setMessage(commitMessage);
-			commit.setAuthor(new PersonIdent(authorIdent, commitDate,
-							timeZone));
-			commit.setCommitter(new PersonIdent(committerIdent, commitDate,
-					timeZone));
-
-			ObjectInserter inserter = repo.newObjectInserter();
-			ObjectId commitId;
-			try {
-				commitId = inserter.insert(commit);
-				inserter.flush();
-			} finally {
-				inserter.release();
+				// TODO
+//				ObjectId parentId;
+//				if (parentIds.length > 0)
+//					parentId = parentIds[0];
+//				else
+//					parentId = null;
+//				ObjectId changeId = ChangeIdUtil.computeChangeId(tree.getId(), parentId, authorIdent, committerIdent, commitMessage);
+//				commitMessage = ChangeIdUtil.insertId(commitMessage, changeId);
+//				if (changeId != null)
+//					commitMessage = commitMessage.replaceAll("\nChange-Id: I0000000000000000000000000000000000000000\n", "\nChange-Id: I" + changeId.getName() + "\n");  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 			}
 
-			final RefUpdate ru = repo.updateRef(Constants.HEAD);
-			ru.setNewObjectId(commitId);
-			ru.setRefLogMessage(buildReflogMessage(commitMessage), false);
-			if (ru.forceUpdate() == RefUpdate.Result.LOCK_FAILURE) {
-				throw new TeamException(NLS.bind(
-						CoreText.CommitOperation_failedToUpdate, ru.getName(),
-						commitId));
-			}
+			command.setMessage(commitMessage);
+			command.call();
 		}
-	}
-
-	private void writeTreeWithSubTrees(Tree tree) throws TeamException {
-		if (tree.getId() == null) {
-			// TODO is this the right Location?
-			if (GitTraceLocation.CORE.isActive())
-				GitTraceLocation.getTrace().trace(
-						GitTraceLocation.CORE.getLocation(),
-						"writing tree for: " + tree.getFullName()); //$NON-NLS-1$
-			try {
-				for (TreeEntry entry : tree.members()) {
-					if (entry.isModified()) {
-						if (entry instanceof Tree) {
-							writeTreeWithSubTrees((Tree) entry);
-						} else {
-							// this shouldn't happen.... not quite sure what to
-							// do here :)
-							// TODO is this the right Location?
-							if (GitTraceLocation.CORE.isActive())
-								GitTraceLocation.getTrace().trace(
-										GitTraceLocation.CORE.getLocation(),
-										"BAD JUJU: " //$NON-NLS-1$
-												+ entry.getFullName());
-						}
-					}
-				}
-
-				ObjectInserter inserter = tree.getRepository().newObjectInserter();
-				try {
-					tree.setId(inserter.insert(Constants.OBJ_TREE, tree.format()));
-					inserter.flush();
-				} finally {
-					inserter.release();
-				}
-			} catch (IOException e) {
-				throw new TeamException(
-						CoreText.CommitOperation_errorWritingTrees, e);
-			}
-		}
-	}
-
-	private String buildReflogMessage(String commitMessage) {
-		String firstLine = commitMessage;
-		int newlineIndex = commitMessage.indexOf("\n"); //$NON-NLS-1$
-		if (newlineIndex > 0) {
-			firstLine = commitMessage.substring(0, newlineIndex);
-		}
-		String commitStr = amending ? "commit (amend):" : "commit: "; //$NON-NLS-1$ //$NON-NLS-2$
-		String result = commitStr + firstLine;
-		return result;
 	}
 
 	/**
@@ -420,14 +242,6 @@ public class CommitOperation implements IEGitOperation {
 	 */
 	public void setAmending(boolean amending) {
 		this.amending = amending;
-	}
-
-	/**
-	 *
-	 * @param previousCommit
-	 */
-	public void setPreviousCommit(RevCommit previousCommit) {
-		this.previousCommit = previousCommit;
 	}
 
 	/**
