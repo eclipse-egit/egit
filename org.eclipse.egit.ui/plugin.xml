@@ -3151,4 +3151,18 @@
             name="%Git">
       </category>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="*">
+         <view
+               id="org.eclipse.egit.ui.RepositoriesView"
+               minimized="false"
+               ratio="0.6"
+               relationship="bottom"
+               relative="org.eclipse.jdt.ui.PackageExplorer"
+               visible="false">
+         </view>
+      </perspectiveExtension>
+   </extension>
 </plugin>
