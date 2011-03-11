@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL3H///7E\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 123
+      },
+      "writtenOn": "2011-02-26T22:47:55Z",
+      "side": 1,
+      "message": "Correct Bug: 330327",
+      "parentUuid": "AAAL3H///7c\u003d",
+      "revId": "36a4af6c54150b8f1277c808d6d119ab52d96b4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL3H///7Y\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/CommitObserver.java",
         "patchSetId": 1
