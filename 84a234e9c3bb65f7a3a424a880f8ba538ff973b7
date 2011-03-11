@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3H///a4\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-03-11T08:30:48Z",
+      "side": 1,
+      "message": "I think this is not needed",
+      "revId": "84a234e9c3bb65f7a3a424a880f8ba538ff973b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///a0\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-03-11T08:30:48Z",
+      "side": 1,
+      "message": "whitespace error",
+      "revId": "84a234e9c3bb65f7a3a424a880f8ba538ff973b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///aw\u003d",
+        "filename": "org.eclipse.egit.ui/schema/commitObserver.exsd",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-03-11T08:30:48Z",
+      "side": 1,
+      "message": "whitespace error",
+      "revId": "84a234e9c3bb65f7a3a424a880f8ba538ff973b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3X////s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/CommitObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-03-11T08:30:48Z",
+      "side": 1,
+      "message": "I think CommitOperation should not be part of an EGit API. It has for example a public execute method which then could be run by any other bundle. We would need another data container class with the information needed for commit which could be manipulated by the Observer.",
+      "revId": "84a234e9c3bb65f7a3a424a880f8ba538ff973b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3X////o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-03-11T08:30:48Z",
+      "side": 1,
+      "message": "This should be a method of its own (yes, other parts of commit() also should).",
+      "revId": "84a234e9c3bb65f7a3a424a880f8ba538ff973b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3X////k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-03-11T08:30:48Z",
+      "side": 1,
+      "message": "This should be a method of its own.",
+      "revId": "84a234e9c3bb65f7a3a424a880f8ba538ff973b7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
