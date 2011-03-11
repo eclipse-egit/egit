@@ -88,7 +88,7 @@ import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.part.IPageSite;
 
 class CommitGraphTable {
-	private static Font highlightFont() {
+	static Font highlightFont() {
 		final Font n, h;
 
 		n = UIUtils.getFont(UIPreferences.THEME_CommitGraphNormalFont);
@@ -440,7 +440,7 @@ class CommitGraphTable {
 			event.gc.setFont(nFont);
 
 		if (event.index == 0) {
-			renderer.paint(event);
+			renderer.paint(event, input.getHead());
 			return;
 		}
 
