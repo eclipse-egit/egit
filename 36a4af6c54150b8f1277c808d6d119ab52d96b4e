@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3H///7c\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-02-26T22:19:03Z",
+      "side": 1,
+      "message": "That bug seems not related to this change. Could you provide the correct bug ID and update this commit message?",
+      "revId": "36a4af6c54150b8f1277c808d6d119ab52d96b4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///7Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/CommitObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-02-26T22:19:03Z",
+      "side": 1,
+      "message": "typo, should be \"true\"",
+      "revId": "36a4af6c54150b8f1277c808d6d119ab52d96b4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///7U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/CommitObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-02-26T22:19:03Z",
+      "side": 1,
+      "message": "typo, should be \"finalize\"",
+      "revId": "36a4af6c54150b8f1277c808d6d119ab52d96b4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
