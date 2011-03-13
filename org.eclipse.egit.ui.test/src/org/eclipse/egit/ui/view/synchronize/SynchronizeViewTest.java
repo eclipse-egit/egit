@@ -13,10 +13,6 @@ import static org.eclipse.egit.ui.UIText.CommitDialog_Commit;
 import static org.eclipse.egit.ui.UIText.CommitDialog_CommitChanges;
 import static org.eclipse.egit.ui.UIText.CommitDialog_SelectAll;
 import static org.eclipse.egit.ui.UIText.GitModelWorkingTree_workingTree;
-import static org.eclipse.egit.ui.UIText.ResetCommand_WizardTitle;
-import static org.eclipse.egit.ui.UIText.ResetTargetSelectionDialog_ResetButton;
-import static org.eclipse.egit.ui.UIText.ResetTargetSelectionDialog_ResetQuestion;
-import static org.eclipse.egit.ui.UIText.ResetTargetSelectionDialog_ResetTypeHardButton;
 import static org.eclipse.egit.ui.UIText.SynchronizeWithAction_localRepoName;
 import static org.eclipse.egit.ui.UIText.SynchronizeWithAction_tagsName;
 import static org.eclipse.egit.ui.test.ContextMenuHelper.clickContextMenu;
@@ -36,11 +32,14 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.egit.core.op.ResetOperation;
+import org.eclipse.egit.core.op.ResetOperation.ResetType;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
@@ -78,10 +77,12 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 	private static final String EMPTY_REPOSITORY = "EmptyRepository";
 
+	private static File repositoryFile;
+
 	@Test
 	public void shouldReturnNoChanges() throws Exception {
 		// given
-		resetRepositoryToCreateInitialTag(PROJ1);
+		resetRepositoryToCreateInitialTag();
 		changeFilesInProject();
 
 		// when
@@ -96,7 +97,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	@Test
 	public void shouldReturnListOfChanges() throws Exception {
 		// given
-		resetRepositoryToCreateInitialTag(PROJ1);
+		resetRepositoryToCreateInitialTag();
 		changeFilesInProject();
 
 		// when
@@ -112,7 +113,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	@Test
 	public void shouldCompareBranchAgainstTag() throws Exception {
 		// given
-		resetRepositoryToCreateInitialTag(PROJ1);
+		resetRepositoryToCreateInitialTag();
 		makeChangesAndCommit(PROJ1);
 
 		// when
@@ -127,7 +128,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	@Test
 	public void shouldCompareTagAgainstTag() throws Exception {
 		// given
-		resetRepositoryToCreateInitialTag(PROJ1);
+		resetRepositoryToCreateInitialTag();
 		makeChangesAndCommit(PROJ1);
 		createTag(PROJ1, "v0.1");
 
@@ -142,7 +143,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 	@Test public void shouldOpenCompareEditorInGitChangeSet() throws Exception {
 		// given
-		resetRepositoryToCreateInitialTag(PROJ1);
+		resetRepositoryToCreateInitialTag();
 		changeFilesInProject();
 
 		// when
@@ -158,7 +159,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	@Test public void shouldOpenCompareEditorInWorkspaceModel()
 			throws Exception {
 		// given
-		resetRepositoryToCreateInitialTag(PROJ1);
+		resetRepositoryToCreateInitialTag();
 		changeFilesInProject();
 
 		// when
@@ -172,7 +173,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 
 	@Test public void shouldListFileDeletedChange() throws Exception {
 		// given
-		resetRepositoryToCreateInitialTag(PROJ1);
+		resetRepositoryToCreateInitialTag();
 		deleteFileAndCommit(PROJ1);
 
 		// when
@@ -224,7 +225,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	@Test public void shouldExchangeCompareEditorSidesBetweenIncomingAndOutgoingChangesInGitChangeSet()
 			throws Exception {
 		// given
-		resetRepositoryToCreateInitialTag(PROJ1);
+		resetRepositoryToCreateInitialTag();
 		makeChangesAndCommit(PROJ1);
 
 		// compare HEAD against tag
@@ -256,7 +257,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	@Test public void shouldExchangeCompareEditorSidesBetweenIncomingAndOutgoingChangesInWorkspaceModel()
 			throws Exception {
 		// given
-		resetRepositoryToCreateInitialTag(PROJ1);
+		resetRepositoryToCreateInitialTag();
 		makeChangesAndCommit(PROJ1);
 
 		// compare HEAD against tag
@@ -332,9 +333,11 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		if (!syncPerspectiveCheck.isSelected())
 			syncPerspectiveCheck.click();
 
+		bot.comboBox().setSelection("None");
+
 		bot.button(IDialogConstants.OK_LABEL).click();
 
-		File repositoryFile = createProjectAndCommitToRepository();
+		repositoryFile = createProjectAndCommitToRepository();
 		createChildRepository(repositoryFile);
 		Activator.getDefault().getRepositoryUtil()
 				.addConfiguredRepository(repositoryFile);
@@ -369,22 +372,11 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		coreTreeItem.collapse();
 	}
 
-	private void resetRepositoryToCreateInitialTag(String projectName)
-			throws Exception {
-		showDialog(projectName, "Team", "Reset...");
-
-		bot.shell(ResetCommand_WizardTitle).bot().activeShell();
-
-		SWTBotTreeItem tagsNode = bot.tree().getTreeItem("Tags");
-		tagsNode.expand();
-		tagsNode.getNode(INITIAL_TAG).select();
-
-		bot.radio(ResetTargetSelectionDialog_ResetTypeHardButton).click();
-		bot.button(ResetTargetSelectionDialog_ResetButton).click();
-
-		bot.shell(ResetTargetSelectionDialog_ResetQuestion).bot().activeShell();
-		bot.button("Yes").click();
-		TestUtil.joinJobs(JobFamilies.RESET);
+	private void resetRepositoryToCreateInitialTag() throws Exception {
+		ResetOperation rop = new ResetOperation(
+				lookupRepository(repositoryFile), Constants.R_TAGS +
+						INITIAL_TAG, ResetType.HARD);
+		rop.execute(new NullProgressMonitor());
 	}
 
 	private static void createTag(String projectName, String tagName)
