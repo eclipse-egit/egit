@@ -31,6 +31,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -287,6 +288,45 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		assertThat(outgoingRight, equalTo(incomingLeft));
 	}
 
+	@Test public void shouldNotShowIgnoredFilesInGitChangeSetModel()
+			throws Exception {
+		// given
+		resetRepositoryToCreateInitialTag();
+		String ignoredName = "to-be-ignored.txt";
+
+		IProject proj = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(PROJ1);
+
+		IFile ignoredFile = proj.getFile(ignoredName);
+		ignoredFile.create(new ByteArrayInputStream("content of ignored file"
+				.getBytes(proj.getDefaultCharset())), false, null);
+
+		IFile gitignore = proj.getFile(".gitignore");
+		gitignore.create(
+				new ByteArrayInputStream(ignoredName.getBytes(proj
+						.getDefaultCharset())), false, null);
+		proj.refreshLocal(IResource.DEPTH_INFINITE, null);
+
+		// when
+		launchSynchronization(SynchronizeWithAction_tagsName, INITIAL_TAG,
+				SynchronizeWithAction_localRepoName, HEAD, true);
+
+		// then
+		// asserts for Git Change Set model
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+		syncViewTree.expandNode(UIText.GitModelWorkingTree_workingTree);
+		assertEquals(1, syncViewTree.getAllItems().length);
+		SWTBotTreeItem proj1Node = syncViewTree.getAllItems()[0];
+		proj1Node.getItems()[0].expand();
+		assertEquals(1, proj1Node.getItems()[0].getItems().length);
+
+		// asserts for Workspace model
+		syncViewTree = setPresentationModel("Workspace").tree();
+		SWTBotTreeItem projectTree = waitForNodeWithText(syncViewTree, PROJ1);
+		projectTree.expand();
+		assertEquals(1, projectTree.getItems().length);
+	}
+
 	// this test always fails with cause:
 	// Timeout after: 5000 ms.: Could not find context menu with text:
 	// Synchronize
@@ -332,6 +372,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		SWTBotRadio syncPerspectiveCheck = bot.radio("Never");
 		if (!syncPerspectiveCheck.isSelected())
 			syncPerspectiveCheck.click();
+		bot.comboBox(0).setSelection("None");
 
 		bot.comboBox().setSelection("None");
 
@@ -463,10 +504,10 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 					UIText.SelectSynchronizeResourceDialog_includeUncommitedChanges)
 					.click();
 
-		if (srcRepo != null)
+		if (!includeLocal && srcRepo != null)
 			bot.comboBox(0)
 					.setSelection(srcRepo);
-		if (srcRef != null)
+		if (!includeLocal && srcRef != null)
 			bot.comboBox(1).setSelection(srcRef);
 
 		if (dstRepo != null)

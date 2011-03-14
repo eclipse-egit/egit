@@ -88,7 +88,7 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 			if (!remote.isContainer() || (local.exists() ^ gitVariant.exists()))
 				return false;
 
-			return local.getFullPath().equals(gitVariant.getFullPath());
+			return local.getLocation().equals(gitVariant.getLocation());
 		}
 		return false;
 	}

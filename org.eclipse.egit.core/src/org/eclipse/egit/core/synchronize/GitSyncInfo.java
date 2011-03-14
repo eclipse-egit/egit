@@ -73,10 +73,10 @@ class GitSyncInfo extends SyncInfo {
 			File local = getLocal().getLocation().toFile();
 			localPath = Repository.stripWorkDir(repo.getWorkTree(), local);
 		} else if (getRemote() != null)
-			localPath = ((GitResourceVariant) getRemote()).getFullPath()
+			localPath = ((GitResourceVariant) getRemote()).getLocation()
 					.toString();
 		else if (getBase() != null)
-			localPath = ((GitResourceVariant) getBase()).getFullPath()
+			localPath = ((GitResourceVariant) getBase()).getLocation()
 					.toString();
 		else
 			// we cannot determinate local path therefore we cannot set proper
