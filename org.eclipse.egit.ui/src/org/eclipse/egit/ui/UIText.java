@@ -3050,6 +3050,15 @@ public class UIText extends NLS {
 	public static String NonDeletedFilesTree_ResourcePathsButton;
 
 	/** */
+	public static String OpenWorkingFileAction_text;
+
+	/** */
+	public static String OpenWorkingFileAction_tooltip;
+
+	/** */
+	public static String OpenWorkingFileAction_openWorkingFileShellTitle;
+
+	/** */
 	public static String RemoteConnectionPreferencePage_TimeoutLabel;
 
 	/** */

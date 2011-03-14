@@ -22,13 +22,18 @@ import static org.eclipse.ui.menus.CommandContributionItem.STYLE_PUSH;
 
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.egit.ui.internal.synchronize.action.ExpandAllModelAction;
+import org.eclipse.egit.ui.internal.synchronize.action.OpenWorkingFileAction;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.egit.ui.internal.synchronize.model.SupportedContextActionsHelper;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration;
+import org.eclipse.team.ui.synchronize.ISynchronizePageSite;
+import org.eclipse.team.ui.synchronize.ModelSynchronizeParticipant;
 import org.eclipse.team.ui.synchronize.ModelSynchronizeParticipantActionGroup;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;
@@ -38,6 +43,8 @@ import org.eclipse.ui.menus.CommandContributionItemParameter;
 class GitActionContributor extends ModelSynchronizeParticipantActionGroup {
 
 	private static final String GIT_ACTIONS = "gitActions"; //$NON-NLS-1$
+
+	private OpenWorkingFileAction openWorkingFileAction;
 
 	public void fillContextMenu(IMenuManager menu) {
 		IStructuredSelection selection = (IStructuredSelection) getContext()
@@ -52,6 +59,18 @@ class GitActionContributor extends ModelSynchronizeParticipantActionGroup {
 				menu.appendToGroup(GIT_ACTIONS, createItem(COMMIT_ACTION));
 				menu.appendToGroup(GIT_ACTIONS, createItem(ADD_TO_INDEX));
 				menu.appendToGroup(GIT_ACTIONS, createItem(IGNORE_ACTION));
+			}
+
+			IContributionItem fileGroup = findGroup(menu,
+				ISynchronizePageConfiguration.FILE_GROUP);
+
+			if (fileGroup != null) {
+			    ModelSynchronizeParticipant msp =
+		    		((ModelSynchronizeParticipant) getConfiguration()
+			    			.getParticipant());
+
+			    if (msp.hasCompareInputFor(element))
+			    	menu.appendToGroup(fileGroup.getId(), openWorkingFileAction);
 			}
 		}
 	}
@@ -93,6 +112,14 @@ class GitActionContributor extends ModelSynchronizeParticipantActionGroup {
 				GitActionContributor_ExpandAll, configuration);
 		expandAllAction.setImageDescriptor(EXPAND_ALL);
 		appendToGroup(P_TOOLBAR_MENU, NAVIGATE_GROUP, expandAllAction);
+
+		ISynchronizePageSite site = configuration.getSite();
+		IWorkbenchSite ws = site.getWorkbenchSite();
+		openWorkingFileAction = new OpenWorkingFileAction(ws.getWorkbenchWindow()
+			.getActivePage());
+
+		site.getSelectionProvider().addSelectionChangedListener(
+				openWorkingFileAction);
 	}
 
 }
