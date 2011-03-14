@@ -158,6 +158,10 @@ public class GitModelRepository extends GitModelObject {
 	}
 
 	private List<GitModelObjectContainer> getListOfCommit() {
+		List<GitModelObjectContainer> result = new ArrayList<GitModelObjectContainer>();
+		if (srcRev.equals(dstRev))
+			return result;
+
 		RevWalk rw = new RevWalk(repo);
 		RevFlag localFlag = rw.newFlag("local"); //$NON-NLS-1$
 		RevFlag remoteFlag = rw.newFlag("remote"); //$NON-NLS-1$
@@ -165,7 +169,6 @@ public class GitModelRepository extends GitModelObject {
 		allFlags.add(localFlag);
 		allFlags.add(remoteFlag);
 		rw.carry(allFlags);
-		List<GitModelObjectContainer> result = new ArrayList<GitModelObjectContainer>();
 
 		rw.setRetainBody(true);
 		try {
