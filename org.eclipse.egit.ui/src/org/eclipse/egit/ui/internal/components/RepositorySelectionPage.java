@@ -31,7 +31,6 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.transport.RemoteConfig;
-import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.osgi.util.NLS;
@@ -329,11 +328,12 @@ public class RepositorySelectionPage extends WizardPage {
 					if (index > 0)
 						text = text.substring(0, index);
 					URIish u = new URIish(text);
-					if (Transport.canHandleProtocol(u, FS.DETECTED)) {
-						if (Protocol.GIT.handles(u) || Protocol.SSH.handles(u)
-								|| text.endsWith(Constants.DOT_GIT))
-							preset = text;
-					}
+					// TODO there should be another check here to
+					// see if the protocol is supported at all as
+					// replacement for the removed Transport.canHandleProtocol()
+					if (Protocol.GIT.handles(u) || Protocol.SSH.handles(u)
+							|| text.endsWith(Constants.DOT_GIT))
+						preset = text;
 				}
 			} catch (URISyntaxException e) {
 				// ignore, preset is null
