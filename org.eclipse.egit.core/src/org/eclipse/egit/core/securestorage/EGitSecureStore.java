@@ -80,7 +80,7 @@ public class EGitSecureStore {
 	}
 
 	private String calcNodePath(URIish uri) {
-		URIish storedURI = uri.setUser(null).setPass(null);
+		URIish storedURI = uri.setUser(null).setPass(null).setPath(null);
 		String pathName = GIT_PATH_PREFIX
 				+ EncodingUtils.encodeSlashes(storedURI.toString());
 		return pathName;
