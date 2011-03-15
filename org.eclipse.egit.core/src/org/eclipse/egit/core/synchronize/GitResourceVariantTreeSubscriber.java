@@ -11,12 +11,20 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
+import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 import static org.eclipse.team.core.Team.isIgnoredHint;
 
+import java.io.IOException;
+
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.treewalk.FileTreeIterator;
+import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.synchronize.SyncInfo;
 import org.eclipse.team.core.variants.IResourceVariant;
@@ -52,8 +60,32 @@ public class GitResourceVariantTreeSubscriber extends
 	private IResource[] roots;
 
 	@Override
-	public boolean isSupervised(IResource resource) throws TeamException {
-		return gsds.contains(resource.getProject()) && !isIgnoredHint(resource);
+	public boolean isSupervised(IResource res) throws TeamException {
+		GitSynchronizeData gsd = gsds.getData(res.getProject());
+		Repository repo = gsd.getRepository();
+
+		boolean notIgnoredByGit = true;
+		if (res.getLocation() != null) {
+			String path = stripWorkDir(repo.getWorkTree(), res.getLocation()
+					.toFile());
+
+			TreeWalk tw = new TreeWalk(repo);
+			if (path.length() > 0)
+				tw.setFilter(PathFilter.create(path));
+			tw.setRecursive(true);
+
+			try {
+				tw.addTree(new FileTreeIterator(repo));
+				notIgnoredByGit = tw.next()
+						&& !tw.getTree(0, FileTreeIterator.class)
+								.isEntryIgnored();
+			} catch (IOException e) {
+				Activator.error(e.getMessage(), e);
+			}
+		}
+
+		return gsds.contains(res.getProject()) && !isIgnoredHint(res)
+				&& notIgnoredByGit;
 	}
 
 	@Override
