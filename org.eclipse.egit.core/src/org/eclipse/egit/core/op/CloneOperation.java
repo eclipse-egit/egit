@@ -261,7 +261,7 @@ public class CloneOperation {
 		boolean result = dirCacheCheckout.checkout();
 		if (!result)
 			// this should never happen when writing in an empty folder
-			throw new IOException("Internal error occured on checking out files"); //$NON-NLS-1$
+			throw new IOException("Internal error occurred on checking out files"); //$NON-NLS-1$
 		monitor.setTaskName(CoreText.CloneOperation_writingIndex);
 	}
 }

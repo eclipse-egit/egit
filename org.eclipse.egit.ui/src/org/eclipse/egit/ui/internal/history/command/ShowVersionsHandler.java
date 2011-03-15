@@ -54,7 +54,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 		Object input = getPage().getInputInternal().getSingleFile();
 		if (input == null)
 			return null;
-		boolean errorOccured = false;
+		boolean errorOccurred = false;
 		List<ObjectId> ids = new ArrayList<ObjectId>();
 		String gitPath = null;
 		if (input instanceof IFile) {
@@ -73,7 +73,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 					Activator.logError(NLS.bind(
 							UIText.GitHistoryPage_errorLookingUpPath, gitPath,
 							commit.getId()), e);
-					errorOccured = true;
+					errorOccurred = true;
 				}
 				if (rev != null) {
 					if (compareMode) {
@@ -87,7 +87,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 						try {
 							openInCompare(event, in);
 						} catch (Exception e) {
-							errorOccured = true;
+							errorOccurred = true;
 						}
 					} else {
 						try {
@@ -97,7 +97,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 						} catch (CoreException e) {
 							Activator.logError(
 									UIText.GitHistoryPage_openFailed, e);
-							errorOccured = true;
+							errorOccurred = true;
 						}
 					}
 				} else {
@@ -120,7 +120,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 					Activator.logError(NLS.bind(
 							UIText.GitHistoryPage_errorLookingUpPath, gitPath,
 							commit.getId()), e);
-					errorOccured = true;
+					errorOccurred = true;
 				}
 				if (rev != null) {
 					if (compareMode) {
@@ -137,7 +137,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 									left, right, null);
 							openInCompare(event, in);
 						} catch (IOException e) {
-							errorOccured = true;
+							errorOccurred = true;
 						}
 					} else {
 						try {
@@ -147,7 +147,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 						} catch (CoreException e) {
 							Activator.logError(
 									UIText.GitHistoryPage_openFailed, e);
-							errorOccured = true;
+							errorOccurred = true;
 						}
 					}
 				} else {
@@ -155,7 +155,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 				}
 			}
 		}
-		if (errorOccured)
+		if (errorOccurred)
 			Activator.showError(UIText.GitHistoryPage_openFailed, null);
 		if (ids.size() > 0) {
 			StringBuilder idList = new StringBuilder(""); //$NON-NLS-1$
