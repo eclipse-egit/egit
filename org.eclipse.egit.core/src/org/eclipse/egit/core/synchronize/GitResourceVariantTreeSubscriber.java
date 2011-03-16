@@ -15,9 +15,14 @@ import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 import static org.eclipse.team.core.Team.isIgnoredHint;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
@@ -61,31 +66,48 @@ public class GitResourceVariantTreeSubscriber extends
 
 	@Override
 	public boolean isSupervised(IResource res) throws TeamException {
-		GitSynchronizeData gsd = gsds.getData(res.getProject());
-		Repository repo = gsd.getRepository();
+		return gsds.contains(res.getProject()) && !isIgnoredHint(res);
+	}
 
-		boolean notIgnoredByGit = true;
-		if (res.getLocation() != null) {
-			String path = stripWorkDir(repo.getWorkTree(), res.getLocation()
-					.toFile());
 
-			TreeWalk tw = new TreeWalk(repo);
-			if (path.length() > 0)
-				tw.setFilter(PathFilter.create(path));
-			tw.setRecursive(true);
-
-			try {
-				tw.addTree(new FileTreeIterator(repo));
-				notIgnoredByGit = tw.next()
-						&& !tw.getTree(0, FileTreeIterator.class)
-								.isEntryIgnored();
-			} catch (IOException e) {
-				Activator.error(e.getMessage(), e);
-			}
+	@Override
+	public IResource[] members(IResource res) throws TeamException {
+		if(res.getType() == IResource.FILE) {
+			return new IResource[0];
 		}
 
-		return gsds.contains(res.getProject()) && !isIgnoredHint(res)
-				&& notIgnoredByGit;
+		GitSynchronizeData gsd = gsds.getData(res.getProject());
+		Repository repo = gsd.getRepository();
+		String path = stripWorkDir(repo.getWorkTree(), res.getLocation()
+				.toFile());
+
+		TreeWalk tw = new TreeWalk(repo);
+		if (path.length() > 0)
+			tw.setFilter(PathFilter.create(path));
+		tw.setRecursive(true);
+
+		Set<IResource> gitMembers = new HashSet<IResource>();
+		Map<String, IResource> allMembers = new HashMap<String, IResource>();
+		try {
+			tw.addTree(new FileTreeIterator(repo));
+			for (IResource member : ((IContainer) res).members())
+				allMembers.put(member.getName(), member);
+
+			while (tw.next()) {
+				if (tw.getTree(0, FileTreeIterator.class).isEntryIgnored())
+					continue;
+
+				IResource member = allMembers.get(tw.getNameString());
+				if (member != null)
+					gitMembers.add(member);
+			}
+		} catch (IOException e) {
+			throw new TeamException(e.getMessage(), e);
+		} catch (CoreException e) {
+			throw TeamException.asTeamException(e);
+		}
+
+		return gitMembers.toArray(new IResource[gitMembers.size()]);
 	}
 
 	@Override
