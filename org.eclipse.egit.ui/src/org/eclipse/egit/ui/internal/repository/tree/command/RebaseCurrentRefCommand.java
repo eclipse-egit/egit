@@ -35,10 +35,10 @@ import org.eclipse.ui.ISources;
 public class RebaseCurrentRefCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		BasicConfigurationDialog.show();
 		RepositoryTreeNode node = getSelectedNodes(event).get(0);
-
 		final Repository repository = node.getRepository();
+
+		BasicConfigurationDialog.show(repository);
 
 		Ref ref;
 		if (node instanceof RefNode)
