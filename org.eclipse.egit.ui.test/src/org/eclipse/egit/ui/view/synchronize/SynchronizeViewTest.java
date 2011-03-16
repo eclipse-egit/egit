@@ -24,8 +24,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileWriter;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -325,6 +327,57 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		SWTBotTreeItem projectTree = waitForNodeWithText(syncViewTree, PROJ1);
 		projectTree.expand();
 		assertEquals(1, projectTree.getItems().length);
+	}
+
+	@Test public void shouldShowNonWorkspaceFileInSynchronization()
+			throws Exception {
+		// given
+		String name = "non-workspace.txt";
+		File root = new File(getTestDirectory(), REPO1);
+		File nonWorkspace = new File(root, name);
+		BufferedWriter writer = new BufferedWriter(new FileWriter(nonWorkspace));
+		writer.append("file content");
+		writer.close();
+
+		// when
+		launchSynchronization(SynchronizeWithAction_tagsName, INITIAL_TAG,
+				SynchronizeWithAction_localRepoName, HEAD, true);
+
+		// then
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+		SWTBotTreeItem workingTree = syncViewTree
+				.expandNode(UIText.GitModelWorkingTree_workingTree);
+		assertEquals(1, syncViewTree.getAllItems().length);
+		assertEquals(1, workingTree.getNodes(name).size());
+	}
+
+	@Test public void shouldShowCompareEditorForNonWorkspaceFileFromSynchronization()
+			throws Exception {
+		// given
+		String content = "file content";
+		String name = "non-workspace.txt";
+		File root = new File(getTestDirectory(), REPO1);
+		File nonWorkspace = new File(root, name);
+		BufferedWriter writer = new BufferedWriter(new FileWriter(nonWorkspace));
+		writer.append(content);
+		writer.close();
+
+		// when
+		launchSynchronization(SynchronizeWithAction_tagsName, INITIAL_TAG,
+				SynchronizeWithAction_localRepoName, HEAD, true);
+
+		// then
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+		SWTBotTreeItem workingTree = syncViewTree
+				.expandNode(UIText.GitModelWorkingTree_workingTree);
+		assertEquals(1, syncViewTree.getAllItems().length);
+		workingTree.expand().getNode(name).doubleClick();
+
+		SWTBotEditor editor = bot.editorByTitle(name);
+		editor.setFocus();
+
+		assertNotNull(editor);
+		assertThat(editor.bot().styledText(1).getText(), equalTo(content));
 	}
 
 	// this test always fails with cause:
