@@ -15,7 +15,6 @@ import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jgit.util.FS;
 
 /**
  * Plugin extension point to initialize the plugin runtime preferences.
@@ -72,7 +71,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 
 		store.setDefault(UIPreferences.REFESH_ON_INDEX_CHANGE, true);
 		store.setDefault(UIPreferences.REFESH_ONLY_WHEN_ACTIVE, true);
-		store.setDefault(UIPreferences.DEFAULT_REPO_DIR, FS.DETECTED.userHome().getPath());
+		store.setDefault(UIPreferences.DEFAULT_REPO_DIR, "${workspace_loc}"); //$NON-NLS-1$
 		store.setDefault(UIPreferences.REBASE_HIDE_CONFIRM, false);
 		store.setDefault(UIPreferences.SHOW_INITIAL_CONFIG_DIALOG, true);
 		store.setDefault(UIPreferences.SHOW_HOME_DIR_WARNING, MessageDialogWithToggle.PROMPT);

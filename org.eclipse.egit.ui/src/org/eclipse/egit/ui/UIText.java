@@ -430,6 +430,9 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_DefaultRepoFolderTooltip;
 
 	/** */
+	public static String GitPreferenceRoot_DefaultRepoFolderVariableButton;
+
+	/** */
 	public static String GitPreferenceRoot_HideConfirmationGroup;
 
 	/** */
