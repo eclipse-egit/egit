@@ -375,7 +375,7 @@ public class CompareUtils {
 
 		return new GitCompareFileRevisionEditorInput.EmptyTypedElement(NLS
 				.bind(UIText.CompareWithIndexAction_FileNotInIndex,
-						gitPath.substring(gitPath.lastIndexOf("/")) + 1)); //$NON-NLS-1$
+						gitPath.substring(gitPath.lastIndexOf("/") + 1))); //$NON-NLS-1$
 	}
 
 }
