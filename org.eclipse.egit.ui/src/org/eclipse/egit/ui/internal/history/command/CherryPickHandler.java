@@ -16,7 +16,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jgit.api.CherryPickCommand;
+import org.eclipse.jgit.api.CherryPickResult;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -30,12 +30,12 @@ public class CherryPickHandler extends AbstractHistoryCommandHandler {
 		RevCommit newHead;
 		Repository repo = getRepository(event);
 
-		CherryPickCommand cherryPick;
+		CherryPickResult cherryPickResult;
 		Git git = new Git(repo);
 		try {
-			cherryPick = git.cherryPick().include(commit.getId());
-			newHead = cherryPick.call();
-			if (newHead != null && cherryPick.getCherryPickedRefs().isEmpty())
+			cherryPickResult = git.cherryPick().include(commit.getId()).call();
+			newHead = cherryPickResult.getNewHead();
+			if (newHead != null && cherryPickResult.getCherryPickedRefs().isEmpty())
 				MessageDialog.openWarning(getPart(event).getSite().getShell(),
 						UIText.CherryPickHandler_NoCherryPickPerformedTitle,
 						UIText.CherryPickHandler_NoCherryPickPerformedMessage);
