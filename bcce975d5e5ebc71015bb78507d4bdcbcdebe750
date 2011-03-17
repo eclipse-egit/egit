@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n///sg\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-17T14:27:52Z",
+      "side": 1,
+      "message": "checkouted should read checked out",
+      "revId": "bcce975d5e5ebc71015bb78507d4bdcbcdebe750",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///tQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-17T14:09:29Z",
+      "side": 1,
+      "message": "comment line should read \"already checked out from the new branch wizard\"",
+      "revId": "bcce975d5e5ebc71015bb78507d4bdcbcdebe750",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
