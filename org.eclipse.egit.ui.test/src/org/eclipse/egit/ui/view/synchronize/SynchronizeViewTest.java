@@ -17,12 +17,14 @@ import static org.eclipse.egit.ui.UIText.SynchronizeWithAction_localRepoName;
 import static org.eclipse.egit.ui.UIText.SynchronizeWithAction_tagsName;
 import static org.eclipse.egit.ui.test.ContextMenuHelper.clickContextMenu;
 import static org.eclipse.egit.ui.test.TestUtil.waitUntilTreeHasNodeContainsText;
+import static org.eclipse.jgit.lib.Constants.DOT_GIT;
 import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.eclipse.jgit.lib.Constants.MASTER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -49,8 +51,11 @@ import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.dircache.DirCacheEntry;
+import org.eclipse.jgit.junit.TestRepository;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
@@ -327,6 +332,39 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		assertEquals(1, projectTree.getItems().length);
 	}
 
+	/**
+	 * Dynamically adds 1000 commits into {@link LocalRepositoryTestCase#REPO1}
+	 * each commit contains 15 modified blobs then run synchronization.
+	 * Synchronize operation should finish in less than 11 seconds.
+	 *
+	 * @throws Exception
+	 */
+	@Test public void shouldSynchronizeInLessThen11seconds() throws Exception {
+		resetRepositoryToCreateInitialTag();
+		File repoRoot = new File(getTestDirectory(), REPO1);
+		FileRepository db = new FileRepository(new File(repoRoot, DOT_GIT));
+		TestRepository<FileRepository> tr = new TestRepository<FileRepository>(db);
+		DirCacheEntry file = tr.file("test.txt", tr.blob("first file"));
+		RevCommit root = tr.commit(tr.tree(file));
+
+		DirCacheEntry[] files = new DirCacheEntry[15];
+		for (int i = 0; i < 1000; i++) {
+			for (int j = 0; j < 15; j++)
+				files[j] = tr.file("t" + (i + j), tr.blob("x" + (i + j)));
+
+			tr.tick(5);
+			root = tr.commit(tr.tree(files), root);
+		}
+		tr.update("master", root);
+
+		// when
+		long time = launchSynchronization(SynchronizeWithAction_tagsName,
+				INITIAL_TAG, SynchronizeWithAction_localRepoName, HEAD, false);
+
+		// then
+		assertTrue(time < 11000);
+	}
+
 	// this test always fails with cause:
 	// Timeout after: 5000 ms.: Could not find context menu with text:
 	// Synchronize
@@ -485,13 +523,14 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 				" was not found in given tree");
 	}
 
-	private void launchSynchronization(String srcRepo, String srcRef,
+	private long launchSynchronization(String srcRepo, String srcRef,
 			String dstRepo, String dstRef, boolean includeLocal) {
-		launchSynchronization(REPO1, PROJ1, srcRepo, srcRef, dstRepo, dstRef,
+		return launchSynchronization(REPO1, PROJ1, srcRepo, srcRef, dstRepo,
+				dstRef,
 				includeLocal);
 	}
 
-	private void launchSynchronization(String repo, String projectName,
+	private long launchSynchronization(String repo, String projectName,
 			String srcRepo, String srcRef, String dstRepo, String dstRef,
 			boolean includeLocal) {
 		showDialog(projectName, "Team", "Synchronize...");
@@ -521,6 +560,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		Job.getJobManager().addJobChangeListener(sfh);
 
 		// fire action
+		long beforeSync = System.currentTimeMillis();
 		bot.button(IDialogConstants.OK_LABEL).click();
 
 		try {
@@ -528,6 +568,8 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		} finally {
 			Job.getJobManager().removeJobChangeListener(sfh);
 		}
+
+		return System.currentTimeMillis() - beforeSync;
 	}
 
 	private static class SynchronizeFinishHook extends JobChangeAdapter
