@@ -192,7 +192,7 @@ public class RebaseResultDialog extends MessageDialog {
 			}
 			if (conflictPaths.size() > 0) {
 				message = NLS.bind(UIText.RebaseResultDialog_Conflicting,
-						conflictPaths.size());
+						Integer.valueOf(conflictPaths.size()));
 				messageLabel.setText(message);
 			}
 		} catch (IOException e) {
