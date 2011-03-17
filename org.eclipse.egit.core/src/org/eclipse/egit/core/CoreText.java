@@ -54,6 +54,9 @@ public class CoreText extends NLS {
 	public static String CommitOperation_PerformingCommit;
 
 	/** */
+	public static String CommitOperation_couldNotFindRepositoryMapping;
+
+	/** */
 	public static String ConnectProviderOperation_connecting;
 
 	/** */
