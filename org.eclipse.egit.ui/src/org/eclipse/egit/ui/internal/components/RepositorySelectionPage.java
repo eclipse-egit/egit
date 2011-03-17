@@ -902,7 +902,7 @@ public class RepositorySelectionPage extends WizardPage {
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 		if (visible)
-			uriText.setFocus();
+			remoteCombo.setFocus();
 	}
 
 	/**
