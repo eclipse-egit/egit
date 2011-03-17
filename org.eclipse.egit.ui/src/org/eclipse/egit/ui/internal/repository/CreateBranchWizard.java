@@ -90,4 +90,12 @@ public class CreateBranchWizard extends Wizard {
 	public String getNewBranchName() {
 		return newBranchName;
 	}
+
+	/**
+	 * @return {@code true} when newly created branch was checkouted after
+	 *         creation, {@code false} otherwise.
+	 */
+	public boolean isNewBranchCheckouted() {
+		return myPage.isNewBranchCheckouted();
+	}
 }
