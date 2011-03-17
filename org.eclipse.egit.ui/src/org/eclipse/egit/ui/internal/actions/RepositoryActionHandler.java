@@ -243,21 +243,24 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 *
 	 * @param event
 	 *
-	 * @return repository for current project, or null
+	 * @return repositories for selection, or an empty array
 	 * @throws ExecutionException
 	 */
 	protected Repository[] getRepositories(ExecutionEvent event)
 			throws ExecutionException {
 		IProject[] selectedProjects = getSelectedProjects(event);
-		Set<Repository> repos = new HashSet<Repository>(selectedProjects.length);
-		for (IProject project : selectedProjects) {
-			RepositoryMapping repositoryMapping = RepositoryMapping
-					.getMapping(project);
-			if (repositoryMapping == null)
-				return new Repository[0];
-			repos.add(repositoryMapping.getRepository());
-		}
-		return repos.toArray(new Repository[repos.size()]);
+		return getRepositoriesFor(selectedProjects);
+	}
+
+	/**
+	 * Get the currently selected repositories. All selected projects must map
+	 * to a repository.
+	 *
+	 * @return repositories for selection, or an empty array
+	 */
+	protected Repository[] getRepositories() {
+		IProject[] selectedProjects = getSelectedProjects(getSelection());
+		return getRepositoriesFor(selectedProjects);
 	}
 
 	/**
