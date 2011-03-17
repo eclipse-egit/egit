@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n///to\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-17T13:54:10Z",
+      "side": 1,
+      "message": "I guess this is for bug 338660, please add it.",
+      "revId": "d049bacde2fa1db659059e205614b5859861988c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///ts\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-17T13:54:10Z",
+      "side": 1,
+      "message": "I think we should simply check if the branch is checked out here in this class instead of changing the wizard and wizard page. Repository.getBranch().equals(newRefName)  should actually do the job.",
+      "revId": "d049bacde2fa1db659059e205614b5859861988c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
