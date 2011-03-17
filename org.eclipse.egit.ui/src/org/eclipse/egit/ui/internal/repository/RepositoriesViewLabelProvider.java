@@ -20,12 +20,14 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.resource.CompositeImageDescriptor;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
+import org.eclipse.jgit.errors.AmbiguousObjectException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -49,10 +51,30 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 	 */
 	private Map<Image, Image> decoratedImages = new HashMap<Image, Image>();
 
+	private Image tagImage = UIIcons.TAG.createImage();
+
+	private Image lightweightTagImage = SWTUtils.getDecoratedImage(tagImage,
+			UIIcons.OVR_LIGHTTAG);
+
 	@Override
 	public Image getImage(Object element) {
-		return decorateImage(
-				((RepositoryTreeNode) element).getType().getIcon(), element);
+		RepositoryTreeNode node = (RepositoryTreeNode) element;
+		if (node.getType() == RepositoryTreeNodeType.TAG) {
+			// determine if we have a lightweight tag and
+			// use the corresponding icon
+			try {
+				ObjectId id = node.getRepository().resolve(
+						((Ref) node.getObject()).getName());
+				new RevWalk(node.getRepository()).parseTag(id);
+				return decorateImage(node.getType().getIcon(), element);
+			} catch (AmbiguousObjectException e) {
+				// ignore
+				return decorateImage(node.getType().getIcon(), element);
+			} catch (IOException e) {
+				return decorateImage(lightweightTagImage, element);
+			}
+		} else
+			return decorateImage(node.getType().getIcon(), element);
 	}
 
 	@Override
@@ -72,6 +94,8 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 			image.dispose();
 		}
 		decoratedImages.clear();
+		tagImage.dispose();
+		lightweightTagImage.dispose();
 		super.dispose();
 	}
 
