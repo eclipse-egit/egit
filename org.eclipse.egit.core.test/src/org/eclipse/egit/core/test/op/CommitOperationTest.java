@@ -12,6 +12,7 @@ package org.eclipse.egit.core.test.op;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.test.GitTestCase;
@@ -75,13 +78,28 @@ public class CommitOperationTest extends GitTestCase {
 		testUtils.addFileToProject(project.getProject(), "zar/b.txt", "some text");
 		resources.add(project.getProject().getFolder("zar"));
 		new AddToIndexOperation(resources).execute(null);
-		project.getProject().getFile("zar/b.txt").delete(true, null);
+		IFile zarFile = project.getProject().getFile("zar/b.txt");
+		IPath zarFilePath = zarFile.getLocation();
+		// delete file and refresh. Deleting using the resource would trigger
+		// GitMoveDeleteHook which removes the file from the index
+		assertTrue("could not delete file " + zarFilePath.toOSString(),
+				zarFilePath.toFile().delete());
+		zarFile.refreshLocal(0, null);
+
 		assertTrue(!project.getProject().getFile("zar/b.txt").exists());
 
 		IFile[] filesToCommit = new IFile[] { project.getProject().getFile("zar/b.txt") };
 		commitOperation = new CommitOperation(filesToCommit, Arrays.asList(filesToCommit), null, TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
 		commitOperation.setRepos(new Repository[] {repository});
-		commitOperation.execute(null);
+		try {
+			commitOperation.execute(null);
+			// TODO this is very ugly. CommitCommand should be extended
+			// not to throw an JGitInternalException in case of an empty
+			// commit
+			fail("expected CoreException");
+		} catch (CoreException e) {
+			assertEquals("No changes", e.getCause().getMessage());
+		}
 
 		TreeWalk treeWalk = new TreeWalk(repository);
 		treeWalk.addTree(repository.resolve("HEAD^{tree}"));
