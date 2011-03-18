@@ -70,9 +70,9 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 	}
 
 	@SuppressWarnings("unchecked")
-	void paint(final Event event, Ref headRef) {
+	void paint(final Event event, Ref actHeadRef) {
 		g = event.gc;
-		this.headRef = headRef;
+		this.headRef = actHeadRef;
 		cellX = event.x;
 		cellY = event.y;
 		cellFG = g.getForeground();
@@ -150,7 +150,7 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		}
 
 		if (txt.length() > 12)
-			txt = txt.substring(0,11) + "\u2026"; // ellipsis "…" (in UTF-8) //$NON-NLS-1$
+			txt = txt.substring(0,11) + "\u2026"; // ellipsis "..." (in UTF-8) //$NON-NLS-1$
 
 		Point textsz = g.stringExtent(txt);
 		int arc = textsz.y/2;
