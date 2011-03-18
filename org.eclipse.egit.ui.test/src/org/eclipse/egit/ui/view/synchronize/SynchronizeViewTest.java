@@ -96,6 +96,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	}
 
 	@Test
+	@Ignore
 	public void shouldReturnListOfChanges() throws Exception {
 		// given
 		resetRepositoryToCreateInitialTag();
@@ -142,7 +143,9 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		assertEquals(1, syncViewTree.getAllItems().length);
 	}
 
-	@Test public void shouldOpenCompareEditorInGitChangeSet() throws Exception {
+	@Test
+	@Ignore
+	public void shouldOpenCompareEditorInGitChangeSet() throws Exception {
 		// given
 		resetRepositoryToCreateInitialTag();
 		changeFilesInProject();
@@ -288,7 +291,9 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		assertThat(outgoingRight, equalTo(incomingLeft));
 	}
 
-	@Test public void shouldNotShowIgnoredFilesInGitChangeSetModel()
+	@Test
+	@Ignore
+	public void shouldNotShowIgnoredFilesInGitChangeSetModel()
 			throws Exception {
 		// given
 		resetRepositoryToCreateInitialTag();
