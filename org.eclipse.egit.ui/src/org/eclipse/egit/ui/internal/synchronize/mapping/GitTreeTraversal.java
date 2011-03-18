@@ -28,7 +28,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
 
 class GitTreeTraversal extends ResourceTraversal {
 
@@ -82,7 +81,6 @@ class GitTreeTraversal extends ResourceTraversal {
 
 		tw.reset();
 		tw.setRecursive(false);
-		tw.setFilter(TreeFilter.ANY_DIFF);
 		try {
 			if (fileTreeIterator == null || !repo.equals(lastRepo)) {
 				lastRepo = repo;

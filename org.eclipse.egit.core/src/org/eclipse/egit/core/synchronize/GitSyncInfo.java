@@ -22,9 +22,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.synchronize.SyncInfo;
 import org.eclipse.team.core.variants.IResourceVariant;
@@ -88,8 +86,7 @@ class GitSyncInfo extends SyncInfo {
 			return IN_SYNC;
 
 		TreeWalk tw = new TreeWalk(repo);
-		tw.setFilter(AndTreeFilter.create(TreeFilter.ANY_DIFF,
-				PathFilter.create(localPath)));
+		tw.setFilter(PathFilter.create(localPath));
 		tw.setRecursive(true);
 
 		try {
