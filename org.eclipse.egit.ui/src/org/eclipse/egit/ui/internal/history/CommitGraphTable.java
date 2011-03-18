@@ -440,7 +440,7 @@ class CommitGraphTable {
 			event.gc.setFont(nFont);
 
 		if (event.index == 0) {
-			renderer.paint(event, input.getHead());
+			renderer.paint(event, input == null ? null : input.getHead());
 			return;
 		}
 
