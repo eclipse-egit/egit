@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n///lg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-18T07:19:28Z",
+      "side": 1,
+      "message": "We should have some debug trace instrumentation here to help us with supportability.",
+      "revId": "3a1995dbcc1fb131b2b8b5dfb54b58788a0c7df1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///lw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-18T07:19:28Z",
+      "side": 1,
+      "message": "These variables are currently only used if commitAll is true, so perhaps this could use some refactoring.",
+      "revId": "3a1995dbcc1fb131b2b8b5dfb54b58788a0c7df1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///ls\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-18T07:19:28Z",
+      "side": 1,
+      "message": "We should probably add support for cancellation, especially within the loop calling AddToIndexOperation (including roll-back).",
+      "revId": "3a1995dbcc1fb131b2b8b5dfb54b58788a0c7df1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///lo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-18T07:19:28Z",
+      "side": 1,
+      "message": "We should have progress monitoring and cancellation here.",
+      "revId": "3a1995dbcc1fb131b2b8b5dfb54b58788a0c7df1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///lk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-18T07:19:28Z",
+      "side": 1,
+      "message": "Progress monitoring and cancellation.",
+      "revId": "3a1995dbcc1fb131b2b8b5dfb54b58788a0c7df1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
