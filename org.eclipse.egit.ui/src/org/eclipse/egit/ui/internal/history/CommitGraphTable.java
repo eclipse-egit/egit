@@ -134,6 +134,8 @@ class CommitGraphTable {
 
 	MenuListener menuListener;
 
+	private RevCommit commitToShow;
+
 	CommitGraphTable(Composite parent) {
 		nFont = UIUtils.getFont(UIPreferences.THEME_CommitGraphNormalFont);
 		hFont = highlightFont();
@@ -312,14 +314,21 @@ class CommitGraphTable {
 		return table.getControl();
 	}
 
+	void selectCommitStored(final RevCommit c) {
+		commitToShow = c;
+		selectCommit(c);
+	}
+
 	void selectCommit(final RevCommit c) {
 		if (c instanceof PlotCommit) {
 			table.setSelection(new StructuredSelection(c));
 			table.reveal(c);
-		} else {
+		} else if (commitsMap != null) {
 			PlotCommit swtCommit = commitsMap.get(c.getId().name());
-			table.setSelection(new StructuredSelection(swtCommit));
-			table.reveal(swtCommit);
+			if (swtCommit != null) {
+				table.setSelection(new StructuredSelection(swtCommit));
+				table.reveal(swtCommit);
+			}
 		}
 	}
 
@@ -369,6 +378,8 @@ class CommitGraphTable {
 		} else {
 			table.getTable().deselectAll();
 		}
+		if (commitToShow != null)
+			selectCommit(commitToShow);
 	}
 
 	void setHistoryPageInput(HistoryPageInput input) {
