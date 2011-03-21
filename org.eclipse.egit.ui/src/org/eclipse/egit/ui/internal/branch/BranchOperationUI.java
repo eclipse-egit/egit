@@ -20,16 +20,20 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.MessageDialogWithToggle;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.jgit.api.CheckoutResult;
 
 /**
  * The UI wrapper for {@link BranchOperation}
@@ -131,7 +135,7 @@ public class BranchOperationUI {
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent cevent) {
-				BranchResultDialog.show(bop.getResult(), repository, refName);
+				showResultDialog();
 			}
 		});
 		job.schedule();
@@ -168,7 +172,32 @@ public class BranchOperationUI {
 
 		bop = new BranchOperation(repository, refName);
 		bop.execute(monitor);
+		showResultDialog();
+	}
+
+	private void showResultDialog() {
 		BranchResultDialog.show(bop.getResult(), repository, refName);
+		if (refName == null && bop.getResult().getStatus() == CheckoutResult.Status.OK)
+			showDetachedHeadWarning();
+	}
+
+	private void showDetachedHeadWarning() {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				IPreferenceStore store = Activator.getDefault()
+						.getPreferenceStore();
+
+				if (store.getString(UIPreferences.SHOW_DETACHED_HEAD_WARNING)
+						.equals(MessageDialogWithToggle.PROMPT)) {
+					String toggleMessage = UIText.ConfigurationChecker_doNotShowAgain;
+					MessageDialogWithToggle.openInformation(getShell(),
+							UIText.BranchOperationUI_DetachedHeadTitle,
+							UIText.BranchOperationUI_DetachedHeadMessage,
+							toggleMessage, false, store,
+							UIPreferences.SHOW_DETACHED_HEAD_WARNING);
+				}
+			}
+		});
 	}
 
 	private Shell getShell() {

@@ -76,6 +76,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.REBASE_HIDE_CONFIRM, false);
 		store.setDefault(UIPreferences.SHOW_INITIAL_CONFIG_DIALOG, true);
 		store.setDefault(UIPreferences.SHOW_HOME_DIR_WARNING, MessageDialogWithToggle.PROMPT);
+		store.setDefault(UIPreferences.SHOW_DETACHED_HEAD_WARNING, MessageDialogWithToggle.PROMPT);
 
 		store.setDefault(UIPreferences.SYNC_VIEW_CHANGESET_LABEL_FORMAT,
 				GitChangeSetLabelProvider.DEFAULT_CHANGESET_FORMAT);
