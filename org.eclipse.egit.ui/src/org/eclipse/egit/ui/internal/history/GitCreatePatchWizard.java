@@ -304,21 +304,25 @@ public class GitCreatePatchWizard extends Wizard {
 			cpRadio.addListener(SWT.Selection, new Listener() {
 				public void handleEvent(Event event) {
 					// disable other input controls
-					fsPathText.setEnabled(false);
-					fsBrowseButton.setEnabled(false);
-					validatePage();
+					if (((Button) event.widget).getSelection()) {
+						fsPathText.setEnabled(false);
+						fsBrowseButton.setEnabled(false);
+						validatePage();
+					}
 				}
 			});
 
 			fsRadio.addListener(SWT.Selection, new Listener() {
 
 				public void handleEvent(Event event) {
-					// enable filesystem input controls
-					fsPathText.setEnabled(true);
-					fsBrowseButton.setEnabled(true);
-					// set focus to filesystem input text control
-					fsPathText.setFocus();
-					validatePage();
+					if (((Button) event.widget).getSelection()) {
+						// enable filesystem input controls
+						fsPathText.setEnabled(true);
+						fsBrowseButton.setEnabled(true);
+						// set focus to filesystem input text control
+						fsPathText.setFocus();
+						validatePage();
+					}
 				}
 			});
 
