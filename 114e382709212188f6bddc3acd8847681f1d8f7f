@@ -1,0 +1,58 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n///sU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-17T14:31:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL3n///vY\u003d",
+      "revId": "114e382709212188f6bddc3acd8847681f1d8f7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///sQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-17T14:31:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL3n///vQ\u003d",
+      "revId": "114e382709212188f6bddc3acd8847681f1d8f7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///sM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-17T14:31:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL3n///vM\u003d",
+      "revId": "114e382709212188f6bddc3acd8847681f1d8f7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
