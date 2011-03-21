@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAL3n///vY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-17T09:03:53Z",
+      "side": 1,
+      "message": "Why is the filter setting checked here? Doesn\u0027t the commit graph table simply ignore the calls if the selected commit is not in the list?\nIf we really need to check whether the list is filtered, then a check for SHOWALLREPO as filter is not sufficient: if the input is a Repository (because you selected a repo in the repo view), then the filter buttons are simply deactivated, but the previous setting will still be active; however, the user can not change the setting, so we would have to check for filter !\u003d SHOWALLREPO \u0026\u0026 ((input.getItems() !\u003d null) || (input.getFiles() \u003d\u003d null))) (or something like this).",
+      "revId": "114e382709212188f6bddc3acd8847681f1d8f7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL3n///sU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 1
@@ -20,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AAAL3n///vQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-17T09:03:53Z",
+      "side": 1,
+      "message": "Same as above",
+      "revId": "114e382709212188f6bddc3acd8847681f1d8f7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL3n///sQ\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 1
@@ -32,6 +66,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAAL3n///vQ\u003d",
+      "revId": "114e382709212188f6bddc3acd8847681f1d8f7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///vM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-17T09:03:53Z",
+      "side": 1,
+      "message": "Same as above",
       "revId": "114e382709212188f6bddc3acd8847681f1d8f7f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
