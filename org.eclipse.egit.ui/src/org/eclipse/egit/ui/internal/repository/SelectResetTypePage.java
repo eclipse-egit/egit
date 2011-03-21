@@ -57,7 +57,8 @@ public class SelectResetTypePage extends WizardPage {
 		soft.setText(UIText.ResetTargetSelectionDialog_ResetTypeSoftButton);
 		soft.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				resetType = ResetType.SOFT;
+				if (((Button) event.widget).getSelection())
+					resetType = ResetType.SOFT;
 			}
 		});
 
@@ -66,7 +67,8 @@ public class SelectResetTypePage extends WizardPage {
 		medium.setText(UIText.ResetTargetSelectionDialog_ResetTypeMixedButton);
 		medium.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				resetType = ResetType.MIXED;
+				if (((Button) event.widget).getSelection())
+					resetType = ResetType.MIXED;
 			}
 		});
 
@@ -74,7 +76,8 @@ public class SelectResetTypePage extends WizardPage {
 		hard.setText(UIText.ResetTargetSelectionDialog_ResetTypeHardButton);
 		hard.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				resetType = ResetType.HARD;
+				if (((Button) event.widget).getSelection())
+					resetType = ResetType.HARD;
 			}
 		});
 		Dialog.applyDialogFont(g);
