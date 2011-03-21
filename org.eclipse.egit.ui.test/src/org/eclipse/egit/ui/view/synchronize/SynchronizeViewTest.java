@@ -626,7 +626,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 	}
 
 	private SWTBotTreeItem waitForNodeWithText(SWTBotTreeItem tree, String name) {
-		waitUntilTreeHasNodeContainsText(bot, tree, name, 10000);
+		waitUntilTreeHasNodeContainsText(bot, tree, name, 15000);
 		return getTreeItemContainingText(tree.getItems(), name).expand();
 	}
 
