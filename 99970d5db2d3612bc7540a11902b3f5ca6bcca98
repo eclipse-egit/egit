@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL3n//+9Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-22T10:12:13Z",
+      "side": 1,
+      "message": "I changed the check, thanks for the tip.",
+      "parentUuid": "AAAL3n//+98\u003d",
+      "revId": "99970d5db2d3612bc7540a11902b3f5ca6bcca98",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL3n//+94\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CheckoutCommand.java",
         "patchSetId": 1
@@ -64,6 +82,24 @@
       "writtenOn": "2011-03-22T08:40:42Z",
       "side": 1,
       "message": "I find the last sentence a bit confusing or just overwhelming. Perhaps we should simply say, \"If you want to make changes, create and/or checkout a local branch first\".",
+      "revId": "99970d5db2d3612bc7540a11902b3f5ca6bcca98",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n//+9c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-22T10:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL3n//+90\u003d",
       "revId": "99970d5db2d3612bc7540a11902b3f5ca6bcca98",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
