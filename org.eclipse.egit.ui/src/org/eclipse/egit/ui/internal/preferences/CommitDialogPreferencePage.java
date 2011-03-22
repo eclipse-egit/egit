@@ -16,6 +16,7 @@ import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IWorkbench;
@@ -55,6 +56,7 @@ public class CommitDialogPreferencePage extends FieldEditorPreferencePage
 		hardWrap.getDescriptionControl(formattingGroup).setToolTipText(
 				UIText.CommitDialogPreferencePage_hardWrapMessageTooltip);
 		addField(hardWrap);
+		updateMargins(formattingGroup);
 
 		Group footersGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		footersGroup.setText(UIText.CommitDialogPreferencePage_footers);
@@ -80,5 +82,14 @@ public class CommitDialogPreferencePage extends FieldEditorPreferencePage
 				.setToolTipText(
 						UIText.CommitDialogPreferencePage_signedOffByTooltip);
 		addField(signedOffBy);
+		updateMargins(footersGroup);
+	}
+
+	private void updateMargins(Group group) {
+		// make sure there is some room between the group border
+		// and the controls in the group
+		GridLayout layout = (GridLayout) group.getLayout();
+		layout.marginWidth = 5;
+		layout.marginHeight = 5;
 	}
 }
