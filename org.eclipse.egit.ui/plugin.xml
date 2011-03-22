@@ -1162,15 +1162,6 @@
                </instanceof></possibleDropTargets>
          </dropAssistant>
       </navigatorContent>
-      <actionProvider
-            class="org.eclipse.egit.ui.internal.repository.tree.RepositoriesViewActionProvider"
-            id="RepositoriesViewActionProvider">
-         <enablement>
-            <instanceof
-                  value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
-            </instanceof>
-         </enablement>
-      </actionProvider>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.viewer">
@@ -1188,14 +1179,6 @@
             </contentExtension>
          </includes>
       </viewerContentBinding>
-      <viewerActionBinding
-            viewerId="org.eclipse.egit.ui.RepositoriesView">
-         <includes>
-            <actionExtension
-                  pattern="RepositoriesViewActionProvider">
-            </actionExtension>
-         </includes>
-      </viewerActionBinding>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -3036,6 +3019,18 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+M3+M">
       </key>
+      <key
+            commandId="org.eclipse.egit.ui.RepositoriesViewPaste"
+            contextId="org.eclipse.egit.ui.RepositoriesView"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+V">
+      </key>
+      <key
+            commandId="org.eclipse.egit.ui.RepositoriesViewCopyPath"
+            contextId="org.eclipse.egit.ui.RepositoriesView"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+C">
+      </key>
    </extension>
    <extension
          name="%HistoryViewCommands.extension.name"
@@ -3164,5 +3159,13 @@
                visible="false">
          </view>
       </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.contexts">
+      <context
+            id="org.eclipse.egit.ui.RepositoriesView"
+            name="%RepositoriesViewContext.name"
+            parentId="org.eclipse.ui.contexts.window">
+      </context>
    </extension>
 </plugin>
