@@ -31,7 +31,7 @@ import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.URIish;
 import org.junit.After;
 import org.junit.Before;
@@ -97,8 +97,12 @@ public class ListRemoteOperationTest extends DualRepositoryTestCase {
 				master, "origin", 0);
 		clop.run(null);
 
-		repository2 = new TestRepository(new FileRepository(new File(workdir2,
-				Constants.DOT_GIT)));
+		Repository existingRepo = Activator
+				.getDefault()
+				.getRepositoryCache()
+				.lookupRepository(
+						new File(workdir2, Constants.DOT_GIT));
+		repository2 = new TestRepository(existingRepo);
 		// we push to branch "test" of repository2
 		RefUpdate createBranch = repository2.getRepository().updateRef(
 				"refs/heads/test");
