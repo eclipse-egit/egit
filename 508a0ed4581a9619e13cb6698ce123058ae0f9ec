@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n//++M\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-22T07:42:12Z",
+      "side": 1,
+      "message": "The first line should be short (70 chars max) and concise, like \"Add scoped keybindings to RepositoriesView\" or such (we also have a convention that suggests to start this first line with [repoView], but that\u0027s rather optional: \"[repoView] Add scoped keybindings for copy/paste\"). See contributor guide.",
+      "revId": "508a0ed4581a9619e13cb6698ce123058ae0f9ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n//++I\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-22T07:42:12Z",
+      "side": 1,
+      "message": "We also need Change-Id and Signed-off. Normally, you can add them both via the commit dialog by clicking the check boxes, but since you have uploaded this already, you can not use the check box for the change id (as it would create a new id) but should add it by copy/paste the change id from this change. Wen you upload again, you should get a second patch set with the commit message updated.",
+      "revId": "508a0ed4581a9619e13cb6698ce123058ae0f9ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n//++E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-22T07:42:12Z",
+      "side": 1,
+      "message": "Style-nit: no brackets around single-line blocks",
+      "revId": "508a0ed4581a9619e13cb6698ce123058ae0f9ec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
