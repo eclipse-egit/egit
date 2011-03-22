@@ -272,7 +272,9 @@ public class CommitOperation implements IEGitOperation {
 						.setCommitter(
 								new PersonIdent(committerIdent,
 										commitDate, timeZone))
-						.setMessage(message).call();
+						.setMessage(message)
+						.setInsertChangeId(createChangeId)
+						.call();
 			} catch (NoHeadException e) {
 				throw new TeamException(e.getLocalizedMessage(), e);
 			} catch (NoMessageException e) {
