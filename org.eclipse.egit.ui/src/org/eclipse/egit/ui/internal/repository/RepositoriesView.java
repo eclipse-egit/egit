@@ -73,6 +73,7 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.navigator.CommonNavigator;
 import org.eclipse.ui.navigator.CommonViewer;
@@ -255,7 +256,16 @@ public class RepositoriesView extends CommonNavigator {
 		repositoryUtil.getPreferences().addPreferenceChangeListener(
 				configurationListener);
 		initRepositoriesAndListeners();
+		activateContextService();
 		return viewer;
+	}
+
+	private void activateContextService() {
+		IContextService contextService = (IContextService) getSite()
+				.getService(IContextService.class);
+		if (contextService != null)
+			contextService.activateContext(VIEW_ID);
+
 	}
 
 	private void initRepositoriesAndListeners() {
