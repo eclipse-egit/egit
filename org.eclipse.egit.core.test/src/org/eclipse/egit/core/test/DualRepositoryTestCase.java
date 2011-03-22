@@ -14,7 +14,10 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.junit.After;
+import org.junit.Before;
 
 public abstract class DualRepositoryTestCase {
 
@@ -25,6 +28,18 @@ public abstract class DualRepositoryTestCase {
 	protected TestRepository repository2;
 
 	protected IProject testProject;
+
+	@Before
+	public void beforeTestCase() throws Exception {
+		// ensure there are no shared Repository instances left
+		// when starting a new test
+		Activator.getDefault().getRepositoryCache().clear();
+	}
+
+	@After
+	public void afterTestCase() throws Exception {
+		Activator.getDefault().getRepositoryCache().clear();
+	}
 
 	protected IProject importProject(TestRepository repo, String projectName)
 			throws Exception {
@@ -43,4 +58,7 @@ public abstract class DualRepositoryTestCase {
 		cop.execute(null);
 		return firstProject;
 	}
+
+
+
 }

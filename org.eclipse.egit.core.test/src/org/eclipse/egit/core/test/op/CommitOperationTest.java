@@ -195,13 +195,10 @@ public class CommitOperationTest extends GitTestCase {
 		ArrayList<IFile> notIndexed = new ArrayList<IFile>();
 		notIndexed.add(filesToCommit[0]);
 		ArrayList<IFile> notTracked = new ArrayList<IFile>();
-		Thread.sleep(1100); // Trouble in "fresh" detection of something
-		// Do this like the commit dialog does it
 		commitOperation = new CommitOperation(filesToCommit, notIndexed, notTracked, TestUtils.AUTHOR, TestUtils.COMMITTER, "second commit");
 		commitOperation.setCommitAll(false);
 		commitOperation.execute(null);
 
-		Thread.sleep(1100); // Trouble in "fresh" detection of something
 		git = new Git(repository);
 		commits = git.log().call().iterator();
 		secondCommit = commits.next();
@@ -250,7 +247,6 @@ public class CommitOperationTest extends GitTestCase {
 				EMPTY_FILE_LIST, Arrays.asList(filesToCommit),
 				TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
 		commitOperation.execute(null);
-		Thread.sleep(1100); // TODO: remove when GitIndex is no longer used
 		testUtils.changeContentOfFile(project.getProject(), fileA,
 				"new content of A");
 		testUtils.changeContentOfFile(project.getProject(), fileB,
@@ -279,7 +275,6 @@ public class CommitOperationTest extends GitTestCase {
 				EMPTY_FILE_LIST, Arrays.asList(filesToCommit),
 				TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
 		commitOperation.execute(null);
-		Thread.sleep(1100); // TODO: remove when GitIndex is no longer used
 		testUtils.changeContentOfFile(project.getProject(), fileA,
 				"new content of A");
 		testUtils.changeContentOfFile(project.getProject(), fileB,

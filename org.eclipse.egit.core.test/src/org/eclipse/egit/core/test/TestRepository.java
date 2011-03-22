@@ -20,6 +20,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.op.DisconnectProviderOperation;
@@ -60,8 +61,11 @@ public class TestRepository {
 	 * @throws IOException
 	 */
 	public TestRepository(File gitDir) throws IOException {
-		repository = new FileRepository(gitDir);
-		repository.create();
+		FileRepository tmpRepository = new FileRepository(gitDir);
+		tmpRepository.create();
+		tmpRepository.close();
+		// use repository instance from RepositoryCache!
+		repository = Activator.getDefault().getRepositoryCache().lookupRepository(gitDir);
 		try {
 			workdirPrefix = repository.getWorkTree().getCanonicalPath();
 		} catch (IOException err) {
