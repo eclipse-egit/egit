@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010-2011 SAP AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -132,51 +132,80 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		remotesItem.select();
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("NewRemoteCommand"));
-		SWTBotShell shell = bot
-				.shell(UIText.ConfigureRemoteWizard_WizardTitle_New);
-		shell.bot().textWithLabel(UIText.SelectRemoteNamePage_RemoteNameLabel)
-				.setText("testRemote");
-		// select configure fetch
-		shell.bot().checkBox(UIText.SelectRemoteNamePage_ConfigureFetch_button)
-				.select();
-		// select configure push
-		shell.bot().checkBox(UIText.SelectRemoteNamePage_ConfigurePush_button)
-				.select();
-		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		// Click change
-		shell.bot().button(UIText.ConfigureUriPage_Change_button).click();
+		SWTBotShell shell = bot.shell(UIText.NewRemoteDialog_WindowTitle);
+		shell.bot().textWithLabel(UIText.NewRemoteDialog_NameLabel).setText(
+				"testRemote");
+		// configure fetch first
+		shell.bot().radio(UIText.NewRemoteDialog_FetchRadio).click();
+		shell.bot().button(IDialogConstants.OK_LABEL).click();
+
+		// configure fetch dialog
+		shell = bot.shell(UIText.SimpleConfigureFetchDialog_WindowTitle);
+		// change uri
+		shell.bot().button(UIText.SimpleConfigureFetchDialog_ChangeUriButton)
+				.click();
 		shell = bot.shell(UIText.SelectUriWiazrd_Title);
 		shell.bot().text().setText("file:///" + remoteRepositoryFile.getPath());
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		// now we have the fetch URI
-		shell = bot.shell(UIText.ConfigureRemoteWizard_WizardTitle_New);
+		// back to dialog
+		shell = bot.shell(UIText.SimpleConfigureFetchDialog_WindowTitle);
+		shell.bot().button(UIText.SimpleConfigureFetchDialog_AddRefSpecButton)
+				.click();
+		shell = bot.shell(UIText.SimpleFetchRefSpecWizard_WizardTitle);
+		shell.bot().textWithLabel(UIText.FetchSourcePage_SourceLabel).setText(
+				"refs/heads/*");
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		// add all branches
-		shell.bot().button(UIText.RefSpecPanel_predefinedAll).click();
-		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		// the URIish-like path
-		String testString = new org.eclipse.jgit.transport.URIish("file:///"
-				+ remoteRepositoryFile.getPath()).toPrivateString();
-		assertEquals(testString, shell.bot().text().getText());
-		// let's try to add the same URI as push
-		shell.bot().button(UIText.ConfigureUriPage_Add_button).click();
-		shell = bot.shell(UIText.SelectUriWiazrd_Title);
-		shell.bot().text().setText("file:///" + remoteRepositoryFile.getPath());
+		shell.bot().textWithLabel(UIText.FetchDestinationPage_DestinationLabel)
+				.setText("refs/remotes/testRemote/*");
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
-		// we get a "duplicate URI" popup
-		shell = bot.shell(UIText.ConfigureUriPage_DuplicateUriTitle);
-		shell.close();
-		shell = bot.shell(UIText.ConfigureRemoteWizard_WizardTitle_New);
-		// we continue without adding a special push URI
-		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		// add all branches
-		shell.bot().button(UIText.RefSpecPanel_predefinedAll).click();
-		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
+		// back to dialog
+		shell = bot.shell(UIText.SimpleConfigureFetchDialog_WindowTitle);
+		// save
+		shell.bot().button(UIText.SimpleConfigureFetchDialog_SaveButton)
+				.click();
+
 		refreshAndWait();
-		// assert 2 children
+		// assert 1 children
 		SWTBotTreeItem item = myRepoViewUtil.getRemotesItem(tree,
 				repositoryFile).expand().getNode("testRemote").expand();
 		List<String> children = item.getNodes();
+		assertTrue(children.size() == 1);
+		item.select();
+		// now we add push
+		ContextMenuHelper.clickContextMenu(tree, myUtil
+				.getPluginLocalizedValue("ConfigurePushCommand"));
+
+		shell = bot.shell(UIText.SimpleConfigurePushDialog_WindowTitle);
+		shell.bot()
+				.button(UIText.SimpleConfigurePushDialog_AddRefSpecButton, 1)
+				.click();
+
+		// add push spec
+		shell = bot.shell(UIText.RefSpecDialog_WindowTitle);
+
+		shell.bot().textWithLabel(UIText.RefSpecDialog_SourceBranchPushLabel)
+				.setText("HEAD");
+		shell.bot().textWithLabel(UIText.RefSpecDialog_DestinationPushLabel)
+				.setText("refs/for/master");
+		final Text text = shell.bot().textWithLabel(
+				UIText.RefSpecDialog_DestinationPushLabel).widget;
+		shell.display.syncExec(new Runnable() {
+
+			public void run() {
+				text.setFocus();
+				text.notifyListeners(SWT.Modify, new Event());
+			}
+		});
+		shell.bot().button(IDialogConstants.OK_LABEL).click();
+		shell = bot.shell(UIText.SimpleConfigurePushDialog_WindowTitle);
+		shell.bot().button(UIText.SimpleConfigurePushDialog_SaveButton).click();
+
+		refreshAndWait();
+		// assert 2 children
+		item = myRepoViewUtil.getRemotesItem(tree, repositoryFile).expand()
+				.getNode("testRemote").expand();
+		children = item.getNodes();
 		assertTrue(children.size() == 2);
 		item.getNode(0).select();
 		// we remove the fetch, the URI is copied into push
@@ -222,13 +251,14 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		shell.bot().textWithLabel(UIText.FetchSourcePage_SourceLabel).setText(
 				"refs/heads/*");
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		shell.bot().textWithLabel(UIText.FetchDestinationPage_DestinationLabel).setText(
-				"refs/remotes/testRemote/*");
+		shell.bot().textWithLabel(UIText.FetchDestinationPage_DestinationLabel)
+				.setText("refs/remotes/testRemote/*");
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		// back to dialog
 		shell = bot.shell(shellText);
 		// save
-		shell.bot().button(UIText.SimpleConfigureFetchDialog_SaveButton).click();
+		shell.bot().button(UIText.SimpleConfigureFetchDialog_SaveButton)
+				.click();
 		refreshAndWait();
 		// assert 1 children
 		item = myRepoViewUtil.getRemotesItem(tree, repositoryFile).expand()
@@ -254,7 +284,8 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 
 		shellText = UIText.SimpleConfigurePushDialog_WindowTitle;
 		shell = bot.shell(shellText);
-		shell.bot().button(UIText.SimpleConfigurePushDialog_AddPushUriButton).click();
+		shell.bot().button(UIText.SimpleConfigurePushDialog_AddPushUriButton)
+				.click();
 
 		// back to dialog
 		shell = bot.shell(shellText);
@@ -263,20 +294,24 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		shell = bot.shell(shellText);
 		// Add is on two buttons
-		shell.bot().button(UIText.SimpleConfigurePushDialog_AddRefSpecButton, 1).click();
+		shell.bot()
+				.button(UIText.SimpleConfigurePushDialog_AddRefSpecButton, 1)
+				.click();
 		// add push spec
 		shell = bot.shell(UIText.RefSpecDialog_WindowTitle);
-		// focus for update of other fields
 
-		shell.bot().textWithLabel(UIText.RefSpecDialog_SourceBranchPushLabel).setText("HEAD");
-		shell.bot().textWithLabel(UIText.RefSpecDialog_DestinationPushLabel).setText("refs/for/master");
-		final Text text = shell.bot().textWithLabel(
+		shell.bot().textWithLabel(UIText.RefSpecDialog_SourceBranchPushLabel)
+				.setText("HEAD");
+		shell.bot().textWithLabel(UIText.RefSpecDialog_DestinationPushLabel)
+				.setText("refs/for/master");
+		final Text text2 = shell.bot().textWithLabel(
 				UIText.RefSpecDialog_DestinationPushLabel).widget;
 		shell.display.syncExec(new Runnable() {
 
 			public void run() {
-				text.setFocus();
-				text.notifyListeners(SWT.Modify, new Event());
+				// focus for update of other fields
+				text2.setFocus();
+				text2.notifyListeners(SWT.Modify, new Event());
 			}
 		});
 
