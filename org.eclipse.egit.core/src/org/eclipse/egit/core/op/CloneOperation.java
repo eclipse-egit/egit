@@ -30,6 +30,7 @@ import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
@@ -57,7 +58,7 @@ public class CloneOperation {
 
 	private final File gitdir;
 
-	private final Ref ref;
+	private final String refName;
 
 	private final String remoteName;
 
@@ -85,22 +86,24 @@ public class CloneOperation {
 	 * @param workdir
 	 *            working directory to clone to. The directory may or may not
 	 *            already exist.
-	 * @param ref
-	 *            ref to be checked out after clone.
+	 * @param refName
+	 *            full name of ref to be checked out after clone, e.g.
+	 *            refs/heads/master, or null for no checkout
 	 * @param remoteName
 	 *            name of created remote config as source remote (typically
 	 *            named "origin").
-	 * @param timeout timeout in seconds
+	 * @param timeout
+	 *            timeout in seconds
 	 */
 	public CloneOperation(final URIish uri, final boolean allSelected,
 			final Collection<Ref> selectedBranches, final File workdir,
-			final Ref ref, final String remoteName, int timeout) {
+			final String refName, final String remoteName, int timeout) {
 		this.uri = uri;
 		this.allSelected = allSelected;
 		this.selectedBranches = selectedBranches;
 		this.workdir = workdir;
 		this.gitdir = new File(workdir, Constants.DOT_GIT);
-		this.ref = ref;
+		this.refName = refName;
 		this.remoteName = remoteName;
 		this.timeout = timeout;
 	}
@@ -175,10 +178,10 @@ public class CloneOperation {
 		local = new FileRepository(gitdir);
 		local.create();
 
-		if (ref != null && ref.getName().startsWith(Constants.R_HEADS)) {
+		if (refName != null && refName.startsWith(Constants.R_HEADS)) {
 			final RefUpdate head = local.updateRef(Constants.HEAD);
 			head.disableRefLog();
-			head.link(ref.getName());
+			head.link(refName);
 		}
 
 		FileBasedConfig config = local.getConfig();
@@ -207,12 +210,12 @@ public class CloneOperation {
 
 		// branch is like 'Constants.R_HEADS + branchName', we need only
 		// the 'branchName' part
-		if (ref != null && ref.getName().startsWith(Constants.R_HEADS)) {
-			String branchName = ref.getName().substring(Constants.R_HEADS.length());
+		if (refName != null && refName.startsWith(Constants.R_HEADS)) {
+			String branchName = Repository.shortenRefName(refName);
 
 			// setup the default remote branch for branchName
 			config.setString(ConfigConstants.CONFIG_BRANCH_SECTION, branchName, ConfigConstants.CONFIG_KEY_REMOTE, remoteName);
-			config.setString(ConfigConstants.CONFIG_BRANCH_SECTION, branchName, ConfigConstants.CONFIG_KEY_MERGE, ref.getName());
+			config.setString(ConfigConstants.CONFIG_BRANCH_SECTION, branchName, ConfigConstants.CONFIG_KEY_MERGE, refName);
 		}
 		config.save();
 	}
@@ -233,9 +236,9 @@ public class CloneOperation {
 	}
 
 	private void doCheckout(final IProgressMonitor monitor) throws IOException {
-		if (ref == null)
+		if (refName == null)
 			return;
-		final Ref head = fetchResult.getAdvertisedRef(ref.getName());
+		final Ref head = fetchResult.getAdvertisedRef(refName);
 		if (head == null || head.getObjectId() == null)
 			return;
 
