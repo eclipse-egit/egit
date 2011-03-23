@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n//+0M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-23T06:04:47Z",
+      "side": 1,
+      "message": "I don\u0027t like playing with Exceptions in that way, I think you should rather do something like\n\n RevObject any \u003d rw.parseAny(ref.getLeaf().getObjectId());\n if (any instanceof RevCommit) {\n \t// it\u0027s a lightweight tag\n } else if (any instanceof RevTag) {\n \t// it\u0027s an annotated or signed tag\n }",
+      "revId": "ae490dc99dfabfb397b580d680b3486ad5e81da7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
