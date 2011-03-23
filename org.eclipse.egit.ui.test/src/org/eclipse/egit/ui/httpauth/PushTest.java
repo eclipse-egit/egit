@@ -25,8 +25,6 @@ import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.wizards.clone.SampleTestRepository;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.transport.URIish;
@@ -55,9 +53,8 @@ public class PushTest extends EGitTestCase {
 		localRepoPath = new File(ResourcesPlugin.getWorkspace().getRoot()
 				.getLocation().toFile(), "test1");
 		String branch = Constants.R_HEADS + SampleTestRepository.FIX;
-		Ref ref = createRef(branch);
 		CloneOperation cloneOperation = new CloneOperation(new URIish(
-				remoteRepository.getUri()), true, null, localRepoPath, ref,
+				remoteRepository.getUri()), true, null, localRepoPath, branch,
 				"origin", 30);
 		cloneOperation
 				.setCredentialsProvider(new UsernamePasswordCredentialsProvider(
@@ -67,45 +64,6 @@ public class PushTest extends EGitTestCase {
 		assertTrue(file.exists());
 		localRepository = Activator.getDefault().getRepositoryCache()
 				.lookupRepository(new File(localRepoPath, ".git"));
-	}
-
-	private Ref createRef(final String branch) {
-		Ref ref = new Ref() {
-
-			public String getName() {
-				return branch;
-			}
-
-			public boolean isSymbolic() {
-				return false;
-			}
-
-			public Ref getLeaf() {
-				return null;
-			}
-
-			public Ref getTarget() {
-				return null;
-			}
-
-			public ObjectId getObjectId() {
-				return null;
-			}
-
-			public ObjectId getPeeledObjectId() {
-				return null;
-			}
-
-			public boolean isPeeled() {
-				return false;
-			}
-
-			public Storage getStorage() {
-				return null;
-			}
-
-		};
-		return ref;
 	}
 
 	@Test
