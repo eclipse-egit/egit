@@ -1004,6 +1004,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		RevWalk rw = new RevWalk(repo);
 		try {
 			ObjectId head = repo.resolve(Constants.HEAD);
+			if (head == null)
+				return;
 			RevCommit c = rw.parseCommit(head);
 			graph.selectCommitStored(c);
 		} catch (IOException e) {
