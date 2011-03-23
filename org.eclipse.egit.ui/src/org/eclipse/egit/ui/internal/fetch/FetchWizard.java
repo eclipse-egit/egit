@@ -82,7 +82,23 @@ public class FetchWizard extends Wizard {
 	}
 
 	@Override
+	public boolean canFinish() {
+		if (getContainer().getCurrentPage() == repoPage) {
+			RepositorySelection sel = repoPage.getSelection();
+			if (sel.isConfigSelected()) {
+				RemoteConfig config = sel.getConfig();
+				return !config.getURIs().isEmpty()
+						&& !config.getFetchRefSpecs().isEmpty();
+			}
+		}
+		return super.canFinish();
+	}
+
+	@Override
 	public boolean performFinish() {
+		boolean calledFromRepoPage = false;
+		if (getContainer().getCurrentPage()==repoPage)
+			calledFromRepoPage = true;
 		if (repoPage.getSelection().isConfigSelected()
 				&& refSpecPage.isSaveRequested())
 			saveConfig();
@@ -97,13 +113,10 @@ public class FetchWizard extends Wizard {
 				UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 		final RepositorySelection repoSelection = repoPage.getSelection();
 
-		// even if a RemoteConfig is selected, we need to make sure to
-		// add the RefSpecs from the RefSpec page into the FetchOperation
-		// TODO once the FetchWizard learns to "complete early" (the user
-		// selects a remote configuration and the wizard allows to "finish"
-		// because there are some RefSpecs in that configuration), we need
-		// to call the other constructor
-		if (repoSelection.isConfigSelected())
+		if (calledFromRepoPage)
+			op = new FetchOperationUI(localDb, repoSelection.getConfig(),
+					timeout, false);
+		else if (repoSelection.isConfigSelected())
 			op = new FetchOperationUI(localDb, repoSelection.getConfig()
 					.getURIs().get(0), refSpecPage.getRefSpecs(), timeout,
 					false);
@@ -116,7 +129,10 @@ public class FetchWizard extends Wizard {
 			op.setCredentialsProvider(new UsernamePasswordCredentialsProvider(
 					credentials.getUser(), credentials.getPassword()));
 
-		op.setTagOpt(refSpecPage.getTagOpt());
+		// even if a RemoteConfig is selected, we need to make sure to
+		// add the RefSpecs from the RefSpec page into the FetchOperation
+		if (!calledFromRepoPage)
+			op.setTagOpt(refSpecPage.getTagOpt());
 		op.start();
 
 		repoPage.saveUriInPrefs();
