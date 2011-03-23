@@ -35,7 +35,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
@@ -47,7 +47,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.dialogs.FilteredTree;
+import org.eclipse.ui.dialogs.PatternFilter;
 
 /**
  * Select a repository, add or clone
@@ -57,7 +59,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 	private final RepositoryUtil util;
 
-	private TableViewer tv;
+	private TreeViewer tv;
 
 	private Button addRepo;
 
@@ -94,10 +96,24 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
 
-		tv = new TableViewer(main, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL
-				| SWT.BORDER);
-		tv.setContentProvider(new RepositoriesViewContentProvider());
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(tv.getTable());
+		// use a filtered tree
+		FilteredTree tree = new FilteredTree(main, SWT.SINGLE | SWT.BORDER
+				| SWT.H_SCROLL | SWT.V_SCROLL, new PatternFilter(), true);
+
+		tv = tree.getViewer();
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(tree);
+		tv.setContentProvider(new RepositoriesViewContentProvider() {
+			// we never show children, only the Repository nodes
+			@Override
+			public Object[] getChildren(Object parentElement) {
+				return null;
+			}
+
+			@Override
+			public boolean hasChildren(Object element) {
+				return false;
+			}
+		});
 		tv.setLabelProvider(new RepositoriesViewLabelProvider());
 
 		Composite tb = new Composite(main, SWT.NONE);
@@ -187,7 +203,7 @@ public class GitSelectRepositoryPage extends WizardPage {
 			// and select it if nothing else is selected
 			String repoDir = settings.get(LAST_SELECTED_REPO_PREF);
 			if (repoDir != null) {
-				for (TableItem item : tv.getTable().getItems()) {
+				for (TreeItem item : tv.getTree().getItems()) {
 					RepositoryNode node = (RepositoryNode) item.getData();
 					if (node.getRepository().getDirectory().getPath().equals(
 							repoDir)) {
