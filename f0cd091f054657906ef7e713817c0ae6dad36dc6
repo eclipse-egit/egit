@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL3H///z4\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-03-01T22:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL3H///0g\u003d",
+      "revId": "f0cd091f054657906ef7e713817c0ae6dad36dc6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL3H///0c\u003d",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2011-03-01T21:58:56Z",
       "side": 1,
       "message": "typo: s/fetchExist/fetchExists/\n\ncompare to property definition below",
+      "revId": "f0cd091f054657906ef7e713817c0ae6dad36dc6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///zo\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1780,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-03-01T22:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL3H///0c\u003d",
       "revId": "f0cd091f054657906ef7e713817c0ae6dad36dc6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL3H///z0\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1802,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-03-01T22:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL3H///0Y\u003d",
+      "revId": "f0cd091f054657906ef7e713817c0ae6dad36dc6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL3H///0U\u003d",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2011-03-01T21:58:56Z",
       "side": 1,
       "message": "typo: s/fetchExist/fetchExists/\n\ncompare to property definition below",
+      "revId": "f0cd091f054657906ef7e713817c0ae6dad36dc6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///zw\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1824,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-03-01T22:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL3H///0U\u003d",
       "revId": "f0cd091f054657906ef7e713817c0ae6dad36dc6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL3H///zs\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1843,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-03-01T22:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL3H///0Q\u003d",
+      "revId": "f0cd091f054657906ef7e713817c0ae6dad36dc6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL3H///0M\u003d",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2011-03-01T21:58:56Z",
       "side": 1,
       "message": "typo: s/fetchExist/fetchExists/\n\ncompare to property definition below",
+      "revId": "f0cd091f054657906ef7e713817c0ae6dad36dc6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///zk\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1868,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-03-01T22:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL3H///0M\u003d",
       "revId": "f0cd091f054657906ef7e713817c0ae6dad36dc6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
