@@ -336,9 +336,8 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		Repository myRepository = lookupRepository(repositoryDir);
 		URIish uri = new URIish("file:///" + myRepository.getDirectory());
 		File workdir = new File(testDirectory, CHILDREPO);
-		Ref master = myRepository.getRef("refs/heads/master");
 		CloneOperation clop = new CloneOperation(uri, true, null, workdir,
-				master, "origin", 0);
+				"refs/heads/master", "origin", 0);
 		clop.run(null);
 		return new File(workdir, Constants.DOT_GIT);
 	}
