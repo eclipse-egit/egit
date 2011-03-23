@@ -22,7 +22,6 @@ import java.util.HashMap;
 import javax.crypto.spec.PBEKeySpec;
 
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.equinox.security.storage.EncodingUtils;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
@@ -36,8 +35,6 @@ import org.junit.Test;
 public class EGitSecureStoreTest {
 
 	ISecurePreferences secureStoreForTest;
-
-	TestUtils testUtils = new TestUtils();
 
 	EGitSecureStore store;
 
