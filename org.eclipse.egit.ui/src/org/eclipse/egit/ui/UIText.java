@@ -1678,6 +1678,15 @@ public class UIText extends NLS {
 	public static String GlobalConfigurationPreferencePage_repositorySettingNoRepositories;
 
 	/** */
+	public static String ConfigureRemoteCommand_RemoteAlreadyExistsMessage;
+
+	/** */
+	public static String ConfigureRemoteCommand_RemoteNameDialogMessage;
+
+	/** */
+	public static String ConfigureRemoteCommand_RemoteNameDialogTitle;
+
+	/** */
 	public static String ConfigureRemoteWizard_WizardTitle_New;
 
 	/** */
