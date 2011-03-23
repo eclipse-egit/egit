@@ -20,18 +20,21 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.resource.CompositeImageDescriptor;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
+import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.graphics.Image;
@@ -49,10 +52,37 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 	 */
 	private Map<Image, Image> decoratedImages = new HashMap<Image, Image>();
 
+	private Image tagImage = UIIcons.TAG.createImage();
+
+	private Image lightweightTagImage = SWTUtils.getDecoratedImage(tagImage,
+			UIIcons.OVR_LIGHTTAG);
+
 	@Override
 	public Image getImage(Object element) {
-		return decorateImage(
-				((RepositoryTreeNode) element).getType().getIcon(), element);
+		RepositoryTreeNode node = (RepositoryTreeNode) element;
+		if (node.getType() == RepositoryTreeNodeType.TAG) {
+			// determine if we have a lightweight tag and
+			// use the corresponding icon
+			RevObject any;
+			try {
+				ObjectId id = node.getRepository().resolve(
+						((Ref) node.getObject()).getName());
+				any = new RevWalk(node.getRepository()).parseAny(id);
+			} catch (MissingObjectException e) {
+				Activator.logError(e.getMessage(), e);
+				return null;
+			} catch (IOException e) {
+				Activator.logError(e.getMessage(), e);
+				return null;
+			}
+			if (any instanceof RevCommit)
+				// lightweight tag
+				return decorateImage(lightweightTagImage, element);
+			else
+				// annotated or signed tag
+				return decorateImage(node.getType().getIcon(), element);
+		} else
+			return decorateImage(node.getType().getIcon(), element);
 	}
 
 	@Override
@@ -72,6 +102,8 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 			image.dispose();
 		}
 		decoratedImages.clear();
+		tagImage.dispose();
+		lightweightTagImage.dispose();
 		super.dispose();
 	}
 
