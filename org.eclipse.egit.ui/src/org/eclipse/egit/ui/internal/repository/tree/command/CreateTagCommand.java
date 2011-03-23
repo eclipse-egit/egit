@@ -110,6 +110,11 @@ public class CreateTagCommand extends RepositoriesViewCommandHandler<RepositoryT
 		return null;
 	}
 
+	@Override
+	public void setEnabled(Object evaluationContext) {
+		enableWhenRepositoryHaveHead(evaluationContext);
+	}
+
 	private RevObject getTagTarget(ObjectId objectId, Repository repo)
 			throws ExecutionException {
 		try {

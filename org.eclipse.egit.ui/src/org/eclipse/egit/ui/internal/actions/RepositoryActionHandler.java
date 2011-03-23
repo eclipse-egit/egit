@@ -496,4 +496,19 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		}
 		return (message == null);
 	}
+
+	/**
+	 *
+	 * @return {@code true} when {@link Constants#HEAD} can be resolved,
+	 *         {@code false} otherwise
+	 */
+	protected boolean containsHead() {
+		try {
+			return getRepository().resolve(Constants.HEAD) != null;
+		} catch (Exception e) {
+			// do nothing
+		}
+
+		return false;
+	}
 }

@@ -20,6 +20,7 @@ import org.eclipse.egit.core.ContainerTreeIterator.ResourceEntry;
 import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.IDecoratableResource.Staged;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEntry;
@@ -286,6 +287,9 @@ public class DecoratableResourceHelper {
 			} else
 				return repository.getFullBranch().substring(0, 7) + "..."; //$NON-NLS-1$
 		}
+
+		if (head == null || head.getObjectId() == null)
+			return UIText.DecoratableResourceHelper_noHead;
 
 		return repository.getBranch();
 	}
