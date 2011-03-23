@@ -43,6 +43,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.util.FileUtils;
 
 /**
  * Helper class for creating and filling a test repository
@@ -119,13 +120,14 @@ public class TestRepository {
 			JGitInternalException, WrongRepositoryStateException {
 		String repoPath = repository.getWorkTree().getAbsolutePath();
 		File file = new File(repoPath, "dummy");
-		file.createNewFile();
+		if (!file.exists())
+			FileUtils.createNewFile(file);
 		track(file);
 		return commit(message);
 	}
 
 	/**
-	 * Create new file
+	 * Create a file or get an existing one
 	 *
 	 * @param project
 	 *            instance of project inside with file will be created
@@ -137,10 +139,11 @@ public class TestRepository {
 	public File createFile(IProject project, String name) throws IOException {
 		String path = project.getLocation().append(name).toOSString();
 		int lastSeparator = path.lastIndexOf(File.separator);
-		new File(path.substring(0, lastSeparator)).mkdirs();
+		FileUtils.mkdirs(new File(path.substring(0, lastSeparator)), true);
 
 		File file = new File(path);
-		file.createNewFile();
+		if (!file.exists())
+			FileUtils.createNewFile(file);
 
 		return file;
 	}
