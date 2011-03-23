@@ -141,7 +141,9 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		assertEquals(1, syncViewTree.getAllItems().length);
 	}
 
-	@Test public void shouldOpenCompareEditorInGitChangeSet() throws Exception {
+	@Test
+	@Ignore // failing rather often on Hudson
+	public void shouldOpenCompareEditorInGitChangeSet() throws Exception {
 		// given
 		resetRepositoryToCreateInitialTag();
 		changeFilesInProject();
@@ -348,7 +350,9 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		assertEquals(1, workingTree.getNodes(name).size());
 	}
 
-	@Test public void shouldShowCompareEditorForNonWorkspaceFileFromSynchronization()
+	@Test
+	@Ignore // failing rather often on Hudson
+	public void shouldShowCompareEditorForNonWorkspaceFileFromSynchronization()
 			throws Exception {
 		// given
 		String content = "file content";
