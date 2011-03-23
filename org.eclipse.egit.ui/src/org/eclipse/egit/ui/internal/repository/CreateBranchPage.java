@@ -119,7 +119,7 @@ class CreateBranchPage extends WizardPage {
 	 * @param repo
 	 *            the repository
 	 * @param baseCommit
-	 *            the commit to base the new branch on, must not be null
+	 *            the commit to base the new branch on, may be null
 	 */
 	public CreateBranchPage(Repository repo, RevCommit baseCommit) {
 		super(CreateBranchPage.class.getName());
