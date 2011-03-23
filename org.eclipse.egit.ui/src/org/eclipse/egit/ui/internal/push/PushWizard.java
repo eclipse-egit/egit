@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.push;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -127,7 +128,23 @@ public class PushWizard extends Wizard {
 	}
 
 	@Override
+	public boolean canFinish() {
+		if (getContainer().getCurrentPage() == repoPage) {
+			RepositorySelection sel = repoPage.getSelection();
+			if (sel.isConfigSelected()) {
+				RemoteConfig config = sel.getConfig();
+				return !config.getPushURIs().isEmpty()
+						|| !config.getURIs().isEmpty();
+			}
+		}
+		return super.canFinish();
+	}
+
+	@Override
 	public boolean performFinish() {
+		boolean calledFromRepoPage = false;
+		if (getContainer().getCurrentPage()==repoPage)
+			calledFromRepoPage = true;
 		if (repoPage.getSelection().isConfigSelected()
 				&& refSpecPage.isSaveRequested()) {
 			saveRefSpecs();
@@ -139,7 +156,7 @@ public class PushWizard extends Wizard {
 				return false;
 		}
 
-		final PushOperation operation = createPushOperation();
+		final PushOperation operation = createPushOperation(calledFromRepoPage);
 		if (operation == null)
 			return false;
 		UserPasswordCredentials credentials = repoPage.getCredentials();
@@ -187,11 +204,35 @@ public class PushWizard extends Wizard {
 		}
 	}
 
-	private PushOperation createPushOperation() {
+	private PushOperation createPushOperation(boolean calledFromRepoPage) {
 		try {
 			final PushOperationSpecification spec;
 			final RemoteConfig config = repoPage.getSelection().getConfig();
-			if (confirmPage.isConfirmed()) {
+			if (calledFromRepoPage) {
+				// obtain the push ref specs from the configuration
+				// use our own list here, as the config returns a non-modifiable
+				// list
+				final Collection<RefSpec> fetchSpecs = new ArrayList<RefSpec>();
+				fetchSpecs.addAll(config.getPushRefSpecs());
+				if (fetchSpecs.isEmpty())
+					// add the default if there are no specs in the
+					// configuration
+					fetchSpecs.add(PushOperationUI.DEFAULT_PUSH_REF_SPEC);
+				final Collection<RemoteRefUpdate> updates = Transport
+						.findRemoteRefUpdatesFor(localDb, fetchSpecs,
+								fetchSpecs);
+				if (updates.isEmpty()) {
+					ErrorDialog.openError(getShell(),
+							UIText.PushWizard_missingRefsTitle, null,
+							new Status(IStatus.ERROR, Activator.getPluginId(),
+									UIText.PushWizard_missingRefsMessage));
+					return null;
+				}
+				spec = new PushOperationSpecification();
+				for (final URIish uri : repoPage.getSelection().getPushURIs())
+					spec.addURIRefUpdates(uri, ConfirmationPage
+							.copyUpdates(updates));
+			} else if (confirmPage.isConfirmed()) {
 				final PushOperationResult confirmedResult = confirmPage
 						.getConfirmedResult();
 				spec = confirmedResult.deriveSpecification(confirmPage
