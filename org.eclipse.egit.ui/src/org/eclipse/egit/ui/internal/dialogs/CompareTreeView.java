@@ -74,7 +74,8 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.WorkingTreeIterator;
+import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
+import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
 import org.eclipse.jgit.treewalk.filter.OrTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
@@ -573,7 +574,19 @@ public class CompareTreeView extends ViewPart {
 					if (relPath.length() > 0)
 						orFilters.add(PathFilter.create(relPath));
 				}
-				if (orFilters.size() > 1)
+				if (checkIgnored) {
+					if (orFilters.size() > 1) {
+						TreeFilter andFilter = AndTreeFilter.create(new NotIgnoredFilter(baseTreeIndex),
+								OrTreeFilter.create(orFilters));
+						tw.setFilter(andFilter);
+					} else if (orFilters.size() == 1) {
+						TreeFilter andFilter = AndTreeFilter.create(new NotIgnoredFilter(baseTreeIndex),
+								orFilters.get(0));
+						tw.setFilter(andFilter);
+					} else
+						tw.setFilter(new NotIgnoredFilter(baseTreeIndex));
+
+				} else if (orFilters.size() > 1)
 					tw.setFilter(OrTreeFilter.create(orFilters));
 				else if (orFilters.size() == 1)
 					tw.setFilter(orFilters.get(0));
@@ -590,11 +603,6 @@ public class CompareTreeView extends ViewPart {
 						compareTreeIndex, AbstractTreeIterator.class);
 				AbstractTreeIterator baseVersionIterator = tw.getTree(
 						baseTreeIndex, AbstractTreeIterator.class);
-				if (checkIgnored
-						&& baseVersionIterator != null
-						&& ((WorkingTreeIterator) baseVersionIterator)
-								.isEntryIgnored())
-					continue;
 				if (compareVersionIterator != null
 						&& baseVersionIterator != null) {
 					monitor.setTaskName(baseVersionIterator
@@ -888,6 +896,16 @@ public class CompareTreeView extends ViewPart {
 			for (Object child : children) {
 				IPath path = new Path(repositoryMapping
 						.getRepoRelativePath((IResource) child));
+				boolean isFile = ((IResource) child).getType() == IResource.FILE;
+
+				// each path that is not ignored creates an entry in either
+				// compareVersionMap or addedPaths, so we can check if a path
+				// was ignored by looking into these tables
+				if (isFile && !compareVersionMap.containsKey(path)
+						&& !addedPaths.contains(path)) {
+					rebuildArray = true;
+					continue;
+				}
 				if (!showEquals && equalContentPaths.contains(path)) {
 					rebuildArray = true;
 					continue;
