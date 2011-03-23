@@ -377,7 +377,7 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		editor.setFocus();
 
 		assertNotNull(editor);
-		assertThat(editor.bot().styledText(1).getText(), equalTo(content));
+		assertThat(editor.bot().styledText(0).getText(), equalTo(content));
 	}
 
 	// this test always fails with cause:
