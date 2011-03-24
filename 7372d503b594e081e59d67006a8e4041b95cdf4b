@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL23///ZQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-22T08:25:12Z",
+      "side": 1,
+      "message": "Good idea.",
+      "parentUuid": "AAAL23///cY\u003d",
+      "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL23///cQ\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2011-02-21T17:53:01Z",
       "side": 1,
       "message": "Is this an eGit convention? I\u0027d have used  baseref \u003d\u003d null ? null : baseref.getName()  to avoid the negation.",
+      "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///ZM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-22T08:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL23///cQ\u003d",
       "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL23///ZI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-22T08:25:12Z",
+      "side": 1,
+      "message": "The doc was wrong.",
+      "parentUuid": "AAAL23///cM\u003d",
+      "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL23///cI\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2011-02-21T17:53:01Z",
       "side": 1,
       "message": "Why is Reference capitalised and branch and tag are not?",
+      "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///ZE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-22T08:25:12Z",
+      "side": 1,
+      "message": "This line is not part of this change.",
+      "parentUuid": "AAAL23///cI\u003d",
       "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL23///ZA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-22T08:25:12Z",
+      "side": 1,
+      "message": "This line is not part of this change.",
+      "parentUuid": "AAAL23///b8\u003d",
+      "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL23///b0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2011-02-21T17:53:01Z",
       "side": 1,
       "message": "Why do we have commit messages in here if we are implementing  \u0027switch to\u0027?",
+      "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///Y8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-22T08:25:12Z",
+      "side": 1,
+      "message": "This line is not part of this change.",
+      "parentUuid": "AAAL23///b0\u003d",
       "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
