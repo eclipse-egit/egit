@@ -3,7 +3,7 @@
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
- * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2010, 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,25 +33,20 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.CheckoutResult.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.team.core.TeamException;
 
 /**
  * This class implements checkouts of a specific revision. A check is made that
  * this can be done without data loss.
  */
 public class BranchOperation implements IEGitOperation {
-
 	private final Repository repository;
 
-	private final String refName;
-
-	private final ObjectId commitId;
+	private final String target;
 
 	private CheckoutResult result;
 
@@ -59,25 +54,12 @@ public class BranchOperation implements IEGitOperation {
 	 * Construct a {@link BranchOperation} object for a {@link Ref}.
 	 *
 	 * @param repository
-	 * @param refName
-	 *            Name of git ref to checkout
+	 * @param target
+	 *            a {@link Ref} name or {@link RevCommit} id
 	 */
-	public BranchOperation(Repository repository, String refName) {
+	public BranchOperation(Repository repository, String target) {
 		this.repository = repository;
-		this.refName = refName;
-		this.commitId = null;
-	}
-
-	/**
-	 * Construct a {@link BranchOperation} object for a commit.
-	 *
-	 * @param repository
-	 * @param commit
-	 */
-	public BranchOperation(Repository repository, ObjectId commit) {
-		this.repository = repository;
-		this.refName = null;
-		this.commitId = commit;
+		this.target = target;
 	}
 
 	public void execute(IProgressMonitor m) throws CoreException {
@@ -87,20 +69,16 @@ public class BranchOperation implements IEGitOperation {
 		else
 			monitor = m;
 
-		if (refName != null && !refName.startsWith(Constants.R_REFS))
-			throw new TeamException(NLS.bind(
-					CoreText.BranchOperation_CheckoutOnlyBranchOrTag, refName));
-
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
 			public void run(IProgressMonitor pm) throws CoreException {
 				IProject[] validProjects = ProjectUtil
 						.getValidProjects(repository);
 				pm.beginTask(NLS.bind(
-						CoreText.BranchOperation_performingBranch, refName), 1);
+						CoreText.BranchOperation_performingBranch, target), 1);
 
 				CheckoutCommand co = new Git(repository).checkout();
-				co.setName(getTarget());
+				co.setName(target);
 
 				try {
 					co.call();
@@ -134,12 +112,6 @@ public class BranchOperation implements IEGitOperation {
 	 */
 	public CheckoutResult getResult() {
 		return result;
-	}
-
-	private String getTarget() {
-		if (refName != null)
-			return refName;
-		return commitId.name();
 	}
 
 	void retryDelete(List<String> pathList) {

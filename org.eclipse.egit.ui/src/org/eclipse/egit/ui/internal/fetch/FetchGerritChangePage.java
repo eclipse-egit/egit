@@ -435,9 +435,10 @@ public class FetchGerritChangePage extends WizardPage {
 									monitor.worked(1);
 								}
 								if (doCheckout || doCreateTag) {
-									monitor.setTaskName(UIText.FetchGerritChangePage_CheckingOutTaskName);
-									new BranchOperation(repository, commit)
-											.execute(monitor);
+									monitor
+											.setTaskName(UIText.FetchGerritChangePage_CheckingOutTaskName);
+									new BranchOperation(repository, commit
+											.name()).execute(monitor);
 									monitor.worked(1);
 								}
 							} catch (RuntimeException e) {
