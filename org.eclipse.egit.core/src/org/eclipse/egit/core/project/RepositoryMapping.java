@@ -255,7 +255,7 @@ public class RepositoryMapping {
 	/**
 	 * @return The GIT DIR absolute path
 	 */
-	public IPath getGitDirAbsolutePath() {
+	public synchronized IPath getGitDirAbsolutePath() {
 		if (gitDirAbsolutePath == null)
 			gitDirAbsolutePath = container.getLocation()
 					.append(getGitDirPath());

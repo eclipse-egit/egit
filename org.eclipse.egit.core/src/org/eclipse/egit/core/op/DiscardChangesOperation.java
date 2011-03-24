@@ -58,7 +58,8 @@ public class DiscardChangesOperation implements IEGitOperation {
 	 * @param files
 	 */
 	public DiscardChangesOperation(IResource[] files) {
-		this.files = files;
+		this.files = new IResource[files.length];
+		System.arraycopy(files, 0, this.files, 0, files.length);
 		schedulingRule = calcRefreshRule(files);
 	}
 
