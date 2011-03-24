@@ -105,7 +105,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 	 * @param repository
 	 *            the {@link Repository}
 	 * @param refToMark
-	 *            the name of the {@link Ref} to mark initially
+	 *            the name of the {@link Ref} to mark initially; may be null
 	 */
 	public AbstractBranchSelectionDialog(Shell parentShell,
 			Repository repository, String refToMark) {
