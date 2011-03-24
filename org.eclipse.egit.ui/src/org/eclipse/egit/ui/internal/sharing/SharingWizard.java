@@ -9,7 +9,11 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.sharing;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -24,6 +28,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.team.ui.IConfigurationWizard;
 import org.eclipse.team.ui.IConfigurationWizardExtension;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * The dialog used for activating Team>Share, i.e. to create a new
@@ -67,6 +72,23 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 						throws InvocationTargetException {
 					try {
 						op.execute(monitor);
+						PlatformUI.getWorkbench().getDisplay()
+								.syncExec(new Runnable() {
+									public void run() {
+										Set<File> filesToAdd = new HashSet<File>();
+										// collect all files first
+										for (Entry<IProject, File> entry : existingPage
+												.getProjects(true).entrySet())
+											filesToAdd.add(entry.getValue());
+										// add the files to the repository view
+										for (File file : filesToAdd)
+											Activator
+													.getDefault()
+													.getRepositoryUtil()
+													.addConfiguredRepository(
+															file);
+									}
+								});
 					} catch (CoreException ce) {
 						throw new InvocationTargetException(ce);
 					}
