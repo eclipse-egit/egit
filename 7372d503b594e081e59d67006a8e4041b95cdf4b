@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///cY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2011-02-21T17:53:01Z",
+      "side": 1,
+      "message": "This could be a configurable value in the future - some people have bigger screens than others",
+      "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///cQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2011-02-21T17:53:01Z",
+      "side": 1,
+      "message": "Is this an eGit convention? I\u0027d have used  baseref \u003d\u003d null ? null : baseref.getName()  to avoid the negation.",
+      "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///cM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2011-02-21T17:53:01Z",
+      "side": 1,
+      "message": "This doc has changed, but no code diffs. Is there any code which has a dependency on it?",
+      "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///cI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2011-02-21T17:53:01Z",
+      "side": 1,
+      "message": "Why is Reference capitalised and branch and tag are not?",
+      "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///b8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2011-02-21T17:53:01Z",
+      "side": 1,
+      "message": "What\u0027s the significance of the hashes in this message?",
+      "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///b0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2011-02-21T17:53:01Z",
+      "side": 1,
+      "message": "Why do we have commit messages in here if we are implementing  \u0027switch to\u0027?",
+      "revId": "7372d503b594e081e59d67006a8e4041b95cdf4b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
