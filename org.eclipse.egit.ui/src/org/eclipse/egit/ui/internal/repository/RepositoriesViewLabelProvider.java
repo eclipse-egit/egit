@@ -67,6 +67,8 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 			try {
 				ObjectId id = node.getRepository().resolve(
 						((Ref) node.getObject()).getName());
+				if (id == null)
+					return null;
 				any = new RevWalk(node.getRepository()).parseAny(id);
 			} catch (MissingObjectException e) {
 				Activator.logError(e.getMessage(), e);
