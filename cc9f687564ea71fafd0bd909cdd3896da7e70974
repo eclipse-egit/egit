@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n//+mM\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-03-24T12:21:35Z",
+      "side": 1,
+      "message": "All your coding changes only speak about \u0027failures\u0027. I would consequently only call this \"Show failures during....\"",
+      "revId": "cc9f687564ea71fafd0bd909cdd3896da7e70974",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
