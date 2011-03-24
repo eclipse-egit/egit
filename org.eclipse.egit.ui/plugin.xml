@@ -54,24 +54,12 @@
                label="%SynchronizeWith_label"
                menubarPath="team.main/group3"/>
          <action
-               class="org.eclipse.egit.ui.internal.actions.TagAction"
-               icon="$nl$/icons/obj16/tags.gif"
-               id="org.eclipse.egit.ui.internal.actions.TagAction"
-               label="%TagAction_label"
-               menubarPath="team.main/group5"/>
-         <action
                class="org.eclipse.egit.ui.internal.actions.MergeAction"
                definitionId="org.eclipse.egit.ui.team.Merge"
                icon="$nl$/icons/obj16/merge.gif"
                id="org.eclipse.egit.ui.internal.actions.MergeAction"
                label="%MergeAction_label"
                menubarPath="team.main/group4"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.BranchAction"
-               icon="$nl$/icons/obj16/branch_obj.gif"
-               id="org.eclipse.egit.ui.internal.actions.BranchAction"
-               label="%BranchAction_label"
-               menubarPath="team.main/group5"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.PullFromUpstreamConfigAction"
                definitionId="org.eclipse.egit.ui.team.Pull"
@@ -2400,6 +2388,81 @@
                </visibleWhen>
             </menu>
             <separator
+                  name="org.eclipse.egit.ui.AdvancedSeparator">
+            </separator>
+            <menu
+                  label="Ad&amp;vanced">
+               <command
+                     commandId="org.eclipse.egit.ui.team.RenameBranch"
+                     label="Rename Branch..."
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                        <iterate>
+                           <and>
+                              <adapt
+                                    type="org.eclipse.core.resources.IProject">
+                                 <test
+                                       property="GitResource.isShared">
+                                 </test>
+                              </adapt>
+                           </and>
+                        </iterate>
+                     </and>
+                  </visibleWhen>
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.team.DeleteBranch"
+                     label="Delete Branch..."
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                        <iterate>
+                           <and>
+                              <adapt
+                                    type="org.eclipse.core.resources.IProject">
+                                 <test
+                                       property="GitResource.isShared">
+                                 </test>
+                              </adapt>
+                           </and>
+                        </iterate>
+                     </and>
+                  </visibleWhen>
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.team.Tag"
+                     label="%TagAction_label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                        <iterate>
+                           <and>
+                              <adapt
+                                    type="org.eclipse.core.resources.IProject">
+                                 <test
+                                       property="GitResource.isShared">
+                                 </test>
+                              </adapt>
+                           </and>
+                        </iterate>
+                     </and>
+                  </visibleWhen>
+               </command>
+            </menu>
+            <separator
                   name="applyPatchGroup"
                   visible="false">
             </separator>
@@ -3027,6 +3090,18 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.ConfigurePushActionHandler"
             id="org.eclipse.egit.ui.team.ConfigurePush"
             name="%ConfigureUpstreamPushCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.DeleteBranchActionHandler"
+            id="org.eclipse.egit.ui.team.DeleteBranch"
+            name="Delete Branch">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.RenameBranchActionHandler"
+            id="org.eclipse.egit.ui.team.RenameBranch"
+            name="Rename Branch">
       </command>
    </extension>
    <extension
