@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///Yg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2011-02-22T10:49:29Z",
+      "side": 1,
+      "message": "I\u0027d personally rather see an \u003d\u003d null rather than a !\u003d null and then flip the branches mentally, which was the original thought (rather than using an in-line tertiary if operator vs an if statement), in other words:\n\nif(baseref\u003d\u003dnull)\n  this.mybaseref \u003d null\nelse\n  this.mybaseref \u003d baseref.getName()\n\nor\n\nthis.mybaseref \u003d (baseref\u003d\u003dnull ? null : baseref.getName())\n\nI\u0027m fine with the ? operator though",
+      "revId": "5acdec7a5d9fd6f296574690f35d3726347e4b6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///YY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2011-02-22T10:49:29Z",
+      "side": 1,
+      "message": "Is this comment change supposed to be part of this changeset?",
+      "revId": "5acdec7a5d9fd6f296574690f35d3726347e4b6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

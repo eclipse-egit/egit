@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///YU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchWizard.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2011-02-22T10:49:29Z",
+      "side": 0,
+      "message": "Is this comment change supposed to be part of this changeset?",
+      "revId": "aabcc25cd814d69bea1827ce0d857265f705ad5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
