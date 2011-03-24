@@ -13,7 +13,10 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,10 +127,9 @@ public class IgnoreOperation implements IEGitOperation {
 	}
 
 	private void addIgnore(IProgressMonitor monitor, IResource resource)
-			throws UnsupportedEncodingException, CoreException {
+			throws UnsupportedEncodingException, CoreException, IOException {
 		IContainer container = resource.getParent();
 		String entry = "/" + resource.getName() + "\n"; //$NON-NLS-1$  //$NON-NLS-2$
-		ByteArrayInputStream entryBytes = asStream(entry);
 
 		if (container instanceof IWorkspaceRoot) {
 			Repository repository = RepositoryMapping.getMapping(
@@ -153,7 +155,9 @@ public class IgnoreOperation implements IEGitOperation {
 		} else {
 			IFile gitignore = container.getFile(new Path(
 					Constants.GITIGNORE_FILENAME));
+			entry = getEntry(gitignore.getLocation().toFile(), entry);
 			IProgressMonitor subMonitor = new SubProgressMonitor(monitor, 1);
+			ByteArrayInputStream entryBytes = asStream(entry);
 			if (gitignore.exists())
 				gitignore.appendContents(entryBytes, true, true, subMonitor);
 			else
@@ -161,16 +165,43 @@ public class IgnoreOperation implements IEGitOperation {
 		}
 	}
 
+	private boolean prependNewline(File file) throws IOException {
+		boolean prepend = false;
+		long length = file.length();
+		if (length > 0) {
+			RandomAccessFile raf = new RandomAccessFile(file, "r"); //$NON-NLS-1$
+			try {
+				// Read the last byte and see it if is a newline
+				ByteBuffer buffer = ByteBuffer.allocate(1);
+				FileChannel channel = raf.getChannel();
+				channel.position(length - 1);
+				if (channel.read(buffer) > 0) {
+					buffer.rewind();
+					prepend = buffer.get() != '\n';
+				}
+			} finally {
+				raf.close();
+			}
+		}
+		return prepend;
+	}
+
+	private String getEntry(File file, String entry) throws IOException {
+		return prependNewline(file) ? "\n" + entry : entry; //$NON-NLS-1$
+	}
+
 	private void updateGitIgnore(File gitIgnore, String entry)
 			throws CoreException {
 		try {
-			if (!gitIgnore.exists())
+			if (!gitIgnore.exists()) {
 				if (!gitIgnore.createNewFile()) {
 					String error = NLS.bind(
 							CoreText.IgnoreOperation_creatingFailed,
 							gitIgnore.getAbsolutePath());
 					throw new CoreException(Activator.error(error, null));
 				}
+			} else
+				entry = getEntry(gitIgnore, entry);
 
 			FileOutputStream os = new FileOutputStream(gitIgnore, true);
 			try {
