@@ -151,8 +151,8 @@ public class SwitchToMenu extends ContributionItem implements
 				item.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
-						new BranchOperationUI(repository, entry.getValue()
-								.getName()).start();
+						BranchOperationUI.checkout(repository,
+								entry.getValue().getName()).start();
 					}
 				});
 			}
@@ -163,7 +163,7 @@ public class SwitchToMenu extends ContributionItem implements
 			others.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					new BranchOperationUI(repository).start();
+					BranchOperationUI.branch(repository).start();
 				}
 			});
 		} catch (IOException e) {
