@@ -26,7 +26,7 @@ public class BranchActionHandler extends RepositoryActionHandler {
 		final Repository repository = getRepository(true, event);
 		if (repository == null)
 			return null;
-		new BranchOperationUI(repository).start();
+		BranchOperationUI.branch(repository).start();
 		return null;
 	}
 
