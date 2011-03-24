@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n///rg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullFromUpstreamActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-17T14:59:44Z",
+      "side": 1,
+      "message": "Style-nit: no brackets around single line blocks",
+      "revId": "860b93d26086ffbf1328384f90da39558f126d14",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///rk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullFromUpstreamActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-17T14:59:44Z",
+      "side": 1,
+      "message": "I think this can not happen anymore, so this check can be removed",
+      "revId": "860b93d26086ffbf1328384f90da39558f126d14",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
