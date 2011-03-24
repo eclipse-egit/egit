@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n///Yc\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/BranchAndResetActionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-03-21T18:33:26Z",
+      "side": 1,
+      "message": "white space error",
+      "revId": "2a4bd9fac53d1e38db1b32f32fe7bdbcde0a0647",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
