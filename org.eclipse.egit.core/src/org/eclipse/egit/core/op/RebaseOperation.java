@@ -118,7 +118,7 @@ public class RebaseOperation implements IEGitOperation {
 
 	/**
 	 * @return the result of calling {@link #execute(IProgressMonitor)}, or
-	 *         <code>null</code> is this has not been executed yet
+	 *         <code>null</code> if this has not been executed yet
 	 */
 	public RebaseResult getResult() {
 		return result;
