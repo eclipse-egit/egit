@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL23///YE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-22T11:14:01Z",
+      "side": 1,
+      "message": "This code is not part of this change.",
+      "parentUuid": "AAAL23///Yg\u003d",
+      "revId": "5acdec7a5d9fd6f296574690f35d3726347e4b6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL23///YY\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2011-02-22T10:49:29Z",
       "side": 1,
       "message": "Is this comment change supposed to be part of this changeset?",
+      "revId": "5acdec7a5d9fd6f296574690f35d3726347e4b6c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///YA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-22T11:14:01Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "AAAL23///YY\u003d",
       "revId": "5acdec7a5d9fd6f296574690f35d3726347e4b6c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false

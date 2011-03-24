@@ -16,6 +16,24 @@
       "revId": "aabcc25cd814d69bea1827ce0d857265f705ad5e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///YI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchWizard.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-22T11:14:01Z",
+      "side": 0,
+      "message": "Yes",
+      "parentUuid": "AAAL23///YU\u003d",
+      "revId": "aabcc25cd814d69bea1827ce0d857265f705ad5e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
