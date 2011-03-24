@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n//+vY\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 2401,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-03-23T15:48:13Z",
+      "side": 1,
+      "message": "White space style nit",
+      "revId": "13cc86b0db14c2e4e25767b3e3bf511a90025b7b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n//+vc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-03-23T15:48:13Z",
+      "side": 1,
+      "message": "I think that in feature this should be configurable via preferences.",
+      "revId": "13cc86b0db14c2e4e25767b3e3bf511a90025b7b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
