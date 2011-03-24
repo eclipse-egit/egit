@@ -142,7 +142,7 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 		newButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				CreateBranchWizard wiz = new CreateBranchWizard(repo,
-						refFromDialog());
+						refNameFromDialog());
 				if (new WizardDialog(getShell(), wiz).open() == Window.OK) {
 					String newRefName = wiz.getNewBranchName();
 					try {
