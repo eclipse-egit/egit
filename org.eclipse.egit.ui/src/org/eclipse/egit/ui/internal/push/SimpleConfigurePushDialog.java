@@ -115,6 +115,25 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 	}
 
 	/**
+	 * @param shell
+	 * @param repository
+	 * @param remoteName
+	 *            the remote to use
+	 * @return the dialog to open, or null
+	 */
+	public static Dialog getDialog(Shell shell, Repository repository,
+			String remoteName) {
+		RemoteConfig configToUse;
+		try {
+			configToUse = new RemoteConfig(repository.getConfig(), remoteName);
+		} catch (URISyntaxException e) {
+			Activator.handleError(e.getMessage(), e, true);
+			return null;
+		}
+		return new SimpleConfigurePushDialog(shell, repository, configToUse);
+	}
+
+	/**
 	 * @param repository
 	 * @return the configured remote for the current branch if any, or null
 	 */

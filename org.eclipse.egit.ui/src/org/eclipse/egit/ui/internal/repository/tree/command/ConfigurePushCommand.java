@@ -12,11 +12,11 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.internal.repository.ConfigureRemoteWizard;
+import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
 import org.eclipse.egit.ui.internal.repository.tree.PushNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
-import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jface.dialogs.Dialog;
 
 /**
  * Configures the Push
@@ -34,12 +34,9 @@ public class ConfigurePushCommand extends
 		else
 			return null;
 
-		WizardDialog dlg = new WizardDialog(
-				getShell(event), new ConfigureRemoteWizard(
-						selectedNode.getRepository(), configName, true));
-		dlg.setHelpAvailable(false);
+		Dialog dlg = SimpleConfigurePushDialog.getDialog(getShell(event),
+				selectedNode.getRepository(), configName);
 		dlg.open();
-
 		return null;
 	}
 }
