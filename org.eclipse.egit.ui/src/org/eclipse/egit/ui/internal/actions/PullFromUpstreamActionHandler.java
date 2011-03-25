@@ -11,6 +11,8 @@
 package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -26,9 +28,10 @@ public class PullFromUpstreamActionHandler extends RepositoryActionHandler {
 		Repository[] repos = getRepositories(event);
 		if (repos.length == 0)
 			return null;
-
-		for (Repository repo : repos)
-			new PullOperationUI(repo).start();
+		Set<Repository> repositories = new HashSet<Repository>();
+		for (int i = 0; i < repos.length; i++)
+			repositories.add(repos[i]);
+		new PullOperationUI(repositories).start();
 		return null;
 	}
 
