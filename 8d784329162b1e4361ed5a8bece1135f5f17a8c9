@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n//+eQ\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-25T11:21:34Z",
+      "side": 1,
+      "message": "...was cast... instead of ...was casted...",
+      "revId": "8d784329162b1e4361ed5a8bece1135f5f17a8c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n//+eU\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-25T11:21:34Z",
+      "side": 1,
+      "message": "I doubt that this change would fix this bug, so I guess we should remove it.",
+      "revId": "8d784329162b1e4361ed5a8bece1135f5f17a8c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
