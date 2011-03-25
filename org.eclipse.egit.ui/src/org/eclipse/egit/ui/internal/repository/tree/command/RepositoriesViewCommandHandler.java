@@ -26,6 +26,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISources;
@@ -68,7 +69,8 @@ abstract class RepositoriesViewCommandHandler<T> extends AbstractHandler {
 					Repository repo = treeNode.getRepository();
 					boolean enabled = false;
 					try {
-						enabled = repo.getRef(Constants.HEAD).getObjectId() != null;
+						Ref ref = repo.getRef(Constants.HEAD);
+						enabled = ref != null && ref.getObjectId() != null;
 					} catch (IOException e) {
 						enabled = false;
 					}

@@ -824,16 +824,11 @@
                class="org.eclipse.egit.ui.internal.actions.PullFromUpstreamActionHandler">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <iterate>
-                  <adapt
-                        type="org.eclipse.core.resources.IProject">
-                  </adapt>
-               </iterate>
-            </and>
+            <iterate>
+               <adapt
+                     type="org.eclipse.core.resources.IProject">
+               </adapt>
+            </iterate>
          </activeWhen>
       </handler>
       <handler
@@ -2352,6 +2347,34 @@
                      label="%ConfigurePushToUpstreamCommand.label"
                      style="push">
                </command>
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <and>
+                           <adapt
+                                 type="org.eclipse.core.resources.IProject">
+                              <test
+                                    property="GitResource.isShared">
+                              </test>
+                           </adapt>
+                        </and>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+            </menu>
+            <separator
+                  name="org.eclipse.egit.ui.branchSeparator">
+            </separator>
+            <menu
+                  label="%SwitchToMenu.label">
+               <dynamic
+                     class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
+                     id="org.eclipse.egit.ui.switchToMenu">
+               </dynamic>
                <visibleWhen
                      checkEnabled="false">
                   <and>

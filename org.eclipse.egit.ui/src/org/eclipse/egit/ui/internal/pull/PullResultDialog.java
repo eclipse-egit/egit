@@ -108,6 +108,8 @@ public class PullResultDialog extends Dialog {
 				// fall through
 			case UP_TO_DATE:
 				// fall through
+			case FAILED:
+				// fall through
 			case ABORTED:
 				break;
 			case STOPPED:

@@ -12,11 +12,11 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.internal.repository.ConfigureRemoteWizard;
+import org.eclipse.egit.ui.internal.fetch.SimpleConfigureFetchDialog;
 import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
-import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jface.dialogs.Dialog;
 
 /**
  * Configures the Fetch
@@ -34,10 +34,8 @@ public class ConfigureFetchCommand extends
 		else
 			return null;
 
-		WizardDialog dlg = new WizardDialog(
-				getShell(event), new ConfigureRemoteWizard(
-						selectedNode.getRepository(), configName, false));
-		dlg.setHelpAvailable(false);
+		Dialog dlg = SimpleConfigureFetchDialog.getDialog(getShell(event),
+				selectedNode.getRepository(), configName);
 		dlg.open();
 
 		return null;
