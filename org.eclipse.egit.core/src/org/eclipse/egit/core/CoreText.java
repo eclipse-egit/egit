@@ -270,6 +270,18 @@ public class CoreText extends NLS {
 	public static String OperationNotYetExecuted;
 
 	/** */
+	public static String GitProjectSetCapability_InvalidTokensCount;
+
+	/** */
+	public static String GitProjectSetCapability_CloneToExistingDirectory;
+
+	/** */
+	public static String GitProjectSetCapability_ExportCouldNotGetBranch;
+
+	/** */
+	public static String GitProjectSetCapability_ExportNoRemote;
+
+	/** */
 	public static String IgnoreOperation_error;
 
 	/** */
