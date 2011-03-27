@@ -33,6 +33,7 @@
          <filter name="projectPersistentProperty"
                value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
          </filter>
+         <filter name="projectPersistentProperty" value="org.eclipse.egit.repository.state=SAFE" />
          <action
                class="org.eclipse.egit.ui.internal.actions.Disconnect"
                icon="$nl$/icons/obj16/disconnect_co.gif"
@@ -45,6 +46,103 @@
                icon="$nl$/icons/obj16/reset.gif"
                id="org.eclipse.egit.ui.internal.actions.ResetAction"
                label="%ResetAction_label"
+               menubarPath="team.main/group5">
+         </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.RebaseAction"
+               icon="$nl$/icons/obj16/rebase.gif"
+               id="org.eclipse.egit.ui.internal.actions.RebaseAction"
+               label="%RebaseWithDialogCommand.name"
+               menubarPath="team.main/group5">
+         </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.SynchronizeWithAction"
+               id="org.eclipse.egit.ui.internal.actions.SynchronizeWithAction"
+               icon="$nl$/icons/obj16/remotespec.gif"
+               label="%SynchronizeWith_label"
+               menubarPath="team.main/group3"/>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.TagAction"
+               icon="$nl$/icons/obj16/tags.gif"
+               id="org.eclipse.egit.ui.internal.actions.TagAction"
+               label="%TagAction_label"
+               menubarPath="team.main/group5"/>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.MergeAction"
+               definitionId="org.eclipse.egit.ui.team.Merge"
+               icon="$nl$/icons/obj16/merge.gif"
+               id="org.eclipse.egit.ui.internal.actions.MergeAction"
+               label="%MergeAction_label"
+               menubarPath="team.main/group4"/>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.BranchAction"
+               icon="$nl$/icons/obj16/branch_obj.gif"
+               id="org.eclipse.egit.ui.internal.actions.BranchAction"
+               label="%BranchAction_label"
+               menubarPath="team.main/group5"/>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.PullFromUpstreamConfigAction"
+               definitionId="org.eclipse.egit.ui.team.Pull"
+               icon="$nl$/icons/obj16/pull.gif"
+               id="org.eclipse.egit.ui.team.PullCurrentBranchAction"
+               label="%PullIntoCurrentBranchMenuLabel"
+               menubarPath="team.main/group2">
+         </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.SimplePushAction"
+               definitionId="org.eclipse.egit.ui.team.SimplePush"
+               icon="icons/obj16/push.gif"
+               id="org.eclipse.egit.ui.team.SimplePush"
+               label="%PushToUpstreamAction.label"
+               menubarPath="team.main/group1">
+         </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.SimpleFetchAction"
+               definitionId="org.eclipse.egit.ui.team.SimpleFetch"
+               icon="icons/obj16/fetch.gif"
+               id="org.eclipse.egit.ui.team.SimpleFetch"
+               label="%FetchFromUpstreamAction.label"
+               menubarPath="team.main/group1">
+         </action>
+     </objectContribution>
+     <objectContribution id="org.eclipse.egit.ui.projectContributions"
+            objectClass="org.eclipse.core.resources.IProject"
+            adaptable="true">
+         <filter name="projectPersistentProperty"
+               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
+         </filter>
+         <filter name="projectPersistentProperty"
+               value="org.eclipse.egit.repository.state=REBASING_INTERACTIVE" />
+         <action
+               class="org.eclipse.egit.ui.internal.actions.Disconnect"
+               icon="$nl$/icons/obj16/disconnect_co.gif"
+               id="org.eclipse.egit.ui.internal.actions.Disconnect"
+               label="%DisconnectAction_label"
+               menubarPath="team.main/group11">
+         </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.ResetAction"
+               icon="$nl$/icons/obj16/reset.gif"
+               id="org.eclipse.egit.ui.internal.actions.ResetAction"
+               label="%ResetAction_label"
+               menubarPath="team.main/group5">
+         </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.RebaseAbortAction"
+               id="org.eclipse.egit.ui.internal.actions.RebaseAbortAction"
+               label="%AbortRebaseCommand.name"
+               menubarPath="team.main/group5">
+         </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.RebaseContinueAction"
+               id="org.eclipse.egit.ui.internal.actions.RebaseContinueAction"
+               label="%ContinueRebaseCommand.name"
+               menubarPath="team.main/group5">
+         </action>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.RebaseSkipAction"
+               id="org.eclipse.egit.ui.internal.actions.RebaseSkipAction"
+               label="%SkipRebaseCommand.name"
                menubarPath="team.main/group5">
          </action>
          <action

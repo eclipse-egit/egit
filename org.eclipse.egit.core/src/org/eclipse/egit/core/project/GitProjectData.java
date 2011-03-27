@@ -39,8 +39,10 @@ import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
+import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.storage.file.WindowCache;
 import org.eclipse.jgit.storage.file.WindowCacheConfig;
 import org.eclipse.jgit.util.FileUtils;
@@ -81,6 +83,13 @@ public class GitProjectData {
 
 	private static QualifiedName MAPPING_KEY = new QualifiedName(
 			GitProjectData.class.getName(), "RepositoryMapping");  //$NON-NLS-1$
+
+	/**
+	 * {@link QualifiedName} for {@code org.eclipse.egit.repository.state}
+	 * property used to determinate rebase actions in project's context menu.
+	 */
+	public static QualifiedName REPOSITORY_STATE_KEY = new QualifiedName(
+			"org.eclipse.egit.repository", "state");  //$NON-NLS-1$//$NON-NLS-2$
 
 	/**
 	 * Start listening for resource changes.
@@ -167,11 +176,33 @@ public class GitProjectData {
 					&& RepositoryProvider.getProvider(p) instanceof GitProvider) {
 				d = new GitProjectData(p).load();
 				cache(p, d);
+				initializeProperties(p, d.getRepositoryMapping(p).getRepository());
 			}
 			return d;
 		} catch (IOException err) {
 			Activator.logError(CoreText.GitProjectData_missing, err);
 			return null;
+		}
+	}
+
+	/**
+	 * Updates projects properties for each project in given {@code repository}
+	 *
+	 * @param repository
+	 */
+	public static void updateProjectsProperties(Repository repository) {
+		IProject[] projects = ProjectUtil.getProjects(repository);
+		for (IProject project : projects) {
+			initializeProperties(project, repository);
+		}
+	}
+
+	private static void initializeProperties(IProject project, Repository repository) {
+		RepositoryState state = repository.getRepositoryState();
+		try {
+			project.setPersistentProperty(REPOSITORY_STATE_KEY, state.name());
+		} catch (CoreException e) {
+			Activator.logError(e.getMessage(), e);
 		}
 	}
 
