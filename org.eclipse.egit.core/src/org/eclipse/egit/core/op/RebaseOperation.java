@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import static org.eclipse.egit.core.project.GitProjectData.updateProjectsProperties;
+
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -23,8 +25,8 @@ import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RebaseCommand;
-import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
+import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoHeadException;
@@ -106,6 +108,8 @@ public class RebaseOperation implements IEGitOperation {
 					throw new CoreException(Activator.error(e.getMessage(), e));
 				} catch (GitAPIException e) {
 					throw new CoreException(Activator.error(e.getMessage(), e));
+				} finally {
+					updateProjectsProperties(repository);
 				}
 			}
 		};
