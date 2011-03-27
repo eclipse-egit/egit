@@ -149,22 +149,21 @@ public class GitCloneWizardTest extends GitCloneWizardTestBase {
 		else
 			propertiesPage.setURI("file://" + System.getProperty("user.home"));
 		propertiesPage.assertSourceParams(null, "", System.getProperty(
-				"user.home").replace('\\', '/'), "file", "", false, "", "",
+				"user.home"), "file", "", false, "", "",
 				false, false);
 
 		// Local protocol without file: prefix
 		propertiesPage.setURI(System.getProperty("user.home"));
 		propertiesPage.assertSourceParams(null, "", System.getProperty(
-				"user.home").replace('\\', '/'), "file", "", false, "", "",
+				"user.home"), "file", "", false, "", "",
 				false, false);
 
 		// On windows the use can choose forward or backward slashes, so add
 		// a case for forward slashes using the non prefixed local protocol.
 		if (Platform.getOS().equals(Platform.OS_WIN32)) {
-			propertiesPage.setURI(System.getProperty("user.home").replace('\\',
-					'/'));
+			propertiesPage.setURI(System.getProperty("user.home"));
 			propertiesPage.assertSourceParams(null, "", System.getProperty(
-					"user.home").replace('\\', '/'), "file", "", false, "", "",
+					"user.home"), "file", "", false, "", "",
 					false, false);
 		}
 		bot.button("Cancel").click();
