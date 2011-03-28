@@ -807,7 +807,24 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 	@Override
 	public void setFocus() {
+		if (repoHasBeenRemoved(currentRepo))
+			clearHistoryPage();
+
 		graph.getControl().setFocus();
+	}
+
+	private boolean repoHasBeenRemoved(final Repository repo) {
+		return (repo != null && repo.getDirectory() != null && !repo
+				.getDirectory().exists());
+	}
+
+	private void clearHistoryPage() {
+		currentRepo = null;
+		name = ""; //$NON-NLS-1$
+		input = null;
+		commentViewer.setInput(null);
+		fileViewer.setInput(null);
+		setInput(null);
 	}
 
 	@Override
@@ -816,6 +833,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	public void refresh() {
+		if (repoHasBeenRemoved(currentRepo))
+			clearHistoryPage();
+
 		this.input = null;
 		inputSet();
 	}
@@ -1257,8 +1277,18 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 						GitTraceLocation.HISTORYVIEW.getLocation());
 
 			cancelRefreshJob();
+
+			if (input == null)
+				return;
 			Repository db = input.getRepository();
-			AnyObjectId headId = resolveHead(db, false);
+			if (repoHasBeenRemoved(db)) {
+				clearHistoryPage();
+				return;
+			}
+
+			AnyObjectId headId = resolveHead(db, true);
+			if (headId == null)
+				return;
 
 			List<String> paths = buildFilterPaths(input.getItems(), input
 					.getFileList(), db);

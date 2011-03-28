@@ -74,6 +74,8 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 	protected Repository getRepository(ExecutionEvent event)
 			throws ExecutionException {
 		Object input = getInput(event);
+		if (input == null)
+			return null;
 		if (input instanceof HistoryPageInput)
 			return ((HistoryPageInput) input).getRepository();
 		if (input instanceof RepositoryTreeNode)
