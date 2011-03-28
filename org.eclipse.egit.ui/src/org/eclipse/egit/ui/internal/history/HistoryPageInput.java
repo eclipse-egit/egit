@@ -12,6 +12,8 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.Activator;
@@ -25,9 +27,9 @@ import org.eclipse.osgi.util.NLS;
  * Input for the {@link GitHistoryPage}
  **/
 public class HistoryPageInput {
-	private final IResource[] list;
+	private final List<IResource> list;
 
-	private final File[] files;
+	private final List<File> files;
 
 	private final Repository repo;
 
@@ -44,7 +46,7 @@ public class HistoryPageInput {
 	public HistoryPageInput(final Repository repository,
 			final IResource[] resourceItems) {
 		this.repo = repository;
-		list = resourceItems;
+		list = Arrays.asList(resourceItems);
 		if (resourceItems.length == 1) {
 			singleItem = resourceItems[0];
 			if (resourceItems[0].getType() == IResource.FILE)
@@ -74,7 +76,7 @@ public class HistoryPageInput {
 			singleItem = null;
 			singleFile = null;
 		}
-		files = fileItems;
+		files = Arrays.asList(fileItems);
 	}
 
 	/**
@@ -100,14 +102,14 @@ public class HistoryPageInput {
 	 * @return the list provided to our constructor
 	 */
 	public IResource[] getItems() {
-		return list;
+		return list == null ? null : list.toArray(new IResource[list.size()]);
 	}
 
 	/**
 	 * @return the list provided to our constructor
 	 */
 	public File[] getFileList() {
-		return files;
+		return files == null ? null : files.toArray(new File[files.size()]);
 	}
 
 	/**

@@ -35,7 +35,7 @@ import org.eclipse.ui.ide.IDE.SharedImages;
 public class FileTreeContentProvider implements ITreeContentProvider {
 	private final Repository repository;
 
-	private Node[] rootNodes;
+	private final List<Node> rootNodes = new ArrayList<Node>();
 
 	private List<String> input;
 
@@ -225,7 +225,7 @@ public class FileTreeContentProvider implements ITreeContentProvider {
 	}
 
 	public Object[] getElements(Object arg0) {
-		return rootNodes;
+		return rootNodes.toArray();
 	}
 
 	public void dispose() {
@@ -234,7 +234,7 @@ public class FileTreeContentProvider implements ITreeContentProvider {
 
 	@SuppressWarnings("unchecked")
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		rootNodes = new Node[0];
+		rootNodes.clear();
 
 		input = (List<String>) newInput;
 		if (input == null)
@@ -285,8 +285,7 @@ public class FileTreeContentProvider implements ITreeContentProvider {
 			}
 		}
 
-		rootNodes = virtualNode.getChildren().toArray(
-				new Node[virtualNode.getChildren().size()]);
+		rootNodes.addAll(virtualNode.getChildren());
 	}
 
 	private IPath resolveResourcePath(IPath fullPath) {

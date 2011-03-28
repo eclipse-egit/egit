@@ -172,7 +172,11 @@ public class GitCloneWizard extends Wizard {
 		final Ref ref = cloneDestination.getInitialBranch();
 		final String remoteName = cloneDestination.getRemote();
 
-		if (!workdir.mkdirs() || !workdir.isDirectory()) {
+		boolean created = workdir.exists();
+		if (!created)
+			created = workdir.mkdirs();
+
+		if (!created || !workdir.isDirectory()) {
 			final String errorMessage = NLS.bind(
 					UIText.GitCloneWizard_errorCannotCreate, workdir.getPath());
 			ErrorDialog.openError(getShell(), getWindowTitle(),
