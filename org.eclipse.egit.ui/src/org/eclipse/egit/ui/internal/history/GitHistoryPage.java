@@ -915,7 +915,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				return true;
 
 			cancelRefreshJob();
-			setErrorMessage(null);
 			Object o = super.getInput();
 			if (o == null) {
 				setErrorMessage(UIText.GitHistoryPage_NoInputMessage);
@@ -1005,6 +1004,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			actions.showAllFolderVersionsAction.setEnabled(inResources != null);
 			actions.showAllResourceVersionsAction.setEnabled(filtersActive);
 
+			setErrorMessage(null);
 			try {
 				initAndStartRevWalk(false);
 			} catch (IllegalStateException e) {
