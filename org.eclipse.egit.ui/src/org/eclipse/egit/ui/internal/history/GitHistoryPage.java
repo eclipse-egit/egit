@@ -1451,6 +1451,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES)) {
 				markStartAllRefs(Constants.R_HEADS);
 				markStartAllRefs(Constants.R_REMOTES);
+				markStartAllRefs(Constants.R_TAGS);
 			} else
 				currentWalk.markStart(currentWalk.parseCommit(headId));
 		} catch (IOException e) {
