@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010 SAP AG.
+ * Copyright (C) 2011 SAP AG.
  * Copyright (C) 2010, Benjamin Muskalla <bmuskalla@eclipsesource.com>
  *
  * All rights reserved. This program and the accompanying materials
@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.internal.repository.RepositorySearchDialog;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -46,11 +47,13 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.TableItem;
 
 /**
  * Select a repository, add or clone
  */
 public class GitSelectRepositoryPage extends WizardPage {
+	private final static String LAST_SELECTED_REPO_PREF = "GitSelectRepositoryPage.lastRepository"; //$NON-NLS-1$
 
 	private final RepositoryUtil util;
 
@@ -173,6 +176,34 @@ public class GitSelectRepositoryPage extends WizardPage {
 		Dialog.applyDialogFont(main);
 		setControl(main);
 
+	}
+
+	@Override
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+		IDialogSettings settings = Activator.getDefault().getDialogSettings();
+		if (visible && tv.getSelection().isEmpty()) {
+			// check in the dialog settings if a repository was selected before
+			// and select it if nothing else is selected
+			String repoDir = settings.get(LAST_SELECTED_REPO_PREF);
+			if (repoDir != null) {
+				for (TableItem item : tv.getTable().getItems()) {
+					RepositoryNode node = (RepositoryNode) item.getData();
+					if (node.getRepository().getDirectory().getPath().equals(
+							repoDir)) {
+						tv.setSelection(new StructuredSelection(node));
+					}
+				}
+			}
+		} else {
+			// save selection in dialog settings
+			Object element = ((IStructuredSelection) tv.getSelection())
+					.getFirstElement();
+			if (element instanceof RepositoryNode)
+				settings.put(LAST_SELECTED_REPO_PREF,
+						((RepositoryNode) element).getRepository()
+								.getDirectory().getPath());
+		}
 	}
 
 	private void refreshRepositoryList() {
