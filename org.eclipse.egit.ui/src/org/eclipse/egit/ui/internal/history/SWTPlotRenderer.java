@@ -19,6 +19,7 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revplot.AbstractPlotRenderer;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
@@ -47,6 +48,8 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 
 	private int textHeight;
 
+	private boolean enableAntialias = true;
+
 	GC g;
 
 	int cellX;
@@ -72,6 +75,14 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 	@SuppressWarnings("unchecked")
 	void paint(final Event event, Ref actHeadRef) {
 		g = event.gc;
+
+		if (this.enableAntialias)
+			try {
+				g.setAntialias(SWT.ON);
+			} catch (SWTException e) {
+				this.enableAntialias = false;
+			}
+
 		this.headRef = actHeadRef;
 		cellX = event.x;
 		cellY = event.y;
