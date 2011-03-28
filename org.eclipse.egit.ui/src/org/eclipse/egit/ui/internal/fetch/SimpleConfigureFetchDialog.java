@@ -186,6 +186,7 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 			RemoteConfig config) {
 		super(shell);
 		setHelpAvailable(false);
+		setShellStyle(getShellStyle() | SWT.SHELL_TRIM);
 		this.repository = repository;
 		this.config = config;
 	}
@@ -321,8 +322,9 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 
 		specViewer = new TableViewer(refSpecGroup, SWT.BORDER | SWT.MULTI);
 		specViewer.setContentProvider(ArrayContentProvider.getInstance());
-		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 150).span(5, 1).grab(
-				true, true).applyTo(specViewer.getTable());
+		GridDataFactory.fillDefaults().hint(SWT.DEFAULT, 150).minSize(
+				SWT.DEFAULT, 30).span(5, 1).grab(true, true).applyTo(
+				specViewer.getTable());
 
 		specViewer.getTable().addKeyListener(new KeyAdapter() {
 			@Override
