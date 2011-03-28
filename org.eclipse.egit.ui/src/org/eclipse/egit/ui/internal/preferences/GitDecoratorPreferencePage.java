@@ -543,7 +543,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		}
 	}
 
-	private class FormatEditor extends SelectionAdapter {
+	private static final class FormatEditor extends SelectionAdapter {
 		private final Text text;
 
 		private final Map bindings;
