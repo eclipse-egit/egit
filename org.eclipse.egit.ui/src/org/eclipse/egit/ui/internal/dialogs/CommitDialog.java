@@ -621,7 +621,8 @@ public class CommitDialog extends Dialog {
 						commitText.setText(previousCommitMessage.replaceAll(
 								"\n", Text.DELIMITER)); //$NON-NLS-1$
 					}
-					authorText.setText(previousAuthor);
+					if (previousAuthor != null)
+						authorText.setText(previousAuthor);
 				}
 				refreshChangeIdText();
 			}
