@@ -2414,6 +2414,80 @@
                   name="group5"
                   visible="true">
             </separator>
+           <command
+                 commandId="org.eclipse.egit.ui.RepositoriesViewRebase" style="push">
+	           <visibleWhen checkEnabled="false">
+	              <and>
+	                 <iterate>
+	                    <and>
+	                       <adapt
+	                             type="org.eclipse.core.resources.IProject">
+	                          <test
+	                                property="GitResource.isSafe">
+	                          </test>
+	                       </adapt>
+	                    </and>
+	                 </iterate>
+	              </and>
+	           </visibleWhen>
+           </command>
+           <command
+                 commandId="org.eclipse.egit.ui.RepositoriesViewAbortRebase" style="push">
+	           <visibleWhen checkEnabled="false">
+	              <and>
+	                 <iterate>
+	                    <and>
+	                       <adapt
+	                             type="org.eclipse.core.resources.IProject">
+	                          <not>
+		                          <test
+		                                property="GitResource.isSafe">
+		                          </test>
+	                          </not>
+	                       </adapt>
+	                    </and>
+	                 </iterate>
+	              </and>
+	           </visibleWhen>
+            </command>
+            <command
+                 commandId="org.eclipse.egit.ui.RepositoriesViewSkipRebase" style="push">
+	           <visibleWhen checkEnabled="false">
+	              <and>
+	                 <iterate>
+	                    <and>
+	                       <adapt
+	                             type="org.eclipse.core.resources.IProject">
+	                          <not>
+		                          <test
+		                                property="GitResource.isSafe">
+		                          </test>
+	                          </not>
+	                       </adapt>
+	                    </and>
+	                 </iterate>
+	              </and>
+	           </visibleWhen>
+            </command>
+            <command
+                 commandId="org.eclipse.egit.ui.RepositoriesViewContinueRebase" style="push">
+	           <visibleWhen checkEnabled="false">
+	              <and>
+	                 <iterate>
+	                    <and>
+	                       <adapt
+	                             type="org.eclipse.core.resources.IProject">
+	                          <not>
+		                          <test
+		                                property="GitResource.isSafe">
+		                          </test>
+	                          </not>
+	                       </adapt>
+	                    </and>
+	                 </iterate>
+	              </and>
+	           </visibleWhen>
+            </command>
             <separator
                   name="group6"
                   visible="true">
@@ -2839,7 +2913,7 @@
             class="org.eclipse.egit.ui.internal.ResourcePropertyTester"
             id="org.eclipse.egit.ui.ResourceTester"
             namespace="GitResource"
-            properties="isShared"
+            properties="isShared,isSafe"
             type="org.eclipse.core.resources.IResource">
       </propertyTester>
    </extension>

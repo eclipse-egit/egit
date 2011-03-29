@@ -17,6 +17,8 @@ import java.io.IOException;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.IEvaluationContext;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.RebaseTargetSelectionDialog;
@@ -31,6 +33,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.ISources;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Implements "Rebase" to the currently checked out {@link Ref}
@@ -39,14 +42,24 @@ public class RebaseCurrentRefCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		BasicConfigurationDialog.show();
-		RepositoryTreeNode node = getSelectedNodes(event).get(0);
 
-		final Repository repository = node.getRepository();
+		IStructuredSelection selection = (IStructuredSelection) HandlerUtil
+				.getCurrentSelectionChecked(event);
+		Object selected = selection.getFirstElement();
 
 		Ref ref;
-		if (node instanceof RefNode)
+		final Repository repository;
+		if (selected instanceof IProject) {
+			ref = null;
+			IProject project = (IProject) selected;
+			repository = RepositoryMapping.getMapping(project).getRepository();
+		} else {
+			RepositoryTreeNode node = (RepositoryTreeNode) selected;
+			repository = node.getRepository();
 			ref = ((RefNode) node).getObject();
-		else {
+		}
+
+		if (ref == null) {
 			RebaseTargetSelectionDialog rebaseTargetSelectionDialog = new RebaseTargetSelectionDialog(
 					getShell(event), repository);
 			if (rebaseTargetSelectionDialog.open() == IDialogConstants.OK_ID) {
