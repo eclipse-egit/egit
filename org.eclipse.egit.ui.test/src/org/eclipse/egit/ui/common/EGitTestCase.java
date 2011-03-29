@@ -36,9 +36,10 @@ public abstract class EGitTestCase {
 			return;
 		try {
 			bot.viewByTitle("Welcome").close();
-			welcomePageClosed = true;
 		} catch (WidgetNotFoundException e) {
 			// somebody else probably closed it, lets not feel bad about it.
+		} finally {
+			welcomePageClosed = true;
 		}
 	}
 
