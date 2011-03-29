@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright (C) 2010, Ketan Padegaonkar <KetanPadegaonkar@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
