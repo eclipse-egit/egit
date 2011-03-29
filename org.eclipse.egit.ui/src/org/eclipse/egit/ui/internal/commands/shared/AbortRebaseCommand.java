@@ -8,7 +8,7 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.repository.tree.command;
+package org.eclipse.egit.ui.internal.commands.shared;
 
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jgit.api.RebaseCommand.Operation;

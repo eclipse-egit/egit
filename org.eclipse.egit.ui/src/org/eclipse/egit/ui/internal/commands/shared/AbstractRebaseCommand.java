@@ -8,10 +8,14 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.repository.tree.command;
+package org.eclipse.egit.ui.internal.commands.shared;
 
+import static org.eclipse.egit.core.project.RepositoryMapping.getMapping;
+
+import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -22,19 +26,23 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
+import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Rebase command base class
  */
-public abstract class AbstractRebaseCommand extends
-		RepositoriesViewCommandHandler<RepositoryTreeNode> {
+public abstract class AbstractRebaseCommand extends AbstractHandler {
 	private final Operation operation;
 
 	private final String jobname;
@@ -54,11 +62,10 @@ public abstract class AbstractRebaseCommand extends
 	}
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelectionChecked(event);
+		Object selected = selection.getFirstElement();
 
-		RepositoryTreeNode node = getSelectedNodes(event).get(0);
-
-		final Repository repository = node.getRepository();
-
+		final Repository repository = getRepository(selected);
 		final RebaseOperation rebase = new RebaseOperation(repository,
 				this.operation);
 		Job job = new Job(jobname) {
@@ -97,6 +104,37 @@ public abstract class AbstractRebaseCommand extends
 			}
 		});
 		job.schedule();
+		return null;
+	}
+
+	/**
+	 *
+	 * @param selected
+	 * @return {@link Ref} connected with given {@code selected} node or
+	 *         {@code null} when ref cannot be determinate
+	 */
+	protected Ref getRef(Object selected) {
+		if (selected instanceof RepositoryTreeNode<?>) {
+			RepositoryTreeNode node = (RepositoryTreeNode) selected;
+			if (node.getType() == RepositoryTreeNodeType.REF)
+				return ((RefNode) node).getObject();
+		}
+
+		return null;
+	}
+
+	/**
+	 *
+	 * @param selected
+	 * @return repository connected with {@code selected} object, or
+	 *         {@code null} otherwise.
+	 */
+	protected Repository getRepository(Object selected) {
+		if (selected instanceof IProject)
+			return getMapping((IProject) selected).getRepository();
+		else if (selected instanceof RepositoryTreeNode<?>)
+			return ((RepositoryTreeNode<?>) selected).getRepository();
+
 		return null;
 	}
 }
