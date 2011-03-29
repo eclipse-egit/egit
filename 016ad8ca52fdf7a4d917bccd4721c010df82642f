@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL33///7c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/FileDiffLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-28T14:34:08Z",
+      "side": 1,
+      "message": "I think this case should be in the list of fallback cases (unfortunately, I don\u0027t know how to create a COPY diff)...",
+      "revId": "016ad8ca52fdf7a4d917bccd4721c010df82642f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
