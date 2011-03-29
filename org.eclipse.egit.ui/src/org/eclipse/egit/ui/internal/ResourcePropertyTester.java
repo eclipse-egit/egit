@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal;
 
+import static org.eclipse.jgit.lib.RepositoryState.SAFE;
+
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -28,6 +30,10 @@ public class ResourcePropertyTester extends PropertyTester {
 			RepositoryMapping mapping = RepositoryMapping.getMapping(res
 					.getProject());
 			return mapping != null && mapping.getRepository() != null;
+		} else if ("isSafe".equals(property)) { //$NON-NLS-1$
+			RepositoryMapping mapping = RepositoryMapping.getMapping(res
+					.getProject());
+			return SAFE == mapping.getRepository().getRepositoryState();
 		}
 		return false;
 	}
