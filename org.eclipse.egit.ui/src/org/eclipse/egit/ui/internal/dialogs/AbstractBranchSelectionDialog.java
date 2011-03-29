@@ -234,6 +234,8 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 					// branches
 					branchTree.expandToLevel(localBranches, 1);
 			}
+			// minor UX improvement to always expand remote branches node
+			branchTree.expandToLevel(remoteBranches, 1);
 		} catch (IOException e) {
 			// ignore
 		}
