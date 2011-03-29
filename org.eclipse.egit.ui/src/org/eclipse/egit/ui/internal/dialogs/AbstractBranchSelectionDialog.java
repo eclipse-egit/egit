@@ -83,6 +83,12 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 
 	private boolean showReferences = true;
 
+	private boolean selectCurrentRef = true;
+
+	private boolean expandLocalBranchesNode = true;
+
+	private boolean expandRemoteBranchesNode = false;
+
 	/**
 	 * Construct a dialog to select a branch.
 	 * <p>
@@ -221,19 +227,21 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		branchTree.setInput(roots);
 
 		try {
-			if (refToMark != null) {
-				if (!markRef(refToMark))
-					// if we can't determine a branch, we just expand local
-					// branches
-					branchTree.expandToLevel(localBranches, 1);
-			} else {
-				// initially, we mark the current head if it can be determined
-				String fullBranch = repo.getFullBranch();
-				if (!markRef(fullBranch))
-					// if we can't determine a branch, we just expand local
-					// branches
-					branchTree.expandToLevel(localBranches, 1);
-			}
+			if (selectCurrentRef)
+				if (refToMark != null)
+					markRef(refToMark);
+				else {
+					// initially, we mark the current head if it can be determined
+					String fullBranch = repo.getFullBranch();
+					markRef(fullBranch);
+				}
+			if (expandLocalBranchesNode)
+				// if we can't determine a branch, we just expand local
+				// branches
+				branchTree.expandToLevel(localBranches, 1);
+			if (expandRemoteBranchesNode)
+				// minor UX improvement to always expand remote branches node
+				branchTree.expandToLevel(remoteBranches, 1);
 		} catch (IOException e) {
 			// ignore
 		}
@@ -342,16 +350,52 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 	}
 
 	/**
-	 * @param showLocalBranches show/hide the local branches root
-	 * @param showRemoteBranches show/hide the remote branches root
-	 * @param showTags show/hide the tag root
-	 * @param showReferences show/hide the references root
+	 * @param state show/hide the local branches root
 	 */
-	protected void setRootsToShow(boolean showLocalBranches,
-			boolean showRemoteBranches, boolean showTags, boolean showReferences) {
-		this.showLocalBranches = showLocalBranches;
-		this.showRemoteBranches = showRemoteBranches;
-		this.showTags = showTags;
-		this.showReferences = showReferences;
+	protected void shouldShowLocalBranches(boolean state) {
+		showLocalBranches = state;
 	}
+
+	/**
+	 * @param state show/hide the remote branches root
+	 */
+	protected void shouldShowRemoteBranches(boolean state) {
+		showRemoteBranches = state;
+	}
+
+	/**
+	 * @param state show/hide the tag root
+	 */
+	protected void shouldShowTags(boolean state) {
+		showTags = state;
+	}
+
+	/**
+	 * @param state show/hide the references root
+	 */
+	protected void shouldShowReferences(boolean state) {
+		showReferences = state;
+	}
+
+	/**
+	 * @param state set current ref selected or not
+	 */
+	protected void shouldSelectCurrentRef(boolean state) {
+		selectCurrentRef  = state;
+	}
+
+	/**
+	 * @param state should local branches node be expanded or not
+	 */
+	protected void shouldExpandLocalBranchesNode(boolean state) {
+		expandLocalBranchesNode = state;
+	}
+
+	/**
+	 * @param state should remote branches node be expanded or not
+	 */
+	protected void shouldExpandRemoteBranchesNode(boolean state) {
+		expandRemoteBranchesNode = state;
+	}
+
 }
