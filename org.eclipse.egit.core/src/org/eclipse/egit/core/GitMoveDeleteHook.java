@@ -37,7 +37,6 @@ import org.eclipse.jgit.dircache.DirCacheBuilder;
 import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.team.core.RepositoryProvider;
-import org.eclipse.team.core.TeamException;
 
 class GitMoveDeleteHook implements IMoveDeleteHook {
 	private static final boolean I_AM_DONE = true;
@@ -216,14 +215,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 				RepositoryMapping mapping = RepositoryMapping
 						.getMapping(source);
 				IPath gitDir = mapping.getGitDirAbsolutePath();
-				try {
-					RepositoryProvider.unmap(source);
-				} catch (TeamException e) {
-					tree.failed(new Status(IStatus.ERROR, Activator
-							.getPluginId(), 0,
-							CoreText.MoveDeleteHook_operationError, e));
-					return true; // Do not let Eclipse complete the operation
-				}
+				RepositoryProvider.unmap(source);
 
 				monitor.worked(100);
 				// source.refreshLocal(IResource.DEPTH_INFINITE,
@@ -237,18 +229,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 				tree.standardMoveProject(source, description, updateFlags,
 						monitor);
 
-				// Reconnect
-				IProject destination = source.getWorkspace().getRoot().getProject(description.getName());
-				GitProjectData projectData = new GitProjectData(destination);
-				RepositoryMapping repositoryMapping = new RepositoryMapping(
-						destination, gitDir.toFile());
-				projectData.setRepositoryMappings(Arrays
-						.asList(repositoryMapping));
-				projectData.store();
-				GitProjectData.add(destination, projectData);
-				RepositoryProvider.map(destination, GitProvider.class.getName());
-				destination.refreshLocal(IResource.DEPTH_INFINITE,
-						new SubProgressMonitor(monitor, 50));
+				reconnect(source, description, gitDir, monitor);
 			} catch (IOException e) {
 				tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
 						0, CoreText.MoveDeleteHook_operationError, e));
@@ -260,6 +241,22 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		}
 
 		return FINISH_FOR_ME;
+	}
+
+	private void reconnect(final IProject source,
+			final IProjectDescription description, final IPath gitDir,
+			final IProgressMonitor monitor) throws CoreException {
+		IProject destination = source.getWorkspace().getRoot()
+				.getProject(description.getName());
+		GitProjectData projectData = new GitProjectData(destination);
+		RepositoryMapping repositoryMapping = new RepositoryMapping(
+				destination, gitDir.toFile());
+		projectData.setRepositoryMappings(Arrays.asList(repositoryMapping));
+		projectData.store();
+		GitProjectData.add(destination, projectData);
+		RepositoryProvider.map(destination, GitProvider.class.getName());
+		destination.refreshLocal(IResource.DEPTH_INFINITE,
+				new SubProgressMonitor(monitor, 50));
 	}
 
 	private boolean moveIndexContent(String dPath,
