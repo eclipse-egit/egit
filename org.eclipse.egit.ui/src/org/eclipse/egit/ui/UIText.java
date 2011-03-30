@@ -298,7 +298,7 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_errorParsingHead;
 
 	/** */
-	public static String GitHistoryPage_errorReadingHeadCommit;
+	public static String GitHistoryPage_errorSettingStartPoints;
 
 	/** */
 	public static String GitHistoryPage_FileNotInCommit;
