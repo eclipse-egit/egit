@@ -110,7 +110,7 @@ public class UIPreferences {
 	/** */
 	public static final String MERGE_MODE = "merge_mode"; //$NON-NLS-1$
 	/** */
-	public static final String REBASE_HIDE_CONFIRM = "rebase_hide_confirm"; //$NON-NLS-1$
+	public static final String SHOW_REBASE_CONFIRM = "show_rebase_confirm"; //$NON-NLS-1$
 	/** */
 	public static final String SHOW_INITIAL_CONFIG_DIALOG = "show_initial_config_dialog"; //$NON-NLS-1$
 	/** */

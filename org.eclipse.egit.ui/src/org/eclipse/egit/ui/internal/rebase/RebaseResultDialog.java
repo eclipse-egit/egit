@@ -95,8 +95,8 @@ public class RebaseResultDialog extends MessageDialog {
 	public static void show(final RebaseResult result,
 			final Repository repository) {
 		boolean shouldShow = result.getStatus() == Status.STOPPED
-				|| !Activator.getDefault().getPreferenceStore().getBoolean(
-						UIPreferences.REBASE_HIDE_CONFIRM);
+				|| Activator.getDefault().getPreferenceStore().getBoolean(
+						UIPreferences.SHOW_REBASE_CONFIRM);
 		if (!shouldShow) {
 			Activator.getDefault().getLog().log(
 					new org.eclipse.core.runtime.Status(IStatus.INFO, Activator
@@ -319,8 +319,8 @@ public class RebaseResultDialog extends MessageDialog {
 		// store the preference to hide these dialogs
 		if (toggleButton != null)
 			Activator.getDefault().getPreferenceStore().setValue(
-					UIPreferences.REBASE_HIDE_CONFIRM,
-					toggleButton.getSelection());
+					UIPreferences.SHOW_REBASE_CONFIRM,
+					!toggleButton.getSelection());
 		if (buttonId == IDialogConstants.OK_ID) {
 			if (result.getStatus() != Status.STOPPED) {
 				super.buttonPressed(buttonId);
@@ -408,8 +408,8 @@ public class RebaseResultDialog extends MessageDialog {
 	}
 
 	private void createToggleButton(Composite parent) {
-		boolean toggleState = Activator.getDefault().getPreferenceStore()
-				.getBoolean(UIPreferences.REBASE_HIDE_CONFIRM);
+		boolean toggleState = !Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.SHOW_REBASE_CONFIRM);
 		toggleButton = new Button(parent, SWT.CHECK | SWT.LEFT);
 		toggleButton.setText(UIText.RebaseResultDialog_ToggleShowButton);
 		toggleButton.setSelection(toggleState);
