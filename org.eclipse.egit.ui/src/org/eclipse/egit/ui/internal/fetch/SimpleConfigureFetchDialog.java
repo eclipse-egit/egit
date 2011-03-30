@@ -89,6 +89,8 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 
 	private RemoteConfig config;
 
+	private final boolean showBranchInfo;
+
 	private Text commonUriText;
 
 	private TableViewer specViewer;
@@ -108,7 +110,8 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 	 */
 	public static Dialog getDialog(Shell shell, Repository repository) {
 		RemoteConfig configToUse = getConfiguredRemote(repository);
-		return new SimpleConfigureFetchDialog(shell, repository, configToUse);
+		return new SimpleConfigureFetchDialog(shell, repository, configToUse,
+				true);
 	}
 
 	/**
@@ -127,7 +130,8 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 			Activator.handleError(e.getMessage(), e, true);
 			return null;
 		}
-		return new SimpleConfigureFetchDialog(shell, repository, configToUse);
+		return new SimpleConfigureFetchDialog(shell, repository, configToUse,
+				false);
 	}
 
 	/**
@@ -181,14 +185,18 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 	 * @param shell
 	 * @param repository
 	 * @param config
+	 * @param showBranchInfo
+	 *            should be true if this is used for upstream configuration; if
+	 *            false, branch information will be hidden in the dialog
 	 */
 	private SimpleConfigureFetchDialog(Shell shell, Repository repository,
-			RemoteConfig config) {
+			RemoteConfig config, boolean showBranchInfo) {
 		super(shell);
 		setHelpAvailable(false);
 		setShellStyle(getShellStyle() | SWT.SHELL_TRIM);
 		this.repository = repository;
 		this.config = config;
+		this.showBranchInfo = showBranchInfo;
 	}
 
 	@Override
@@ -213,20 +221,24 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 		repositoryText.setText(Activator.getDefault().getRepositoryUtil()
 				.getRepositoryName(repository));
 
-		Label branchLabel = new Label(repositoryGroup, SWT.NONE);
-		branchLabel.setText(UIText.SimpleConfigureFetchDialog_BranchLabel);
-		String branch;
-		try {
-			branch = repository.getBranch();
-		} catch (IOException e2) {
-			branch = null;
+		if (showBranchInfo) {
+			Label branchLabel = new Label(repositoryGroup, SWT.NONE);
+			branchLabel.setText(UIText.SimpleConfigureFetchDialog_BranchLabel);
+			String branch;
+			try {
+				branch = repository.getBranch();
+			} catch (IOException e2) {
+				branch = null;
+			}
+			if (branch == null || ObjectId.isId(branch)) {
+				branch = UIText.SimpleConfigureFetchDialog_DetachedHeadMessage;
+			}
+			Text branchText = new Text(repositoryGroup, SWT.BORDER
+					| SWT.READ_ONLY);
+			GridDataFactory.fillDefaults().grab(true, false)
+					.applyTo(branchText);
+			branchText.setText(branch);
 		}
-		if (branch == null || ObjectId.isId(branch)) {
-			branch = UIText.SimpleConfigureFetchDialog_DetachedHeadMessage;
-		}
-		Text branchText = new Text(repositoryGroup, SWT.BORDER | SWT.READ_ONLY);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(branchText);
-		branchText.setText(branch);
 
 		Group remoteGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		remoteGroup.setLayout(new GridLayout(1, false));
@@ -636,6 +648,8 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 	 * @param parent
 	 */
 	private void addDefaultOriginWarningIfNeeded(Composite parent) {
+		if (!showBranchInfo)
+			return;
 		List<String> otherBranches = new ArrayList<String>();
 		String currentBranch;
 		try {
