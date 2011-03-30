@@ -62,4 +62,10 @@ public class JobFamilies {
 	 * Format job
 	 */
 	public final static Object FORMAT_COMMIT_INFO = new Object();
+
+	/**
+	 * Fill tag list
+	 */
+	public final static Object FILL_TAG_LIST = new Object();
+
 }

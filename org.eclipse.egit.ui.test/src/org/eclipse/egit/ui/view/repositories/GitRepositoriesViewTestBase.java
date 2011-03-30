@@ -231,6 +231,7 @@ public abstract class GitRepositoriesViewTestBase extends
 			shell.bot().tree().expandNode(gitCategory).getNode(viewName)
 					.select();
 			shell.bot().button(IDialogConstants.OK_LABEL).click();
+			TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
 
 			viewbot = bot.viewByTitle(viewName);
 
