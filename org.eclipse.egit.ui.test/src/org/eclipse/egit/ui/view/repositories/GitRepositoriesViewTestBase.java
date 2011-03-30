@@ -89,7 +89,6 @@ public abstract class GitRepositoriesViewTestBase extends
 
 		File gitDir = new File(new File(getTestDirectory(), REPO1),
 				Constants.DOT_GIT);
-		gitDir.mkdir();
 		Repository myRepository = lookupRepository(gitDir);
 		myRepository.create();
 

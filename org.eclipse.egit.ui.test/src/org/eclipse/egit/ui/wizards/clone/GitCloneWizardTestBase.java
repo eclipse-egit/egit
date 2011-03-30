@@ -32,10 +32,10 @@ import org.junit.Before;
 public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 
 	protected static final int NUMBER_RANDOM_COMMITS = 100;
-	protected static SampleTestRepository r;
 	protected GitImportRepoWizard importWizard;
 	protected File destRepo;
-
+    // package private for FindBugs
+	static SampleTestRepository r;
 	@AfterClass
 	public static void tearDown() throws Exception {
 		r.shutDown();
