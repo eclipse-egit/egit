@@ -266,12 +266,9 @@ public class GitMoveDeleteHookTest  {
 	/**
 	 * Test a simple rename of a project.
 	 * The project contains a Git repository, which will also be moved.
-	 *
-	 * FIXME <em>THIS DOES NOT WORK YEY</em<
-	 *
 	 * @throws Exception
 	 */
-	@Test(expected=ResourceException.class)
+	@Test
 	public void testMoveProjectContainingGitRepo() throws Exception {
 		TestProject project = initRepoInsideProject();
 		testUtils.addFileToProject(project.getProject(), "file.txt",
@@ -282,9 +279,9 @@ public class GitMoveDeleteHookTest  {
 		IProjectDescription description = project.getProject().getDescription();
 		description.setName("P2");
 		project.getProject().move(description, IResource.FORCE | IResource.SHALLOW, null);
-		assertNotNull(RepositoryMapping.getMapping(project.getProject()));
-		assertEquals("P2", RepositoryMapping.getMapping(project.getProject()).getRepository().getDirectory().getParentFile().getName());
-		fail();
+		IProject project2 = project.getProject().getWorkspace().getRoot().getProject("P2");
+		assertTrue(project2.exists());
+		assertNotNull(RepositoryMapping.getMapping(project2));
 	}
 
 	@Test
