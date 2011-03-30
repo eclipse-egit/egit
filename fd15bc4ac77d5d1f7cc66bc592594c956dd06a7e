@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL33///uc\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-29T22:30:17Z",
+      "side": 1,
+      "message": "which option is about an error dialog ? Looks like these are all confirmation dialogs",
+      "revId": "fd15bc4ac77d5d1f7cc66bc592594c956dd06a7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///uY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/DialogsPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-29T22:30:17Z",
+      "side": 1,
+      "message": "I propose to change this page to only have one group named \"Show confirmation dialogs\" and all options provided as checkboxes. I would order the list as follows:\n\n\"Show confirmation dialogs\"\n- Initial configuration\n- Home directory warning (Windows only)\n- Rebase confirmation\n- Detached Head warning\n\nI think this would be easier to understand",
+      "revId": "fd15bc4ac77d5d1f7cc66bc592594c956dd06a7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
