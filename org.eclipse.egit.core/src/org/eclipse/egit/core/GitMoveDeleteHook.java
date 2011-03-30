@@ -201,12 +201,16 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 						.getMapping(source);
 				IPath gitDir = newLocation.append(mapping.getGitDir());
 				RepositoryProvider.unmap(source);
+				GitProjectData.delete(source);
 
 				monitor.worked(100);
 				tree.standardMoveProject(source, description, updateFlags,
 						monitor);
 
 				reconnect(source, description, gitDir, monitor);
+			} catch (IOException e) {
+				tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
+						0, CoreText.MoveDeleteHook_operationError, e));
 			} catch (CoreException e) {
 				tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
 						0, CoreText.MoveDeleteHook_operationError, e));
@@ -230,6 +234,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 						.getMapping(source);
 				IPath gitDir = mapping.getGitDirAbsolutePath();
 				RepositoryProvider.unmap(source);
+				GitProjectData.delete(source);
 
 				monitor.worked(100);
 				// source.refreshLocal(IResource.DEPTH_INFINITE,
@@ -271,6 +276,10 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		RepositoryProvider.map(destination, GitProvider.class.getName());
 		destination.refreshLocal(IResource.DEPTH_INFINITE,
 				new SubProgressMonitor(monitor, 50));
+
+		RepositoryUtil repoUtil = Activator.getDefault().getRepositoryUtil();
+		repoUtil.addConfiguredRepository(repositoryMapping.getRepository()
+				.getDirectory());
 	}
 
 	private boolean moveIndexContent(String dPath,
