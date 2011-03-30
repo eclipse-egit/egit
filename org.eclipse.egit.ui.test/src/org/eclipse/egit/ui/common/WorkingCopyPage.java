@@ -20,7 +20,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 
 public class WorkingCopyPage {
 
@@ -48,14 +48,14 @@ public class WorkingCopyPage {
 						.getConfiguredRepositories().contains(targetDir));
 
 		SWTBotShell dialogShell = bot.shell("Import Projects from Git");
-		SWTBotTable table = dialogShell.bot().table();
-		int expectedRowCount = table.rowCount() + 1;
+		SWTBotTree tree = dialogShell.bot().tree();
+		int expectedRowCount = tree.rowCount() + 1;
 		bot.button("Finish").click();
 
 		// wait until clone operation finished.
 		// wizard executes clone operation using getContainer.run
 		// wait until the repository table gets an additional entry
-		bot.waitUntil(Conditions.tableHasRows(table, expectedRowCount), 20000);
+		bot.waitUntil(Conditions.treeHasRows(tree, expectedRowCount), 20000);
 
 
 		// depending on the timing, the clone job may already be run
