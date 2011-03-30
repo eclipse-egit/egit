@@ -57,6 +57,7 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
+import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotRadio;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotStyledText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarDropDownButton;
@@ -316,9 +317,14 @@ public class SynchronizeViewTest extends LocalRepositoryTestCase {
 		// then
 		// asserts for Git Change Set model
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+		bot.waitUntil(Conditions.treeHasRows(syncViewTree, syncViewTree.rowCount()), 20000);
+
 		syncViewTree.expandNode(UIText.GitModelWorkingTree_workingTree);
+		bot.waitUntil(Conditions.treeHasRows(syncViewTree, syncViewTree.rowCount()), 20000);
 		assertEquals(1, syncViewTree.getAllItems().length);
+
 		SWTBotTreeItem proj1Node = syncViewTree.getAllItems()[0];
+		bot.waitUntil(Conditions.treeHasRows(syncViewTree, syncViewTree.rowCount()), 20000);
 		proj1Node.getItems()[0].expand();
 		assertEquals(1, proj1Node.getItems()[0].getItems().length);
 
