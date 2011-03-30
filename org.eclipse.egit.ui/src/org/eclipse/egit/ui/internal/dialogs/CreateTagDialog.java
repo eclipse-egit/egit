@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
@@ -290,6 +291,13 @@ public class CreateTagDialog extends TitleAreaDialog {
 		super.create();
 		// start a job that fills the tag list lazily
 		Job job = new Job(UIText.CreateTagDialog_GetTagJobName) {
+			@Override
+			public boolean belongsTo(Object family) {
+				if (family.equals(JobFamilies.FILL_TAG_LIST))
+					return true;
+				return super.belongsTo(family);
+			}
+
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 
