@@ -63,16 +63,6 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 	protected void createFieldEditors() {
 		Composite main = getFieldEditorParent();
 
-		Group initialGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
-		initialGroup.setText(UIText.GitPreferenceRoot_InitialConfiguration);
-		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
-				.applyTo(initialGroup);
-		addField(new BooleanFieldEditor(
-				UIPreferences.SHOW_INITIAL_CONFIG_DIALOG,
-				UIText.GitPreferenceRoot_ShowInitialConfigDialogCheckbox,
-				initialGroup));
-		updateMargins(initialGroup);
-
 		Group cloningGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		cloningGroup.setText(UIText.GitPreferenceRoot_CloningRepoGroupHeader);
 		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
@@ -158,15 +148,6 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 				UIText.GitPreferenceRoot_MergeModeTooltip);
 		addField(mergeMode);
 		updateMargins(mergeGroup);
-
-		Group confirmGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
-		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
-				.applyTo(confirmGroup);
-		confirmGroup.setText(UIText.GitPreferenceRoot_HideConfirmationGroup);
-		addField(new BooleanFieldEditor(UIPreferences.REBASE_HIDE_CONFIRM,
-				UIText.GitPreferenceRoot_HideRebaseConfirmationField,
-				confirmGroup));
-		updateMargins(confirmGroup);
 	}
 
 	private void updateMargins(Group group) {
