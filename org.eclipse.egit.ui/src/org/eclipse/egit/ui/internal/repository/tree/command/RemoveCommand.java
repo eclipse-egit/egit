@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -36,7 +37,15 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevTree;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.EmptyTreeIterator;
+import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
@@ -126,7 +135,6 @@ public class RemoveCommand extends
 			}
 		}
 
-
 		final boolean deleteWorkDir = deleteWorkingDir;
 		final boolean removeProj = removeProjects;
 
@@ -138,26 +146,10 @@ public class RemoveCommand extends
 				monitor
 						.setTaskName(UIText.RepositoriesView_DeleteRepoDeterminProjectsMessage);
 
-
 				if (removeProj) {
 					// confirmed deletion
-					IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
-
-						public void run(IProgressMonitor actMonitor)
-								throws CoreException {
-
-							for (IProject prj : projectsToDelete)
-								prj.delete(false, false, actMonitor);
-						}
-					};
-
-					try {
-						ResourcesPlugin.getWorkspace().run(wsr,
-								ResourcesPlugin.getWorkspace().getRoot(),
-								IWorkspace.AVOID_UPDATE, monitor);
-					} catch (CoreException e1) {
-						Activator.logError(e1.getMessage(), e1);
-					}
+					deleteProjects(delete, projectsToDelete,
+							monitor);
 				}
 				for (RepositoryNode node : selectedNodes) {
 					util.removeDir(node.getRepository().getDirectory());
@@ -165,16 +157,7 @@ public class RemoveCommand extends
 
 				if (delete) {
 					try {
-						for (RepositoryNode node : selectedNodes) {
-							Repository repo = node.getRepository();
-							repo.close();
-							if (!repo.isBare() && deleteWorkDir)
-								FileUtils.delete(repo.getWorkTree(),
-										FileUtils.RECURSIVE | FileUtils.RETRY);
-							FileUtils.delete(repo.getDirectory(),
-									FileUtils.RECURSIVE | FileUtils.RETRY
-											| FileUtils.SKIP_MISSING);
-						}
+						deleteRepositoryContent(selectedNodes, deleteWorkDir);
 					} catch (IOException e) {
 						return Activator.createErrorStatus(e.getMessage(), e);
 					}
@@ -184,6 +167,71 @@ public class RemoveCommand extends
 		};
 
 		service.schedule(job);
+	}
+
+	private void deleteProjects(
+			final boolean delete,
+			final List<IProject> projectsToDelete,
+			IProgressMonitor monitor) {
+		IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
+
+			public void run(IProgressMonitor actMonitor)
+			throws CoreException {
+
+				for (IProject prj : projectsToDelete)
+					prj.delete(delete, false, actMonitor);
+			}
+		};
+
+		try {
+			ResourcesPlugin.getWorkspace().run(wsr,
+					ResourcesPlugin.getWorkspace().getRoot(),
+					IWorkspace.AVOID_UPDATE, monitor);
+		} catch (CoreException e1) {
+			Activator.logError(e1.getMessage(), e1);
+		}
+	}
+
+	private void deleteRepositoryContent(
+			final List<RepositoryNode> selectedNodes,
+			final boolean deleteWorkDir) throws IOException {
+		for (RepositoryNode node : selectedNodes) {
+			Repository repo = node.getRepository();
+			if (!repo.isBare() && deleteWorkDir) {
+				File[] files = repo.getWorkTree().listFiles();
+				if (files != null)
+					for (File file : files) {
+						if (isTracked(file, repo))
+							FileUtils.delete(file,
+									FileUtils.RECURSIVE | FileUtils.RETRY);
+					}
+			}
+			repo.close();
+			FileUtils.delete(repo.getDirectory(),
+					FileUtils.RECURSIVE | FileUtils.RETRY
+							| FileUtils.SKIP_MISSING);
+		}
+	}
+
+	private boolean isTracked(File file, Repository repo) throws IOException {
+		ObjectId objectId = repo.resolve(Constants.HEAD);
+		RevTree tree;
+		if (objectId != null)
+			tree = new RevWalk(repo).parseTree(objectId);
+		else
+			tree = null;
+
+		TreeWalk treeWalk = new TreeWalk(repo);
+		treeWalk.setRecursive(true);
+		if (tree != null)
+			treeWalk.addTree(tree);
+		else
+			treeWalk.addTree(new EmptyTreeIterator());
+		treeWalk.addTree(new DirCacheIterator(repo.readDirCache()));
+		treeWalk.setFilter(PathFilterGroup.createFromStrings(Collections.singleton(
+				Repository.stripWorkDir(repo.getWorkTree(), file))));
+		return treeWalk.next();
+
 	}
 
 	private List<IProject> findProjectsToDelete(final List<RepositoryNode> selectedNodes) {
