@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL33///tM\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/EGitTestCase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-29T23:34:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL33///zw\u003d",
+      "revId": "6cabd93f469eeb7e726438d3f85a2e02acdcd5cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
