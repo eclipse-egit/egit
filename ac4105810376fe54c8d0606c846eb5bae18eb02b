@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n//+eo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2011-03-25T09:01:38Z",
+      "side": 1,
+      "message": "\"...see if it...\"",
+      "revId": "ac4105810376fe54c8d0606c846eb5bae18eb02b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n//+e0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2011-03-25T09:01:38Z",
+      "side": 1,
+      "message": "You can also remove this bracket.",
+      "revId": "ac4105810376fe54c8d0606c846eb5bae18eb02b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n//+ew\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2011-03-25T09:01:38Z",
+      "side": 1,
+      "message": "See above.",
+      "revId": "ac4105810376fe54c8d0606c846eb5bae18eb02b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n//+es\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2011-03-25T09:01:38Z",
+      "side": 1,
+      "message": "You shouldn\u0027t assign the new value to the parameter. I would prefer having a local variable.",
+      "revId": "ac4105810376fe54c8d0606c846eb5bae18eb02b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
