@@ -219,7 +219,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 					branchTree.setExpandedState(node, !branchTree
 							.getExpandedState(node));
 				else if (getButton(Window.OK).isEnabled())
-					okPressed();
+					buttonPressed(OK);
 
 			}
 		});
