@@ -2350,15 +2350,6 @@ public class UIText extends NLS {
 	public static String DeleteBranchDialog_WindowTitle;
 
 	/** */
-	public static String DeleteBranchDialog_DialogMessage;
-
-	/** */
-	public static String DeleteBranchDialog_DialogTitle;
-
-	/** */
-	public static String DeleteBranchDialog_WindowTitle;
-
-	/** */
 	public static String DeleteRepositoryConfirmDialog_DeleteRepositoryMessage;
 
 	/** */

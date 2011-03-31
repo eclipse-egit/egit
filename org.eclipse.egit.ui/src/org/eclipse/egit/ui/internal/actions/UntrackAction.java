@@ -8,15 +8,18 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
+import org.eclipse.egit.core.op.TagOperation;
 
 /**
- * "Apply patch" action.
+ * An action for creating tag.
+ *
+ * @see TagOperation
  */
-public class AssumeUnchangedAction extends RepositoryAction {
+public class UntrackAction extends RepositoryAction {
 	/**
-	 * Constructs this action
+	 *
 	 */
-	public AssumeUnchangedAction() {
-		super(ActionCommands.ASSUME_UNCHANGED, new AssumeUnchangedActionHandler());
+	public UntrackAction() {
+		super(ActionCommands.UNTRACK_ACTION, new UntrackActionHandler());
 	}
 }
