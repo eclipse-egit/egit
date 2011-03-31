@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL33///xo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-29T15:25:04Z",
+      "side": 1,
+      "message": "mapping may be null at this point",
+      "revId": "73b765145307f82584a672580ea3f89818ab09e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///xc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractSharedCommandHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-29T15:25:04Z",
+      "side": 1,
+      "message": "...cannot be determined",
+      "revId": "73b765145307f82584a672580ea3f89818ab09e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///xY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractSharedCommandHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-29T15:25:04Z",
+      "side": 1,
+      "message": "...cannot be determined",
+      "revId": "73b765145307f82584a672580ea3f89818ab09e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///xU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/RebaseCurrentRefCommand.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-29T15:25:04Z",
+      "side": 1,
+      "message": "You can\u0027t simply cast here (I learned this the hard way; the framework can return just about anthing here). Check the returned object for instanceof IStructuredSelection and simply return null otherwise.",
+      "revId": "73b765145307f82584a672580ea3f89818ab09e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
