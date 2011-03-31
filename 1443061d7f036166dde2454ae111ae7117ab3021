@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL33///zI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RebaseCurrentRefCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-29T13:34:21Z",
+      "side": 1,
+      "message": "This fails when you call rebase from a RepositoryNode (i.e. a \"Repository\" node from the repo view; in this case, ref should simply be null; doing something like \n\nif (node.getType() \u003d\u003d RepositoryTreeNodeType.Ref)\nref \u003d ((RefNode)...\nelse\nref \u003d null;\n\nshould do the job.",
+      "revId": "1443061d7f036166dde2454ae111ae7117ab3021",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
