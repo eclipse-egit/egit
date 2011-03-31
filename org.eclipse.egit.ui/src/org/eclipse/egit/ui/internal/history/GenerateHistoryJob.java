@@ -64,7 +64,11 @@ class GenerateHistoryJob extends Job {
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.HISTORYVIEW.getLocation(),
 								"Filling commit list"); //$NON-NLS-1$
-					allCommits.fillTo(oldsz + BATCH_SIZE - 1);
+					// ensure that filling (here) and reading (CommitGraphTable)
+					// the commit list is thread safe
+					synchronized (allCommits) {
+						allCommits.fillTo(oldsz + BATCH_SIZE - 1);
+					}
 					if (monitor.isCanceled()) {
 						page.setErrorMessage(NLS.bind(
 								UIText.GenerateHistoryJob_CancelMessage, page

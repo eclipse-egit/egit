@@ -390,8 +390,12 @@ class CommitGraphTable {
 
 	private void initCommitsMap() {
 		commitsMap = new HashMap<String, PlotCommit>();
-		for (PlotCommit commit : allCommits)
-			commitsMap.put(commit.getId().name(), commit);
+		// ensure that filling (GenerateHistoryJob) and reading (here)
+		// the commit list is thread safe
+		synchronized (allCommits) {
+			for (PlotCommit commit : allCommits)
+				commitsMap.put(commit.getId().name(), commit);
+		}
 	}
 
 	private void createColumns(final Table rawTable, final TableLayout layout) {
