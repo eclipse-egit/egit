@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n//+pE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-03-24T00:49:28Z",
+      "side": 1,
+      "message": "AFAIR Mac Os X uses only \u0027\\r\u0027 as a line end so this code would not work on Os X.",
+      "revId": "4e3832e77e2c6d1c7ffeb72fc6bf698bf6d9c727",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n//+o8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-03-24T00:49:28Z",
+      "side": 1,
+      "message": "Style nit: we don\u0027t use brackets for single line blocks",
+      "revId": "4e3832e77e2c6d1c7ffeb72fc6bf698bf6d9c727",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

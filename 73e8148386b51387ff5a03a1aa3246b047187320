@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n//+pA\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/IgnoreOperationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-03-24T00:49:28Z",
+      "side": 0,
+      "message": "Irrelevant line deletation.",
+      "revId": "73e8148386b51387ff5a03a1aa3246b047187320",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
