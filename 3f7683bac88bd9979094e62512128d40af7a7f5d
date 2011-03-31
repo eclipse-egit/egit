@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL33///ro\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/RebaseCurrentRefCommand.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-30T05:59:54Z",
+      "side": 1,
+      "message": "I\u0027m not absolutely sure about this, but please use Object, not ISelection here; we aren\u0027t losing anything bug might prevent ClassCastExceptions in certain circumstances.",
+      "revId": "3f7683bac88bd9979094e62512128d40af7a7f5d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
