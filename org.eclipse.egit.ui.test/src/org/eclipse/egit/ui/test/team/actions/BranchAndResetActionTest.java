@@ -469,5 +469,4 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		dialog.bot().button(IDialogConstants.OK_LABEL).click();
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 	}
-
 }
