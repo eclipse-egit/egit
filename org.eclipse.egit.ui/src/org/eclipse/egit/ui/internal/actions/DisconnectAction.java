@@ -8,15 +8,14 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-
 /**
- * "Apply patch" action.
+ * Checkout all selected dirty files.
  */
-public class AssumeUnchangedAction extends RepositoryAction {
+public class DisconnectAction extends RepositoryAction {
 	/**
-	 * Constructs this action
+	 *
 	 */
-	public AssumeUnchangedAction() {
-		super(ActionCommands.ASSUME_UNCHANGED, new AssumeUnchangedActionHandler());
+	public DisconnectAction() {
+		super(ActionCommands.DISCONNECT_ACTION, new DisconnectActionHandler());
 	}
 }
