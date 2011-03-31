@@ -27,8 +27,13 @@ class FileDiffContentProvider implements IStructuredContentProvider {
 
 	public void inputChanged(final Viewer newViewer, final Object oldInput,
 			final Object newInput) {
-		walk = ((CommitFileDiffViewer) newViewer).getTreeWalk();
-		commit = (RevCommit) newInput;
+		if (newInput != null) {
+			walk = ((CommitFileDiffViewer) newViewer).getTreeWalk();
+			commit = (RevCommit) newInput;
+		} else {
+			walk = null;
+			commit = null;
+		}
 		diff = null;
 	}
 
