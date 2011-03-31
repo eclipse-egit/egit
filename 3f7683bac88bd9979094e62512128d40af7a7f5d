@@ -16,6 +16,24 @@
       "revId": "3f7683bac88bd9979094e62512128d40af7a7f5d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///kw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/RebaseCurrentRefCommand.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-03-30T18:27:57Z",
+      "side": 1,
+      "message": "ClassCastException should never appear here. In case when selected element isn\u0027t instance of ISelection the ExecutionException will be thrown from org.eclipse.ui.handlers.HandlerUtil.getCurrentSelectionChecked(ExecutionEvent) and we can\u0027t prevent from throwing this exception. Therefore I don\u0027t think that making currentSelection to be an type of Object make any sense here.",
+      "parentUuid": "AAAL33///ro\u003d",
+      "revId": "3f7683bac88bd9979094e62512128d40af7a7f5d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
