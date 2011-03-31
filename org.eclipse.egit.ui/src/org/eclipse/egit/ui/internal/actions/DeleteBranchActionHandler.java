@@ -1,7 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2007, Dave Watson <dwatson@mimvista.com>
- * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
- * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,17 +14,15 @@ import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.jgit.lib.Repository;
 
 /**
- * Action for selecting a branch and checking it out.
- *
- * @see BranchOperationUI
+ * Action for deleting a branch
  */
-public class BranchActionHandler extends RepositoryActionHandler {
+public class DeleteBranchActionHandler extends RepositoryActionHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(true, event);
 		if (repository == null)
 			return null;
-		BranchOperationUI.checkout(repository).start();
+		BranchOperationUI.delete(repository).start();
 		return null;
 	}
 
