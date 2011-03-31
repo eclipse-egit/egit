@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Dariusz Luksza <dariusz@luksza.org> - add getRef() and getShell methods
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commands.shared;
 
@@ -15,11 +16,15 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -74,4 +79,31 @@ public abstract class AbstractSharedCommandHandler extends AbstractHandler {
 		}
 		return null;
 	}
+
+	/**
+	 *
+	 * @param selected
+	 * @return {@link Ref} connected with given {@code selected} node or
+	 *         {@code null} when ref cannot be determined
+	 */
+	protected Ref getRef(Object selected) {
+		if (selected instanceof RepositoryTreeNode<?>) {
+			RepositoryTreeNode node = (RepositoryTreeNode) selected;
+			if (node.getType() == RepositoryTreeNodeType.REF)
+				return ((RefNode) node).getObject();
+		}
+
+		return null;
+	}
+
+	/**
+	 *
+	 * @param event
+	 * @return {@link Shell} connected with given {@code event}, or {@code null}
+	 *         when shell cannot be determined
+	 */
+	protected Shell getShell(ExecutionEvent event) {
+		return HandlerUtil.getActiveShell(event);
+	}
+
 }
