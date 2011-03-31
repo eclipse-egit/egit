@@ -112,9 +112,12 @@ public class TagActionTest extends LocalRepositoryTestCase {
 		SWTBotTree projectExplorerTree = bot.viewById(
 				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
-		String menuString = util.getPluginLocalizedValue("TagAction_label");
-		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Team",
-				menuString);
+
+		String[] menuPath = new String[] {
+				util.getPluginLocalizedValue("TeamMenu.label"),
+				util.getPluginLocalizedValue("AdvancedMenu.label"),
+				util.getPluginLocalizedValue("TagAction_label") };
+		ContextMenuHelper.clickContextMenu(projectExplorerTree, menuPath);
 		SWTBotShell dialog = bot.shell(UIText.CreateTagDialog_NewTag);
 		return dialog;
 	}
