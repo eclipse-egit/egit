@@ -35,8 +35,8 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 		// TODO perhaps we can mark the default merge branch for
 		// the current branch by reading the configuration and use the other
 		// super constructor
-		super(parentShell, repo);
-		setRootsToShow(true, true, true, false);
+		super(parentShell, repo, SHOW_LOCAL_BRANCHES | SHOW_REMOTE_BRANCHES
+				| SHOW_TAGS | EXPAND_LOCAL_BRANCHES_NODE);
 	}
 
 	@Override
