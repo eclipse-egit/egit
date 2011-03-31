@@ -86,26 +86,30 @@ public class ExistingOrNewPage {
 			this.project = project;
 			this.path = path;
 			this.repository = repository;
-			this.subrows = subrows;
+			if (subrows != null) {
+				this.subrows = new Row[subrows.length];
+				System.arraycopy(subrows, 0, this.subrows, 0, subrows.length);
+			} else
+				this.subrows = null;
 		}
 
-		public String getProject() {
+		String getProject() {
 			return project;
 		}
 
-		public String getPath() {
+		String getPath() {
 			return path;
 		}
 
-		public String getRepository() {
+		String getRepository() {
 			return repository;
 		}
 
-		public Row[] getSubrows() {
+		Row[] getSubrows() {
 			return subrows;
 		}
 
-		public boolean isSelected() {
+		boolean isSelected() {
 			return selected;
 		}
 	}

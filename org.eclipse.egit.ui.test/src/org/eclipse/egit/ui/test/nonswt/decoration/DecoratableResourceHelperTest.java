@@ -285,4 +285,9 @@ class TestDecoratableResource extends DecoratableResource {
 
 		return true;
 	}
+
+	public int hashCode() {
+		// this appeases FindBugs
+		return super.hashCode();
+	}
 }
