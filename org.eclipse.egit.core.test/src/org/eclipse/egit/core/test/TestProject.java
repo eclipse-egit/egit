@@ -13,8 +13,10 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 
+import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -61,15 +63,27 @@ public class TestProject {
 	/**
 	 * @param remove
 	 *            should project be removed if already exists
-	 * @param projectName
+	 * @param path
 	 * @throws CoreException
 	 */
-	public TestProject(final boolean remove, String projectName) throws CoreException {
+	public TestProject(final boolean remove, String path) throws CoreException {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		Path ppath = new Path(path);
+		String projectName = ppath.lastSegment();
+		URI locationURI;
+		if (!ppath.lastSegment().equals(path)) {
+			locationURI = URIUtil.toURI(URIUtil.toPath(root.getRawLocationURI()).append(path));
+		} else
+			locationURI = null;
 		project = root.getProject(projectName);
 		if (remove)
 			project.delete(true, null);
-		project.create(null);
+		IProjectDescription description = ResourcesPlugin.getWorkspace()
+				.newProjectDescription(projectName);
+
+		description.setName(projectName);
+		description.setLocationURI(locationURI);
+		project.create(description, null);
 		project.open(null);
 		location = project.getLocation().toOSString();
 		javaProject = JavaCore.create(project);
