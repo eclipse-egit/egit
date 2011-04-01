@@ -21,6 +21,8 @@ import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.osgi.service.localization.BundleLocalization;
+import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
@@ -204,6 +206,34 @@ public class TestUtil {
 	}
 
 	/**
+	 * Waits until the given tree item has a selected node with the given text
+	 *
+	 * @param bot
+	 * @param tree
+	 * @param text
+	 * @param timeout
+	 * @throws TimeoutException
+	 */
+	public static void waitUntilTreeHasSelectedNodeWithText(SWTBot bot,
+			final SWTBotTree tree, final String text, long timeout)
+			throws TimeoutException {
+		bot.waitUntil(new ICondition() {
+
+			public boolean test() throws Exception {
+				return tree.selection().get(0, 0).equals(text);
+			}
+
+			public void init(SWTBot bot2) {
+				// empty
+			}
+
+			public String getFailureMessage() {
+				return null;
+			}
+		}, timeout);
+	}
+
+	/**
 	 * Waits until the given table has an item with the given text
 	 * @param bot
 	 * @param table
@@ -231,6 +261,24 @@ public class TestUtil {
 		}, timeout);
 	}
 
+	public static void waitUntilEditorIsActive(SWTWorkbenchBot bot,
+			final SWTBotEditor editor, long timeout) {
+		bot.waitUntil(new ICondition() {
+
+			public boolean test() throws Exception {
+				return editor.isActive();
+			}
+
+			public void init(SWTBot bot2) {
+				// empty
+			}
+
+			public String getFailureMessage() {
+				return null;
+			}
+		}, timeout);
+	}
+
 	/**
 	 * Disables usage of proxy servers
 	 */
@@ -241,5 +289,6 @@ public class TestUtil {
 		proxyService.setSystemProxiesEnabled(false);
 		proxyService.setProxiesEnabled(false);
 	}
+
 
 }
