@@ -1330,10 +1330,7 @@ public class UIText extends NLS {
 	public static String HistoryPage_findbar_notFound;
 
 	/** */
-	public static String PullOperationUI_BranchNotConfiguredForPullMessage;
-
-	/** */
-	public static String PullOperationUI_NoLocalBranchMessage;
+	public static String PullOperationUI_NotTriedMessage;
 
 	/** */
 	public static String PullOperationUI_PullCanceledWindowTitle;
@@ -1342,13 +1339,13 @@ public class UIText extends NLS {
 	public static String PullOperationUI_PullErrorWindowTitle;
 
 	/** */
+	public static String PullOperationUI_PullingMultipleTaskName;
+
+	/** */
 	public static String PullOperationUI_PullingTaskName;
 
 	/** */
 	public static String PullOperationUI_PullOperationCanceledMessage;
-
-	/** */
-	public static String PullOperationUI_UnexpectedExceptionGettingBranchMessage;
 
 	/** */
 	public static String PullResultDialog_DialogTitle;
@@ -2714,6 +2711,45 @@ public class UIText extends NLS {
 
 	/** */
 	public static String MixedResetToRevisionAction_mixedReset;
+
+	/** */
+	public static String MultiPullResultDialog_DetailsButton;
+
+	/** */
+	public static String MultiPullResultDialog_FetchStatusColumnHeader;
+
+	/** */
+	public static String MultiPullResultDialog_MergeResultMessage;
+
+	/** */
+	public static String MultiPullResultDialog_NothingFetchedStatus;
+
+	/** */
+	public static String MultiPullResultDialog_NothingUpdatedStatus;
+
+	/** */
+	public static String MultiPullResultDialog_OkStatus;
+
+	/** */
+	public static String MultiPullResultDialog_OverallStatusColumnHeader;
+
+	/** */
+	public static String MultiPullResultDialog_RebaseResultMessage;
+
+	/** */
+	public static String MultiPullResultDialog_RepositoryColumnHeader;
+
+	/** */
+	public static String MultiPullResultDialog_UnknownStatus;
+
+	/** */
+	public static String MultiPullResultDialog_UpdatedMessage;
+
+	/** */
+	public static String MultiPullResultDialog_UpdateStatusColumnHeader;
+
+	/** */
+	public static String MultiPullResultDialog_WindowTitle;
 
 	/** */
 	public static String UIIcons_errorDeterminingIconBase;

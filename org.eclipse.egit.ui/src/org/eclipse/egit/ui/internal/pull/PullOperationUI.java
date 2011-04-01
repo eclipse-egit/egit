@@ -11,28 +11,29 @@
 package org.eclipse.egit.ui.internal.pull;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.core.op.PullOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.job.JobUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -40,110 +41,121 @@ import org.eclipse.ui.PlatformUI;
  * UI wrapper for {@link PullOperation}
  */
 public class PullOperationUI extends JobChangeAdapter implements
-		IEGitOperation, IJobChangeListener {
-	private final Repository repository;
+		IJobChangeListener {
+	private static final IStatus NOT_TRIED_STATUS = new Status(IStatus.ERROR,
+			Activator.getPluginId(), UIText.PullOperationUI_NotTriedMessage);
 
-	private final PullOperation pull;
+	private final Repository[] repositories;
+
+	private final Map<Repository, Object> results = new HashMap<Repository, Object>();
+
+	private final PullOperation pullOperation;
 
 	/**
-	 * @param repository
+	 * @param repositories
 	 */
-	public PullOperationUI(Repository repository) {
-		this.repository = repository;
-		this.pull = new PullOperation(repository, Activator.getDefault()
-				.getPreferenceStore().getInt(
-						UIPreferences.REMOTE_CONNECTION_TIMEOUT));
+	public PullOperationUI(Set<Repository> repositories) {
+		this.repositories = repositories.toArray(new Repository[repositories
+				.size()]);
+		int timeout = Activator.getDefault().getPreferenceStore().getInt(
+				UIPreferences.REMOTE_CONNECTION_TIMEOUT);
+		pullOperation = new PullOperation(repositories, timeout);
+		for (Repository repository : repositories)
+			results.put(repository, NOT_TRIED_STATUS);
 	}
 
 	/**
 	 * Starts this operation asynchronously
 	 */
 	public void start() {
-		String errorMessage = null;
-		String branchName;
-		try {
-			try {
-				branchName = repository.getFullBranch();
-			} catch (IOException e) {
-				Activator.logError(e.getMessage(), e);
-				errorMessage = UIText.PullOperationUI_UnexpectedExceptionGettingBranchMessage;
-				return;
-			}
-			if (!branchName.startsWith(Constants.R_HEADS)) {
-				errorMessage = UIText.PullOperationUI_NoLocalBranchMessage;
-				return;
-			}
-
-			String shortBranchName = branchName.substring(Constants.R_HEADS
-					.length());
-
-			String remoteBranchName = repository.getConfig().getString(
-					ConfigConstants.CONFIG_BRANCH_SECTION, shortBranchName,
-					ConfigConstants.CONFIG_KEY_MERGE);
-			if (remoteBranchName == null) {
-				errorMessage = NLS
-						.bind(
-								UIText.PullOperationUI_BranchNotConfiguredForPullMessage,
-								shortBranchName);
-				return;
-			}
+		// figure out a job name
+		String jobName;
+		if (this.repositories.length == 1) {
 			String repoName = Activator.getDefault().getRepositoryUtil()
-					.getRepositoryName(repository);
-
-			String jobName = NLS.bind(UIText.PullOperationUI_PullingTaskName,
+					.getRepositoryName(repositories[0]);
+			String shortBranchName;
+			try {
+				shortBranchName = repositories[0].getBranch();
+			} catch (IOException e) {
+				// ignore here
+				shortBranchName = ""; //$NON-NLS-1$
+			}
+			jobName = NLS.bind(UIText.PullOperationUI_PullingTaskName,
 					shortBranchName, repoName);
-			JobUtil.scheduleUserJob(this, jobName, JobFamilies.PULL, this);
+		} else
+			jobName = UIText.PullOperationUI_PullingMultipleTaskName;
+		Job job = new Job(jobName) {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				execute(monitor);
+				// we always return OK and handle display of errors on our own
+				return Status.OK_STATUS;
+			}
 
-		} finally {
-			if (errorMessage != null)
-				MessageDialog.openError(PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getShell(),
-						UIText.PullOperationUI_PullErrorWindowTitle,
-						errorMessage);
-		}
+			@Override
+			public boolean belongsTo(Object family) {
+				if (JobFamilies.PULL.equals(family))
+					return true;
+				return super.belongsTo(family);
+			}
+		};
+		job.setRule(ResourcesPlugin.getWorkspace().getRoot());
+		job.setUser(true);
+		job.addJobChangeListener(this);
+		job.schedule();
 	}
 
 	/**
 	 * Starts this operation synchronously.
 	 *
-	 * Note that the asynchronous method has more elaborate checks providing a
-	 * specific error dialog in case of missing configuration (see
-	 * {@link #start()})
-	 *
 	 * @param monitor
-	 * @throws CoreException
 	 */
-	public void execute(IProgressMonitor monitor) throws CoreException {
-		pull.execute(monitor);
+	public void execute(IProgressMonitor monitor) {
+		try {
+			pullOperation.execute(monitor);
+			results.putAll(pullOperation.getResults());
+		} catch (CoreException e) {
+			if (e.getStatus().getSeverity() == IStatus.CANCEL)
+				results.putAll(pullOperation.getResults());
+			else
+				Activator.handleError(e.getMessage(), e, true);
+		}
 	}
 
 	public void done(IJobChangeEvent event) {
-		IStatus result = event.getJob().getResult();
-		if (result.getSeverity() == IStatus.CANCEL) {
-			Display.getDefault().asyncExec(new Runnable() {
-				public void run() {
-					Shell shell = PlatformUI.getWorkbench()
-							.getActiveWorkbenchWindow().getShell();
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				Shell shell = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell();
+				showResults(shell);
+			}
+		});
+
+	}
+
+	private void showResults(final Shell shell) {
+		if (this.results.isEmpty())
+			// shouldn't really happen, but just in case...
+			return;
+		else if (this.results.size() == 1) {
+			Entry<Repository, Object> entry = this.results.entrySet()
+					.iterator().next();
+			if (entry.getValue() instanceof PullResult)
+				new PullResultDialog(shell, entry.getKey(), (PullResult) entry
+						.getValue()).open();
+			else {
+				IStatus status = (IStatus) entry.getValue();
+				if (status == NOT_TRIED_STATUS) {
 					MessageDialog
 							.openInformation(
 									shell,
 									UIText.PullOperationUI_PullCanceledWindowTitle,
 									UIText.PullOperationUI_PullOperationCanceledMessage);
-				}
-			});
-		} else if (result.isOK()) {
-			Display.getDefault().asyncExec(new Runnable() {
-				public void run() {
-					Shell shell = PlatformUI.getWorkbench()
-							.getActiveWorkbenchWindow().getShell();
-					new PullResultDialog(shell, repository, pull.getResult())
-							.open();
-				}
-			});
-		}
-	}
-
-	public ISchedulingRule getSchedulingRule() {
-		return ResourcesPlugin.getWorkspace().getRoot();
+				} else
+					Activator.handleError(status.getMessage(), status
+							.getException(), true);
+			}
+		} else
+			new MultiPullResultDialog(shell, results).open();
 	}
 }
