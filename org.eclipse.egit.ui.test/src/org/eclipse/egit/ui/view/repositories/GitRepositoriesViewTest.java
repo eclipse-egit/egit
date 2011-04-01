@@ -36,6 +36,7 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.utils.TableCollection;
+import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -49,7 +50,7 @@ import org.junit.runner.RunWith;
 
 /**
  * SWTBot Tests for the Git Repositories View.
- * 
+ *
  * <pre>
  * TODO
  * global copy and paste command
@@ -119,7 +120,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		item = myRepoViewUtil.getLocalBranchesItem(tree, repositoryFile)
 				.expand().getNode("stable").doubleClick();
 		refreshAndWait();
-		waitInUI();
+		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		String contentStable = getTestFileContent();
 		assertTrue("Content of master and stable should differ", !contentMaster
 				.equals(contentStable));
@@ -127,7 +128,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 
 	/**
 	 * Checks for the Symbolic Reference node
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -186,7 +187,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 
 	/**
 	 * Show properties
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -196,14 +197,13 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		item.select();
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("OpenPropertiesCommand"));
-		waitInUI();
-		assertEquals("org.eclipse.ui.views.PropertySheet", bot.activeView()
-				.getReference().getId());
+		SWTBotView propertieView = bot.viewById("org.eclipse.ui.views.PropertySheet");
+		assertTrue(propertieView.isActive());
 	}
 
 	/**
 	 * Import wizard golden path test
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -226,7 +226,6 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// wizard directory should be working dir
 		assertEquals(myRepoViewUtil.getWorkdirItem(tree, repositoryFile)
 				.getText(), wizardNode);
-		waitInUI();
 		shell.close();
 		// start wizard from .git
 		myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand().getNode(
@@ -246,7 +245,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		shell.bot().tree().getAllItems()[0].getNode(PROJ1).select();
 		// next is 1
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		waitInUI();
+		bot.button(UIText.WizardProjectsImportPage_selectAll);
 		assertTrue(shell.bot().tree().getAllItems().length == 1);
 		assertTrue(!shell.bot().button(IDialogConstants.FINISH_LABEL)
 				.isEnabled());
@@ -254,7 +253,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		assertTrue(shell.bot().button(IDialogConstants.FINISH_LABEL)
 				.isEnabled());
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
-		waitInUI();
+		bot.waitUntil(Conditions.shellCloses(shell));
 		assertProjectExistence(PROJ1, true);
 		assertProjectIsShared(PROJ1, true);
 	}
@@ -281,7 +280,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// wizard directory should be PROJ2
 		assertEquals(PROJ2, wizardNode);
 		shell.bot().button(IDialogConstants.NEXT_LABEL).click();
-		waitInUI();
+		shell.bot().text(" " + UIText.GitProjectsImportPage_NoProjectsMessage);
 		assertTrue(shell.bot().tree().getAllItems().length == 0);
 		shell.bot().button(IDialogConstants.BACK_LABEL).click();
 		// import as general
@@ -305,7 +304,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 				UIText.GitCreateGeneralProjectPage_ProjectNameLabel).getText());
 
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
-		waitInUI();
+		bot.waitUntil(Conditions.shellCloses(shell));
 		assertProjectExistence(PROJ2, true);
 		assertProjectIsShared(PROJ2, true);
 	}
@@ -334,7 +333,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		// See also SWTBot Bug 337465
 		button.setFocus();
 		button.click();
-		waitInUI();
+		shell.bot().text(UIText.WizardProjectsImportPage_ImportProjectsDescription);
 		shell.bot().tree().getAllItems()[0].check();
 		// add to working set
 		shell.bot().checkBox().select();
@@ -351,7 +350,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		workingSetDialog.bot().table().getTableItem(workingSetName).check();
 		workingSetDialog.bot().button(IDialogConstants.OK_LABEL).click();
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
-		waitInUI();
+		bot.waitUntil(Conditions.shellCloses(shell));
 		assertProjectExistence(PROJ1, true);
 		assertProjectInWorkingSet(workingSetName, PROJ1);
 		assertProjectIsShared(PROJ1, true);
@@ -370,7 +369,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		assertEquals("Wrong project in working set", projectName, project
 				.getName());
 	}
-	
+
 	private void assertProjectIsShared(String projectName,
 			boolean shouldBeShared) {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
@@ -471,22 +470,19 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 			// activate the link with selection
 			getOrOpenView().toolbarButton("Link with Editor").click();
 			bot.editorByTitle(FILE2).show();
-			waitInUI();
 			// the selection should have changed to the latest editor
-			assertTrue(tree.selection().get(0, 0).equals(FILE2));
+			TestUtil.waitUntilTreeHasSelectedNodeWithText(bot, tree, FILE2, 10000);
 
 			bot.editorByTitle(FILE1).show();
-			waitInUI();
 			// selection should have changed
-			assertTrue(tree.selection().get(0, 0).equals(FILE1));
+			TestUtil.waitUntilTreeHasSelectedNodeWithText(bot, tree, FILE1, 10000);
 
 			// deactivate the link with editor
 			getOrOpenView().toolbarButton("Link with Editor").click();
 
 			bot.editorByTitle(FILE2).show();
-			waitInUI();
 			// the selection should be still be test.txt
-			assertTrue(tree.selection().get(0, 0).equals(FILE1));
+			TestUtil.waitUntilTreeHasSelectedNodeWithText(bot, tree, FILE1, 10000);
 
 			bot.editorByTitle(FILE1).show();
 
@@ -498,20 +494,22 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 			assertEquals(FILE1, bot.activeEditor().getTitle());
 
 			// activate again
-			getOrOpenView().toolbarButton("Link with Editor").click();
+			SWTBotView repoView = getOrOpenView();
+			repoView.toolbarButton("Link with Editor").click();
 			// make sure focus is here
+			// tried to remove this waitInUI but failed.
+			// tried setting focus, waiting for focus, joining RepositoriesView
+			// refresh job
 			waitInUI();
 			myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand()
 					.getNode(PROJ1).expand().getNode(FOLDER).expand().getNode(
 							FILE2).select();
-			waitInUI();
-			assertEquals(FILE2, bot.activeEditor().getTitle());
+			TestUtil.waitUntilEditorIsActive(bot, bot.editorByTitle(FILE2), 10000);
 
 			myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand()
 					.getNode(PROJ1).expand().getNode(FOLDER).expand().getNode(
 							FILE1).select();
-			waitInUI();
-			assertEquals(FILE1, bot.activeEditor().getTitle());
+			TestUtil.waitUntilEditorIsActive(bot, bot.editorByTitle(FILE1), 10000);
 
 			// deactivate the link with editor
 			getOrOpenView().toolbarButton("Link with Editor").click();
@@ -519,8 +517,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 			myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand()
 					.getNode(PROJ1).expand().getNode(FOLDER).expand().getNode(
 							FILE2).select();
-			waitInUI();
-			assertEquals(FILE1, bot.activeEditor().getTitle());
+			TestUtil.waitUntilEditorIsActive(bot, bot.editorByTitle(FILE1), 10000);
 
 		} finally {
 			if (perspective != null)
