@@ -388,7 +388,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 			// show push if either a fetch or push URI is specified and
 			// at least one push specification
-			if (uriCount > 0 && !rc.getPushRefSpecs().isEmpty()) {
+			if (uriCount > 0) {
 				URIish firstUri;
 				if (!rc.getPushURIs().isEmpty())
 					firstUri = rc.getPushURIs().get(0);
