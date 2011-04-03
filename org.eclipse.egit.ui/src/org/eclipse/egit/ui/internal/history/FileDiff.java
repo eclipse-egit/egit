@@ -40,7 +40,11 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 
-class FileDiff {
+/**
+ * A class with information about the changes to a file introduced in a
+ * commit.
+ */
+public class FileDiff {
 
 	private final RevCommit commit;
 
@@ -54,7 +58,18 @@ class FileDiff {
 		return r;
 	}
 
-	static FileDiff[] compute(final TreeWalk walk, final RevCommit commit)
+	/**
+	 * Computer file diffs for specified tree walk and commit
+	 *
+	 * @param walk
+	 * @param commit
+	 * @return non-null but possibly empty array of file diffs
+	 * @throws MissingObjectException
+	 * @throws IncorrectObjectTypeException
+	 * @throws CorruptObjectException
+	 * @throws IOException
+	 */
+	public static FileDiff[] compute(final TreeWalk walk, final RevCommit commit)
 			throws MissingObjectException, IncorrectObjectTypeException,
 			CorruptObjectException, IOException {
 		final ArrayList<FileDiff> r = new ArrayList<FileDiff>();
@@ -215,20 +230,40 @@ class FileDiff {
 		return new RawText(ldr.getCachedBytes(Integer.MAX_VALUE));
 	}
 
+	/**
+	 * Get commit
+	 *
+	 * @return commit
+	 */
 	public RevCommit getCommit() {
 		return commit;
 	}
 
+	/**
+	 * Get path
+	 *
+	 * @return path
+	 */
 	public String getPath() {
 		if (ChangeType.DELETE.equals(diffEntry.getChangeType()))
 			return diffEntry.getOldPath();
 		return diffEntry.getNewPath();
 	}
 
+	/**
+	 * Get change type
+	 *
+	 * @return type
+	 */
 	public ChangeType getChange() {
 		return diffEntry.getChangeType();
 	}
 
+	/**
+	 * Get blob object ids
+	 *
+	 * @return non-null but possibly empty array of object ids
+	 */
 	public ObjectId[] getBlobs() {
 		List<ObjectId> objectIds = new ArrayList<ObjectId>();
 		if (diffEntry.getOldId() != null)
@@ -238,6 +273,11 @@ class FileDiff {
 		return objectIds.toArray(new ObjectId[]{});
 	}
 
+	/**
+	 * Get file modes
+	 *
+	 * @return non-null but possibly empty array of file modes
+	 */
 	public FileMode[] getModes() {
 		List<FileMode> modes = new ArrayList<FileMode>();
 		if (diffEntry.getOldMode() != null)
@@ -247,7 +287,14 @@ class FileDiff {
 		return modes.toArray(new FileMode[]{});
 	}
 
-	FileDiff(final RevCommit c, final DiffEntry entry) {
+	/**
+	 * Create a file diff for a specified {@link RevCommit} and
+	 * {@link DiffEntry}
+	 *
+	 * @param c
+	 * @param entry
+	 */
+	public FileDiff(final RevCommit c, final DiffEntry entry) {
 		diffEntry = entry;
 		commit = c;
 	}

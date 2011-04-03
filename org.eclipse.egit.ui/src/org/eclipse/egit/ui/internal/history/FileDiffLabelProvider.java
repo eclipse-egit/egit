@@ -22,7 +22,10 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
-class FileDiffLabelProvider extends BaseLabelProvider implements
+/**
+ * Label provider for {@link FileDiff} objects
+ */
+public class FileDiffLabelProvider extends BaseLabelProvider implements
 		ITableLabelProvider {
 
 	private Image DEFAULT = PlatformUI.getWorkbench().getSharedImages()
