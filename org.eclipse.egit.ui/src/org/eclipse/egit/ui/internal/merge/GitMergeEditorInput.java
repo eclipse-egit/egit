@@ -135,6 +135,8 @@ public class GitMergeEditorInput extends CompareEditorInput {
 				String target;
 				if (repo.getRepositoryState().equals(RepositoryState.MERGING))
 					target = Constants.MERGE_HEAD;
+				else if (repo.getRepositoryState().equals(RepositoryState.CHERRY_PICKING))
+					target = Constants.CHERRY_PICK_HEAD;
 				else if (repo.getRepositoryState().equals(
 						RepositoryState.REBASING_INTERACTIVE))
 					target = readFile(repo.getDirectory(),

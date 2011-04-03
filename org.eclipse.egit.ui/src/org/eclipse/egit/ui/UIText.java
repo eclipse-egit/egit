@@ -655,6 +655,12 @@ public class UIText extends NLS {
 	public static String CherryPickHandler_NoCherryPickPerformedTitle;
 
 	/** */
+	public static String CherryPickHandler_CherryPickConflictsMessage;
+
+	/** */
+	public static String CherryPickHandler_CherryPickConflictsTitle;
+
+	/** */
 	public static String CherryPickOperation_Failed;
 
 	/** */
