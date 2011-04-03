@@ -382,7 +382,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			}
 
 			final Scale scale = new Scale(composite, SWT.HORIZONTAL);
-			scale.setLayoutData(SWTUtils.createHVFillGridData());
+			scale.setLayoutData(SWTUtils.createHFillGridData());
 			scale.setMaximum(values.length - 1);
 			scale.setMinimum(0);
 			scale.setIncrement(1);
