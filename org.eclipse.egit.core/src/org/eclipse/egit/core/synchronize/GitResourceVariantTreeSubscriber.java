@@ -72,9 +72,8 @@ public class GitResourceVariantTreeSubscriber extends
 
 	@Override
 	public IResource[] members(IResource res) throws TeamException {
-		if(res.getType() == IResource.FILE) {
+		if(res.getType() == IResource.FILE)
 			return new IResource[0];
-		}
 
 		GitSynchronizeData gsd = gsds.getData(res.getProject());
 		Repository repo = gsd.getRepository();
@@ -84,12 +83,12 @@ public class GitResourceVariantTreeSubscriber extends
 		TreeWalk tw = new TreeWalk(repo);
 		if (path.length() > 0)
 			tw.setFilter(PathFilter.create(path));
-		tw.setRecursive(true);
 
 		Set<IResource> gitMembers = new HashSet<IResource>();
 		Map<String, IResource> allMembers = new HashMap<String, IResource>();
 		try {
 			tw.addTree(new FileTreeIterator(repo));
+			enterFilteredPath(path, tw);
 			for (IResource member : ((IContainer) res).members())
 				allMembers.put(member.getName(), member);
 
@@ -169,6 +168,14 @@ public class GitResourceVariantTreeSubscriber extends
 
 		info.init();
 		return info;
+	}
+
+	private void enterFilteredPath(String path, TreeWalk tw) throws IOException {
+		int subtreesLen = path.split("/").length; //$NON-NLS-1$
+		for (int i = 0; i < subtreesLen; i++) {
+			tw.next();
+			tw.enterSubtree();
+		}
 	}
 
 }

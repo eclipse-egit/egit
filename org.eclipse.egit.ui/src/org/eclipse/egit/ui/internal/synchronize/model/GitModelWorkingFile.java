@@ -8,6 +8,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
+import static org.eclipse.compare.structuremergeviewer.Differencer.ADDITION;
+import static org.eclipse.compare.structuremergeviewer.Differencer.CHANGE;
+import static org.eclipse.compare.structuremergeviewer.Differencer.LEFT;
+import static org.eclipse.compare.structuremergeviewer.Differencer.RIGHT;
+import static org.eclipse.jgit.lib.ObjectId.zeroId;
+
 import java.io.IOException;
 
 import org.eclipse.core.runtime.IPath;
@@ -29,6 +35,22 @@ class GitModelWorkingFile extends GitModelBlob {
 			ComparisonDataSource remoteData, ComparisonDataSource ancestorData) {
 		return new GitLocalCompareInput(getRepository(), ancestorData,
 				baseData, remoteData, gitPath);
+	}
+
+	@Override
+	public int getKind() {
+		if (kind != LEFT && kind != RIGHT)
+			return kind;
+
+		int changeKind;
+		if (zeroId().equals(baseId))
+			changeKind = ADDITION;
+		else
+			changeKind = CHANGE;
+
+		kind |= changeKind;
+
+		return kind;
 	}
 
 	@Override
