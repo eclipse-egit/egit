@@ -374,7 +374,7 @@ public class CommitInfoBuilder {
 		if (trace)
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation());
-		if (commit.getParentCount() != 1) {
+		if (commit.getParentCount() > 1) {
 			d.append(UIText.CommitMessageViewer_CanNotRenderDiffMessage);
 			return;
 		}
