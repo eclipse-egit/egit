@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL33///YY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-04-01T07:00:24Z",
+      "side": 1,
+      "message": "Well, we\u0027re not quite consistent with that in our texts, but from my UI knowledge, I\u0027d say it should be upper case, and the majority of occurences in this file is upper case, too. The rationale from a UI point of view is that it is not a \"generic\" repository that\u0027s meant but a Git-specific term.",
+      "parentUuid": "AAAL33///a8\u003d",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///YU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-04-01T07:00:24Z",
+      "side": 1,
+      "message": "Again, same as above: this is a \"term\", and I think it should be upper case.",
+      "parentUuid": "AAAL33///ao\u003d",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
