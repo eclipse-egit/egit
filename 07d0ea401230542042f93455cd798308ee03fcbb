@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAL33///bQ\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-31T20:54:01Z",
+      "side": 1,
+      "message": "Repositories -\u003e repositories\n\nThe message should mention that it\u0027s a table with a summary and that the normal result dialog can be shown per repository.",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///bM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PullOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-31T20:54:01Z",
+      "side": 1,
+      "message": "Maybe you could extract some local variables here so that the code is not indented like this.",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///bI\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1837,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-31T20:54:01Z",
+      "side": 1,
+      "message": "Thanks, I missed that. Should be in a separate commit or mentioned in the commit message.",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///bE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/PullFromUpstreamActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-31T20:54:01Z",
+      "side": 1,
+      "message": "how about this: new HashSet\u003cRepository\u003e(Arrays.asList(repos));",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///bA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-31T20:54:01Z",
+      "side": 1,
+      "message": "No -\u003e Not",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///a8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-31T20:54:01Z",
+      "side": 1,
+      "message": "Repositories -\u003e repositories",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL33///YY\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 1
@@ -20,6 +122,109 @@
     },
     {
       "key": {
+        "uuid": "AAAL33///Ws\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-04-01T09:13:08Z",
+      "side": 1,
+      "message": "There are two kinds of capitalizations styles in user interfaces: sentence and header/title, see the GNOME [1] or Apple HIG [2].\n\nThe task name should have sentence capitalization, based on what I can see from other task names in Eclipse.\n\nIn the Git man pages, \"repository\" is never capitalized, and they are pretty well-written. Also, looking at the CVS repository property page, they don\u0027t capitalize it either in the text. If repository is part of a title, then it should be capitalized (header capitalization), but not in sentence capitalization.\n\nAlso, we would have to capitalize many Git-specific terms, such as \"branch\" (it\u0027s not a branch of a tree, it\u0027s a Git branch), tag, tree..\n\n[1] http://library.gnome.org/devel/hig-book/stable/design-text-labels.html.en#layout-capitalization\n[2] http://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/AppleHIGuidelines/XHIGText/XHIGText.html#//apple_ref/doc/uid/TP30000365-BABDIBBH",
+      "parentUuid": "AAAL33///YY\u003d",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///a4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-31T20:54:01Z",
+      "side": 1,
+      "message": "status -\u003e Status (title capitalization)",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///a0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-31T20:54:01Z",
+      "side": 1,
+      "message": "Result -\u003e result",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///aw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-31T20:54:01Z",
+      "side": 1,
+      "message": "status -\u003e Status",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///as\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-31T20:54:01Z",
+      "side": 1,
+      "message": "Result -\u003e result",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///ao\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-31T20:54:01Z",
+      "side": 1,
+      "message": "Refs were updated -\u003e refs updated\n(consistency with \"Nothing updated\")",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL33///YU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 1
@@ -32,6 +237,40 @@
       "side": 1,
       "message": "Again, same as above: this is a \"term\", and I think it should be upper case.",
       "parentUuid": "AAAL33///ao\u003d",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///ak\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-31T20:54:01Z",
+      "side": 1,
+      "message": "status -\u003e Status",
+      "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///ag\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-31T20:54:01Z",
+      "side": 1,
+      "message": "multiple -\u003e Multiple",
       "revId": "07d0ea401230542042f93455cd798308ee03fcbb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
