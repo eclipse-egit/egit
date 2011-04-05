@@ -179,7 +179,7 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 				Command deleteCommand = commandService
 						.getCommand("org.eclipse.egit.ui.RepositoriesViewDeleteBranch"); //$NON-NLS-1$
 
-				deleteCommand.addExecutionListener(new IExecutionListener() {
+				IExecutionListener deleteListener = new IExecutionListener() {
 					public void preExecute(String commandId,
 							ExecutionEvent event) {	/* do nothing */ }
 
@@ -193,11 +193,12 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 
 					public void notHandled(String commandId,
 							NotHandledException exception) { /* do nothing */ }
-				});
+				};
 
 				// launch deleteCommand
 				ExecutionEvent executionEvent = hsr.createExecutionEvent(
 						deleteCommand, null);
+				deleteCommand.addExecutionListener(deleteListener);
 				try {
 					deleteCommand.executeWithChecks(executionEvent);
 				} catch (Throwable e) {
@@ -205,6 +206,8 @@ public class BranchSelectionDialog extends AbstractBranchSelectionDialog {
 							e,
 							UIText.BranchSelectionDialog_ErrorCouldNotDeleteRef,
 							refNameFromDialog());
+				} finally {
+					deleteCommand.removeExecutionListener(deleteListener);
 				}
 			}
 		});
