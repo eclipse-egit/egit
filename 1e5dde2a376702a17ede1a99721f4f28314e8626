@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL33///Hk\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/AbstractSynchronizeViewTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-04T23:49:59Z",
+      "side": 1,
+      "message": "commit is using DirCache since a while",
+      "revId": "1e5dde2a376702a17ede1a99721f4f28314e8626",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///Hg\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/AbstractSynchronizeViewTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-04T23:49:59Z",
+      "side": 1,
+      "message": "style nit: unnecessary blank line",
+      "revId": "1e5dde2a376702a17ede1a99721f4f28314e8626",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///Hc\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-04T23:49:59Z",
+      "side": 1,
+      "message": "typo in method name s/Presenentation/Presentation/",
+      "revId": "1e5dde2a376702a17ede1a99721f4f28314e8626",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
