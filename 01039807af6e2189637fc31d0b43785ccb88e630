@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL33///M4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 4
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-04-03T16:47:54Z",
+      "side": 1,
+      "message": "Refs -\u003e refs",
+      "revId": "01039807af6e2189637fc31d0b43785ccb88e630",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///M0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 4
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-04-03T16:47:54Z",
+      "side": 1,
+      "message": "repositories -\u003e Repositories (title capitalization here)",
+      "revId": "01039807af6e2189637fc31d0b43785ccb88e630",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
