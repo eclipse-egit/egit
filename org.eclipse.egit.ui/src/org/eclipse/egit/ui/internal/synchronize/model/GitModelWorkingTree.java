@@ -12,13 +12,14 @@ package org.eclipse.egit.ui.internal.synchronize.model;
 import java.io.IOException;
 
 import org.eclipse.compare.structuremergeviewer.Differencer;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.IndexDiffFilter;
 
@@ -85,7 +86,8 @@ public class GitModelWorkingTree extends GitModelCache {
 		tw.setRecursive(true);
 
 		Repository repo = getRepository();
-		int ftIndex = tw.addTree(new FileTreeIterator(repo));
+		int ftIndex = tw.addTree(new AdaptableFileTreeIterator(repo,
+				ResourcesPlugin.getWorkspace().getRoot()));
 		int dirCacheIteratorNth = tw.addTree(new DirCacheIterator(repo.readDirCache()));
 		IndexDiffFilter idf = new IndexDiffFilter(dirCacheIteratorNth, ftIndex, true);
 		tw.setFilter(idf);
