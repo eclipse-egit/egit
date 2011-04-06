@@ -2605,6 +2605,9 @@ public class UIText extends NLS {
 	public static String GitImportWithDirectoriesPage_PageTitle;
 
 	/** */
+	public static String GitImportWithDirectoriesPage_PathErrorMessage;
+
+	/** */
 	public static String GitImportWithDirectoriesPage_SelectFolderMessage;
 
 	/** */
@@ -2859,6 +2862,7 @@ public class UIText extends NLS {
 	 * able to find the corresponding bundle file.
 	 */
 	private static final String BUNDLE_NAME = "org.eclipse.egit.ui.uitext"; //$NON-NLS-1$
+
 
 	/** */
 	public static String CommitAction_commit;
