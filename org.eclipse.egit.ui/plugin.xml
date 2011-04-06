@@ -2426,7 +2426,8 @@
                   visible="true">
             </separator>
            <command
-                 commandId="org.eclipse.egit.ui.RepositoriesViewRebase" style="push">
+                 commandId="org.eclipse.egit.ui.RepositoriesViewRebase" style="push"
+                 label="%RebaseWithDialog_label">
 	           <visibleWhen checkEnabled="false">
 	              <and>
 	                 <iterate>
