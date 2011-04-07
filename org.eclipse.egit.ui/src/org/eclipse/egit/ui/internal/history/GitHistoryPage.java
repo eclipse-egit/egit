@@ -822,9 +822,19 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		currentRepo = null;
 		name = ""; //$NON-NLS-1$
 		input = null;
-		commentViewer.setInput(null);
-		fileViewer.setInput(null);
+		clearCommentViewer();
+		clearFileViewer();
 		setInput(null);
+	}
+
+	private void clearCommentViewer() {
+		commentViewer.setRepository(null);
+		commentViewer.setInput(null);
+	}
+
+	private void clearFileViewer() {
+		fileViewer.setTreeWalk(null, null);
+		fileViewer.setInput(null);
 	}
 
 	@Override
@@ -921,44 +931,52 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				return false;
 			}
 
+			boolean showHead = false;
+			boolean showRef = false;
+			boolean showTag = false;
+			Repository repo = null;
+			Ref ref = null;
 			if (o instanceof IResource) {
 				RepositoryMapping mapping = RepositoryMapping
 						.getMapping((IResource) o);
 				if (mapping != null) {
-					Repository repo = mapping.getRepository();
+					repo = mapping.getRepository();
 					input = new HistoryPageInput(repo,
 							new IResource[] { (IResource) o });
-					showHead(repo);
+					showHead = true;
 				}
 			} else if (o instanceof RepositoryTreeNode) {
 				RepositoryTreeNode repoNode = (RepositoryTreeNode) o;
-				Repository repo = repoNode.getRepository();
+				repo = repoNode.getRepository();
 				switch (repoNode.getType()) {
 				case FILE:
 					File file = ((FileNode) repoNode).getObject();
 					input = new HistoryPageInput(repo, new File[] { file });
-					showHead(repo);
+					showHead = true;
 					break;
 				case FOLDER:
 					File folder = ((FolderNode) repoNode).getObject();
 					input = new HistoryPageInput(repo, new File[] { folder });
-					showHead(repo);
+					showHead = true;
 					break;
 				case REF:
 					input = new HistoryPageInput(repo);
-					showRef(((RefNode) repoNode).getObject(), repo);
+					ref = ((RefNode) repoNode).getObject();
+					showRef = true;
 					break;
 				case ADDITIONALREF:
 					input = new HistoryPageInput(repo);
-					showRef(((AdditionalRefNode) repoNode).getObject(), repo);
+					ref = ((AdditionalRefNode) repoNode).getObject();
+					showRef = true;
 					break;
 				case TAG:
 					input = new HistoryPageInput(repo);
-					showTag(((TagNode) repoNode).getObject(), repo);
+					ref = ((TagNode) repoNode).getObject();
+					showTag = true;
 					break;
 				default:
 					input = new HistoryPageInput(repo);
-					showHead(repo);
+					showHead = true;
 					break;
 				}
 			} else if (o instanceof HistoryPageInput)
@@ -969,7 +987,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				if (resource != null) {
 					RepositoryMapping mapping = RepositoryMapping
 							.getMapping(resource);
-					Repository repo = mapping.getRepository();
+					repo = mapping.getRepository();
 					input = new HistoryPageInput(repo,
 							new IResource[] { resource });
 				}
@@ -1011,6 +1029,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				Activator.handleError(e.getMessage(), e, true);
 				return false;
 			}
+
+			if (showHead)
+				showHead(repo);
+			if (showRef)
+				showRef(ref, repo);
+			if (showTag)
+				showTag(ref, repo);
 
 			return true;
 		} finally {
