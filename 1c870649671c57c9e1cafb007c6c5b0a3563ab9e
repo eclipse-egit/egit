@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL4H///6w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-04-06T14:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL4H///7Y\u003d",
+      "revId": "1c870649671c57c9e1cafb007c6c5b0a3563ab9e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///6o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-04-06T14:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL4H///7M\u003d",
+      "revId": "1c870649671c57c9e1cafb007c6c5b0a3563ab9e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
