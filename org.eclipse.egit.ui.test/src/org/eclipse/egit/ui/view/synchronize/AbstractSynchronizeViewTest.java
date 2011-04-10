@@ -15,6 +15,8 @@ import static org.eclipse.egit.ui.UIText.CommitDialog_SelectAll;
 import static org.eclipse.egit.ui.UIText.GitModelWorkingTree_workingTree;
 import static org.eclipse.egit.ui.test.ContextMenuHelper.clickContextMenu;
 import static org.eclipse.egit.ui.test.TestUtil.waitUntilTreeHasNodeContainsText;
+import static org.eclipse.jface.dialogs.MessageDialogWithToggle.NEVER;
+import static org.eclipse.team.internal.ui.IPreferenceIds.SYNCHRONIZING_COMPLETE_PERSPECTIVE;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -46,10 +48,10 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotRadio;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarDropDownButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.eclipse.team.internal.ui.TeamUIPlugin;
 import org.eclipse.team.ui.synchronize.ISynchronizeManager;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -75,16 +77,8 @@ public abstract class AbstractSynchronizeViewTest extends
 
 	@BeforeClass public static void setupEnvironment() throws Exception {
 		// disable perspective synchronize selection
-		new Eclipse().openPreferencePage(null);
-		bot.tree().getTreeItem("Team").expand().select();
-		SWTBotRadio syncPerspectiveCheck = bot.radio("Never");
-		if (!syncPerspectiveCheck.isSelected())
-			syncPerspectiveCheck.click();
-		bot.comboBox(0).setSelection("None");
-
-		bot.comboBox().setSelection("None");
-
-		bot.button(IDialogConstants.OK_LABEL).click();
+		TeamUIPlugin.getPlugin().getPreferenceStore().setValue(
+				SYNCHRONIZING_COMPLETE_PERSPECTIVE, NEVER);
 
 		repositoryFile = createProjectAndCommitToRepository();
 		createChildRepository(repositoryFile);
