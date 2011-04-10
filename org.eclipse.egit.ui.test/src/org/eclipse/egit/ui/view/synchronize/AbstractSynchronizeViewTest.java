@@ -38,6 +38,7 @@ import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
@@ -93,7 +94,7 @@ public abstract class AbstractSynchronizeViewTest extends
 		bot.perspectiveById("org.eclipse.jdt.ui.JavaPerspective").activate();
 		bot.viewByTitle("Package Explorer").show();
 
-		createTag(PROJ1, INITIAL_TAG);
+		createTag(INITIAL_TAG);
 	}
 
 	@AfterClass public static void restoreEnvironmentSetup() throws Exception {
@@ -126,17 +127,10 @@ public abstract class AbstractSynchronizeViewTest extends
 		rop.execute(new NullProgressMonitor());
 	}
 
-	protected static void createTag(String projectName, String tagName)
+	public static void createTag(String tagName)
 			throws Exception {
-		showDialog(projectName, "Team", "Tag...");
-
-		bot.shell("Create new tag").bot().activeShell();
-		bot.text(0).setFocus();
-		bot.text(0).setText(tagName);
-		bot.styledText(0).setFocus();
-		bot.styledText(0).setText(tagName);
-		bot.button(IDialogConstants.OK_LABEL).click();
-		TestUtil.joinJobs(JobFamilies.TAG);
+		new Git(lookupRepository(repositoryFile)).tag().setName(tagName)
+				.setMessage(tagName).call();
 	}
 
 	protected void makeChangesAndCommit(String projectName) throws Exception {

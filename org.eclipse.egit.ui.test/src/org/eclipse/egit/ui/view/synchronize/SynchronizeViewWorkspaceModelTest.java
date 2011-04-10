@@ -89,7 +89,7 @@ public class SynchronizeViewWorkspaceModelTest extends AbstractSynchronizeViewTe
 		// given
 		resetRepositoryToCreateInitialTag();
 		makeChangesAndCommit(PROJ1);
-		createTag(PROJ1, "v0.1");
+		createTag("v0.1");
 
 		// when
 		launchSynchronization(SynchronizeWithAction_tagsName, INITIAL_TAG,
