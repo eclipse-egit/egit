@@ -2458,6 +2458,9 @@
 	                    <and>
 	                       <adapt
 	                             type="org.eclipse.core.resources.IProject">
+                              <test
+                                    property="GitResource.isShared">
+                              </test>
 	                          <not>
 		                          <test
 		                                property="GitResource.isSafe">
@@ -3245,5 +3248,8 @@
             name="%RepositoriesViewContext.name"
             parentId="org.eclipse.ui.contexts.window">
       </context>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
    </extension>
 </plugin>
