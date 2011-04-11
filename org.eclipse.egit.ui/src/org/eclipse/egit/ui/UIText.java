@@ -655,6 +655,12 @@ public class UIText extends NLS {
 	public static String CherryPickHandler_NoCherryPickPerformedTitle;
 
 	/** */
+	public static String CherryPickHandler_CherryPickConflictsMessage;
+
+	/** */
+	public static String CherryPickHandler_CherryPickConflictsTitle;
+
+	/** */
 	public static String CherryPickOperation_Failed;
 
 	/** */
@@ -2863,7 +2869,7 @@ public class UIText extends NLS {
 	 */
 	private static final String BUNDLE_NAME = "org.eclipse.egit.ui.uitext"; //$NON-NLS-1$
 
-
+	/** */
 	/** */
 	public static String CommitAction_commit;
 

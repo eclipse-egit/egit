@@ -186,8 +186,9 @@ class CommitFileDiffViewer extends TableViewer {
 				final IStructuredSelection iss = (IStructuredSelection) s;
 				for (Iterator<FileDiff> it = iss.iterator(); it.hasNext();) {
 					String relativePath = it.next().getPath();
-					String path = new Path(db.getWorkTree().getAbsolutePath())
-							.append(relativePath).toOSString();
+					String path = new Path(getRepository().getWorkTree()
+							.getAbsolutePath()).append(relativePath)
+							.toOSString();
 					openFileInEditor(path);
 				}
 			}
@@ -330,9 +331,9 @@ class CommitFileDiffViewer extends TableViewer {
 			IWorkbenchPage page = window.getActivePage();
 			IFileRevision rev = CompareUtils.getFileRevision(d.getPath(), d
 					.getChange().equals(ChangeType.DELETE) ? d.getCommit()
-					.getParent(0) : d.getCommit(), db, d.getChange().equals(
-					ChangeType.DELETE) ? d.getBlobs()[0] : d.getBlobs()[d
-					.getBlobs().length - 1]);
+					.getParent(0) : d.getCommit(), getRepository(), d
+					.getChange().equals(ChangeType.DELETE) ? d.getBlobs()[0]
+					: d.getBlobs()[d.getBlobs().length - 1]);
 			if (rev != null)
 				EgitUiEditorUtils.openEditor(page, rev,
 						new NullProgressMonitor());
@@ -361,7 +362,7 @@ class CommitFileDiffViewer extends TableViewer {
 
 		if (d.getBlobs().length == 2 && !d.getChange().equals(ChangeType.ADD))
 			base = CompareUtils.getFileRevisionTypedElement(p, c.getParent(0),
-					db, d.getBlobs()[0]);
+					getRepository(), d.getBlobs()[0]);
 		else
 			// Initial import
 			base = new GitCompareFileRevisionEditorInput.EmptyTypedElement(""); //$NON-NLS-1$
@@ -369,8 +370,8 @@ class CommitFileDiffViewer extends TableViewer {
 		if (d.getChange().equals(ChangeType.DELETE))
 			next = new GitCompareFileRevisionEditorInput.EmptyTypedElement(""); //$NON-NLS-1$
 		else
-			next = CompareUtils.getFileRevisionTypedElement(p, c, db, d
-					.getBlobs()[1]);
+			next = CompareUtils.getFileRevisionTypedElement(p, c,
+					getRepository(), d.getBlobs()[1]);
 
 		in = new GitCompareFileRevisionEditorInput(next, base, null);
 		CompareUtils.openInCompare(site.getWorkbenchWindow().getActivePage(),
@@ -379,7 +380,15 @@ class CommitFileDiffViewer extends TableViewer {
 	}
 
 	TreeWalk getTreeWalk() {
+		if (walker == null)
+			throw new IllegalStateException("TreeWalk has not been set"); //$NON-NLS-1$
 		return walker;
+	}
+
+	private Repository getRepository() {
+		if (db == null)
+			throw new IllegalStateException("Repository has not been set"); //$NON-NLS-1$
+		return db;
 	}
 
 	void setTreeWalk(Repository repository, TreeWalk walk) {
