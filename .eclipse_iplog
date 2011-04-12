@@ -31,3 +31,13 @@
 	license = MIT license
 	use = unmodified source & binary
 	state = approved
+[CQ "4954"]
+	description = "Mockito Version: 1.8.4  (Includes parts of CGLib and ASM) (PB CQ3930)"
+	license = Apache License, 2.0, New BSD license, MIT license
+	use = unmodified source
+	state = approved
+[CQ "4957"]
+	description = Objenesis Version: 1.0 (Subset, Custom) (PB CQ3931)
+	license = MIT License
+	use = unmodified source & binary
+	state = approved
