@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.CoreText;
@@ -27,6 +28,7 @@ import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.FileUtils;
@@ -53,6 +55,8 @@ public class CloneOperation {
 	private final int timeout;
 
 	private CredentialsProvider credentialsProvider;
+
+	private List<PostCloneTask> postCloneTasks;
 
 	/**
 	 * Create a new clone operation.
@@ -115,6 +119,7 @@ public class CloneOperation {
 
 		EclipseGitProgressTransformer gitMonitor = new EclipseGitProgressTransformer(
 				monitor);
+		Repository repository = null;
 		try {
 			monitor.beginTask(NLS.bind(CoreText.CloneOperation_title, uri),
 					5000);
@@ -134,9 +139,14 @@ public class CloneOperation {
 				cloneRepository.setBranchesToClone(branches);
 			}
 			Git git = cloneRepository.call();
-			git.getRepository().close();
+			repository = git.getRepository();
+			if (postCloneTasks != null)
+				for (PostCloneTask task : postCloneTasks)
+					task.execute(git.getRepository(), monitor);
 		} catch (final Exception e) {
 			try {
+				if (repository != null)
+					repository.close();
 				FileUtils.delete(workdir, FileUtils.RECURSIVE);
 			} catch (IOException ioe) {
 				throw new InvocationTargetException(ioe);
@@ -147,6 +157,8 @@ public class CloneOperation {
 				throw new InvocationTargetException(e);
 		} finally {
 			monitor.done();
+			if (repository != null)
+				repository.close();
 		}
 	}
 
@@ -158,4 +170,29 @@ public class CloneOperation {
 		return gitdir;
 	}
 
+	/**
+	 * @param task to be performed after clone
+	 */
+	public synchronized void addPostCloneTask(PostCloneTask task) {
+		if (postCloneTasks == null)
+			postCloneTasks = new ArrayList<PostCloneTask>();
+		postCloneTasks.add(task);
+	}
+
+	/**
+	 * A task which can be added to be performed after clone
+	 */
+	public interface PostCloneTask  {
+
+		/**
+		 * Executes the task
+		 * @param repository the cloned git repository
+		 *
+		 * @param monitor
+		 *            a progress monitor, or <code>null</code> if progress reporting
+		 *            and cancellation are not desired
+		 * @throws CoreException
+		 */
+		void execute(Repository repository, IProgressMonitor monitor) throws CoreException;
+	}
 }
