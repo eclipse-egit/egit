@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.ConfigurePushAfterCloneTask;
+import org.eclipse.egit.core.op.SetChangeIdTask;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
@@ -205,7 +206,8 @@ public class GitCloneWizard extends Wizard {
 				UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 		final CloneOperation op = new CloneOperation(uri, allSelected,
 				selectedBranches, workdir, ref.getName(), remoteName, timeout);
-		doGerritConfiguration(remoteName, op);
+		if (gerritConfiguration.configureGerrit())
+			doGerritConfiguration(remoteName, op);
 		UserPasswordCredentials credentials = cloneSource.getCredentials();
 		if (credentials != null)
 			op.setCredentialsProvider(new UsernamePasswordCredentialsProvider(
@@ -230,6 +232,7 @@ public class GitCloneWizard extends Wizard {
 					"HEAD:refs/for/" + gerritBranch, pushURI); //$NON-NLS-1$
 			op.addPostCloneTask(push);
 		}
+		op.addPostCloneTask(new SetChangeIdTask(true));
 	}
 
 	/**

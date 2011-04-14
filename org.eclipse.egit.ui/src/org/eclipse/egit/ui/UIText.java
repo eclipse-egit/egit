@@ -2248,12 +2248,6 @@ public class UIText extends NLS {
 	public static String CommitDialogPreferencePage_hardWrapMessageTooltip;
 
 	/** */
-	public static String CommitDialogPreferencePage_createChangeId;
-
-	/** */
-	public static String CommitDialogPreferencePage_createChangeIdTooltip;
-
-	/** */
 	public static String CommitDialogPreferencePage_footers;
 
 	/** */

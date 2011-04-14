@@ -20,14 +20,13 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.TagOperation;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.TagBuilder;
@@ -117,9 +116,9 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 
 	@Test
 	public void testAmendWithChangeIdPreferenceOff() throws Exception {
-		Activator.getDefault()
-			.getPreferenceStore()
-			.setValue(UIPreferences.COMMIT_DIALOG_CREATE_CHANGE_ID, true);
+		Repository repo = lookupRepository(repositoryFile);
+		repo.getConfig().setBoolean(ConfigConstants.CONFIG_GERRIT_SECTION,
+				null, ConfigConstants.CONFIG_KEY_CREATECHANGEID, true);
 		setTestFileContent("Another Change");
 		clickOnCommit();
 		SWTBotShell commitDialog = bot.shell(UIText.CommitDialog_CommitChanges);
@@ -142,9 +141,8 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 		Job.getJobManager().join(JobFamilies.COMMIT, null);
 
 		clickOnCommit();
-		Activator.getDefault()
-			.getPreferenceStore()
-			.setValue(UIPreferences.COMMIT_DIALOG_CREATE_CHANGE_ID, false);
+		repo.getConfig().setBoolean(ConfigConstants.CONFIG_GERRIT_SECTION,
+				null, ConfigConstants.CONFIG_KEY_CREATECHANGEID, false);
 		bot.shell(UIText.CommitAction_noFilesToCommit).bot().button(
 				IDialogConstants.YES_LABEL).click();
 		commitDialog = bot.shell(UIText.CommitDialog_CommitChanges);
