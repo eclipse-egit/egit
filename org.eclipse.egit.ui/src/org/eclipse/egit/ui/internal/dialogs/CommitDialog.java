@@ -64,6 +64,7 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.ObjectId;
@@ -308,6 +309,8 @@ public class CommitDialog extends Dialog {
 
 	private boolean showUntracked = true;
 
+	private boolean createChangeIdDefault = false;
+
 	private boolean createChangeId = false;
 
 	private boolean allowToChangeSelection = true;
@@ -375,16 +378,24 @@ public class CommitDialog extends Dialog {
 	 */
 	public void setFiles(Set<IFile> files, Map<Repository, IndexDiff> indexDiffs) {
 		items.clear();
+		Set<Repository> repos = new HashSet<Repository>();
 		for (IFile file : files) {
 			RepositoryMapping repositoryMapping = RepositoryMapping
 					.getMapping(file.getProject());
 			Repository repo = repositoryMapping.getRepository();
+			repos.add(repo);
 			String path = repositoryMapping.getRepoRelativePath(file);
 			CommitItem item = new CommitItem();
 			item.status = getFileStatus(path, indexDiffs.get(repo));
 			item.file = file;
 			items.add(item);
 		}
+		for (Repository repo : repos)
+			createChangeIdDefault = createChangeIdDefault
+					|| repo.getConfig().getBoolean(
+							ConfigConstants.CONFIG_GERRIT_SECTION,
+							ConfigConstants.CONFIG_KEY_CREATECHANGEID, false);
+
 		// initially, we sort by status plus project plus path
 		Collections.sort(items, new Comparator<CommitItem>() {
 			public int compare(CommitItem o1, CommitItem o2) {
@@ -667,8 +678,8 @@ public class CommitDialog extends Dialog {
 			}
 		});
 
-		changeIdButton.setSelection( org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
-				.getBoolean(UIPreferences.COMMIT_DIALOG_CREATE_CHANGE_ID));
+
+		changeIdButton.setSelection(createChangeIdDefault);
 		if (!amending)
 			refreshChangeIdText();
 

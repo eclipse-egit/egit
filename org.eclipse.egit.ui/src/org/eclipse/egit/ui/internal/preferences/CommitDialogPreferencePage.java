@@ -63,16 +63,6 @@ public class CommitDialogPreferencePage extends FieldEditorPreferencePage
 		GridDataFactory.fillDefaults().grab(true, false).span(3, 1)
 				.applyTo(footersGroup);
 
-		BooleanFieldEditor createChangeId = new BooleanFieldEditor(
-				UIPreferences.COMMIT_DIALOG_CREATE_CHANGE_ID,
-				UIText.CommitDialogPreferencePage_createChangeId,
-				footersGroup);
-		createChangeId
-				.getDescriptionControl(footersGroup)
-				.setToolTipText(
-						UIText.CommitDialogPreferencePage_createChangeIdTooltip);
-		addField(createChangeId);
-
 		BooleanFieldEditor signedOffBy = new BooleanFieldEditor(
 				UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY,
 				UIText.CommitDialogPreferencePage_signedOffBy,
