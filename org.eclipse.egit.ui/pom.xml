@@ -39,17 +39,17 @@
         <groupId>org.sonatype.tycho</groupId>
         <artifactId>maven-osgi-source-plugin</artifactId>
       </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <configuration>
-          <excludeFilterFile>findBugs/FindBugsExcludeFilter.xml</excludeFilterFile>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-      </plugin>
     </plugins>
+	<pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>findbugs-maven-plugin</artifactId>
+          <configuration>
+            <excludeFilterFile>findBugs/FindBugsExcludeFilter.xml</excludeFilterFile>
+          </configuration>
+        </plugin>
+      </plugins>
+	</pluginManagement>
   </build>
 </project>
