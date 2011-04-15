@@ -263,11 +263,7 @@ public class GitProjectsImportPage extends WizardPage {
 		selectAll.setText(UIText.WizardProjectsImportPage_selectAll);
 		selectAll.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				for (TreeItem item : projectsList.getTree().getItems()) {
-					ProjectRecord record = (ProjectRecord) item.getData();
-					if (!isProjectInWorkspace(record.getProjectName()))
-						projectsList.setChecked(item.getData(), true);
-				}
+				selectAllNewProjects();
 				enableSelectAllButtons();
 				setPageComplete(true);
 			}
@@ -288,7 +284,14 @@ public class GitProjectsImportPage extends WizardPage {
 		});
 		Dialog.applyDialogFont(deselectAll);
 		setButtonLayoutData(deselectAll);
+	}
 
+	private void selectAllNewProjects() {
+		for (TreeItem item : projectsList.getTree().getItems()) {
+			ProjectRecord record = (ProjectRecord) item.getData();
+			if (!isProjectInWorkspace(record.getProjectName()))
+				projectsList.setChecked(item.getData(), true);
+		}
 	}
 
 	/**
@@ -395,6 +398,7 @@ public class GitProjectsImportPage extends WizardPage {
 		} else {
 			setMessage(UIText.WizardProjectsImportPage_ImportProjectsDescription);
 		}
+		selectAllNewProjects();
 		enableSelectAllButtons();
 		checkPageComplete();
 	}
