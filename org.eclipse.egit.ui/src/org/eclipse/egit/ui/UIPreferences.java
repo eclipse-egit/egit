@@ -72,6 +72,12 @@ public class UIPreferences {
 	public final static String THEME_UncommittedChangeBackgroundColor = "org.eclipse.egit.ui.UncommittedChangeBackgroundColor"; //$NON-NLS-1$
 	/** */
 	public final static String THEME_UncommittedChangeFont = "org.eclipse.egit.ui.UncommittedChangeFont"; //$NON-NLS-1$
+	/** */
+	public final static String THEME_DiffHunkColor = "org.eclipse.egit.ui.DiffHunkColor"; //$NON-NLS-1$
+	/** */
+	public final static String THEME_DifAddColor = "org.eclipse.egit.ui.DiffAddColor"; //$NON-NLS-1$
+	/** */
+	public final static String THEME_DiffRemoveColor = "org.eclipse.egit.ui.DiffRemoveColor"; //$NON-NLS-1$
 
 	/** */
 	public final static String DECORATOR_RECOMPUTE_ANCESTORS = "decorator_recompute_ancestors"; //$NON-NLS-1$
