@@ -13,6 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.compare.structuremergeviewer.IDiffElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration;
 import org.eclipse.team.ui.synchronize.SynchronizeModelAction;
@@ -66,4 +67,10 @@ public class ExpandAllModelAction extends SynchronizeModelAction {
 			}
 		};
 	}
+
+	@Override
+	protected boolean updateSelection(IStructuredSelection selection) {
+		return true;
+	}
+
 }
