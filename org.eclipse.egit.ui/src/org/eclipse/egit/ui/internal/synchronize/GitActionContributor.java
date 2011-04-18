@@ -31,7 +31,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration;
 import org.eclipse.team.ui.synchronize.ISynchronizePageSite;
 import org.eclipse.team.ui.synchronize.ModelSynchronizeParticipant;
-import org.eclipse.team.ui.synchronize.ModelSynchronizeParticipantActionGroup;
+import org.eclipse.team.ui.synchronize.SynchronizePageActionGroup;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -40,7 +40,7 @@ import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 
-class GitActionContributor extends ModelSynchronizeParticipantActionGroup {
+class GitActionContributor extends SynchronizePageActionGroup {
 
 	private static final String GIT_ACTIONS = "gitActions"; //$NON-NLS-1$
 
