@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL4H///Hk\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-19T07:01:40Z",
+      "side": 1,
+      "message": "typo: s/with with/with/",
+      "revId": "c27367be9d22c90c7dc0d63bf78fa19ef2cd8296",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
