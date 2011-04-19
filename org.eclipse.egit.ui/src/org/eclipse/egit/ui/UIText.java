@@ -2906,6 +2906,12 @@ public class UIText extends NLS {
 	public static String CommitActionHandler_repository;
 
 	/** */
+	public static String CommitEditorInput_Name;
+
+	/** */
+	public static String CommitEditorInput_ToolTip;
+
+	/** */
 	public static String CommitFileDiffViewer_CanNotOpenCompareEditorTitle;
 
 	/** */
