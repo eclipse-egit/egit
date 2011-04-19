@@ -19,38 +19,53 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 
 /**
  * Creates a branch based on another branch or on a commit.
  */
 public class CreateBranchWizard extends Wizard {
 	private String newBranchName;
-	/**
-	 * @param repository
-	 *            the repository
-	 * @param baseBranch
-	 *            the base branch, may be null
-	 */
-	public CreateBranchWizard(Repository repository, Ref baseBranch) {
-		myPage = new CreateBranchPage(repository, baseBranch);
-		setWindowTitle(UIText.CreateBranchWizard_NewBranchTitle);
-	}
-
-	/**
-	 * @param repository
-	 *            the repository
-	 * @param baseCommit
-	 *            the base commit, may be null
-	 */
-	public CreateBranchWizard(Repository repository, RevCommit baseCommit) {
-		myPage = new CreateBranchPage(repository, baseCommit);
-		setWindowTitle(UIText.CreateBranchWizard_NewBranchTitle);
-	}
 
 	private CreateBranchPage myPage;
+	/**
+	 * @param repository
+	 *            the repository
+	 * @param base
+	 *            a {@link Ref} name or {@link RevCommit} id, or null
+	 */
+	public CreateBranchWizard(Repository repository, String base) {
+		try {
+			if (base == null) {
+				myPage = new CreateBranchPage(repository, (Ref) null);
+			} else if (ObjectId.isId(base)) {
+				RevCommit commit = new RevWalk(repository).parseCommit(ObjectId
+						.fromString(base));
+				myPage = new CreateBranchPage(repository, commit);
+			} else {
+				if (base.startsWith(Constants.R_HEADS)
+						|| base.startsWith(Constants.R_REMOTES)
+						|| base.startsWith(Constants.R_TAGS)) {
+					Ref currentBranch = repository.getRef(base);
+					myPage = new CreateBranchPage(repository, currentBranch);
+				} else {
+					// the page only knows some special Refs
+					RevCommit commit = new RevWalk(repository)
+							.parseCommit(repository.resolve(base + "^{commit}")); //$NON-NLS-1$
+					myPage = new CreateBranchPage(repository, commit);
+				}
+			}
+		} catch (IOException e) {
+			// simply don't select the drop down
+			myPage = new CreateBranchPage(repository, (Ref) null);
+		}
+		setWindowTitle(UIText.CreateBranchWizard_NewBranchTitle);
+	}
 
 	@Override
 	public void addPages() {

@@ -23,7 +23,6 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.op.TagOperation;
@@ -31,6 +30,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.dialogs.Dialog;
@@ -435,10 +435,10 @@ public class FetchGerritChangePage extends WizardPage {
 									monitor.worked(1);
 								}
 								if (doCheckout || doCreateTag) {
-									monitor
-											.setTaskName(UIText.FetchGerritChangePage_CheckingOutTaskName);
-									new BranchOperation(repository, commit
-											.name()).execute(monitor);
+									monitor.setTaskName(UIText.FetchGerritChangePage_CheckingOutTaskName);
+									BranchOperationUI.checkout(repository, commit.name())
+											.run(monitor);
+
 									monitor.worked(1);
 								}
 							} catch (RuntimeException e) {

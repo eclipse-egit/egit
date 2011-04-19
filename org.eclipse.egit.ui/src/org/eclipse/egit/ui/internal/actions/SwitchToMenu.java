@@ -21,26 +21,19 @@ import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
-import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISelectionService;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.IWorkbenchContribution;
 import org.eclipse.ui.services.IServiceLocator;
 
@@ -100,27 +93,7 @@ public class SwitchToMenu extends ContributionItem implements
 		newBranch.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				RevCommit commit = null;
-				Ref currentBranch = null;
-				try {
-					String branch = repository.getFullBranch();
-					if (ObjectId.isId(branch)) {
-						commit = new RevWalk(repository).parseCommit(ObjectId
-								.fromString(branch));
-					} else {
-						currentBranch = repository.getRef(branch);
-					}
-				} catch (IOException e1) {
-					// ignore here
-				}
-				CreateBranchWizard wiz;
-				if (currentBranch != null)
-					wiz = new CreateBranchWizard(repository, currentBranch);
-				else
-					wiz = new CreateBranchWizard(repository, commit);
-				Shell shell = PlatformUI.getWorkbench()
-						.getActiveWorkbenchWindow().getShell();
-				new WizardDialog(shell, wiz).open();
+				BranchOperationUI.create(repository).start();
 			}
 		});
 		new MenuItem(menu, SWT.SEPARATOR);
@@ -163,7 +136,7 @@ public class SwitchToMenu extends ContributionItem implements
 			others.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					BranchOperationUI.branch(repository).start();
+					BranchOperationUI.checkout(repository).start();
 				}
 			});
 		} catch (IOException e) {
