@@ -27,6 +27,7 @@ import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.services.IServiceLocator;
@@ -68,10 +69,10 @@ public abstract class RepositoryAction extends AbstractHandler implements
 	}
 
 	public void run(IAction action) {
-
-		ICommandService srv = (ICommandService) serviceLocator
+        IServiceLocator locator = getServiceLocator();
+		ICommandService srv = (ICommandService) locator
 				.getService(ICommandService.class);
-		IHandlerService hsrv = (IHandlerService) serviceLocator
+		IHandlerService hsrv = (IHandlerService) locator
 				.getService(IHandlerService.class);
 		Command command = srv.getCommand(commandId);
 
@@ -88,6 +89,12 @@ public abstract class RepositoryAction extends AbstractHandler implements
 		}
 	}
 
+	private IServiceLocator getServiceLocator() {
+		if (serviceLocator == null)
+			serviceLocator = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		return serviceLocator;
+	}
+
 	public final void selectionChanged(IAction action, ISelection selection) {
 		mySelection = selection;
 		handler.setSelection(mySelection);
@@ -96,7 +103,7 @@ public abstract class RepositoryAction extends AbstractHandler implements
 	}
 
 	public final Object execute(ExecutionEvent event) throws ExecutionException {
-		ICommandService srv = (ICommandService) serviceLocator
+		ICommandService srv = (ICommandService) getServiceLocator()
 				.getService(ICommandService.class);
 		Command command = srv.getCommand(commandId);
 		try {
