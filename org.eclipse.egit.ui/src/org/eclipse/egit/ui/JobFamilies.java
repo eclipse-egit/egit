@@ -68,4 +68,18 @@ public class JobFamilies {
 	 */
 	public final static Object FILL_TAG_LIST = new Object();
 
+	/**
+	 * AssumeUnchanged/NoAssumeUnchanged
+	 */
+	public final static Object ASSUME_NOASSUME_UNCHANGED = new Object();
+
+	/**
+	 * Untrack
+	 */
+	public final static Object UNTRACK = new Object();
+
+	/**
+	 * Disconnect
+	 */
+	public final static Object DISCONNECT = new Object();
 }

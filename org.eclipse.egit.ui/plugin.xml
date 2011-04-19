@@ -34,7 +34,7 @@
                value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
          </filter>
          <action
-               class="org.eclipse.egit.ui.internal.actions.Disconnect"
+               class="org.eclipse.egit.ui.internal.actions.DisconnectAction"
                icon="$nl$/icons/obj16/disconnect_co.gif"
                id="org.eclipse.egit.ui.internal.actions.Disconnect"
                label="%DisconnectAction_label"
@@ -93,23 +93,10 @@
                value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
          </filter>
          <action
-               class="org.eclipse.egit.ui.internal.actions.Untrack"
+               class="org.eclipse.egit.ui.internal.actions.UntrackAction"
                icon="$nl$/icons/obj16/untrack.gif"
                id="org.eclipse.egit.ui.internal.actions.Untrack"
                label="%UntrackAction_label"
-               menubarPath="team.main/group9"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.NoAssumeUnchangedAction"
-               icon="icons/obj16/no-assume-unchanged.gif"
-               id="org.eclipse.egit.ui.internal.actions.NoAssumeUnchanged"
-               label="%NoAssumeUnchangedAction_label"
-               menubarPath="team.main/group9">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.AssumeUnchangedAction"
-               icon="icons/obj16/assume-unchanged.gif"
-               id="org.eclipse.egit.ui.internal.actions.AssumeUnchanged"
-               label="%AssumeUnchangedAction_label"
                menubarPath="team.main/group9"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.CommitAction"
@@ -2467,6 +2454,52 @@
                      </and>
                   </visibleWhen>
                </command>
+               <separator
+                     name="org.eclipse.egit.ui.TeamAdvancedFileSeparator"
+                     visible="true">
+               </separator>
+               <command
+                     commandId="org.eclipse.egit.ui.team.AssumeUnchanged"
+                     label="%AssumeUnchangedAction_label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                    <and>
+                       <count
+                              value="+">
+                       </count>
+                       <iterate>
+                          <adapt
+                               type="org.eclipse.core.resources.IResource">
+                             <test
+                                  property="GitResource.isShared">
+                             </test>
+                          </adapt>
+                        </iterate>
+                     </and>
+                  </visibleWhen> 
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.team.NoAssumeUnchanged"
+                     label="%NoAssumeUnchangedAction_label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <and>
+                        <count
+                              value="+">
+                        </count>
+                        <iterate>
+                          <adapt
+                               type="org.eclipse.core.resources.IResource">
+                             <test
+                                 property="GitResource.isShared">
+                             </test>
+                          </adapt>
+                        </iterate>
+                     </and>
+                  </visibleWhen>
+               </command>
             </menu>
             <separator
                   name="applyPatchGroup"
@@ -2946,6 +2979,14 @@
             commandId="org.eclipse.egit.ui.team.Tag"
             icon="icons/obj16/tags.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.AssumeUnchanged"
+            icon="icons/obj16/assume-unchanged.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.NoAssumeUnchanged"
+            icon="icons/obj16/no-assume-unchanged.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -3155,6 +3196,18 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.RenameBranchActionHandler"
             id="org.eclipse.egit.ui.team.RenameBranch"
             name="%RenameBranchCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.AssumeUnchangedAction"
+            id="org.eclipse.egit.ui.team.AssumeUnchanged"
+            name="Assume Unchanged">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.NoAssumeUnchangedAction"
+            id="org.eclipse.egit.ui.team.NoAssumeUnchanged"
+            name="No Assume Unchanged">
       </command>
    </extension>
    <extension
