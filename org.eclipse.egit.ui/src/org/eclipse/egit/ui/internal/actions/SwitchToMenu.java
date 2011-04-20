@@ -49,6 +49,8 @@ public class SwitchToMenu extends ContributionItem implements
 
 	private final Image branchImage;
 
+	private final Image newBranchImage;
+
 	private final Image checkedOutImage;
 
 	/**
@@ -63,6 +65,7 @@ public class SwitchToMenu extends ContributionItem implements
 	public SwitchToMenu(String id) {
 		super(id);
 		branchImage = UIIcons.BRANCH.createImage();
+		newBranchImage = UIIcons.CREATE_BRANCH.createImage();
 		// create the "checked out" image
 		checkedOutImage = SWTUtils.getDecoratedImage(branchImage,
 				UIIcons.OVR_CHECKEDOUT);
@@ -90,6 +93,7 @@ public class SwitchToMenu extends ContributionItem implements
 
 		MenuItem newBranch = new MenuItem(menu, SWT.PUSH);
 		newBranch.setText(UIText.SwitchToMenu_NewBranchMenuLabel);
+		newBranch.setImage(newBranchImage);
 		newBranch.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
