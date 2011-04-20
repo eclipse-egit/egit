@@ -47,6 +47,9 @@ public class ActionCommands {
 	/** "Configure push" action command id */
 	public static final String CONFIGURE_PUSH = "org.eclipse.egit.ui.team.ConfigurePush"; //$NON-NLS-1$
 
+	/** "Delete Branch" action command id */
+	public static final String DELETE_BRANCH_ACTION = "org.eclipse.egit.ui.team.DeleteBranch"; //$NON-NLS-1$
+
 	/** "Discard changes" action command id */
 	public static final String DISCARD_CHANGES_ACTION = "org.eclipse.egit.ui.team.Discard"; //$NON-NLS-1$
 
@@ -61,6 +64,9 @@ public class ActionCommands {
 
 	/** "Push" action command id */
 	public static final String PUSH_ACTION = "org.eclipse.egit.ui.team.Push"; //$NON-NLS-1$
+
+	/** "Rename Branch" action command id */
+	public static final String RENAME_BRANCH_ACTION = "org.eclipse.egit.ui.team.RenameBranch"; //$NON-NLS-1$
 
 	/** "Simple Push" action command id */
 	public static final String SIMPLE_PUSH_ACTION = "org.eclipse.egit.ui.team.SimplePush"; //$NON-NLS-1$
