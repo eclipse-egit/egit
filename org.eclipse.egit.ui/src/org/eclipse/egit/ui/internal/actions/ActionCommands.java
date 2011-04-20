@@ -53,6 +53,9 @@ public class ActionCommands {
 	/** "Discard changes" action command id */
 	public static final String DISCARD_CHANGES_ACTION = "org.eclipse.egit.ui.team.Discard"; //$NON-NLS-1$
 
+	/** "Disconnect" action command id */
+	public static final String DISCONNECT_ACTION = "org.eclipse.egit.ui.internal.actions.Disconnect"; //$NON-NLS-1$
+
 	/** "Fetch" action command id */
 	public static final String FETCH_ACTION = "org.eclipse.egit.ui.team.Fetch"; //$NON-NLS-1$
 
@@ -91,6 +94,9 @@ public class ActionCommands {
 
 	/** "Track" action command id */
 	public static final String TRACK_ACTION = "org.eclipse.egit.ui.team.Track"; //$NON-NLS-1$
+
+	/** "Untrack" action command id */
+	public static final String UNTRACK_ACTION = "org.eclipse.egit.ui.internal.actions.Untrack"; //$NON-NLS-1$
 
 	/** "Pull from upstream configuration" action command id */
 	public static final String PULL_FROM_UPSTREAM_CONFIG = "org.eclipse.egit.ui.team.PullFromUpstreamConfig"; //$NON-NLS-1$
