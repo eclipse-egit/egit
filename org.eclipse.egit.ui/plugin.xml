@@ -1210,7 +1210,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewCreateBranch"
-               icon="icons/obj16/branch_obj.gif"
+               icon="icons/obj16/new_branch_obj.gif"
                label="%RepoViewCreateBranch.label"
                style="push">
             <visibleWhen
@@ -2829,7 +2829,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.CreateBranch"
-            icon="icons/obj16/branch_obj.gif">
+            icon="icons/obj16/new_branch_obj.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.CheckoutCommand"
@@ -2837,7 +2837,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewCreateBranch"
-            icon="icons/obj16/branch_obj.gif">
+            icon="icons/obj16/new_branch_obj.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewNewRemote"
@@ -2990,6 +2990,14 @@
       <image
             commandId="org.eclipse.egit.ui.team.NoAssumeUnchanged"
             icon="icons/obj16/no-assume-unchanged.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.DeleteBranch"
+            icon="icons/obj16/delete_obj.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.RenameBranch"
+            icon="icons/obj16/editconfig.gif">
       </image>
    </extension>
    <extension
