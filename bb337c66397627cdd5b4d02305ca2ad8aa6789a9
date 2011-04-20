@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL4H///Gg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-04-19T14:06:33Z",
+      "side": 1,
+      "message": "typo: for checking out ...",
+      "revId": "bb337c66397627cdd5b4d02305ca2ad8aa6789a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///Gs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-04-19T14:06:33Z",
+      "side": 1,
+      "message": "In the dialog the currently checked out branch should be preselected.",
+      "revId": "bb337c66397627cdd5b4d02305ca2ad8aa6789a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///Go\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateBranchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-04-19T14:06:33Z",
+      "side": 1,
+      "message": "Here the preselection should be added.",
+      "revId": "bb337c66397627cdd5b4d02305ca2ad8aa6789a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///Gk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CreateBranchDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-04-19T14:06:33Z",
+      "side": 1,
+      "message": "The button label \"OK\" is confusing. Please change it to \"Create Branch\".",
+      "revId": "bb337c66397627cdd5b4d02305ca2ad8aa6789a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
