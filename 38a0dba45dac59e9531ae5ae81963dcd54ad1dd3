@@ -16,6 +16,24 @@
       "revId": "38a0dba45dac59e9531ae5ae81963dcd54ad1dd3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H//+6Y\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/BranchAndResetActionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-20T23:21:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL4H//+60\u003d",
+      "revId": "38a0dba45dac59e9531ae5ae81963dcd54ad1dd3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
