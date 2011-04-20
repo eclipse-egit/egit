@@ -2497,6 +2497,15 @@ public class UIText extends NLS {
 	public static String DialogsPreferencePage_ShowInitialConfigCheckbox;
 
 	/** */
+	public static String DiffEditorPage_TaskGeneratingDiff;
+
+	/** */
+	public static String DiffEditorPage_TaskUpdatingViewer;
+
+	/** */
+	public static String DiffEditorPage_Title;
+
+	/** */
 	public static String DiscardChangesAction_confirmActionTitle;
 
 	/** */
