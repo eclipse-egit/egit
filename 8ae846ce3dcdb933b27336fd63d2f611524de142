@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL4H///AA\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 2480,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-19T23:33:34Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "8ae846ce3dcdb933b27336fd63d2f611524de142",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H//+/4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/AssumeUnchangedAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-19T23:33:34Z",
+      "side": 1,
+      "message": "wrong javadoc",
+      "revId": "8ae846ce3dcdb933b27336fd63d2f611524de142",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H//+/8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DisconnectAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-19T23:33:34Z",
+      "side": 1,
+      "message": "wrong javadoc",
+      "revId": "8ae846ce3dcdb933b27336fd63d2f611524de142",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H//+/0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/NoAssumeUnchangedAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-19T23:33:34Z",
+      "side": 1,
+      "message": "wrong javadoc",
+      "revId": "8ae846ce3dcdb933b27336fd63d2f611524de142",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H//+/w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/UntrackAction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-19T23:33:34Z",
+      "side": 1,
+      "message": "wrong javadoc",
+      "revId": "8ae846ce3dcdb933b27336fd63d2f611524de142",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
