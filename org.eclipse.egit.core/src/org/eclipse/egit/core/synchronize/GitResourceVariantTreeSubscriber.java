@@ -66,9 +66,9 @@ public class GitResourceVariantTreeSubscriber extends
 
 	@Override
 	public boolean isSupervised(IResource res) throws TeamException {
-		return gsds.contains(res.getProject()) && !isIgnoredHint(res);
+		return IResource.FILE == res.getType()
+				&& gsds.contains(res.getProject()) && !isIgnoredHint(res);
 	}
-
 
 	@Override
 	public IResource[] members(IResource res) throws TeamException {
