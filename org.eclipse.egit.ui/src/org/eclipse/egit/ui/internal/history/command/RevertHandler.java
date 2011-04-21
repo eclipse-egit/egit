@@ -27,10 +27,10 @@ import org.eclipse.jgit.revwalk.RevCommit;
  */
 public class RevertHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		BasicConfigurationDialog.show();
+		Repository repo = getRepository(event);
+		BasicConfigurationDialog.show(repo);
 		RevCommit commit = (RevCommit) getSelection(getPage()).getFirstElement();
 		RevCommit newHead;
-		Repository repo = getRepository(event);
 
 		RevertCommand revert;
 		Git git = new Git(repo);

@@ -34,7 +34,7 @@
                value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
          </filter>
          <action
-               class="org.eclipse.egit.ui.internal.actions.Disconnect"
+               class="org.eclipse.egit.ui.internal.actions.DisconnectAction"
                icon="$nl$/icons/obj16/disconnect_co.gif"
                id="org.eclipse.egit.ui.internal.actions.Disconnect"
                label="%DisconnectAction_label"
@@ -54,24 +54,12 @@
                label="%SynchronizeWith_label"
                menubarPath="team.main/group3"/>
          <action
-               class="org.eclipse.egit.ui.internal.actions.TagAction"
-               icon="$nl$/icons/obj16/tags.gif"
-               id="org.eclipse.egit.ui.internal.actions.TagAction"
-               label="%TagAction_label"
-               menubarPath="team.main/group5"/>
-         <action
                class="org.eclipse.egit.ui.internal.actions.MergeAction"
                definitionId="org.eclipse.egit.ui.team.Merge"
                icon="$nl$/icons/obj16/merge.gif"
                id="org.eclipse.egit.ui.internal.actions.MergeAction"
                label="%MergeAction_label"
                menubarPath="team.main/group4"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.BranchAction"
-               icon="$nl$/icons/obj16/branch_obj.gif"
-               id="org.eclipse.egit.ui.internal.actions.BranchAction"
-               label="%BranchAction_label"
-               menubarPath="team.main/group5"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.PullFromUpstreamConfigAction"
                definitionId="org.eclipse.egit.ui.team.Pull"
@@ -105,23 +93,10 @@
                value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
          </filter>
          <action
-               class="org.eclipse.egit.ui.internal.actions.Untrack"
+               class="org.eclipse.egit.ui.internal.actions.UntrackAction"
                icon="$nl$/icons/obj16/untrack.gif"
                id="org.eclipse.egit.ui.internal.actions.Untrack"
                label="%UntrackAction_label"
-               menubarPath="team.main/group9"/>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.NoAssumeUnchangedAction"
-               icon="icons/obj16/no-assume-unchanged.gif"
-               id="org.eclipse.egit.ui.internal.actions.NoAssumeUnchanged"
-               label="%NoAssumeUnchangedAction_label"
-               menubarPath="team.main/group9">
-         </action>
-         <action
-               class="org.eclipse.egit.ui.internal.actions.AssumeUnchangedAction"
-               icon="icons/obj16/assume-unchanged.gif"
-               id="org.eclipse.egit.ui.internal.actions.AssumeUnchanged"
-               label="%AssumeUnchangedAction_label"
                menubarPath="team.main/group9"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.CommitAction"
@@ -1235,7 +1210,7 @@
          </command>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewCreateBranch"
-               icon="icons/obj16/branch_obj.gif"
+               icon="icons/obj16/new_branch_obj.gif"
                label="%RepoViewCreateBranch.label"
                style="push">
             <visibleWhen
@@ -2406,6 +2381,131 @@
                </visibleWhen>
             </menu>
             <separator
+                  name="org.eclipse.egit.ui.AdvancedSeparator">
+            </separator>
+            <menu
+                  label="%AdvancedMenu.label">
+               <command
+                     commandId="org.eclipse.egit.ui.team.RenameBranch"
+                     label="%RenameBranchMenu.label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                        <iterate>
+                           <and>
+                              <adapt
+                                    type="org.eclipse.core.resources.IProject">
+                                 <test
+                                       property="GitResource.isShared">
+                                 </test>
+                              </adapt>
+                           </and>
+                        </iterate>
+                     </and>
+                  </visibleWhen>
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.team.DeleteBranch"
+                     label="%DeleteBranchMenu.label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                        <iterate>
+                           <and>
+                              <adapt
+                                    type="org.eclipse.core.resources.IProject">
+                                 <test
+                                       property="GitResource.isShared">
+                                 </test>
+                              </adapt>
+                           </and>
+                        </iterate>
+                     </and>
+                  </visibleWhen>
+               </command>
+               <separator
+                     name="org.eclipse.egit.ui.separator1"
+                     visible="true">
+               </separator>
+               <command
+                     commandId="org.eclipse.egit.ui.team.Tag"
+                     label="%TagAction_label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                        <iterate>
+                           <and>
+                              <adapt
+                                    type="org.eclipse.core.resources.IProject">
+                                 <test
+                                       property="GitResource.isShared">
+                                 </test>
+                              </adapt>
+                           </and>
+                        </iterate>
+                     </and>
+                  </visibleWhen>
+               </command>
+               <separator
+                     name="org.eclipse.egit.ui.TeamAdvancedFileSeparator"
+                     visible="true">
+               </separator>
+               <command
+                     commandId="org.eclipse.egit.ui.team.AssumeUnchanged"
+                     label="%AssumeUnchangedAction_label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                    <and>
+                       <count
+                              value="+">
+                       </count>
+                       <iterate>
+                          <adapt
+                               type="org.eclipse.core.resources.IResource">
+                             <test
+                                  property="GitResource.isShared">
+                             </test>
+                          </adapt>
+                        </iterate>
+                     </and>
+                  </visibleWhen>
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.team.NoAssumeUnchanged"
+                     label="%NoAssumeUnchangedAction_label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <and>
+                        <count
+                              value="+">
+                        </count>
+                        <iterate>
+                          <adapt
+                               type="org.eclipse.core.resources.IResource">
+                             <test
+                                 property="GitResource.isShared">
+                             </test>
+                          </adapt>
+                        </iterate>
+                     </and>
+                  </visibleWhen>
+               </command>
+            </menu>
+            <separator
                   name="applyPatchGroup"
                   visible="false">
             </separator>
@@ -2731,7 +2831,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.CreateBranch"
-            icon="icons/obj16/branch_obj.gif">
+            icon="icons/obj16/new_branch_obj.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.CheckoutCommand"
@@ -2739,7 +2839,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewCreateBranch"
-            icon="icons/obj16/branch_obj.gif">
+            icon="icons/obj16/new_branch_obj.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewNewRemote"
@@ -2884,6 +2984,22 @@
       <image
             commandId="org.eclipse.egit.ui.team.Tag"
             icon="icons/obj16/tags.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.AssumeUnchanged"
+            icon="icons/obj16/assume-unchanged.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.NoAssumeUnchanged"
+            icon="icons/obj16/no-assume-unchanged.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.DeleteBranch"
+            icon="icons/obj16/delete_obj.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.RenameBranch"
+            icon="icons/obj16/editconfig.gif">
       </image>
    </extension>
    <extension
@@ -3083,6 +3199,30 @@
             id="org.eclipse.egit.ui.team.ConfigurePush"
             name="%ConfigureUpstreamPushCommand.name">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.DeleteBranchActionHandler"
+            id="org.eclipse.egit.ui.team.DeleteBranch"
+            name="%DeleteBranchCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.RenameBranchActionHandler"
+            id="org.eclipse.egit.ui.team.RenameBranch"
+            name="%RenameBranchCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.AssumeUnchangedActionHandler"
+            id="org.eclipse.egit.ui.team.AssumeUnchanged"
+            name="Assume Unchanged">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.NoAssumeUnchangedActionHandler"
+            id="org.eclipse.egit.ui.team.NoAssumeUnchanged"
+            name="No Assume Unchanged">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
@@ -3126,7 +3266,7 @@
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.CompareVersionsInTreeHandler"
             id="org.eclipse.egit.ui.history.CompareVersionsInTree"
-            name="Compare in Tree">
+            name="%CompareInTreeCommand.name">
       </command>
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.CompareWithWorkingTreeHandler"

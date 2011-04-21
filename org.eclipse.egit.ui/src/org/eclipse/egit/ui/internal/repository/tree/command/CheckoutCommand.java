@@ -14,7 +14,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 
@@ -30,13 +29,8 @@ public class CheckoutCommand extends
 
 		final Ref ref = (Ref) node.getObject();
 		Repository repo = node.getRepository();
-		String refName = ref.getLeaf().getName();
-		final BranchOperationUI op;
-		if (refName.startsWith(Constants.R_REFS))
-			op = new BranchOperationUI(repo, ref.getName());
-		else
-			op = new BranchOperationUI(repo, ref.getLeaf().getObjectId());
 
+		BranchOperationUI op = BranchOperationUI.checkout(repo, ref.getName());
 		op.start();
 
 		return null;

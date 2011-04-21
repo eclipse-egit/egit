@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2011 Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (c) 2011 Matthias Sohn <matthias.sohn@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,8 +20,9 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.lib.ConfigConstants;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.lib.UserConfig;
-import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.swt.SWT;
@@ -46,9 +48,7 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 public class BasicConfigurationDialog extends TitleAreaDialog {
 	private Button dontShowAgain;
 
-	private FileBasedConfig userScopedConfig;
-
-	private UserConfig config;
+	private StoredConfig userScopedConfig;
 
 	private Text email;
 
@@ -58,17 +58,62 @@ public class BasicConfigurationDialog extends TitleAreaDialog {
 
 	/**
 	 * Opens the dialog if the {@link UIPreferences#SHOW_INITIAL_CONFIG_DIALOG}
-	 * is true
+	 * is true and author or committer identity is based on implicit data
+	 *
+	 * @param repositories
+	 *            if called from repository context otherwise null
 	 */
-	public static void show() {
-		if (Activator.getDefault().getPreferenceStore().getBoolean(
-				UIPreferences.SHOW_INITIAL_CONFIG_DIALOG))
+	public static void show(Repository... repositories) {
+		if (Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.SHOW_INITIAL_CONFIG_DIALOG)
+				&& isImplicitUserConfig(repositories))
 			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 				public void run() {
 					new BasicConfigurationDialog(PlatformUI.getWorkbench()
 							.getDisplay().getActiveShell()).open();
 				}
 			});
+	}
+
+	private static boolean isImplicitUserConfig(Repository... repositories) {
+		if (repositories == null)
+			return false;
+
+		for (Repository repository : repositories) {
+			UserConfig uc = loadRepoScopedConfig(repository)
+					.get(UserConfig.KEY);
+			if (uc.isAuthorNameImplicit() //
+					|| uc.isAuthorEmailImplicit()
+					|| uc.isCommitterNameImplicit()
+					|| uc.isCommitterEmailImplicit())
+				return true;
+		}
+		return false;
+	}
+
+	private static StoredConfig loadUserScopedConfig() {
+		StoredConfig c = SystemReader.getInstance().openUserConfig(null,
+				FS.DETECTED);
+		try {
+			c.load();
+		} catch (IOException e) {
+			Activator.handleError(e.getMessage(), e, true);
+		} catch (ConfigInvalidException e) {
+			Activator.handleError(e.getMessage(), e, true);
+		}
+		return c;
+	}
+
+	private static StoredConfig loadRepoScopedConfig(Repository repo) {
+		StoredConfig c = repo.getConfig();
+		try {
+			c.load();
+		} catch (IOException e) {
+			Activator.handleError(e.getMessage(), e, true);
+		} catch (ConfigInvalidException e) {
+			Activator.handleError(e.getMessage(), e, true);
+		}
+		return c;
 	}
 
 	/**
@@ -81,16 +126,9 @@ public class BasicConfigurationDialog extends TitleAreaDialog {
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		userScopedConfig = SystemReader.getInstance().openUserConfig(null,
-				FS.DETECTED);
-		try {
-			userScopedConfig.load();
-		} catch (IOException e) {
-			Activator.handleError(e.getMessage(), e, true);
-		} catch (ConfigInvalidException e) {
-			Activator.handleError(e.getMessage(), e, true);
-		}
-		config = userScopedConfig.get(UserConfig.KEY);
+		userScopedConfig = loadUserScopedConfig();
+
+		UserConfig userConfig = userScopedConfig.get(UserConfig.KEY);
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(2, false));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
@@ -101,8 +139,8 @@ public class BasicConfigurationDialog extends TitleAreaDialog {
 		userName = new Text(main, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(userName);
 		String currentName = null;
-		if (config != null)
-			currentName = config.getAuthorName();
+		if (userConfig != null)
+			currentName = userConfig.getAuthorName();
 		if (currentName != null)
 			userName.setText(currentName);
 		userName.addModifyListener(new ModifyListener() {
@@ -117,8 +155,8 @@ public class BasicConfigurationDialog extends TitleAreaDialog {
 		email = new Text(main, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(email);
 		String currentMail = null;
-		if (config != null)
-			currentMail = config.getAuthorEmail();
+		if (userConfig != null)
+			currentMail = userConfig.getAuthorEmail();
 		if (currentMail != null)
 			email.setText(currentMail);
 		email.addModifyListener(new ModifyListener() {
