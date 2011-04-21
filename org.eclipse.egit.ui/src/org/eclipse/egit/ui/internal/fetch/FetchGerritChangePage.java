@@ -247,6 +247,7 @@ public class FetchGerritChangePage extends WizardPage {
 		refText.setFocus();
 		Dialog.applyDialogFont(main);
 		setControl(main);
+		setPageComplete(false);
 	}
 
 	@Override
