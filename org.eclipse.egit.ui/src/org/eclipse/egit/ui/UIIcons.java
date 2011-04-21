@@ -143,6 +143,9 @@ public class UIIcons {
 	/** Branch icon */
 	public final static ImageDescriptor BRANCH;
 
+	/** Create Branch icon */
+	public final static ImageDescriptor CREATE_BRANCH;
+
 	/** Clone Icon */
 	public final static ImageDescriptor CLONEGIT;
 
@@ -205,6 +208,7 @@ public class UIIcons {
 		TAGS = map("obj16/tags.gif"); //$NON-NLS-1$
 		TAG = map("obj16/version_rep.gif"); //$NON-NLS-1$
 		BRANCH = map("obj16/branch_obj.gif"); //$NON-NLS-1$
+		CREATE_BRANCH = map("obj16/new_branch_obj.gif"); //$NON-NLS-1$
 		COLLAPSEALL = map("elcl16/collapseall.gif"); //$NON-NLS-1$
 		CLONEGIT = map("obj16/cloneGit.gif"); //$NON-NLS-1$
 		RESET = map("obj16/reset.gif"); //$NON-NLS-1$
