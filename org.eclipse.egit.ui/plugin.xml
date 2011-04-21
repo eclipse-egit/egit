@@ -2430,7 +2430,8 @@
                  label="%RebaseWithDialog_label">
 	           <visibleWhen checkEnabled="false">
 	              <and>
-	                 <iterate>
+	                 <iterate
+                        ifEmpty="false">
 	                    <and>
 	                       <adapt
 	                             type="org.eclipse.core.resources.IProject">
@@ -2454,7 +2455,8 @@
 	                 commandId="org.eclipse.egit.ui.ContinueRebase" style="push" />
 	           <visibleWhen checkEnabled="false">
 	              <and>
-	                 <iterate>
+	                 <iterate
+                        ifEmpty="false">
 	                    <and>
 	                       <adapt
 	                             type="org.eclipse.core.resources.IProject">
