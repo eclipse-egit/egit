@@ -44,8 +44,6 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 	}
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		BasicConfigurationDialog.show();
-
 		Ref ref;
 		ISelection currentSelection = getCurrentSelectionChecked(event);
 		if (currentSelection instanceof IStructuredSelection) {
@@ -57,6 +55,8 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 			ref = null;
 
 		final Repository repository = getRepository(event);
+
+		BasicConfigurationDialog.show(repository);
 
 		if (ref == null) {
 			RebaseTargetSelectionDialog rebaseTargetSelectionDialog = new RebaseTargetSelectionDialog(
