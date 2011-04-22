@@ -37,7 +37,7 @@ import org.eclipse.swt.dnd.TextTransfer;
  */
 public class PasteCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
-	private static final String URIRISH_HINT = "://"; //$NON-NLS-1$
+	private static final String URIish_HINT = "://"; //$NON-NLS-1$
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		// we check if the pasted content is a directory
@@ -54,10 +54,8 @@ public class PasteCommand extends
 				return null;
 			}
 
-			// http://bugs.eclipse.org/343309
-			if (content.indexOf(URIRISH_HINT) > 2) {
+			if (content.indexOf(URIish_HINT) > 2)
 				return new CloneCommand().execute(event);
-			}
 
 			File file = new File(content);
 			if (!file.exists() || !file.isDirectory()) {
