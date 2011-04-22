@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL4H//+4E\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-21T07:42:08Z",
+      "side": 1,
+      "message": "style nit: don\u0027t put the bug id in the commit message header instead add a bug footer, Gerrit will then render a proper hyperlink. Also include a Gerrit change-id using the commit message hook (see contributor guide how to install that) or EGit\n\nso this should look like:\n\n Pasting remote git ...\n\n Bug: 343309\n Change-Id: Ideadbeaf...",
+      "revId": "f5dfa57e2934de5d73b2721b9c8d5586ed10bddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H//+4Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-21T07:42:08Z",
+      "side": 1,
+      "message": "you can\u0027t add a copyright for SAP, instead add a new line with your company\u0027s copyright",
+      "revId": "f5dfa57e2934de5d73b2721b9c8d5586ed10bddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H//+4A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-21T07:42:08Z",
+      "side": 1,
+      "message": "URIRISH looks strange, maybe better URIISH ?",
+      "revId": "f5dfa57e2934de5d73b2721b9c8d5586ed10bddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H//+4I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-21T07:42:08Z",
+      "side": 1,
+      "message": "we don\u0027t need this comment, the commit\u0027s diff has the same information and doesn\u0027t clutter this class",
+      "revId": "f5dfa57e2934de5d73b2721b9c8d5586ed10bddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H//+4M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-21T07:42:08Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "f5dfa57e2934de5d73b2721b9c8d5586ed10bddb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
