@@ -12,19 +12,10 @@
 package org.eclipse.egit.ui.internal.synchronize;
 
 import java.io.IOException;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
-import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
 
 /**
  * Synchronization wizard for Git repositories
@@ -49,22 +40,11 @@ public class GitSynchronizeWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		GitSynchronizeDataSet gsdSet = new GitSynchronizeDataSet();
-
-		Map<Repository, String> branches = page.getSelectedBranches();
-		for (Entry<Repository, String> branchesEntry : branches.entrySet())
-			try {
-				gsdSet.add(new GitSynchronizeData(branchesEntry.getKey(),
-						Constants.HEAD, branchesEntry.getValue(), false));
-			} catch (IOException e) {
-				Activator.logError(e.getMessage(), e);
-			}
-
-		Set<IProject> selectedProjects
-				 = page.getSelectedProjects();
-		GitModelSynchronize.launch(gsdSet, selectedProjects
-				.toArray(new IResource[selectedProjects
-				.size()]));
+		try {
+			GitModelSynchronize.launch(page.getSyncData(), page.getProjects());
+		} catch (IOException e) {
+			Activator.logError(e.getMessage(), e);
+		}
 
 		return true;
 	}
