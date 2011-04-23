@@ -3422,6 +3422,12 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel;
 
 	/** */
+	public static String CommitSearchResult_LabelPlural;
+
+	/** */
+	public static String CommitSearchResult_LabelSingle;
+
+	/** */
 	public static String CommitSelectionDialog_BuildingCommitListMessage;
 
 	/** */
