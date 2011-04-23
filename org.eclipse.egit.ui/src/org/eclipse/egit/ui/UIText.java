@@ -1480,6 +1480,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_AddFileOnDiskToIndex;
 
 	/** */
+	public static String CommitDialog_PasteFileNameToCommitMSG;
+
+	/** */
 	public static String CommitDialog_AddSOB;
 
 	/** */
