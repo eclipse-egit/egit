@@ -12,26 +12,28 @@ package org.eclipse.egit.ui.test.commit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
-import org.eclipse.core.runtime.AssertionFailedException;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.commit.CommitEditorInput;
+import org.eclipse.egit.ui.internal.commit.CommitEditorInputFactory;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.ui.XMLMemento;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link CommitEditorInput}
+ * Unit tests of {@link CommitEditorInputFactory}
  */
-public class CommitEditorInputTest extends LocalRepositoryTestCase {
+public class CommitEditorInputFactoryTest extends LocalRepositoryTestCase {
 
 	private static Repository repository;
 
@@ -55,32 +57,20 @@ public class CommitEditorInputTest extends LocalRepositoryTestCase {
 	}
 
 	@Test
-	public void testConstructorAsserts() {
-		try {
-			assertNull(new CommitEditorInput(null));
-		} catch (AssertionFailedException afe) {
-			assertNotNull(afe);
-		}
-	}
-
-	@Test
-	public void testAdapters() {
-		RepositoryCommit repoCommit = new RepositoryCommit(repository, commit);
-		CommitEditorInput input = new CommitEditorInput(repoCommit);
-		assertEquals(repoCommit, input.getAdapter(RepositoryCommit.class));
-		assertEquals(repository, input.getAdapter(Repository.class));
-		assertEquals(commit, input.getAdapter(RevCommit.class));
-	}
-
-	@Test
-	public void testInput() {
-		RepositoryCommit repoCommit = new RepositoryCommit(repository, commit);
-		CommitEditorInput input = new CommitEditorInput(repoCommit);
-		assertNotNull(input.getImageDescriptor());
-		assertNotNull(input.getToolTipText());
-		assertNotNull(input.getName());
-		assertEquals(repoCommit, input.getCommit());
-		assertNotNull(input.getPersistable());
+	public void testPersistable() {
+		CommitEditorInput input = new CommitEditorInput(new RepositoryCommit(
+				repository, commit));
+		XMLMemento memento = XMLMemento.createWriteRoot("test");
+		input.getPersistable().saveState(memento);
+		CommitEditorInputFactory factory = new CommitEditorInputFactory();
+		IAdaptable created = factory.createElement(memento);
+		assertNotNull(created);
+		assertTrue(created instanceof CommitEditorInput);
+		CommitEditorInput createdInput = (CommitEditorInput) created;
+		assertEquals(input.getCommit().getRevCommit().name(), createdInput
+				.getCommit().getRevCommit().name());
+		assertEquals(input.getCommit().getRepository().getDirectory(),
+				createdInput.getCommit().getRepository().getDirectory());
 	}
 
 }
