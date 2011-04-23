@@ -13,6 +13,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.TreeItem;
 
 /**
  * Label provider displaying image centered.
@@ -37,8 +38,7 @@ public abstract class CenteredImageLabelProvider extends OwnerDrawLabelProvider 
 	@Override
 	protected void paint(final Event event, final Object element) {
 		final Image image = getImage(element);
-		final Rectangle bounds = ((TableItem) event.item)
-				.getBounds(event.index);
+		final Rectangle bounds = getBounds(event);
 		final Rectangle imgBounds = image.getBounds();
 		bounds.width /= 2;
 		bounds.width -= imgBounds.width / 2;
@@ -49,5 +49,20 @@ public abstract class CenteredImageLabelProvider extends OwnerDrawLabelProvider 
 		final int y = bounds.height > 0 ? bounds.y + bounds.height : bounds.y;
 
 		event.gc.drawImage(image, x, y);
+	}
+
+	private Rectangle getBounds(final Event event) {
+		final Rectangle bounds;
+		if (event.item instanceof TableItem)
+			bounds = ((TableItem) event.item).getBounds(event.index);
+		else if (event.item instanceof TreeItem)
+			bounds = ((TreeItem) event.item).getBounds(event.index);
+		else
+			throw new IllegalArgumentException(
+					"Event source item should be instanceof " //$NON-NLS-1$
+						+ TableItem.class.getName() + " or " //$NON-NLS-1$
+						+ TreeItem.class.getName() + ". Given element " //$NON-NLS-1$
+						+ event.item.getClass().getName() + " is unsupported."); //$NON-NLS-1$
+		return bounds;
 	}
 }
