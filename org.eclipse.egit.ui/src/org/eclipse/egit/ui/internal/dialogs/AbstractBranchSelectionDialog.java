@@ -97,6 +97,13 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 	/** Determinate does remote branches should be expanded or not */
 	protected static final int EXPAND_REMOTE_BRANCHES_NODE = 1 << 7;
 
+	/**
+	 * Will allow select multiple branches. The implementer must override
+	 * {@link AbstractBranchSelectionDialog#refNameFromDialog()} to be able to
+	 * obtain list of selected branches
+	 */
+	protected static final int ALLOW_MULTISELECTION = 1 << 8;
+
 	private final int settings;
 
 	/**
@@ -190,7 +197,12 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		Composite parent = (Composite) super.createDialogArea(base);
 		parent.setLayout(GridLayoutFactory.fillDefaults().create());
 
-		FilteredTree tree = new FilteredTree(parent, SWT.SINGLE | SWT.BORDER,
+		int selectionModel = -1;
+		if ((settings & ALLOW_MULTISELECTION) != 0)
+			selectionModel = SWT.MULTI;
+		else
+			selectionModel = SWT.SINGLE;
+		FilteredTree tree = new FilteredTree(parent, selectionModel | SWT.BORDER,
 				new PatternFilter(), true);
 		branchTree = tree.getViewer();
 		branchTree.setLabelProvider(new RepositoriesViewLabelProvider());
@@ -274,6 +286,8 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		} catch (IOException e) {
 			// ignore
 		}
+
+		getButton(Window.OK).setEnabled(false);
 	}
 
 	/**

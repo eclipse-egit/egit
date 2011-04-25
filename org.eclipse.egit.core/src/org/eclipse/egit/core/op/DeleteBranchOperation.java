@@ -8,6 +8,11 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import static java.util.Arrays.asList;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -47,7 +52,7 @@ public class DeleteBranchOperation implements IEGitOperation {
 
 	private final Repository repository;
 
-	private final Ref branch;
+	private final Set<Ref> branches;
 
 	private final boolean force;
 
@@ -59,8 +64,19 @@ public class DeleteBranchOperation implements IEGitOperation {
 	 */
 	public DeleteBranchOperation(Repository repository, Ref branch,
 			boolean force) {
+		this(repository, new HashSet<Ref>(asList(branch)), force);
+	}
+
+	/**
+	 * @param repository
+	 * @param branches
+	 *            the list of branches to deleted
+	 * @param force
+	 */
+	public DeleteBranchOperation(Repository repository, Set<Ref> branches,
+			boolean force) {
 		this.repository = repository;
-		this.branch = branch;
+		this.branches = branches;
 		this.force = force;
 	}
 
@@ -81,22 +97,37 @@ public class DeleteBranchOperation implements IEGitOperation {
 
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 			public void run(IProgressMonitor actMonitor) throws CoreException {
-				String taskName = NLS.bind(
-						CoreText.DeleteBranchOperation_TaskName, branch
-								.getName());
-				actMonitor.beginTask(taskName, 1);
-				try {
-					new Git(repository).branchDelete().setBranchNames(
-							branch.getName()).setForce(force).call();
-					status = OK;
-				} catch (NotMergedException e) {
-					status = REJECTED_UNMERGED;
-				} catch (CannotDeleteCurrentBranchException e) {
-					status = REJECTED_CURRENT;
-				} catch (JGitInternalException e) {
-					throw new CoreException(Activator.error(e.getMessage(), e));
+
+				String taskName;
+				if (branches.size() == 1)
+					taskName = NLS.bind(
+							CoreText.DeleteBranchOperation_TaskName, branches
+									.iterator().next().getName());
+				else {
+					String names = ""; //$NON-NLS-1$
+					for (Ref ref : branches)
+						names = names + ref.getName() + ", "; //$NON-NLS-1$
+					taskName = NLS.bind(
+							CoreText.DeleteBranchOperation_TaskName,
+							names.substring(0, names.length() - 2));
 				}
-				actMonitor.worked(1);
+				actMonitor.beginTask(taskName, branches.size());
+				for (Ref branch : branches) {
+					try {
+						new Git(repository).branchDelete().setBranchNames(
+								branch.getName()).setForce(force).call();
+						status = OK;
+					} catch (NotMergedException e) {
+						status = REJECTED_UNMERGED;
+						break;
+					} catch (CannotDeleteCurrentBranchException e) {
+						status = REJECTED_CURRENT;
+						break;
+					} catch (JGitInternalException e) {
+						throw new CoreException(Activator.error(e.getMessage(), e));
+					}
+					actMonitor.worked(1);
+				}
 				actMonitor.done();
 			}
 		};
