@@ -48,6 +48,12 @@
                menubarPath="team.main/group5">
          </action>
          <action
+               class="org.eclipse.egit.ui.internal.actions.SynchronizeWorkspaceAction"
+               id="org.eclipse.egit.ui.internal.actions.SynchronizeWorkspace"
+               icon="$nl$/icons/obj16/remotespec.gif"
+               label="%SynchronizeWorkspace_label"
+               menubarPath="team.main/group3"/>
+         <action
                class="org.eclipse.egit.ui.internal.actions.SynchronizeWithAction"
                id="org.eclipse.egit.ui.internal.actions.SynchronizeWithAction"
                icon="$nl$/icons/obj16/remotespec.gif"
