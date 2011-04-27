@@ -116,6 +116,13 @@
                label="%CompareWithBranchOrTagAction.label"
                menubarPath="compareWithMenu/gitCompareWithGroup">
          </action>
+          <action
+               class="org.eclipse.egit.ui.internal.actions.CompareWithPreviousAction"
+               definitionId="org.eclipse.egit.ui.team.CompareWithPrevious"
+               enablesFor="1"
+               id="org.eclipse.egit.ui.internal.actions.CompareWithPreviousAction"
+               label="%CompareWithPreviousAction.label"
+               menubarPath="compareWithMenu/gitCompareWithGroup"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.CompareWithHeadAction"
                id="org.eclipse.egit.ui.internal.actions.CompareWithHeadAction"
@@ -3129,6 +3136,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithHeadActionHandler"
             id="org.eclipse.egit.ui.team.CompareWithHead"
             name="%CompareWithHeadCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithPreviousActionHandler"
+            id="org.eclipse.egit.ui.team.CompareWithPrevious"
+            name="%CompareWithPreviousCommand.name">
       </command>
             <command
             categoryId="org.eclipse.egit.ui.commandCategory"

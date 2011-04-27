@@ -11,8 +11,16 @@
 package org.eclipse.egit.ui.internal.actions;
 
 /**
- * 
+ * Compare with previous revision action.
  */
-public class CompareWithPreviousAction {
+public class CompareWithPreviousAction extends RepositoryAction {
+
+	/**
+	 * Create compare with previous revision action
+	 */
+	public CompareWithPreviousAction() {
+		super(ActionCommands.COMPARE_WITH_PREVIOUS_ACTION,
+				new CompareWithPreviousActionHandler());
+	}
 
 }
