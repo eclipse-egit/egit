@@ -15,8 +15,10 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.equinox.security.storage.StorageException;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.errors.UnsupportedCredentialItem;
 import org.eclipse.jgit.transport.CredentialItem;
+import org.eclipse.jgit.transport.CredentialItem.CertPassword;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.swt.widgets.Shell;
@@ -41,6 +43,8 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 				continue;
 			else if (i instanceof CredentialItem.Password)
 				continue;
+			else if (i instanceof CredentialItem.CertPassword)
+				continue;
 			else
 				return false;
 		}
@@ -52,12 +56,17 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 			throws UnsupportedCredentialItem {
 		CredentialItem.Username userItem = null;
 		CredentialItem.Password passwordItem = null;
+		CredentialItem.CertPassword certPasswordItem = null;
 
 		for (CredentialItem item : items) {
 			if (item instanceof CredentialItem.Username)
 				userItem = (CredentialItem.Username) item;
 			else if (item instanceof CredentialItem.Password)
 				passwordItem = (CredentialItem.Password) item;
+			else if (item instanceof CredentialItem.CertPassword) {
+				certPasswordItem = (CredentialItem.CertPassword) item;
+				return handleCertPassword(certPasswordItem);
+			}
 			else
 				throw new UnsupportedCredentialItem(uri, item.getPromptText());
 		}
@@ -76,6 +85,11 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 		return true;
 	}
 
+	private boolean handleCertPassword(CertPassword certPasswordItem) {
+		getCertPasswordFromUser(certPasswordItem);
+		return certPasswordItem.getValue() != null;
+	}
+
 	private UserPasswordCredentials getCredentialsFromUser(final URIish uri) {
 		final AtomicReference<UserPasswordCredentials> aRef = new AtomicReference<UserPasswordCredentials>(
 				null);
@@ -87,6 +101,22 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 			}
 		});
 		return aRef.get();
+	}
+
+	private void getCertPasswordFromUser(final CertPassword certPasswordItem) {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+			public void run() {
+				Shell shell = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell();
+				CertPasswordDialog dialog = new CertPasswordDialog(shell,
+						certPasswordItem.getPromptText());
+				if (dialog.open() == Window.OK) {
+					String certPassword = dialog.getCertPassword();
+					if (certPassword != null)
+						certPasswordItem.setValue(certPassword.toCharArray());
+				}
+			}
+		});
 	}
 
 	private UserPasswordCredentials getCredentialsFromSecureStore(final URIish uri) {
