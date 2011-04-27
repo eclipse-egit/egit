@@ -8,7 +8,7 @@
 
    <extension point="org.eclipse.ui.importWizards">
       <category name="%Git_clone_category"
-	    id="org.eclipse.egit.ui.internal.clone.gitclonecategory"/>
+	    id="org.eclipse.egit.ui.inannternal.clone.gitclonecategory"/>
       <wizard name="%Git_clone_wizard"
 	    icon="icons/obj16/import_obj.gif"
 	    class="org.eclipse.egit.ui.internal.clone.GitImportWizard"
@@ -190,6 +190,21 @@
                id="org.eclipse.egit.ui.internal.actions.CompareWithRevisionAction"
                label="%CompareWithRevisionAction_label"
                menubarPath="compareWithMenu/gitCompareWithGroup"/>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.egit.ui.gitFileContributions"
+            objectClass="org.eclipse.core.resources.IFile">
+         <filter
+               name="projectPersistentProperty"
+               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
+         </filter>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.ShowAnnotationAction"
+               id="org.eclipse.egit.ui.internal.actions.ShowAnnotationAction"
+               label="Show Annotation"
+               menubarPath="team.main/group10">
+         </action>
       </objectContribution>
    </extension>
 
