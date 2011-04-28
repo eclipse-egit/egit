@@ -15,6 +15,7 @@ import java.text.MessageFormat;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.history.FileDiff;
@@ -29,14 +30,18 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
+import org.eclipse.ui.forms.events.HyperlinkAdapter;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.Section;
 
 /**
@@ -119,8 +124,24 @@ public class CommitEditorPage extends FormPage {
 				toolkit.createLabel(parents,
 						UIText.CommitEditorPage_LabelParent).setForeground(
 						toolkit.getColors().getColor(IFormColors.TB_TOGGLE));
-				toolkit.createHyperlink(parents,
-						parentCommit.abbreviate(PARENT_LENGTH).name(), SWT.NONE);
+				final Hyperlink link = toolkit
+						.createHyperlink(parents,
+								parentCommit.abbreviate(PARENT_LENGTH).name(),
+								SWT.NONE);
+				link.addHyperlinkListener(new HyperlinkAdapter() {
+
+					public void linkActivated(HyperlinkEvent e) {
+						try {
+							CommitEditor.open(new RepositoryCommit(getCommit()
+									.getRepository(), parentCommit));
+							if ((e.getStateMask() & SWT.MOD1) != 0)
+								getEditor().close(false);
+						} catch (PartInitException e1) {
+							Activator.logError(
+									"Error opening commit editor", e1);//$NON-NLS-1$
+						}
+					}
+				});
 			}
 		}
 	}
