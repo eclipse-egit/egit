@@ -3446,6 +3446,12 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel;
 
 	/** */
+	public static String CommitSearchQuery_Label;
+
+	/** */
+	public static String CommitSearchQuery_TaskSearchCommits;
+
+	/** */
 	public static String CommitSearchResult_LabelPlural;
 
 	/** */
