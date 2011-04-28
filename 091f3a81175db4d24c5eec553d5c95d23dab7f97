@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL4n///7E\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/commit/RepositoryCommitTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-23T00:07:16Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "091f3a81175db4d24c5eec553d5c95d23dab7f97",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4n///7A\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/commit/RepositoryCommitTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-23T00:07:16Z",
+      "side": 1,
+      "message": "we do not use author tags",
+      "revId": "091f3a81175db4d24c5eec553d5c95d23dab7f97",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4n///68\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/RepositoryCommit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-23T00:07:16Z",
+      "side": 1,
+      "message": "we do not use author tags",
+      "revId": "091f3a81175db4d24c5eec553d5c95d23dab7f97",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4n///64\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/RepositoryCommit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-23T00:07:16Z",
+      "side": 1,
+      "message": "why 7 ? In history view we use 8",
+      "revId": "091f3a81175db4d24c5eec553d5c95d23dab7f97",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
