@@ -33,6 +33,15 @@ public class CreateBranchWizard extends Wizard {
 	private String newBranchName;
 
 	private CreateBranchPage myPage;
+
+	/**
+	 * @param repository
+	 *            the repository
+	 */
+	public CreateBranchWizard(Repository repository) {
+		this(repository, null);
+	}
+
 	/**
 	 * @param repository
 	 *            the repository
