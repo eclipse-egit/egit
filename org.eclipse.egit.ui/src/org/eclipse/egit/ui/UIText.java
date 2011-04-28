@@ -2972,6 +2972,9 @@ public class UIText extends NLS {
 	public static String CommitGraphTable_CompareWithEachOtherInTreeMenuLabel;
 
 	/** */
+	public static String CommitGraphTable_OpenCommitLabel;
+
+	/** */
 	public static String GitSynchronizeWizard_synchronize;
 
 	/** */
