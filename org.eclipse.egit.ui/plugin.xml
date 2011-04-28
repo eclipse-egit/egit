@@ -476,6 +476,66 @@
             %Theme_CommitMessageEditorFont_description
          </description>
       </fontDefinition>
+      <colorDefinition
+            categoryId="org.eclipse.egit.ui.GitTheme"
+            id="org.eclipse.egit.ui.DiffHunkBackgroundColor"
+            isEditable="true"
+            label="%Theme_DiffHunkBackgroundColor_label"
+            value="234,242,245">
+         <description>
+            %Theme_DiffHunkBackgroundColor_description
+         </description>
+      </colorDefinition>
+      <colorDefinition
+            categoryId="org.eclipse.egit.ui.GitTheme"
+            id="org.eclipse.egit.ui.DiffHunkForegroundColor"
+            isEditable="true"
+            label="%Theme_DiffHunkForegroundColor_label"
+            value="153,153,153">
+         <description>
+            %Theme_DiffHunkForegroundColor_description
+         </description>
+      </colorDefinition>
+      <colorDefinition
+            categoryId="org.eclipse.egit.ui.GitTheme"
+            id="org.eclipse.egit.ui.DiffAddBackgroundColor"
+            isEditable="true"
+            label="%Theme_DiffAddBackgroundColor_label"
+            value="221,255,221">
+         <description>
+            %Theme_DiffAddBackgroundColor_description
+         </description>
+      </colorDefinition>
+      <colorDefinition
+            categoryId="org.eclipse.egit.ui.GitTheme"
+            id="org.eclipse.egit.ui.DiffAddForegroundColor"
+            isEditable="true"
+            label="%Theme_DiffAddForegroundColor_label"
+            value="COLOR_BLACK">
+         <description>
+            %Theme_DiffAddForegroundColor_description
+         </description>
+      </colorDefinition>
+      <colorDefinition
+            categoryId="org.eclipse.egit.ui.GitTheme"
+            id="org.eclipse.egit.ui.DiffRemoveBackgroundColor"
+            isEditable="true"
+            label="%Theme_DiffRemoveBackgroundColor_label"
+            value="255,221,221">
+         <description>
+            %Theme_DiffRemoveBackgroundColor_description
+         </description>
+      </colorDefinition>
+      <colorDefinition
+            categoryId="org.eclipse.egit.ui.GitTheme"
+            id="org.eclipse.egit.ui.DiffRemoveForegroundColor"
+            isEditable="true"
+            label="%Theme_DiffRemoveForegroundColor_label"
+            value="COLOR_BLACK">
+         <description>
+            %Theme_DiffRemoveForegroundColor_description
+         </description>
+      </colorDefinition>
    </extension>
 
 <!-- ********** QuickDiff text editor support ************** -->
