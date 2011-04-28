@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL4n///5w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffViewer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-23T00:26:01Z",
+      "side": 1,
+      "message": "avoid using author tags",
+      "revId": "f49b458050d90b8f43b757e7f806121eb375b65d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
