@@ -58,7 +58,7 @@ public class SynchronizeWithActionHandler extends RepositoryActionHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository[] repos = getRepositories(event);
 
-		if (repos.length != repos.length)
+		if (repos.length == 0)
 			return null;
 
 		GitSynchronizeDataSet gsdSet = new GitSynchronizeDataSet();
