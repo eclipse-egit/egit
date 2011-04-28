@@ -3450,6 +3450,11 @@
             id="org.eclipse.egit.ui.RebaseCurrent"
             name="%RebaseCurrentCommand.name">
       </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.OpenInCommitViewerHandler"
+            id="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
+            name="%OpenInCommitViewerCommand.name">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
