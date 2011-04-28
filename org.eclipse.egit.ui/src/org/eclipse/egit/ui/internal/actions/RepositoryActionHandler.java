@@ -14,6 +14,7 @@ package org.eclipse.egit.ui.internal.actions;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -25,6 +26,9 @@ import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.resources.mapping.ResourceTraversal;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -79,7 +83,19 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		for (IResource resource : (IResource[]) getSelectedAdaptables(
 				selection, IResource.class))
 			ret.add(resource.getProject());
+		ret.addAll(extractProjectsFromMappings(selection));
+
 		return ret.toArray(new IProject[ret.size()]);
+	}
+
+	private Set<IProject> extractProjectsFromMappings(IStructuredSelection selection) {
+		Set<IProject> ret = new HashSet<IProject>();
+		for (ResourceMapping mapping : (ResourceMapping[]) getSelectedAdaptables(
+				selection, ResourceMapping.class)) {
+			IProject[] projects = mapping.getProjects();
+			ret.addAll(Arrays.asList(projects));
+		}
+		return ret;
 	}
 
 	/**
@@ -437,8 +453,26 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 			IResource resource = (IResource) getAdapter(o, IResource.class);
 			if (resource != null)
 				result.add(resource);
+			else
+				extractResourcesFromMapping(result, o);
 		}
 		return result.toArray(new IResource[result.size()]);
+	}
+
+	private void extractResourcesFromMapping(Set<IResource> result, Object o) {
+		ResourceMapping mapping = (ResourceMapping) getAdapter(o, ResourceMapping.class);
+		if (mapping != null) {
+			ResourceTraversal[] traversals;
+			try {
+				traversals = mapping.getTraversals(null, null);
+				for (ResourceTraversal traversal : traversals) {
+					IResource[] resources = traversal.getResources();
+					result.addAll(Arrays.asList(resources));
+				}
+			} catch (CoreException e) {
+				Activator.logError(e.getMessage(), e);
+			}
+		}
 	}
 
 	/**
