@@ -11,10 +11,13 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
@@ -160,7 +163,13 @@ public class SpellcheckableMessageArea extends Composite {
 		Document document = new Document(initialText);
 
 		sourceViewer.configure(new TextSourceViewerConfiguration(EditorsUI
-				.getPreferenceStore()));
+				.getPreferenceStore()) {
+
+			protected Map getHyperlinkDetectorTargets(ISourceViewer targetViewer) {
+				return getHyperlinkTargets();
+			}
+
+		});
 		sourceViewer.setDocument(document, annotationModel);
 
 		getTextWidget().addDisposeListener(new DisposeListener() {
@@ -437,6 +446,25 @@ public class SpellcheckableMessageArea extends Composite {
 	 */
 	public void reconfigure() {
 		configureHardWrap();
+	}
+
+	/**
+	 * Get hyperlink targets
+	 *
+	 * @return map of targets
+	 */
+	protected Map<String, IAdaptable> getHyperlinkTargets() {
+		return Collections.singletonMap("org.eclipse.ui.DefaultTextEditor", //$NON-NLS-1$
+				getDefaultTarget());
+	}
+
+	/**
+	 * Get default target for hyperlink presenter
+	 *
+	 * @return target
+	 */
+	protected IAdaptable getDefaultTarget() {
+		return null;
 	}
 
 	/**
