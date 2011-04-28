@@ -41,6 +41,9 @@ public class ActionCommands {
 	/** "Compare with revision" action command id */
 	public static final String COMPARE_WITH_REVISION_ACTION = "org.eclipse.egit.ui.team.CompareWithRevision"; //$NON-NLS-1$
 
+	/** "Compare with previous" action command id */
+	public static final String COMPARE_WITH_PREVIOUS_ACTION = "org.eclipse.egit.ui.team.CompareWithPrevious"; //$NON-NLS-1$
+
 	/** "Configure Fetch" action command id */
 	public static final String CONFIGURE_FETCH = "org.eclipse.egit.ui.team.ConfigureFetch"; //$NON-NLS-1$
 
