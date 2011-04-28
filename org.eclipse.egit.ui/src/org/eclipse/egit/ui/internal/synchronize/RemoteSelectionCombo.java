@@ -26,6 +26,8 @@ class RemoteSelectionCombo extends Composite {
 
 	private Label myRefLabel;
 
+	private Label myRemoteLabel;
+
 	private Combo refsCombo;
 
 	private Combo remotesCombo;
@@ -46,6 +48,7 @@ class RemoteSelectionCombo extends Composite {
 	@Override
 	public void setEnabled(boolean enabled) {
 		myRefLabel.setEnabled(enabled);
+		myRemoteLabel.setEnabled(enabled);
 		refsCombo.setEnabled(enabled);
 		remotesCombo.setEnabled(enabled);
 		super.setEnabled(enabled);
@@ -56,8 +59,8 @@ class RemoteSelectionCombo extends Composite {
 		remoteComposite.setLayout(new GridLayout());
 		remoteComposite.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, false).hint(150, SWT.DEFAULT).create());
-		myRefLabel = new Label(remoteComposite, SWT.NONE);
-		myRefLabel.setText(remoteLabel);
+		myRemoteLabel = new Label(remoteComposite, SWT.NONE);
+		myRemoteLabel.setText(remoteLabel);
 		remotesCombo = new Combo(remoteComposite, SWT.NONE | SWT.READ_ONLY);
 		remotesCombo.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, false).create());
@@ -77,8 +80,8 @@ class RemoteSelectionCombo extends Composite {
 		refsComposite.setLayout(new GridLayout());
 		refsComposite.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, false).hint(150, SWT.DEFAULT).create());
-		Label ref = new Label(refsComposite, SWT.NONE);
-		ref.setText(refLabel);
+		myRefLabel = new Label(refsComposite, SWT.NONE);
+		myRefLabel.setText(refLabel);
 		refsCombo = new Combo(refsComposite, SWT.NONE | SWT.READ_ONLY);
 		refsCombo.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, false).create());
