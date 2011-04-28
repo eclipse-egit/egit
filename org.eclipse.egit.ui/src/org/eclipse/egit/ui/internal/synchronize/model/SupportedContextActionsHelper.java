@@ -28,12 +28,10 @@ public final class SupportedContextActionsHelper {
 	 *         {@code object}
 	 */
 	public static boolean canCommit(GitModelObject object) {
-		// commit action on change root (like GitModelWorkingTree
-		// GitModelCache) nodes should be currently unavailable because in
-		// some cases we cannot determinate eclipse resource for given path
 		return object instanceof GitModelWorkingFile
 				|| object instanceof GitModelCacheFile
-				|| object instanceof GitModelCacheTree;
+				|| object instanceof GitModelCacheTree
+				|| object instanceof GitModelCache;
 	}
 
 	/**
