@@ -13,12 +13,13 @@ package org.eclipse.egit.ui.internal.preferences;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.ui.Activator;
@@ -238,11 +239,23 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 					continue;
 				}
 			}
+			sortRepositoriesByName();
 		}
 	}
 
+	private void sortRepositoriesByName() {
+		Collections.sort(repositories, new Comparator<Repository>() {
+
+			public int compare(Repository repo1, Repository repo2) {
+				String repo1Name = repo1.getDirectory().getParentFile().getName();
+				String repo2Name = repo2.getDirectory().getParentFile().getName();
+				return repo1Name.compareTo(repo2Name);
+			}
+		});
+	}
+
 	private String[] getRepositoryComboItems() {
-		Set<String> items = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+		List<String> items = new ArrayList<String>();
 		for (Repository repository : repositories) {
 			String repoName = repository.getDirectory().getParentFile().getName();
 			items.add(repoName);
