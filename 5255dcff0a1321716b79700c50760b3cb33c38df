@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIX///m4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-04-29T13:03:49Z",
+      "side": 1,
+      "message": "as usually, please remove curly brackets around single line blocks",
+      "revId": "5255dcff0a1321716b79700c50760b3cb33c38df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
