@@ -182,6 +182,8 @@ class CreateBranchPage extends WizardPage {
 			this.branchCombo.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					upstreamConfig = getDefaultUpstreamConfig(myRepository,
+							branchCombo.getText());
 					checkPage();
 				}
 			});
@@ -328,8 +330,7 @@ class CreateBranchPage extends WizardPage {
 				buttonConfigMerge.setSelection(false);
 			buttonConfigRebase.setSelection(false);
 			buttonConfigNone.setSelection(false);
-			switch (getDefaultUpstreamConfig(myRepository, branchCombo
-					.getText())) {
+			switch (upstreamConfig) {
 			case MERGE:
 				buttonConfigMerge.setSelection(true);
 				break;
