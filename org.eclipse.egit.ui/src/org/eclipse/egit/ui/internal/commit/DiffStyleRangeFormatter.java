@@ -99,7 +99,7 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 				this.document.replace(this.offset, 0, content);
 				this.offset += content.length();
 			} catch (BadLocationException e) {
-				throw new IOException(e);
+				throw new IOException(e.getMessage());
 			}
 		}
 
