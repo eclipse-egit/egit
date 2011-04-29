@@ -23,6 +23,7 @@ import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.synchronize.compare.ComparisonDataSource;
 import org.eclipse.egit.ui.internal.synchronize.compare.GitCompareInput;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
@@ -76,9 +77,16 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 			ISynchronizePageConfiguration configuration) {
 		configuration.setProperty(ISynchronizePageConfiguration.P_VIEWER_ID,
 				VIEWER_ID);
+		String modelProvider;
+		if(Activator.getDefault().getPreferenceStore().getBoolean(
+				UIPreferences.SYNC_VIEW_ALWAYS_SHOW_CHANGESET_MODEL)) {
+			modelProvider = GitChangeSetModelProvider.ID;
+		} else {
+			modelProvider = WORKSPACE_MODEL_PROVIDER_ID;
+		}
 		configuration.setProperty(
 				ModelSynchronizeParticipant.P_VISIBLE_MODEL_PROVIDER,
-				WORKSPACE_MODEL_PROVIDER_ID);
+				modelProvider);
 		super.initializeConfiguration(configuration);
 
 		configuration.addActionContribution(new GitActionContributor());
