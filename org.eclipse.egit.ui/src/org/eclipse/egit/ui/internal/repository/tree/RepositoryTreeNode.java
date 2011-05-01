@@ -330,4 +330,8 @@ public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTree
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return "RepositoryNode[" + myType + ", " + myObject.toString() + "]";   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+	}
 }
