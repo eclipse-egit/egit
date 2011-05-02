@@ -239,6 +239,47 @@
 
 			<br/>
 		</p>
+		<p>You can press 
+			<b>Finish</b> ob this page or press 
+			<b>Next</b> if you are working with 
+			<a href="http://code.google.com/p/gerrit/" target="egit_external">Gerrit Code Review</a> and you want to configure your repository accordingly.
+		</p>
+		<h4 id="Gerrit_Configuration">Gerrit Configuration</h4>
+		<p>If you clone a repository from a 
+			<a href="http://code.google.com/p/gerrit/" target="egit_external">Gerrit Code Review</a> server you may use this page to 
+		</p>
+		<ul>
+			<li>specify the push configuration used to push changes to code review </li>
+			<li>configure your repository to select the 
+				<b>Compute Change-Id for Gerrit Code Review</b> option in the Commit dialog by default
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-0.9-clone-wizard-gerrit-page.png"/>
+		</p>
+		<p>Select the check box 
+			<b>Configure Push to Gerrit Code Review</b>. This has two effects:
+		</p>
+		<ul>
+			<li>The fields in the sections 
+				<b>Push URI</b> and 
+				<b>Push Configuration</b> get enabled. 
+			</li>
+			<li>When you click 
+				<b>Finish</b> the wizard sets the repository configuration parameter 
+				<b>gerrit.createchangeid</b> to 
+				<i>true</i>. This ensures that the checkbox 
+				<b>Compute Change-Id for Gerrit Code Review</b> in the Commit dialog is selected by default. See 
+				<a href="http://wiki.eclipse.org/EGit/User_Guide#Commit_Message" target="egit_external">Commit Message</a> for details.
+			</li>
+		</ul>
+		<p>In the section 
+			<b>Push URI</b> you can configure the URI which is used for the default push configuration. It is pre-filled depending on the URI you are cloning from. If you clone with the git protocol, the protocol is automatically changed to ssh, and the default Gerrit ssh port 29418 is automatically added. For protocols which require a user there is a user field for convenience.
+		</p>
+		<p>The section 
+			<b>Push Configuration</b> has one field, 
+			<b>Destination Branch</b>. Here you should enter the name of the target branch where changes accepted in the Gerrit code review workflow will be submitted to. This yields an entry <tt>HEAD:refs/for/&lt;branchname&gt;</tt> in the push configuration of the remote you specified in the clone wizard.
+		</p>
 		<h3 id="Pushing_to_other_Repositories">Pushing to other Repositories</h3>
 		<h4 id="Pushing_to_upstream">Pushing to upstream</h4>
 		<p>If you are working with a local branch which has a so-called "upstream configuration", the most convenient way for pushing relies on this upstream configuration. </p>
@@ -287,14 +328,15 @@
 		<h5 id="Push_URI">Push URI</h5>
 		<ul>
 			<li>If you already configured a Push Specification in the Repositories View you may also select it here using the drop-down list under 
-				<b>Configured remote repositories</b>. 
+				<b>Configured remote repositories</b>. The 
+				<b>Finish</b> button will be enabled if the Push Specification for this remote is configured properly (i.e. has at least one URI and a ref spec.
 			</li>
 			<li>Otherwise click 
 				<b>Custom URI</b> and enter the URI of the upstream repository you want to push to.
 			</li>
 		</ul>
 		<p>
-			<img border="0" src="images/Egit-0.9-push-wizard-destination-page.png"/> 
+			<img border="0" src="images/Egit-0.9-push-wizard-destination-page.png"/>
 		</p>
 		<h5 id="Push_Ref_Specifications">Push Ref Specifications</h5>
 		<p>See also 
@@ -456,7 +498,8 @@
 		</p>
 		<ul>
 			<li>If you already configured a Fetch Specification in the Repositories View you may also select it here using the drop-down list under 
-				<b>Configured remote repositories</b>.
+				<b>Configured remote repositories</b>. The 
+				<b>Finish</b> button will be enabled if the Fetch Specification for this remote is configured properly (i.e. has at least one URI and a ref spec.
 			</li>
 		</ul>
 		<p>
@@ -551,10 +594,10 @@
 		</p>
 		<h3 id="Pulling_New_Changes_from_Upstream_Branch.3Cbr.3E">Pulling New Changes from Upstream Branch&lt;br&gt;</h3>
 		<ul>
-			<li>click 
-				<b>Team &gt; Pull</b> to pull new changes from the upstream branch your local branch is tracking 
+			<li>Click 
+				<b>Team &gt; Pull</b> to pull new changes from the upstream branch your local branch is tracking. This also works if resources are selected from more than one repository.
 			</li>
-			<li>whenever you create a local branch based on a remote tracking branch EGit can configure a tracking relationship so that subsequent pulls will fetch and then merge or rebase (depending on the configuration of this tracking relationship) the changes from the tracked upstream branch; see 
+			<li>Whenever you create a local branch based on a remote tracking branch EGit can configure a tracking relationship so that subsequent pulls will fetch and then merge or rebase (depending on the configuration of this tracking relationship) the changes from the tracked upstream branch; see 
 				<a href="Tasks.html#Branching">Branching</a> for details.
 			</li>
 		</ul>
@@ -707,13 +750,13 @@
 		<p>The differences between the current working tree and the index (based on the currently selected resource) can be viewed from the context menu 
 			<b>Compare With &gt; Git Index</b>.
 		</p>
-		<h4 id="Comparing_Working_Tree_with_a_branch_or_tag">Comparing Working Tree with a branch or tag</h4>
+		<h4 id="Comparing_Working_Tree_with_a_branch.2C_a_tag_or_a_reference">Comparing Working Tree with a branch, a tag or a reference</h4>
 		<ul>
 			<li>Select a resource </li>
 			<li>right-click 
-				<b>Compare With &gt; Branch or Tag...</b> 
+				<b>Compare With &gt; Branch, Tag, or Reference...</b> 
 			</li>
-			<li>select a branch or tag</li>
+			<li>select a branch, tag or reference</li>
 		</ul>
 		<h4 id="Comparing_Working_Tree_with_Any_Commit">Comparing Working Tree with Any Commit</h4>
 		<h5 id="From_the_project_explorer:">From the project explorer:</h5>
@@ -896,11 +939,15 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<li>
 				<a href="http://code.google.com/p/gerrit/" target="egit_external">Gerrit Code Review</a> uses the 
 				<i>Change-Id:</i> footer to correlate different patchsets of a change evolving during the review process towards the finally accepted patch. To generate a Gerrit Change-Id click 
-				<b>Compute Change-Id for Gerrit Code Review</b>; the ID will be generated on commit, until then a null Change-Id is shown as a placeholder.
+				<b>Compute Change-Id for Gerrit Code Review</b>; the ID will be generated on commit, until then a null Change-Id is shown as a placeholder. With the egit configuration parameter 
+				<b>gerrit.createchangeid</b> set to true the corresponding checkbox in the Commit Dialog is alway preselected. This parameter can be set on repository level, on system level or on user level. See 
+				<a href="http://wiki.eclipse.org/EGit/User_Guide#Repository_Configuration" target="egit_external">Repository Configuration</a> for more information.
 			</li>
 			<li>The 
 				<i>Signed-off-by:</i> footer is used by many projects to create a formal track record of declarations that the signing author contributed the changes under the project's license and IP rules. This way the IP provenance of a project's evolving code base can be captured on a technical level. See e.g. the 
-				<a href="http://elinux.org/Developer_Certificate_Of_Origin" target="egit_external">Developer Certificate Of Origin</a> used by the Linux kernel project. 
+				<a href="http://elinux.org/Developer_Certificate_Of_Origin" target="egit_external">Developer Certificate Of Origin</a> used by the Linux kernel project. If the egit preference 
+				<b>Insert Signed-off-by</b> in 
+				<b>Team &gt; Git &gt; Commit Dialog</b> is set the corresponding checkbox in the Commit Dialog is always preselected.
 			</li>
 		</ul>
 		<p>Additionally this dialog controls which of the changes will be included in the commit. If you clear the checkbox in front of a file, the changes to this file will not be included in the commit. The local file in your eclipse workspace will still contain the modifications giving you the chance to commit these changes with a subsequent commit. This feature is often used to separate modifications done to a set of files into different commits. </p>
@@ -947,6 +994,10 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>This feature is currently not available on single file level. You can use 
 			<b>Reset to</b> with option 
 			<b>hard</b> to forcefully reset the entire working tree of your repository back to the state of the HEAD commit (See "Resetting your current HEAD" below). This operation will revert all changes in the working tree and the index. You can't do it on a selected set of files using EGit yet.
+		</p>
+		<h3 id="Revert_using_quickdiff">Revert using quickdiff</h3>
+		<p>The quickddiff feature can be used to revert individual changes to a file. You can revert by line, block (se range of changes lines) or selection. Select all text and then 
+			<b>Revert selection</b> to revert a whole file.
 		</p>
 		<h3 id="Reverting_changes_introduced_by_a_specific_commit">Reverting changes introduced by a specific commit</h3>
 		<p>Changes which are introduced by a given commit can be reverted by an automatically created new commit on top of the currently checked out commit. The commit which is to be reverted does not have to be checked out for that.</p>
@@ -998,69 +1049,95 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<br/>
 		</p>
 		<h2 id="Branching">Branching</h2>
-		<h3 id="Branching_Dialog">Branching Dialog</h3>
-		<p>To open the branching dialog click 
-			<br/> 
-			<b>Team &gt; Branch...</b> 
-		</p>
-		<p>
-			<img border="0" src="images/Egit-0.8-branch-dialog.png"/> 
-		</p>
-		<h4 id="Creating_a_New_Local_Branch">Creating a New Local Branch</h4>
+		<h3 id="Checking_out_an_existing_Branch">Checking out an existing Branch</h3>
+		<h4 id="From_the_team_menu_on_a_project_node:">From the team menu on a project node:</h4>
 		<ul>
-			<li>Select the branch your new branch should be based on </li>
-			<li>Click 
-				<b>New Branch...</b> 
-			</li>
-			<li>The 
-				<a href="Tasks.html#Branch_Creation_Dialog">Branch Creation dialog</a> will be opened
+			<li>Select 
+				<b>Team &gt; Switch To...</b> and select a branch name from the list 
 			</li>
 		</ul>
-		<h4 id="Renaming_an_Existing_Branch">Renaming an Existing Branch</h4>
+		<p>If there are too many branches the list does not show all of them. In this case </p>
 		<ul>
+			<li>Select 
+				<b>Team &gt; Switch To... &gt; Other...</b>
+			</li>
+			<li>On the dialog, select a branch, a tag or a Reference</li>
+			<li>Click 
+				<b>Ok</b>
+			</li>
+		</ul>
+		<h4 id="From_the_Git_Repositories_View">From the Git Repositories View</h4>
+		<ul>
+			<li>Select 
+				<b>Checkout</b> on a branch node
+			</li>
+		</ul>
+		<p>or</p>
+		<ul>
+			<li>Double Click on a branch node</li>
+		</ul>
+		<h4 id="From_the_History_View">From the History View</h4>
+		<ul>
+			<li>Select 
+				<b>Checkout</b> on a commit which has a branch label
+			</li>
+			<li>If more than one branch point to the commit a dialog will let you decide which branch to check out.</li>
+		</ul>
+		<h3 id="Creating_a_New_Local_Branch">Creating a New Local Branch</h3>
+		<p>This is always done with the 
+			<a href="Tasks.html#Branch_Creation_Dialog">Branch Creation dialog</a>. The newly created branch can optionally be checked out by selecting a check box on the dialog.
+		</p>
+		<h4 id="From_the_team_menu_on_a_project_node.2C_based_on_a_branch.2C_a_tag_or_a_Reference:">From the team menu on a project node, based on a branch, a tag or a Reference:</h4>
+		<ul>
+			<li>Select 
+				<b>Team &gt; Switch To... &gt; New Branch...</b>.
+			</li>
+			<li>On the dialog, select a branch, a tag or a Reference.</li>
+			<li>Click 
+				<b>Create Branch...</b>.
+			</li>
+			<li>The 
+				<a href="Tasks.html#Branch_Creation_Dialog">Branch Creation dialog</a> will be opened.
+			</li>
+		</ul>
+		<h4 id="From_the_Repositories_View.2C_based_on_a_branch.2C_a_tag_or_a_Reference:">From the Repositories View, based on a branch, a tag or a Reference:</h4>
+		<ul>
+			<li>Select 
+				<b>Create Branch...</b> on the "Branches" node or on any "Branch", "Tag" or "References" node.
+			</li>
+			<li>The 
+				<a href="Tasks.html#Branch_Creation_Dialog">Branch Creation dialog</a> will be opened.
+			</li>
+		</ul>
+		<h4 id="From_the_History_View.2C_based_on_a_given_commit:">From the History View, based on a given commit:</h4>
+		<ul>
+			<li>Select a commit in the history view .</li>
+			<li>Click 
+				<b>Create Branch...</b>.
+			</li>
+			<li>The 
+				<a href="Tasks.html#Branch_Creation_Dialog">Branch Creation dialog</a> will be opened.
+			</li>
+		</ul>
+		<h3 id="Renaming_an_Existing_Branch">Renaming an Existing Branch</h3>
+		<ul>
+			<li>Open the Git Repositories View</li>
 			<li>Select the branch you want to rename </li>
 			<li>Click 
-				<b>Rename</b> 
+				<b>Rename Branch...</b> 
 			</li>
 			<li>Enter the new branch name and click 
 				<b>OK</b>
 			</li>
 		</ul>
-		<h4 id="Checking_out_a_Branch">Checking out a Branch</h4>
+		<h3 id="Deleting_Branch">Deleting Branch</h3>
 		<ul>
-			<li>Select the branch you want to check out </li>
+			<li>Open the Git Repositories View</li>
+			<li>Select the branch you want to rename </li>
 			<li>Click 
-				<b>Checkout</b> 
+				<b>Delete Branch</b> 
 			</li>
 		</ul>
-		<h3 id="Branching_in_the_Repositories_View">Branching in the Repositories View</h3>
-		<p>The Repositories View 
-			<a href="Tasks.html#Branch_and_Tag_Support">supports</a> the following branching actions: 
-		</p>
-		<ul>
-			<li>
-				<a href="Tasks.html#Check-out_of_Branches_and_Tags">Checkout branches</a> 
-			</li>
-			<li>
-				<a href="Tasks.html#Creation_and_Deletion_of_Branches">Creation and deletion of branches</a> 
-			</li>
-			<li>
-				<a href="Tasks.html#Determining_the_Checked-out_Branch">Determining the checked out branch</a>
-			</li>
-		</ul>
-		<h3 id="Branching_in_the_History_View">Branching in the History View</h3>
-		<p>In the History View a new branch can be created based on a given commit: </p>
-		<ul>
-			<li>select a commit in the history view </li>
-			<li>click 
-				<b>Create Branch...</b> 
-			</li>
-			<li>this opens the Branch Creation dialog:</li>
-		</ul>
-		<p>
-			<br/> 
-			<img border="0" src="images/Egit-0.11-BranchCreationFromCommitDialog.png"/>
-		</p>
 		<h3 id="Branch_Creation_Dialog">Branch Creation Dialog</h3>
 		<p>There are several actions available to create a local branch. All these actions use the Branch Creation dialog: </p>
 		<p>
@@ -1519,9 +1596,10 @@ Sein oder nicht sein
 				<b>git format-patch --no-stat</b></tt> on the git command line.
 			</li>
 		</ul>
+		<p>Binary diffs are currently not produced.</p>
 		<h3 id="Applying_Patches">Applying Patches</h3>
-		<p>Currently it s not possible to apply patches in git format. It is possible to apply patches using the standard eclipse format using 
-			<b>Team &gt; Apply Patch...</b>.
+		<p>Currently it s not possible to apply all patches in git format. It is possible to apply patches using the standard Eclipse (unified diff) format using 
+			<b>Team &gt; Apply Patch...</b>. Git patches may contain non-standard extensions for rename and binary diffs. The current version of EGit does not generate these extensions.
 		</p>
 		<p>
 			<br/>
@@ -1824,9 +1902,7 @@ Sein oder nicht sein
 			<br/>
 		</p>
 		<h2 id="Working_with_Tasks">Working with Tasks</h2>
-		<p>
-			<b>New:</b> EGit 0.11 features a first integration with Mylyn to support working with task repositories.
-		</p>
+		<p>Since EGit 0.11 a first integration with Mylyn is available to support working with task repositories.</p>
 		<h3 id="Installation">Installation</h3>
 		<p>You need to install the feature "EGit Mylyn" to use the EGit Mylyn integration. This requires also Mylyn to be installed.</p>
 		<h3 id="Commit_Message_Template">Commit Message Template</h3>

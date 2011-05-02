@@ -64,11 +64,11 @@
 		<h4 id="Setting_up_the_Home_Directory_on_Windows">Setting up the Home Directory on Windows</h4>
 		<p>Add the environment variable <code>HOME</code> to your user variables. EGit needs this path for looking up the user configuration (.gitconfig).
 <code>			HOME</code> should point to your home directory e.g. <code>C:\Users\Tom</code>. 
-			<b>Ensure correct case!</b> E.g. <code>C:\users</code> instead of <code>C:\Users</code> can cause follow-up problems! 
+			<b>Ensure correct case!</b> E.g. <code>C:\users</code> instead of <code>C:\Users</code> may cause problems! 
 		</p>
 		<p>If the <code>HOME</code> variable is not defined the home directory will be calculated by concatenating <code>HOMEDRIVE</code> and <code>HOMEPATH</code>. </p>
 		<p>If both <code>HOME</code> and <code>HOMEDRIVE</code> are not defined <code>HOMESHARE</code> will be used.</p>
-		<p>EGit shows a warning if <code>HOME</code> is not defined:</p>
+		<p>EGit shows a warning if <code>HOME</code> is not defined explicitly:</p>
 		<p>
 			<img border="0" src="images/Egit_no_home.png"/>
 		</p>
