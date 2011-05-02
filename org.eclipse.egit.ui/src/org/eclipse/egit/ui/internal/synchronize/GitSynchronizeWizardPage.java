@@ -28,7 +28,7 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.components.CheckboxLabelProvider;
+import org.eclipse.egit.ui.internal.components.ButtonLabelProvider;
 import org.eclipse.egit.ui.internal.synchronize.SyncRepoEntity.SyncRefEntity;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.CellEditor;
@@ -259,8 +259,8 @@ class GitSynchronizeWizardPage extends WizardPage {
 				UIText.GitSynchronizeWizard_IncludeLocalToolTip);
 		final CheckboxCellEditor includeLocalEditor = new CheckboxCellEditor(
 				treeViewer.getTree());
-		includeLocalColumn.setLabelProvider(new CheckboxLabelProvider(
-				treeViewer.getControl()) {
+		includeLocalColumn.setLabelProvider(new ButtonLabelProvider(
+				treeViewer.getControl(), SWT.CHECK) {
 			@Override
 			protected boolean isChecked(Object element) {
 				return repoMapping.get(element).includeLocal;
