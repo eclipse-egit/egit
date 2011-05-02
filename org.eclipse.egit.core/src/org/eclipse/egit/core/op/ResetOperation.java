@@ -212,8 +212,7 @@ public class ResetOperation implements IEGitOperation {
 				name = name.substring(11);
 			if (name.startsWith("refs/remotes/"))  //$NON-NLS-1$
 				name = name.substring(13);
-			String message = "reset --" //$NON-NLS-1$
-					+ type.toString().toLowerCase() + " " + name; //$NON-NLS-1$
+			String message = name + ": updating " + Constants.HEAD; //$NON-NLS-1$
 			ru.setRefLogMessage(message, false);
 			if (ru.forceUpdate() == RefUpdate.Result.LOCK_FAILURE)
 				throw new TeamException(NLS.bind(
