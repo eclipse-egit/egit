@@ -402,6 +402,7 @@ $ git log --graph --oneline
 |/  
 * 0dd1f35 Added README.txt
 $ (mkdir /tmp/other;cd /tmp/other;git init) # Could do this in other process
+$ (cd /tmp/other;git config --bool core.bare true) # Need to tell git that /tmp/other is a bare repository so we can "push" to it
 Initialized empty Git repository in /tmp/other/.git/
 $ git remote add other /tmp/other # could be a URL over http/git
 $ git push other master # push branch 'master' to remote repository 'other'
@@ -424,6 +425,7 @@ To /tmp/other
  * [new branch]      french -&amp;gt; french
  * [new branch]      web -&amp;gt; web
 $ cd /tmp/other # Switch to 'other' repository
+$ git config --bool core.bare false # need to allow this repository to have checked out files
 $ ls # Nothing to be seen, but it's there
 $ git branch
   french

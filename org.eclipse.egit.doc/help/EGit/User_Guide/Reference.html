@@ -36,13 +36,13 @@
 			Git actions are available for projects shared with the Git team provider:
 
 			<br/> 
-			<img border="0" src="images/Egit-0.11-project-menu.png"/>
+			<img border="0" src="images/Egit-0.12-project-menu.png"/>
 		</p>
 		<h3 id="Resource_Context_Menu">Resource Context Menu</h3>
 		<p>On resource nodes (files and folders) in navigation views the following Git actions are available for projects shared with the Git team provider:
 
 			<br/> 
-			<img border="0" src="images/Egit-0.10-resource-menu.png"/>
+			<img border="0" src="images/Egit-0.12-resource-menu.png"/>
 		</p>
 		<h3 id="Repositories_View_Menus">Repositories View Menus</h3>
 		<p>In the Repositories View the menu depends on the node type which is selected 
@@ -53,7 +53,7 @@
 		<p>Menu on repository nodes:
 			<br/>
 
-			<img border="0" src="images/Egit-0.11-repoview-repomenu.png"/>
+			<img border="0" src="images/Egit-0.12-repoview-repomenu.png"/>
 		</p>
 		<p>Menu on branch nodes:
 			<br/>
@@ -239,6 +239,9 @@
 			</li>
 			<li>
 				<a href="Tasks.html#Managing_Repositories">Show in Repositories View</a> - Show the selected resource in the Repositories View. 
+			</li>
+			<li>
+				<a href="#">Switch to...</a> - Switch to (also known as checkout) another branch or tag.
 			</li>
 			<li>
 				<a href="Tasks.html#Comparing_with_Branches_.28Synchronize.29">Synchronize</a> - Synchronize local and remote branches with each other. 
@@ -565,7 +568,11 @@
 				</dl>
 			</dt>
 			<dt>Java Model: displays a Java based model (similar to what appears in the Package Explorer).</dt>
-			<dt>Change Sets: displays a Change Set based model. This model shows incoming changes grouped by commit comment which is handy for seeing who released what and why. For outgoing changes, you can create Change Sets for grouping related changes together. Grouping is performed using various commands in the context menu.</dt>
+			<dt>Change Sets: displays a Change Set based model. This model shows incoming changes grouped by commit which is handy for seeing who released what and why. For outgoing changes, you can create Change Sets by 
+				<a href="Tasks.html#Committing_Changes">creating commits</a>. The display format of the Change Set description can be configured in the preferences under 
+				<b>Team &gt; Git &gt; Label Decorations</b> in the tab 
+				<b>Other</b>.
+			</dt>
 		</dl>
 		<p>In addition to to the models, there is also a 
 			<b>Flat Presentation</b> which displays all the out-of-sync elements as top level elements.
@@ -574,6 +581,10 @@
 		<p>The Synchronize view provides toolbar actions for navigating through the changes in the view. These actions not only navigate between files but also go from change to change within a file.</p>
 		<p>
 			<img border="0" src="images/Egit-0.9-synchronize-navigation.png"/>
+		</p>
+		<p>The tree in the Synchronize View can easily be expanded and collapsed from the tool bar.</p>
+		<p>
+			<img border="0" src="images/Egit-0.9-synchronize-expand-collapse.png"/>
 		</p>
 		<p>
 			<br/>
@@ -623,9 +634,6 @@
 				<a href="http://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol" target="egit_external">SSH File Transfer Protocol</a> 
 			</li>
 		</ul>
-		<p>
-			<b>Note:</b> EGit 0.9 does not yet support authentication via HTTP or HTTPS protocol. 
-		</p>
 		<p>Git URLs are used when </p>
 		<ul>
 			<li>
@@ -756,6 +764,9 @@
 		<p>The EGit 
 			<b>Ignore</b> 
 			<a href="Reference.html#Menu_Actions">menu action</a> adds the selected resource to the <code>.gitignore</code> file in the resource's parent directory. To enter other ignore patterns use a text editor.
+		</p>
+		<p>
+			<b>Note:</b> EGit does not yet respect <code>.gitignore</code> files outside Eclipse projects, so if you have a repository containing multiple projects you should add a <code>.gitignore</code> file for each project instead of a single one in the root directory.
 		</p>
 		<h2 id="Git_Fetch_Factory_for_PDE_Build">Git Fetch Factory for PDE Build</h2>
 		<p>As part of EGit's PDE Tools, there's a PDE Build fetch factory for Git included in the 
