@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.commands.IStateListener;
+import org.eclipse.core.commands.State;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.UIIcons;
@@ -23,10 +25,11 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
+import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand;
 import org.eclipse.jface.resource.CompositeImageDescriptor;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
-import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -40,12 +43,14 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
 
 /**
  * Label Provider for the Git Repositories View
  */
 public class RepositoriesViewLabelProvider extends LabelProvider implements
-		IStyledLabelProvider {
+		IStyledLabelProvider, IStateListener {
 
 	/**
 	 * A map of regular images to their decorated counterpart.
@@ -56,6 +61,27 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 
 	private Image lightweightTagImage = SWTUtils.getDecoratedImage(tagImage,
 			UIIcons.OVR_LIGHTTAG);
+
+	private final State verboseBranchModeState;
+
+	private boolean verboseBranchMode = false;
+
+	/**
+	 * Constructs a repositories view label provider
+	 */
+	public RepositoriesViewLabelProvider() {
+		ICommandService srv = (ICommandService) PlatformUI.getWorkbench()
+				.getService(ICommandService.class);
+		verboseBranchModeState = srv.getCommand(ToggleBranchCommitCommand.ID)
+				.getState(ToggleBranchCommitCommand.TOGGLE_STATE);
+		verboseBranchModeState.addListener(this);
+		try {
+			this.verboseBranchMode = ((Boolean) verboseBranchModeState
+					.getValue()).booleanValue();
+		} catch (Exception e) {
+			Activator.logError(e.getMessage(), e);
+		}
+	}
 
 	@Override
 	public Image getImage(Object element) {
@@ -99,6 +125,7 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 
 	@Override
 	public void dispose() {
+		verboseBranchModeState.removeListener(this);
 		// dispose of our decorated images
 		for (Image image : decoratedImages.values()) {
 			image.dispose();
@@ -210,6 +237,18 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 		return decoratedImage;
 	}
 
+	private RevCommit getLatestCommit(RepositoryTreeNode node) {
+		RevWalk walk = new RevWalk(node.getRepository());
+		walk.setRetainBody(true);
+		try {
+			return walk.parseCommit(((Ref) node.getObject()).getObjectId());
+		} catch (IOException ignored) {
+			return null;
+		} finally {
+			walk.release();
+		}
+	}
+
 	public StyledString getStyledText(Object element) {
 		if (!(element instanceof RepositoryTreeNode))
 			return null;
@@ -269,6 +308,23 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 							.getAbsolutePath(), StyledString.QUALIFIER_STYLER);
 				}
 				return dirString;
+
+			case REF:
+				// fall through
+			case TAG:
+				StyledString styled = null;
+				String nodeText = getSimpleText(node);
+				if (nodeText != null) {
+					styled = new StyledString(nodeText);
+					if (verboseBranchMode) {
+						RevCommit latest = getLatestCommit(node);
+						if (latest != null)
+							styled.append(' ' + latest.abbreviate(7).name()
+									+ ' ' + latest.getShortMessage(),
+									StyledString.QUALIFIER_STYLER);
+					}
+				}
+				return styled;
 			case PUSH:
 				// fall through
 			case FETCH:
@@ -293,11 +349,7 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 				// fall through
 			case REMOTE:
 				// fall through
-			case ERROR:
-				// fall through
-			case REF:
-				// fall through
-			case TAG: {
+			case ERROR: {
 				String label = getSimpleText(node);
 				if (label != null)
 					return new StyledString(label);
@@ -386,6 +438,19 @@ public class RepositoriesViewLabelProvider extends LabelProvider implements
 
 		}
 		return null;
+	}
+
+	/**
+	 * @see org.eclipse.core.commands.IStateListener#handleStateChange(org.eclipse.core.commands.State,
+	 *      java.lang.Object)
+	 */
+	public void handleStateChange(State state, Object oldValue) {
+		try {
+			this.verboseBranchMode = ((Boolean) state.getValue())
+					.booleanValue();
+		} catch (Exception e) {
+			Activator.logError(e.getMessage(), e);
+		}
 	}
 
 }
