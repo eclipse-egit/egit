@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.eclipse.egit.core.GitProvider">
+<project reference="1.0,git://egit.eclipse.org/jgit.git,master,org.eclipse.jgit"/>
+<project reference="1.0,git://egit.eclipse.org/jgit.git,master,org.eclipse.jgit.console"/>
+<project reference="1.0,git://egit.eclipse.org/jgit.git,master,org.eclipse.jgit.packaging/org.eclipse.jgit.feature"/>
+<project reference="1.0,git://egit.eclipse.org/jgit.git,master,org.eclipse.jgit.junit"/>
+<project reference="1.0,git://egit.eclipse.org/jgit.git,master,org.eclipse.jgit.packaging/org.eclipse.jgit.junit.feature"/>
+<project reference="1.0,git://egit.eclipse.org/jgit.git,master,org.eclipse.jgit.pgm"/>
+<project reference="1.0,git://egit.eclipse.org/jgit.git,master,org.eclipse.jgit.test"/>
+<project reference="1.0,git://egit.eclipse.org/jgit.git,master,org.eclipse.jgit.ui"/>
+<project reference="1.0,git://egit.eclipse.org/egit.git,master,org.eclipse.egit"/>
+<project reference="1.0,git://egit.eclipse.org/egit.git,master,org.eclipse.egit.core"/>
+<project reference="1.0,git://egit.eclipse.org/egit.git,master,org.eclipse.egit.core.test"/>
+<project reference="1.0,git://egit.eclipse.org/egit.git,master,org.eclipse.egit-feature"/>
+<project reference="1.0,git://egit.eclipse.org/egit.git,master,org.eclipse.egit.ui"/>
+<project reference="1.0,git://egit.eclipse.org/egit.git,master,org.eclipse.egit-updatesite"/>
+</provider>
+</psf>
