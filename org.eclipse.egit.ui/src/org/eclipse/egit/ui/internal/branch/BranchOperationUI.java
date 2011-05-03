@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.branch;
 
+import java.io.IOException;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -23,10 +25,9 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
-import org.eclipse.egit.ui.internal.dialogs.RenameBranchDialog;
 import org.eclipse.egit.ui.internal.dialogs.CheckoutDialog;
-import org.eclipse.egit.ui.internal.dialogs.CreateBranchDialog;
 import org.eclipse.egit.ui.internal.dialogs.DeleteBranchDialog;
+import org.eclipse.egit.ui.internal.dialogs.RenameBranchDialog;
 import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
@@ -229,11 +230,12 @@ public class BranchOperationUI {
 			dialog = new CheckoutDialog(getShell(), repository);
 			break;
 		case MODE_CREATE:
-			dialog = new CreateBranchDialog(getShell(), repository);
-			if (dialog.open() != Window.OK)
-				return null;
-			CreateBranchWizard wiz = new CreateBranchWizard(repository, dialog
-					.getRefName());
+			CreateBranchWizard wiz;
+			try {
+				wiz = new CreateBranchWizard(repository, repository.getFullBranch());
+			} catch (IOException e) {
+				wiz = new CreateBranchWizard(repository);
+			}
 			new WizardDialog(getShell(), wiz).open();
 			return null;
 		case MODE_DELETE:
