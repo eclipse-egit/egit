@@ -2314,6 +2314,11 @@
                style="toggle"
                tooltip="%RepoViewHierarchicalBranchRepresenation.tooltip">
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesToggleBranchCommit"
+               style="toggle"
+               tooltip="%RepoViewBranchCommit.tooltip">
+         </command>
       </menuContribution>
       <menuContribution
             locationURI="menu:org.eclipse.egit.ui.RepositoriesView">
@@ -2353,6 +2358,11 @@
          <command
                commandId="org.eclipse.egit.ui.RepositoriesToggleBranchHierarchy"
                label="%HierarchyLayout.label"
+               style="toggle">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesToggleBranchCommit"
+               label="%BranchCommit.label"
                style="toggle">
          </command>
       </menuContribution>
@@ -2841,6 +2851,16 @@
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
+       <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchCommitCommand"
+            id="org.eclipse.egit.ui.RepositoriesToggleBranchCommit"
+            name="%ToggleBranchCommitCommand.name">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:false"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.commands.shared.RebaseCurrentRefCommand"
@@ -2955,6 +2975,10 @@
       <image
             commandId="org.eclipse.egit.ui.RepositoriesToggleBranchHierarchy"
             icon="icons/elcl16/hierarchicalLayout.gif">
+      </image>
+       <image
+            commandId="org.eclipse.egit.ui.RepositoriesToggleBranchCommit"
+            icon="icons/obj16/changelog_obj.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewRemove"
