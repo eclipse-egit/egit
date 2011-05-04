@@ -226,8 +226,15 @@ public class CommitDialog extends Dialog {
 			IFileRevision baseFile = fileHistory.getFileRevisions()[0];
 			IFileRevision nextFile = fileHistoryProvider.getWorkspaceFileRevision(commitItem.file);
 
-			ITypedElement base = new FileRevisionTypedElement(baseFile);
-			ITypedElement next = new FileRevisionTypedElement(nextFile);
+			String encoding;
+			try {
+				encoding = commitItem.file.getCharset();
+			} catch (CoreException e1) {
+				encoding = null;
+			}
+
+			ITypedElement base = new FileRevisionTypedElement(baseFile, encoding);
+			ITypedElement next = new FileRevisionTypedElement(nextFile, encoding);
 
 			GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(next, base, null);
 			CompareUI.openCompareDialog(input);
