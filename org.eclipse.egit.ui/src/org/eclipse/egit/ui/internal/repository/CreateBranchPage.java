@@ -11,7 +11,11 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -149,6 +153,7 @@ class CreateBranchPage extends WizardPage {
 					.setToolTipText(UIText.CreateBranchPage_SourceBranchTooltip);
 		}
 		this.branchCombo = new Combo(main, SWT.READ_ONLY | SWT.DROP_DOWN);
+		branchCombo.setData("org.eclipse.swtbot.widget.key", "BaseBranch"); //$NON-NLS-1$ //$NON-NLS-2$
 
 		GridDataFactory.fillDefaults().span(2, 1).grab(true, false).applyTo(
 				this.branchCombo);
@@ -158,26 +163,19 @@ class CreateBranchPage extends WizardPage {
 			this.branchCombo.setText(myBaseCommit.name());
 			this.branchCombo.setEnabled(false);
 		} else {
+			List<String> refs = new ArrayList<String>();
 			try {
-				for (Entry<String, Ref> ref : myRepository.getRefDatabase()
-						.getRefs(Constants.R_REMOTES).entrySet()) {
-					if (!ref.getValue().isSymbolic())
-						this.branchCombo.add(ref.getValue().getName());
-				}
-				for (Entry<String, Ref> ref : myRepository.getRefDatabase()
-						.getRefs(Constants.R_HEADS).entrySet()) {
-					if (!ref.getValue().isSymbolic())
-						this.branchCombo.add(ref.getValue().getName());
-				}
-				for (Entry<String, Ref> ref : myRepository.getRefDatabase()
-						.getRefs(Constants.R_TAGS).entrySet()) {
-					if (!ref.getValue().isSymbolic())
-						this.branchCombo.add(ref.getValue().getName());
-				}
-
+				Set<Entry<String, Ref>> entrys = myRepository.getRefDatabase()
+						.getRefs("").entrySet(); //$NON-NLS-1$
+				for (Entry<String, Ref> ref : entrys)
+					refs.add(ref.getValue().getName());
 			} catch (IOException e1) {
 				// ignore here
 			}
+
+			Collections.sort(refs);
+			for (String refName : refs)
+				this.branchCombo.add(refName);
 
 			this.branchCombo.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -188,9 +186,8 @@ class CreateBranchPage extends WizardPage {
 				}
 			});
 			// select the current branch in the drop down
-			if (myBaseRef != null) {
+			if (myBaseRef != null)
 				this.branchCombo.setText(myBaseRef);
-			}
 		}
 
 		Label nameLabel = new Label(main, SWT.NONE);
