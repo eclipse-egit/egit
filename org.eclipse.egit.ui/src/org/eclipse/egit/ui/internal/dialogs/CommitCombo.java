@@ -137,8 +137,7 @@ public class CommitCombo extends Composite {
 				new ComboContentAdapter(), new CommitContentProposalProvider(),
 				null, null);
 		adapter.setPropagateKeys(true);
-		adapter
-				.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 	}
 
 	/**
@@ -183,14 +182,17 @@ public class CommitCombo extends Composite {
 	 * @return index of selected element
 	 */
 	public int getSelectedIndex() {
-		return combo.getSelectionIndex();
+		int selectionIndex = combo.getSelectionIndex();
+		if (selectionIndex == -1)
+			selectionIndex = combo.indexOf(combo.getText());
+		return selectionIndex;
 	}
 
 	/**
 	 * @return SHA-1 of selected commit
 	 */
 	public ObjectId getValue() {
-		int selectionIndex = combo.getSelectionIndex();
+		int selectionIndex = getSelectedIndex();
 		return -1 != selectionIndex ? getItem(selectionIndex) : null;
 	}
 
