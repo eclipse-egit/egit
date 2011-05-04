@@ -108,7 +108,7 @@ public class SyncRepoEntity {
 
 	}
 
-	private static final Pattern PATTERN = Pattern.compile("^(" //$NON-NLS-1$
+	static final Pattern PATTERN = Pattern.compile("^(" //$NON-NLS-1$
 			+ R_HEADS + ")|(" //$NON-NLS-1$
 			+ R_REMOTES + ")|(" //$NON-NLS-1$
 			+ R_TAGS + ")|(" //$NON-NLS-1$

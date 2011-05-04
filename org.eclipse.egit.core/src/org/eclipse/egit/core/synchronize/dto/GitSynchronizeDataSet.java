@@ -112,4 +112,15 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 		return builder.toString();
 	}
 
+	/**
+	 * Adds all of the elements in the specified {@code syncData} parameter to
+	 * this container if they're not already present
+	 *
+	 * @param syncData
+	 */
+	public void addAll(GitSynchronizeDataSet syncData) {
+		gsd.addAll(syncData.gsd);
+		projectMapping.putAll(syncData.projectMapping);
+	}
+
 }
