@@ -1555,7 +1555,7 @@
          </separator>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewCreateTag"
-               icon="icons/obj16/tags.gif"
+               icon="icons/obj16/new_tag_obj.gif"
                label="%RepoViewCreateTag.label"
                style="push">
             <visibleWhen
@@ -2906,7 +2906,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewCreateTag"
-            icon="icons/obj16/version_rep.gif">
+            icon="icons/obj16/new_tag_obj.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.ShowRepositoriesView"
@@ -2934,7 +2934,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.CreateTag"
-            icon="icons/obj16/version_rep.gif">
+            icon="icons/obj16/new_tag_obj.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.history.CheckoutCommand"
