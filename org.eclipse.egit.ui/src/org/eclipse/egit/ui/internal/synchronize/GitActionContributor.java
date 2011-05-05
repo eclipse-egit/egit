@@ -9,6 +9,7 @@
 package org.eclipse.egit.ui.internal.synchronize;
 
 import static org.eclipse.egit.ui.UIIcons.EXPAND_ALL;
+import static org.eclipse.egit.ui.UIIcons.PUSH;
 import static org.eclipse.egit.ui.UIText.GitActionContributor_ExpandAll;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.ADD_TO_INDEX;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.COMMIT_ACTION;
@@ -17,12 +18,15 @@ import static org.eclipse.egit.ui.internal.actions.ActionCommands.PUSH_ACTION;
 import static org.eclipse.egit.ui.internal.synchronize.model.SupportedContextActionsHelper.canPush;
 import static org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration.NAVIGATE_GROUP;
 import static org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration.P_TOOLBAR_MENU;
+import static org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration.SYNCHRONIZE_GROUP;
 import static org.eclipse.ui.ISources.ACTIVE_MENU_SELECTION_NAME;
 import static org.eclipse.ui.menus.CommandContributionItem.STYLE_PUSH;
 
 import org.eclipse.core.expressions.IEvaluationContext;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.synchronize.action.ExpandAllModelAction;
 import org.eclipse.egit.ui.internal.synchronize.action.OpenWorkingFileAction;
+import org.eclipse.egit.ui.internal.synchronize.action.PushAction;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.egit.ui.internal.synchronize.model.SupportedContextActionsHelper;
 import org.eclipse.jface.action.IContributionItem;
@@ -112,6 +116,12 @@ class GitActionContributor extends SynchronizePageActionGroup {
 				GitActionContributor_ExpandAll, configuration);
 		expandAllAction.setImageDescriptor(EXPAND_ALL);
 		appendToGroup(P_TOOLBAR_MENU, NAVIGATE_GROUP, expandAllAction);
+
+		PushAction pushAction = new PushAction(
+				UIText.GitActionContributor_Push, configuration);
+		pushAction.setImageDescriptor(PUSH);
+
+		appendToGroup(P_TOOLBAR_MENU, SYNCHRONIZE_GROUP, pushAction);
 
 		ISynchronizePageSite site = configuration.getSite();
 		IWorkbenchSite ws = site.getWorkbenchSite();
