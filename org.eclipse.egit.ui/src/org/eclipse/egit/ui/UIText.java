@@ -3527,6 +3527,9 @@ public class UIText extends NLS {
 	public static String GitActionContributor_ExpandAll;
 
 	/** */
+	public static String GitActionContributor_Push;
+
+	/** */
 	public static String DecoratableResourceHelper_noHead;
 
 	/** */
