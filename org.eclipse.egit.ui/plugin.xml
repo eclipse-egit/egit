@@ -143,6 +143,11 @@
                label="%AddToIndexAction_label"
                menubarPath="team.main/group9"/>
          <action
+               class="org.eclipse.egit.ui.internal.actions.ReplaceWithHeadAction"
+               id="org.eclipse.egit.ui.internal.actions.ReplaceWithHeadAction"
+               label="%ReplaceWithHeadAction_label"
+               menubarPath="replaceWithMenu/gitReplaceWithGroup"/>
+         <action
                class="org.eclipse.egit.ui.internal.actions.DiscardChangesAction"
                id="org.eclipse.egit.ui.internal.actions.DiscardChangesAction"
                label="%DiscardChangesAction_label"
@@ -3243,6 +3248,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.DiscardChangesActionHandler"
             id="org.eclipse.egit.ui.team.Discard"
             name="%ReplaceWithIndexCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.ReplaceWithHeadAction"
+            id="org.eclipse.egit.ui.team.ReplaceWithHead"
+            name="%ReplaceWithHeadCommand.name">
       </command>
             <command
             categoryId="org.eclipse.egit.ui.commandCategory"

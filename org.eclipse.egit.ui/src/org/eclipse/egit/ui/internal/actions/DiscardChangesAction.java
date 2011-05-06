@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
+import org.eclipse.egit.core.op.DiscardChangesOperation.Type;
+
 /**
  * Checkout all selected dirty files.
  */
@@ -16,6 +18,7 @@ public class DiscardChangesAction extends RepositoryAction {
 	 *
 	 */
 	public DiscardChangesAction() {
-		super(ActionCommands.DISCARD_CHANGES_ACTION, new DiscardChangesActionHandler());
+		super(ActionCommands.DISCARD_CHANGES_ACTION,
+				new DiscardChangesActionHandler(Type.INDEX));
 	}
 }
