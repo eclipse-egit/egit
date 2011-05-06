@@ -36,8 +36,9 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 				UIText.DiscardChangesAction_confirmActionMessage);
 		if (!performAction)
 			return null;
-		final DiscardChangesOperation operation = new DiscardChangesOperation(
-				getSelectedResources(event));
+		final DiscardChangesOperation operation = createOperation(event);
+		if (operation == null)
+			return null;
 		String jobname = UIText.DiscardChangesAction_discardChanges;
 		Job job = new Job(jobname) {
 			@Override
@@ -70,6 +71,20 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Create discard operation to execute. Returning a null operation aborts
+	 * this execution of this handler.
+	 *
+	 * @param event
+	 * @return revision
+	 * @throws ExecutionException
+	 */
+	protected DiscardChangesOperation createOperation(ExecutionEvent event)
+			throws ExecutionException {
+		return new DiscardChangesOperation(getSelectedResources(event), null);
+
 	}
 
 }
