@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.DiscardChangesOperation;
+import org.eclipse.egit.core.op.DiscardChangesOperation.Type;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -29,6 +30,24 @@ import org.eclipse.jgit.lib.RepositoryState;
  */
 public class DiscardChangesActionHandler extends RepositoryActionHandler {
 
+	private Type type;
+
+	/**
+	 * Create discard handler with {@link Type#INDEX} type
+	 */
+	public DiscardChangesActionHandler() {
+		this(Type.INDEX);
+	}
+
+	/**
+	 * Create discard handler with specified type
+	 *
+	 * @param type
+	 */
+	public DiscardChangesActionHandler(Type type) {
+		this.type = type;
+	}
+
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		boolean performAction = MessageDialog.openConfirm(getShell(event),
@@ -37,7 +56,7 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 		if (!performAction)
 			return null;
 		final DiscardChangesOperation operation = new DiscardChangesOperation(
-				getSelectedResources(event));
+				getSelectedResources(event), type);
 		String jobname = UIText.DiscardChangesAction_discardChanges;
 		Job job = new Job(jobname) {
 			@Override
