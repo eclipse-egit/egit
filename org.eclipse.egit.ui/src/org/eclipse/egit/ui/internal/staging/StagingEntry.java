@@ -8,12 +8,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.IteratorService;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jgit.lib.Repository;
 
 
@@ -77,13 +77,10 @@ public class StagingEntry implements IAdaptable {
 
 	public Object getAdapter(Class adapter) {
 		if (adapter == IResource.class) {
+			IPath absolutePath = new Path(repository.getWorkTree().getAbsolutePath()).append(path);
 			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-
-			IContainer findContainer = IteratorService.findContainer(root, repository.getWorkTree());
-			if (findContainer != null) {
-				IResource findMember = findContainer.findMember(path);
-				return findMember;
-			}
+			IResource resource = root.getFileForLocation(absolutePath);
+			return resource;
 		}
 		return null;
 	}

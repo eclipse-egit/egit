@@ -29,13 +29,16 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.util.LocalSelectionTransfer;
+import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jgit.events.IndexChangedEvent;
@@ -161,6 +164,11 @@ public class StagingView extends ViewPart {
 						event.detail = DND.DROP_MOVE;
 					}
 				});
+		unstagedTableViewer.addOpenListener(new IOpenListener() {
+			public void open(OpenEvent event) {
+				compareWith(event);
+			}
+		});
 
 		Composite commitMessageComposite = new Composite(horizontalSashForm, SWT.NONE);
 		commitMessageComposite.setLayout(new GridLayout(2, false));
@@ -239,6 +247,11 @@ public class StagingView extends ViewPart {
 						event.detail = DND.DROP_MOVE;
 					}
 				});
+		stagedTableViewer.addOpenListener(new IOpenListener() {
+			public void open(OpenEvent event) {
+				compareWith(event);
+			}
+		});
 
 		selectionChangedListener = new ISelectionListener() {
 			public void selectionChanged(IWorkbenchPart part,
@@ -266,6 +279,29 @@ public class StagingView extends ViewPart {
 		srv.addPostSelectionListener(selectionChangedListener);
 
 		getSite().setSelectionProvider(unstagedTableViewer);
+	}
+
+	private void compareWith(OpenEvent event) {
+		IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+		if (selection.isEmpty())
+			return;
+		StagingEntry stagingEntry = (StagingEntry) selection.getFirstElement();
+		switch (stagingEntry.getState()) {
+		case ADDED:
+		case CHANGED:
+		case REMOVED:
+			runCommand(ActionCommands.COMPARE_INDEX_WITH_HEAD_ACTION, selection);
+			break;
+
+		case MISSING:
+		case MODIFIED:
+		case PARTIALLY_MODIFIED:
+		case CONFLICTING:
+		case UNTRACKED:
+		default:
+			// compare with index
+			runCommand(ActionCommands.COMPARE_WITH_INDEX_ACTION, selection);
+		}
 	}
 
 	private void reactOnSelection(ISelection selection) {
@@ -311,7 +347,7 @@ public class StagingView extends ViewPart {
 	}
 
 	private void stage(IStructuredSelection selection) {
-		runCommand("org.eclipse.egit.ui.team.AddToIndex", selection); //$NON-NLS-1$
+		runCommand(ActionCommands.ADD_TO_INDEX, selection);
 	}
 
 	private void unstage(IStructuredSelection selection) {
@@ -333,6 +369,7 @@ public class StagingView extends ViewPart {
 			c = new EvaluationContext(handlerService
 					.createContextSnapshot(false), selection.toList());
 			c.addVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME, selection);
+			c.removeVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
 		}
 		try {
 			if (c != null) {
