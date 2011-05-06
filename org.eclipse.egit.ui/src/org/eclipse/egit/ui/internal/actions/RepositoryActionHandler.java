@@ -54,6 +54,7 @@ import org.eclipse.ui.ide.ResourceUtil;
  * A helper class for Team Actions on Git controlled projects
  */
 abstract class RepositoryActionHandler extends AbstractHandler {
+	private IEvaluationContext evaluationContext;
 
 	private IStructuredSelection mySelection;
 
@@ -295,7 +296,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		// if the selection was set explicitly, use it
 		if (mySelection != null)
 			return mySelection;
-		return convertSelection(getEvaluationContext(), null);
+		return convertSelection(evaluationContext, null);
 	}
 
 	private IStructuredSelection convertSelection(IEvaluationContext aContext,
@@ -326,6 +327,10 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		if (selection instanceof IStructuredSelection)
 			return (IStructuredSelection) selection;
 		return StructuredSelection.EMPTY;
+	}
+
+	public void setEnabled(Object evaluationContext) {
+		this.evaluationContext = (IEvaluationContext) evaluationContext;
 	}
 
 	private IEvaluationContext getEvaluationContext() {
