@@ -9,6 +9,7 @@
 package org.eclipse.egit.ui.internal.synchronize;
 
 import static org.eclipse.egit.ui.UIIcons.EXPAND_ALL;
+import static org.eclipse.egit.ui.UIIcons.PULL;
 import static org.eclipse.egit.ui.UIIcons.PUSH;
 import static org.eclipse.egit.ui.UIText.GitActionContributor_ExpandAll;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.ADD_TO_INDEX;
@@ -26,6 +27,7 @@ import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.synchronize.action.ExpandAllModelAction;
 import org.eclipse.egit.ui.internal.synchronize.action.OpenWorkingFileAction;
+import org.eclipse.egit.ui.internal.synchronize.action.PullAction;
 import org.eclipse.egit.ui.internal.synchronize.action.PushAction;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.egit.ui.internal.synchronize.model.SupportedContextActionsHelper;
@@ -117,10 +119,14 @@ class GitActionContributor extends SynchronizePageActionGroup {
 		expandAllAction.setImageDescriptor(EXPAND_ALL);
 		appendToGroup(P_TOOLBAR_MENU, NAVIGATE_GROUP, expandAllAction);
 
+		PullAction pullAction = new PullAction(
+				UIText.GitActionContributor_Pull, configuration);
+		pullAction.setImageDescriptor(PULL);
+		appendToGroup(P_TOOLBAR_MENU, SYNCHRONIZE_GROUP, pullAction);
+
 		PushAction pushAction = new PushAction(
 				UIText.GitActionContributor_Push, configuration);
 		pushAction.setImageDescriptor(PUSH);
-
 		appendToGroup(P_TOOLBAR_MENU, SYNCHRONIZE_GROUP, pushAction);
 
 		ISynchronizePageSite site = configuration.getSite();
