@@ -301,11 +301,9 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 	@Test
 	public void testCreateDeleteBranch() throws Exception {
 		assertNull(lookupRepository(repositoryFile).resolve("newBranch"));
-		SWTBotShell dialog = openCreateBranchDialog();
-		dialog.bot().tree().getTreeItem(LOCAL_BRANCHES).expand().getNode("master").select();
-		dialog.bot().button(UIText.CreateBranchDialog_OKButtonText).click();
 
-		SWTBotShell newBranchDialog = bot.shell(UIText.CreateBranchWizard_NewBranchTitle);
+		SWTBotShell newBranchDialog = openCreateBranchDialog();
+		newBranchDialog.bot().comboBoxWithId("BaseBranch").setSelection(0);
 		newBranchDialog.bot().textWithId("BranchName").setText("newBranch");
 		newBranchDialog.bot().checkBox(UIText.CreateBranchPage_CheckoutButton).deselect();
 		newBranchDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
@@ -335,17 +333,18 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 	}
 
 	private SWTBotShell openCreateBranchDialog() {
-		SWTBotTree projectExplorerTree = bot.viewById(
-				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
-		getProjectItem(projectExplorerTree, PROJ1).select();
-		String[] menuPath = new String[] {
-				util.getPluginLocalizedValue("TeamMenu.label"),
-				util.getPluginLocalizedValue("SwitchToMenu.label"),
-				UIText.SwitchToMenu_NewBranchMenuLabel };
-		ContextMenuHelper.clickContextMenu(projectExplorerTree, menuPath);
-		SWTBotShell dialog = bot.shell(UIText.CreateBranchDialog_WindowTitle);
-		return dialog;
-	}
+			SWTBotTree projectExplorerTree = bot.viewById(
+					"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+			getProjectItem(projectExplorerTree, PROJ1).select();
+			String[] menuPath = new String[] {
+					util.getPluginLocalizedValue("TeamMenu.label"),
+					util.getPluginLocalizedValue("SwitchToMenu.label"),
+					UIText.SwitchToMenu_NewBranchMenuLabel };
+			ContextMenuHelper.clickContextMenu(projectExplorerTree, menuPath);
+		SWTBotShell dialog = bot
+				.shell(UIText.CreateBranchWizard_NewBranchTitle);
+			return dialog;
+		}
 
 	private SWTBotShell openRenameBranchDialog() {
 		SWTBotTree projectExplorerTree = bot.viewById(
