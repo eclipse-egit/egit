@@ -11,7 +11,13 @@
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -27,6 +33,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
@@ -82,6 +89,10 @@ class CreateBranchPage extends WizardPage {
 	private Button buttonConfigMerge;
 
 	private Button buttonConfigNone;
+
+	private static final Pattern NUMBERS = Pattern.compile("[\\d]*"); //$NON-NLS-1$
+
+	private static final Pattern CHARS = Pattern.compile("[^0-9]*"); //$NON-NLS-1$
 
 	/**
 	 * Constructs this page.
@@ -149,6 +160,7 @@ class CreateBranchPage extends WizardPage {
 					.setToolTipText(UIText.CreateBranchPage_SourceBranchTooltip);
 		}
 		this.branchCombo = new Combo(main, SWT.READ_ONLY | SWT.DROP_DOWN);
+		branchCombo.setData("org.eclipse.swtbot.widget.key", "BaseBranch"); //$NON-NLS-1$ //$NON-NLS-2$
 
 		GridDataFactory.fillDefaults().span(2, 1).grab(true, false).applyTo(
 				this.branchCombo);
@@ -158,26 +170,42 @@ class CreateBranchPage extends WizardPage {
 			this.branchCombo.setText(myBaseCommit.name());
 			this.branchCombo.setEnabled(false);
 		} else {
+			List<String> refs = new ArrayList<String>();
+			RefDatabase refDatabase = myRepository.getRefDatabase();
 			try {
-				for (Entry<String, Ref> ref : myRepository.getRefDatabase()
-						.getRefs(Constants.R_REMOTES).entrySet()) {
-					if (!ref.getValue().isSymbolic())
-						this.branchCombo.add(ref.getValue().getName());
-				}
-				for (Entry<String, Ref> ref : myRepository.getRefDatabase()
-						.getRefs(Constants.R_HEADS).entrySet()) {
-					if (!ref.getValue().isSymbolic())
-						this.branchCombo.add(ref.getValue().getName());
-				}
-				for (Entry<String, Ref> ref : myRepository.getRefDatabase()
-						.getRefs(Constants.R_TAGS).entrySet()) {
-					if (!ref.getValue().isSymbolic())
-						this.branchCombo.add(ref.getValue().getName());
-				}
+				for (Ref ref : refDatabase.getAdditionalRefs())
+					refs.add(ref.getName());
 
+				Set<Entry<String, Ref>> entrys = refDatabase.getRefs(RefDatabase.ALL).entrySet();
+				for (Entry<String, Ref> ref : entrys)
+						refs.add(ref.getValue().getName());
 			} catch (IOException e1) {
 				// ignore here
 			}
+
+			Collections.sort(refs, new Comparator<String>() {
+				public int compare(String o1, String o2) {
+					String o1Chars = NUMBERS.matcher(o1).replaceAll(""); //$NON-NLS-1$
+					String o2Chars = NUMBERS.matcher(o2).replaceAll(""); //$NON-NLS-1$
+					int charCompare = o1Chars.compareTo(o2Chars);
+
+					if (charCompare == 0) {
+						String o1Numbers = CHARS.matcher(o1).replaceAll(""); //$NON-NLS-1$
+						String o2Numbers = CHARS.matcher(o2).replaceAll(""); //$NON-NLS-1$
+						if (o1Numbers.length() == 0)
+							o1Numbers = "0"; //$NON-NLS-1$
+						if (o2Numbers.length() == 0)
+							o2Numbers = "0"; //$NON-NLS-1$
+
+						return Integer.parseInt(o2Numbers)
+								- Integer.parseInt(o1Numbers);
+					}
+
+					return charCompare;
+				}
+			});
+			for (String refName : refs)
+				this.branchCombo.add(refName);
 
 			this.branchCombo.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -188,9 +216,8 @@ class CreateBranchPage extends WizardPage {
 				}
 			});
 			// select the current branch in the drop down
-			if (myBaseRef != null) {
+			if (myBaseRef != null)
 				this.branchCombo.setText(myBaseRef);
-			}
 		}
 
 		Label nameLabel = new Label(main, SWT.NONE);
