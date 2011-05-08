@@ -25,8 +25,8 @@
    <requires>
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.egit.core" version="1.0.0.qualifier" match="equivalent"/>
-      <import plugin="org.eclipse.egit.ui" version="1.0.0.qualifier" match="equivalent"/>
+      <import plugin="org.eclipse.egit.core" version="1.0.0" match="equivalent"/>
+      <import plugin="org.eclipse.egit.ui" version="1.0.0" match="equivalent"/>
       <import plugin="org.eclipse.jface"/>
       <import plugin="org.eclipse.jgit" version="1.0.0" match="equivalent"/>
       <import plugin="org.eclipse.mylyn.monitor.core" version="3.0.0" match="compatible"/>
