@@ -24,25 +24,27 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.themes.ColorUtil;
 
 class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
-	private final Color sys_blue;
 
 	private final Color sys_black;
 
 	private final Color sys_gray;
-
-	private final Color sys_darkblue;
 
 	private final Color sys_yellow;
 
 	private final Color sys_green;
 
 	private final Color sys_white;
+
+	private final Color commitDotFill;
+
+	private final Color commitDotOutline;
 
 	private final Map<String, Point> labelCoordinates = new HashMap<String, Point>();
 
@@ -63,13 +65,18 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 	private Ref headRef;
 
 	SWTPlotRenderer(final Display d) {
-		sys_blue = d.getSystemColor(SWT.COLOR_BLUE);
 		sys_black = d.getSystemColor(SWT.COLOR_BLACK);
 		sys_gray = d.getSystemColor(SWT.COLOR_GRAY);
-		sys_darkblue = d.getSystemColor(SWT.COLOR_DARK_BLUE);
 		sys_yellow = d.getSystemColor(SWT.COLOR_YELLOW);
 		sys_green = d.getSystemColor(SWT.COLOR_GREEN);
 		sys_white = d.getSystemColor(SWT.COLOR_WHITE);
+		commitDotFill = new Color(d, new RGB(220, 220, 220));
+		commitDotOutline = new Color(d, new RGB(110, 110, 110));
+	}
+
+	void dispose() {
+		commitDotFill.dispose();
+		commitDotOutline.dispose();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -102,25 +109,27 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		g.drawLine(cellX + x1, cellY + y1, cellX + x2, cellY + y2);
 	}
 
+	protected void drawDot(final Color outline, final Color fill, final int x,
+			final int y, final int w, final int h) {
+		int dotX = cellX + x + 2;
+		int dotY = cellY + y + 1;
+		int dotW = w - 2;
+		int dotH = h - 2;
+		g.setBackground(fill);
+		g.fillOval(dotX, dotY, dotW, dotH);
+		g.setForeground(outline);
+		g.setLineWidth(2);
+		g.drawOval(dotX, dotY, dotW, dotH);
+	}
+
 	protected void drawCommitDot(final int x, final int y, final int w,
 			final int h) {
-		g.setBackground(sys_blue);
-		g.fillOval(cellX + x, cellY + y, w, h);
-		g.setForeground(sys_darkblue);
-		g.setLineWidth(2);
-		g.drawOval(cellX + x + 1, cellY + y + 1, w - 2, h - 2);
-		g.setForeground(sys_black);
-		g.setLineWidth(1);
-		g.drawOval(cellX + x, cellY + y, w, h);
+		drawDot(commitDotOutline, commitDotFill, x, y, w, h);
 	}
 
 	protected void drawBoundaryDot(final int x, final int y, final int w,
 			final int h) {
-		g.setForeground(sys_gray);
-		g.setBackground(cellBG);
-		g.setLineWidth(1);
-		g.fillOval(cellX + x, cellY + y, w, h);
-		g.drawOval(cellX + x, cellY + y, w, h);
+		drawDot(sys_gray, sys_white, x, y, w, h);
 	}
 
 	protected void drawText(final String msg, final int x, final int y) {
