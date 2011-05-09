@@ -28,13 +28,13 @@ public class CommitActionHandler extends RepositoryActionHandler {
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		Repository[] repos = getRepositoriesFor(getProjectsForSelectedResources(event));
 		IResource[] selectedResources = getSelectedResources(event);
-		new CommitUI(getShell(event), repos, selectedResources).commit();
+		new CommitUI(getShell(event), repos[0], selectedResources).commit();
 		return null;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return getProjectsInRepositoryOfSelectedResources().length > 0;
+		return getRepositories().length == 1;
 	}
 
 }

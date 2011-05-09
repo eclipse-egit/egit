@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.BranchOperation;
@@ -56,8 +57,10 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 		Repository repo = lookupRepository(repositoryFile);
 		// TODO delete the second project for the time being (.gitignore is
 		// currently not hiding the .project file from commit)
-		ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ2).delete(
-				false, null);
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ2);
+		File dotProject = new File(project.getLocation().toOSString(), ".project");
+		project.delete(false, false, null);
+		assertTrue(dotProject.delete());
 
 		TagBuilder tag = new TagBuilder();
 		tag.setTag("SomeTag");
