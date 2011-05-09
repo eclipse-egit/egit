@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.dialogs;
 
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Composite;
@@ -52,9 +53,7 @@ public class CreateBranchDialog extends AbstractBranchSelectionDialog {
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		super.createButtonsForButtonBar(parent);
-		getButton(Window.OK).setText(UIText.CreateBranchDialog_OKButtonText);
+		createButton(parent, IDialogConstants.OK_ID, UIText.CreateBranchDialog_OKButtonText, true);
+		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
-
-
 }
