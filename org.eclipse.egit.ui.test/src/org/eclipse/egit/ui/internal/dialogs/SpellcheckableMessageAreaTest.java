@@ -1,12 +1,13 @@
 /*******************************************************************************
  * Copyright (C) 2010, Robin Stocker
+ * Copyright (C) 2011, Matthias Sohn <matthias.sohn@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.ui.dialogs.commit;
+package org.eclipse.egit.ui.internal.dialogs;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,65 +33,65 @@ public class SpellcheckableMessageAreaTest {
 
 	@Test
 	public void dontWrapMaximumLengthText() {
-		String input = "123456789 123456789 123456789 123456789 123456789 123456789 123456789.";
+		String input = "123456789 123456789 123456789 123456789 123456789 123456789 123456789 12";
 		assertWrappedEquals(input, input);
 	}
 
 	@Test
 	public void wrapOverlengthText() {
-		String input = "123456789 123456789 123456789 123456789 123456789 123456789 123456789. 123";
-		String expected = "123456789 123456789 123456789 123456789 123456789 123456789 123456789.\n123";
+		String input = "123456789 123456789 123456789 123456789 123456789 123456789 123456789 12 3";
+		String expected = "123456789 123456789 123456789 123456789 123456789 123456789 123456789 12\n3";
 		assertWrappedEquals(expected, input);
 	}
 
 	@Test
 	public void wrapOverlengthTextByOne() {
-		String input = "123456789 123456789 123456789 123456789 123456789 123456789 123456789ab";
-		String expected = "123456789 123456789 123456789 123456789 123456789 123456789\n123456789ab";
+		String input = "123456789 123456789 123456789 123456789 123456789 123456789 123456789.abc";
+		String expected = "123456789 123456789 123456789 123456789 123456789 123456789\n123456789.abc";
 		assertWrappedEquals(expected, input);
 	}
 
 	@Test
 	public void wrapOverlengthText2() {
-		String input = "123456789 123456789 123456789 123456789 123456789 123456789. 12345678901234";
-		String expected = "123456789 123456789 123456789 123456789 123456789 123456789.\n12345678901234";
+		String input = "123456789 123456789 123456789 123456789 123456789 123456789. 1234567890123456";
+		String expected = "123456789 123456789 123456789 123456789 123456789 123456789.\n1234567890123456";
 		assertWrappedEquals(expected, input);
 	}
 
 	public void wrapOverlengthTextTwice() {
-		String input = "123456789 123456789 123456789 123456789 123456789 123456789 123456789. "
-				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789. "
-				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789.";
-		String expected = "123456789 123456789 123456789 123456789 123456789 123456789 123456789.\n"
-				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789.\n"
-				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789.";
+		String input = "123456789 123456789 123456789 123456789 123456789 123456789 123456789.12 "
+				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789.12 "
+				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789.12";
+		String expected = "123456789 123456789 123456789 123456789 123456789 123456789 123456789.12\n"
+				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789.12\n"
+				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789.12";
 		assertWrappedEquals(expected, input);
 	}
 
 	@Test
 	public void dontWrapWordLongerThanOneLineAtStart() {
-		String input = "12345678901234567890123456789012345678901234567890123456789012345678901234567890 the previous was longer than a line";
-		String expected = "12345678901234567890123456789012345678901234567890123456789012345678901234567890\nthe previous was longer than a line";
+		String input = "1234567890123456789012345678901234567890123456789012345678901234567890123456789012 the previous was longer than a line";
+		String expected = "1234567890123456789012345678901234567890123456789012345678901234567890123456789012\nthe previous was longer than a line";
 		assertWrappedEquals(expected, input);
 	}
 
 	@Test
 	public void dontWrapWordLongerThanOneLine() {
-		String input = "This has to be on its own line: 12345678901234567890123456789012345678901234567890123456789012345678901234567890 this not";
-		String expected = "This has to be on its own line:\n12345678901234567890123456789012345678901234567890123456789012345678901234567890\nthis not";
+		String input = "This has to be on its own line: 1234567890123456789012345678901234567890123456789012345678901234567890123456789012 this not";
+		String expected = "This has to be on its own line:\n1234567890123456789012345678901234567890123456789012345678901234567890123456789012\nthis not";
 		assertWrappedEquals(expected, input);
 	}
 
 	@Test
 	public void wrapSecondLongLine() {
-		String input = "First line\n123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789.";
-		String expected = "First line\n123456789 123456789 123456789 123456789 123456789 123456789 123456789\n123456789.";
+		String input = "First line\n123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789.12";
+		String expected = "First line\n123456789 123456789 123456789 123456789 123456789 123456789 123456789\n123456789.12";
 		assertWrappedEquals(expected, input);
 	}
 
 	@Test
 	public void keepExistingNewlines() {
-		String input = "This\n\nis\nall\nok\n123456789 123456789 123456789 123456789 123456789 123456789 123456789.";
+		String input = "This\n\nis\nall\nok\n123456789 123456789 123456789 123456789 123456789 123456789 123456789.12";
 		assertWrappedEquals(input, input);
 	}
 
@@ -130,8 +131,9 @@ public class SpellcheckableMessageAreaTest {
 
 	private static String wrap(String text, String lineDelimiter) {
 		StringBuilder sb = new StringBuilder(text);
-		List<WrapEdit> wrapEdits = SpellcheckableMessageArea.calculateWrapEdits(text, 70,
-				lineDelimiter);
+		List<WrapEdit> wrapEdits = SpellcheckableMessageArea
+				.calculateWrapEdits(text,
+						SpellcheckableMessageArea.MAX_LINE_WIDTH, lineDelimiter);
 		for (WrapEdit wrapEdit : wrapEdits) {
 			sb.replace(wrapEdit.getStart(),
 					wrapEdit.getStart() + wrapEdit.getLength(), lineDelimiter);
