@@ -176,8 +176,16 @@ class CommitGraphTable {
 
 		copy = createStandardAction(ActionFactory.COPY);
 
+		table.setUseHashlookup(true);
+
 		table.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
+				ISelection s = event.getSelection();
+				if (s.isEmpty() || !(s instanceof IStructuredSelection))
+					return;
+				final IStructuredSelection iss = (IStructuredSelection) s;
+				commitToShow = (PlotCommit<?>) iss.getFirstElement();
+
 				copy.setEnabled(canDoCopy());
 			}
 		});
@@ -248,8 +256,10 @@ class CommitGraphTable {
 		table.getTable().addDisposeListener(new DisposeListener() {
 
 			public void widgetDisposed(DisposeEvent e) {
-				allCommits.dispose();
-				renderer.dispose();
+				if (allCommits != null)
+					allCommits.dispose();
+				if (renderer != null)
+					renderer.dispose();
 			}
 		});
 	}
@@ -380,7 +390,6 @@ class CommitGraphTable {
 		table.setInput(asArray);
 		if (asArray != null && asArray.length > 0) {
 			if (oldList != list) {
-				selectCommit(asArray[0]);
 				initCommitsMap();
 			}
 		} else {
