@@ -63,7 +63,7 @@
 
   <properties>
     <egit-version>1.0.0-SNAPSHOT</egit-version>
-    <tycho-version>0.11.0</tycho-version>
+    <tycho-version>0.12.0</tycho-version>
     <mockito-version>1.8.4</mockito-version>
     <junit-version>4.8.1</junit-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.updatesite/target/site</jgit-site>
@@ -187,13 +187,13 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.sonatype.tycho</groupId>
+        <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-maven-plugin</artifactId>
         <version>${tycho-version}</version>
         <extensions>true</extensions>
       </plugin>
       <plugin>
-        <groupId>org.sonatype.tycho</groupId>
+        <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho-version}</version>
         <configuration>
@@ -205,8 +205,8 @@
     <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>org.sonatype.tycho</groupId>
-          <artifactId>maven-osgi-compiler-plugin</artifactId>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-compiler-plugin</artifactId>
           <version>${tycho-version}</version>
           <configuration>
             <encoding>UTF-8</encoding>
@@ -216,8 +216,8 @@
           <!-- TODO remove workaround when
              https://issues.sonatype.org/browse/TYCHO-473
              is fixed -->
-          <groupId>org.sonatype.tycho</groupId>
-          <artifactId>maven-osgi-source-plugin</artifactId>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-source-plugin</artifactId>
           <version>${tycho-version}</version>
           <executions>
             <execution>
