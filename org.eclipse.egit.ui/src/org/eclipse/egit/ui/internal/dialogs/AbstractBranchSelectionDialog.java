@@ -255,6 +255,12 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 	public void create() {
 		super.create();
 
+		// Initially disable OK button, as the required user inputs may not be
+		// complete after the dialog is first shown. If automatic selections
+		// happen after this (making the user inputs complete), the button will
+		// be enabled.
+		getButton(Window.OK).setEnabled(false);
+
 		List<RepositoryTreeNode> roots = new ArrayList<RepositoryTreeNode>();
 		if ((settings & SHOW_LOCAL_BRANCHES) != 0)
 			roots.add(localBranches);
@@ -286,8 +292,6 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		} catch (IOException e) {
 			// ignore
 		}
-
-		getButton(Window.OK).setEnabled(false);
 	}
 
 	/**

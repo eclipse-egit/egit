@@ -12,7 +12,6 @@
 package org.eclipse.egit.ui.test.team.actions;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 import java.io.File;
 
@@ -122,14 +121,16 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		String compareWithRefActionLabel = util
 				.getPluginLocalizedValue("CompareWithBranchOrTagAction.label");
 		String dialogTitle = UIText.CompareTargetSelectionDialog_WindowTitle;
+
 		SWTBotShell dialog = openCompareWithDialog(compareWithRefActionLabel,
 				dialogTitle);
-		// use the default (the last commit) -> no changes -> compare button
-		// disabled
-		assertFalse(dialog.bot()
-				.button(UIText.CompareTargetSelectionDialog_CompareButton)
-				.isEnabled());
+		// use the default (the last commit) -> no changes
+		dialog.bot().button(UIText.CompareTargetSelectionDialog_CompareButton)
+				.click();
+		waitUntilCompareTreeViewTreeHasNodeCount(0);
+
 		// use the tag -> should have a change
+		dialog = openCompareWithDialog(compareWithRefActionLabel, dialogTitle);
 		dialog.bot().tree().getTreeItem(TAGS).expand().getNode("SomeTag")
 				.select();
 		dialog.bot().button(UIText.CompareTargetSelectionDialog_CompareButton)
