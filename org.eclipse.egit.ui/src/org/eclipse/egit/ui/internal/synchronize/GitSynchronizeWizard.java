@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize;
 
+import static org.eclipse.jgit.lib.Constants.HEAD;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -23,7 +25,6 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -52,10 +53,11 @@ public class GitSynchronizeWizard extends Wizard {
 		GitSynchronizeDataSet gsdSet = new GitSynchronizeDataSet();
 
 		Map<Repository, String> branches = page.getSelectedBranches();
+		boolean shouldIncludeLocal = page.shouldIncludeLocal();
 		for (Entry<Repository, String> branchesEntry : branches.entrySet())
 			try {
-				gsdSet.add(new GitSynchronizeData(branchesEntry.getKey(),
-						Constants.HEAD, branchesEntry.getValue(), false));
+				gsdSet.add(new GitSynchronizeData(branchesEntry.getKey(), HEAD,
+						branchesEntry.getValue(), shouldIncludeLocal));
 			} catch (IOException e) {
 				Activator.logError(e.getMessage(), e);
 			}
