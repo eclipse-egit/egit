@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.search;
 
+import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -19,6 +20,8 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.search.ui.text.AbstractTextSearchViewPage;
+import org.eclipse.search.ui.text.Match;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 
 /**
@@ -76,6 +79,15 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 	 */
 	protected void configureTableViewer(TableViewer viewer) {
 		configureViewer(viewer);
+	}
+
+	/**
+	 * @see org.eclipse.search.ui.text.AbstractTextSearchViewPage#showMatch(org.eclipse.search.ui.text.Match,
+	 *      int, int, boolean)
+	 */
+	protected void showMatch(Match match, int currentOffset, int currentLength,
+			boolean activate) throws PartInitException {
+		CommitEditor.open((RepositoryCommit) match.getElement());
 	}
 
 }

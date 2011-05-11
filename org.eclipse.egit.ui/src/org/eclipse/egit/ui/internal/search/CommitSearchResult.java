@@ -56,10 +56,10 @@ public class CommitSearchResult extends AbstractTextSearchResult implements
 	public String getLabel() {
 		int matches = getMatchCount();
 		if (matches != 1)
-			return UIText.CommitSearchResult_LabelSingle;
-		else
 			return MessageFormat.format(UIText.CommitSearchResult_LabelPlural,
 					Integer.valueOf(matches));
+		else
+			return UIText.CommitSearchResult_LabelSingle;
 	}
 
 	/**

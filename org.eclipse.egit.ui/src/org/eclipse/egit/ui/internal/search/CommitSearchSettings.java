@@ -40,6 +40,8 @@ public class CommitSearchSettings {
 
 	private static final String MATCH_TREE = "matchTree"; //$NON-NLS-1$
 
+	private static final String ALL_BRANCHES = "allBranches"; //$NON-NLS-1$
+
 	private static final String REPOSITORY_COUNT = "repositoryCount"; //$NON-NLS-1$
 
 	private static final String REPOSITORY = "repository"; //$NON-NLS-1$
@@ -64,6 +66,7 @@ public class CommitSearchSettings {
 			searchSettings.setMatchCommit(section.getBoolean(MATCH_COMMIT));
 			searchSettings.setMatchParents(section.getBoolean(MATCH_PARENTS));
 			searchSettings.setMatchTree(section.getBoolean(MATCH_TREE));
+			searchSettings.setAllBranches(section.getBoolean(ALL_BRANCHES));
 			try {
 				int count = section.getInt(REPOSITORY_COUNT);
 				for (int i = 0; i < count; i++)
@@ -91,6 +94,8 @@ public class CommitSearchSettings {
 
 	private boolean isRegExSearch = false;
 
+	private boolean isAllBranches = false;
+
 	private String textPattern = null;
 
 	private List<String> repositories = new LinkedList<String>();
@@ -114,6 +119,7 @@ public class CommitSearchSettings {
 		section.put(MATCH_MESSAGE, isMatchMessage);
 		section.put(MATCH_PARENTS, isMatchParents);
 		section.put(MATCH_TREE, isMatchTree);
+		section.put(ALL_BRANCHES, isAllBranches);
 
 		int count = 0;
 		for (String repo : this.repositories) {
@@ -221,6 +227,16 @@ public class CommitSearchSettings {
 	/** @param textPattern */
 	public void setTextPattern(String textPattern) {
 		this.textPattern = textPattern;
+	}
+
+	/** @return isAllBranches */
+	public boolean isAllBranches() {
+		return this.isAllBranches;
+	}
+
+	/** @param isAllBranches */
+	public void setAllBranches(boolean isAllBranches) {
+		this.isAllBranches = isAllBranches;
 	}
 
 }

@@ -42,16 +42,10 @@ public class CommitEditorInput extends PlatformObject implements IEditorInput,
 		this.commit = commit;
 	}
 
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
 	public int hashCode() {
 		return commit.getRevCommit().hashCode();
 	}
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	public boolean equals(Object obj) {
 		if (obj == this)
 			return true;
@@ -64,16 +58,10 @@ public class CommitEditorInput extends PlatformObject implements IEditorInput,
 			return false;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
 	public String toString() {
 		return getName();
 	}
 
-	/**
-	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
-	 */
 	public Object getAdapter(Class adapter) {
 		if (RepositoryCommit.class == adapter)
 			return commit;
@@ -87,38 +75,23 @@ public class CommitEditorInput extends PlatformObject implements IEditorInput,
 		return super.getAdapter(adapter);
 	}
 
-	/**
-	 * @see org.eclipse.ui.IEditorInput#exists()
-	 */
 	public boolean exists() {
 		return true;
 	}
 
-	/**
-	 * @see org.eclipse.ui.IEditorInput#getImageDescriptor()
-	 */
 	public ImageDescriptor getImageDescriptor() {
 		return UIIcons.CHANGESET;
 	}
 
-	/**
-	 * @see org.eclipse.ui.IEditorInput#getName()
-	 */
 	public String getName() {
 		return MessageFormat.format(UIText.CommitEditorInput_Name,
 				commit.abbreviate(), commit.getRepositoryName());
 	}
 
-	/**
-	 * @see org.eclipse.ui.IEditorInput#getPersistable()
-	 */
 	public IPersistableElement getPersistable() {
 		return this;
 	}
 
-	/**
-	 * @see org.eclipse.ui.IEditorInput#getToolTipText()
-	 */
 	public String getToolTipText() {
 		return MessageFormat.format(UIText.CommitEditorInput_ToolTip, commit
 				.getRevCommit().name(), commit.getRepositoryName());
@@ -133,16 +106,10 @@ public class CommitEditorInput extends PlatformObject implements IEditorInput,
 		return this.commit;
 	}
 
-	/**
-	 * @see org.eclipse.ui.IPersistable#saveState(org.eclipse.ui.IMemento)
-	 */
 	public void saveState(IMemento memento) {
 		CommitEditorInputFactory.saveState(memento, this);
 	}
 
-	/**
-	 * @see org.eclipse.ui.IPersistableElement#getFactoryId()
-	 */
 	public String getFactoryId() {
 		return CommitEditorInputFactory.ID;
 	}
