@@ -17,10 +17,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.team.core.history.IFileRevision;
 
 /** An {@link IFileRevision} for the current version in the workspace. */
-class WorkspaceFileRevision extends GitFileRevision implements IFileRevision {
+public class WorkspaceFileRevision extends GitFileRevision implements IFileRevision {
 	private final IResource rsrc;
 
-	WorkspaceFileRevision(final IResource resource) {
+	/**
+	 * @param resource
+	 */
+	public WorkspaceFileRevision(final IResource resource) {
 		super(resource.getName());
 		rsrc = resource;
 	}
