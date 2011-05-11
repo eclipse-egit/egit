@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///qY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-04T12:34:27Z",
+      "side": 1,
+      "message": "typo: s/Synchronzie/Synchronize/",
+      "revId": "3d1972a3e28d59a28413722b29cc60e26f7316a3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
