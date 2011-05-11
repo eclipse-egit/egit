@@ -3029,7 +3029,7 @@ public class UIText extends NLS {
 	public static String GitBranchSynchronizeWizardPage_description;
 
 	/** */
-	public static String GitBranchSynchronizeWizardPage_repositories;
+	public static String GitBranchSynchronizeWizardPage_projects;
 
 	/** */
 	public static String GitBranchSynchronizeWizardPage_destination;
