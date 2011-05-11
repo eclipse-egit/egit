@@ -50,77 +50,47 @@ public class CommitSearchResult extends AbstractTextSearchResult implements
 		return this;
 	}
 
-	/**
-	 * @see org.eclipse.search.ui.ISearchResult#getLabel()
-	 */
 	public String getLabel() {
 		int matches = getMatchCount();
 		if (matches != 1)
-			return UIText.CommitSearchResult_LabelSingle;
-		else
 			return MessageFormat.format(UIText.CommitSearchResult_LabelPlural,
 					Integer.valueOf(matches));
+		else
+			return UIText.CommitSearchResult_LabelSingle;
 	}
 
-	/**
-	 * @see org.eclipse.search.ui.ISearchResult#getTooltip()
-	 */
 	public String getTooltip() {
 		return getLabel();
 	}
 
-	/**
-	 * @see org.eclipse.search.ui.ISearchResult#getImageDescriptor()
-	 */
 	public ImageDescriptor getImageDescriptor() {
 		return null;
 	}
 
-	/**
-	 * @see org.eclipse.search.ui.ISearchResult#getQuery()
-	 */
 	public ISearchQuery getQuery() {
 		return this.query;
 	}
 
-	/**
-	 * @see org.eclipse.search.ui.text.AbstractTextSearchResult#getEditorMatchAdapter()
-	 */
 	public IEditorMatchAdapter getEditorMatchAdapter() {
 		return null;
 	}
 
-	/**
-	 * @see org.eclipse.search.ui.text.AbstractTextSearchResult#getFileMatchAdapter()
-	 */
 	public IFileMatchAdapter getFileMatchAdapter() {
 		return null;
 	}
 
-	/**
-	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getChildren(java.lang.Object)
-	 */
 	public Object[] getChildren(Object o) {
 		return getElements();
 	}
 
-	/**
-	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getImageDescriptor(java.lang.Object)
-	 */
 	public ImageDescriptor getImageDescriptor(Object object) {
 		return null;
 	}
 
-	/**
-	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getLabel(java.lang.Object)
-	 */
 	public String getLabel(Object o) {
 		return getLabel();
 	}
 
-	/**
-	 * @see org.eclipse.ui.model.IWorkbenchAdapter#getParent(java.lang.Object)
-	 */
 	public Object getParent(Object o) {
 		return null;
 	}

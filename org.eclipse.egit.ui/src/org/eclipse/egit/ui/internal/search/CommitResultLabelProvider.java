@@ -34,24 +34,15 @@ public class CommitResultLabelProvider extends LabelProvider implements
 
 	private Image commitImage = UIIcons.CHANGESET.createImage();
 
-	/**
-	 * @see org.eclipse.jface.viewers.BaseLabelProvider#dispose()
-	 */
 	public void dispose() {
 		this.commitImage.dispose();
 		super.dispose();
 	}
 
-	/**
-	 * @see org.eclipse.jface.viewers.LabelProvider#getImage(java.lang.Object)
-	 */
 	public Image getImage(Object element) {
 		return this.commitImage;
 	}
 
-	/**
-	 * @see org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider#getStyledText(java.lang.Object)
-	 */
 	public StyledString getStyledText(Object element) {
 		StyledString styled = new StyledString();
 		if (element instanceof RepositoryCommit) {
