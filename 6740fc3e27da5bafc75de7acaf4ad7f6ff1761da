@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///m0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitPreconfiguredSynchronizeWizardPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-04T20:26:52Z",
+      "side": 1,
+      "message": "typo s/Custome/Custom/",
+      "revId": "6740fc3e27da5bafc75de7acaf4ad7f6ff1761da",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///mw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitPreconfiguredSynchronizeWizardPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-04T20:26:52Z",
+      "side": 1,
+      "message": "typo s/Custome/Custom/",
+      "revId": "6740fc3e27da5bafc75de7acaf4ad7f6ff1761da",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///ms\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitPreconfiguredSynchronizeWizardPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-04T20:26:52Z",
+      "side": 1,
+      "message": "typo s/Predefinded/Predefined/",
+      "revId": "6740fc3e27da5bafc75de7acaf4ad7f6ff1761da",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///mk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-04T20:26:52Z",
+      "side": 1,
+      "message": "better: s/if there is one configured/if any is configured/",
+      "revId": "6740fc3e27da5bafc75de7acaf4ad7f6ff1761da",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///mo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-04T20:26:52Z",
+      "side": 1,
+      "message": "typo s/custome/custom/",
+      "revId": "6740fc3e27da5bafc75de7acaf4ad7f6ff1761da",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
