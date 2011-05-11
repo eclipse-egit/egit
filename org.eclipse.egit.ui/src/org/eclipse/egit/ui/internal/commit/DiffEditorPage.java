@@ -172,9 +172,6 @@ public class DiffEditorPage extends FormPage {
 		});
 	}
 
-	/**
-	 * @see org.eclipse.ui.forms.editor.FormPage#createFormContent(org.eclipse.ui.forms.IManagedForm)
-	 */
 	protected void createFormContent(IManagedForm managedForm) {
 		Composite body = managedForm.getForm().getBody();
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(body);

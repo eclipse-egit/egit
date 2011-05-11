@@ -33,7 +33,7 @@ public class UIIcons {
 	/** Decoration for resource not being tracked by Git */
 	public final static ImageDescriptor OVR_UNTRACKED;
 
-	/** Decoration for tracked resource with a merge conflict.  */
+	/** Decoration for tracked resource with a merge conflict. */
 	public final static ImageDescriptor OVR_CONFLICT;
 
 	/** Decoration for tracked resources that we want to ignore changes in. */
@@ -47,45 +47,64 @@ public class UIIcons {
 
 	/** Find icon */
 	public final static ImageDescriptor ELCL16_FIND;
+
 	/** Compare / View icon */
 	public final static ImageDescriptor ELCL16_COMPARE_VIEW;
+
 	/** Next arrow icon */
 	public final static ImageDescriptor ELCL16_NEXT;
+
 	/** Previous arrow icon */
 	public final static ImageDescriptor ELCL16_PREVIOUS;
+
 	/** Commit icon */
 	public final static ImageDescriptor ELCL16_COMMIT;
+
 	/** Comments icon */
 	public final static ImageDescriptor ELCL16_COMMENTS;
+
 	/** Author icon */
 	public final static ImageDescriptor ELCL16_AUTHOR;
+
 	/** Committer icon */
 	public final static ImageDescriptor ELCL16_COMMITTER;
+
 	/** Id icon */
 	public final static ImageDescriptor ELCL16_ID;
+
 	/** Delete icon */
 	public final static ImageDescriptor ELCL16_DELETE;
+
 	/** Add icon */
 	public final static ImageDescriptor ELCL16_ADD;
+
 	/** Trash icon */
 	public final static ImageDescriptor ELCL16_TRASH;
+
 	/** Clear icon */
 	public final static ImageDescriptor ELCL16_CLEAR;
+
 	/** Refresh icon */
 	public final static ImageDescriptor ELCL16_REFRESH;
+
 	/** Linked with icon */
 	public final static ImageDescriptor ELCL16_SYNCED;
 
 	/** Enabled, checked, checkbox image */
 	public final static ImageDescriptor CHECKBOX_ENABLED_CHECKED;
+
 	/** Enabled, unchecked, checkbox image */
 	public final static ImageDescriptor CHECKBOX_ENABLED_UNCHECKED;
+
 	/** Disabled, checked, checkbox image */
 	public final static ImageDescriptor CHECKBOX_DISABLED_CHECKED;
+
 	/** Disabled, unchecked, checkbox image */
 	public final static ImageDescriptor CHECKBOX_DISABLED_UNCHECKED;
+
 	/** Edit configuration */
 	public final static ImageDescriptor EDITCONFIG;
+
 	/** Create Patch Wizard banner */
 	public final static ImageDescriptor WIZBAN_CREATE_PATCH;
 
@@ -161,6 +180,12 @@ public class UIIcons {
 	/** Expand all icon */
 	public final static ImageDescriptor EXPAND_ALL;
 
+	/** Checkout icon */
+	public final static ImageDescriptor CHECKOUT;
+
+	/** Signed Off By icon */
+	public final static ImageDescriptor SIGNED_OFF;
+
 	/** base URL */
 	public final static URL base;
 
@@ -219,6 +244,8 @@ public class UIIcons {
 		CHANGESET = map("obj16/changelog_obj.gif"); //$NON-NLS-1$
 		GERRIT = map("obj16/gerrit_obj.gif"); //$NON-NLS-1$
 		EXPAND_ALL = map("wizban/expandall.gif"); //$NON-NLS-1$
+		CHECKOUT = map("obj16/checkout.gif"); //$NON-NLS-1$
+		SIGNED_OFF = map("obj16/signed-off.png"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {

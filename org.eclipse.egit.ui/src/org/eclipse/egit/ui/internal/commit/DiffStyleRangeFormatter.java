@@ -179,10 +179,6 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 		return range;
 	}
 
-	/**
-	 * @see org.eclipse.jgit.diff.DiffFormatter#writeHunkHeader(int, int, int,
-	 *      int)
-	 */
 	protected void writeHunkHeader(int aStartLine, int aEndLine,
 			int bStartLine, int bEndLine) throws IOException {
 		DiffStyleRange range = addRange(Type.HUNK);
@@ -190,10 +186,6 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 		range.length = stream.offset - range.start;
 	}
 
-	/**
-	 * @see org.eclipse.jgit.diff.DiffFormatter#writeLine(char,
-	 *      org.eclipse.jgit.diff.RawText, int)
-	 */
 	protected void writeLine(char prefix, RawText text, int cur)
 			throws IOException {
 		if (prefix == ' ')

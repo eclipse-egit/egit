@@ -2936,6 +2936,14 @@
             icon="icons/obj16/new_branch_obj.gif">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.commit.CreateTag"
+            icon="icons/obj16/new_tag_obj.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.commit.CreateBranch"
+            icon="icons/obj16/new_branch_obj.gif">
+      </image>
+      <image
             commandId="org.eclipse.egit.ui.CheckoutCommand"
             icon="icons/obj16/checkout.gif">
       </image>
@@ -3490,6 +3498,20 @@
       </command>
    </extension>
    <extension
+         name="%CommitViewerCommands.extension.name"
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commit.command.CreateTagHandler"
+            id="org.eclipse.egit.ui.commit.CreateTag"
+            name="%CreateTagCommand">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler"
+            id="org.eclipse.egit.ui.commit.CreateBranch"
+            name="%CreateBranchCommand">
+      </command>
+   </extension>
+   <extension
          point="org.eclipse.ui.newWizards">
       <wizard
             category="org.eclipse.egit.ui.wizardCategory"
@@ -3545,5 +3567,41 @@
             class="org.eclipse.egit.ui.internal.commit.CommitEditorInputFactory"
             id="org.eclipse.egit.ui.internal.commit.CommitEditorInputFactory">
       </factory>
+   </extension>
+   <extension
+         point="org.eclipse.search.searchPages">
+      <page
+            class="org.eclipse.egit.ui.internal.search.CommitSearchPage"
+            icon="icons/obj16/search-commit.gif"
+            id="org.eclipse.egit.ui.commitSearchPage"
+            label="%CommitSearchPage.label">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.search.searchResultViewPages">
+      <viewPage
+            class="org.eclipse.egit.ui.internal.search.CommitSearchResultsPage"
+            icon="icons/obj16/search-commit.gif"
+            id="org.eclipse.egit.ui.commitSearchResultsPage"
+            label="%CommitSearchResults.label"
+            searchResultClass="org.eclipse.egit.ui.internal.search.CommitSearchResult">
+      </viewPage>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.eclipse.egit.ui.navigation"
+            label="%NavigationActionSet.label"
+            visible="true">
+        <action
+               class="org.eclipse.egit.ui.internal.commit.OpenCommitAction"
+               icon="icons/obj16/open-commit.gif"
+               id="org.eclipse.egit.ui.commit.OpenCommitAction"
+               label="%OpenCommitAction.label"
+               menubarPath="navigate/open.ext3"
+               style="push"
+               toolbarPath="org.eclipse.search.searchActionSet/Search"
+               tooltip="%OpenCommitAction.tooltip"/>
+       </actionSet>
    </extension>
 </plugin>
