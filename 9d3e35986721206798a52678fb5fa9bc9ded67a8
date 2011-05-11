@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///mg\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-04T20:13:48Z",
+      "side": 1,
+      "message": "you renamed that to ButtonLabelProvider, maybe it should be renamed to StyledButtonLabelProvider and explain in the message body what is styled here",
+      "revId": "9d3e35986721206798a52678fb5fa9bc9ded67a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
