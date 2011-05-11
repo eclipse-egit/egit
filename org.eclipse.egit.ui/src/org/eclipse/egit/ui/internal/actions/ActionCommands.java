@@ -29,6 +29,9 @@ public class ActionCommands {
 	/** "Compare with head" action command id */
 	public static final String COMPARE_WITH_HEAD_ACTION = "org.eclipse.egit.ui.team.CompareWithHead"; //$NON-NLS-1$
 
+	/** "Compare index with head" action command id */
+	public static final String COMPARE_INDEX_WITH_HEAD_ACTION = "org.eclipse.egit.ui.team.CompareIndexWithHead"; //$NON-NLS-1$
+
 	/** "Compare with index" action command id */
 	public static final String COMPARE_WITH_INDEX_ACTION = "org.eclipse.egit.ui.team.CompareWithIndex"; //$NON-NLS-1$
 
