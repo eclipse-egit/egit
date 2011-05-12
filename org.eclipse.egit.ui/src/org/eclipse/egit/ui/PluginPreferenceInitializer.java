@@ -82,6 +82,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 				GitChangeSetLabelProvider.DEFAULT_CHANGESET_FORMAT);
 		store.setDefault(UIPreferences.SYNC_VIEW_ALWAYS_SHOW_CHANGESET_MODEL,
 				false);
+		store.setDefault(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH, true);
 		store.setDefault(UIPreferences.DATE_FORMAT,
 				GitChangeSetLabelProvider.DEFAULT_DATE_FORMAT);
 		store.setDefault(UIPreferences.HISTORY_MAX_NUM_COMMITS, 10000);

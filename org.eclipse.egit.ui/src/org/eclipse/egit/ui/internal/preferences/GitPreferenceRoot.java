@@ -156,6 +156,9 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 		GridDataFactory.fillDefaults().grab(true, false).span(GROUP_SPAN, 1)
 				.applyTo(synchronizeGroup);
 		synchronizeGroup.setText(UIText.GitPreferenceRoot_SynchronizeView);
+		addField(new BooleanFieldEditor(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH,
+				UIText.GitPreferenceRoot_fetchBeforeSynchronization,
+				synchronizeGroup));
 		addField(new BooleanFieldEditor(UIPreferences.SYNC_VIEW_ALWAYS_SHOW_CHANGESET_MODEL,
 				UIText.GitPreferenceRoot_automaticallyEnableChangesetModel,
 				synchronizeGroup));

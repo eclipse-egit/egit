@@ -424,6 +424,9 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_automaticallyEnableChangesetModel;
 
 	/** */
+	public static String GitPreferenceRoot_fetchBeforeSynchronization;
+
+	/** */
 	public static String GitPreferenceRoot_CloningRepoGroupHeader;
 
 	/** */
@@ -3666,6 +3669,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String SynchronizeFetchJob_SubTaskName;
+
+	/** */
+	public static String SynchronizeFetchJob_FetchFailedTitle;
+
+	/** */
+	public static String SynchronizeFetchJob_FetchFailedMessage;
 
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
