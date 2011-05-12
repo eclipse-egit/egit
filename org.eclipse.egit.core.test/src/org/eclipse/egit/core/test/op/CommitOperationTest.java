@@ -72,7 +72,7 @@ public class CommitOperationTest extends GitTestCase {
 		new AddToIndexOperation(resources).execute(null);
 		CommitOperation commitOperation = new CommitOperation(null, null, null, TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
 		commitOperation.setCommitAll(true);
-		commitOperation.setRepos(new Repository[] {repository});
+		commitOperation.setRepository(repository);
 		commitOperation.execute(null);
 
 		testUtils.addFileToProject(project.getProject(), "zar/b.txt", "some text");
@@ -90,7 +90,7 @@ public class CommitOperationTest extends GitTestCase {
 
 		IFile[] filesToCommit = new IFile[] { project.getProject().getFile("zar/b.txt") };
 		commitOperation = new CommitOperation(filesToCommit, Arrays.asList(filesToCommit), null, TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
-		commitOperation.setRepos(new Repository[] {repository});
+		commitOperation.setRepository(repository);
 		try {
 			commitOperation.execute(null);
 			// TODO this is very ugly. CommitCommand should be extended
@@ -124,7 +124,7 @@ public class CommitOperationTest extends GitTestCase {
 				TestUtils.AUTHOR, TestUtils.COMMITTER,
 				"first commit");
 		commitOperation.setCommitAll(true);
-		commitOperation.setRepos(new Repository[]{repository});
+		commitOperation.setRepository(repository);
 		commitOperation.execute(null);
 
 		Git git = new Git(repository);
@@ -140,7 +140,7 @@ public class CommitOperationTest extends GitTestCase {
 				TestUtils.AUTHOR, TestUtils.COMMITTER,
 				"second commit");
 		commitOperation.setCommitAll(true);
-		commitOperation.setRepos(new Repository[]{repository});
+		commitOperation.setRepository(repository);
 		commitOperation.execute(null);
 
 		git = new Git(repository);
@@ -170,7 +170,7 @@ public class CommitOperationTest extends GitTestCase {
 				TestUtils.AUTHOR, TestUtils.COMMITTER,
 				"first commit");
 		commitOperation.setCommitAll(true);
-		commitOperation.setRepos(new Repository[]{repository});
+		commitOperation.setRepository(repository);
 		commitOperation.execute(null);
 
 		Git git = new Git(repository);

@@ -21,16 +21,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
+import java.net.URI;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -48,7 +48,6 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
-import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -70,50 +69,54 @@ import org.eclipse.ui.PlatformUI;
  */
 public class CommitUI  {
 
-	private Map<Repository, IndexDiff> indexDiffs;
+	private IndexDiff indexDiff;
 
-	private Set<IFile> notIndexed;
+	private Set<String> notIndexed;
 
-	private Set<IFile> indexChanges;
+	private Set<String> indexChanges;
 
-	private Set<IFile> notTracked;
+	private Set<String> notTracked;
 
-	private Set<IFile> files;
+	private Set<String> files;
 
 	private RevCommit previousCommit;
 
-	private boolean amendAllowed;
+	private boolean amendAllowed = true;
 
 	private boolean amending;
 
 	private Shell shell;
 
-	private Repository[] repos;
+	private Repository repo;
 
 	private IResource[] selectedResources;
+
+	private boolean preselectAll;
 
 	/**
 	 * Constructs a CommitUI object
 	 * @param shell
 	 *            Shell to use for UI interaction. Must not be null.
-	 * @param repos
-	 *            Repositories to commit. Must not be null
+	 * @param repo
+	 *            Repository to commit. Must not be null
 	 * @param selectedResources
 	 *            Resources selected by the user. A file is preselected in the
 	 *            commit dialog if the file is contained in selectedResources or
 	 *            if selectedResources contains a resource that is parent of the
 	 *            file. selectedResources must not be null.
+	 * @param preselectAll
+	 * 			  preselect all changed files in the commit dialog.
+	 * 			  If set to true selectedResources are ignored.
 	 */
-	public CommitUI(Shell shell, Repository[] repos,
-			IResource[] selectedResources) {
+	public CommitUI(Shell shell, Repository repo,
+			IResource[] selectedResources, boolean preselectAll) {
 		this.shell = shell;
-		this.repos = new Repository[repos.length];
-		// keep our own copy
-		System.arraycopy(repos, 0, this.repos, 0, repos.length);
+		this.repo = repo;
 		this.selectedResources = new IResource[selectedResources.length];
 		// keep our own copy
 		System.arraycopy(selectedResources, 0, this.selectedResources, 0,
 				selectedResources.length);
+		this.preselectAll = preselectAll;
 	}
 
 	/**
@@ -126,7 +129,7 @@ public class CommitUI  {
 			return;
 		}
 
-		BasicConfigurationDialog.show(repos);
+		BasicConfigurationDialog.show(new Repository[]{repo});
 
 		resetState();
 		final IProject[] projects = getProjectsOfRepositories();
@@ -150,32 +153,26 @@ public class CommitUI  {
 			return;
 		}
 
-		Repository repository = null;
 		Repository mergeRepository = null;
-		amendAllowed = repos.length == 1;
 		boolean isMergedResolved = false;
 		boolean isCherryPickResolved = false;
-		for (Repository repo : repos) {
-			repository = repo;
-			RepositoryState state = repo.getRepositoryState();
-			if (!state.canCommit()) {
-				MessageDialog.openError(shell,
-						UIText.CommitAction_cannotCommit, NLS.bind(
-								UIText.CommitAction_repositoryState, state
-										.getDescription()));
-				return;
-			}
-			else if (state.equals(RepositoryState.MERGING_RESOLVED)) {
-				isMergedResolved = true;
-				mergeRepository = repo;
-			}
-			else if (state.equals(RepositoryState.CHERRY_PICKING_RESOLVED)) {
-				isCherryPickResolved = true;
-				mergeRepository = repo;
-			}
+		RepositoryState state = repo.getRepositoryState();
+		if (!state.canCommit()) {
+			MessageDialog.openError(
+					shell,
+					UIText.CommitAction_cannotCommit,
+					NLS.bind(UIText.CommitAction_repositoryState,
+							state.getDescription()));
+			return;
+		} else if (state.equals(RepositoryState.MERGING_RESOLVED)) {
+			isMergedResolved = true;
+			mergeRepository = repo;
+		} else if (state.equals(RepositoryState.CHERRY_PICKING_RESOLVED)) {
+			isCherryPickResolved = true;
+			mergeRepository = repo;
 		}
 		if (amendAllowed)
-			loadPreviousCommit(repos[0]);
+			loadPreviousCommit();
 		if (files.isEmpty()) {
 			if (amendAllowed && previousCommit != null) {
 				boolean result = MessageDialog.openQuestion(shell,
@@ -194,22 +191,21 @@ public class CommitUI  {
 
 		String author = null;
 		String committer = null;
-		if (repository != null) {
-			final UserConfig config = repository.getConfig().get(UserConfig.KEY);
-			author = config.getAuthorName();
-			final String authorEmail = config.getAuthorEmail();
-			author = author + " <" + authorEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
+		final UserConfig config = repo.getConfig().get(UserConfig.KEY);
+		author = config.getAuthorName();
+		final String authorEmail = config.getAuthorEmail();
+		author = author + " <" + authorEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 
-			committer = config.getCommitterName();
-			final String committerEmail = config.getCommitterEmail();
-			committer = committer + " <" + committerEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
-		}
+		committer = config.getCommitterName();
+		final String committerEmail = config.getCommitterEmail();
+		committer = committer + " <" + committerEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 
 		CommitDialog commitDialog = new CommitDialog(shell);
 		commitDialog.setAmending(amending);
 		commitDialog.setAmendAllowed(amendAllowed);
-		commitDialog.setFiles(files, indexDiffs);
+		commitDialog.setFiles(repo, files, indexDiff);
 		commitDialog.setPreselectedFiles(getSelectedFiles());
+		commitDialog.setPreselectAll(preselectAll);
 		commitDialog.setAuthor(author);
 		commitDialog.setCommitter(committer);
 		commitDialog.setAllowToChangeSelection(!isMergedResolved && !isCherryPickResolved);
@@ -231,30 +227,33 @@ public class CommitUI  {
 		if (commitDialog.open() != IDialogConstants.OK_ID)
 			return;
 
-		final CommitOperation commitOperation = new CommitOperation(
-				commitDialog.getSelectedFiles(), notIndexed, notTracked,
-				commitDialog.getAuthor(), commitDialog.getCommitter(),
-				commitDialog.getCommitMessage());
-		if (commitDialog.isAmending()) {
-			commitOperation.setAmending(true);
-			commitOperation.setRepos(repos);
+		final CommitOperation commitOperation;
+		try {
+			commitOperation= new CommitOperation(
+					repo,
+					commitDialog.getSelectedFiles(), notIndexed, notTracked,
+					commitDialog.getAuthor(), commitDialog.getCommitter(),
+					commitDialog.getCommitMessage());
+		} catch (CoreException e1) {
+			Activator.handleError(UIText.CommitUI_commitFailed, e1, true);
+			return;
 		}
+		if (commitDialog.isAmending())
+			commitOperation.setAmending(true);
 		commitOperation.setComputeChangeId(commitDialog.getCreateChangeId());
 		commitOperation.setCommitAll(isMergedResolved);
 		if (isMergedResolved)
-			commitOperation.setRepos(repos);
+			commitOperation.setRepository(repo);
 		String jobname = UIText.CommitAction_CommittingChanges;
 		Job job = new Job(jobname) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					commitOperation.execute(monitor);
-					for (Repository repo : repos) {
-						RepositoryMapping mapping = RepositoryMapping
-								.findRepositoryMapping(repo);
-						if (mapping != null)
-							mapping.fireRepositoryChanged();
-					}
+					RepositoryMapping mapping = RepositoryMapping
+							.findRepositoryMapping(repo);
+					if (mapping != null)
+						mapping.fireRepositoryChanged();
 				} catch (CoreException e) {
 					return Activator.createErrorStatus(
 							UIText.CommitAction_CommittingFailed, e);
@@ -283,24 +282,20 @@ public class CommitUI  {
 				.getProjects();
 		for (IProject project : projects) {
 			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
-			for (Repository repository : repos) {
-				if (mapping != null && mapping.getRepository() == repository) {
-					ret.add(project);
-					break;
-				}
-			}
+			if (mapping != null && mapping.getRepository() == repo)
+				ret.add(project);
 		}
 		return ret.toArray(new IProject[ret.size()]);
 	}
 
 	private void resetState() {
-		files = new LinkedHashSet<IFile>();
-		notIndexed = new LinkedHashSet<IFile>();
-		indexChanges = new LinkedHashSet<IFile>();
-		notTracked = new LinkedHashSet<IFile>();
+		files = new LinkedHashSet<String>();
+		notIndexed = new LinkedHashSet<String>();
+		indexChanges = new LinkedHashSet<String>();
+		notTracked = new LinkedHashSet<String>();
 		amending = false;
 		previousCommit = null;
-		indexDiffs = new HashMap<Repository, IndexDiff>();
+		indexDiff = null;
 	}
 
 	/**
@@ -312,23 +307,29 @@ public class CommitUI  {
 	 * @return a collection of files that is eligible to be committed based on
 	 *         the user's selection
 	 */
-	private Set<IFile> getSelectedFiles() {
-		Set<IFile> preselectionCandidates = new LinkedHashSet<IFile>();
+	private Set<String> getSelectedFiles() {
+		Set<String> preselectionCandidates = new LinkedHashSet<String>();
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		// iterate through all the files that may be committed
-		for (IFile file : files) {
-			for (IResource resource : selectedResources) {
-				// if any selected resource contains the file, add it as a
-				// preselection candidate
-				if (resource.contains(file)) {
-					preselectionCandidates.add(file);
-					break;
+		for (String fileName : files) {
+			URI uri = new File(repo.getWorkTree(), fileName).toURI();
+			IFile[] workspaceFiles = root.findFilesForLocationURI(uri);
+			if (workspaceFiles.length > 0) {
+				IFile file = workspaceFiles[0];
+				for (IResource resource : selectedResources) {
+					// if any selected resource contains the file, add it as a
+					// preselection candidate
+					if (resource.contains(file)) {
+						preselectionCandidates.add(fileName);
+						break;
+					}
 				}
 			}
 		}
 		return preselectionCandidates;
 	}
 
-	private void loadPreviousCommit(Repository repo) {
+	private void loadPreviousCommit() {
 		try {
 			ObjectId parentId = repo.resolve(Constants.HEAD);
 			if (parentId != null)
@@ -339,60 +340,35 @@ public class CommitUI  {
 		}
 	}
 
-	private void buildIndexHeadDiffList(IProject[] selectedProjects, IProgressMonitor monitor)
-			throws IOException, OperationCanceledException {
-		HashMap<Repository, HashSet<IProject>> repositories = new HashMap<Repository, HashSet<IProject>>();
+	private void buildIndexHeadDiffList(IProject[] selectedProjects,
+			IProgressMonitor monitor) throws IOException,
+			OperationCanceledException {
 
-		for (IProject project : selectedProjects) {
-			RepositoryMapping repositoryMapping = RepositoryMapping
-					.getMapping(project);
-			assert repositoryMapping != null;
-
-			Repository repository = repositoryMapping.getRepository();
-
-			HashSet<IProject> projects = repositories.get(repository);
-
-			if (projects == null) {
-				projects = new HashSet<IProject>();
-				repositories.put(repository, projects);
+		monitor.beginTask(UIText.CommitActionHandler_calculatingChanges, 1000);
+		EclipseGitProgressTransformer jgitMonitor = new EclipseGitProgressTransformer(
+				monitor);
+		CountingVisitor counter = new CountingVisitor();
+		for (IProject p : selectedProjects) {
+			try {
+				p.accept(counter);
+			} catch (CoreException e) {
+				// ignore
 			}
-
-			projects.add(project);
 		}
+		indexDiff = new IndexDiff(repo, Constants.HEAD,
+				IteratorService.createInitialIterator(repo));
+		indexDiff.diff(jgitMonitor, counter.count, 0, NLS.bind(
+				UIText.CommitActionHandler_repository, repo.getDirectory()
+						.getPath()));
 
-		monitor.beginTask(UIText.CommitActionHandler_calculatingChanges,
-				repositories.size() * 1000);
-		for (Map.Entry<Repository, HashSet<IProject>> entry : repositories
-				.entrySet()) {
-			Repository repository = entry.getKey();
-			EclipseGitProgressTransformer jgitMonitor = new EclipseGitProgressTransformer(monitor);
-			HashSet<IProject> projects = entry.getValue();
-			CountingVisitor counter = new CountingVisitor();
-			for (IProject p : projects) {
-				try {
-					p.accept(counter);
-				} catch (CoreException e) {
-					// ignore
-				}
-			}
-			IndexDiff indexDiff = new IndexDiff(repository, Constants.HEAD,
-					IteratorService.createInitialIterator(repository));
-			indexDiff.diff(jgitMonitor, counter.count, 0, NLS.bind(
-					UIText.CommitActionHandler_repository, repository
-							.getDirectory().getPath()));
-			indexDiffs.put(repository, indexDiff);
-
-			for (IProject project : projects) {
-				includeList(project, indexDiff.getAdded(), indexChanges);
-				includeList(project, indexDiff.getChanged(), indexChanges);
-				includeList(project, indexDiff.getRemoved(), indexChanges);
-				includeList(project, indexDiff.getMissing(), notIndexed);
-				includeList(project, indexDiff.getModified(), notIndexed);
-				includeList(project, indexDiff.getUntracked(), notTracked);
-			}
-			if (monitor.isCanceled())
-				throw new OperationCanceledException();
-		}
+		includeList(indexDiff.getAdded(), indexChanges);
+		includeList(indexDiff.getChanged(), indexChanges);
+		includeList(indexDiff.getRemoved(), indexChanges);
+		includeList(indexDiff.getMissing(), notIndexed);
+		includeList(indexDiff.getModified(), notIndexed);
+		includeList(indexDiff.getUntracked(), notTracked);
+		if (monitor.isCanceled())
+			throw new OperationCanceledException();
 		monitor.done();
 	}
 
@@ -404,31 +380,11 @@ public class CommitUI  {
 		}
 	}
 
-	private void includeList(IProject project, Set<String> added,
-			Set<IFile> category) {
-		String repoRelativePath = RepositoryMapping.getMapping(project)
-				.getRepoRelativePath(project);
-		if (repoRelativePath.length() > 0) {
-			repoRelativePath += "/"; //$NON-NLS-1$
-		}
-
+	private void includeList(Set<String> added, Set<String> category) {
 		for (String filename : added) {
-			try {
-				if (!filename.startsWith(repoRelativePath))
-					continue;
-				String projectRelativePath = filename
-						.substring(repoRelativePath.length());
-				IFile member = project.getFile(projectRelativePath);
-				if (!files.contains(member))
-					files.add(member);
-				category.add(member);
-			} catch (Exception e) {
-				if (GitTraceLocation.UI.isActive())
-					GitTraceLocation.getTrace().trace(
-							GitTraceLocation.UI.getLocation(), e.getMessage(),
-							e);
-				continue;
-			} // if it's outside the workspace, bad things happen
+			if (!files.contains(filename))
+				files.add(filename);
+			category.add(filename);
 		}
 	}
 

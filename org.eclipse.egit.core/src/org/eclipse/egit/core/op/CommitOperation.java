@@ -12,12 +12,10 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.TimeZone;
 
 import org.eclipse.core.resources.IFile;
@@ -26,15 +24,16 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
@@ -50,7 +49,7 @@ import org.eclipse.team.core.TeamException;
  */
 public class CommitOperation implements IEGitOperation {
 
-	private IFile[] filesToCommit;
+	Collection<String> commitFileList;
 
 	private boolean commitWorkingDirChanges = false;
 
@@ -64,16 +63,15 @@ public class CommitOperation implements IEGitOperation {
 
 	private boolean commitAll = false;
 
-	private Repository[] repos;
+	private Repository repo;
 
-	Collection<IFile> notIndexed;
+	Collection<String> notIndexed;
 
-	Collection<IFile> notTracked;
+	Collection<String> notTracked;
 
 	private boolean createChangeId;
 
 	/**
-	 *
 	 * @param filesToCommit
 	 *            a list of files which will be included in the commit
 	 * @param notIndexed
@@ -86,21 +84,81 @@ public class CommitOperation implements IEGitOperation {
 	 *            the committer of the commit
 	 * @param message
 	 *            the commit message
+	 * @throws CoreException
 	 */
 	public CommitOperation(IFile[] filesToCommit, Collection<IFile> notIndexed,
 			Collection<IFile> notTracked, String author, String committer,
-			String message) {
-		if (filesToCommit != null) {
-			// save them in our own copy
-			this.filesToCommit = new IFile[filesToCommit.length];
-			System.arraycopy(filesToCommit, 0, this.filesToCommit, 0,
-					filesToCommit.length);
-		}
-		this.notIndexed = notIndexed;
-		this.notTracked = notTracked;
+			String message) throws CoreException {
 		this.author = author;
 		this.committer = committer;
 		this.message = message;
+		if (filesToCommit != null && filesToCommit.length > 0)
+			setRepository(filesToCommit[0]);
+		if (filesToCommit != null)
+			commitFileList = buildFileList(Arrays.asList(filesToCommit));
+		if (notIndexed != null)
+			this.notIndexed = buildFileList(notIndexed);
+		if (notTracked != null)
+			this.notTracked = buildFileList(notTracked);
+	}
+
+	/**
+	 * @param repository
+	 * @param filesToCommit
+	 *            a list of files which will be included in the commit
+	 * @param notIndexed
+	 *            a list of all files with changes not in the index
+	 * @param notTracked
+	 *            a list of all untracked files
+	 * @param author
+	 *            the author of the commit
+	 * @param committer
+	 *            the committer of the commit
+	 * @param message
+	 *            the commit message
+	 * @throws CoreException
+	 */
+	public CommitOperation(Repository repository, Collection<String> filesToCommit, Collection<String> notIndexed,
+			Collection<String> notTracked, String author, String committer,
+			String message) throws CoreException {
+		this.repo = repository;
+		this.author = author;
+		this.committer = committer;
+		this.message = message;
+		if (filesToCommit != null)
+			commitFileList = new HashSet<String>(filesToCommit);
+		if (notIndexed != null)
+			this.notIndexed = new HashSet<String>(notIndexed);
+		if (notTracked != null)
+			this.notTracked = new HashSet<String>(notTracked);
+	}
+
+	private void setRepository(IFile file) throws CoreException {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(file);
+		if (mapping == null)
+			throw new CoreException(Activator.error(NLS.bind(
+					CoreText.CommitOperation_couldNotFindRepositoryMapping,
+					file), null));
+		repo = mapping.getRepository();
+	}
+
+	/**
+	 * @param repository
+	 */
+	public void setRepository(Repository repository) {
+		repo = repository;
+	}
+
+	private Collection<String> buildFileList(Collection<IFile> files) throws CoreException {
+		Collection<String> result = new HashSet<String>();
+		for (IFile file : files) {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(file);
+			if (mapping == null)
+				throw new CoreException(Activator.error(NLS.bind(CoreText.CommitOperation_couldNotFindRepositoryMapping, file), null));
+			String repoRelativePath = mapping.getRepoRelativePath(file);
+			result.add(repoRelativePath);
+		}
+		return result;
 	}
 
 	public void execute(IProgressMonitor m) throws CoreException {
@@ -118,86 +176,55 @@ public class CommitOperation implements IEGitOperation {
 				final PersonIdent committerIdent = RawParseUtils.parsePersonIdent(committer);
 				if (commitAll)
 					commitAll(commitDate, timeZone, authorIdent, committerIdent);
-
-				else if (amending || filesToCommit != null
-						&& filesToCommit.length > 0) {
+				else if (amending || commitFileList != null
+						&& commitFileList.size() > 0) {
 					actMonitor.beginTask(
 							CoreText.CommitOperation_PerformingCommit,
-							filesToCommit.length * 2);
+							commitFileList.size() * 2);
 					actMonitor.setTaskName(CoreText.CommitOperation_PerformingCommit);
-					Map<Repository, List<String>> filesByRepo = prepareCommit(actMonitor);
-					doCommits(filesByRepo);
-					actMonitor.worked(filesToCommit.length);
+					addUntracked();
+					commit();
+					actMonitor.worked(commitFileList.size());
 				} else if (commitWorkingDirChanges) {
 					// TODO commit -a
 				} else {
 					// TODO commit
 				}
 			}
+
 		};
 		ResourcesPlugin.getWorkspace().run(action, monitor);
+	}
+
+	private void addUntracked() throws CoreException {
+		if (notTracked == null || notTracked.size() == 0)
+			return;
+		AddCommand addCommand = new Git(repo).add();
+		boolean fileAdded = false;
+		for (String path : notTracked)
+			if (commitFileList.contains(path)) {
+				addCommand.addFilepattern(path);
+				fileAdded = true;
+			}
+		if (fileAdded) {
+			try {
+				addCommand.call();
+			} catch (NoFilepatternException e) {
+				throw new CoreException(Activator.error(e.getMessage(), e));
+			}
+		}
 	}
 
 	public ISchedulingRule getSchedulingRule() {
 		return ResourcesPlugin.getWorkspace().getRoot();
 	}
 
-	private Map<Repository, List<String>> prepareCommit(IProgressMonitor monitor)
-			throws CoreException {
-		Map<Repository, List<String>> filesByRepo = new HashMap<Repository, List<String>>();
-		ArrayList<IFile> filesToAddToIndex = new ArrayList<IFile>();
-
-		for (IFile file : filesToCommit) {
-			RepositoryMapping mapping = RepositoryMapping.getMapping(file);
-			if (mapping == null)
-				throw new CoreException(Activator.error(NLS.bind(CoreText.CommitOperation_couldNotFindRepositoryMapping, file), null));
-			String repoRelativePath = mapping.getRepoRelativePath(file);
-			Repository repository = mapping.getRepository();
-			monitor.worked(1);
-			List<String> commitFileList = getCommitFileListForRepository(filesByRepo, repository);
-			commitFileList.add(repoRelativePath);
-			if (file.exists() && (notIndexed.contains(file) || notTracked.contains(file)))
-				filesToAddToIndex.add(file);
-		}
-		if (filesToAddToIndex.size()>0)
-			new AddToIndexOperation(filesToAddToIndex)
-					.execute(new SubProgressMonitor(monitor, 1));
-		return filesByRepo;
-	}
-
-	private List<String> getCommitFileListForRepository(
-			Map<Repository, List<String>> filesByRepo, Repository repository) {
-		List<String> result = filesByRepo.get(repository);
-		if (result == null) {
-			result = new ArrayList<String>();
-			filesByRepo.put(repository, result);
-		}
-		return result;
-	}
-
-	private void doCommits(Map<Repository, List<String>> filesByRepo)
-			throws TeamException {
-
+	private void commit() throws TeamException {
 		final Date commitDate = new Date();
 		final TimeZone timeZone = TimeZone.getDefault();
-
 		final PersonIdent authorIdent = RawParseUtils.parsePersonIdent(author);
 		final PersonIdent committerIdent = RawParseUtils.parsePersonIdent(committer);
 
-		if (amending && filesToCommit.length == 0) {
-			commit(repos[0], new ArrayList<String>(), commitDate, timeZone, authorIdent, committerIdent);
-			return;
-		}
-		for (java.util.Map.Entry<Repository, List<String>> entry : filesByRepo.entrySet()) {
-			List<String> commitFileList = entry.getValue();
-			Repository repo = entry.getKey();
-			commit(repo, commitFileList, commitDate, timeZone, authorIdent, committerIdent);
-		}
-	}
-
-	private void commit(Repository repo, List<String> commitFileList, final Date commitDate,
-			final TimeZone timeZone, final PersonIdent authorIdent,
-			final PersonIdent committerIdent) throws TeamException {
 		Git git = new Git(repo);
 		try {
 			CommitCommand commitCommand = git.commit();
@@ -248,19 +275,6 @@ public class CommitOperation implements IEGitOperation {
 	}
 
 	/**
-	 *
-	 * @param repos
-	 */
-	public void setRepos(Repository[] repos) {
-		if (repos != null) {
-			// save them in our own copy
-			this.repos = new Repository[repos.length];
-			System.arraycopy(repos, 0, this.repos, 0, repos.length);
-		} else
-			this.repos = null;
-	}
-
-	/**
 	 * @param createChangeId
 	 *            <code>true</code> if a Change-Id should be inserted
 	 */
@@ -268,38 +282,33 @@ public class CommitOperation implements IEGitOperation {
 		this.createChangeId = createChangeId;
 	}
 
+	// TODO: can the commit message be change by the user in case of a merge commit?
 	private void commitAll(final Date commitDate, final TimeZone timeZone,
 			final PersonIdent authorIdent, final PersonIdent committerIdent)
 			throws TeamException {
-		for (Repository repo : repos) {
-			Git git = new Git(repo);
-			try {
-				git.commit()
-						.setAll(true)
-						.setAuthor(
-								new PersonIdent(authorIdent,
-										commitDate, timeZone))
-						.setCommitter(
-								new PersonIdent(committerIdent,
-										commitDate, timeZone))
-						.setMessage(message)
-						.setInsertChangeId(createChangeId)
-						.call();
-			} catch (NoHeadException e) {
-				throw new TeamException(e.getLocalizedMessage(), e);
-			} catch (NoMessageException e) {
-				throw new TeamException(e.getLocalizedMessage(), e);
-			} catch (UnmergedPathException e) {
-				throw new TeamException(e.getLocalizedMessage(), e);
-			} catch (ConcurrentRefUpdateException e) {
-				throw new TeamException(
-						CoreText.MergeOperation_InternalError, e);
-			} catch (JGitInternalException e) {
-				throw new TeamException(
-						CoreText.MergeOperation_InternalError, e);
-			} catch (WrongRepositoryStateException e) {
-				throw new TeamException(e.getLocalizedMessage(), e);
-			}
+
+		Git git = new Git(repo);
+		try {
+			git.commit()
+					.setAll(true)
+					.setAuthor(
+							new PersonIdent(authorIdent, commitDate, timeZone))
+					.setCommitter(
+							new PersonIdent(committerIdent, commitDate,
+									timeZone)).setMessage(message)
+					.setInsertChangeId(createChangeId).call();
+		} catch (NoHeadException e) {
+			throw new TeamException(e.getLocalizedMessage(), e);
+		} catch (NoMessageException e) {
+			throw new TeamException(e.getLocalizedMessage(), e);
+		} catch (UnmergedPathException e) {
+			throw new TeamException(e.getLocalizedMessage(), e);
+		} catch (ConcurrentRefUpdateException e) {
+			throw new TeamException(CoreText.MergeOperation_InternalError, e);
+		} catch (JGitInternalException e) {
+			throw new TeamException(CoreText.MergeOperation_InternalError, e);
+		} catch (WrongRepositoryStateException e) {
+			throw new TeamException(e.getLocalizedMessage(), e);
 		}
 	}
 

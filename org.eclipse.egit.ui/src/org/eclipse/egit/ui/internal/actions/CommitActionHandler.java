@@ -16,6 +16,7 @@ package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.internal.commit.CommitUI;
 import org.eclipse.jgit.lib.Repository;
@@ -28,13 +29,14 @@ public class CommitActionHandler extends RepositoryActionHandler {
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		Repository[] repos = getRepositoriesFor(getProjectsForSelectedResources(event));
 		IResource[] selectedResources = getSelectedResources(event);
-		new CommitUI(getShell(event), repos, selectedResources).commit();
+		new CommitUI(getShell(event), repos[0], selectedResources, false).commit();
 		return null;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return getProjectsInRepositoryOfSelectedResources().length > 0;
+		IProject[] projects = getProjectsForSelectedResources();
+		return getRepositoriesFor(projects).length == 1;
 	}
 
 }

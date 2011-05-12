@@ -3518,6 +3518,9 @@ public class UIText extends NLS {
 	public static String CommitSelectionDialog_WindowTitle;
 
 	/** */
+	public static String CommitUI_commitFailed;
+
+	/** */
 	public static String EgitUiEditorUtils_openFailed;
 
 	/** */
