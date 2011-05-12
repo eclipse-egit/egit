@@ -69,9 +69,9 @@ public class PushAction extends SynchronizeModelAction {
 					push.setCredentialsProvider(new EGitCredentialsProvider());
 					push.execute(monitor);
 				} catch (URISyntaxException e) {
-					new InvocationTargetException(e);
+					throw new InvocationTargetException(e);
 				} catch (CoreException e) {
-					new InvocationTargetException(e);
+					throw new InvocationTargetException(e);
 				}
 			}
 		};
