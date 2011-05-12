@@ -10,6 +10,9 @@ package org.eclipse.egit.core.synchronize.dto;
 
 import static org.eclipse.core.runtime.Assert.isNotNull;
 import static org.eclipse.egit.core.RevUtils.getCommonAncestor;
+import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_BRANCH_SECTION;
+import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_REMOTE;
+import static org.eclipse.jgit.lib.Constants.R_HEADS;
 import static org.eclipse.jgit.lib.Constants.R_REMOTES;
 
 import java.io.File;
@@ -17,6 +20,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -34,6 +38,8 @@ public class GitSynchronizeData {
 
 	private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace()
 					.getRoot();
+
+	private static final Pattern BRANCH_NAME_PATTERN = Pattern.compile("^" + R_HEADS + "/.*?/"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private final boolean includeLocal;
 
@@ -175,8 +181,15 @@ public class GitSynchronizeData {
 		if (rev.contains(R_REMOTES)) {
 			String remote = rev.replaceAll(R_REMOTES, ""); //$NON-NLS-1$
 			return remote.substring(0, remote.indexOf("/")); //$NON-NLS-1$
-		} else
-			return null;
+		} else {
+			String name = BRANCH_NAME_PATTERN.matcher(rev).replaceAll(""); //$NON-NLS-1$
+			String remoteTracking = repo.getConfig().getString(CONFIG_BRANCH_SECTION,
+					name, CONFIG_KEY_REMOTE);
+			if (remoteTracking != null && remoteTracking.length() > 0)
+				return remoteTracking;
+			else
+				return null;
+		}
 	}
 
 }
