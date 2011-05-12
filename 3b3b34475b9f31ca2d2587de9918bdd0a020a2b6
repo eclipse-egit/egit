@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//+9w\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-11T22:13:41Z",
+      "side": 1,
+      "message": "I would add a blank line here to separate the 2 paragraphs",
+      "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//++A\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-11T22:13:41Z",
+      "side": 1,
+      "message": "wouldn\u0027t it look cleaner if the null checks would be moved into buildFileList() ?",
+      "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+98\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-11T22:13:41Z",
+      "side": 1,
+      "message": "style nit: this line looks too wide",
+      "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+90\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-11T22:13:41Z",
+      "side": 1,
+      "message": "I think HashSet would be faster as in addUntracked() you call contains() which is O(n) for ArrayList but O(1) for HashSet",
+      "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+94\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-11T22:13:41Z",
+      "side": 1,
+      "message": "style nit: looks like a blank is missing here",
+      "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//++M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-11T22:13:41Z",
+      "side": 1,
+      "message": "gerrit shows this diff in a strange way ...",
+      "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//++I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-11T22:13:41Z",
+      "side": 1,
+      "message": "what if length \u003e 1 ?",
+      "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
