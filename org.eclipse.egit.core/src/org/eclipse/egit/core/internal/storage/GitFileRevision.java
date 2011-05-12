@@ -28,6 +28,10 @@ public abstract class GitFileRevision extends FileRevision {
 	/** Content identifier for the working copy. */
 	public static final String WORKSPACE = "Workspace";  //$NON-NLS-1$
 
+	/** Content identifier for the working tree version.
+	/* Used to access non workspace files */
+	public static final String WORKING_TREE = "Working Tree";  //$NON-NLS-1$
+
 	/** Content identifier for the content staged in the index. */
 	public static final String INDEX = "Index";  //$NON-NLS-1$
 
