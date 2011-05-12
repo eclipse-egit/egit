@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///Gc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/search/CommitResultLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-10T14:52:06Z",
+      "side": 1,
+      "message": "style nit: we rather use @Override than @see tags",
+      "revId": "1efe0b9ced6387d485bccd0c27e23ce22df0cff4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
