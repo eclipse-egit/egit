@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//+50\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-12T08:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//+9w\u003d",
+      "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//++A\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
         "patchSetId": 4
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//+5o\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-12T08:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//+98\u003d",
+      "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//+90\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
         "patchSetId": 4
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//+5s\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-12T08:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//+90\u003d",
+      "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//+94\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
         "patchSetId": 4
@@ -81,6 +135,24 @@
       "writtenOn": "2011-05-11T22:13:41Z",
       "side": 1,
       "message": "style nit: looks like a blank is missing here",
+      "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+5k\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-12T08:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//+94\u003d",
       "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -115,6 +187,24 @@
       "writtenOn": "2011-05-11T22:13:41Z",
       "side": 1,
       "message": "what if length \u003e 1 ?",
+      "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+5g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-12T08:48:58Z",
+      "side": 1,
+      "message": "It might happen that more than one resource exists for a given file (e.g. nested projects). Anyway, we just need a resource and can thus take the first.",
+      "parentUuid": "AABOIn//++I\u003d",
       "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
