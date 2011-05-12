@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//+5w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-12T08:48:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure. I like to do null checks on parameters early.",
+      "parentUuid": "AABOIn//++A\u003d",
+      "revId": "3b3b34475b9f31ca2d2587de9918bdd0a020a2b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//+98\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CommitOperation.java",
         "patchSetId": 4
