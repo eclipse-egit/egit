@@ -16,6 +16,24 @@
       "revId": "81680e18f83ec8edaeba52d901478bd0671dc7c3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIX///rE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchOperationUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-04-28T19:39:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIX///vo\u003d",
+      "revId": "81680e18f83ec8edaeba52d901478bd0671dc7c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
