@@ -23,6 +23,7 @@ import org.eclipse.egit.core.synchronize.GitSubscriberResourceMappingContext;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
 import org.eclipse.team.ui.TeamUI;
@@ -57,9 +58,14 @@ public class GitModelSynchronize {
 	 */
 	public static final void launch(final GitSynchronizeDataSet gsdSet,
 			IResource[] resources) {
-		Job fetchJob = new SynchronizeFetchJob(gsdSet);
-		fetchJob.setUser(true);
-		fetchJob.schedule();
+		boolean launchFetch = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH);
+		Job fetchJob = null;
+		if (launchFetch) {
+			fetchJob = new SynchronizeFetchJob(gsdSet);
+			fetchJob.setUser(true);
+			fetchJob.schedule();
+		}
 
 		ResourceMapping[] mappings = getSelectedResourceMappings(resources);
 
@@ -82,11 +88,13 @@ public class GitModelSynchronize {
 		if (window != null)
 			activePart = window.getActivePage().getActivePart();
 
-		try {
-			fetchJob.join();
-		} catch (InterruptedException e) {
-			Activator.logError("Fetch operation interupted", e); //$NON-NLS-1$
-		}
+		if (launchFetch && fetchJob != null)
+			try {
+				fetchJob.join();
+			} catch (InterruptedException e) {
+				Activator.logError("Fetch operation interupted", e); //$NON-NLS-1$
+			}
+
 		participant.run(activePart);
 	}
 

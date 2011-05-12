@@ -23,10 +23,13 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.fetch.FetchOperationUI;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 
 class SynchronizeFetchJob extends Job {
 
@@ -71,6 +74,7 @@ class SynchronizeFetchJob extends Job {
 			try {
 				fetchOperationUI.execute(subMonitor);
 			} catch (CoreException e) {
+				showInformationDialog(remoteName);
 				Activator.logError(e.getMessage(), e);
 			}
 
@@ -79,4 +83,18 @@ class SynchronizeFetchJob extends Job {
 
 		return Status.OK_STATUS;
 	}
+
+	private void showInformationDialog(final String remoteName) {
+		final Display display = PlatformUI.getWorkbench().getDisplay();
+		display.syncExec(new Runnable() {
+			public void run() {
+				MessageDialog.openInformation(display.getActiveShell(), NLS
+						.bind(UIText.SynchronizeFetchJob_FetchFailedTitle,
+								remoteName), NLS.bind(
+						UIText.SynchronizeFetchJob_FetchFailedMessage,
+						UIText.GitPreferenceRoot_fetchBeforeSynchronization));
+			}
+		});
+	}
+
 }
