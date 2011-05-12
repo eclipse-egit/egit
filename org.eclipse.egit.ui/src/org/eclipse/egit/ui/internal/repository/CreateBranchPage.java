@@ -7,23 +7,23 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Dariusz Luksza <dariusz@luksza.org>
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation.UpstreamConfig;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.ValidationUtils;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.jface.dialogs.Dialog;
@@ -89,10 +89,6 @@ class CreateBranchPage extends WizardPage {
 	private Button buttonConfigMerge;
 
 	private Button buttonConfigNone;
-
-	private static final Pattern NUMBERS = Pattern.compile("[\\d]*"); //$NON-NLS-1$
-
-	private static final Pattern CHARS = Pattern.compile("[^0-9]*"); //$NON-NLS-1$
 
 	/**
 	 * Constructs this page.
@@ -183,27 +179,7 @@ class CreateBranchPage extends WizardPage {
 				// ignore here
 			}
 
-			Collections.sort(refs, new Comparator<String>() {
-				public int compare(String o1, String o2) {
-					String o1Chars = NUMBERS.matcher(o1).replaceAll(""); //$NON-NLS-1$
-					String o2Chars = NUMBERS.matcher(o2).replaceAll(""); //$NON-NLS-1$
-					int charCompare = o1Chars.compareTo(o2Chars);
-
-					if (charCompare == 0) {
-						String o1Numbers = CHARS.matcher(o1).replaceAll(""); //$NON-NLS-1$
-						String o2Numbers = CHARS.matcher(o2).replaceAll(""); //$NON-NLS-1$
-						if (o1Numbers.length() == 0)
-							o1Numbers = "0"; //$NON-NLS-1$
-						if (o2Numbers.length() == 0)
-							o2Numbers = "0"; //$NON-NLS-1$
-
-						return Integer.parseInt(o2Numbers)
-								- Integer.parseInt(o1Numbers);
-					}
-
-					return charCompare;
-				}
-			});
+			Collections.sort(refs, CommonUtils.STRING_ASCENDING_COMPARATOR);
 			for (String refName : refs)
 				this.branchCombo.add(refName);
 
