@@ -3559,6 +3559,15 @@ public class UIText extends NLS {
 	/** */
 	public static String StagingView_Commit;
 
+	/** */
+	public static String SynchronizeFetchJob_JobName;
+
+	/** */
+	public static String SynchronizeFetchJob_TaskName;
+
+	/** */
+	public static String SynchronizeFetchJob_SubTaskName;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
