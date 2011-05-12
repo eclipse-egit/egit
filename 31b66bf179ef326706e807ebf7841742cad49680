@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///BI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-05-11T13:15:31Z",
+      "side": 1,
+      "message": "Now the commit action is not enabled when I select a non-project resource. The method getRepositories does only work for projects.",
+      "revId": "31b66bf179ef326706e807ebf7841742cad49680",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
