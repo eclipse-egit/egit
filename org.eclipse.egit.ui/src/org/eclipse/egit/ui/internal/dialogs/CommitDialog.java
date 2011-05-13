@@ -24,10 +24,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.eclipse.compare.CompareUI;
-import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
@@ -37,15 +34,12 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
-import org.eclipse.egit.core.GitProvider;
-import org.eclipse.egit.core.internal.storage.GitFileHistoryProvider;
 import org.eclipse.egit.ui.ICommitMessageProvider;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
-import org.eclipse.egit.ui.internal.FileRevisionTypedElement;
-import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
+import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.dialogs.CommitItem.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -97,10 +91,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.team.core.RepositoryProvider;
-import org.eclipse.team.core.history.IFileHistory;
-import org.eclipse.team.core.history.IFileHistoryProvider;
-import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
@@ -193,48 +183,15 @@ public class CommitDialog extends Dialog {
 
 		public void widgetDefaultSelected(SelectionEvent e) {
 			IStructuredSelection selection = (IStructuredSelection) filesViewer.getSelection();
-
 			CommitItem commitItem = (CommitItem) selection.getFirstElement();
 			if (commitItem == null) {
 				return;
 			}
-			if (commitItem.status == Status.UNTRACKED)
-				return;
 			IFile file = findFile(commitItem.path);
 			if (file == null)
-				return; // file is outside the workspace. TODO: support
-						// displaying diffs in this case.
-			IProject project = file.getProject();
-			try {
-				ObjectId id = repository.resolve(Constants.HEAD);
-				if (id == null
-						|| repository.open(id, Constants.OBJ_COMMIT).getType() != Constants.OBJ_COMMIT) {
-					return;
-				}
-			} catch (IOException e1) {
-				return;
-			}
-
-			GitProvider provider = (GitProvider) RepositoryProvider.getProvider(project);
-			GitFileHistoryProvider fileHistoryProvider = (GitFileHistoryProvider) provider.getFileHistoryProvider();
-
-			IFileHistory fileHistory = fileHistoryProvider.getFileHistoryFor(file, IFileHistoryProvider.SINGLE_REVISION, null);
-
-			IFileRevision baseFile = fileHistory.getFileRevisions()[0];
-			IFileRevision nextFile = fileHistoryProvider.getWorkspaceFileRevision(file);
-
-			String encoding;
-			try {
-				encoding = file.getCharset();
-			} catch (CoreException e1) {
-				encoding = null;
-			}
-
-			ITypedElement base = new FileRevisionTypedElement(baseFile, encoding);
-			ITypedElement next = new FileRevisionTypedElement(nextFile, encoding);
-
-			GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(next, base, null);
-			CompareUI.openCompareDialog(input);
+				CompareUtils.compareHeadWithWorkingTree(repository, commitItem.path);
+			else
+				CompareUtils.compareHeadWithWorkspace(repository, file);
 		}
 
 	}
