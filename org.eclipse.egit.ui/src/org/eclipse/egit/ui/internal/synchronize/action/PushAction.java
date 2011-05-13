@@ -58,12 +58,12 @@ public class PushAction extends SynchronizeModelAction {
 
 				String remoteName = gsd.getSrcRemoteName();
 				if (remoteName == null)
-					remoteName = gsd.getDstRemoteName();
+					return;
 
 				RemoteConfig rc;
 				try {
-					rc = new RemoteConfig(gsd.getRepository()
-							.getConfig(), gsd.getDstRemoteName());
+					rc = new RemoteConfig(gsd.getRepository().getConfig(),
+							remoteName);
 					PushOperationUI push = new PushOperationUI(gsd.getRepository(),
 							rc, timeout, false);
 					push.setCredentialsProvider(new EGitCredentialsProvider());
