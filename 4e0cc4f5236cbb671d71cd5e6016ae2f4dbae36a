@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn///IQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-05-09T23:19:57Z",
+      "side": 1,
+      "message": "When I called the ActionCommands.COMPARE_WITH_INDEX_ACTION from the staging view I found that it would not use my supplied context instead getEvaluationContext() would be called, convertSelection would then return \u003cempty selection\u003e instead of the selection in my supplied context.\n\nThe framework class Command in executeWithChecks calls setEnabled(event.getApplicationContext()) (e.g. the supplied context) and then isEnabled() which without this change uses a different context.\n\nThis is my first foray into eclipse RCP and its a big learning curve so I may have missed something completely.  This change \u0027makes it work for me\u0027 though...",
+      "parentUuid": "AABOIn///LU\u003d",
+      "revId": "4e0cc4f5236cbb671d71cd5e6016ae2f4dbae36a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn///AM\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
         "patchSetId": 1
