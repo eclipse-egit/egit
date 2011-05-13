@@ -16,6 +16,24 @@
       "revId": "9b4967d71b48f7549e4322fcca49547f777c6021",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n//+bY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-03-25T18:24:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL3n//+e8\u003d",
+      "revId": "9b4967d71b48f7549e4322fcca49547f777c6021",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
