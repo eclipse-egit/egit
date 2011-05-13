@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOIn//+7w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//+7s\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditor.java",
         "patchSetId": 3
@@ -24,6 +41,40 @@
         "patchSetId": 3
       },
       "lineNbr": 105,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+7k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+7g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
       "author": {
         "id": 49
       },
@@ -70,11 +121,198 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//+8U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorInput.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+8Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorInput.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+8M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorInput.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+8I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorInput.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+8E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorInput.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+8A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorInput.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+78\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorInput.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+74\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorInput.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//+70\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorInput.java",
         "patchSetId": 3
       },
       "lineNbr": 145,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+7c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorInputFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+7Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 0,
+      "message": "Why you removed this javadoc? It is somehow connected with this change?",
+      "revId": "0906e924f118eefa7550e868beacc0b3d1873706",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+7M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffEditorPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
       "author": {
         "id": 49
       },

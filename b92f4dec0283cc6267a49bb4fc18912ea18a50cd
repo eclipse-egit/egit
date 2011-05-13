@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//+8g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIIcons.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 1,
+      "message": "please revert those irrelevant changes",
+      "revId": "b92f4dec0283cc6267a49bb4fc18912ea18a50cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+7U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditorPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-11T23:58:07Z",
+      "side": 1,
+      "message": "Commit can be signed-off by other people then author and committer. Maybe you should create more universal static regexp in replaceSignedOfByLine() that will match all signed-off tags regardless who actually signed commit.",
+      "revId": "b92f4dec0283cc6267a49bb4fc18912ea18a50cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
