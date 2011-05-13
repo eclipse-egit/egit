@@ -164,6 +164,12 @@ public class UIIcons {
 	/** Expand all icon */
 	public final static ImageDescriptor EXPAND_ALL;
 
+	/** Checkout icon */
+	public final static ImageDescriptor CHECKOUT;
+
+	/** Signed Off By icon */
+	public final static ImageDescriptor SIGNED_OFF;
+
 	/** base URL */
 	public final static URL base;
 
@@ -223,6 +229,8 @@ public class UIIcons {
 		CHANGESET = map("obj16/changelog_obj.gif"); //$NON-NLS-1$
 		GERRIT = map("obj16/gerrit_obj.gif"); //$NON-NLS-1$
 		EXPAND_ALL = map("wizban/expandall.gif"); //$NON-NLS-1$
+		CHECKOUT = map("obj16/checkout.gif"); //$NON-NLS-1$
+		SIGNED_OFF = map("obj16/signed-off.png"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
