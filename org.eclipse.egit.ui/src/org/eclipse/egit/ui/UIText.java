@@ -751,6 +751,12 @@ public class UIText extends NLS {
 	public static String CompareTreeView_WorkspaceVersionText;
 
 	/** */
+	public static String CompareUtils_errorGettingEncoding;
+
+	/** */
+	public static String CompareUtils_errorGettingHeadCommit;
+
+	/** */
 	public static String MergeHandler_SelectBranchMessage;
 
 	/** */
