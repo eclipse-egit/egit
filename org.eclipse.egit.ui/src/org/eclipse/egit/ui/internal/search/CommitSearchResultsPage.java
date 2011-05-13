@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.search;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -18,7 +22,10 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.search.ui.text.AbstractTextSearchViewPage;
+import org.eclipse.search.ui.text.Match;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 
 /**
@@ -37,10 +44,12 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 						.getAuthorIdent();
 				if (person1 != null && person2 != null)
 					return person2.getWhen().compareTo(person1.getWhen());
-			}
+			} else if (e1 instanceof RepositoryMatch
+					&& e2 instanceof RepositoryMatch)
+				return ((RepositoryMatch) e1).getLabel(e1).compareToIgnoreCase(
+						((RepositoryMatch) e2).getLabel(e2));
 			return super.compare(viewer, e1, e2);
 		}
-
 	}
 
 	/**
@@ -59,9 +68,29 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 
 	private void configureViewer(StructuredViewer viewer) {
 		viewer.setSorter(new CommitSorter());
-		viewer.setContentProvider(new WorkbenchContentProvider());
+		viewer.setContentProvider(new WorkbenchContentProvider() {
+
+			public Object[] getElements(Object element) {
+				if (getLayout() == FLAG_LAYOUT_TREE) {
+					Map<Repository, RepositoryMatch> repos = new HashMap<Repository, RepositoryMatch>();
+					for (Object inputElement : getInput().getElements()) {
+						RepositoryCommit commit = (RepositoryCommit) inputElement;
+						RepositoryMatch match = repos.get(commit
+								.getRepository());
+						if (match == null) {
+							match = new RepositoryMatch(commit.getRepository());
+							repos.put(commit.getRepository(), match);
+						}
+						match.addCommit(commit);
+					}
+					return repos.values().toArray();
+				}
+				return super.getElements(element);
+			}
+
+		});
 		viewer.setLabelProvider(new DelegatingStyledCellLabelProvider(
-				new CommitResultLabelProvider()));
+				new CommitResultLabelProvider(getLayout())));
 	}
 
 	/**
@@ -78,4 +107,9 @@ public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 		configureViewer(viewer);
 	}
 
+	protected void showMatch(Match match, int currentOffset, int currentLength,
+			boolean activate) throws PartInitException {
+		if (match instanceof CommitMatch)
+			CommitEditor.open(((CommitMatch) match).getCommit());
+	}
 }
