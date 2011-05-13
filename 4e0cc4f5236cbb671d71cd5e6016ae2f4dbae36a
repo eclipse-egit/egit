@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///LU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-05-09T13:45:10Z",
+      "side": 1,
+      "message": "Just for me to understand: When is mySelection \u003d\u003d null? \n\nIn my tests, whenever this is the case, I get an \u003cempty selection\u003e as return value from convertSelection. So what is the usecase for the evalutation of the IEvaluationContext?",
+      "revId": "4e0cc4f5236cbb671d71cd5e6016ae2f4dbae36a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///AM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-05-11T13:50:58Z",
+      "side": 1,
+      "message": "Ah, thanks. Now I see what it\u0027s for.\n\nI\u0027m not that familiar with that, but your solution works.",
+      "parentUuid": "AABOIn///IQ\u003d",
+      "revId": "4e0cc4f5236cbb671d71cd5e6016ae2f4dbae36a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
