@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n//+e8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-25T08:24:29Z",
+      "side": 1,
+      "message": "Code style: Even though the compiler would optimize this anyway, I\u0027d prefer to have the pattern as a constant here.",
+      "revId": "9b4967d71b48f7549e4322fcca49547f777c6021",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
