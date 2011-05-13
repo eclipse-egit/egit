@@ -1306,6 +1306,9 @@ public class UIText extends NLS {
 	public static String ResourceHistory_ShowTagSequence;
 
 	/** */
+	public static String ResourceHistory_toggleRelativeDate;
+
+	/** */
 	public static String ResourceHistory_toggleCommentWrap;
 
 	/** */
