@@ -143,7 +143,7 @@ public class StagingView extends ViewPart {
 				new Transfer[] { LocalSelectionTransfer.getTransfer() },
 				new DragSourceAdapter() {
 					public void dragStart(DragSourceEvent event) {
-						IStructuredSelection selection = (IStructuredSelection) stagedTableViewer
+						IStructuredSelection selection = (IStructuredSelection) unstagedTableViewer
 								.getSelection();
 						event.doit = !selection.isEmpty();
 					}
@@ -221,7 +221,7 @@ public class StagingView extends ViewPart {
 				new Transfer[] { LocalSelectionTransfer.getTransfer() },
 				new DragSourceAdapter() {
 					public void dragStart(DragSourceEvent event) {
-						IStructuredSelection selection = (IStructuredSelection) unstagedTableViewer
+						IStructuredSelection selection = (IStructuredSelection) stagedTableViewer
 								.getSelection();
 						event.doit = !selection.isEmpty();
 					}
