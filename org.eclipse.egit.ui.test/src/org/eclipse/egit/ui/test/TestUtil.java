@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.eclipse.core.net.proxy.IProxyService;
+import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jgit.lib.ObjectId;
@@ -130,7 +131,17 @@ public class TestUtil {
 	 * @throws InterruptedException
 	 */
 	public static void joinJobs(Object family) throws InterruptedException  {
-		Job.getJobManager().join(family, null);
+		IJobManager manager = Job.getJobManager();
+		long waitedForStart = 0;
+		while (waitedForStart < 5000) {
+			if (manager.find(family).length != 0) {
+				break;
+			} else {
+				Thread.sleep(500);
+				waitedForStart += 500;
+			}
+		}
+		manager.join(family, null);
 	}
 
 	/**
