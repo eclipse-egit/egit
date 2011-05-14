@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOI3///7o\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/AbstractSynchronizeViewTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-12T23:01:43Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be here FileUtils.mkdir(gitDir) sice previous implementation doesn\u0027t create dirs recursive.",
+      "revId": "6cabfb2e216576b3623ebcef3c1c375ed2deb141",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOI3///ws\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/AbstractSynchronizeViewTest.java",
         "patchSetId": 1
