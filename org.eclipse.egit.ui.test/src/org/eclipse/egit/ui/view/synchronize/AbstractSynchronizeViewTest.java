@@ -251,7 +251,10 @@ public abstract class AbstractSynchronizeViewTest extends
 		SWTBotTreeItem folderNode = waitForNodeWithText(projNode, FOLDER);
 		waitForNodeWithText(folderNode, fileName).doubleClick();
 
-		return bot.editorByTitle(fileName);
+		SWTBotEditor editor = bot.editorByTitle(fileName);
+		// Ensure that both StyledText widgets are enabled
+		editor.toTextEditor().setFocus();
+		return editor;
 	}
 
 	protected SWTBotTreeItem waitForNodeWithText(SWTBotTree tree, String name) {

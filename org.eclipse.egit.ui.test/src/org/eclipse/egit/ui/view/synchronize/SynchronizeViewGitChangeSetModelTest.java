@@ -195,6 +195,8 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		String outgoingRight = outgoingCompareBot.styledText(1).getText();
 		outgoingCompare.close();
 
+		assertNotSame("Text from SWTBot widgets was the same", outgoingLeft, outgoingRight);
+
 		// when
 		// compare tag against HEAD
 		launchSynchronization(SynchronizeWithAction_tagsName, INITIAL_TAG,
