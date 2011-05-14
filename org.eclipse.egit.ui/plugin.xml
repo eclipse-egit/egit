@@ -129,6 +129,11 @@
                label="%CompareWithHeadAction_label"
                menubarPath="compareWithMenu/gitCompareWithGroup"/>
          <action
+               class="org.eclipse.egit.ui.internal.actions.CompareIndexWithHeadAction"
+               id="org.eclipse.egit.ui.internal.actions.CompareIndexWithHeadAction"
+               label="%CompareIndexWithHeadAction_label"
+               menubarPath="compareWithMenu/gitCompareWithGroup"/>
+         <action
                class="org.eclipse.egit.ui.internal.actions.IgnoreAction"
                definitionId="org.eclipse.egit.ui.team.Ignore"
                icon="$nl$/icons/obj16/ignore.gif"
@@ -3250,6 +3255,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithHeadActionHandler"
             id="org.eclipse.egit.ui.team.CompareWithHead"
             name="%CompareWithHeadCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.CompareIndexWithHeadActionHandler"
+            id="org.eclipse.egit.ui.team.CompareIndexWithHead"
+            name="%CompareIndexWithHeadCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
