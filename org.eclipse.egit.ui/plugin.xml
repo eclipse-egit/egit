@@ -2616,6 +2616,31 @@
                   name="group3"
                   visible="true">
             </separator>
+            <menu
+                  label="%SynchronizeWith_label">
+               <dynamic
+                     class="org.eclipse.egit.ui.internal.actions.SynchronizeWithMenu"
+                     id="org.eclipse.egit.ui.synchronize">
+               </dynamic>
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <and>
+                           <adapt
+                                 type="org.eclipse.core.resources.IProject">
+                              <test
+                                    property="GitResource.isShared">
+                              </test>
+                           </adapt>
+                        </and>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+            </menu>
             <separator
                   name="group4"
                   visible="true">
