@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///LM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-05-09T14:14:54Z",
+      "side": 1,
+      "message": "This is not what I would expect. I would expect a comparison between index and HEAD.",
+      "revId": "aa72f5eba9ace10e6d67a8bcc18d9e9518d23862",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
