@@ -48,6 +48,8 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
+import org.eclipse.swtbot.swt.finder.waits.Conditions;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotStyledText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotToolbarDropDownButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
@@ -248,13 +250,7 @@ public abstract class AbstractSynchronizeViewTest extends
 			rootTree = waitForNodeWithText(syncViewTree, TEST_COMMIT_MSG);
 
 		SWTBotTreeItem projNode = waitForNodeWithText(rootTree, PROJ1);
-		SWTBotTreeItem folderNode = waitForNodeWithText(projNode, FOLDER);
-		waitForNodeWithText(folderNode, fileName).doubleClick();
-
-		SWTBotEditor editor = bot.editorByTitle(fileName);
-		// Ensure that both StyledText widgets are enabled
-		editor.toTextEditor().setFocus();
-		return editor;
+		return getCompareEditor(projNode, fileName);
 	}
 
 	protected SWTBotTreeItem waitForNodeWithText(SWTBotTree tree, String name) {
@@ -272,10 +268,7 @@ public abstract class AbstractSynchronizeViewTest extends
 			throws Exception {
 		SWTBotTree syncViewTree = setPresentationModel("Workspace").tree();
 		SWTBotTreeItem projectTree = waitForNodeWithText(syncViewTree, PROJ1);
-		SWTBotTreeItem folderTree = waitForNodeWithText(projectTree, FOLDER);
-		waitForNodeWithText(folderTree, FILE1).doubleClick();
-
-		return bot.editorByTitle(FILE1);
+		return getCompareEditor(projectTree, FILE1);
 	}
 
 	protected SWTBotEditor getCompareEditorForFileInGitChangeSetModel()
@@ -285,13 +278,7 @@ public abstract class AbstractSynchronizeViewTest extends
 		SWTBotTreeItem commitNode = syncViewTree.getAllItems()[0];
 		commitNode.expand();
 		SWTBotTreeItem projectTree = waitForNodeWithText(commitNode, PROJ1);
-		SWTBotTreeItem folderTree = waitForNodeWithText(projectTree, FOLDER);
-		waitForNodeWithText(folderTree, FILE1).doubleClick();
-
-		SWTBotEditor editor = bot.editorByTitle(FILE1);
-		editor.toTextEditor().setFocus();
-
-		return editor;
+		return getCompareEditor(projectTree, FILE1);
 	}
 
 	protected SWTBotEditor getCompareEditorForFileInWorspaceModel(
@@ -299,11 +286,7 @@ public abstract class AbstractSynchronizeViewTest extends
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 
 		SWTBotTreeItem projNode = waitForNodeWithText(syncViewTree, PROJ1);
-		SWTBotTreeItem folderNode = waitForNodeWithText(projNode, FOLDER);
-		waitForNodeWithText(folderNode, fileName).doubleClick();
-
-		SWTBotEditor editor = bot.editorByTitle(fileName);
-		editor.toTextEditor().setFocus();
+		SWTBotEditor editor = getCompareEditor(projNode, fileName);
 
 		return editor;
 	}
@@ -316,6 +299,18 @@ public abstract class AbstractSynchronizeViewTest extends
 		bot.button(CommitDialog_SelectAll).click();
 		bot.button(CommitDialog_Commit).click();
 		TestUtil.joinJobs(JobFamilies.COMMIT);
+	}
+
+	private SWTBotEditor getCompareEditor(SWTBotTreeItem projectNode,
+			String fileName) {
+		SWTBotTreeItem folderNode = waitForNodeWithText(projectNode, FOLDER);
+		waitForNodeWithText(folderNode, fileName).doubleClick();
+
+		SWTBotEditor editor = bot.editorByTitle(fileName);
+		// Ensure that both StyledText widgets are enabled
+		SWTBotStyledText styledText = editor.toTextEditor().getStyledText();
+		bot.waitUntil(Conditions.widgetIsEnabled(styledText));
+		return editor;
 	}
 
 	private static void showDialog(String projectName, String... cmd) {
