@@ -33,7 +33,7 @@ import org.eclipse.ui.model.WorkbenchContentProvider;
  */
 public class CommitSearchResultsPage extends AbstractTextSearchViewPage {
 
-	private class CommitSorter extends ViewerSorter {
+	private static class CommitSorter extends ViewerSorter {
 
 		public int compare(Viewer viewer, Object e1, Object e2) {
 			if (e1 instanceof RepositoryCommit
