@@ -164,6 +164,9 @@ public class UIIcons {
 	/** Expand all icon */
 	public final static ImageDescriptor EXPAND_ALL;
 
+	/** Show Annotation icon */
+	public final static ImageDescriptor ANNOTATE;
+
 	/** base URL */
 	public final static URL base;
 
@@ -223,6 +226,7 @@ public class UIIcons {
 		CHANGESET = map("obj16/changelog_obj.gif"); //$NON-NLS-1$
 		GERRIT = map("obj16/gerrit_obj.gif"); //$NON-NLS-1$
 		EXPAND_ALL = map("wizban/expandall.gif"); //$NON-NLS-1$
+		ANNOTATE = map("etool16/annotate.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
