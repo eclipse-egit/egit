@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALun///LA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchSelectionDialog.java.orig",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-20T20:34:59Z",
+      "side": 1,
+      "message": "Delete this file",
+      "revId": "b310517f6dcc9277446cd1d98d6f7ab61d8b76a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///K8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/ResourceNode.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-20T20:34:59Z",
+      "side": 1,
+      "message": "I would say return 31 * root.hashCode() + resource.hashCode()\nand add an equals method.",
+      "revId": "b310517f6dcc9277446cd1d98d6f7ab61d8b76a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///LQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagedNode.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-20T20:34:59Z",
+      "side": 1,
+      "message": "Why shouldn\u0027t this text be i18n;able?",
+      "revId": "b310517f6dcc9277446cd1d98d6f7ab61d8b76a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///LM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-20T20:34:59Z",
+      "side": 1,
+      "message": "Either add the NLS stuff or leave out the NON-NLS stuff so others people can find these strings. Having a warning is meaningful.",
+      "revId": "b310517f6dcc9277446cd1d98d6f7ab61d8b76a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///LI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-20T20:34:59Z",
+      "side": 1,
+      "message": "i18N-ab le string. Do not silence warning.",
+      "revId": "b310517f6dcc9277446cd1d98d6f7ab61d8b76a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALun///LE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StatusNode.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2010-05-20T20:34:59Z",
+      "side": 1,
+      "message": "probably not terribly important, but I guess you meant\n\n return 31 * getClass().getName().hashCode() + repository.hashCode(\n\nBut worse is that you don\u0027t have an equals. Defining hashCode\nwithout equals make little sense to me.",
+      "revId": "b310517f6dcc9277446cd1d98d6f7ab61d8b76a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
