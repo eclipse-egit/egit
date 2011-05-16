@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,6 +42,12 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jgit.api.AddCommand;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.RmCommand;
+import org.eclipse.jgit.api.errors.NoFilepatternException;
+import org.eclipse.jgit.dircache.DirCacheEditor;
+import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.events.IndexChangedEvent;
 import org.eclipse.jgit.events.IndexChangedListener;
 import org.eclipse.jgit.events.ListenerHandle;
@@ -50,11 +57,14 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.UserConfig;
+import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
+import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
@@ -146,7 +156,7 @@ public class StagingView extends ViewPart {
 				new Transfer[] { LocalSelectionTransfer.getTransfer() },
 				new DragSourceAdapter() {
 					public void dragStart(DragSourceEvent event) {
-						IStructuredSelection selection = (IStructuredSelection) stagedTableViewer
+						IStructuredSelection selection = (IStructuredSelection) unstagedTableViewer
 								.getSelection();
 						event.doit = !selection.isEmpty();
 					}
@@ -229,7 +239,7 @@ public class StagingView extends ViewPart {
 				new Transfer[] { LocalSelectionTransfer.getTransfer() },
 				new DragSourceAdapter() {
 					public void dragStart(DragSourceEvent event) {
-						IStructuredSelection selection = (IStructuredSelection) unstagedTableViewer
+						IStructuredSelection selection = (IStructuredSelection) stagedTableViewer
 								.getSelection();
 						event.doit = !selection.isEmpty();
 					}
@@ -347,10 +357,118 @@ public class StagingView extends ViewPart {
 	}
 
 	private void stage(IStructuredSelection selection) {
-		runCommand(ActionCommands.ADD_TO_INDEX, selection);
+		Git git = new Git(currentRepository);
+		AddCommand add = null;
+		RmCommand rm = null;
+		Iterator iterator = selection.iterator();
+		while (iterator.hasNext()) {
+			StagingEntry entry = (StagingEntry) iterator.next();
+			switch(entry.getState()) {
+			case ADDED:
+			case CHANGED:
+			case REMOVED:
+				// already staged
+				break;
+			case CONFLICTING:
+			case MODIFIED:
+			case PARTIALLY_MODIFIED:
+			case UNTRACKED:
+				if (add == null)
+					add = git.add();
+				add.addFilepattern(entry.getPath());
+				break;
+			case MISSING:
+				if (rm == null)
+					rm = git.rm();
+				rm.addFilepattern(entry.getPath());
+				break;
+			}
+		}
+
+		if (add != null)
+			try {
+				add.call();
+			} catch (NoFilepatternException e1) {
+				// cannot happen
+			}
+		if (rm != null)
+			try {
+				rm.call();
+			} catch (NoFilepatternException e) {
+				// cannot happen
+			}
+
+		reload(currentRepository);
 	}
 
 	private void unstage(IStructuredSelection selection) {
+		if (selection.isEmpty())
+			return;
+
+		final DirCacheEditor edit;
+		try {
+			edit = currentRepository.lockDirCache().editor();
+		} catch (IOException e) {
+			// TODO fix text
+			MessageDialog.openError(getSite().getShell(),
+					UIText.CommitAction_MergeHeadErrorTitle,
+					UIText.CommitAction_ErrorReadingMergeMsg);
+			return;
+		}
+
+		final RevTree headRevTree;
+		try {
+			final Ref head = currentRepository.getRef(Constants.HEAD);
+			headRevTree = new RevWalk(currentRepository).parseTree(head.getObjectId());
+		} catch (IOException e1) {
+			// TODO fix text
+			MessageDialog.openError(getSite().getShell(),
+					UIText.CommitAction_MergeHeadErrorTitle,
+					UIText.CommitAction_ErrorReadingMergeMsg);
+			return;
+		}
+
+		Iterator iterator = selection.iterator();
+		while (iterator.hasNext()) {
+			StagingEntry entry = (StagingEntry) iterator.next();
+			switch(entry.getState()) {
+			case ADDED:
+			case CHANGED:
+			case REMOVED:
+				// set the index object id/file mode back to our head revision
+				try {
+					final TreeWalk tw = TreeWalk.forPath(currentRepository, entry.getPath(), headRevTree);
+					if (tw != null) {
+						edit.add(new DirCacheEditor.PathEdit(entry.getPath()) {
+							@Override
+							public void apply(DirCacheEntry ent) {
+								ent.setFileMode(tw.getFileMode(0));
+								ent.setObjectId(tw.getObjectId(0));
+							}
+						});
+					}
+				} catch (IOException e) {
+					// TODO fix text
+					MessageDialog.openError(getSite().getShell(),
+							UIText.CommitAction_MergeHeadErrorTitle,
+							UIText.CommitAction_ErrorReadingMergeMsg);
+				}
+				break;
+			default:
+				// unstaged
+			}
+		}
+
+		try {
+			edit.commit();
+		} catch (IOException e) {
+			// TODO fix text
+			MessageDialog.openError(getSite().getShell(),
+					UIText.CommitAction_MergeHeadErrorTitle,
+					UIText.CommitAction_ErrorReadingMergeMsg);
+		}
+
+		reload(currentRepository);
 	}
 
 	private static boolean runCommand(String commandId,
