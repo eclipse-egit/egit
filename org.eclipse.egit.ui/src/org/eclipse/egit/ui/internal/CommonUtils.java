@@ -11,6 +11,8 @@ package org.eclipse.egit.ui.internal;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
+import org.eclipse.jgit.lib.Ref;
+
 /**
  * Class containing all common utils
  */
@@ -47,6 +49,15 @@ public class CommonUtils {
 			}
 
 			return charCompare;
+		}
+	};
+
+	/**
+	 *
+	 */
+	public static final Comparator<Ref> REF_ASCENDING_COMPARATOR = new Comparator<Ref>() {
+		public int compare(Ref o1, Ref o2) {
+			return STRING_ASCENDING_COMPARATOR.compare(o1.getName(), o2.getName());
 		}
 	};
 
