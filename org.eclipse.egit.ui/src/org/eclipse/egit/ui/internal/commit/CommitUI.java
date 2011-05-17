@@ -324,6 +324,13 @@ public class CommitUI  {
 						break;
 					}
 				}
+			} else {
+				// could be file outside of workspace
+				for (IResource resource : selectedResources) {
+					if(resource.getFullPath().toFile().equals(new File(uri))) {
+						preselectionCandidates.add(fileName);
+					}
+				}
 			}
 		}
 		return preselectionCandidates;

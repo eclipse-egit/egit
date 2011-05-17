@@ -9,13 +9,12 @@
 package org.eclipse.egit.ui.internal.synchronize.mapping;
 
 import static org.eclipse.core.resources.IResource.ALLOW_MISSING_LOCAL;
-import static org.eclipse.core.resources.IResource.DEPTH_INFINITE;
 import static org.eclipse.core.resources.IResource.DEPTH_ONE;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -44,31 +43,37 @@ class GitContainerMapping extends GitObjectMapping {
 		List<ResourceTraversal> result = new ArrayList<ResourceTraversal>();
 
 		for (GitModelObject child : children) {
-			ResourceTraversal traversal;
-			IPath location = child.getLocation();
-
-			if (child.isContainer()) {
-				IContainer container = ROOT.getContainerForLocation(location);
-
-				if (container == null)
-					continue;
-
-				traversal = new ResourceTraversal(
-						new IResource[] { container }, DEPTH_INFINITE,
-						ALLOW_MISSING_LOCAL);
-			} else {
-				IFile file = ROOT.getFileForLocation(location);
-				if (file == null)
-					continue;
-
-				traversal = new ResourceTraversal(new IResource[] { file },
-						DEPTH_ONE, ALLOW_MISSING_LOCAL);
-			}
-
-			result.add(traversal);
+			if (child.isContainer())
+				result.addAll(createTraversalForContainer(child));
+			else
+				result.add(createTraversalForFile(child));
 		}
-
+		result.removeAll(Collections.singleton(null));
 		return result.toArray(new ResourceTraversal[result.size()]);
+	}
+
+	private List<ResourceTraversal> createTraversalForContainer(GitModelObject child) {
+		GitModelObject[] containerChildren = child.getChildren();
+		List<ResourceTraversal> result = new ArrayList<ResourceTraversal>();
+		for (GitModelObject aChild : containerChildren) {
+			if(aChild.isContainer())
+				result.addAll(createTraversalForContainer(aChild));
+			else
+				result.add(createTraversalForFile(aChild));
+		}
+		return result;
+	}
+
+	private ResourceTraversal createTraversalForFile(GitModelObject aChild) {
+		IPath childLocation = aChild.getLocation();
+		IFile file = ROOT.getFileForLocation(childLocation);
+
+		if (file == null) {
+			file = ROOT.getFile(childLocation);
+		}
+		ResourceTraversal traversal = new ResourceTraversal(
+				new IResource[] { file }, DEPTH_ONE, ALLOW_MISSING_LOCAL);
+		return traversal;
 	}
 
 }
