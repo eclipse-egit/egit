@@ -778,9 +778,14 @@
                      value="+">
                </count>
                <iterate>
-                  <adapt
+                  <or>
+                    <adapt
                         type="org.eclipse.core.resources.IResource">
-                  </adapt>
+                    </adapt>
+                    <adapt
+                        type="org.eclipse.core.resources.mapping.ResourceMapping">
+                    </adapt>
+                  </or>
                </iterate>
             </and>
          </activeWhen>
