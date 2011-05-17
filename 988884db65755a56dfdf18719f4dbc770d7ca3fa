@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///B8\u003d",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-11T09:42:19Z",
+      "side": 0,
+      "message": "due to the move to Eclipse Tycho changed groupid and some of its artifactIds, hence all egit module poms also might need to be adapted.",
+      "revId": "988884db65755a56dfdf18719f4dbc770d7ca3fa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
