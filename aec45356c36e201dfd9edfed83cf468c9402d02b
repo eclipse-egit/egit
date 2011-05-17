@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOI3///Z8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeleteBranchOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-16T23:42:31Z",
+      "side": 1,
+      "message": "Now when we conditionally added comma we don\u0027t need to do a substring(0, length - 2)",
+      "revId": "aec45356c36e201dfd9edfed83cf468c9402d02b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOI3///ZA\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeleteBranchOperation.java",
         "patchSetId": 3
