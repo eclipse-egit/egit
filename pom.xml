@@ -70,6 +70,8 @@
     <jetty-site>http://download.eclipse.org/jetty/7.1.6.v20100715/repository/</jetty-site>
     <wikitext-site>http://download.eclipse.org/tools/mylyn/update/weekly</wikitext-site>
     <orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/S20110124210048/repository</orbit-site>
+    <signer-input-directory>/home/data/httpd/download-staging.priv/egit</signer-input-directory>
+    <download-publish-path>/home/data/httpd/download.eclipse.org/egit/updates-nightly</download-publish-path>
   </properties>
 
   <profiles>
@@ -150,6 +152,13 @@
 
     <module>org.eclipse.egit.source-feature</module>
    </modules>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>maven.eclipse.org</id>
+      <url>http://maven.eclipse.org/nexus/content/repositories/nightly-indigo</url>
+    </pluginRepository>
+  </pluginRepositories>
 
   <repositories>
     <repository>
@@ -276,6 +285,16 @@
               </goals>
             </execution>
           </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.2-beta-4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.dash.maven</groupId>
+          <artifactId>eclipse-maven-signing-plugin</artifactId>
+          <version>1.0.0.0-SNAPSHOT</version>
         </plugin>
       </plugins>
     </pluginManagement>
