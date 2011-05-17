@@ -206,6 +206,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 		List<IWorkbenchAction> actionsToDispose;
 
+		BooleanPrefAction showRelativeDateAction;
+
 		BooleanPrefAction wrapCommentAction;
 
 		BooleanPrefAction fillCommentAction;
@@ -249,6 +251,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			createShowAllBranchesAction();
 			createShowCommentAction();
 			createShowFilesAction();
+			createShowRelativeDateAction();
 			createWrapCommentAction();
 			createFillCommentAction();
 
@@ -377,6 +380,18 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				}
 			};
 			actionsToDispose.add(showFilesAction);
+		}
+
+		private void createShowRelativeDateAction() {
+			showRelativeDateAction = new BooleanPrefAction(
+					UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE,
+					UIText.ResourceHistory_toggleRelativeDate) {
+				void apply(boolean date) {
+					// nothing, just set the Preference
+				}
+			};
+			showRelativeDateAction.apply(showRelativeDateAction.isChecked());
+			actionsToDispose.add(showRelativeDateAction);
 		}
 
 		private void createWrapCommentAction() {
@@ -583,6 +598,24 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(
 				graphDetailSplit);
 		graph = new CommitGraphTable(graphDetailSplit, getSite(), popupMgr);
+
+		// react on changes in the date preferences
+		IPropertyChangeListener listener = new IPropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent event) {
+				if (event.getProperty().equals(
+						UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE)) {
+					if (graph.setRelativeDate(((Boolean) event.getNewValue())
+							.booleanValue()))
+						graph.getTableView().refresh();
+					return;
+				}
+			}
+		};
+		graph.setRelativeDate(Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE));
+		Activator.getDefault().getPreferenceStore()
+				.addPropertyChangeListener(listener);
+
 		revInfoSplit = new SashForm(graphDetailSplit, SWT.HORIZONTAL);
 		commentViewer = new CommitMessageViewer(revInfoSplit, getSite(), getPartSite());
 		fileViewer = new CommitFileDiffViewer(revInfoSplit, getSite());
@@ -773,6 +806,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		viewMenuMgr.add(new Separator());
 		viewMenuMgr.add(actions.wrapCommentAction);
 		viewMenuMgr.add(actions.fillCommentAction);
+
+		viewMenuMgr.add(new Separator());
+		viewMenuMgr.add(actions.showRelativeDateAction);
 	}
 
 	public void dispose() {
