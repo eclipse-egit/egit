@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIX///wk\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-04-28T10:16:55Z",
+      "side": 1,
+      "message": "I think that this empty line should be removed",
+      "revId": "f58e6dcebe5dc2e8208a4f25b87ad429771de46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIX///ws\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitContainerMapping.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-04-28T10:15:52Z",
+      "side": 1,
+      "message": "Curly brackets are not needed here ;)",
+      "revId": "f58e6dcebe5dc2e8208a4f25b87ad429771de46a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
