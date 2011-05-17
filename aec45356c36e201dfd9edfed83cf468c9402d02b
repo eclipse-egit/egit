@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOI3///ZA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DeleteBranchOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-17T07:04:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOI3///Z8\u003d",
+      "revId": "aec45356c36e201dfd9edfed83cf468c9402d02b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
