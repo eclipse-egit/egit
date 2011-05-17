@@ -12,12 +12,18 @@ import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.commit.CommitEditor;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.jface.viewers.IOpenListener;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
@@ -168,7 +174,28 @@ public class MergeResultDialog extends Dialog {
 				.align(SWT.FILL, SWT.FILL).span(2, 1)
 				.applyTo(viewer.getControl());
 		viewer.setInput(mergeResult);
+		viewer.addOpenListener(new IOpenListener() {
+
+			public void open(OpenEvent event) {
+				ISelection selection = event.getSelection();
+				if (selection instanceof IStructuredSelection) {
+					for (Object element : ((IStructuredSelection) selection)
+							.toArray())
+						if (element instanceof ObjectId)
+							openCommit((ObjectId) element);
+				}
+			}
+		});
 		return composite;
+	}
+
+	private void openCommit(ObjectId id) {
+		try {
+			RevCommit commit = new RevWalk(repository).parseCommit(id);
+			CommitEditor.openQuiet(new RepositoryCommit(repository, commit));
+		} catch (IOException e) {
+			Activator.logError(UIText.MergeResultDialog_couldNotFindCommit, e);
+		}
 	}
 
 	private String getCommitMessage(ObjectId id) {
