@@ -187,7 +187,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 			UIJob job = new UIJob("Refreshing editor") { //$NON-NLS-1$
 
 				public IStatus runInUIThread(IProgressMonitor monitor) {
-					commitPage.refresh();
+					if (!getContainer().isDisposed())
+						commitPage.refresh();
 					return Status.OK_STATUS;
 				}
 			};
