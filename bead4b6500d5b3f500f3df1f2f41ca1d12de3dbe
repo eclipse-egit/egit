@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOI3///aQ\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-16T23:37:51Z",
+      "side": 1,
+      "message": "style nit: all footers should be in last paragraph so remove this blank line",
+      "revId": "bead4b6500d5b3f500f3df1f2f41ca1d12de3dbe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///aU\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-16T23:37:51Z",
+      "side": 1,
+      "message": "style nit: whitespace errors",
+      "revId": "bead4b6500d5b3f500f3df1f2f41ca1d12de3dbe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
