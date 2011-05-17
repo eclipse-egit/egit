@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOI3///Yg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-17T09:01:14Z",
+      "side": 1,
+      "message": "It\u0027s not required to rebuild the commit list here. Just refresh the table: graph.getTableView().refresh();",
+      "revId": "d9afc2dc0521b334075d2a38346202b4e94e8ccd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOI3///X8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 3
