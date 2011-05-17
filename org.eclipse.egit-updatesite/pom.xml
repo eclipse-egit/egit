@@ -75,4 +75,90 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+     <id>build-server</id>
+     <build>
+       <plugins>
+         <plugin>
+           <groupId>org.eclipse.dash.maven</groupId>
+           <artifactId>eclipse-maven-signing-plugin</artifactId>
+           <version>1.0.0.0-SNAPSHOT</version>
+           <executions>
+             <execution>
+               <id>pack</id>
+               <configuration>
+                 <inputFile>${project.build.directory}/org.eclipse.egit-updatesite-${version}-site.zip</inputFile>
+               </configuration>
+               <phase>package</phase>
+               <goals>
+                 <goal>pack</goal>
+               </goals>
+             </execution>
+             <execution>
+               <id>sign</id>
+               <configuration>
+                 <inputFile>${project.build.directory}/org.eclipse.egit-updatesite-${version}-site.zip</inputFile>
+                 <signerInputDirectory>/home/data/httpd/download-staging.priv/egit</signerInputDirectory>
+               </configuration>
+               <phase>package</phase>
+               <goals>
+                 <goal>sign</goal>
+               </goals>
+             </execution>
+             <execution>
+               <id>repack</id>
+               <configuration>
+                 <inputFile>${project.build.directory}/org.eclipse.egit-updatesite-${version}-site.zip</inputFile>
+               </configuration>
+               <phase>package</phase>
+               <goals>
+                 <goal>pack</goal>
+               </goals>
+             </execution>
+             <execution>
+               <id>fixCheckSums</id>
+               <configuration>
+                 <inputFile>${project.build.directory}/org.eclipse.egit-updatesite-${version}-site.zip</inputFile>
+               </configuration>
+               <phase>package</phase>
+               <goals>
+                 <goal>fixCheckSums</goal>
+               </goals>
+             </execution>
+           </executions>
+         </plugin>
+         <plugin>
+             <artifactId>maven-antrun-plugin</artifactId>
+             <executions>
+               <execution>
+                 <id>deploy</id>
+                 <phase>install</phase>
+                 <goals>
+                   <goal>run</goal>
+                 </goals>
+                 <configuration>
+                   <tasks>
+                     <delete includeemptydirs="false">
+                       <fileset
+                         dir="/home/data/httpd/download.eclipse.org/egit/updates-nightly">
+                         <include name="**" />
+                       </fileset>
+                     </delete>
+                     <copy includeemptydirs="false"
+                       todir="/home/data/httpd/download.eclipse.org/egit/updates-nightly">
+                       <fileset dir="target/checksumFix">
+                         <include name="**" />
+                       </fileset>
+                     </copy>
+                   </tasks>
+                 </configuration>
+               </execution>
+             </executions>
+           </plugin>
+    </plugins>
+  </build>
+  </profile>
+  </profiles>
+
 </project>

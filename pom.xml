@@ -151,6 +151,13 @@
     <module>org.eclipse.egit.source-feature</module>
    </modules>
 
+  <pluginRepositories>
+    <pluginRepository>
+      <id>maven.eclipse.org</id>
+      <url>http://maven.eclipse.org/nexus/content/repositories/nightly-indigo</url>
+    </pluginRepository>
+  </pluginRepositories>
+
   <repositories>
     <repository>
       <id>jgit</id>
