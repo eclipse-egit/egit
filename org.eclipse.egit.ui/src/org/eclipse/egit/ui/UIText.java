@@ -3554,6 +3554,9 @@ public class UIText extends NLS {
 	public static String CommitSearchPage_SearchAllBranches;
 
 	/** */
+	public static String CommitSearchPage_ToggleSelection;
+
+	/** */
 	public static String CommitSearchPage_TreeId;
 
 	/** */
