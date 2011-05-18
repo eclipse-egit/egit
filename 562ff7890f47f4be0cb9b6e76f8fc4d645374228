@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOI3///Rk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-18T13:26:44Z",
+      "side": 1,
+      "message": "Why to reload if event.getRepository differs from currentRepository?",
+      "revId": "562ff7890f47f4be0cb9b6e76f8fc4d645374228",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///Rg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-18T13:26:44Z",
+      "side": 1,
+      "message": "Why to reload if event.getRepository differs from currentRepository?",
+      "revId": "562ff7890f47f4be0cb9b6e76f8fc4d645374228",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///RU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-18T13:26:44Z",
+      "side": 1,
+      "message": "Only reload if repository changed.",
+      "revId": "562ff7890f47f4be0cb9b6e76f8fc4d645374228",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///Rc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-18T13:26:44Z",
+      "side": 1,
+      "message": "yes, should be moved to a Job. An example can be found in GitHistoryPage.scheduleNewGenerateHistoryJob.",
+      "revId": "562ff7890f47f4be0cb9b6e76f8fc4d645374228",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///RY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-18T13:26:44Z",
+      "side": 1,
+      "message": "Only reload if repository changed.",
+      "revId": "562ff7890f47f4be0cb9b6e76f8fc4d645374228",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
