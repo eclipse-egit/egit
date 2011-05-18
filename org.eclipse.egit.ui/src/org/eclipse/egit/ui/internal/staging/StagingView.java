@@ -26,6 +26,7 @@ import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
@@ -54,7 +55,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.UserConfig;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
+import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
@@ -394,10 +395,8 @@ public class StagingView extends ViewPart {
 
 		final IndexDiff indexDiff;
 		try {
-			// TODO IteratorService.createInitialIterator(repository)?
-			FileTreeIterator fileTreeIterator = new FileTreeIterator(repository);
-			indexDiff = new IndexDiff(repository, Constants.HEAD,
-					fileTreeIterator);
+			WorkingTreeIterator iterator = IteratorService.createInitialIterator(repository);
+			indexDiff = new IndexDiff(repository, Constants.HEAD, iterator);
 			indexDiff.diff();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
