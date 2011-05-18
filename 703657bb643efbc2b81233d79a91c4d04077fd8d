@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOI3///M4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWorkspaceActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-05-18T20:53:20Z",
+      "side": 1,
+      "message": "Style nit: Curlies not needed",
+      "revId": "703657bb643efbc2b81233d79a91c4d04077fd8d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOI3///Mw\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWorkspaceActionHandler.java",
         "patchSetId": 3
