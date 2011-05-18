@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn///8E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/ConflictingNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-04-30T10:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL4H///U4\u003d",
+      "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL4H///VE\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/OpenCommand.java",
         "patchSetId": 1
@@ -64,6 +82,24 @@
       "writtenOn": "2011-04-29T19:52:27Z",
       "side": 1,
       "message": "missing license header",
+      "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///8A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/OpenCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-04-30T10:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL4H///VE\u003d",
       "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -104,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn///7U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/ResourceNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-04-30T10:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL4H///U8\u003d",
+      "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL4H///U0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagedNode.java",
         "patchSetId": 1
@@ -115,6 +169,24 @@
       "writtenOn": "2011-04-29T19:52:27Z",
       "side": 1,
       "message": "label should be externalized",
+      "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///78\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagedNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-04-30T10:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL4H///U0\u003d",
       "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -155,6 +227,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn///7w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-04-30T10:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL4H///Uo\u003d",
+      "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL4H///Uk\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -189,6 +279,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn///7o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-04-30T10:44:04Z",
+      "side": 1,
+      "message": "Thats from Remy\u0027s original implementation which used a different API from IndexDiff.  Don\u0027t think its required anymore so I\u0027ve removed it now.",
+      "parentUuid": "AAAL4H///Ug\u003d",
+      "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL4H///UY\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -200,6 +308,24 @@
       "writtenOn": "2011-04-29T19:52:27Z",
       "side": 1,
       "message": "can we find a better name for this method ?",
+      "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///7g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-04-30T10:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL4H///UY\u003d",
       "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -223,6 +349,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn///7c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-04-30T10:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL4H///Uc\u003d",
+      "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL4H///UU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -240,6 +384,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn///70\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-04-30T10:44:04Z",
+      "side": 1,
+      "message": "Definitely need support for non workspace files.  The current code uses IFile to track the nodes,",
+      "parentUuid": "AAAL4H///UU\u003d",
+      "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL4H///LE\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -251,6 +413,24 @@
       "writtenOn": "2011-04-29T19:52:27Z",
       "side": 1,
       "message": "why commented out code ?",
+      "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///7k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-04-30T10:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL4H///LE\u003d",
       "revId": "6622d388e79f7cb0102d5c71340e8b09dab6b045",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
