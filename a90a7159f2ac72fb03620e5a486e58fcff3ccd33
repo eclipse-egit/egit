@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn///lE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-05-05T03:54:53Z",
+      "side": 1,
+      "message": "What is correct here?  Sorry this is my first attempt with an eclipse plugin.",
+      "parentUuid": "AABOIn///n4\u003d",
+      "revId": "a90a7159f2ac72fb03620e5a486e58fcff3ccd33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn///n0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 6
