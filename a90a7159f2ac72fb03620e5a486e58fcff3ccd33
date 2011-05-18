@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOIn///nw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagedNode.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-04T15:46:41Z",
+      "side": 1,
+      "message": "maybe better \"StagedEntry\" ? \"Node\" sounds like tree-ish to me (though I am not a native English speaker).",
+      "revId": "a90a7159f2ac72fb03620e5a486e58fcff3ccd33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///n8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-04T15:46:41Z",
+      "side": 1,
+      "message": "I don\u0027t like these type prefixes, modern IDEs easily show the type without polluting the source code. Also don\u0027t use underscores in variable names. Instead we prefer readable names (or very short names for variables only used locally within the next few lines).",
+      "revId": "a90a7159f2ac72fb03620e5a486e58fcff3ccd33",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn///n4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 6
