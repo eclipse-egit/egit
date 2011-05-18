@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///r0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/GitXStagedNode.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-03T23:13:47Z",
+      "side": 1,
+      "message": "we should remove GitX from these class names as we just borrow the ui layout idea but don\u0027t depend on their implementation",
+      "revId": "6f612b66f9ab001d33dcef83e4e4ee16ee5036b9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
