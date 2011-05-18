@@ -104,6 +104,9 @@ public class ActionCommands {
 	/** "Synchronize with" action command id */
 	public static final String SYNC_WITH_ACTION = "org.eclipse.egit.ui.team.SyncWith"; //$NON-NLS-1$
 
+	/** "Synchronize workspace" action command id */
+	public static final String SYNC_WORKSPACE_ACTION = "org.eclipse.egit.ui.team.SyncWorkspace"; //$NON-NLS-1$
+
 	/** "Tag" action command id */
 	public static final String TAG_ACTION = "org.eclipse.egit.ui.team.Tag"; //$NON-NLS-1$
 
