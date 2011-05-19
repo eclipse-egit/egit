@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.pull.PullOperationUI;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -44,9 +45,10 @@ public class PullFromUpstreamActionHandler extends RepositoryActionHandler {
 			try {
 				String fullBranch = repo.getFullBranch();
 				if (!fullBranch.startsWith(Constants.R_REFS)
-						|| repo.getAllRefs().isEmpty())
+						|| repo.getRef(Constants.HEAD).getObjectId() == null)
 					return false;
 			} catch (IOException e) {
+				Activator.handleError(e.getMessage(), e, false);
 				return false;
 			}
 		}
