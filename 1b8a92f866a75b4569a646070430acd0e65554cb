@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOI3///kE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWithMenu.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-05-15T05:05:30Z",
+      "side": 1,
+      "message": "A maximum number of menu entries be shown similar to SwitchToMenu",
+      "revId": "1b8a92f866a75b4569a646070430acd0e65554cb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
