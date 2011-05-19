@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOI3///RE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-18T13:32:19Z",
+      "side": 1,
+      "message": "Update the affected entries instead of calculating a complete IndexDiff.\nSee CommitDialog.getFileStatus(String path) for an example.",
+      "revId": "fb98b083fcdb4457eef9ba1eb24c394f386300dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///Rs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-18T12:46:27Z",
+      "side": 1,
+      "message": "There should be a finally block to unlock the DirCache in case of error:\n\ndirCache \u003d repository.lockDirCache();\ntry {\n\n... work with dirCache\n} finally {\n     dirCache.unlock();\n}",
+      "revId": "fb98b083fcdb4457eef9ba1eb24c394f386300dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///Rw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-18T12:46:27Z",
+      "side": 1,
+      "message": "Does not work for the added use case. tw is null in this case.",
+      "revId": "fb98b083fcdb4457eef9ba1eb24c394f386300dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///R0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-18T12:46:27Z",
+      "side": 1,
+      "message": "Unstaging works if you add this line: ent.setLastModified(0);\nWe are not sure if 0 is the right value but lastModified must be changed to indicate that working tree state and index state differ.",
+      "revId": "fb98b083fcdb4457eef9ba1eb24c394f386300dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///RA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-18T13:32:19Z",
+      "side": 1,
+      "message": "Update the affected entries instead of calculating a complete IndexDiff. See CommitDialog.getFileStatus(String path) for an example.",
+      "revId": "fb98b083fcdb4457eef9ba1eb24c394f386300dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
