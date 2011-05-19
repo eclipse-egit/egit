@@ -106,6 +106,11 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 			IResource resource) {
 		String resRelPath = RepositoryMapping.getMapping(resource).getRepoRelativePath(resource);
 
+		// This action at the moment only works for files anyway
+		if (resRelPath == null || resRelPath.length() == 0) {
+			return false;
+		}
+
 		try {
 			FileTreeIterator fileTreeIterator = new FileTreeIterator(repository);
 			IndexDiff indexDiff = new IndexDiff(repository, Constants.HEAD,
