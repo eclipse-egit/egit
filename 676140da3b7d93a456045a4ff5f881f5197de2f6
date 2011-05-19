@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOI3///hY\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-05-15T21:19:12Z",
+      "side": 1,
+      "message": "Should be \"a separate action\" instead of \"an\"",
+      "revId": "676140da3b7d93a456045a4ff5f881f5197de2f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOI3///hQ\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
