@@ -419,8 +419,11 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 	private void handleWidgetSelected() {
 		int selectionIndex = patternCombo.getSelectionIndex();
 		if (selectionIndex < 0
-				|| selectionIndex >= fPreviousSearchPatterns.size())
+				|| selectionIndex >= fPreviousSearchPatterns.size()) {
+			repositoryViewer.setAllChecked(true);
+			repositoryGroup.setText(getRepositoryText());
 			return;
+		}
 
 		CommitSearchSettings settings = fPreviousSearchPatterns
 				.get(selectionIndex);
