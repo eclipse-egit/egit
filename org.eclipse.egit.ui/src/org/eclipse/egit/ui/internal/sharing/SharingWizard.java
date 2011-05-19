@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2007, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,10 +12,13 @@ package org.eclipse.egit.ui.internal.sharing;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -25,14 +29,16 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.ConfigurationChecker;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.ui.IConfigurationWizard;
 import org.eclipse.team.ui.IConfigurationWizardExtension;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.undo.MoveProjectOperation;
 
 /**
- * The dialog used for activating Team>Share, i.e. to create a new
- * Git repository or associate projects with one.
+ * The dialog used for activating Team>Share, i.e. to create a new Git
+ * repository or associate projects with one.
  */
 public class SharingWizard extends Wizard implements IConfigurationWizard,
 		IConfigurationWizardExtension {
@@ -64,6 +70,49 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 	}
 
 	public boolean performFinish() {
+		if (existingPage.getExternalMode()) {
+			try {
+				final Map<IProject, File> projectsToMove = existingPage
+						.getProjects(true);
+				final Repository selectedRepository = existingPage
+						.getSelectedRepsoitory();
+				getContainer().run(false, false, new IRunnableWithProgress() {
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException,
+							InterruptedException {
+						for (Map.Entry<IProject, File> entry : projectsToMove
+								.entrySet()) {
+							URI targetLocation = entry.getValue().toURI();
+							MoveProjectOperation op = new MoveProjectOperation(
+									entry.getKey(), targetLocation,
+									"Moving project"); //$NON-NLS-1$
+							try {
+								IStatus result = op.execute(monitor, null);
+								if (!result.isOK())
+									throw new RuntimeException();
+							} catch (ExecutionException e) {
+								throw new InvocationTargetException(e);
+							}
+
+							try {
+								new ConnectProviderOperation(entry.getKey(),
+										selectedRepository.getDirectory())
+										.execute(monitor);
+							} catch (CoreException e) {
+								throw new InvocationTargetException(e);
+							}
+						}
+					}
+				});
+			} catch (InvocationTargetException e) {
+				Activator.handleError(UIText.SharingWizard_failed,
+						e.getCause(), true);
+				return false;
+			} catch (InterruptedException e) {
+				// ignore for the moment
+			}
+			return true;
+		}
 		final ConnectProviderOperation op = new ConnectProviderOperation(
 				existingPage.getProjects(true));
 		try {
