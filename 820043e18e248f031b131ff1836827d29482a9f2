@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOI3///gg\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-16T13:27:02Z",
+      "side": 1,
+      "message": "typos: s/build/built/\ns/menu will contains/menu will contain/\ns/entry\u0027s/entries/",
+      "revId": "820043e18e248f031b131ff1836827d29482a9f2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
