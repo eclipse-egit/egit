@@ -3208,6 +3208,20 @@
       </linkHelper>
     </extension>
     <extension
+         point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+            targetID="org.eclipse.egit.ui.StagingView.unstaged"
+            id="org.eclipse.egit.ui.StagingViewPopupActions">
+        <!--command commandId="org.eclipse.egit.ui.team.Discard" />
+        <command commandId="org.eclipse.egit.ui.team.CompareWithIndex" /-->
+        <action
+               class="org.eclipse.egit.ui.internal.actions.DiscardChangesAction"
+               id="org.eclipse.egit.ui.internal.actions.DiscardChangesAction"
+               label="%DiscardChangesAction_label"
+               menubarPath="additions"/>
+      </viewerContribution>
+    </extension>
+    <extension
          id="changeSetModel"
          name="%ChangeSetModel.name"
          point="org.eclipse.core.resources.modelProviders">

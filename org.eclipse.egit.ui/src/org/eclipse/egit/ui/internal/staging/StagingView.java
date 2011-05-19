@@ -27,20 +27,26 @@ import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jgit.api.AddCommand;
@@ -67,6 +73,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
@@ -79,6 +86,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
@@ -87,10 +95,13 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.ISources;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.internal.actions.CommandAction;
 import org.eclipse.ui.part.ViewPart;
 
 /**
@@ -124,6 +135,7 @@ public class StagingView extends ViewPart {
 			reload(event.getRepository());
 		}
 	};
+	private CommandAction mergeToolAction;
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -291,6 +303,87 @@ public class StagingView extends ViewPart {
 		srv.addPostSelectionListener(selectionChangedListener);
 
 		getSite().setSelectionProvider(unstagedTableViewer);
+
+		createUnstageMenu();
+		createStagedMenu();
+	}
+
+	private void createUnstageMenu() {
+		final MenuManager mgr = new MenuManager();
+		Control c = unstagedTableViewer.getControl();
+		c.setMenu(mgr.createContextMenu(c));
+		mgr.add(new CommandAction(getSite(), ActionCommands.DISCARD_CHANGES_ACTION));
+		mgr.add(new CommandAction(getSite(), ActionCommands.ADD_TO_INDEX));
+		mgr.add(new CommandAction(getSite(), ActionCommands.COMPARE_WITH_INDEX_ACTION));
+		mgr.add(new CommandAction(getSite(), ActionCommands.SHOW_HISTORY));
+		mgr.add(mergeToolAction = new CommandAction(getSite(), ActionCommands.MERGE_TOOL_ACTION));
+		mgr.add(new Action(
+				UIText.CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel) {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void run() {
+				final ISelection s = unstagedTableViewer.getSelection();
+				if (s.isEmpty() || !(s instanceof IStructuredSelection))
+					return;
+				final IStructuredSelection iss = (IStructuredSelection) s;
+				for (Iterator<StagingEntry> it = iss.iterator(); it.hasNext();) {
+					String relativePath = it.next().getPath();
+					String path = new Path(currentRepository.getWorkTree()
+							.getAbsolutePath()).append(relativePath)
+							.toOSString();
+					openFileInEditor(path);
+				}
+			}
+		});
+
+		unstagedTableViewer.addPostSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+				if (selection.isEmpty())
+					return;
+				StagingEntry stagingEntry = (StagingEntry) selection.getFirstElement();
+				mergeToolAction.setEnabled(stagingEntry.getState() == StagingEntry.State.CONFLICTING);
+			}
+		});
+	}
+
+	private void openFileInEditor(String filePath) {
+		IWorkbenchWindow window = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		File file = new File(filePath);
+		if (!file.exists()) {
+			String message = NLS.bind(UIText.CommitFileDiffViewer_FileDoesNotExist, filePath);
+			Activator.showError(message, null);
+		}
+		IWorkbenchPage page = window.getActivePage();
+		EgitUiEditorUtils.openEditor(file, page);
+	}
+
+	private void createStagedMenu() {
+		final MenuManager mgr = new MenuManager();
+		Control c = stagedTableViewer.getControl();
+		c.setMenu(mgr.createContextMenu(c));
+		mgr.add(new CommandAction(getSite(), ActionCommands.DISCARD_CHANGES_ACTION));	// reset?
+		mgr.add(new CommandAction(getSite(), ActionCommands.COMPARE_WITH_HEAD_ACTION));
+		mgr.add(new CommandAction(getSite(), ActionCommands.SHOW_HISTORY));
+		mgr.add(new Action(
+				UIText.CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel) {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void run() {
+				final ISelection s = stagedTableViewer.getSelection();
+				if (s.isEmpty() || !(s instanceof IStructuredSelection))
+					return;
+				final IStructuredSelection iss = (IStructuredSelection) s;
+				for (Iterator<StagingEntry> it = iss.iterator(); it.hasNext();) {
+					String relativePath = it.next().getPath();
+					String path = new Path(currentRepository.getWorkTree()
+							.getAbsolutePath()).append(relativePath)
+							.toOSString();
+					openFileInEditor(path);
+				}
+			}
+		});
 	}
 
 	private void compareWith(OpenEvent event) {
