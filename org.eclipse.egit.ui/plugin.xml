@@ -48,12 +48,6 @@
                menubarPath="team.main/group5">
          </action>
          <action
-               class="org.eclipse.egit.ui.internal.actions.SynchronizeWithAction"
-               id="org.eclipse.egit.ui.internal.actions.SynchronizeWithAction"
-               icon="$nl$/icons/obj16/remotespec.gif"
-               label="%SynchronizeWith_label"
-               menubarPath="team.main/group3"/>
-         <action
                class="org.eclipse.egit.ui.internal.actions.SynchronizeWorkspaceAction"
                id="org.eclipse.egit.ui.internal.actions.SynchronizeWorkspace"
                icon="$nl$/icons/obj16/remotespec.gif"
@@ -2661,6 +2655,32 @@
                   name="group3"
                   visible="true">
             </separator>
+            <menu
+                  label="%SynchronizeWith_label"
+                  icon="$nl$/icons/obj16/remotespec.gif">
+               <dynamic
+                     class="org.eclipse.egit.ui.internal.actions.SynchronizeWithMenu"
+                     id="org.eclipse.egit.ui.synchronize">
+               </dynamic>
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <and>
+                           <adapt
+                                 type="org.eclipse.core.resources.IProject">
+                              <test
+                                    property="GitResource.isShared">
+                              </test>
+                           </adapt>
+                        </and>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+            </menu>
             <separator
                   name="group4"
                   visible="true">

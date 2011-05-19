@@ -16,15 +16,18 @@ import static org.eclipse.egit.ui.UIText.GitModelWorkingTree_workingTree;
 import static org.eclipse.egit.ui.test.ContextMenuHelper.clickContextMenu;
 import static org.eclipse.egit.ui.test.TestUtil.waitUntilTreeHasNodeContainsText;
 import static org.eclipse.jface.dialogs.MessageDialogWithToggle.NEVER;
+import static org.eclipse.jgit.lib.Constants.R_TAGS;
 import static org.eclipse.team.internal.ui.IPreferenceIds.SYNCHRONIZING_COMPLETE_PERSPECTIVE;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -32,14 +35,15 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.core.op.ResetOperation.ResetType;
+import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.bindings.keys.KeyStroke;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -62,7 +66,7 @@ import org.junit.BeforeClass;
 public abstract class AbstractSynchronizeViewTest extends
 		LocalRepositoryTestCase {
 
-	protected static final String INITIAL_TAG = "initial-tag";
+	protected static final String INITIAL_TAG = R_TAGS + "initial-tag";
 
 	protected static final String TEST_COMMIT_MSG = "test commit";
 
@@ -140,38 +144,22 @@ public abstract class AbstractSynchronizeViewTest extends
 		commit(projectName);
 	}
 
-	protected void launchSynchronization(String srcRepo, String srcRef,
-			String dstRepo, String dstRef, boolean includeLocal)
-			throws InterruptedException {
-		launchSynchronization(REPO1, PROJ1, srcRepo, srcRef, dstRepo, dstRef,
-				includeLocal);
+	protected void launchSynchronization(String srcRef, String dstRef,
+			boolean includeLocal) throws InterruptedException, IOException {
+		launchSynchronization(PROJ1, srcRef, dstRef, includeLocal);
 	}
 
-	protected void launchSynchronization(String repo, String projectName,
-			String srcRepo, String srcRef, String dstRepo, String dstRef,
-			boolean includeLocal) throws InterruptedException {
-		showDialog(projectName, "Team", "Synchronize...");
+	protected void launchSynchronization(String projectName, String srcRef,
+			String dstRef, boolean includeLocal) throws InterruptedException,
+			IOException {
+		IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(projectName);
+		Repository repo = RepositoryMapping.getMapping(project).getRepository();
 
-		bot.shell("Synchronize repository: " + repo + File.separator + ".git");
+		GitSynchronizeData data = new GitSynchronizeData(repo, srcRef, dstRef,
+				includeLocal);
 
-		if (!includeLocal)
-			bot.checkBox(
-					UIText.SelectSynchronizeResourceDialog_includeUncommitedChanges)
-					.click();
-
-		if (!includeLocal && srcRepo != null)
-			bot.comboBox(0)
-					.setSelection(srcRepo);
-		if (!includeLocal && srcRef != null)
-			bot.comboBox(1).setSelection(srcRef);
-
-		if (dstRepo != null)
-			bot.comboBox(2)
-					.setSelection(dstRepo);
-		if (dstRef != null)
-			bot.comboBox(3).setSelection(dstRef);
-
-		bot.button(IDialogConstants.OK_LABEL).click();
+		GitModelSynchronize.launch(data, new IResource[] { project });
 
 		Job.getJobManager().join(
 				ISynchronizeManager.FAMILY_SYNCHRONIZE_OPERATION, null);
