@@ -25,12 +25,18 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Abstract super class for commands shared between different components in EGit
  */
 public abstract class AbstractSharedCommandHandler extends AbstractHandler {
+
+	private static final IWorkbench WORKBENCH = PlatformUI.getWorkbench();
+
 	/**
 	 * @param event
 	 *            the {@link ExecutionEvent}
@@ -75,7 +81,13 @@ public abstract class AbstractSharedCommandHandler extends AbstractHandler {
 			return result;
 		}
 		if (selection instanceof TextSelection) {
-			// TODO find editor input and adapt to IResource
+			IEditorInput activeEditor = WORKBENCH.getActiveWorkbenchWindow()
+					.getActivePage().getActiveEditor().getEditorInput();
+			IResource resource = (IResource) activeEditor
+					.getAdapter(IResource.class);
+
+			if (resource != null)
+				return RepositoryMapping.getMapping(resource).getRepository();
 		}
 		return null;
 	}
