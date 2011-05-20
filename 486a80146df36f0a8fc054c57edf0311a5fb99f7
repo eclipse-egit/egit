@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOI3///Bs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-19T19:52:35Z",
+      "side": 1,
+      "message": "IMHO this string should be exported into UIPreferences class",
+      "revId": "486a80146df36f0a8fc054c57edf0311a5fb99f7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///Bg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-19T19:52:35Z",
+      "side": 1,
+      "message": "unnecessary brackets",
+      "revId": "486a80146df36f0a8fc054c57edf0311a5fb99f7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///BQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-05-19T19:52:35Z",
+      "side": 1,
+      "message": "I can\u0027t find proper variable mapping in UIText class for \tCommitDialogPreferencePage_changeIdTooltip",
+      "revId": "486a80146df36f0a8fc054c57edf0311a5fb99f7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
