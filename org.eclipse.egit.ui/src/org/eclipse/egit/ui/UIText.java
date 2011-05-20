@@ -1546,9 +1546,6 @@ public class UIText extends NLS {
 	public static String CommitDialog_ErrorNoMessage;
 
 	/** */
-	public static String CommitDialog_File;
-
-	/** */
 	public static String CommitDialog_SelectAll;
 
 	/** */
@@ -1594,13 +1591,19 @@ public class UIText extends NLS {
 	public static String CommitDialog_AddChangeIdLabel;
 
 	/** */
-	public static String CommitDialog_AddChangeIdTooltip;
-
-	/** */
 	public static String CommitDialog_WrongTypeOfCommitMessageProvider;
 
 	/** */
 	public static String CommitDialog_ConfigureLink;
+
+	/** */
+	public static String CommitDialog_Message;
+
+	/** */
+	public static String CommitDialog_Path;
+
+	/** */
+	public static String CommitDialog_Title;
 
 	/** */
 	public static String ConfigurationChecker_checkHomeDirectory;
