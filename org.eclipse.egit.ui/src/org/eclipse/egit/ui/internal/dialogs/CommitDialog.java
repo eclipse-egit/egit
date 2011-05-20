@@ -82,6 +82,8 @@ import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
@@ -617,6 +619,12 @@ public class CommitDialog extends TitleAreaDialog {
 	@Override
 	protected Control createContents(Composite parent) {
 		toolkit = new FormToolkit(parent.getDisplay());
+		parent.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				toolkit.dispose();
+			}
+		});
 		return super.createContents(parent);
 	}
 
