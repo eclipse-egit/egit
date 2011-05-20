@@ -296,7 +296,7 @@ public abstract class AbstractSynchronizeViewTest extends
 
 		bot.shell(CommitDialog_CommitChanges).bot().activeShell();
 		bot.styledText(0).setText(TEST_COMMIT_MSG);
-		bot.button(CommitDialog_SelectAll).click();
+		bot.toolbarButtonWithTooltip(CommitDialog_SelectAll).click();
 		bot.button(CommitDialog_Commit).click();
 		TestUtil.joinJobs(JobFamilies.COMMIT);
 	}
