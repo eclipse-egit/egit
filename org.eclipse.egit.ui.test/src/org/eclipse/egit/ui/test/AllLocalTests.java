@@ -10,6 +10,7 @@ package org.eclipse.egit.ui.test;
 
 import org.eclipse.egit.ui.httpauth.PushTest;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageAreaTest;
+import org.eclipse.egit.ui.operations.GitScopeUtilTest;
 import org.eclipse.egit.ui.prefpages.configuration.GlobalConfigurationPageTest;
 import org.eclipse.egit.ui.test.history.HistoryViewTest;
 import org.eclipse.egit.ui.test.team.actions.AllTeamActionTests;
@@ -33,6 +34,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		AllTeamActionTests.class,                   //
 		HistoryViewTest.class,                      //
 		PushTest.class,
+ GitScopeUtilTest.class,
 		SpellcheckableMessageAreaTest.class,
 		TraceConfigurationDialogTest.class,
 		SynchronizeViewWorkspaceModelTest.class,
