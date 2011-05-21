@@ -79,8 +79,8 @@ public class EGitSecureStore {
 		return new UserPasswordCredentials(user, password);
 	}
 
-	private String calcNodePath(URIish uri) {
-		URIish storedURI = uri.setUser(null).setPass(null);
+	static String calcNodePath(URIish uri) {
+		URIish storedURI = uri.setUser(null).setPass(null).setPath(null);
 		String pathName = GIT_PATH_PREFIX
 				+ EncodingUtils.encodeSlashes(storedURI.toString());
 		return pathName;
