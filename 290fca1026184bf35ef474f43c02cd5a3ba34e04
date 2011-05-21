@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL1H////8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-09T08:32:53Z",
+      "side": 1,
+      "message": "i18n: text should be externalized",
+      "revId": "290fca1026184bf35ef474f43c02cd5a3ba34e04",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL1H////4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-09T08:32:53Z",
+      "side": 1,
+      "message": "i18n: text should be externalized\n\nThis text looks good, but at runtime I see a different tooltip text on the gerrit button: \"Inserts the final id when you press Commit\" -\u003e that\u0027s hard to understand",
+      "revId": "290fca1026184bf35ef474f43c02cd5a3ba34e04",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL1H////0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2010-12-09T08:32:53Z",
+      "side": 1,
+      "message": "i18n: shouldn\u0027t that be translatable (think about Chinese) ?",
+      "revId": "290fca1026184bf35ef474f43c02cd5a3ba34e04",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
