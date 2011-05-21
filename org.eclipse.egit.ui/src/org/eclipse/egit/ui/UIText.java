@@ -3032,7 +3032,10 @@ public class UIText extends NLS {
 	public static String GitBranchSynchronizeWizardPage_repositories;
 
 	/** */
-	public static String GitBranchSynchronizeWizardPage_branches;
+	public static String GitBranchSynchronizeWizardPage_destination;
+
+	/** */
+	public static String GitBranchSynchronizeWizardPage_includeUncommitedChanges;
 
 	/** */
 	public static String GitBranchSynchronizeWizardPage_selectAll;
