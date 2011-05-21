@@ -113,8 +113,10 @@ public class CompareUtils {
 		try {
 			IFileRevision nextFile = getFileRevision(gitPath, commit, db,
 							blobId);
-				if (nextFile != null)
-					right = new FileRevisionTypedElement(nextFile);
+				if (nextFile != null) {
+					String encoding = getResourceEncoding(db, gitPath);
+					right = new FileRevisionTypedElement(nextFile, encoding);
+				}
 		} catch (IOException e) {
 			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
 					gitPath, commit.getId()), e);
