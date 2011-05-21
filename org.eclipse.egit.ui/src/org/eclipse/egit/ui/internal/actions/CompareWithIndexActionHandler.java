@@ -107,7 +107,8 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 		}
 
 		IFileRevision nextFile = GitFileRevision.inIndex(repository, gitPath);
-		final EditableRevision next = new EditableRevision(nextFile);
+		String encoding = CompareUtils.getResourceEncoding(baseFile);
+		final EditableRevision next = new EditableRevision(nextFile, encoding);
 
 		IContentChangeListener listener = new IContentChangeListener() {
 			public void contentChanged(IContentChangeNotifier source) {
