@@ -17,10 +17,10 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.LocalFileRevision;
@@ -31,7 +31,6 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
@@ -97,12 +96,7 @@ public class CompareWithRefActionHandler extends RepositoryActionHandler {
 		RevCommit commit = rw.parseCommit(commitId);
 		rw.release();
 
-		IFileRevision nextFile = GitFileRevision.inCommit(repository, commit,
-				gitPath, null);
-
-		FileRevisionTypedElement element = new FileRevisionTypedElement(
-				nextFile);
-		return element;
+		return CompareUtils.getFileRevisionTypedElement(gitPath, commit, repository);
 	}
 
 	@Override
