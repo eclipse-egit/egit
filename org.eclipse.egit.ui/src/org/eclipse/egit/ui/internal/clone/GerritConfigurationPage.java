@@ -190,7 +190,7 @@ public class GerritConfigurationPage extends WizardPage {
 	 * @return true if Gerrit configuration should be done
 	 */
 	public boolean configureGerrit() {
-		return configureGerrit.isEnabled();
+		return configureGerrit.getSelection();
 	}
 
 	/**
