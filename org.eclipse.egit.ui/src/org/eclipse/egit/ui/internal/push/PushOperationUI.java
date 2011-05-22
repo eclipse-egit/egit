@@ -10,10 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -28,13 +25,10 @@ import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
-import org.eclipse.jgit.transport.Transport;
-import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -118,38 +112,39 @@ public class PushOperationUI {
 	public PushOperationResult execute(IProgressMonitor monitor)
 			throws CoreException {
 		if (spec == null) {
-			// we don't use the configuration directly, as it may contain
-			// unsaved changes and as we may need
-			// to add the default push RefSpec here
-			spec = new PushOperationSpecification();
+//			// we don't use the configuration directly, as it may contain
+//			// unsaved changes and as we may need
+//			// to add the default push RefSpec here
+//			spec = new PushOperationSpecification();
+//
+//			List<URIish> urisToPush = new ArrayList<URIish>();
+//			for (URIish uri : config.getPushURIs())
+//				urisToPush.add(uri);
+//			if (urisToPush.isEmpty() && !config.getURIs().isEmpty())
+//				urisToPush.add(config.getURIs().get(0));
+//
+//			List<RefSpec> pushRefSpecs = new ArrayList<RefSpec>();
+//			pushRefSpecs.addAll(config.getPushRefSpecs());
+//			if (pushRefSpecs.isEmpty())
+//				// default push to all branches
+//				pushRefSpecs.add(DEFAULT_PUSH_REF_SPEC);
+//
+//			for (URIish uri : urisToPush) {
+//				try {
+//					spec.addURIRefUpdates(uri, Transport.open(repository, uri)
+//							.findRemoteRefUpdatesFor(pushRefSpecs));
+//				} catch (NotSupportedException e) {
+//					throw new CoreException(Activator.createErrorStatus(
+//							e.getMessage(), e));
+//				} catch (IOException e) {
+//					throw new CoreException(Activator.createErrorStatus(
+//							e.getMessage(), e));
+//				}
+//			}
+			op = new PushOperation(repository, config, dryRun, timeout);
+		} else
+			op = new PushOperation(repository, spec, dryRun, timeout);
 
-			List<URIish> urisToPush = new ArrayList<URIish>();
-			for (URIish uri : config.getPushURIs())
-				urisToPush.add(uri);
-			if (urisToPush.isEmpty() && !config.getURIs().isEmpty())
-				urisToPush.add(config.getURIs().get(0));
-
-			List<RefSpec> pushRefSpecs = new ArrayList<RefSpec>();
-			pushRefSpecs.addAll(config.getPushRefSpecs());
-			if (pushRefSpecs.isEmpty())
-				// default push to all branches
-				pushRefSpecs.add(DEFAULT_PUSH_REF_SPEC);
-
-			for (URIish uri : urisToPush) {
-				try {
-					spec.addURIRefUpdates(uri, Transport.open(repository, uri)
-							.findRemoteRefUpdatesFor(pushRefSpecs));
-				} catch (NotSupportedException e) {
-					throw new CoreException(Activator.createErrorStatus(
-							e.getMessage(), e));
-				} catch (IOException e) {
-					throw new CoreException(Activator.createErrorStatus(
-							e.getMessage(), e));
-				}
-			}
-		}
-
-		op = new PushOperation(repository, spec, dryRun, timeout);
 		if (credentialsProvider != null)
 			op.setCredentialsProvider(credentialsProvider);
 
