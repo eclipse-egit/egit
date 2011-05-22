@@ -166,7 +166,6 @@ public class SynchronizeWithMenu extends ContributionItem implements
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				GitSynchronizeWizard gitWizard = new GitSynchronizeWizard();
-				gitWizard.selectProjects(selectedProject);
 				WizardDialog wizard = new WizardDialog(menu.getShell(),
 						gitWizard);
 				wizard.create();
