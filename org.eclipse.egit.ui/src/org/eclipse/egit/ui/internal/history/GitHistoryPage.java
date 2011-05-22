@@ -1323,6 +1323,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	}
 
 	private void setWarningText(String warning) {
+		if (warningComposite == null || warningComposite.isDisposed())
+			return;
 		GridData gd = (GridData) warningComposite.getLayoutData();
 		gd.exclude = warning == null;
 		warningComposite.setVisible(!gd.exclude);
