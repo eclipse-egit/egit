@@ -244,6 +244,16 @@ public class CommitUI  {
 		commitOperation.setCommitAll(isMergedResolved);
 		if (isMergedResolved)
 			commitOperation.setRepository(repo);
+		performCommit(repo, commitOperation);
+		return;
+	}
+
+	/**
+	 * Uses a Job to perform the given CommitOperation
+	 * @param repository
+	 * @param commitOperation
+	 */
+	public static void performCommit(final Repository repository, final CommitOperation commitOperation) {
 		String jobname = UIText.CommitAction_CommittingChanges;
 		Job job = new Job(jobname) {
 			@Override
@@ -251,7 +261,7 @@ public class CommitUI  {
 				try {
 					commitOperation.execute(monitor);
 					RepositoryMapping mapping = RepositoryMapping
-							.findRepositoryMapping(repo);
+							.findRepositoryMapping(repository);
 					if (mapping != null)
 						mapping.fireRepositoryChanged();
 				} catch (CoreException e) {
@@ -273,7 +283,6 @@ public class CommitUI  {
 		};
 		job.setUser(true);
 		job.schedule();
-		return;
 	}
 
 	private IProject[] getProjectsOfRepositories() {
