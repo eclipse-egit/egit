@@ -10,15 +10,23 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
 
+import org.eclipse.compare.CompareUI;
+import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.CompareUtils;
+import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
@@ -35,8 +43,28 @@ public class CompareWithHeadActionHandler extends RepositoryActionHandler {
 		final IResource[] resources = getSelectedResources(event);
 
 		if (resources.length == 1 && resources[0] instanceof IFile) {
-			final IFile file = (IFile) resources[0];
-			CompareUtils.compareHeadWithWorkspace(repository, file);
+			final IFile baseFile = (IFile) resources[0];
+			final String gitPath = RepositoryMapping.getMapping(
+					baseFile.getProject()).getRepoRelativePath(baseFile);
+			final ITypedElement base = SaveableCompareEditorInput
+					.createFileElement(baseFile);
+
+			ITypedElement next;
+			try {
+				Ref head = repository.getRef(Constants.HEAD);
+				RevWalk rw = new RevWalk(repository);
+				RevCommit commit = rw.parseCommit(head.getObjectId());
+
+				next = CompareUtils.getFileRevisionTypedElement(gitPath,
+						commit, repository);
+			} catch (IOException e) {
+				Activator.handleError(e.getMessage(), e, true);
+				return null;
+			}
+
+			final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+					base, next, null);
+			CompareUI.openCompareEditor(in);
 			return null;
 
 		} else {
