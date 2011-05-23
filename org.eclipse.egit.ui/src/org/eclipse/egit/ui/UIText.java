@@ -3149,6 +3149,15 @@ public class UIText extends NLS {
 	public static String NonDeletedFilesTree_ResourcePathsButton;
 
 	/** */
+	public static String NoteDetailsPage_ContentSection;
+
+	/** */
+	public static String NotesBlock_NotesSection;
+
+	/** */
+	public static String NotesEditorPage_Title;
+
+	/** */
 	public static String OpenWorkingFileAction_text;
 
 	/** */
