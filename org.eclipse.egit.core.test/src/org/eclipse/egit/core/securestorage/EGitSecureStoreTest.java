@@ -22,7 +22,6 @@ import java.util.HashMap;
 import javax.crypto.spec.PBEKeySpec;
 
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.equinox.security.storage.EncodingUtils;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.equinox.security.storage.provider.IProviderHints;
@@ -56,8 +55,8 @@ public class EGitSecureStoreTest {
 				"agitter", "letmein");
 		store.putCredentials(uri, credentials);
 
-		ISecurePreferences node = secureStoreForTest.node("/GIT/"
-				+ EncodingUtils.encodeSlashes(uri.toString()));
+		ISecurePreferences node = secureStoreForTest.node(EGitSecureStore
+				.calcNodePath(uri).toString());
 		assertEquals("agitter", node.get("user", null));
 		assertTrue(node.isEncrypted("password"));
 		assertEquals("letmein", node.get("password", null));
@@ -86,14 +85,14 @@ public class EGitSecureStoreTest {
 	@Test
 	public void testPutUserAndPasswordURIContainingUserAndPass()
 			throws Exception {
+		URIish uri = new URIish(
+				"http://user:pass@testRepo.example.com/testrepo");
 		UserPasswordCredentials credentials = new UserPasswordCredentials(
 				"agitter", "letmein");
-		store.putCredentials(new URIish(
-				"http://user:pass@testRepo.example.com/testrepo"), credentials);
+		store.putCredentials(uri, credentials);
 
-		ISecurePreferences node = secureStoreForTest.node("/GIT/"
-				+ EncodingUtils
-						.encodeSlashes("http://testRepo.example.com/testrepo"));
+		ISecurePreferences node = secureStoreForTest.node(EGitSecureStore
+				.calcNodePath(uri).toString());
 		assertEquals("agitter", node.get("user", null));
 		assertTrue(node.isEncrypted("password"));
 		assertEquals("letmein", node.get("password", null));
