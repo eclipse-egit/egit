@@ -14,12 +14,31 @@ package org.eclipse.egit.ui.common;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotRadio;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
 public class ExistingOrNewPage {
 
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
+
+	public void setExternalMode(boolean externalMode) {
+		SWTBotRadio externalButton = bot
+				.radio(UIText.ExistingOrNewPage_ExternalModeRadioButton);
+		if (externalMode && !externalButton.isSelected())
+			externalButton.click();
+		SWTBotRadio parentButton = bot
+				.radio(UIText.ExistingOrNewPage_ParentModeRadioButton);
+		if (!externalMode && !parentButton.isSelected())
+			parentButton.click();
+	}
+
+	public SWTBotShell clickCreateRepository(){
+		bot.button(UIText.ExistingOrNewPage_CreateRepositoryButton).click();
+		return bot.shell(UIText.NewRepositoryWizard_WizardTitle);
+	}
 
 	@SuppressWarnings("boxing")
 	public void assertEnabling(boolean createRepository, boolean textField,
@@ -34,6 +53,17 @@ public class ExistingOrNewPage {
 			String newRepoPath) {
 		assertContents(new Row[] { new Row(selected, project, path, repository) },
 				newRepoPath);
+	}
+
+	public void assertTableContents(String[][] contents){
+		assertEquals(contents.length, bot.table().rowCount());
+		for (int i = 0; i<contents.length; i++){
+			String[] testStrings = contents[i];
+			assertEquals(testStrings.length, bot.table().columnCount());
+			for (int j = 0; j<testStrings.length; j++){
+				assertEquals(testStrings[j], bot.table().cell(i, j));
+			}
+		}
 	}
 
 	public void assertContents(Row[] rows, String newRepoPath) {
@@ -114,4 +144,8 @@ public class ExistingOrNewPage {
 		}
 	}
 
+	public void setRelativePath(String path) {
+		bot.textWithLabel(UIText.ExistingOrNewPage_RelativePathLabel).setText(
+				path);
+	}
 }
