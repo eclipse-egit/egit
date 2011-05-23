@@ -81,6 +81,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 
 	private DiffEditorPage diffPage;
 
+	private NotesEditorPage notePage;
+
 	private ListenerHandle refListenerHandle;
 
 	/**
@@ -94,6 +96,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 				diffPage = new DiffEditorPage(this);
 				addPage(diffPage);
 			}
+			notePage = new NotesEditorPage(this);
+			addPage(notePage);
 		} catch (PartInitException e) {
 			Activator.error("Error adding page", e); //$NON-NLS-1$
 		}
