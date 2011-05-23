@@ -1,0 +1,9 @@
+Change-Id: Ifa399997ef16bd27e616400af88c619e34b674ad
+Code-Review+2: Stefan Lay <stefan.lay@sap.com>
+IP-Clean+1: Stefan Lay <stefan.lay@sap.com>
+Code-Review+1: Mathias Kinzler <mathias.kinzler@sap.com>
+Submitted-by: Stefan Lay <stefan.lay@sap.com>
+Submitted-at: Fri, 09 Apr 2010 10:25:36 -0400
+Reviewed-on: http://egit.eclipse.org/r/529
+Project: egit
+Branch: refs/heads/master

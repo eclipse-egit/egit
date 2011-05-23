@@ -1,0 +1,9 @@
+Change-Id: I08f6a5e5eeee8f466475f3851a414cc259b111e4
+Code-Review+1: Alex Blewitt <alex.blewitt@gmail.com>
+Code-Review+2: Mathias Kinzler <mathias.kinzler@sap.com>
+IP-Clean+1: Mathias Kinzler <mathias.kinzler@sap.com>
+Submitted-by: Mathias Kinzler <mathias.kinzler@sap.com>
+Submitted-at: Thu, 24 Jun 2010 14:05:28 -0400
+Reviewed-on: http://egit.eclipse.org/r/928
+Project: egit
+Branch: refs/heads/master

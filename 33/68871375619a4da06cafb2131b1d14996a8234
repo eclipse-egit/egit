@@ -1,0 +1,8 @@
+Change-Id: I3368871375619a4da06cafb2131b1d14996a8234
+Code-Review+2: Robin Rosenberg <robin.rosenberg@dewire.com>
+IP-Clean+1: Robin Rosenberg <robin.rosenberg@dewire.com>
+Submitted-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+Submitted-at: Wed, 30 Dec 2009 11:50:41 -0400
+Reviewed-on: http://egit.eclipse.org/r/169
+Project: egit
+Branch: refs/heads/master

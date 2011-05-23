@@ -1,0 +1,9 @@
+Change-Id: I791207d3a7681fa4dbe28b598acd3210aaa8c8d3
+Code-Review+2: Mathias Kinzler <mathias.kinzler@sap.com>
+IP-Clean+1: Mathias Kinzler <mathias.kinzler@sap.com>
+Verified+1: Hudson CI
+Submitted-by: Mathias Kinzler <mathias.kinzler@sap.com>
+Submitted-at: Thu, 24 Mar 2011 12:21:27 -0400
+Reviewed-on: http://egit.eclipse.org/r/2913
+Project: egit
+Branch: refs/heads/master

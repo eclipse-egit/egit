@@ -1,0 +1,10 @@
+Change-Id: I46d41a307c2f768ec91591a94ece1d73ee04cd41
+Code-Review+2: Chris Aniszczyk <caniszczyk@gmail.com>
+IP-Clean+1: Chris Aniszczyk <caniszczyk@gmail.com>
+Code-Review+1: Matthias Sohn <matthias.sohn@sap.com>
+IP-Clean+1: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-by: Chris Aniszczyk <caniszczyk@gmail.com>
+Submitted-at: Fri, 16 Apr 2010 15:57:38 -0400
+Reviewed-on: http://egit.eclipse.org/r/563
+Project: egit
+Branch: refs/heads/master

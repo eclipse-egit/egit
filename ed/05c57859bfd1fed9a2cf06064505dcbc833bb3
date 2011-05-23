@@ -1,0 +1,10 @@
+Change-Id: Ied05c57859bfd1fed9a2cf06064505dcbc833bb3
+Code-Review+2: Stefan Lay <stefan.lay@sap.com>
+IP-Clean+1: Stefan Lay <stefan.lay@sap.com>
+Code-Review+1: Mykola Nikishov <mn@mn.com.ua>
+IP-Clean+1: Mykola Nikishov <mn@mn.com.ua>
+Submitted-by: Stefan Lay <stefan.lay@sap.com>
+Submitted-at: Wed, 30 Jun 2010 06:49:19 -0400
+Reviewed-on: http://egit.eclipse.org/r/1008
+Project: egit
+Branch: refs/heads/master

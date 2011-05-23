@@ -1,0 +1,10 @@
+Change-Id: I8530497fd4d4c2a6bf4f09779645b33c6a1b3ab2
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+IP-Clean+1: Matthias Sohn <matthias.sohn@sap.com>
+Verified+1: Matthias Sohn <matthias.sohn@sap.com>
+Code-Review-1: Hudson CI
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Tue, 03 May 2011 11:07:26 -0400
+Reviewed-on: http://egit.eclipse.org/r/3318
+Project: egit
+Branch: refs/heads/master

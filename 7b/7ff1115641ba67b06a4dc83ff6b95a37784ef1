@@ -1,0 +1,8 @@
+Change-Id: I7b7ff1115641ba67b06a4dc83ff6b95a37784ef1
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+IP-Clean+1: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Tue, 14 Dec 2010 13:05:56 -0400
+Reviewed-on: http://egit.eclipse.org/r/2123
+Project: egit
+Branch: refs/heads/stable-0.10

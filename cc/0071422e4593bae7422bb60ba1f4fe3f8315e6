@@ -1,0 +1,9 @@
+Change-Id: Icc0071422e4593bae7422bb60ba1f4fe3f8315e6
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+IP-Clean+1: Matthias Sohn <matthias.sohn@sap.com>
+Code-Review+1: Jens Baumgart <jens.baumgart@sap.com>
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Fri, 30 Apr 2010 11:08:53 -0400
+Reviewed-on: http://egit.eclipse.org/r/622
+Project: egit
+Branch: refs/heads/master

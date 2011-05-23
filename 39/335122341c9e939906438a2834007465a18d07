@@ -1,0 +1,10 @@
+Change-Id: I39335122341c9e939906438a2834007465a18d07
+Code-Review+2: Dariusz Luksza <dariusz.luksza@gmail.com>
+IP-Clean+1: Dariusz Luksza <dariusz.luksza@gmail.com>
+Verified+1: Dariusz Luksza <dariusz.luksza@gmail.com>
+Verified+1: Hudson CI
+Submitted-by: Dariusz Luksza <dariusz.luksza@gmail.com>
+Submitted-at: Fri, 22 Apr 2011 14:51:44 -0400
+Reviewed-on: http://egit.eclipse.org/r/3213
+Project: egit
+Branch: refs/heads/master
