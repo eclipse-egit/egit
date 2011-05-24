@@ -18,11 +18,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.commands.Command;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.NotEnabledException;
-import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.ParameterizedCommand;
-import org.eclipse.core.commands.common.NotDefinedException;
+import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -30,12 +27,17 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
-import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
+import org.eclipse.egit.ui.internal.commit.CommitMesageSection;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -75,12 +77,11 @@ import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
@@ -90,6 +91,10 @@ import org.eclipse.ui.ISources;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.forms.widgets.ExpandableComposite;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.ViewPart;
 
@@ -97,18 +102,28 @@ import org.eclipse.ui.part.ViewPart;
  * A GitX style staging view with embedded commit dialog.
  */
 public class StagingView extends ViewPart {
-	private Label repositoryLabel;
+
+	/**
+	 * Staging view id
+	 */
+	public static final String VIEW_ID = "org.eclipse.egit.ui.StagingView"; //$NON-NLS-1$
+
+	private ScrolledForm form;
+
+	private CommitMesageSection messageSection;
+
 	private TableViewer stagedTableViewer;
+
 	private TableViewer unstagedTableViewer;
-	private SpellcheckableMessageArea commitMessageText;
-	private Text committerText;
-	private Text authorText;
-	private Button commitButton;
+
+	private IAction commitAction;
 
 	private boolean reactOnSelection = true;
 
 	private final List<ListenerHandle> myListeners = new LinkedList<ListenerHandle>();
+
 	private ISelectionListener selectionChangedListener;
+
 	private Repository currentRepository;
 
 	private final RefsChangedListener myRefsChangedListener = new RefsChangedListener() {
@@ -127,33 +142,66 @@ public class StagingView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
-		parent.setLayout(new GridLayout(1, false));
+		GridLayoutFactory.fillDefaults().applyTo(parent);
 
-		repositoryLabel = new Label(parent, SWT.NONE);
-		repositoryLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		final FormToolkit toolkit = new FormToolkit(parent.getDisplay());
+		parent.addDisposeListener(new DisposeListener() {
 
-		SashForm horizontalSashForm = new SashForm(parent, SWT.NONE);
-		horizontalSashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+			public void widgetDisposed(DisposeEvent e) {
+				toolkit.dispose();
+			}
+		});
 
-		Composite leftHandComposite = new Composite(horizontalSashForm, SWT.NONE);
-		leftHandComposite.setLayout(new GridLayout(1, false));
+		form = toolkit.createScrolledForm(parent);
+		commitAction = new Action(UIText.StagingView_CommitAction,
+				UIIcons.COMMIT) {
 
-		SashForm veriticalSashForm = new SashForm(leftHandComposite, SWT.VERTICAL);
-		veriticalSashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+			public void run() {
+				// TODO commit changes
+			}
+		};
+		form.getToolBarManager().add(commitAction);
+		form.getToolBarManager().update(true);
+		Image repoImage = UIIcons.REPOSITORY.createImage();
+		UIUtils.hookDisposal(form, repoImage);
+		form.setImage(repoImage);
+		form.setText(""); //$NON-NLS-1$
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(form);
+		toolkit.decorateFormHeading(form.getForm());
+		GridLayoutFactory.swtDefaults().applyTo(form.getBody());
 
-		Composite unstagedComposite = new Composite(veriticalSashForm, SWT.NONE);
-		unstagedComposite.setLayout(new GridLayout(1, false));
+		SashForm horizontalSashForm = new SashForm(form.getBody(), SWT.NONE);
+		toolkit.adapt(horizontalSashForm, true, true);
+		horizontalSashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+				true, 1, 1));
 
-		new Label(unstagedComposite, SWT.NONE).setText(UIText.StagingView_UnstagedChanges);
+		SashForm veriticalSashForm = new SashForm(horizontalSashForm,
+				SWT.VERTICAL);
+		toolkit.adapt(veriticalSashForm, true, true);
+		veriticalSashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+				true, 1, 1));
 
-		Composite unstagedTableComposite = new Composite(unstagedComposite, SWT.NONE);
-		unstagedTableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		unstagedTableComposite.setLayout(new TableColumnLayout());
+		Section unstagedSection = toolkit.createSection(veriticalSashForm,
+				ExpandableComposite.TITLE_BAR);
+		unstagedSection.setText(UIText.StagingView_UnstagedChanges);
 
-		unstagedTableViewer = new TableViewer(unstagedTableComposite, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
+		Composite unstagedTableComposite = toolkit
+				.createComposite(unstagedSection);
+		toolkit.paintBordersFor(unstagedTableComposite);
+		unstagedSection.setClient(unstagedTableComposite);
+		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
+				.applyTo(unstagedTableComposite);
+
+		unstagedTableViewer = new TableViewer(toolkit.createTable(
+				unstagedTableComposite, SWT.FULL_SELECTION | SWT.MULTI));
+		GridDataFactory.fillDefaults().grab(true, true)
+				.applyTo(unstagedTableViewer.getControl());
+		unstagedTableViewer.getTable().setData(FormToolkit.KEY_DRAW_BORDER,
+				FormToolkit.TEXT_BORDER);
 		unstagedTableViewer.getTable().setLinesVisible(true);
 		unstagedTableViewer.setLabelProvider(new StagingViewLabelProvider());
-		unstagedTableViewer.setContentProvider(new StagingViewContentProvider(true));
+		unstagedTableViewer.setContentProvider(new StagingViewContentProvider(
+				true));
 		unstagedTableViewer.addDragSupport(DND.DROP_MOVE,
 				new Transfer[] { LocalSelectionTransfer.getTransfer() },
 				new DragSourceAdapter() {
@@ -182,61 +230,28 @@ public class StagingView extends ViewPart {
 			}
 		});
 
-		Composite commitMessageComposite = new Composite(horizontalSashForm, SWT.NONE);
-		commitMessageComposite.setLayout(new GridLayout(2, false));
+		messageSection = new CommitMesageSection();
+		messageSection.createControl(horizontalSashForm, toolkit);
 
-		Label commitMessageLabel = new Label(commitMessageComposite, SWT.NONE);
-		commitMessageLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		commitMessageLabel.setText(UIText.StagingView_CommitMessage);
+		Section stagedSection = toolkit.createSection(veriticalSashForm,
+				ExpandableComposite.TITLE_BAR);
+		stagedSection.setText(UIText.StagingView_StagedChanges);
+		Composite stagedTableComposite = toolkit.createComposite(stagedSection);
+		toolkit.paintBordersFor(stagedTableComposite);
+		stagedSection.setClient(stagedTableComposite);
+		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
+				.applyTo(stagedTableComposite);
 
-		commitMessageText = new SpellcheckableMessageArea(commitMessageComposite, ""); //$NON-NLS-1$
-		commitMessageText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-
-		Composite composite = new Composite(commitMessageComposite, SWT.NONE);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		composite.setLayout(new GridLayout(2, false));
-
-		new Label(composite, SWT.NONE).setText(UIText.StagingView_Committer);
-
-		committerText = new Text(composite, SWT.BORDER);
-		committerText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		new Label(composite, SWT.NONE).setText(UIText.StagingView_Author);
-
-		authorText = new Text(composite, SWT.BORDER);
-		authorText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Button amendPreviousCommitButton = new Button(commitMessageComposite, SWT.CHECK);
-		amendPreviousCommitButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		amendPreviousCommitButton.setText(UIText.StagingView_Ammend_Previous_Commit);
-
-		Button signedOffByButton = new Button(commitMessageComposite, SWT.CHECK);
-		signedOffByButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		signedOffByButton.setText(UIText.StagingView_Add_Signed_Off_By);
-
-		Button addChangeIdButton = new Button(commitMessageComposite, SWT.CHECK);
-		GridData addChangeIdButtonGridData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		addChangeIdButtonGridData.minimumHeight = 1;
-		addChangeIdButton.setLayoutData(addChangeIdButtonGridData);
-		addChangeIdButton.setText(UIText.StagingView_Add_Change_ID);
-
-		commitButton = new Button(commitMessageComposite, SWT.NONE);
-		commitButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		commitButton.setText(UIText.StagingView_Commit);
-
-		Composite stagedComposite = new Composite(veriticalSashForm, SWT.NONE);
-		stagedComposite.setLayout(new GridLayout(1, false));
-
-		new Label(stagedComposite, SWT.NONE).setText(UIText.StagingView_StagedChanges);
-
-		Composite stagedTableComposite = new Composite(stagedComposite, SWT.NONE);
-		stagedTableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		stagedTableComposite.setLayout(new TableColumnLayout());
-
-		stagedTableViewer = new TableViewer(stagedTableComposite, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
+		stagedTableViewer = new TableViewer(toolkit.createTable(
+				stagedTableComposite, SWT.FULL_SELECTION | SWT.MULTI));
+		GridDataFactory.fillDefaults().grab(true, true)
+				.applyTo(stagedTableViewer.getControl());
+		stagedTableViewer.getTable().setData(FormToolkit.KEY_DRAW_BORDER,
+				FormToolkit.TEXT_BORDER);
 		stagedTableViewer.getTable().setLinesVisible(true);
 		stagedTableViewer.setLabelProvider(new StagingViewLabelProvider());
-		stagedTableViewer.setContentProvider(new StagingViewContentProvider(false));
+		stagedTableViewer.setContentProvider(new StagingViewContentProvider(
+				false));
 		stagedTableViewer.addDragSupport(DND.DROP_MOVE,
 				new Transfer[] { LocalSelectionTransfer.getTransfer() },
 				new DragSourceAdapter() {
@@ -282,8 +297,8 @@ public class StagingView extends ViewPart {
 			}
 		};
 
-		horizontalSashForm.setWeights(new int[] {40, 60});
-		veriticalSashForm.setWeights(new int[] {50, 50});
+		horizontalSashForm.setWeights(new int[] { 40, 60 });
+		veriticalSashForm.setWeights(new int[] { 50, 50 });
 
 		// react on selection changes
 		ISelectionService srv = (ISelectionService) getSite().getService(
@@ -507,17 +522,14 @@ public class StagingView extends ViewPart {
 			c.removeVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
 		}
 		try {
-			if (c != null) {
+			if (c != null)
 				handlerService.executeCommandInContext(
 						new ParameterizedCommand(cmd, null), null, c);
-			} else {
+			else
 				handlerService.executeCommand(commandId, null);
-			}
 			return true;
-		} catch (ExecutionException e) {
-		} catch (NotDefinedException e) {
-		} catch (NotEnabledException e) {
-		} catch (NotHandledException e) {
+		} catch (CommandException ignored) {
+			// Ignored
 		}
 		return false;
 	}
@@ -541,19 +553,18 @@ public class StagingView extends ViewPart {
 
 		unstagedTableViewer.getTable().getDisplay().asyncExec(new Runnable() {
 			public void run() {
-				if (!unstagedTableViewer.getTable().isDisposed())
-					unstagedTableViewer.setInput(new Object[] { repository, indexDiff });
-				if (!stagedTableViewer.getTable().isDisposed())
-					stagedTableViewer.setInput(new Object[] { repository, indexDiff });
-				if (!commitButton.isDisposed())
-					commitButton.setEnabled(repository.getRepositoryState().canCommit());
-				if (!authorText.isDisposed())
-					updateAuthorAndCommitter(repository);
-				if (!commitMessageText.isDisposed())
-					updateCommitMessage(repository);
-				if (!repositoryLabel.isDisposed()) {
-					repositoryLabel.setText(StagingView.getRepositoryName(repository));
-				}
+				if (unstagedTableViewer.getTable().isDisposed())
+					return;
+
+				unstagedTableViewer.setInput(new Object[] { repository,
+						indexDiff });
+				stagedTableViewer
+						.setInput(new Object[] { repository, indexDiff });
+				commitAction.setEnabled(repository.getRepositoryState()
+						.canCommit());
+				updateAuthorAndCommitter(repository);
+				updateCommitMessage(repository);
+				form.setText(getRepositoryName(repository));
 			}
 		});
 
@@ -586,14 +597,14 @@ public class StagingView extends ViewPart {
 		final String committerEmail = config.getCommitterEmail();
 		committer = committer + " <" + committerEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 
-		authorText.setText(author);
-		committerText.setText(committer);
+		messageSection.setAuthor(author);
+		messageSection.setCommitter(committer);
 	}
 
 	private void updateCommitMessage(Repository repository) {
 		if (repository.getRepositoryState() == RepositoryState.MERGING_RESOLVED
 				|| repository.getRepositoryState() == RepositoryState.CHERRY_PICKING_RESOLVED)
-			commitMessageText.setText(getMergeResolveMessage(repository));
+			messageSection.setMessage(getMergeResolveMessage(repository));
 	}
 
 	private String getCherryPickOriginalAuthor(Repository mergeRepository) {
