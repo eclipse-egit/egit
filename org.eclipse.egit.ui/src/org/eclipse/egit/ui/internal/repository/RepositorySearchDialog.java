@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.UIIcons;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CachedCheckboxTreeViewer;
 import org.eclipse.egit.ui.internal.FilteredCheckboxTree;
@@ -219,8 +220,10 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 				false).hint(300, SWT.DEFAULT).applyTo(dir);
 		dir.setToolTipText(UIText.RepositorySearchDialog_EnterDirectoryToolTip);
 
-		String initialPath = prefs.get(PREF_PATH, FS.DETECTED.userHome()
-				.toString());
+		String defaultRepoPath = org.eclipse.egit.ui.Activator.getDefault()
+				.getPreferenceStore().getString(UIPreferences.DEFAULT_REPO_DIR);
+
+		String initialPath = prefs.get(PREF_PATH, defaultRepoPath);
 
 		dir.setText(initialPath);
 
