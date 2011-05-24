@@ -40,6 +40,12 @@ public class UIText extends NLS {
 	public static String AbstractRebaseCommand_DialogTitle;
 
 	/** */
+	public static String Activator_DefaultRepoFolderIsFile;
+
+	/** */
+	public static String Activator_DefaultRepoFolderNotCreated;
+
+	/** */
 	public static String Activator_refreshFailed;
 
 	/** */
