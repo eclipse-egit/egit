@@ -14,12 +14,29 @@ package org.eclipse.egit.ui.common;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotCheckBox;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
 public class ExistingOrNewPage {
 
 	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
+
+	public void setInternalMode(boolean internalMode) {
+		SWTBotCheckBox internalModeCheckbox = bot
+				.checkBox(UIText.ExistingOrNewPage_InternalModeCheckbox);
+		if (!internalMode)
+			internalModeCheckbox.deselect();
+		else
+			internalModeCheckbox.select();
+	}
+
+	public SWTBotShell clickCreateRepository() {
+		bot.button(UIText.ExistingOrNewPage_CreateRepositoryButton).click();
+		return bot.shell(UIText.NewRepositoryWizard_WizardTitle);
+	}
 
 	@SuppressWarnings("boxing")
 	public void assertEnabling(boolean createRepository, boolean textField,
@@ -30,10 +47,22 @@ public class ExistingOrNewPage {
 		assertEquals(finish, bot.button("Finish").isEnabled());
 	}
 
-	public void assertContents(boolean selected, String project, String path, String repository,
-			String newRepoPath) {
-		assertContents(new Row[] { new Row(selected, project, path, repository) },
+	public void assertContents(boolean selected, String project, String path,
+			String repository, String newRepoPath) {
+		assertContents(
+				new Row[] { new Row(selected, project, path, repository) },
 				newRepoPath);
+	}
+
+	public void assertTableContents(String[][] contents) {
+		assertEquals(contents.length, bot.table().rowCount());
+		for (int i = 0; i < contents.length; i++) {
+			String[] testStrings = contents[i];
+			assertEquals(testStrings.length, bot.table().columnCount());
+			for (int j = 0; j < testStrings.length; j++) {
+				assertEquals(testStrings[j], bot.table().cell(i, j));
+			}
+		}
 	}
 
 	public void assertContents(Row[] rows, String newRepoPath) {
@@ -45,24 +74,29 @@ public class ExistingOrNewPage {
 	private void assertContents(Row[] rows) {
 		assertEquals(rows.length, bot.tree().rowCount());
 		for (int i = 0; i < rows.length; i++) {
-			assertEquals(rows[i].isSelected(), bot.tree().getAllItems()[i].isChecked());
+			assertEquals(rows[i].isSelected(),
+					bot.tree().getAllItems()[i].isChecked());
 			assertEquals(rows[i].getProject(), bot.tree().cell(i, 0));
 			assertEquals(rows[i].getPath(), bot.tree().cell(i, 1));
 			assertEquals(rows[i].getRepository(), bot.tree().cell(i, 2));
 			SWTBotTreeItem subteeItems = bot.tree().getAllItems()[i];
 			Row[] subrows = rows[i].getSubrows();
 			if (subrows != null) {
-				assertEquals("Row " + i + " is a tree:", subrows.length, subteeItems.getItems().length);
-				assertNotNull("Rows " + i + " is not a tree", subteeItems.getItems());
+				assertEquals("Row " + i + " is a tree:", subrows.length,
+						subteeItems.getItems().length);
+				assertNotNull("Rows " + i + " is not a tree",
+						subteeItems.getItems());
 				for (int j = 0; j < subrows.length; ++j) {
 					Row r = subrows[j];
-					assertEquals(r.isSelected(), subteeItems.getItems()[j].isChecked());
+					assertEquals(r.isSelected(),
+							subteeItems.getItems()[j].isChecked());
 					assertEquals(r.getProject(), subteeItems.cell(j, 0));
 					assertEquals(r.getPath(), subteeItems.cell(j, 1));
 					assertEquals(r.getRepository(), subteeItems.cell(j, 2));
 				}
 			} else
-				assertEquals("Row " + i + " is a tree:", 0, subteeItems.getItems().length);
+				assertEquals("Row " + i + " is a tree:", 0,
+						subteeItems.getItems().length);
 		}
 	}
 
@@ -77,11 +111,13 @@ public class ExistingOrNewPage {
 
 		private final Row[] subrows;
 
-		public Row(boolean selected, String project, String path, String repository) {
+		public Row(boolean selected, String project, String path,
+				String repository) {
 			this(selected, project, path, repository, null);
 		}
 
-		public Row(boolean selected, String project, String path, String repository, Row[] subrows) {
+		public Row(boolean selected, String project, String path,
+				String repository, Row[] subrows) {
 			this.selected = selected;
 			this.project = project;
 			this.path = path;
@@ -114,4 +150,8 @@ public class ExistingOrNewPage {
 		}
 	}
 
+	public void setRelativePath(String path) {
+		bot.textWithLabel(UIText.ExistingOrNewPage_RelativePathLabel).setText(
+				path);
+	}
 }
