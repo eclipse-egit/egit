@@ -3709,4 +3709,12 @@
                tooltip="%OpenCommitAction.tooltip"/>
        </actionSet>
    </extension>
+   <extension
+         point="org.eclipse.core.variables.dynamicVariables">
+      <variable
+            description="%GitBranchVariableResolver.description"
+            name="project_git_branch"
+            resolver="org.eclipse.egit.ui.internal.GitBranchVariableResolver">
+      </variable>
+   </extension>
 </plugin>
