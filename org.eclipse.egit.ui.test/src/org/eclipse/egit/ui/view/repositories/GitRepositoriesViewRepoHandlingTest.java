@@ -315,36 +315,39 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		// create a non-bare repository
 		getOrOpenView()
 				.toolbarButton(
-						myUtil
-								.getPluginLocalizedValue("RepoViewCreateRepository.tooltip"))
+						myUtil.getPluginLocalizedValue("RepoViewCreateRepository.tooltip"))
 				.click();
 		SWTBotShell shell = bot.shell(UIText.NewRepositoryWizard_WizardTitle)
 				.activate();
-		IPath newPath = new Path(getTestDirectory().getPath())
-				.append("NewRepository");
+		IPath newPath = new Path(getTestDirectory().getPath());
 		shell.bot().textWithLabel(UIText.CreateRepositoryPage_DirectoryLabel)
 				.setText(newPath.toOSString());
+		shell.bot()
+				.textWithLabel(UIText.CreateRepositoryPage_RepositoryNameLabel)
+				.setText("NewRepository");
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		refreshAndWait();
-		File repoFile = new File(newPath.toFile(), Constants.DOT_GIT);
+		File repoFile = new File(newPath.append("NewRepository").toFile(),
+				Constants.DOT_GIT);
 		myRepoViewUtil.getRootItem(getOrOpenView().bot().tree(), repoFile);
 		assertFalse(myRepoViewUtil.lookupRepository(repoFile).isBare());
 
 		// create a bare repository
 		getOrOpenView()
 				.toolbarButton(
-						myUtil
-								.getPluginLocalizedValue("RepoViewCreateRepository.tooltip"))
+						myUtil.getPluginLocalizedValue("RepoViewCreateRepository.tooltip"))
 				.click();
 		shell = bot.shell(UIText.NewRepositoryWizard_WizardTitle).activate();
-		newPath = new Path(getTestDirectory().getPath()).append("bare").append(
-				"NewBareRepository");
+		newPath = new Path(getTestDirectory().getPath()).append("bare");
+		shell.bot()
+				.textWithLabel(UIText.CreateRepositoryPage_RepositoryNameLabel)
+				.setText("NewBareRepository");
 		shell.bot().textWithLabel(UIText.CreateRepositoryPage_DirectoryLabel)
 				.setText(newPath.toOSString());
 		shell.bot().checkBox(UIText.CreateRepositoryPage_BareCheckbox).select();
 		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		refreshAndWait();
-		repoFile = newPath.toFile();
+		repoFile = newPath.append("NewBareRepository").toFile();
 		myRepoViewUtil.getRootItem(getOrOpenView().bot().tree(), repoFile);
 		assertTrue(myRepoViewUtil.lookupRepository(repoFile).isBare());
 	}
