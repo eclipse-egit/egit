@@ -140,6 +140,8 @@ public class UIPreferences {
 	/** */
 	public static final String HISTORY_SHOW_TAG_SEQUENCE = "HistoryView_ShowTagSequence"; //$NON-NLS-1$
 	/** */
+	public static final String STAGING__SHOW_NEW_COMMITS = "StagingView_ShowNewCommit"; //$NON-NLS-1$
+	/** */
 	public static final String PAGE_COMMIT_PREFERENCES = "org.eclipse.egit.ui.internal.preferences.CommitDialogPreferencePage"; //$NON-NLS-1$
 
 
