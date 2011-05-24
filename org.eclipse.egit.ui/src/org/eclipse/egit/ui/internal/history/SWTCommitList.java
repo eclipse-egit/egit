@@ -19,9 +19,9 @@ import org.eclipse.swt.widgets.Display;
 
 class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> {
 
-	private static final RGB[] COMMIT_RGB = new RGB[] { new RGB(131, 150, 98),
+	private static final RGB[] COMMIT_RGB = new RGB[] { new RGB(133, 166, 214),
 			new RGB(221, 205, 93), new RGB(199, 134, 57),
-			new RGB(133, 166, 214), new RGB(197, 123, 127),
+			new RGB(131, 150, 98), new RGB(197, 123, 127),
 			new RGB(139, 136, 140), new RGB(48, 135, 144),
 			new RGB(190, 93, 66), new RGB(143, 163, 54), new RGB(180, 148, 74),
 			new RGB(101, 101, 217), new RGB(72, 153, 119),
