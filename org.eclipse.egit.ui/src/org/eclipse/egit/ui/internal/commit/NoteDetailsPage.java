@@ -14,6 +14,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -104,6 +105,13 @@ public class NoteDetailsPage implements IDetailsPage, IDetailsPageProvider {
 
 		};
 		notesText.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TEXT_BORDER);
+		StyledText text = notesText.getTextWidget();
+		text.setEditable(false);
+		text.setFont(JFaceResources.getFont(JFaceResources.TEXT_FONT));
+		text.setForeground(text.getDisplay().getSystemColor(
+				SWT.COLOR_INFO_FOREGROUND));
+		text.setBackground(text.getDisplay().getSystemColor(
+				SWT.COLOR_INFO_BACKGROUND));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(notesText);
 	}
 

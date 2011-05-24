@@ -11,13 +11,20 @@
 package org.eclipse.egit.ui.internal.commit;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.notes.Note;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -44,6 +51,8 @@ public class RepositoryCommit extends PlatformObject implements
 	private RevCommit commit;
 
 	private FileDiff[] diffs;
+
+	private RepositoryCommitNote[] notes;
 
 	/**
 	 * Create a repository commit
@@ -134,6 +143,36 @@ public class RepositoryCommit extends PlatformObject implements
 			}
 		}
 		return diffs;
+	}
+
+	/**
+	 * Get notes for this commit.
+	 *
+	 * @return non-null but possibly empty array of {@link RepositoryCommitNote}
+	 *         instances.
+	 */
+	public RepositoryCommitNote[] getNotes() {
+		if (notes == null) {
+			List<RepositoryCommitNote> noteList = new ArrayList<RepositoryCommitNote>();
+			try {
+				Repository repo = getRepository();
+				Git git = Git.wrap(repo);
+				RevCommit revCommit = getRevCommit();
+				for (Ref ref : repo.getRefDatabase().getRefs(Constants.R_NOTES)
+						.values()) {
+					Note note = git.notesShow().setNotesRef(ref.getName())
+							.setObjectId(revCommit).call();
+					if (note != null)
+						noteList.add(new RepositoryCommitNote(this, ref, note));
+				}
+				notes = noteList.toArray(new RepositoryCommitNote[noteList
+						.size()]);
+			} catch (IOException e) {
+				Activator.logError("Error showing notes", e); //$NON-NLS-1$
+				notes = new RepositoryCommitNote[0];
+			}
+		}
+		return notes;
 	}
 
 	public Object[] getChildren(Object o) {
