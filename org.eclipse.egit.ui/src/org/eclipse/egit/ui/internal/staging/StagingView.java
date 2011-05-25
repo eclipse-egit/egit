@@ -8,10 +8,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -26,12 +22,18 @@ import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.IteratorService;
+import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
+import org.eclipse.egit.ui.internal.commit.CommitHelper;
+import org.eclipse.egit.ui.internal.commit.CommitUI;
+import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponent;
+import org.eclipse.egit.ui.internal.dialogs.ICommitMessageComponentNotifications;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -57,12 +59,9 @@ import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
-import org.eclipse.jgit.lib.UserConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -75,6 +74,8 @@ import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -97,6 +98,7 @@ import org.eclipse.ui.part.ViewPart;
  * A GitX style staging view with embedded commit dialog.
  */
 public class StagingView extends ViewPart {
+	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 	private Label repositoryLabel;
 	private TableViewer stagedTableViewer;
 	private TableViewer unstagedTableViewer;
@@ -104,6 +106,7 @@ public class StagingView extends ViewPart {
 	private Text committerText;
 	private Text authorText;
 	private Button commitButton;
+	private CommitMessageComponent commitMessageComponent;
 
 	private boolean reactOnSelection = true;
 
@@ -124,6 +127,9 @@ public class StagingView extends ViewPart {
 			reload(event.getRepository());
 		}
 	};
+	private Button signedOffByButton;
+	private Button addChangeIdButton;
+	private Button amendPreviousCommitButton;
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -189,7 +195,7 @@ public class StagingView extends ViewPart {
 		commitMessageLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		commitMessageLabel.setText(UIText.StagingView_CommitMessage);
 
-		commitMessageText = new SpellcheckableMessageArea(commitMessageComposite, ""); //$NON-NLS-1$
+		commitMessageText = new SpellcheckableMessageArea(commitMessageComposite, EMPTY_STRING);
 		commitMessageText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 
 		Composite composite = new Composite(commitMessageComposite, SWT.NONE);
@@ -206,23 +212,62 @@ public class StagingView extends ViewPart {
 		authorText = new Text(composite, SWT.BORDER);
 		authorText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Button amendPreviousCommitButton = new Button(commitMessageComposite, SWT.CHECK);
+		amendPreviousCommitButton = new Button(commitMessageComposite, SWT.CHECK);
 		amendPreviousCommitButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		amendPreviousCommitButton.setText(UIText.StagingView_Ammend_Previous_Commit);
 
-		Button signedOffByButton = new Button(commitMessageComposite, SWT.CHECK);
+		signedOffByButton = new Button(commitMessageComposite, SWT.CHECK);
 		signedOffByButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		signedOffByButton.setText(UIText.StagingView_Add_Signed_Off_By);
 
-		Button addChangeIdButton = new Button(commitMessageComposite, SWT.CHECK);
+		addChangeIdButton = new Button(commitMessageComposite, SWT.CHECK);
 		GridData addChangeIdButtonGridData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		addChangeIdButtonGridData.minimumHeight = 1;
 		addChangeIdButton.setLayoutData(addChangeIdButtonGridData);
 		addChangeIdButton.setText(UIText.StagingView_Add_Change_ID);
 
+		final ICommitMessageComponentNotifications listener = new ICommitMessageComponentNotifications() {
+
+			public void updateSignedOffToggleSelection(boolean selection) {
+				signedOffByButton.setSelection(selection);
+			}
+
+			public void updateChangeIdToggleSelection(boolean selection) {
+				addChangeIdButton.setSelection(selection);
+			}
+		};
+		commitMessageComponent = new CommitMessageComponent(listener);
+		commitMessageComponent.attachControls(commitMessageText, authorText, committerText);
+		addChangeIdButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				commitMessageComponent.setChangeIdButtonSelection(addChangeIdButton.getSelection());
+			}
+		});
+		signedOffByButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				commitMessageComponent.setSignedOffButtonSelection(signedOffByButton.getSelection());
+			}
+		});
+		amendPreviousCommitButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				commitMessageComponent.setAmendingButtonSelection(amendPreviousCommitButton.getSelection());
+			}
+		});
+
+
 		commitButton = new Button(commitMessageComposite, SWT.NONE);
 		commitButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		commitButton.setText(UIText.StagingView_Commit);
+		commitButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				commit();
+			}
+
+		});
 
 		Composite stagedComposite = new Composite(veriticalSashForm, SWT.NONE);
 		stagedComposite.setLayout(new GridLayout(1, false));
@@ -524,6 +569,7 @@ public class StagingView extends ViewPart {
 
 	// TODO move to a Job?
 	private IndexDiff reload(final Repository repository) {
+		final boolean repositoryChanged = repository != currentRepository;
 		currentRepository = repository;
 
 
@@ -547,17 +593,36 @@ public class StagingView extends ViewPart {
 					stagedTableViewer.setInput(new Object[] { repository, indexDiff });
 				if (!commitButton.isDisposed())
 					commitButton.setEnabled(repository.getRepositoryState().canCommit());
-				if (!authorText.isDisposed())
-					updateAuthorAndCommitter(repository);
-				if (!commitMessageText.isDisposed())
-					updateCommitMessage(repository);
 				if (!repositoryLabel.isDisposed()) {
 					repositoryLabel.setText(StagingView.getRepositoryName(repository));
 				}
+				if (repositoryChanged) {
+					updateCommitMessageComponent();
+					clearCommitMessageToggles();
+				}
 			}
+
 		});
 
 		return indexDiff;
+	}
+
+	private void clearCommitMessageToggles() {
+		amendPreviousCommitButton.setSelection(false);
+		addChangeIdButton.setSelection(false);
+		signedOffByButton.setSelection(false);
+	}
+
+	void updateCommitMessageComponent() {
+		CommitHelper helper = new CommitHelper(currentRepository);
+		commitMessageComponent.setRepository(currentRepository);
+		commitMessageComponent.setAuthor(helper.getAuthor());
+		commitMessageComponent.setCommitMessage(helper.getCommitMessage());
+		commitMessageComponent.setCommitter(helper.getCommitter());
+		commitMessageComponent.setPreviousAuthor(helper.getPreviousAuthor());
+		commitMessageComponent.setPreviousCommitMessage(helper
+				.getPreviousCommitMessage());
+		commitMessageComponent.updateUI();
 	}
 
 	private static String getRepositoryName(Repository repository) {
@@ -570,80 +635,25 @@ public class StagingView extends ViewPart {
 			return repoName;
 	}
 
-	private void updateAuthorAndCommitter(Repository repository) {
-		final UserConfig config = repository.getConfig().get(UserConfig.KEY);
-
-		String author;
-		if (repository.getRepositoryState() == RepositoryState.CHERRY_PICKING_RESOLVED)
-			author = getCherryPickOriginalAuthor(repository);
-		else {
-			author = config.getAuthorName();
-			final String authorEmail = config.getAuthorEmail();
-			author = author + " <" + authorEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
-		}
-
-		String committer = config.getCommitterName();
-		final String committerEmail = config.getCommitterEmail();
-		committer = committer + " <" + committerEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
-
-		authorText.setText(author);
-		committerText.setText(committer);
-	}
-
-	private void updateCommitMessage(Repository repository) {
-		if (repository.getRepositoryState() == RepositoryState.MERGING_RESOLVED
-				|| repository.getRepositoryState() == RepositoryState.CHERRY_PICKING_RESOLVED)
-			commitMessageText.setText(getMergeResolveMessage(repository));
-	}
-
-	private String getCherryPickOriginalAuthor(Repository mergeRepository) {
+	private void commit() {
+		if (!commitMessageComponent.checkCommitInfo())
+			return;
+		CommitOperation commitOperation = null;
 		try {
-			ObjectId cherryPickHead = mergeRepository.readCherryPickHead();
-			PersonIdent author = new RevWalk(mergeRepository).parseCommit(cherryPickHead).getAuthorIdent();
-			return author.getName() + " <" + author.getEmailAddress() + ">";  //$NON-NLS-1$//$NON-NLS-2$
-		} catch (IOException e) {
-			Activator.handleError(UIText.CommitAction_errorRetrievingCommit, e,
-					true);
-			throw new IllegalStateException(e);
+			commitOperation = new CommitOperation(currentRepository,
+					commitMessageComponent.getAuthor(),
+					commitMessageComponent.getCommitter(),
+					commitMessageComponent.getCommitMessage());
+		} catch (CoreException e) {
+			Activator.handleError(UIText.StagingView_commitFailed, e, true);
+			return;
 		}
-	}
-
-	private String getMergeResolveMessage(Repository mergeRepository) {
-		File mergeMsg = new File(mergeRepository.getDirectory(), Constants.MERGE_MSG);
-		FileReader reader;
-		try {
-			reader = new FileReader(mergeMsg);
-			BufferedReader br = new BufferedReader(reader);
-			try {
-				StringBuilder message = new StringBuilder();
-				String s;
-				String newLine = newLine();
-				while ((s = br.readLine()) != null) {
-					message.append(s).append(newLine);
-				}
-				return message.toString();
-			} catch (IOException e) {
-				MessageDialog.openError(getSite().getShell(),
-						UIText.CommitAction_MergeHeadErrorTitle,
-						UIText.CommitAction_ErrorReadingMergeMsg);
-				throw new IllegalStateException(e);
-			} finally {
-				try {
-					br.close();
-				} catch (IOException e) {
-					// Empty
-				}
-			}
-		} catch (FileNotFoundException e) {
-			MessageDialog.openError(getSite().getShell(),
-					UIText.CommitAction_MergeHeadErrorTitle,
-					UIText.CommitAction_MergeHeadErrorMessage);
-			throw new IllegalStateException(e);
-		}
-	}
-
-	private String newLine() {
-		return System.getProperty("line.separator"); //$NON-NLS-1$
+		if (amendPreviousCommitButton.getSelection())
+			commitOperation.setAmending(true);
+		commitOperation.setComputeChangeId(addChangeIdButton.getSelection());
+		CommitUI.performCommit(currentRepository, commitOperation);
+		clearCommitMessageToggles();
+		commitMessageText.setText(EMPTY_STRING);
 	}
 
 	@Override
