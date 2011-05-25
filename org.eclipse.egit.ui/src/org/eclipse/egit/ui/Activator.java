@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.Authenticator;
 import java.net.ProxySelector;
@@ -51,7 +50,6 @@ import org.eclipse.jgit.transport.SshSessionFactory;
 import org.eclipse.jsch.core.IJSchService;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWindowListener;
@@ -197,24 +195,6 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		setupRepoIndexRefresh();
 		setupFocusHandling();
 		setupCredentialsProvider();
-		setupDefaultRepositoryFolder();
-	}
-
-	private void setupDefaultRepositoryFolder() {
-		// we create this folder immediately, as
-		// the tools should have an existing directory
-		// for browsing and such
-		String defaultFolder = getPreferenceStore().getString(
-				UIPreferences.DEFAULT_REPO_DIR);
-		File testFile = new File(defaultFolder);
-		if (!testFile.exists()) {
-			if (!testFile.mkdirs())
-				logError(NLS.bind(UIText.Activator_DefaultRepoFolderNotCreated,
-						testFile.getPath()), null);
-		} else if (testFile.isFile())
-			logError(
-					NLS.bind(UIText.Activator_DefaultRepoFolderIsFile,
-							testFile.getPath()), null);
 	}
 
 	private void setupCredentialsProvider() {
