@@ -3457,6 +3457,12 @@
             id="org.eclipse.egit.ui.team.NoAssumeUnchanged"
             name="No Assume Unchanged">
       </command>
+            <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.CleanActionHandler"
+            id="org.eclipse.egit.ui.team.Clean"
+            name="Clean">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
