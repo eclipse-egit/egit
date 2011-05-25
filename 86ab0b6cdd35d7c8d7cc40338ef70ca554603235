@@ -16,6 +16,24 @@
       "revId": "86ab0b6cdd35d7c8d7cc40338ef70ca554603235",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJX///i4\u003d",
+        "filename": ".eclipse_iplog",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-25T20:41:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJX///jc\u003d",
+      "revId": "86ab0b6cdd35d7c8d7cc40338ef70ca554603235",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
