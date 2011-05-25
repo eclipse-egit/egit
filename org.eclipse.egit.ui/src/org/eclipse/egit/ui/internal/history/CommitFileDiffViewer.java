@@ -100,13 +100,28 @@ public class CommitFileDiffViewer extends TableViewer {
 	 * @param parent
 	 * @param site
 	 */
-	public CommitFileDiffViewer(final Composite parent, final IWorkbenchSite site) {
+	public CommitFileDiffViewer(final Composite parent,
+			final IWorkbenchSite site) {
+		this(parent, site, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER
+				| SWT.FULL_SELECTION);
+	}
+
+	/**
+	 * Shows a list of file changed by a commit.
+	 *
+	 * If no input is available, an error message is shown instead.
+	 *
+	 * @param parent
+	 * @param site
+	 * @param style SWT style bits
+	 */
+	public CommitFileDiffViewer(final Composite parent,
+			final IWorkbenchSite site, final int style) {
 		// since out parent is a SashForm, we can't add the alternate
 		// text to be displayed in case of no input directly to that
 		// parent; we create our own parent instead and set the
 		// StackLayout on it instead
-		super(new Composite(parent, SWT.NONE), SWT.MULTI | SWT.H_SCROLL
-				| SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION);
+		super(new Composite(parent, SWT.NONE), style);
 		this.site = site;
 		final Table rawTable = getTable();
 		Composite main = rawTable.getParent();
