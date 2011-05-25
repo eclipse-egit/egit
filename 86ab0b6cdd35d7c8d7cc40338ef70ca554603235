@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJX///jc\u003d",
+        "filename": ".eclipse_iplog",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2011-05-25T19:37:20Z",
+      "side": 1,
+      "message": "technically we don\u0027t use this library, this can be dropped",
+      "revId": "86ab0b6cdd35d7c8d7cc40338ef70ca554603235",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
