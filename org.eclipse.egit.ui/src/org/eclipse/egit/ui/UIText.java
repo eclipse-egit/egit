@@ -3749,6 +3749,9 @@ public class UIText extends NLS {
 	public static String StagingView_Commit;
 
 	/** */
+	public static String StagingView_commitFailed;
+
+	/** */
 	public static String SynchronizeWithMenu_custom;
 
 	/** */
