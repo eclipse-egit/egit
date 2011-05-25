@@ -148,6 +148,9 @@ public class UIText extends NLS {
 	public static String SharingWizard_failed;
 
 	/** */
+	public static String SharingWizard_MoveProjectActionLabel;
+
+	/** */
 	public static String GenerateHistoryJob_BuildingListMessage;
 
 	/** */
@@ -187,7 +190,19 @@ public class UIText extends NLS {
 	public static String EgitUiUtils_CouldNotOpenEditorMessage;
 
 	/** */
+	public static String ExistingOrNewPage_BrowseRepositoryButton;
+
+	/** */
 	public static String ExistingOrNewPage_CreateButton;
+
+	/** */
+	public static String ExistingOrNewPage_CreateRepositoryButton;
+
+	/** */
+	public static String ExistingOrNewPage_CreationInWorkspaceWarningTooltip;
+
+	/** */
+	public static String ExistingOrNewPage_CurrentLocationColumnHeader;
 
 	/** */
 	public static String ExistingOrNewPage_title;
@@ -196,10 +211,25 @@ public class UIText extends NLS {
 	public static String ExistingOrNewPage_description;
 
 	/** */
+	public static String ExistingOrNewPage_DescriptionExternalMode;
+
+	/** */
 	public static String ExistingOrNewPage_ErrorFailedToCreateRepository;
 
 	/** */
 	public static String ExistingOrNewPage_ErrorFailedToRefreshRepository;
+
+	/** */
+	public static String ExistingOrNewPage_ExistingRepositoryLabel;
+
+	/** */
+	public static String ExistingOrNewPage_ExistingTargetErrorMessage;
+
+	/** */
+	public static String ExistingOrNewPage_FailedToDetectRepositoryMessage;
+
+	/** */
+	public static String ExistingOrNewPage_FolderWillBeCreatedMessage;
 
 	/** */
 	public static String ExistingOrNewPage_HeaderPath;
@@ -211,7 +241,37 @@ public class UIText extends NLS {
 	public static String ExistingOrNewPage_HeaderRepository;
 
 	/** */
+	public static String ExistingOrNewPage_InternalModeCheckbox;
+
+	/** */
+	public static String ExistingOrNewPage_NestedProjectErrorMessage;
+
+	/** */
+	public static String ExistingOrNewPage_NewLocationTargetHeader;
+
+	/** */
+	public static String ExistingOrNewPage_NoRepositorySelectedMessage;
+
+	/** */
+	public static String ExistingOrNewPage_ProjectNameColumnHeader;
+
+	/** */
+	public static String ExistingOrNewPage_RelativePathLabel;
+
+	/** */
+	public static String ExistingOrNewPage_RepoCreationInWorkspaceCreationWarning;
+
+	/** */
 	public static String ExistingOrNewPage_SymbolicValueEmptyMapping;
+
+	/** */
+	public static String ExistingOrNewPage_WorkingDirectoryLabel;
+
+	/** */
+	public static String ExistingOrNewPage_WrongPathErrorDialogMessage;
+
+	/** */
+	public static String ExistingOrNewPage_WrongPathErrorDialogTitle;
 
 	/** */
 	public static String GitCloneWizard_abortingCloneMsg;
