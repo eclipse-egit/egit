@@ -44,3 +44,9 @@
 	license = MIT License
 	use = unmodified source & binary
 	state = approved
+
+[CQ "5162"]
+	description = jakarta-httpclient-4.1 (PB Orbit CQ4840)
+	license = Apache License, 2.0
+	use = unmodified source & binary
+	state = approved
