@@ -64,6 +64,10 @@ public class DisconnectConnectTest extends LocalRepositoryTestCase {
 		mapping = RepositoryMapping.getMapping(project);
 		assertNull(mapping);
 		SWTBotShell connectDialog = openConnectDialog();
+		// test the "share with repository in parent folder" scenario
+		connectDialog.bot()
+				.checkBox(UIText.ExistingOrNewPage_InternalModeCheckbox)
+				.select();
 		connectDialog.bot().tree().getAllItems()[0].select();
 		connectDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
 		ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
