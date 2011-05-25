@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOI3///LY\u003d",
+        "filename": "org.eclipse.egit-updatesite/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-18T23:05:50Z",
+      "side": 1,
+      "message": "plugin version shouldn\u0027t be specified here but in pluginManagement section in parent pom\n\nwith some additional properties we could parametrize this in a way so that this configuration could go into a common shared eclipse-tycho-parent pom so that projects using that would just have to use that parent and define some properties to configure it.",
+      "revId": "8f571a33daec92dcafec04c3203fd8db462a6902",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///Lg\u003d",
+        "filename": "org.eclipse.egit-updatesite/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-18T23:05:50Z",
+      "side": 1,
+      "message": "this path should be injected by a property (which could default to nightly path) so that we can use it for both nightly and release builds without changing the pom.xml",
+      "revId": "8f571a33daec92dcafec04c3203fd8db462a6902",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///Lc\u003d",
+        "filename": "org.eclipse.egit-updatesite/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-18T23:05:50Z",
+      "side": 1,
+      "message": "should be replaced by same property as above",
+      "revId": "8f571a33daec92dcafec04c3203fd8db462a6902",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
