@@ -147,7 +147,8 @@ public class RepositoryUtil {
 						}
 					} else if (any instanceof RevCommit) {
 						RevCommit commit = ((RevCommit)any);
-						tagMap.put(tagRef.getName(), commit.getCommitterIdent().getWhen());
+						if (commit.name().equals(commitId))
+							tagMap.put(tagRef.getName(), commit.getCommitterIdent().getWhen());
 					} // else ignore here
 				}
 			} catch (IOException e) {
