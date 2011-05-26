@@ -182,6 +182,7 @@ public class CommitEditorPage extends FormPage {
 								: UIText.CommitEditorPage_LabelCommitter,
 						person.getName(), person.getEmailAddress(), person
 								.getWhen()));
+		userText.setEditable(false);
 
 		GridDataFactory.fillDefaults().span(signedOff ? 1 : 2, 1)
 				.applyTo(userText);
