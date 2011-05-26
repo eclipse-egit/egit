@@ -40,6 +40,9 @@ public class StagingViewContentProvider implements
 			Repository repository = (Repository)((Object[])newInput)[0];
 			IndexDiff indexDiff = (IndexDiff)((Object[])newInput)[1];
 
+			if (repository == null || indexDiff == null)
+				return;
+
 			Set<StagingEntry> nodes = new TreeSet<StagingEntry>(new Comparator<StagingEntry>() {
 				public int compare(StagingEntry o1, StagingEntry o2) {
 					return o1.getPath().compareTo(o2.getPath());
