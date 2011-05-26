@@ -7,7 +7,7 @@
 
 [consumes "technology.jgit"]
 	name = JGit
-	version = 0.12.0
+	version = 1.0.0
 	license = Eclipse Distribution License v1.0
 
 [CQ "3493"]
@@ -42,11 +42,5 @@
 [CQ "4957"]
 	description = Objenesis Version: 1.0 (Subset, Custom) (PB CQ3931)
 	license = MIT License
-	use = unmodified source & binary
-	state = approved
-
-[CQ "5162"]
-	description = jakarta-httpclient-4.1 (PB Orbit CQ4840)
-	license = Apache License, 2.0
 	use = unmodified source & binary
 	state = approved
