@@ -45,11 +45,13 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -404,9 +406,22 @@ public class CommitEditorPage extends FormPage {
 	private void createFilesArea(Composite parent, FormToolkit toolkit, int span) {
 		Section files = createSection(parent, toolkit, span);
 		Composite filesArea = createSectionClient(files, toolkit);
+		GridLayout filesAreaLayout = (GridLayout) filesArea.getLayout();
+		filesAreaLayout.marginLeft = 0;
+		filesAreaLayout.marginRight = 0;
+		filesAreaLayout.marginTop = 0;
+		filesAreaLayout.marginBottom = 0;
 
 		CommitFileDiffViewer viewer = new CommitFileDiffViewer(filesArea,
-				getSite());
+				getSite(), SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL
+						| SWT.FULL_SELECTION);
+		// commit file diff viewer uses a nested composite with a stack layout
+		// and so margins need to be applied to have form toolkit style borders
+		toolkit.paintBordersFor(viewer.getTable().getParent());
+		StackLayout viewerLayout = (StackLayout) viewer.getControl()
+				.getParent().getLayout();
+		viewerLayout.marginHeight = 2;
+		viewerLayout.marginWidth = 2;
 		GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT, 80)
 				.applyTo(viewer.getTable().getParent());
 		viewer.setContentProvider(ArrayContentProvider.getInstance());
