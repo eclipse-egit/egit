@@ -1171,7 +1171,7 @@
       <view
             category="org.eclipse.egit.ui.GitCategory"
             class="org.eclipse.egit.ui.internal.staging.StagingView"
-            icon="icons/eview16/repo_rep.gif"
+            icon="icons/eview16/staging.png"
             id="org.eclipse.egit.ui.StagingView"
             name="%GitStagingView_name">
       </view>
