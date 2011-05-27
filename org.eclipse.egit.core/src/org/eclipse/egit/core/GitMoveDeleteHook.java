@@ -31,6 +31,7 @@ import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheBuilder;
 import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEntry;
+import org.eclipse.jgit.lib.Constants;
 
 class GitMoveDeleteHook implements IMoveDeleteHook {
 	private static final boolean I_AM_DONE = true;
@@ -124,7 +125,7 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			sEdit.add(new DirCacheEditor.DeletePath(sEnt));
 			if (dstm != null && dstm.getRepository() == srcm.getRepository()) {
 				final String dPath = srcm.getRepoRelativePath(dstf);
-				sEdit.add(new DirCacheEditor.PathEdit(dPath) {
+				sEdit.add(new DirCacheEditor.PathEdit(Constants.encode(dPath, sCache.getAbstractTreeOptions().getPathEncoding())) {
 					@Override
 					public void apply(final DirCacheEntry dEnt) {
 						dEnt.copyMetaData(sEnt);

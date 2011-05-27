@@ -179,7 +179,7 @@ public class DecoratableResourceHelper {
 			// ... and remove nulls
 		}
 
-		treeWalk.setFilter(PathFilterGroup.createFromStrings(paths));
+		treeWalk.setFilter(PathFilterGroup.createFromStrings(paths, treeWalk.getPathEncoding()));
 		treeWalk.setRecursive(true);
 		treeWalk.reset();
 

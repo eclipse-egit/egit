@@ -229,7 +229,7 @@ public class RemoveCommand extends
 			treeWalk.addTree(new EmptyTreeIterator());
 		treeWalk.addTree(new DirCacheIterator(repo.readDirCache()));
 		treeWalk.setFilter(PathFilterGroup.createFromStrings(Collections.singleton(
-				Repository.stripWorkDir(repo.getWorkTree(), file))));
+				Repository.stripWorkDir(repo.getWorkTree(), file)), treeWalk.getPathEncoding()));
 		return treeWalk.next();
 
 	}

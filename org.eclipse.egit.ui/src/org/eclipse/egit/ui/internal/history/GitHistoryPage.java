@@ -1546,7 +1546,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		if (paths.size() > 0) {
 			pathFilters = paths;
 			currentWalk.setTreeFilter(AndTreeFilter.create(PathFilterGroup
-					.createFromStrings(paths), TreeFilter.ANY_DIFF));
+					.createFromStrings(paths, fileWalker.getPathEncoding()), TreeFilter.ANY_DIFF));
 			fileWalker.setFilter(currentWalk.getTreeFilter().clone());
 
 		} else {

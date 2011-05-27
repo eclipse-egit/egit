@@ -182,7 +182,7 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 		TreeWalk tw = new TreeWalk(repo);
 		tw.reset();
 
-		tw.setFilter(PathFilter.create(path));
+		tw.setFilter(PathFilter.create(path, tw.getPathEncoding()));
 
 		return tw;
 	}
