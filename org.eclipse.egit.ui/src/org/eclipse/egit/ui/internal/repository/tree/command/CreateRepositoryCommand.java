@@ -24,7 +24,7 @@ public class CreateRepositoryCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> implements IHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		WizardDialog dlg = new WizardDialog(getShell(event),
-				new NewRepositoryWizard(false));
+				new NewRepositoryWizard());
 		dlg.setHelpAvailable(false);
 		dlg.open();
 		return null;

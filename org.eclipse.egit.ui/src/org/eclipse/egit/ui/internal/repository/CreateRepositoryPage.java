@@ -39,7 +39,6 @@ import org.eclipse.swt.widgets.Text;
  * Asks for a directory and whether to create a bare repository
  */
 public class CreateRepositoryPage extends WizardPage {
-	private final boolean hideBare;
 
 	private Text directoryText;
 
@@ -49,12 +48,9 @@ public class CreateRepositoryPage extends WizardPage {
 
 	/**
 	 * Constructs this page
-	 *
-	 * @param hideBareOption
 	 */
-	public CreateRepositoryPage(boolean hideBareOption) {
+	public CreateRepositoryPage() {
 		super(CreateRepositoryPage.class.getName());
-		this.hideBare = hideBareOption;
 		setTitle(UIText.CreateRepositoryPage_PageTitle);
 		setMessage(UIText.CreateRepositoryPage_PageMessage);
 		// we must at least enter the directory
@@ -95,13 +91,10 @@ public class CreateRepositoryPage extends WizardPage {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 				.grab(true, false).applyTo(nameText);
 
-		if (!hideBare) {
-			bareButton = new Button(main, SWT.CHECK);
-			bareButton.setText(UIText.CreateRepositoryPage_BareCheckbox);
-			GridDataFactory.fillDefaults().indent(10, 0).span(3, 1)
-					.applyTo(bareButton);
-		}
-
+		bareButton = new Button(main, SWT.CHECK);
+		bareButton.setText(UIText.CreateRepositoryPage_BareCheckbox);
+		GridDataFactory.fillDefaults().indent(10, 0).span(3, 1)
+				.applyTo(bareButton);
 		directoryText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				checkPage();
@@ -112,7 +105,6 @@ public class CreateRepositoryPage extends WizardPage {
 				checkPage();
 			}
 		});
-
 		setControl(main);
 		nameText.setFocus();
 	}
@@ -130,7 +122,7 @@ public class CreateRepositoryPage extends WizardPage {
 	 * @return <code>true</code> if a bare Repository is to be created
 	 */
 	public boolean getBare() {
-		return bareButton != null && bareButton.getSelection();
+		return bareButton.getSelection();
 	}
 
 	void checkPage() {

@@ -22,18 +22,12 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.ExistingOrNewPage;
 import org.eclipse.egit.ui.common.ExistingOrNewPage.Row;
-import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.common.SharingWizard;
 import org.eclipse.egit.ui.test.Eclipse;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
@@ -43,12 +37,11 @@ import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.util.SystemReader;
+import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.junit.After;
 import org.junit.Before;
@@ -57,12 +50,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class SharingWizardTest extends LocalRepositoryTestCase {
+public class SharingWizardTest {
 
 	private static final String projectName0 = "TestProject";
 	private static final String projectName1 = "TestProject1";
 	private static final String projectName2 = "TestProject2";
 	private static final String projectName3 = "TestProject3";
+
+	private static final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
 	private SharingWizard sharingWizard;
 
@@ -129,7 +124,6 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 		createProject(projectName0);
 		ExistingOrNewPage existingOrNewPage = sharingWizard
 				.openWizard(projectName0);
-		existingOrNewPage.setInternalMode(true);
 
 		// initial state
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -189,7 +183,6 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 
 		ExistingOrNewPage existingOrNewPage = sharingWizard.openWizard(
 				projectName1, projectName2, projectName3);
-		existingOrNewPage.setInternalMode(true);
 
 		// initial state
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -223,71 +216,5 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 		assertEquals(repo2.getDirectory().getCanonicalPath(), RepositoryMapping
 				.getMapping(workspace.getRoot().getProject(projectName2))
 				.getRepository().getDirectory().toString());
-	}
-
-	@Test
-	public void shareProjectWithExternalRepo() throws Exception {
-		String repoName = "ExternalRepositoryForShare";
-		createProject(projectName0);
-		String location1 = createProject(projectName1);
-		String location2 = createProject(projectName2);
-		createProject(projectName3);
-
-		ExistingOrNewPage existingOrNewPage = sharingWizard.openWizard(
-				projectName1, projectName2);
-		SWTBotShell createRepoDialog = existingOrNewPage
-				.clickCreateRepository();
-		String repoDir = Activator.getDefault().getPreferenceStore()
-				.getString(UIPreferences.DEFAULT_REPO_DIR);
-		File repoFolder = new File(repoDir, repoName);
-		createRepoDialog.bot()
-				.textWithLabel(UIText.CreateRepositoryPage_DirectoryLabel)
-				.setText(repoDir);
-		createRepoDialog.bot()
-				.textWithLabel(UIText.CreateRepositoryPage_RepositoryNameLabel)
-				.setText(repoName);
-		createRepoDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
-
-		SWTBotCombo combo = bot
-				.comboBoxWithLabel(UIText.ExistingOrNewPage_ExistingRepositoryLabel);
-		assertTrue(combo.getText().startsWith(repoName));
-		Repository targetRepo = lookupRepository(new File(repoFolder,
-				Constants.DOT_GIT));
-
-		assertTrue(combo.getText()
-				.endsWith(targetRepo.getDirectory().getPath()));
-		assertEquals(
-				targetRepo.getWorkTree().getPath(),
-				bot.textWithLabel(
-						UIText.ExistingOrNewPage_WorkingDirectoryLabel)
-						.getText());
-		String[][] contents = new String[2][3];
-		contents[0][0] = projectName1;
-		contents[0][1] = new Path(location1).toString();
-		contents[0][2] = new Path(targetRepo.getWorkTree().getPath()).append(
-				projectName1).toString();
-
-		contents[1][0] = projectName2;
-		contents[1][1] = new Path(location2).toString();
-		contents[1][2] = new Path(targetRepo.getWorkTree().getPath()).append(
-				projectName2).toString();
-		existingOrNewPage.assertTableContents(contents);
-
-		existingOrNewPage.setRelativePath("a/b");
-
-		contents[0][2] = new Path(targetRepo.getWorkTree().getPath())
-				.append("a/b").append(projectName1).toString();
-		contents[1][2] = new Path(targetRepo.getWorkTree().getPath())
-				.append("a/b").append(projectName2).toString();
-		existingOrNewPage.assertTableContents(contents);
-
-		bot.button(IDialogConstants.FINISH_LABEL).click();
-		Thread.sleep(1000);
-		String location1Path = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(projectName1).getLocation().toString();
-		assertEquals(contents[0][2], location1Path);
-		String location2Path = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(projectName2).getLocation().toString();
-		assertEquals(contents[1][2], location2Path);
 	}
 }

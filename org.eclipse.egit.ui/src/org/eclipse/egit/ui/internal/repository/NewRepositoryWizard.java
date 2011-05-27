@@ -27,17 +27,7 @@ import org.eclipse.ui.IWorkbench;
  * The "Create New Repository" wizard
  */
 public class NewRepositoryWizard extends Wizard implements INewWizard {
-	private final CreateRepositoryPage myCreatePage;
-
-	private Repository newRepo;
-
-	/**
-	 * @param hideBareOption
-	 *            if <code>true</code>, no "bare" repository can be created
-	 */
-	public NewRepositoryWizard(boolean hideBareOption) {
-		myCreatePage = new CreateRepositoryPage(hideBareOption);
-	}
+	private final CreateRepositoryPage myCreatePage = new CreateRepositoryPage();
 
 	@Override
 	public void addPages() {
@@ -54,11 +44,10 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 			if (!myCreatePage.getBare())
 				repoFile = new File(repoFile, Constants.DOT_GIT);
 
-			Repository repoToCreate = cache.lookupRepository(repoFile);
-			repoToCreate.create(myCreatePage.getBare());
-			Activator.getDefault().getRepositoryUtil()
-					.addConfiguredRepository(repoFile);
-			this.newRepo = repoToCreate;
+			Repository newRepo = cache.lookupRepository(repoFile);
+			newRepo.create(myCreatePage.getBare());
+			Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
+					repoFile);
 		} catch (IOException e) {
 			org.eclipse.egit.ui.Activator.handleError(e.getMessage(), e, false);
 		}
@@ -67,13 +56,5 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		// nothing to initialize
-	}
-
-	/**
-	 * @return the newly created Repository in case of successful completion,
-	 *         otherwise <code>null</code
-	 */
-	public Repository getCreatedRepository() {
-		return newRepo;
 	}
 }
