@@ -8,12 +8,20 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
+import java.io.IOException;
+
+import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.project.GitProjectData;
+import org.eclipse.egit.core.project.RepositoryChangeListener;
+import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.team.core.diff.IDiff;
 import org.eclipse.team.core.mapping.ISynchronizationScopeManager;
-import org.eclipse.team.core.subscribers.Subscriber;
 import org.eclipse.team.core.subscribers.SubscriberMergeContext;
 
 /**
@@ -23,15 +31,25 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 
 	private final GitSynchronizeDataSet gsds;
 
+	private final RepositoryChangeListener repoChangeListener;
+
 	/**
 	 * @param subscriber
 	 * @param manager
 	 * @param gsds
 	 */
-	public GitSubscriberMergeContext(Subscriber subscriber,
+	public GitSubscriberMergeContext(final GitResourceVariantTreeSubscriber subscriber,
 			ISynchronizationScopeManager manager, GitSynchronizeDataSet gsds) {
 		super(subscriber, manager);
 		this.gsds = gsds;
+
+
+		repoChangeListener = new RepositoryChangeListener() {
+			public void repositoryChanged(RepositoryMapping which) {
+				update(subscriber, which);
+			}
+		};
+		GitProjectData.addRepositoryChangeListener(repoChangeListener);
 
 		initialize();
 	}
@@ -60,6 +78,40 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 			throws CoreException {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void dispose() {
+		GitProjectData.removeRepositoryChangeListener(repoChangeListener);
+		super.dispose();
+	}
+
+
+	private void update(GitResourceVariantTreeSubscriber subscriber,
+			RepositoryMapping which) {
+		for (GitSynchronizeData gsd : gsds) {
+			if (which.getRepository().equals(gsd.getRepository())) {
+				try {
+					gsd.updateRevs();
+				} catch (IOException e) {
+					Activator.error("Failed refresh Rev's", e); //$NON-NLS-1$
+
+					return;
+				}
+
+				subscriber.reset(this.gsds);
+
+				ResourceTraversal[] traversals = getScopeManager().getScope()
+						.getTraversals();
+				try {
+					subscriber.refresh(traversals, new NullProgressMonitor());
+				} catch (CoreException e) {
+					Activator.error("Failed refresh synchronize view", e); //$NON-NLS-1$
+				}
+
+				return;
+			}
+		}
 	}
 
 }
