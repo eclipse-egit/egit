@@ -115,7 +115,9 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 			FileTreeIterator fileTreeIterator = new FileTreeIterator(repository);
 			IndexDiff indexDiff = new IndexDiff(repository, Constants.HEAD,
 					fileTreeIterator);
-			indexDiff.setFilter(PathFilterGroup.createFromStrings(Collections.singletonList(resRelPath)));
+			indexDiff.setFilter(PathFilterGroup.createFromStrings(Collections
+					.singletonList(resRelPath), fileTreeIterator
+					.getTreeOptions().getPathEncoding()));
 			indexDiff.diff();
 
 			return indexDiff.getAdded().contains(resRelPath) || indexDiff.getChanged().contains(resRelPath)

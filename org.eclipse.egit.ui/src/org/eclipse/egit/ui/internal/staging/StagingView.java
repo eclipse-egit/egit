@@ -459,7 +459,9 @@ public class StagingView extends ViewPart {
 					try {
 						WorkingTreeIterator iterator = IteratorService.createInitialIterator(currentRepository);
 						indexDiff = new IndexDiff(currentRepository, Constants.HEAD, iterator);
-						indexDiff.setFilter(PathFilterGroup.createFromStrings(resourcesToUpdate));
+						indexDiff.setFilter(PathFilterGroup.createFromStrings(
+								resourcesToUpdate, iterator.getTreeOptions()
+										.getPathEncoding()));
 						indexDiff.diff();
 					} catch (IOException e) {
 						throw new RuntimeException(e);

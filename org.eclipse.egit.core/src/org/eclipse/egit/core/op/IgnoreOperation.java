@@ -101,7 +101,7 @@ public class IgnoreOperation implements IEGitOperation {
 		String path = mapping.getRepoRelativePath(resource);
 		TreeWalk walk = new TreeWalk(repository);
 		walk.addTree(new FileTreeIterator(repository));
-		walk.setFilter(PathFilter.create(path));
+		walk.setFilter(PathFilter.create(path, walk.getPathEncoding()));
 		while (walk.next()) {
 			WorkingTreeIterator workingTreeIterator = walk.getTree(0,
 					WorkingTreeIterator.class);

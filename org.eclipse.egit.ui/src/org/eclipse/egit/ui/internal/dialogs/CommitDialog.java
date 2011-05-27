@@ -906,7 +906,7 @@ public class CommitDialog extends TitleAreaDialog {
 				repository, ResourcesPlugin.getWorkspace().getRoot());
 		IndexDiff indexDiff = new IndexDiff(repository, Constants.HEAD, fileTreeIterator);
 		Set<String> repositoryPaths = Collections.singleton(path);
-		indexDiff.setFilter(PathFilterGroup.createFromStrings(repositoryPaths));
+		indexDiff.setFilter(PathFilterGroup.createFromStrings(repositoryPaths, fileTreeIterator.getTreeOptions().getPathEncoding()));
 		indexDiff.diff(null, 0, 0, ""); //$NON-NLS-1$
 		return getFileStatus(path, indexDiff);
 	}

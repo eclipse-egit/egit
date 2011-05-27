@@ -82,7 +82,7 @@ public class GitResourceVariantTreeSubscriber extends
 
 		TreeWalk tw = new TreeWalk(repo);
 		if (path.length() > 0)
-			tw.setFilter(PathFilter.create(path));
+			tw.setFilter(PathFilter.create(path, tw.getPathEncoding()));
 
 		Set<IResource> gitMembers = new HashSet<IResource>();
 		Map<String, IResource> allMembers = new HashMap<String, IResource>();

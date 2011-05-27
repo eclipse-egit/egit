@@ -603,7 +603,7 @@ public class CompareTreeView extends ViewPart {
 					String relPath = repositoryMapping
 							.getRepoRelativePath(resource);
 					if (relPath.length() > 0)
-						orFilters.add(PathFilter.create(relPath));
+						orFilters.add(PathFilter.create(relPath, tw.getPathEncoding()));
 				}
 				if (orFilters.size() > 1)
 					tw.setFilter(OrTreeFilter.create(orFilters));

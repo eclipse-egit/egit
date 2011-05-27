@@ -233,11 +233,11 @@ public class GitCompareEditorInput extends CompareEditorInput {
 		if (filterPathStrings.size() > 1) {
 			List<TreeFilter> suffixFilters = new ArrayList<TreeFilter>();
 			for (String filterPath : filterPathStrings)
-				suffixFilters.add(PathFilter.create(filterPath));
+				suffixFilters.add(PathFilter.create(filterPath, tw.getPathEncoding()));
 			TreeFilter otf = OrTreeFilter.create(suffixFilters);
 			tw.setFilter(otf);
 		} else if (filterPathStrings.size() > 0)
-			tw.setFilter(PathFilter.create(filterPathStrings.get(0)));
+			tw.setFilter(PathFilter.create(filterPathStrings.get(0), tw.getPathEncoding()));
 
 		tw.setRecursive(true);
 

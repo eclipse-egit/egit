@@ -299,7 +299,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 		if (repositoryPaths.contains("")) //$NON-NLS-1$
 			return true; // Project filter
 
-		treeWalk.setFilter(PathFilterGroup.createFromStrings(repositoryPaths));
+		treeWalk.setFilter(PathFilterGroup.createFromStrings(repositoryPaths, treeWalk.getPathEncoding()));
 		return true;
 	}
 

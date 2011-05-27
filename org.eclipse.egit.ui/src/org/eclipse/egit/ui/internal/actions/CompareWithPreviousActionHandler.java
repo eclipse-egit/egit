@@ -109,7 +109,7 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 			try {
 				String path = getRepositoryPath();
 				if (path.length() > 0)
-					rw.setTreeFilter(FollowFilter.create(path));
+					rw.setTreeFilter(FollowFilter.create(path, rw.getObjectReader().getPathEncoding()));
 				RevCommit headCommit = rw.parseCommit(repository.getRef(
 						Constants.HEAD).getObjectId());
 				rw.markStart(headCommit);
