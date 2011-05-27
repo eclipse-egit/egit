@@ -321,7 +321,7 @@ public class CommitEditorPage extends FormPage {
 			message = replaceSignedOffByLine(message, committer);
 
 		SpellcheckableMessageArea textContent = new SpellcheckableMessageArea(
-				messageArea, message, SWT.NONE) {
+				messageArea, message, toolkit.getBorderStyle()) {
 
 			@Override
 			protected IAdaptable getDefaultTarget() {
