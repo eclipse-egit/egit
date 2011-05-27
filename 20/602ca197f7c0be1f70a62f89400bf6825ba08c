@@ -1,0 +1,9 @@
+Code-Review-1: Hudson CI
+Code-Review+2: Kevin Sawicki <kevin@github.com>
+IP-Clean+1: Kevin Sawicki <kevin@github.com>
+Verified+1: Kevin Sawicki <kevin@github.com>
+Submitted-by: Kevin Sawicki <kevin@github.com>
+Submitted-at: Fri, 27 May 2011 13:03:12 -0400
+Reviewed-on: http://egit.eclipse.org/r/3555
+Project: egit
+Branch: refs/heads/stable-1.0
