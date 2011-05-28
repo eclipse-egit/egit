@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -36,15 +38,25 @@ public class StagingViewContentProvider implements
 	public void inputChanged(Viewer viewer, Object oldInput,
 			Object newInput) {
 		if (newInput != null) {
+			Object[] params = (Object[])newInput;
 
-			Repository repository = (Repository)((Object[])newInput)[0];
-			IndexDiff indexDiff = (IndexDiff)((Object[])newInput)[1];
+			Repository repository = (Repository)params[0];
+			IndexDiff indexDiff = (IndexDiff)params[1];
 
 			Set<StagingEntry> nodes = new TreeSet<StagingEntry>(new Comparator<StagingEntry>() {
 				public int compare(StagingEntry o1, StagingEntry o2) {
 					return o1.getPath().compareTo(o2.getPath());
 				}
 			});
+
+			if (params.length == 3) {
+				nodes.addAll(Arrays.asList(content));
+				Collection<String> removedResources = (Collection<String>)params[2];
+				for (String res : removedResources)
+					for (StagingEntry entry : content)
+						if (entry.getPath().equals(res))
+							nodes.remove(entry);
+			}
 
 			if (isWorkspace) {
 				for (String file : indexDiff.getMissing())
