@@ -42,6 +42,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
+import org.eclipse.egit.ui.internal.actions.BooleanPrefAction;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitUI;
@@ -57,6 +58,8 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.preference.IPersistentPreferenceStore;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -350,6 +353,13 @@ public class StagingView extends ViewPart {
 			}
 		};
 
+		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+		if (preferenceStore.contains(UIPreferences.STAGING_VIEW_SYNC_SELECTION))
+			reactOnSelection = preferenceStore.getBoolean(
+					UIPreferences.STAGING_VIEW_SYNC_SELECTION);
+		else
+			preferenceStore.setDefault(UIPreferences.STAGING_VIEW_SYNC_SELECTION, true);
+
 		updateSectionText();
 		updateToolbar();
 
@@ -382,6 +392,31 @@ public class StagingView extends ViewPart {
 	private void updateToolbar() {
 		IToolBarManager toolbar = getViewSite().getActionBars()
 				.getToolBarManager();
+
+		// refresh
+		Action refreshAction = new Action(UIText.StagingView_Refresh, IAction.AS_PUSH_BUTTON) {
+			public void run() {
+				reload(currentRepository);
+			}
+		};
+		refreshAction.setImageDescriptor(UIIcons.ELCL16_REFRESH);
+		toolbar.add(refreshAction);
+
+		// link with selection
+		Action linkSelectionAction = new BooleanPrefAction(
+				(IPersistentPreferenceStore) Activator.getDefault()
+						.getPreferenceStore(),
+				UIPreferences.STAGING_VIEW_SYNC_SELECTION,
+				UIText.StagingView_LinkSelection) {
+			@Override
+			public void apply(boolean value) {
+				reactOnSelection = value;
+			}
+		};
+		linkSelectionAction.setImageDescriptor(UIIcons.ELCL16_SYNCED);
+		toolbar.add(linkSelectionAction);
+
+		toolbar.add(new Separator());
 
 		amendPreviousCommitAction = new Action(
 				UIText.StagingView_Ammend_Previous_Commit, IAction.AS_CHECK_BOX) {
