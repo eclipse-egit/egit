@@ -379,6 +379,8 @@ class CommitGraphTable {
 			r.append(d.getId().name());
 		}
 
+		if (clipboard == null || clipboard.isDisposed())
+			return;
 		clipboard.setContents(new Object[] { r.toString() },
 				new Transfer[] { TextTransfer.getInstance() }, DND.CLIPBOARD);
 	}
@@ -414,7 +416,8 @@ class CommitGraphTable {
 		// the commit list is thread safe
 		synchronized (allCommits) {
 			for (PlotCommit commit : allCommits)
-				commitsMap.put(commit.getId().name(), commit);
+				if (commit != null)
+					commitsMap.put(commit.getId().name(), commit);
 		}
 	}
 
