@@ -26,6 +26,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.lib.ConfigConstants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.ObjectWalk;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -39,7 +41,7 @@ public class GitSynchronizeData {
 	private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace()
 					.getRoot();
 
-	private static final Pattern BRANCH_NAME_PATTERN = Pattern.compile("^" + R_HEADS + "/.*?/"); //$NON-NLS-1$ //$NON-NLS-2$
+	private static final Pattern BRANCH_NAME_PATTERN = Pattern.compile("^" + R_HEADS + ".*?"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private final boolean includeLocal;
 
@@ -48,6 +50,10 @@ public class GitSynchronizeData {
 	private final String srcRemote;
 
 	private final String dstRemote;
+
+	private final String srcMerge;
+
+	private final String dstMerge;
 
 	private final RevCommit srcRevCommit;
 
@@ -58,6 +64,15 @@ public class GitSynchronizeData {
 	private final Set<IProject> projects;
 
 	private final String repoParentPath;
+
+	private static class RemoteConfig {
+		final String remote;
+		final String merge;
+		public RemoteConfig(String remote, String merge) {
+			this.remote = remote;
+			this.merge = merge;
+		}
+	}
 
 	/**
 	 * Constructs {@link GitSynchronizeData} object
@@ -77,8 +92,14 @@ public class GitSynchronizeData {
 		isNotNull(dstRev);
 		repo = repository;
 
-		srcRemote = extractRemoteName(srcRev);
-		dstRemote = extractRemoteName(dstRev);
+		RemoteConfig srcRemoteConfig = extractRemoteName(srcRev);
+		RemoteConfig dstRemoteConfig = extractRemoteName(dstRev);
+
+		srcRemote = srcRemoteConfig.remote;
+		srcMerge = srcRemoteConfig.merge;
+
+		dstRemote = dstRemoteConfig.remote;
+		dstMerge = dstRemoteConfig.merge;
 
 		ObjectWalk ow = new ObjectWalk(repo);
 		if (srcRev.length() > 0)
@@ -123,6 +144,20 @@ public class GitSynchronizeData {
 	 */
 	public String getSrcRemoteName() {
 		return srcRemote;
+	}
+
+	/**
+	 * @return ref specification of destination merge branch
+	 */
+	public String getDstMerge() {
+		return dstMerge;
+	}
+
+	/**
+	 * @return ref specification of source merge branch
+	 */
+	public String getSrcMerge() {
+		return srcMerge;
 	}
 
 	/**
@@ -177,18 +212,35 @@ public class GitSynchronizeData {
 		return ancestorRevCommit;
 	}
 
-	private String extractRemoteName(String rev) {
+	private RemoteConfig extractRemoteName(String rev) {
 		if (rev.contains(R_REMOTES)) {
-			String remote = rev.replaceAll(R_REMOTES, ""); //$NON-NLS-1$
-			return remote.substring(0, remote.indexOf("/")); //$NON-NLS-1$
+			String remoteWithBranchName = rev.replaceAll(R_REMOTES, ""); //$NON-NLS-1$
+			int firstSeparator = remoteWithBranchName.indexOf("/"); //$NON-NLS-1$
+
+			String remote = remoteWithBranchName.substring(0, firstSeparator);
+			String name = remoteWithBranchName.substring(firstSeparator,
+					remoteWithBranchName.length());
+
+			return new RemoteConfig(remote, name);
 		} else {
-			String name = BRANCH_NAME_PATTERN.matcher(rev).replaceAll(""); //$NON-NLS-1$
-			String remoteTracking = repo.getConfig().getString(CONFIG_BRANCH_SECTION,
-					name, CONFIG_KEY_REMOTE);
-			if (remoteTracking != null && remoteTracking.length() > 0)
-				return remoteTracking;
+			String realName;
+			Ref ref;
+			try {
+				ref = repo.getRef(rev);
+			} catch (IOException e) {
+				ref = null;
+			}
+			if (ref != null && ref.isSymbolic())
+				realName = ref.getTarget().getName();
 			else
-				return null;
+				realName = rev;
+			String name = BRANCH_NAME_PATTERN.matcher(realName).replaceAll(""); //$NON-NLS-1$
+			String remote = repo.getConfig().getString(CONFIG_BRANCH_SECTION,
+					name, CONFIG_KEY_REMOTE);
+			String merge = repo.getConfig().getString(CONFIG_BRANCH_SECTION,
+					name, ConfigConstants.CONFIG_KEY_MERGE);
+
+			return new RemoteConfig(remote, merge);
 		}
 	}
 
