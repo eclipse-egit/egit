@@ -125,4 +125,6 @@ public class ActionCommands {
 	/** "Merge Tool" action command id */
 	public static final String MERGE_TOOL_ACTION = "org.eclipse.egit.ui.team.MergeTool"; //$NON-NLS-1$
 
+	/** "Show Annotation" action command id */
+	public static final String SHOW_ANNOTATION_ACTION = "org.eclipse.egit.ui.team.ShowAnnotation"; //$NON-NLS-1$
 }
