@@ -284,6 +284,12 @@ public class CoreText extends NLS {
 	/** */
 	public static String IgnoreOperation_updatingFailed;
 
+	/** */
+	public static String GitSubscriberMergeContext_FailedFetchRefs;
+
+	/** */
+	public static String GitSubscriberMergeContext_FailedRefreshSyncView;
+
 	static {
 		initializeMessages(BUNDLE_NAME,	CoreText.class);
 	}
