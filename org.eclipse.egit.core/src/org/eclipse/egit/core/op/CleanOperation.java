@@ -10,6 +10,7 @@ package org.eclipse.egit.core.op;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
@@ -20,6 +21,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
+import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.api.CleanCommand;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  * Clean operation cleans a repository or a selected list of resources
@@ -42,7 +47,34 @@ public class CleanOperation implements IEGitOperation {
 	}
 
 	public void execute(IProgressMonitor monitor) throws CoreException {
-		// TODO run clean command
+		Git repoTree;
+		// discover repositories and run clean on them
+		for (IResource res : resources) {
+			repoTree = new Git(getRepository(res));
+			repoTree.clean().call();
+		}
+	}
+
+	/**
+	 * Dry run on cleancommand
+	 * @return a Set<String>
+	 */
+	public Set<String> dryRun() {
+		if (resources.length == 0)
+			return null;
+
+		Repository repo = getRepository(resources[0]);
+		CleanCommand clean = new Git(repo).clean();
+
+		return clean.setDryRun(true).call();
+	}
+
+	private static Repository getRepository(IResource resource) {
+		RepositoryMapping repositoryMapping = RepositoryMapping.getMapping(resource.getProject());
+		if (repositoryMapping != null)
+			return repositoryMapping.getRepository();
+		else
+			return null;
 	}
 
 	public ISchedulingRule getSchedulingRule() {

@@ -2923,6 +2923,18 @@ public class UIText extends NLS {
 	public static String CreateTagDialog_NewTag;
 
 	/** */
+	public static String CleanTreeDialog_Title_Branch;
+
+	/** */
+	public static String CleanTreeDialog_Title;
+
+	/** */
+	public static String CleanTreeDialog_Message;
+
+	/** */
+	public static String CleanTreeDialog_deleteFiles;
+
+	/** */
 	public static String CommitCombo_showSuggestedCommits;
 
 	/** */
