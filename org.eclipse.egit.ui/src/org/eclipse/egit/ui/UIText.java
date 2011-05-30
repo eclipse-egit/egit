@@ -853,6 +853,9 @@ public class UIText extends NLS {
 	public static String RepositorySearchDialog_browse;
 
 	/** */
+	public static String RepositorySearchDialog_CheckAllRepositories;
+
+	/** */
 	public static String RepositorySearchDialog_directory;
 
 	/** */
@@ -871,7 +874,7 @@ public class UIText extends NLS {
 	public static String RepositorySearchDialog_searchRepositoriesMessage;
 
 	/** */
-	public static String RepositorySearchDialog_ToggleSelectionButton;
+	public static String RepositorySearchDialog_UncheckAllRepositories;
 
 	/** */
 	public static String RepositorySelectionPage_BrowseLocalFile;
