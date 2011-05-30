@@ -218,6 +218,23 @@
                label="%CompareWithRevisionAction_label"
                menubarPath="compareWithMenu/gitCompareWithGroup"/>
       </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.egit.ui.gitFileContributions"
+            objectClass="org.eclipse.core.resources.IFile">
+         <filter
+               name="projectPersistentProperty"
+               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
+         </filter>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.ShowBlameAction"
+               enablesFor="1"
+               id="org.eclipse.egit.ui.internal.actions.ShowBlameAction"
+               label="%ShowBlameAction_label"
+               icon="icons/etool16/annotate.gif"
+               menubarPath="team.main/group10">
+         </action>
+      </objectContribution>
    </extension>
 
    <extension

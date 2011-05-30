@@ -129,6 +129,16 @@ public class UIUtils {
 	}
 
 	/**
+	 * @param id
+	 *            see {@link FontRegistry#getItalic(String)}
+	 * @return the font
+	 */
+	public static Font getItalicFont(final String id) {
+		return PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
+				.getFontRegistry().getItalic(id);
+	}
+
+	/**
 	 * Adds little bulb decoration to given control. Bulb will appear in top
 	 * left corner of control after giving focus for this control.
 	 *
