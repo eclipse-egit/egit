@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.op.CleanOperation;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.dialogs.CleanTreeDialog;
 import org.eclipse.egit.ui.internal.job.JobUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Repository;
@@ -56,7 +57,7 @@ public class CleanActionHandler extends RepositoryActionHandler {
 			return null;
 		}
 
-		CleanTreeDialog dialog = new CleanTreeDialog(getShell(event),currentBranchName, repo, fileList);
+		CleanTreeDialog dialog = new CleanTreeDialog(getShell(event), currentBranchName, repo, fileList);
 
 		if (dialog.open() != IDialogConstants.OK_ID)
 			return null;

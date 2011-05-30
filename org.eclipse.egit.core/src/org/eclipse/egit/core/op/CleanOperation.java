@@ -35,6 +35,8 @@ public class CleanOperation implements IEGitOperation {
 
 	private ISchedulingRule schedulingRule;
 
+	private Set<String> paths = null;
+
 	/**
 	 * Construct an CleanOperation
 	 *
@@ -46,12 +48,32 @@ public class CleanOperation implements IEGitOperation {
 		schedulingRule = calcSchedulingRule();
 	}
 
+	/**
+	 * Construct an CleanOperation
+	 *
+	 * @param resources
+	 * @param paths
+	 */
+	public CleanOperation(IResource[] resources, Set<String> paths) {
+		this.resources = new IResource[resources.length];
+		System.arraycopy(resources, 0, this.resources, 0, resources.length);
+		schedulingRule = calcSchedulingRule();
+		this.setPaths(paths);
+	}
+
 	public void execute(IProgressMonitor monitor) throws CoreException {
 		Git repoTree;
 		// discover repositories and run clean on them
-		for (IResource res : resources) {
-			repoTree = new Git(getRepository(res));
-			repoTree.clean().call();
+		if (paths != null) {
+			for (IResource res : resources) {
+				repoTree = new Git(getRepository(res));
+				repoTree.clean().setPaths(paths);
+			}
+		} else {
+			for (IResource res : resources) {
+				repoTree = new Git(getRepository(res));
+				repoTree.clean().call();
+			}
 		}
 	}
 
@@ -97,5 +119,19 @@ public class CleanOperation implements IEGitOperation {
 			return null;
 		else
 			return new MultiRule(rules.toArray(new IResource[rules.size()]));
+	}
+
+	/**
+	 * @param paths the paths to set
+	 */
+	public void setPaths(Set<String> paths) {
+		this.paths = paths;
+	}
+
+	/**
+	 * @return the paths
+	 */
+	public Set<String> getPaths() {
+		return paths;
 	}
 }

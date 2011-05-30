@@ -2935,6 +2935,12 @@ public class UIText extends NLS {
 	public static String CleanTreeDialog_deleteFiles;
 
 	/** */
+	public static String CleanTreeDialog_LoadingMessageText;
+
+	/** */
+	public static String CleanTreeDialog_GetTreeJobName;
+
+	/** */
 	public static String CommitCombo_showSuggestedCommits;
 
 	/** */
