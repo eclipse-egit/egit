@@ -49,15 +49,19 @@ public class GitSynchronizeData {
 
 	private final String dstRemote;
 
-	private final RevCommit srcRevCommit;
+	private RevCommit srcRevCommit;
 
-	private final RevCommit dstRevCommit;
+	private RevCommit dstRevCommit;
 
-	private final RevCommit ancestorRevCommit;
+	private RevCommit ancestorRevCommit;
 
 	private final Set<IProject> projects;
 
 	private final String repoParentPath;
+
+	private final String srcRev;
+
+	private final String dstRev;
 
 	/**
 	 * Constructs {@link GitSynchronizeData} object
@@ -76,10 +80,32 @@ public class GitSynchronizeData {
 		isNotNull(srcRev);
 		isNotNull(dstRev);
 		repo = repository;
+		this.srcRev = srcRev;
+		this.dstRev = dstRev;
+		this.includeLocal = includeLocal;
 
 		srcRemote = extractRemoteName(srcRev);
 		dstRemote = extractRemoteName(dstRev);
 
+		repoParentPath = repo.getDirectory().getParentFile().getAbsolutePath();
+
+		projects = new HashSet<IProject>();
+		final IProject[] workspaceProjects = ROOT.getProjects();
+		for (IProject project : workspaceProjects) {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
+			if (mapping != null && mapping.getRepository() == repo)
+				projects.add(project);
+		}
+
+		updateRevs();
+	}
+
+	/**
+	 * Recalculates source, destination and ancestor Rev commits
+	 *
+	 * @throws IOException
+	 */
+	public void updateRevs() throws IOException {
 		ObjectWalk ow = new ObjectWalk(repo);
 		if (srcRev.length() > 0)
 			this.srcRevCommit = ow.parseCommit(repo.resolve(srcRev));
@@ -96,18 +122,6 @@ public class GitSynchronizeData {
 					this.dstRevCommit);
 		else
 			this.ancestorRevCommit = null;
-
-		this.includeLocal = includeLocal;
-		repoParentPath = repo.getDirectory().getParentFile().getAbsolutePath();
-
-		projects = new HashSet<IProject>();
-		final IProject[] workspaceProjects = ROOT.getProjects();
-		for (IProject project : workspaceProjects) {
-			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
-			if (mapping != null && mapping.getRepository() == repo)
-				projects.add(project);
-		}
-
 	}
 
 	/**
