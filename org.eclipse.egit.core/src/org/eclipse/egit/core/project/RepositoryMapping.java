@@ -14,8 +14,10 @@ package org.eclipse.egit.core.project;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Properties;
 
+import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -71,7 +73,14 @@ public class RepositoryMapping {
 	 * @param gitDir
 	 */
 	public RepositoryMapping(final IContainer mappedContainer, final File gitDir) {
-		final IPath cLoc = mappedContainer.getLocation()
+		IPath destLocation;
+		URI containerLocation = mappedContainer.getLocationURI();
+		if (containerLocation == null) {
+			IPath rootLocation = ResourcesPlugin.getWorkspace().getRoot().getLocation();
+			destLocation = rootLocation.append(mappedContainer.getName());
+		} else
+			destLocation = URIUtil.toPath(containerLocation);
+		final IPath cLoc = destLocation
 				.removeTrailingSeparator();
 		final IPath gLoc = Path.fromOSString(gitDir.getAbsolutePath())
 				.removeTrailingSeparator();
