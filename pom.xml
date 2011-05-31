@@ -294,7 +294,7 @@
         <plugin>
           <groupId>org.eclipse.dash.maven</groupId>
           <artifactId>eclipse-maven-signing-plugin</artifactId>
-          <version>1.0.0.0</version>
+          <version>1.0.1</version>
         </plugin>
       </plugins>
     </pluginManagement>
