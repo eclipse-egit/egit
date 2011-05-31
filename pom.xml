@@ -69,7 +69,7 @@
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.updatesite/target/site</jgit-site>
     <jetty-site>http://download.eclipse.org/jetty/7.1.6.v20100715/repository/</jetty-site>
     <wikitext-site>http://download.eclipse.org/tools/mylyn/update/weekly</wikitext-site>
-    <orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/S20110124210048/repository</orbit-site>
+    <orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/R20110523182458/repository</orbit-site>
     <signer-input-directory>/home/data/httpd/download-staging.priv/egit</signer-input-directory>
     <download-publish-path>/home/data/httpd/download.eclipse.org/egit/updates-nightly</download-publish-path>
   </properties>
