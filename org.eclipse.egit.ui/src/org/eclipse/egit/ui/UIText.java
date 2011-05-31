@@ -271,9 +271,6 @@ public class UIText extends NLS {
 	public static String ExistingOrNewPage_RelativePathLabel;
 
 	/** */
-	public static String ExistingOrNewPage_RepoCreationInWorkspaceCreationWarning;
-
-	/** */
 	public static String ExistingOrNewPage_SymbolicValueEmptyMapping;
 
 	/** */

@@ -19,7 +19,6 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -606,16 +605,6 @@ class ExistingOrNewPage extends WizardPage {
 				}
 			}
 			setPageComplete(pageComplete);
-			// provide a warning if Repository is created in workspace
-			for (IProject project : myWizard.projects) {
-				if (ResourcesPlugin.getWorkspace().getRoot().getLocation()
-						.isPrefixOf(project.getLocation())) {
-					setMessage(
-							UIText.ExistingOrNewPage_RepoCreationInWorkspaceCreationWarning,
-							IMessageProvider.WARNING);
-					break;
-				}
-			}
 		}
 
 		externalComposite.setVisible(!internalMode);
