@@ -3773,6 +3773,12 @@ public class UIText extends NLS {
 	public static String StagingView_noStagedFiles;
 
 	/** */
+	public static String StagingView_NoSelectionTitle;
+
+	/** */
+	public static String StagingView_OpenNewCommits;
+
+	/** */
 	public static String SynchronizeWithMenu_custom;
 
 	/** */

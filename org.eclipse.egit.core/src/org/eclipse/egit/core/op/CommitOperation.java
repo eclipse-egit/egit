@@ -40,6 +40,7 @@ import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.errors.UnmergedPathException;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
@@ -239,7 +240,13 @@ public class CommitOperation implements IEGitOperation {
 		return ResourcesPlugin.getWorkspace().getRoot();
 	}
 
-	private void commit() throws TeamException {
+	/**
+	 * Commit changes
+	 *
+	 * @return created commit
+	 * @throws TeamException
+	 */
+	protected RevCommit commit() throws TeamException {
 		final Date commitDate = new Date();
 		final TimeZone timeZone = TimeZone.getDefault();
 		final PersonIdent authorIdent = RawParseUtils.parsePersonIdent(author);
@@ -261,7 +268,7 @@ public class CommitOperation implements IEGitOperation {
 			if (!commitIndex)
 				for(String path:commitFileList)
 					commitCommand.setOnly(path);
-			commitCommand.call();
+			return commitCommand.call();
 		} catch (NoHeadException e) {
 			throw new TeamException(e.getLocalizedMessage(), e);
 		} catch (NoMessageException e) {
@@ -303,14 +310,24 @@ public class CommitOperation implements IEGitOperation {
 		this.createChangeId = createChangeId;
 	}
 
+	/**
+	 * Commit all changes
+	 *
+	 * @param commitDate
+	 * @param timeZone
+	 * @param authorIdent
+	 * @param committerIdent
+	 * @return created commit
+	 * @throws TeamException
+	 */
 	// TODO: can the commit message be change by the user in case of a merge commit?
-	private void commitAll(final Date commitDate, final TimeZone timeZone,
+	protected RevCommit commitAll(final Date commitDate, final TimeZone timeZone,
 			final PersonIdent authorIdent, final PersonIdent committerIdent)
 			throws TeamException {
 
 		Git git = new Git(repo);
 		try {
-			git.commit()
+			return git.commit()
 					.setAll(true)
 					.setAuthor(
 							new PersonIdent(authorIdent, commitDate, timeZone))
