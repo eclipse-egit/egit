@@ -22,6 +22,6 @@
   <artifactId>org.eclipse.egit.source-feature</artifactId>
   <packaging>eclipse-feature</packaging>
 
-  <name>Eclipse EGit Sources Feature (Incubation)</name>
+  <name>Eclipse EGit Sources Feature</name>
 
 </project>

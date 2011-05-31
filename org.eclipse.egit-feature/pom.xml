@@ -22,6 +22,6 @@
   <artifactId>org.eclipse.egit-feature</artifactId>
   <packaging>eclipse-feature</packaging>
 
-  <name>Eclipse Git Feature (Incubation)</name>
+  <name>Eclipse EGit Feature</name>
 
 </project>
