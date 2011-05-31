@@ -22,7 +22,7 @@
   <artifactId>org.eclipse.egit.doc</artifactId>
   <packaging>eclipse-plugin</packaging>
 
-  <name>Git Team Provider (Documentation) (Incubation)</name>
+  <name>Git Team Provider (Documentation)</name>
 
   <build>
     <plugins>
