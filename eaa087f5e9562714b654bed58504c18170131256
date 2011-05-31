@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJX///f4\u003d",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2011-05-26T14:30:41Z",
+      "side": 1,
+      "message": "it should be milestone-indigo instead of nightly-indigo",
+      "revId": "eaa087f5e9562714b654bed58504c18170131256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJX///f0\u003d",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2011-05-26T14:30:41Z",
+      "side": 1,
+      "message": "1.0.0 instead of 1.0.0.0-SNAPSHOT",
+      "revId": "eaa087f5e9562714b654bed58504c18170131256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
