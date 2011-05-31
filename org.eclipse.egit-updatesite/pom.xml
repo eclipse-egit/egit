@@ -88,7 +88,7 @@
              <execution>
                <id>pack</id>
                <configuration>
-                 <inputFile>${project.build.directory}/org.eclipse.egit-updatesite-${version}-site.zip</inputFile>
+                 <inputFile>${project.build.directory}/org.eclipse.egit-updatesite-${project.version}-site.zip</inputFile>
                </configuration>
                <phase>package</phase>
                <goals>
@@ -98,7 +98,7 @@
              <execution>
                <id>sign</id>
                <configuration>
-                 <inputFile>${project.build.directory}/org.eclipse.egit-updatesite-${version}-site.zip</inputFile>
+                 <inputFile>${project.build.directory}/org.eclipse.egit-updatesite-${project.version}-site.zip</inputFile>
                  <signerInputDirectory>${signer-input-directory}</signerInputDirectory>
                </configuration>
                <phase>package</phase>
