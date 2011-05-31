@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJn///6Q\u003d",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-29T21:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJX///f4\u003d",
+      "revId": "eaa087f5e9562714b654bed58504c18170131256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJX///f0\u003d",
         "filename": "pom.xml",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2011-05-26T14:30:41Z",
       "side": 1,
       "message": "1.0.0 instead of 1.0.0.0-SNAPSHOT",
+      "revId": "eaa087f5e9562714b654bed58504c18170131256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJn///6M\u003d",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-29T21:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJX///f0\u003d",
       "revId": "eaa087f5e9562714b654bed58504c18170131256",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
