@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJn///yA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-30T19:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJn///y4\u003d",
+      "revId": "ab7b67d99e0b88ae4cbbd07312260184d56e84f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJn///x8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-30T19:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJn///zQ\u003d",
+      "revId": "ab7b67d99e0b88ae4cbbd07312260184d56e84f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJn///x0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-30T19:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJn///zI\u003d",
+      "revId": "ab7b67d99e0b88ae4cbbd07312260184d56e84f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJn///xw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponentState.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-30T19:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJn///zE\u003d",
+      "revId": "ab7b67d99e0b88ae4cbbd07312260184d56e84f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJn///xs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponentStateManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-30T19:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJn///zA\u003d",
+      "revId": "ab7b67d99e0b88ae4cbbd07312260184d56e84f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJn///xo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-30T19:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJn///zU\u003d",
+      "revId": "ab7b67d99e0b88ae4cbbd07312260184d56e84f8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
