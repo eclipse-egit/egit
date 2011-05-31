@@ -65,7 +65,7 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 		UserPasswordCredentials credentials = getCredentialsFromSecureStore(uri);
 
 		if (credentials == null) {
-			credentials = getCredentialsFromUser(uri);
+			credentials = getCredentialsFromUser(uri, passwordItem.getPromptText());
 			if (credentials == null)
 				return false;
 		}
@@ -76,14 +76,14 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 		return true;
 	}
 
-	private UserPasswordCredentials getCredentialsFromUser(final URIish uri) {
+	private UserPasswordCredentials getCredentialsFromUser(final URIish uri, final String promptText) {
 		final AtomicReference<UserPasswordCredentials> aRef = new AtomicReference<UserPasswordCredentials>(
 				null);
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			public void run() {
 				Shell shell = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell();
-				aRef.set(LoginService.login(shell, uri));
+				aRef.set(LoginService.login(shell, uri, promptText));
 			}
 		});
 		return aRef.get();

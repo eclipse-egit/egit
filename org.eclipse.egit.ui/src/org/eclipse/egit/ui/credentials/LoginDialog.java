@@ -47,9 +47,16 @@ class LoginDialog extends Dialog {
 
 	private String oldUser;
 
+	private String promptText;
+
 	LoginDialog(Shell shell, URIish uri) {
+		this(shell, uri, null);
+	}
+
+	LoginDialog(Shell shell, URIish uri, final String promptText) {
 		super(shell);
 		this.uri = uri;
+		this.promptText = promptText;
 		isUserSet = uri.getUser() != null && uri.getUser().length() > 0;
 	}
 
@@ -57,9 +64,12 @@ class LoginDialog extends Dialog {
 	protected Control createDialogArea(Composite parent) {
 		final Composite composite = (Composite) super.createDialogArea(parent);
 		composite.setLayout(new GridLayout(2, false));
-		getShell().setText(
-				changeCredentials ? UIText.LoginDialog_changeCredentials
-						: UIText.LoginDialog_login);
+		if (changeCredentials)
+			getShell().setText(UIText.LoginDialog_changeCredentials);
+		else if (promptText != null && promptText.length() > 0)
+			getShell().setText(promptText);
+		else
+			getShell().setText(UIText.LoginDialog_login);
 
 		Label uriLabel = new Label(composite, SWT.NONE);
 		uriLabel.setText(UIText.LoginDialog_repository);
