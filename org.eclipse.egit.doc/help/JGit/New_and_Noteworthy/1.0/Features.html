@@ -2,17 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>EGit 0.12 New and Noteworthy - Performance Improvements</title>
+		<title>JGit 1.0 New and Noteworthy - Features</title>
 		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
 	</head>
 	<body>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
-				<th style="width: 100%" align="center" colspan="3">Performance Improvements</th>
+				<th style="width: 100%" align="center" colspan="3">Features</th>
 			</tr>
 			<tr>
 				<td style="width: 20%" align="left">
-					<a href="0.12.html" title="EGit 0.12 New and Noteworthy">
+					<a href="1.0.html" title="JGit 1.0 New and Noteworthy">
 						<img alt="Previous" border="0" src="../../../images/prev.gif"/>
 					</a>
 				</td>
@@ -24,23 +24,42 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="width: 20%" align="left" valign="top">EGit 0.12 New and Noteworthy</td>
+				<td style="width: 20%" align="left" valign="top">JGit 1.0 New and Noteworthy</td>
 				<td style="width: 60%" align="center"></td>
 				<td style="width: 20%" align="right" valign="top">Bugs Closed</td>
 			</tr>
 		</table><hr/>
-		<h1 id="Performance_Improvements">Performance Improvements</h1>
-		<p>Performance of History View was enhanced</p><hr/>
+		<h1 id="Features">Features</h1>
+		<h2 id="Ant_Tasks">Ant Tasks</h2>
+		<p>There are ant tasks now available for the 
+			<b>org.eclipse.jgit.ant</b> bundle.
+		</p>
+		<ul>
+			<li><code>git-init</code></li>
+			<li><code>git-clone</code></li>
+			<li><code>git-checkout</code></li>
+		</ul>
+		<h2 id="jgit.storage.dht_storage_SPI_implementation_for_JGit">jgit.storage.dht storage SPI implementation for JGit</h2>
+		<p>permits storing the Git repository in a distributed hashtable, NoSQL system, or other database</p>
+		<h2 id="storage_system_implementations_based_on_this_DHT_SPI">storage system implementations based on this DHT SPI</h2>
+		<ul>
+			<li>Apache HBase</li>
+			<li>Apache Cassandra</li>
+			<li>Google Bigtable (proprietary, not part of jgit)</li>
+			<li>an in-memory implementation for unit testing</li>
+			<li>a JDBC implementation for SQL</li>
+			<li>a generic cache provider that can ride on top of memcache</li>
+		</ul><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left">
-					<a href="0.12.html" title="EGit 0.12 New and Noteworthy">
+					<a href="1.0.html" title="JGit 1.0 New and Noteworthy">
 						<img alt="Previous" border="0" src="../../../images/prev.gif"/>
 					</a>
 				</td>
 				<td style="width: 60%" align="center">
-					<a href="0.12.html" title="EGit 0.12 New and Noteworthy">
-						<img alt="EGit 0.12 New and Noteworthy" border="0" src="../../../images/home.gif"/>
+					<a href="1.0.html" title="JGit 1.0 New and Noteworthy">
+						<img alt="JGit 1.0 New and Noteworthy" border="0" src="../../../images/home.gif"/>
 					</a>
 				</td>
 				<td style="width: 20%" align="right">
@@ -50,7 +69,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="width: 20%" align="left" valign="top">EGit 0.12 New and Noteworthy</td>
+				<td style="width: 20%" align="left" valign="top">JGit 1.0 New and Noteworthy</td>
 				<td style="width: 60%" align="center"></td>
 				<td style="width: 20%" align="right" valign="top">Bugs Closed</td>
 			</tr>

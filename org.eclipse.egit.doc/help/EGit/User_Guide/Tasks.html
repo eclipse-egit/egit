@@ -31,6 +31,57 @@
 		</table><hr/>
 		<h1 id="Tasks">Tasks</h1>
 		<h2 id="Creating_Repositories">Creating Repositories</h2>
+		<h3 id="Considerations_for_Git_Repositories_to_be_used_in_Eclipse">Considerations for Git Repositories to be used in Eclipse</h3>
+		<h4 id="The_short_story">The short story</h4>
+		<p>When setting up Git Repositories with EGit, there are two recommendations for the creation of "productive" (as opposed for "playground") Repositories:</p>
+		<ul>
+			<li>Don't create the Repository within the Eclipse workspace
+				<ul>
+					<li>Be careful when cloning or creating a Repository</li>
+					<li>Make sure to use the Git Sharing Wizard correctly</li>
+				</ul>
+			</li>
+			<li>Don't create a Repository with an Eclipse project as root
+				<ul>
+					<li>Make sure to use the Git Sharing Wizard correctly</li>
+				</ul>
+			</li>
+		</ul>
+		<p>The first one happens when you specify a workspace folder during cloning or creation of a Repository.</p>
+		<p>Both of the above will happen when you use the Git Sharing Wizard from an Eclipse project that you have created manually in your workspace without taking precautions (the wizard has been fixed in the latest version).</p>
+		<p>Below you will find some motivation for these recommendations.</p>
+		<h4 id="The_longer_story">The longer story</h4>
+		<h5 id="Eclipse_Workspace_and_Repository_working_directory">Eclipse Workspace and Repository working directory</h5>
+		<p>Git Repositories can be created in different ways, for example by cloning from an existing Repository, by creating one from scratch, or by using the EGit Sharing wizard.</p>
+		<p>In any case (unless you create a "bare" Repository, but that't not discussed here), the new Repository is essentially a folder on the local hard disk which contains the "working directory" and the metadata folder. The metadata folder is a dedicated child folder named ".git" and often referred to as ".git-folder". It contains the actual repository (i.e. the Commits, the References, the logs and such).</p>
+		<p>The metadata folder is totally transparent to the Git client, while the working directory is used to expose the currently checked out Repository content as files for tools and editors.</p>
+		<p>Typically, if these files are to be used in Eclipse, they must be imported into the Eclipse workspace in one way or another. In order to do so, the easiest way would be to check in .project files from which the "Import Existing Projects" wizard can create the projects easily. Thus in most cases, the structure of a Repository containing Eclipse projects would look similar to something like this:</p>
+		<p>
+			<img border="0" src="images/EGit-0.12-SetupRepo-RepoStructureTwoProjects.jpg"/>
+		</p>
+		<h5 id="Implications">Implications</h5>
+		<p>The above has the following implications:</p>
+		<ul>
+			<li>It is probably not a good idea to make a project the root folder of your Repository</li>
+		</ul>
+		<dl>
+			<dd>The reason is that you will never be able to add another project to this Repository, as the .project file will occupy the root folder; you could still add projects as sub-folders, but this kind of project nesting is known to cause lots of problems all over the place. In order to add another project, you would have to move the project to a sub-folder in the Repository and add the second project as another sub-folder before you could commit this change. </dd>
+		</dl>
+		<ul>
+			<li>It is a good idea to keep your Repository outside of your Eclipse Workspace</li>
+		</ul>
+		<dl>
+			<dd>There are several reasons for this:</dd>
+		</dl>
+		<dl>
+			<dd>The new Repository will consider the complete folder structure of the Eclipse workspace as (potential) content. This can result in performance issues, for example when calculating the changes before committing (which will scan the complete .metadata folder, for example); more often than not, the workspace will contain dead folders (e.g. deleted projects) which semantically are not relevant for EGit but can not be excluded easily.</dd>
+		</dl>
+		<dl>
+			<dd>The metadata (.git-) folder will be a child of the Eclipse Workspace. It is unclear whether this might cause unwanted folder traversals by Eclipse.</dd>
+		</dl>
+		<dl>
+			<dd>You can easily destroy your Repository by destroying your Eclipse Workspace</dd>
+		</dl>
 		<h3 id="Creating_a_new_empty_Git_Repository">Creating a new empty Git Repository</h3>
 		<p>You can create a project first and share it afterwards. The Share Project Wizard supports creation of Git repositories  (see 
 			<a href="http://wiki.eclipse.org/EGit/User_Guide/Sharing#Adding_a_project_to_version_control" title="EGit/User Guide/Sharing#Adding_a_project_to_version_control" target="egit_external">Adding a project to version control</a>).
@@ -802,24 +853,21 @@
 			<br/>
 		</p>
 		<h3 id="Comparing_with_Branches_.28Synchronize.29">Comparing with Branches (Synchronize)</h3>
-		<p>The difference between two branches can be viewed by clicking 
-			<b>Team &gt; Synchronize</b> on a project. If the Git repository contains multiple Eclipse projects it is sufficient to select one project, the 
-			<b>Synchronization View</b> will also include all other projects. It is critical to have all important files/projects imported into Eclipse because the 
-			<b>Synchronization view</b> can only dispatch and show files that are known as a resource in Eclipse any other files will 
-			<b>never</b> appear in the 
-			<b>Synchronization View</b>. 
-		</p>
-		<p>After launching 
-			<b>Synchronize</b> the 
-			<b>Synchronization dialog</b> will appear. 
+		<p>The difference between the working tree (including not committed changes) and a branch or tag can be viewed by clicking the dynamic menu 
+			<b>Team &gt; Synchronize &gt; ''' '</b>'Ref'
+			<b>' on a project. If the Git repository contains multiple Eclipse projects it is sufficient to select one project, the '''Synchronization View</b> will also include all other projects. 
 		</p>
 		<p>
-			<img border="0" src="images/Synchronize-dialog.jpg"/>
+			<img border="0" src="images/Egit-1.0-synchronize-dynamic.png"/>
 		</p>
-		<p>Select the two branches that should be compared. When clicking "include local uncommited changed files" also local, not yet staged changes and also already staged changes will be shown in comparison (currently this is not supported by ChangeSet implementation).</p>
-		<p>It is also possible to compare multiple repositories at once. In this case for each repository the 
-			<b>Synchronize dialog</b> will appear and you could select a different configuration for each repository.
+		<p>If you want to synchronize with a Ref not listed in the dynamic menu click 
+			<b>Team &gt; Synchronize &gt; Other...</b>. Then in the Synchronize Wizard click into the destination column of the repository you want to synchronize and select the Ref you want to compare against.
 		</p>
+		<p>
+			<img border="0" src="images/Egit-1.0-synchronize-custom.png"/>
+		</p>
+		<p>When clicking "Include local uncommited changes in comparison" also local, not yet staged changes and the already staged changes will be shown in comparison.</p>
+		<p>It is also possible to compare multiple repositories at once. In this case in the Synchronize Wizard select for each repository the Ref you want to compare against.</p>
 		<h3 id="Quickdiff">Quickdiff</h3>
 		<p>Instead of using a compare editor you can enable quick diff support and see the changes within the text editor. 
 
@@ -1153,6 +1201,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>You may view and edit the upstream configuration in the 
 			<a href="Tasks.html#Repository_Configuration">repository configuration</a>. 
 		</p>
+		<p>EGit also supports the git configuration parameter <code>branch.autosetuprebase</code>, set it to <code>always</code> if you want to use the rebase pull strategy by default. If you set this in the repository configuration this is used for all local branches created based on a remote tracking branch in this repository, if you set it in your user configuration it will be used for all your repositories.</p>
 		<p>In the lower part, you can decide whether the new branch shall be checked out immediately.</p>
 		<h2 id="Merging">Merging</h2>
 		<p>A merge incorporates changes from named commits (since the time their histories diverged from the current branch) into the current branch. </p>
@@ -1801,7 +1850,7 @@ Sein oder nicht sein
 		<p>
 			<img border="0" src="images/RepoMgrPropertiesView.png"/> 
 		</p>
-		<p>With a drop down box (left red box in the screen shot) you can switch between the display of the Repository Configutarion, the Global Configuration and a view which aggregates both. If the view displays the Repository Configutarion or the Global Configuration you can open an editor dialog with the 
+		<p>With a drop down box (left red box in the screen shot) you can switch between the display of the Repository Configuration, the Global Configuration and a view which aggregates both. If the view displays the Repository Configuration or the Global Configuration you can open an editor dialog with the 
 			<b>Edit</b> button (right red box in the screen shot). The editor dialog has the same functionality as the preference page 
 			<b>Team &gt; Git &gt; Configuration</b>. 
 		</p>
@@ -1934,6 +1983,132 @@ Sein oder nicht sein
 		</p>
 		<p>See the 
 			<a href="http://wiki.eclipse.org/index.php/Mylyn/User_Guide" target="egit_external">Mylyn User Guide</a> for more information how to work with tasks.
+		</p>
+		<h2 id="Viewing_Commits">Viewing Commits</h2>
+		<p>EGit 1.0 added a Git commit viewer that allows commits to be opened in the Eclipse editor area.</p>
+		<p>The EGit commit viewer displays the following commit information:</p>
+		<ul>
+			<li>Commit tab
+				<ul>
+					<li>Links to open parent commits</li>
+					<li>Author</li>
+					<li>Committer</li>
+					<li>Message</li>
+					<li>List of tags pointing to this commits</li>
+					<li>List of branches that the commit exists on</li>
+				</ul>
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/commit-editor-commit-page.png"/>
+		</p>
+		<ul>
+			<li>Diff tab
+				<ul>
+					<li>Text viewer with the output of the file differences</li>
+					<li>The colors used in the viewer can be configured from the 
+						<b>Preferences</b> &gt; 
+						<b>General</b> &gt; 
+						<b>Appearance</b> &gt; 
+						<b>Colors and Fonts</b> &gt; 
+						<i>Git</i> folder
+					</li>
+				</ul>
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/commit-editor-diff-page.png"/>
+		</p>
+		<ul>
+			<li>Notes tab
+				<ul>
+					<li>All Git notes for the commit</li>
+				</ul>
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/commit-editor-notes-page.png"/>
+		</p>
+		<h3 id="Tagging_a_commit">Tagging a commit</h3>
+		<ul>
+			<li>Select the Create Tag icon from the commit viewer toolbar
+				<ul>
+					<li>The Tag dialog will open allowing you to create a tag from the commit.</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="Creating_a_branch_from_a_commit">Creating a branch from a commit</h3>
+		<ul>
+			<li>Select the Create Branch icon from the commit viewer toolbar.
+				<ul>
+					<li>The Branch dialog will open allowing you to create a new branch from the commit</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="Opening_the_commit_viewer">Opening the commit viewer</h3>
+		<p>The commit viewer can be opened from the following places:</p>
+		<ul>
+			<li>History view table context menu</li>
+			<li>Double-clicking commits in the Pull/Fetch dialog results table</li>
+			<li>
+				<a href="Tasks.html#Open_commit_dialog">Open commit dialog</a>
+			</li>
+			<li>
+				<a href="Tasks.html#Finding_the_author_of_each_line_in_a_file">Blame annotation popup</a>
+			</li>
+		</ul>
+		<h2 id="Searching_for_commits">Searching for commits</h2>
+		<p>EGit 1.0 support searching for commits.</p>
+		<h3 id="Git_Search_page">Git Search page</h3>
+		<p>Commits can be searched from the 
+			<b>Git Search</b> tab in the standard Eclipse Search dialog.
+		</p>
+		<p>This dialog supports searching for text or patterns present in the different fields of a Git commit such as the message, author line, committer line, and the SHA-1 ids of the commit, its parent(s), and the tree associated with it.</p>
+		<p>
+			<img border="0" src="images/git-search-page.png"/>
+		</p>
+		<h3 id="Browsing_Search_Results">Browsing Search Results</h3>
+		<p>Commit search results are displayed in the standard Eclipse Search view. Results are grouped by repository when in Tree mode. Double-clicking a commit from the Search view will open it in the 
+			<a href="Tasks.html#Viewing_Commits">commit viewer</a>.
+		</p>
+		<p>
+			<img border="0" src="images/git-search-results.png"/>
+		</p>
+		<h3 id="Launching_Git_Search">Launching Git Search</h3>
+		<p>The Git Search page can be opened by selecting the Git Search option from the Search drop-down on the Eclipse toolbar.</p>
+		<p>
+			<img border="0" src="images/git-search-dropdown.png"/>
+		</p>
+		<h3 id="Open_commit_dialog">Open commit dialog</h3>
+		<p>EGit 1.0 has an 
+			<b>Open Git Commit</b> dialog similar to the Mylyn 
+			<b>Open Task</b> and core''' Open Resource''' dialogs. The dialog searches every configured Git repository for the branch, tag, or commit SHA-1 entered into the filter box and displays the matching commits.
+		</p>
+		<p>
+			<img border="0" src="images/git-open-commit.png"/>
+		</p>
+		<p>The dialog can be opened by selecting the 
+			<b>Open Git Commit</b> button on the Eclipse navigation toolbar.
+		</p>
+		<p>
+			<img border="0" src="images/git-open-commit-toolbar.png"/>
+		</p>
+		<h2 id="Finding_the_author_of_each_line_in_a_file">Finding the author of each line in a file</h2>
+		<p>EGit 1.0 supports showing 
+			<i>git blame</i> information inside the editor ruler.
+		</p>
+		<p>Selecting the 
+			<b>Team</b> &gt; 
+			<b>Show Blame Annotations</b> action on file selections will open the editor and display an annotation ruler with commit and author information for each line in a file.  Hovering over the ruler will display a pop-up showing the commit id, author, committer, and the commit message.
+		</p>
+		<p>The look and feel of the blame annotation editor ruler can be configured from the 
+			<b>Revisions</b> sub-menu available from the ruler context-menu.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-1.0-blame-ruler.png"/>
+		</p>
+		<p>Selecting the SHA-1 hyperlink from the popup will open the commit in the 
+			<a href="Tasks.html#Viewing_Commits">commit viewer</a>.
 		</p><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>

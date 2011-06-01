@@ -18,7 +18,7 @@
 				</td>
 				<td style="width: 60%" align="center"></td>
 				<td style="width: 20%" align="right">
-					<a href="Advanced-Topics.html" title="Advanced Topics">
+					<a href="Snippets.html" title="Snippets">
 						<img alt="Next" border="0" src="../../images/next.gif"/>
 					</a>
 				</td>
@@ -26,7 +26,7 @@
 			<tr>
 				<td style="width: 20%" align="left" valign="top">Concepts</td>
 				<td style="width: 60%" align="center"></td>
-				<td style="width: 20%" align="right" valign="top">Advanced Topics</td>
+				<td style="width: 20%" align="right" valign="top">Snippets</td>
 			</tr>
 		</table><hr/>
 		<h1 id="Reference">Reference</h1>
@@ -83,6 +83,56 @@ RevTag tag = git.tag().setName("tag").call();
 LogCommand log = git.log().call();
 </pre>
 		<h3 id="MergeCommand_.28git-merge.29">MergeCommand (git-merge)</h3>
+		<p>TODO</p>
+		<h2 id="Ant_Tasks">Ant Tasks</h2>
+		<p>JGit has Ant tasks for some common tasks contained in the 
+			<b>org.eclipse.jgit.ant</b> bundle.
+		</p>
+		<p>To use these tasks:</p>
+		<pre>   &lt;taskdef resource="org/eclipse/jgit/ant/ant-tasks.properties"&gt;
+       &lt;classpath&gt;
+         &lt;pathelement location="path/to/org.eclipse.jgit.ant-VERSION.jar"/&gt;
+         &lt;pathelement location="path/to/org.eclipse.jgit-VERSION.jar"/&gt;
+         &lt;pathelement location="path/to/jsch-0.1.44-1.jar"/&gt;
+       &lt;/classpath&gt;
+   &lt;/taskdef&gt;
+</pre>
+		<p>This would then provide git-clone, git-init and git-checkout tasks.</p>
+		<h3 id="git-clone">git-clone</h3>
+		<pre>   &lt;git-clone uri="http://egit.eclipse.org/jgit.git" /&gt;
+</pre>
+		<p>The following attributes are required:</p>
+		<ul>
+			<li>uri: the uri to clone from</li>
+		</ul>
+		<p>The following attributes are optional:</p>
+		<ul>
+			<li>dest: the destination to clone to (defaults to use a human readable directory name based on the last path component of the uri)</li>
+			<li>bare: true/false/yes/no to indicate if the cloned repository should be bare or not (defaults to false)</li>
+			<li>branch: the initial branch to check out when cloning the repository (defaults to HEAD)</li>
+		</ul>
+		<h3 id="git-init">git-init</h3>
+		<pre>   &lt;git-init /&gt;
+</pre>
+		<p>The following attributes are optional:</p>
+		<ul>
+			<li>dest: the path where a git repository is initialized (defaults $GIT_DIR or the current directory)</li>
+			<li>bare: true/false/yes/no to indicate if the repository should be bare or not (defaults to false)</li>
+		</ul>
+		<h3 id="git-checkout">git-checkout</h3>
+		<pre>   &lt;git-checkout src="path/to/repo" branch="origin/experimental" /&gt;
+</pre>
+		<p>The following attributes are required:</p>
+		<ul>
+			<li>src: the path to the git repository</li>
+			<li>branch: the initial branch to checkout</li>
+		</ul>
+		<p>The following attributes are optional:</p>
+		<ul>
+			<li>createbranch: true/false/yes/no to indicate whether the branch should be created if it does not already exist (defaults to false)</li>
+			<li>force: true/false/yes/no: if true/yes and the branch with the given name already exists, the start-point of an existing branch will be set to a new start-point; if false, the existing branch will not be changed (defaults to false)</li>
+		</ul>
+		<h3 id="git-add">git-add</h3>
 		<p>TODO</p><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
@@ -97,7 +147,7 @@ LogCommand log = git.log().call();
 					</a>
 				</td>
 				<td style="width: 20%" align="right">
-					<a href="Advanced-Topics.html" title="Advanced Topics">
+					<a href="Snippets.html" title="Snippets">
 						<img alt="Next" border="0" src="../../images/next.gif"/>
 					</a>
 				</td>
@@ -105,7 +155,7 @@ LogCommand log = git.log().call();
 			<tr>
 				<td style="width: 20%" align="left" valign="top">Concepts</td>
 				<td style="width: 60%" align="center"></td>
-				<td style="width: 20%" align="right" valign="top">Advanced Topics</td>
+				<td style="width: 20%" align="right" valign="top">Snippets</td>
 			</tr>
 		</table>
 	</body>
