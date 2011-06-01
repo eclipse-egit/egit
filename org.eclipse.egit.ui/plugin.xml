@@ -2599,6 +2599,29 @@
                   </visibleWhen>
                </command>
                <separator
+               		name="org.eclipse.egit.ui.SynchronizeWitchSeparator"
+               		visible="true" />
+               <menu
+                  label="%SynchronizeWith_label"
+                  icon="$nl$/icons/obj16/remotespec.gif">
+                  <dynamic
+                     class="org.eclipse.egit.ui.internal.actions.SynchronizeWithMenu"
+                     id="org.eclipse.egit.ui.synchronize">
+                  </dynamic>
+                  <visibleWhen checkEnabled="false">
+                     <and>
+                        <count value="1" />
+                        <iterate>
+                           <and>
+                              <adapt type="org.eclipse.core.resources.IProject">
+                                <test property="GitResource.isShared" />
+                              </adapt>
+                           </and>
+                        </iterate>
+                     </and>
+                  </visibleWhen>
+               </menu>
+               <separator
                      name="org.eclipse.egit.ui.separator1"
                      visible="true">
                </separator>
@@ -2684,32 +2707,6 @@
                   name="group3"
                   visible="true">
             </separator>
-            <menu
-                  label="%SynchronizeWith_label"
-                  icon="$nl$/icons/obj16/remotespec.gif">
-               <dynamic
-                     class="org.eclipse.egit.ui.internal.actions.SynchronizeWithMenu"
-                     id="org.eclipse.egit.ui.synchronize">
-               </dynamic>
-               <visibleWhen
-                     checkEnabled="false">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate>
-                        <and>
-                           <adapt
-                                 type="org.eclipse.core.resources.IProject">
-                              <test
-                                    property="GitResource.isShared">
-                              </test>
-                           </adapt>
-                        </and>
-                     </iterate>
-                  </and>
-               </visibleWhen>
-            </menu>
             <separator
                   name="group4"
                   visible="true">
