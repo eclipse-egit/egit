@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJn///1E\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-05-30T09:14:37Z",
+      "side": 1,
+      "message": "We should externalize error messages too.",
+      "revId": "5e8a3d42f1962f719205afd7cbdfe72a64af452b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJn///1A\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-05-30T09:14:37Z",
+      "side": 1,
+      "message": "We should externalize error messages too.",
+      "revId": "5e8a3d42f1962f719205afd7cbdfe72a64af452b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
