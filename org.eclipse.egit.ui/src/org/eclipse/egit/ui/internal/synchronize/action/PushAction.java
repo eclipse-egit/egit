@@ -9,12 +9,12 @@
 package org.eclipse.egit.ui.internal.synchronize.action;
 
 import static org.eclipse.egit.ui.internal.synchronize.GitModelSynchronizeParticipant.SYNCHRONIZATION_DATA;
+import static org.eclipse.jgit.lib.Constants.HEAD;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 
 import org.eclipse.compare.structuremergeviewer.IDiffElement;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
@@ -22,6 +22,9 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
+import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration;
 import org.eclipse.team.ui.synchronize.SynchronizeModelAction;
@@ -49,30 +52,9 @@ public class PushAction extends SynchronizeModelAction {
 				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 
 		return new SynchronizeModelOperation(configuration, elements) {
-
 			public void run(IProgressMonitor monitor) throws InvocationTargetException,
 					InterruptedException {
-				GitSynchronizeDataSet gsds = (GitSynchronizeDataSet) getConfiguration()
-						.getProperty(SYNCHRONIZATION_DATA);
-				GitSynchronizeData gsd = gsds.iterator().next();
-
-				String remoteName = gsd.getSrcRemoteName();
-				if (remoteName == null)
-					return;
-
-				RemoteConfig rc;
-				try {
-					rc = new RemoteConfig(gsd.getRepository().getConfig(),
-							remoteName);
-					PushOperationUI push = new PushOperationUI(gsd.getRepository(),
-							rc, timeout, false);
-					push.setCredentialsProvider(new EGitCredentialsProvider());
-					push.execute(monitor);
-				} catch (URISyntaxException e) {
-					throw new InvocationTargetException(e);
-				} catch (CoreException e) {
-					throw new InvocationTargetException(e);
-				}
+				runPushOperation(timeout);
 			}
 		};
 	}
@@ -81,16 +63,40 @@ public class PushAction extends SynchronizeModelAction {
 	public boolean isEnabled() {
 		GitSynchronizeDataSet gsds = (GitSynchronizeDataSet) getConfiguration()
 				.getProperty(SYNCHRONIZATION_DATA);
+		for (GitSynchronizeData gsd : gsds)
+			if (gsd.getDstRemoteName() != null)
+				return true;
 
-		if (gsds == null || gsds.size() != 1)
-			return false;
+		return false;
+	}
 
-		GitSynchronizeData gsd = gsds.iterator().next();
-		String srcRemoteName = gsd.getSrcRemoteName();
-		String dstRemoteName = gsd.getDstRemoteName();
+	private void runPushOperation(final int timeout) {
+		GitSynchronizeDataSet gsds = (GitSynchronizeDataSet) getConfiguration()
+				.getProperty(SYNCHRONIZATION_DATA);
 
-		return srcRemoteName != dstRemoteName
-				&& (srcRemoteName != null || dstRemoteName != null);
+		for (GitSynchronizeData gsd : gsds) {
+			String remoteName = gsd.getSrcRemoteName();
+			if (remoteName == null)
+				continue;
+
+			RemoteConfig rc;
+			Repository repo = gsd.getRepository();
+			StoredConfig config = repo.getConfig();
+			try {
+				rc = new RemoteConfig(config, remoteName);
+			} catch (URISyntaxException e) {
+				Activator
+						.logError(
+								"Unable to create RemoteConfiguration for remote: " + remoteName, e); //$NON-NLS-1$
+				continue;
+			}
+
+			if (rc.getPushRefSpecs().isEmpty())
+				rc.addPushRefSpec(new RefSpec(HEAD + ":" + gsd.getDstMerge())); //$NON-NLS-1$
+			PushOperationUI push = new PushOperationUI(repo, rc, timeout, false);
+			push.setCredentialsProvider(new EGitCredentialsProvider());
+			push.start();
+		}
 	}
 
 }
