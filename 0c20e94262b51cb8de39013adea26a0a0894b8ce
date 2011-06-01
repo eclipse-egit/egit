@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJX///pI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-25T15:05:21Z",
+      "side": 1,
+      "message": "AtomicReference\u003cT\u003e is easier to handle and thread safe.",
+      "revId": "0c20e94262b51cb8de39013adea26a0a0894b8ce",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJX///pE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-25T15:05:21Z",
+      "side": 1,
+      "message": "add repository name",
+      "revId": "0c20e94262b51cb8de39013adea26a0a0894b8ce",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
