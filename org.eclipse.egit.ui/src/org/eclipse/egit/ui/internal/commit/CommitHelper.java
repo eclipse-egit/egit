@@ -31,6 +31,7 @@ import org.eclipse.jgit.lib.UserConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * Helper class for preparing a commit in EGit UI
@@ -223,7 +224,8 @@ public class CommitHelper {
 		RevCommit headCommit = getHeadCommit(repository);
 		if (headCommit == null)
 			return null;
-		String commitMessage = headCommit.getFullMessage();
+		String commitMessage = headCommit.getFullMessage().replaceAll(
+				"\n", Text.DELIMITER); //$NON-NLS-1$
 		PersonIdent authorIdent = headCommit.getAuthorIdent();
 		String author = authorIdent.getName()
 				+ " <" + authorIdent.getEmailAddress() + ">"; //$NON-NLS-1$ //$NON-NLS-2$
