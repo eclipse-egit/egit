@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Git Team Provider UI Test Fragment (Incubation)
 Bundle-Vendor: Eclipse.org
-Bundle-SymbolicName: org.eclipse.egit.ui.test
+Bundle-SymbolicName: org.eclipse.egit.ui.test;singleton:=true
 Fragment-Host: org.eclipse.egit.ui
 Bundle-Version: 1.0.0.qualifier
 Bundle-ActivationPolicy: lazy
