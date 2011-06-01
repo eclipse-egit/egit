@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3///8g\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-06-01T09:26:37Z",
+      "side": 1,
+      "message": "typo: s/_FailedFetchRefs/_FailedUpdateRevs/\nas this is updating Revs not fetching refs",
+      "revId": "1ffc6eee395742e6fe41216edb40f0e1cc041b20",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///8c\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-06-01T09:26:37Z",
+      "side": 1,
+      "message": "better: Failed to refresh synchronize view",
+      "revId": "1ffc6eee395742e6fe41216edb40f0e1cc041b20",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
