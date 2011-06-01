@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJn///zs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/BooleanPrefAction.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-30T15:42:25Z",
+      "side": 1,
+      "message": "missing license header, should also have the copyright of the original author as this class has been moved",
+      "revId": "5ddd88fcdd567b70f3688ec66b3cae9cdfac6a82",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
