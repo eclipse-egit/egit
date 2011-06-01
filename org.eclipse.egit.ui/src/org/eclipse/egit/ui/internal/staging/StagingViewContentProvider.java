@@ -8,10 +8,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewUpdate;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.lib.IndexDiff;
@@ -35,12 +37,10 @@ public class StagingViewContentProvider implements
 
 	public void inputChanged(Viewer viewer, Object oldInput,
 			Object newInput) {
-		if (newInput != null) {
+		if (newInput != null && newInput instanceof StagingViewUpdate) {
+			StagingViewUpdate update = (StagingViewUpdate)newInput;
 
-			Repository repository = (Repository)((Object[])newInput)[0];
-			IndexDiff indexDiff = (IndexDiff)((Object[])newInput)[1];
-
-			if (repository == null || indexDiff == null)
+			if (update.repository == null || update.indexDiff == null)
 				return;
 
 			Set<StagingEntry> nodes = new TreeSet<StagingEntry>(new Comparator<StagingEntry>() {
@@ -49,6 +49,16 @@ public class StagingViewContentProvider implements
 				}
 			});
 
+			if (update.changedResources != null && update.changedResources.size() != 0) {
+				nodes.addAll(Arrays.asList(content));
+				for (String res : update.changedResources)
+					for (StagingEntry entry : content)
+						if (entry.getPath().equals(res))
+							nodes.remove(entry);
+			}
+
+			final IndexDiff indexDiff = update.indexDiff;
+			final Repository repository = update.repository;
 			if (isWorkspace) {
 				for (String file : indexDiff.getMissing())
 					nodes.add(new StagingEntry(repository, StagingEntry.State.MISSING, file));
