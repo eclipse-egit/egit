@@ -22,7 +22,7 @@
   <artifactId>org.eclipse.egit.ui</artifactId>
   <packaging>eclipse-plugin</packaging>
 
-  <name>Git Team Provider (UI) (Incubation)</name>
+  <name>Git Team Provider (UI)</name>
 
   <!-- workaround for https://issues.sonatype.org/browse/TYCHO-168 -->
   <build>

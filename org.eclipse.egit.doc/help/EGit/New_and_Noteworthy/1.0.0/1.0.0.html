@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 1.0 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 1.0 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bugs-Closed.html" title="Bugs Closed">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bugs Closed</td>
+			</tr>
+		</table><hr/>
+		<h1 id="Features">Features</h1>
+		<h2 id="Git_Commit_Search_and_Commit_Viewer">Git Commit Search and Commit Viewer</h2>
+		<ul>
+			<li>
+				<b>Search &gt; Search... &gt; Git Search</b> opens the new Git commit search wizard
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-1.0-commit-search.png"/>
+		</p>
+		<ul>
+			<li>Double clicking a commit in the search result opens the new Commit Viewer</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-1.0-commit-search-result.png"/>
+		</p>
+		<h2 id="Staging_View">Staging View</h2>
+		<ul>
+			<li>The new Staging View shows the "git status" for the selected repository.</li>
+			<li>Drag and drop files you want to stage and use commit to commit the staged changes. </li>
+			<li>Double clicking a file opens a Compare View showing the diff which isn't yet staged / is staged already.</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-1.0-staging-view.png"/>
+		</p>
+		<h2 id="Blame_Annotations">Blame Annotations</h2>
+		<p>EGit now supports displaying 
+			<i>blame</i> annotations in the editor showing commit and author information for each line in a file.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-1.0-blame-ruler.png"/>
+		</p>
+		<h2 id="New_Menu_Actions">New Menu Actions</h2>
+		<ul>
+			<li>Compare index with HEAD</li>
+			<li>Replace with HEAD, commit and ref</li>
+			<li>commit action in Synchronize View</li>
+		</ul>
+		<h2 id="Usability_improvements">Usability improvements</h2>
+		<h3 id="History_View">History View</h3>
+		<ul>
+			<li>improved graph rendering</li>
+			<li>support for relative dates</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-1.0-improved-history-view.png"/>
+		</p>
+		<h3 id="Synchronize_View">Synchronize View</h3>
+		<ul>
+			<li>improved menus and synchronize wizard</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-1.0-dynamic-synch-menu.png"/>
+		</p>
+		<ul>
+			<li>auto-fetching changes before synchronize</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-1.0-synch-auto-fetch.png"/>
+		</p>
+		<h3 id="Commit">Commit</h3>
+		<ul>
+			<li>enhanced commit dialog</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-1.0-commit-dialog.png"/>
+		</p>
+		<ul>
+			<li>commit viewer with notes support</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-1.0-commit-note-viewer.png"/>
+		</p>
+		<ul>
+			<li>non-modal commit from staging view</li>
+		</ul>
+		<h3 id="Improved_Share_Project_Wizard">Improved Share Project Wizard</h3>
+		<ul>
+			<li>The improved Share Project Wizard allows to relocate a new project which has been created in the Eclipse workspace under an already existing or newly created git repository.</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-1.0-share-project-wizard.png"/>
+		</p>
+		<h2 id="Git_Repositories_view">Git Repositories view</h2>
+		<h3 id="Branch_commits">Branch commits</h3>
+		<p>The latest commit on branches and tags can now be displayed in the Git Repositories view by selecting the changeset icon on the toolbar.</p>
+		<p>
+			<img border="0" src="images/Egit-1.0-branch-commits.png"/>
+		</p>
+		<h2 id="GitHub_Connector">GitHub Connector</h2>
+		<h3 id="Issues">Issues</h3>
+		<p>GitHub issues can be added as a Mylyn Task repository and can appear under queries in the Task List view.</p>
+		<p>
+			<img border="0" src="images/GitHubMylynIssueQueryPage.png"/>
+		</p>
+		<p>Issues can be created, edited, and commented on using the task editor.</p>
+		<p>
+			<img border="0" src="images/GitHubMylynIssueEditor.png"/>
+		</p>
+		<h3 id="Gists">Gists</h3>
+		<p>GitHub 
+			<a href="http://gist.github.com" target="egit_external">gists</a> can be added as a Mylyn Task Repository and can appear under queries in the Task List view.  Gists can be edited and commented on using the task editor.
+		</p>
+		<p>
+			<img border="0" src="images/GitHubMylynGistEditor.png"/>
+		</p>
+		<p>Gists can also be created from the GitHub menu when selecting files or from text selections in the editors.</p><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bugs-Closed.html" title="Bugs Closed">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bugs Closed</td>
+			</tr>
+		</table>
+	</body>
+</html>

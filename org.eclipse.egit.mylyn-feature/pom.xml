@@ -22,6 +22,6 @@
   <artifactId>org.eclipse.egit.mylyn</artifactId>
   <packaging>eclipse-feature</packaging>
 
-  <name>EGit Mylyn Feature (Incubation)</name>
+  <name>EGit Mylyn Feature</name>
 
 </project>

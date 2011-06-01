@@ -7,7 +7,7 @@
 
 [consumes "technology.jgit"]
 	name = JGit
-	version = 0.12.0
+	version = 1.0.0
 	license = Eclipse Distribution License v1.0
 
 [CQ "3493"]

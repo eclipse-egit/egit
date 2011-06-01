@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Git Team Provider Core Test Plug-in (Incubation)
+Bundle-Name: Git Team Provider Core Test Plug-in
 Bundle-Vendor: Eclipse.org
 Bundle-SymbolicName: org.eclipse.egit.core.test
 Fragment-Host: org.eclipse.egit.core
