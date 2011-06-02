@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3///4k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-06-02T18:28:48Z",
+      "side": 1,
+      "message": "Does this listener get removed on dispose?  I\u0027m not where it does, should be in removeListeners() correct?",
+      "revId": "898b8307ca195439209ff80bbb0e0ad2935f16dc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
