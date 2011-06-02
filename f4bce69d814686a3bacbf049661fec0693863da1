@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3///4Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-06-02T18:35:54Z",
+      "side": 1,
+      "message": "Could this be done with the variable declaration like the other listeners?",
+      "revId": "f4bce69d814686a3bacbf049661fec0693863da1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
