@@ -11,7 +11,6 @@ package org.eclipse.egit.ui.internal.staging;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -127,8 +126,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
+import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.ViewPart;
@@ -146,7 +145,7 @@ public class StagingView extends ViewPart {
 
 	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
-	private ScrolledForm form;
+	private Form form;
 
 	private Section stagedSection;
 
@@ -232,14 +231,14 @@ public class StagingView extends ViewPart {
 			}
 		});
 
-		form = toolkit.createScrolledForm(parent);
+		form = toolkit.createForm(parent);
 
 		Image repoImage = UIIcons.REPOSITORY.createImage();
 		UIUtils.hookDisposal(form, repoImage);
 		form.setImage(repoImage);
 		form.setText(UIText.StagingView_NoSelectionTitle);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(form);
-		toolkit.decorateFormHeading(form.getForm());
+		toolkit.decorateFormHeading(form);
 		GridLayoutFactory.swtDefaults().applyTo(form.getBody());
 
 		SashForm horizontalSashForm = new SashForm(form.getBody(), SWT.NONE);
@@ -466,7 +465,7 @@ public class StagingView extends ViewPart {
 					}
 
 					final StagingViewUpdate update = new StagingViewUpdate(currentRepository, indexDiff, resourcesToUpdate);
-					form.getDisplay().asyncExec(new Runnable() {
+					asyncExec(new Runnable() {
 						public void run() {
 							if (form.isDisposed())
 								return;
@@ -861,7 +860,7 @@ public class StagingView extends ViewPart {
 
 		job.addJobChangeListener(new JobChangeAdapter() {
 			public void done(final IJobChangeEvent event) {
-				form.getDisplay().asyncExec(new Runnable() {
+				asyncExec(new Runnable() {
 					public void run() {
 						if (form.isDisposed())
 							return;
@@ -1088,15 +1087,13 @@ public class StagingView extends ViewPart {
 
 				private void openNewCommit(final RevCommit newCommit) {
 					if (newCommit != null && openNewCommitsAction.isChecked())
-						PlatformUI.getWorkbench().getDisplay()
-								.asyncExec(new Runnable() {
+						asyncExec(new Runnable() {
 
-									public void run() {
-										CommitEditor
-												.openQuiet(new RepositoryCommit(
-														repository, newCommit));
-									}
-								});
+							public void run() {
+								CommitEditor.openQuiet(new RepositoryCommit(
+										repository, newCommit));
+							}
+						});
 				}
 
 			};
@@ -1127,6 +1124,10 @@ public class StagingView extends ViewPart {
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
 
 		removeListeners();
+	}
+
+	private void asyncExec(Runnable runnable) {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(runnable);
 	}
 
 }
