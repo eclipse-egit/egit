@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJn///9M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-05-28T15:15:57Z",
+      "side": 1,
+      "message": "I would prefer having an input class over having an array with different object types inside it with both the view and the content provider having to know which indices are which.\n\nThen you can have:\n\nif (newInput instanceof StagingViewInput) {\n\nStagingViewInput sInput \u003d (StagingViewInput)newInput;\n\nRepository repository \u003d sInput.getRepository();\n\n...\n\n}",
+      "revId": "3762d289b8acf67720179d68ec7e44bd22ac92b5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
