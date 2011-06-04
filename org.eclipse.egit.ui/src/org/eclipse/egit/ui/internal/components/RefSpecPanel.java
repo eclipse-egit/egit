@@ -807,7 +807,7 @@ public class RefSpecPanel {
 		addConfiguredButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 				true, false));
 		addConfiguredButton.setText(NLS.bind(
-				UIText.RefSpecPanel_predefinedConfigured, typeString()));
+				UIText.RefSpecPanel_predefinedConfigured, typeStringTitle()));
 		addConfiguredButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1673,6 +1673,11 @@ public class RefSpecPanel {
 	private String typeString() {
 		return (pushSpecs ? UIText.RefSpecPanel_push
 				: UIText.RefSpecPanel_fetch);
+	}
+
+	private String typeStringTitle() {
+		return (pushSpecs ? UIText.RefSpecPanel_pushTitle
+				: UIText.RefSpecPanel_fetchTitle);
 	}
 
 	private void addPredefinedRefSpecs(final RefSpec predefined) {
