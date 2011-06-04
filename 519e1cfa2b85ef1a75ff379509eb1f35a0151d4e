@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3///1c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-06-04T01:55:45Z",
+      "side": 1,
+      "message": "instead of the above;\n\nif (repositoryChnaged) clearCommitMessageToggles();\nupateCommitMessageComponent(true); (probably can just remove the argument!)\n\nthen remove the changes below.\n\nThe commit messages are updated correctly (although perhaps they\u0027re being refreshed too frequently this way?)",
+      "revId": "519e1cfa2b85ef1a75ff379509eb1f35a0151d4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///1g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-06-04T01:55:45Z",
+      "side": 1,
+      "message": "this will always evaluate to true",
+      "revId": "519e1cfa2b85ef1a75ff379509eb1f35a0151d4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///1o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-06-04T01:43:48Z",
+      "side": 1,
+      "message": "doReload is always called from the Job and the Job change listener should be doing this update.  The block there however is slightly different to this one.",
+      "revId": "519e1cfa2b85ef1a75ff379509eb1f35a0151d4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
