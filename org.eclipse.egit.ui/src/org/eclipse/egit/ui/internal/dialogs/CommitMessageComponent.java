@@ -545,11 +545,17 @@ public class CommitMessageComponent {
 	}
 
 	private int findNextEOL(int oldPos, String message) {
-		return message.indexOf("\n", oldPos + 1); //$NON-NLS-1$
+		int pos = message.indexOf("\n", oldPos + 1); //$NON-NLS-1$
+		if (pos > -1)
+			return pos;
+		return message.indexOf(Text.DELIMITER, oldPos + 1);
 	}
 
 	private int findOffsetOfChangeIdLine(String message) {
-		return message.indexOf("\nChange-Id: I"); //$NON-NLS-1$
+		int pos = message.indexOf("\nChange-Id: I"); //$NON-NLS-1$
+		if (pos > -1)
+			return pos;
+		return message.indexOf(Text.DELIMITER + "Change-Id: I"); //$NON-NLS-1$
 	}
 
 	private void updateChangeIdButton() {
