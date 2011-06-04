@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.staging;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -872,7 +873,10 @@ public class StagingView extends ViewPart {
 						commitAction.setEnabled(repository.getRepositoryState()
 								.canCommit());
 						form.setText(StagingView.getRepositoryName(repository));
-						updateCommitMessageComponent(repositoryChanged);
+						if (repositoryChanged) {
+							updateCommitMessageComponent(repositoryChanged);
+							clearCommitMessageToggles();
+						}
 						updateSectionText();
 					}
 
@@ -899,6 +903,7 @@ public class StagingView extends ViewPart {
 
 	private IndexDiff doReload(final Repository repository, IProgressMonitor monitor, String jobTitle) {
 		currentRepository = repository;
+		final boolean repositoryChanged = currentRepository == repository;
 
 		EclipseGitProgressTransformer jgitMonitor = new EclipseGitProgressTransformer(
 				monitor);
@@ -915,6 +920,22 @@ public class StagingView extends ViewPart {
 
 		removeListeners();
 		attachListeners(repository);
+
+		form.getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				if (form.isDisposed())
+					return;
+				StagingViewUpdate update = new StagingViewUpdate(repository, indexDiff, Collections.<String> emptyList());
+				unstagedTableViewer.setInput(update);
+				stagedTableViewer.setInput(update);
+				commitAction.setEnabled(repository.getRepositoryState()
+						.canCommit());
+				form.setText(StagingView.getRepositoryName(repository));
+				updateCommitMessageComponent(repositoryChanged);
+				updateSectionText();
+			}
+
+		});
 
 		return indexDiff;
 	}
