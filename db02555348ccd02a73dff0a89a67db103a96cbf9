@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3///1M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-06-04T11:12:12Z",
+      "side": 1,
+      "message": "Code conventions: we don\u0027t use curly brackets around single line blocks",
+      "revId": "db02555348ccd02a73dff0a89a67db103a96cbf9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///1I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CommonUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-06-04T11:12:12Z",
+      "side": 1,
+      "message": "Code conventions: we don\u0027t use curly brackets around single line blocks",
+      "revId": "db02555348ccd02a73dff0a89a67db103a96cbf9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
