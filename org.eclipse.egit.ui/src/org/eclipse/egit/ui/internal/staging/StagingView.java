@@ -839,7 +839,7 @@ public class StagingView extends ViewPart {
 	}
 
 	private void reload(final Repository repository) {
-		final boolean repositoryChanged = currentRepository == repository;
+		final boolean repositoryChanged = currentRepository != repository;
 
 		final AtomicReference<IndexDiff> results = new AtomicReference<IndexDiff>();
 
