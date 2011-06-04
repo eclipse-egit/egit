@@ -80,6 +80,11 @@ public abstract class GitModelObject extends PlatformObject {
 	public abstract boolean isContainer();
 
 	/**
+	 * Refresh child of this item
+	 */
+	public abstract void refresh();
+
+	/**
 	 *
 	 * @param parent
 	 *            of particular model object

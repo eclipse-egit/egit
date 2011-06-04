@@ -8,25 +8,35 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.mapping;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.compare.structuremergeviewer.Differencer;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
 import org.eclipse.egit.core.synchronize.GitSubscriberResourceMappingContext;
 import org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObjectContainer;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelRoot;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.team.core.diff.IDiff;
+import org.eclipse.team.core.diff.IDiffChangeEvent;
 import org.eclipse.team.core.mapping.ISynchronizationContext;
 import org.eclipse.team.ui.mapping.SynchronizationContentProvider;
 import org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration;
@@ -111,6 +121,28 @@ public class GitChangeSetContentProvider extends SynchronizationContentProvider 
 			provider.dispose();
 
 		super.dispose();
+	}
+
+	@Override
+	public void diffsChanged(IDiffChangeEvent event, IProgressMonitor monitor) {
+		List<IPath> toRefresh = new LinkedList<IPath>();
+		for (IDiff addition : event.getAdditions())
+			toRefresh.add(addition.getPath());
+		for (IDiff changed : event.getChanges())
+			toRefresh.add(changed.getPath());
+
+
+		toRefresh.addAll(Arrays.asList(event.getRemovals()));
+		for (IPath refresh : toRefresh)
+			for (GitModelObject child : modelRoot.getChildren())
+				if (child instanceof GitModelCache)
+					for (IProject project : child.getProjects())
+						if (project.getName().equals(refresh.segment(0))) {
+							child.refresh();
+							break;
+						}
+
+		super.diffsChanged(event, monitor);
 	}
 
 	@Override
