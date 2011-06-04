@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.view.repositories;
 
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withText;
+import static org.eclipse.swtbot.swt.finder.waits.Conditions.waitForShell;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -28,10 +30,13 @@ import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.utils.SWTBotPreferences;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -184,21 +189,12 @@ public class GitRepositoriesViewFetchAndPushTest extends
 
 		SWTBotTree tree = getOrOpenView().bot().tree();
 
-		String destinationString = clonedRepositoryFile.getParentFile()
-				.getName()
-				+ " - " + "origin";
-		String dialogTitle = NLS.bind(UIText.FetchResultDialog_title,
-				destinationString);
+		fetchFromOrigin(tree);
 
-		myRepoViewUtil.getRemotesItem(tree, clonedRepositoryFile).expand().getNode(
-				"origin").expand().getNode(0).select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("SimpleFetchCommand"));
-
-		SWTBotShell confirm = bot.shell(dialogTitle);
-		assertEquals("Wrong result table row count", 0, confirm.bot().table()
+		SWTBotShell resultDialog = waitForFetchResultDialog();
+		assertEquals("Wrong result table row count", 0, resultDialog.bot().table()
 				.rowCount());
-		confirm.close();
+		resultDialog.close();
 
 		deleteAllProjects();
 		shareProjects(clonedRepositoryFile2);
@@ -220,14 +216,10 @@ public class GitRepositoriesViewFetchAndPushTest extends
 
 		refreshAndWait();
 
-		myRepoViewUtil.getRemotesItem(tree, clonedRepositoryFile).expand().getNode(
-				"origin").expand().getNode(0).select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("SimpleFetchCommand"));
+		fetchFromOrigin(tree);
 
-		TestUtil.joinJobs(JobFamilies.FETCH);
-		confirm = bot.shell(dialogTitle);
-		SWTBotTable table = confirm.bot().table();
+		resultDialog = waitForFetchResultDialog();
+		SWTBotTable table = resultDialog.bot().table();
 		boolean found = false;
 		for (int i = 0; i < table.rowCount(); i++) {
 			found = table.getTableItem(i).getText(2).startsWith(objid);
@@ -235,15 +227,34 @@ public class GitRepositoriesViewFetchAndPushTest extends
 				break;
 		}
 		assertTrue(found);
-		confirm.close();
+		resultDialog.close();
 
+		fetchFromOrigin(tree);
+
+		resultDialog = waitForFetchResultDialog();
+		assertEquals("Wrong result table row count", 0, resultDialog.bot().table()
+				.rowCount());
+	}
+
+	private void fetchFromOrigin(SWTBotTree tree) throws Exception,
+			InterruptedException {
 		myRepoViewUtil.getRemotesItem(tree, clonedRepositoryFile).expand().getNode(
 				"origin").expand().getNode(0).select();
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("SimpleFetchCommand"));
+		TestUtil.joinJobs(JobFamilies.FETCH);
+	}
 
-		confirm = bot.shell(dialogTitle);
-		assertEquals("Wrong result table row count", 0, confirm.bot().table()
-				.rowCount());
+	private SWTBotShell waitForFetchResultDialog() {
+		String destinationString = clonedRepositoryFile.getParentFile()
+				.getName() + " - " + "origin";
+		String dialogTitle = NLS.bind(UIText.FetchResultDialog_title,
+				destinationString);
+
+		Matcher<Shell> withText = withText(dialogTitle);
+		bot.waitUntil(waitForShell(withText), SWTBotPreferences.TIMEOUT * 2);
+
+		SWTBotShell confirm = bot.shell(dialogTitle);
+		return confirm;
 	}
 }
