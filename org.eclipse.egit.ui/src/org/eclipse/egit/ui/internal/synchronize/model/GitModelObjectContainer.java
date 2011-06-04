@@ -124,6 +124,11 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 	}
 
 	@Override
+	public void refresh() {
+		children = null;
+	}
+
+	@Override
 	public String getName() {
 		if (name == null)
 			name = baseCommit.getShortMessage();
