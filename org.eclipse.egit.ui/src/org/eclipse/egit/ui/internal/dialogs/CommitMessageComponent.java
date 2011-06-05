@@ -268,8 +268,7 @@ public class CommitMessageComponent {
 		} else {
 			getHeadCommitInfo();
 			saveOriginalChangeId();
-			commitText.setText(previousCommitMessage.replaceAll(
-					"\n", Text.DELIMITER)); //$NON-NLS-1$
+			commitText.setText(previousCommitMessage);
 			if (previousAuthor != null)
 				authorText.setText(previousAuthor);
 		}
@@ -456,7 +455,8 @@ public class CommitMessageComponent {
 
 	private void getHeadCommitInfo() {
 		CommitInfo headCommitInfo = CommitHelper.getHeadCommitInfo(repository);
-		previousCommitMessage = headCommitInfo.getCommitMessage();
+		previousCommitMessage = headCommitInfo.getCommitMessage().replaceAll(
+				"\n", Text.DELIMITER); //$NON-NLS-1$;
 		previousAuthor = headCommitInfo.getAuthor();
 	}
 
@@ -545,11 +545,11 @@ public class CommitMessageComponent {
 	}
 
 	private int findNextEOL(int oldPos, String message) {
-		return message.indexOf("\n", oldPos + 1); //$NON-NLS-1$
+		return message.indexOf(Text.DELIMITER, oldPos + 1);
 	}
 
 	private int findOffsetOfChangeIdLine(String message) {
-		return message.indexOf("\nChange-Id: I"); //$NON-NLS-1$
+		return message.indexOf(Text.DELIMITER + "Change-Id: I"); //$NON-NLS-1$
 	}
 
 	private void updateChangeIdButton() {
@@ -562,8 +562,9 @@ public class CommitMessageComponent {
 	}
 
 	private void refreshChangeIdText() {
-		String text = commitText.getText().replaceAll(Text.DELIMITER, "\n"); //$NON-NLS-1$
 		if (createChangeId) {
+			// ChangeIdUtil uses \n line endings
+			String text = commitText.getText().replaceAll(Text.DELIMITER, "\n"); //$NON-NLS-1$
 			String changedText = ChangeIdUtil.insertId(
 					text,
 					originalChangeId != null ? originalChangeId : ObjectId
@@ -573,6 +574,7 @@ public class CommitMessageComponent {
 				commitText.setText(changedText);
 			}
 		} else {
+			String text = commitText.getText();
 			int changeIdOffset = findOffsetOfChangeIdLine(text);
 			if (changeIdOffset > 0) {
 				int endOfChangeId = findNextEOL(changeIdOffset, text);
