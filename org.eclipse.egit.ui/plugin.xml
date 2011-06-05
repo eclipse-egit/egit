@@ -3304,6 +3304,58 @@
          </enablement>
          <commonSorter
                class="org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetSorter"/>
+       <possibleChildren>
+         <or>
+           <instanceof
+                 value="java.lang.Object">
+           </instanceof>
+           <instanceof
+                 value="org.eclipse.egit.ui.internal.synchronize.model.GitModelCache">
+           </instanceof>
+           <instanceof
+                 value="org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob">
+           </instanceof>
+           <instanceof
+                 value="org.eclipse.egit.ui.internal.synchronize.model.GitModelTree">
+           </instanceof>
+         </or>
+       </possibleChildren>
+       <triggerPoints>
+         <or>
+           <instanceof
+                 value="java.lang.Object">
+           </instanceof>
+           <instanceof
+                 value="org.eclipse.egit.ui.internal.synchronize.model.GitModelCache">
+           </instanceof>
+           <instanceof
+                 value="org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob">
+           </instanceof>
+           <instanceof
+                 value="org.eclipse.egit.ui.internal.synchronize.model.GitModelTree">
+           </instanceof>
+         </or>
+       </triggerPoints>
+	     <dropAssistant
+	           class="org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetDropAdapterAssistant"
+	           id="org.eclipse.egit.ui.changeSetDropAssistan">
+	        <possibleDropTargets>
+  	          <or>
+  	            <instanceof
+                     value="java.lang.Object">
+  	            </instanceof>
+  	            <instanceof
+                 value="org.eclipse.egit.ui.internal.synchronize.model.GitModelCache">
+           </instanceof>
+           <instanceof
+                 value="org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob">
+           </instanceof>
+           <instanceof
+                 value="org.eclipse.egit.ui.internal.synchronize.model.GitModelTree">
+           </instanceof>
+  	          </or>
+	        </possibleDropTargets>
+	     </dropAssistant>
        </navigatorContent>
    </extension>
    <extension
