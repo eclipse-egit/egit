@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOJ3///0U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-06-04T22:17:22Z",
+      "side": 1,
+      "message": "Is there any reason why not use here Text.DELIMITER instead of \"\\n\"?",
+      "revId": "4287a2da7abf02c549c91b828922da148ee48df9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3///z4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
         "patchSetId": 1
