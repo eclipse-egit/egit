@@ -10,7 +10,9 @@ package org.eclipse.egit.ui.internal.staging;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,6 +25,10 @@ import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
@@ -92,6 +98,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
@@ -105,6 +112,7 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.team.core.Team;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -118,8 +126,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
+import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.ViewPart;
@@ -137,7 +145,7 @@ public class StagingView extends ViewPart {
 
 	private static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
-	private ScrolledForm form;
+	private Form form;
 
 	private Section stagedSection;
 
@@ -163,7 +171,31 @@ public class StagingView extends ViewPart {
 
 	private ISelectionListener selectionChangedListener;
 
+	private IResourceChangeListener resourceChangeListener;
+
 	private Repository currentRepository;
+
+	static class StagingViewUpdate {
+		Repository repository;
+		IndexDiff indexDiff;
+		Collection<String> changedResources;
+
+		StagingViewUpdate(Repository theRepository,
+				IndexDiff theIndexDiff, Collection<String> theChanges) {
+			this.repository = theRepository;
+			this.indexDiff = theIndexDiff;
+			this.changedResources = theChanges;
+		}
+	}
+
+	/**
+	 * Bit-mask describing interesting changes for IResourceChangeListener
+	 * events
+	 */
+	private static int INTERESTING_CHANGES = IResourceDelta.CONTENT
+			| IResourceDelta.MOVED_FROM | IResourceDelta.MOVED_TO
+			| IResourceDelta.OPEN | IResourceDelta.REPLACED
+			| IResourceDelta.TYPE;
 
 	private final RefsChangedListener myRefsChangedListener = new RefsChangedListener() {
 		public void onRefsChanged(RefsChangedEvent event) {
@@ -199,14 +231,14 @@ public class StagingView extends ViewPart {
 			}
 		});
 
-		form = toolkit.createScrolledForm(parent);
+		form = toolkit.createForm(parent);
 
 		Image repoImage = UIIcons.REPOSITORY.createImage();
 		UIUtils.hookDisposal(form, repoImage);
 		form.setImage(repoImage);
 		form.setText(UIText.StagingView_NoSelectionTitle);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(form);
-		toolkit.decorateFormHeading(form.getForm());
+		toolkit.decorateFormHeading(form);
 		GridLayoutFactory.swtDefaults().applyTo(form.getBody());
 
 		SashForm horizontalSashForm = new SashForm(form.getBody(), SWT.NONE);
@@ -378,6 +410,77 @@ public class StagingView extends ViewPart {
 					UIPreferences.STAGING_VIEW_SYNC_SELECTION);
 		else
 			preferenceStore.setDefault(UIPreferences.STAGING_VIEW_SYNC_SELECTION, true);
+
+		resourceChangeListener = new IResourceChangeListener() {
+			public void resourceChanged(IResourceChangeEvent event) {
+				final Collection<String> resourcesToUpdate = new HashSet<String>();
+
+				try {
+					event.getDelta().accept(new IResourceDeltaVisitor() {
+						public boolean visit(IResourceDelta delta) throws CoreException {
+							// If the file has changed but not in a way that we care
+							// about (e.g. marker changes to files) then ignore
+							if (delta.getKind() == IResourceDelta.CHANGED
+									&& (delta.getFlags() & INTERESTING_CHANGES) == 0)
+								return true;
+
+							final IResource resource = delta.getResource();
+
+							// skip any non-FILE resources
+							if (resource.getType() != IResource.FILE)
+								return true;
+
+							// If the resource is not part of a project under Git
+							// revision control
+							final RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+							if (mapping == null || mapping.getRepository() != currentRepository)
+								// Ignore the change
+								return true;
+
+							// Don't include ignored resources
+							if (Team.isIgnoredHint(resource))
+								return false;
+
+							String repoRelativePath = mapping.getRepoRelativePath(resource);
+							resourcesToUpdate.add(repoRelativePath);
+
+							return true;
+						}
+					});
+				} catch (CoreException e) {
+					MessageDialog.openError(getSite().getShell(),
+							UIText.StagingView_exceptionTitle,
+							UIText.StagingView_exceptionMessage);
+				}
+
+				if (!resourcesToUpdate.isEmpty()) {
+					final IndexDiff indexDiff;
+					try {
+						WorkingTreeIterator iterator = IteratorService.createInitialIterator(currentRepository);
+						indexDiff = new IndexDiff(currentRepository, Constants.HEAD, iterator);
+						indexDiff.setFilter(PathFilterGroup.createFromStrings(resourcesToUpdate));
+						indexDiff.diff();
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+
+					final StagingViewUpdate update = new StagingViewUpdate(currentRepository, indexDiff, resourcesToUpdate);
+					asyncExec(new Runnable() {
+						public void run() {
+							if (form.isDisposed())
+								return;
+
+							unstagedTableViewer.setInput(update);
+							stagedTableViewer.setInput(update);
+
+							updateSectionText();
+						}
+					});
+				}
+			}
+		};
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener,
+				IResourceChangeEvent.POST_CHANGE);
 
 		updateSectionText();
 		updateToolbar();
@@ -736,7 +839,7 @@ public class StagingView extends ViewPart {
 	}
 
 	private void reload(final Repository repository) {
-		final boolean repositoryChanged = currentRepository == repository;
+		final boolean repositoryChanged = currentRepository != repository;
 
 		final AtomicReference<IndexDiff> results = new AtomicReference<IndexDiff>();
 
@@ -757,23 +860,19 @@ public class StagingView extends ViewPart {
 
 		job.addJobChangeListener(new JobChangeAdapter() {
 			public void done(final IJobChangeEvent event) {
-				form.getDisplay().asyncExec(new Runnable() {
+				asyncExec(new Runnable() {
 					public void run() {
 						if (form.isDisposed())
 							return;
 
 						final IndexDiff indexDiff = results.get();
-						unstagedTableViewer.setInput(new Object[] { repository,
-								indexDiff });
-						stagedTableViewer
-								.setInput(new Object[] { repository, indexDiff });
+						final StagingViewUpdate update = new StagingViewUpdate(currentRepository, indexDiff, null);
+						unstagedTableViewer.setInput(update);
+						stagedTableViewer.setInput(update);
 						commitAction.setEnabled(repository.getRepositoryState()
 								.canCommit());
 						form.setText(StagingView.getRepositoryName(repository));
-						if (repositoryChanged) {
-							updateCommitMessageComponent(repositoryChanged);
-							clearCommitMessageToggles();
-						}
+						updateCommitMessageComponent(repositoryChanged);
 						updateSectionText();
 					}
 
@@ -800,7 +899,6 @@ public class StagingView extends ViewPart {
 
 	private IndexDiff doReload(final Repository repository, IProgressMonitor monitor, String jobTitle) {
 		currentRepository = repository;
-		final boolean repositoryChanged = currentRepository == repository;
 
 		EclipseGitProgressTransformer jgitMonitor = new EclipseGitProgressTransformer(
 				monitor);
@@ -817,23 +915,6 @@ public class StagingView extends ViewPart {
 
 		removeListeners();
 		attachListeners(repository);
-
-		form.getDisplay().asyncExec(new Runnable() {
-			public void run() {
-				if (form.isDisposed())
-					return;
-				unstagedTableViewer.setInput(new Object[] { repository,
-						indexDiff });
-				stagedTableViewer
-						.setInput(new Object[] { repository, indexDiff });
-				commitAction.setEnabled(repository.getRepositoryState()
-						.canCommit());
-				form.setText(StagingView.getRepositoryName(repository));
-				updateCommitMessageComponent(repositoryChanged);
-				updateSectionText();
-			}
-
-		});
 
 		return indexDiff;
 	}
@@ -1006,15 +1087,13 @@ public class StagingView extends ViewPart {
 
 				private void openNewCommit(final RevCommit newCommit) {
 					if (newCommit != null && openNewCommitsAction.isChecked())
-						PlatformUI.getWorkbench().getDisplay()
-								.asyncExec(new Runnable() {
+						asyncExec(new Runnable() {
 
-									public void run() {
-										CommitEditor
-												.openQuiet(new RepositoryCommit(
-														repository, newCommit));
-									}
-								});
+							public void run() {
+								CommitEditor.openQuiet(new RepositoryCommit(
+										repository, newCommit));
+							}
+						});
 				}
 
 			};
@@ -1042,8 +1121,13 @@ public class StagingView extends ViewPart {
 		ISelectionService srv = (ISelectionService) getSite().getService(
 				ISelectionService.class);
 		srv.removePostSelectionListener(selectionChangedListener);
+		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
 
 		removeListeners();
+	}
+
+	private void asyncExec(Runnable runnable) {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(runnable);
 	}
 
 }
