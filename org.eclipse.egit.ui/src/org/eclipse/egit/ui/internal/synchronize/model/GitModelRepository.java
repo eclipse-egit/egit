@@ -46,8 +46,6 @@ public class GitModelRepository extends GitModelObject {
 
 	private final boolean includeLocal;
 
-	private GitModelObject[] childrens;
-
 	private IPath location;
 
 	/**
@@ -69,10 +67,17 @@ public class GitModelRepository extends GitModelObject {
 
 	@Override
 	public GitModelObject[] getChildren() {
-		if (childrens == null)
-			getChildrenImpl();
+		List<GitModelObjectContainer> result = new ArrayList<GitModelObjectContainer>();
+		if (srcRev != null && dstRev != null)
+			result.addAll(getListOfCommit());
+		else {
+			GitModelWorkingTree changes = getLocaWorkingTreeChanges();
+			if (changes != null)
+				result.add(changes);
+		}
 
-		return childrens;
+
+		return result.toArray(new GitModelObjectContainer[result.size()]);
 	}
 
 	@Override
@@ -140,20 +145,6 @@ public class GitModelRepository extends GitModelObject {
 	@Override
 	public String toString() {
 		return "ModelRepository[" + repo.getWorkTree() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
-	private void getChildrenImpl() {
-		List<GitModelObjectContainer> result = new ArrayList<GitModelObjectContainer>();
-		if (srcRev != null && dstRev != null)
-			result.addAll(getListOfCommit());
-		else {
-			GitModelWorkingTree changes = getLocaWorkingTreeChanges();
-			if (changes != null)
-				result.add(changes);
-		}
-
-
-		childrens = result.toArray(new GitModelObjectContainer[result.size()]);
 	}
 
 	private List<GitModelObjectContainer> getListOfCommit() {
