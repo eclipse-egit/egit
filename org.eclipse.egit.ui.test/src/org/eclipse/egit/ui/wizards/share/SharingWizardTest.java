@@ -16,14 +16,19 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.egit.core.op.DisconnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -45,6 +50,7 @@ import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
@@ -54,6 +60,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 
 @RunWith(SWTBotJunit4ClassRunner.class)
@@ -99,21 +106,37 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 
 	@After
 	public void after() throws Exception {
-		erase(projectName0);
-		erase(projectName1);
-		erase(projectName2);
-		erase(projectName3);
+		Set<File> d = new TreeSet<File>();
+		erase(projectName0, d);
+		erase(projectName1, d);
+		erase(projectName2, d);
+		erase(projectName3, d);
+		for (File f : d)
+			if (f.exists())
+				FileUtils.delete(f, FileUtils.RECURSIVE);
 		ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
 				IResource.DEPTH_INFINITE, null);
 		new Eclipse().reset();
 	}
 
-	private void erase(String projectName) throws CoreException {
+	private void erase(String projectName, Set<File> dirs) throws CoreException, IOException {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
 				projectName);
 		if (project.exists()) {
+			RepositoryMapping repo = RepositoryMapping.getMapping(project);
+			if (repo != null) {
+				IPath gitDirAbsolutePath = repo.getGitDirAbsolutePath();
+				File canonicalFile = gitDirAbsolutePath.toFile().getCanonicalFile();
+				dirs.add(canonicalFile);
+				File workspacePath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile().getCanonicalFile();
+				File gitDirParent = canonicalFile.getParentFile();
+				if (!(gitDirParent.toString()+"/").startsWith(workspacePath.toString()+"/"))
+					if (!(gitDirParent.toString()+"/").startsWith(getTestDirectory().getCanonicalPath().toString()+"/"))
+						fail("Attempting cleanup of directory neither in workspace nor test directory" + canonicalFile);
+				new DisconnectProviderOperation(Collections.singleton(project)).execute(null);
+			}
 			project.close(null);
-			project.delete(false, null);
+			project.delete(true, true, null);
 		}
 	}
 
