@@ -23,12 +23,16 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
@@ -51,6 +55,10 @@ public class TestUtil {
 	public final static String TESTAUTHOR = "Test Author <test.author@test.com>";
 
 	public final static String TESTCOMMITTER = "Test Committer <test.committer@test.com>";
+	
+	public final static String TESTCOMMITTER_NAME = "Test Committer";
+	
+	public final static String TESTCOMMITTER_EMAIL = "test.committer@test.com";
 
 	private final static char AMPERSAND = '&';
 
@@ -386,5 +394,33 @@ public class TestUtil {
 		}
 		return map;
 	}
+	
+	/**
+	 * @param projectExplorerTree
+	 * @param project
+	 *            name of a project
+	 * @return the project item pertaining to the project
+	 */
+	public SWTBotTreeItem getProjectItem(SWTBotTree projectExplorerTree,
+			String project) {
+		for (SWTBotTreeItem item : projectExplorerTree.getAllItems()) {
+			String itemText = item.getText();
+			StringTokenizer tok = new StringTokenizer(itemText, " ");
+			String name = tok.nextToken();
+			// may be a dirty marker
+			if (name.equals(">"))
+				name = tok.nextToken();
+			if (project.equals(name))
+				return item;
+		}
+		return null;
+	}
 
+	public static RevCommit getHeadCommit(Repository repository) throws Exception {
+		RevCommit headCommit = null;
+		ObjectId parentId = repository.resolve(Constants.HEAD);
+		if (parentId != null)
+			headCommit = new RevWalk(repository).parseCommit(parentId);
+		return headCommit;
+	}	
 }
