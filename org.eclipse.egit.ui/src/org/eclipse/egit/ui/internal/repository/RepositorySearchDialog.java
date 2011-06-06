@@ -27,6 +27,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CachedCheckboxTreeViewer;
 import org.eclipse.egit.ui.internal.FilteredCheckboxTree;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -63,7 +64,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.dialogs.PatternFilter;
 import org.osgi.service.prefs.BackingStoreException;
 
@@ -90,7 +92,9 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 
 	private Button searchButton;
 
-	private Button toggleSelectionButton;
+	private ToolItem checkAllItem;
+
+	private ToolItem uncheckAllItem;
 
 	private final ResourceManager fImageCache = new LocalResourceManager(
 			JFaceResources.getResources());
@@ -324,25 +328,41 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 		GridDataFactory.fillDefaults().grab(true, true).minSize(0, 300)
 				.applyTo(fTree);
 
-		Composite buttonColumn = new Composite(searchResultGroup, SWT.NONE);
-		buttonColumn.setLayout(new GridLayout(1, false));
+		ToolBar toolbar = new ToolBar(searchResultGroup, SWT.FLAT
+				| SWT.VERTICAL);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).applyTo(
-				buttonColumn);
+				toolbar);
 
-		toggleSelectionButton = new Button(buttonColumn, SWT.NONE);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).applyTo(
-				toggleSelectionButton);
-		toggleSelectionButton
-				.setText(UIText.RepositorySearchDialog_ToggleSelectionButton);
-		toggleSelectionButton.setEnabled(false);
-		toggleSelectionButton.addSelectionListener(new SelectionAdapter() {
+		checkAllItem = new ToolItem(toolbar, SWT.PUSH);
+		checkAllItem
+				.setToolTipText(UIText.RepositorySearchDialog_CheckAllRepositories);
+		checkAllItem.setEnabled(false);
+		Image checkImage = UIIcons.CHECK_ALL.createImage();
+		UIUtils.hookDisposal(checkAllItem, checkImage);
+		checkAllItem.setImage(checkImage);
+		checkAllItem.addSelectionListener(new SelectionAdapter() {
 
-			@Override
 			public void widgetSelected(SelectionEvent e) {
-				for (TreeItem item : fTreeViewer.getTree().getItems())
-					fTreeViewer.setChecked(item.getData(), !item.getChecked());
+				fTreeViewer.setAllChecked(true);
 				enableOk();
 			}
+
+		});
+
+		uncheckAllItem = new ToolItem(toolbar, SWT.PUSH);
+		uncheckAllItem
+				.setToolTipText(UIText.RepositorySearchDialog_UncheckAllRepositories);
+		uncheckAllItem.setEnabled(false);
+		Image uncheckImage = UIIcons.UNCHECK_ALL.createImage();
+		UIUtils.hookDisposal(uncheckAllItem, uncheckImage);
+		uncheckAllItem.setImage(uncheckImage);
+		uncheckAllItem.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+				fTreeViewer.setAllChecked(false);
+				enableOk();
+			}
+
 		});
 
 		// TODO this isn't the most optimal way of handling this... ideally we
@@ -493,7 +513,8 @@ public class RepositorySearchDialog extends TitleAreaDialog {
 				setMessage(UIText.RepositorySearchDialog_NothingFoundMessage,
 						IMessageProvider.INFORMATION);
 
-			toggleSelectionButton.setEnabled(!validDirs.isEmpty());
+			checkAllItem.setEnabled(!validDirs.isEmpty());
+			uncheckAllItem.setEnabled(!validDirs.isEmpty());
 			fTree.clearFilter();
 			fTreeViewer.setInput(validDirs);
 			// this sets all to selected
