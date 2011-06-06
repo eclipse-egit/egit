@@ -72,6 +72,14 @@ public class GitModelCache extends GitModelObjectContainer {
 		GitModelBlob createFileModel(GitModelObjectContainer parent,
 				RevCommit commit, ObjectId repoId, ObjectId cacheId, IPath location)
 				throws IOException;
+
+		/**
+		 * Distinguish working tree from changed/staged tree
+		 *
+		 * @return {@code true} when this tree is working tree, {@code false}
+		 *         when it is a cached tree
+		 */
+		boolean isWorkingTree();
 	}
 
 	/**
@@ -93,6 +101,10 @@ public class GitModelCache extends GitModelObjectContainer {
 					throws IOException {
 				return new GitModelCacheFile(modelParent, commit, repoId,
 						cacheId, location);
+			}
+
+			public boolean isWorkingTree() {
+				return false;
 			}
 		});
 	}
