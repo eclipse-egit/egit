@@ -35,4 +35,9 @@ public class UntrackActionHandler extends RepositoryActionHandler {
 				UIText.Untrack_untrack, JobFamilies.UNTRACK);
 		return null;
 	}
+
+	@Override
+	public boolean isEnabled() {
+		return !selectionContainsLinkedResources();
+	}
 }

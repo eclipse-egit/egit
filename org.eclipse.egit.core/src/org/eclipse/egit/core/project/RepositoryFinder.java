@@ -100,6 +100,7 @@ public class RepositoryFinder {
 
 	private void find(final IProgressMonitor m, final IContainer c)
 			throws CoreException {
+		if (c.isLinked()) return; // Ignore linked folders
 		final IPath loc = c.getLocation();
 
 		m.beginTask("", 101);  //$NON-NLS-1$
@@ -114,7 +115,7 @@ public class RepositoryFinder {
 				if (ownCfg.isFile()) {
 					register(c, ownCfg.getParentFile());
 				}
-				if (c.isLinked() || c instanceof IProject) {
+				if (c instanceof IProject) {
 					File p = fsLoc.getParentFile();
 					while (p != null) {
 						// TODO is this the right location?

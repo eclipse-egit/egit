@@ -115,6 +115,8 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 	}
 
 	private void assumeValid(final IResource resource) throws CoreException {
+		if (resource.isLinked(IResource.CHECK_ANCESTORS))
+			return;
 		final IProject proj = resource.getProject();
 		final GitProjectData pd = GitProjectData.get(proj);
 		if (pd == null)

@@ -37,4 +37,9 @@ public class ShowBlameActionHandler extends RepositoryActionHandler {
 					UIText.ShowBlameHandler_JobName, null);
 		return null;
 	}
+
+	@Override
+	public boolean isEnabled() {
+		return !selectionContainsLinkedResources();
+	}
 }

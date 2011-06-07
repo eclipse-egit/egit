@@ -168,6 +168,8 @@ public class DiscardChangesOperation implements IEGitOperation {
 
 	private void discardChange(IResource res, Repository repository)
 			throws GitAPIException {
+		if (res.isLinked(IResource.CHECK_ANCESTORS))
+			return;
 		String resRelPath = RepositoryMapping.getMapping(res)
 				.getRepoRelativePath(res);
 		CheckoutCommand co = new Git(repository).checkout().addPath(resRelPath);

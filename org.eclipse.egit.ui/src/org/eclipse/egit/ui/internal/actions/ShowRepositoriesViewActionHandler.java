@@ -37,6 +37,6 @@ public class ShowRepositoriesViewActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return getSelection().size() == 1;
+		return getSelection().size() == 1 && !selectionContainsLinkedResources();
 	}
 }

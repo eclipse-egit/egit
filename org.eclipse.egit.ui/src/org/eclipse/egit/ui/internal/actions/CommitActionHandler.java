@@ -36,7 +36,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 	@Override
 	public boolean isEnabled() {
 		IProject[] projects = getProjectsForSelectedResources();
-		return getRepositoriesFor(projects).length == 1;
+		return getRepositoriesFor(projects).length == 1 && !selectionContainsLinkedResources();
 	}
 
 }

@@ -278,7 +278,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 			return;
 
 		// Cannot decorate linked resources
-		if (mapping.getRepoRelativePath(resource) == null)
+		if (mapping.getRepoRelativePath(resource) == null || resource.isLinked(IResource.CHECK_ANCESTORS))
 			return;
 
 		// Step 4: For project nodes only: create temporary decoratable resource
