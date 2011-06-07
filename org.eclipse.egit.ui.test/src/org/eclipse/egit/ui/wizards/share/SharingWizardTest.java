@@ -130,10 +130,15 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 				dirs.add(canonicalFile);
 				File workspacePath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile().getCanonicalFile();
 				File gitDirParent = canonicalFile.getParentFile();
-				if (!(gitDirParent.toString()+"/").startsWith(workspacePath.toString()+"/"))
-					if (!(gitDirParent.toString()+"/").startsWith(getTestDirectory().getCanonicalPath().toString()+"/"))
-						fail("Attempting cleanup of directory neither in workspace nor test directory" + canonicalFile);
-				new DisconnectProviderOperation(Collections.singleton(project)).execute(null);
+				if (!(gitDirParent.toString() + File.separator)
+						.startsWith(workspacePath.toString() + File.separator))
+					if (!(gitDirParent.toString() + File.separator)
+							.startsWith(getTestDirectory().getCanonicalPath()
+									.toString() + File.separator))
+						fail("Attempting cleanup of directory neither in workspace nor test directory"
+								+ canonicalFile);
+				new DisconnectProviderOperation(Collections.singleton(project))
+						.execute(null);
 			}
 			project.close(null);
 			project.delete(true, true, null);
