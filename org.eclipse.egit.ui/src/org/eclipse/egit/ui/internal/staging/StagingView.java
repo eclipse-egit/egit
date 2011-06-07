@@ -855,7 +855,7 @@ public class StagingView extends ViewPart {
 			}
 		};
 
-		job.setUser(true);
+		job.setUser(false);
 		job.setRule(ResourcesPlugin.getWorkspace().getRoot());
 
 		job.addJobChangeListener(new JobChangeAdapter() {
