@@ -17,6 +17,9 @@ public class ActionCommands {
 	/** Add to index action command id */
 	public static final String ADD_TO_INDEX = "org.eclipse.egit.ui.team.AddToIndex"; //$NON-NLS-1$
 
+	/** Remove from index action command id */
+	public static final String REMOVE_FROM_INDEX = "org.eclipse.egit.ui.team.RemoveFromIndex"; //$NON-NLS-1$
+
 	/** "Apply patch" action command id */
 	public static final String APPLY_PATCH = "org.eclipse.egit.ui.team.ApplyPatch"; //$NON-NLS-1$
 
