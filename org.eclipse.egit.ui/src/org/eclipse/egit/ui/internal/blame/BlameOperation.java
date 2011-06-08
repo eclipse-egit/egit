@@ -80,6 +80,14 @@ public class BlameOperation implements IEGitOperation {
 		BlameRevision previous = null;
 		for (int i = 0; i < lineCount; i++) {
 			RevCommit commit = result.getSourceCommit(i);
+			if (commit == null) {
+				// Unregister the current revision
+				if (previous != null) {
+					previous.register();
+					previous = null;
+				}
+				continue;
+			}
 			BlameRevision revision = revisions.get(commit);
 			if (revision == null) {
 				revision = new BlameRevision();
