@@ -4,7 +4,7 @@ Bundle-Name: Git Team Provider Core Test Plug-in
 Bundle-Vendor: Eclipse.org
 Bundle-SymbolicName: org.eclipse.egit.core.test
 Fragment-Host: org.eclipse.egit.core
-Bundle-Version: 1.0.0.201106071701-r
+Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.filesystem;bundle-version="[1.1.0,2.0.0)",
  org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
