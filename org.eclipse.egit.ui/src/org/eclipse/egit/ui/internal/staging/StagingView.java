@@ -855,7 +855,7 @@ public class StagingView extends ViewPart {
 			}
 		};
 
-		job.setUser(true);
+		job.setUser(false);
 		job.setRule(ResourcesPlugin.getWorkspace().getRoot());
 
 		job.addJobChangeListener(new JobChangeAdapter() {
@@ -985,8 +985,8 @@ public class StagingView extends ViewPart {
 	}
 
 	private void addHeadChangedWarning(String commitMessage) {
-		String message = UIText.StagingView_headCommitChanged + "\n\n" + //$NON-NLS-1$
-				commitMessage;
+		String message = UIText.StagingView_headCommitChanged + Text.DELIMITER
+				+ Text.DELIMITER + commitMessage;
 		commitMessageComponent.setCommitMessage(message);
 	}
 

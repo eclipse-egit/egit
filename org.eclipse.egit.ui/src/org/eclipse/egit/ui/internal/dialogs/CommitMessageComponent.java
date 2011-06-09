@@ -455,8 +455,7 @@ public class CommitMessageComponent {
 
 	private void getHeadCommitInfo() {
 		CommitInfo headCommitInfo = CommitHelper.getHeadCommitInfo(repository);
-		previousCommitMessage = headCommitInfo.getCommitMessage().replaceAll(
-				"\n", Text.DELIMITER); //$NON-NLS-1$;
+		previousCommitMessage = headCommitInfo.getCommitMessage();
 		previousAuthor = headCommitInfo.getAuthor();
 	}
 
@@ -533,7 +532,7 @@ public class CommitMessageComponent {
 					previousCommitMessage);
 			if (endOfChangeId < 0)
 				endOfChangeId = previousCommitMessage.length() - 1;
-			int sha1Offset = changeIdOffset + "\nChange-Id: I".length(); //$NON-NLS-1$
+			int sha1Offset = changeIdOffset + Text.DELIMITER.length() + "Change-Id: I".length(); //$NON-NLS-1$
 			try {
 				originalChangeId = ObjectId.fromString(previousCommitMessage
 						.substring(sha1Offset, endOfChangeId));
@@ -580,7 +579,6 @@ public class CommitMessageComponent {
 				int endOfChangeId = findNextEOL(changeIdOffset, text);
 				String cleanedText = text.substring(0, changeIdOffset)
 						+ text.substring(endOfChangeId);
-				cleanedText = cleanedText.replaceAll("\n", Text.DELIMITER); //$NON-NLS-1$
 				commitText.setText(cleanedText);
 			}
 		}
