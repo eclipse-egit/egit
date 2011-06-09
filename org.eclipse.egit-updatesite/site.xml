@@ -9,10 +9,10 @@
    <feature url="features/org.eclipse.egit.sources_0.0.0.qualifier.jar" id="org.eclipse.egit.source" version="0.0.0" patch="true">
       <category name="Eclipse Git Team Provider"/>
    </feature>
-   <feature url="features/org.eclipse.egit.mylyn_0.0.0.qualifier.jar" id="org.eclipse.egit.mylyn" version="0.0.0" patch="false">
+   <feature url="features/org.eclipse.egit.mylyn_0.0.0.qualifier.jar" id="org.eclipse.egit.mylyn" version="0.0.0">
       <category name="Eclipse Git Team Provider"/>
    </feature>
-    <feature url="features/org.eclipse.jgit_0.0.0.qualifier.jar" id="org.eclipse.jgit" version="0.0.0" patch="true">
+   <feature url="features/org.eclipse.jgit_0.0.0.qualifier.jar" id="org.eclipse.jgit" version="0.0.0" patch="true">
       <category name="JGit"/>
    </feature>
    <feature url="features/org.eclipse.jgit.sources_0.0.0.qualifier.jar" id="org.eclipse.jgit.source" version="0.0.0" patch="true">
