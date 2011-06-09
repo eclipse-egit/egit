@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.egit.mylyn.ui;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.0.201106090707-r
 Bundle-Activator: org.eclipse.egit.internal.mylyn.ui.EGitMylynUI
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.team.core,

@@ -4,7 +4,7 @@ Bundle-Name: Git Team Provider UI Test Fragment
 Bundle-Vendor: Eclipse.org
 Bundle-SymbolicName: org.eclipse.egit.ui.test
 Fragment-Host: org.eclipse.egit.ui
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.0.201106090707-r
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.apache.log4j;bundle-version="[1.0.0,2.0.0)",
