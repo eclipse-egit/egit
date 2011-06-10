@@ -8,7 +8,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test;
 
-import org.eclipse.swt.widgets.Text;
 
 public class CommitMessageUtil {
 
@@ -26,11 +25,11 @@ public class CommitMessageUtil {
 	}
 
 	private static int findNextEOL(int oldPos, String message) {
-		return message.indexOf(Text.DELIMITER, oldPos + 1);
+		return message.indexOf("\n", oldPos + 1);
 	}
 
 	private static int findOffsetOfChangeIdLine(String message) {
-		return message.indexOf("\nChange-Id: I"); //$NON-NLS-1$
+		return message.indexOf("\nChange-Id: I");
 	}
 
 }
