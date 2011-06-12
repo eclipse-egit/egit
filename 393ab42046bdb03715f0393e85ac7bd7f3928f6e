@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOKH///vY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/OpenInCommitViewerHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-06-11T09:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOKH///1A\u003d",
+      "revId": "393ab42046bdb03715f0393e85ac7bd7f3928f6e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
