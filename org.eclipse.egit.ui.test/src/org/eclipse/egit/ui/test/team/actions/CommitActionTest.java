@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.test.team.actions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 
@@ -23,18 +24,15 @@ import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.common.CommitDialogTester;
 import org.eclipse.egit.ui.common.CommitDialogTester.NoFilesToCommitPopup;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
-import org.eclipse.egit.ui.internal.commit.CommitHelper;
-import org.eclipse.egit.ui.internal.commit.CommitHelper.CommitInfo;
 import org.eclipse.egit.ui.test.CommitMessageUtil;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.RawParseUtils;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.junit.AfterClass;
@@ -56,6 +54,7 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 	public static void setup() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
 		Repository repo = lookupRepository(repositoryFile);
+		TestUtil.configureTestCommitterAsUser(repo);
 		// TODO delete the second project for the time being (.gitignore is
 		// currently not hiding the .project file from commit)
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ2);
@@ -110,19 +109,11 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 		commitDialogTester.setCommitter(TestUtil.TESTCOMMITTER);
 		commitDialogTester.setCommitMessage("The new commit");
 		commitDialogTester.commit();
-		checkHeadCommit(TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER, "The new commit");
+		TestUtil.checkHeadCommit(lookupRepository(repositoryFile),
+				TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER, "The new commit");
 		NoFilesToCommitPopup popup = CommitDialogTester
 				.openCommitDialogExpectNoFilesToCommit(PROJ1);
 		popup.cancelPopup();
-	}
-
-	private void checkHeadCommit(String author, String committer,
-			String message) throws Exception {
-		Repository repository = lookupRepository(repositoryFile);
-		CommitInfo commitInfo = CommitHelper.getHeadCommitInfo(repository);
-		assertEquals(author, commitInfo.getAuthor());
-		assertEquals(committer, commitInfo.getCommitter());
-		assertEquals(message, commitInfo.getCommitMessage());
 	}
 
 	@Test
@@ -156,7 +147,7 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 		Repository repository = lookupRepository(repositoryFile);
 		RevCommit oldHeadCommit = TestUtil.getHeadCommit(repository);
 		commitOneFileChange("Again another Change");
-		configureTestCommitterAsUser(repository);
+		ObjectId headCommitId = TestUtil.getHeadCommit(repository).getId();
 		NoFilesToCommitPopup noFilesToCommitPopup = CommitDialogTester
 				.openCommitDialogExpectNoFilesToCommit(PROJ1);
 		CommitDialogTester commitDialogTester = noFilesToCommitPopup.confirmPopup();
@@ -165,8 +156,13 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 		assertTrue(commitDialogTester.getAmend());
 		assertTrue(commitDialogTester.getSignedOff());
 		assertTrue(commitDialogTester.getInsertChangeId());
+		// change commit message to get a different SHA1 for the commit
+		commitDialogTester.setCommitMessage("Changed "
+				+ commitDialogTester.getCommitMessage());
 		commitDialogTester.commit();
 		RevCommit headCommit = TestUtil.getHeadCommit(repository);
+		if(headCommitId.equals(headCommit.getId()))
+			fail("There is no new commit");
 		assertEquals(oldHeadCommit, headCommit.getParent(0));
 	}
 
@@ -195,9 +191,9 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 		RevCommit oldHeadCommit = TestUtil.getHeadCommit(repository);
 		commitOneFileChange("Yet another Change");
 		RevCommit headCommit = TestUtil.getHeadCommit(repository);
+		ObjectId headCommitId = headCommit.getId();
 		String changeId = CommitMessageUtil.extractChangeId(headCommit
-				.getFullMessage().replaceAll("\n", Text.DELIMITER));
-		configureTestCommitterAsUser(repository);
+				.getFullMessage());
 		setTestFileContent("Changes over changes");
 		CommitDialogTester commitDialogTester = CommitDialogTester
 				.openCommitDialog(PROJ1);
@@ -209,16 +205,10 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 		assertTrue(commitDialogTester.getInsertChangeId());
 		commitDialogTester.commit();
 		headCommit = TestUtil.getHeadCommit(repository);
+		if(headCommitId.equals(headCommit.getId()))
+			fail("There is no new commit");
 		assertEquals(oldHeadCommit, headCommit.getParent(0));
 		assertTrue(headCommit.getFullMessage().indexOf(changeId) > 0);
-	}
-
-	void configureTestCommitterAsUser(Repository repository) {
-		StoredConfig config = repository.getConfig();
-		config.setString(ConfigConstants.CONFIG_USER_SECTION, null,
-				ConfigConstants.CONFIG_KEY_NAME, TestUtil.TESTCOMMITTER_NAME);
-		config.setString(ConfigConstants.CONFIG_USER_SECTION, null,
-				ConfigConstants.CONFIG_KEY_EMAIL, TestUtil.TESTCOMMITTER_EMAIL);
 	}
 
 }
