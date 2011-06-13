@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3///v0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-06-06T10:47:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJ3///ww\u003d",
+      "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3///w4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2011-06-06T09:04:56Z",
       "side": 1,
       "message": "style nit: trailing whitespace",
+      "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///vw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-06-06T10:47:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJ3///w4\u003d",
       "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3///vs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-06-06T10:47:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJ3///ws\u003d",
+      "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3///yg\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2011-06-05T22:48:12Z",
       "side": 1,
       "message": "Push button should be headline style?",
+      "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///vo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-06-06T10:47:07Z",
+      "side": 1,
+      "message": "No, it\u0027s a radio \"button\" (see source). Should we rename the label?",
+      "parentUuid": "AABOJ3///yg\u003d",
       "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3///vk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-06-06T10:47:07Z",
+      "side": 1,
+      "message": "No, it\u0027s a radio \"button\" (see source).",
+      "parentUuid": "AABOJ3///yY\u003d",
+      "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3///yU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2011-06-05T22:48:12Z",
       "side": 1,
       "message": "Push button should be headline style?",
+      "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///vg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-06-06T10:47:07Z",
+      "side": 1,
+      "message": "Radio button.",
+      "parentUuid": "AABOJ3///yU\u003d",
       "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3///vc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-06-06T10:47:07Z",
+      "side": 1,
+      "message": "Radio button.",
+      "parentUuid": "AABOJ3///yQ\u003d",
+      "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3///yM\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2011-06-05T22:48:12Z",
       "side": 1,
       "message": "Push button should be headline style?",
+      "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///vY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-06-06T10:47:07Z",
+      "side": 1,
+      "message": "Radio button.",
+      "parentUuid": "AABOJ3///yM\u003d",
       "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
