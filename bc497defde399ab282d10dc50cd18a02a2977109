@@ -50,6 +50,91 @@
       "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///yg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-06-05T22:48:12Z",
+      "side": 1,
+      "message": "Push button should be headline style?",
+      "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///yY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-06-05T22:48:12Z",
+      "side": 1,
+      "message": "Push button should be headline style?",
+      "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///yU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-06-05T22:48:12Z",
+      "side": 1,
+      "message": "Push button should be headline style?",
+      "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///yQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-06-05T22:48:12Z",
+      "side": 1,
+      "message": "Push button should be headline style?",
+      "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///yM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-06-05T22:48:12Z",
+      "side": 1,
+      "message": "Push button should be headline style?",
+      "revId": "bc497defde399ab282d10dc50cd18a02a2977109",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
