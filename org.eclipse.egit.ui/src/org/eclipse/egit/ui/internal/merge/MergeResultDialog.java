@@ -226,7 +226,7 @@ public class MergeResultDialog extends Dialog {
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText(UIText.MergeResultDialog_mergeResult);
+		newShell.setText(UIText.MergeAction_MergeResultTitle);
 		newShell.addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				if (objectReader != null)
