@@ -1204,6 +1204,14 @@
             name="%TreeCompareView.name"
             restorable="false">
       </view>
+      <view
+            allowMultiple="false"
+            category="org.eclipse.egit.ui.GitCategory"
+            class="org.eclipse.egit.ui.internal.reflog.ReflogView"
+            icon="icons/eview16/staging.png"
+            id="org.eclipse.egit.ui.ReflogView"
+            name="Git Reflog">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
