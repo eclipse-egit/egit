@@ -21,7 +21,9 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.IndexDiffFilter;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
 
 /**
  * Representation of working tree in EGit ChangeSet model
@@ -29,13 +31,25 @@ import org.eclipse.jgit.treewalk.filter.IndexDiffFilter;
 public class GitModelWorkingTree extends GitModelCache {
 
 	/**
+	 * Constructor used by JUnits
+	 *
 	 * @param parent
 	 *            parent of working tree instance
 	 * @throws IOException
 	 */
-	public GitModelWorkingTree(GitModelObject parent)
+	GitModelWorkingTree(GitModelObject parent) throws IOException {
+		this(parent, null);
+	}
+
+	/**
+	 * @param parent
+	 *            parent of working tree instance
+	 * @param pathFilter synchronize configuration
+	 * @throws IOException
+	 */
+	public GitModelWorkingTree(GitModelObject parent, TreeFilter pathFilter)
 			throws IOException {
-		super(parent, null, new FileModelFactory() {
+		super(parent, null, pathFilter, new FileModelFactory() {
 			public GitModelBlob createFileModel(
 					GitModelObjectContainer modelParent, RevCommit modelCommit,
 					ObjectId repoId, ObjectId cacheId, IPath location)
@@ -90,7 +104,11 @@ public class GitModelWorkingTree extends GitModelCache {
 				ResourcesPlugin.getWorkspace().getRoot()));
 		int dirCacheIteratorNth = tw.addTree(new DirCacheIterator(repo.readDirCache()));
 		IndexDiffFilter idf = new IndexDiffFilter(dirCacheIteratorNth, ftIndex, true);
-		tw.setFilter(idf);
+
+		if (pathFilter != null)
+			tw.setFilter(AndTreeFilter.create(pathFilter, idf));
+		else
+			tw.setFilter(idf);
 
 		return tw;
 	}

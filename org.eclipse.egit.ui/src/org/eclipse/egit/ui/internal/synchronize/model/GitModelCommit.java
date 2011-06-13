@@ -22,6 +22,7 @@ import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.team.ui.mapping.ISynchronizationCompareInput;
 
 /**
@@ -34,6 +35,7 @@ public class GitModelCommit extends GitModelObjectContainer implements
 	 * Common ancestor commit for wrapped commit object
 	 */
 	protected final RevCommit ancestorCommit;
+	private final TreeFilter pathFilter;
 
 	/**
 	 * @param parent
@@ -43,11 +45,13 @@ public class GitModelCommit extends GitModelObjectContainer implements
 	 *            instance of commit that will be associated with this model
 	 *            object
 	 * @param direction
+	 * @param pathFilter
 	 * @throws IOException
 	 */
 	public GitModelCommit(GitModelRepository parent, RevCommit commit,
-			int direction) throws IOException {
+			int direction, TreeFilter pathFilter) throws IOException {
 		super(parent, commit, direction);
+		this.pathFilter = pathFilter;
 
 		this.ancestorCommit = calculateAncestor(commit);
 	}
@@ -72,7 +76,21 @@ public class GitModelCommit extends GitModelObjectContainer implements
 			RevCommit ancestorCommit, int direction) throws IOException {
 		super(parent, commit, direction);
 
+		pathFilter = null;
 		this.ancestorCommit = ancestorCommit;
+	}
+
+	/**
+	 * Constructor used by JUnits
+	 *
+	 * @param parent
+	 * @param commit
+	 * @param direction
+	 * @throws IOException
+	 */
+	GitModelCommit(GitModelRepository parent, RevCommit commit,
+			int direction) throws IOException {
+		this(parent, commit, direction, null);
 	}
 
 	@Override
@@ -136,6 +154,9 @@ public class GitModelCommit extends GitModelObjectContainer implements
 	private RevCommit calculateAncestor(RevCommit actual) throws IOException {
 		RevWalk rw = new RevWalk(getRepository());
 		rw.setRevFilter(RevFilter.MERGE_BASE);
+
+		if (pathFilter != null)
+			rw.setTreeFilter(pathFilter);
 
 		for (RevCommit parent : actual.getParents()) {
 			RevCommit parentCommit = rw.parseCommit(parent.getId());
