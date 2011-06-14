@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOKH///r8\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/StagingViewTester.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-06-12T21:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOKH///sY\u003d",
+      "revId": "ea07a0e35f4345e5269cd9a0b0075819afb23915",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
