@@ -217,6 +217,14 @@ public class CommitHelper {
 	}
 
 	/**
+	 * @return true if amending is allowed
+	 */
+	public boolean amendAllowed() {
+		return previousCommit != null && !isMergedResolved()
+				&& !isCherryPickResolved();
+	}
+
+	/**
 	 * @param repository
 	 * @return info related to the HEAD commit
 	 */
