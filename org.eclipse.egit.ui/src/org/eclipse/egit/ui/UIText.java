@@ -2821,9 +2821,6 @@ public class UIText extends NLS {
 	public static String MergeAction_MergeCanceledTitle;
 
 	/** */
-	public static String MergeAction_MergeResultTitle;
-
-	/** */
 	public static String MergeAction_WrongRepositoryState;
 
 	/** */
