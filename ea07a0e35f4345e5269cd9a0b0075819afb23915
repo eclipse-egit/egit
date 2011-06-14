@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOKH///sY\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/StagingViewTester.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-06-12T14:48:46Z",
+      "side": 1,
+      "message": "is this commented line really needed?",
+      "revId": "ea07a0e35f4345e5269cd9a0b0075819afb23915",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOKH///r8\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/StagingViewTester.java",
         "patchSetId": 6
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABOKH///sY\u003d",
+      "revId": "ea07a0e35f4345e5269cd9a0b0075819afb23915",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOKH///sU\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/CommitActionTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-06-12T14:48:46Z",
+      "side": 1,
+      "message": "Is this change somehow connected with this commit?",
       "revId": "ea07a0e35f4345e5269cd9a0b0075819afb23915",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
