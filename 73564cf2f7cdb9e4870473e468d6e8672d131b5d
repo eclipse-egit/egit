@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOKH///wM\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/CommitActionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-06-11T22:57:29Z",
+      "side": 1,
+      "message": "these are pure formatting changes, do we need that ?",
+      "revId": "73564cf2f7cdb9e4870473e468d6e8672d131b5d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOKH///wI\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/CommitActionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-06-11T22:57:29Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "73564cf2f7cdb9e4870473e468d6e8672d131b5d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOKH///wE\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/CommitActionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-06-11T22:57:29Z",
+      "side": 1,
+      "message": "typo in method name :\n\ns/testLauched/testLaunched/",
+      "revId": "73564cf2f7cdb9e4870473e468d6e8672d131b5d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOKH///uo\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/CommitActionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-06-11T22:57:29Z",
+      "side": 1,
+      "message": "test is failing on Mac as some parts use \\n and other rely on Text.DELIMITER as line ending, instead always use the latter one like in CommitMessageComponent",
+      "revId": "73564cf2f7cdb9e4870473e468d6e8672d131b5d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
