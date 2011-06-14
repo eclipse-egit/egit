@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOKH///s4\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/stagview/StagingViewTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-06-12T09:04:31Z",
+      "side": 1,
+      "message": "changeId should be platform independent here. Patch Set 4 is working on my iMac.",
+      "revId": "8248d20c9ffb6ce8d951a410c112381198c3250b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
