@@ -242,10 +242,12 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		// asserts for Git Change Set model
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		syncViewTree.expandNode(UIText.GitModelWorkingTree_workingTree);
-		assertEquals(1, syncViewTree.getAllItems().length);
+		assertEquals(2, syncViewTree.getAllItems().length);
 		SWTBotTreeItem proj1Node = syncViewTree.getAllItems()[0];
 		proj1Node.getItems()[0].expand();
 		assertEquals(1, proj1Node.getItems()[0].getItems().length);
+		assertEquals(".gitignore",
+				proj1Node.getItems()[0].getItems()[0].getText());
 	}
 
 	@Test public void shouldShowNonWorkspaceFileInSynchronization()
@@ -266,7 +268,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		SWTBotTreeItem workingTree = syncViewTree
 				.expandNode(UIText.GitModelWorkingTree_workingTree);
-		assertEquals(1, syncViewTree.getAllItems().length);
+		assertEquals(2, syncViewTree.getAllItems().length);
 		assertEquals(1, workingTree.getNodes(name).size());
 	}
 
@@ -290,7 +292,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		SWTBotTreeItem workingTree = syncViewTree
 				.expandNode(UIText.GitModelWorkingTree_workingTree);
-		assertEquals(1, syncViewTree.getAllItems().length);
+		assertEquals(2, syncViewTree.getAllItems().length);
 		workingTree.expand().getNode(name).doubleClick();
 
 		SWTBotEditor editor = bot.editorByTitle(name);
