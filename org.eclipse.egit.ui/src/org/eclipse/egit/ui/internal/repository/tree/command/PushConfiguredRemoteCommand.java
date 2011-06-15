@@ -59,7 +59,7 @@ public class PushConfiguredRemoteCommand extends
 		if (evaluationContext instanceof IEvaluationContext) {
 			IEvaluationContext ctx = (IEvaluationContext) evaluationContext;
 			Object selection = ctx
-					.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
+					.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
 			if (selection instanceof IStructuredSelection) {
 				IStructuredSelection sel = (IStructuredSelection) selection;
 				if (sel.getFirstElement() instanceof RepositoryTreeNode) {
