@@ -20,7 +20,6 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
-import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -32,6 +31,7 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.ui.PlatformUI;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -96,12 +96,10 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		repository.getConfig().setString("remote", "origin", "push",
 				"refs/heads/*:refs/remotes/origin/*");
 		repository.getConfig().save();
-
+		joinRepoViewRefresh();
 		myRepoViewUtil.getRemotesItem(tree, clonedRepositoryFile).expand().getNode(
-				"origin").expand().getNode(1).select();
-
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("SimplePushCommand"));
+				"origin").expand().getNode(1).contextMenu(myUtil
+						.getPluginLocalizedValue("SimplePushCommand")).click();
 
 		String destinationString = clonedRepositoryFile.getParentFile()
 				.getName()
@@ -124,11 +122,10 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		confirmed.close();
 		assertTrue("New branch expected", newBranch);
 		// second time: expect up to date
+		joinRepoViewRefresh();
 		myRepoViewUtil.getRemotesItem(tree, clonedRepositoryFile).expand().getNode(
-				"origin").expand().getNode(1).select();
-
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("SimplePushCommand"));
+				"origin").expand().getNode(1).contextMenu(myUtil
+						.getPluginLocalizedValue("SimplePushCommand")).click();
 
 		confirmed = bot.shell(dialogTitle);
 		table = confirmed.bot().table();
@@ -148,11 +145,10 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		objectIdBefore = objectIdBefore.substring(0, 7);
 		touchAndSubmit(null);
 
+		joinRepoViewRefresh();
 		myRepoViewUtil.getRemotesItem(tree, clonedRepositoryFile).expand().getNode(
-				"origin").expand().getNode(1).select();
-
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("SimplePushCommand"));
+				"origin").expand().getNode(1).contextMenu(myUtil
+						.getPluginLocalizedValue("SimplePushCommand")).click();
 
 		confirmed = bot.shell(dialogTitle);
 		table = confirmed.bot().table();
@@ -168,6 +164,15 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		assertTrue("New branch expected", newBranch);
 	}
 
+	private void joinRepoViewRefresh() throws Exception {
+		TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+			public void run() {
+				// empty
+			}
+		});
+	}
+	
 	@Test
 	public void testFetchFromOrigin() throws Exception {
 
@@ -189,11 +194,11 @@ public class GitRepositoriesViewFetchAndPushTest extends
 				+ " - " + "origin";
 		String dialogTitle = NLS.bind(UIText.FetchResultDialog_title,
 				destinationString);
-
+		
+		joinRepoViewRefresh();
 		myRepoViewUtil.getRemotesItem(tree, clonedRepositoryFile).expand().getNode(
-				"origin").expand().getNode(0).select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("SimpleFetchCommand"));
+				"origin").expand().getNode(0).contextMenu(myUtil
+						.getPluginLocalizedValue("SimpleFetchCommand")).click();
 
 		SWTBotShell confirm = bot.shell(dialogTitle);
 		assertEquals("Wrong result table row count", 0, confirm.bot().table()
@@ -220,10 +225,10 @@ public class GitRepositoriesViewFetchAndPushTest extends
 
 		refreshAndWait();
 
+		joinRepoViewRefresh();
 		myRepoViewUtil.getRemotesItem(tree, clonedRepositoryFile).expand().getNode(
-				"origin").expand().getNode(0).select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("SimpleFetchCommand"));
+				"origin").expand().getNode(0).contextMenu(myUtil
+						.getPluginLocalizedValue("SimpleFetchCommand")).click();
 
 		TestUtil.joinJobs(JobFamilies.FETCH);
 		confirm = bot.shell(dialogTitle);
@@ -236,11 +241,11 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		}
 		assertTrue(found);
 		confirm.close();
-
+		
+		joinRepoViewRefresh();
 		myRepoViewUtil.getRemotesItem(tree, clonedRepositoryFile).expand().getNode(
-				"origin").expand().getNode(0).select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("SimpleFetchCommand"));
+				"origin").expand().getNode(0).contextMenu(myUtil
+						.getPluginLocalizedValue("SimpleFetchCommand")).click();
 
 		confirm = bot.shell(dialogTitle);
 		assertEquals("Wrong result table row count", 0, confirm.bot().table()
