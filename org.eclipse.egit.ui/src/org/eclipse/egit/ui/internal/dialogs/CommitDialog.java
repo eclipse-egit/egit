@@ -814,12 +814,15 @@ public class CommitDialog extends TitleAreaDialog {
 			amendingItem.setEnabled(false);
 			showUntrackedItem.setSelection(false);
 			showUntrackedItem.setEnabled(false);
+			checkAllItem.setEnabled(false);
+			uncheckAllItem.setEnabled(false);
 
 			filesViewer.addCheckStateListener(new ICheckStateListener() {
 
 				public void checkStateChanged(CheckStateChangedEvent event) {
 					if (!event.getChecked())
 						filesViewer.setAllChecked(true);
+					updateFileSectionText();
 				}
 			});
 			filesViewer.setAllGrayed(true);
