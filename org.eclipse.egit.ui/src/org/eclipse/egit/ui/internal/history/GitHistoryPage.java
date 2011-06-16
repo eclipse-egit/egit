@@ -69,6 +69,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
+import org.eclipse.jgit.revwalk.FollowFilter;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
 import org.eclipse.jgit.revwalk.RevObject;
@@ -224,6 +225,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 		IWorkbenchAction showAllBranchesAction;
 
+		BooleanPrefAction followRenamesAction;
+
 		IWorkbenchAction reuseCompareEditorAction;
 
 		ShowFilterAction showAllRepoVersionsAction;
@@ -254,6 +257,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			createShowRelativeDateAction();
 			createWrapCommentAction();
 			createFillCommentAction();
+			createFollowRenamesAction();
 
 			wrapCommentAction.setEnabled(showCommentAction.isChecked());
 			fillCommentAction.setEnabled(showCommentAction.isChecked());
@@ -356,6 +360,21 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			showAllBranchesAction
 					.setToolTipText(UIText.GitHistoryPage_showAllBranches);
 			actionsToDispose.add(showAllBranchesAction);
+		}
+
+		private void createFollowRenamesAction() {
+			followRenamesAction = new BooleanPrefAction(
+					UIPreferences.RESOURCEHISTORY_FOLLOW_RENAMES,
+					UIText.GitHistoryPage_FollowRenames) {
+				@Override
+				void apply(boolean follow) {
+					// TODO: refreshing is a bit too much, just completing the
+					// walk should be sufficient
+					historyPage.refresh();
+				}
+			};
+			followRenamesAction.apply(followRenamesAction.isChecked());
+			actionsToDispose.add(followRenamesAction);
 		}
 
 		private void createShowCommentAction() {
@@ -538,6 +557,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private Repository currentRepo;
 
 	private boolean currentShowAllBranches;
+
+	private boolean currentFollowRenames;
 
 	/**
 	 * Highlight flag that can be applied to commits to make them stand out.
@@ -830,6 +851,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				UIText.GitHistoryPage_ShowSubMenuLabel);
 		viewMenuMgr.add(showSubMenuMgr);
 		showSubMenuMgr.add(actions.showAllBranchesAction);
+		showSubMenuMgr.add(actions.followRenamesAction);
+		showSubMenuMgr.add(new Separator());
 		showSubMenuMgr.add(actions.findAction);
 		showSubMenuMgr.add(actions.showFilesAction);
 		showSubMenuMgr.add(actions.showCommentAction);
@@ -1435,13 +1458,18 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		currentShowAllBranches = store
 			.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES);
 
+		boolean followRenamesChanged = currentFollowRenames != store
+			.getBoolean(UIPreferences.RESOURCEHISTORY_FOLLOW_RENAMES);
+		currentFollowRenames = store
+			.getBoolean(UIPreferences.RESOURCEHISTORY_FOLLOW_RENAMES);
+
 		if (!db.equals(currentRepo)) {
 			repoChanged = true;
 			currentRepo = db;
 		}
 
 		return pathChanged
-			|| currentWalk == null || headChanged || repoChanged || allBranchesChanged;
+			|| currentWalk == null || headChanged || repoChanged || allBranchesChanged || followRenamesChanged;
 	}
 
 	private AnyObjectId resolveHead(Repository db, boolean acceptNull) {
@@ -1589,7 +1617,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private TreeWalk createFileWalker(Repository db, List<FilterPath> paths) {
 		final TreeWalk fileWalker = new TreeWalk(db);
 		fileWalker.setRecursive(true);
-		if (paths.size() > 0) {
+		if (store.getBoolean(UIPreferences.RESOURCEHISTORY_FOLLOW_RENAMES)
+				&& paths.size() == 1
+				&& paths.get(0).isRegularFile()) {
+			pathFilters = paths;
+			currentWalk.setTreeFilter(FollowFilter.create(paths.get(0).getPath()));
+		} else if (paths.size() > 0) {
 			pathFilters = paths;
 			List<String> stringPaths = new ArrayList<String>(paths.size());
 			for (FilterPath p : paths) {
