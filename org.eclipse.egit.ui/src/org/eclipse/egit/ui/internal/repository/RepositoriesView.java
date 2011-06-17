@@ -440,6 +440,8 @@ public class RepositoriesView extends CommonNavigator {
 
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
+						if (tv.getTree().isDisposed())
+							return;
 						long start = 0;
 						boolean traceActive = GitTraceLocation.REPOSITORIESVIEW
 								.isActive();
