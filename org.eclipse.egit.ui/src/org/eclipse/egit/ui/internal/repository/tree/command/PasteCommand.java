@@ -46,9 +46,12 @@ public class PasteCommand extends
 			clip = new Clipboard(getShell(event).getDisplay());
 			String content = (String) clip.getContents(TextTransfer
 					.getInstance());
+
 			if (content == null) {
 				errorMessage = UIText.RepositoriesView_NothingToPasteMessage;
 				return null;
+			} else if (!content.endsWith(".git")) { //$NON-NLS-1$
+				content = new StringBuffer(content).append("/.git").toString(); //$NON-NLS-1$
 			}
 
 			File file = new File(content);

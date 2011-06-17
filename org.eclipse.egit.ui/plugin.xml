@@ -2337,6 +2337,11 @@
                label="%RepoViewPastePath.label"
                style="push">
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewPasteClone"
+               label="%RepoViewPasteRemotePath.label"
+               style="push">
+         </command>
          <separator
                name="File-1">
          </separator>
@@ -2836,6 +2841,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.PasteCommand"
             id="org.eclipse.egit.ui.RepositoriesViewPaste"
             name="%PastePathCommand">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.CloneCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewPasteClone"
+            name="%PastePathCommandClone">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
