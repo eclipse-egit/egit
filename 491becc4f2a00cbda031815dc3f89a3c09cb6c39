@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "AABOKH///Y8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-06-16T22:53:15Z",
+      "side": 1,
+      "message": "Yes, there should be a parameter here. Done.",
+      "parentUuid": "AABOKH///ZQ\u003d",
+      "revId": "491becc4f2a00cbda031815dc3f89a3c09cb6c39",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOKH///Zg\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/variables/GitVariableResolver.java",
         "patchSetId": 2
