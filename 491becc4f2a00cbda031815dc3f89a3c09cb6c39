@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOKH///Yw\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-06-16T22:53:15Z",
+      "side": 1,
+      "message": "Done. \nThe index_path was an idea that sounded better at the time. Dropped.",
+      "parentUuid": "AABOKH///ZM\u003d",
+      "revId": "491becc4f2a00cbda031815dc3f89a3c09cb6c39",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOKH///ZE\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -87,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "AABOKH///Y4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/variables/GitVariableResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-06-16T22:53:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOKH///Zg\u003d",
+      "revId": "491becc4f2a00cbda031815dc3f89a3c09cb6c39",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOKH///ZU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/variables/GitVariableResolver.java",
         "patchSetId": 2
@@ -98,6 +134,24 @@
       "writtenOn": "2011-06-16T22:08:38Z",
       "side": 1,
       "message": "typo : s/selectd/selected resource/",
+      "revId": "491becc4f2a00cbda031815dc3f89a3c09cb6c39",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOKH///Y0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/variables/GitVariableResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-06-16T22:53:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOKH///ZU\u003d",
       "revId": "491becc4f2a00cbda031815dc3f89a3c09cb6c39",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
