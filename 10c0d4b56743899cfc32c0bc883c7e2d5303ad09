@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOKH///gg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitRepositoryProviderType.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-06-14T20:02:02Z",
+      "side": 1,
+      "message": "style nit: missing tab",
+      "revId": "10c0d4b56743899cfc32c0bc883c7e2d5303ad09",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
