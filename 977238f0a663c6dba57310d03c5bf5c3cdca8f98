@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOKH///g0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitRepositoryProviderType.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-06-14T19:25:41Z",
+      "side": 1,
+      "message": "GitResourceVariantTreeSubscriber relay on data that are added into GitSynchronizeDateSet. Such data contains repository, destination and source rev\u0027s using with we can determinate differences in particular file.\n\nPassing empty GitSynchronizeDataSet will cause NPE in members() and getSyncInfo methods.\n\nIn case of git it is quite tricky to obtain subscriber because we don\u0027t have one main repository. Of course we can consider that in this case we\u0027ll be always comparing HEAD against HEAD (or origin/HEAD or maybe origin/master (?))\n\nI\u0027m not sure what the default behavior should be here :|",
+      "revId": "977238f0a663c6dba57310d03c5bf5c3cdca8f98",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
