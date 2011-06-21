@@ -198,6 +198,18 @@ public class UIText extends NLS {
 	/** */
 	public static String EGitCredentialsProvider_errorReadingCredentials;
 
+	/**
+	 */
+	public static String EGitUI_ImportProjectsNotHandled;
+
+	/**
+	 */
+	public static String EGitUI_ImportProjectsNotEnabled;
+
+	/**
+	 */
+	public static String EGitUI_ImportProjectsNotDefined;
+
 	/** */
 	public static String EgitUiUtils_CouldNotOpenEditorMessage;
 
