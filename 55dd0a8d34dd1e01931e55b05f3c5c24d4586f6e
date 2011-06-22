@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAH///7s\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-06-22T00:36:05Z",
+      "side": 1,
+      "message": "Please add a signed-off-by line and reference the bug using the format \"Bug: 123456\"",
+      "revId": "55dd0a8d34dd1e01931e55b05f3c5c24d4586f6e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAH///74\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/EGitUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-06-22T00:36:05Z",
+      "side": 1,
+      "message": "EGit doesn\u0027t use author tags",
+      "revId": "55dd0a8d34dd1e01931e55b05f3c5c24d4586f6e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAH///70\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/EGitUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-06-22T00:36:05Z",
+      "side": 1,
+      "message": "style-nit: curlies aren\u0027t needed for single-line statements",
+      "revId": "55dd0a8d34dd1e01931e55b05f3c5c24d4586f6e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAH///7w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/EGitUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-06-22T00:36:05Z",
+      "side": 1,
+      "message": "Please format these catch statements such as spaces after commas.",
+      "revId": "55dd0a8d34dd1e01931e55b05f3c5c24d4586f6e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAH///78\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-06-22T00:36:05Z",
+      "side": 1,
+      "message": "Please use single-line comment ( /** */ )",
+      "revId": "55dd0a8d34dd1e01931e55b05f3c5c24d4586f6e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
