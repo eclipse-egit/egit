@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAH///6A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/EGitUI.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2011-06-22T03:13:49Z",
+      "side": 1,
+      "message": "I see your point re: class naming.  Do we anticipate lots of project-related API?  I\u0027m ok with UIProjectUtils if so.  If not we might end up with a class with only one or two methods.",
+      "parentUuid": "AABOAH///6M\u003d",
+      "revId": "1ece6e3db1432beb245addf242855dbc8e187b10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
