@@ -3316,7 +3316,7 @@
    <extension point="org.eclipse.ui.navigator.viewer">
        <viewer viewerId="org.eclipse.egit.ui.compareSynchronization">
            <popupMenu
-                allowsPlatformContributions="true"
+                allowsPlatformContributions="false"
                 id="org.eclipse.egit.ui.compareSynchronizationMenu">
              <insertionPoint name="gitActions" separator="true"/>
              <insertionPoint name="file"/>
