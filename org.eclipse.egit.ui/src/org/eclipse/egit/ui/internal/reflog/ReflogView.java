@@ -39,6 +39,9 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.jgit.events.ListenerHandle;
+import org.eclipse.jgit.events.RefsChangedEvent;
+import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -50,6 +53,7 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -67,7 +71,7 @@ import org.eclipse.ui.part.ViewPart;
  * A view that shows reflog entries.  The View includes a quick filter that searches
  * on both the commit hashes and commit messages.
  */
-public class ReflogView extends ViewPart {
+public class ReflogView extends ViewPart implements RefsChangedListener {
 
 	/**
 	 * View id
@@ -79,6 +83,8 @@ public class ReflogView extends ViewPart {
 	private TreeViewer refLogTableTreeViewer;
 
 	private ISelectionListener selectionChangedListener;
+
+	private ListenerHandle addRefsChangedListener;
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -249,6 +255,7 @@ public class ReflogView extends ViewPart {
 		service.addPostSelectionListener(selectionChangedListener);
 
 		getSite().setSelectionProvider(refLogTableTreeViewer);
+		addRefsChangedListener = Repository.getGlobalListenerList().addRefsChangedListener(this);
 	}
 
 	@Override
@@ -262,6 +269,8 @@ public class ReflogView extends ViewPart {
 		ISelectionService service = (ISelectionService) getSite().getService(
 				ISelectionService.class);
 		service.removePostSelectionListener(selectionChangedListener);
+		if ( addRefsChangedListener != null)
+			addRefsChangedListener.remove();
 	}
 
 	private void reactOnSelection(ISelection selection) {
@@ -274,7 +283,8 @@ public class ReflogView extends ViewPart {
 				IResource resource = (IResource) ssel.getFirstElement();
 				RepositoryMapping mapping = RepositoryMapping
 						.getMapping(resource.getProject());
-				repository = mapping.getRepository();
+				if ( mapping != null )
+					repository = mapping.getRepository();
 			}
 			if (ssel.getFirstElement() instanceof IAdaptable) {
 				IResource adapted = (IResource) ((IAdaptable) ssel
@@ -282,9 +292,8 @@ public class ReflogView extends ViewPart {
 				if (adapted != null) {
 					RepositoryMapping mapping = RepositoryMapping
 							.getMapping(adapted);
-					if (mapping != null) {
+					if (mapping != null)
 						repository = mapping.getRepository();
-					}
 				}
 			} else if (ssel.getFirstElement() instanceof RepositoryTreeNode) {
 				RepositoryTreeNode repoNode = (RepositoryTreeNode) ssel
@@ -318,6 +327,14 @@ public class ReflogView extends ViewPart {
 			return repoName + '|' + state.getDescription();
 		else
 			return repoName;
+	}
+
+	public void onRefsChanged(RefsChangedEvent event) {
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				ReflogView.this.refLogTableTreeViewer.refresh();
+			}
+		});
 	}
 
 }
