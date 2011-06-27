@@ -7,6 +7,7 @@
  *
  * Contributors:
  *   Chris Aniszczyk <caniszczyk@gmail.com> - initial implementation
+ *   EclipseSource - Filtered Viewer
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.reflog;
 
@@ -24,7 +25,7 @@ import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
@@ -36,8 +37,8 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -47,20 +48,24 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.dialogs.FilteredTree;
+import org.eclipse.ui.dialogs.PatternFilter;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ViewPart;
 
 /**
- * A view that shows reflog entries
+ * A view that shows reflog entries.  The View includes a quick filter that searches
+ * on both the commit hashes and commit messages.
  */
 public class ReflogView extends ViewPart {
 
@@ -71,7 +76,7 @@ public class ReflogView extends ViewPart {
 
 	private Form form;
 
-	private TableViewer reflogTableViewer;
+	private TreeViewer refLogTableTreeViewer;
 
 	private ISelectionListener selectionChangedListener;
 
@@ -81,7 +86,6 @@ public class ReflogView extends ViewPart {
 
 		final FormToolkit toolkit = new FormToolkit(parent.getDisplay());
 		parent.addDisposeListener(new DisposeListener() {
-
 			public void widgetDisposed(DisposeEvent e) {
 				toolkit.dispose();
 			}
@@ -100,18 +104,29 @@ public class ReflogView extends ViewPart {
 		GridLayoutFactory.fillDefaults().applyTo(form.getBody());
 
 		Composite tableComposite = toolkit.createComposite(form.getBody());
-		final TableColumnLayout layout = new TableColumnLayout();
-		tableComposite.setLayout(layout);
+		tableComposite.setLayout(new GridLayout());
+
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(tableComposite);
 
-		reflogTableViewer = new TableViewer(toolkit.createTable(tableComposite,
-				SWT.FULL_SELECTION | SWT.MULTI));
-		reflogTableViewer.getTable().setLinesVisible(true);
-		reflogTableViewer.getTable().setHeaderVisible(true);
-		reflogTableViewer.setContentProvider(new ReflogViewContentProvider());
-		ColumnViewerToolTipSupport.enableFor(reflogTableViewer);
+		final TreeColumnLayout layout = new TreeColumnLayout();
 
-		TableViewerColumn fromColum = createColumn(layout, "From", 10, SWT.LEFT); //$NON-NLS-1$
+		FilteredTree filteredTree = new FilteredTree(tableComposite, SWT.NONE | SWT.BORDER, new PatternFilter(), true) {
+			@Override
+			protected void createControl(Composite composite, int treeStyle) {
+				super.createControl(composite, treeStyle);
+				treeComposite.setLayout(layout);
+			}
+		};
+
+		toolkit.adapt(filteredTree);
+		refLogTableTreeViewer = filteredTree.getViewer();
+		refLogTableTreeViewer.getTree().setLinesVisible(true);
+		refLogTableTreeViewer.getTree().setHeaderVisible(true);
+		refLogTableTreeViewer.setContentProvider(new ReflogViewContentProvider());
+
+		ColumnViewerToolTipSupport.enableFor(refLogTableTreeViewer);
+
+		TreeViewerColumn fromColum = createColumn(layout, "From", 10, SWT.LEFT); //$NON-NLS-1$
 		fromColum.setLabelProvider(new ColumnLabelProvider() {
 
 			@Override
@@ -132,7 +147,7 @@ public class ReflogView extends ViewPart {
 			}
 		});
 
-		TableViewerColumn toColumn = createColumn(layout, "To", 10, SWT.LEFT); //$NON-NLS-1$
+		TreeViewerColumn toColumn = createColumn(layout, "To", 10, SWT.LEFT); //$NON-NLS-1$
 		toColumn.setLabelProvider(new ColumnLabelProvider() {
 
 			@Override
@@ -153,7 +168,7 @@ public class ReflogView extends ViewPart {
 			}
 
 		});
-		TableViewerColumn messageColumn = createColumn(layout,
+		TreeViewerColumn messageColumn = createColumn(layout,
 				"Message", 50, SWT.LEFT); //$NON-NLS-1$
 		messageColumn.setLabelProvider(new ColumnLabelProvider() {
 
@@ -186,14 +201,14 @@ public class ReflogView extends ViewPart {
 				super.dispose();
 			}
 		});
-		reflogTableViewer.addOpenListener(new IOpenListener() {
+		refLogTableTreeViewer.addOpenListener(new IOpenListener() {
 
 			public void open(OpenEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) event
 						.getSelection();
 				if (selection.isEmpty())
 					return;
-				Repository repo = (Repository) reflogTableViewer.getInput();
+				Repository repo = (Repository) refLogTableTreeViewer.getInput();
 				if (repo == null)
 					return;
 				RevWalk walk = new RevWalk(repo);
@@ -233,12 +248,12 @@ public class ReflogView extends ViewPart {
 				ISelectionService.class);
 		service.addPostSelectionListener(selectionChangedListener);
 
-		getSite().setSelectionProvider(reflogTableViewer);
+		getSite().setSelectionProvider(refLogTableTreeViewer);
 	}
 
 	@Override
 	public void setFocus() {
-		reflogTableViewer.getControl().setFocus();
+		refLogTableTreeViewer.getControl().setFocus();
 	}
 
 	@Override
@@ -279,17 +294,17 @@ public class ReflogView extends ViewPart {
 
 			if (repository != null) {
 				form.setText(getRepositoryName(repository));
-				reflogTableViewer.setInput(repository);
+				refLogTableTreeViewer.setInput(repository);
 			}
 		}
 	}
 
-	private TableViewerColumn createColumn(
-			final TableColumnLayout columnLayout, final String text,
+	private TreeViewerColumn createColumn(
+			final TreeColumnLayout columnLayout, final String text,
 			final int weight, final int style) {
-		final TableViewerColumn viewerColumn = new TableViewerColumn(
-				reflogTableViewer, style);
-		final TableColumn column = viewerColumn.getColumn();
+		final TreeViewerColumn viewerColumn = new TreeViewerColumn(
+				refLogTableTreeViewer, style);
+		final TreeColumn column = viewerColumn.getColumn();
 		column.setText(text);
 		columnLayout.setColumnData(column, new ColumnWeightData(weight, 10));
 		return viewerColumn;
