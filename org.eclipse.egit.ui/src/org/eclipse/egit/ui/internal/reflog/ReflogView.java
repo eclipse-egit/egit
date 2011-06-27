@@ -38,6 +38,8 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -48,7 +50,9 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
@@ -99,6 +103,10 @@ public class ReflogView extends ViewPart {
 		toolkit.decorateFormHeading(form);
 		GridLayoutFactory.fillDefaults().applyTo(form.getBody());
 
+		final Text searchBox = toolkit.createText(form.getBody(), "Find", SWT.SEARCH | SWT.ICON_CANCEL); //$NON-NLS-1$
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).applyTo(searchBox);
+		searchBox.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_GRAY));
+
 		Composite tableComposite = toolkit.createComposite(form.getBody());
 		final TableColumnLayout layout = new TableColumnLayout();
 		tableComposite.setLayout(layout);
@@ -109,6 +117,19 @@ public class ReflogView extends ViewPart {
 		reflogTableViewer.getTable().setLinesVisible(true);
 		reflogTableViewer.getTable().setHeaderVisible(true);
 		reflogTableViewer.setContentProvider(new ReflogViewContentProvider());
+
+		reflogTableViewer.setFilters(new ViewerFilter[] { new ViewerFilter() {
+
+			@Override
+			public boolean select(Viewer viewer, Object parentElement, Object element) {
+				if ( element instanceof ReflogEntry) {
+					ReflogEntry reflogEntry = (ReflogEntry) element;
+					return reflogEntry.getComment().contains(searchBox.getText());
+				}
+				return true;
+			}
+		}});
+
 		ColumnViewerToolTipSupport.enableFor(reflogTableViewer);
 
 		TableViewerColumn fromColum = createColumn(layout, "From", 10, SWT.LEFT); //$NON-NLS-1$
