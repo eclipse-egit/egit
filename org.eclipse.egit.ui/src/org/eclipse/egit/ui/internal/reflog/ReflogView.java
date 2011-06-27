@@ -267,16 +267,19 @@ public class ReflogView extends ViewPart {
 				if (adapted != null) {
 					RepositoryMapping mapping = RepositoryMapping
 							.getMapping(adapted);
-					repository = mapping.getRepository();
+					if (mapping != null) {
+						repository = mapping.getRepository();
+					}
 				}
 			} else if (ssel.getFirstElement() instanceof RepositoryTreeNode) {
 				RepositoryTreeNode repoNode = (RepositoryTreeNode) ssel
 						.getFirstElement();
 				repository = repoNode.getRepository();
 			}
+
 			if (repository != null) {
-				reflogTableViewer.setInput(repository);
 				form.setText(getRepositoryName(repository));
+				reflogTableViewer.setInput(repository);
 			}
 		}
 	}
