@@ -20,9 +20,11 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.op.IEGitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.jface.text.revisions.RevisionInformation;
 import org.eclipse.jgit.api.BlameCommand;
 import org.eclipse.jgit.blame.BlameResult;
+import org.eclipse.jgit.diff.RawTextComparator;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
@@ -69,11 +71,20 @@ public class BlameOperation implements IEGitOperation {
 				.getProject());
 		if (mapping == null)
 			return;
+
+		final RawTextComparator textComparator;
+		if (Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.BLAME_IGNORE_WHITESPACE))
+			textComparator = RawTextComparator.WS_IGNORE_ALL;
+		else
+			textComparator = RawTextComparator.DEFAULT;
+
 		BlameResult result = new BlameCommand(repository)
-				.setFollowFileRenames(true)
+				.setFollowFileRenames(true).setTextComparator(textComparator)
 				.setFilePath(mapping.getRepoRelativePath(file)).call();
 		if (result == null)
 			return;
+
 		Map<RevCommit, BlameRevision> revisions = new HashMap<RevCommit, BlameRevision>();
 		int lineCount = result.getResultContents().size();
 		monitor.beginTask("", lineCount); //$NON-NLS-1$
