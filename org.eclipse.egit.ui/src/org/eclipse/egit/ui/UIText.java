@@ -3835,6 +3835,18 @@ public class UIText extends NLS {
 	/** */
 	public static String SynchronizeFetchJob_FetchFailedMessage;
 
+	/** */
+	public static String EGitCredentialsProvider_question;
+
+	/** */
+	public static String EGitCredentialsProvider_information;
+
+	/** */
+	public static String CustomPromptDialog_provide_information_for;
+
+	/** */
+	public static String CustomPromptDialog_information_about;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
