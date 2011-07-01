@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX///6I\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-01T08:34:56Z",
+      "side": 1,
+      "message": "Don\u0027t put the bug id in the header instead add a footer in the last paragraph as a separate line:\n\nBug: 347073\n\nthis will ensure that gerrit renders a link\n\nAlso start the commit message header with an uppercase letter",
+      "revId": "ead6cf32f4f7968385c8bb9ca0e9961c64430f68",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX///6A\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-01T08:34:56Z",
+      "side": 1,
+      "message": "This is obvious from the diff so you don\u0027t need to mention this again in the commit message.\n\nThis is a lot of text to read for a small improvement, I think the commit message header is sufficient to explain the intention of this change.",
+      "revId": "ead6cf32f4f7968385c8bb9ca0e9961c64430f68",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX///50\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-01T08:35:52Z",
+      "side": 1,
+      "message": "this modification is unrelated to this change",
+      "revId": "ead6cf32f4f7968385c8bb9ca0e9961c64430f68",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
