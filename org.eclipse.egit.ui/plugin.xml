@@ -2946,6 +2946,10 @@
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.LinkWithSelectionCommand"
             id="org.eclipse.egit.ui.RepositoriesLinkWithSelection"
             name="%LinkWithSelectionCommand">
+          <state
+                class="org.eclipse.ui.handlers.RegistryToggleState:false"
+                id="org.eclipse.ui.commands.toggleState">
+          </state>
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"

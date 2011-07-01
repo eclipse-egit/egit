@@ -71,10 +71,12 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.handlers.RegistryToggleState;
 import org.eclipse.ui.navigator.CommonNavigator;
 import org.eclipse.ui.navigator.CommonViewer;
 import org.eclipse.ui.part.IPage;
@@ -194,6 +196,21 @@ public class RepositoriesView extends CommonNavigator {
 		};
 	}
 
+	@SuppressWarnings("boxing")
+	@Override
+	public void createPartControl(Composite aParent) {
+		super.createPartControl(aParent);
+
+		IWorkbenchWindow w = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		ICommandService csrv = (ICommandService) w
+				.getService(ICommandService.class);
+		Command command = csrv
+				.getCommand("org.eclipse.egit.ui.RepositoriesLinkWithSelection"); //$NON-NLS-1$
+		reactOnSelection = (Boolean) command.getState(
+				RegistryToggleState.STATE_ID).getValue();
+	}
+
 	@Override
 	public Object getAdapter(Class adapter) {
 		// integrate with Properties view
@@ -213,7 +230,6 @@ public class RepositoriesView extends CommonNavigator {
 	 * @param reactOnSelection
 	 */
 	public void setReactOnSelection(boolean reactOnSelection) {
-		// TODO persist the state of the button somewhere
 		this.reactOnSelection = reactOnSelection;
 	}
 
