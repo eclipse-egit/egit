@@ -1505,6 +1505,14 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		if (currentWalk != null)
 			currentWalk.release();
 		currentWalk = new SWTWalk(db);
+		try {
+			currentWalk.addAdditionalRefs(db.getRefDatabase().getAdditionalRefs());
+		} catch (IOException e) {
+			throw new IllegalStateException(NLS.bind(
+					UIText.GitHistoryPage_errorReadingAdditionalRefs, Activator
+							.getDefault().getRepositoryUtil()
+							.getRepositoryName(db)), e);
+		}
 		currentWalk.sort(RevSort.COMMIT_TIME_DESC, true);
 		currentWalk.sort(RevSort.BOUNDARY, true);
 		highlightFlag = currentWalk.newFlag("highlight"); //$NON-NLS-1$
