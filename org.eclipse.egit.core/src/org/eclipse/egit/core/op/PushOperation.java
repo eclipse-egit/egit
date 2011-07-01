@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.jgit.api.Git;
@@ -199,13 +200,12 @@ public class PushOperation {
 					} catch (JGitInternalException e) {
 						String errorMessage = e.getCause() != null ? e
 								.getCause().getMessage() : e.getMessage();
-						String userMessage = NLS
-								.bind(
+						String userMessage = NLS.bind(
 										CoreText.PushOperation_InternalExceptionOccurredMessage,
 										errorMessage);
-						operationResult.addOperationResult(uri, userMessage);
+						handleException(uri, e, userMessage);
 					} catch (InvalidRemoteException e) {
-						operationResult.addOperationResult(uri, e.getMessage());
+						handleException(uri, e, e.getMessage());
 					}
 
 					monitor.worked(WORK_UNITS_PER_TRANSPORT);
@@ -235,13 +235,21 @@ public class PushOperation {
 						errorMessage);
 				URIish uri = rc.getPushURIs().isEmpty() ? rc.getURIs().get(0)
 						: rc.getPushURIs().get(0);
-				operationResult.addOperationResult(uri, userMessage);
+				handleException(uri, e, userMessage);
 			} catch (InvalidRemoteException e) {
 				URIish uri = rc.getPushURIs().isEmpty() ? rc.getURIs().get(0)
 						: rc.getPushURIs().get(0);
-				operationResult.addOperationResult(uri, e.getMessage());
+				handleException(uri, e, e.getMessage());
 			}
 		}
 		monitor.done();
 	}
+
+	private void handleException(final URIish uri, Exception e,
+			String userMessage) {
+		operationResult.addOperationResult(uri, userMessage);
+		String userMessageForUri = NLS.bind(CoreText.PushOperation_ExceptionOccurredDuringPushOnUriMessage, uri, userMessage);
+		Activator.logError(userMessageForUri, e);
+	}
+
 }
