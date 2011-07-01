@@ -278,6 +278,13 @@ class CloneDestinationPage extends WizardPage {
 			setPageComplete(false);
 			return;
 		}
+
+		if (initialBranch.getCombo().getSelectionIndex() < 0) {
+			setErrorMessage(UIText.CloneDestinationPage_errorInitialBranchRequired);
+			setPageComplete(false);
+			return;
+		}
+
 		if (remoteText.getText().length() == 0) {
 			setErrorMessage(UIText.CloneDestinationPage_errorRemoteNameRequired);
 			setPageComplete(false);
