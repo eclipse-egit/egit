@@ -228,6 +228,8 @@ public class StagingView extends ViewPart {
 
 	private Action refreshAction;
 
+	private String currentCommitMessage;
+
 	@Override
 	public void createPartControl(Composite parent) {
 		GridLayoutFactory.fillDefaults().applyTo(parent);
@@ -1045,6 +1047,7 @@ public class StagingView extends ViewPart {
 		amendPreviousCommitAction.setChecked(commitMessageComponent
 				.isAmending());
 		amendPreviousCommitAction.setEnabled(amendAllowed(helper));
+		currentCommitMessage = commitMessageComponent.getCommitMessage();
 	}
 
 	private void loadExistingState(CommitHelper helper,
@@ -1096,6 +1099,7 @@ public class StagingView extends ViewPart {
 		commitMessageComponent.setCreateChangeId(false);
 		commitMessageComponent.updateUI();
 		commitMessageComponent.enableListers(true);
+		currentCommitMessage = commitMessageComponent.getCommitMessage();
 	}
 
 	private boolean amendAllowed(CommitHelper commitHelper) {
@@ -1109,7 +1113,7 @@ public class StagingView extends ViewPart {
 		String message = commitMessageComponent.getCommitMessage();
 		if (message == null || message.trim().length() == 0)
 			return false;
-		return true;
+		return !message.equals(currentCommitMessage);
 	}
 
 	private ObjectId getCommitId(RevCommit commit) {
