@@ -380,7 +380,7 @@ public class StagingView extends ViewPart {
 		selectionChangedListener = new ISelectionListener() {
 			public void selectionChanged(IWorkbenchPart part,
 					ISelection selection) {
-				if (!reactOnSelection)
+				if (!reactOnSelection || part == getSite().getPart())
 					return;
 
 				// this may happen if we switch between editors
