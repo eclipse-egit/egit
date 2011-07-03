@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.jgit.lib.ObjectId;
@@ -107,7 +108,7 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 			if (resource.getType() == IResource.FILE) {
 				tw.setRecursive(true);
 				if (tw.next() && !tw.getObjectId(nth).equals(zeroId()))
-					variant = new GitBlobResourceVariant(repo, revCommit,
+					variant = new GitRemoteFile(repo, revCommit,
 							tw.getObjectId(nth), path);
 			} else {
 				while (tw.next() && !path.equals(tw.getPathString())) {
@@ -120,7 +121,7 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 
 				ObjectId objectId = tw.getObjectId(nth);
 				if (!objectId.equals(zeroId()))
-					variant = new GitFolderResourceVariant(repo, revCommit, objectId, path);
+					variant = new GitRemoteFolder(repo, revCommit, objectId, path);
 			}
 			if (variant != null)
 				cache.put(resource, variant);
@@ -136,18 +137,12 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 	@Override
 	protected IResourceVariant[] fetchMembers(IResourceVariant variant,
 			IProgressMonitor progress) throws TeamException {
-		if (variant == null || !(variant instanceof GitFolderResourceVariant))
+		if (variant == null || !(variant instanceof GitRemoteFolder))
 			return new IResourceVariant[0];
 
-		GitFolderResourceVariant gitVariant = (GitFolderResourceVariant) variant;
+		GitRemoteFolder gitVariant = (GitRemoteFolder) variant;
 
-		try {
-			return gitVariant.getMembers(progress);
-		} catch (IOException e) {
-			throw new TeamException(NLS.bind(
-					CoreText.GitResourceVariantTree_couldNotFetchMembers,
-					gitVariant), e);
-		}
+		return gitVariant.members(progress);
 	}
 
 	public IResourceVariant getResourceVariant(final IResource resource)
@@ -166,16 +161,16 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 			throws TeamException;
 
 	private IResourceVariant handleRepositoryRoot(final IResource resource,
-			Repository repo, RevCommit revCommit) throws TeamException {
-		try {
-			return new GitFolderResourceVariant(repo, revCommit,
-					revCommit.getTree(), resource.getLocation().toString());
-		} catch (IOException e) {
-			throw new TeamException(
-					NLS.bind(
-							CoreText.GitResourceVariantTree_couldNotFindResourceVariant,
-							resource), e);
-		}
+			Repository repo, RevCommit revCommit) /*throws TeamException*/ {
+//		try {
+		String path = RepositoryMapping.findRepositoryMapping(repo).getRepoRelativePath(resource);
+			return new GitRemoteFolder(repo, revCommit, revCommit.getTree(), path);
+//		} catch (IOException e) {
+//			throw new TeamException(
+//					NLS.bind(
+//							CoreText.GitResourceVariantTree_couldNotFindResourceVariant,
+//							resource), e);
+//		}
 	}
 
 	private TreeWalk initializeTreeWalk(Repository repo, String path) {
