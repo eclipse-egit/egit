@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+
+   <!-- ================================================================================ -->
+   <!-- Model provider for the GitScopeUtilTest											 -->
+   <!-- ================================================================================ -->
+   <extension
+         id="modelProvider"
+         name="Egit Test Mock Model"
+         point="org.eclipse.core.resources.modelProviders">
+      <modelProvider class="org.eclipse.egit.ui.operations.GitScopeUtilTest$MockModelProvider"/>
+      <extends-model id="org.eclipse.core.resources.modelProvider"/>
+      <enablement>
+          <test property="org.eclipse.core.resources.name" value="*.model" />
+      </enablement>
+   </extension>
+   
+</fragment>
