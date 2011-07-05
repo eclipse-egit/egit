@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL4H//+/o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitSelectWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-19T23:51:44Z",
+      "side": 1,
+      "message": "why did you touch formatting here ?",
+      "revId": "9ef5640eb2abb6c34b2b3a9b24615461bf842223",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H//+/k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-19T23:51:44Z",
+      "side": 1,
+      "message": "don\u0027t use string concatenation to build sentence as grammar could be different in other languages, instead use NLS.bind()\n\nthis is a rather unspecific error message, why don\u0027t you want to disclose that having no work tree is the problem",
+      "revId": "9ef5640eb2abb6c34b2b3a9b24615461bf842223",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
