@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX///+U\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-06-29T09:10:34Z",
+      "side": 1,
+      "message": "style nit: remove the blanks :\n\ns/( repoUrl \u003d\u003d null )/(repoUrl \u003d\u003d null)",
+      "revId": "6389862c6503a83781e238e3cdb53b28d4b6be2c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
