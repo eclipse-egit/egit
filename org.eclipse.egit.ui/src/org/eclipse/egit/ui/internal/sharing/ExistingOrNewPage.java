@@ -546,7 +546,7 @@ class ExistingOrNewPage extends WizardPage {
 				targetPath = targetPath.append(relPath.getText());
 				moveProjectsLabelProvider.targetFolder = targetPath;
 				projectMoveViewer.refresh(true);
-				browseRepository.setEnabled(this.selectedRepository != null);
+				browseRepository.setEnabled(true);
 				for (Object checked : projectMoveViewer.getCheckedElements()) {
 					IProject prj = (IProject) checked;
 					IPath projectMoveTarget = targetPath.append(prj.getName());
