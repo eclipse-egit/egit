@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOI3///Ew\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-19T15:18:52Z",
+      "side": 1,
+      "message": "CommandAction is an internal class.\n\n\n/**\n * Instantiate an action that will execute the command.\n * \u003cp\u003e\n * This is a legacy bridge class, and should not be used outside of the\n * framework. Please use menu contributions to display a command in a menu or\n * toolbar.",
+      "revId": "5ab82428df974cab554a3318365d2c7bf570f041",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
