@@ -39,15 +39,17 @@ public class GitModelCacheFile extends GitModelBlob {
 		if (obj == this)
 			return true;
 
-		if (obj instanceof GitModelCacheFile) {
-			GitModelCacheFile objBlob = (GitModelCacheFile) obj;
+		if (obj == null)
+			return false;
 
-			return objBlob.baseId.equals(baseId)
-					&& objBlob.remoteId.equals(remoteId)
-					&& objBlob.getLocation().equals(getLocation());
-		}
+		if (obj.getClass() != getClass())
+			return false;
 
-		return false;
+		GitModelCacheFile objBlob = (GitModelCacheFile) obj;
+
+		return objBlob.baseId.equals(baseId)
+				&& objBlob.remoteId.equals(remoteId)
+				&& objBlob.getLocation().equals(getLocation());
 	}
 
 	@Override

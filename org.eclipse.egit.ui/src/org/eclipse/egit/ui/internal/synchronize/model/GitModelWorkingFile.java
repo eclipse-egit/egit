@@ -61,11 +61,13 @@ public class GitModelWorkingFile extends GitModelBlob {
 		if (obj == this)
 			return true;
 
-		if (obj instanceof GitModelWorkingFile)
-			return ((GitModelWorkingFile) obj).getLocation()
-					.equals(getLocation());
+		if (obj == null)
+			return false;
 
-		return false;
+		if (obj.getClass() != getClass())
+			return false;
+
+		return ((GitModelWorkingFile) obj).getLocation().equals(getLocation());
 	}
 
 	@Override

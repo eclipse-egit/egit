@@ -153,22 +153,23 @@ public class GitModelBlob extends GitModelCommit {
 		if (obj == this)
 			return true;
 
-		if (obj instanceof GitModelBlob && !(obj instanceof GitModelCacheFile)
-				&& !(obj instanceof GitModelWorkingFile)) {
-			GitModelBlob objBlob = (GitModelBlob) obj;
+		if (obj == null)
+			return false;
 
-			boolean equalsRemoteId;
-			ObjectId objRemoteId = objBlob.remoteId;
-			if (objRemoteId != null)
-				equalsRemoteId = objRemoteId.equals(remoteId);
-			else
-				equalsRemoteId = remoteId == null;
+		if (obj.getClass() != getClass())
+			return false;
 
-			return objBlob.baseId.equals(baseId) && equalsRemoteId
-					&& objBlob.location.equals(location);
-		}
+		GitModelBlob objBlob = (GitModelBlob) obj;
 
-		return false;
+		boolean equalsRemoteId;
+		ObjectId objRemoteId = objBlob.remoteId;
+		if (objRemoteId != null)
+			equalsRemoteId = objRemoteId.equals(remoteId);
+		else
+			equalsRemoteId = remoteId == null;
+
+		return objBlob.baseId.equals(baseId) && equalsRemoteId
+				&& objBlob.location.equals(location);
 	}
 
 	@Override

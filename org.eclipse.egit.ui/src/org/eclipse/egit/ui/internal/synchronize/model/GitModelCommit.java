@@ -85,15 +85,16 @@ public class GitModelCommit extends GitModelObjectContainer implements
 		if (obj == this)
 			return true;
 
-		if (obj instanceof GitModelCommit && !(obj instanceof GitModelTree)
-				&& !(obj instanceof GitModelBlob)) {
-			GitModelCommit objCommit = (GitModelCommit) obj;
+		if (obj == null)
+			return false;
 
-			return objCommit.getBaseCommit().equals(baseCommit)
-					&& objCommit.getParent().equals(getParent());
-		}
+		if (obj.getClass() != getClass())
+			return false;
 
-		return false;
+		GitModelCommit objCommit = (GitModelCommit) obj;
+
+		return objCommit.getBaseCommit().equals(baseCommit)
+				&& objCommit.getParent().equals(getParent());
 	}
 
 	@Override
