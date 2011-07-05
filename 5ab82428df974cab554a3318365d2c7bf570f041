@@ -16,6 +16,23 @@
       "revId": "5ab82428df974cab554a3318365d2c7bf570f041",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///E0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-05-19T15:18:52Z",
+      "side": 1,
+      "message": "Nearly same code in lines [369,386] and [320, 337].",
+      "revId": "5ab82428df974cab554a3318365d2c7bf570f041",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
