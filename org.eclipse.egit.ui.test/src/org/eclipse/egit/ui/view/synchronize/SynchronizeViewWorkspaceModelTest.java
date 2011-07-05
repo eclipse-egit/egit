@@ -131,7 +131,7 @@ public class SynchronizeViewWorkspaceModelTest extends AbstractSynchronizeViewTe
 		deleteFileAndCommit(PROJ1);
 
 		// when
-		launchSynchronization(HEAD, INITIAL_TAG, true);
+		launchSynchronization("HEAD~1", HEAD, true);
 
 		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
