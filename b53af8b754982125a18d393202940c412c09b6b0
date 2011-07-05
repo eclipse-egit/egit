@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX///xk\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-07-04T08:26:37Z",
+      "side": 1,
+      "message": "Are you sure this is for ssh authentication? When I use EGit to push via ssh then your new dialogs don\u0027t pop up. SSH communication goes through the jsch component and their dialogs.\nI think this proposal fixes http pushes and https pushes where I am asked for http user/password or, during https communication, passphrases to access certificate stores",
+      "revId": "b53af8b754982125a18d393202940c412c09b6b0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX///6k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/credentials/EGitCredentialsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-07-04T08:26:37Z",
+      "side": 1,
+      "message": "Style-nit: please remove the trailing whitespaces here and in 13 other places in this file. The gerrit web-ui tells you with red markers about trainling whitespaces.",
+      "revId": "b53af8b754982125a18d393202940c412c09b6b0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX///xg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CustomPromptDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-07-04T08:26:37Z",
+      "side": 1,
+      "message": "Style-nit: please remove the trailing whitespaces in this file",
+      "revId": "b53af8b754982125a18d393202940c412c09b6b0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
