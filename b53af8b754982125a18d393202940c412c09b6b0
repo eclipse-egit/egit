@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAX///xY\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 130
+      },
+      "writtenOn": "2011-07-05T08:17:23Z",
+      "side": 1,
+      "message": "This patch basically provides complete credential support for EGit and is similar to the AwtCredentialsProvider for the jgit commandline app. So it may indeed fix http authentication issues (of which I am not aware).\n\nIt does fix ssh authentication, at least for me. The point is EclipseSshSessionFactory.configure(), where this patch will not overwrite the existing UserInfo (for me always an instance of CredentialsProviderUserInfo) anymore. \n\nIf the session factory installs the UserInfoPrompter, the jsch authentication dialog will be used. And this is the cause for those many authentication dialogs, because username and password are not remembered anywhere.\n\n(And sorry for all that whitespace in the patch, I had disabled the save-actions in Eclipse because of some other problem I had with them).",
+      "parentUuid": "AABOAX///xk\u003d",
+      "revId": "b53af8b754982125a18d393202940c412c09b6b0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX///6k\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/credentials/EGitCredentialsProvider.java",
         "patchSetId": 1
