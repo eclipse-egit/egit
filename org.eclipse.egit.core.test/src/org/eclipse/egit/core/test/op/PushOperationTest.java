@@ -10,12 +10,14 @@ package org.eclipse.egit.core.test.op;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.filesystem.EFS;
@@ -24,6 +26,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.ILogListener;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.op.AddToIndexOperation;
@@ -47,6 +52,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class PushOperationTest extends DualRepositoryTestCase {
+
+
+	private static final String INVALID_URI = "invalid-uri";
 
 	File workdir;
 
@@ -184,6 +192,65 @@ public class PushOperationTest extends DualRepositoryTestCase {
 		testFile = new File(workdir2, newFilePath);
 		assertTrue(testFile.exists());
 	}
+
+	/**
+	 * An invalid URI should yield an operation result with an error message
+	 * and the exception should be logged
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void testInvalidUriDuringPush() throws Exception {
+		ILog log = Activator.getDefault().getLog();
+		LogListener listener = new LogListener();
+		log.addLogListener(listener);
+
+		PushOperation pop = createInvalidPushOperation();
+		pop.run(new NullProgressMonitor());
+		PushOperationResult result = pop.getOperationResult();
+		String errorMessage = result.getErrorMessage(new URIish(INVALID_URI));
+		assertNotNull(errorMessage);
+		assertTrue(errorMessage.contains(INVALID_URI));
+
+		assertTrue(listener.loggedSomething());
+		assertTrue(listener.loggedException());
+
+	}
+
+	private PushOperation createInvalidPushOperation() throws Exception {
+		// set up push with invalid URI to provoke an exception
+		PushOperationSpecification spec = new PushOperationSpecification();
+		// the remote is invalid
+		URIish remote = new URIish(INVALID_URI);
+		// update master upon master
+		Repository local = repository1.getRepository();
+		RemoteRefUpdate update = new RemoteRefUpdate(local, "HEAD", "refs/heads/test",
+				false, null, null);
+		spec.addURIRefUpdates(remote, Collections.singletonList(update));
+		// now we can construct the push operation
+		PushOperation pop = new PushOperation(local, spec, false, 0);
+		return pop;
+	}
+
+	private final class LogListener implements ILogListener {
+		private boolean loggedSomething = false;
+		private boolean loggedException = false;
+
+		public void logging(IStatus status, String plugin) {
+			loggedSomething = true;
+			loggedException = status.getException() != null;
+
+		}
+
+		public boolean loggedSomething() {
+			return loggedSomething;
+		}
+
+		public boolean loggedException() {
+			return loggedException;
+		}
+
+}
 
 	/**
 	 * We should get an {@link IllegalStateException} if we run
