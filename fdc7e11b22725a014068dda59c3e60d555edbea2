@@ -16,6 +16,24 @@
       "revId": "fdc7e11b22725a014068dda59c3e60d555edbea2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX///h0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-07-06T13:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX///iQ\u003d",
+      "revId": "fdc7e11b22725a014068dda59c3e60d555edbea2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
