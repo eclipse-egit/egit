@@ -40,6 +40,7 @@ public class AddOperationTest extends GitTestCase {
 				.getLocationURI().getPath(), Constants.DOT_GIT);
 		testRepository = new TestRepository(gitDir);
 		testRepository.connect(project.getProject());
+		testRepository.commit("initial commit");
 	}
 
 	@After
