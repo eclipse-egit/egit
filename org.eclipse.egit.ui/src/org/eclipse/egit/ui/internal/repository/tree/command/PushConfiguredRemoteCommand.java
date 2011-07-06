@@ -49,7 +49,7 @@ public class PushConfiguredRemoteCommand extends
 		}
 		int timeout = Activator.getDefault().getPreferenceStore()
 				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-		new PushOperationUI(node.getRepository(), config, timeout, false)
+		new PushOperationUI(node.getRepository(), config.getName(), timeout, false)
 				.start();
 		return null;
 	}
