@@ -65,6 +65,16 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 
 		}
 
+		@Override
+		public boolean equals(Object object) {
+			return super.equals(object);
+		}
+
+		@Override
+		public int hashCode() {
+			return super.hashCode();
+		}
+
 		/**
 		 * Diff type
 		 */
