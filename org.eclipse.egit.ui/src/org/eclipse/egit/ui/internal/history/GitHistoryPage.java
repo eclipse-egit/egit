@@ -575,6 +575,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 		warningComposite = new Composite(historyControl, SWT.NONE);
 		warningComposite.setLayout(new GridLayout(3, false));
+		warningComposite.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		Label warningLabel = new Label(warningComposite, SWT.NONE);
 		warningLabel.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_WARN_TSK));
 		warningText = new Text(warningComposite, SWT.READ_ONLY);
