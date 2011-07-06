@@ -81,6 +81,7 @@ import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.custom.StyledText;
@@ -95,10 +96,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.team.ui.history.HistoryPage;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPart;
@@ -476,8 +475,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	/** A label showing a warning icon */
 	private Composite warningComposite;
 
-	/** A text field to display a warning */
-	private Text warningText;
+	/** A label field to display a warning */
+	private CLabel warningLabel;
 
 	/** Our context menu manager for the entire page. */
 	private final MenuManager popupMgr = new MenuManager(null, POPUP_ID);
@@ -574,11 +573,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		historyControl = createMainPanel(parent);
 
 		warningComposite = new Composite(historyControl, SWT.NONE);
-		warningComposite.setLayout(new GridLayout(3, false));
-		Label warningLabel = new Label(warningComposite, SWT.NONE);
-		warningLabel.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_WARN_TSK));
-		warningText = new Text(warningComposite, SWT.READ_ONLY);
-		warningText.setToolTipText(UIText.GitHistoryPage_IncompleteListTooltip);
+		warningComposite.setLayout(new GridLayout(2, false));
+		warningLabel = new CLabel(warningComposite, SWT.NONE);
+		warningLabel.setImage(PlatformUI.getWorkbench().getSharedImages()
+				.getImage(ISharedImages.IMG_OBJS_WARN_TSK));
+		warningLabel
+				.setToolTipText(UIText.GitHistoryPage_IncompleteListTooltip);
 
 		Link preferencesLink = new Link(warningComposite, SWT.NONE);
 		preferencesLink.setText(UIText.CommitDialog_ConfigureLink);
@@ -587,7 +587,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			public void widgetSelected(SelectionEvent e) {
 				String preferencePageId = "org.eclipse.egit.ui.GitPreferences"; //$NON-NLS-1$
 				PreferenceDialog dialog = PreferencesUtil
-						.createPreferenceDialogOn(getSite().getShell(), preferencePageId,
+						.createPreferenceDialogOn(getSite().getShell(),
+								preferencePageId,
 								new String[] { preferencePageId }, null);
 				dialog.open();
 			}
@@ -1329,9 +1330,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		gd.exclude = warning == null;
 		warningComposite.setVisible(!gd.exclude);
 		if (warning != null)
-			warningText.setText(warning);
+			warningLabel.setText(warning);
 		else
-			warningText.setText(""); //$NON-NLS-1$
+			warningLabel.setText(""); //$NON-NLS-1$
 		warningComposite.getParent().layout(true);
 	}
 
