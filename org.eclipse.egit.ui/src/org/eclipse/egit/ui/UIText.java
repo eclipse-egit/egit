@@ -97,6 +97,9 @@ public class UIText extends NLS {
 	public static String AddToIndexCommand_addingFilesFailed;
 
 	/** */
+	public static String RemoveFromIndexAction_removingFiles;
+
+	/** */
 	public static String BlameInformationControl_Author;
 
 	/** */

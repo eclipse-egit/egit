@@ -3311,7 +3311,7 @@
             <instanceof value="org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider"/>
            </or>
          </enablement>
-         <commonSorter
+	     <commonSorter
                class="org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetSorter"/>
        </navigatorContent>
    </extension>
@@ -3347,6 +3347,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.AddToIndexActionHandler"
             id="org.eclipse.egit.ui.team.AddToIndex"
             name="%AddToIndexCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.RemoveFromIndexActionHandler"
+            id="org.eclipse.egit.ui.team.RemoveFromIndex"
+            name="RemoveFromIndexCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
