@@ -141,9 +141,11 @@ public class CloneOperation {
 			}
 			Git git = cloneRepository.call();
 			repository = git.getRepository();
-			if (postCloneTasks != null)
-				for (PostCloneTask task : postCloneTasks)
-					task.execute(git.getRepository(), monitor);
+			synchronized (this) {
+				if (postCloneTasks != null)
+					for (PostCloneTask task : postCloneTasks)
+						task.execute(git.getRepository(), monitor);
+			}
 		} catch (final Exception e) {
 			try {
 				if (repository != null)
