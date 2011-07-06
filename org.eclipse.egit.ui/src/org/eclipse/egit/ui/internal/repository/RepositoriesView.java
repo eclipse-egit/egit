@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2011 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.commands.Command;
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -249,15 +248,9 @@ public class RepositoriesView extends CommonNavigator {
 						|| element instanceof TagNode) {
 					IHandlerService srv = (IHandlerService) getViewSite()
 							.getService(IHandlerService.class);
-					ICommandService csrv = (ICommandService) getViewSite()
-							.getService(ICommandService.class);
-					Command openCommand = csrv
-							.getCommand("org.eclipse.egit.ui.RepositoriesViewOpen"); //$NON-NLS-1$
-					ExecutionEvent evt = srv.createExecutionEvent(openCommand,
-							null);
 
 					try {
-						openCommand.executeWithChecks(evt);
+						srv.executeCommand("org.eclipse.egit.ui.RepositoriesViewOpen", null); //$NON-NLS-1$
 					} catch (Exception e) {
 						Activator.handleError(e.getMessage(), e, false);
 					}
