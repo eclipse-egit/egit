@@ -58,8 +58,9 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 			return;
 
 		final int cmp = lastWorked + work;
-		if (lastWorked == UNKNOWN && cmp > 0) {
-			task.subTask(msg + ", " + cmp);  //$NON-NLS-1$
+		if (totalWork == UNKNOWN && cmp > 0) {
+			if (lastWorked != cmp)
+				task.subTask(msg + ", " + cmp); //$NON-NLS-1$
 		} else if (totalWork <= 0) {
 			// Do nothing to update the task.
 		} else if (cmp * 100 / totalWork != lastWorked * 100 / totalWork) {
@@ -69,25 +70,22 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 			while (m.length() < 25)
 				m.append(' ');
 
-			if (totalWork == UNKNOWN) {
-				m.append(cmp);
-			} else {
-				final String twstr = String.valueOf(totalWork);
-				String cmpstr = String.valueOf(cmp);
-				while (cmpstr.length() < twstr.length())
-					cmpstr = " " + cmpstr;  //$NON-NLS-1$
-				final int pcnt = (cmp * 100 / totalWork);
-				if (pcnt < 100)
-					m.append(' ');
-				if (pcnt < 10)
-					m.append(' ');
-				m.append(pcnt);
-				m.append("% (");  //$NON-NLS-1$
-				m.append(cmpstr);
-				m.append("/");  //$NON-NLS-1$
-				m.append(twstr);
-				m.append(")");  //$NON-NLS-1$
-			}
+			final String twstr = String.valueOf(totalWork);
+			String cmpstr = String.valueOf(cmp);
+			while (cmpstr.length() < twstr.length())
+				cmpstr = " " + cmpstr; //$NON-NLS-1$
+			final int pcnt = (cmp * 100 / totalWork);
+			if (pcnt < 100)
+				m.append(' ');
+			if (pcnt < 10)
+				m.append(' ');
+			m.append(pcnt);
+			m.append("% ("); //$NON-NLS-1$
+			m.append(cmpstr);
+			m.append("/"); //$NON-NLS-1$
+			m.append(twstr);
+			m.append(")"); //$NON-NLS-1$
+
 			task.subTask(m.toString());
 		}
 		lastWorked = cmp;
