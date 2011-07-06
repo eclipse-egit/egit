@@ -142,10 +142,11 @@ public class RefSpecPanel {
 	private static boolean isValidRefExpression(final String s) {
 		if (RefSpec.isWildcard(s)) {
 			// replace wildcard with some legal name just for checking
-			return Repository
-					.isValidRefName(s.substring(0, s.length() - 1) + 'X');
+			return isValidRefExpression(s.substring(0, s.length() - 1) + 'X');
 		} else
-			return Repository.isValidRefName(s);
+			return Repository.isValidRefName(s)
+					|| Repository.isValidRefName(Constants.R_HEADS + s)
+					|| Repository.isValidRefName(Constants.R_TAGS + s);
 	}
 
 	private static RefSpec setRefSpecSource(final RefSpec spec, final String src) {
