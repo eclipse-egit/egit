@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX///hw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-06T13:49:00Z",
+      "side": 1,
+      "message": "This looks convoluted ... instead do\n\n String uriString;\n if (uri !\u003d null) {\n     operationResult.addOperationResult(uri, userMessage);\n     uriString \u003d uri.toString();\n } else\n     uriString \u003d \"retrieving URI failed\"; //$NON-NLS-1$",
+      "revId": "a314103174098058bca0162be488da814c295889",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
