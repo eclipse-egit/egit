@@ -20,6 +20,8 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.DiffFormatter;
@@ -39,12 +41,12 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.ui.model.WorkbenchAdapter;
 
 /**
- * A class with information about the changes to a file introduced in a
- * commit.
+ * A class with information about the changes to a file introduced in a commit.
  */
-public class FileDiff {
+public class FileDiff extends WorkbenchAdapter {
 
 	private final RevCommit commit;
 
@@ -88,8 +90,7 @@ public class FileDiff {
 				final FileDiff d = new FileDiff(commit, entry);
 				r.add(d);
 			}
-		}
-		else { // DiffEntry does not support walks with more than two trees
+		} else { // DiffEntry does not support walks with more than two trees
 			final int nTree = walk.getTreeCount();
 			final int myTree = nTree - 1;
 			while (walk.next()) {
@@ -108,7 +109,8 @@ public class FileDiff {
 				else if (m0 != 0 && m1 == 0)
 					d.change = ChangeType.DELETE;
 				else if (m0 != m1 && walk.idEqual(0, myTree))
-					d.change = ChangeType.MODIFY; // there is no ChangeType.TypeChanged
+					d.change = ChangeType.MODIFY; // there is no
+													// ChangeType.TypeChanged
 				d.blobs = new ObjectId[nTree];
 				d.modes = new FileMode[nTree];
 				for (int i = 0; i < nTree; i++) {
@@ -134,8 +136,8 @@ public class FileDiff {
 	}
 
 	/**
-	 * Creates a textual diff together with meta information.
-	 * TODO So far this works only in case of one parent commit.
+	 * Creates a textual diff together with meta information. TODO So far this
+	 * works only in case of one parent commit.
 	 *
 	 * @param d
 	 *            the StringBuilder where the textual diff is added to
@@ -144,9 +146,9 @@ public class FileDiff {
 	 * @param diffFmt
 	 *            the DiffFormatter used to create the textual diff
 	 * @param gitFormat
-	 *            if false, do not show any source or destination prefix,
-	 *            and the paths are calculated relative to the eclipse
-	 *            project, otherwise relative to the git repository
+	 *            if false, do not show any source or destination prefix, and
+	 *            the paths are calculated relative to the eclipse project,
+	 *            otherwise relative to the git repository
 	 * @throws IOException
 	 */
 	public void outputDiff(final StringBuilder d, final Repository db,
@@ -174,7 +176,7 @@ public class FileDiff {
 
 		String projectRelativePath = getProjectRelativePath(db, getPath());
 		d.append("diff --git ").append(projectRelativePath).append(" ") //$NON-NLS-1$ //$NON-NLS-2$
-			.append(projectRelativePath).append("\n"); //$NON-NLS-1$
+				.append(projectRelativePath).append("\n"); //$NON-NLS-1$
 		final ObjectId id1 = getBlobs()[0];
 		final ObjectId id2 = getBlobs()[1];
 		final FileMode mode1 = getModes()[0];
@@ -209,15 +211,16 @@ public class FileDiff {
 
 		final RawText a = getRawText(id1, reader);
 		final RawText b = getRawText(id2, reader);
-		EditList editList = MyersDiff.INSTANCE
-				.diff(RawTextComparator.DEFAULT, a, b);
+		EditList editList = MyersDiff.INSTANCE.diff(RawTextComparator.DEFAULT,
+				a, b);
 		diffFmt.format(editList, a, b);
 	}
 
 	private String getProjectRelativePath(Repository db, String repoPath) {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
-		IPath absolutePath = new Path(db.getWorkTree().getAbsolutePath()).append(repoPath);
+		IPath absolutePath = new Path(db.getWorkTree().getAbsolutePath())
+				.append(repoPath);
 		IResource resource = root.getFileForLocation(absolutePath);
 		return resource.getProjectRelativePath().toString();
 	}
@@ -270,7 +273,7 @@ public class FileDiff {
 			objectIds.add(diffEntry.getOldId().toObjectId());
 		if (diffEntry.getNewId() != null)
 			objectIds.add(diffEntry.getNewId().toObjectId());
-		return objectIds.toArray(new ObjectId[]{});
+		return objectIds.toArray(new ObjectId[] {});
 	}
 
 	/**
@@ -284,7 +287,7 @@ public class FileDiff {
 			modes.add(diffEntry.getOldMode());
 		if (diffEntry.getOldMode() != null)
 			modes.add(diffEntry.getOldMode());
-		return modes.toArray(new FileMode[]{});
+		return modes.toArray(new FileMode[] {});
 	}
 
 	/**
@@ -299,6 +302,14 @@ public class FileDiff {
 		commit = c;
 	}
 
+	public ImageDescriptor getImageDescriptor(Object object) {
+		return UIUtils.getEditorImage(getPath());
+	}
+
+	public String getLabel(Object object) {
+		return getPath();
+	}
+
 	private static class FileDiffForMerges extends FileDiff {
 		private String path;
 
@@ -309,7 +320,7 @@ public class FileDiff {
 		private FileMode[] modes;
 
 		private FileDiffForMerges(final RevCommit c) {
-			super (c, null);
+			super(c, null);
 		}
 
 		@Override
