@@ -3752,4 +3752,20 @@
 	   supportsArgument="true">
      </variable>
   </extension>
+  <extension
+        point="org.eclipse.mylyn.tasks.bugs.support">
+        <product featureId="org.eclipse.egit" id="org.eclipse.egit" providerId="org.eclipse"/>
+		<mapping namespace="org.eclipse.egit.ui" productId="org.eclipse.egit">
+			<property name="product" value="EGit"/>
+			<property name="component" value="UI"/>
+		</mapping>
+		<mapping namespace="org.eclipse.egit.core" productId="org.eclipse.egit">
+			<property name="product" value="EGit"/>
+			<property name="component" value="Core"/>
+		</mapping>
+		<mapping namespace="org.eclipse.egit.mylyn" productId="org.eclipse.egit">
+			<property name="product" value="EGit"/>
+			<property name="component" value="Mylyn"/>
+		</mapping>
+  </extension>
 </plugin>
