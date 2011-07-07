@@ -226,6 +226,8 @@ public class StagingView extends ViewPart {
 
 	private Action openNewCommitsAction;
 
+	private Action refreshAction;
+
 	@Override
 	public void createPartControl(Composite parent) {
 		GridLayoutFactory.fillDefaults().applyTo(parent);
@@ -491,6 +493,7 @@ public class StagingView extends ViewPart {
 
 		updateSectionText();
 		updateToolbar();
+		enableCommitWidgets(false);
 
 		createPopupMenu(unstagedTableViewer);
 		createPopupMenu(stagedTableViewer);
@@ -517,12 +520,22 @@ public class StagingView extends ViewPart {
 		getSite().setSelectionProvider(unstagedTableViewer);
 	}
 
+	private void enableCommitWidgets(boolean enabled) {
+		commitMessageText.setEnabled(enabled);
+		committerText.setEnabled(enabled);
+		authorText.setEnabled(enabled);
+		refreshAction.setEnabled(enabled);
+		amendPreviousCommitAction.setEnabled(enabled);
+		signedOffByAction.setEnabled(enabled);
+		addChangeIdAction.setEnabled(enabled);
+		commitAction.setEnabled(enabled);
+	}
+
 	private void updateToolbar() {
 		IToolBarManager toolbar = getViewSite().getActionBars()
 				.getToolBarManager();
 
-		// refresh
-		Action refreshAction = new Action(UIText.StagingView_Refresh, IAction.AS_PUSH_BUTTON) {
+		refreshAction = new Action(UIText.StagingView_Refresh, IAction.AS_PUSH_BUTTON) {
 			public void run() {
 				reload(currentRepository);
 			}
@@ -944,6 +957,7 @@ public class StagingView extends ViewPart {
 						final StagingViewUpdate update = new StagingViewUpdate(currentRepository, indexDiff, null);
 						unstagedTableViewer.setInput(update);
 						stagedTableViewer.setInput(update);
+						enableCommitWidgets(true);
 						commitAction.setEnabled(repository.getRepositoryState()
 								.canCommit());
 						form.setText(StagingView.getRepositoryName(repository));
