@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.internal.components.RefContentProposal;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
@@ -26,6 +27,7 @@ import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.resource.FontRegistry;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -38,6 +40,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -154,8 +157,11 @@ public class UIUtils {
 		ControlDecoration dec = new ControlDecoration(control, SWT.TOP
 				| SWT.LEFT);
 
-		dec.setImage(FieldDecorationRegistry.getDefault().getFieldDecoration(
-				FieldDecorationRegistry.DEC_CONTENT_PROPOSAL).getImage());
+		dec.setImage(FieldDecorationRegistry
+				.getDefault()
+				.getFieldDecoration(
+						FieldDecorationRegistry.DEC_CONTENT_PROPOSAL)
+				.getImage());
 
 		dec.setShowOnlyOnFocus(true);
 		dec.setShowHover(true);
@@ -181,8 +187,10 @@ public class UIUtils {
 		KeyStroke stroke;
 		try {
 			stroke = KeyStroke.getInstance("M1+SPACE"); //$NON-NLS-1$
-			addBulbDecorator(textField, NLS.bind(
-					UIText.UIUtils_PressShortcutMessage, stroke.format()));
+			addBulbDecorator(
+					textField,
+					NLS.bind(UIText.UIUtils_PressShortcutMessage,
+							stroke.format()));
 		} catch (ParseException e1) {
 			Activator.handleError(e1.getMessage(), e1, false);
 			stroke = null;
@@ -265,8 +273,7 @@ public class UIUtils {
 				new TextContentAdapter(), cp, stroke,
 				VALUE_HELP_ACTIVATIONCHARS);
 		// set the acceptance style to always replace the complete content
-		adapter
-				.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 
 		return new IPreviousValueProposalHandler() {
 			public void updateProposals() {
@@ -304,8 +311,8 @@ public class UIUtils {
 						while (values.size() > 10)
 							values.remove(values.size() - 1);
 
-						settings.put(preferenceKey, values
-								.toArray(new String[values.size()]));
+						settings.put(preferenceKey,
+								values.toArray(new String[values.size()]));
 					}
 				}
 			}
@@ -328,8 +335,10 @@ public class UIUtils {
 		KeyStroke stroke;
 		try {
 			stroke = KeyStroke.getInstance("M1+SPACE"); //$NON-NLS-1$
-			UIUtils.addBulbDecorator(textField, NLS.bind(
-					UIText.UIUtils_PressShortcutMessage, stroke.format()));
+			UIUtils.addBulbDecorator(
+					textField,
+					NLS.bind(UIText.UIUtils_PressShortcutMessage,
+							stroke.format()));
 		} catch (ParseException e1) {
 			Activator.handleError(e1.getMessage(), e1, false);
 			stroke = null;
@@ -395,12 +404,12 @@ public class UIUtils {
 				new TextContentAdapter(), cp, stroke,
 				UIUtils.VALUE_HELP_ACTIVATIONCHARS);
 		// set the acceptance style to always replace the complete content
-		adapter
-				.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 	}
 
 	/**
 	 * Set enabled state of the control and all its children
+	 *
 	 * @param control
 	 * @param enable
 	 */
@@ -428,6 +437,23 @@ public class UIUtils {
 				resource.dispose();
 			}
 		});
+	}
+
+	/**
+	 * Get editor image for path
+	 *
+	 * @param path
+	 * @return image descriptor
+	 */
+	public static ImageDescriptor getEditorImage(final String path) {
+		if (path != null && path.length() > 0) {
+			final String name = new Path(path).lastSegment();
+			if (name != null)
+				return PlatformUI.getWorkbench().getEditorRegistry()
+						.getImageDescriptor(name);
+		}
+		return PlatformUI.getWorkbench().getSharedImages()
+				.getImageDescriptor(ISharedImages.IMG_OBJ_FILE);
 	}
 
 }
