@@ -16,6 +16,23 @@
       "revId": "10e51a448e6f4e2be035f4e10366e8d13ddf54f4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX///VI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CherryPickHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-07T21:41:17Z",
+      "side": 1,
+      "message": "this text should be translatable as well as it is used to construct an error message displayed to the user",
+      "revId": "10e51a448e6f4e2be035f4e10366e8d13ddf54f4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
