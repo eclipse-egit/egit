@@ -16,6 +16,24 @@
       "revId": "077592a7334c4f54d8d2012ef7285712414bf009",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX///cA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-07-06T23:42:43Z",
+      "side": 1,
+      "message": "The link is on line 583, I switched to a CLabel for the text and icon so we don\u0027t need an extra control and so it could degrade gracefully when not enough space exists for both the icon and text.",
+      "parentUuid": "AABOAX///cI\u003d",
+      "revId": "077592a7334c4f54d8d2012ef7285712414bf009",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
