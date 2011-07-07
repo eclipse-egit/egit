@@ -795,11 +795,13 @@ public class UIText extends NLS {
 	/** */
 	public static String CherryPickHandler_CouldNotDeleteFile;
 
+	/** */
 	public static String CherryPickHandler_ErrorMsgTemplate;
 
 	/** */
 	public static String CherryPickHandler_IndexDirty;
 
+	/** */
 	public static String CherryPickHandler_unknown;
 
 	/** */
