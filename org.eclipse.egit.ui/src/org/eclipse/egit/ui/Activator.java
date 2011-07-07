@@ -128,6 +128,17 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	}
 
 	/**
+	 * Shows an error. The error is NOT logged.
+	 *
+	 * @param message
+	 *            a localized message
+	 * @param status
+	 */
+	public static void showErrorStatus(String message, IStatus status) {
+		StatusManager.getManager().handle(status, StatusManager.SHOW);
+	}
+
+	/**
 	 * Get the theme used by this plugin.
 	 *
 	 * @return our theme.
