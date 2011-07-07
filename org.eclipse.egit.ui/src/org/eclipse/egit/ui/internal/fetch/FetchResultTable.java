@@ -1,238 +1,330 @@
 package org.eclipse.egit.ui.internal.fetch;
 
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.jface.layout.TableColumnLayout;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.egit.ui.internal.WorkbenchStyledCellLabelProvider;
+import org.eclipse.egit.ui.internal.commit.CommitEditor;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
-import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.IOpenListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.OpenEvent;
+import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RefUpdate.Result;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.TrackingRefUpdate;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.model.WorkbenchAdapter;
+import org.eclipse.ui.model.WorkbenchContentProvider;
 
 /**
  * Component displaying table with results of fetch operation.
  */
 class FetchResultTable {
-	private static final int TABLE_PREFERRED_HEIGHT = 600;
 
-	private static final int TABLE_PREFERRED_WIDTH = 300;
+	private class FetchResultAdapter extends WorkbenchAdapter {
 
-	private static final int COLUMN_SRC_WEIGHT = 10;
+		private final TrackingRefUpdate update;
 
-	private static final int COLUMN_DST_WEIGHT = 10;
+		private Object[] children;
 
-	private static final int COLUMN_STATUS_WEIGHT = 7;
+		public FetchResultAdapter(TrackingRefUpdate update) {
+			this.update = update;
+		}
 
-	private final Composite tablePanel;
+		public String getLabel(Object object) {
+			return getStyledText(object).getString();
+		}
 
-	private final TableViewer tableViewer;
+		public ImageDescriptor getImageDescriptor(Object object) {
+			switch (update.getResult()) {
+			case IO_FAILURE:
+			case LOCK_FAILURE:
+			case REJECTED_CURRENT_BRANCH:
+			case REJECTED:
+				return PlatformUI.getWorkbench().getSharedImages()
+						.getImageDescriptor(ISharedImages.IMG_OBJS_ERROR_TSK);
+			case FORCED:
+			case RENAMED:
+			case FAST_FORWARD:
+				if (update.getRemoteName().startsWith(Constants.R_HEADS))
+					return UIIcons.BRANCH;
+				if (update.getLocalName().startsWith(Constants.R_TAGS))
+					return UIIcons.TAG;
+				if (update.getLocalName().startsWith(Constants.R_NOTES))
+					return UIIcons.NOTE;
+				break;
+			case NEW:
+				if (update.getRemoteName().startsWith(Constants.R_HEADS))
+					return UIIcons.CREATE_BRANCH;
+				if (update.getLocalName().startsWith(Constants.R_TAGS))
+					return UIIcons.CREATE_TAG;
+				if (update.getLocalName().startsWith(Constants.R_NOTES))
+					return UIIcons.NOTE;
+				break;
+			default:
+				return super.getImageDescriptor(object);
+			}
+			return super.getImageDescriptor(object);
+		}
 
-	private final Color rejectedColor;
+		private void addCommits(StyledString styled, String separator) {
+			styled.append('[', StyledString.DECORATIONS_STYLER);
+			styled.append(safeAbbreviate(update.getNewObjectId()),
+					StyledString.DECORATIONS_STYLER);
+			styled.append(separator, StyledString.DECORATIONS_STYLER);
+			styled.append(safeAbbreviate(update.getOldObjectId()),
+					StyledString.DECORATIONS_STYLER);
+			styled.append(']', StyledString.DECORATIONS_STYLER);
 
-	private final Color updatedColor;
+			styled.append(MessageFormat.format(
+					UIText.FetchResultTable_counterCommits,
+					Integer.valueOf(getChildren(this).length)),
+					StyledString.COUNTER_STYLER);
+		}
 
-	private final Color upToDateColor;
+		public Object[] getChildren(Object object) {
+			if (children != null)
+				return children;
+
+			switch (update.getResult()) {
+			case FORCED:
+			case FAST_FORWARD:
+				RevWalk walk = new RevWalk(reader);
+				try {
+					walk.setRetainBody(true);
+					walk.markStart(walk.parseCommit(update.getNewObjectId()));
+					walk.markUninteresting(walk.parseCommit(update
+							.getOldObjectId()));
+					List<RepositoryCommit> commits = new ArrayList<RepositoryCommit>();
+					for (RevCommit commit : walk)
+						commits.add(new RepositoryCommit(repo, commit));
+					children = commits.toArray();
+					break;
+				} catch (IOException e) {
+					Activator.logError(
+							"Error parsing commits from fetch result", e); //$NON-NLS-1$
+				} finally {
+					walk.release();
+				}
+				//$FALL-THROUGH$
+			default:
+				children = super.getChildren(object);
+			}
+			return children;
+		}
+
+		public StyledString getStyledText(Object object) {
+			StyledString styled = new StyledString();
+			final String remote = update.getRemoteName();
+			final String local = update.getLocalName();
+			styled.append(Repository.shortenRefName(remote));
+			styled.append(": ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
+			styled.append(Repository.shortenRefName(local),
+					StyledString.QUALIFIER_STYLER);
+			styled.append(' ');
+			switch (update.getResult()) {
+			case LOCK_FAILURE:
+				styled.append(UIText.FetchResultTable_statusLockFailure,
+						StyledString.DECORATIONS_STYLER);
+				break;
+			case IO_FAILURE:
+				styled.append(UIText.FetchResultTable_statusIOError,
+						StyledString.DECORATIONS_STYLER);
+				break;
+			case NEW:
+				if (remote.startsWith(Constants.R_HEADS))
+					styled.append(UIText.FetchResultTable_statusNewBranch,
+							StyledString.DECORATIONS_STYLER);
+				else if (local.startsWith(Constants.R_TAGS))
+					styled.append(UIText.FetchResultTable_statusNewTag,
+							StyledString.DECORATIONS_STYLER);
+				else
+					styled.append(UIText.FetchResultTable_statusNew,
+							StyledString.DECORATIONS_STYLER);
+				break;
+			case FORCED:
+				addCommits(styled, "..."); //$NON-NLS-1$
+				break;
+			case FAST_FORWARD:
+				addCommits(styled, ".."); //$NON-NLS-1$
+				break;
+			case REJECTED:
+				styled.append(UIText.FetchResultTable_statusRejected,
+						StyledString.DECORATIONS_STYLER);
+				break;
+			case NO_CHANGE:
+				styled.append(UIText.FetchResultTable_statusUpToDate,
+						StyledString.DECORATIONS_STYLER);
+				break;
+			default:
+				break;
+			}
+			return styled;
+		}
+	}
+
+	private final Composite treePanel;
+
+	private final TreeViewer treeViewer;
+
+	private Repository repo;
 
 	private ObjectReader reader;
 
 	private Map<ObjectId, String> abbrevations;
 
 	FetchResultTable(final Composite parent) {
-		tablePanel = new Composite(parent, SWT.NONE);
-		tablePanel.setLayout(new GridLayout());
-		final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		layoutData.heightHint = TABLE_PREFERRED_HEIGHT;
-		layoutData.widthHint = TABLE_PREFERRED_WIDTH;
-		tableViewer = new TableViewer(tablePanel);
-		ColumnViewerToolTipSupport.enableFor(tableViewer);
-		final Table table = tableViewer.getTable();
-		table.setLinesVisible(true);
-		table.setHeaderVisible(true);
-
-		rejectedColor = new Color(parent.getDisplay(), 255, 0, 0);
-		updatedColor = new Color(parent.getDisplay(), 0, 255, 0);
-		upToDateColor = new Color(parent.getDisplay(), 245, 245, 245);
-
-		tablePanel.addDisposeListener(new DisposeListener() {
-			public void widgetDisposed(DisposeEvent e) {
-				if (reader != null)
-					reader.release();
-
-				// dispose of our allocated Color instances
-				rejectedColor.dispose();
-				updatedColor.dispose();
-				upToDateColor.dispose();
-			}
-		});
-
-		tableViewer.setContentProvider(new TrackingRefUpdateContentProvider());
-		tableViewer.setInput(null);
-
-		createTableColumns();
-	}
-
-	void setData(final Repository db, final FetchResult fetchResult) {
-		tableViewer.setInput(null);
-		this.reader = db.newObjectReader();
-		this.abbrevations = new HashMap<ObjectId, String>();
-		tableViewer.setInput(fetchResult);
-	}
-
-	Control getControl() {
-		return tablePanel;
-	}
-
-	private void createTableColumns() {
-		final TableColumnLayout layout = new TableColumnLayout();
-		tablePanel.setLayout(layout);
-
-		final TableViewerColumn srcViewer = createColumn(layout,
-				UIText.FetchResultTable_columnSrc, COLUMN_SRC_WEIGHT, SWT.LEFT);
-		srcViewer.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				return ((TrackingRefUpdate) element).getRemoteName();
-			}
-		});
-
-		final TableViewerColumn dstViewer = createColumn(layout,
-				UIText.FetchResultTable_columnDst, COLUMN_DST_WEIGHT, SWT.LEFT);
-		dstViewer.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				return ((TrackingRefUpdate) element).getLocalName();
-			}
-		});
-
-		final TableViewerColumn statusViewer = createColumn(layout,
-				UIText.FetchResultTable_columnStatus, COLUMN_STATUS_WEIGHT,
-				SWT.LEFT);
-		statusViewer.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(final Object element) {
-				final TrackingRefUpdate tru = (TrackingRefUpdate) element;
-				final RefUpdate.Result r = tru.getResult();
-				if (r == RefUpdate.Result.LOCK_FAILURE)
-					return UIText.FetchResultTable_statusLockFailure;
-
-				if (r == RefUpdate.Result.IO_FAILURE)
-					return UIText.FetchResultTable_statusIOError;
-
-				if (r == RefUpdate.Result.NEW) {
-					if (tru.getRemoteName().startsWith(Constants.R_HEADS))
-						return UIText.FetchResultTable_statusNewBranch;
-					else if (tru.getLocalName().startsWith(Constants.R_TAGS))
-						return UIText.FetchResultTable_statusNewTag;
-					return UIText.FetchResultTable_statusNew;
-				}
-
-				if (r == RefUpdate.Result.FORCED) {
-					final String o = safeAbbreviate(tru.getOldObjectId());
-					final String n = safeAbbreviate(tru.getNewObjectId());
-					return o + "..." + n; //$NON-NLS-1$
-				}
-
-				if (r == RefUpdate.Result.FAST_FORWARD) {
-					final String o = safeAbbreviate(tru.getOldObjectId());
-					final String n = safeAbbreviate(tru.getNewObjectId());
-					return o + ".." + n; //$NON-NLS-1$
-				}
-
-				if (r == RefUpdate.Result.REJECTED)
-					return UIText.FetchResultTable_statusRejected;
-				if (r == RefUpdate.Result.NO_CHANGE)
-					return UIText.FetchResultTable_statusUpToDate;
-				throw new IllegalArgumentException(NLS.bind(
-						UIText.FetchResultTable_statusUnexpected, r));
-			}
-
-			private String safeAbbreviate(ObjectId id) {
-				String abbrev = abbrevations.get(id);
-				if (abbrev == null) {
-					try {
-						abbrev = reader.abbreviate(id).name();
-					} catch (IOException cannotAbbreviate) {
-						abbrev = id.name();
-					}
-					abbrevations.put(id, abbrev);
-				}
-				return abbrev;
-			}
+		treePanel = new Composite(parent, SWT.NONE);
+		treePanel.setLayout(new GridLayout());
+		treeViewer = new TreeViewer(treePanel);
+		treeViewer.setLabelProvider(new WorkbenchStyledCellLabelProvider() {
 
 			@Override
 			public String getToolTipText(final Object element) {
-				final Result result = ((TrackingRefUpdate) element).getResult();
-				switch (result) {
-				case FAST_FORWARD:
-					return UIText.FetchResultTable_statusDetailFastForward;
-				case FORCED:
-				case REJECTED:
-					return UIText.FetchResultTable_statusDetailNonFastForward;
-				case NEW:
-				case NO_CHANGE:
-					return null;
-				case IO_FAILURE:
-					return UIText.FetchResultTable_statusDetailIOError;
-				case LOCK_FAILURE:
-					return UIText.FetchResultTable_statusDetailCouldntLock;
-				default:
-					throw new IllegalArgumentException(NLS.bind(
-							UIText.FetchResultTable_statusUnexpected, result));
+				if (element instanceof FetchResultAdapter) {
+					switch (((FetchResultAdapter) element).update.getResult()) {
+					case FAST_FORWARD:
+						return UIText.FetchResultTable_statusDetailFastForward;
+					case FORCED:
+					case REJECTED:
+						return UIText.FetchResultTable_statusDetailNonFastForward;
+					case IO_FAILURE:
+						return UIText.FetchResultTable_statusDetailIOError;
+					case LOCK_FAILURE:
+						return UIText.FetchResultTable_statusDetailCouldntLock;
+					default:
+						return super.getToolTipText(element);
+					}
 				}
+				return super.getToolTipText(element);
 			}
 
-			@Override
-			public Color getBackground(final Object element) {
-				final Result result = ((TrackingRefUpdate) element).getResult();
-				switch (result) {
-				case FAST_FORWARD:
-				case FORCED:
-				case NEW:
-					return updatedColor;
-				case NO_CHANGE:
-					return upToDateColor;
-				case IO_FAILURE:
-				case LOCK_FAILURE:
-				case REJECTED:
-					return rejectedColor;
-				default:
-					throw new IllegalArgumentException(NLS.bind(
-							UIText.FetchResultTable_statusUnexpected, result));
+		});
+		treeViewer.setSorter(new ViewerSorter() {
+
+			public int compare(Viewer viewer, Object e1, Object e2) {
+				if (e1 instanceof FetchResultAdapter
+						&& e2 instanceof FetchResultAdapter) {
+					FetchResultAdapter f1 = (FetchResultAdapter) e1;
+					FetchResultAdapter f2 = (FetchResultAdapter) e2;
+					if (f1.getChildren(f1).length > 0
+							&& f2.getChildren(f2).length == 0)
+						return 1;
+					if (f1.getChildren(f1).length == 0
+							&& f2.getChildren(f2).length > 0)
+						return -1;
+
+					return f1.getLabel(f1).compareToIgnoreCase(f2.getLabel(f2));
 				}
+
+				// Leave commits order alone
+				if (e1 instanceof RepositoryCommit
+						&& e2 instanceof RepositoryCommit)
+					return 0;
+
+				return super.compare(viewer, e1, e2);
+			}
+
+		});
+		ColumnViewerToolTipSupport.enableFor(treeViewer);
+		final Tree tree = treeViewer.getTree();
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(tree);
+		tree.setLinesVisible(true);
+
+		treePanel.addDisposeListener(new DisposeListener() {
+			public void widgetDisposed(DisposeEvent e) {
+				if (reader != null)
+					reader.release();
+			}
+		});
+
+		treeViewer.setContentProvider(new WorkbenchContentProvider() {
+
+			public Object[] getElements(Object inputElement) {
+				if (inputElement == null)
+					return new FetchResultAdapter[0];
+
+				final FetchResult result = (FetchResult) inputElement;
+				TrackingRefUpdate[] updates = result.getTrackingRefUpdates()
+						.toArray(new TrackingRefUpdate[0]);
+				FetchResultAdapter[] elements = new FetchResultAdapter[updates.length];
+				for (int i = 0; i < elements.length; i++)
+					elements[i] = new FetchResultAdapter(updates[i]);
+				return elements;
+			}
+
+			public Object[] getChildren(Object element) {
+				if (element instanceof RepositoryCommit)
+					return ((RepositoryCommit) element).getDiffs();
+				return super.getChildren(element);
+			}
+
+		});
+
+		treeViewer.addOpenListener(new IOpenListener() {
+
+			public void open(OpenEvent event) {
+				ISelection selection = event.getSelection();
+				if (selection instanceof IStructuredSelection)
+					for (Object element : ((IStructuredSelection) selection)
+							.toArray())
+						if (element instanceof RepositoryCommit)
+							CommitEditor.openQuiet((RepositoryCommit) element);
 			}
 		});
 	}
 
-	private TableViewerColumn createColumn(
-			final TableColumnLayout columnLayout, final String text,
-			final int weight, final int style) {
-		final TableViewerColumn viewerColumn = new TableViewerColumn(
-				tableViewer, style);
-		final TableColumn column = viewerColumn.getColumn();
-		column.setText(text);
-		columnLayout.setColumnData(column, new ColumnWeightData(weight));
-		return viewerColumn;
+	void setData(final Repository db, final FetchResult fetchResult) {
+		treeViewer.setInput(null);
+		repo = db;
+		reader = db.newObjectReader();
+		abbrevations = new HashMap<ObjectId, String>();
+		treeViewer.setInput(fetchResult);
 	}
+
+	private String safeAbbreviate(ObjectId id) {
+		String abbrev = abbrevations.get(id);
+		if (abbrev == null) {
+			try {
+				abbrev = reader.abbreviate(id).name();
+			} catch (IOException cannotAbbreviate) {
+				abbrev = id.name();
+			}
+			abbrevations.put(id, abbrev);
+		}
+		return abbrev;
+	}
+
+	Control getControl() {
+		return treePanel;
+	}
+
 }
