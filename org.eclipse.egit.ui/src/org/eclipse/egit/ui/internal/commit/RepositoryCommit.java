@@ -11,17 +11,23 @@
 package org.eclipse.egit.ui.internal.commit;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.notes.Note;
@@ -29,7 +35,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.ui.model.IWorkbenchAdapter;
+import org.eclipse.ui.model.WorkbenchAdapter;
 
 /**
  * Class that encapsulates a particular {@link Repository} instance and
@@ -38,8 +44,24 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
  * This class computes and provides access to the {@link FileDiff} objects
  * introduced by the commit.
  */
-public class RepositoryCommit extends PlatformObject implements
-		IWorkbenchAdapter {
+public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
+
+	private static DateFormat FORMAT = DateFormat.getDateTimeInstance(
+			DateFormat.MEDIUM, DateFormat.SHORT);
+
+	/**
+	 * Format commit date
+	 *
+	 * @param date
+	 * @return date string
+	 */
+	public static String formatDate(final Date date) {
+		if (date == null)
+			return ""; //$NON-NLS-1$
+		synchronized (FORMAT) {
+			return FORMAT.format(date);
+		}
+	}
 
 	/**
 	 * NAME_LENGTH
@@ -67,9 +89,6 @@ public class RepositoryCommit extends PlatformObject implements
 		this.commit = commit;
 	}
 
-	/**
-	 * @see org.eclipse.core.runtime.PlatformObject#getAdapter(java.lang.Class)
-	 */
 	public Object getAdapter(Class adapter) {
 		if (Repository.class == adapter)
 			return repository;
@@ -77,7 +96,7 @@ public class RepositoryCommit extends PlatformObject implements
 		if (RevCommit.class == adapter)
 			return commit;
 
-		return super.getAdapter(adapter);
+		return Platform.getAdapterManager().getAdapter(this, adapter);
 	}
 
 	/**
@@ -189,6 +208,22 @@ public class RepositoryCommit extends PlatformObject implements
 
 	public Object getParent(Object o) {
 		return null;
+	}
+
+	public StyledString getStyledText(Object object) {
+		StyledString styled = new StyledString();
+		styled.append(abbreviate());
+		styled.append(": "); //$NON-NLS-1$
+		styled.append(commit.getShortMessage());
+
+		PersonIdent person = commit.getAuthorIdent();
+		if (person == null)
+			person = commit.getCommitterIdent();
+		if (person != null)
+			styled.append(MessageFormat.format(" ({0} on {1})", //$NON-NLS-1$
+					person.getName(), formatDate(person.getWhen())),
+					StyledString.QUALIFIER_STYLER);
+		return styled;
 	}
 
 }
