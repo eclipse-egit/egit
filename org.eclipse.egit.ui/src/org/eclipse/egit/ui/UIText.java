@@ -667,6 +667,18 @@ public class UIText extends NLS {
 	public static String RebaseTargetSelectionDialog_RebaseTitle;
 
 	/** */
+	public static String ReplaceTargetSelectionDialog_ReplaceButton;
+
+	/** */
+	public static String ReplaceTargetSelectionDialog_ReplaceMessage;
+
+	/** */
+	public static String ReplaceTargetSelectionDialog_ReplaceTitle;
+
+	/** */
+	public static String ReplaceTargetSelectionDialog_ReplaceWindowTitle;
+
+	/** */
 	public static String RepositoryPropertySource_EditConfigButton;
 
 	/** */
