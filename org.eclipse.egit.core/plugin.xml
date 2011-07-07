@@ -17,5 +17,8 @@
      <ignore
            enabled="true"
            pattern=".git"/>
+     <ignore
+           enabled="true"
+           pattern="*/.git/*"/>
   </extension>
 </plugin>
