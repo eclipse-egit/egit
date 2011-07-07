@@ -16,7 +16,9 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.RemoteResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
 import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
 import org.eclipse.egit.core.synchronize.GitSubscriberResourceMappingContext;
@@ -58,15 +60,6 @@ public class GitModelSynchronize {
 	 */
 	public static final void launch(final GitSynchronizeDataSet gsdSet,
 			IResource[] resources) {
-		boolean launchFetch = Activator.getDefault().getPreferenceStore()
-				.getBoolean(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH);
-		Job fetchJob = null;
-		if (launchFetch) {
-			fetchJob = new SynchronizeFetchJob(gsdSet);
-			fetchJob.setUser(true);
-			fetchJob.schedule();
-		}
-
 		ResourceMapping[] mappings = getSelectedResourceMappings(resources);
 
 		GitResourceVariantTreeSubscriber subscriber = new GitResourceVariantTreeSubscriber(
@@ -77,25 +70,31 @@ public class GitModelSynchronize {
 				subscriber.getName(), mappings, subscriber, remoteContext, true);
 		GitSubscriberMergeContext context = new GitSubscriberMergeContext(
 				subscriber, manager, gsdSet);
-		GitModelSynchronizeParticipant participant = new GitModelSynchronizeParticipant(
+		final GitModelSynchronizeParticipant participant = new GitModelSynchronizeParticipant(
 				context);
 
 		TeamUI.getSynchronizeManager().addSynchronizeParticipants(
 				new ISynchronizeParticipant[] { participant });
-		IWorkbenchWindow window = PlatformUI.getWorkbench()
+		final IWorkbenchWindow window = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
-		IWorkbenchPart activePart = null;
-		if (window != null)
-			activePart = window.getActivePage().getActivePart();
 
-		if (launchFetch && fetchJob != null)
-			try {
-				fetchJob.join();
-			} catch (InterruptedException e) {
-				Activator.logError("Fetch operation interupted", e); //$NON-NLS-1$
-			}
+		boolean launchFetch = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH);
+		Job fetchJob = null;
+		if (launchFetch) {
+			fetchJob = new SynchronizeFetchJob(gsdSet);
+			fetchJob.setUser(true);
 
-		participant.run(activePart);
+			fetchJob.addJobChangeListener(new JobChangeAdapter() {
+				@Override
+				public void done(IJobChangeEvent event) {
+					IWorkbenchPart activePart = window.getActivePage().getActivePart();
+					participant.run(activePart);
+				}
+			});
+
+			fetchJob.schedule();
+		}
 	}
 
 	/**

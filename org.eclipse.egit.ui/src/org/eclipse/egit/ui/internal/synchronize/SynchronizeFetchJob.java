@@ -81,6 +81,7 @@ class SynchronizeFetchJob extends Job {
 			monitor.worked(1);
 		}
 
+		monitor.done();
 		return Status.OK_STATUS;
 	}
 
