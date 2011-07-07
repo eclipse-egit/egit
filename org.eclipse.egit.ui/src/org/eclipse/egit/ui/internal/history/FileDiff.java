@@ -20,6 +20,8 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.DiffFormatter;
@@ -39,12 +41,13 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.ui.model.WorkbenchAdapter;
 
 /**
  * A class with information about the changes to a file introduced in a
  * commit.
  */
-public class FileDiff {
+public class FileDiff extends WorkbenchAdapter {
 
 	private final RevCommit commit;
 
@@ -297,6 +300,14 @@ public class FileDiff {
 	public FileDiff(final RevCommit c, final DiffEntry entry) {
 		diffEntry = entry;
 		commit = c;
+	}
+
+	public ImageDescriptor getImageDescriptor(Object object) {
+		return UIUtils.getEditorImage(getPath());
+	}
+
+	public String getLabel(Object object) {
+		return getPath();
 	}
 
 	private static class FileDiffForMerges extends FileDiff {
