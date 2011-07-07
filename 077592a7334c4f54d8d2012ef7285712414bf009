@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX///cI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-07-06T23:40:38Z",
+      "side": 1,
+      "message": "CLabel doesn\u0027t render hyperlinks. Did you mean to use a Link control instead?",
+      "revId": "077592a7334c4f54d8d2012ef7285712414bf009",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
