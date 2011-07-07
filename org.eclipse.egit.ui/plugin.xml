@@ -3661,9 +3661,6 @@
       </context>
    </extension>
    <extension
-         point="org.eclipse.core.expressions.propertyTesters">
-   </extension>
-   <extension
          point="org.eclipse.ui.editors">
       <editor
             class="org.eclipse.egit.ui.internal.commit.CommitEditor"
