@@ -16,6 +16,7 @@ import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.api.RebaseResult;
@@ -25,6 +26,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -66,16 +68,19 @@ public class PullResultDialog extends Dialog {
 		Group fetchResultGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		fetchResultGroup
 				.setText(UIText.PullResultDialog_FetchResultGroupHeader);
-		fetchResultGroup.setLayout(new GridLayout(1, false));
+		GridLayoutFactory.fillDefaults().applyTo(fetchResultGroup);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(
 				fetchResultGroup);
 		FetchResult fRes = result.getFetchResult();
 		if (fRes != null && !fRes.getTrackingRefUpdates().isEmpty()) {
 			FetchResultDialog dlg = new FetchResultDialog(getParentShell(),
 					repo, fRes, result.getFetchedFrom());
-			Control fresult = dlg.createDialogArea(fetchResultGroup);
-			GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT,
-					130).applyTo(fresult);
+			Control fresult = dlg.createFetchResultTable(fetchResultGroup);
+			Object layoutData = fresult.getLayoutData();
+			if (layoutData instanceof GridData)
+				GridDataFactory.createFrom((GridData) layoutData)
+						.hint(SWT.DEFAULT, 130).applyTo(fresult);
+
 		} else {
 			Label noResult = new Label(fetchResultGroup, SWT.NONE);
 			if (result.getFetchedFrom().equals(".")) //$NON-NLS-1$

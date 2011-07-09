@@ -889,6 +889,9 @@ public class UIText extends NLS {
 	public static String RepositoryAction_multiRepoSelectionTitle;
 
 	/** */
+	public static String RepositoryCommit_UserAndDate;
+
+	/** */
 	public static String RepositorySearchDialog_browse;
 
 	/** */
@@ -2236,13 +2239,13 @@ public class UIText extends NLS {
 	public static String FetchResultDialog_title;
 
 	/** */
-	public static String FetchResultTable_columnDst;
+	public static String FetchResultTable_collapseAll;
 
 	/** */
-	public static String FetchResultTable_columnSrc;
+	public static String FetchResultTable_counterCommits;
 
 	/** */
-	public static String FetchResultTable_columnStatus;
+	public static String FetchResultTable_expandAll;
 
 	/** */
 	public static String FetchResultTable_statusDetailCouldntLock;
