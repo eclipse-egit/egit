@@ -31,7 +31,6 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -95,10 +94,10 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 						ConfigConstants.CONFIG_KEY_URL);
 		SWTBotShell confirm = bot.shell(NLS.bind(
 				UIText.FetchResultDialog_title, uri));
-		SWTBotTable table = confirm.bot().table();
-		String branch = table.getTableItem(0).getText(2);
-		assertTrue("Wrong result", previousCommit.startsWith(branch.substring(
-				0, 7)));
+		SWTBotTree tree = confirm.bot().tree();
+		String branch = tree.getAllItems()[0].getText();
+		assertTrue("Wrong result",
+				branch.contains(previousCommit.substring(0, 7)));
 
 		confirm.close();
 
@@ -109,7 +108,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 		fetchDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
 		fetchDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
 		confirm = bot.shell(NLS.bind(UIText.FetchResultDialog_title, uri));
-		int count = confirm.bot().table().rowCount();
+		int count = confirm.bot().tree().rowCount();
 
 		confirm.close();
 
