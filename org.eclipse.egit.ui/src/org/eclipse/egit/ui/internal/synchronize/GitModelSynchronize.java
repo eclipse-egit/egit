@@ -80,20 +80,20 @@ public class GitModelSynchronize {
 
 		boolean launchFetch = Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH);
-		Job fetchJob = null;
 		if (launchFetch) {
-			fetchJob = new SynchronizeFetchJob(gsdSet);
+			Job fetchJob = new SynchronizeFetchJob(gsdSet);
 			fetchJob.setUser(true);
 
 			fetchJob.addJobChangeListener(new JobChangeAdapter() {
 				@Override
 				public void done(IJobChangeEvent event) {
-					IWorkbenchPart activePart = window.getActivePage().getActivePart();
-					participant.run(activePart);
+					fireSynchronizeAction(participant, window);
 				}
 			});
 
 			fetchJob.schedule();
+		} else {
+			fireSynchronizeAction(participant, window);
 		}
 	}
 
@@ -155,6 +155,15 @@ public class GitModelSynchronize {
 				return true;
 		}
 		return false;
+	}
+
+	private static void fireSynchronizeAction(
+			GitModelSynchronizeParticipant participant, IWorkbenchWindow window) {
+		IWorkbenchPart activePart = null;
+		if (window != null)
+			activePart = window.getActivePage().getActivePart();
+
+		participant.run(activePart);
 	}
 
 	private GitModelSynchronize() {
