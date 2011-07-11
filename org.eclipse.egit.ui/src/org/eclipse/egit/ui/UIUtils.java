@@ -35,6 +35,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Resource;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -450,4 +452,16 @@ public class UIUtils {
 				.getImageDescriptor(ISharedImages.IMG_OBJ_FILE);
 	}
 
+	/**
+	 * Get size of image descriptor as point.
+	 *
+	 * @param descriptor
+	 * @return size
+	 */
+	public static Point getSize(ImageDescriptor descriptor) {
+		ImageData data = descriptor.getImageData();
+		if (data == null)
+			return new Point(0, 0);
+		return new Point(data.width, data.height);
+	}
 }

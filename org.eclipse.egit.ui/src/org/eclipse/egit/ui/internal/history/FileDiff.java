@@ -20,8 +20,11 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.DecorationOverlayDescriptor;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.DiffFormatter;
@@ -303,7 +306,17 @@ public class FileDiff extends WorkbenchAdapter {
 	}
 
 	public ImageDescriptor getImageDescriptor(Object object) {
-		return UIUtils.getEditorImage(getPath());
+		final ImageDescriptor base = UIUtils.getEditorImage(getPath());
+		switch (getChange()) {
+		case ADD:
+			return new DecorationOverlayDescriptor(base,
+					UIIcons.OVR_STAGED_ADD, IDecoration.BOTTOM_RIGHT);
+		case DELETE:
+			return new DecorationOverlayDescriptor(base,
+					UIIcons.OVR_STAGED_REMOVE, IDecoration.BOTTOM_RIGHT);
+		default:
+			return base;
+		}
 	}
 
 	public String getLabel(Object object) {
