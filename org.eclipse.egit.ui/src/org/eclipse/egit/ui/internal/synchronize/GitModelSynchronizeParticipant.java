@@ -27,6 +27,9 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.synchronize.compare.ComparisonDataSource;
 import org.eclipse.egit.ui.internal.synchronize.compare.GitCompareInput;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -83,13 +86,19 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 		configuration.setProperty(ISynchronizePageConfiguration.P_VIEWER_ID,
 				VIEWER_ID);
 		String modelProvider;
-		if (Activator
-				.getDefault()
-				.getPreferenceStore()
-				.getBoolean(UIPreferences.SYNC_VIEW_ALWAYS_SHOW_CHANGESET_MODEL))
+		final IPreferenceStore preferenceStore = Activator.getDefault()
+				.getPreferenceStore();
+		if (preferenceStore
+				.getBoolean(UIPreferences.SYNC_VIEW_ALWAYS_SHOW_CHANGESET_MODEL)) {
 			modelProvider = GitChangeSetModelProvider.ID;
-		else
-			modelProvider = WORKSPACE_MODEL_PROVIDER_ID;
+		} else {
+			String lastSelectedModel = preferenceStore.getString(UIPreferences.SYNC_VIEW_LAST_SELECTED_MODEL);
+			if (!"".equals(lastSelectedModel)) //$NON-NLS-1$
+				modelProvider = lastSelectedModel;
+			else
+				modelProvider = WORKSPACE_MODEL_PROVIDER_ID;
+		}
+
 		configuration.setProperty(
 				ModelSynchronizeParticipant.P_VISIBLE_MODEL_PROVIDER,
 				modelProvider);
@@ -99,6 +108,19 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 		super.initializeConfiguration(configuration);
 
 		configuration.addActionContribution(new GitActionContributor());
+
+		configuration.addPropertyChangeListener(new IPropertyChangeListener() {
+
+			public void propertyChange(PropertyChangeEvent event) {
+				if (event.getProperty().equals(
+						ModelSynchronizeParticipant.P_VISIBLE_MODEL_PROVIDER)) {
+					String newValue = (String) event.getNewValue();
+					preferenceStore.setValue(
+							UIPreferences.SYNC_VIEW_LAST_SELECTED_MODEL,
+							newValue);
+				}
+			}
+		});
 	}
 
 	@Override
