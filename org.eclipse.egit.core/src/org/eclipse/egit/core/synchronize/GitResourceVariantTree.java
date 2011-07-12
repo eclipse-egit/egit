@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -54,7 +55,11 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 	public IResource[] roots() {
 		Set<IResource> roots = new HashSet<IResource>();
 		for (GitSynchronizeData gsd : gsds)
-			roots.addAll(gsd.getProjects());
+			if (gsd.getPathFilter() == null)
+				roots.addAll(gsd.getProjects());
+			else
+				for (IContainer container : gsd.getIncludedPaths())
+					roots.add(container.getProject());
 
 		return roots.toArray(new IResource[roots.size()]);
 	}
