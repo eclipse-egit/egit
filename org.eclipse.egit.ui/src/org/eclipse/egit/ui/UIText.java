@@ -2074,6 +2074,9 @@ public class UIText extends NLS {
 	public static String PushResultTable_columnMode;
 
 	/** */
+	public static String PushResultTable_MesasgeText;
+
+	/** */
 	public static String PushResultTable_statusUnexpected;
 
 	/** */
@@ -3321,6 +3324,15 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RefreshPreferencesPage_RefreshWhenIndexChange;
+
+	/** */
+	public static String RefUpdateElement_CommitCountDecoration;
+
+	/** */
+	public static String RefUpdateElement_CommitRangeDecoration;
+
+	/** */
+	public static String RefUpdateElement_UrisDecoration;
 
 	/** */
 	public static String RemoteSelectionCombo_destinationName;

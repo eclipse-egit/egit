@@ -11,6 +11,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.WorkbenchStyledLabelProvider;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -19,7 +20,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
-import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -51,7 +51,6 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.WorkbenchAdapter;
 import org.eclipse.ui.model.WorkbenchContentProvider;
-import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
  * Component displaying table with results of fetch operation.
@@ -218,25 +217,7 @@ class FetchResultTable {
 
 		addToolbar(treePanel);
 
-		final IStyledLabelProvider styleProvider = new IStyledLabelProvider() {
-
-			private final WorkbenchLabelProvider wrapped = new WorkbenchLabelProvider();
-
-			public void removeListener(ILabelProviderListener listener) {
-				// Empty
-			}
-
-			public boolean isLabelProperty(Object element, String property) {
-				return false;
-			}
-
-			public void dispose() {
-				wrapped.dispose();
-			}
-
-			public void addListener(ILabelProviderListener listener) {
-				// Empty
-			}
+		final IStyledLabelProvider styleProvider = new WorkbenchStyledLabelProvider() {
 
 			public StyledString getStyledText(Object element) {
 				// TODO Replace with use of IWorkbenchAdapter3 when is no longer
@@ -247,11 +228,7 @@ class FetchResultTable {
 				if (element instanceof RepositoryCommit)
 					return ((RepositoryCommit) element).getStyledText(element);
 
-				return new StyledString(wrapped.getText(element));
-			}
-
-			public Image getImage(Object element) {
-				return wrapped.getImage(element);
+				return super.getStyledText(element);
 			}
 		};
 		treeViewer.setLabelProvider(new DelegatingStyledCellLabelProvider(
