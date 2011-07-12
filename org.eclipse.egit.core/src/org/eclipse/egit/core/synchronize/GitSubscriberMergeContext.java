@@ -10,12 +10,14 @@ package org.eclipse.egit.core.synchronize;
 
 import java.io.IOException;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryChangeListener;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -57,8 +59,10 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 
 	public void markAsMerged(IDiff node, boolean inSyncHint,
 			IProgressMonitor monitor) throws CoreException {
-		// TODO Auto-generated method stub
-
+		IResource resource = getDiffTree().getResource(node);
+		AddToIndexOperation operation = new AddToIndexOperation(
+				new IResource[] { resource });
+		operation.execute(monitor);
 	}
 
 	public void reject(IDiff diff, IProgressMonitor monitor)
