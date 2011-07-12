@@ -8,10 +8,30 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.egit.core.op.PushOperationResult;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIIcons;
+import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.DecorationOverlayDescriptor;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.IDecoration;
+import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
+import org.eclipse.jgit.transport.RemoteRefUpdate.Status;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.ui.model.WorkbenchAdapter;
 
 /**
  * Data class representing row (element) of table with push results.
@@ -22,51 +42,238 @@ import org.eclipse.jgit.transport.URIish;
  * @see PushOperationResult
  * @see RefUpdateContentProvider
  */
-class RefUpdateElement {
-	private final String srcRefName;
-
-	private final String dstRefName;
+class RefUpdateElement extends WorkbenchAdapter {
+	private final RemoteRefUpdate update;
 
 	private final PushOperationResult result;
 
-	RefUpdateElement(final PushOperationResult result, final String srcRef,
-			final String dstRef) {
+	private final URIish uri;
+
+	private final ObjectReader reader;
+
+	private final Repository repo;
+
+	private Object[] children;
+
+	private final boolean tag;
+
+	RefUpdateElement(final PushOperationResult result, RemoteRefUpdate update,
+			URIish uri, ObjectReader reader, Repository repo) {
 		this.result = result;
-		this.srcRefName = srcRef;
-		this.dstRefName = dstRef;
+		this.update = update;
+		this.uri = uri;
+		this.reader = reader;
+		this.repo = repo;
+		String remote = update.getRemoteName();
+		tag = remote != null && remote.startsWith(Constants.R_TAGS);
+	}
+
+	URIish getUri() {
+		return uri;
 	}
 
 	String getSrcRefName() {
-		return srcRefName;
+		return update.getSrcRef();
 	}
 
 	String getDstRefName() {
-		return dstRefName;
+		return update.getRemoteName();
 	}
 
 	boolean isDelete() {
 		// Assuming that we never use ObjectId.zeroId() in GUI.
 		// (no need to compare to it).
-		return srcRefName == null;
+		return getSrcRefName() == null;
+	}
+
+	boolean isAdd() {
+		return getAdvertisedRemoteRef() == null;
+	}
+
+	boolean isRejected() {
+		switch (getStatus()) {
+		case REJECTED_NODELETE:
+		case REJECTED_NONFASTFORWARD:
+		case REJECTED_OTHER_REASON:
+		case REJECTED_REMOTE_CHANGED:
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	boolean isTag() {
+		return tag;
 	}
 
 	PushOperationResult getPushOperationResult() {
 		return result;
 	}
 
-	boolean isSuccessfulConnection(final URIish uri) {
+	boolean isSuccessfulConnection() {
 		return result.isSuccessfulConnection(uri);
 	}
 
-	String getErrorMessage(final URIish uri) {
+	String getErrorMessage() {
 		return result.getErrorMessage(uri);
 	}
 
-	RemoteRefUpdate getRemoteRefUpdate(final URIish uri) {
-		return result.getPushResult(uri).getRemoteUpdate(dstRefName);
+	Status getStatus() {
+		return update.getStatus();
 	}
 
-	Ref getAdvertisedRemoteRef(final URIish uri) {
-		return result.getPushResult(uri).getAdvertisedRef(dstRefName);
+	RemoteRefUpdate getRemoteRefUpdate() {
+		return update;
+	}
+
+	Ref getAdvertisedRemoteRef() {
+		return result.getPushResult(uri).getAdvertisedRef(getDstRefName());
+	}
+
+	public ImageDescriptor getImageDescriptor(Object object) {
+		switch (getStatus()) {
+		case OK:
+			if (isDelete())
+				return tag ? new DecorationOverlayDescriptor(UIIcons.TAG,
+						UIIcons.OVR_STAGED_REMOVE, IDecoration.TOP_RIGHT)
+						: new DecorationOverlayDescriptor(UIIcons.BRANCH,
+								UIIcons.OVR_STAGED_REMOVE,
+								IDecoration.TOP_RIGHT);
+
+			if (isAdd())
+				return tag ? UIIcons.CREATE_TAG : UIIcons.CREATE_BRANCH;
+			else
+				return tag ? UIIcons.TAG : UIIcons.BRANCH;
+		case UP_TO_DATE:
+			return tag ? UIIcons.TAG : UIIcons.BRANCH;
+		case REJECTED_NODELETE:
+		case REJECTED_NONFASTFORWARD:
+		case REJECTED_OTHER_REASON:
+		case REJECTED_REMOTE_CHANGED:
+			return tag ? new DecorationOverlayDescriptor(UIIcons.TAG,
+					UIIcons.OVR_ERROR, IDecoration.TOP_RIGHT)
+					: new DecorationOverlayDescriptor(UIIcons.BRANCH,
+							UIIcons.OVR_ERROR, IDecoration.TOP_RIGHT);
+		default:
+			return super.getImageDescriptor(object);
+		}
+	}
+
+	public String getLabel(Object object) {
+		return getStyledText(object).getString();
+	}
+
+	private RepositoryCommit[] getCommits(Ref end) {
+		final RevWalk walk = new RevWalk(reader);
+		try {
+			walk.setRetainBody(true);
+			walk.markStart(walk.parseCommit(update.getNewObjectId()));
+			walk.markUninteresting(walk.parseCommit(end.getObjectId()));
+			List<RepositoryCommit> commits = new ArrayList<RepositoryCommit>();
+			for (RevCommit commit : walk)
+				commits.add(new RepositoryCommit(repo, commit));
+			return commits.toArray(new RepositoryCommit[commits.size()]);
+		} catch (IOException e) {
+			Activator.logError("Error parsing commits from push result", e); //$NON-NLS-1$
+			return new RepositoryCommit[0];
+		}
+	}
+
+	public Object[] getChildren(Object object) {
+		if (children != null)
+			return children;
+
+		switch (update.getStatus()) {
+		case OK:
+			if (!isDelete()) {
+				final Ref ref = getAdvertisedRemoteRef();
+				if (ref != null) {
+					children = getCommits(ref);
+					break;
+				}
+			}
+			//$FALL-THROUGH$
+		default:
+			children = super.getChildren(object);
+		}
+		return children;
+	}
+
+	/**
+	 * Get styled text
+	 *
+	 * @return styled string
+	 */
+	public StyledString getStyledText(Object object) {
+		StyledString styled = new StyledString();
+		final String remote = getDstRefName();
+		final String local = getSrcRefName();
+
+		styled.append(Repository.shortenRefName(remote));
+
+		if (!tag) {
+			styled.append(": ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
+			styled.append(Repository.shortenRefName(local),
+					StyledString.QUALIFIER_STYLER);
+		}
+		styled.append(' ');
+		// Include uri if more than one
+		if (result.getURIs().size() > 1)
+			styled.append(MessageFormat.format(
+					UIText.RefUpdateElement_UrisDecoration, uri.toString()),
+					StyledString.QUALIFIER_STYLER);
+
+		styled.append(' ');
+		switch (getStatus()) {
+		case OK:
+			if (update.isDelete())
+				styled.append(UIText.PushResultTable_statusOkDeleted,
+						StyledString.DECORATIONS_STYLER);
+			else {
+				final Ref oldRef = getAdvertisedRemoteRef();
+				if (oldRef == null) {
+					if (tag)
+						styled.append(UIText.PushResultTable_statusOkNewTag,
+								StyledString.DECORATIONS_STYLER);
+					else
+						styled.append(UIText.PushResultTable_statusOkNewBranch,
+								StyledString.DECORATIONS_STYLER);
+				} else {
+					String separator = update.isFastForward() ? ".." : "..."; //$NON-NLS-1$ //$NON-NLS-2$
+					styled.append(MessageFormat.format(
+							UIText.RefUpdateElement_CommitRangeDecoration,
+							update.getNewObjectId().abbreviate(7).name(),
+							separator, oldRef.getObjectId().abbreviate(7)
+									.name()), StyledString.DECORATIONS_STYLER);
+
+					styled.append(MessageFormat.format(
+							UIText.RefUpdateElement_CommitCountDecoration,
+							Integer.valueOf(getChildren(this).length)),
+							StyledString.COUNTER_STYLER);
+				}
+			}
+			break;
+		case UP_TO_DATE:
+			styled.append(UIText.PushResultTable_statusUpToDate,
+					StyledString.DECORATIONS_STYLER);
+			break;
+		case NON_EXISTING:
+			styled.append(UIText.PushResultTable_statusNoMatch,
+					StyledString.DECORATIONS_STYLER);
+			break;
+		case REJECTED_NODELETE:
+		case REJECTED_NONFASTFORWARD:
+		case REJECTED_REMOTE_CHANGED:
+			styled.append(UIText.PushResultTable_statusRejected,
+					StyledString.DECORATIONS_STYLER);
+			break;
+		case REJECTED_OTHER_REASON:
+			styled.append(UIText.PushResultTable_statusRemoteRejected,
+					StyledString.DECORATIONS_STYLER);
+			break;
+		default:
+			break;
+		}
+		return styled;
 	}
 }
