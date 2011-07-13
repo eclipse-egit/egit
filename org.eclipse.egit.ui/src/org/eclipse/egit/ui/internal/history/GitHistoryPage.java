@@ -495,6 +495,17 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 	private boolean currentShowAllBranches;
 
+	// react on changes to the relative date preference
+	private final IPropertyChangeListener listener = new IPropertyChangeListener() {
+		public void propertyChange(PropertyChangeEvent event) {
+			if (event.getProperty().equals(
+					UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE))
+				if (graph.setRelativeDate(((Boolean) event.getNewValue())
+						.booleanValue()))
+					graph.getTableView().refresh();
+		}
+	};
+
 	/**
 	 * Highlight flag that can be applied to commits to make them stand out.
 	 * <p>
@@ -601,18 +612,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				graphDetailSplit);
 		graph = new CommitGraphTable(graphDetailSplit, getSite(), popupMgr);
 
-		// react on changes in the date preferences
-		IPropertyChangeListener listener = new IPropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent event) {
-				if (event.getProperty().equals(
-						UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE)) {
-					if (graph.setRelativeDate(((Boolean) event.getNewValue())
-							.booleanValue()))
-						graph.getTableView().refresh();
-					return;
-				}
-			}
-		};
 		graph.setRelativeDate(Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE));
 		Activator.getDefault().getPreferenceStore()
@@ -818,6 +817,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		if (trace)
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation());
+
+		Activator.getDefault().getPreferenceStore()
+				.removePropertyChangeListener(listener);
 
 		if (myRefsChangedHandle != null) {
 			myRefsChangedHandle.remove();
