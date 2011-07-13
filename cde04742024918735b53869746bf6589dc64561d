@@ -17,6 +17,42 @@
       "revId": "cde04742024918735b53869746bf6589dc64561d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX///Hs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-07-13T14:04:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX///Q8\u003d",
+      "revId": "cde04742024918735b53869746bf6589dc64561d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX///Ho\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1390,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-07-13T14:04:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX///Q0\u003d",
+      "revId": "cde04742024918735b53869746bf6589dc64561d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
