@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOAX///RA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2011-07-08T09:00:46Z",
+      "side": 1,
+      "message": "[optional] This variable is actually not really needed.",
+      "revId": "cde04742024918735b53869746bf6589dc64561d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX///Hw\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
         "patchSetId": 2
@@ -20,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AABOAX///Q8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2011-07-08T09:00:46Z",
+      "side": 1,
+      "message": "[optional] this could be: \n ref.startsWith(prefix)",
+      "revId": "cde04742024918735b53869746bf6589dc64561d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX///Hs\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
         "patchSetId": 2
@@ -32,6 +66,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABOAX///Q8\u003d",
+      "revId": "cde04742024918735b53869746bf6589dc64561d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX///Q0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1390,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2011-07-08T09:00:46Z",
+      "side": 1,
+      "message": "[optional] this could be:\n return ref.substring(prefix.length());",
       "revId": "cde04742024918735b53869746bf6589dc64561d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
