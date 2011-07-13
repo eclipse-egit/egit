@@ -583,7 +583,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				.setToolTipText(UIText.GitHistoryPage_IncompleteListTooltip);
 
 		Link preferencesLink = new Link(warningComposite, SWT.NONE);
-		preferencesLink.setText(UIText.CommitDialog_ConfigureLink);
+		preferencesLink.setText(UIText.GitHistoryPage_PreferencesLink);
 		preferencesLink.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
