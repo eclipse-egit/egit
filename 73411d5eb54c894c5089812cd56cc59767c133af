@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOAX///Yw\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2011-07-07T05:28:15Z",
+      "side": 1,
+      "message": "s/now the only the name/now only the name",
+      "revId": "73411d5eb54c894c5089812cd56cc59767c133af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX///RM\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -20,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AABOAX///Yo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2011-07-07T05:28:15Z",
+      "side": 1,
+      "message": "[optional] my preference would be to inline this",
+      "revId": "73411d5eb54c894c5089812cd56cc59767c133af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX///RY\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
         "patchSetId": 1
@@ -32,6 +66,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABOAX///Yo\u003d",
+      "revId": "73411d5eb54c894c5089812cd56cc59767c133af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX///Ys\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefSpecPanel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 104
+      },
+      "writtenOn": "2011-07-07T05:28:15Z",
+      "side": 1,
+      "message": "Both the methods \u0027deleteTagPrefix(String newDst)\u0027 and \u0027deleteHeadsPrefix(String newDst)\u0027 are very similar. I think it would be better to just have one method for that: \u0027deletePrefix(String prefix, String newDst)\u0027. Even better would be if this method could remove several prefixes at once: \u0027deletePrefix(String prefix..., String newDst)\u0027",
       "revId": "73411d5eb54c894c5089812cd56cc59767c133af",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
