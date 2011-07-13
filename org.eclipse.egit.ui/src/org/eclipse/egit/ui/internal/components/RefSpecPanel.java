@@ -1358,8 +1358,13 @@ public class RefSpecPanel {
 
 		// dst is empty, src is ref or wildcard, so we can rewrite it as user
 		// would perhaps
-		if (pushSpecs)
-			creationDstCombo.setText(src);
+		if (pushSpecs) {
+			String newDst = src;
+			newDst = deletePrefixes(src,
+					Constants.R_TAGS.substring(Constants.R_REFS.length()),
+					Constants.R_HEADS.substring(Constants.R_REFS.length()));
+			creationDstCombo.setText(newDst);
+		}
 		else {
 			for (final RefSpec spec : predefinedConfigured) {
 				if (spec.matchSource(src)) {
@@ -1375,6 +1380,15 @@ public class RefSpecPanel {
 				creationDstCombo.setText(newDst);
 			}
 		}
+	}
+
+	private String deletePrefixes(String ref, String... prefixes) {
+		for (String prefix : prefixes) {
+			if (ref.startsWith(prefix)) {
+				return ref.substring(prefix.length());
+			}
+		}
+		return ref;
 	}
 
 	private void tryAutoCompleteDstToSrc() {
