@@ -21,7 +21,7 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.fetch.FetchOperationUI;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;

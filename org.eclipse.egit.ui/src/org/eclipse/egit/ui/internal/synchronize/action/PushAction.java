@@ -20,7 +20,7 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
