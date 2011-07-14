@@ -36,6 +36,16 @@ public final class SupportedContextActionsHelper {
 
 	/**
 	 * @param object
+	 * @return {@code true} if commit operation can be performed on
+	 *         {@code object}
+	 */
+	public static boolean canUseMergeTool(GitModelObject object) {
+		return object instanceof GitModelWorkingFile
+				|| object instanceof GitModelCacheFile;
+	}
+
+	/**
+	 * @param object
 	 * @return {@code true} if stage/add operation can be performed on
 	 *         {@code object}
 	 */
