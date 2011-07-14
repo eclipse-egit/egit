@@ -32,6 +32,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.notes.NoteMap;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.FetchResult;
@@ -149,14 +150,23 @@ class FetchResultTable {
 			return children;
 		}
 
+		/**
+		 * Shorten ref name
+		 *
+		 * @param ref
+		 * @return shortened ref name
+		 */
+		protected String shortenRef(final String ref) {
+			return NoteMap.shortenRefName(Repository.shortenRefName(ref));
+		}
+
 		public StyledString getStyledText(Object object) {
 			StyledString styled = new StyledString();
 			final String remote = update.getRemoteName();
 			final String local = update.getLocalName();
-			styled.append(Repository.shortenRefName(remote));
+			styled.append(shortenRef(remote));
 			styled.append(" : ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
-			styled.append(Repository.shortenRefName(local),
-					StyledString.QUALIFIER_STYLER);
+			styled.append(shortenRef(local), StyledString.QUALIFIER_STYLER);
 			styled.append(' ');
 			switch (update.getResult()) {
 			case LOCK_FAILURE:
