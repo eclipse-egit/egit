@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.revwalk.ObjectWalk;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.swt.graphics.Image;
@@ -73,7 +74,8 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 
 			RevCommit[] parents = baseCommit.getParents();
 			if (parents != null && parents.length > 0)
-				remoteCommit = baseCommit.getParent(0);
+				remoteCommit = new ObjectWalk(getRepository())
+						.parseCommit(baseCommit.getParent(0));
 			else {
 				remoteCommit = null;
 			}
