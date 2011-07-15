@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX///HA\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-07-13T14:28:08Z",
+      "side": 1,
+      "message": "s/user/use",
+      "revId": "86e19e7246c0b80baee3994a69885f2a425e6abb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
