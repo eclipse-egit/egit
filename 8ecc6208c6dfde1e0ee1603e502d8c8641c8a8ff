@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAX///BI\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContextTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-15T14:11:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX///I0\u003d",
+      "revId": "8ecc6208c6dfde1e0ee1603e502d8c8641c8a8ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX///Io\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContextTest.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAX///A4\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContextTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-15T14:11:12Z",
+      "side": 1,
+      "message": "For this case, there is no difference between a modified file with or without conflicts as the result is the same. Tried to make the testcase not too complex.",
+      "parentUuid": "AABOAX///Io\u003d",
+      "revId": "8ecc6208c6dfde1e0ee1603e502d8c8641c8a8ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX///Is\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContextTest.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2011-07-13T07:35:15Z",
       "side": 1,
       "message": "I would rather say that \u0027marked as merged\u0027 file should be in git index not in list of changed files.",
+      "revId": "8ecc6208c6dfde1e0ee1603e502d8c8641c8a8ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX///A8\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContextTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-15T14:11:12Z",
+      "side": 1,
+      "message": "Changed in the Status object means modified + added (bad working in my eyes, had the same problem at first)",
+      "parentUuid": "AABOAX///Is\u003d",
       "revId": "8ecc6208c6dfde1e0ee1603e502d8c8641c8a8ff",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
