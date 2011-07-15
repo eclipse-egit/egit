@@ -43,15 +43,12 @@ import org.eclipse.jgit.transport.URIish;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 
 /**
@@ -222,32 +219,7 @@ class PushResultTable {
 	private void addToolbar(Composite parent) {
 		ToolBar toolbar = new ToolBar(parent, SWT.VERTICAL);
 		GridDataFactory.fillDefaults().grab(false, true).applyTo(toolbar);
-
-		ToolItem collapseItem = new ToolItem(toolbar, SWT.PUSH);
-		Image collapseImage = UIIcons.COLLAPSEALL.createImage();
-		UIUtils.hookDisposal(collapseItem, collapseImage);
-		collapseItem.setImage(collapseImage);
-		collapseItem.setToolTipText(UIText.FetchResultTable_collapseAll);
-		collapseItem.addSelectionListener(new SelectionAdapter() {
-
-			public void widgetSelected(SelectionEvent e) {
-				treeViewer.collapseAll();
-			}
-
-		});
-
-		ToolItem expandItem = new ToolItem(toolbar, SWT.PUSH);
-		Image expandImage = UIIcons.EXPAND_ALL.createImage();
-		UIUtils.hookDisposal(expandItem, expandImage);
-		expandItem.setImage(expandImage);
-		expandItem.setToolTipText(UIText.FetchResultTable_expandAll);
-		expandItem.addSelectionListener(new SelectionAdapter() {
-
-			public void widgetSelected(SelectionEvent e) {
-				treeViewer.expandAll();
-			}
-
-		});
+		UIUtils.addExpansionItems(toolbar, treeViewer);
 	}
 
 	private String getResult(RefUpdateElement element) {
