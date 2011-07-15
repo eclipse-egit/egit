@@ -7,7 +7,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.ui.variables;
+package org.eclipse.egit.ui.internal.variables;
 
 import java.io.IOException;
 import java.util.Iterator;

@@ -6,7 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.ui.credentials;
+package org.eclipse.egit.ui.internal.credentials;
 
 import java.io.IOException;
 
