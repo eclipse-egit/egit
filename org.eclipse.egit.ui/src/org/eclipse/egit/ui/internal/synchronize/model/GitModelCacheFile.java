@@ -64,4 +64,9 @@ public class GitModelCacheFile extends GitModelBlob {
 				+ getLocation() + "]"; //$NON-NLS-1$
 	}
 
+	@Override
+	protected ObjectId getParentRevCommit() {
+		return baseCommit;
+	}
+
 }

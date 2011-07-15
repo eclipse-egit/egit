@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.team.ui.mapping.ISynchronizationCompareInput;
@@ -73,7 +74,8 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 
 			RevCommit[] parents = baseCommit.getParents();
 			if (parents != null && parents.length > 0)
-				remoteCommit = baseCommit.getParent(0);
+				remoteCommit = new RevWalk(getRepository())
+						.parseCommit(getParentRevCommit());
 			else {
 				remoteCommit = null;
 			}
@@ -247,6 +249,13 @@ public abstract class GitModelObjectContainer extends GitModelObject implements
 					objAncestorId, objBaseId, objRemoteId, path);
 
 		return null;
+	}
+
+	/**
+	 * @return id of parent commit
+	 */
+	protected ObjectId getParentRevCommit() {
+		return baseCommit.getParent(0);
 	}
 
 	private void calculateKind() {
