@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX//+9U\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-15T17:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX//+9g\u003d",
+      "revId": "7273db62d23639559896d70291b6760c6a92a6bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+9Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-15T17:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX//+9k\u003d",
+      "revId": "7273db62d23639559896d70291b6760c6a92a6bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
