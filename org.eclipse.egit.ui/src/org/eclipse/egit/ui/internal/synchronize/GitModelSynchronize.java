@@ -16,6 +16,9 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.RemoteResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
@@ -26,6 +29,7 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
 import org.eclipse.team.ui.TeamUI;
@@ -62,7 +66,7 @@ public class GitModelSynchronize {
 			IResource[] resources) {
 		ResourceMapping[] mappings = getSelectedResourceMappings(resources);
 
-		GitResourceVariantTreeSubscriber subscriber = new GitResourceVariantTreeSubscriber(
+		final GitResourceVariantTreeSubscriber subscriber = new GitResourceVariantTreeSubscriber(
 				gsdSet);
 		RemoteResourceMappingContext remoteContext = new GitSubscriberResourceMappingContext(
 				gsdSet);
@@ -75,6 +79,7 @@ public class GitModelSynchronize {
 
 		TeamUI.getSynchronizeManager().addSynchronizeParticipants(
 				new ISynchronizeParticipant[] { participant });
+
 		final IWorkbenchWindow window = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 
@@ -83,17 +88,16 @@ public class GitModelSynchronize {
 		if (launchFetch) {
 			Job fetchJob = new SynchronizeFetchJob(gsdSet);
 			fetchJob.setUser(true);
-
 			fetchJob.addJobChangeListener(new JobChangeAdapter() {
 				@Override
 				public void done(IJobChangeEvent event) {
-					fireSynchronizeAction(participant, window);
+					fireSynchronizeAction(subscriber, participant, window);
 				}
 			});
 
 			fetchJob.schedule();
 		} else {
-			fireSynchronizeAction(participant, window);
+			fireSynchronizeAction(subscriber, participant, window);
 		}
 	}
 
@@ -158,12 +162,31 @@ public class GitModelSynchronize {
 	}
 
 	private static void fireSynchronizeAction(
-			GitModelSynchronizeParticipant participant, IWorkbenchWindow window) {
-		IWorkbenchPart activePart = null;
-		if (window != null)
-			activePart = window.getActivePage().getActivePart();
+			final GitResourceVariantTreeSubscriber subscriber,
+			final GitModelSynchronizeParticipant participant,
+			final IWorkbenchWindow window) {
+		Job syncJob = new Job(UIText.GitModelSynchonize_fetchGitDataJobName) {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				subscriber.init(monitor);
 
-		participant.run(activePart);
+				return Status.OK_STATUS;
+			}
+		};
+
+		syncJob.addJobChangeListener(new JobChangeAdapter() {
+			@Override
+			public void done(IJobChangeEvent event) {
+				IWorkbenchPart activePart = null;
+				if (window != null)
+					activePart = window.getActivePage().getActivePart();
+
+				participant.run(activePart);
+			}
+		});
+
+		syncJob.setUser(true);
+		syncJob.schedule();
 	}
 
 	private GitModelSynchronize() {

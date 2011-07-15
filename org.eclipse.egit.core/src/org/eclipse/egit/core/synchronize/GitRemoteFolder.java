@@ -8,38 +8,47 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
-import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
-
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.team.core.TeamException;
 
 class GitRemoteFolder extends GitRemoteResource {
+
+	private final GitSyncObjectCache cachedData;
+	private final Repository repo;
 
 	/**
 	 *
 	 * @param repo
-	 * @param revCommit
+	 * @param cachedData
+	 * @param commitId
 	 * @param objectId
 	 *            given object sha-1 id or {@code null} if this object doesn't
 	 *            exist in remote
 	 * @param path
 	 */
-	GitRemoteFolder(Repository repo, RevCommit revCommit, ObjectId objectId,
-			String path) {
-		super(repo, revCommit, objectId, path);
+	GitRemoteFolder(Repository repo, GitSyncObjectCache cachedData,
+			RevCommit commitId, ObjectId objectId, String path) {
+		super(commitId, objectId, path);
+		this.repo = repo;
+		this.cachedData = cachedData;
 	}
 
 	public boolean isContainer() {
 		return true;
+	}
+
+	@Override
+	protected void fetchContents(IProgressMonitor monitor) throws TeamException {
+		// should be never used on folder
 	}
 
 	public boolean equals(Object object) {
@@ -61,39 +70,32 @@ class GitRemoteFolder extends GitRemoteResource {
 	}
 
 	GitRemoteResource[] members(IProgressMonitor monitor) {
-		String path = getPath();
-		Repository repo = getRepo();
-		RevCommit revCommit = getCommit();
 		List<GitRemoteResource> result = new ArrayList<GitRemoteResource>();
 
-		try {
-			TreeWalk tw;
-			if (path.length() > 0) {
-				tw = TreeWalk.forPath(repo, path, revCommit.getTree());
-			} else {
-				tw = new TreeWalk(repo);
-				tw.addTree(revCommit.getTree());
-			}
-			while (tw.next()) {
-				if (monitor.isCanceled())
-					break;
+		Collection<GitSyncObjectCache> members = cachedData.members();
+		if (members == null)
+			return new GitRemoteResource[0];
 
-				ObjectId objectId = tw.getObjectId(0);
-				if (ObjectId.zeroId().equals(objectId))
+		monitor.beginTask("Fetching members of " + getPath(), cachedData.membersCount()); //$NON-NLS-1$
+		try {
+			for (GitSyncObjectCache member : members) {
+				DiffEntry diffEntry = member.getDiffEntry();
+				String memberPath = diffEntry.getOldPath();
+
+				if (DiffEntry.DEV_NULL.equals(memberPath))
 					continue;
 
-				GitRemoteResource obj = null;
-				int objectType = tw.getFileMode(0).getObjectType();
-				if (objectType == OBJ_BLOB)
-					obj = new GitRemoteFile(repo, revCommit, objectId, tw.getPathString());
-				else if (objectType == Constants.OBJ_TREE)
-					obj = new GitRemoteFolder(repo, revCommit, objectId, tw.getPathString());
+				GitRemoteResource obj;
+				ObjectId id = diffEntry.getOldId().toObjectId();
+				if (FileMode.TREE == diffEntry.getOldMode())
+					obj = new GitRemoteFolder(repo, member, getCommitId(), id,
+							memberPath);
+				else
+					obj = new GitRemoteFile(repo, getCommitId(), id, memberPath);
 
-				if (obj != null)
-					result.add(obj);
+				result.add(obj);
+				monitor.worked(1);
 			}
-		} catch (IOException e) {
-			Activator.logError(e.getMessage(), e);
 		} finally {
 			monitor.done();
 		}

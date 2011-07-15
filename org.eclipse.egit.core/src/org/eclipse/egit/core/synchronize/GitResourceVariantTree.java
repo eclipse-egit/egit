@@ -14,7 +14,6 @@ package org.eclipse.egit.core.synchronize;
 import static org.eclipse.jgit.lib.ObjectId.zeroId;
 import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -22,18 +21,14 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.CoreText;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
+import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.variants.IResourceVariant;
@@ -42,14 +37,18 @@ import org.eclipse.team.core.variants.ResourceVariantTree;
 
 abstract class GitResourceVariantTree extends ResourceVariantTree {
 
+	private final GitSyncCache gitCache;
+
 	private final GitSynchronizeDataSet gsds;
 
 	private final Map<IResource, IResourceVariant> cache = new HashMap<IResource, IResourceVariant>();
 
+
 	GitResourceVariantTree(ResourceVariantByteStore store,
-			GitSynchronizeDataSet gsds) {
+			GitSyncCache gitCache, GitSynchronizeDataSet gsds) {
 		super(store);
 		this.gsds = gsds;
+		this.gitCache = gitCache;
 	}
 
 	public IResource[] roots() {
@@ -73,14 +72,13 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 				CoreText.GitResourceVariantTree_fetchingVariant,
 				resource.getName()), IProgressMonitor.UNKNOWN);
 		try {
-			return fetchVariant(resource, subMonitor);
+			return fetchVariant(resource);
 		} finally {
 			subMonitor.done();
 		}
 	}
 
-	private IResourceVariant fetchVariant(IResource resource,
-			IProgressMonitor monitor) throws TeamException {
+	private IResourceVariant fetchVariant(IResource resource) {
 		if (cache.containsKey(resource))
 			return cache.get(resource);
 
@@ -90,49 +88,36 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 
 		Repository repo = gsd.getRepository();
 		String path = getPath(resource, repo);
-		RevCommit revCommit = getRevCommit(gsd);
-		if (revCommit == null)
+		GitSyncObjectCache syncCache = gitCache.get(repo);
+		GitSyncObjectCache cachedData = syncCache.get(path);
+		if (cachedData == null)
 			return null;
 
-		if (path.length() == 0)
-			return handleRepositoryRoot(resource, repo, revCommit);
+		ObjectId objectId;
+		if (cachedData.getDiffEntry() != null)
+			objectId = getObjectId(cachedData.getDiffEntry());
+		else
+			objectId = getObjectId(gsd);
+		IResourceVariant variant = null;
+		if (!objectId.equals(zeroId())) {
+			if (resource.getType() == IResource.FILE)
+				variant = new GitRemoteFile(repo, getCommitId(gsd), objectId,
+						path);
+			else
+				variant = new GitRemoteFolder(repo, cachedData,
+						getCommitId(gsd), objectId, path);
 
-		try {
-			if (monitor.isCanceled())
-				throw new OperationCanceledException();
-
-			TreeWalk tw = initializeTreeWalk(repo, path);
-
-			int nth = tw.addTree(revCommit.getTree());
-			IResourceVariant variant = null;
-			if (resource.getType() == IResource.FILE) {
-				tw.setRecursive(true);
-				if (tw.next() && !tw.getObjectId(nth).equals(zeroId()))
-					variant = new GitRemoteFile(repo, revCommit,
-							tw.getObjectId(nth), path);
-			} else {
-				while (tw.next() && !path.equals(tw.getPathString())) {
-					if (monitor.isCanceled())
-						throw new OperationCanceledException();
-
-					if (tw.isSubtree())
-						tw.enterSubtree();
-				}
-
-				ObjectId objectId = tw.getObjectId(nth);
-				if (!objectId.equals(zeroId()))
-					variant = new GitRemoteFolder(repo, revCommit, objectId, path);
-			}
-			if (variant != null)
-				cache.put(resource, variant);
-			return variant;
-		} catch (IOException e) {
-			throw new TeamException(
-					NLS.bind(
-							CoreText.GitResourceVariantTree_couldNotFindResourceVariant,
-							resource), e);
+			cache.put(resource, variant);
 		}
+
+		return variant;
 	}
+
+	protected abstract ObjectId getObjectId(DiffEntry diffEntry);
+
+	protected abstract ObjectId getObjectId(GitSynchronizeData gsd);
+
+	protected abstract RevCommit getCommitId(GitSynchronizeData gsd);
 
 	@Override
 	protected IResourceVariant[] fetchMembers(IResourceVariant variant,
@@ -148,38 +133,6 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 	public IResourceVariant getResourceVariant(final IResource resource)
 			throws TeamException {
 		return fetchVariant(resource, 0, null);
-	}
-
-	/**
-	 *
-	 * @param gsd
-	 * @return instance of {@link RevTree} for given {@link GitSynchronizeData}
-	 *         or <code>null</code> if rev tree was not found
-	 * @throws TeamException
-	 */
-	protected abstract RevCommit getRevCommit(GitSynchronizeData gsd)
-			throws TeamException;
-
-	private IResourceVariant handleRepositoryRoot(final IResource resource,
-			Repository repo, RevCommit revCommit) /*throws TeamException*/ {
-//		try {
-		String path = RepositoryMapping.findRepositoryMapping(repo).getRepoRelativePath(resource);
-			return new GitRemoteFolder(repo, revCommit, revCommit.getTree(), path);
-//		} catch (IOException e) {
-//			throw new TeamException(
-//					NLS.bind(
-//							CoreText.GitResourceVariantTree_couldNotFindResourceVariant,
-//							resource), e);
-//		}
-	}
-
-	private TreeWalk initializeTreeWalk(Repository repo, String path) {
-		TreeWalk tw = new TreeWalk(repo);
-		tw.reset();
-
-		tw.setFilter(PathFilter.create(path));
-
-		return tw;
 	}
 
 	private String getPath(final IResource resource, Repository repo) {
