@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAX///AA\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-07-15T14:35:46Z",
+      "side": 1,
+      "message": "I\u0027ve notice it on deleted file but didn\u0027t test it on other changes. But you have right it appears on all staged chagnes",
+      "parentUuid": "AABOAX///Ao\u003d",
+      "revId": "d57066e21904bfdb7764a805cf36707c4b8a4bad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX///BU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelObjectContainer.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAX//+/8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelObjectContainer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-07-15T14:35:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX///BU\u003d",
+      "revId": "d57066e21904bfdb7764a805cf36707c4b8a4bad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX///BE\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelObjectContainer.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2011-07-15T14:14:05Z",
       "side": 1,
       "message": "Btw.: By using the parent here in the case of a change in the index the compare editor will show HEAD~1 on the right hand side instead of HEAD. I\u0027ll reopen Bug 326674 which had addressed this issue.",
+      "revId": "d57066e21904bfdb7764a805cf36707c4b8a4bad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+/4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelObjectContainer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-07-15T14:35:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX///BE\u003d",
       "revId": "d57066e21904bfdb7764a805cf36707c4b8a4bad",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
