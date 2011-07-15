@@ -3086,6 +3086,12 @@ public class UIText extends NLS {
 	public static String CommitActionHandler_repository;
 
 	/** */
+	public static String CommitEditor_couldNotShowRepository;
+
+	/** */
+	public static String CommitEditor_showGitRepo;
+
+	/** */
 	public static String CommitEditor_TitleHeader;
 
 	/** */
