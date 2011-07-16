@@ -25,9 +25,9 @@ import java.util.Observer;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.DecorationHelper;
 import org.eclipse.egit.ui.internal.decorators.IDecoratableResource;
@@ -868,12 +868,12 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		public ChangeSetPreview(Composite composite) {
 			super(composite);
 			fViewer.setContentProvider(this);
-			fViewer.setLabelProvider(new LabelProvider() {
+			fViewer.setLabelProvider(new GitLabelProvider() {
 
 				@Override
 				public Image getImage(Object element) {
 					if (element instanceof GitModelCommitMockup)
-						return fImageCache.createImage(UIIcons.CHANGESET);
+						return getChangesetIcon();
 
 					return super.getImage(element);
 				}
