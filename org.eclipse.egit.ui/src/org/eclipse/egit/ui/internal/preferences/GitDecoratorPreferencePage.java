@@ -472,7 +472,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		private final Label dateFormatPreview;
 
-		private final Date exapmleDate = new Date();
+		private final Date exampleDate = new Date();
 
 		private boolean formatValid;
 
@@ -510,7 +510,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			SimpleDateFormat sdf;
 			try {
 				sdf = new SimpleDateFormat(dateFormat.getText());
-				dateFormatPreview.setText(sdf.format(exapmleDate));
+				dateFormatPreview.setText(sdf.format(exampleDate));
 				formatValid = true;
 			} catch (Exception ex) {
 				dateFormatPreview.setText(UIText.DecoratorPreferencesPage_wrongDateFormat);
@@ -872,23 +872,23 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 				@Override
 				public Image getImage(Object element) {
-					if (element instanceof GitModelCommitMokeup)
+					if (element instanceof GitModelCommitMockup)
 						return fImageCache.createImage(UIIcons.CHANGESET);
 
 					return super.getImage(element);
 				}
 
 				public String getText(Object element) {
-					if (element instanceof GitModelCommitMokeup) {
+					if (element instanceof GitModelCommitMockup) {
 						String format = store.getString(UIPreferences.SYNC_VIEW_CHANGESET_LABEL_FORMAT);
 						String dateFormat = store.getString(UIPreferences.DATE_FORMAT);
-						return ((GitModelCommitMokeup)element).getMokeupText(format, dateFormat);
+						return ((GitModelCommitMockup)element).getMokeupText(format, dateFormat);
 					}
 					return super.getText(element);
 				}
 			});
 			fViewer.setContentProvider(this);
-			fViewer.setInput(new GitModelCommitMokeup());
+			fViewer.setInput(new GitModelCommitMockup());
 		}
 
 		public Object[] getChildren(Object parentElement) {
@@ -1035,7 +1035,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		}
 	}
 
-	private static class GitModelCommitMokeup {
+	private static class GitModelCommitMockup {
 
 		private static final String message = "Commit message text"; //$NON-NLS-1$
 		private static final String author = "Author Name"; //$NON-NLS-1$
