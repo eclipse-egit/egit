@@ -14,7 +14,7 @@ package org.eclipse.egit.core.synchronize;
 import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 import static org.eclipse.team.core.Team.isIgnoredHint;
 
-import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -23,13 +23,12 @@ import java.util.Set;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.synchronize.SyncInfo;
 import org.eclipse.team.core.variants.IResourceVariant;
@@ -55,6 +54,10 @@ public class GitResourceVariantTreeSubscriber extends
 
 	private GitSynchronizeDataSet gsds;
 
+	private IResource[] roots;
+
+	private GitSyncCache cache;
+
 	/**
 	 * @param data
 	 */
@@ -62,7 +65,23 @@ public class GitResourceVariantTreeSubscriber extends
 		this.gsds = data;
 	}
 
-	private IResource[] roots;
+	/**
+	 * Initialize git subscriber. This method will pre-fetch data from git
+	 * repository. This approach will reduce number of {@link TreeWalk}'s
+	 * created during synchronization
+	 *
+	 * @param monitor
+	 */
+	public void init(IProgressMonitor monitor) {
+		monitor.beginTask(
+				CoreText.GitResourceVariantTreeSubscriber_fetchTaskName,
+				gsds.size());
+		try {
+			cache = GitSyncCache.getAllData(gsds, monitor);
+		} finally {
+			monitor.done();
+		}
+	}
 
 	@Override
 	public boolean isSupervised(IResource res) throws TeamException {
@@ -78,41 +97,45 @@ public class GitResourceVariantTreeSubscriber extends
 	 */
 	@Override
 	public IResource[] members(IResource res) throws TeamException {
-		if(res.getType() == IResource.FILE)
+		if (res.getType() == IResource.FILE)
 			return new IResource[0];
 
 		GitSynchronizeData gsd = gsds.getData(res.getProject());
 		Repository repo = gsd.getRepository();
-		String path = stripWorkDir(repo.getWorkTree(), res.getLocation()
-				.toFile());
-
-		TreeWalk tw = new TreeWalk(repo);
-		if (path.length() > 0)
-			tw.setFilter(PathFilter.create(path));
+		GitSyncObjectCache repoCache = cache.get(repo);
 
 		Set<IResource> gitMembers = new HashSet<IResource>();
 		Map<String, IResource> allMembers = new HashMap<String, IResource>();
+
+		Set<GitSyncObjectCache> gitCachedMembers = new HashSet<GitSyncObjectCache>();
+		String path = stripWorkDir(repo.getWorkTree(), res.getLocation().toFile());
+		GitSyncObjectCache cachedMembers = repoCache.get(path);
+		if (cachedMembers != null) {
+			Collection<GitSyncObjectCache> members = cachedMembers.members();
+			if (members != null)
+				gitCachedMembers.addAll(members);
+		}
 		try {
-			tw.addTree(new FileTreeIterator(repo));
-			enterFilteredPath(path, tw);
 			for (IResource member : ((IContainer) res).members())
 				allMembers.put(member.getName(), member);
 
-			while (tw.next()) {
-				if (tw.getTree(0, FileTreeIterator.class).isEntryIgnored())
-					continue;
-
-				IResource member = allMembers.get(tw.getNameString());
+			for (GitSyncObjectCache gitMember : gitCachedMembers) {
+				IResource member = allMembers.get(gitMember.getName());
 				if (member != null)
 					gitMembers.add(member);
 			}
-		} catch (IOException e) {
-			throw new TeamException(e.getMessage(), e);
 		} catch (CoreException e) {
 			throw TeamException.asTeamException(e);
 		}
 
 		return gitMembers.toArray(new IResource[gitMembers.size()]);
+	}
+
+	@Override
+	public void refresh(IResource[] resources, int depth,
+			IProgressMonitor monitor) throws TeamException {
+		init(monitor);
+		super.refresh(resources, depth, monitor);
 	}
 
 	@Override
@@ -147,17 +170,17 @@ public class GitResourceVariantTreeSubscriber extends
 
 	@Override
 	protected IResourceVariantTree getBaseTree() {
-		if (baseTree == null) {
-			baseTree = new GitBaseResourceVariantTree(gsds);
-		}
+		if (baseTree == null)
+			baseTree = new GitBaseResourceVariantTree(cache, gsds);
+
 		return baseTree;
 	}
 
 	@Override
 	protected IResourceVariantTree getRemoteTree() {
-		if (remoteTree == null) {
-			remoteTree = new GitRemoteResourceVariantTree(gsds);
-		}
+		if (remoteTree == null)
+			remoteTree = new GitRemoteResourceVariantTree(cache, gsds);
+
 		return remoteTree;
 	}
 
@@ -174,14 +197,6 @@ public class GitResourceVariantTreeSubscriber extends
 
 		info.init();
 		return info;
-	}
-
-	private void enterFilteredPath(String path, TreeWalk tw) throws IOException {
-		int subtreesLen = path.split("/").length; //$NON-NLS-1$
-		for (int i = 0; i < subtreesLen; i++) {
-			tw.next();
-			tw.enterSubtree();
-		}
 	}
 
 }
