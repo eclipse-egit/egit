@@ -107,7 +107,7 @@ public class SynchronizeViewWorkspaceModelTest extends AbstractSynchronizeViewTe
 
 		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-		assertEquals(1, syncViewTree.getAllItems().length);
+		assertEquals(2, syncViewTree.getAllItems().length);
 	}
 
 	@Test public void shouldOpenCompareEditor()
@@ -135,7 +135,7 @@ public class SynchronizeViewWorkspaceModelTest extends AbstractSynchronizeViewTe
 
 		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-		assertEquals(1, syncViewTree.getAllItems().length);
+		assertEquals(2, syncViewTree.getAllItems().length);
 
 		SWTBotTreeItem projectTree = waitForNodeWithText(syncViewTree, PROJ1);
 		assertEquals(1, projectTree.getItems().length);
@@ -145,6 +145,9 @@ public class SynchronizeViewWorkspaceModelTest extends AbstractSynchronizeViewTe
 
 		SWTBotTreeItem fileTree = folderTree.getItems()[0];
 		assertEquals("test.txt", fileTree.getText());
+
+		projectTree = waitForNodeWithText(syncViewTree, PROJ2);
+		assertEquals(1, projectTree.getItems().length);
 	}
 
 	@Test public void shouldSynchronizeInEmptyRepository() throws Exception {
