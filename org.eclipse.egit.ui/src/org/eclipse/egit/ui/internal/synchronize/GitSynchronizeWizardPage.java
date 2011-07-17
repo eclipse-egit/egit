@@ -28,6 +28,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.jface.dialogs.Dialog;
@@ -64,6 +65,8 @@ class GitSynchronizeWizardPage extends WizardPage {
 
 	private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace()
 			.getRoot();
+
+	private boolean forceFetch;
 
 	private boolean shouldIncludeLocal = false;
 
@@ -278,11 +281,26 @@ class GitSynchronizeWizardPage extends WizardPage {
 
 		Composite buttonsComposite = new Composite(composite, SWT.NONE);
 		layout = new GridLayout(4, false);
+		layout.numColumns = 1;
 		layout.marginWidth = 0;
 		layout.marginHeight = 0;
 		buttonsComposite.setLayout(layout);
 		buttonsComposite.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, false).create());
+
+		final Button fetchChanges = new Button(buttonsComposite, SWT.CHECK);
+		fetchChanges
+		.setText(UIText.GitBranchSynchronizeWizardPage_fetchChangesFromRemote);
+		fetchChanges.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				forceFetch = fetchChanges.getSelection();
+			}
+		});
+		fetchChanges.setLayoutData(GridDataFactory.fillDefaults()
+				.grab(true, false).create());
+		fetchChanges.setSelection(Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH));
 
 		final Button includeLocal = new Button(buttonsComposite, SWT.CHECK);
 		includeLocal
@@ -330,6 +348,10 @@ class GitSynchronizeWizardPage extends WizardPage {
 
 	boolean shouldIncludeLocal() {
 		return shouldIncludeLocal;
+	}
+
+	boolean forceFetch() {
+		return forceFetch;
 	}
 
 }

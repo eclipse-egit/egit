@@ -27,10 +27,23 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 
 	private final Map<String, GitSynchronizeData> projectMapping;
 
+	private final boolean forceFetch;
+
 	/**
 	 * Constructs GitSynchronizeDataSet.
 	 */
 	public GitSynchronizeDataSet() {
+		this(false);
+	}
+
+	/**
+	 * Constructs GitSynchronizeDataSet.
+	 *
+	 * @param forceFetch
+	 *            {@code true} for forcing fetch action before synchronization
+	 */
+	public GitSynchronizeDataSet(boolean forceFetch) {
+		this.forceFetch = forceFetch;
 		gsd = new HashSet<GitSynchronizeData>();
 		projectMapping = new HashMap<String, GitSynchronizeData>();
 	}
@@ -113,6 +126,15 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 			resource.addAll(data.getProjects());
 		}
 		return resource.toArray(new IProject[resource.size()]);
+	}
+
+
+	/**
+	 * @return {@code true} when fetch action should be forced before
+	 *         synchronization, {@code false} otherwise.
+	 */
+	public boolean forceFetch() {
+		return forceFetch;
 	}
 
 	@Override
