@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX///B4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 15
+      },
+      "writtenOn": "2011-07-15T06:37:05Z",
+      "side": 1,
+      "message": "s/Expandsion/Expansion/",
+      "revId": "e3767e9a7eb69991db5392331a99e2012a29fb78",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
