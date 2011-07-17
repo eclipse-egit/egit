@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -32,6 +33,8 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.ObjectWalk;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
 
 /**
  * Simple data transfer object containing all necessary information for
@@ -69,6 +72,10 @@ public class GitSynchronizeData {
 	private final String srcRev;
 
 	private final String dstRev;
+
+	private TreeFilter pathFilter;
+
+	private Set<IContainer> includedPaths;
 
 	private static class RemoteConfig {
 		final String remote;
@@ -217,6 +224,37 @@ public class GitSynchronizeData {
 	 */
 	public RevCommit getCommonAncestorRev() {
 		return ancestorRevCommit;
+	}
+
+	/**
+	 * @param includedPaths
+	 *            list of containers to be synchronized
+	 */
+	public void setIncludedPaths(Set<IContainer> includedPaths) {
+		this.includedPaths = includedPaths;
+		Set<String> paths = new HashSet<String>();
+		RepositoryMapping rm = RepositoryMapping.findRepositoryMapping(repo);
+		for (IContainer container : includedPaths)
+			paths.add(rm.getRepoRelativePath(container));
+
+		if (!paths.isEmpty())
+			pathFilter = PathFilterGroup.createFromStrings(paths);
+	}
+
+	/**
+	 * @return set of included paths or {@code null} when all paths should be
+	 *         included
+	 */
+	public Set<IContainer> getIncludedPaths() {
+		return includedPaths;
+	}
+
+	/**
+	 * @return instance of {@link TreeFilter} when synchronization was launched
+	 *         from nested node (like folder) or {@code null} otherwise
+	 */
+	public TreeFilter getPathFilter() {
+		return pathFilter;
 	}
 
 	private RemoteConfig extractRemoteName(String rev) {

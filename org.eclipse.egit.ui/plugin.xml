@@ -48,12 +48,6 @@
                menubarPath="team.main/group5">
          </action>
          <action
-               class="org.eclipse.egit.ui.internal.actions.SynchronizeWorkspaceAction"
-               id="org.eclipse.egit.ui.internal.actions.SynchronizeWorkspace"
-               icon="$nl$/icons/obj16/remotespec.gif"
-               label="%SynchronizeWorkspace_label"
-               menubarPath="team.main/group3"/>
-         <action
                class="org.eclipse.egit.ui.internal.actions.MergeAction"
                definitionId="org.eclipse.egit.ui.team.Merge"
                icon="$nl$/icons/obj16/merge.gif"
@@ -84,6 +78,19 @@
                label="%FetchFromUpstreamAction.label"
                menubarPath="team.main/group1">
          </action>
+     </objectContribution>
+     <objectContribution id="org.eclipse.egit.ui.containerContributions"
+            objectClass="org.eclipse.core.resources.IContainer"
+            adaptable="true">
+         <filter name="projectPersistentProperty"
+               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
+         </filter>
+         <action
+               class="org.eclipse.egit.ui.internal.actions.SynchronizeWorkspaceAction"
+               id="org.eclipse.egit.ui.internal.actions.SynchronizeWorkspace"
+               icon="$nl$/icons/obj16/remotespec.gif"
+               label="%SynchronizeWorkspace_label"
+               menubarPath="team.main/group3"/>
      </objectContribution>
      <objectContribution
             adaptable="true"
@@ -2620,17 +2627,17 @@
                      id="org.eclipse.egit.ui.synchronize">
                   </dynamic>
                   <visibleWhen checkEnabled="false">
-                     <and>
+                  <and>
                         <count value="1" />
-                        <iterate>
-                           <and>
-                              <adapt type="org.eclipse.core.resources.IProject">
-                                <test property="GitResource.isShared" />
-                              </adapt>
-                           </and>
-                        </iterate>
-                     </and>
-                  </visibleWhen>
+                     <iterate>
+                        <and>
+                           <adapt type="org.eclipse.core.resources.IContainer">
+                              <test property="GitResource.isShared" />
+                           </adapt>
+                        </and>
+                     </iterate>
+                  </and>
+               </visibleWhen>
                </menu>
                <separator
                      name="org.eclipse.egit.ui.separator1"
