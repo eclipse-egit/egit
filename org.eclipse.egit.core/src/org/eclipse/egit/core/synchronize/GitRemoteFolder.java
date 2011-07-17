@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -73,21 +72,21 @@ class GitRemoteFolder extends GitRemoteResource {
 		List<GitRemoteResource> result = new ArrayList<GitRemoteResource>();
 
 		Collection<GitSyncObjectCache> members = cachedData.members();
-		if (members == null)
+		if (members == null || members.size() == 0)
 			return new GitRemoteResource[0];
 
 		monitor.beginTask("Fetching members of " + getPath(), cachedData.membersCount()); //$NON-NLS-1$
 		try {
 			for (GitSyncObjectCache member : members) {
-				DiffEntry diffEntry = member.getDiffEntry();
-				String memberPath = diffEntry.getOldPath();
+				ThreeWayDiffEntry diffEntry = member.getDiffEntry();
+				String memberPath = diffEntry.getPath();
 
 				if (DiffEntry.DEV_NULL.equals(memberPath))
 					continue;
 
 				GitRemoteResource obj;
-				ObjectId id = diffEntry.getOldId().toObjectId();
-				if (FileMode.TREE == diffEntry.getOldMode())
+				ObjectId id = diffEntry.getRemoteId().toObjectId();
+				if (diffEntry.isTree())
 					obj = new GitRemoteFolder(repo, member, getCommitId(), id,
 							memberPath);
 				else
