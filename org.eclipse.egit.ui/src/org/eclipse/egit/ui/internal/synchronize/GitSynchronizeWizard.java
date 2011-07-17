@@ -50,7 +50,7 @@ public class GitSynchronizeWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		GitSynchronizeDataSet gsdSet = new GitSynchronizeDataSet();
+		GitSynchronizeDataSet gsdSet = new GitSynchronizeDataSet(page.forceFetch());
 
 		Map<Repository, String> branches = page.getSelectedBranches();
 		boolean shouldIncludeLocal = page.shouldIncludeLocal();

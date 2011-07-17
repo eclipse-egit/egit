@@ -3188,6 +3188,9 @@ public class UIText extends NLS {
 	public static String GitBranchSynchronizeWizardPage_includeUncommitedChanges;
 
 	/** */
+	public static String GitBranchSynchronizeWizardPage_fetchChangesFromRemote;
+
+	/** */
 	public static String GitBranchSynchronizeWizardPage_selectAll;
 
 	/** */
