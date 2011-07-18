@@ -50,8 +50,11 @@ public class GitModelRoot {
 				for (GitModelObject obj : repoModel.getChildren())
 					restult.add(obj);
 			} else
-				for (GitSynchronizeData data : gsds)
-						restult.add(new GitModelRepository(data));
+				for (GitSynchronizeData data : gsds) {
+					GitModelRepository repoModel = new GitModelRepository(data);
+					if (repoModel.getChildren().length > 0)
+						restult.add(repoModel);
+				}
 		} catch (IOException e) {
 				Activator.logError(e.getMessage(), e);
 		}
