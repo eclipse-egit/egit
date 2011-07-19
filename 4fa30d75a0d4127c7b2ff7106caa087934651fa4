@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOAX//+z0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitProjectPropertyPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-07-17T20:20:55Z",
+      "side": 1,
+      "message": "CommitEditor.openQuiet should not be called it getCommit returns null.",
+      "revId": "4fa30d75a0d4127c7b2ff7106caa087934651fa4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX//+zM\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitProjectPropertyPage.java",
         "patchSetId": 1
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABOAX//+z0\u003d",
+      "revId": "4fa30d75a0d4127c7b2ff7106caa087934651fa4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+zs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitProjectPropertyPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-07-17T20:21:39Z",
+      "side": 1,
+      "message": "This error should probably be logged.",
       "revId": "4fa30d75a0d4127c7b2ff7106caa087934651fa4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
