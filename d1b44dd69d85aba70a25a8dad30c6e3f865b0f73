@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOAX//+w4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitProjectPropertyPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-07-18T16:33:52Z",
+      "side": 1,
+      "message": "It looks like the link is still selectable even when these cases occur.",
+      "revId": "d1b44dd69d85aba70a25a8dad30c6e3f865b0f73",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX//+uk\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitProjectPropertyPage.java",
         "patchSetId": 2
