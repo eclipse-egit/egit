@@ -3686,6 +3686,9 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel;
 
 	/** */
+	public static String CommitHelper_couldNotFindMergeMsg;
+
+	/** */
 	public static String CommitResultLabelProvider_SectionAuthor;
 
 	/** */
