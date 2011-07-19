@@ -34,13 +34,13 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CachedCheckboxTreeViewer;
 import org.eclipse.egit.ui.internal.FilteredCheckboxTree;
+import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
@@ -70,11 +70,8 @@ import org.eclipse.ui.statushandlers.StatusManager;
  */
 public class GitProjectsImportPage extends WizardPage {
 
-	private final class ProjectLabelProvider extends LabelProvider implements
+	private final class ProjectLabelProvider extends GitLabelProvider implements
 			IColorProvider {
-		public String getText(Object element) {
-			return ((ProjectRecord) element).getProjectLabel();
-		}
 
 		public Color getForeground(Object element) {
 			if (isProjectInWorkspace(((ProjectRecord) element).getProjectName()))

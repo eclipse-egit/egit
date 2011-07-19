@@ -14,38 +14,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.ui.UIIcons;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
+import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelRepository;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelTree;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.resource.LocalResourceManager;
-import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
-import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jgit.lib.AbbreviatedObjectId;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.team.ui.mapping.SynchronizationLabelProvider;
-import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
  * Label provider for Git ChangeSet model.
  */
-public class GitChangeSetLabelProvider extends SynchronizationLabelProvider
-		implements IStyledLabelProvider {
+public class GitChangeSetLabelProvider extends SynchronizationLabelProvider implements IStyledLabelProvider {
 
 	/** */
 	public static final String BINDING_CHANGESET_SHORT_MESSAGE = "{short_message}"; //$NON-NLS-1$
@@ -73,64 +58,17 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider
 	private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
 			store.getString(UIPreferences.DATE_FORMAT));
 
-	private static final ILabelProvider workbenchLabelProvider = new WorkbenchLabelProvider();
-
-	private LabelProvider delegateLabelProvider;
+	private GitLabelProvider delegateLabelProvider;
 
 	@Override
-	protected ILabelProvider getDelegateLabelProvider() {
+	protected GitLabelProvider getDelegateLabelProvider() {
 		if (delegateLabelProvider == null)
-			delegateLabelProvider = new DelegateLabelProvider();
+			delegateLabelProvider = new GitLabelProvider();
 
 		return delegateLabelProvider;
 	}
 
-	private static class DelegateLabelProvider extends LabelProvider {
-
-		private final ResourceManager fImageCache = new LocalResourceManager(
-				JFaceResources.getResources());
-
-		public String getText(Object element) {
-			if (element instanceof GitModelObject)
-				return ((GitModelObject) element).getName();
-
-			return null;
-		}
-
-		public Image getImage(Object element) {
-			if (element instanceof GitModelBlob) {
-				Object adapter = ((GitModelBlob) element)
-						.getAdapter(IResource.class);
-				return workbenchLabelProvider.getImage(adapter);
-			}
-
-			if (element instanceof GitModelTree) {
-				Object adapter = ((GitModelTree) element)
-						.getAdapter(IResource.class);
-				return workbenchLabelProvider.getImage(adapter);
-			}
-
-			if (element instanceof GitModelCommit
-					|| element instanceof GitModelCache
-					|| element instanceof GitModelWorkingTree)
-				return fImageCache.createImage(UIIcons.CHANGESET);
-
-			if (element instanceof GitModelRepository)
-				return fImageCache.createImage(UIIcons.REPOSITORY);
-
-			return super.getImage(element);
-		}
-
-		@Override
-		public void dispose() {
-			fImageCache.dispose();
-			super.dispose();
-		}
-
-	}
-
 	public StyledString getStyledText(Object element) {
-		String rawText = getText(element);
 		// need to compare classes as everything is 'instanceof GitModelCommit'
 		if (element.getClass().equals(GitModelCommit.class)) {
 			String formattedName = createChangeSetLabel((GitModelCommit) element);
@@ -141,7 +79,7 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider
 			return string;
 		}
 
-		return new StyledString(rawText);
+		return getDelegateLabelProvider().getStyledText(element);
 	}
 
 	private String createChangeSetLabel(GitModelCommit commit) {

@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.history.CommitFileDiffViewer;
 import org.eclipse.egit.ui.internal.history.FileDiff;
@@ -34,7 +35,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jgit.lib.Constants;
@@ -358,14 +358,10 @@ public class CommitEditorPage extends FormPage {
 		GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT, 50)
 				.applyTo(branchViewer.getControl());
 		branchViewer.setSorter(new ViewerSorter());
-		branchViewer.setLabelProvider(new LabelProvider() {
-
-			public Image getImage(Object element) {
-				return CommitEditorPage.this.getImage(UIIcons.BRANCH);
-			}
+		branchViewer.setLabelProvider(new GitLabelProvider() {
 
 			public String getText(Object element) {
-				return Repository.shortenRefName(((Ref) element).getName());
+				return Repository.shortenRefName(super.getText(element));
 			}
 
 		});
