@@ -571,6 +571,9 @@ public class UIText extends NLS {
 	public static String GitProjectPropertyPage_LabelWorkdir;
 
 	/** */
+	public static String GitProjectPropertyPage_UnableToGetCommit;
+
+	/** */
 	public static String GitProjectPropertyPage_ValueEmptyRepository;
 
 	/** */
