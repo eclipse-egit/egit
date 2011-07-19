@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX//+uk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitProjectPropertyPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-19T11:54:04Z",
+      "side": 1,
+      "message": "Yes, that\u0027s a shortcoming of the Hyperlink widget. Replaced by original implementation (Text) in this case.",
+      "parentUuid": "AABOAX//+w4\u003d",
+      "revId": "d1b44dd69d85aba70a25a8dad30c6e3f865b0f73",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+ug\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitProjectPropertyPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-19T11:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX//+yE\u003d",
+      "revId": "d1b44dd69d85aba70a25a8dad30c6e3f865b0f73",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
