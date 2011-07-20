@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n//+6Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitTreeTraversal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-22T18:05:54Z",
+      "side": 0,
+      "message": "Not sure if you can simply drop this. The filter will only be useless as long as the TreeWalk has only one tree (i.e. as long you don\u0027t go through the code in line 95). So you might want to move this line into the block after line 94.... But I\u0027m not quite sure, as I don\u0027t understand your code completely...",
+      "revId": "cd15f9dafaab88f737b450381538dbab3cf1636a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

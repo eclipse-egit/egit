@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n//+6U\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSyncInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-03-22T18:05:54Z",
+      "side": 1,
+      "message": "Hmm... I believe you are interested in a single path, right? In this case, perhaps you should look at the static TreeWalk.forPath() method. You provide a repo, a path and a list of trees (the ones you add in your code already).\nWith this, you don\u0027t need to add a PathFilter. Adding a ANY_DIFF filter might still make a difference: TreeWalk.forPath should return null if the filter is set and the entries don\u0027t \"differ\" (whatever exactly that means). If the filter does what you expect, you could skip the calculateKindImpl and simply return IN_SYNC...\nYou probably won\u0027t see much performance difference here on the TreeWalk, as it is a single path access, but it may well simplify your code.",
+      "revId": "769096c37732eeaf7ada9d8c661e1d19937c0f12",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
