@@ -182,7 +182,7 @@ class PushResultTable {
 				.applyTo(messageGroup);
 
 		final Text text = new Text(messageGroup, SWT.MULTI | SWT.READ_ONLY
-				| SWT.BORDER);
+				| SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.hint(SWT.DEFAULT, TEXT_PREFERRED_HEIGHT).applyTo(text);
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
