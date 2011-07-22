@@ -20,19 +20,17 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.DeleteBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -46,19 +44,6 @@ import org.eclipse.swt.widgets.Shell;
 public class DeleteBranchDialog extends AbstractBranchSelectionDialog {
 
 	private final Set<Ref> selectedRefs = new HashSet<Ref>();
-
-	private static final class BranchLabelProvider extends LabelProvider {
-		@Override
-		public String getText(Object element) {
-			RefNode refNode = (RefNode) element;
-			return refNode.getObject().getName();
-		}
-
-		@Override
-		public Image getImage(Object element) {
-			return RepositoryTreeNodeType.REF.getIcon();
-		}
-	}
 
 	private static final class BranchMessageDialog extends MessageDialog {
 		private final List<RefNode> nodes;
@@ -80,7 +65,7 @@ public class DeleteBranchDialog extends AbstractBranchSelectionDialog {
 
 			TableViewer branchesList = new TableViewer(area);
 			branchesList.setContentProvider(ArrayContentProvider.getInstance());
-			branchesList.setLabelProvider(new BranchLabelProvider());
+			branchesList.setLabelProvider(new GitLabelProvider());
 			branchesList.setInput(nodes);
 			return area;
 		}
