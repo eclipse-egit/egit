@@ -40,6 +40,7 @@ import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.quickassist.IQuickAssistInvocationContext;
 import org.eclipse.jface.text.quickassist.IQuickAssistProcessor;
+import org.eclipse.jface.text.reconciler.IReconciler;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.AnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationAccess;
@@ -149,6 +150,17 @@ public class SpellcheckableMessageArea extends Composite {
 	 */
 	public SpellcheckableMessageArea(Composite parent, String initialText,
 			int styles) {
+		this(parent, initialText, false, styles);
+	}
+	/**
+	 * @param parent
+	 * @param initialText
+	 * @param readOnly
+	 * @param styles
+	 */
+	public SpellcheckableMessageArea(Composite parent, String initialText,
+			boolean readOnly,
+			int styles) {
 		super(parent, styles);
 		setLayout(new FillLayout());
 
@@ -163,6 +175,8 @@ public class SpellcheckableMessageArea extends Composite {
 		int textHeight = getLineHeight() * 7;
 		Point size = getTextWidget().computeSize(textWidth, textHeight);
 		getTextWidget().setSize(size);
+
+		getTextWidget().setEditable(!readOnly);
 
 		createMarginPainter();
 
@@ -182,6 +196,19 @@ public class SpellcheckableMessageArea extends Composite {
 				return getHyperlinkTargets();
 			}
 
+			@Override
+			public int getHyperlinkStateMask(ISourceViewer viewer) {
+				return SWT.NONE;
+			}
+
+			@Override
+			public IReconciler getReconciler(ISourceViewer viewer) {
+				if (!isEditable(viewer)) {
+					return null;
+				}
+				return super.getReconciler(sourceViewer);
+			}
+
 		});
 		sourceViewer.setDocument(document, annotationModel);
 
@@ -191,6 +218,10 @@ public class SpellcheckableMessageArea extends Composite {
 				getHandlerService().deactivateHandler(handlerActivation);
 			}
 		});
+	}
+
+	private boolean isEditable(ISourceViewer viewer) {
+		return viewer != null && viewer.getTextWidget().getEditable();
 	}
 
 	private void configureHardWrap() {
@@ -252,14 +283,16 @@ public class SpellcheckableMessageArea extends Composite {
 		contextMenu.add(selectAllAction);
 		contextMenu.add(new Separator());
 
-		final SubMenuManager quickFixMenu = new SubMenuManager(contextMenu);
-		quickFixMenu.setVisible(true);
-		quickFixMenu.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
-				quickFixMenu.removeAll();
-				addProposals(quickFixMenu);
-			}
-		});
+		if(isEditable(sourceViewer)) {
+			final SubMenuManager quickFixMenu = new SubMenuManager(contextMenu);
+			quickFixMenu.setVisible(true);
+			quickFixMenu.addMenuListener(new IMenuListener() {
+				public void menuAboutToShow(IMenuManager manager) {
+					quickFixMenu.removeAll();
+					addProposals(quickFixMenu);
+				}
+			});
+		}
 		StyledText textWidget = getTextWidget();
 		getTextWidget().setMenu(contextMenu.createContextMenu(textWidget));
 
