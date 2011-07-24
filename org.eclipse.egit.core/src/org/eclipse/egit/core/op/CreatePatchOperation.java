@@ -40,6 +40,8 @@ public class CreatePatchOperation implements IEGitOperation {
 
 	private String patchContent;
 
+	private int contextLines;
+
 	/**
 	 * Creates the new operation.
 	 *
@@ -78,6 +80,7 @@ public class CreatePatchOperation implements IEGitOperation {
 				});
 
 		diffFmt.setProgressMonitor(gitMonitor);
+		diffFmt.setContext(contextLines);
 
 		RevCommit[] parents = commit.getParents();
 		if (parents.length > 1)
@@ -147,6 +150,15 @@ public class CreatePatchOperation implements IEGitOperation {
 	 */
 	public void useGitFormat(boolean useFormat) {
 		this.useGitFormat = useFormat;
+	}
+
+	/**
+	 * Change the number of lines of context to display.
+	 *
+	 * @param contextLines line count
+	 */
+	public void setContextLines(int contextLines) {
+		this.contextLines = contextLines;
 	}
 
 	/**
