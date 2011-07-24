@@ -13,6 +13,11 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -23,6 +28,8 @@ import org.eclipse.core.commands.Parameterization;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.egit.core.op.CreatePatchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
@@ -46,12 +53,17 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSourceAdapter;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.DisposeEvent;
@@ -259,6 +271,10 @@ class CommitGraphTable {
 					renderer.dispose();
 			}
 		});
+
+		Transfer[] transferTypes = new Transfer[] {TextTransfer.getInstance(), FileTransfer.getInstance()};
+		table.addDragSupport(DND.DROP_DEFAULT | DND.DROP_COPY, transferTypes,
+				new CommitDragSourceListener());
 	}
 
 	CommitGraphTable(final Composite parent, final IPageSite site,
@@ -533,6 +549,93 @@ class CommitGraphTable {
 			}
 		};
 		return action;
+	}
+
+	private final class CommitDragSourceListener extends DragSourceAdapter {
+		@Override
+		public void dragStart(DragSourceEvent event) {
+			RevCommit commit = getSelectedCommit();
+			event.doit = commit.getParentCount() == 1;
+		}
+
+		public void dragSetData(DragSourceEvent event) {
+			boolean isFileTransfer = FileTransfer.getInstance()
+					.isSupportedType(event.dataType);
+			boolean isTextTransfer = TextTransfer.getInstance()
+					.isSupportedType(event.dataType);
+			if (isFileTransfer || isTextTransfer) {
+				RevCommit commit = getSelectedCommit();
+				String patchContent = createPatch(commit);
+				if (isTextTransfer) {
+					event.data = patchContent;
+					return;
+				} else {
+					File patchFile = null;
+					try {
+						patchFile = createTempFile(commit);
+						writeToFile(patchFile.getAbsolutePath(), patchContent);
+						event.data = new String[] { patchFile.getAbsolutePath() };
+					} catch (IOException e) {
+						Activator.logError(NLS.bind(
+								UIText.CommitGraphTable_UnableToWritePatch,
+								commit.getId().name()), e);
+					} finally {
+						if (patchFile != null) {
+							patchFile.deleteOnExit();
+						}
+					}
+				}
+			}
+		}
+
+		private File createTempFile(RevCommit commit) {
+			String tmpDir = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
+			File patchDir = new File(tmpDir, "egit-patch" + commit.getId().name()); //$NON-NLS-1$
+			int counter = 1;
+			while(patchDir.exists()) {
+				patchDir = new File(tmpDir, commit.getId().name() + "_" + counter); //$NON-NLS-1$
+			}
+			patchDir.mkdir();
+			patchDir.deleteOnExit();
+			File patchFile;
+			String suggestedFileName = CreatePatchOperation
+					.suggestFileName(commit);
+			patchFile = new File(patchDir, suggestedFileName);
+			return patchFile;
+		}
+
+		private String createPatch(RevCommit commit) {
+			Repository repository = input.getRepository();
+			CreatePatchOperation operation = new CreatePatchOperation(
+					repository, commit);
+			operation.useGitFormat(true);
+			try {
+				operation.execute(null);
+			} catch (CoreException e) {
+				Activator.logError(NLS.bind(
+						UIText.CommitGraphTable_UnableToCreatePatch, commit
+								.getId().name()), e);
+			}
+			String patchContent = operation.getPatchContent();
+			return patchContent;
+		}
+
+		private RevCommit getSelectedCommit() {
+			IStructuredSelection selection = (IStructuredSelection) table
+					.getSelection();
+			RevCommit commit = (RevCommit) selection.getFirstElement();
+			return commit;
+		}
+
+		private void writeToFile(final String fileName, String content)
+				throws IOException {
+			Writer output = new BufferedWriter(new FileWriter(fileName));
+			try {
+				output.write(content);
+			} finally {
+				output.close();
+			}
+		}
 	}
 
 	private final static class MenuListener implements MenuDetectListener {
