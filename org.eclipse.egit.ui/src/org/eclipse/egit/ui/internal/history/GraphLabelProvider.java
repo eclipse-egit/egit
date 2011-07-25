@@ -10,18 +10,36 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 
+import org.eclipse.egit.core.UtilCommit;
+import org.eclipse.egit.core.UtilWalk;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.util.RelativeDateFormatter;
 import org.eclipse.swt.graphics.Image;
 
 class GraphLabelProvider extends BaseLabelProvider implements
 		ITableLabelProvider {
+	private static Repository repo;
+
+	private static final int CUTOFF_DATE_SLOP = 86400; // 1 day
+
+	/* How many generations are maximally preferred over _one_ merge traversal? */
+	private static final int MERGE_TRAVERSAL_WEIGHT = 65535;
+
+	private static UtilWalk revWalk;
+
 	private final DateFormat absoluteFormatter;
 
 	private RevCommit lastCommit;
@@ -34,6 +52,83 @@ class GraphLabelProvider extends BaseLabelProvider implements
 
 	GraphLabelProvider() {
 		absoluteFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
+	}
+
+	private String getNameRev(RevCommit commit) throws MissingObjectException,
+			IOException {
+		if (repo == null) {
+			return ""; //$NON-NLS-1$
+		}
+
+		Map<String, Ref> tagsMap = repo.getTags();
+		UtilCommit current = (UtilCommit) revWalk.parseCommit(commit);
+
+		for (Map.Entry<String, Ref> entry : tagsMap.entrySet()) {
+			RevObject any = revWalk.peel(revWalk.parseAny(entry.getValue()
+					.getObjectId()));
+
+			if (!(any instanceof UtilCommit)) {
+				continue;
+			}
+
+			UtilCommit newTag = (UtilCommit) any;
+			fillNames(newTag, entry.getKey(), 0, 0, current.getCommitTime()
+					- CUTOFF_DATE_SLOP, revWalk);
+		}
+
+		return current.getUtil() == null ? "" : String.valueOf(current.getUtil()); //$NON-NLS-1$
+	}
+
+	private void fillNames(UtilCommit commit, String name, int generation,
+			int distance, int cutoff, UtilWalk revWalk)
+			throws MissingObjectException, IncorrectObjectTypeException,
+			IOException {
+		if (commit.getCommitTime() < cutoff) {
+			return;
+		}
+
+		NameInfo nameInfo = (NameInfo) commit.getUtil();
+
+		if (nameInfo == null) {
+			nameInfo = new NameInfo();
+			commit.setUtil(nameInfo);
+		} else if (nameInfo.distance <= distance) {
+			return;
+		}
+
+		nameInfo.name = name;
+		nameInfo.distance = distance;
+		nameInfo.generation = generation;
+
+		for (int parent_number = 0; parent_number < commit.getParentCount(); parent_number++) {
+			UtilCommit parent = (UtilCommit) revWalk.parseCommit(commit
+					.getParent(parent_number).getId());
+
+			if (parent_number > 0) {
+				String new_name;
+
+				if (generation > 0) {
+					new_name = String.format(
+							"%s~%d^%d", name, generation, parent_number + 1); //$NON-NLS-1$
+				} else {
+					new_name = String.format("%s^%d", name, parent_number + 1); //$NON-NLS-1$
+				}
+
+				fillNames(parent, new_name, 0, distance
+						+ MERGE_TRAVERSAL_WEIGHT, cutoff, revWalk);
+			} else {
+				fillNames(parent, name, generation + 1, distance + 1, cutoff,
+						revWalk);
+			}
+		}
+	}
+
+	private String tagOf(final RevCommit c) {
+		try {
+			return getNameRev(c);
+		} catch (Exception e) {
+			return ""; //$NON-NLS-1$
+		}
 	}
 
 	public String getColumnText(final Object element, final int columnIndex) {
@@ -63,6 +158,10 @@ class GraphLabelProvider extends BaseLabelProvider implements
 				return committer.getName()
 						+ " <" + committer.getEmailAddress() + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 			}
+		}
+
+		if (columnIndex == 5) {
+			return tagOf(c);
 		}
 
 		return ""; //$NON-NLS-1$
@@ -99,5 +198,31 @@ class GraphLabelProvider extends BaseLabelProvider implements
 			return false;
 		relativeDate = relative;
 		return true;
+	}
+
+	public static void setRepo(Repository repo) {
+		if (GraphLabelProvider.repo != repo) {
+			GraphLabelProvider.repo = repo;
+			if (revWalk != null)
+				revWalk.release();
+			revWalk = new UtilWalk(repo);
+		}
+	}
+
+	private class NameInfo {
+		private String name;
+
+		private int generation;
+
+		private int distance;
+
+		@Override
+		public String toString() {
+			if (generation == 0) {
+				return name;
+			} else {
+				return String.format("%s~%d", name, generation); //$NON-NLS-1$
+			}
+		}
 	}
 }

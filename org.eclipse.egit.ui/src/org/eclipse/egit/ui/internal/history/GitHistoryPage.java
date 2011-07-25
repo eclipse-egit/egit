@@ -1038,6 +1038,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				return false;
 			}
 			Repository db = input.getRepository();
+			GraphLabelProvider.setRepo(db);
 			if (resolveHead(db, true) == null) {
 				this.name = ""; //$NON-NLS-1$
 				setErrorMessage(UIText.GitHistoryPage_NoInputMessage);
