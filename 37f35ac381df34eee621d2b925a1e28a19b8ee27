@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX//+rA\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestRepository.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-07-22T15:15:48Z",
+      "side": 1,
+      "message": "You change the semantics of this method. Interestingly all test cases still work. But the implementation indeed did what the method name said. The index contains the whole repository tree and not only the staged files (http://book.git-scm.com/7_the_git_index.html).\n\nPlease introduce a new method, maybe isStaged, which returns true if the index content differs from the repo content.",
+      "revId": "37f35ac381df34eee621d2b925a1e28a19b8ee27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+q8\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/AddOperationTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-07-22T15:15:48Z",
+      "side": 1,
+      "message": "Please remove that line. It changes the tests.",
+      "revId": "37f35ac381df34eee621d2b925a1e28a19b8ee27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+q4\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 3355,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-07-22T15:15:48Z",
+      "side": 1,
+      "message": "missing %",
+      "revId": "37f35ac381df34eee621d2b925a1e28a19b8ee27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
