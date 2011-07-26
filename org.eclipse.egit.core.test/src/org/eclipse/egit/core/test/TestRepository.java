@@ -33,6 +33,7 @@ import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.errors.UnmergedPathException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -405,10 +406,19 @@ public class TestRepository {
 	}
 
 	public boolean inIndex(String path) throws IOException {
-		String repoPath = getRepoRelativePath(path);
-		DirCache dc = DirCache.read(repository.getIndexFile(), repository.getFS());
+		return getDirCacheEntry(path) != null;
+	}
 
-		return dc.getEntry(repoPath) != null;
+	public boolean removedFromIndex(String path) throws IOException {
+		DirCacheEntry dc = getDirCacheEntry(path);
+		if (dc == null)
+			return true;
+
+		Ref ref = repository.getRef(Constants.HEAD);
+		RevCommit c = new RevWalk(repository).parseCommit(ref.getObjectId());
+		TreeWalk tw = TreeWalk.forPath(repository, path, c.getTree());
+
+		return tw == null || dc.getObjectId().equals(tw.getObjectId(0));
 	}
 
 	public long lastModifiedInIndex(String path) throws IOException {
@@ -478,4 +488,10 @@ public class TestRepository {
 		disconnect.execute(null);
 	}
 
+	private DirCacheEntry getDirCacheEntry(String path) throws IOException {
+		String repoPath = getRepoRelativePath(path);
+		DirCache dc = DirCache.read(repository.getIndexFile(), repository.getFS());
+
+		return dc.getEntry(repoPath);
+	}
 }
