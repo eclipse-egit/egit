@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAX//+qg\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/AddOperationTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-07-22T17:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX//+q8\u003d",
+      "revId": "37f35ac381df34eee621d2b925a1e28a19b8ee27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX//+q4\u003d",
         "filename": "org.eclipse.egit.ui/plugin.xml",
         "patchSetId": 5
@@ -65,6 +83,24 @@
       "writtenOn": "2011-07-22T15:15:48Z",
       "side": 1,
       "message": "missing %",
+      "revId": "37f35ac381df34eee621d2b925a1e28a19b8ee27",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+qY\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 3355,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-07-22T17:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX//+q4\u003d",
       "revId": "37f35ac381df34eee621d2b925a1e28a19b8ee27",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
