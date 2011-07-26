@@ -28,9 +28,13 @@ public class OpenCommitAction extends ActionDelegate implements
 	@Override
 	public void run(IAction action) {
 		CommitSelectionDialog dialog = new CommitSelectionDialog(shell, true);
-		if (Window.OK == dialog.open())
-			for (Object result : dialog.getResult())
-				CommitEditor.openQuiet((RepositoryCommit) result);
+		if (Window.OK != dialog.open())
+			return;
+		Object[] results = dialog.getResult();
+		if (results == null || results.length == 0)
+			return;
+		for (Object result : results)
+			CommitEditor.openQuiet((RepositoryCommit) result);
 	}
 
 	public void init(IWorkbenchWindow window) {
