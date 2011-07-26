@@ -2,6 +2,24 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOKH///xY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RemoveFromIndexOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-06-10T18:06:26Z",
+      "side": 1,
+      "message": "because currently ResetCommand does not work on folders (it only works for files).",
+      "parentUuid": "AABOKH///6k\u003d",
+      "revId": "1047e8dfbd6575e5e3568fe8cfed735d4a689e4c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOKH///tE\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RemoveFromIndexOperation.java",
         "patchSetId": 1
@@ -14,6 +32,24 @@
       "side": 1,
       "message": "but then we should fix the resetcommand instead of writing a fixed version into egit. This is a functionality is needed by other jgit users\nalso and we should offer it in jgit.",
       "parentUuid": "AABOKH///xY\u003d",
+      "revId": "1047e8dfbd6575e5e3568fe8cfed735d4a689e4c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOKH///sk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RemoveFromIndexOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-06-12T11:15:21Z",
+      "side": 1,
+      "message": "You are right Chis, I\u0027ve already push a change I441db34f226be36548c61cef77958995971498de that adds support for dir reset. But in time when I was extracting this code from StageView class I didn\u0027t really think about fixing jgit",
+      "parentUuid": "AABOKH///tE\u003d",
       "revId": "1047e8dfbd6575e5e3568fe8cfed735d4a689e4c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
