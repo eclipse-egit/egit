@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOKH///tE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RemoveFromIndexOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-06-12T07:47:03Z",
+      "side": 1,
+      "message": "but then we should fix the resetcommand instead of writing a fixed version into egit. This is a functionality is needed by other jgit users\nalso and we should offer it in jgit.",
+      "parentUuid": "AABOKH///xY\u003d",
+      "revId": "1047e8dfbd6575e5e3568fe8cfed735d4a689e4c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
