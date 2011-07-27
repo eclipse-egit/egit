@@ -18,6 +18,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.egit.core.internal.merge.StorageContentMerger;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -44,7 +45,7 @@ public class CherryPickHandler extends AbstractHistoryCommandHandler {
 		Git git = new Git(repo);
 		Shell parent = getPart(event).getSite().getShell();
 		try {
-			cherryPickResult = git.cherryPick().include(commit.getId()).call();
+			cherryPickResult = git.cherryPick().include(commit.getId()).mergeWith(new StorageContentMerger(repo)).call();
 			newHead = cherryPickResult.getNewHead();
 			if (newHead != null && cherryPickResult.getCherryPickedRefs().isEmpty())
 				MessageDialog.openWarning(parent,
