@@ -23,21 +23,8 @@
    </url>
 
    <requires>
-      <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.egit.core" version="1.1.0" match="equivalent"/>
-      <import plugin="org.eclipse.egit.ui" version="1.1.0" match="equivalent"/>
-      <import plugin="org.eclipse.jface"/>
-      <import plugin="org.eclipse.jgit" version="1.1.0" match="equivalent"/>
-      <import plugin="org.eclipse.mylyn.monitor.core" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.mylyn.tasks.core" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.mylyn.tasks.ui" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.mylyn.team.ui" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.mylyn.resources.ui" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.mylyn.context.core" version="3.0.0" match="compatible"/>
-      <import plugin="org.eclipse.team.core"/>
-      <import plugin="org.eclipse.ui.navigator.resources"/>
-      <import plugin="org.eclipse.ui.workbench"/>
+      <import feature="org.eclipse.egit" version="1.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.mylyn.team_feature" version="3.5.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
