@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX//+04\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ShowInReflogCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-07-17T20:00:31Z",
+      "side": 1,
+      "message": "please remove commented code",
+      "revId": "50cb04628113102f8bbf6fc19850cc5f86c3e9a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
