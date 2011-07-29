@@ -21,19 +21,17 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.DeleteBranchOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -66,24 +64,11 @@ public class DeleteBranchCommand extends
 
 			TableViewer branchesList = new TableViewer(area);
 			branchesList.setContentProvider(ArrayContentProvider.getInstance());
-			branchesList.setLabelProvider(new BranchLabelProvider());
+			branchesList.setLabelProvider(new GitLabelProvider());
 			branchesList.setInput(nodes);
 			return area;
 		}
 
-	}
-
-	private static final class BranchLabelProvider extends LabelProvider {
-		@Override
-		public String getText(Object element) {
-			RefNode refNode = (RefNode) element;
-			return refNode.getObject().getName();
-		}
-
-		@Override
-		public Image getImage(Object element) {
-			return RepositoryTreeNodeType.REF.getIcon();
-		}
 	}
 
 	public Object execute(final ExecutionEvent event) throws ExecutionException {

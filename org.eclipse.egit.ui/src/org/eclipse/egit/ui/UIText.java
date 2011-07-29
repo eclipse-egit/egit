@@ -3809,6 +3809,9 @@ public class UIText extends NLS {
 	public static String GitActionContributor_Pull;
 
 	/** */
+	public static String GitLabelProvider_UnableToRetrieveLabel;
+
+	/** */
 	public static String GitVariableResolver_InternalError;
 
 	/** */
