@@ -835,11 +835,14 @@ public class StagingView extends ViewPart {
 		if (selection.isEmpty())
 			return;
 
-		final RevCommit headRev;
+		RevCommit headRev = null;
 		try {
 			final Ref head = currentRepository.getRef(Constants.HEAD);
-			headRev = new RevWalk(currentRepository).parseCommit(head
-					.getObjectId());
+			// head.getObjectId() is null if the repository does not contain any
+			// commit
+			if (head.getObjectId() != null)
+				headRev = new RevWalk(currentRepository).parseCommit(head
+						.getObjectId());
 		} catch (IOException e1) {
 			// TODO fix text
 			MessageDialog.openError(getSite().getShell(),
