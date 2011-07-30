@@ -1074,18 +1074,37 @@
                class="org.eclipse.egit.ui.internal.repository.tree.command.SynchronizeCommand">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <and>
+	         <or>
+	            <and>
+	               <count
+	                     value="1">
+	               </count>
+	               <and>
+	                  <iterate>
+	                     <instanceof
+	                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
+	                     </instanceof>
+	                  </iterate>
+	               </and>
+	            </and>
+	            <and>
+                  <count
+                        value="2">
+                  </count>
                   <iterate>
-                     <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
-                     </instanceof>
+                     <and>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                           </instanceof>
+                        </or>
+                     </and>
                   </iterate>
                </and>
-            </and>
+	         </or>
          </activeWhen>
       </handler>
       <handler
