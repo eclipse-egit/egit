@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX//+dk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-07-29T13:53:16Z",
+      "side": 1,
+      "message": "What exactly happens if the repository does not contain any commit?\n\nPlease make that clearer, and better write the comment above the line to be commented.",
+      "revId": "c74a23441fd75b20aff16bf4f81dae84503de207",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
