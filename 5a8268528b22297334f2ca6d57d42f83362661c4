@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX//+nc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-24T22:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX//+o4\u003d",
+      "revId": "5a8268528b22297334f2ca6d57d42f83362661c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
