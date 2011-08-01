@@ -15,10 +15,12 @@ import java.util.List;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
@@ -239,5 +241,9 @@ public class MergeResultDialog extends Dialog {
 					objectReader.release();
 			}
 		});
+	}
+
+	protected IDialogSettings getDialogBoundsSettings() {
+		return UIUtils.getDialogBoundSettings(getClass());
 	}
 }

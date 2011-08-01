@@ -11,8 +11,10 @@ package org.eclipse.egit.ui.internal.push;
 
 import org.eclipse.egit.core.op.PushOperationResult;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.URIish;
@@ -132,5 +134,9 @@ class PushResultDialog extends TitleAreaDialog {
 
 	public void showConfigureButton(boolean show) {
 		this.hideConfigure = !show;
+	}
+
+	protected IDialogSettings getDialogBoundsSettings() {
+		return UIUtils.getDialogBoundSettings(getClass());
 	}
 }

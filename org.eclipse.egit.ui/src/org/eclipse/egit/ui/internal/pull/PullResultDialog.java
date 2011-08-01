@@ -11,10 +11,12 @@
 package org.eclipse.egit.ui.internal.pull;
 
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.fetch.FetchResultDialog;
 import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jgit.api.MergeResult;
@@ -146,5 +148,9 @@ public class PullResultDialog extends Dialog {
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		newShell.setText(UIText.PullResultDialog_DialogTitle);
+	}
+
+	protected IDialogSettings getDialogBoundsSettings() {
+		return UIUtils.getDialogBoundSettings(getClass());
 	}
 }
