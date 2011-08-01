@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AABOAX//+x4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-07-18T03:18:57Z",
+      "side": 1,
+      "message": "What do you think about the following? It removes the branch string and the +\u003d performed on it which creates an unneeded extra string.\n\nstring.append(\u0027 \u0027);\n\nstring.append(\u0027[\u0027, StyledString.DECORATIONS_STYLER);\n\nstring.append(repository.getBranch(), StyledString.DECORATIONS_STYLER);\n\nRepositoryState state \u003d repository.getRepositoryState();\n\nif (state !\u003d RepositoryState.SAFE) {\n\nstring.append(\" - \", StyledString.DECORATIONS_STYLER);\n\nstring.append(state.getDescription(), StyledString.DECORATIONS_STYLER);\n\n}\n\nstring.append(\u0027]\u0027, StyledString.DECORATIONS_STYLER);",
+      "revId": "2a1df2623fb097bebcb0e33fae8b3d5d95031ecd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX//+uQ\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
         "patchSetId": 3
