@@ -177,6 +177,23 @@
     },
     {
       "key": {
+        "uuid": "AABOAX//+00\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-07-17T20:01:12Z",
+      "side": 1,
+      "message": "This should check for repository.isBare() and use the directory name on bare repositories.\n\nSee RepositoryCommit.getRepositoryName() for an example.",
+      "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX//+yk\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
         "patchSetId": 2
@@ -189,6 +206,23 @@
       "side": 1,
       "message": "Good catch, done!",
       "parentUuid": "AABOAX//+00\u003d",
+      "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+0g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-07-17T20:02:43Z",
+      "side": 1,
+      "message": "Should workbenchLabelProvider.dispose be called as well when non-null?",
       "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
