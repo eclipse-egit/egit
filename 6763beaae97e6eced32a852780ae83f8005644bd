@@ -16,6 +16,23 @@
       "revId": "6763beaae97e6eced32a852780ae83f8005644bd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+dc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositorySearchDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-07-29T18:45:08Z",
+      "side": 1,
+      "message": "Using GitLabelProvider does not work here because the Content Provider provides String objects and no Repository objects.",
+      "revId": "6763beaae97e6eced32a852780ae83f8005644bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
