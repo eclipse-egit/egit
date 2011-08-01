@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX//+4o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-07-17T13:13:43Z",
+      "side": 1,
+      "message": "is this \u0027f\u0027 prefix really needed ?",
+      "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+4k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-07-17T13:13:43Z",
+      "side": 1,
+      "message": "this tailing white space isn\u0027t needed here",
+      "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+4g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-07-17T13:13:43Z",
+      "side": 1,
+      "message": "one empty line is enough",
+      "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
