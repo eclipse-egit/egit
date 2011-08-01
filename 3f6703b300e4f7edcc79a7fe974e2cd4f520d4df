@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAX//+zA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-18T00:37:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX//+2w\u003d",
+      "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX//+4o\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2011-07-17T13:13:43Z",
       "side": 1,
       "message": "is this \u0027f\u0027 prefix really needed ?",
+      "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+y8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-18T00:37:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX//+4o\u003d",
       "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -117,6 +153,42 @@
       "writtenOn": "2011-07-17T13:13:43Z",
       "side": 1,
       "message": "curly brackets can be removed",
+      "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+ys\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-18T00:37:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX//+4c\u003d",
+      "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+yk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-18T00:37:55Z",
+      "side": 1,
+      "message": "Good catch, done!",
+      "parentUuid": "AABOAX//+00\u003d",
       "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
