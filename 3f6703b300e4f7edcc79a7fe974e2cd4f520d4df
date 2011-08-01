@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAX//+y4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-18T00:37:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX//+4k\u003d",
+      "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX//+4g\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
         "patchSetId": 2
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAX//+yw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-18T00:37:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAX//+4g\u003d",
+      "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAX//+4c\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
         "patchSetId": 2
@@ -81,6 +117,24 @@
       "writtenOn": "2011-07-17T13:13:43Z",
       "side": 1,
       "message": "curly brackets can be removed",
+      "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAX//+yo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-07-18T00:37:55Z",
+      "side": 1,
+      "message": "Good catch! Done",
+      "parentUuid": "AABOAX//+0g\u003d",
       "revId": "3f6703b300e4f7edcc79a7fe974e2cd4f520d4df",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
