@@ -12,6 +12,9 @@
    <feature url="features/org.eclipse.egit.mylyn_0.0.0.qualifier.jar" id="org.eclipse.egit.mylyn" version="0.0.0" patch="false">
       <category name="Eclipse Git Team Provider"/>
    </feature>
+   <feature url="features/org.eclipse.egit.psf_0.0.0.qualifier.jar" id="org.eclipse.egit.psf" version="0.0.0" patch="false">
+      <category name="Eclipse Git Team Provider"/>
+   </feature>
     <feature url="features/org.eclipse.jgit_0.0.0.qualifier.jar" id="org.eclipse.jgit" version="0.0.0" patch="true">
       <category name="JGit"/>
    </feature>

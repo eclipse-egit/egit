@@ -143,6 +143,8 @@
     <module>org.eclipse.egit.mylyn.ui</module>
     <module>org.eclipse.egit.mylyn-feature</module>
 
+    <module>org.eclipse.egit.psf-feature</module>
+
     <module>org.eclipse.egit.doc</module>
     <module>org.eclipse.egit-feature</module>
     <module>org.eclipse.egit-updatesite</module>
