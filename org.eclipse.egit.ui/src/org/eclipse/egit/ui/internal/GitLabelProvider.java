@@ -138,6 +138,8 @@ public class GitLabelProvider extends LabelProvider implements
 		string.append(directory.getAbsolutePath(), StyledString.QUALIFIER_STYLER);
 
 		String branch = repository.getBranch();
+		if (branch == null)
+			return null;
 		string.append(" "); //$NON-NLS-1$
 		string.append("[", StyledString.DECORATIONS_STYLER); //$NON-NLS-1$
 		string.append(branch, StyledString.DECORATIONS_STYLER);
