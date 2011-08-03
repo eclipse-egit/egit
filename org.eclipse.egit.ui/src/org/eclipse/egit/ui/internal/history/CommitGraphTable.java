@@ -345,13 +345,11 @@ class CommitGraphTable {
 
 	void selectCommit(final RevCommit c) {
 		if (c instanceof PlotCommit) {
-			table.setSelection(new StructuredSelection(c));
-			table.reveal(c);
+			table.setSelection(new StructuredSelection(c), true);
 		} else if (commitsMap != null) {
 			PlotCommit swtCommit = commitsMap.get(c.getId().name());
 			if (swtCommit != null) {
-				table.setSelection(new StructuredSelection(swtCommit));
-				table.reveal(swtCommit);
+				table.setSelection(new StructuredSelection(swtCommit), true);
 			}
 		}
 	}
