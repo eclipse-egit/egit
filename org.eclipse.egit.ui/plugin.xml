@@ -3385,8 +3385,17 @@
          <enablement>
            <or>
             <instanceof value="org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider"/>
+            <instanceof value="org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob"/>
+            <instanceof value="org.eclipse.egit.ui.internal.synchronize.model.GitModelCacheTree"/>
            </or>
          </enablement>
+	     <dropAssistant
+	             class="org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetDropAdapterAssistant"
+	             id="org.eclipse.egit.ui.changeSetDropAssistan">
+	       <possibleDropTargets>
+             <instanceof value="org.eclipse.egit.ui.internal.synchronize.model.GitModelCache"/>
+	       </possibleDropTargets>
+	     </dropAssistant>
 	     <commonSorter
                class="org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetSorter"/>
        </navigatorContent>

@@ -13,13 +13,17 @@ import static org.eclipse.egit.core.project.RepositoryMapping.findRepositoryMapp
 import static org.eclipse.jgit.lib.Constants.HEAD;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.lib.Repository;
@@ -33,16 +37,23 @@ public class RemoveFromIndexOperation implements IEGitOperation {
 
 	private final Collection<String> paths;
 
+	private final IResource[] resources;
+
 	/**
 	 * @param repo
 	 *            repository in with given files should be removed from index
-	 * @param paths
+	 * @param resources
 	 *            list repository relative path of files/folders that should be
 	 *            removed from index
 	 */
-	public RemoveFromIndexOperation(Repository repo, Collection<String> paths) {
+	public RemoveFromIndexOperation(Repository repo, IResource[] resources) {
 		this.repo = repo;
-		this.paths = paths;
+		this.resources = resources;
+		paths = new ArrayList<String>();
+
+		RepositoryMapping mapping = RepositoryMapping.findRepositoryMapping(repo);
+		for (IResource res : resources)
+			paths.add(mapping.getRepoRelativePath(res));
 	}
 
 	public void execute(IProgressMonitor m) throws CoreException {
@@ -73,7 +84,7 @@ public class RemoveFromIndexOperation implements IEGitOperation {
 	}
 
 	public ISchedulingRule getSchedulingRule() {
-		return null;
+		return new MultiRule(resources);
 	}
 
 }
