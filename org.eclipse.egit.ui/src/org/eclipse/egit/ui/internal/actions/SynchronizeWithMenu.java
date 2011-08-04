@@ -14,9 +14,11 @@ import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
@@ -86,12 +88,12 @@ public class SynchronizeWithMenu extends ContributionItem implements
 	public void fill(final Menu menu, int index) {
 		if (srv == null)
 			return;
-		final IProject selectedProject = getSelection();
-		if (selectedProject == null)
+		final IResource selectedResource = getSelection();
+		if (selectedResource == null)
 			return;
 
 		RepositoryMapping mapping = RepositoryMapping
-				.getMapping(selectedProject);
+				.getMapping(selectedResource.getProject());
 		if (mapping == null)
 			return;
 
@@ -145,7 +147,13 @@ public class SynchronizeWithMenu extends ContributionItem implements
 					GitSynchronizeData data;
 					try {
 						data = new GitSynchronizeData(repo, HEAD, name, true);
-						GitModelSynchronize.launch(data, new IResource[] { selectedProject });
+						if (!(selectedResource instanceof IProject)) {
+							HashSet<IContainer> containers = new HashSet<IContainer>();
+							containers.add((IContainer) selectedResource);
+							data.setIncludedPaths(containers);
+						}
+
+						GitModelSynchronize.launch(data, new IResource[] { selectedResource });
 					} catch (IOException e) {
 						Activator.logError(e.getMessage(), e);
 					}
@@ -176,7 +184,7 @@ public class SynchronizeWithMenu extends ContributionItem implements
 
 	public void initialize(IServiceLocator serviceLocator) {
 		srv = (ISelectionService) serviceLocator
-		.getService(ISelectionService.class);
+				.getService(ISelectionService.class);
 	}
 
 	@Override
@@ -189,7 +197,7 @@ public class SynchronizeWithMenu extends ContributionItem implements
 		branchImage.dispose();
 	}
 
-	private IProject getSelection() {
+	private IResource getSelection() {
 		ISelection sel = srv.getSelection();
 
 		if (!(sel instanceof IStructuredSelection))
@@ -197,10 +205,11 @@ public class SynchronizeWithMenu extends ContributionItem implements
 
 		Object selected = ((IStructuredSelection) sel).getFirstElement();
 		if (selected instanceof IAdaptable)
-			return (IProject) ((IAdaptable) selected)
-					.getAdapter(IProject.class);
-		if (selected instanceof IProject)
-			return (IProject) selected;
+			return (IResource) ((IAdaptable) selected)
+					.getAdapter(IResource.class);
+
+		if (selected instanceof IResource)
+			return (IResource) selected;
 
 		return null;
 	}

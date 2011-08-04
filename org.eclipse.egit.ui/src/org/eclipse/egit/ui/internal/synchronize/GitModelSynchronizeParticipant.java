@@ -85,18 +85,18 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 			ISynchronizePageConfiguration configuration) {
 		configuration.setProperty(ISynchronizePageConfiguration.P_VIEWER_ID,
 				VIEWER_ID);
-		String modelProvider;
+		String modelProvider = WORKSPACE_MODEL_PROVIDER_ID;
 		final IPreferenceStore preferenceStore = Activator.getDefault()
 				.getPreferenceStore();
-		if (preferenceStore
-				.getBoolean(UIPreferences.SYNC_VIEW_ALWAYS_SHOW_CHANGESET_MODEL)) {
-			modelProvider = GitChangeSetModelProvider.ID;
-		} else {
-			String lastSelectedModel = preferenceStore.getString(UIPreferences.SYNC_VIEW_LAST_SELECTED_MODEL);
-			if (!"".equals(lastSelectedModel)) //$NON-NLS-1$
-				modelProvider = lastSelectedModel;
-			else
-				modelProvider = WORKSPACE_MODEL_PROVIDER_ID;
+		if (!gsds.containsFolderLevelSynchronizationRequest()) {
+			if (preferenceStore
+					.getBoolean(UIPreferences.SYNC_VIEW_ALWAYS_SHOW_CHANGESET_MODEL)) {
+				modelProvider = GitChangeSetModelProvider.ID;
+			} else {
+				String lastSelectedModel = preferenceStore.getString(UIPreferences.SYNC_VIEW_LAST_SELECTED_MODEL);
+				if (!"".equals(lastSelectedModel)) //$NON-NLS-1$
+					modelProvider = lastSelectedModel;
+			}
 		}
 
 		configuration.setProperty(
