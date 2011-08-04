@@ -1,0 +1,64 @@
+/*******************************************************************************
+ * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+package org.eclipse.egit.ui.internal.synchronize;
+
+import java.lang.reflect.Method;
+
+import org.eclipse.compare.CompareNavigator;
+import org.eclipse.compare.INavigatable;
+import org.eclipse.core.runtime.jobs.IJobManager;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.project.GitProjectData;
+import org.eclipse.egit.ui.JobFamilies;
+
+/**
+ * Wraps given {@link CompareNavigator} and waits for add to index, remove from
+ * index and repository change jobs finish before call
+ * {@link CompareNavigator#selectChange(boolean)} from main navigator
+ */
+class GitTreeCompareNavigator extends CompareNavigator {
+
+	private final CompareNavigator mainNavigator;
+
+	public GitTreeCompareNavigator(CompareNavigator mainNavigator) {
+		this.mainNavigator = mainNavigator;
+	}
+
+	@Override
+	protected INavigatable[] getNavigatables() {
+		try {
+			Method baseNavigables = CompareNavigator.class.getDeclaredMethod(
+					"getNavigatables", Void.class); //$NON-NLS-1$
+			baseNavigables.setAccessible(true);
+
+			return (INavigatable[]) baseNavigables.invoke(mainNavigator,
+					Void.class);
+		} catch (Exception e) {
+			// should never happen
+		}
+
+		return new INavigatable[0];
+	}
+
+	@Override
+	public boolean selectChange(boolean next) {
+		// wait for repositories actions
+		IJobManager manager = Job.getJobManager();
+		try {
+			manager.join(JobFamilies.ADD_TO_INDEX, null);
+			manager.join(JobFamilies.REMOVE_FROM_INDEX, null);
+			manager.join(GitProjectData.REPOSITORIES_CHANGE_JOB, null);
+		} catch (InterruptedException e) {
+			// ignore
+		}
+
+		return mainNavigator.selectChange(next);
+	}
+
+}
