@@ -3869,6 +3869,9 @@ public class UIText extends NLS {
 	public static String StagingView_OpenNewCommits;
 
 	/** */
+	public static String StagingView_ColumnLayout;
+
+	/** */
 	public static String StagingView_IndexDiffReload;
 
 	/** */

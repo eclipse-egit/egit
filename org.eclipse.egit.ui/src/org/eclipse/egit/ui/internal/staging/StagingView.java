@@ -226,7 +226,11 @@ public class StagingView extends ViewPart {
 
 	private Action openNewCommitsAction;
 
+	private Action columnLayoutAction;
+
 	private Action refreshAction;
+
+	private SashForm stagingSashForm;
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -255,13 +259,13 @@ public class StagingView extends ViewPart {
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(horizontalSashForm);
 
-		SashForm verticalSashForm = new SashForm(horizontalSashForm,
-				SWT.VERTICAL);
-		toolkit.adapt(verticalSashForm, true, true);
+		stagingSashForm = new SashForm(horizontalSashForm,
+				getStagingFormOrientation());
+		toolkit.adapt(stagingSashForm, true, true);
 		GridDataFactory.fillDefaults().grab(true, true)
-				.applyTo(verticalSashForm);
+				.applyTo(stagingSashForm);
 
-		unstagedSection = toolkit.createSection(verticalSashForm,
+		unstagedSection = toolkit.createSection(stagingSashForm,
 				ExpandableComposite.TITLE_BAR);
 
 		Composite unstagedTableComposite = toolkit
@@ -350,7 +354,7 @@ public class StagingView extends ViewPart {
 		committerText.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, false).create());
 
-		stagedSection = toolkit.createSection(verticalSashForm,
+		stagedSection = toolkit.createSection(stagingSashForm,
 				ExpandableComposite.TITLE_BAR);
 		Composite stagedTableComposite = toolkit.createComposite(stagedSection);
 		toolkit.paintBordersFor(stagedTableComposite);
@@ -520,6 +524,15 @@ public class StagingView extends ViewPart {
 		getSite().setSelectionProvider(unstagedTableViewer);
 	}
 
+	private int getStagingFormOrientation() {
+		boolean columnLayout = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.STAGING_COLUMN_LAYOUT);
+		if (columnLayout)
+			return SWT.HORIZONTAL;
+		else
+			return SWT.VERTICAL;
+	}
+
 	private void enableCommitWidgets(boolean enabled) {
 		commitMessageText.setEnabled(enabled);
 		committerText.setEnabled(enabled);
@@ -614,8 +627,28 @@ public class StagingView extends ViewPart {
 		openNewCommitsAction.setChecked(Activator.getDefault()
 				.getPreferenceStore()
 				.getBoolean(UIPreferences.STAGING_SHOW_NEW_COMMITS));
+		columnLayoutAction = new Action(UIText.StagingView_ColumnLayout,
+				IAction.AS_CHECK_BOX) {
+
+			public void run() {
+				Activator
+						.getDefault()
+						.getPreferenceStore()
+						.setValue(UIPreferences.STAGING_COLUMN_LAYOUT,
+								isChecked());
+				stagingSashForm.setOrientation(isChecked() ? SWT.HORIZONTAL
+						: SWT.VERTICAL);
+			}
+		};
+		columnLayoutAction.setChecked(Activator.getDefault()
+				.getPreferenceStore()
+				.getBoolean(UIPreferences.STAGING_COLUMN_LAYOUT));
+
 		getViewSite().getActionBars().getMenuManager()
 				.add(openNewCommitsAction);
+		getViewSite().getActionBars().getMenuManager()
+				.add(columnLayoutAction);
+
 	}
 
 	private void updateSectionText() {
