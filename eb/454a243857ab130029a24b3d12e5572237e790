@@ -1,0 +1,10 @@
+Code-Review+2: Matthias Sohn <matthias.sohn@sap.com>
+IP-Clean+1: Matthias Sohn <matthias.sohn@sap.com>
+Verified+1: Matthias Sohn <matthias.sohn@sap.com>
+Code-Review-1: Hudson CI
+Code-Review+1: Bernard Leach <leachbj@bouncycastle.org>
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Sat, 06 Aug 2011 18:59:10 -0400
+Reviewed-on: http://egit.eclipse.org/r/3962
+Project: egit
+Branch: refs/heads/master
