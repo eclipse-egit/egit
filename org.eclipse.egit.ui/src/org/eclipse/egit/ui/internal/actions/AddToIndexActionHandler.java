@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 
 
@@ -45,6 +46,14 @@ public class AddToIndexActionHandler extends RepositoryActionHandler {
 							.getMessage(), e);
 				}
 				return Status.OK_STATUS;
+			}
+
+			@Override
+			public boolean belongsTo(Object family) {
+				if (JobFamilies.ADD_TO_INDEX.equals(family))
+					return true;
+
+				return super.belongsTo(family);
 			}
 		};
 		job.setUser(true);
