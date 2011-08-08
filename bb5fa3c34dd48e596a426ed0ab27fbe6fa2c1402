@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn///sE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/RemoveFromIndexOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-08T22:25:24Z",
+      "side": 0,
+      "message": "these are no longer paths, so better: list of resources that should be ...",
+      "revId": "bb5fa3c34dd48e596a426ed0ab27fbe6fa2c1402",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
