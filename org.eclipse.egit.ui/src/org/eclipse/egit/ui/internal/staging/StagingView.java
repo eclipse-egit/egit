@@ -524,11 +524,20 @@ public class StagingView extends ViewPart {
 				committerText);
 
 		// react on selection changes
-		ISelectionService srv = (ISelectionService) getSite().getService(
-				ISelectionService.class);
+		IWorkbenchPartSite site = getSite();
+		ISelectionService srv = (ISelectionService) site
+				.getService(ISelectionService.class);
 		srv.addPostSelectionListener(selectionChangedListener);
 
-		getSite().setSelectionProvider(unstagedTableViewer);
+		// Use current selection to populate staging view
+		ISelection selection = srv.getSelection();
+		if (selection != null && !selection.isEmpty()) {
+			IWorkbenchPart part = site.getPage().getActivePart();
+			if (part != null)
+				selectionChangedListener.selectionChanged(part, selection);
+		}
+
+		site.setSelectionProvider(unstagedTableViewer);
 	}
 
 	private int getStagingFormOrientation() {
