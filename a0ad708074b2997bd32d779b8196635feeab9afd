@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOKH///cA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitChangeSetDropAdapterAssistant.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 214
+      },
+      "writtenOn": "2011-06-15T21:10:26Z",
+      "side": 1,
+      "message": "import static this one too for consistency?",
+      "revId": "a0ad708074b2997bd32d779b8196635feeab9afd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
