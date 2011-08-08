@@ -11,15 +11,14 @@ package org.eclipse.egit.core.test.op;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertTrue;
-import static org.eclipse.egit.core.project.RepositoryMapping.getMapping;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.op.RemoveFromIndexOperation;
 import org.eclipse.egit.core.test.GitTestCase;
@@ -58,8 +57,7 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 	public void shouldUnTrackFile() throws Exception {
 		// given
 		IFile file1 = createFileInRepo("a.txt");
-		List<String> resources = new ArrayList<String>();
-		resources.add(getMapping(file1).getRepoRelativePath(file1));
+		IResource[] resources = new IResource[] { file1 };
 		new AddToIndexOperation(asList(file1)).execute(null);
 
 		// when
@@ -75,10 +73,8 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 		// given
 		IFile file1 = createFileInRepo("sub/a.txt");
 		IFile file2 = createFileInRepo("sub/b.txt");
-		List<String> resources = new ArrayList<String>();
 		IFolder container = project.getProject().getFolder("sub");
-		String containerPath = getMapping(file1).getRepoRelativePath(container);
-		resources.add(containerPath);
+		IResource[] resources = new IResource[] { container };
 		new AddToIndexOperation(asList(file1, file2)).execute(null);
 
 		// when
@@ -93,8 +89,7 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 	public void shouldUnstExistingFile() throws Exception {
 		// given
 		IFile file1 = createFileInRepo("a.txt");
-		List<String> resources = new ArrayList<String>();
-		resources.add(getMapping(file1).getRepoRelativePath(file1));
+		IResource[] resources = new IResource[] { file1 };
 		new AddToIndexOperation(asList(file1)).execute(null);
 
 		testRepo.commit("first commit");
@@ -117,10 +112,8 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 		// given
 		IFile file1 = createFileInRepo("sub/a.txt");
 		IFile file2 = createFileInRepo("sub/b.txt");
-		List<String> resources = new ArrayList<String>();
 		IFolder container = project.getProject().getFolder("sub");
-		String containerPath = getMapping(file1).getRepoRelativePath(container);
-		resources.add(containerPath);
+		IResource[] resources = new IResource[] { container };
 		List<IFolder> addResources = asList(project.getProject().getFolder("sub"));
 		new AddToIndexOperation(addResources).execute(null);
 
@@ -149,10 +142,8 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 		// given
 		IFile file1 = createFileInRepo("sub/next/a.txt");
 		IFile file2 = createFileInRepo("sub/next/b.txt");
-		List<String> resources = new ArrayList<String>();
 		IFolder container = project.getProject().getFolder("sub");
-		String containerPath = getMapping(file1).getRepoRelativePath(container);
-		resources.add(containerPath);
+		IResource[] resources = new IResource[] { container };
 		List<IFolder> addResources = asList(project.getProject().getFolder("sub"));
 		new AddToIndexOperation(addResources).execute(null);
 

@@ -93,4 +93,14 @@ public class JobFamilies {
 	 */
 	public static final Object STAGING_VIEW_REFRESH = new Object();
 
+	/**
+	 * Add to index job
+	 */
+	public static final Object ADD_TO_INDEX = new Object();
+
+	/**
+	 * Remove from index job
+	 */
+	public static final Object REMOVE_FROM_INDEX = new Object();
+
 }

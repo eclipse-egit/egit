@@ -8,9 +8,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
@@ -21,8 +18,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.op.RemoveFromIndexOperation;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jgit.lib.Repository;
 
@@ -39,13 +36,8 @@ public class RemoveFromIndexActionHandler extends RepositoryActionHandler {
 			return null;
 
 		Repository repo = getRepository();
-		List<String> paths = new ArrayList<String>();
-		RepositoryMapping mapping = RepositoryMapping.findRepositoryMapping(repo);
-		for (IResource res : sel)
-			paths.add(mapping.getRepoRelativePath(res));
-
 		final RemoveFromIndexOperation removeOperation = new RemoveFromIndexOperation(
-				repo, paths);
+				repo, sel);
 		Job job = new Job(UIText.RemoveFromIndexAction_removingFiles) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
@@ -54,9 +46,19 @@ public class RemoveFromIndexActionHandler extends RepositoryActionHandler {
 				} catch (CoreException e) {
 					return Activator.createErrorStatus(e.getStatus()
 							.getMessage(), e);
+				} finally {
+					monitor.done();
 				}
 
 				return Status.OK_STATUS;
+			}
+
+			@Override
+			public boolean belongsTo(Object family) {
+				if (JobFamilies.REMOVE_FROM_INDEX.equals(family))
+					return true;
+
+				return super.belongsTo(family);
 			}
 		};
 		job.setUser(true);
