@@ -25,6 +25,7 @@ import org.eclipse.egit.ui.internal.search.CommitSearchPage;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -90,21 +91,23 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 		setDetailsLabelProvider(new GitLabelProvider() {
 			@Override
 			public Image getImage(Object element) {
-				if(element instanceof RepositoryCommit) {
+				if (element instanceof RepositoryCommit) {
 					RepositoryCommit commit = (RepositoryCommit) element;
 					return super.getImage(commit.getRepository());
 				}
 				return super.getImage(element);
 			}
+
 			@Override
 			public String getText(Object element) {
-				if(element instanceof RepositoryCommit) {
+				if (element instanceof RepositoryCommit) {
 					RepositoryCommit commit = (RepositoryCommit) element;
 					return super.getText(commit.getRepository());
 				}
 				return super.getText(element);
 			}
 		});
+		setInitialPattern(Constants.HEAD, FULL_SELECTION);
 	}
 
 	protected Control createExtendedContentArea(Composite parent) {
