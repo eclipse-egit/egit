@@ -2938,6 +2938,9 @@ public class UIText extends NLS {
 	public static String MultiPullResultDialog_OkStatus;
 
 	/** */
+	public static String MultiPullResultDialog_FailedStatus;
+
+	/** */
 	public static String MultiPullResultDialog_OverallStatusColumnHeader;
 
 	/** */
