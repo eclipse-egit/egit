@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
+import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -256,7 +257,7 @@ public class CompareTreeView extends ViewPart {
 										UIText.CompareTreeView_ItemNotFoundInVersionMessage,
 										res.getName(), getCompareVersion()));
 			} else {
-				String encoding = CompareUtils.getResourceEncoding(res);
+				String encoding = CompareCoreUtils.getResourceEncoding(res);
 				right = new FileRevisionTypedElement(rightRevision, encoding);
 			}
 			GitCompareFileRevisionEditorInput compareInput = new GitCompareFileRevisionEditorInput(
