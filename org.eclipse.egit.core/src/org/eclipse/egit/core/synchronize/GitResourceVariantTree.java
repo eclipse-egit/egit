@@ -26,7 +26,6 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
-import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -120,7 +119,7 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 		return variant;
 	}
 
-	protected abstract ObjectId getObjectId(DiffEntry diffEntry);
+	protected abstract ObjectId getObjectId(ThreeWayDiffEntry diffEntry);
 
 	protected abstract ObjectId getObjectId(GitSynchronizeData gsd);
 

@@ -234,8 +234,11 @@ public class GitSynchronizeData {
 		this.includedPaths = includedPaths;
 		Set<String> paths = new HashSet<String>();
 		RepositoryMapping rm = RepositoryMapping.findRepositoryMapping(repo);
-		for (IContainer container : includedPaths)
-			paths.add(rm.getRepoRelativePath(container));
+		for (IContainer container : includedPaths) {
+			String relativePath = rm.getRepoRelativePath(container);
+			if (relativePath.length() > 0)
+				paths.add(relativePath);
+		}
 
 		if (!paths.isEmpty())
 			pathFilter = PathFilterGroup.createFromStrings(paths);
