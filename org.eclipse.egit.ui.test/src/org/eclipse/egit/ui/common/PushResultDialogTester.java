@@ -16,7 +16,7 @@ public class PushResultDialogTester {
 	private final SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
 	public void assertResultMessage(String expectedMessage) {
-		bot.text(expectedMessage);
+		bot.styledText(expectedMessage);
 	}
 
 	public void closeDialog() {

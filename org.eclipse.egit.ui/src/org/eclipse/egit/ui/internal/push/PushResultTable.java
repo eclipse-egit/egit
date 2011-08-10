@@ -18,6 +18,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.WorkbenchStyledLabelProvider;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
@@ -181,8 +182,15 @@ class PushResultTable {
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
 				.applyTo(messageGroup);
 
-		final Text text = new Text(messageGroup, SWT.MULTI | SWT.READ_ONLY
-				| SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		final SpellcheckableMessageArea text = new SpellcheckableMessageArea(
+				messageGroup, EMPTY_STRING, true, SWT.MULTI | SWT.BORDER | SWT.WRAP
+						| SWT.V_SCROLL) {
+
+			protected void createMarginPainter() {
+				// Disabled intentionally
+			}
+
+		};
 		GridDataFactory.fillDefaults().grab(true, true)
 				.hint(SWT.DEFAULT, TEXT_PREFERRED_HEIGHT).applyTo(text);
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
