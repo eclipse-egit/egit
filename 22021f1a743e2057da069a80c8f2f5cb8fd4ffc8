@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn///tk\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-08T15:16:16Z",
+      "side": 1,
+      "message": "add a link to the corresponding bug:\n\nBug: 337288",
+      "revId": "22021f1a743e2057da069a80c8f2f5cb8fd4ffc8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///to\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushResultTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-08T15:16:16Z",
+      "side": 1,
+      "message": "style nit: unnecessary blank line, one should be sufficient",
+      "revId": "22021f1a743e2057da069a80c8f2f5cb8fd4ffc8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
