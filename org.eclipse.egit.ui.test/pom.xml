@@ -57,7 +57,7 @@
         </os>
       </activation>
       <properties>
-        <ui.test.vmargs>-Xmx512m -XX:MaxPermSize=256m -XstartOnFirstThread</ui.test.vmargs>
+        <ui.test.vmargs>-Xmx1024m -XX:MaxPermSize=384m -XstartOnFirstThread</ui.test.vmargs>
       </properties>
     </profile>
     <profile>
@@ -69,7 +69,7 @@
         </os>
       </activation>
       <properties>
-        <ui.test.vmargs>-Xmx512m -XX:MaxPermSize=256m</ui.test.vmargs>
+        <ui.test.vmargs>-Xmx1024m -XX:MaxPermSize=384m</ui.test.vmargs>
       </properties>
     </profile>
   </profiles>
