@@ -183,8 +183,7 @@ class PushResultTable {
 				.applyTo(messageGroup);
 
 		final SpellcheckableMessageArea text = new SpellcheckableMessageArea(
-				messageGroup, EMPTY_STRING, true, SWT.MULTI | SWT.BORDER | SWT.WRAP
-						| SWT.V_SCROLL) {
+				messageGroup, EMPTY_STRING, true, SWT.BORDER) {
 
 			protected void createMarginPainter() {
 				// Disabled intentionally
