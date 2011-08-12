@@ -45,7 +45,18 @@ public abstract class AbstractSharedCommandHandler extends AbstractHandler {
 	 */
 	protected Repository getRepository(ExecutionEvent event) {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection.isEmpty())
+		return getRepository(selection);
+	}
+
+	/**
+	 * Get repository from selection
+	 *
+	 * @param selection
+	 * @return a {@link Repository} if all elements in the current selection map
+	 *         to the same {@link Repository}, otherwise null
+	 */
+	protected Repository getRepository(ISelection selection) {
+		if (selection == null || selection.isEmpty())
 			return null;
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection ssel = (IStructuredSelection) selection;
