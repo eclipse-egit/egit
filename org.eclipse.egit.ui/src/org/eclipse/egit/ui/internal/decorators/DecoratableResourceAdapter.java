@@ -78,6 +78,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			repositoryName = DecoratableResourceHelper
 					.getRepositoryName(repository);
 			branch = DecoratableResourceHelper.getShortBranch(repository);
+			branchStatus = DecoratableResourceHelper.getBranchStatus(repository);
 
 			TreeWalk treeWalk = createThreeWayTreeWalk();
 			if (treeWalk == null)

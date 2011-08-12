@@ -33,6 +33,11 @@ public class DecoratableResource implements IDecoratableResource {
 	protected String branch = null;
 
 	/**
+	 * Branch status relative to remote tracking branch
+	 */
+	protected String branchStatus = null;
+
+	/**
 	 * Flag indicating whether or not the resource is tracked
 	 */
 	protected boolean tracked = false;
@@ -90,6 +95,10 @@ public class DecoratableResource implements IDecoratableResource {
 
 	public String getBranch() {
 		return branch;
+	}
+
+	public String getBranchStatus() {
+		return branchStatus;
 	}
 
 	public boolean isTracked() {
