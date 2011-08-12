@@ -21,10 +21,12 @@ import org.eclipse.egit.core.ContainerTreeIterator.ResourceEntry;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.decorators.IDecoratableResource.Staged;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.lib.BranchTrackingStatus;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.Ref;
@@ -215,5 +217,21 @@ public class DecoratableResourceHelper {
 			return UIText.DecoratableResourceHelper_noHead;
 
 		return repository.getBranch();
+	}
+
+	static String getBranchStatus(Repository repo) throws IOException {
+		String branchName = repo.getBranch();
+		if (branchName == null)
+			return null;
+
+		BranchTrackingStatus status = BranchTrackingStatus.of(repo, branchName);
+		if (status == null)
+			return null;
+
+		if (status.getAheadCount() == 0 && status.getBehindCount() == 0)
+			return null;
+
+		String formattedStatus = GitLabelProvider.formatBranchTrackingStatus(status);
+		return formattedStatus;
 	}
 }
