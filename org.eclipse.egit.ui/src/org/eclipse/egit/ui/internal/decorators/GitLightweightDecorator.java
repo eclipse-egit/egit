@@ -224,6 +224,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 		public static final String BINDING_BRANCH_NAME = "branch"; //$NON-NLS-1$
 
 		/** */
+		public static final String BINDING_BRANCH_STATUS = "branch_status"; //$NON-NLS-1$
+
+		/** */
 		public static final String BINDING_REPOSITORY_NAME = "repository"; //$NON-NLS-1$
 
 		/** */
@@ -239,7 +242,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 		public static final String FOLDER_FORMAT_DEFAULT = "{dirty:>} {name}"; //$NON-NLS-1$
 
 		/** */
-		public static final String PROJECT_FORMAT_DEFAULT ="{dirty:>} {name} [{repository} {branch}]";  //$NON-NLS-1$
+		public static final String PROJECT_FORMAT_DEFAULT ="{dirty:>} {name} [{repository} {branch}{ branch_status}]";  //$NON-NLS-1$
 
 		private IPreferenceStore store;
 
@@ -365,6 +368,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 			bindings.put(BINDING_RESOURCE_NAME, resource.getName());
 			bindings.put(BINDING_REPOSITORY_NAME, resource.getRepositoryName());
 			bindings.put(BINDING_BRANCH_NAME, resource.getBranch());
+			bindings.put(BINDING_BRANCH_STATUS, resource.getBranchStatus());
 			bindings.put(BINDING_DIRTY_FLAG, resource.isDirty() ? ">" : null); //$NON-NLS-1$
 			bindings.put(BINDING_STAGED_FLAG,
 					resource.staged() != Staged.NOT_STAGED ? "*" : null); //$NON-NLS-1$
@@ -446,6 +450,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 					if ((start = format.indexOf('}', end)) > -1) {
 						String key = format.substring(end + 1, start);
 						String s;
+						boolean spaceBefore = false;
+						boolean spaceAfter = false;
 
 						// Allow users to override the binding
 						if (key.indexOf(':') > -1) {
@@ -454,7 +460,17 @@ public class GitLightweightDecorator extends LabelProvider implements
 							if (keyAndBinding.length > 1
 									&& bindings.get(key) != null)
 								bindings.put(key, keyAndBinding[1]);
+						} else {
+							if (key.charAt(0) == ' ') {
+								spaceBefore = true;
+								key = key.substring(1);
+							}
+							if (key.charAt(key.length() - 1) == ' ') {
+								spaceAfter = true;
+								key = key.substring(0, key.length() - 1);
+							}
 						}
+
 
 						// We use the BINDING_RESOURCE_NAME key to determine if
 						// we are doing the prefix or suffix. The name isn't
@@ -467,7 +483,11 @@ public class GitLightweightDecorator extends LabelProvider implements
 						}
 
 						if (s != null) {
+							if (spaceBefore)
+								output.append(' ');
 							output.append(s);
+							if (spaceAfter)
+								output.append(' ');
 						} else {
 							// Support removing prefix character if binding is
 							// null
