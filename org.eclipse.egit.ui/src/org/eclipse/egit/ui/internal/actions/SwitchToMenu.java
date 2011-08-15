@@ -161,5 +161,7 @@ public class SwitchToMenu extends ContributionItem implements
 	@Override
 	public void dispose() {
 		branchImage.dispose();
+		newBranchImage.dispose();
+		checkedOutImage.dispose();
 	}
 }
