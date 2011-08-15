@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn///cE\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparatorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "avoid mixing in pure formatting changes",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///cA\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparatorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "avoid mixing in pure formatting changes",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///b8\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparatorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "avoid mixing in pure formatting changes",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///b4\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparatorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "avoid mixing in pure formatting changes",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///b0\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparatorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "avoid mixing in pure formatting changes",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///bw\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparatorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "avoid mixing in pure formatting changes",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///bs\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparatorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "avoid mixing in pure formatting changes",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///bo\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantComparatorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "avoid mixing in pure formatting changes",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///bk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "remove dead code which was commented out",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///bg\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelBlobTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "typo: s/Symetric/Symmetric/",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///bc\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelBlobTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "typo: s/Symetric/Symmetric/",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///bY\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelBlobTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "remove dead code",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///bQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitChangeSetCapability.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///bU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitChangeSetCapability.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "? we do not use author tags and your name isn\u0027t lock ...\n\nmissing javadoc for public class",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///bM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitChangeSetCapability.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-14T20:56:51Z",
+      "side": 1,
+      "message": "remove TODOs (more below) ?",
+      "revId": "8b5f35f6364bd1b3f1833e1e69e757cd0c3c0ed7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
