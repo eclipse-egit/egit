@@ -75,6 +75,36 @@ public class GitModelBlobTest extends GitModelTestCase {
 		assertTrue(actual);
 	}
 
+	@Test
+	public void shouldBeSymmetric() throws Exception {
+		// given
+		GitModelBlob left = createGitModelBlob(zeroId(), getFile1Location());
+		GitModelBlob right = createGitModelBlob(zeroId(), getFile1Location());
+
+		// when
+		boolean actual1 = left.equals(right);
+		boolean actual2 = right.equals(left);
+
+		// then
+		assertTrue(actual1 == actual2);
+	}
+
+	@Test
+	public void shouldBeSymmetric1() throws Exception {
+		// given
+		GitModelBlob left = createGitModelBlob(zeroId(), getFile1Location());
+		GitModelCommit right = new GitModelCommit(createModelRepository(),
+				getCommit(leftRepoFile, HEAD), LEFT);
+
+		// when
+		boolean actual1 = left.equals(right);
+		boolean actual2 = right.equals(left);
+
+		// then
+		assertTrue(!actual1);
+		assertTrue(!actual2);
+	}
+
 	@Test public void shouldReturnNotEqualForDifferentFiles()
 			throws Exception {
 		// given
