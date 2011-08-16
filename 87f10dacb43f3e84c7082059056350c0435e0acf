@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL33///vM\u003d",
+        "filename": "egit.psf",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-29T20:23:10Z",
+      "side": 1,
+      "message": "What do you mean, start from scratch?\n\nI thought maybe it should correspond to the EGit version. But 1.0 makes sense, I\u0027ll change it.",
+      "parentUuid": "AAAL33///0o\u003d",
+      "revId": "87f10dacb43f3e84c7082059056350c0435e0acf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL33///0Q\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
         "patchSetId": 2
