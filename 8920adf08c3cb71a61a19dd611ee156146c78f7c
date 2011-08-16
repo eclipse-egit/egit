@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL4H///Nc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-04-15T20:07:11Z",
+      "side": 1,
+      "message": "The preferences in egit.core use IEclipsePreferences, whereas the preferences in egit.ui use IPreferenceStore. Is there a reason for this? For example, how can a FieldEditor be used with IEclipsePreferences?",
+      "parentUuid": "AAAL4H///Pg\u003d",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL4H//++w\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
         "patchSetId": 7
@@ -89,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL4H//++k\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-04-20T12:54:34Z",
+      "side": 1,
+      "message": "Hm, I read the mailing list thread and also the minimalistic Eclipse API documentation. But I still don\u0027t know how to use field editors with IEclipsePreferences.\n\nWhen we move the timeout preference, the namespace changes from \"org.eclipse.egit.ui\" to \"org.eclipse.egit.core\". But AFAICS, a FieldEditorPreferencePage can only work on one preference store (corresponding to one namespace). In the case of GitPreferenceRoot, this is \"org.eclipse.egit.ui\". I read that you can nest preference stores, but that it only works for \"get\", not for \"set\" operations.\n\nOne way it may work is when both used the same namespace, \"org.eclipse.egit\". But that would mean we had to migrate all the existing preferences to this namespace, right?",
+      "parentUuid": "AAAL4H//++w\u003d",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL4H///PQ\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
         "patchSetId": 7
@@ -100,6 +136,24 @@
       "writtenOn": "2011-04-15T15:30:28Z",
       "side": 1,
       "message": "if the same repo/workspace is listed twice with different branches this will fail as you can\u0027t import the same project twice into the same workspace",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///NQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-04-15T20:07:11Z",
+      "side": 1,
+      "message": "Hm, maybe we should explicitly check for that and throw a TeamException with a message. Currently it will fail with an internal exception.",
+      "parentUuid": "AAAL4H///PQ\u003d",
       "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -141,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL4H///NY\u003d",
+        "filename": "org.eclipse.egit.psf-feature/build.properties",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-04-15T20:07:11Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "AAAL4H///OY\u003d",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL4H///OQ\u003d",
         "filename": "org.eclipse.egit.psf-feature/feature.properties",
         "patchSetId": 7
@@ -152,6 +224,24 @@
       "writtenOn": "2011-04-15T15:30:28Z",
       "side": 1,
       "message": "add \"(Incubation)\" here as egit is still in incubation",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///NU\u003d",
+        "filename": "org.eclipse.egit.psf-feature/feature.properties",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-04-15T20:07:11Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "AAAL4H///OQ\u003d",
       "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
