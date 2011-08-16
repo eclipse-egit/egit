@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL4H///Ng\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-04-15T20:07:11Z",
+      "side": 1,
+      "message": "I\u0027ll change it (still not used to it).",
+      "parentUuid": "AAAL4H///Qg\u003d",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL4H///Pg\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
         "patchSetId": 7
