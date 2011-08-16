@@ -202,8 +202,12 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 					return (Image) resourceManager.get(UIIcons.CLONEGIT);
 				if (comment.startsWith("rebase finished:")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.REBASE);
-				if (comment.startsWith("merge branch")) //$NON-NLS-1$
+				if (comment.startsWith("merge ")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.MERGE);
+				if (comment.startsWith("fetch: ")) //$NON-NLS-1$
+					return (Image) resourceManager.get(UIIcons.FETCH);
+				if (comment.startsWith("branch: ")) //$NON-NLS-1$
+					return (Image) resourceManager.get(UIIcons.CREATE_BRANCH);
 				return null;
 			}
 
