@@ -16,6 +16,24 @@
       "revId": "04ef5c783ebb0f6041275fdcf8d9e89b73fd9af9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///Lg\u003d",
+        "filename": "org.eclipse.egit.psf-feature/feature.properties",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-16T15:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn///Lw\u003d",
+      "revId": "04ef5c783ebb0f6041275fdcf8d9e89b73fd9af9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
