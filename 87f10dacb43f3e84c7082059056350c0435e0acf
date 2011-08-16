@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AAAL33///0Y\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-03-29T07:32:34Z",
+      "side": 1,
+      "message": "And because it\u0027s default is the home directory, i always set that path to my folder, where all Git repositories are and should be located. I don\u0027t clone them into the workspace because of some bugs with m2eclipse. Nevertheless what the default is, i think, we should either respect and use that option wherever it\u0027s possible, or remove it. If there is that option, and some part of EGit uses it, and other parts don\u0027t use it, it would be confusing for the users, and that\u0027s something we should avoid.",
+      "revId": "87f10dacb43f3e84c7082059056350c0435e0acf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL33///0Q\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
         "patchSetId": 2
