@@ -507,27 +507,30 @@ public class CommitDialog extends TitleAreaDialog {
 		final ToolItem dropDownItem = new ToolItem(dropDownBar, SWT.PUSH);
 		dropDownItem.setImage(PlatformUI.getWorkbench().getSharedImages()
 				.getImage("IMG_LCL_RENDERED_VIEW_MENU")); //$NON-NLS-1$
+		final Menu menu = new Menu(dropDownBar);
+		dropDownItem.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				menu.dispose();
+			}
+		});
+		MenuItem preferencesItem = new MenuItem(menu, SWT.PUSH);
+		preferencesItem.setText(UIText.CommitDialog_ConfigureLink);
+		preferencesItem.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+				String[] pages = new String[] { UIPreferences.PAGE_COMMIT_PREFERENCES };
+				PreferenceDialog dialog = PreferencesUtil
+						.createPreferenceDialogOn(getShell(), pages[0], pages,
+								null);
+				if (Window.OK == dialog.open())
+					commitText.reconfigure();
+			}
+
+		});
 		dropDownItem.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent e) {
-				Menu menu = new Menu(dropDownBar);
-				MenuItem preferencesItem = new MenuItem(menu, SWT.PUSH);
-				preferencesItem.setText(UIText.CommitDialog_ConfigureLink);
-				preferencesItem.addSelectionListener(new SelectionAdapter() {
-
-					public void widgetSelected(SelectionEvent e1) {
-						PreferenceDialog dialog = PreferencesUtil
-								.createPreferenceDialogOn(
-										getShell(),
-										UIPreferences.PAGE_COMMIT_PREFERENCES,
-										new String[] { UIPreferences.PAGE_COMMIT_PREFERENCES },
-										null);
-						if (Window.OK == dialog.open())
-							commitText.reconfigure();
-					}
-
-				});
-
 				Rectangle b = dropDownItem.getBounds();
 				Point p = dropDownItem.getParent().toDisplay(
 						new Point(b.x, b.y + b.height));
@@ -859,7 +862,13 @@ public class CommitDialog extends TitleAreaDialog {
 	private Menu getContextMenu() {
 		if (!allowToChangeSelection)
 			return null;
-		Menu menu = new Menu(filesViewer.getTable());
+		final Menu menu = new Menu(filesViewer.getTable());
+		filesViewer.getTable().addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				menu.dispose();
+			}
+		});
 		MenuItem item = new MenuItem(menu, SWT.PUSH);
 		item.setText(UIText.CommitDialog_AddFileOnDiskToIndex);
 		item.addListener(SWT.Selection, new Listener() {
