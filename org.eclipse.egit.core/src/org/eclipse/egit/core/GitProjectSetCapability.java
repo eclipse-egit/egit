@@ -11,6 +11,7 @@ package org.eclipse.egit.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -53,8 +54,10 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 	private static final String SEPARATOR = ","; //$NON-NLS-1$
 	private static final String VERSION = "1.0"; //$NON-NLS-1$
 
-	private final class ProjectReferenceComparator implements
-			Comparator<ProjectReference> {
+	private static final class ProjectReferenceComparator implements
+			Comparator<ProjectReference>, Serializable {
+		private static final long serialVersionUID = 1L;
+
 		public int compare(ProjectReference o1, ProjectReference o2) {
 			final boolean reposEqual = o1.repository.equals(o2.repository);
 			final boolean branchesEqual = o1.branch
@@ -65,14 +68,9 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 		}
 	}
 
-	final class ProjectReference {
+	private static final class ProjectReference {
 
 		private static final String DEFAULT_BRANCH = Constants.MASTER;
-
-		/**
-		 * the version of the reference string
-		 */
-		String version;
 
 		/**
 		 * a relative path (from the repository root) to a project
@@ -90,12 +88,6 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 		 */
 		String branch = DEFAULT_BRANCH;
 
-		/**
-		 * use this name instead of using the remote name origin to keep track
-		 * of the upstream repository, see <code>--origin</code> option.
-		 */
-		String origin = Constants.DEFAULT_REMOTE_NAME;
-
 		@SuppressWarnings("boxing")
 		ProjectReference(final String reference) throws URISyntaxException, IllegalArgumentException {
 			final String[] tokens = reference.split(Pattern.quote(SEPARATOR));
@@ -104,7 +96,6 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 						CoreText.GitProjectSetCapability_InvalidTokensCount, new Object[] {
 								4, tokens.length, tokens }));
 
-			this.version = tokens[0];
 			this.repository = new URIish(tokens[1]);
 			if (!"".equals(tokens[2])) //$NON-NLS-1$
 				this.branch = tokens[2];
@@ -190,11 +181,14 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 			}
 		}
 		final ArrayList<IProject> importedProjects = new ArrayList<IProject>();
-		for (final URIish gitUrl : repositories.keySet()) {
-			Map<String, Set<ProjectReference>> branches = repositories
-					.get(gitUrl);
-			for (final String branch : branches.keySet()) {
-				final Set<ProjectReference> projects = branches.get(branch);
+		for (final Map.Entry<URIish, Map<String, Set<ProjectReference>>> entry : repositories.entrySet()) {
+			final URIish gitUrl = entry.getKey();
+			final Map<String, Set<ProjectReference>> branches = entry.getValue();
+
+			for (final Map.Entry<String, Set<ProjectReference>> branchEntry : branches.entrySet()) {
+				final String branch = branchEntry.getKey();
+				final Set<ProjectReference> projects = branchEntry.getValue();
+
 				try {
 					final IPath workDir = getWorkingDir(gitUrl, branch,
 							branches.keySet());
