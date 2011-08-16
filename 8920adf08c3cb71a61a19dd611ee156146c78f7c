@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAL4H///OE\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-15T15:30:28Z",
+      "side": 1,
+      "message": "What\u0027s the use case for cloning the same repo multiple times ? You anyway can\u0027t import the same project multiple times into the same workspace.",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL4H//++s\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -54,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL4H//++w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-20T11:50:53Z",
+      "side": 1,
+      "message": "I think we should use the newer API IEclipsePreferences as it is more powerful [1], AFAIK this was done in some places, obviously this wasn\u0027t done everywhere. \n\n[1] http://dev.eclipse.org/newslists/news.eclipse.platform/msg42275.html",
+      "parentUuid": "AAAL4H///Nc\u003d",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL4H///PQ\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
         "patchSetId": 7
@@ -83,6 +118,23 @@
       "side": 1,
       "message": "yes we should check this explicitly and raise a proper message",
       "parentUuid": "AAAL4H///NQ\u003d",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///OY\u003d",
+        "filename": "org.eclipse.egit.psf-feature/build.properties",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-15T15:30:28Z",
+      "side": 1,
+      "message": "this is incomplete, needs to also list feature.properties, license.html, see the other egit features",
       "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
