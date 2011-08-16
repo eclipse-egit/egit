@@ -34,6 +34,24 @@
       "revId": "87f10dacb43f3e84c7082059056350c0435e0acf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///vQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-03-29T20:23:10Z",
+      "side": 1,
+      "message": "I already raised the issue that the home directory is a bad default on another change, maybe that needs to be discussed on the mailing list.\n\nOk, so it should show a dialog here, similar to the clone dialog (but only once, not for each repository). I\u0027ll do that for the next patch set.",
+      "parentUuid": "AAAL33///0Q\u003d",
+      "revId": "87f10dacb43f3e84c7082059056350c0435e0acf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
