@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL33///0o\u003d",
+        "filename": "egit.psf",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-03-29T07:54:30Z",
+      "side": 1,
+      "message": "May be itt would be better to start from scratch? It should be \u00271.0\u0027 as it\u0027s actualy the first version of reference\u0027s format.",
+      "revId": "87f10dacb43f3e84c7082059056350c0435e0acf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///0Q\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-03-29T07:54:30Z",
+      "side": 1,
+      "message": "That is exactly why I placed a TODO here. +1 for asking user where to clone but -1 from implementation PoV ;-)",
+      "parentUuid": "AAAL33///0Y\u003d",
+      "revId": "87f10dacb43f3e84c7082059056350c0435e0acf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
