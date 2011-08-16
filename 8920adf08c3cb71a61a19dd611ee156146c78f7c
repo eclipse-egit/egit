@@ -1,0 +1,108 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL4H//++s\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-20T11:50:53Z",
+      "side": 1,
+      "message": "you are right",
+      "parentUuid": "AAAL4H///Nk\u003d",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///Qg\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-15T15:30:28Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks, more occurrences throughout this patch",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///Pg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-15T15:30:28Z",
+      "side": 1,
+      "message": "the timeout shouldn\u0027t be hardcoded, we have a preference for that (see GitCloneWizard) which needs to be moved to egit.core so that you can also use that here. This should be done in a separate change this one needs to depend on.",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///PQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-15T15:30:28Z",
+      "side": 1,
+      "message": "if the same repo/workspace is listed twice with different branches this will fail as you can\u0027t import the same project twice into the same workspace",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H//++0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-20T11:50:53Z",
+      "side": 1,
+      "message": "yes we should check this explicitly and raise a proper message",
+      "parentUuid": "AAAL4H///NQ\u003d",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///OQ\u003d",
+        "filename": "org.eclipse.egit.psf-feature/feature.properties",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-15T15:30:28Z",
+      "side": 1,
+      "message": "add \"(Incubation)\" here as egit is still in incubation",
+      "revId": "8920adf08c3cb71a61a19dd611ee156146c78f7c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
