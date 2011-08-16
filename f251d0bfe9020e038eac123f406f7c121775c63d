@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOAn///U4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/ReflogView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-08-15T12:58:35Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to externalize logged error messages. Or is this an EGit convention that I wasn\u0027t aware of?",
+      "revId": "f251d0bfe9020e038eac123f406f7c121775c63d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn///UI\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/ReflogView.java",
         "patchSetId": 1
