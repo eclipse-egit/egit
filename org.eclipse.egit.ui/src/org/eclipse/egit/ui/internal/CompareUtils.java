@@ -18,22 +18,17 @@ import java.io.IOException;
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.core.resources.IEncodedStorage;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
@@ -114,7 +109,7 @@ public class CompareUtils {
 			IFileRevision nextFile = getFileRevision(gitPath, commit, db,
 							blobId);
 				if (nextFile != null) {
-					String encoding = getResourceEncoding(db, gitPath);
+					String encoding = CompareCoreUtils.getResourceEncoding(db, gitPath);
 					right = new FileRevisionTypedElement(nextFile, encoding);
 				}
 		} catch (IOException e) {
@@ -176,55 +171,6 @@ public class CompareUtils {
 			return ci.substring(0, 7) + "..."; //$NON-NLS-1$
 		else
 			return ci;
-	}
-
-	/**
-	 * Determine the encoding used by Eclipse for the resource which belongs to
-	 * repoPath in the eclipse workspace or null if no resource is found
-	 *
-	 * @param db
-	 *            the repository
-	 * @param repoPath
-	 *            the path in the git repository
-	 * @return the encoding used in eclipse for the resource or null if
-	 *
-	 */
-	public static String getResourceEncoding(Repository db, String repoPath) {
-		if (db.isBare())
-			return null;
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IWorkspaceRoot root = workspace.getRoot();
-		IPath absolutePath = new Path(db.getWorkTree().getAbsolutePath())
-				.append(repoPath);
-		IResource resource = root.getFileForLocation(absolutePath);
-		if (resource == null)
-			return null;
-
-		return getResourceEncoding(resource);
-	}
-
-	/**
-	 * Determine the encoding used by eclipse for the resource.
-	 *
-	 * @param resource
-	 *            must be an instance of IEncodedStorage
-	 * @return the encoding used in Eclipse for the resource if found or null
-	 */
-	public static String getResourceEncoding(IResource resource) {
-		// Get the encoding for the current version. As a matter of
-		// principle one might want to use the eclipse settings for the
-		// version we are retrieving as that may be defined by the
-		// project settings, but there is no historic API for this.
-		String charset;
-		IEncodedStorage encodedStorage = ((IEncodedStorage) resource);
-		try {
-			charset = encodedStorage.getCharset();
-			if (charset == null)
-				charset = resource.getParent().getDefaultCharset();
-		} catch (CoreException e) {
-			charset = Constants.CHARACTER_ENCODING;
-		}
-		return charset;
 	}
 
 	/**

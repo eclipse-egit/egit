@@ -31,10 +31,10 @@ import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.history.CommitMessageViewer.ObjectLink;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.diff.DiffFormatter;
@@ -410,7 +410,7 @@ public class CommitInfoBuilder {
 					String path = currentDiff.getPath();
 					monitor.setTaskName(NLS.bind(
 							UIText.CommitMessageViewer_BuildDiffTaskName, path));
-					currentEncoding[0] = CompareUtils.getResourceEncoding(db,
+					currentEncoding[0] = CompareCoreUtils.getResourceEncoding(db,
 							path);
 					d.append(formatPathLine(path)).append(LF);
 					currentDiff.outputDiff(d, db, diffFmt, true);

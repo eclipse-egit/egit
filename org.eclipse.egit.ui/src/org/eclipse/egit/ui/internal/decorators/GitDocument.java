@@ -14,10 +14,10 @@ import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.GitProvider;
+import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jgit.events.ListenerHandle;
@@ -172,7 +172,7 @@ class GitDocument extends Document implements RefsChangedListener {
 				ObjectLoader loader = repository.open(id, Constants.OBJ_BLOB);
 				byte[] bytes = loader.getBytes();
 				String charset;
-				charset = CompareUtils.getResourceEncoding(resource);
+				charset = CompareCoreUtils.getResourceEncoding(resource);
 				// Finally we could consider validating the content with respect
 				// to the content. We don't do that here.
 				String s = new String(bytes, charset);
