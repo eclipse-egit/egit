@@ -13,8 +13,8 @@ package org.eclipse.egit.ui.internal.pull;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -32,6 +32,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.api.PullResult;
+import org.eclipse.jgit.errors.TransportException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
@@ -151,6 +152,14 @@ public class PullOperationUI extends JobChangeAdapter implements
 									shell,
 									UIText.PullOperationUI_PullCanceledWindowTitle,
 									UIText.PullOperationUI_PullOperationCanceledMessage);
+				} else if (status.getException() instanceof TransportException) {
+					MessageDialog
+							.openWarning(
+									shell,
+									UIText.PullOperationUI_PullFailed,
+									NLS.bind(
+											UIText.PullOperationUI_GitDataTransferFailed,
+											status.getMessage()));
 				} else
 					Activator.handleError(status.getMessage(), status
 							.getException(), true);
