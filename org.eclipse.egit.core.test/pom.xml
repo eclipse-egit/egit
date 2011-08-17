@@ -37,6 +37,13 @@
           </excludes>
           <useUIHarness>false</useUIHarness>
           <useUIThread>false</useUIThread>
+          <dependencies>
+            <dependency>
+              <type>p2-installable-unit</type>
+              <artifactId>org.eclipse.pde.feature.group</artifactId>
+              <version>${platform-version}</version>
+            </dependency>
+           </dependencies>
         </configuration>
       </plugin>
     </plugins>
