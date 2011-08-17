@@ -18,4 +18,14 @@
        <adapter type="org.eclipse.mylyn.team.ui.AbstractTaskReference"/>
     </factory>
    </extension>
+   <extension
+         point="org.eclipse.ui.workbench.texteditor.hyperlinkDetectors">
+      <hyperlinkDetector
+            activate="true"
+            class="org.eclipse.egit.internal.mylyn.ui.CommitHyperlinkDetector"
+            id="org.eclipse.egit.mylyn.ui.commitHyperlinkDetector"
+            name="%hyperlinkDetector.name"
+            targetId="org.eclipse.mylyn.tasks.ui.TaskEditor">
+      </hyperlinkDetector>
+   </extension>
 </plugin>
