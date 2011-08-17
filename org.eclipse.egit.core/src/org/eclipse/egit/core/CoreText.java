@@ -198,6 +198,12 @@ public class CoreText extends NLS {
 	public static String CreateLocalBranchOperation_CreatingBranchMessage;
 
 	/** */
+	public static String CreatePatchOperation_commitRequired;
+
+	/** */
+	public static String CreatePatchOperation_repoRequired;
+
+	/** */
 	public static String IndexFileRevision_errorLookingUpPath;
 
 	/** */
