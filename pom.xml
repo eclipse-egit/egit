@@ -151,6 +151,7 @@
 
     <module>org.eclipse.egit.core.test</module>
     <module>org.eclipse.egit.ui.test</module>
+    <module>org.eclipse.egit.mylyn.ui.test</module>
 
     <module>org.eclipse.egit.source-feature</module>
    </modules>
