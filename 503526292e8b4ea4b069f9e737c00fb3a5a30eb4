@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn///FI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/ReflogView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-17T09:40:07Z",
+      "side": 1,
+      "message": "no, don\u0027t resolve the symbolic link here otherwise you get the reflog for the branch HEAD is pointing at, instead I would like to see the extra reflog maintained for HEAD which follows all updates of HEAD including branch switches with is not the case for git reflog for a branch.\n\nUse just \n\n refName \u003d Constants.HEAD \n\ninstead of \n\n refName \u003d ref.getTarget().getName() \n\nthen you\u0027ll see the difference, select master to see the difference. \n\nAlso the branch selection dialog of the reflog view needs to show HEAD otherwise this cannot be selected explicitly.",
+      "revId": "503526292e8b4ea4b069f9e737c00fb3a5a30eb4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
