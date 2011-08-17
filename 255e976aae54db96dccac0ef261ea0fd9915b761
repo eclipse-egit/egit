@@ -16,6 +16,24 @@
       "revId": "255e976aae54db96dccac0ef261ea0fd9915b761",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///BM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-17T14:41:55Z",
+      "side": 1,
+      "message": "Not sure if a new preference would be overkill for this. I introduced a new default number for context lines for now. If we decide to introduce a pref for this, I\u0027d suggest to do this in an additional commit.",
+      "parentUuid": "AABOAX//+jM\u003d",
+      "revId": "255e976aae54db96dccac0ef261ea0fd9915b761",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
