@@ -38,6 +38,11 @@ import org.eclipse.jgit.revwalk.RevCommit;
  */
 public class CreatePatchOperation implements IEGitOperation {
 
+	/**
+	 * The default number of lines to use as context
+	 */
+	public static final int DEFAULT_CONTEXT_LINES = 3;
+
 	private final RevCommit commit;
 
 	private final Repository repository;
@@ -49,7 +54,7 @@ public class CreatePatchOperation implements IEGitOperation {
 
 	private String patchContent;
 
-	private int contextLines;
+	private int contextLines = DEFAULT_CONTEXT_LINES;
 
 	/**
 	 * Creates the new operation.

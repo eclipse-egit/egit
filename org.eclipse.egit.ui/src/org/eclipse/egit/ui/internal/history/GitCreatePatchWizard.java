@@ -409,7 +409,7 @@ public class GitCreatePatchWizard extends Wizard {
 			contextLinesLabel.setText(UIText.GitCreatePatchWizard_LinesOfContext);
 
 			contextLines = new Text(composite, SWT.BORDER | SWT.RIGHT);
-			contextLines.setText("3"); //$NON-NLS-1$
+			contextLines.setText(String.valueOf(CreatePatchOperation.DEFAULT_CONTEXT_LINES));
 			contextLines.addModifyListener(new ModifyListener() {
 
 				public void modifyText(ModifyEvent e) {

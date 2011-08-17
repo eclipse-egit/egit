@@ -3197,6 +3197,12 @@ public class UIText extends NLS {
 	public static String CommitGraphTable_OpenCommitLabel;
 
 	/** */
+	public static String CommitGraphTable_UnableToCreatePatch;
+
+	/** */
+	public static String CommitGraphTable_UnableToWritePatch;
+
+	/** */
 	public static String GitSynchronizeWizard_synchronize;
 
 	/** */
