@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn///MU\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui.test/.settings/org.eclipse.jdt.core.prefs",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-16T23:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn///d0\u003d",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn///dw\u003d",
         "filename": "org.eclipse.egit.mylyn.ui.test/META-INF/MANIFEST.MF",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2011-08-13T23:56:18Z",
       "side": 1,
       "message": "should be JavaSE-1.5",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///MQ\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-16T23:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn///dw\u003d",
       "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn///MI\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/CommitHyperlinkDetector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-16T23:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn///ds\u003d",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn///do\u003d",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/CommitHyperlinkDetector.java",
         "patchSetId": 3
@@ -81,6 +135,24 @@
       "writtenOn": "2011-08-13T23:56:18Z",
       "side": 1,
       "message": "style nit: no braces around single line blocks",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///MM\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/CommitHyperlinkDetector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-16T23:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn///do\u003d",
       "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn///MA\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/CommitHyperlinkDetector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-16T23:57:20Z",
+      "side": 1,
+      "message": "I\u0027d say we should no try to do this as the minimum length depends on the repository and we may end up parsing really everything in the incoming source viewer instead of failing earlier as we now do.",
+      "parentUuid": "AABOAn///dk\u003d",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn///dg\u003d",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/CommitHyperlinkDetector.java",
         "patchSetId": 3
@@ -115,6 +205,24 @@
       "writtenOn": "2011-08-13T23:56:18Z",
       "side": 1,
       "message": "style nit: no braces here",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///ME\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/CommitHyperlinkDetector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-16T23:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn///dg\u003d",
       "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn///L8\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/Messages.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-16T23:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn///dc\u003d",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn///dY\u003d",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/Messages.java",
         "patchSetId": 3
@@ -149,6 +275,24 @@
       "writtenOn": "2011-08-13T23:56:18Z",
       "side": 1,
       "message": "style nit: how about adding a blank line before the static initializer to increase readability ?",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///L4\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/Messages.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-16T23:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn///dY\u003d",
       "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
