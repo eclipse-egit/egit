@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX//+jM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-07-28T09:27:11Z",
+      "side": 1,
+      "message": "You now use the default 0 for the number of context lines. I would prefer that we also use the same default here as in the patch wizard.\n\nMaybe we could even make the default number of context lines configurable with a new preference?",
+      "revId": "255e976aae54db96dccac0ef261ea0fd9915b761",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
