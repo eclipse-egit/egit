@@ -11,36 +11,75 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.reflog;
 
-import java.util.Collection;
-
+import org.eclipse.core.runtime.Assert;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.ReflogCommand;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.ReflogEntry;
 
 /**
  * A content provider for reflog entries given a repository
  */
-public class ReflogViewContentProvider implements
-		ITreeContentProvider {
+public class ReflogViewContentProvider implements ITreeContentProvider {
 
-	public Object[] getElements(Object inputElement) {
-		if(inputElement instanceof Repository) {
-			Repository repository = (Repository) inputElement;
-			Git git = new Git(repository);
-			try {
-				Collection<ReflogEntry> entries = git.reflog().call();
-				return entries.toArray(new ReflogEntry[entries.size()]);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	/**
+	 * Input class for this content provider
+	 */
+	public static class ReflogInput {
+
+		private final Repository repository;
+
+		private final String ref;
+
+		/**
+		 * Create input with non-null repository and non-null ref
+		 *
+		 * @param repository
+		 * @param ref
+		 */
+		public ReflogInput(Repository repository, String ref) {
+			Assert.isNotNull(repository, "Repository cannot be null"); //$NON-NLS-1$
+			Assert.isNotNull(ref, "Ref cannot be null"); //$NON-NLS-1$
+			this.repository = repository;
+			this.ref = ref;
 		}
-		return null;
+
+		/**
+		 * Get repository
+		 *
+		 * @return repositoyr
+		 */
+		public Repository getRepository() {
+			return repository;
+		}
+
+		/**
+		 * Get ref
+		 *
+		 * @return ref
+		 */
+		public String getRef() {
+			return ref;
+		}
 	}
 
-	public void inputChanged(Viewer viewer, Object oldInput,
-			Object newInput) {
+	public Object[] getElements(Object inputElement) {
+		if (inputElement instanceof ReflogInput) {
+			ReflogInput input = (ReflogInput) inputElement;
+			ReflogCommand command = new Git(input.repository).reflog();
+			command.setRef(input.ref);
+			try {
+				return command.call().toArray();
+			} catch (Exception e) {
+				Activator.logError("Error running reflog command", e); //$NON-NLS-1$
+			}
+		}
+		return new Object[0];
+	}
+
+	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		// TODO
 	}
 
