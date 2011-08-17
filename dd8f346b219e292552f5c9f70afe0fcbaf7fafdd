@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn///MY\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui.test/.classpath",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-16T23:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn///d4\u003d",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn///d0\u003d",
         "filename": "org.eclipse.egit.mylyn.ui.test/.settings/org.eclipse.jdt.core.prefs",
         "patchSetId": 3
