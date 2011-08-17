@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn///d4\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui.test/.classpath",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-13T23:56:18Z",
+      "side": 1,
+      "message": "so far we still support JavaSE-1.5",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///d0\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui.test/.settings/org.eclipse.jdt.core.prefs",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-13T23:56:18Z",
+      "side": 1,
+      "message": "we still support Java 1.5\n\nI would recommend to copy all prefs from an already existing project (e.g. egit.ui.tests) to ensure consistent settings\n\nresources.prefs and runtime.prefs are required to enforce UTF-8 encoded source encoding and unix line endings",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///dw\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-13T23:56:18Z",
+      "side": 1,
+      "message": "should be JavaSE-1.5",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///ds\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/CommitHyperlinkDetector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-13T23:56:18Z",
+      "side": 1,
+      "message": "missing javadoc",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///do\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/CommitHyperlinkDetector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-13T23:56:18Z",
+      "side": 1,
+      "message": "style nit: no braces around single line blocks",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///dk\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/CommitHyperlinkDetector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-13T23:56:18Z",
+      "side": 1,
+      "message": "Should we also look for abbreviated commitIDs if they have a reasonable minimum length \nand can be resolved non-ambiguously, similar to what cgit also allows on the command line ? \nsee AbbreviatedObjectId.isId()",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///dg\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/CommitHyperlinkDetector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-13T23:56:18Z",
+      "side": 1,
+      "message": "style nit: no braces here",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///dc\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/Messages.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-13T23:56:18Z",
+      "side": 1,
+      "message": "style nit: in similar classes we use a single blank instead of a tab between /** and */",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///dY\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/Messages.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-13T23:56:18Z",
+      "side": 1,
+      "message": "style nit: how about adding a blank line before the static initializer to increase readability ?",
+      "revId": "dd8f346b219e292552f5c9f70afe0fcbaf7fafdd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
