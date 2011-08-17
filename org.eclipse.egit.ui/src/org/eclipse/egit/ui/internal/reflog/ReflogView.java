@@ -215,7 +215,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 					return (Image) resourceManager.get(UIIcons.PULL);
 				if (comment.startsWith("clone:")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.CLONEGIT);
-				if (comment.startsWith("rebase finished:")) //$NON-NLS-1$
+				if (comment.startsWith("rebase ")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.REBASE);
 				if (comment.startsWith("merge ")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.MERGE);
