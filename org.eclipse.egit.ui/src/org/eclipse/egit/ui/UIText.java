@@ -2776,6 +2776,9 @@ public class UIText extends NLS {
 	public static String GitCreatePatchWizard_Clipboard;
 
 	/** */
+	public static String GitCreatePatchWizard_ContextMustBePositiveInt;
+
+	/** */
 	public static String GitCreatePatchWizard_CreatePatchTitle;
 
 	/** */
@@ -2810,6 +2813,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitCreatePatchWizard_FilesystemDirectoryNotExistsError;
+
+	/** */
+	public static String GitCreatePatchWizard_LinesOfContext;
 
 	/** */
 	public static String GitCreateProjectViaWizardWizard_AbortedMessage;

@@ -27,6 +27,7 @@ import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.Wizard;
@@ -47,6 +48,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPart;
@@ -119,7 +121,9 @@ public class GitCreatePatchWizard extends Wizard {
 	public boolean performFinish() {
 		final CreatePatchOperation operation = new CreatePatchOperation(db,
 				commit);
-		operation.useGitFormat(optionsPage.gitFormat.getSelection());
+		boolean useGitFormat = optionsPage.gitFormat.getSelection();
+		operation.useGitFormat(useGitFormat);
+		operation.setContextLines(Integer.parseInt(optionsPage.contextLines.getText()));
 
 		final boolean isFile = locationPage.fsRadio.getSelection();
 		final String fileName = locationPage.fsPathText.getText();
@@ -375,6 +379,8 @@ public class GitCreatePatchWizard extends Wizard {
 	 */
 	public static class OptionsPage extends WizardPage {
 		private Button gitFormat;
+		private Text contextLines;
+		private Label contextLinesLabel;
 
 		/**
 		 *
@@ -389,20 +395,60 @@ public class GitCreatePatchWizard extends Wizard {
 
 		public void createControl(Composite parent) {
 			final Composite composite = new Composite(parent, SWT.NULL);
-			GridLayout gridLayout = new GridLayout();
-			gridLayout.numColumns = 3;
+			GridLayout gridLayout = new GridLayout(2, false);
 			composite.setLayout(gridLayout);
 			composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-			// clipboard
 			GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-			gd.horizontalSpan = 3;
+			gd.horizontalSpan = 2;
 			gitFormat = new Button(composite, SWT.CHECK);
 			gitFormat.setText(UIText.GitCreatePatchWizard_GitFormat);
 			gitFormat.setLayoutData(gd);
 
+			contextLinesLabel = new Label(composite, SWT.NONE);
+			contextLinesLabel.setText(UIText.GitCreatePatchWizard_LinesOfContext);
+
+			contextLines = new Text(composite, SWT.BORDER | SWT.RIGHT);
+			contextLines.setText("3"); //$NON-NLS-1$
+			contextLines.addModifyListener(new ModifyListener() {
+
+				public void modifyText(ModifyEvent e) {
+					validatePage();
+				}
+			});
+			GridDataFactory.swtDefaults().hint(30, SWT.DEFAULT).applyTo(contextLines);
+
 			Dialog.applyDialogFont(composite);
 			setControl(composite);
+		}
+
+		private void validatePage() {
+			boolean pageValid = true;
+			pageValid = validateContextLines();
+			if (pageValid) {
+				setMessage(null);
+				setErrorMessage(null);
+			}
+			setPageComplete(pageValid);
+		}
+
+		private boolean validateContextLines() {
+			String text = contextLines.getText();
+			if(text == null || text.trim().length() == 0) {
+				setErrorMessage(UIText.GitCreatePatchWizard_ContextMustBePositiveInt);
+				return false;
+			}
+
+			text = text.trim();
+
+			char[] charArray = text.toCharArray();
+			for (char c : charArray) {
+				if(!Character.isDigit(c)) {
+					setErrorMessage(UIText.GitCreatePatchWizard_ContextMustBePositiveInt);
+					return false;
+				}
+			}
+			return true;
 		}
 	}
 }
