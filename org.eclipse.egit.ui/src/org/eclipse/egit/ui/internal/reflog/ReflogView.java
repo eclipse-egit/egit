@@ -22,7 +22,10 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.reflog.ReflogViewContentProvider.ReflogInput;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jface.action.ControlContribution;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.layout.TreeColumnLayout;
@@ -39,9 +42,11 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -52,8 +57,9 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -62,15 +68,20 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
+import org.eclipse.ui.forms.IFormColors;
+import org.eclipse.ui.forms.events.HyperlinkAdapter;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.ImageHyperlink;
 import org.eclipse.ui.part.ViewPart;
 
 /**
- * A view that shows reflog entries.  The View includes a quick filter that searches
- * on both the commit hashes and commit messages.
+ * A view that shows reflog entries. The View includes a quick filter that
+ * searches on both the commit hashes and commit messages.
  */
 public class ReflogView extends ViewPart implements RefsChangedListener {
 
@@ -78,6 +89,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 	 * View id
 	 */
 	public static final String VIEW_ID = "org.eclipse.egit.ui.ReflogView"; //$NON-NLS-1$
+
+	private FormToolkit toolkit;
 
 	private Form form;
 
@@ -91,7 +104,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 	public void createPartControl(Composite parent) {
 		GridLayoutFactory.fillDefaults().applyTo(parent);
 
-		final FormToolkit toolkit = new FormToolkit(parent.getDisplay());
+		toolkit = new FormToolkit(parent.getDisplay());
 		parent.addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				toolkit.dispose();
@@ -102,7 +115,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 
 		Image repoImage = UIIcons.REPOSITORY.createImage();
 		UIUtils.hookDisposal(form, repoImage);
-		final Image branchImage = UIIcons.BRANCH.createImage();
+		final Image branchImage = UIIcons.CHANGESET.createImage();
 		UIUtils.hookDisposal(form, branchImage);
 		form.setImage(repoImage);
 		form.setText(UIText.StagingView_NoSelectionTitle);
@@ -117,7 +130,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 
 		final TreeColumnLayout layout = new TreeColumnLayout();
 
-		FilteredTree filteredTree = new FilteredTree(tableComposite, SWT.NONE | SWT.BORDER, new PatternFilter(), true) {
+		FilteredTree filteredTree = new FilteredTree(tableComposite, SWT.NONE
+				| SWT.BORDER, new PatternFilter(), true) {
 			@Override
 			protected void createControl(Composite composite, int treeStyle) {
 				super.createControl(composite, treeStyle);
@@ -129,7 +143,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 		refLogTableTreeViewer = filteredTree.getViewer();
 		refLogTableTreeViewer.getTree().setLinesVisible(true);
 		refLogTableTreeViewer.getTree().setHeaderVisible(true);
-		refLogTableTreeViewer.setContentProvider(new ReflogViewContentProvider());
+		refLogTableTreeViewer
+				.setContentProvider(new ReflogViewContentProvider());
 
 		ColumnViewerToolTipSupport.enableFor(refLogTableTreeViewer);
 
@@ -193,10 +208,10 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 			public Image getImage(Object element) {
 				String comment = ((ReflogEntry) element).getComment();
 				if (comment.startsWith("commit:")) //$NON-NLS-1$
-					return (Image) resourceManager.get(UIIcons.CHANGESET);
+					return (Image) resourceManager.get(UIIcons.COMMIT);
 				if (comment.startsWith("commit (amend):")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.AMEND_COMMIT);
-				if (comment.startsWith("pull :")) //$NON-NLS-1$
+				if (comment.startsWith("pull ")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.PULL);
 				if (comment.startsWith("clone:")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.CLONEGIT);
@@ -204,10 +219,12 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 					return (Image) resourceManager.get(UIIcons.REBASE);
 				if (comment.startsWith("merge ")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.MERGE);
-				if (comment.startsWith("fetch: ")) //$NON-NLS-1$
+				if (comment.startsWith("fetch:")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.FETCH);
-				if (comment.startsWith("branch: ")) //$NON-NLS-1$
+				if (comment.startsWith("branch:")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.CREATE_BRANCH);
+				if (comment.startsWith("checkout:")) //$NON-NLS-1$
+					return (Image) resourceManager.get(UIIcons.CHECKOUT);
 				return null;
 			}
 
@@ -223,7 +240,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 						.getSelection();
 				if (selection.isEmpty())
 					return;
-				Repository repo = (Repository) refLogTableTreeViewer.getInput();
+				Repository repo = getRepository();
 				if (repo == null)
 					return;
 				RevWalk walk = new RevWalk(repo);
@@ -274,7 +291,8 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 
 		site.setSelectionProvider(refLogTableTreeViewer);
 
-		addRefsChangedListener = Repository.getGlobalListenerList().addRefsChangedListener(this);
+		addRefsChangedListener = Repository.getGlobalListenerList()
+				.addRefsChangedListener(this);
 	}
 
 	@Override
@@ -288,40 +306,96 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 		ISelectionService service = (ISelectionService) getSite().getService(
 				ISelectionService.class);
 		service.removePostSelectionListener(selectionChangedListener);
-		if ( addRefsChangedListener != null)
+		if (addRefsChangedListener != null)
 			addRefsChangedListener.remove();
 	}
 
 	private void reactOnSelection(ISelection selection) {
-		if (selection instanceof StructuredSelection) {
-			StructuredSelection ssel = (StructuredSelection) selection;
-			if (ssel.size() != 1)
-				return;
-			Repository repository = null;
-			if (ssel.getFirstElement() instanceof IResource) {
-				IResource resource = (IResource) ssel.getFirstElement();
-				RepositoryMapping mapping = RepositoryMapping
-						.getMapping(resource.getProject());
-				if ( mapping != null )
-					repository = mapping.getRepository();
-			}
-			if (ssel.getFirstElement() instanceof IAdaptable) {
-				IResource adapted = (IResource) ((IAdaptable) ssel
-						.getFirstElement()).getAdapter(IResource.class);
-				if (adapted != null) {
-					RepositoryMapping mapping = RepositoryMapping
-							.getMapping(adapted);
-					if (mapping != null)
-						repository = mapping.getRepository();
-				}
-			} else if (ssel.getFirstElement() instanceof RepositoryTreeNode) {
-				RepositoryTreeNode repoNode = (RepositoryTreeNode) ssel
-						.getFirstElement();
-				repository = repoNode.getRepository();
-			}
-
-			showReflogFor(repository);
+		if (!(selection instanceof IStructuredSelection))
+			return;
+		IStructuredSelection ssel = (IStructuredSelection) selection;
+		if (ssel.size() != 1)
+			return;
+		Repository selectedRepo = null;
+		Object first = ssel.getFirstElement();
+		if (first instanceof IResource) {
+			IResource resource = (IResource) ssel.getFirstElement();
+			RepositoryMapping mapping = RepositoryMapping.getMapping(resource
+					.getProject());
+			if (mapping != null)
+				selectedRepo = mapping.getRepository();
 		}
+		if (first instanceof IAdaptable) {
+			IResource adapted = (IResource) ((IAdaptable) ssel
+					.getFirstElement()).getAdapter(IResource.class);
+			if (adapted != null) {
+				RepositoryMapping mapping = RepositoryMapping
+						.getMapping(adapted);
+				if (mapping != null)
+					selectedRepo = mapping.getRepository();
+			}
+		} else if (first instanceof RepositoryTreeNode) {
+			RepositoryTreeNode repoNode = (RepositoryTreeNode) ssel
+					.getFirstElement();
+			selectedRepo = repoNode.getRepository();
+		}
+		if (selectedRepo == null)
+			return;
+
+		// Only update when different repository is selected
+		Repository currentRepo = getRepository();
+		if (currentRepo == null
+				|| !selectedRepo.getDirectory().equals(
+						currentRepo.getDirectory()))
+			showReflogFor(selectedRepo);
+	}
+
+	private void updateRefLink(final String name) {
+		IToolBarManager toolbar = form.getToolBarManager();
+		toolbar.removeAll();
+
+		ControlContribution refLabelControl = new ControlContribution(
+				"refLabel") { //$NON-NLS-1$
+			@Override
+			protected Control createControl(Composite cParent) {
+				Composite composite = toolkit.createComposite(cParent);
+				composite.setLayout(new RowLayout());
+				composite.setBackground(null);
+
+				final ImageHyperlink refLink = new ImageHyperlink(composite,
+						SWT.NONE);
+				Image image = UIIcons.BRANCH.createImage();
+				UIUtils.hookDisposal(refLink, image);
+				refLink.setImage(image);
+				refLink.setFont(JFaceResources.getBannerFont());
+				refLink.setForeground(toolkit.getColors().getColor(
+						IFormColors.TITLE));
+				refLink.addHyperlinkListener(new HyperlinkAdapter() {
+					@Override
+					public void linkActivated(HyperlinkEvent event) {
+						Repository repository = getRepository();
+						if (repository == null)
+							return;
+						RefSelectionDialog dialog = new RefSelectionDialog(
+								refLink.getShell(), repository);
+						if (Window.OK == dialog.open())
+							showReflogFor(repository, dialog.getRefName());
+					}
+				});
+				refLink.setText(Repository.shortenRefName(name));
+
+				return composite;
+			}
+		};
+		toolbar.add(refLabelControl);
+		toolbar.update(true);
+	}
+
+	private Repository getRepository() {
+		Object input = refLogTableTreeViewer.getInput();
+		if (input instanceof ReflogInput)
+			return ((ReflogInput) input).getRepository();
+		return null;
 	}
 
 	/**
@@ -330,8 +404,19 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 	 * @param repository
 	 */
 	public void showReflogFor(Repository repository) {
-		if (repository != null) {
-			refLogTableTreeViewer.setInput(repository);
+		showReflogFor(repository, Constants.HEAD);
+	}
+
+	/**
+	 * Defines the repository for the reflog to show.
+	 *
+	 * @param repository
+	 * @param ref
+	 */
+	private void showReflogFor(Repository repository, String ref) {
+		if (repository != null && ref != null) {
+			refLogTableTreeViewer.setInput(new ReflogInput(repository, ref));
+			updateRefLink(ref);
 			form.setText(getRepositoryName(repository));
 		}
 	}
@@ -358,11 +443,10 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 	}
 
 	public void onRefsChanged(RefsChangedEvent event) {
-		Display.getDefault().syncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			public void run() {
-				ReflogView.this.refLogTableTreeViewer.refresh();
+				refLogTableTreeViewer.refresh();
 			}
 		});
 	}
-
 }
