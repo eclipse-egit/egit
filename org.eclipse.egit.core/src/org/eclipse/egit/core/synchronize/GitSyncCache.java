@@ -18,7 +18,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
-import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
@@ -63,16 +62,22 @@ class GitSyncCache {
 			else
 				tw.addTree(new EmptyTreeIterator());
 
+			// setup base tree
+			if (gsd.getCommonAncestorRev() != null)
+				tw.addTree(gsd.getCommonAncestorRev().getTree());
+			else
+				tw.addTree(new EmptyTreeIterator());
+
 			// setup remote tree
 			if (gsd.getDstRevCommit() != null)
 				tw.addTree(gsd.getDstRevCommit().getTree());
 			else
 				tw.addTree(new EmptyTreeIterator());
 
-			List<DiffEntry> diffEntrys = DiffEntry.scan(tw, true);
+			List<ThreeWayDiffEntry> diffEntrys = ThreeWayDiffEntry.scan(tw);
 			tw.release();
 
-			for (DiffEntry diffEntry : diffEntrys)
+			for (ThreeWayDiffEntry diffEntry : diffEntrys)
 				repoCache.addMember(diffEntry);
 		} catch (Exception e) {
 			Activator.logError(e.getMessage(), e);
