@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+zI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-18T21:34:03Z",
+      "side": 1,
+      "message": "it seems ErrorDialog always displays the reason also in the dialog area, or did I miss anything ?",
+      "parentUuid": "AABOAn//+0w\u003d",
+      "revId": "cc4751ba65296dd8a40129ae07bdf9efa89880d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+zM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-18T21:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn//+0s\u003d",
+      "revId": "cc4751ba65296dd8a40129ae07bdf9efa89880d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
