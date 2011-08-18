@@ -12,12 +12,16 @@ import static org.eclipse.compare.structuremergeviewer.Differencer.LEFT;
 import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.eclipse.jgit.lib.ObjectId.fromString;
 import static org.eclipse.jgit.lib.ObjectId.zeroId;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jgit.lib.ObjectId;
 import org.junit.BeforeClass;
@@ -221,6 +225,18 @@ public class GitModelBlobTest extends GitModelTestCase {
 		assertFalse(actual);
 	}
 
+	@Test public void shouldActAsResourceProvider()
+			throws Exception {
+		// given
+		GitModelBlob left = createGitModelBlob();
+
+		// then
+		IFile file = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ1)
+				.getFile(new Path("folder/test.txt"));
+		IPath leftLocation = left.getResource().getLocation();
+		assertEquals(file.getLocation(), leftLocation);
+	}
+	
 	@BeforeClass public static void setupEnvironment() throws Exception {
 		leftRepoFile = createProjectAndCommitToRepository();
 
