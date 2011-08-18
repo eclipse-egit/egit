@@ -218,6 +218,9 @@
          adaptable="true"
          id="org.eclipse.egit.ui.fileContributions"
          objectClass="org.eclipse.core.resources.IFile">
+         <filter name="projectPersistentProperty"
+               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
+         </filter>
          <action
                class="org.eclipse.egit.ui.internal.actions.CompareWithRevisionAction"
                icon="$nl$/icons/obj16/history.gif"
