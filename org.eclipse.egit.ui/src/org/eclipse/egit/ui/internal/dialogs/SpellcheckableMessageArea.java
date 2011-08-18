@@ -38,6 +38,7 @@ import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.MarginPainter;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.quickassist.IQuickAssistInvocationContext;
 import org.eclipse.jface.text.quickassist.IQuickAssistProcessor;
 import org.eclipse.jface.text.reconciler.IReconciler;
@@ -133,6 +134,7 @@ public class SpellcheckableMessageArea extends Composite {
 	}
 
 	private final SourceViewer sourceViewer;
+
 	private ModifyListener hardWrapModifyListener;
 
 	/**
@@ -152,6 +154,7 @@ public class SpellcheckableMessageArea extends Composite {
 			int styles) {
 		this(parent, initialText, false, styles);
 	}
+
 	/**
 	 * @param parent
 	 * @param initialText
@@ -206,6 +209,25 @@ public class SpellcheckableMessageArea extends Composite {
 				if (!isEditable(viewer))
 					return null;
 				return super.getReconciler(sourceViewer);
+			}
+
+			public IContentAssistant getContentAssistant(ISourceViewer viewer) {
+				if (!viewer.isEditable())
+					return null;
+				IContentAssistant assistant = createContentAssistant(viewer);
+				// Add content assist proposal handler if assistant exists
+				if (assistant != null) {
+					final IHandlerActivation activation = installContentAssistActionHandler();
+					viewer.getTextWidget().addDisposeListener(
+							new DisposeListener() {
+
+								public void widgetDisposed(DisposeEvent e) {
+									getHandlerService().deactivateHandler(
+											activation);
+								}
+							});
+				}
+				return assistant;
 			}
 
 		});
@@ -454,12 +476,20 @@ public class SpellcheckableMessageArea extends Composite {
 	}
 
 	private IHandlerActivation installQuickFixActionHandler() {
-		IHandlerService handlerService = getHandlerService();
 		ActionHandler handler = createQuickFixActionHandler(sourceViewer);
+		return addHandler(handler);
+	}
+
+	private IHandlerActivation installContentAssistActionHandler() {
+		ActionHandler handler = createContentAssistActionHandler(sourceViewer);
+		return addHandler(handler);
+	}
+
+	private IHandlerActivation addHandler(ActionHandler handler) {
 		ActiveShellExpression expression = new ActiveShellExpression(
 				sourceViewer.getTextWidget().getShell());
-		return handlerService.activateHandler(
-				ITextEditorActionDefinitionIds.QUICK_ASSIST, handler,
+		return getHandlerService().activateHandler(
+				handler.getAction().getActionDefinitionId(), handler,
 				expression);
 	}
 
@@ -478,6 +508,21 @@ public class SpellcheckableMessageArea extends Composite {
 		quickFixAction
 		.setActionDefinitionId(ITextEditorActionDefinitionIds.QUICK_ASSIST);
 		return new ActionHandler(quickFixAction);
+	}
+
+	private ActionHandler createContentAssistActionHandler(
+			final ITextOperationTarget textOperationTarget) {
+		Action proposalAction = new Action() {
+			public void run() {
+				if (textOperationTarget
+						.canDoOperation(ISourceViewer.CONTENTASSIST_PROPOSALS))
+					textOperationTarget
+							.doOperation(ISourceViewer.CONTENTASSIST_PROPOSALS);
+			}
+		};
+		proposalAction
+				.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
+		return new ActionHandler(proposalAction);
 	}
 
 	/**
@@ -506,6 +551,16 @@ public class SpellcheckableMessageArea extends Composite {
 	protected Map<String, IAdaptable> getHyperlinkTargets() {
 		return Collections.singletonMap("org.eclipse.ui.DefaultTextEditor", //$NON-NLS-1$
 				getDefaultTarget());
+	}
+
+	/**
+	 * Create content assistant
+	 *
+	 * @param viewer
+	 * @return content assistant
+	 */
+	protected IContentAssistant createContentAssistant(ISourceViewer viewer) {
+		return null;
 	}
 
 	/**
