@@ -165,6 +165,7 @@ public abstract class AbstractSynchronizeViewTest extends
 
 		GitModelSynchronize.launch(data, new IResource[] { project });
 
+		Job.getJobManager().join(JobFamilies.SYNCHRONIZE_READ_DATA, null);
 		Job.getJobManager().join(
 				ISynchronizeManager.FAMILY_SYNCHRONIZE_OPERATION, null);
 	}
