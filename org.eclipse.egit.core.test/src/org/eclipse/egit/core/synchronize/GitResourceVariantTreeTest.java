@@ -172,7 +172,7 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 		new Git(repo).commit().setAuthor("JUnit", "junit@egit.org")
 				.setMessage("Initial commit").call();
 		GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, MASTER,
-				false);
+				true);
 		GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
 		GitSyncCache cache = GitSyncCache.getAllData(dataSet,
 				new NullProgressMonitor());
@@ -201,7 +201,7 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 				"initial commit");
 		IFile mainJava = testRepo.getIFile(iProject, file);
 		GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, MASTER,
-				false);
+				true);
 		GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
 		GitSyncCache cache = GitSyncCache.getAllData(dataSet,
 				new NullProgressMonitor());
