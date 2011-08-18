@@ -1543,6 +1543,9 @@ public class UIText extends NLS {
 	public static String HistoryPage_findbar_notFound;
 
 	/** */
+	public static String PullOperationUI_ConnectionProblem;
+
+	/** */
 	public static String PullOperationUI_NotTriedMessage;
 
 	/** */
@@ -1550,6 +1553,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String PullOperationUI_PullErrorWindowTitle;
+
+	/** */
+	public static String PullOperationUI_PullFailed;
 
 	/** */
 	public static String PullOperationUI_PullingMultipleTaskName;
