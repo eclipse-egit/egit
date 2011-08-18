@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOAn//+0w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullOperationUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-18T19:04:43Z",
+      "side": 1,
+      "message": "I\u0027d use an ErrorDialog.openError and pass the status in there. This way people are not confronted with the JGit error message at first (only if they want to see the details) and they\u0027re able to copy the error message",
+      "revId": "cc4751ba65296dd8a40129ae07bdf9efa89880d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+zI\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullOperationUI.java",
         "patchSetId": 1
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "it seems ErrorDialog always displays the reason also in the dialog area, or did I miss anything ?",
       "parentUuid": "AABOAn//+0w\u003d",
+      "revId": "cc4751ba65296dd8a40129ae07bdf9efa89880d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+0s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-18T19:04:43Z",
+      "side": 1,
+      "message": "Wonder if we should use something like \"Connection problem\" instead of \"Git data transfer\"\n\nI\u0027d remove the reason, see ErrorDialog comment.",
       "revId": "cc4751ba65296dd8a40129ae07bdf9efa89880d1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
