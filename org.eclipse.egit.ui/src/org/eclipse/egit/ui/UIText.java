@@ -823,6 +823,9 @@ public class UIText extends NLS {
 	public static String CherryPickHandler_IndexDirty;
 
 	/** */
+	public static String CherryPickHandler_JobName;
+
+	/** */
 	public static String CherryPickHandler_unknown;
 
 	/** */
