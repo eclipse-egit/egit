@@ -13,18 +13,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.egit.core.CoreText;
-import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.osgi.util.NLS;
 
 /**
  * Thin cache object. It contains list of object members, object name and
- * {@link DiffEntry} data.
+ * {@link ThreeWayDiffEntry} data.
  */
 class GitSyncObjectCache {
 
 	private final String name;
 
-	private final DiffEntry diffEntry;
+	private final ThreeWayDiffEntry diffEntry;
 
 	private Map<String, GitSyncObjectCache> members;
 
@@ -43,7 +42,7 @@ class GitSyncObjectCache {
 	 * @param diffEntry
 	 *            entry meta data
 	 */
-	GitSyncObjectCache(String name, DiffEntry diffEntry) {
+	GitSyncObjectCache(String name, ThreeWayDiffEntry diffEntry) {
 		this.name = name;
 		this.diffEntry = diffEntry;
 	}
@@ -59,7 +58,7 @@ class GitSyncObjectCache {
 	 *
 	 * @return entry meta data
 	 */
-	public DiffEntry getDiffEntry() {
+	public ThreeWayDiffEntry getDiffEntry() {
 		return diffEntry;
 	}
 
@@ -73,8 +72,8 @@ class GitSyncObjectCache {
 	 * @throws RuntimeException
 	 *             when cannot find parent of given {@code entry} in cache
 	 */
-	public void addMember(DiffEntry entry) {
-		String memberPath = getMemberPath(entry);
+	public void addMember(ThreeWayDiffEntry entry) {
+		String memberPath = entry.getPath();
 
 		if (members == null)
 			members = new HashMap<String, GitSyncObjectCache>();
@@ -162,13 +161,6 @@ class GitSyncObjectCache {
 		}
 
 		return builder.toString();
-	}
-
-	private String getMemberPath(DiffEntry entry) {
-		if (!entry.getNewPath().equals(DiffEntry.DEV_NULL))
-			return entry.getNewPath();
-		else
-			return entry.getOldPath();
 	}
 
 }
