@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.httpauth;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -64,6 +65,7 @@ public class PushTest extends EGitTestCase {
 		assertTrue(file.exists());
 		localRepository = Activator.getDefault().getRepositoryCache()
 				.lookupRepository(new File(localRepoPath, ".git"));
+		assertNotNull(localRepository);
 	}
 
 	@Test
