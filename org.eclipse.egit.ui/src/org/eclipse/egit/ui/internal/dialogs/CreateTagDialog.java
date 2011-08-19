@@ -38,9 +38,6 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.resource.LocalResourceManager;
-import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelection;
@@ -134,14 +131,10 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 		private final Image IMG_LIGHTTAG;
 
-		private final ResourceManager fImageCache;
-
 		private TagLabelProvider() {
-			fImageCache = new LocalResourceManager(
-					JFaceResources.getResources());
-			IMG_TAG = fImageCache.createImage(UIIcons.TAG);
-			IMG_LIGHTTAG = SWTUtils.getDecoratedImage(
-					fImageCache.createImage(UIIcons.TAG), UIIcons.OVR_LIGHTTAG);
+			IMG_TAG = UIIcons.TAG.createImage();
+			IMG_LIGHTTAG = SWTUtils.getDecoratedImage(IMG_TAG,
+					UIIcons.OVR_LIGHTTAG);
 		}
 
 		public Image getColumnImage(Object element, int columnIndex) {
@@ -165,7 +158,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 		}
 
 		public void dispose() {
-			fImageCache.dispose();
+			IMG_TAG.dispose();
+			IMG_LIGHTTAG.dispose();
 			super.dispose();
 		}
 	}
