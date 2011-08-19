@@ -320,11 +320,12 @@ class CreateBranchPage extends WizardPage {
 		setErrorMessage(null);
 		try {
 			GridData gd = (GridData) warningComposite.getLayoutData();
-			gd.exclude = !branchCombo.getText().startsWith(Constants.R_HEADS);
+			String refName = branchCombo.getText();
+			gd.exclude = !refName.startsWith(Constants.R_HEADS);
 			warningComposite.setVisible(!gd.exclude);
 
 			gd = (GridData) upstreamConfigGroup.getLayoutData();
-			gd.exclude = branchCombo.getText().startsWith(Constants.R_TAGS);
+			gd.exclude = !refName.startsWith(Constants.R_REMOTES);
 			upstreamConfigGroup.setVisible(!gd.exclude);
 
 			upstreamConfigGroup.getParent().layout(true);
@@ -345,7 +346,7 @@ class CreateBranchPage extends WizardPage {
 				break;
 			}
 
-			if (branchCombo.getText().length() == 0) {
+			if (refName.length() == 0) {
 				setErrorMessage(UIText.CreateBranchPage_MissingSourceMessage);
 				return;
 			}
