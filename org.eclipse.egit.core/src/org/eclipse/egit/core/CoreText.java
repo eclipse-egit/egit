@@ -252,6 +252,9 @@ public class CoreText extends NLS {
 	public static String RemoveFromIndexOperation_failed;
 
 	/** */
+	public static String RevertCommitOperation_reverting;
+
+	/** */
 	public static String BranchOperation_performingBranch;
 
 	/** */

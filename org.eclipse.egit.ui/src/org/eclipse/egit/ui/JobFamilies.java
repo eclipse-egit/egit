@@ -107,4 +107,9 @@ public class JobFamilies {
 	 * Cherry pick commit job
 	 */
 	public static final Object CHERRY_PICK = new Object();
+
+	/**
+	 * Revert commit job
+	 */
+	public static final Object REVERT_COMMIT = new Object();
 }

@@ -3434,6 +3434,9 @@ public class UIText extends NLS {
 	public static String RevertHandler_AlreadyRevertedMessae;
 
 	/** */
+	public static String RevertHandler_JobName;
+
+	/** */
 	public static String RevertHandler_NoRevertTitle;
 
 	/** */
