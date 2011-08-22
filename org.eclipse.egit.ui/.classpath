@@ -3,5 +3,26 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.google.protobuf"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.jcraft.jsch"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/javax.servlet"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.ant"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.ant.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.console"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.generated.storage.dht.proto"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.http.server"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.http.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.iplog"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.junit"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.junit.http"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.pgm"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.storage.dht"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.storage.dht.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jgit.ui"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.kohsuke.args4j"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.mockito"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.objenesis"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
