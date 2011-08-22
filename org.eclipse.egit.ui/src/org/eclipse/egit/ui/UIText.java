@@ -1765,6 +1765,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_ConfigureLink;
 
 	/** */
+	public static String CommitDialog_ContentAssist;
+
+	/** */
 	public static String CommitDialog_Files;
 
 	/** */
