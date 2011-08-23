@@ -2605,7 +2605,7 @@ public class UIText extends NLS {
 	public static String RepositoriesView_ClipboardContentNoGitRepoMessage;
 
 	/** */
-	public static String RepositoriesView_ClipboardContentNotDirectoryMessage;
+	public static String RepositoriesView_ClipboardContentNotDirectoryOrURIMessage;
 
 	/** */
 	public static String RepositoriesView_ConfirmBranchDeletionMessage;
