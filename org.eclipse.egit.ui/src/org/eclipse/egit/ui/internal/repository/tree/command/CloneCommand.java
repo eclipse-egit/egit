@@ -21,9 +21,27 @@ import org.eclipse.jface.wizard.WizardDialog;
  */
 public class CloneCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
+	private String presetURI;
+
+	/**
+	 * Default constructor
+	 */
+	public CloneCommand() {
+		this(null);
+	}
+
+	/**
+	 * Constructor support presetURI
+	 *
+	 * @param presetURI
+	 */
+	public CloneCommand(String presetURI) {
+		this.presetURI = presetURI;
+	}
+
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		WizardDialog dlg = new WizardDialog(getShell(event),
-				new GitCloneWizard());
+				new GitCloneWizard(presetURI));
 		dlg.setHelpAvailable(true);
 		dlg.open();
 		return null;
