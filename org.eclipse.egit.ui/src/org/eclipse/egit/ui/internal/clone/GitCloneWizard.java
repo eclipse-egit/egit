@@ -75,10 +75,21 @@ public class GitCloneWizard extends Wizard {
 	 * The default constructor
 	 */
 	public GitCloneWizard() {
+		this(null);
+	}
+
+	/**
+	 * Construct Clone Wizard
+	 *
+	 * @param presetURI
+	 *            the clone URI to prepopulate the URI field of the clone wizard
+	 *            with.
+	 */
+	public GitCloneWizard(String presetURI) {
 		setWindowTitle(UIText.GitCloneWizard_title);
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 		setNeedsProgressMonitor(true);
-		cloneSource = new RepositorySelectionPage(true, null);
+		cloneSource = new RepositorySelectionPage(true, presetURI);
 		cloneSource.setHelpContext(HELP_CONTEXT);
 		validSource = new SourceBranchPage() {
 
