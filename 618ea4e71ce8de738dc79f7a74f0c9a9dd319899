@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+xs\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelBlobTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-18T23:39:27Z",
+      "side": 1,
+      "message": "here should be \u0027when\u0027 clause",
+      "revId": "618ea4e71ce8de738dc79f7a74f0c9a9dd319899",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+xo\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelBlobTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-18T23:39:27Z",
+      "side": 1,
+      "message": "before assert block should be \u0027should\u0027 clause",
+      "revId": "618ea4e71ce8de738dc79f7a74f0c9a9dd319899",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+xk\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelBlobTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-18T23:39:27Z",
+      "side": 1,
+      "message": "useless tailing white space",
+      "revId": "618ea4e71ce8de738dc79f7a74f0c9a9dd319899",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
