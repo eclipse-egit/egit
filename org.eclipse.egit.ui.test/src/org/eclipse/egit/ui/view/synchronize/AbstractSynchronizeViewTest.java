@@ -269,7 +269,7 @@ public abstract class AbstractSynchronizeViewTest extends
 
 	protected SWTBotEditor getCompareEditorForFileInGitChangeSetModel()
 			throws Exception {
-		SWTBotTree syncViewTree = setPresentationModel("Git Change Set")
+		SWTBotTree syncViewTree = setPresentationModel("Git Commits")
 				.tree();
 		SWTBotTreeItem commitNode = syncViewTree.getAllItems()[0];
 		commitNode.expand();
