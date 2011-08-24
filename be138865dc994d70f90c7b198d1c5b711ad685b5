@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+d4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitCompareFileRevisionEditorInput.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-24T20:46:49Z",
+      "side": 1,
+      "message": "style nit: missing blank s/if(/if (/",
+      "revId": "be138865dc994d70f90c7b198d1c5b711ad685b5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
