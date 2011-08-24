@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn//+fk\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelBlobTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-24T14:32:45Z",
+      "side": 1,
+      "message": "Sorry but this when/should pattern is something that doesn\u0027t match all test cases and makes them hard to read as you can\u0027t inline the assertion and loose the idea of assertEquals as you need to replace this with an assertTrue/False (which in fact looses the comparison feature when the assertion fails).\nWill not fix.",
+      "parentUuid": "AABOAn//+xs\u003d",
+      "revId": "618ea4e71ce8de738dc79f7a74f0c9a9dd319899",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+xo\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelBlobTest.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn//+fg\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelBlobTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-24T14:32:45Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "AABOAn//+xo\u003d",
+      "revId": "618ea4e71ce8de738dc79f7a74f0c9a9dd319899",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+xk\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelBlobTest.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2011-08-18T23:39:27Z",
       "side": 1,
       "message": "useless tailing white space",
+      "revId": "618ea4e71ce8de738dc79f7a74f0c9a9dd319899",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+fc\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelBlobTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-24T14:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn//+xk\u003d",
       "revId": "618ea4e71ce8de738dc79f7a74f0c9a9dd319899",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
