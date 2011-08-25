@@ -1589,6 +1589,9 @@
                            <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
                            </instanceof>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                           </instanceof>
                         </or>
                         <not>
                            <test
