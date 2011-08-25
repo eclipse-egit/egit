@@ -8,9 +8,13 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
+import org.eclipse.core.resources.IStorage;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.internal.storage.CommitBlobStorage;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.team.core.TeamException;
 
 class GitRemoteFile extends GitRemoteResource {
 
@@ -36,6 +40,12 @@ class GitRemoteFile extends GitRemoteResource {
 		}
 
 		return false;
+	}
+
+	@Override
+	public IStorage getStorage(IProgressMonitor monitor) throws TeamException {
+		return new CommitBlobStorage(getRepo(), getCachePath(), getObjectId(),
+				getCommit());
 	}
 
 	@Override
