@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn///8c\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/operations/GitScopeUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-01T17:10:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn///+k\u003d",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn///+g\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/operations/GitScopeUtilTest.java",
         "patchSetId": 6
@@ -115,6 +133,24 @@
       "writtenOn": "2011-07-31T13:52:33Z",
       "side": 1,
       "message": "trailing whitespace",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///8Q\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/operations/GitScopeUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-01T17:10:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn///+Y\u003d",
       "revId": "b265be092b844c3a8238025927f0aabaad72741e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
