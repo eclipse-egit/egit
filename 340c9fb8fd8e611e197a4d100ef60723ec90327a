@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn///+A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/AddToIndexActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:54:48Z",
+      "side": 1,
+      "message": "typo s/not show add/not add/",
+      "revId": "340c9fb8fd8e611e197a4d100ef60723ec90327a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
