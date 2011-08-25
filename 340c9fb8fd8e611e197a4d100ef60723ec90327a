@@ -16,6 +16,24 @@
       "revId": "340c9fb8fd8e611e197a4d100ef60723ec90327a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///7w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/AddToIndexActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-01T17:12:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn///+A\u003d",
+      "revId": "340c9fb8fd8e611e197a4d100ef60723ec90327a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
