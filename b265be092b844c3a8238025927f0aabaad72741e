@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn///+w\u003d",
+        "filename": "org.eclipse.egit.ui.test/META-INF/MANIFEST.MF",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:52:33Z",
+      "side": 1,
+      "message": "this seems unrelated to this change",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///+s\u003d",
+        "filename": "org.eclipse.egit.ui.test/fragment.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:52:33Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///+o\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/operations/GitScopeUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:52:33Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///+k\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/operations/GitScopeUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:52:33Z",
+      "side": 1,
+      "message": "please remove dead code",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///+g\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/operations/GitScopeUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:52:33Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///+c\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/operations/GitScopeUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:52:33Z",
+      "side": 1,
+      "message": "please remove dead code",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///+Y\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/operations/GitScopeUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:52:33Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///+U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:52:33Z",
+      "side": 1,
+      "message": "this seems to be unrelated to this change",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///+4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeOperationFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:52:33Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///+0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeOperationFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:52:33Z",
+      "side": 1,
+      "message": "- we don\u0027t use author tags\n- missing javadoc for public class",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///+Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:52:33Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///+M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:52:33Z",
+      "side": 1,
+      "message": "typos:\n\ns/occured/occurred/\n\ns/commit/committing/",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///+I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-07-31T13:52:33Z",
+      "side": 1,
+      "message": "key name is not understandable",
+      "revId": "b265be092b844c3a8238025927f0aabaad72741e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
