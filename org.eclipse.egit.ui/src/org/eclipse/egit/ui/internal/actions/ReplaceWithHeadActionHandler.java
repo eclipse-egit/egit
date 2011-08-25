@@ -7,12 +7,11 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
+ *    Benjamin Muskalla (Tasktop Technologies Inc.) - support for model scoping
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.core.op.DiscardChangesOperation;
 import org.eclipse.jgit.lib.Constants;
 
 /**
@@ -21,10 +20,8 @@ import org.eclipse.jgit.lib.Constants;
 public class ReplaceWithHeadActionHandler extends DiscardChangesActionHandler {
 
 	@Override
-	protected DiscardChangesOperation createOperation(ExecutionEvent event)
-			throws ExecutionException {
-		return new DiscardChangesOperation(getSelectedResources(event),
-				Constants.HEAD);
+	protected String gatherRevision(ExecutionEvent event) {
+		return Constants.HEAD;
 	}
 
 }
