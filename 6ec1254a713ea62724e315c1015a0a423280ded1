@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+s0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-20T23:26:06Z",
+      "side": 1,
+      "message": "what\u0027s the purpose of this  /* package */ comment ?",
+      "revId": "6ec1254a713ea62724e315c1015a0a423280ded1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+so\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-20T23:26:06Z",
+      "side": 1,
+      "message": "I think the /*package*/ comment is unnecessary",
+      "revId": "6ec1254a713ea62724e315c1015a0a423280ded1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+sg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeOperation.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-20T23:26:06Z",
+      "side": 1,
+      "message": "style nit: no braces around single line block",
+      "revId": "6ec1254a713ea62724e315c1015a0a423280ded1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+sQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeOperationFactory.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-20T23:26:06Z",
+      "side": 1,
+      "message": "style nit: no braces around single line blocks",
+      "revId": "6ec1254a713ea62724e315c1015a0a423280ded1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+sI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-20T23:26:06Z",
+      "side": 1,
+      "message": "style nit: no braces for single line block",
+      "revId": "6ec1254a713ea62724e315c1015a0a423280ded1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+sE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-20T23:26:06Z",
+      "side": 1,
+      "message": "style nit: no braces for single line block",
+      "revId": "6ec1254a713ea62724e315c1015a0a423280ded1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+sA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-20T23:26:06Z",
+      "side": 1,
+      "message": "style nit: no braces for single line block",
+      "revId": "6ec1254a713ea62724e315c1015a0a423280ded1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
