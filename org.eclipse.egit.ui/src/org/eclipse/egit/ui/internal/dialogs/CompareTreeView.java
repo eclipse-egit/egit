@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 SAP AG.
+ * Copyright (c) 2011 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -260,11 +260,6 @@ public class CompareTreeView extends ViewPart {
 				String encoding = CompareCoreUtils.getResourceEncoding(res);
 				right = new FileRevisionTypedElement(rightRevision, encoding);
 			}
-			GitCompareFileRevisionEditorInput compareInput = new GitCompareFileRevisionEditorInput(
-					left, right, PlatformUI.getWorkbench()
-							.getActiveWorkbenchWindow().getActivePage());
-			CompareUtils.openInCompare(PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getActivePage(), compareInput);
 		} else if (selected instanceof GitFileRevision) {
 			GitFileRevision rightRevision = (GitFileRevision) selected;
 			left = new GitCompareFileRevisionEditorInput.EmptyTypedElement(NLS
