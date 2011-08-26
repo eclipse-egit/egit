@@ -332,7 +332,8 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 
 	@Override
 	protected void fireInputChange() {
-		// nothing
+		// have the diff node notify its listeners of a change
+		((NotifiableDiffNode) getCompareResult()).fireChange();
 	}
 
 	private LocalResourceTypedElement getLocalElement() {
@@ -354,7 +355,8 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 
 		// The compare editor (Structure Compare) will show the diff filenames
 		// with their project relative path. So, no need to also show directory entries.
-		DiffNode flatDiffNode = new DiffNode(null,Differencer.CHANGE,null,left,right);
+		DiffNode flatDiffNode = new NotifiableDiffNode(null,
+				Differencer.CHANGE, null, left, right);
 		flatDiffView(flatDiffNode, (DiffNode) input);
 
 		return flatDiffNode;
