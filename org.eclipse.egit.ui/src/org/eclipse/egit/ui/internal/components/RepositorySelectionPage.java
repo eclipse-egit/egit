@@ -331,7 +331,7 @@ public class RepositorySelectionPage extends WizardPage {
 					URIish u = new URIish(text);
 					if (canHandleProtocol(u)) {
 						if (Protocol.GIT.handles(u) || Protocol.SSH.handles(u)
-								|| text.endsWith(Constants.DOT_GIT))
+								|| text.endsWith(Constants.DOT_GIT_EXT))
 							preset = text;
 					}
 				}

@@ -61,7 +61,7 @@ public class PasteCommand extends
 
 			if (!RepositoryCache.FileKey.isGitRepository(file, FS.DETECTED)) {
 				// try if .git folder is one level below
-				file = new File(file, Constants.DOT_GIT_EXT);
+				file = new File(file, Constants.DOT_GIT);
 				if (!RepositoryCache.FileKey.isGitRepository(file, FS.DETECTED)) {
 					errorMessage = NLS
 							.bind(UIText.RepositoriesView_ClipboardContentNoGitRepoMessage,
