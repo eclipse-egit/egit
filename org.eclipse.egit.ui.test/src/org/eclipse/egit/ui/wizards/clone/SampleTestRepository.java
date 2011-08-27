@@ -159,7 +159,7 @@ public class SampleTestRepository {
 		d.setRepositoryResolver(resolver);
 		d.start();
 		uri = "git://localhost:" + d.getAddress().getPort() + "/" + REPO_NAME
-				+ Constants.DOT_GIT;
+				+ Constants.DOT_GIT_EXT;
 	}
 
 	private void serveHttp() throws Exception{
