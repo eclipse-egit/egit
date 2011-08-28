@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn//+WQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/NotifiableDiffNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-08-28T10:31:57Z",
+      "side": 1,
+      "message": "The fireChange() method is protected and cannot be accessed from our GitCompareFileRevisionEditorInput. By extending the class and overriding the protected method, the method is now exposed to other classes of the same package.",
+      "parentUuid": "AABOAn//+WY\u003d",
+      "revId": "588c6f6db7bf7a5453e3dff289b57ce2d9555e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+WA\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/NotifiableDiffNode.java",
         "patchSetId": 1
