@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+WY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/NotifiableDiffNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-08-28T09:50:35Z",
+      "side": 1,
+      "message": "This is a new class,doing exactly the same thing as the superclass. Why?",
+      "revId": "588c6f6db7bf7a5453e3dff289b57ce2d9555e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+WA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/NotifiableDiffNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-08-28T17:57:34Z",
+      "side": 1,
+      "message": "Aah!",
+      "parentUuid": "AABOAn//+WQ\u003d",
+      "revId": "588c6f6db7bf7a5453e3dff289b57ce2d9555e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
