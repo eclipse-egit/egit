@@ -66,9 +66,13 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 			db = rm.getRepository();
 			walk = new KidWalk(db);
 			gitPath = rm.getRepoRelativePath(resource);
-			walk.setTreeFilter(AndTreeFilter.create(PathFilterGroup
-					.createFromStrings(Collections.singleton(gitPath)),
-					TreeFilter.ANY_DIFF));
+			if(gitPath == null || gitPath.isEmpty()) {
+				walk.setTreeFilter(TreeFilter.ANY_DIFF);
+			} else {
+				walk.setTreeFilter(AndTreeFilter.create(PathFilterGroup
+						.createFromStrings(Collections.singleton(gitPath)),
+						TreeFilter.ANY_DIFF));
+			}
 		}
 
 		revisions = buildRevisions(monitor, flags);
