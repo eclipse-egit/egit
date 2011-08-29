@@ -2658,6 +2658,40 @@
                </visibleWhen>
             </menu>
             <separator
+                  name="org.eclipse.egit.ui.StashSeparator">
+            </separator>
+            <menu
+                  label="%StashMenu.label">
+               <command
+                     commandId="org.eclipse.egit.ui.team.CreateStash"
+                     label="%CreateStashAction_label"
+                     style="push">
+               </command>
+               <command
+                     commandId="org.eclipse.egit.ui.team.ListStash"
+                     label="%ListStashAction_label"
+                     style="push">
+               </command>
+                  <visibleWhen
+                        checkEnabled="false">
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                        <iterate>
+                           <and>
+                              <adapt
+                                    type="org.eclipse.core.resources.IProject">
+                                 <test
+                                       property="GitResource.isShared">
+                                 </test>
+                              </adapt>
+                           </and>
+                        </iterate>
+                     </and>
+                  </visibleWhen>
+            </menu>
+            <separator
                   name="org.eclipse.egit.ui.AdvancedSeparator">
             </separator>
             <menu
@@ -2877,6 +2911,10 @@
 	              </and>
 	           </visibleWhen>
             </menu>
+            <separator
+                  name="group51"
+                  visible="true">
+            </separator>
             <separator
                   name="group6"
                   visible="true">
@@ -3566,6 +3604,16 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.ConfigurePushActionHandler"
             id="org.eclipse.egit.ui.ConfigureUpstreamPush"
             name="%ConfigureUpstreamPushCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.actions.CreateStashActionHandler"
+            id="org.eclipse.egit.ui.team.CreateStash"
+            name="%CreateStashCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.actions.ListStashActionHandler"
+            id="org.eclipse.egit.ui.team.ListStash"
+            name="%ListStashCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
