@@ -184,6 +184,15 @@
                overrideActionId="org.eclipse.team.ui.applyPatch">
          </action>
          <action
+               class="org.eclipse.egit.ui.internal.actions.CreateStashAction"
+               definitionId="org.eclipse.egit.ui.team.CreateStash"
+               enablesFor="*"
+               id="org.eclipse.egit.ui.internal.actions.createStash"
+               label="%CreateStashAction_label"
+               menubarPath="team.main/group51"
+               overrideActionId="org.eclipse.team.ui.createStash">
+         </action>
+         <action
                class="org.eclipse.egit.ui.internal.actions.ShowHistoryAction"
                definitionId="org.eclipse.egit.ui.team.ShowHistory"
                icon="icons/obj16/history.gif"
@@ -2878,6 +2887,10 @@
 	           </visibleWhen>
             </menu>
             <separator
+                  name="group51"
+                  visible="true">
+            </separator>
+            <separator
                   name="group6"
                   visible="true">
             </separator>
@@ -3550,6 +3563,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.ApplyPatchActionHandler"
             id="org.eclipse.egit.ui.team.ApplyPatch"
             name="%ApplyPatchCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.CreateStashActionHandler"
+            id="org.eclipse.egit.ui.team.CreateStash"
+            name="%CreateStashCommand.name">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
