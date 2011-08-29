@@ -112,4 +112,9 @@ public class JobFamilies {
 	 * Revert commit job
 	 */
 	public static final Object REVERT_COMMIT = new Object();
+
+	/**
+	 * Create Stash
+	 */
+	public final static Object CREATE_STASH = new Object();
 }
