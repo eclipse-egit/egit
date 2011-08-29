@@ -3985,6 +3985,9 @@ public class UIText extends NLS {
 	/** */
 	public static String CustomPromptDialog_information_about;
 
+	/** */
+	public static String GitModelSynchonize_fetchGitDataJobName;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}

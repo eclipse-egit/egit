@@ -136,7 +136,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		deleteFileAndCommit(PROJ1);
 
 		// when
-		launchSynchronization(HEAD, INITIAL_TAG, true);
+		launchSynchronization(HEAD, HEAD + "~1", true);
 		setGitChangeSetPresentationModel();
 
 		// then
