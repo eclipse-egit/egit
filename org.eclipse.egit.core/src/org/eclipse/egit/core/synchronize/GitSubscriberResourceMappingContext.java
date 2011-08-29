@@ -20,10 +20,13 @@ public class GitSubscriberResourceMappingContext extends
 	private final GitSynchronizeDataSet data;
 
 	/**
+	 * @param subscriber
 	 * @param data
 	 */
-	public GitSubscriberResourceMappingContext(GitSynchronizeDataSet data) {
-		super(new GitResourceVariantTreeSubscriber(data), true);
+	public GitSubscriberResourceMappingContext(
+			GitResourceVariantTreeSubscriber subscriber,
+			GitSynchronizeDataSet data) {
+		super(subscriber, true);
 		this.data = data;
 	}
 

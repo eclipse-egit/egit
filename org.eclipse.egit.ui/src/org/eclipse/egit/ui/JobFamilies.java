@@ -117,4 +117,10 @@ public class JobFamilies {
 	 * Clone repository job
 	 */
 	public static final Object CLONE = new Object();
+	
+	/**
+	 * Fetch data from git job
+	 */
+	public static final Object SYNCHRONIZE_READ_DATA = new Object();
+
 }

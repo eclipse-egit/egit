@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
 import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
 import org.eclipse.egit.core.synchronize.GitSubscriberResourceMappingContext;
 import org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider;
@@ -88,6 +89,7 @@ public class GitChangeSetContentProvider extends SynchronizationContentProvider 
 			ResourceMapping rm = getResourceMapping(object);
 			GitSubscriberMergeContext ctx = (GitSubscriberMergeContext) getContext();
 			ResourceMappingContext rmCtx = new GitSubscriberResourceMappingContext(
+					(GitResourceVariantTreeSubscriber) ctx.getSubscriber(),
 					ctx.getSyncData());
 			try {
 				ResourceTraversal[] traversals = rm.getTraversals(rmCtx, new NullProgressMonitor());
