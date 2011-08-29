@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn//+Uo\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2011-08-28T23:27:27Z",
+      "side": 1,
+      "message": "LinkedTaskInfo does not have any JavaDoc but I can write some if it helps? \nThe timestamp is the posix time of the commit (in milli-seconds). It is used to match commits to comments on tasks.",
+      "parentUuid": "AABOAn//+VA\u003d",
+      "revId": "b332e64a12b685bef1889fb8402733ac4fb4bbbf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+UI\u003d",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
         "patchSetId": 1
