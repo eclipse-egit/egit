@@ -29,6 +29,12 @@ public class ActionCommands {
 	/** "Commit" action command id */
 	public static final String COMMIT_ACTION = "org.eclipse.egit.ui.team.Commit"; //$NON-NLS-1$
 
+	/** "Create stash" action command id */
+	public static final String CREATE_STASH = "org.eclipse.egit.ui.CreateStash"; //$NON-NLS-1$
+
+	/** "List stash" action command id */
+	public static final String LIST_STASH = "org.eclipse.egit.ui.ListStash"; //$NON-NLS-1$
+
 	/** "Compare with head" action command id */
 	public static final String COMPARE_WITH_HEAD_ACTION = "org.eclipse.egit.ui.team.CompareWithHead"; //$NON-NLS-1$
 
