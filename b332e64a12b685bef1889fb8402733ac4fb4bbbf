@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+VA\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-28T23:15:48Z",
+      "side": 1,
+      "message": "can you point me to javadoc for LinkedTaskInfo ?",
+      "revId": "b332e64a12b685bef1889fb8402733ac4fb4bbbf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+UI\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/TaskReferenceFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-28T23:53:56Z",
+      "side": 1,
+      "message": "that\u0027s what I was looking for, would make sense to write JavaDoc for this public class ...",
+      "parentUuid": "AABOAn//+Uo\u003d",
+      "revId": "b332e64a12b685bef1889fb8402733ac4fb4bbbf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
