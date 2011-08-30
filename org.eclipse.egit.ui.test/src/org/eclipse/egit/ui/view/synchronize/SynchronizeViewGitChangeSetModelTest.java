@@ -31,6 +31,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
@@ -303,6 +304,66 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		SWTBotStyledText right = editor.bot().styledText("");
 		// to be complete sure assert that both sides are not the same
 		assertNotSame(left, right);
+	}
+
+	@Test
+	public void shouldRefreshSyncResultAfterWorkspaceChange() throws Exception {
+		// given
+		String newFileName = "new.txt";
+		resetRepositoryToCreateInitialTag();
+		launchSynchronization(INITIAL_TAG, HEAD, true);
+		setGitChangeSetPresentationModel();
+		IProject proj = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(PROJ1);
+
+		// when
+		IFile newFile = proj.getFile(newFileName);
+		newFile.create(
+				new ByteArrayInputStream("content of new file".getBytes(proj
+						.getDefaultCharset())), false, null);
+		// force refresh
+		proj.refreshLocal(IResource.DEPTH_INFINITE, null);
+		Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD, null);
+
+		// then
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+		SWTBotTreeItem[] syncItems = syncViewTree.getAllItems();
+		assertEquals(GitModelWorkingTree_workingTree, syncItems[0].getText());
+		syncItems[0].doubleClick(); // expand all
+		// WidgetNotFoundException will be thrown when node named 'new.txt' not
+		// exists
+		assertNotNull(syncItems[0].getNode(PROJ1));
+		assertNotNull(syncItems[0].getNode(PROJ1).getNode(newFileName));
+	}
+
+	@Test
+	public void shouldRefreshSyncResultAfterRepositoryChange() throws Exception {
+		// given
+		resetRepositoryToCreateInitialTag();
+		changeFilesInProject();
+		launchSynchronization(HEAD, HEAD, true);
+		setGitChangeSetPresentationModel();
+
+		// preconditions - sync result should contain two uncommitted changes
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+		SWTBotTreeItem[] syncItems = syncViewTree.getAllItems();
+		assertEquals(GitModelWorkingTree_workingTree, syncItems[0].getText());
+		syncItems[0].doubleClick();
+		assertEquals(2,
+				syncItems[0].getItems()[0].getItems()[0].getItems().length);
+
+		// when
+		commit(PROJ1);
+
+		// then - synchronize view should be empty
+		SWTBot viewBot = bot.viewByTitle("Synchronize").bot();
+		@SuppressWarnings("unchecked")
+		Matcher matcher = allOf(widgetOfType(Label.class),
+				withRegex("No changes in .*"));
+
+		@SuppressWarnings("unchecked")
+		SWTBotLabel l = new SWTBotLabel((Label) viewBot.widget(matcher));
+		assertNotNull(l);
 	}
 
 	// this test always fails with cause:
