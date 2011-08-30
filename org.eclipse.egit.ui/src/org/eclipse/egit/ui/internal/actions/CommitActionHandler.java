@@ -17,18 +17,29 @@ package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.NotEnabledException;
+import org.eclipse.core.commands.NotHandledException;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.actions.utils.CommandUtils;
 import org.eclipse.egit.ui.internal.commit.CommitUI;
 import org.eclipse.egit.ui.internal.operations.GitScopeUtil;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Scan for modified resources in the same project as the selected resources.
  */
 public class CommitActionHandler extends RepositoryActionHandler {
+
+	private static final String EGIT_PUSH_COMMAND_ID = "org.eclipse.egit.ui.team.Push"; //$NON-NLS-1$
 
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final Repository[] repos = getRepositoriesFor(getProjectsForSelectedResources(event));
@@ -47,7 +58,36 @@ public class CommitActionHandler extends RepositoryActionHandler {
 		CommitUI commitUi = new CommitUI(shell, repos[0], resourcesInScope,
 				false);
 		commitUi.commit();
+		if (commitUi.isExecutePush()) {
+			executePushCommand(HandlerUtil.getCurrentSelection(event));
+		}
 		return null;
+	}
+
+	private boolean executePushCommand(ISelection selection)
+			throws ExecutionException {
+		if (!(selection instanceof IStructuredSelection)) {
+			throw new ExecutionException(NLS.bind(
+					UIText.CommitActionHandler_NoSelection,
+					EGIT_PUSH_COMMAND_ID));
+		}
+		IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+		try {
+			return CommandUtils.executeCommand(EGIT_PUSH_COMMAND_ID,
+					structuredSelection);
+		} catch (NotDefinedException e) {
+			throw new ExecutionException(NLS.bind(
+					UIText.CommitActionHandler_CommandNotDefined,
+					EGIT_PUSH_COMMAND_ID), e);
+		} catch (NotEnabledException e) {
+			throw new ExecutionException(NLS.bind(
+					UIText.CommitActionHandler_CommandNotEnabled,
+					EGIT_PUSH_COMMAND_ID), e);
+		} catch (NotHandledException e) {
+			throw new ExecutionException(NLS.bind(
+					UIText.CommitActionHandler_CommandNotHandled,
+					EGIT_PUSH_COMMAND_ID), e);
+		}
 	}
 
 	@Override
