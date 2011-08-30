@@ -287,7 +287,7 @@ public abstract class AbstractSynchronizeViewTest extends
 		return editor;
 	}
 
-	private void commit(String projectName) throws InterruptedException {
+	protected void commit(String projectName) throws InterruptedException {
 		showDialog(projectName, "Team", CommitAction_commit);
 
 		bot.shell(CommitDialog_CommitChanges).bot().activeShell();
