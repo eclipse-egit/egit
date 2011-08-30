@@ -13,11 +13,11 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.lib.FileMode;
+import org.eclipse.egit.core.CoreText;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
 import org.eclipse.team.core.variants.IResourceVariant;
 
@@ -72,23 +72,22 @@ class GitRemoteFolder extends GitRemoteResource {
 
 	GitRemoteResource[] members(IProgressMonitor monitor) {
 		Collection<GitSyncObjectCache> members = cachedData.members();
-		if (members == null)
+		if (members == null || members.size() == 0)
 			return new GitRemoteResource[0];
 
 		List<IResourceVariant> result = new ArrayList<IResourceVariant>();
 
-		monitor.beginTask("Fetching members of " + getPath(), cachedData.membersCount()); //$NON-NLS-1$
+		monitor.beginTask(
+				NLS.bind(CoreText.GitRemoteFolder_fetchingMembers, getPath()),
+				cachedData.membersCount());
 		try {
 			for (GitSyncObjectCache member : members) {
-				DiffEntry diffEntry = member.getDiffEntry();
-				String memberPath = diffEntry.getOldPath();
-
-				if (DiffEntry.DEV_NULL.equals(memberPath))
-					continue;
+				ThreeWayDiffEntry diffEntry = member.getDiffEntry();
+				String memberPath = diffEntry.getPath();
 
 				GitRemoteResource obj;
-				ObjectId id = diffEntry.getOldId().toObjectId();
-				if (FileMode.TREE == diffEntry.getOldMode())
+				ObjectId id = diffEntry.getRemoteId().toObjectId();
+				if (diffEntry.isTree())
 					obj = new GitRemoteFolder(repo, member, getCommitId(), id,
 							memberPath);
 				else

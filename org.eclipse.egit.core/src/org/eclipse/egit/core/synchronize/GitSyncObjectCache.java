@@ -11,29 +11,23 @@ package org.eclipse.egit.core.synchronize;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.egit.core.CoreText;
-import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.egit.core.synchronize.ThreeWayDiffEntry.ChangeType;
 import org.eclipse.osgi.util.NLS;
 
 /**
  * Thin cache object. It contains list of object members, object name and
- * {@link DiffEntry} data.
+ * {@link ThreeWayDiffEntry} data.
  */
 class GitSyncObjectCache {
 
 	private final String name;
 
-	private final DiffEntry diffEntry;
+	private final ThreeWayDiffEntry diffEntry;
 
 	private Map<String, GitSyncObjectCache> members;
-
-	/**
-	 * Default constructor, preserved only for root elements
-	 */
-	public GitSyncObjectCache() {
-		this("", null); //$NON-NLS-1$
-	}
 
 	/**
 	 * Creates node and leaf element
@@ -43,7 +37,7 @@ class GitSyncObjectCache {
 	 * @param diffEntry
 	 *            entry meta data
 	 */
-	GitSyncObjectCache(String name, DiffEntry diffEntry) {
+	GitSyncObjectCache(String name, ThreeWayDiffEntry diffEntry) {
 		this.name = name;
 		this.diffEntry = diffEntry;
 	}
@@ -59,7 +53,7 @@ class GitSyncObjectCache {
 	 *
 	 * @return entry meta data
 	 */
-	public DiffEntry getDiffEntry() {
+	public ThreeWayDiffEntry getDiffEntry() {
 		return diffEntry;
 	}
 
@@ -73,8 +67,8 @@ class GitSyncObjectCache {
 	 * @throws RuntimeException
 	 *             when cannot find parent of given {@code entry} in cache
 	 */
-	public void addMember(DiffEntry entry) {
-		String memberPath = getMemberPath(entry);
+	public void addMember(ThreeWayDiffEntry entry) {
+		String memberPath = entry.getPath();
 
 		if (members == null)
 			members = new HashMap<String, GitSyncObjectCache>();
@@ -86,8 +80,8 @@ class GitSyncObjectCache {
 			String key = memberPath.substring(start + 1, separatorIdx);
 			GitSyncObjectCache cacheObject = parent.get(key);
 			if (cacheObject == null)
-				throw new RuntimeException(
-						NLS.bind(CoreText.GitSyncObjectCache_noData, key));
+				throw new RuntimeException(NLS.bind(
+						CoreText.GitSyncObjectCache_noData, key));
 
 			start = separatorIdx;
 			separatorIdx = memberPath.indexOf("/", separatorIdx + 1); //$NON-NLS-1$
@@ -114,8 +108,13 @@ class GitSyncObjectCache {
 	 *         for given path
 	 */
 	public GitSyncObjectCache get(String childPath) {
-		if (childPath.length() == 0 || members == null)
+		if (childPath.length() == 0)
 			return this;
+		if (childPath
+				.substring(childPath.lastIndexOf("/") + 1, childPath.length()).equals(name)) //$NON-NLS-1$
+			return this;
+		if (members == null)
+			return null;
 
 		int start = -1;
 		Map<String, GitSyncObjectCache> parent = members;
@@ -131,6 +130,9 @@ class GitSyncObjectCache {
 			separatorIdx = childPath.indexOf("/", separatorIdx + 1); //$NON-NLS-1$
 			parent = childObject.members;
 		}
+
+		if (parent == null)
+			return null;
 
 		return parent.get(childPath.subSequence(
 				childPath.lastIndexOf("/") + 1, childPath.length())); //$NON-NLS-1$
@@ -164,11 +166,27 @@ class GitSyncObjectCache {
 		return builder.toString();
 	}
 
-	private String getMemberPath(DiffEntry entry) {
-		if (!entry.getNewPath().equals(DiffEntry.DEV_NULL))
-			return entry.getNewPath();
-		else
-			return entry.getOldPath();
+	void merge(GitSyncObjectCache value) {
+		if (value.members != null) {
+			if (members == null)
+				members = new HashMap<String, GitSyncObjectCache>();
+			else
+				for (Entry<String, GitSyncObjectCache> entry : members
+						.entrySet())
+					if (!value.members.containsKey(entry.getKey()))
+						entry.getValue().diffEntry.changeType = ChangeType.IN_SYNC;
+
+			for (Entry<String, GitSyncObjectCache> entry : value.members
+					.entrySet()) {
+				String key = entry.getKey();
+				if (members.containsKey(key))
+					members.get(key).merge(entry.getValue());
+				else
+					members.put(key, entry.getValue());
+			}
+		} else if (members != null)
+			for (GitSyncObjectCache obj : members.values())
+				obj.diffEntry.changeType = ChangeType.IN_SYNC;
 	}
 
 }
