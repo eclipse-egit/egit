@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+S0\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-29T11:24:54Z",
+      "side": 1,
+      "message": "style nit: commit message isn\u0027t formatted along the git convention mentioned in the contributor guide [1].\n\n[1] http://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "5420b144b318aae205ea49711747dacb28853268",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
