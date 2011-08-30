@@ -31,6 +31,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.SWTBot;
@@ -227,6 +228,60 @@ public class SynchronizeViewWorkspaceModelTest extends AbstractSynchronizeViewTe
 		SWTBotTreeItem projectTree = waitForNodeWithText(syncViewTree, PROJ1);
 		projectTree.expand();
 		assertEquals(1, projectTree.getItems().length);
+	}
+
+	@Test
+	public void shouldRefreshSyncResultAfterWorkspaceChange() throws Exception {
+		// given
+		String newFileName = "new.txt";
+		resetRepositoryToCreateInitialTag();
+		launchSynchronization(INITIAL_TAG, HEAD, true);
+		IProject proj = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(PROJ1);
+
+		// when
+		IFile newFile = proj.getFile(newFileName);
+		newFile.create(
+				new ByteArrayInputStream("content of new file".getBytes(proj
+						.getDefaultCharset())), false, null);
+		Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD, null);
+
+		// then
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+		SWTBotTreeItem[] syncItems = syncViewTree.getAllItems();
+		assertTrue(syncItems[0].getText().contains(PROJ1));
+		syncItems[0].expand();
+		// WidgetNotFoundException will be thrown when node named 'new.txt' not exists
+		assertNotNull(syncItems[0].getNode(newFileName));
+	}
+
+	@Test
+	public void shouldRefreshSyncResultAfterRepositoryChange() throws Exception {
+		// given
+		resetRepositoryToCreateInitialTag();
+		changeFilesInProject();
+		launchSynchronization(HEAD, HEAD, true);
+
+		// preconditions - sync result should contain two uncommitted changes
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+		SWTBotTreeItem[] syncItems = syncViewTree.getAllItems();
+		assertTrue(syncItems[0].getText().contains(PROJ1));
+		syncItems[0].expand();
+		syncItems[0].getItems()[0].expand();
+		assertEquals(2, syncItems[0].getItems()[0].getItems().length);
+
+		// when
+		commit(PROJ1);
+
+		// then - synchronize view should be empty
+		SWTBot viewBot = bot.viewByTitle("Synchronize").bot();
+		@SuppressWarnings("unchecked")
+		Matcher matcher = allOf(widgetOfType(Label.class),
+				withRegex("No changes in .*"));
+
+		@SuppressWarnings("unchecked")
+		SWTBotLabel l = new SWTBotLabel((Label) viewBot.widget(matcher));
+		assertNotNull(l);
 	}
 
 	@Test @Ignore// workspace model dosn't show non-workspace files ... yet ;)
