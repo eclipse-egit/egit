@@ -79,11 +79,14 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -297,6 +300,8 @@ public class CommitDialog extends TitleAreaDialog {
 
 	Section filesSection;
 
+	Button commitButton;
+
 	ArrayList<CommitItem> items = new ArrayList<CommitItem>();
 
 	private String commitMessage = null;
@@ -331,7 +336,6 @@ public class CommitDialog extends TitleAreaDialog {
 	 */
 	public CommitDialog(Shell parentShell) {
 		super(parentShell);
-		setTitleImage(UIIcons.WIZBAN_CONNECT_REPO.createImage());
 	}
 
 	/**
@@ -481,9 +485,11 @@ public class CommitDialog extends TitleAreaDialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		toolkit.adapt(parent, false, false);
-		createButton(parent, IDialogConstants.OK_ID, UIText.CommitDialog_Commit, true);
+		commitButton = createButton(parent, IDialogConstants.OK_ID,
+				UIText.CommitDialog_Commit, true);
 		createButton(parent, IDialogConstants.CANCEL_ID,
 				IDialogConstants.CANCEL_LABEL, false);
+		updateMessage();
 	}
 
 	@Override
@@ -803,6 +809,7 @@ public class CommitDialog extends TitleAreaDialog {
 				showUntracked = showUntrackedItem.getSelection();
 				filesViewer.refresh(true);
 				updateFileSectionText();
+				updateMessage();
 			}
 
 		});
@@ -817,6 +824,7 @@ public class CommitDialog extends TitleAreaDialog {
 			public void widgetSelected(SelectionEvent e) {
 				filesViewer.setAllChecked(true);
 				updateFileSectionText();
+				updateMessage();
 			}
 
 		});
@@ -831,6 +839,7 @@ public class CommitDialog extends TitleAreaDialog {
 			public void widgetSelected(SelectionEvent e) {
 				filesViewer.setAllChecked(false);
 				updateFileSectionText();
+				updateMessage();
 			}
 
 		});
@@ -867,10 +876,39 @@ public class CommitDialog extends TitleAreaDialog {
 		resourceCol.pack();
 		container.pack();
 		commitText.setFocus();
+		Image titleImage = UIIcons.WIZBAN_CONNECT_REPO.createImage();
+		UIUtils.hookDisposal(parent, titleImage);
+		setTitleImage(titleImage);
 		setTitle(UIText.CommitDialog_Title);
 		setMessage(UIText.CommitDialog_Message, IMessageProvider.INFORMATION);
+
+		ModifyListener validator = new ModifyListener() {
+
+			public void modifyText(ModifyEvent e) {
+				updateMessage();
+			}
+		};
+		commitText.getTextWidget().addModifyListener(validator);
+		authorText.addModifyListener(validator);
+		committerText.addModifyListener(validator);
+		filesViewer.addCheckStateListener(new ICheckStateListener() {
+
+			public void checkStateChanged(CheckStateChangedEvent event) {
+				updateMessage();
+			}
+		});
+
 		updateFileSectionText();
 		return container;
+	}
+
+	private void updateMessage() {
+		String message = commitMessageComponent.getMessage();
+		if (message == null && filesViewer.getCheckedElements().length == 0
+				&& !amendingItem.getSelection())
+			message = UIText.CommitDialog_MessageNoFilesSelected;
+		setMessage(message, IMessageProvider.INFORMATION);
+		commitButton.setEnabled(message == null);
 	}
 
 	private Collection<String> getFileList() {
