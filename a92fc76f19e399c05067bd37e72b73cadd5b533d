@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "AAAABX///8M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2009-12-01T08:22:48Z",
+      "side": 1,
+      "message": "It\u0027s just a leftover from an original implementation which was TreeSet-based.",
+      "parentUuid": "AAAABX////s\u003d",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAABX////k\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
         "patchSetId": 1
@@ -205,6 +223,24 @@
       "writtenOn": "2009-12-01T00:52:36Z",
       "side": 1,
       "message": "Shouldn\u0027t DEFAULT_BRANCH here be the branch field from the ProjectReference class?\n\nOf course you could have the case where a project set has 2 or more projects from the same repository, but they are pointing at different branches.  IMHO this is an invalid project set for the EGit puglin, and we should reject it.",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX///8U\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2009-12-01T07:53:12Z",
+      "side": 1,
+      "message": "I\u0027m not sure how this should be handled and waiting for any feedback,  http://wiki.eclipse.org/EGit/User_Guide/Project_Set_File#Same_branch_VS_individual_branches",
+      "parentUuid": "AAAABX////I\u003d",
       "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
