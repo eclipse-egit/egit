@@ -19,14 +19,12 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.editors.text.EditorsUI;
-import org.eclipse.ui.ide.FileStoreEditorInput;
 import org.eclipse.ui.ide.IDE;
 
 /**
- * Implements "Open in Text Editor"
+ * Implements "Open in Editor"
  */
-public class OpenInTextEditorCommand extends
+public class OpenInEditorCommand extends
 		RepositoriesViewCommandHandler<FileNode> {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		FileNode node = getSelectedNodes(event).get(0);
@@ -35,9 +33,7 @@ public class OpenInTextEditorCommand extends
 				new Path(node.getObject().getAbsolutePath()));
 		try {
 			// TODO do we need a read-only editor here?
-			IDE.openEditor(getView(event).getSite().getPage(),
-					new FileStoreEditorInput(store),
-					EditorsUI.DEFAULT_TEXT_EDITOR_ID);
+			IDE.openEditorOnFileStore(getView(event).getSite().getPage(), store);
 		} catch (PartInitException e) {
 			Activator.handleError(UIText.RepositoriesView_Error_WindowTitle, e,
 					true);

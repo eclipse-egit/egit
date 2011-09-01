@@ -2451,7 +2451,7 @@
                name="File-1">
          </separator>
          <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewOpenInTextEditor"
+               commandId="org.eclipse.egit.ui.RepositoriesViewOpenInEditor"
                label="%RepoViewOpenInEditor.label"
                style="push">
             <visibleWhen
@@ -3027,8 +3027,8 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.OpenInTextEditorCommand"
-            id="org.eclipse.egit.ui.RepositoriesViewOpenInTextEditor"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.OpenInEditorCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewOpenInEditor"
             name="%OpenInEditorCommand">
       </command>
       <command
