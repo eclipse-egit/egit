@@ -31,7 +31,7 @@ public class OpenCommand extends
 		if (node instanceof RefNode || node instanceof TagNode)
 			return new CheckoutCommand().execute(event);
 		if (node instanceof FileNode)
-			return new OpenInTextEditorCommand().execute(event);
+			return new OpenInEditorCommand().execute(event);
 
 		return null;
 	}
