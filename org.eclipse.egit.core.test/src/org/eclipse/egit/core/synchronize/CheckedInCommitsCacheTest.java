@@ -13,14 +13,12 @@ import static org.eclipse.compare.structuremergeviewer.Differencer.CHANGE;
 import static org.eclipse.compare.structuremergeviewer.Differencer.DELETION;
 import static org.eclipse.compare.structuremergeviewer.Differencer.LEFT;
 import static org.eclipse.compare.structuremergeviewer.Differencer.RIGHT;
-import static org.eclipse.jgit.lib.ObjectId.zeroId;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -28,34 +26,12 @@ import org.eclipse.egit.core.synchronize.CheckedInCommitsCache.Change;
 import org.eclipse.egit.core.synchronize.CheckedInCommitsCache.Commit;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.errors.AmbiguousObjectException;
-import org.eclipse.jgit.junit.LocalDiskRepositoryTestCase;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.storage.file.FileRepository;
-import org.eclipse.jgit.util.FileUtils;
-import org.junit.Before;
 import org.junit.Test;
 
 @SuppressWarnings("boxing")
-public class CheckedInCommitsCacheTest extends LocalDiskRepositoryTestCase {
-
-	private FileRepository db;
-
-	private static final String INITIAL_TAG = "initial-tag";
-
-	private static final AbbreviatedObjectId ZERO_ID = AbbreviatedObjectId.fromObjectId(zeroId());
-
-	@Before
-	@Override
-	// copied from org.eclipse.jgit.lib.RepositoryTestCase
-	public void setUp() throws Exception {
-		super.setUp();
-		db = createWorkRepository();
-		Git git = new Git(db);
-		git.commit().setMessage("initial commit").call();
-		git.tag().setName(INITIAL_TAG).call();
-	}
+public class CheckedInCommitsCacheTest extends AbstractCacheTest {
 
 	@Test
 	public void shouldReturnEmptyListForSameSrcAndDstCommit() throws Exception {
@@ -555,19 +531,6 @@ public class CheckedInCommitsCacheTest extends LocalDiskRepositoryTestCase {
 					is(parent.getId()));
 		assertThat(change.getName(), is(name));
 		assertThat(change.getKind(), is(direction));
-	}
-
-	// copied from org.eclipse.jgit.lib.RepositoryTestCase
-	private File writeTrashFile(final String name, final String data)
-			throws IOException {
-		File path = new File(db.getWorkTree(), name);
-		write(path, data);
-		return path;
-	}
-
-	private void deleteTrashFile(final String name) throws IOException {
-		File path = new File(db.getWorkTree(), name);
-		FileUtils.delete(path);
 	}
 
 }
