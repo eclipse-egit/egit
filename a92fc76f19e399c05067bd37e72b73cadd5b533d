@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAABX///8Y\u003d",
+        "filename": "egit.psf",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2009-12-01T07:53:12Z",
+      "side": 1,
+      "message": "My original intent was to define/show/discuss the project reference\u0027s format (i.e, do we need a version here like CVS does \u00271.0|git://...\u0027, single branch per repo VS individual branch per project and so on).\n\nAs of args4j and jsch: may be the better way here would be a target platform definition?",
+      "parentUuid": "AAAABX////4\u003d",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAABX////o\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2009-12-01T00:52:36Z",
       "side": 1,
       "message": "Why can\u0027t this be private?",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX///8I\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2009-12-01T08:59:49Z",
+      "side": 1,
+      "message": "...due to \u0027origin field is never read locally\u0027 error. See next comment.",
+      "parentUuid": "AAAABX////o\u003d",
       "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -64,6 +100,24 @@
       "writtenOn": "2009-12-01T00:52:36Z",
       "side": 1,
       "message": "The --origin option comment makes no sense in this context.  We don\u0027t use this string within the project reference in the project set, but I expected you to be using it given your comment right here.\n\nAlso, we\u0027re probably OK to just hardcode this as \"origin\" via the DEFAULT_REMOTE_NAME constant.  Users aren\u0027t likely to change it.  IMHO project set files are about simplifying getting started with a project in Eclipse.  We should help that by also setting some basic standard rules, like the name of the default remote that the project set created.",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX///8E\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2009-12-01T08:59:49Z",
+      "side": 1,
+      "message": "What about a (more generic) use case: for instance, I\u0027ve checked out some project\u0027s fork from GitHub and now I\u0027m trying to check out its original codebase from org.eclipse using a provided PSF. Dealing with two different local repositories of the same codebase in this case seems to me unhandy.\n\nWould it be better try to add a new origin to the existing local repo and fetch from the repository specified in a PSF?",
+      "parentUuid": "AAAABX////A\u003d",
       "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
