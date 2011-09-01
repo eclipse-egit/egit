@@ -70,6 +70,42 @@
     },
     {
       "key": {
+        "uuid": "AAAABX///70\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2009-12-01T17:44:52Z",
+      "side": 1,
+      "message": "Any general discussions are better tracked using mail. Interesting topic though so please post to the mailing list.",
+      "parentUuid": "AAAABX///8E\u003d",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX///40\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2009-12-18T23:32:09Z",
+      "side": 1,
+      "message": "Yes, adding a new remote using the team project set makes sense to me. I don\u0027t know if it works. Another thing is that you may want to use another name for the remote master branch, like the ones i import from clearcase where the master branch is called main and I think it makes more sense to keep that name,",
+      "parentUuid": "AAAABX///8E\u003d",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAABX////s\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
         "patchSetId": 1
@@ -115,6 +151,24 @@
       "writtenOn": "2009-12-01T00:52:36Z",
       "side": 1,
       "message": "Shouldn\u0027t DEFAULT_BRANCH here be the branch field from the ProjectReference class?\n\nOf course you could have the case where a project set has 2 or more projects from the same repository, but they are pointing at different branches.  IMHO this is an invalid project set for the EGit puglin, and we should reject it.",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX///4w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2009-12-18T23:32:09Z",
+      "side": 1,
+      "message": "Just throw an exception. Such a team project set should not be possible to\ncreate using EGit so it\u0027s simply an example of a corrupt psf file.\n\nThis should happen at an early stage, so the user gets feedback in the import dialog.",
+      "parentUuid": "AAAABX///8U\u003d",
       "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
