@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAABX////4\u003d",
+        "filename": "egit.psf",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-01T00:52:36Z",
+      "side": 1,
+      "message": "I wonder if we shouldn\u0027t also be including our two Orbit based dependencies of args4j and jsch when we define this project set for egit/jgit ?",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX////o\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-01T00:52:36Z",
+      "side": 1,
+      "message": "Why can\u0027t this be private?",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX////E\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-01T00:52:36Z",
+      "side": 1,
+      "message": "The --branch option comment makes no sense in this context.  We don\u0027t use this string within the project reference in the project set, but I expected you to be using it given your comment right here.",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX////A\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-01T00:52:36Z",
+      "side": 1,
+      "message": "The --origin option comment makes no sense in this context.  We don\u0027t use this string within the project reference in the project set, but I expected you to be using it given your comment right here.\n\nAlso, we\u0027re probably OK to just hardcode this as \"origin\" via the DEFAULT_REMOTE_NAME constant.  Users aren\u0027t likely to change it.  IMHO project set files are about simplifying getting started with a project in Eclipse.  We should help that by also setting some basic standard rules, like the name of the default remote that the project set created.",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX////s\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-01T00:52:36Z",
+      "side": 1,
+      "message": "I don\u0027t think you need UrrishComparator here.  URIish implements hashCode and equals contract correctly for HashMap.",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX////k\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-01T00:52:36Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we do this only once during the projectsInRepository \u003d\u003d null condition two lines above?",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX////I\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-01T00:52:36Z",
+      "side": 1,
+      "message": "Shouldn\u0027t DEFAULT_BRANCH here be the branch field from the ProjectReference class?\n\nOf course you could have the case where a project set has 2 or more projects from the same repository, but they are pointing at different branches.  IMHO this is an invalid project set for the EGit puglin, and we should reject it.",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX////0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProviderType.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-01T00:52:36Z",
+      "side": 1,
+      "message": "We don\u0027t do @author tags.",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX////w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProviderType.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-01T00:52:36Z",
+      "side": 1,
+      "message": "Style-nit: We prefer \"public final class\" round here.",
+      "revId": "a92fc76f19e399c05067bd37e72b73cadd5b533d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
