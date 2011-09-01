@@ -64,9 +64,9 @@ public class SynchronizeWithActionHandler extends RepositoryActionHandler {
 		GitSynchronizeDataSet gsdSet = new GitSynchronizeDataSet();
 		for (Repository repo : repos) {
 			try {
-				List<SyncRepoEntity> syncRepoEntitys = createSyncRepoEntitys(repo);
+				List<SyncRepoEntity> syncRepoEntities = createSyncRepoEntities(repo);
 				SelectSynchronizeResourceDialog dialog = new SelectSynchronizeResourceDialog(
-						getShell(event), repo.getDirectory(), syncRepoEntitys);
+						getShell(event), repo.getDirectory(), syncRepoEntities);
 
 				if (dialog.open() != IDialogConstants.OK_ID)
 					return null;
@@ -85,18 +85,18 @@ public class SynchronizeWithActionHandler extends RepositoryActionHandler {
 		return null;
 	}
 
-	private List<SyncRepoEntity> createSyncRepoEntitys(Repository repo)
+	private List<SyncRepoEntity> createSyncRepoEntities(Repository repo)
 			throws URISyntaxException, IOException {
 		RefDatabase refDatabase = repo.getRefDatabase();
 		List<RemoteConfig> remoteConfigs = getRemoteConfigs(repo);
-		List<SyncRepoEntity> syncRepoEntitys = new ArrayList<SyncRepoEntity>();
+		List<SyncRepoEntity> syncRepoEntities = new ArrayList<SyncRepoEntity>();
 
-		syncRepoEntitys.add(getLocalSyncRepo(repo));
-		syncRepoEntitys.add(getTagsSyncRepo(repo));
+		syncRepoEntities.add(getLocalSyncRepo(repo));
+		syncRepoEntities.add(getTagsSyncRepo(repo));
 		for (RemoteConfig rc : remoteConfigs)
-			syncRepoEntitys.add(getRemoteSyncRepo(refDatabase, rc));
+			syncRepoEntities.add(getRemoteSyncRepo(refDatabase, rc));
 
-		return syncRepoEntitys;
+		return syncRepoEntities;
 	}
 
 	private List<RemoteConfig> getRemoteConfigs(Repository repo)
