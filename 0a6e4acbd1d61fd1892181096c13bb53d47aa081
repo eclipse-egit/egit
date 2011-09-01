@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAD3///7s\u003d",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2010-01-06T13:53:14Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need this, and especially shouldn\u0027t mandate it. We can make it an optional dependency, using ;resolution:\u003doptional on the line. Ideally this bug should be fixed upstream such that we don\u0027t need it, but I see no reason to demand it and prevent everything else from working if it\u0027s not present.",
+      "revId": "0a6e4acbd1d61fd1892181096c13bb53d47aa081",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
