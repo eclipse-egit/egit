@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+TY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitDocument.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-08-29T07:38:58Z",
+      "side": 1,
+      "message": "Isn\u0027t this check testing that we are on a unborn branch and complain only when we are on a unborn branch? Somehow the opposite of what you wanted to achive, or?",
+      "revId": "b3de681fafd2dbe8e6c3daafb573017fd41d4305",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
