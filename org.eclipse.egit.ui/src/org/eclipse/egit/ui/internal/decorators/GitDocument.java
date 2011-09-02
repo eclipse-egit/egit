@@ -116,9 +116,12 @@ class GitDocument extends Document implements RefsChangedListener {
 					return;
 				}
 			} else {
-				String msg = NLS.bind(UIText.GitDocument_errorResolveQuickdiff,
-						new Object[] { baseline, resource, repository });
-				Activator.logError(msg, new Throwable());
+				if (repository.getRef(Constants.HEAD) == null) {
+					// Complain only if not an unborn branch
+					String msg = NLS.bind(UIText.GitDocument_errorResolveQuickdiff,
+							new Object[] { baseline, resource, repository });
+					Activator.logError(msg, new Throwable());
+				}
 				setResolved(null, null, null, ""); //$NON-NLS-1$
 				return;
 			}
