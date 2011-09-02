@@ -16,6 +16,24 @@
       "revId": "b3de681fafd2dbe8e6c3daafb573017fd41d4305",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///+8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitDocument.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-08-30T21:13:15Z",
+      "side": 1,
+      "message": "No. It is a normal, though unusual, case that HEAD exists, but it cannot be resolved.  The detection of the unresolved HEAD is at line 110.",
+      "parentUuid": "AABOAn//+TY\u003d",
+      "revId": "b3de681fafd2dbe8e6c3daafb573017fd41d4305",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
