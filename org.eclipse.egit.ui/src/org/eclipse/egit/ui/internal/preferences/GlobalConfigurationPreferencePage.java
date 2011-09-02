@@ -195,7 +195,11 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 				ok = false;
 			}
 		}
-		for (Repository repository : dirtyRepositories) {
+		// Use array since calling save updates the dirty state which updates
+		// the set of dirty repositories that is being iterated over
+		final Repository[] repos = dirtyRepositories
+				.toArray(new Repository[dirtyRepositories.size()]);
+		for (Repository repository : repos) {
 			ConfigurationEditorComponent editor = repoConfigEditors.get(repository);
 			try {
 				editor.save();
