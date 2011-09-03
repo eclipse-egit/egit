@@ -123,8 +123,11 @@ public class BranchOperation implements IEGitOperation {
 			File fileToDelete = new File(repository.getWorkTree(), path);
 			if (fileToDelete.exists())
 				try {
-					FileUtils.delete(fileToDelete, FileUtils.RETRY
-							| FileUtils.RECURSIVE);
+					// Only files should be passed here, thus
+					// we ignore attempt to delete submodules when
+					// we switch to a branch without a submodule
+					if (!fileToDelete.isFile())
+						FileUtils.delete(fileToDelete, FileUtils.RETRY);
 				} catch (IOException e) {
 					// ignore here
 				}
