@@ -29,6 +29,7 @@ import org.eclipse.egit.core.op.ConfigurePushAfterCloneTask;
 import org.eclipse.egit.core.op.SetChangeIdTask;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
@@ -49,11 +50,6 @@ import org.eclipse.osgi.util.NLS;
  * Import Git Repository Wizard. A front end to a git clone operation.
  */
 public class GitCloneWizard extends Wizard {
-
-	/**
-	 * Job family of the Clone Repository job.
-	 */
-	public static final Object CLONE_JOB_FAMILY = new Object();
 
 	private static final String HELP_CONTEXT = "org.eclipse.egit.ui.GitCloneWizard"; //$NON-NLS-1$
 
@@ -286,7 +282,9 @@ public class GitCloneWizard extends Wizard {
 
 			@Override
 			public boolean belongsTo(Object family) {
-				return CLONE_JOB_FAMILY.equals(family);
+				if (family.equals(JobFamilies.CLONE))
+					return true;
+				return super.belongsTo(family);
 			}
 		};
 		job.setUser(true);
