@@ -112,4 +112,9 @@ public class JobFamilies {
 	 * Revert commit job
 	 */
 	public static final Object REVERT_COMMIT = new Object();
+
+	/**
+	 * Clone repository job
+	 */
+	public static final Object CLONE = new Object();
 }
