@@ -29,7 +29,11 @@ import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -37,9 +41,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.forms.events.HyperlinkAdapter;
-import org.eclipse.ui.forms.events.HyperlinkEvent;
-import org.eclipse.ui.forms.widgets.Hyperlink;
 
 /**
  * Annotation information control
@@ -55,7 +56,7 @@ public class BlameInformationControl extends AbstractInformationControl
 
 	private Composite displayArea;
 
-	private Hyperlink commitLink;
+	private StyledText commitLink;
 
 	private Label authorLabel;
 
@@ -94,10 +95,12 @@ public class BlameInformationControl extends AbstractInformationControl
 		displayArea.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridLayoutFactory.swtDefaults().equalWidth(true).applyTo(displayArea);
 
-		commitLink = new Hyperlink(displayArea, SWT.NONE);
-		commitLink.addHyperlinkListener(new HyperlinkAdapter() {
+		commitLink = new StyledText(displayArea, SWT.READ_ONLY);
+		commitLink.addMouseListener(new MouseAdapter() {
 
-			public void linkActivated(HyperlinkEvent e) {
+			public void mouseUp(MouseEvent e) {
+				if (commitLink.getSelectionText().length() != 0)
+					return;
 				try {
 					getShell().dispose();
 					CommitEditor.open(new RepositoryCommit(revision
@@ -106,12 +109,13 @@ public class BlameInformationControl extends AbstractInformationControl
 					Activator.logError(pie.getLocalizedMessage(), pie);
 				}
 			}
-
 		});
-		commitLink.setUnderlined(true);
 		commitLink.setFont(JFaceResources.getBannerFont());
 		commitLink.setForeground(JFaceColors.getHyperlinkText(commitLink
 				.getDisplay()));
+		Cursor handCursor = new Cursor(commitLink.getDisplay(), SWT.CURSOR_HAND);
+		UIUtils.hookDisposal(commitLink, handCursor);
+		commitLink.setCursor(handCursor);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(commitLink);
 
 		authorLabel = new Label(displayArea, SWT.NONE);
@@ -164,16 +168,19 @@ public class BlameInformationControl extends AbstractInformationControl
 
 		RevCommit commit = this.revision.getCommit();
 
-		commitLink.setText(MessageFormat.format(
-				UIText.BlameInformationControl_Commit, commit.name()));
+		String linkText = MessageFormat.format(
+				UIText.BlameInformationControl_Commit, commit.name());
+		commitLink.setText(linkText);
+		StyleRange styleRange = new StyleRange(0, linkText.length(), null, null);
+		styleRange.underline = true;
+		commitLink.setStyleRange(styleRange);
 
 		PersonIdent author = commit.getAuthorIdent();
 		if (author != null) {
 			setControlVisible(authorLabel, true);
 			authorLabel.setText(MessageFormat.format(
-					UIText.BlameInformationControl_Author,
-					author.getName(), author.getEmailAddress(),
-					author.getWhen()));
+					UIText.BlameInformationControl_Author, author.getName(),
+					author.getEmailAddress(), author.getWhen()));
 		} else
 			setControlVisible(authorLabel, false);
 
