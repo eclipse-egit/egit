@@ -8,9 +8,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
-import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.ui.Activator;
@@ -59,8 +59,7 @@ public class GitModelWorkingFileTest extends GitModelTestCase {
 			throws Exception {
 		// given
 		GitModelWorkingFile left = createWorkingFile(getFile1Location());
-		GitModelBlob right = new GitModelBlob(createModelCommit(), getCommit(
-				leftRepoFile, HEAD), null, null, null, null, getFile1Location());
+		GitModelBlob right = mock(GitModelBlob.class);
 
 		// when
 		boolean actual = left.equals(right);
@@ -73,8 +72,7 @@ public class GitModelWorkingFileTest extends GitModelTestCase {
 			throws Exception {
 		// given
 		GitModelWorkingFile left = createWorkingFile(getFile1Location());
-		GitModelCacheFile right = new GitModelCacheFile(createModelCommit(),
-				getCommit(leftRepoFile, HEAD), null, null, getFile1Location());
+		GitModelCacheFile right = mock(GitModelCacheFile.class);
 
 		// when
 		boolean actual = left.equals(right);
@@ -92,8 +90,8 @@ public class GitModelWorkingFileTest extends GitModelTestCase {
 
 	private GitModelWorkingFile createWorkingFile(IPath location)
 			throws Exception {
-		return new GitModelWorkingFile(createModelCommit(), getCommit(
-				leftRepoFile, HEAD), null, location);
+		return new GitModelWorkingFile(createModelCommit(),
+				lookupRepository(leftRepoFile), null, location);
 	}
 
 }
