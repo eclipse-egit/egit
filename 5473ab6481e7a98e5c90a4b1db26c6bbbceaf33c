@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn///bA\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-15T22:32:36Z",
+      "side": 1,
+      "message": "formatting change",
+      "revId": "5473ab6481e7a98e5c90a4b1db26c6bbbceaf33c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///a8\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-15T22:32:36Z",
+      "side": 1,
+      "message": "formatting change",
+      "revId": "5473ab6481e7a98e5c90a4b1db26c6bbbceaf33c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///a4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-15T22:32:36Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "5473ab6481e7a98e5c90a4b1db26c6bbbceaf33c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///a0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitRemoteFile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-15T22:32:36Z",
+      "side": 1,
+      "message": "why no error message ?",
+      "revId": "5473ab6481e7a98e5c90a4b1db26c6bbbceaf33c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///aw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitRemoteFolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-15T22:32:36Z",
+      "side": 1,
+      "message": "wouldn\u0027t it be better to throw an exception here if this shouldn\u0027t happen",
+      "revId": "5473ab6481e7a98e5c90a4b1db26c6bbbceaf33c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///QQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-15T22:32:36Z",
+      "side": 1,
+      "message": "typo: s/Synchonize/Synchronize/\n\ndo you mean fetching from a remote repository or something else ?",
+      "revId": "5473ab6481e7a98e5c90a4b1db26c6bbbceaf33c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
