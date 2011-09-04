@@ -133,14 +133,15 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	protected void createHeaderContents(IManagedForm headerForm) {
 		RepositoryCommit commit = getCommit();
 		ScrolledForm form = headerForm.getForm();
-		form.setText(MessageFormat.format(UIText.CommitEditor_TitleHeader,
-				commit.getRevCommit().name()));
+		new HeaderText(form.getForm(), MessageFormat.format(
+				UIText.CommitEditor_TitleHeader, commit.getRevCommit().name()));
 		form.setToolTipText(commit.getRevCommit().name());
 		getToolkit().decorateFormHeading(form.getForm());
 
 		IToolBarManager toolbar = form.getToolBarManager();
 
-		ControlContribution repositoryLabelControl = new ControlContribution("repositoryLabel") { //$NON-NLS-1$
+		ControlContribution repositoryLabelControl = new ControlContribution(
+				"repositoryLabel") { //$NON-NLS-1$
 			@Override
 			protected Control createControl(Composite parent) {
 				FormToolkit toolkit = getHeaderForm().getToolkit();
@@ -153,7 +154,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 				ImageHyperlink link = new ImageHyperlink(composite, SWT.NONE);
 				link.setText(label);
 				link.setFont(JFaceResources.getBannerFont());
-				link.setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
+				link.setForeground(toolkit.getColors().getColor(
+						IFormColors.TITLE));
 				link.setToolTipText(UIText.CommitEditor_showGitRepo);
 				link.addHyperlinkListener(new HyperlinkAdapter() {
 					@Override
@@ -161,11 +163,13 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 						RepositoriesView view;
 						try {
 							view = (RepositoriesView) PlatformUI.getWorkbench()
-									.getActiveWorkbenchWindow().getActivePage().showView(
-											RepositoriesView.VIEW_ID);
+									.getActiveWorkbenchWindow().getActivePage()
+									.showView(RepositoriesView.VIEW_ID);
 							view.showRepository(getCommit().getRepository());
 						} catch (PartInitException e) {
-							Activator.handleError(UIText.CommitEditor_couldNotShowRepository, e, false);
+							Activator.handleError(
+									UIText.CommitEditor_couldNotShowRepository,
+									e, false);
 						}
 					}
 				});
