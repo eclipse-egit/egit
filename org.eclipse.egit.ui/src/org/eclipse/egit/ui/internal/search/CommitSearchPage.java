@@ -75,6 +75,23 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 	 */
 	public static final String ID = "org.eclipse.egit.ui.commitSearchPage"; //$NON-NLS-1$
 
+	private static class SearchComposite extends Composite {
+
+		/**
+		 * @param parent
+		 * @param style
+		 */
+		public SearchComposite(Composite parent, int style) {
+			super(parent, style);
+		}
+
+		public void setLayoutData(Object layoutData) {
+			// Prevent search dialog from overriding the locally set data
+			if (getLayoutData() == null)
+				super.setLayoutData(layoutData);
+		}
+	}
+
 	private static final int HISTORY_SIZE = 12;
 
 	// Dialog store id constants
@@ -199,8 +216,9 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 		readConfiguration();
 
 		initializeDialogUnits(parent);
-		Composite result = new Composite(parent, SWT.NONE);
+		SearchComposite result = new SearchComposite(parent, SWT.NONE);
 		result.setFont(parent.getFont());
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(result);
 		GridLayoutFactory.swtDefaults().numColumns(2).equalWidth(false)
 				.applyTo(result);
 		addTextPatternControls(result);
@@ -242,7 +260,7 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 
 		Group scopeArea = new Group(parent, SWT.NONE);
 		scopeArea.setText(UIText.CommitSearchPage_Scope);
-		GridDataFactory.fillDefaults().grab(true, true).span(2, 1)
+		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
 				.applyTo(scopeArea);
 		GridLayoutFactory.swtDefaults().numColumns(3).applyTo(scopeArea);
 
@@ -301,7 +319,7 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 				repositoryGroup.setText(getRepositoryText());
 			}
 		});
-		GridDataFactory.fillDefaults().grab(true, true)
+		GridDataFactory.fillDefaults().grab(true, true).hint(SWT.DEFAULT, 40)
 				.applyTo(this.repositoryViewer.getControl());
 
 		ToolBar checkBar = new ToolBar(repositoryGroup, SWT.FLAT | SWT.VERTICAL);
