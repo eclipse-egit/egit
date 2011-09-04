@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn///GI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/ThreeWayDiffEntry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-16T23:33:14Z",
+      "side": 1,
+      "message": "would it make sense to use null instead to save a couple of 40 byte SHA1 objects in memory (with large repos you\u0027ll create many ThreeWayDiffEntries). I analyzed a heap dump taken after running the example you described. I found that the ThreeWayDiffEntries weigh around 500 byte, many seem to have only one ID really set and two set to A_ZERO which eats 80 byte for every entry.",
+      "revId": "b09dbc726ed63ae3076481b065259646af823586",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
