@@ -167,7 +167,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		SWTBotTreeItem commitTree = waitForNodeWithText(syncViewTree,
 				GitModelWorkingTree_workingTree);
-		assertEquals(1, syncViewTree.getAllItems().length);
+		assertEquals(2, syncViewTree.getAllItems().length);
 		SWTBotTreeItem projectTree = waitForNodeWithText(commitTree,
 				EMPTY_PROJECT);
 		assertEquals(2, projectTree.getItems().length);
