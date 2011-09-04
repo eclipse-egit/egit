@@ -8,10 +8,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
-import static org.eclipse.compare.structuremergeviewer.Differencer.LEFT;
-import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import java.io.File;
 
@@ -24,7 +23,7 @@ public class GitModelCacheTest extends GitModelTestCase {
 	@Test public void shouldReturnEqualForSameInstance() throws Exception {
 		// given
 		GitModelCache left = new GitModelCache(createModelRepository(),
-				getCommit(leftRepoFile, HEAD));
+				lookupRepository(leftRepoFile), null);
 
 		// when
 		boolean actual = left.equals(left);
@@ -40,24 +39,9 @@ public class GitModelCacheTest extends GitModelTestCase {
 		GitModelRepository rightGsd = new GitModelRepository(
 				getGSD(lookupRepository(localRightRepoFile)));
 		GitModelCache left = new GitModelCache(createModelRepository(),
-				getCommit(leftRepoFile, HEAD));
+				lookupRepository(leftRepoFile), null);
 		GitModelCache right = new GitModelCache(rightGsd,
-				getCommit(localRightRepoFile, HEAD));
-
-		// when
-		boolean actual = left.equals(right);
-
-		// then
-		assertFalse(actual);
-	}
-
-	@Test public void shouldReturnNotEqualForDifferentCommits()
-			throws Exception {
-		// given
-		GitModelCache left = new GitModelCache(createModelRepository(),
-				getCommit(leftRepoFile, HEAD));
-		GitModelCache right = new GitModelCache(createModelRepository(),
-				getCommit(leftRepoFile, HEAD + "~1"));
+				lookupRepository(leftRepoFile), null);
 
 		// when
 		boolean actual = left.equals(right);
@@ -70,9 +54,9 @@ public class GitModelCacheTest extends GitModelTestCase {
 			throws Exception {
 		// given
 		GitModelCache left = new GitModelCache(createModelRepository(),
-				getCommit(leftRepoFile, HEAD));
+				lookupRepository(leftRepoFile), null);
 		GitModelCache right = new GitModelCache(createModelRepository(),
-				getCommit(leftRepoFile, HEAD));
+				lookupRepository(leftRepoFile), null);
 
 		// when
 		boolean actual = left.equals(right);
@@ -85,8 +69,8 @@ public class GitModelCacheTest extends GitModelTestCase {
 			throws Exception {
 		// given
 		GitModelCache left = new GitModelCache(createModelRepository(),
-				getCommit(leftRepoFile, HEAD));
-		GitModelCache right = new GitModelWorkingTree(createModelRepository());
+				lookupRepository(leftRepoFile), null);
+		GitModelCache right = mock(GitModelWorkingTree.class);
 
 		// when
 		boolean actual = left.equals(right);
@@ -99,9 +83,8 @@ public class GitModelCacheTest extends GitModelTestCase {
 			throws Exception {
 		// given
 		GitModelCache left = new GitModelCache(createModelRepository(),
-				getCommit(leftRepoFile, HEAD));
-		GitModelCommit right = new GitModelCommit(createModelRepository(),
-				getCommit(leftRepoFile, HEAD), LEFT);
+				lookupRepository(leftRepoFile), null);
+		GitModelCommit right = mock(GitModelCommit.class);
 
 		// when
 		boolean actual = left.equals(right);
