@@ -122,6 +122,13 @@ public class CheckedInCommitsCache {
 			return children;
 		}
 
+		/**
+		 * Disposes nested resources
+		 */
+		public void dispose() {
+			children.clear();
+		}
+
 	}
 
 	/**

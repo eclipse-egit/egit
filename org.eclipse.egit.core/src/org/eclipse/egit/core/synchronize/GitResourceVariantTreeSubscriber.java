@@ -46,12 +46,12 @@ public class GitResourceVariantTreeSubscriber extends
 	/**
 	 * A resource variant tree of the remote branch(es).
 	 */
-	private IResourceVariantTree remoteTree;
+	private GitRemoteResourceVariantTree remoteTree;
 
 	/**
 	 * A resource variant tree against HEAD.
 	 */
-	private IResourceVariantTree baseTree;
+	private GitBaseResourceVariantTree baseTree;
 
 	private GitSynchronizeDataSet gsds;
 
@@ -161,6 +161,17 @@ public class GitResourceVariantTreeSubscriber extends
 		roots = null;
 		baseTree = null;
 		remoteTree = null;
+	}
+
+	/**
+	 * Disposes nested resources
+	 */
+	public void dispose() {
+		if (baseTree != null)
+			baseTree.dispose();
+		if (remoteTree != null)
+			remoteTree.dispose();
+		gsds.dispose();
 	}
 
 	@Override
