@@ -45,7 +45,7 @@ public class GitModelCache extends GitModelObjectContainer {
 		/**
 		 * Creates proper instance of {@link GitModelBlob} for cache and working
 		 * tree model representation
-		 * 
+		 *
 		 * @param objParent
 		 *            parent object
 		 * @param repo
@@ -70,10 +70,10 @@ public class GitModelCache extends GitModelObjectContainer {
 
 	/**
 	 * Constructs model node that represents current status of Git cache.
-	 * 
+	 *
 	 * @param parent
 	 *            parent object
-	 * 
+	 *
 	 * @param repo
 	 *            repository associated with this object
 	 * @param cache
@@ -172,6 +172,15 @@ public class GitModelCache extends GitModelObjectContainer {
 	@Override
 	public String toString() {
 		return "ModelCache"; //$NON-NLS-1$
+	}
+
+	@Override
+	public void dispose() {
+		for (GitModelTree modelTree : cacheTreeMap.values())
+			modelTree.dispose();
+
+		cache.clear();
+		cacheTreeMap.clear();
 	}
 
 	private GitModelObject extractFromCache(Change change, String path) {
