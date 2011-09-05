@@ -118,6 +118,16 @@ public class GitModelRepository extends GitModelObjectContainer implements HasPr
 	}
 
 	@Override
+	public void dispose() {
+		for (Commit commit : commitCache)
+			commit.dispose();
+
+		commitCache.clear();
+		stagedChanges.clear();
+		workingChanges.clear();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this)
 			return true;

@@ -163,6 +163,13 @@ public class GitResourceVariantTreeSubscriber extends
 		remoteTree = null;
 	}
 
+	/**
+	 * Disposes nested resources
+	 */
+	public void dispose() {
+		gsds.dispose();
+	}
+
 	@Override
 	public String getName() {
 		return CoreText.GitBranchResourceVariantTreeSubscriber_gitRepository;
