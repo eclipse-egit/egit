@@ -17,6 +17,23 @@
       "revId": "758eacd92cf58f25235102d17d341f550e2c90cc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+Yc\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-26T09:42:16Z",
+      "side": 1,
+      "message": "CVS plugin uses \"Show Annotation\"",
+      "revId": "758eacd92cf58f25235102d17d341f550e2c90cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
