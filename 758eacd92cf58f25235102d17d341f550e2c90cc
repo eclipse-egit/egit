@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn//+b4\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-08-25T14:45:55Z",
+      "side": 1,
+      "message": "I think Show Annotations is correct over Show Annotation",
+      "parentUuid": "AABOAn//+cA\u003d",
+      "revId": "758eacd92cf58f25235102d17d341f550e2c90cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+Yc\u003d",
         "filename": "org.eclipse.egit.ui/plugin.properties",
         "patchSetId": 1
