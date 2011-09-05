@@ -22,6 +22,9 @@ import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
+import org.eclipse.egit.ui.internal.repository.tree.BranchesNode;
+import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -85,16 +88,26 @@ public class SwitchToMenu extends ContributionItem implements
 		Object selected = ((IStructuredSelection) sel).getFirstElement();
 		if (selected instanceof IAdaptable)
 			selected = ((IAdaptable) selected).getAdapter(IProject.class);
-		if (!(selected instanceof IProject))
-			return;
-		RepositoryMapping mapping = RepositoryMapping
-				.getMapping((IProject) selected);
-		if (mapping == null)
-			return;
-		final Repository repository = mapping.getRepository();
-		if (repository == null)
-			return;
 
+		Repository repository = null;
+		if (selected instanceof RepositoryNode)
+			repository = ((RepositoryNode) selected).getRepository();
+		else if (selected instanceof BranchesNode)
+			repository = ((BranchesNode) selected).getRepository();
+		else if (selected instanceof LocalNode)
+			repository = ((LocalNode) selected).getRepository();
+		else if ((selected instanceof IProject)) {
+			RepositoryMapping mapping = RepositoryMapping
+					.getMapping((IProject) selected);
+			if (mapping != null)
+				repository = mapping.getRepository();
+		}
+
+		if (repository != null)
+			createDynamicMenu(menu, repository);
+	}
+
+	private void createDynamicMenu(Menu menu, final Repository repository) {
 		MenuItem newBranch = new MenuItem(menu, SWT.PUSH);
 		newBranch.setText(UIText.SwitchToMenu_NewBranchMenuLabel);
 		newBranch.setImage(newBranchImage);
@@ -106,14 +119,14 @@ public class SwitchToMenu extends ContributionItem implements
 		});
 		new MenuItem(menu, SWT.SEPARATOR);
 		try {
-			String currentBranch = mapping.getRepository().getFullBranch();
-			Map<String, Ref> localBranches = mapping.getRepository().getRefDatabase().getRefs(
+			String currentBranch = repository.getFullBranch();
+			Map<String, Ref> localBranches = repository.getRefDatabase().getRefs(
 					Constants.R_HEADS);
 			TreeMap<String, Ref> sortedRefs = new TreeMap<String, Ref>();
 
 			// Add the MAX_NUM_MENU_ENTRIES most recently used branches first
 			List<ReflogEntry> reflogEntries = new ReflogReader(
-					mapping.getRepository(), Constants.HEAD)
+					repository, Constants.HEAD)
 					.getReverseEntries();
 			for (ReflogEntry entry : reflogEntries) {
 				CheckoutEntry checkout = entry.parseCheckout();
