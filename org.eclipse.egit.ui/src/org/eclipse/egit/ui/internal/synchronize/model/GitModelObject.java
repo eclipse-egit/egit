@@ -94,4 +94,9 @@ public abstract class GitModelObject extends PlatformObject {
 	 */
 	public abstract boolean isContainer();
 
+	/**
+	 * Disposed all nested resources
+	 */
+	public abstract void dispose();
+
 }
