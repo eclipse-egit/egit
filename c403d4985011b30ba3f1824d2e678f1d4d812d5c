@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH///tk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-05T06:44:40Z",
+      "side": 1,
+      "message": "Prepend \"Inconsistent merge state:\" to make clear which operation might have failed.\n\ntypo: s/File/file/",
+      "revId": "c403d4985011b30ba3f1824d2e678f1d4d812d5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
