@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+cA\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-25T12:14:07Z",
+      "side": 1,
+      "message": "any native speaker around ? I feel it should be plural as typically it\u0027s about many annotations.",
+      "parentUuid": "AABOAn//+cI\u003d",
+      "revId": "758eacd92cf58f25235102d17d341f550e2c90cc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
