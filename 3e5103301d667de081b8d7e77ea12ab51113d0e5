@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH///v0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-04T21:07:50Z",
+      "side": 0,
+      "message": "you already ensured this protection in lines 123 and 127 so this comment should be moved up or removed",
+      "revId": "3e5103301d667de081b8d7e77ea12ab51113d0e5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

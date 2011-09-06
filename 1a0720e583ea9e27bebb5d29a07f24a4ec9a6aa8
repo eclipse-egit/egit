@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH///vw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-04T21:07:50Z",
+      "side": 1,
+      "message": "should be \u003c instead of \u003c\u003d otherwise you end up with 21 menu entries",
+      "revId": "1a0720e583ea9e27bebb5d29a07f24a4ec9a6aa8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///vs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-04T21:07:50Z",
+      "side": 1,
+      "message": "should be \u003c instead of \u003c\u003d otherwise you end up with 21 menu entries",
+      "revId": "1a0720e583ea9e27bebb5d29a07f24a4ec9a6aa8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
