@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH///ps\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-09-06T07:32:53Z",
+      "side": 1,
+      "message": "Why do we need the condition\n\nitemCount \u003e 0 \u0026\u0026 sortedRefs.size() \u003e 0\n\nhere?\n\nI have created a new repo, made one commit and created a new branch \"b\", but did not check it out. When I now open \"Team -\u003e Switch To\" I do not see branch \"b\".",
+      "revId": "524ce35b91f134e755f32113d11b751d5f32d469",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
