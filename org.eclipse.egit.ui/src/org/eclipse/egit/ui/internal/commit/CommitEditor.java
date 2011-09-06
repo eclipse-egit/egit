@@ -20,6 +20,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler;
 import org.eclipse.egit.ui.internal.commit.command.CreateTagHandler;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
+import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.JFaceResources;
@@ -47,6 +48,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
+import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.progress.UIJob;
 
 /**
@@ -59,6 +61,8 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	 * ID - editor id
 	 */
 	public static final String ID = "org.eclipse.egit.ui.commitEditor"; //$NON-NLS-1$
+
+	private static final String TOOLBAR_HEADER_ID = ID + ".header.toolbar"; //$NON-NLS-1$
 
 	/**
 	 * Open commit in editor
@@ -180,7 +184,20 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		toolbar.add(repositoryLabelControl);
 		toolbar.add(createCommandContributionItem(CreateTagHandler.ID));
 		toolbar.add(createCommandContributionItem(CreateBranchHandler.ID));
+		addContributions(toolbar);
 		toolbar.update(true);
+	}
+
+	private void addContributions(IToolBarManager toolBarManager) {
+		IMenuService menuService = (IMenuService) getSite().getService(
+				IMenuService.class);
+		if (menuService != null
+				&& toolBarManager instanceof ContributionManager) {
+			ContributionManager contributionManager = (ContributionManager) toolBarManager;
+			String toolbarUri = "toolbar:" + TOOLBAR_HEADER_ID; //$NON-NLS-1$
+			menuService.populateContributionManager(contributionManager,
+					toolbarUri);
+		}
 	}
 
 	private RepositoryCommit getCommit() {
