@@ -60,7 +60,7 @@ public class GitModelWorkingFileTest extends GitModelTestCase {
 		// given
 		GitModelWorkingFile left = createWorkingFile(getFile1Location());
 		GitModelBlob right = new GitModelBlob(createModelCommit(), getCommit(
-				leftRepoFile, HEAD), null, null, null, null, getFile1Location());
+				leftRepoFile, HEAD), null, null, null, getFile1Location());
 
 		// when
 		boolean actual = left.equals(right);

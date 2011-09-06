@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,8 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.compare;
 
-import static org.eclipse.compare.structuremergeviewer.Differencer.RIGHT;
-import static org.eclipse.egit.core.internal.storage.GitFileRevision.INDEX;
+import static org.eclipse.compare.structuremergeviewer.Differencer.CHANGE;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ITypedElement;
@@ -20,32 +19,55 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.LocalResourceTypedElement;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.team.ui.mapping.ISynchronizationCompareInput;
 import org.eclipse.team.ui.mapping.SaveableComparison;
 
 /**
- * Git specific implementation of {@link ISynchronizationCompareInput}
+ * Git specific implementation of {@link ISynchronizationCompareInput} for
+ * Workspace presentation model
  */
-public class GitCompareInput implements ISynchronizationCompareInput {
+public class GitWorkspaceCompareInput implements ISynchronizationCompareInput {
+
+	private final String gitPath;
+
+	private final Repository repo;
+
+	private final ObjectId baseId;
+
+	private final ObjectId remoteId;
+
+	private final RevCommit baseCommit;
+
+	private final RevCommit remoteCommit;
 
 	/**
-	 * Git resource that should be used for comparing
+	 * @param repo
+	 * @param baseCommit
+	 * @param baseId
+	 * @param remoteCommit
+	 * @param remoteId
+	 * @param gitPath
 	 */
-	protected final GitModelBlob resource;
-
-	/**
-	 * Creates {@link GitCompareInput}
-	 * @param object
-	 */
-	public GitCompareInput(GitModelBlob object) {
-		this.resource = object;
+	public GitWorkspaceCompareInput(Repository repo, RevCommit baseCommit, ObjectId baseId, RevCommit remoteCommit, ObjectId remoteId, String gitPath) {
+		this.repo = repo;
+		this.baseId = baseId;
+		this.gitPath = gitPath;
+		this.remoteId = remoteId;
+		this.baseCommit = baseCommit;
+		this.remoteCommit = remoteCommit;
 	}
 
 	public String getName() {
-		return resource.getName();
+		int lastSeparator = gitPath.indexOf("/"); //$NON-NLS-1$
+		if (lastSeparator > -1)
+			return gitPath.substring(lastSeparator + 1, gitPath.length());
+		else
+			return gitPath;
 	}
 
 	public Image getImage() {
@@ -54,7 +76,7 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 	}
 
 	public int getKind() {
-		return resource.getKind();
+		return CHANGE;
 	}
 
 	public ITypedElement getAncestor() {
@@ -62,26 +84,13 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 	}
 
 	public ITypedElement getLeft() {
-		if ((resource.getKind() & RIGHT) == RIGHT)
-			return CompareUtils.getFileRevisionTypedElement(resource.getGitPath(),
-				resource.getBaseCommit(), resource.getRepository(),
-				resource.getBaseId());
-		else
-			return CompareUtils.getFileRevisionTypedElement(resource.getGitPath(),
-					resource.getRemoteCommit(), resource.getRepository(),
-					resource.getRemoteId());
+		return CompareUtils.getFileRevisionTypedElement(gitPath, baseCommit,
+				repo, baseId);
 	}
 
 	public ITypedElement getRight() {
-		if ((resource.getKind() & RIGHT) == RIGHT)
-			return CompareUtils.getFileRevisionTypedElement(resource.getGitPath(),
-					resource.getRemoteCommit(), resource.getRepository(),
-					resource.getRemoteId());
-		else
-			return CompareUtils.getFileRevisionTypedElement(resource.getGitPath(),
-				resource.getBaseCommit(), resource.getRepository(),
-				resource.getBaseId());
-
+		return CompareUtils.getFileRevisionTypedElement(gitPath, remoteCommit,
+				repo, remoteId);
 	}
 
 	public void addCompareInputChangeListener(
@@ -111,12 +120,12 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 		configuration.setRightLabel(getFileRevisionLabel(getRight()));
 
 		// disable editing on both sides, since we can't edit checked in blobs
-		configuration.setLeftEditable(false);
+		configuration.setLeftEditable(true);
 		configuration.setRightEditable(false);
 	}
 
 	public String getFullPath() {
-		return resource.getLocation().toOSString();
+		return gitPath;
 	}
 
 	public boolean isCompareInputFor(Object obj) {
@@ -127,19 +136,13 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 	private String getFileRevisionLabel(ITypedElement element) {
 		if (element instanceof FileRevisionTypedElement) {
 			FileRevisionTypedElement castElement = (FileRevisionTypedElement) element;
-			if (INDEX.equals(castElement.getContentIdentifier()))
-				return NLS.bind(
-						UIText.GitCompareFileRevisionEditorInput_StagedVersion,
-						element.getName());
-			else
-				return NLS.bind(
-						UIText.GitCompareFileRevisionEditorInput_RevisionLabel,
-						new Object[] {
-								element.getName(),
-								CompareUtils.truncatedRevision(castElement
-										.getContentIdentifier()),
-								castElement.getAuthor() });
-
+			return NLS.bind(
+					UIText.GitCompareFileRevisionEditorInput_RevisionLabel,
+					new Object[] {
+							element.getName(),
+							CompareUtils.truncatedRevision(castElement
+									.getContentIdentifier()),
+							castElement.getAuthor() });
 		} else if (element instanceof LocalResourceTypedElement)
 			return NLS.bind(
 					UIText.GitCompareFileRevisionEditorInput_LocalVersion,

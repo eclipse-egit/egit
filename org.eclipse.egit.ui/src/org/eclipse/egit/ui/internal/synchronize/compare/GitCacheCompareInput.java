@@ -11,8 +11,11 @@ package org.eclipse.egit.ui.internal.synchronize.compare;
 import static org.eclipse.egit.ui.internal.CompareUtils.getFileCachedRevisionTypedElement;
 import static org.eclipse.egit.ui.internal.CompareUtils.getFileRevisionTypedElement;
 
+import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ITypedElement;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelCacheFile;
 import org.eclipse.team.ui.mapping.ISynchronizationCompareInput;
 
 /**
@@ -22,38 +25,34 @@ import org.eclipse.team.ui.mapping.ISynchronizationCompareInput;
 public class GitCacheCompareInput extends GitCompareInput {
 
 	/**
-	 * Creates {@link GitCacheCompareInput}
-	 *
-	 * @param repo
-	 *            repository that is connected with this object
-	 * @param ancestorDataSource
-	 *            data that should be use to obtain common ancestor object data
-	 * @param baseDataSource
-	 *            data that should be use to obtain base object data
-	 * @param remoteDataSource
-	 *            data that should be used to obtain remote object data
-	 * @param gitPath
-	 *            repository relative path of object
+	 * @param object
 	 */
-	public GitCacheCompareInput(Repository repo,
-			ComparisonDataSource ancestorDataSource,
-			ComparisonDataSource baseDataSource,
-			ComparisonDataSource remoteDataSource, String gitPath) {
-		super(repo, ancestorDataSource, baseDataSource, remoteDataSource,
-				gitPath);
+	public GitCacheCompareInput(GitModelCacheFile object) {
+		super(object);
 	}
 
 	public ITypedElement getLeft() {
-		return getFileCachedRevisionTypedElement(gitPath, repo);
+		return getFileCachedRevisionTypedElement(resource.getGitPath(),
+				resource.getRepository());
 	}
 
 	public ITypedElement getRight() {
-		return getFileRevisionTypedElement(gitPath, baseCommit, repo);
+		return getFileRevisionTypedElement(resource.getGitPath(),
+				resource.getBaseCommit(), resource.getRepository());
 	}
 
 	@Override
 	public ITypedElement getAncestor() {
 		return getRight();
+	}
+
+	@Override
+	public void prepareInput(CompareConfiguration configuration,
+			IProgressMonitor monitor) throws CoreException {
+		super.prepareInput(configuration, monitor);
+
+		// allow only modify left side (staged version)
+		configuration.setLeftEditable(true);
 	}
 
 }

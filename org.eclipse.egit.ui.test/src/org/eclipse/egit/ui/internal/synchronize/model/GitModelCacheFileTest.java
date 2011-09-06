@@ -110,7 +110,7 @@ public class GitModelCacheFileTest extends GitModelTestCase {
 				fromString("000000006aa218a9c985e6ce9df2845eb575be48"),
 				getFile1Location());
 		GitModelBlob right = new GitModelBlob(createModelCommit(), getCommit(
-				leftRepoFile, HEAD), null, null, null, null, getFile1Location());
+				leftRepoFile, HEAD), null, null, null, getFile1Location());
 
 		// when
 		boolean actual = left.equals(right);

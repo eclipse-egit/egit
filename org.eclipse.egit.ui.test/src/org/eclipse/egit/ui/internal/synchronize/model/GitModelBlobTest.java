@@ -256,8 +256,8 @@ public class GitModelBlobTest extends GitModelTestCase {
 	private GitModelBlob createGitModelBlob(ObjectId baseId, ObjectId remoteId,
 			IPath location) throws Exception {
 		return new GitModelBlob(createModelCommit(),
-				getCommit(leftRepoFile, HEAD), null, null, baseId,
-				remoteId, location);
+				getCommit(leftRepoFile, HEAD), null, baseId, remoteId,
+				location);
 	}
 
 }

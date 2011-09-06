@@ -17,19 +17,12 @@ import static org.eclipse.jgit.lib.ObjectId.zeroId;
 
 import java.io.IOException;
 
-import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.IResourceProvider;
-import org.eclipse.compare.ITypedElement;
-import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.ui.internal.synchronize.compare.ComparisonDataSource;
-import org.eclipse.egit.ui.internal.synchronize.compare.GitCompareInput;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -47,11 +40,7 @@ public class GitModelBlob extends GitModelCommit implements IResourceProvider {
 	/** {@link ObjectId} of remove variant */
 	protected final ObjectId remoteId;
 
-	private final ObjectId ancestorId;
-
 	private static final GitModelObject[] empty = new GitModelObject[0];
-
-	private GitCompareInput compareInput;
 
 	/**
 	 * Git repository relative path of file associated with this
@@ -66,8 +55,6 @@ public class GitModelBlob extends GitModelCommit implements IResourceProvider {
 	 * @param commit
 	 *            remote commit
 	 * @param ancestorCommit TODO
-	 * @param ancestorId
-	 *            common ancestor id
 	 * @param baseId
 	 *            id of base object variant
 	 * @param remoteId
@@ -77,17 +64,37 @@ public class GitModelBlob extends GitModelCommit implements IResourceProvider {
 	 * @throws IOException
 	 */
 	public GitModelBlob(GitModelObjectContainer parent, RevCommit commit,
-			RevCommit ancestorCommit, ObjectId ancestorId, ObjectId baseId, ObjectId remoteId, IPath location)
+			RevCommit ancestorCommit, ObjectId baseId, ObjectId remoteId, IPath location)
 			throws IOException {
 		// only direction is important for us, therefore we mask rest of bits in
 		// kind
 		super(parent, commit, ancestorCommit, parent.getKind() & (LEFT | RIGHT));
 		this.baseId = baseId;
 		this.remoteId = remoteId;
-		this.ancestorId = ancestorId;
 		this.location = location;
 		gitPath = Repository.stripWorkDir(getRepository().getWorkTree(),
 				getLocation().toFile());
+	}
+
+	/**
+	 * @return git path
+	 */
+	public String getGitPath() {
+		return gitPath;
+	}
+
+	/**
+	 * @return base object id
+	 */
+	public ObjectId getBaseId() {
+		return baseId;
+	}
+
+	/**
+	 * @return remote object id
+	 */
+	public ObjectId getRemoteId() {
+		return remoteId;
 	}
 
 	@Override
@@ -111,24 +118,6 @@ public class GitModelBlob extends GitModelCommit implements IResourceProvider {
 	}
 
 	@Override
-	public ITypedElement getAncestor() {
-		createCompareInput();
-		return compareInput.getAncestor();
-	}
-
-	@Override
-	public ITypedElement getLeft() {
-		createCompareInput();
-		return compareInput.getLeft();
-	}
-
-	@Override
-	public ITypedElement getRight() {
-		createCompareInput();
-		return compareInput.getRight();
-	}
-
-	@Override
 	public int getKind() {
 		if (kind != LEFT && kind != RIGHT)
 			return kind;
@@ -144,13 +133,6 @@ public class GitModelBlob extends GitModelCommit implements IResourceProvider {
 		kind |= changeKind;
 
 		return kind;
-	}
-
-	@Override
-	public void prepareInput(CompareConfiguration configuration,
-			IProgressMonitor monitor) throws CoreException {
-		createCompareInput();
-		compareInput.prepareInput(configuration, monitor);
 	}
 
 	@Override
@@ -189,40 +171,6 @@ public class GitModelBlob extends GitModelCommit implements IResourceProvider {
 	@Override
 	public String toString() {
 		return "ModelBlob[objectId=" + baseId + ", location=" + getLocation() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
-
-	private void createCompareInput() {
-		if (compareInput == null) {
-			ComparisonDataSource baseData;
-			ComparisonDataSource remoteData;
-			if ((getKind() & RIGHT) == RIGHT) {
-				baseData = new ComparisonDataSource(remoteCommit, remoteId);
-				remoteData = new ComparisonDataSource(baseCommit, baseId);
-			} else /* getKind() == LEFT */{
-				baseData = new ComparisonDataSource(baseCommit, baseId);
-				remoteData = new ComparisonDataSource(remoteCommit, remoteId);
-			}
-
-			ComparisonDataSource ancestorData = new ComparisonDataSource(
-					ancestorCommit, ancestorId);
-
-			compareInput = getCompareInput(baseData, remoteData, ancestorData);
-		}
-	}
-
-	/**
-	 * Returns specific instance of {@link GitCompareInput} for particular
-	 * compare input.
-	 *
-	 * @param baseData
-	 * @param remoteData
-	 * @param ancestorData
-	 * @return Git specific {@link ICompareInput}
-	 */
-	protected GitCompareInput getCompareInput(ComparisonDataSource baseData,
-			ComparisonDataSource remoteData, ComparisonDataSource ancestorData) {
-		return new GitCompareInput(getRepository(), ancestorData, remoteData,
-				baseData, gitPath);
 	}
 
 	public IResource getResource() {

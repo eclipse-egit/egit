@@ -10,13 +10,16 @@ package org.eclipse.egit.ui.internal.synchronize.compare;
 
 import static org.eclipse.egit.ui.internal.CompareUtils.getFileCachedRevisionTypedElement;
 
+import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.internal.LocalResourceTypedElement;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingFile;
 import org.eclipse.team.ui.mapping.ISynchronizationCompareInput;
 
 /**
@@ -28,30 +31,16 @@ public class GitLocalCompareInput extends GitCompareInput {
 	private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace().getRoot();
 
 	/**
-	 * Creates {@link GitLocalCompareInput}
-	 *
-	 * @param repo
-	 *            repository that is connected with this object
-	 * @param ancestorDataSource
-	 *            data that should be use to obtain common ancestor object data
-	 * @param baseDataSource
-	 *            data that should be use to obtain base object data
-	 * @param remoteDataSource
-	 *            data that should be used to obtain remote object data
-	 * @param gitPath
-	 *            repository relative path of object
+	 * @param object
 	 */
-	public GitLocalCompareInput(Repository repo,
-			ComparisonDataSource ancestorDataSource,
-			ComparisonDataSource baseDataSource,
-			ComparisonDataSource remoteDataSource, String gitPath) {
-		super(repo, ancestorDataSource, baseDataSource, remoteDataSource,
-				gitPath);
+	public GitLocalCompareInput(GitModelWorkingFile object) {
+		super(object);
 	}
 
 	public ITypedElement getLeft() {
-		String absoluteFilePath = repo.getWorkTree().getAbsolutePath()
-				+ "/" + gitPath; //$NON-NLS-1$
+		String absoluteFilePath = resource.getRepository().getWorkTree()
+				.getAbsolutePath()
+				+ "/" + resource.getGitPath(); //$NON-NLS-1$
 		IFile file = ROOT.getFileForLocation(new Path(absoluteFilePath));
 
 		if (file == null)
@@ -60,8 +49,18 @@ public class GitLocalCompareInput extends GitCompareInput {
 		return new LocalResourceTypedElement(file);
 	}
 
+	@Override
+	public void prepareInput(CompareConfiguration configuration,
+			IProgressMonitor monitor) throws CoreException {
+		super.prepareInput(configuration, monitor);
+
+		// enable edition on both sides
+		configuration.setLeftEditable(true);
+		configuration.setRightEditable(true);
+	}
+
 	public ITypedElement getRight() {
-		return getFileCachedRevisionTypedElement(gitPath, repo);
+		return getFileCachedRevisionTypedElement(resource.getGitPath(), resource.getRepository());
 	}
 
 	@Override

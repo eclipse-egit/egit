@@ -11,9 +11,6 @@ package org.eclipse.egit.ui.internal.synchronize.model;
 import java.io.IOException;
 
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.ui.internal.synchronize.compare.ComparisonDataSource;
-import org.eclipse.egit.ui.internal.synchronize.compare.GitCacheCompareInput;
-import org.eclipse.egit.ui.internal.synchronize.compare.GitCompareInput;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
 
@@ -24,14 +21,7 @@ public class GitModelCacheFile extends GitModelBlob {
 
 	GitModelCacheFile(GitModelObjectContainer parent, RevCommit commit,
 			ObjectId repoId, ObjectId cacheId, IPath location) throws IOException {
-		super(parent, commit, null, repoId, cacheId, repoId, location);
-	}
-
-	@Override
-	protected GitCompareInput getCompareInput(ComparisonDataSource baseData,
-			ComparisonDataSource remoteData, ComparisonDataSource ancestorData) {
-		return new GitCacheCompareInput(getRepository(), ancestorData,
-				baseData, remoteData, gitPath);
+		super(parent, commit, null, cacheId, repoId, location);
 	}
 
 	@Override

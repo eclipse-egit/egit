@@ -118,8 +118,7 @@ public class GitModelCommitTest extends GitModelTestCase {
 		GitModelCommit left = new GitModelCommit(createModelRepository(),
 				getCommit(leftRepoFile, HEAD), LEFT);
 		GitModelBlob right = new GitModelBlob(left,
-				getCommit(leftRepoFile, HEAD), null, null, null, null,
-				getFile1Location());
+				getCommit(leftRepoFile, HEAD), null, null, null, getFile1Location());
 
 		// when
 		boolean actual = left.equals(right);

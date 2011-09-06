@@ -23,13 +23,11 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.team.ui.mapping.ISynchronizationCompareInput;
 
 /**
  * Git commit object representation in Git ChangeSet
  */
-public class GitModelCommit extends GitModelObjectContainer implements
-		ISynchronizationCompareInput {
+public class GitModelCommit extends GitModelObjectContainer {
 
 	/**
 	 * Common ancestor commit for wrapped commit object

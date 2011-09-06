@@ -88,7 +88,7 @@ public class GitModelTreeTest extends GitModelTestCase {
 		// given
 		GitModelTree left = createModelTree(HEAD, getTreeLocation());
 		GitModelBlob right = new GitModelBlob(createModelCommit(), getCommit(
-				leftRepoFile, HEAD), null, null, null, null, getTreeLocation());
+				leftRepoFile, HEAD), null, null, null, getTreeLocation());
 
 		// when
 		boolean actual = left.equals(right);
