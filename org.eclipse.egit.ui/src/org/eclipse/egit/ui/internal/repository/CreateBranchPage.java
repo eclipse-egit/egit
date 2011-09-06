@@ -307,6 +307,19 @@ class CreateBranchPage extends WizardPage {
 		} else
 			// in any case, we will have to enter the name
 			setPageComplete(false);
+
+		try {
+			if (myBaseRef.equals(myRepository.getFullBranch().toString())) {
+				String sourceRef = myRepository.getConfig().getString(
+						ConfigConstants.CONFIG_WORKFLOW_SECTION, null,
+						ConfigConstants.CONFIG_KEY_DEFAULTSOURCEREF);
+				if (sourceRef != null)
+					branchCombo.setText(sourceRef);
+			}
+		} catch (IOException e1) {
+			//do nothing on error
+		}
+		
 		checkPage();
 		// add the listener just now to avoid unneeded checkPage()
 		nameText.addModifyListener(new ModifyListener() {
