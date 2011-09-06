@@ -12,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import org.eclipse.egit.core.synchronize.CheckedInCommitsCache.Commit;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
@@ -19,7 +20,6 @@ import org.eclipse.egit.ui.internal.synchronize.model.GitModelTree;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jgit.revwalk.MockRevCommit;
 import org.eclipse.ui.navigator.CommonViewer;
 import org.junit.Test;
 
@@ -370,14 +370,19 @@ public class GitChangeSetSorterTest {
 	/*
 	 * Test for commit chronological order
 	 */
+	@SuppressWarnings("boxing")
 	@Test public void shouldOrderCommitsByCommitDate() {
 		// given
 		Viewer viewer = mock(Viewer.class);
 		GitChangeSetSorter sorter = new GitChangeSetSorter();
 		GitModelCommit commit1 = mock(GitModelCommit.class);
 		GitModelCommit commit2 = mock(GitModelCommit.class);
-		when(commit1.getBaseCommit()).thenReturn(new MockRevCommit(100));
-		when(commit2.getBaseCommit()).thenReturn(new MockRevCommit(200));
+		Commit mockCommit1 = mock(Commit.class);
+		when(mockCommit1.getCommitTime()).thenReturn(10);
+		Commit mockCommit2 = mock(Commit.class);
+		when(mockCommit2.getCommitTime()).thenReturn(20);
+		when(commit1.getCachedCommitObj()).thenReturn(mockCommit1);
+		when(commit2.getCachedCommitObj()).thenReturn(mockCommit2);
 
 		// when
 		int actual1 = sorter.compare(viewer, commit1, commit2);

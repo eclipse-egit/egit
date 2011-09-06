@@ -8,10 +8,11 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
-import static org.eclipse.compare.structuremergeviewer.Differencer.LEFT;
-import static org.eclipse.jgit.lib.Constants.HEAD;
+import static org.eclipse.compare.structuremergeviewer.Differencer.CHANGE;
+import static org.eclipse.compare.structuremergeviewer.Differencer.RIGHT;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.ui.Activator;
@@ -33,8 +34,8 @@ public class GitModelTreeTest extends GitModelTestCase {
 
 	@Test public void shouldReturnEqualForSameBaseCommit() throws Exception {
 		// given
-		GitModelTree left = createModelTree(HEAD, getTreeLocation());
-		GitModelTree right = createModelTree(HEAD, getTreeLocation());
+		GitModelTree left = createModelTree(getTreeLocation());
+		GitModelTree right = createModelTree(getTreeLocation());
 		
 		// when
 		boolean actual = left.equals(right);
@@ -43,24 +44,11 @@ public class GitModelTreeTest extends GitModelTestCase {
 		assertTrue(actual);
 	}
 
-	@Test public void shouldReturnNotEqualForDifferentBaseCommit()
-			throws Exception {
-		// given
-		GitModelTree left = createModelTree(HEAD, getTreeLocation());
-		GitModelTree right = createModelTree(HEAD + "~1", getTreeLocation());
-
-		// when
-		boolean actual = left.equals(right);
-
-		// then
-		assertFalse(actual);
-	}
-
 	@Test public void shouldReturnNotEqualForDifferentLocation()
 			throws Exception {
 		// given
-		GitModelTree left = createModelTree(HEAD, getTreeLocation());
-		GitModelTree right = createModelTree(HEAD, getTree1Location());
+		GitModelTree left = createModelTree(getTreeLocation());
+		GitModelTree right = createModelTree(getTree1Location());
 
 		// when
 		boolean actual = left.equals(right);
@@ -72,9 +60,8 @@ public class GitModelTreeTest extends GitModelTestCase {
 	@Test public void shouldReturnNotEqualForTreeAndCommit()
 			throws Exception {
 		// given
-		GitModelTree left = createModelTree(HEAD, getTreeLocation());
-		GitModelCommit right = new GitModelCommit(createModelRepository(),
-				getCommit(leftRepoFile, HEAD), LEFT);
+		GitModelTree left = createModelTree(getTreeLocation());
+		GitModelCommit right = mock(GitModelCommit.class);
 
 		// when
 		boolean actual = left.equals(right);
@@ -86,9 +73,8 @@ public class GitModelTreeTest extends GitModelTestCase {
 	@Test public void shouldReturnNotEqualForTreeAndBlob()
 			throws Exception {
 		// given
-		GitModelTree left = createModelTree(HEAD, getTreeLocation());
-		GitModelBlob right = new GitModelBlob(createModelCommit(), getCommit(
-				leftRepoFile, HEAD), null, null, null, null, getTreeLocation());
+		GitModelTree left = createModelTree(getTreeLocation());
+		GitModelBlob right = mock(GitModelBlob.class);
 
 		// when
 		boolean actual = left.equals(right);
@@ -100,10 +86,8 @@ public class GitModelTreeTest extends GitModelTestCase {
 	@Test public void shouldReturnNotEqualForTreeAndCacheTree()
 			throws Exception {
 		// given
-		GitModelTree left = createModelTree(HEAD, getTreeLocation());
-		GitModelCacheTree right = new GitModelCacheTree(createModelCommit(),
-				getCommit(leftRepoFile, HEAD), null, null, getTreeLocation(),
-				null);
+		GitModelTree left = createModelTree(getTreeLocation());
+		GitModelCacheTree right = mock(GitModelCacheTree.class);
 
 		// when
 		boolean actual = left.equals(right);
@@ -120,14 +104,12 @@ public class GitModelTreeTest extends GitModelTestCase {
 	}
 
 	private GitModelTree createModelTree() throws Exception {
-		return createModelTree(HEAD, getTreeLocation());
+		return createModelTree(getTreeLocation());
 	}
 
-	private GitModelTree createModelTree(String revStr, IPath location)
+	private GitModelTree createModelTree(IPath location)
 			throws Exception {
-		return new GitModelTree(createModelCommit(), getCommit(
-				leftRepoFile, revStr), getCommit(leftRepoFile, revStr), null,
-				null, null, location);
+		return new GitModelTree(createModelCommit(), location, RIGHT | CHANGE);
 	}
 
 }
