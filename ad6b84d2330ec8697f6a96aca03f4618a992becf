@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH///k8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-06T21:09:36Z",
+      "side": 1,
+      "message": "with this condition a separator is missing before \"Other...\" if the repo has a few branches and all of them were found in the reflog. \n\nI think instead the condition should be:\n\n if (itemCount \u003e 0)",
+      "revId": "ad6b84d2330ec8697f6a96aca03f4618a992becf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
