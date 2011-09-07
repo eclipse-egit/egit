@@ -153,13 +153,17 @@ public class SwitchToMenu extends ContributionItem implements
 				localBranches.remove(shortName);
 			}
 
-			if (itemCount < MAX_NUM_MENU_ENTRIES && itemCount > 0 && sortedRefs.size() > 0) {
+			if (itemCount < MAX_NUM_MENU_ENTRIES) {
+				// A separator between recently used branches and local branches is
+				// nice but only if we have both recently used branches and other
+				// local branches
+				if (itemCount > 0 && localBranches.size() > 0)
+					new MenuItem(menu, SWT.SEPARATOR);
+
 				// Now add more other branches if we have only a few branch switches
 				// Sort the remaining local branches
 				sortedRefs.clear();
 				sortedRefs.putAll(localBranches);
-				// A separator between recently used branches and other branches is nice
-				new MenuItem(menu, SWT.SEPARATOR);
 				for (final Entry<String, Ref> entry : sortedRefs.entrySet()) {
 					itemCount++;
 					// protect ourselves against a huge sub-menu
@@ -167,10 +171,10 @@ public class SwitchToMenu extends ContributionItem implements
 						break;
 					final String fullName = entry.getValue().getName();
 					final String shortName = entry.getKey();
-					createMenuItem(menu, repository, fullName, shortName, shortName);
+					createMenuItem(menu, repository, currentBranch, fullName, shortName);
 				}
 			}
-			if (localBranches.size() > 0)
+			if (itemCount > 0)
 				new MenuItem(menu, SWT.SEPARATOR);
 			MenuItem others = new MenuItem(menu, SWT.PUSH);
 			others.setText(UIText.SwitchToMenu_OtherMenuLabel);
