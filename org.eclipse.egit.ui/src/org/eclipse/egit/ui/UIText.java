@@ -178,10 +178,16 @@ public class UIText extends NLS {
 	public static String GenerateHistoryJob_NoCommits;
 
 	/** */
+	public static String GerritConfigurationPage_ConfigureFetchReviewNotes;
+
+	/** */
 	public static String GerritConfigurationPage_configurePushToGerrit;
 
 	/** */
 	public static String GerritConfigurationPage_errorBranchName;
+
+	/** */
+	public static String GerritConfigurationPage_groupFetch;
 
 	/** */
 	public static String GerritConfigurationPage_groupPush;
