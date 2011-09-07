@@ -307,6 +307,7 @@ class CreateBranchPage extends WizardPage {
 		} else
 			// in any case, we will have to enter the name
 			setPageComplete(false);
+
 		checkPage();
 		// add the listener just now to avoid unneeded checkPage()
 		nameText.addModifyListener(new ModifyListener() {
