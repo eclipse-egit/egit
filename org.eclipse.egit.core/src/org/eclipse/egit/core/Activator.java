@@ -15,6 +15,7 @@ import java.util.Hashtable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.securestorage.EGitSecureStore;
@@ -30,6 +31,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends Plugin implements DebugOptionsListener {
 	private static Activator plugin;
 	private RepositoryCache repositoryCache;
+	private IndexDiffCache indexDiffCache;
 	private RepositoryUtil repositoryUtil;
 	private EGitSecureStore secureStore;
 
@@ -91,6 +93,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 				props);
 
 		repositoryCache = new RepositoryCache();
+		indexDiffCache = new IndexDiffCache();
 		try {
 			GitProjectData.reconfigureWindowCache();
 		} catch (RuntimeException e) {
@@ -113,6 +116,13 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	 */
 	public RepositoryCache getRepositoryCache() {
 		return repositoryCache;
+	}
+
+	/**
+	 *  @return cache for Repository objects
+	 */
+	public IndexDiffCache getIndexDiffCache() {
+		return indexDiffCache;
 	}
 
 	/**
