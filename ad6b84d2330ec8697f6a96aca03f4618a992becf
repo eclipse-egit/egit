@@ -16,6 +16,41 @@
       "revId": "ad6b84d2330ec8697f6a96aca03f4618a992becf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///ks\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-09-07T06:01:06Z",
+      "side": 1,
+      "message": "maybe below instead. This is for the separator before the local branches.",
+      "parentUuid": "AABOBH///k8\u003d",
+      "revId": "ad6b84d2330ec8697f6a96aca03f4618a992becf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///ko\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-09-07T06:01:06Z",
+      "side": 1,
+      "message": "if (itemCount \u003e 0) here?",
+      "revId": "ad6b84d2330ec8697f6a96aca03f4618a992becf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
