@@ -82,8 +82,8 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 		this.repo = repo;
 		this.gitPath = gitPath;
 		this.baseId = baseDataSource.getObjectId();
-		this.remoteId = remoteDataSource.getObjectId();
 		this.baseCommit = baseDataSource.getRevCommit();
+		this.remoteId = remoteDataSource.getObjectId();
 		this.ancestorId = ancestroDataSource.getObjectId();
 		this.remoteCommit = remoteDataSource.getRevCommit();
 		this.ancestorCommit = ancestroDataSource.getRevCommit();
