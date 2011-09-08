@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
@@ -129,7 +130,7 @@ public class DiffEditorPage extends FormPage {
 				new UIJob(UIText.DiffEditorPage_TaskUpdatingViewer) {
 
 					public IStatus runInUIThread(IProgressMonitor uiMonitor) {
-						if (!viewer.getControl().isDisposed()) {
+						if (UIUtils.isUsable(viewer)) {
 							viewer.setDocument(document);
 							viewer.refreshStyleRanges();
 						}
