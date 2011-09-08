@@ -2,4 +2,6 @@
 org.eclipse.egit.core/debug = false
 # General trace location for the EGit Core Plugin
 org.eclipse.egit.core/debug/core = false
+# Trace location for the IndexDiffCache
+org.eclipse.egit.core/debug/core/indexdiffcache = false
 
