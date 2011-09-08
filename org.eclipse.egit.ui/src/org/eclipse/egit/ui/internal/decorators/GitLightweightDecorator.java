@@ -37,9 +37,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.util.ExceptionCollector;
-import org.eclipse.egit.core.project.GitProjectData;
-import org.eclipse.egit.core.project.RepositoryChangeListener;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
@@ -55,11 +55,6 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
-import org.eclipse.jgit.events.IndexChangedEvent;
-import org.eclipse.jgit.events.IndexChangedListener;
-import org.eclipse.jgit.events.ListenerHandle;
-import org.eclipse.jgit.events.RefsChangedEvent;
-import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.TextProcessor;
@@ -84,8 +79,7 @@ import org.eclipse.ui.themes.ITheme;
  */
 public class GitLightweightDecorator extends LabelProvider implements
 		ILightweightLabelDecorator, IPropertyChangeListener,
-		IResourceChangeListener, RepositoryChangeListener,
-		IndexChangedListener, RefsChangedListener {
+		IResourceChangeListener, IndexDiffChangedListener {
 
 	/**
 	 * Property constant pointing back to the extension point id of the
@@ -128,9 +122,6 @@ public class GitLightweightDecorator extends LabelProvider implements
 		UIPreferences.THEME_UncommittedChangeBackgroundColor,
 		UIPreferences.THEME_UncommittedChangeForegroundColor};
 
-	private ListenerHandle myIndexChangedHandle;
-	private ListenerHandle myRefsChangedHandle;
-
 	/**
 	 * Constructs a new Git resource decorator
 	 */
@@ -139,14 +130,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 		Activator.addPropertyChangeListener(this);
 		PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
 				.addPropertyChangeListener(this);
-		myIndexChangedHandle = Repository.getGlobalListenerList()
-				.addIndexChangedListener(this);
-		myRefsChangedHandle = Repository.getGlobalListenerList()
-				.addRefsChangedListener(this);
-		GitProjectData.addRepositoryChangeListener(this);
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(this,
-				IResourceChangeEvent.POST_CHANGE);
 
+		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache().addIndexDiffChangedListener(this);
 		// This is an optimization to ensure that while decorating our fonts and colors are
 		// pre-created and decoration can occur without having to syncExec.
 		ensureFontAndColorsCreated(fonts, colors);
@@ -187,10 +172,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 				.removePropertyChangeListener(this);
 		TeamUI.removePropertyChangeListener(this);
 		Activator.removePropertyChangeListener(this);
-		myIndexChangedHandle.remove();
-		myRefsChangedHandle.remove();
-		GitProjectData.removeRepositoryChangeListener(this);
-		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
+		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache().removeIndexDiffChangedListener(this);
 	}
 
 	/**
@@ -805,23 +787,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 		postLabelEvent(resourcesToUpdate.toArray());
 	}
 
-	public void onIndexChanged(IndexChangedEvent e) {
-		postLabelEvent();
-	}
-
-	public void onRefsChanged(RefsChangedEvent e) {
-		postLabelEvent();
-	}
-
-	/**
-	 * Callback for RepositoryChangeListener events, as well as
-	 * RepositoryListener events via repositoryChanged()
-	 *
-	 * @see org.eclipse.egit.core.project.RepositoryChangeListener#repositoryChanged(org.eclipse.egit.core.project.RepositoryMapping)
-	 */
-	public void repositoryChanged(RepositoryMapping mapping) {
-		// Until we find a way to refresh visible labels within a project
-		// we have to use this blanket refresh that includes all projects.
+	public void indexDiffChanged(Repository repository,
+			IndexDiffData indexDiffData) {
 		postLabelEvent();
 	}
 
