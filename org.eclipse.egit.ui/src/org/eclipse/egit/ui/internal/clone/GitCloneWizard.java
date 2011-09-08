@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
+import org.eclipse.egit.core.op.ConfigureFetchAfterCloneTask;
 import org.eclipse.egit.core.op.ConfigurePushAfterCloneTask;
 import org.eclipse.egit.core.op.SetChangeIdTask;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
@@ -40,6 +41,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
@@ -235,6 +237,9 @@ public class GitCloneWizard extends Wizard {
 			final CloneOperation op) {
 		String gerritBranch = gerritConfiguration.getBranch();
 		URIish pushURI = gerritConfiguration.getURI();
+		String notesRef = Constants.R_NOTES + "review"; //$NON-NLS-1$
+		op.addPostCloneTask(new ConfigureFetchAfterCloneTask(remoteName,
+				notesRef + ":" + notesRef)); //$NON-NLS-1$
 		if (gerritBranch != null && gerritBranch.length() > 0) {
 			ConfigurePushAfterCloneTask push = new ConfigurePushAfterCloneTask(remoteName,
 					"HEAD:refs/for/" + gerritBranch, pushURI); //$NON-NLS-1$
