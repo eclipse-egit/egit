@@ -29,7 +29,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.ui.ICommitMessageProvider;
+import org.eclipse.egit.ui.IWorkflowProvider;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
@@ -70,7 +70,7 @@ public class CommitMessageComponent {
 	/**
 	 * Constant for the extension point for the commit message provider
 	 */
-	private static final String COMMIT_MESSAGE_PROVIDER_ID = "org.eclipse.egit.ui.commitMessageProvider"; //$NON-NLS-1$
+	private static final String COMMIT_MESSAGE_PROVIDER_ID = "org.eclipse.egit.ui.workflowProvider"; //$NON-NLS-1$
 
 	private static final String COMMITTER_VALUES_PREF = "CommitDialog.committerValues"; //$NON-NLS-1$
 
@@ -514,12 +514,12 @@ public class CommitMessageComponent {
 				resources.add(file.getProject());
 		}
 		try {
-			ICommitMessageProvider messageProvider = getCommitMessageProvider();
+			IWorkflowProvider messageProvider = getCommitMessageProvider();
 			if (messageProvider != null) {
 				IResource[] resourcesArray = resources
 						.toArray(new IResource[0]);
 				calculatedCommitMessage = messageProvider
-						.getMessage(resourcesArray);
+						.getCommitMessage(resourcesArray);
 			}
 		} catch (CoreException coreException) {
 			Activator.error(coreException.getLocalizedMessage(), coreException);
@@ -530,7 +530,7 @@ public class CommitMessageComponent {
 			return EMPTY_STRING;
 	}
 
-	private ICommitMessageProvider getCommitMessageProvider()
+	private IWorkflowProvider getCommitMessageProvider()
 			throws CoreException {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		IConfigurationElement[] config = registry
@@ -538,8 +538,8 @@ public class CommitMessageComponent {
 		if (config.length > 0) {
 			Object provider;
 			provider = config[0].createExecutableExtension("class");//$NON-NLS-1$
-			if (provider instanceof ICommitMessageProvider) {
-				return (ICommitMessageProvider) provider;
+			if (provider instanceof IWorkflowProvider) {
+				return (IWorkflowProvider) provider;
 			} else {
 				Activator.logError(
 						UIText.CommitDialog_WrongTypeOfCommitMessageProvider,

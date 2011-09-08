@@ -104,7 +104,7 @@ public class SwitchToMenu extends ContributionItem implements
 			public void widgetSelected(SelectionEvent e) {
 				String sourceRef = repository.getConfig().getString(
 						ConfigConstants.CONFIG_WORKFLOW_SECTION, null,
-						ConfigConstants.CONFIG_KEY_DEFAULTSOURCEREF);
+						ConfigConstants.CONFIG_KEY_DEFBRANCHSTARTPOINT);
 				try {
 					if (repository.getRef(sourceRef) != null)
 						BranchOperationUI.createWithRef(repository, sourceRef).start();
