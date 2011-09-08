@@ -49,10 +49,11 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		final IFile baseFile = (IFile) resources[0];
 		final String gitPath = RepositoryMapping.getMapping(
 				baseFile.getProject()).getRepoRelativePath(baseFile);
-		final ITypedElement base = CompareUtils.getFileCachedRevisionTypedElement(gitPath, repository);
+		ITypedElement base;
 
 		ITypedElement next;
 		try {
+			base = CompareUtils.getHeadTypedElement(baseFile);
 			Ref head = repository.getRef(Constants.HEAD);
 			RevWalk rw = new RevWalk(repository);
 			RevCommit commit = rw.parseCommit(head.getObjectId());
