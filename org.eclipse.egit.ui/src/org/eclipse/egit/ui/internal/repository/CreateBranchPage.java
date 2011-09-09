@@ -19,9 +19,14 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation.UpstreamConfig;
+import org.eclipse.egit.ui.IWorkflowProvider;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.ValidationUtils;
@@ -307,6 +312,14 @@ class CreateBranchPage extends WizardPage {
 		} else
 			// in any case, we will have to enter the name
 			setPageComplete(false);
+
+		String suggestedName = getBranchNameSuggestion();
+		if (suggestedName != null) {
+			nameText.setText(suggestedName);
+			this.upstreamConfig = getDefaultUpstreamConfig(myRepository,
+					this.branchCombo.getText());
+		}
+		
 		checkPage();
 		// add the listener just now to avoid unneeded checkPage()
 		nameText.addModifyListener(new ModifyListener() {
@@ -430,5 +443,38 @@ class CreateBranchPage extends WizardPage {
 		if (setupRebase)
 			return UpstreamConfig.REBASE;
 		return UpstreamConfig.MERGE;
+	}
+
+	private IWorkflowProvider getWorkflowProvider() throws CoreException {
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IConfigurationElement[] config = registry
+				.getConfigurationElementsFor(IWorkflowProvider.WORKFLOW_PROVIDER_ID);
+		if (config.length > 0) {
+			Object provider;
+			provider = config[0].createExecutableExtension("class");//$NON-NLS-1$
+			if (provider instanceof IWorkflowProvider) {
+				return (IWorkflowProvider) provider;
+			} else {
+				Activator.logError(
+						UIText.CommitDialog_WrongTypeOfCommitMessageProvider,
+						null);
+			}
+		}
+		return null;
+	}
+
+	private String getBranchNameSuggestion() {
+		IWorkflowProvider workflowProvider;
+
+		try {
+			workflowProvider = getWorkflowProvider();
+			if (workflowProvider != null) {
+				return workflowProvider.getBranchNameSuggestion();
+			}
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
