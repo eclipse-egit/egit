@@ -16,8 +16,12 @@ package org.eclipse.egit.ui.internal.clone;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -26,6 +30,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.ConfigurePushAfterCloneTask;
+import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.op.SetChangeIdTask;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
@@ -39,8 +44,12 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.IWizardContainer;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.util.FileUtils;
@@ -50,6 +59,11 @@ import org.eclipse.osgi.util.NLS;
  * Import Git Repository Wizard. A front end to a git clone operation.
  */
 public class GitCloneWizard extends Wizard {
+
+	/**
+	 * Job family of the Clone Repository job.
+	 */
+	public static final Object CLONE_JOB_FAMILY = new Object();
 
 	private static final String HELP_CONTEXT = "org.eclipse.egit.ui.GitCloneWizard"; //$NON-NLS-1$
 
@@ -66,6 +80,10 @@ public class GitCloneWizard extends Wizard {
 	private boolean callerRunsCloneOperation;
 
 	private CloneOperation cloneOperation;
+
+	private RepositorySourceFileSelectionPage repositorySelection;
+
+	private Ref head;
 
 	/**
 	 * The default constructor
@@ -85,7 +103,10 @@ public class GitCloneWizard extends Wizard {
 		setWindowTitle(UIText.GitCloneWizard_title);
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 		setNeedsProgressMonitor(true);
-		cloneSource = new RepositorySelectionPage(true, presetURI);
+
+		repositorySelection = new RepositorySourceFileSelectionPage();
+
+		cloneSource = new RepositorySelectionPage(true, null);
 		cloneSource.setHelpContext(HELP_CONTEXT);
 		validSource = new SourceBranchPage() {
 
@@ -152,6 +173,7 @@ public class GitCloneWizard extends Wizard {
 
 	@Override
 	public void addPages() {
+		addPage(repositorySelection);
 		addPage(cloneSource);
 		addPage(validSource);
 		addPage(cloneDestination);
@@ -160,22 +182,173 @@ public class GitCloneWizard extends Wizard {
 
 	@Override
 	public boolean canFinish() {
-		return cloneDestination.isPageComplete() &&
-			gerritConfiguration.isPageComplete();
+		if (repositorySelection.isSingleRepo()) {
+			return cloneDestination.isPageComplete()
+					&& gerritConfiguration.isPageComplete();
+		} else {
+			return repositorySelection.isPageComplete();
+		}
 	}
 
 	@Override
 	public boolean performFinish() {
 		try {
-			if (cloneSource.getStoreInSecureStore()) {
-				if (!SecureStoreUtils.storeCredentials(cloneSource
-						.getCredentials(), cloneSource.getSelection().getURI()))
-					return false;
+			if (repositorySelection.isSingleRepo()) {
+				if (cloneSource.getStoreInSecureStore()) {
+					if (!SecureStoreUtils.storeCredentials(cloneSource
+							.getCredentials(), cloneSource.getSelection()
+							.getURI()))
+						return false;
+				}
+				return performClone();
+			} else {
+				try {
+
+					return performMultipleClone();
+				} finally {
+					setWindowTitle(UIText.GitCloneWizard_title);
+				}
 			}
-			return performClone();
 		} finally {
 			setWindowTitle(UIText.GitCloneWizard_title);
 		}
+	}
+
+	boolean performMultipleClone() {
+		final Object[] uris = repositorySelection.getURIs();
+		setWindowTitle(UIText.GitCloneWizard_jobName);
+		final String workdirLocation = repositorySelection.getDestination();
+		if (uris == null) {
+			return true;
+		}
+
+		Job job = new Job("Cloning") { //$NON-NLS-1$
+
+			@Override
+			public IStatus run(IProgressMonitor monitor) {
+				for (Object uriString : uris) {
+					URIish uri = null;
+					try {
+						uri = new URIish((String) uriString);
+					} catch (URISyntaxException e) {
+						// if invalid uri, ignore the error and skip it
+					}
+					if (uri == null) {
+						continue;
+					}
+					Collection<Ref> selectedBranches;
+					selectedBranches = getAvailableBranches(uri);
+
+					final File workdir = new File(workdirLocation
+							+ "/" + uri.getPath()); //$NON-NLS-1$
+
+					final Ref ref = head;
+					final String remoteName = "orignial"; //$NON-NLS-1$
+
+					boolean created = workdir.exists();
+					if (!created)
+						created = workdir.mkdirs();
+
+					if (!created || !workdir.isDirectory()) {
+						final String errorMessage = NLS.bind(
+								UIText.GitCloneWizard_errorCannotCreate,
+								workdir.getPath());
+						Status status = new Status(IStatus.ERROR,
+								Activator.getPluginId(), 0, errorMessage, null);
+						// ErrorDialog
+						// .openError(getShell(), getWindowTitle(),
+						// UIText.GitCloneWizard_failed,status);
+						// let's give user a chance to fix this minor problem
+						return status;
+					}
+
+					int timeout = Activator.getDefault().getPreferenceStore()
+							.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
+					final CloneOperation op = new CloneOperation(uri, true,
+							selectedBranches, workdir,
+							ref != null ? ref.getName() : null, remoteName,
+							timeout);
+
+					// UserPasswordCredentials credentials =
+					// cloneSource.getCredentials();
+					// if (credentials != null)
+					// op.setCredentialsProvider(new
+					// UsernamePasswordCredentialsProvider(
+					// credentials.getUser(), credentials.getPassword()));
+
+					// alreadyClonedInto = workdir.getPath();
+
+					runAsJob(uri, op);
+				}
+				return Status.OK_STATUS;
+			}
+		};
+
+		job.schedule();
+
+		return true;
+	}
+
+	/**
+	 * @param uri
+	 * @return list of ref.
+	 */
+	public List<Ref> getAvailableBranches(URIish uri) {
+		final ListRemoteOperation listRemoteOp;
+
+		try {
+			final Repository db = new FileRepository(new File("/tmp")); //$NON-NLS-1$
+			int timeout = Activator.getDefault().getPreferenceStore()
+					.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
+			listRemoteOp = new ListRemoteOperation(db, uri, timeout);
+
+			Job job = new Job("Retrieving remote branches") { //$NON-NLS-1$
+
+				@Override
+				protected IStatus run(IProgressMonitor monitor) {
+					try {
+						listRemoteOp.run(monitor);
+					} catch (InvocationTargetException e) {
+						return new Status(IStatus.ERROR,
+								Activator.getPluginId(), "Error");//$NON-NLS-1$
+					} catch (InterruptedException e) {
+						return Status.CANCEL_STATUS;
+					}
+					return Status.OK_STATUS;
+				}
+			};
+			job.schedule();
+			job.join();
+
+			final Ref idHEAD = listRemoteOp.getRemoteRef(Constants.HEAD);
+			head = null;
+			List<Ref> availableRefs = new ArrayList<Ref>();
+			for (final Ref r : listRemoteOp.getRemoteRefs()) {
+				final String n = r.getName();
+				if (!n.startsWith(Constants.R_HEADS))
+					continue;
+				availableRefs.add(r);
+				if (idHEAD == null || head != null)
+					continue;
+				if (r.getObjectId().equals(idHEAD.getObjectId()))
+					head = r;
+			}
+			Collections.sort(availableRefs, new Comparator<Ref>() {
+				public int compare(final Ref o1, final Ref o2) {
+					return o1.getName().compareTo(o2.getName());
+				}
+			});
+			if (idHEAD != null && head == null) {
+				head = idHEAD;
+				availableRefs.add(0, idHEAD);
+			}
+			return availableRefs;
+		} catch (IOException e) {
+			// Ignore the error
+		} catch (InterruptedException e) {
+			// Ignore the error
+		}
+		return null;
 	}
 
 	boolean performClone() {
@@ -301,5 +474,14 @@ public class GitCloneWizard extends Wizard {
 		op.run(monitor);
 		util.addConfiguredRepository(op.getGitDir());
 		return Status.OK_STATUS;
+	}
+
+	@Override
+	public IWizardPage getNextPage(IWizardPage page) {
+		if (repositorySelection.isSingleRepo()) {
+			return super.getNextPage(page);
+		} else {
+			return null;
+		}
 	}
 }
