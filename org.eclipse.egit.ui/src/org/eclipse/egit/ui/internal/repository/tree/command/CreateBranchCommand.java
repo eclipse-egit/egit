@@ -21,6 +21,7 @@ import org.eclipse.egit.ui.internal.repository.CreateBranchWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -61,27 +62,35 @@ public class CreateBranchCommand extends
 			// -> try to determine the currently checked out branch
 			Ref branch;
 			try {
-				if (node.getRepository().getFullBranch().startsWith(
-						Constants.R_HEADS)) {
-					// simple case: local branch checked out
-					branch = node.getRepository().getRef(
-							node.getRepository().getFullBranch());
-				} else {
-					// remote branch or tag checked out: resolve the commit
-					String ref = Activator
-							.getDefault()
-							.getRepositoryUtil()
-							.mapCommitToRef(node.getRepository(),
-									node.getRepository().getFullBranch(), false);
-					if (ref == null)
-						branch = null;
-					else {
-						if (ref.startsWith(Constants.R_TAGS))
-							// if a tag is checked out, we don't suggest
-							// anything
+				String sourceRef = node.getRepository().getConfig().getString(
+						ConfigConstants.CONFIG_WORKFLOW_SECTION, null,
+						ConfigConstants.CONFIG_KEY_DEFBRANCHSTARTPOINT);
+				if (node.getRepository().getRef(sourceRef) != null)
+					branch = node.getRepository().getRef(sourceRef);
+				else {
+					if (node.getRepository().getFullBranch()
+							.startsWith(Constants.R_HEADS)) {
+						// simple case: local branch checked out
+						branch = node.getRepository().getRef(
+								node.getRepository().getFullBranch());
+					} else {
+						// remote branch or tag checked out: resolve the commit
+						String ref = Activator
+								.getDefault()
+								.getRepositoryUtil()
+								.mapCommitToRef(node.getRepository(),
+										node.getRepository().getFullBranch(),
+										false);
+						if (ref == null)
 							branch = null;
-						else
-							branch = node.getRepository().getRef(ref);
+						else {
+							if (ref.startsWith(Constants.R_TAGS))
+								// if a tag is checked out, we don't suggest
+								// anything
+								branch = null;
+							else
+								branch = node.getRepository().getRef(ref);
+						}
 					}
 				}
 			} catch (IOException e) {
