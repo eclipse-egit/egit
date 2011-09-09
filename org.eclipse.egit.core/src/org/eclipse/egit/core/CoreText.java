@@ -207,6 +207,9 @@ public class CoreText extends NLS {
 	public static String CreatePatchOperation_repoRequired;
 
 	/** */
+	public static String IndexDiffCacheEntry_reindexing;
+
+	/** */
 	public static String IndexFileRevision_errorLookingUpPath;
 
 	/** */
