@@ -13,18 +13,32 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
 
 /**
- * This interface must be implemented to be a commit message provider. A commit
- * message provider provides the complete or a fragment of a commit message.
+ * This interface must be implemented to be a workflow provider. A workflow
+ * provider provides informations related to a user workflow.
  * This message will be added to the text field in the {@link CommitDialog}. <br/>
  *
- * @see CommitDialog
  */
-public interface ICommitMessageProvider {
+public interface IWorkflowProvider {
+
+	/**
+	 * ID of the extension point for the WorkflowProvider
+	 */
+	public static final String WORKFLOW_PROVIDER_ID = "org.eclipse.egit.ui.workflowProvider"; //$NON-NLS-1$
 
 	/**
 	 * @param resources
-	 * @return the message the CommitDialog should use as default message or
+	 * @return the message the {@link CommitDialog} should use as default message or
 	 * <code>null</code> if this provider cannot provide a commit message
 	 */
-	public String getMessage(IResource[] resources);
+	public String getCommitMessage(IResource[] resources);
+
+	/**
+	 * @return a branch name suggestion for the Creation wizard
+	 */
+	public String getBranchNameSuggestion();
+
+	/**
+	 * @return default source reference from the Preferences
+	 */
+	public String getDefaultSourceReference();
 }

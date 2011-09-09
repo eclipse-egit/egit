@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
-         point="org.eclipse.egit.ui.commitMessageProvider">
-      <commitMessageProvider
-            class="org.eclipse.egit.internal.mylyn.ui.commit.MylynCommitMessageProvider">
-      </commitMessageProvider>
-   </extension>
 
    <extension point="org.eclipse.core.runtime.adapters">
     <factory adaptableType="org.eclipse.egit.ui.internal.history.SWTCommit"
@@ -27,5 +21,18 @@
             name="%hyperlinkDetector.name"
             targetId="org.eclipse.mylyn.tasks.ui.TaskEditor">
       </hyperlinkDetector>
+   </extension>
+   <extension
+         point="org.eclipse.mylyn.tasks.core.taskActivationListeners">
+      <listener
+            class="org.eclipse.egit.internal.mylyn.ui.tasks.TaskActivationListener"
+            id="org.eclipse.egit.mylyn.ui.listener">
+      </listener>
+   </extension>
+   <extension
+         point="org.eclipse.egit.ui.workflowProvider">
+      <workflowProvider
+            class="org.eclipse.egit.internal.mylyn.ui.commit.MylynWorkflowProvider">
+      </workflowProvider>
    </extension>
 </plugin>

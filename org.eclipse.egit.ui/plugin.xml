@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
-   <extension-point id="commitMessageProvider" name="%CommitMessageProviderExtension-point.name" schema="schema/commitMessageProvider.exsd"/>
+   <extension-point id="workflowProvider" name="%WorkflowProviderExtension-point.name" schema="schema/workflowProvider.exsd"/>
    <extension point="org.eclipse.core.runtime.preferences">
       <initializer class="org.eclipse.egit.ui.PluginPreferenceInitializer"/>
    </extension>
