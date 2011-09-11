@@ -107,6 +107,9 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 				UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE,
 				UIText.ResourceHistory_toggleRelativeDate, historyGroup));
 		addField(new BooleanFieldEditor(
+				UIPreferences.RESOURCEHISTORY_SHOW_NOTES,
+				UIText.ResourceHistory_toggleShowNotes, historyGroup));
+		addField(new BooleanFieldEditor(
 				UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP,
 				UIText.ResourceHistory_toggleCommentWrap, historyGroup));
 
