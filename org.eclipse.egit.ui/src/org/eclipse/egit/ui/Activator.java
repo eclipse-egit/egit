@@ -405,7 +405,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		}
 
 		// FIXME, need to be more intelligent about this to avoid too much work
-		private static final long REPO_SCAN_INTERVAL = 10000L;
+		private static final long REPO_SCAN_INTERVAL = 500L;
 		// volatile in order to ensure thread synchronization
 		private volatile boolean doReschedule = true;
 
