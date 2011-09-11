@@ -446,7 +446,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 
 		Repository repo = lookupRepository(repositoryFile);
 
-		dialog.bot().button(IDialogConstants.OK_LABEL).click();
+		dialog.bot().button(UIText.CheckoutDialog_OkCheckout).click();
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		if (ObjectId.isId(repo.getBranch())) {
 			String mapped = Activator.getDefault().getRepositoryUtil()
@@ -465,7 +465,7 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 		assertEquals("Wrong selection count", 1, tc.rowCount());
 		assertEquals("Wrong item selected", newBranch[1], tc.get(0, 0));
 
-		dialog.bot().button(IDialogConstants.OK_LABEL).click();
+		dialog.bot().button(UIText.CheckoutDialog_OkCheckout).click();
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 	}
 
