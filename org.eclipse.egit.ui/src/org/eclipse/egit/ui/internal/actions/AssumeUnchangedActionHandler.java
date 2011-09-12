@@ -15,10 +15,10 @@ import java.util.Arrays;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.AssumeUnchangedOperation;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.job.JobUtil;
 
 /**
  * This operation sets the assume-valid bit in the index for the selected
