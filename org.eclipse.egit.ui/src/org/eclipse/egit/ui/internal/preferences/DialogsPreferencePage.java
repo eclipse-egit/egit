@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-/** Root preference page for the all of our workspace preferences. */
+/** Preference page for confirmation dialog preferences */
 public class DialogsPreferencePage extends FieldEditorPreferencePage implements
 		IWorkbenchPreferencePage {
 	private final static int GROUP_SPAN = 3;
