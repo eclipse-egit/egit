@@ -33,6 +33,25 @@ import org.eclipse.ui.PlatformUI;
  */
 public class EGitCredentialsProvider extends CredentialsProvider {
 
+	private String user;
+	private String password;
+
+	/**
+	 * Default constructor
+	 */
+	public EGitCredentialsProvider() {
+		// empty
+	}
+
+	/**
+	 * @param user
+	 * @param password
+	 */
+	public EGitCredentialsProvider(String user, String password) {
+		this.user = user;
+		this.password = password;
+	}
+
 	@Override
 	public boolean isInteractive() {
 		return true;
@@ -77,7 +96,11 @@ public class EGitCredentialsProvider extends CredentialsProvider {
 		}
 
 		if (!isSpecial && (userItem != null || passwordItem != null)) {
-			UserPasswordCredentials credentials = getCredentialsFromSecureStore(uri);
+			UserPasswordCredentials credentials = null;
+			if ((user != null) && (password != null))
+				credentials = new UserPasswordCredentials(user, password);
+			else
+				credentials = getCredentialsFromSecureStore(uri);
 
 			if (credentials == null) {
 				credentials = getCredentialsFromUser(uri);
