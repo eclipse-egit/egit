@@ -40,6 +40,7 @@ import org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration;
 import org.eclipse.team.ui.synchronize.ISynchronizePageSite;
 import org.eclipse.team.ui.synchronize.ModelSynchronizeParticipant;
 import org.eclipse.team.ui.synchronize.SynchronizePageActionGroup;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -134,11 +135,11 @@ class GitActionContributor extends SynchronizePageActionGroup {
 
 		ISynchronizePageSite site = configuration.getSite();
 		IWorkbenchSite ws = site.getWorkbenchSite();
-		openWorkingFileAction = new OpenWorkingFileAction(ws.getWorkbenchWindow()
-			.getActivePage());
-
-		site.getSelectionProvider().addSelectionChangedListener(
-				openWorkingFileAction);
+		if (ws instanceof IViewSite) {
+			openWorkingFileAction = new OpenWorkingFileAction(ws.getWorkbenchWindow()
+					.getActivePage());
+			site.getSelectionProvider().addSelectionChangedListener(
+					openWorkingFileAction);
+		}
 	}
-
 }
