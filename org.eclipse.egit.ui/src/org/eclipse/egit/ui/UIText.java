@@ -562,6 +562,12 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_RepoChangeScannerGroupHeader;
 
 	/** */
+	public static String GitPreferenceRoot_SecureStoreGroupLabel;
+
+	/** */
+	public static String GitPreferenceRoot_SecureStoreUseByDefault;
+
+	/** */
 	public static String GitPreferenceRoot_SynchronizeView;
 
 	/** */

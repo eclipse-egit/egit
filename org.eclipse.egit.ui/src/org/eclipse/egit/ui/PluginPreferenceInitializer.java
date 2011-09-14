@@ -93,6 +93,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.BLAME_IGNORE_WHITESPACE, false);
 		store.setDefault(UIPreferences.REMOTE_CONNECTION_TIMEOUT, 30 /* seconds */);
 		store.setDefault(UIPreferences.STAGING_VIEW_FILENAME_MODE, true);
+		store.setDefault(UIPreferences.CLONE_WIZARD_STORE_SECURESTORE, false);
 	}
 
 }
