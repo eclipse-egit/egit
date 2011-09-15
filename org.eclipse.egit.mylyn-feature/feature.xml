@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.egit.mylyn"
       label="%featureName"
-      version="1.1.0.201109151100-r"
+      version="1.1.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.egit">
 
@@ -24,7 +24,7 @@
    </url>
 
    <requires>
-      <import feature="org.eclipse.egit" version="1.1.0.201109151100-r" match="greaterOrEqual"/>
+      <import feature="org.eclipse.egit" version="1.0.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.mylyn.team_feature" version="3.5.0" match="greaterOrEqual"/>
    </requires>
 
@@ -32,7 +32,7 @@
          id="org.eclipse.egit.mylyn.ui"
          download-size="0"
          install-size="0"
-         version="1.1.0.201109151100-r"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>
