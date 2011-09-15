@@ -62,13 +62,23 @@
 			<img border="0" src="images/Egit-0.9-getstarted-name.png"/>
 		</p>
 		<h4 id="Setting_up_the_Home_Directory_on_Windows">Setting up the Home Directory on Windows</h4>
-		<p>Add the environment variable <code>HOME</code> to your user variables. EGit needs this path for looking up the user configuration (.gitconfig).
-<code>			HOME</code> should point to your home directory e.g. <code>C:\Users\Tom</code>. 
+		<p>Add the environment variable <code>HOME</code> to your environment variables. </p>
+		<ol>
+			<li>In Windows 7, type "enviroment window" at the start menu </li>
+			<li>Select "Edit environment variables for your account"</li>
+			<li>Click the "New" button. </li>
+			<li>Enter "HOME" in the name field </li>
+			<li>Enter "%USERPROFILE%" or some other path in the value field. </li>
+			<li>Click OK, and OK again. You have just added the Home directory on Windows.
+				<br/>
+			</li>
+		</ol>
+		<p>EGit needs this path for looking up the user configuration (.gitconfig). <code>HOME</code> should point to your home directory e.g. <code>C:\Users\Tom</code>. 
 			<b>Ensure correct case!</b> E.g. <code>C:\users</code> instead of <code>C:\Users</code> may cause problems! 
 		</p>
 		<p>If the <code>HOME</code> variable is not defined the home directory will be calculated by concatenating <code>HOMEDRIVE</code> and <code>HOMEPATH</code>. </p>
-		<p>If both <code>HOME</code> and <code>HOMEDRIVE</code> are not defined <code>HOMESHARE</code> will be used.</p>
-		<p>EGit shows a warning if <code>HOME</code> is not defined explicitly:</p>
+		<p>If both <code>HOME</code> and <code>HOMEDRIVE</code> are not defined <code>HOMESHARE</code> will be used. </p>
+		<p>EGit shows a warning if <code>HOME</code> is not defined explicitly: </p>
 		<p>
 			<img border="0" src="images/Egit_no_home.png"/>
 		</p>
@@ -308,6 +318,61 @@
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.10-github-pushed-repo.png"/>
+		</p>
+		<p>
+			<br/>
+		</p>
+		<h2 id="EGit_Tutorial">EGit Tutorial</h2>
+		<p>You may want to learn how to work with EGit and Gerrit Code Review by going through the 
+			<a href="http://www.eclipsecon.org/2011/sessions/?page=sessions&amp;id=2035" target="egit_external">EGit tutorial we held at EclipseCon 2011</a>.
+		</p>
+		<h3 id="Installation_and_Configuration">Installation and Configuration</h3>
+		<p>The tutorial was developed using EGit 0.11 so you should use at least this version. Newer versions may provide an easier way to do certain steps, look at the 
+			<a href="http://wiki.eclipse.org/EGit/FAQ#Where_can_I_find_older_releases_of_EGit.3F" target="egit_external">EGit "New and Noteworthy" documentation</a>.
+		</p>
+		<p>Best you go through the exercises using the Gerrit-in-a-zip you may download from TODO.
+			See exercise 9 to learn how to use that.</p>
+		<p>The egit-training repository is also available on 
+			<a href="http://egit.eclipse.org/" target="egit_external">http://egit.eclipse.org/</a>. 
+			You may clone it from there using
+		</p>
+		<pre>git://egit.eclipse.org/egit-training.git
+</pre>
+		<p>More details are given in</p>
+		<ul>
+			<li>Exercise 1: 
+				<a href="https://docs.google.com/document/d/1Uxq59vCcWqK-hPb5CHQcR97A%20mJehj6Rn0ScTnih2tyU/edit?hl=en_US" target="egit_external">Installation and configuration</a>
+			</li>
+			<li>Exercise 9: 
+				<a href="https://docs.google.com/document/d/1JDdge66iEN5BvBMSETtO3u5eUHmsuXLCoEc25HQqOcE/edit?hl=en_US" target="egit_external">Starting demo Gerrit server</a>
+			</li>
+		</ul>
+		<h3 id="Exercises">Exercises</h3>
+		<ul>
+			<li>Exercise 2: 
+				<a href="https://docs.google.com/document/d/1v65gQ2FdzZrqEfOCoCa6iUOLr9cxu2BRYo5EoKDARr0/edit?hl=en_US" target="egit_external">Develop a feature</a>
+			</li>
+			<li>Exercise 3: 
+				<a href="https://docs.google.com/document/d/1B6AD3SPMj6OTjibAQut07BlkYs4aVdPkREQBSYhL1Go/edit?hl=en_US" target="egit_external">Review a change from another developer</a>
+			</li>
+			<li>Exercise 4: 
+				<a href="https://docs.google.com/document/d/1FrsMGskez96vYFJaYyqKBYjklxj5dpBvqtpEpqKfsTo/edit?hl=en_US" target="egit_external">Rework your change</a>
+			</li>
+			<li>Exercise 5: 
+				<a href="https://docs.google.com/document/d/1us6K8cEvtiPsEqqEZoN3MqLJV2dNrHCwURzTeR413T0/edit?hl=en_US" target="egit_external">Review re-worked change</a>
+			</li>
+			<li>Exercise 6: 
+				<a href="https://docs.google.com/document/d/1ESvTMzNy4b6-5doARKt-vEaBOE8oUAQGSDccKyH1eZo/edit?hl=en_US" target="egit_external">Register projects to watch</a>
+			</li>
+			<li>Exercise 7: 
+				<a href="https://docs.google.com/document/d/1hJrlX_S3Z2qYZudNg8CFnuUnZMhFIsS2RI-_uib2gzk/edit?hl=en_US" target="egit_external">Rebase change to resolve conflicts</a>
+			</li>
+			<li>Exercise 8: 
+				<a href="https://docs.google.com/document/d/18f_IRY_ztLCsipZKqjdwaofjbQC-_wP-WqTD5dqNvlE/edit?hl=en_US" target="egit_external">Working with patch series</a>
+			</li>
+		</ul>
+		<p>
+			<br/>
 		</p><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>

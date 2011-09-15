@@ -323,6 +323,10 @@
 				<b>Compute Change-Id for Gerrit Code Review</b> in the Commit dialog is selected by default. See 
 				<a href="http://wiki.eclipse.org/EGit/User_Guide#Commit_Message" target="egit_external">Commit Message</a> for details.
 			</li>
+			<li>If you want to configure automatic Change-Id insertion at a later point in time you may use the repository configuration editor (
+				<b>Preferences &gt; Team &gt; Git &gt; Configuration</b>) to set the configuration parameter 
+				<b>gerrit.createchangeid</b> to true. If you want this configuration for all your repositories you may put it into ~/.gitconfig then you don't need to repeat this configuration for every new repository you happen to work on.
+			</li>
 		</ul>
 		<p>In the section 
 			<b>Push URI</b> you can configure the URI which is used for the default push configuration. It is pre-filled depending on the URI you are cloning from. If you clone with the git protocol, the protocol is automatically changed to ssh, and the default Gerrit ssh port 29418 is automatically added. For protocols which require a user there is a user field for convenience.
@@ -1054,7 +1058,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<b>Revert Commit</b>. This reverts the changes that the selected commit introduces by creating a new commit on top of the currently checked out commit.
 		</p>
 		<h3 id="Resetting_your_current_HEAD">Resetting your current HEAD</h3>
-		<p>Git offers the possibility to reset the HEAD of the current branch to any other commit. It optionally resets the index and the working tree to match that commit. Note that this action affects all files and folders in the enitre repository.</p>
+		<p>Git offers the possibility to reset the HEAD of the current branch to any other commit. It optionally resets the index and the working tree to match that commit. Note that this action affects all files and folders in the entire repository.</p>
 		<p>You have the option to do a hard reset, a mixed reset and a soft reset.</p>
 		<ul>
 			<li>
@@ -1328,7 +1332,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		<p>After pressing the "Commit" Button the merge is completed.</p>
 		<h3 id="Aborting_Merge">Aborting Merge</h3>
 		<p>If a merge resulted in conflicts you can abort the merge with a hard reset to the current branch. This can be done in state "Conflicts" and in state "Merged", i.e. before and after you have resolved the conflicts. </p>
-		<p>The hard reset can be done from the team menu, the Git Repositories View or the History View. See [
+		<p>The hard reset can be done from the team menu, the Git Repositories View or the History View. See 
 			<a href="Tasks.html#Revert_all_local_and_staged_changes">Revert all local and staged changes</a> for more details.
 		</p>
 		<p>

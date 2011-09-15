@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 1.1 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 1.1 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="New-Actions.html" title="New Actions">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">New Actions</td>
+			</tr>
+		</table><hr/>
+		<h1 id="New_Features">New Features</h1>
+		<h2 id="New_Reflog_View">New Reflog View</h2>
+		<ul>
+			<li>Shows the Git reflog for a selected repository</li>
+			<li>Supports showing the reflog for a specific branch by selecting the hyperlink ref name in the top right of the view</li>
+			<li>Supports searching and filtering</li>
+			<li>Double-clicking a reflog entry opens the corresponding 
+				<i>To</i> commit
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit11-reflow-view.png"/>
+		</p>
+		<h2 id="Allow_dragging_of_commits_from_History_view">Allow dragging of commits from History view</h2>
+		<p>You're now able to Drag and drop commits either onto a Mylyn Task or into a folder on your harddisk. In both cases, EGit will automatically create a patch for you to attach it on the bug or to create a patchfile on your harddisk.</p>
+		<p>
+			<img border="0" src="images/Dnd_patch.png"/>
+		</p>
+		<h2 id="New_preference_to_ignore_whitespace_changes_in_blame_annotations">New preference to ignore whitespace changes in blame annotations</h2>
+		<h2 id="History_View_always_displays_HEAD_and_other_additional_refs">History View always displays HEAD and other additional refs</h2>
+		<h2 id="More_information_displayed_in_merge.2C_fetch_and_push_results_dialogs">More information displayed in merge, fetch and push results dialogs</h2>
+		<ul>
+			<li>Commits and modified files displayed in fetch, push, and pull and push result dialogs</li>
+			<li>Commit details such as author and date are now displayed for merge results</li>
+			<li>Icons displayed for different ref update types (new tag, new branch, etc.)</li>
+			<li>Push result messages now support hyperlinks</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit11-pull-results.png"/>
+		</p>
+		<p>
+			<img border="0" src="images/Egit11-push-results.png"/>
+		</p>
+		<h2 id="Commit_Dialog_Improvements">Commit Dialog Improvements</h2>
+		<ul>
+			<li>Support for commit ID hyperlinks</li>
+			<li>Content assist for file names shown in 
+				<i>Files</i> section
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit11-commit-content-assist.png"/>
+		</p>
+		<h2 id="Staging_View">Staging View</h2>
+		<ul>
+			<li>New column layout preference that supports showing the 
+				<i>Unstaged Changes</i> and 
+				<i>Staged Changes</i> sections side by side
+			</li>
+			<li>New preference for showing the file names first followed by the directory that the files are located in</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit11-staging-view.png"/>
+		</p>
+		<h2 id="New_Features_in_Synchronize_View">New Features in Synchronize View</h2>
+		<ul>
+			<li>Synchronize filtered on folder</li>
+			<li>drag and drop staging / unstaging in Git Changeset Model (
+				<a href="http://www.youtube.com/watch?v=MU9eaf_rSWw" target="egit_external">demonstration on youtube</a>)
+			</li>
+			<li>new "Fetch Changes" checkbox in synchronize wizard</li>
+			<li>Performance improvements</li>
+			<li>"Synchronize Wizard" allow select additional refs like FETCH_HEAD</li>
+			<li>"Synchronize With..." menu item moved into "Advanced" section</li>
+		</ul>
+		<h2 id="Team_Project_Set_Support">Team Project Set Support</h2>
+		<p>It's now possible to export and import Git projects with team project set files (.psf). This enables easier workspace setup, especially with many repositories and/or with different branches. How it works:</p>
+		<ul>
+			<li>Select the projects you want to export</li>
+			<li>Right click on the selection and chose 
+				<i>Export</i>
+			</li>
+			<li>Select 
+				<i>Team Project Set</i>
+			</li>
+			<li>Fill in the details such as where the 
+				<i>.psf</i> file should be saved and finish the wizard
+			</li>
+		</ul>
+		<p>This creates a file with all the information that is necessary for Eclipse to reconstruct the project setup. It contains the URLs of the Git repositories, the branch to checkout, and the paths to the projects. Creating a new workspace is as easy as:</p>
+		<ul>
+			<li>Go to 
+				<i>File</i> -&gt; 
+				<i>Import</i>
+			</li>
+			<li>Select 
+				<i>Team Project Set</i>
+			</li>
+			<li>Select the 
+				<i>.psf</i> file
+			</li>
+		</ul>
+		<p>Eclipse will clone the repositories into the workspace location, check out the right branches and import the projects, ready for creating new commits and pushing.</p>
+		<h2 id="Logical_Model_Support">Logical Model Support</h2>
+		<p>In case you're working with files that are supported by a Logical Model Provider (eg. EMF Compare for .ecore, or other commercial modeling tools), EGit now detects these cases during staging, replacing and commiting changes and will help you to choose the right set of files to work on.</p>
+		<p>
+			<img border="0" src="images/EGit_logical_Selection.png"/>
+		</p>
+		<p>For some background information on Logical Models, see this blog post: 
+			<a href="http://tasktop.com/blog/eclipse/what-the-heck-are-logical-models" target="egit_external">What the heck are Logical Models</a>
+		</p>
+		<h2 id="Navigating_from_tasks_to_commits">Navigating from tasks to commits</h2>
+		<p>With the Mylyn/EGit bridge installed, you're now able to see commit ids in tasks (eg. Bugzilla) hyperlinked. Once clicked, the corresponding commit will open up in the Commit Editor.</p>
+		<p>
+			<img border="0" src="images/Mylyn_commit_links.png"/>
+		</p><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="New-Actions.html" title="New Actions">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">New Actions</td>
+			</tr>
+		</table>
+	</body>
+</html>

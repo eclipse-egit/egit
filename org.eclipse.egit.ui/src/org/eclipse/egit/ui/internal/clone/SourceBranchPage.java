@@ -32,6 +32,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CachedCheckboxTreeViewer;
 import org.eclipse.egit.ui.internal.FilteredCheckboxTree;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
+import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -48,7 +49,6 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.URIish;
-import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -301,8 +301,9 @@ class SourceBranchPage extends WizardPage {
 			listRemoteOp = new ListRemoteOperation(db, uri, timeout);
 			if (credentials != null)
 				listRemoteOp
-						.setCredentialsProvider(new UsernamePasswordCredentialsProvider(
-								credentials.getUser(), credentials.getPassword()));
+						.setCredentialsProvider(new EGitCredentialsProvider(
+								credentials.getUser(), credentials
+										.getPassword()));
 			getContainer().run(true, true, new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor)
 						throws InvocationTargetException, InterruptedException {
