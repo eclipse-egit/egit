@@ -13,6 +13,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.equinox.security;bundle-version="[1.0.0,2.0.0)"
 Export-Package: org.eclipse.egit.core;version="1.2.0",
  org.eclipse.egit.core.internal;version="1.2.0";x-friends:="org.eclipse.egit.ui",
+ org.eclipse.egit.core.internal.indexdiff;version="1.2.0";x-friends:="org.eclipse.egit.ui",
  org.eclipse.egit.core.internal.storage;version="1.2.0";x-friends:="org.eclipse.egit.ui,org.eclipse.egit.core.test",
  org.eclipse.egit.core.internal.trace;version="1.2.0";x-internal:=true,
  org.eclipse.egit.core.internal.util;version="1.2.0";x-friends:="org.eclipse.egit.ui",

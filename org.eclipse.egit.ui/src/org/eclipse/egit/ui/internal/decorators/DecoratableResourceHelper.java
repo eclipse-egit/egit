@@ -9,7 +9,6 @@
 package org.eclipse.egit.ui.internal.decorators;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -17,7 +16,6 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.ContainerTreeIterator;
 import org.eclipse.egit.core.ContainerTreeIterator.ResourceEntry;
-import org.eclipse.egit.core.IteratorService;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
@@ -27,15 +25,11 @@ import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
-import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 
 /**
  * Helper class to create decoratable resources
@@ -73,63 +67,22 @@ public class DecoratableResourceHelper {
 				// Array only contains nulls
 				return null;
 		}
-		final RepositoryMapping mapping = RepositoryMapping
-				.getMapping(resources[i]);
 
 		final IDecoratableResource[] decoratableResources = new IDecoratableResource[resources.length];
 
-		ArrayList<String> resourcePaths = new ArrayList<String>();
 		for (i = 0; i < resources.length; i++) {
 			final IResource resource = resources[i];
 			if (resource != null && resource.getProject().isOpen()) {
-				switch (resource.getType()) {
-				case IResource.FILE:
-					// Add file path to list used for bulk decoration
-					resourcePaths.add(mapping.getRepoRelativePath(resource));
-					break;
-				case IResource.FOLDER:
-				case IResource.PROJECT:
-					// Decorate folder and project node separately
-					try {
-						decoratableResources[i] = new DecoratableResourceAdapter(
-								resource);
-					} catch (IOException e) {
-						// Ignore - decoratableResources[i] is null
-					}
-					resourcePaths.add(null);
-					break;
+				// Decorate folder and project node separately
+				try {
+					decoratableResources[i] = new DecoratableResourceAdapter(
+							resource);
+				} catch (IOException e) {
+					// Ignore - decoratableResources[i] is null
 				}
-			} else {
-				resourcePaths.add(null);
 			}
 		}
 
-		// Check resource paths before proceeding with bulk decoration
-		boolean containsAtLeastOnePath = false;
-		for (final String p : resourcePaths) {
-			if (p != null) {
-				containsAtLeastOnePath = true;
-				break;
-			}
-		}
-		if (!containsAtLeastOnePath)
-			return decoratableResources;
-
-		final TreeWalk treeWalk = createThreeWayTreeWalk(mapping, resourcePaths);
-		if (treeWalk != null)
-			while (treeWalk.next()) {
-				i = resourcePaths.indexOf(treeWalk.getPathString());
-				if (i != -1) {
-					try {
-						if (decoratableResources[i] == null)
-							decoratableResources[i] = decorateResource(
-									new DecoratableResource(resources[i]),
-									treeWalk);
-					} catch (IOException e) {
-						// Ignore - decoratableResources[i] is null
-					}
-				}
-			}
 		return decoratableResources;
 	}
 
@@ -165,38 +118,6 @@ public class DecoratableResourceHelper {
 			repoToDirCache.put(repository, dirCache);
 			return dirCache;
 		}
-	}
-
-	private static TreeWalk createThreeWayTreeWalk(
-			final RepositoryMapping mapping,
-			final ArrayList<String> resourcePaths) throws IOException {
-		final Repository repository = mapping.getRepository();
-		final TreeWalk treeWalk = new TreeWalk(repository);
-
-		// Copy path list...
-		final ArrayList<String> paths = new ArrayList<String>(resourcePaths);
-		while (paths.remove(null)) {
-			// ... and remove nulls
-		}
-
-		treeWalk.setFilter(PathFilterGroup.createFromStrings(paths));
-		treeWalk.setRecursive(true);
-		treeWalk.reset();
-
-		// Repository
-		final ObjectId headId = repository.resolve(Constants.HEAD);
-		if (headId != null)
-			treeWalk.addTree(new RevWalk(repository).parseTree(headId));
-		else
-			treeWalk.addTree(new EmptyTreeIterator());
-
-		// Index
-		treeWalk.addTree(new DirCacheIterator(getDirCache(repository)));
-
-		// Working directory
-		treeWalk.addTree(IteratorService.createInitialIterator(repository));
-
-		return treeWalk;
 	}
 
 	static DecoratableResource decorateResource(
