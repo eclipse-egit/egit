@@ -15,18 +15,10 @@
 package org.eclipse.egit.ui.internal.decorators;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceChangeEvent;
-import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
@@ -37,9 +29,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.internal.util.ExceptionCollector;
-import org.eclipse.egit.core.project.GitProjectData;
-import org.eclipse.egit.core.project.RepositoryChangeListener;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
@@ -55,12 +47,6 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
-import org.eclipse.jgit.events.IndexChangedEvent;
-import org.eclipse.jgit.events.IndexChangedListener;
-import org.eclipse.jgit.events.ListenerHandle;
-import org.eclipse.jgit.events.RefsChangedEvent;
-import org.eclipse.jgit.events.RefsChangedListener;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.TextProcessor;
 import org.eclipse.swt.graphics.Color;
@@ -84,8 +70,7 @@ import org.eclipse.ui.themes.ITheme;
  */
 public class GitLightweightDecorator extends LabelProvider implements
 		ILightweightLabelDecorator, IPropertyChangeListener,
-		IResourceChangeListener, RepositoryChangeListener,
-		IndexChangedListener, RefsChangedListener {
+		IndexDiffChangedListener {
 
 	/**
 	 * Property constant pointing back to the extension point id of the
@@ -106,15 +91,6 @@ public class GitLightweightDecorator extends LabelProvider implements
 			Activator.getPluginId(), "notDecoratable"); //$NON-NLS-1$
 
 	/**
-	 * Bit-mask describing interesting changes for IResourceChangeListener
-	 * events
-	 */
-	private static int INTERESTING_CHANGES = IResourceDelta.CONTENT
-			| IResourceDelta.MOVED_FROM | IResourceDelta.MOVED_TO
-			| IResourceDelta.OPEN | IResourceDelta.REPLACED
-			| IResourceDelta.TYPE;
-
-	/**
 	 * Collector for keeping the error view from filling up with exceptions
 	 */
 	private static ExceptionCollector exceptions = new ExceptionCollector(
@@ -128,9 +104,6 @@ public class GitLightweightDecorator extends LabelProvider implements
 		UIPreferences.THEME_UncommittedChangeBackgroundColor,
 		UIPreferences.THEME_UncommittedChangeForegroundColor};
 
-	private ListenerHandle myIndexChangedHandle;
-	private ListenerHandle myRefsChangedHandle;
-
 	/**
 	 * Constructs a new Git resource decorator
 	 */
@@ -139,14 +112,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 		Activator.addPropertyChangeListener(this);
 		PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
 				.addPropertyChangeListener(this);
-		myIndexChangedHandle = Repository.getGlobalListenerList()
-				.addIndexChangedListener(this);
-		myRefsChangedHandle = Repository.getGlobalListenerList()
-				.addRefsChangedListener(this);
-		GitProjectData.addRepositoryChangeListener(this);
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(this,
-				IResourceChangeEvent.POST_CHANGE);
 
+		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache().addIndexDiffChangedListener(this);
 		// This is an optimization to ensure that while decorating our fonts and colors are
 		// pre-created and decoration can occur without having to syncExec.
 		ensureFontAndColorsCreated(fonts, colors);
@@ -187,10 +154,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 				.removePropertyChangeListener(this);
 		TeamUI.removePropertyChangeListener(this);
 		Activator.removePropertyChangeListener(this);
-		myIndexChangedHandle.remove();
-		myRefsChangedHandle.remove();
-		GitProjectData.removeRepositoryChangeListener(this);
-		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
+		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache().removeIndexDiffChangedListener(this);
 	}
 
 	/**
@@ -703,125 +667,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 		}
 	}
 
-	/**
-	 * Callback for IResourceChangeListener events
-	 *
-	 * Schedules a refresh of the changed resource
-	 *
-	 * If the preference for computing deep dirty states has been set we walk
-	 * the ancestor tree of the changed resource and update all parents as well.
-	 *
-	 * @see org.eclipse.core.resources.IResourceChangeListener#resourceChanged(org.eclipse.core.resources.IResourceChangeEvent)
-	 */
-	public void resourceChanged(IResourceChangeEvent event) {
-		final long currentTime = System.currentTimeMillis();
-		final Set<IResource> resourcesToUpdate = new HashSet<IResource>();
-
-		try { // Compute the changed resources by looking at the delta
-			event.getDelta().accept(new IResourceDeltaVisitor() {
-				public boolean visit(IResourceDelta delta) throws CoreException {
-
-					// If the file has changed but not in a way that we care
-					// about (e.g. marker changes to files) then ignore
-					if (delta.getKind() == IResourceDelta.CHANGED
-							&& (delta.getFlags() & INTERESTING_CHANGES) == 0) {
-						return true;
-					}
-
-					final IResource resource = delta.getResource();
-
-					// If the resource is not part of a project under Git
-					// revision control
-					final RepositoryMapping mapping = RepositoryMapping
-							.getMapping(resource);
-					if (mapping == null) {
-						// Ignore the change
-						return true;
-					}
-
-					if (resource.getType() == IResource.ROOT) {
-						// Continue with the delta
-						return true;
-					}
-
-					if (resource.getType() == IResource.PROJECT) {
-						// If the project is not accessible, don't process it
-						if (!resource.isAccessible())
-							return false;
-					}
-
-					// Ignore resources that haven't been changed within the
-					// last 10 seconds
-					if (currentTime - resource.getLocalTimeStamp() > 10000)
-						return false;
-
-					// Don't include ignored resources
-					if (Team.isIgnoredHint(resource))
-						return false;
-
-					// All seems good, schedule the resource for update
-					if (Constants.GITIGNORE_FILENAME.equals(resource.getName())) {
-						// re-decorate all container members when .gitignore changes
-						IContainer parent = resource.getParent();
-						if (parent.exists())
-							resourcesToUpdate.addAll(Arrays.asList(parent
-									.members()));
-						else
-							return false;
-					} else {
-						resourcesToUpdate.add(resource);
-					}
-
-					if (delta.getKind() == IResourceDelta.CHANGED
-							&& (delta.getFlags() & IResourceDelta.OPEN) > 1)
-						return false; // Don't recurse when opening projects
-					else
-						return true;
-				}
-			}, true /* includePhantoms */);
-		} catch (final CoreException e) {
-			handleException(null, e);
-		}
-
-		if (resourcesToUpdate.isEmpty())
-			return;
-
-		// If ancestor-decoration is enabled in the preferences we walk
-		// the ancestor tree of each of the changed resources and add
-		// their parents to the update set
-		final IPreferenceStore store = Activator.getDefault()
-				.getPreferenceStore();
-		if (store.getBoolean(UIPreferences.DECORATOR_RECOMPUTE_ANCESTORS)) {
-			final IResource[] changedResources = resourcesToUpdate
-					.toArray(new IResource[resourcesToUpdate.size()]);
-			for (IResource current : changedResources) {
-				while (current.getType() != IResource.ROOT) {
-					current = current.getParent();
-					resourcesToUpdate.add(current);
-				}
-			}
-		}
-
-		postLabelEvent(resourcesToUpdate.toArray());
-	}
-
-	public void onIndexChanged(IndexChangedEvent e) {
-		postLabelEvent();
-	}
-
-	public void onRefsChanged(RefsChangedEvent e) {
-		postLabelEvent();
-	}
-
-	/**
-	 * Callback for RepositoryChangeListener events, as well as
-	 * RepositoryListener events via repositoryChanged()
-	 *
-	 * @see org.eclipse.egit.core.project.RepositoryChangeListener#repositoryChanged(org.eclipse.egit.core.project.RepositoryMapping)
-	 */
-	public void repositoryChanged(RepositoryMapping mapping) {
-		// Until we find a way to refresh visible labels within a project
-		// we have to use this blanket refresh that includes all projects.
+	public void indexDiffChanged(Repository repository,
+			IndexDiffData indexDiffData) {
 		postLabelEvent();
 	}
 
@@ -858,56 +705,15 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 * <code>postLabelEvent(null, true)</code>.
 	 */
 	private void postLabelEvent() {
-		postLabelEvent(null, true);
-	}
-
-	/**
-	 * Post a label event to the LabelEventJob
-	 *
-	 * Posts a label event for specific elements. Does not invalidate other
-	 * decorations. Same as <code>postLabelEvent(elements, false)</code>.
-	 *
-	 * @param elements
-	 *            The elements to update
-	 */
-	private void postLabelEvent(final Object[] elements) {
-		postLabelEvent(elements, false);
-	}
-
-	private void postLabelEvent(final Object[] elements,
-			final boolean invalidateAllDecorations) {
 		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		boolean updateRoot = false;
 
-		if (elements != null) {
-			// Update specific elements
-			for (Object element : elements) {
-				final IResource resource = getResource(element);
-				if (resource != null) {
-					if (resource.equals(root)) {
-						updateRoot = true;
-						break;
-					} else {
-						try {
-							// Remove 'refreshed' property
-							resource.setSessionProperty(REFRESHED_KEY, null);
-						} catch (CoreException e) {
-							// Ignore
-						}
-					}
-				}
-			}
-		}
-
-		if (invalidateAllDecorations || updateRoot) {
-			// Invalidate all decorations
-			try {
-				// Set (new) 'refresh' timestamp
-				root.setSessionProperty(REFRESH_KEY,
-						Long.valueOf(System.currentTimeMillis()));
-			} catch (CoreException e) {
-				handleException(root, e);
-			}
+		// Invalidate all decorations
+		try {
+			// Set (new) 'refresh' timestamp
+			root.setSessionProperty(REFRESH_KEY,
+					Long.valueOf(System.currentTimeMillis()));
+		} catch (CoreException e) {
+			handleException(root, e);
 		}
 
 		// Post label event to LabelEventJob
