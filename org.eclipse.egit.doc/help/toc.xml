@@ -18,6 +18,10 @@
 				<topic href="help/EGit/User_Guide/User-Guide.html#Eclipse_SSH_Configuration" label="Eclipse SSH Configuration"></topic>
 				<topic href="help/EGit/User_Guide/User-Guide.html#Push_Upstream" label="Push Upstream"></topic>
 			</topic>
+			<topic href="help/EGit/User_Guide/User-Guide.html#EGit_Tutorial" label="EGit Tutorial">
+				<topic href="help/EGit/User_Guide/User-Guide.html#Installation_and_Configuration" label="Installation and Configuration"></topic>
+				<topic href="help/EGit/User_Guide/User-Guide.html#Exercises" label="Exercises"></topic>
+			</topic>
 		</topic>
 		<topic href="help/EGit/User_Guide/Concepts.html" label="Concepts">
 			<topic href="help/EGit/User_Guide/Concepts.html#Repository" label="Repository"></topic>
@@ -373,40 +377,33 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html" label="EGit 1.0 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html" label="Features">
-			<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#Git_Commit_Search_and_Commit_Viewer" label="Git Commit Search and Commit Viewer"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#Staging_View" label="Staging View"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#Blame_Annotations" label="Blame Annotations"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#New_Menu_Actions" label="New Menu Actions"></topic>
-			<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#Usability_improvements" label="Usability improvements">
-				<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#History_View" label="History View"></topic>
-				<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#Synchronize_View" label="Synchronize View"></topic>
-				<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#Commit" label="Commit"></topic>
-				<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#Improved_Share_Project_Wizard" label="Improved Share Project Wizard"></topic>
-			</topic>
-			<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#Git_Repositories_view" label="Git Repositories view">
-				<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#Branch_commits" label="Branch commits"></topic>
-			</topic>
-			<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#GitHub_Connector" label="GitHub Connector">
-				<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#Issues" label="Issues"></topic>
-				<topic href="help/EGit/New_and_Noteworthy/1.0.0/1.0.0.html#Gists" label="Gists"></topic>
-			</topic>
+	<topic href="help/EGit/New_and_Noteworthy/1.1/1.1.html" label="EGit 1.1 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/1.1/1.1.html" label="New Features">
+			<topic href="help/EGit/New_and_Noteworthy/1.1/1.1.html#New_Reflog_View" label="New Reflog View"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/1.1/1.1.html#Allow_dragging_of_commits_from_History_view" label="Allow dragging of commits from History view"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/1.1/1.1.html#New_preference_to_ignore_whitespace_changes_in_blame_annotations" label="New preference to ignore whitespace changes in blame annotations"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/1.1/1.1.html#History_View_always_displays_HEAD_and_other_additional_refs" label="History View always displays HEAD and other additional refs"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/1.1/1.1.html#More_information_displayed_in_merge.2C_fetch_and_push_results_dialogs" label="More information displayed in merge, fetch and push results dialogs"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/1.1/1.1.html#Commit_Dialog_Improvements" label="Commit Dialog Improvements"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/1.1/1.1.html#Staging_View" label="Staging View"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/1.1/1.1.html#New_Features_in_Synchronize_View" label="New Features in Synchronize View"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/1.1/1.1.html#Team_Project_Set_Support" label="Team Project Set Support"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/1.1/1.1.html#Logical_Model_Support" label="Logical Model Support"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/1.1/1.1.html#Navigating_from_tasks_to_commits" label="Navigating from tasks to commits"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/1.0.0/Bugs-Closed.html" label="Bugs Closed"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/1.0.0/Commits.html" label="Commits"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/1.0.0/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/1.1/New-Actions.html" label="New Actions"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/1.1/GitHub-Mylyn-Connector.html" label="GitHub Mylyn Connector">
+			<topic href="help/EGit/New_and_Noteworthy/1.1/GitHub-Mylyn-Connector.html#Pull_Request_Support" label="Pull Request Support"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/1.1/GitHub-Mylyn-Connector.html#Import_and_Clone" label="Import and Clone"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/1.1/GitHub-Mylyn-Connector.html#GitHub_Java_API" label="GitHub Java API"></topic>
+		</topic>
+		<topic href="help/EGit/New_and_Noteworthy/1.1/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/1.0/1.0.html" label="JGit 1.0 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/1.0/1.0.html" label="Git Porcelain API Updates"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/1.0/Features.html" label="Features">
-			<topic href="help/JGit/New_and_Noteworthy/1.0/Features.html#Ant_Tasks" label="Ant Tasks"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/1.0/Features.html#jgit.storage.dht_storage_SPI_implementation_for_JGit" label="jgit.storage.dht storage SPI implementation for JGit"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/1.0/Features.html#storage_system_implementations_based_on_this_DHT_SPI" label="storage system implementations based on this DHT SPI"></topic>
-		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/1.0/Bugs-Closed.html" label="Bugs Closed"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/1.0/Commits.html" label="Commits"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/1.0/Updating-This-Document.html" label="Updating This Document"></topic>
+	<topic href="help/JGit/New_and_Noteworthy/1.1/1.1.html" label="JGit 1.1 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/1.1/1.1.html" label="Git Porcelain API Updates"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/1.1/Features.html" label="Features"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/1.1/Performance-Improvements.html" label="Performance Improvements"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/1.1/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>
