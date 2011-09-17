@@ -13,8 +13,10 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 
+import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -46,6 +48,12 @@ public class TestProject {
 	private String location;
 	private TestUtils testUtils = new TestUtils();
 
+	private File testRoot;
+
+	public File getTestRoot() {
+		return testRoot;
+	}
+
 	/**
 	 * @throws CoreException
 	 *             If project already exists
@@ -61,23 +69,82 @@ public class TestProject {
 	/**
 	 * @param remove
 	 *            should project be removed if already exists
-	 * @param projectName
+	 * @param path
 	 * @throws CoreException
 	 */
-	public TestProject(final boolean remove, String projectName) throws CoreException {
+	public TestProject(final boolean remove, String path) throws CoreException {
+		this(remove, path, true);
+	}
+
+	/**
+	 * @param remove
+	 *            should project be removed if already exists
+	 * @param path
+	 * @param insidews set false to create in temp
+	 * @throws CoreException
+	 */
+	public TestProject(final boolean remove, String path, boolean insidews) throws CoreException {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		project = root.getProject(projectName);
+		IProjectDescription description = createDescription(remove, path,
+				insidews, root);
+		project = root.getProject(description.getName());
 		if (remove)
 			project.delete(true, null);
-		project.create(null);
+		IPath locationBefore = description.getLocation();
+		if (locationBefore == null)
+			locationBefore = root.getRawLocation().append(path);
+		location = locationBefore.toOSString();
+		project.create(description, null);
 		project.open(null);
-		location = project.getLocation().toOSString();
 		javaProject = JavaCore.create(project);
 		IFolder binFolder = createBinFolder();
 		setJavaNature();
 		javaProject.setRawClasspath(new IClasspathEntry[0], null);
 		createOutputFolder(binFolder);
 		addSystemLibraries();
+	}
+
+	private IProjectDescription createDescription(final boolean remove,
+			String path, boolean insidews, IWorkspaceRoot root) {
+		Path ppath = new Path(path);
+		String projectName = ppath.lastSegment();
+		URI locationURI;
+		URI top;
+		if (insidews) {
+			top = root.getRawLocationURI();
+			testRoot = URIUtil.toPath(top).toFile().getAbsoluteFile();
+		} else {
+			File tempName;
+			try {
+				tempName = testUtils.createTempDir("wssupplement");
+				testRoot = tempName;
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+			top = URIUtil.toURI(tempName.getAbsolutePath());
+		}
+		if (!insidews || !ppath.lastSegment().equals(path)) {
+			/*
+			 * FIXME:
+			 * Stefan Lay Aug 30
+			 *
+			 * If path is simple, i.e. just the project name, then
+			 * ppath.lastSegment().equals(path) is true and as a consequence
+			 * locatioURI is set to null (the default location). The parameter
+			 * insidews is not taken into account in this case. Please fix that.
+			 *
+			 * I think (!ppath.lastSegment().equals(path) || !insidews) would
+			 * work.
+			 */
+			locationURI = URIUtil.toURI(URIUtil.toPath(top).append(path));
+		} else
+			locationURI = null;
+		IProjectDescription description = ResourcesPlugin.getWorkspace()
+				.newProjectDescription(projectName);
+
+		description.setName(projectName);
+		description.setLocationURI(locationURI);
+		return description;
 	}
 
 	public IProject getProject() {
@@ -224,5 +291,9 @@ public class TestProject {
 	 */
 	public void setSourceFolder(IPackageFragmentRoot sourceFolder) {
 		this.sourceFolder = sourceFolder;
+	}
+
+	public String getLocation() {
+		return location;
 	}
 }
