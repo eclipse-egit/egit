@@ -22,7 +22,7 @@ public class RepositoriesViewSorter extends
 	 * Default constructor
 	 */
 	public RepositoriesViewSorter() {
-		// default
+		this(null);
 	}
 
 	/**
