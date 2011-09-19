@@ -240,6 +240,7 @@
                class="org.eclipse.egit.ui.internal.actions.ShowBlameAction"
                enablesFor="1"
                id="org.eclipse.egit.ui.internal.actions.ShowBlameAction"
+               definitionId="org.eclipse.egit.ui.team.ShowBlame"
                label="%ShowBlameAction_label"
                icon="icons/etool16/annotate.gif"
                menubarPath="team.main/group10">
@@ -796,6 +797,12 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.Rebase"
             name="%RebaseCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.ShowBlame"
+            name="%ShowBlameCommand.name"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.ShowBlameActionHandler">
       </command>
    </extension>
    <extension
@@ -2942,6 +2949,25 @@
                   visible="true">
             </separator>
          </menu>
+      </menuContribution>
+      <menuContribution
+         locationURI="popup:#AbstractTextEditorRulerContext?after=QuickDiff.Toggle">
+         <command
+            commandId="org.eclipse.egit.ui.team.ShowBlame"
+            label="%ShowBlameAction_label"
+            style="push">
+            <visibleWhen
+               checkEnabled="false">
+               <with
+                     variable="activeEditorInput">
+                  <adapt
+                     type="org.eclipse.core.resources.IFile">
+                     <test
+                        property="GitResource.isShared" />>
+                  </adapt>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
    </extension>
    <extension
