@@ -134,23 +134,25 @@ public class GitLabelProvider extends LabelProvider implements
 			string.append(directory.getParentFile().getName());
 		else
 			string.append(directory.getName());
+
+		String branch = repository.getBranch();
+		if (branch != null) {
+			string.append(' ');
+			string.append('[', StyledString.DECORATIONS_STYLER);
+			string.append(branch, StyledString.DECORATIONS_STYLER);
+
+			RepositoryState repositoryState = repository.getRepositoryState();
+			if (repositoryState != RepositoryState.SAFE) {
+				string.append(" - ", StyledString.DECORATIONS_STYLER); //$NON-NLS-1$
+				string.append(repositoryState.getDescription(),
+						StyledString.DECORATIONS_STYLER);
+			}
+			string.append(']', StyledString.DECORATIONS_STYLER);
+		}
+
 		string.append(" - ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
 		string.append(directory.getAbsolutePath(), StyledString.QUALIFIER_STYLER);
 
-		String branch = repository.getBranch();
-		if (branch == null)
-			return null;
-		string.append(" "); //$NON-NLS-1$
-		string.append("[", StyledString.DECORATIONS_STYLER); //$NON-NLS-1$
-		string.append(branch, StyledString.DECORATIONS_STYLER);
-
-		RepositoryState repositoryState = repository.getRepositoryState();
-		if (repositoryState != RepositoryState.SAFE) {
-			string.append(" - ", StyledString.DECORATIONS_STYLER); //$NON-NLS-1$
-			string.append(repositoryState.getDescription(), StyledString.DECORATIONS_STYLER);
-		}
-
-		string.append("]", StyledString.DECORATIONS_STYLER); //$NON-NLS-1$
 		return string;
 	}
 
