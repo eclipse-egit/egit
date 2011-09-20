@@ -84,6 +84,8 @@ public class CommitUI  {
 
 	private boolean preselectAll;
 
+	private boolean executePush;
+
 	/**
 	 * Constructs a CommitUI object
 	 * @param shell
@@ -182,6 +184,8 @@ public class CommitUI  {
 
 		if (commitDialog.open() != IDialogConstants.OK_ID)
 			return;
+
+		this.executePush = commitDialog.isExecutePush();
 
 		final CommitOperation commitOperation;
 		try {
@@ -367,4 +371,10 @@ public class CommitUI  {
 		}
 	}
 
+	/**
+	 * @return true if the user chose to push the changes that were committed.
+	 */
+	public boolean isExecutePush() {
+		return executePush;
+	}
 }
