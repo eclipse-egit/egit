@@ -28,6 +28,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
@@ -75,7 +76,8 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		top.execute(null);
 		touchAndSubmit(null);
 
-		RepositoriesViewLabelProvider provider = new RepositoriesViewLabelProvider();
+		RepositoriesViewLabelProvider provider = GitRepositoriesViewTestUtils
+				.createLabelProvider();
 		// LOCAL_BRANCHES = provider.getText(new LocalNode(new RepositoryNode(
 		// null, repo), repo));
 		TAGS = provider.getText(new TagsNode(new RepositoryNode(null, repo),
