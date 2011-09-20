@@ -331,6 +331,8 @@ public class CommitDialog extends TitleAreaDialog {
 
 	private Repository repository;
 
+	private boolean executePush = false;
+
 	/**
 	 * @param parentShell
 	 */
@@ -480,6 +482,13 @@ public class CommitDialog extends TitleAreaDialog {
 	 */
 	public boolean getCreateChangeId() {
 		return createChangeId;
+	}
+
+	/**
+	 * @return true if the user has chosen to push the changes to a remote repo.
+	 */
+	public boolean isExecutePush() {
+		return executePush;
 	}
 
 	@Override
@@ -870,6 +879,24 @@ public class CommitDialog extends TitleAreaDialog {
 					filesViewer.setChecked(item, true);
 			}
 		}
+
+		Section pushSection = toolkit.createSection(container,
+							ExpandableComposite.TITLE_BAR
+							| ExpandableComposite.CLIENT_INDENT);
+		pushSection.setText(UIText.CommitDialog_Push);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(pushSection);
+		Composite pushArea = toolkit.createComposite(pushSection);
+		pushSection.setClient(pushArea);
+		toolkit.paintBordersFor(pushArea);
+		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2).applyTo(pushArea);
+		Button executePushButton = new Button(pushArea, SWT.CHECK);
+		executePushButton.setText(UIText.CommitDialog_ExecutePush);
+		executePushButton.setSelection(executePush);
+		executePushButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				executePush = !executePush;
+			}
+		});
 
 		applyDialogFont(container);
 		statCol.pack();
