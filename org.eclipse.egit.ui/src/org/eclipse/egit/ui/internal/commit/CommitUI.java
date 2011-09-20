@@ -84,6 +84,8 @@ public class CommitUI  {
 
 	private boolean preselectAll;
 
+	private boolean executePush;
+
 	/**
 	 * Constructs a CommitUI object
 	 * @param shell
@@ -112,12 +114,13 @@ public class CommitUI  {
 
 	/**
 	 * Performs a commit
+	 * @return true if the commit was successfully executed
 	 */
-	public void commit() {
+	public boolean commit() {
 		// let's see if there is any dirty editor around and
 		// ask the user if they want to save or abort
 		if (!PlatformUI.getWorkbench().saveAllEditors(true)) {
-			return;
+			return false;
 		}
 
 		BasicConfigurationDialog.show(new Repository[]{repo});
@@ -139,9 +142,9 @@ public class CommitUI  {
 		} catch (InvocationTargetException e) {
 			Activator.handleError(UIText.CommitAction_errorComputingDiffs, e.getCause(),
 					true);
-			return;
+			return false;
 		} catch (InterruptedException e) {
-			return;
+			return false;
 		}
 
 		CommitHelper commitHelper = new CommitHelper(repo);
@@ -151,7 +154,7 @@ public class CommitUI  {
 					shell,
 					UIText.CommitAction_cannotCommit,
 					commitHelper.getCannotCommitMessage());
-			return;
+			return false;
 		}
 		if (files.isEmpty()) {
 			if (amendAllowed && commitHelper.getPreviousCommit() != null) {
@@ -159,13 +162,13 @@ public class CommitUI  {
 						UIText.CommitAction_noFilesToCommit,
 						UIText.CommitAction_amendCommit);
 				if (!result)
-					return;
+					return false;
 				amending = true;
 			} else {
 				MessageDialog.openWarning(shell,
 						UIText.CommitAction_noFilesToCommit,
 						UIText.CommitAction_amendNotPossible);
-				return;
+				return false;
 			}
 		}
 
@@ -181,7 +184,9 @@ public class CommitUI  {
 		commitDialog.setCommitMessage(commitHelper.getCommitMessage());
 
 		if (commitDialog.open() != IDialogConstants.OK_ID)
-			return;
+			return false;
+
+		this.executePush = commitDialog.isExecutePush();
 
 		final CommitOperation commitOperation;
 		try {
@@ -192,7 +197,7 @@ public class CommitUI  {
 					commitDialog.getCommitMessage());
 		} catch (CoreException e1) {
 			Activator.handleError(UIText.CommitUI_commitFailed, e1, true);
-			return;
+			return false;
 		}
 		if (commitDialog.isAmending())
 			commitOperation.setAmending(true);
@@ -201,7 +206,7 @@ public class CommitUI  {
 		if (commitHelper.isMergedResolved)
 			commitOperation.setRepository(repo);
 		performCommit(repo, commitOperation, false);
-		return;
+		return true;
 	}
 
 	/**
@@ -367,4 +372,10 @@ public class CommitUI  {
 		}
 	}
 
+	/**
+	 * @return true if the user chose to push the changes that were committed.
+	 */
+	public boolean isExecutePush() {
+		return executePush;
+	}
 }

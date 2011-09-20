@@ -1035,7 +1035,7 @@
                </count>
                <iterate>
                   <adapt
-                        type="org.eclipse.core.resources.IProject">
+                        type="org.eclipse.core.resources.IResource">
                   </adapt>
                </iterate>
             </and>
