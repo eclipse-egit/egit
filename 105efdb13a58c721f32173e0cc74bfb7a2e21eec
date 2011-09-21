@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBX///7M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffData.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-09T13:07:29Z",
+      "side": 1,
+      "message": "instead of all this code you can call just this(indexDiff, null, null); then marking all members as final should be relatively easy ;)",
+      "revId": "105efdb13a58c721f32173e0cc74bfb7a2e21eec",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
