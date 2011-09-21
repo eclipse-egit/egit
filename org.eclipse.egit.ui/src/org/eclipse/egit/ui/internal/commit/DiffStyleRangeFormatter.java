@@ -21,6 +21,7 @@ import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jgit.diff.DiffFormatter;
+import org.eclipse.jgit.diff.EditList;
 import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.custom.StyleRange;
@@ -99,6 +100,8 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 
 		private int offset;
 
+		private StringBuilder lineBuffer = new StringBuilder();
+
 		public DocumentOutputStream(IDocument document, int offset) {
 			this.document = document;
 			this.offset = offset;
@@ -115,9 +118,9 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 
 		public void write(byte[] b, int off, int len) throws IOException {
 			if (charset == null)
-				write(new String(b, off, len));
+				lineBuffer.append(new String(b, off, len));
 			else
-				write(new String(b, off, len, charset));
+				lineBuffer.append(new String(b, off, len, charset));
 		}
 
 		public void write(byte[] b) throws IOException {
@@ -126,6 +129,13 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 
 		public void write(int b) throws IOException {
 			write(new byte[] { (byte) b });
+		}
+
+		protected void flushLine() throws IOException {
+			if (lineBuffer.length() > 0) {
+				write(lineBuffer.toString());
+				lineBuffer.setLength(0);
+			}
 		}
 	}
 
@@ -197,6 +207,7 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 			int bStartLine, int bEndLine) throws IOException {
 		DiffStyleRange range = addRange(Type.HUNK);
 		super.writeHunkHeader(aStartLine, aEndLine, bStartLine, bEndLine);
+		stream.flushLine();
 		range.length = stream.offset - range.start;
 	}
 
@@ -206,13 +217,23 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 	 */
 	protected void writeLine(char prefix, RawText text, int cur)
 			throws IOException {
-		if (prefix == ' ')
+		if (prefix == ' ') {
 			super.writeLine(prefix, text, cur);
-		else {
+			stream.flushLine();
+		} else {
 			DiffStyleRange range = addRange(prefix == '+' ? Type.ADD
 					: Type.REMOVE);
 			super.writeLine(prefix, text, cur);
+			stream.flushLine();
 			range.length = stream.offset - range.start;
 		}
+	}
+
+	@Override
+	public void format(final EditList edits, final RawText a, final RawText b)
+			throws IOException {
+		// Flush header before formatting of edits begin
+		stream.flushLine();
+		super.format(edits, a, b);
 	}
 }
