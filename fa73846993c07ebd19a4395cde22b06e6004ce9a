@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOBX///50\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/indexDiff/IndexDiffCacheTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-09T21:04:38Z",
+      "side": 1,
+      "message": "I think you meant 2011 not 2010",
+      "revId": "fa73846993c07ebd19a4395cde22b06e6004ce9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBX///ko\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/indexDiff/IndexDiffCacheTest.java",
         "patchSetId": 7
@@ -14,6 +31,40 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABOBX///50\u003d",
+      "revId": "fa73846993c07ebd19a4395cde22b06e6004ce9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///5w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-09T21:04:38Z",
+      "side": 1,
+      "message": "personally I would prefer to have here something like this:\n\nthis(null, null, null, indexDiff);",
+      "revId": "fa73846993c07ebd19a4395cde22b06e6004ce9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///5s\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-09T21:04:38Z",
+      "side": 1,
+      "message": "and here instead of lines 79-87:\n\nif (changedFileResources !\u003d null)\n\tthis.changedFileResources \u003d Collections\n\t\t\t.unmodifiableCollection(new HashSet\u003cIFile\u003e(changedFileResources));\nelse\n\tthis.changedFileResources \u003d null;\n\nSet\u003cString\u003e added2, changed2, removed2, missing2, modified2, untracked2, conflicts2;\nif (baseDiff !\u003d null) {\n\tadded2 \u003d new HashSet\u003cString\u003e(baseDiff.getAdded());\n\tchanged2 \u003d new HashSet\u003cString\u003e(baseDiff.getChanged());\n\tremoved2 \u003d new HashSet\u003cString\u003e(baseDiff.getRemoved());\n\tmissing2 \u003d new HashSet\u003cString\u003e(baseDiff.getMissing());\n\tmodified2 \u003d new HashSet\u003cString\u003e(baseDiff.getModified());\n\tuntracked2 \u003d new HashSet\u003cString\u003e(baseDiff.getUntracked());\n\tconflicts2 \u003d new HashSet\u003cString\u003e(baseDiff.getConflicting());\n} else {\n\tadded2 \u003d new HashSet\u003cString\u003e();\n\tchanged2 \u003d new HashSet\u003cString\u003e();\n\tremoved2 \u003d new HashSet\u003cString\u003e();\n\tmissing2 \u003d new HashSet\u003cString\u003e();\n\tmodified2 \u003d new HashSet\u003cString\u003e();\n\tuntracked2 \u003d new HashSet\u003cString\u003e();\n\tconflicts2 \u003d new HashSet\u003cString\u003e();\n}",
       "revId": "fa73846993c07ebd19a4395cde22b06e6004ce9a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
