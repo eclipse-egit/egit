@@ -237,7 +237,7 @@ public class GitCloneWizard extends Wizard {
 			final CloneOperation op) {
 		String gerritBranch = gerritConfiguration.getBranch();
 		URIish pushURI = gerritConfiguration.getURI();
-		String notesRef = Constants.R_NOTES + "review"; //$NON-NLS-1$
+		String notesRef = Constants.R_NOTES + "*"; //$NON-NLS-1$
 		op.addPostCloneTask(new ConfigureFetchAfterCloneTask(remoteName,
 				notesRef + ":" + notesRef)); //$NON-NLS-1$
 		if (gerritBranch != null && gerritBranch.length() > 0) {
