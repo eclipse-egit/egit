@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBX///kw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-21T08:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBX///ms\u003d",
+      "revId": "7a3f85ce0198da376d605328ae7ad7b7e633b971",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBX///mo\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2011-09-20T21:59:10Z",
       "side": 1,
       "message": "style nit: put comment on extra line before this member definition",
+      "revId": "7a3f85ce0198da376d605328ae7ad7b7e633b971",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///lE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-21T08:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBX///mo\u003d",
       "revId": "7a3f85ce0198da376d605328ae7ad7b7e633b971",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBX///lA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-21T08:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBX///mk\u003d",
+      "revId": "7a3f85ce0198da376d605328ae7ad7b7e633b971",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBX///mc\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2011-09-20T21:59:10Z",
       "side": 1,
       "message": "style nit: comment needs reformatting",
+      "revId": "7a3f85ce0198da376d605328ae7ad7b7e633b971",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///k8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-21T08:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBX///mc\u003d",
       "revId": "7a3f85ce0198da376d605328ae7ad7b7e633b971",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBX///k4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-21T08:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBX///mg\u003d",
+      "revId": "7a3f85ce0198da376d605328ae7ad7b7e633b971",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBX///mY\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
         "patchSetId": 9
@@ -98,6 +188,24 @@
       "writtenOn": "2011-09-20T21:59:10Z",
       "side": 1,
       "message": "no braces here",
+      "revId": "7a3f85ce0198da376d605328ae7ad7b7e633b971",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///k0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-21T08:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBX///mY\u003d",
       "revId": "7a3f85ce0198da376d605328ae7ad7b7e633b971",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
