@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBX///ko\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/indexDiff/IndexDiffCacheTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-21T08:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBX///50\u003d",
+      "revId": "fa73846993c07ebd19a4395cde22b06e6004ce9a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
