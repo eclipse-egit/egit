@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.view.repositories;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
@@ -27,6 +28,7 @@ import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -35,15 +37,41 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
 public class GitRepositoriesViewTestUtils {
 
+	/**
+	 * Create a new instance of {@link RepositoriesViewLabelProvider}
+	 *
+	 * @return label provider
+	 */
+	public static RepositoriesViewLabelProvider createLabelProvider() {
+		final AtomicReference<RepositoriesViewLabelProvider> providerRef = new AtomicReference<RepositoriesViewLabelProvider>();
+		Display.getDefault().syncExec(new Runnable() {
+
+			public void run() {
+				providerRef.set(new RepositoriesViewLabelProvider());
+			}
+
+		});
+		return providerRef.get();
+	}
+
 	protected static final TestUtil myUtil = new TestUtil();
+
 	// the human-readable view name
 	protected final static String viewName = myUtil
 			.getPluginLocalizedValue("GitRepositoriesView_name");
+
 	// the human readable Git category
 	private final static String gitCategory = myUtil
 			.getPluginLocalizedValue("GitCategory_name");
 
-	private final RepositoriesViewLabelProvider labelProvider = new RepositoriesViewLabelProvider();
+	private final RepositoriesViewLabelProvider labelProvider;
+
+	/**
+	 * Create repositories view test utilities
+	 */
+	public GitRepositoriesViewTestUtils() {
+		labelProvider = createLabelProvider();
+	}
 
 	public SWTBotTreeItem getLocalBranchesItem(SWTBotTree tree, File repo)
 			throws Exception {
