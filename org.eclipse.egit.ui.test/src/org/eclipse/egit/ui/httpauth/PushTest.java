@@ -105,10 +105,14 @@ public class PushTest extends EGitTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		remoteRepository.shutDown();
+		if (remoteRepository != null)
+			remoteRepository.shutDown();
 		Activator.getDefault().getRepositoryCache().clear();
-		localRepository.close();
-		FileUtils.delete(localRepoPath, FileUtils.RECURSIVE | FileUtils.RETRY);
+		if (localRepository != null)
+			localRepository.close();
+		if (localRepoPath != null)
+			FileUtils.delete(localRepoPath, FileUtils.RECURSIVE
+					| FileUtils.RETRY);
 	}
 
 }
