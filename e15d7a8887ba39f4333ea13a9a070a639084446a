@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH///50\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "Please keep with our commit message guide lines http://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///5w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "we don\u0027t use curly brackets for single line bolocks",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///5s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///5o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/utils/CommandUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "we don\u0027t use @author tag, please remove this and add proper java doc for this util class",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///5k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/utils/CommandUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "remove curly brackets",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///5g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/utils/CommandUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "same issue with brackets as above",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///5c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "this is unrelated change. please don\u0027t change code formatting",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///5Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "same as above, don\u0027t change code formatting of existing code in repository",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///5U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "another unrelated code formatting change",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///5Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "another unrelated code formatting change",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///5M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///5I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///5E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///5A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///48\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-09-01T12:43:20Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "e15d7a8887ba39f4333ea13a9a070a639084446a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
