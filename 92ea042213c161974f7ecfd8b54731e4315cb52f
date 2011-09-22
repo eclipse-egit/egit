@@ -34,6 +34,23 @@
       "revId": "92ea042213c161974f7ecfd8b54731e4315cb52f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///e8\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-22T11:34:30Z",
+      "side": 1,
+      "message": "why is this required for this change ?",
+      "revId": "92ea042213c161974f7ecfd8b54731e4315cb52f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
