@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBX///ew\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 270
+      },
+      "writtenOn": "2011-09-22T12:13:14Z",
+      "side": 1,
+      "message": "afaik this is the commit message (and not the header)",
+      "parentUuid": "AABOBX///fA\u003d",
+      "revId": "92ea042213c161974f7ecfd8b54731e4315cb52f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBX///eo\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
