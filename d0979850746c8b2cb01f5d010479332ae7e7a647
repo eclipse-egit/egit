@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH///1o\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-01T21:26:31Z",
+      "side": 1,
+      "message": "style nit: commit header is too wide, follow recommendations in [1]\n\n[1] http://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "d0979850746c8b2cb01f5d010479332ae7e7a647",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///1k\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-01T21:26:31Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "d0979850746c8b2cb01f5d010479332ae7e7a647",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///10\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3160,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-01T21:26:31Z",
+      "side": 1,
+      "message": "style nit: extra blank in front of tab",
+      "revId": "d0979850746c8b2cb01f5d010479332ae7e7a647",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///1w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-01T21:26:31Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "d0979850746c8b2cb01f5d010479332ae7e7a647",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///1s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-01T21:26:31Z",
+      "side": 1,
+      "message": "typo: s/actve/active/",
+      "revId": "d0979850746c8b2cb01f5d010479332ae7e7a647",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
