@@ -517,6 +517,9 @@ public class UIText extends NLS {
 	public static String GitPreferenceRoot_automaticallyEnableChangesetModel;
 
 	/** */
+	public static String GitPreferenceRoot_AutoShareProjects;
+
+	/** */
 	public static String GitPreferenceRoot_BlameGroupHeader;
 
 	/** */
