@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBX///64\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-09T15:01:19Z",
+      "side": 0,
+      "message": "What happens if just the branch changes? Don\u0027t we need refsChanged event in this case?",
+      "revId": "e7cefa767388f9ee0bd8d4155888830ae730529f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

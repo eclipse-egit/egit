@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOBX///7A\u003d",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-09T15:01:19Z",
+      "side": 1,
+      "message": "white space error",
+      "revId": "0bfbb95bb7dec6e0786dfc3fd2e19bb9739accd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBX///58\u003d",
         "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
         "patchSetId": 2
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "which whitespace error?",
       "parentUuid": "AABOBX///7A\u003d",
+      "revId": "0bfbb95bb7dec6e0786dfc3fd2e19bb9739accd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///68\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-09T15:01:19Z",
+      "side": 1,
+      "message": "Why do we need a resource change listener?\nThose changes should be covered by IndexDiffCache",
       "revId": "0bfbb95bb7dec6e0786dfc3fd2e19bb9739accd7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
