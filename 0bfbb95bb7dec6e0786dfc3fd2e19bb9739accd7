@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBX///58\u003d",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-09-09T16:01:50Z",
+      "side": 1,
+      "message": "which whitespace error?",
+      "parentUuid": "AABOBX///7A\u003d",
+      "revId": "0bfbb95bb7dec6e0786dfc3fd2e19bb9739accd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///6E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-09-09T16:01:50Z",
+      "side": 1,
+      "message": "We removed the rescource change listener and it just works",
+      "parentUuid": "AABOBX///68\u003d",
+      "revId": "0bfbb95bb7dec6e0786dfc3fd2e19bb9739accd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
