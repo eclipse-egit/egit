@@ -421,6 +421,28 @@ public class TestUtil {
 		return null;
 	}
 
+	/**
+	 * Retrieves a child node with the given childNodeText.
+	 * Nodes with dirty marker are also found (without specifying > in childNodeText)
+	 * @param node
+	 * @param childNodeText
+	 * @return  child node
+	 */
+	public SWTBotTreeItem getChildNode(SWTBotTreeItem node, String childNodeText) {
+		for (SWTBotTreeItem item : node.getItems()) {
+			String itemText = item.getText();
+			StringTokenizer tok = new StringTokenizer(itemText, " ");
+			String name = tok.nextToken();
+			// may be a dirty marker
+			if (name.equals(">"))
+				name = tok.nextToken();
+			if (childNodeText.equals(name))
+				return item;
+		}
+		return null;
+	}
+
+
 	public static RevCommit getHeadCommit(Repository repository)
 			throws Exception {
 		RevCommit headCommit = null;

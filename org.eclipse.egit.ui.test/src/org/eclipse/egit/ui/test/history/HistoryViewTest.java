@@ -243,15 +243,18 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 	private SWTBotTable getHistoryViewTable(String... path) throws Exception {
 		SWTBotTree projectExplorerTree = bot
 				.viewById("org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		TestUtil testUtil = new TestUtil();
 		SWTBotTreeItem explorerItem;
+		SWTBotTreeItem projectItem = getProjectItem(projectExplorerTree, path[0]);
 		if (path.length == 1)
-			explorerItem = getProjectItem(projectExplorerTree, path[0]);
+			explorerItem = projectItem;
 		else if (path.length == 2)
-			explorerItem = getProjectItem(projectExplorerTree, path[0])
-					.expand().getNode(path[1]);
-		else
-			explorerItem = getProjectItem(projectExplorerTree, path[0])
-					.expand().getNode(path[1]).expand().getNode(path[2]);
+			explorerItem = testUtil.getChildNode(projectItem.expand(), path[1]);
+		else {
+			SWTBotTreeItem childItem = testUtil.getChildNode(
+					projectItem.expand(), path[1]);
+			explorerItem = testUtil.getChildNode(childItem.expand(), path[2]);
+		}
 		explorerItem.select();
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Show In",
 				"History");
