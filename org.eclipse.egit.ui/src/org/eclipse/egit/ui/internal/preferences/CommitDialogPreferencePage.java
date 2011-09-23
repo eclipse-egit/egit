@@ -15,6 +15,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -52,7 +53,8 @@ public class CommitDialogPreferencePage extends FieldEditorPreferencePage
 
 		BooleanFieldEditor hardWrap = new BooleanFieldEditor(
 				UIPreferences.COMMIT_DIALOG_HARD_WRAP_MESSAGE,
-				UIText.CommitDialogPreferencePage_hardWrapMessage, formattingGroup);
+				UIText.CommitDialogPreferencePage_hardWrapMessage,
+				formattingGroup);
 		hardWrap.getDescriptionControl(formattingGroup).setToolTipText(
 				UIText.CommitDialogPreferencePage_hardWrapMessageTooltip);
 		addField(hardWrap);
@@ -65,14 +67,16 @@ public class CommitDialogPreferencePage extends FieldEditorPreferencePage
 
 		BooleanFieldEditor signedOffBy = new BooleanFieldEditor(
 				UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY,
-				UIText.CommitDialogPreferencePage_signedOffBy,
-				footersGroup);
-		signedOffBy
-				.getDescriptionControl(footersGroup)
-				.setToolTipText(
-						UIText.CommitDialogPreferencePage_signedOffByTooltip);
+				UIText.CommitDialogPreferencePage_signedOffBy, footersGroup);
+		signedOffBy.getDescriptionControl(footersGroup).setToolTipText(
+				UIText.CommitDialogPreferencePage_signedOffByTooltip);
 		addField(signedOffBy);
 		updateMargins(footersGroup);
+
+		IntegerFieldEditor historySize = new IntegerFieldEditor(
+				UIPreferences.COMMIT_DIALOG_HISTORY_SIZE,
+				"Maximum number of comments in history:", main); //$NON-NLS-1$
+		addField(historySize);
 	}
 
 	private void updateMargins(Group group) {
