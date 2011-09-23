@@ -31,6 +31,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.IteratorService;
+import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.events.IndexChangedEvent;
@@ -149,6 +150,14 @@ public class IndexDiffCacheEntry {
 					lock.unlock();
 				}
 			}
+
+			@Override
+			public boolean belongsTo(Object family) {
+				if (family.equals(JobFamilies.INDEX_DIFF_CACHE_UPDATE))
+					return true;
+				return super.belongsTo(family);
+			}
+
 		};
 		reloadJob.schedule();
 	}
@@ -177,6 +186,13 @@ public class IndexDiffCacheEntry {
 					lock.unlock();
 				}
 			}
+			@Override
+			public boolean belongsTo(Object family) {
+				if (family.equals(JobFamilies.INDEX_DIFF_CACHE_UPDATE))
+					return true;
+				return super.belongsTo(family);
+			}
+
 		};
 		job.schedule();
 	}
