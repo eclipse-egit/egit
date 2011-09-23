@@ -10,11 +10,11 @@ package org.eclipse.egit.ui.internal.history.command;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.core.op.ResetOperation.ResetType;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.job.JobUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
