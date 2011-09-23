@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBX///Yo\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/nonswt/decoration/DecoratableResourceHelperTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-23T21:36:28Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "56c703dba06d2f4ba1f99cef0af86eb3713a0014",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
