@@ -3458,6 +3458,9 @@ public class UIText extends NLS {
 	public static String RefUpdateElement_CommitRangeDecoration;
 
 	/** */
+	public static String RefUpdateElement_statusRejectedNonFastForward;
+
+	/** */
 	public static String RefUpdateElement_UrisDecoration;
 
 	/** */
