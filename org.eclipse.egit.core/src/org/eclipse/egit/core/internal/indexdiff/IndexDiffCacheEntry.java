@@ -41,6 +41,7 @@ import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.Team;
 
 /**
@@ -50,6 +51,8 @@ import org.eclipse.team.core.Team;
  *
  */
 public class IndexDiffCacheEntry {
+
+	private static final int RESOURCE_LIST_UPDATE_LIMIT = 1000;
 
 	private Repository repository;
 
@@ -134,16 +137,21 @@ public class IndexDiffCacheEntry {
 			protected IStatus run(IProgressMonitor monitor) {
 				lock.lock();
 				try {
+					long startTime = System.currentTimeMillis();
 					IndexDiff result = calcIndexDiff(monitor, getName());
 					if (monitor.isCanceled())
 						return Status.CANCEL_STATUS;
 					indexDiffData = new IndexDiffData(result);
-					if (GitTraceLocation.INDEXDIFFCACHE.isActive())
-						GitTraceLocation
-								.getTrace()
-								.trace(GitTraceLocation.INDEXDIFFCACHE
-										.getLocation(),
-										"Updated IndexDiffData\n" + indexDiffData.toString()); //$NON-NLS-1$
+					if (GitTraceLocation.INDEXDIFFCACHE.isActive()) {
+						long time = System.currentTimeMillis() - startTime;
+						StringBuilder message = new StringBuilder(NLS.bind(
+								"Updated IndexDiffData in {0} ms\n", //$NON-NLS-1$
+								new Long(time)));
+						GitTraceLocation.getTrace().trace(
+								GitTraceLocation.INDEXDIFFCACHE.getLocation(),
+								message.append(indexDiffData.toString())
+										.toString());
+					}
 					notifyListeners();
 					return Status.OK_STATUS;
 				} finally {
@@ -169,17 +177,24 @@ public class IndexDiffCacheEntry {
 			protected IStatus run(IProgressMonitor monitor) {
 				lock.lock();
 				try {
+					long startTime = System.currentTimeMillis();
 					IndexDiffData result = calcIndexDiffData(monitor,
 							getName(), filesToUpdate, fileResourcesToUpdate);
 					if (monitor.isCanceled())
 						return Status.CANCEL_STATUS;
 					indexDiffData = result;
-					if (GitTraceLocation.INDEXDIFFCACHE.isActive())
-						GitTraceLocation
-								.getTrace()
-								.trace(GitTraceLocation.INDEXDIFFCACHE
-										.getLocation(),
-										"Updated IndexDiffData based on resource list \n" + indexDiffData.toString()); //$NON-NLS-1$
+					if (GitTraceLocation.INDEXDIFFCACHE.isActive()) {
+						long time = System.currentTimeMillis() - startTime;
+						StringBuilder message = new StringBuilder(
+								NLS.bind(
+										"Updated IndexDiffData based on resource list (length = {0}) in {1} ms\n", //$NON-NLS-1$
+										new Integer(fileResourcesToUpdate
+												.size()), new Long(time)));
+						GitTraceLocation.getTrace().trace(
+								GitTraceLocation.INDEXDIFFCACHE.getLocation(),
+								message.append(indexDiffData.toString())
+								.toString());
+					}
 					notifyListeners();
 					return Status.OK_STATUS;
 				} finally {
@@ -300,7 +315,12 @@ public class IndexDiffCacheEntry {
 				}
 
 				if (!filesToUpdate.isEmpty())
-					scheduleUpdateJob(filesToUpdate, fileResourcesToUpdate);
+					if (filesToUpdate.size() < RESOURCE_LIST_UPDATE_LIMIT)
+						scheduleUpdateJob(filesToUpdate, fileResourcesToUpdate);
+					else
+						// Calculate new IndexDiff if too many resources changed
+						// This happens e.g. when a project is opened
+						scheduleReloadJob();
 			}
 
 		};
