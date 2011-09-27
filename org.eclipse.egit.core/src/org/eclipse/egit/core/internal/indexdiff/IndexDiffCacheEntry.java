@@ -36,6 +36,8 @@ import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.events.IndexChangedEvent;
 import org.eclipse.jgit.events.IndexChangedListener;
+import org.eclipse.jgit.events.RefsChangedEvent;
+import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
@@ -84,6 +86,12 @@ public class IndexDiffCacheEntry {
 		repository.getListenerList().addIndexChangedListener(
 				new IndexChangedListener() {
 					public void onIndexChanged(IndexChangedEvent event) {
+						scheduleReloadJob();
+					}
+				});
+		repository.getListenerList().addRefsChangedListener(
+				new RefsChangedListener() {
+					public void onRefsChanged(RefsChangedEvent event) {
 						scheduleReloadJob();
 					}
 				});
