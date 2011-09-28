@@ -446,7 +446,7 @@ class CommitGraphTable {
 	private void createColumns(final Table rawTable, final TableLayout layout) {
 		final TableColumn graph = new TableColumn(rawTable, SWT.NONE);
 		graph.setResizable(true);
-		graph.setText(""); //$NON-NLS-1$
+		graph.setText(UIText.CommitGraphTable_messageColumn);
 		graph.setWidth(250);
 		layout.addColumnData(new ColumnWeightData(20, true));
 
