@@ -48,6 +48,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemotesNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.tree.SubmodulesNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
@@ -58,6 +59,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.ui.PlatformUI;
@@ -297,6 +299,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			nodeList.add(new AdditionalRefsNode(node, repo));
 			nodeList.add(new WorkingDirNode(node, repo));
 			nodeList.add(new RemotesNode(node, repo));
+			if (!repo.isBare())
+				nodeList.add(new SubmodulesNode(node, repo));
 
 			return nodeList.toArray();
 		}
@@ -406,6 +410,20 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 		}
 
+		case SUBMODULES:
+			List<RepositoryNode> children = new ArrayList<RepositoryNode>();
+			try {
+				SubmoduleWalk walk = SubmoduleWalk.forIndex(node
+						.getRepository());
+				while (walk.next()) {
+					Repository subRepo = walk.getRepository();
+					if (subRepo != null)
+						children.add(new RepositoryNode(node, subRepo));
+				}
+			} catch (IOException e) {
+				handleException(e, node);
+			}
+			return children.toArray();
 		case FILE:
 			// fall through
 		case REF:
@@ -456,6 +474,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		case REPO:
 			return true;
 		case ADDITIONALREFS:
+			return true;
+		case SUBMODULES:
 			return true;
 		case TAGS:
 			try {
