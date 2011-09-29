@@ -21,6 +21,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache;
@@ -119,6 +120,38 @@ public class GitLabelProvider extends LabelProvider implements
 					element.toString()), e);
 		}
 		return new StyledString(getText(element));
+	}
+
+	/**
+	 * Get styled text for submodule repository node
+	 *
+	 * @param node
+	 * @return styled string
+	 * @throws IOException
+	 */
+	protected StyledString getStyledTextForSubmodule(RepositoryTreeNode node)
+			throws IOException {
+		StyledString string = new StyledString();
+		Repository repository = (Repository) node.getObject();
+		String path = Repository.stripWorkDir(node.getParent().getRepository()
+				.getWorkTree(), repository.getWorkTree());
+		string.append(path);
+
+		String branch = repository.getBranch();
+		if (branch != null) {
+			string.append(' ');
+			string.append('[', StyledString.DECORATIONS_STYLER);
+			string.append(branch, StyledString.DECORATIONS_STYLER);
+
+			RepositoryState repositoryState = repository.getRepositoryState();
+			if (repositoryState != RepositoryState.SAFE) {
+				string.append(" - ", StyledString.DECORATIONS_STYLER); //$NON-NLS-1$
+				string.append(repositoryState.getDescription(),
+						StyledString.DECORATIONS_STYLER);
+			}
+			string.append(']', StyledString.DECORATIONS_STYLER);
+		}
+		return string;
 	}
 
 	/**
