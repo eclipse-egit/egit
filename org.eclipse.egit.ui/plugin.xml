@@ -945,18 +945,11 @@
                class="org.eclipse.egit.ui.internal.repository.tree.command.PullCommand">
          </class>
          <activeWhen>
-            <and>
-               <count
-                     value="1">
-               </count>
-               <and>
-                  <iterate>
-                     <instanceof
-                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                     </instanceof>
-                  </iterate>
-               </and>
-            </and>
+            <iterate>
+               <instanceof
+                     value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+               </instanceof>
+            </iterate>
          </activeWhen>
       </handler>
       <handler

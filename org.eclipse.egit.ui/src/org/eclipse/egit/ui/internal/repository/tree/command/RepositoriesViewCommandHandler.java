@@ -61,28 +61,70 @@ abstract class RepositoriesViewCommandHandler<T> extends AbstractHandler {
 		return HandlerUtil.getActiveShellChecked(event);
 	}
 
-	protected void enableWhenRepositoryHaveHead(Object evaluationContext) {
-		Object selection = HandlerUtil.getVariable(evaluationContext,
-				ISources.ACTIVE_CURRENT_SELECTION_NAME);
-		if (selection instanceof TreeSelection) {
-			TreeSelection treeSelection = (TreeSelection) selection;
-			Object firstElement = treeSelection.getFirstElement();
-			if (firstElement instanceof RepositoryTreeNode) {
-				RepositoryTreeNode<?> treeNode = (RepositoryTreeNode<?>) firstElement;
-				Repository repo = treeNode.getRepository();
-				boolean enabled = false;
-				try {
-					Ref ref = repo.getRef(Constants.HEAD);
-					enabled = ref != null && ref.getObjectId() != null;
-				} catch (IOException e) {
-					enabled = false;
-				}
-				setBaseEnabled(enabled);
-				return;
+	private boolean checkRepositoryHasHead(Object element) {
+		if (element instanceof RepositoryTreeNode) {
+			RepositoryTreeNode<?> treeNode = (RepositoryTreeNode<?>) element;
+			Repository repo = treeNode.getRepository();
+			try {
+				Ref ref = repo.getRef(Constants.HEAD);
+				return ref != null && ref.getObjectId() != null;
+			} catch (IOException e) {
+				// ignore and report false
+				return false;
 			}
 		}
+		return false;
+	}
 
-		setBaseEnabled(false);
+	protected boolean checkSelectionHasHead(Object evaluationContext,
+			boolean all) {
+		// get the current selection
+		Object selection = HandlerUtil.getVariable(evaluationContext,
+				ISources.ACTIVE_CURRENT_SELECTION_NAME);
+		if (selection instanceof IStructuredSelection) {
+			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+			// check that it's a non-empty selection
+			if (structuredSelection.size() > 0) {
+				if (all) {
+					// check that all the repositories have a valid head
+					for (Object element : structuredSelection.toArray()) {
+						if (!checkRepositoryHasHead(element)) {
+							return false;
+						}
+					}
+					return true;
+				}
+
+				// just check the first one
+				return checkRepositoryHasHead(structuredSelection
+						.getFirstElement());
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Enables this handler if all the repositories that have been selected in
+	 * the current evaluation context is a repository that has a valid head
+	 * reference.
+	 *
+	 * @param evaluationContext
+	 *            the current application context
+	 */
+	protected void enableWhenAllRepositoriesHaveHead(Object evaluationContext) {
+		setBaseEnabled(checkSelectionHasHead(evaluationContext, true));
+	}
+
+	/**
+	 * Enables this handler if the first repository that has been selected in
+	 * the current evaluation context is a repository that has a valid head
+	 * reference.
+	 *
+	 * @param evaluationContext
+	 *            the current application context
+	 */
+	protected void enableWhenRepositoryHaveHead(Object evaluationContext) {
+		setBaseEnabled(checkSelectionHasHead(evaluationContext, false));
 	}
 
 	/**
