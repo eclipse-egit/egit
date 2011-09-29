@@ -13,15 +13,12 @@ package org.eclipse.egit.ui.test.nonswt.decoration;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.JobFamilies;
@@ -33,8 +30,6 @@ import org.eclipse.egit.ui.internal.decorators.DecoratableResourceHelper;
 import org.eclipse.egit.ui.internal.decorators.IDecoratableResource;
 import org.eclipse.egit.ui.internal.decorators.IDecoratableResource.Staged;
 import org.eclipse.egit.ui.test.TestUtil;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
 import org.eclipse.jgit.junit.LocalDiskRepositoryTestCase;
@@ -43,7 +38,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.team.core.RepositoryProvider;
-import org.eclipse.ui.PlatformUI;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -98,17 +92,11 @@ public class DecoratableResourceHelperTest extends LocalDiskRepositoryTestCase {
 		waitForIndexDiffUpdate(false);
 	}
 
-	private void waitForIndexDiffUpdate(final boolean refreshCache) throws Exception {
-		// Wait for index diff update outside UI thread
-		ModalContext.run(new IRunnableWithProgress() {
-
-			public void run(IProgressMonitor monitor) throws InvocationTargetException,
-					InterruptedException {
-				if (refreshCache)
-					indexDiffCacheEntry.refresh();
-				TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
-			}
-		}, true, new NullProgressMonitor(), PlatformUI.getWorkbench().getDisplay());
+	private void waitForIndexDiffUpdate(final boolean refreshCache)
+			throws Exception {
+		if (refreshCache)
+			indexDiffCacheEntry.refresh();
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 	}
 
 	@After
