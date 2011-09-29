@@ -24,4 +24,8 @@ public class JobFamilies {
 	 */
 	public static final Object INDEX_DIFF_CACHE_UPDATE = new Object();
 
+	/**
+	 * Job family for auto share job
+	 */
+	public static final Object AUTO_SHARE = new Object();
 }
