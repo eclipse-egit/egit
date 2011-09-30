@@ -200,6 +200,9 @@ public class UIIcons {
 	/** Merge icon */
 	public final static ImageDescriptor MERGE;
 
+	/** Submodules icon */
+	public final static ImageDescriptor SUBMODULES;
+
 	/** base URL */
 	public final static URL base;
 
@@ -271,6 +274,7 @@ public class UIIcons {
 		REBASE = map("obj16/rebase.gif"); //$NON-NLS-1$
 		OVR_ERROR = map("ovr/error.png"); //$NON-NLS-1$
 		MERGE = map("obj16/merge.gif"); //$NON-NLS-1$
+		SUBMODULES = map("obj16/submodules.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
