@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBX//++o\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-30T13:58:26Z",
+      "side": 1,
+      "message": "Style nit: unnecessary blanks",
+      "revId": "d2642f76e281c338d4e1d0e24ab91ccbd26f3e0b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
