@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOBX///Fo\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-29T15:56:02Z",
+      "side": 1,
+      "message": "Please provide a meaningful commit message describing the change. You can find examples for the message format in other gerrit changes.",
+      "revId": "19827c2c02d97df940ae7dbe383ada66b9121fd2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBX///DA\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -13,6 +30,23 @@
       "writtenOn": "2011-09-29T21:09:56Z",
       "side": 1,
       "message": "Commit message header should give a short description of the change, the body should explain why this change is needed. Also see [1].\n\n[1] http://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "19827c2c02d97df940ae7dbe383ada66b9121fd2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///Fg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-29T15:56:02Z",
+      "side": 1,
+      "message": "Deltas introduced by code formatting make it hard to review the actual change. Please only format the changed / added lines.",
       "revId": "19827c2c02d97df940ae7dbe383ada66b9121fd2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
