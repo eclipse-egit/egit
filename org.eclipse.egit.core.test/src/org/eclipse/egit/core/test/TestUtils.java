@@ -17,6 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,6 +28,7 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jgit.lib.ObjectId;
@@ -101,11 +103,11 @@ public class TestUtils {
 	 * @param content
 	 *            the contents
 	 * @return the file
-	 * @throws Exception
+	 * @throws CoreException
 	 *             if the file can not be created
+	 * @throws UnsupportedEncodingException
 	 */
-	public IFile addFileToProject(IProject project, String path, String content)
-			throws Exception {
+	public IFile addFileToProject(IProject project, String path, String content) throws CoreException, UnsupportedEncodingException {
 		IPath filePath = new Path(path);
 		IFolder folder = null;
 		for (int i = 0; i < filePath.segmentCount() - 1; i++) {
@@ -130,10 +132,10 @@ public class TestUtils {
 	 * @param file
 	 * @param newContent
 	 * @return the file
-	 * @throws Exception
+	 * @throws CoreException
+	 * @throws UnsupportedEncodingException
 	 */
-	public IFile changeContentOfFile(IProject project, IFile file, String newContent)
-			throws Exception {
+	public IFile changeContentOfFile(IProject project, IFile file, String newContent) throws UnsupportedEncodingException, CoreException {
 		file.setContents(new ByteArrayInputStream(newContent.getBytes(project
 				.getDefaultCharset())), 0, null);
 		return file;
@@ -251,6 +253,10 @@ public class TestUtils {
 			map.put(args[i], args[i+1]);
 		}
 		return map;
+	}
+
+	File getWorkspaceSupplement() throws IOException {
+		return createTempDir("wssupplement");
 	}
 
 }
