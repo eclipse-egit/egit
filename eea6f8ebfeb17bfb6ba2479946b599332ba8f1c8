@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOBX//+/4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-30T07:33:04Z",
+      "side": 1,
+      "message": "Check for isAccessible() to avoid exception (see comment patch set 7)",
+      "revId": "eea6f8ebfeb17bfb6ba2479946b599332ba8f1c8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBX//+/M\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 8
