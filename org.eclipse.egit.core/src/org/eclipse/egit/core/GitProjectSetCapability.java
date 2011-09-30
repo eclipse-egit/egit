@@ -238,7 +238,7 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 									connectProviderOperation.execute(wsOpMonitor);
 								}
 							} catch (final InvocationTargetException e) {
-								throw TeamException.asTeamException(e);
+								throwTeamException(e);
 							} catch (final CoreException e) {
 								throw TeamException.asTeamException(e);
 							} catch (final InterruptedException e) {
@@ -256,6 +256,14 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 		final IProject[] result = importedProjects
 				.toArray(new IProject[importedProjects.size()]);
 		return result;
+	}
+
+	private TeamException throwTeamException(Throwable th) throws TeamException{
+		Throwable current = th;
+		while(current.getCause()!=null){
+			current = current.getCause();
+		}
+		throw new TeamException(current.getMessage(), current);
 	}
 
 	/**
