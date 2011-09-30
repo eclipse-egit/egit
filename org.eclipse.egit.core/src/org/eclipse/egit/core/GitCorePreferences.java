@@ -22,4 +22,7 @@ public class GitCorePreferences {
 	/** */
 	public static final String core_deltaBaseCacheLimit =
 		"core_deltaBaseCacheLimit";  //$NON-NLS-1$
+	/** */
+	public static final String core_autoShareProjects =
+		"core_autoShareProjects";  //$NON-NLS-1$
 }
