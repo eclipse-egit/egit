@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AABOBX///F4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-29T15:40:42Z",
+      "side": 1,
+      "message": "Exception does not occur.",
+      "revId": "58c75d7628ffbf041f0cfdd8f382c4a799c69b65",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBX///DQ\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 7
@@ -49,6 +66,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABOBX///F4\u003d",
+      "revId": "58c75d7628ffbf041f0cfdd8f382c4a799c69b65",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///F0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-29T15:40:42Z",
+      "side": 1,
+      "message": "The only Exception to catch here is the IllegalArgumentException (addConfiguredRepository).\nEclipse will not break if another Exception occurs in the listener.",
       "revId": "58c75d7628ffbf041f0cfdd8f382c4a799c69b65",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
