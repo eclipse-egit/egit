@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -202,8 +203,12 @@ public class GitResourceVariantTreeSubscriber extends
 	}
 
 	private boolean shouldBeIncluded(IResource res) {
-		Set<IContainer> includedPaths = gsds.getData(res.getProject())
-				.getIncludedPaths();
+		if (res == null)
+			return false;
+		IProject proj = res.getProject();
+		if (proj == null)
+			return false;
+		Set<IContainer> includedPaths = gsds.getData(proj).getIncludedPaths();
 		if (includedPaths == null)
 			return true;
 
