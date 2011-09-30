@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOBX///F8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-09-29T15:40:42Z",
+      "side": 1,
+      "message": "why catching Throwable here?",
+      "revId": "58c75d7628ffbf041f0cfdd8f382c4a799c69b65",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBX///DU\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 7
