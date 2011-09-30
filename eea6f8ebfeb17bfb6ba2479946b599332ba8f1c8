@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBX//+/M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-30T09:40:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBX//+/4\u003d",
+      "revId": "eea6f8ebfeb17bfb6ba2479946b599332ba8f1c8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
