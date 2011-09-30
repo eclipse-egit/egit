@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2011, Matthias Sohn <matthias.sohn@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,19 +10,39 @@
  *******************************************************************************/
 package org.eclipse.egit.core;
 
+import java.io.File;
+import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
+import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.GitProjectData;
+import org.eclipse.egit.core.project.RepositoryFinder;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
+import org.eclipse.team.core.RepositoryProvider;
+import org.eclipse.team.core.Team;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -34,6 +55,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	private IndexDiffCache indexDiffCache;
 	private RepositoryUtil repositoryUtil;
 	private EGitSecureStore secureStore;
+	private AutoShareProjects shareGitProjectsJob;
 
 	/**
 	 * @return the singleton {@link Activator}
@@ -104,6 +126,8 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		repositoryUtil = new RepositoryUtil();
 
 		secureStore = new EGitSecureStore(SecurePreferencesFactory.getDefault());
+
+		registerAutoShareProjects();
 	}
 
 	public void optionsChanged(DebugOptions options) {
@@ -150,4 +174,87 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		plugin = null;
 	}
 
+	private void registerAutoShareProjects() {
+		shareGitProjectsJob = new AutoShareProjects();
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(
+				shareGitProjectsJob, IResourceChangeEvent.POST_CHANGE);
+	}
+
+	private static class AutoShareProjects implements
+			IResourceChangeListener {
+
+		private static int INTERESTING_CHANGES = IResourceDelta.ADDED
+				| IResourceDelta.OPEN;
+
+		public AutoShareProjects() {
+			// empty
+		}
+
+		private boolean doAutoShare() {
+			IEclipsePreferences d = new DefaultScope().getNode(Activator
+					.getPluginId());
+			IEclipsePreferences p = new InstanceScope().getNode(Activator
+					.getPluginId());
+			return p.getBoolean(GitCorePreferences.core_autoShareProjects, d
+					.getBoolean(GitCorePreferences.core_autoShareProjects,
+							false));
+		}
+
+		public void resourceChanged(IResourceChangeEvent event) {
+			try {
+				event.getDelta().accept(new IResourceDeltaVisitor() {
+
+					public boolean visit(IResourceDelta delta)
+							throws CoreException {
+						if (!doAutoShare())
+							return false;
+						if (delta.getKind() == IResourceDelta.CHANGED
+								&& (delta.getFlags() & INTERESTING_CHANGES) == 0)
+							return true;
+						final IResource resource = delta.getResource();
+						if (!resource.exists() || !resource.isAccessible())
+							return false;
+						if (resource.getType() != IResource.PROJECT)
+							return true;
+						// shouldn't happen for projects
+						if (Team.isIgnoredHint(resource))
+							return false;
+						if (RepositoryMapping.getMapping(resource) != null)
+							return false;
+						final IProject project = (IProject) resource;
+						RepositoryProvider provider = RepositoryProvider
+								.getProvider(project);
+						// respect if project is already shared with another
+						// team provider
+						if (provider != null)
+							return false;
+						RepositoryFinder f = new RepositoryFinder(project);
+						Collection<RepositoryMapping> mappings = f.find(new NullProgressMonitor());
+						try {
+							if (mappings.size() == 1) {
+								// connect
+								RepositoryMapping m = mappings.iterator()
+										.next();
+								final File repositoryDir = m
+										.getGitDirAbsolutePath().toFile();
+								final ConnectProviderOperation op = new ConnectProviderOperation(
+										project, repositoryDir);
+								JobUtil.scheduleUserJob(op,
+										CoreText.Activator_AutoShareJobName,
+										JobFamilies.AUTO_SHARE);
+								Activator.getDefault().getRepositoryUtil()
+										.addConfiguredRepository(repositoryDir);
+							}
+						} catch (IllegalArgumentException e) {
+							logError(CoreText.Activator_AutoSharingFailed, e);
+						}
+						return false;
+					}
+				});
+			} catch (CoreException e) {
+				Activator.logError(e.getMessage(), e);
+				return;
+			}
+		}
+	}
 }
