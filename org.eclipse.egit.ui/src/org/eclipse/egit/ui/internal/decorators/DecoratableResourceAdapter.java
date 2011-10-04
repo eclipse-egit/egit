@@ -129,7 +129,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 		if (ignored)
 			tracked = false;
 		else
-			tracked = true; // TODO: empty folder, folder with all children untracked?
+			tracked = true; // TODO: implement decoration for untracked folders
 
 		// containers are marked as staged whenever file was added, removed or
 		// changed
