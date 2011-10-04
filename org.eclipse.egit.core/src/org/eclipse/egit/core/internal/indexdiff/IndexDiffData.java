@@ -39,6 +39,8 @@ public class IndexDiffData {
 
 	private final Set<String> conflicts;
 
+	private final Set<String> ignored;
+
 	private final Collection<IFile> changedFileResources;
 
 	/**
@@ -59,6 +61,8 @@ public class IndexDiffData {
 				.getUntracked()));
 		conflicts = Collections.unmodifiableSet(new HashSet<String>(indexDiff
 				.getConflicting()));
+		ignored = Collections.unmodifiableSet(new HashSet<String>(indexDiff
+				.getIgnored()));
 		changedFileResources = null;
 	}
 
@@ -85,6 +89,7 @@ public class IndexDiffData {
 		Set<String> modified2 = new HashSet<String>(baseDiff.getModified());
 		Set<String> untracked2 = new HashSet<String>(baseDiff.getUntracked());
 		Set<String> conflicts2 = new HashSet<String>(baseDiff.getConflicting());
+		Set<String> ignored2 = new HashSet<String>(baseDiff.getIgnored());
 
 		mergeList(added2, changedFiles, diffForChangedFiles.getAdded());
 		mergeList(changed2, changedFiles, diffForChangedFiles.getChanged());
@@ -94,6 +99,8 @@ public class IndexDiffData {
 		mergeList(untracked2, changedFiles, diffForChangedFiles.getUntracked());
 		mergeList(conflicts2, changedFiles,
 				diffForChangedFiles.getConflicting());
+		mergeList(ignored2, changedFiles,
+				diffForChangedFiles.getIgnored());
 
 		added = Collections.unmodifiableSet(added2);
 		changed = Collections.unmodifiableSet(changed2);
@@ -102,6 +109,7 @@ public class IndexDiffData {
 		modified = Collections.unmodifiableSet(modified2);
 		untracked = Collections.unmodifiableSet(untracked2);
 		conflicts = Collections.unmodifiableSet(conflicts2);
+		ignored = Collections.unmodifiableSet(ignored2);
 	}
 
 	private void mergeList(Set<String> baseList,
@@ -164,6 +172,13 @@ public class IndexDiffData {
 	 */
 	public Set<String> getConflicting() {
 		return conflicts;
+	}
+
+	/**
+	 * @return list of files that are ignored
+	 */
+	public Set<String> getIgnored() {
+		return ignored;
 	}
 
 	/**
