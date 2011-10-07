@@ -24,7 +24,7 @@ import org.eclipse.jgit.lib.Repository;
  */
 public class StagingViewContentProvider implements
 		IStructuredContentProvider {
-	private StagingEntry[] content;
+	private StagingEntry[] content = new StagingEntry[0];
 	private boolean isWorkspace;
 
 	StagingViewContentProvider(boolean workspace) {
@@ -49,7 +49,8 @@ public class StagingViewContentProvider implements
 				}
 			});
 
-			if (update.changedResources != null && update.changedResources.size() != 0) {
+			if (update.changedResources != null
+					&& !update.changedResources.isEmpty()) {
 				nodes.addAll(Arrays.asList(content));
 				for (String res : update.changedResources)
 					for (StagingEntry entry : content)
