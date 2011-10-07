@@ -444,6 +444,12 @@
 		</adapt>
 	    </enabledWhen>
       </page>
+      <page
+            class="org.eclipse.egit.ui.internal.repository.RepositoryPropertyPage"
+            id="org.eclipse.egit.ui.property.RepositoryPropertyPage"
+            name="%RepositoryConfigPropertyPage"
+            objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+      </page>
    </extension>
 
    <extension point="org.eclipse.ui.keywords">
