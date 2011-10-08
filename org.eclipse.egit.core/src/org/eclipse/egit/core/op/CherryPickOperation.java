@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.internal.merge.StorageContentMerger;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.CherryPickCommand;
 import org.eclipse.jgit.api.CherryPickResult;
@@ -68,8 +69,9 @@ public class CherryPickOperation implements IEGitOperation {
 				pm.subTask(MessageFormat.format(
 						CoreText.CherryPickOperation_cherryPicking,
 						commit.name()));
-				CherryPickCommand command = new Git(repo).cherryPick().include(
-						commit.getId());
+				CherryPickCommand command = new Git(repo).cherryPick()
+						.mergeWith(new StorageContentMerger(repo))
+						.include(commit.getId());
 				try {
 					result = command.call();
 				} catch (GitAPIException e) {

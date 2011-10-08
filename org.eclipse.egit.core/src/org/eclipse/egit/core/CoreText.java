@@ -344,6 +344,12 @@ public class CoreText extends NLS {
 	/** */
 	public static String GitRemoteFolder_fetchingMembers;
 
+	/** */
+	public static String StorageContentMerger_ErrorDuringMerge;
+
+	/** */
+	public static String StorageMerger_failedToGetContentForMerge;
+
 	static {
 		initializeMessages(BUNDLE_NAME,	CoreText.class);
 	}
