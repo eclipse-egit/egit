@@ -44,9 +44,10 @@ public class ProjectUtil {
 		List<IProject> result = new ArrayList<IProject>();
 		final File parentFile = repository.getWorkTree();
 		for (IProject p : projects) {
-			if (!p.isOpen())
+			IPath projectLocation = p.getLocation();
+			if (!p.isOpen() || projectLocation == null)
 				continue;
-			String projectFilePath = p.getLocation()
+			String projectFilePath = projectLocation
 					.append(".project").toOSString(); //$NON-NLS-1$
 			File projectFile = new File(projectFilePath);
 			if (projectFile.exists()) {
