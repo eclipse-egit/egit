@@ -283,14 +283,17 @@ public class IndexDiffCacheEntry {
 					event.getDelta().accept(new IResourceDeltaVisitor() {
 						public boolean visit(IResourceDelta delta)
 								throws CoreException {
+							final IResource resource = delta.getResource();
+							// Don't include ignored resources
+							if (Team.isIgnoredHint(resource))
+								return false;
+
 							// If the file has changed but not in a way that we
 							// care about (e.g. marker changes to files) then
 							// ignore
 							if (delta.getKind() == IResourceDelta.CHANGED
 									&& (delta.getFlags() & INTERESTING_CHANGES) == 0)
 								return true;
-
-							final IResource resource = delta.getResource();
 
 							// skip any non-FILE resources
 							if (resource.getType() != IResource.FILE)
@@ -304,10 +307,6 @@ public class IndexDiffCacheEntry {
 									|| mapping.getRepository() != repository)
 								// Ignore the change
 								return true;
-
-							// Don't include ignored resources
-							if (Team.isIgnoredHint(resource))
-								return false;
 
 							String repoRelativePath = mapping
 									.getRepoRelativePath(resource);
