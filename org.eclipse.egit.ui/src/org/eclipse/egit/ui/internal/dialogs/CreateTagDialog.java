@@ -88,6 +88,8 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
  */
 public class CreateTagDialog extends TitleAreaDialog {
 
+	private static final int MAX_COMMIT_COUNT = 1000;
+
 	/**
 	 * Button id for a "Clear" button (value 22).
 	 */
@@ -653,8 +655,18 @@ public class CreateTagDialog extends TitleAreaDialog {
 			setErrorMessage(UIText.TagAction_errorWhileGettingRevCommits);
 		}
 		// do the walk to get the commits
-		for (RevCommit commit : revWalk)
-			commits.add(commit);
+		RevCommit commit;
+		long count = 0;
+		try {
+			while ((commit = revWalk.next()) != null
+					&& count < MAX_COMMIT_COUNT) {
+				commits.add(commit);
+				count++;
+			}
+		} catch (IOException e) {
+			Activator.logError(UIText.TagAction_errorWhileGettingRevCommits, e);
+			setErrorMessage(UIText.TagAction_errorWhileGettingRevCommits);
+		}
 	}
 
 	/**
