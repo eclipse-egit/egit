@@ -171,6 +171,14 @@ public class IndexDiffCacheEntry {
 					}
 					notifyListeners();
 					return Status.OK_STATUS;
+				} catch (RuntimeException e) {
+					if (GitTraceLocation.INDEXDIFFCACHE.isActive()) {
+						GitTraceLocation.getTrace().trace(
+								GitTraceLocation.INDEXDIFFCACHE.getLocation(),
+								"Calculating IndexDiff failed", e); //$NON-NLS-1$
+					}
+					scheduleReloadJob();
+					return Status.OK_STATUS;
 				} finally {
 					lock.unlock();
 				}
@@ -244,6 +252,14 @@ public class IndexDiffCacheEntry {
 								.toString());
 					}
 					notifyListeners();
+					return Status.OK_STATUS;
+				} catch (RuntimeException e) {
+					if (GitTraceLocation.INDEXDIFFCACHE.isActive()) {
+						GitTraceLocation.getTrace().trace(
+								GitTraceLocation.INDEXDIFFCACHE.getLocation(),
+								"Calculating IndexDiff failed", e); //$NON-NLS-1$
+					}
+					scheduleReloadJob();
 					return Status.OK_STATUS;
 				} finally {
 					lock.unlock();
