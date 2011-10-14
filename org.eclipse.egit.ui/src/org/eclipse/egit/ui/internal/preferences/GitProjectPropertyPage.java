@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, Tomi Pakarinen <tomi.pakarinen@iki.fi>
+ * Copyright (C) 2008, 2011 Tomi Pakarinen <tomi.pakarinen@iki.fi> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,6 +14,7 @@ package org.eclipse.egit.ui.internal.preferences;
 import java.io.IOException;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -81,12 +82,12 @@ public class GitProjectPropertyPage extends PropertyPage {
 		// Get the project that is the source of this property page
 		IProject project = null;
 		final IAdaptable element = getElement();
-		if (element instanceof IProject) {
-			project = (IProject) element;
+		if (element instanceof IResource) {
+			project = ((IResource) element).getProject();
 		} else {
-			Object adapter = element.getAdapter(IProject.class);
-			if (adapter instanceof IProject) {
-				project = (IProject) adapter;
+			Object adapter = element.getAdapter(IResource.class);
+			if (adapter instanceof IResource) {
+				project = ((IResource) adapter).getProject();
 			}
 		}
 
