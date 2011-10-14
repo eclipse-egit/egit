@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.repository.tree;
 
 import java.io.File;
 
+import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 
@@ -21,7 +22,7 @@ import org.eclipse.jgit.lib.Repository;
  * @param <T>
  *            the type
  */
-public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTreeNode> {
+public abstract class RepositoryTreeNode<T> extends PlatformObject implements Comparable<RepositoryTreeNode> {
 
 	private final Repository myRepository;
 
@@ -328,6 +329,12 @@ public abstract class RepositoryTreeNode<T> implements Comparable<RepositoryTree
 			return myObject.equals(otherObject);
 		}
 		return false;
+	}
+
+	public Object getAdapter(Class adapter) {
+		if (Repository.class == adapter && myRepository != null)
+			return myRepository;
+		return super.getAdapter(adapter);
 	}
 
 	@Override
