@@ -152,8 +152,7 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 			treewalk.setFilter(TreeFilter.ANY_DIFF);
 			try {
 				for (RevCommit parent : commit.getParents())
-					if (parent.getTree() == null)
-						revWalk.parseBody(parent);
+					revWalk.parseBody(parent);
 				diffs = FileDiff.compute(treewalk, commit);
 			} catch (IOException e) {
 				diffs = new FileDiff[0];
