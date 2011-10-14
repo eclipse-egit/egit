@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBn///+E\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-14T20:04:38Z",
+      "side": 1,
+      "message": "typo: s/wordspace/workspace/",
+      "revId": "a5741dd4e60c4c99f51aede48953cff25686b395",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
