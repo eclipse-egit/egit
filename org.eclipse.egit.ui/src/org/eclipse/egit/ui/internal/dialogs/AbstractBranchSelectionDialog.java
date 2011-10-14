@@ -238,10 +238,12 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 						.getSelection()).getFirstElement();
 				if (node == null)
 					return;
-				if (node.getType() != RepositoryTreeNodeType.REF
-						&& node.getType() != RepositoryTreeNodeType.TAG)
-					branchTree.setExpandedState(node, !branchTree
-							.getExpandedState(node));
+				final RepositoryTreeNodeType type = node.getType();
+				if (type != RepositoryTreeNodeType.REF
+						&& type != RepositoryTreeNodeType.TAG
+						&& type != RepositoryTreeNodeType.ADDITIONALREF)
+					branchTree.setExpandedState(node,
+							!branchTree.getExpandedState(node));
 				else if (getButton(Window.OK).isEnabled())
 					buttonPressed(OK);
 
