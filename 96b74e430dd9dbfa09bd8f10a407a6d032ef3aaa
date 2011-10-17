@@ -16,6 +16,24 @@
       "revId": "96b74e430dd9dbfa09bd8f10a407a6d032ef3aaa",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///00\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-17T22:07:53Z",
+      "side": 0,
+      "message": "aha, got it",
+      "parentUuid": "AABOBn///3w\u003d",
+      "revId": "96b74e430dd9dbfa09bd8f10a407a6d032ef3aaa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
