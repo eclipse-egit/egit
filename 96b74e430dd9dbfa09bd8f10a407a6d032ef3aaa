@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBn///3w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-10-17T07:57:26Z",
+      "side": 0,
+      "message": "The purpose of this loop is checking for files that do not belong to a Git repository. The later called code ignores such files.",
+      "parentUuid": "AABOBn///84\u003d",
+      "revId": "96b74e430dd9dbfa09bd8f10a407a6d032ef3aaa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///00\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
         "patchSetId": 2
