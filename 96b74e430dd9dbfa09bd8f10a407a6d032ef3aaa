@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBn///84\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-14T21:27:06Z",
+      "side": 0,
+      "message": "What\u0027s the purpose of this loop ? \n\nI suspect it is no longer needed as you map resources to repositories using the new ResourceUtil class called from discardChanges().\n\nIf this is correct also method getRepository(IResource resource) can be removed.",
+      "revId": "96b74e430dd9dbfa09bd8f10a407a6d032ef3aaa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
