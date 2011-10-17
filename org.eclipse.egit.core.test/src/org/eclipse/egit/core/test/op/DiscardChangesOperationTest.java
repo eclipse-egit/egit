@@ -49,7 +49,8 @@ public class DiscardChangesOperationTest extends DualRepositoryTestCase {
 		// now we create a project in repo1
 		project = testUtils
 				.createProjectInLocalFileSystem(workdir, projectName);
-		testUtils.addFileToProject(project, "folder1/file1.txt", "Hello world");
+		testUtils.addFileToProject(project, "folder1/file1.txt", "Hello world 1");
+		testUtils.addFileToProject(project, "folder1/file2.txt", "Hello world 2");
 
 		repository1.connect(project);
 
@@ -83,22 +84,31 @@ public class DiscardChangesOperationTest extends DualRepositoryTestCase {
 
 	@Test
 	public void testDiscardChanges() throws Exception {
-		IFile file = project.getFile(new Path("folder1/file1.txt"));
-		String contents = testUtils.slurpAndClose(file.getContents());
-		assertEquals("Hello world", contents);
+		IFile file1 = project.getFile(new Path("folder1/file1.txt"));
+		String contents = testUtils.slurpAndClose(file1.getContents());
+		assertEquals("Hello world 1", contents);
+		setNewFileContent(file1, "changed 1");
 
-		file.setContents(new ByteArrayInputStream("Changed".getBytes(project
-				.getDefaultCharset())), 0, null);
-
-		contents = testUtils.slurpAndClose(file.getContents());
-		assertEquals("Changed", contents);
+		IFile file2 = project.getFile(new Path("folder1/file2.txt"));
+		contents = testUtils.slurpAndClose(file2.getContents());
+		assertEquals("Hello world 2", contents);
+		setNewFileContent(file2, "changed 2");
 
 		DiscardChangesOperation dcop = new DiscardChangesOperation(
-				new IResource[] { file });
+				new IResource[] { file1, file2 });
 		dcop.execute(new NullProgressMonitor());
 
-		contents = testUtils.slurpAndClose(file.getContents());
-		assertEquals("Hello world", contents);
+		contents = testUtils.slurpAndClose(file1.getContents());
+		assertEquals("Hello world 1", contents);
 
+		contents = testUtils.slurpAndClose(file2.getContents());
+		assertEquals("Hello world 2", contents);
+	}
+
+	private void setNewFileContent(IFile file, String content) throws Exception {
+		file.setContents(
+				new ByteArrayInputStream(content.getBytes(project
+						.getDefaultCharset())), 0, null);
+		assertEquals(content, testUtils.slurpAndClose(file.getContents()));
 	}
 }
