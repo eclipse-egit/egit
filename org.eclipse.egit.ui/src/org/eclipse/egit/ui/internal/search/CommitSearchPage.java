@@ -335,6 +335,7 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 			public void widgetSelected(SelectionEvent e) {
 				repositoryViewer.setAllChecked(true);
 				repositoryGroup.setText(getRepositoryText());
+				updateOKStatus();
 			}
 
 		});
@@ -348,6 +349,7 @@ public class CommitSearchPage extends DialogPage implements ISearchPage {
 			public void widgetSelected(SelectionEvent e) {
 				repositoryViewer.setAllChecked(false);
 				repositoryGroup.setText(getRepositoryText());
+				updateOKStatus();
 			}
 
 		});
