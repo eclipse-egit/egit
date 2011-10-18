@@ -73,7 +73,7 @@ public class BranchOperation implements IEGitOperation {
 
 			public void run(IProgressMonitor pm) throws CoreException {
 				IProject[] validProjects = ProjectUtil
-						.getValidProjects(repository);
+						.getValidOpenProjects(repository);
 				pm.beginTask(NLS.bind(
 						CoreText.BranchOperation_performingBranch, target), 1);
 
