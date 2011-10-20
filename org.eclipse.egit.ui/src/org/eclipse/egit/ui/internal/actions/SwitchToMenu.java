@@ -86,8 +86,11 @@ public class SwitchToMenu extends ContributionItem implements
 		if (!(sel instanceof IStructuredSelection))
 			return;
 		Object selected = ((IStructuredSelection) sel).getFirstElement();
-		if (selected instanceof IAdaptable)
-			selected = ((IAdaptable) selected).getAdapter(IProject.class);
+		if (selected instanceof IAdaptable) {
+			Object adapter = ((IAdaptable) selected).getAdapter(IProject.class);
+			if (adapter != null)
+				selected = adapter;
+		}
 
 		Repository repository = null;
 		if (selected instanceof RepositoryNode)
