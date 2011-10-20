@@ -502,6 +502,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_ShowAllBranchesMenuLabel;
 
 	/** */
+	public static String GitHistoryPage_FollowRenames;
+
+	/** */
 	public static String GitHistoryPage_FilterSubMenuLabel;
 
 	/** */
