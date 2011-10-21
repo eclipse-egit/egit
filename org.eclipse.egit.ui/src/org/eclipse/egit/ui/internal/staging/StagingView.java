@@ -825,17 +825,16 @@ public class StagingView extends ViewPart {
 			StructuredSelection ssel = (StructuredSelection) selection;
 			if (ssel.size() != 1)
 				return;
-			if (ssel.getFirstElement() instanceof IResource)
-				showResource((IResource) ssel.getFirstElement());
-			if (ssel.getFirstElement() instanceof IAdaptable) {
-				IResource adapted = (IResource) ((IAdaptable) ssel
-						.getFirstElement()).getAdapter(IResource.class);
+			Object firstElement = ssel.getFirstElement();
+			if (firstElement instanceof IResource)
+				showResource((IResource) firstElement);
+			else if (firstElement instanceof RepositoryTreeNode) {
+				RepositoryTreeNode repoNode = (RepositoryTreeNode) firstElement;
+				reload(repoNode.getRepository());
+			} else if (firstElement instanceof IAdaptable) {
+				IResource adapted = (IResource) ((IAdaptable) firstElement).getAdapter(IResource.class);
 				if (adapted != null)
 					showResource(adapted);
-			} else if (ssel.getFirstElement() instanceof RepositoryTreeNode) {
-				RepositoryTreeNode repoNode = (RepositoryTreeNode) ssel
-						.getFirstElement();
-				reload(repoNode.getRepository());
 			}
 		}
 	}
