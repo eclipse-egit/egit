@@ -16,6 +16,10 @@ import org.eclipse.jgit.lib.ObjectId;
  */
 public class Utils {
 
+	private static final String CR = "\r"; //$NON-NLS-1$
+	private static final String LF = "\n"; //$NON-NLS-1$
+	private static final String CRLF = "\r\n"; //$NON-NLS-1$
+
 	/**
 	 * @param id
 	 * @return a shortened ObjectId (first 6 digits)
@@ -24,4 +28,13 @@ public class Utils {
 		return id.abbreviate(6).name();
 	}
 
+	/**
+	 * The method replaces all platform specific line endings
+	 * with  <code>\n</code>
+	 * @param s
+	 * @return String with normalized line endings
+	 */
+	public static String normalizeLineEndings(String s) {
+		return s.replaceAll(CRLF, LF).replaceAll(CR, LF);
+	}
 }

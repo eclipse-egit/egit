@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
@@ -533,8 +534,7 @@ public class SpellcheckableMessageArea extends Composite {
 	 */
 	public String getCommitMessage() {
 		String text = getText();
-		text = text.replaceAll(getTextWidget().getLineDelimiter(), "\n"); //$NON-NLS-1$
-		return text;
+		return Utils.normalizeLineEndings(text);
 	}
 
 	/**
