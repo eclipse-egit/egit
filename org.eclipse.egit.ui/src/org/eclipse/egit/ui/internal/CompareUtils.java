@@ -394,8 +394,7 @@ public class CompareUtils {
 	 */
 	public static ITypedElement getHeadTypedElement(final IFile baseFile)
 			throws IOException {
-		final RepositoryMapping mapping = RepositoryMapping.getMapping(baseFile
-				.getProject());
+		final RepositoryMapping mapping = RepositoryMapping.getMapping(baseFile);
 		final Repository repository = mapping.getRepository();
 		final String gitPath = mapping.getRepoRelativePath(baseFile);
 
