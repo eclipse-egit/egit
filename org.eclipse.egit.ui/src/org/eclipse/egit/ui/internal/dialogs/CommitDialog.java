@@ -99,6 +99,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PreferencesUtil;
@@ -252,8 +253,10 @@ public class CommitDialog extends TitleAreaDialog {
 				return;
 			}
 			IFile file = findFile(commitItem.path);
-			if (file == null)
-				CompareUtils.compareHeadWithWorkingTree(repository, commitItem.path);
+			if (file == null
+					|| RepositoryProvider.getProvider(file.getProject()) == null)
+				CompareUtils.compareHeadWithWorkingTree(repository,
+						commitItem.path);
 			else
 				CompareUtils.compareHeadWithWorkspace(repository, file);
 		}
