@@ -205,10 +205,13 @@ public class GitResourceVariantTreeSubscriber extends
 	private boolean shouldBeIncluded(IResource res) {
 		if (res == null)
 			return false;
-		IProject proj = res.getProject();
+		final IProject proj = res.getProject();
 		if (proj == null)
 			return false;
-		Set<IContainer> includedPaths = gsds.getData(proj).getIncludedPaths();
+		final GitSynchronizeData d = gsds.getData(proj);
+		if (d == null)
+			return false;
+		final Set<IContainer> includedPaths = d.getIncludedPaths();
 		if (includedPaths == null)
 			return true;
 
