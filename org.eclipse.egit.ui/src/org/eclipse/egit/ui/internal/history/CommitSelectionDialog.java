@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -88,7 +88,9 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 				});
 		table.getTableView().addOpenListener(new IOpenListener() {
 			public void open(OpenEvent event) {
-				buttonPressed(OK);
+				if (getButton(OK).isEnabled()) {
+					buttonPressed(OK);
+				}
 			}
 		});
 		// allow for some room here
