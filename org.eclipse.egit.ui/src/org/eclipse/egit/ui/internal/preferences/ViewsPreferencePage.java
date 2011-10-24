@@ -59,6 +59,9 @@ public class ViewsPreferencePage extends FieldEditorPreferencePage implements
 				UIPreferences.RESOURCEHISTORY_SHOW_NOTES,
 				UIText.ResourceHistory_toggleShowNotes, historyGroup));
 		addField(new BooleanFieldEditor(
+				UIPreferences.RESOURCEHISTORY_FOLLOW_RENAMES,
+				UIText.GitHistoryPage_FollowRenames, historyGroup));
+		addField(new BooleanFieldEditor(
 				UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP,
 				UIText.ResourceHistory_toggleCommentWrap, historyGroup));
 
