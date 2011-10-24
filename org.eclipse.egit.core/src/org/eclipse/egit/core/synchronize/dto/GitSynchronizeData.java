@@ -28,6 +28,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -45,7 +46,10 @@ public class GitSynchronizeData {
 	private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace()
 					.getRoot();
 
-	private static final Pattern BRANCH_NAME_PATTERN = Pattern.compile("^" + R_HEADS + ".*?"); //$NON-NLS-1$ //$NON-NLS-2$
+	/**
+	 * Compiled patter "^" + {@link Constants#R_HEADS} + ".*?"
+	 */
+	public static final Pattern BRANCH_NAME_PATTERN = Pattern.compile("^" + R_HEADS + ".*?"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private final boolean includeLocal;
 
