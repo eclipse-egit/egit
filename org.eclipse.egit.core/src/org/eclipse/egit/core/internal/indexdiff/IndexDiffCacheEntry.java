@@ -90,16 +90,16 @@ public class IndexDiffCacheEntry {
 		repository.getListenerList().addIndexChangedListener(
 				new IndexChangedListener() {
 					public void onIndexChanged(IndexChangedEvent event) {
-						scheduleReloadJob();
+						scheduleReloadJob("IndexChanged"); //$NON-NLS-1$
 					}
 				});
 		repository.getListenerList().addRefsChangedListener(
 				new RefsChangedListener() {
 					public void onRefsChanged(RefsChangedEvent event) {
-						scheduleReloadJob();
+						scheduleReloadJob("RefsChanged"); //$NON-NLS-1$
 					}
 				});
-		scheduleReloadJob();
+		scheduleReloadJob("IndexDiffCacheEntry construction"); //$NON-NLS-1$
 		createResourceChangeListener();
 	}
 
@@ -128,7 +128,7 @@ public class IndexDiffCacheEntry {
 	 * Trigger a new index diff calculation manually
 	 */
 	public void refresh() {
-		scheduleReloadJob();
+		scheduleReloadJob("Refresh called"); //$NON-NLS-1$
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class IndexDiffCacheEntry {
 		return indexDiffData;
 	}
 
-	private void scheduleReloadJob() {
+	private void scheduleReloadJob(final String trigger) {
 		if (reloadJob != null)
 			reloadJob.cancel();
 		if (!checkRepository())
@@ -161,9 +161,8 @@ public class IndexDiffCacheEntry {
 					indexDiffData = new IndexDiffData(result);
 					if (GitTraceLocation.INDEXDIFFCACHE.isActive()) {
 						long time = System.currentTimeMillis() - startTime;
-						StringBuilder message = new StringBuilder(NLS.bind(
-								"Updated IndexDiffData in {0} ms\n", //$NON-NLS-1$
-								new Long(time)));
+						StringBuilder message = new StringBuilder(
+								getTraceMessage(time));
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.INDEXDIFFCACHE.getLocation(),
 								message.append(indexDiffData.toString())
@@ -177,11 +176,18 @@ public class IndexDiffCacheEntry {
 								GitTraceLocation.INDEXDIFFCACHE.getLocation(),
 								"Calculating IndexDiff failed", e); //$NON-NLS-1$
 					}
-					scheduleReloadJob();
+					scheduleReloadJob("Recalculation due to Exception in reload job"); //$NON-NLS-1$
 					return Status.OK_STATUS;
 				} finally {
 					lock.unlock();
 				}
+			}
+
+			private String getTraceMessage(long time) {
+				return NLS
+						.bind("\nUpdated IndexDiffData in {0} ms\nReason: {1}\nRepository: {2}\n", //$NON-NLS-1$
+						new Object[] { new Long(time), trigger,
+								repository.getWorkTree().getName() });
 			}
 
 			@Override
@@ -259,7 +265,7 @@ public class IndexDiffCacheEntry {
 								GitTraceLocation.INDEXDIFFCACHE.getLocation(),
 								"Calculating IndexDiff failed", e); //$NON-NLS-1$
 					}
-					scheduleReloadJob();
+					scheduleReloadJob("Recalculation due to Exception in update job"); //$NON-NLS-1$
 					return Status.OK_STATUS;
 				} finally {
 					lock.unlock();
@@ -384,15 +390,17 @@ public class IndexDiffCacheEntry {
 					return;
 				}
 
-				if (gitIgnoreChanged[0] || indexDiffData == null)
-					scheduleReloadJob();
+				if (gitIgnoreChanged[0])
+					scheduleReloadJob("A .gitignore changed"); //$NON-NLS-1$
+				else if (indexDiffData == null)
+					scheduleReloadJob("Resource changed, no diff available"); //$NON-NLS-1$
 				else if (!filesToUpdate.isEmpty())
 					if (filesToUpdate.size() < RESOURCE_LIST_UPDATE_LIMIT)
 						scheduleUpdateJob(filesToUpdate, fileResourcesToUpdate);
 					else
 						// Calculate new IndexDiff if too many resources changed
 						// This happens e.g. when a project is opened
-						scheduleReloadJob();
+						scheduleReloadJob("Too many resources changed"); //$NON-NLS-1$
 			}
 
 		};
