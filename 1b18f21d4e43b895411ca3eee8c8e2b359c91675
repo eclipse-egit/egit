@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBn///cc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-10-24T12:45:24Z",
+      "side": 1,
+      "message": "I would use repository.getWorktree(). That leads you directly to the directory you want (without the getParentFile()). It would also throw an appropriate exception instead of displaying wrong data when called on a bare repo.",
+      "revId": "1b18f21d4e43b895411ca3eee8c8e2b359c91675",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
