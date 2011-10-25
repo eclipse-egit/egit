@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBn///bQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-24T20:30:32Z",
+      "side": 1,
+      "message": "could you prepend \\n so that the timing is not at the end of the line to avoid the need for horizontal scrolling when reading the trace output ?",
+      "revId": "11bfa39f065a11b72f97dbd23f9fbebe9802a9e2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
