@@ -16,6 +16,24 @@
       "revId": "11bfa39f065a11b72f97dbd23f9fbebe9802a9e2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///Zg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-10-25T08:23:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBn///bQ\u003d",
+      "revId": "11bfa39f065a11b72f97dbd23f9fbebe9802a9e2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
