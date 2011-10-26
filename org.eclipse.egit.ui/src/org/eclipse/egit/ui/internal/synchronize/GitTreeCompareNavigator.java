@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.eclipse.compare.CompareNavigator;
@@ -33,17 +34,24 @@ class GitTreeCompareNavigator extends CompareNavigator {
 
 	@Override
 	protected INavigatable[] getNavigatables() {
+		Method baseNavigables;
 		try {
-			Method baseNavigables = COMPARE_NAVIGATOR_CLASS.getDeclaredMethod(
+			baseNavigables = COMPARE_NAVIGATOR_CLASS.getDeclaredMethod(
 					"getNavigatables", Void.class); //$NON-NLS-1$
 			baseNavigables.setAccessible(true);
-
 			return (INavigatable[]) baseNavigables.invoke(mainNavigator,
 					Void.class);
-		} catch (Exception e) {
+		} catch (SecurityException e) {
+			// should never happen
+		} catch (NoSuchMethodException e) {
+			// should never happen
+		} catch (IllegalArgumentException e) {
+			// should never happen
+		} catch (IllegalAccessException e) {
+			// should never happen
+		} catch (InvocationTargetException e) {
 			// should never happen
 		}
-
 		return new INavigatable[0];
 	}
 
