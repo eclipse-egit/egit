@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBn///h4\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-24T07:14:11Z",
+      "side": 1,
+      "message": "add a hint that this change depends on change  I4761e9f5cfb4f0ef0b0e1e38991401a1d5003bea",
+      "revId": "ac7bd748314034cbec567821e6e2ee86b2c44fb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///eU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-24T07:14:11Z",
+      "side": 1,
+      "message": "This preference should also show up under Preferences \u003e Team \u003e Git \u003e View in the \"History View\" group \n(similar to \"Show Notes History\" option).",
+      "revId": "ac7bd748314034cbec567821e6e2ee86b2c44fb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///i0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1898,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-24T07:14:11Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly braces around single line blocks",
+      "revId": "ac7bd748314034cbec567821e6e2ee86b2c44fb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
