@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBn///eM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 130
+      },
+      "writtenOn": "2011-10-24T08:18:14Z",
+      "side": 1,
+      "message": "I think Benjamin meant that it might be better performance-wise to not start a whole new job to calculate the history from scratch. Instead he would somehow adjust the already calculated history.\n\nI for one would remove that TODO for now.",
+      "parentUuid": "AABOBn///fM\u003d",
+      "revId": "ac7bd748314034cbec567821e6e2ee86b2c44fb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///fI\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 4
