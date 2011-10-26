@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAH///4s\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-06-22T13:41:17Z",
+      "side": 1,
+      "message": "Please add a line \"Bug: 302549\"\n\nPlease do not forget to add the Change-Id.",
+      "revId": "d810e22db3f415a8471a7c4c80d9abe9fcaeb21f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAH///4o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1625,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-06-22T13:41:17Z",
+      "side": 1,
+      "message": "You did not specify a filter for the fileWalker. Now all the files are listed in the file list.\n\nI tried just to add the FollowFilter to the fileWalker like below. This however does not work, the fileWalker cannot handle the rename.  \n\nWe need somehow to set the correct file filter when the selection of the CommitGraphTable changes.",
+      "revId": "d810e22db3f415a8471a7c4c80d9abe9fcaeb21f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
