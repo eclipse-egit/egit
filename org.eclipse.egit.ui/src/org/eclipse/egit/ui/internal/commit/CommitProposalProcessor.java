@@ -59,6 +59,18 @@ public class CommitProposalProcessor implements IContentAssistProcessor {
 			return display.compareTo(other.display);
 		}
 
+		@Override
+		public int hashCode() {
+			return display.hashCode();
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			if (!(other instanceof CommitFile))
+				return false;
+			return (this.compareTo((CommitFile)other) == 0);
+		}
+
 		public Image getImage() {
 			return (Image) resourceManager.get(UIUtils.getEditorImage(full));
 		}
