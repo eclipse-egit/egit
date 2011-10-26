@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBn///ek\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-23T21:40:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we call this methods isRegularFileOrDirectory then? I read this literally as \"@return whether the file is a regular file or a directory\", but my guess is it would be clearer without the parentheses. It would also be clearer if you state what is the meaning a \"true\" return value (by implication everything else is false). Say: @return true if the file is a regular file.\n\nDid you consider how gitlinks and symbolic links affect this method in the future? I assume this method would return false for directories and gitlinks, but how about symblic links?",
+      "revId": "5c5548491a9bae98a4c53b1642e676d4e00c309d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///eo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-23T21:40:44Z",
+      "side": 1,
+      "message": "style-nit; we don\u0027t use braces for simple single stament constructs",
+      "revId": "5c5548491a9bae98a4c53b1642e676d4e00c309d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///es\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-23T21:40:44Z",
+      "side": 1,
+      "message": "style-nit; we don\u0027t use braces for simple single stament constructs",
+      "revId": "5c5548491a9bae98a4c53b1642e676d4e00c309d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///ew\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-23T21:40:44Z",
+      "side": 1,
+      "message": "style-nit; we don\u0027t use braces for simple single stament constructs",
+      "revId": "5c5548491a9bae98a4c53b1642e676d4e00c309d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///eg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-23T21:40:44Z",
+      "side": 1,
+      "message": "Style-nit: extra curly braces",
+      "revId": "5c5548491a9bae98a4c53b1642e676d4e00c309d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
