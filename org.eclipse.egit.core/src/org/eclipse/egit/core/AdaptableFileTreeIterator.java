@@ -19,7 +19,6 @@ import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.WorkingTreeOptions;
 import org.eclipse.jgit.util.FS;
 
 /**
@@ -50,8 +49,7 @@ public class AdaptableFileTreeIterator extends FileTreeIterator {
 	 */
 	public AdaptableFileTreeIterator(final Repository repository,
 			final IWorkspaceRoot workspaceRoot) {
-		super(repository.getWorkTree(), FS.DETECTED, repository.getConfig()
-				.get(WorkingTreeOptions.KEY));
+		super(repository);
 		root = workspaceRoot;
 	}
 
