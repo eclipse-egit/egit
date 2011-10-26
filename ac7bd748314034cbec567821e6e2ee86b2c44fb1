@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBn///dw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1728,
+      "author": {
+        "id": 130
+      },
+      "writtenOn": "2011-10-24T09:10:27Z",
+      "side": 1,
+      "message": "I just lifted the restriction, but it doesn\u0027t change anything because of this code in GenericHistoryView:\n\nIStructuredSelection structSelection \u003d (IStructuredSelection) selection;\n//Always take the first element - this is not intended to work with multiple selection\n//Also, hang on to this selection for future use in case the history view is not visible\nlastSelectedElement \u003d structSelection.getFirstElement();\n\nIn other words: we never get more than a single element into the view anyway.",
+      "parentUuid": "AABOBn///e0\u003d",
+      "revId": "ac7bd748314034cbec567821e6e2ee86b2c44fb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///i0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 4
