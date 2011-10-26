@@ -36,6 +36,125 @@
     },
     {
       "key": {
+        "uuid": "AABOBn///fM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-23T21:53:52Z",
+      "side": 1,
+      "message": "?",
+      "revId": "ac7bd748314034cbec567821e6e2ee86b2c44fb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///fI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1416,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-23T21:53:52Z",
+      "side": 1,
+      "message": "style-nit; surplus braces",
+      "revId": "ac7bd748314034cbec567821e6e2ee86b2c44fb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///fE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-23T21:53:52Z",
+      "side": 1,
+      "message": "style-nit; surplus braces",
+      "revId": "ac7bd748314034cbec567821e6e2ee86b2c44fb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///fA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1453,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-23T21:53:52Z",
+      "side": 1,
+      "message": "style-nit; surplus braces",
+      "revId": "ac7bd748314034cbec567821e6e2ee86b2c44fb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///e8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-23T21:53:52Z",
+      "side": 1,
+      "message": "style-nit; surplus braces",
+      "revId": "ac7bd748314034cbec567821e6e2ee86b2c44fb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///e4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1668,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-23T21:53:52Z",
+      "side": 1,
+      "message": "style-nit; surplus braces",
+      "revId": "ac7bd748314034cbec567821e6e2ee86b2c44fb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///e0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1728,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-23T21:53:52Z",
+      "side": 1,
+      "message": "Why wouldn\u0027t we want to be able to follow renames for a pair of files? I might be able to live with the restriction if there is a good reason for this.",
+      "revId": "ac7bd748314034cbec567821e6e2ee86b2c44fb1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///i0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 4
