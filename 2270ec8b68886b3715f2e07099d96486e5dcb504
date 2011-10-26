@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAH///48\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-06-22T13:33:39Z",
+      "side": 1,
+      "message": "The commit message header should fit on one line (please see http://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines)",
+      "revId": "2270ec8b68886b3715f2e07099d96486e5dcb504",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAH///4w\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-06-22T13:33:39Z",
+      "side": 1,
+      "message": "Please add the Change-Id line to the commit message before you push a second patch set (http://wiki.eclipse.org/EGit/Contributor_Guide#To_update_an_existing_change_with_a_new_commit). The Change-Id can be found in the Gerrit header. In this case it is I2270ec8b68886b3715f2e07099d96486e5dcb504. It is best practice to include the Change-Id already in the first commit when working with Gerrit.",
+      "revId": "2270ec8b68886b3715f2e07099d96486e5dcb504",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAH///44\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-06-22T13:33:39Z",
+      "side": 1,
+      "message": "This method is never used. Please remove it and add it in the next commit, or add a test case that calls the method. In eclipse that does not even compile (org.eclipse.jdt.core.compiler.problem.unusedPrivateMember\u003derror in org.eclipse.jdt.core.prefs)",
+      "revId": "2270ec8b68886b3715f2e07099d96486e5dcb504",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAH///40\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-06-22T13:33:39Z",
+      "side": 1,
+      "message": "Please also override hashCode (see e.g. http://stackoverflow.com/questions/27581/overriding-equals-and-hashcode-in-java)",
+      "revId": "2270ec8b68886b3715f2e07099d96486e5dcb504",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
