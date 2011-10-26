@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBn///vI\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-20T07:26:54Z",
+      "side": 1,
+      "message": "add an \"AlsoBy:\" footer to the last paragraph in order to give credit to Benjamin instead of this line.\n\n AlsoBy: Benjamin Gandon \u003cbenje@linkeo.com\u003e\n Change-Id: Id810e22db3f415a8471a7c4c80d9abe9fcaeb21f",
+      "revId": "a61c177d9edb437fdd6d90b057e7488d9dd96336",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
