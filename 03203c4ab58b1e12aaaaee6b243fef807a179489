@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBH///84\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-08-31T15:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn//+RU\u003d",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+Rs\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
         "patchSetId": 1
@@ -65,6 +83,24 @@
       "writtenOn": "2011-08-29T21:03:50Z",
       "side": 1,
       "message": "There is nothing to do here.",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///9I\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-08-31T15:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn//+SE\u003d",
       "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -151,6 +187,24 @@
       "writtenOn": "2011-08-29T22:13:30Z",
       "side": 1,
       "message": "+1 for removal",
+      "parentUuid": "AABOAn//+Rg\u003d",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+Qg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-08-30T22:33:41Z",
+      "side": 1,
+      "message": "I\u0027m planning to use it, so i want to leave it there.",
       "parentUuid": "AABOAn//+Rg\u003d",
       "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
