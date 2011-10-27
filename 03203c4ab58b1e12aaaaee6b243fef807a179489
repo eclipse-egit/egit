@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBH///9M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-08-31T15:22:01Z",
+      "side": 1,
+      "message": "I want to create instances of ProjectReferences in the egit.mylyn.ui plugin, so i need it public (i guess using the package name org.eclipse.egit.core in the egit.mylyn.ui plugin wouldn\u0027t be ok?).",
+      "parentUuid": "AABOAn//+Ro\u003d",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBH///28\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
         "patchSetId": 1
@@ -313,6 +331,24 @@
       "side": 1,
       "message": "Use default level, so this method will be available from org.eclipse.egit.core package only, it\u0027s Ok.\n\nWhy not removing this field? In line #69 it\u0027s obvious what value we expect from the first token. Removing this field you have to document this explicitly somewhere, you have to keep it in sync etc. As there is no better documentation than code itself... please leave it inplace ;-)",
       "parentUuid": "AABOAn//+Qc\u003d",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///9A\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-08-31T15:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBH///9U\u003d",
       "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
