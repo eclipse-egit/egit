@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH///8c\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-08-31T16:14:06Z",
+      "side": 1,
+      "message": "Why? It should be populated otherwise its getter is useless.",
+      "revId": "164a4eef9eed0da9ff701a56fe610e84c0948c42",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///8Q\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-08-31T16:18:54Z",
+      "side": 1,
+      "message": "...also this change introduces FindBugs warning:\n\n    File: ProjectReference.java, Line: 108, Type: UWF_UNWRITTEN_FIELD, Priority: Normal",
+      "parentUuid": "AABOBH///8c\u003d",
+      "revId": "164a4eef9eed0da9ff701a56fe610e84c0948c42",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
