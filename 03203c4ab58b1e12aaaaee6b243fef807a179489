@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOAn//+Rw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-08-29T21:28:10Z",
+      "side": 1,
+      "message": "I\u0027d also move this to ProjectReference. This way, GitProjectSetCapability will only depend on ProjectReference and not vice versa.",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+RU\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
         "patchSetId": 1
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "Good catch, Robin. +1",
       "parentUuid": "AABOAn//+Rw\u003d",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+Rs\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-08-29T21:28:10Z",
+      "side": 1,
+      "message": "Should we refactor this to an equals method in ProjectReference (and hashCode of course)?\n\nIt would make its usage easier, you could just use a HashSet instead of having to remember to use this comparator.",
       "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -48,6 +82,40 @@
       "writtenOn": "2011-08-29T21:23:03Z",
       "side": 1,
       "message": "Should anyone be able to create a new instance of reference instead of GitProjectSetCapability? I would rather make it package-level.",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+Rc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-08-29T21:28:10Z",
+      "side": 1,
+      "message": "Change the message key to ProjectReference_InvalidTokensCount.",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+Rg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-08-29T21:28:10Z",
+      "side": 1,
+      "message": "getOrigin is not used in GitProjectSetCapability, it should be removed (unless you plan to use it). The same comments about API apply as with getVersion below.",
       "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
