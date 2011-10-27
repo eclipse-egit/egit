@@ -34,6 +34,24 @@
       "revId": "164a4eef9eed0da9ff701a56fe610e84c0948c42",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///8U\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-08-31T16:35:34Z",
+      "side": 1,
+      "message": "Yes, it\u0027s a mistake. Will correct it.",
+      "parentUuid": "AABOBH///8c\u003d",
+      "revId": "164a4eef9eed0da9ff701a56fe610e84c0948c42",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
