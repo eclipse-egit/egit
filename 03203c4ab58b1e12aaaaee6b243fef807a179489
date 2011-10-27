@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBH///80\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-08-31T15:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn//+Rs\u003d",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+SE\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
         "patchSetId": 1
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBH///rQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-09-05T08:31:12Z",
+      "side": 1,
+      "message": "At the moment i have the string from a project set file, so it\u0027s easy for me to call the constructor, because i don\u0027t need to split the string. With a method with separate arguments i would have to do it myself. So for me this constructor is the best and easiest way.",
+      "parentUuid": "AABOBH///28\u003d",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+Rc\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
         "patchSetId": 1
@@ -153,6 +189,24 @@
       "writtenOn": "2011-08-29T21:28:10Z",
       "side": 1,
       "message": "Change the message key to ProjectReference_InvalidTokensCount.",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///9E\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-08-31T15:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn//+Rc\u003d",
       "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -223,6 +277,24 @@
       "writtenOn": "2011-08-29T21:03:50Z",
       "side": 1,
       "message": "I\u0027m not sure about public modifier here as version field represents reference\u0027s implementation details. I doubt consumers would be really interested in it.\n\nI would leave it private (or even remove it) unless there is a real usecase that requires access to its value. Making it private later would be hard (due to API breakage), we can make it public later without any problems.",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+Qc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-08-30T22:33:41Z",
+      "side": 1,
+      "message": "Ok, but that way i would have to delete version, because it would be an unused private member, which causes an error with the current JDT properties. But since it isn\u0027t used at the moment (and i don\u0027t plan it to use), that would be no further problem for me, and if we need it later, we still can add it.\nWhat do you suggest in that case?",
+      "parentUuid": "AABOAn//+R8\u003d",
       "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
