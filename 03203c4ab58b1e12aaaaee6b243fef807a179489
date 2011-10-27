@@ -72,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "AABOAn//+R8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-08-29T21:03:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure about public modifier here as version field represents reference\u0027s implementation details. I doubt consumers would be really interested in it.\n\nI would leave it private (or even remove it) unless there is a real usecase that requires access to its value. Making it private later would be hard (due to API breakage), we can make it public later without any problems.",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBH///9U\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
         "patchSetId": 1
