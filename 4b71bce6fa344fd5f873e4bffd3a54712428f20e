@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBn///N8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/AdaptableFileTreeIterator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-10-27T13:14:36Z",
+      "side": 1,
+      "message": "What could explain the failing test we currently have? One hint: your change of course adds the execution of workingTreeIterator.initRootIterator() - that\u0027s what we want. But It also changes that we use the use repo.getFS() instead of FS.DETECTED.",
+      "revId": "4b71bce6fa344fd5f873e4bffd3a54712428f20e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
