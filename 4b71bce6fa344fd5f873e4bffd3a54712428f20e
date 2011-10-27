@@ -16,6 +16,24 @@
       "revId": "4b71bce6fa344fd5f873e4bffd3a54712428f20e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///M8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/AdaptableFileTreeIterator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-10-27T16:12:30Z",
+      "side": 1,
+      "message": "The test failure occurs sometimes and is not related to this change.",
+      "parentUuid": "AABOBn///N8\u003d",
+      "revId": "4b71bce6fa344fd5f873e4bffd3a54712428f20e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
