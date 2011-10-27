@@ -16,6 +16,24 @@
       "revId": "fe828697afea36b3353e929927394ba3847b2073",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///qg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-09-05T12:50:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBH///3A\u003d",
+      "revId": "fe828697afea36b3353e929927394ba3847b2073",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
