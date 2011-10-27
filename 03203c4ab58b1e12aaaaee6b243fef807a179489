@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBH///28\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-09-01T17:02:11Z",
+      "side": 1,
+      "message": "If you want to create instances of this, is the String constructor really the right approach? Wouldn\u0027t you prefer an API like ProjectReference(String repository, String branch, String projectDir)?\n\nOr if you really want to use the serialized String approach, maybe there should be a method here that returns such a String from an existing ProjectReference (doing the inverse of the constructor).",
+      "parentUuid": "AABOBH///9M\u003d",
+      "revId": "03203c4ab58b1e12aaaaee6b243fef807a179489",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+Rc\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReference.java",
         "patchSetId": 1
