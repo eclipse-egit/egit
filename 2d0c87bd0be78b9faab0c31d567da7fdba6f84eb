@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH///jk\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/ProjectReferenceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-09-07T11:28:39Z",
+      "side": 1,
+      "message": "I would name it smth like createFromValidString, avoiding test* pattern.",
+      "revId": "2d0c87bd0be78b9faab0c31d567da7fdba6f84eb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///jg\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/ProjectReferenceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-09-07T11:28:39Z",
+      "side": 1,
+      "message": "I would also use single assert per test. This way it\u0027s clear - one problem is the cause for one and only one broken test.\n\nNow, if you have problems with asserts #1 and #4, test will break after #1 and you have to fix it first and only then you\u0027ll find out that there is another problem.",
+      "revId": "2d0c87bd0be78b9faab0c31d567da7fdba6f84eb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
