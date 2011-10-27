@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH///3A\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitProjectSetCapability.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-09-01T17:02:30Z",
+      "side": 1,
+      "message": "Could you use a LinkedHashSet, so that the order stays predictable? The HashMap above should probably also be a LinkedHashMap (sorry, it isn\u0027t related to your change per se).",
+      "revId": "fe828697afea36b3353e929927394ba3847b2073",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
