@@ -27,6 +27,7 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.ConfigureFetchAfterCloneTask;
 import org.eclipse.egit.core.op.ConfigurePushAfterCloneTask;
+import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.op.SetChangeIdTask;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
@@ -36,6 +37,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
+import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -43,6 +45,8 @@ import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.util.FileUtils;
@@ -216,12 +220,19 @@ public class GitCloneWizard extends Wizard {
 		final CloneOperation op = new CloneOperation(uri, allSelected,
 				selectedBranches, workdir, ref != null ? ref.getName() : null,
 				remoteName, timeout);
-		if (gerritConfiguration.configureGerrit())
-			doGerritConfiguration(remoteName, op);
 		UserPasswordCredentials credentials = cloneSource.getCredentials();
 		if (credentials != null)
 			op.setCredentialsProvider(new UsernamePasswordCredentialsProvider(
 					credentials.getUser(), credentials.getPassword()));
+
+		if (gerritConfiguration.configureGerrit()) {
+			boolean hasReviewNotes = hasReviewNotes(uri, timeout, credentials);
+			if (!hasReviewNotes)
+				MessageDialog.openInformation(getShell(),
+						UIText.GitCloneWizard_MissingNotesTitle,
+						UIText.GitCloneWizard_MissingNotesMessage);
+			doGerritConfiguration(remoteName, op, hasReviewNotes);
+		}
 
 		alreadyClonedInto = workdir.getPath();
 
@@ -233,13 +244,46 @@ public class GitCloneWizard extends Wizard {
 		return true;
 	}
 
+	private boolean hasReviewNotes(final URIish uri, int timeout,
+			UserPasswordCredentials credentials) {
+		boolean hasNotes = false;
+		try {
+			final Repository db = new FileRepository(new File("/tmp")); //$NON-NLS-1$
+			final ListRemoteOperation listRemoteOp = new ListRemoteOperation(db, uri, timeout);
+			if (credentials != null)
+				listRemoteOp
+				.setCredentialsProvider(new EGitCredentialsProvider(
+						credentials.getUser(), credentials
+						.getPassword()));
+			getContainer().run(true, true, new IRunnableWithProgress() {
+				public void run(IProgressMonitor monitor)
+						throws InvocationTargetException, InterruptedException {
+					listRemoteOp.run(monitor);
+				}
+			});
+			String notesRef = Constants.R_NOTES + "review"; //$NON-NLS-1$
+			hasNotes = listRemoteOp.getRemoteRef(notesRef) != null;
+		} catch (IOException e) {
+			Activator.handleError(UIText.GitCloneWizard_failed,
+					e, true);
+		} catch (InvocationTargetException e) {
+			Activator.handleError(UIText.GitCloneWizard_failed,
+					e.getCause(), true);
+		} catch (InterruptedException e) {
+			// nothing to do
+		}
+		return hasNotes;
+	}
+
 	private void doGerritConfiguration(final String remoteName,
-			final CloneOperation op) {
+			final CloneOperation op, final boolean hasNotes) {
 		String gerritBranch = gerritConfiguration.getBranch();
 		URIish pushURI = gerritConfiguration.getURI();
-		String notesRef = Constants.R_NOTES + "review"; //$NON-NLS-1$
-		op.addPostCloneTask(new ConfigureFetchAfterCloneTask(remoteName,
-				notesRef + ":" + notesRef)); //$NON-NLS-1$
+		if (hasNotes) {
+			String notesRef = Constants.R_NOTES + "review"; //$NON-NLS-1$
+			op.addPostCloneTask(new ConfigureFetchAfterCloneTask(remoteName,
+					notesRef + ":" + notesRef)); //$NON-NLS-1$
+		}
 		if (gerritBranch != null && gerritBranch.length() > 0) {
 			ConfigurePushAfterCloneTask push = new ConfigurePushAfterCloneTask(remoteName,
 					"HEAD:refs/for/" + gerritBranch, pushURI); //$NON-NLS-1$
