@@ -50,7 +50,7 @@ public class ConfigureFetchAfterCloneTask implements PostCloneTask {
 			configToUse.update(repository.getConfig());
 			repository.getConfig().save();
 			Git git = new Git(repository);
-			git.fetch().call();
+			git.fetch().setRemote(remoteName).call();
 		} catch (Exception e) {
 			throw new CoreException(Activator.error(e.getMessage(), e));
 		}
