@@ -47,7 +47,7 @@ public class RepositoryPropertyPage extends PropertyPage {
 			File configFile = ((FileBasedConfig) config).getFile();
 			config = new FileBasedConfig(configFile, repo.getFS());
 		}
-		editor = new ConfigurationEditorComponent(displayArea, config, true) {
+		editor = new ConfigurationEditorComponent(displayArea, config, true, false) {
 			@Override
 			protected void setErrorMessage(String message) {
 				RepositoryPropertyPage.this.setErrorMessage(message);

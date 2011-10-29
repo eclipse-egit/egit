@@ -1882,6 +1882,12 @@ public class UIText extends NLS {
 	public static String ConfigurationEditorComponent_AddButton;
 
 	/** */
+	public static String ConfigurationEditorComponent_BrowseForPrefix;
+
+	/** */
+	public static String ConfigurationEditorComponent_CannotChangeGitPrefixError;
+
+	/** */
 	public static String ConfigurationEditorComponent_ChangeButton;
 
 	/** */
@@ -1892,6 +1898,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String ConfigurationEditorComponent_EmptyStringNotAllowed;
+
+	/** */
+	public static String ConfigurationEditorComponent_GitPrefixSelectionErrorMessage;
+
+	/** */
+	public static String ConfigurationEditorComponent_GitPrefixSelectionErrorTitle;
 
 	/** */
 	public static String ConfigurationEditorComponent_KeyColumnHeader;
@@ -1934,6 +1946,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String ConfigurationEditorComponent_RemoveSubsectionTitle;
+
+	/** */
+	public static String ConfigurationEditorComponent_SelectGitInstallation;
 
 	/** */
 	public static String ConfigurationEditorComponent_ValueColumnHeader;
