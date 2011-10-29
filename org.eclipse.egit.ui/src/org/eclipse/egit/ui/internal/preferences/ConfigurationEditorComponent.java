@@ -23,6 +23,9 @@ import java.util.StringTokenizer;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -57,6 +60,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -84,7 +88,7 @@ public class ConfigurationEditorComponent {
 
 	private final static String DOT = "."; //$NON-NLS-1$
 
-	private final StoredConfig editableConfig;
+	private StoredConfig editableConfig;
 
 	private final IShellProvider shellProvider;
 
@@ -108,6 +112,8 @@ public class ConfigurationEditorComponent {
 
 	private Text location;
 
+	private final boolean changeablePath;
+
 	/**
 	 * @param parent
 	 *            the parent
@@ -115,13 +121,21 @@ public class ConfigurationEditorComponent {
 	 *            to be used instead of the user configuration
 	 * @param useDialogFont
 	 *            if <code>true</code>, the current dialog font is used
+	 * @param changeablePath
+	 *            The user can change the path of the configuration file
 	 */
 	public ConfigurationEditorComponent(Composite parent, StoredConfig config,
-			boolean useDialogFont) {
+			boolean useDialogFont, boolean changeablePath) {
 		editableConfig = config;
 		this.shellProvider = new SameShellProvider(parent);
 		this.parent = parent;
 		this.useDialogFont = useDialogFont;
+		this.changeablePath = changeablePath;
+	}
+
+	void setConfig(FileBasedConfig config) throws IOException {
+		editableConfig = config;
+		restore();
 	}
 
 	/**
@@ -160,7 +174,7 @@ public class ConfigurationEditorComponent {
 
 		if (editableConfig instanceof FileBasedConfig) {
 			Composite locationPanel = new Composite(main, SWT.NONE);
-			locationPanel.setLayout(new GridLayout(3, false));
+			locationPanel.setLayout(new GridLayout(4, false));
 			GridDataFactory.fillDefaults().grab(true, false).applyTo(
 					locationPanel);
 			Label locationLabel = new Label(locationPanel, SWT.NONE);
@@ -168,9 +182,53 @@ public class ConfigurationEditorComponent {
 					.setText(UIText.ConfigurationEditorComponent_ConfigLocationLabel);
 			// GridDataFactory.fillDefaults().applyTo(locationLabel);
 			location = new Text(locationPanel, SWT.BORDER);
-			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(
-					true, false).applyTo(location);
-			location.setEditable(false);
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+					.grab(true, false).applyTo(location);
+			if (changeablePath) {
+				Button selectPath = new Button(locationPanel, SWT.PUSH);
+				selectPath.setText(UIText.ConfigurationEditorComponent_BrowseForPrefix);
+				selectPath.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						DirectoryDialog dialog = new DirectoryDialog(
+								getShell(), SWT.OPEN);
+						dialog.setText(UIText.ConfigurationEditorComponent_SelectGitInstallation);
+						String file = dialog.open();
+						if (file != null) {
+							File etc = new File(file, "etc"); //$NON-NLS-1$
+							File bin = new File(file, "bin"); //$NON-NLS-1$
+							if (!new File(etc, "gitconfig").exists() //$NON-NLS-1$
+									&& !new File(bin, "git").exists() //$NON-NLS-1$
+									&& (!System
+											.getProperty("os.name").startsWith("Windows") || //$NON-NLS-1$ //$NON-NLS-2$
+									!new File(bin, "git.exe").exists())) { //$NON-NLS-1$
+								MessageDialog
+										.open(SWT.ERROR,
+												getShell(),
+												UIText.ConfigurationEditorComponent_GitPrefixSelectionErrorTitle,
+												UIText.ConfigurationEditorComponent_GitPrefixSelectionErrorMessage,
+												SWT.NONE);
+								return;
+							}
+							location.setText(file);
+							try {
+								IEclipsePreferences node = new InstanceScope()
+										.getNode(org.eclipse.egit.core.Activator
+												.getPluginId());
+								node.put(GitCorePreferences.core_gitPrefix,
+										file);
+								node.flush();
+								setChangeSystemPrefix(file);
+							} catch (Exception e1) {
+								Activator
+										.logError(
+												UIText.ConfigurationEditorComponent_CannotChangeGitPrefixError,
+												e1);
+							}
+						}
+					}
+				});
+			}
 			Button openEditor = new Button(locationPanel, SWT.PUSH);
 			// GridDataFactory.fillDefaults().applyTo(openEditor);
 			openEditor
@@ -477,6 +535,15 @@ public class ConfigurationEditorComponent {
 	 *            the dirty flag
 	 */
 	protected void setDirty(boolean dirty) {
+		// the default implementation does nothing
+	}
+
+	/**
+	 * @param prefix
+	 *            new System prefix
+	 * @throws IOException
+	 */
+	protected void setChangeSystemPrefix(String prefix) throws IOException {
 		// the default implementation does nothing
 	}
 

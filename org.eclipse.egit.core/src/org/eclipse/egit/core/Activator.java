@@ -39,6 +39,7 @@ import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
 import org.eclipse.team.core.RepositoryProvider;
@@ -122,6 +123,11 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			logError(CoreText.Activator_ReconfigureWindowCacheError, e);
 		}
 		GitProjectData.attachToWorkspace(true);
+
+		IEclipsePreferences node = new InstanceScope().getNode(Activator.getPluginId());
+		String gitPrefix = node.get(GitCorePreferences.core_gitPrefix, null);
+		if (gitPrefix != null)
+			FS.DETECTED.setGitPrefix(new File(gitPrefix));
 
 		repositoryUtil = new RepositoryUtil();
 
