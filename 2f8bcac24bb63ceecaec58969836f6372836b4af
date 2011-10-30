@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOBn///Uw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-26T13:28:06Z",
+      "side": 1,
+      "message": "Please update the copyright header.",
+      "revId": "2f8bcac24bb63ceecaec58969836f6372836b4af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///Uk\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
         "patchSetId": 3
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABOBn///Uw\u003d",
+      "revId": "2f8bcac24bb63ceecaec58969836f6372836b4af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///Wo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-25T20:06:50Z",
+      "side": 1,
+      "message": "The original code didn\u0027t use resource mappings. What does this buy us?",
       "revId": "2f8bcac24bb63ceecaec58969836f6372836b4af",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
