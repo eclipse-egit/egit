@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOBn///YE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-25T15:15:25Z",
+      "side": 1,
+      "message": "If you check the documentation of getAffectedChildren(), sending in a mask value of ADDED | CHANGED | REMOVED essentially makes a  call to getAffectedChildren() and getAffectedChildren(int) identical. Perhaps your intent was to make this more explicit to people reading the code?",
+      "revId": "d116c05eac7f56f38fc4f73805bf36131abe8bea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///X0\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
         "patchSetId": 2
