@@ -72,9 +72,8 @@ class IndexFileRevision extends GitFileRevision implements IFileRevision {
 		try {
 			DirCacheEntry entry = db.readDirCache().getEntry(path);
 			if (entry == null)
-				throw new CoreException(Activator.error(NLS.bind(
-						CoreText.IndexFileRevision_indexEntryNotFound, path),
-						null));
+				return null;
+
 			return entry.getObjectId();
 		} catch (IOException e) {
 			throw new CoreException(Activator.error(NLS.bind(
