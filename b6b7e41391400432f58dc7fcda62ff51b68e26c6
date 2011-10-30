@@ -1,0 +1,58 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBn///Yk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-25T14:33:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBn///Y4\u003d",
+      "revId": "b6b7e41391400432f58dc7fcda62ff51b68e26c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///Yg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-25T14:33:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBn///Y0\u003d",
+      "revId": "b6b7e41391400432f58dc7fcda62ff51b68e26c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///Yc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-25T14:33:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBn///Yw\u003d",
+      "revId": "b6b7e41391400432f58dc7fcda62ff51b68e26c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
