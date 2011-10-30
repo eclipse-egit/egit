@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 IBM Corporation and others.
+ * Copyright (c) 2010, 2011 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,9 +14,11 @@ package org.eclipse.egit.core.synchronize;
 import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 import static org.eclipse.team.core.Team.isIgnoredHint;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,6 +29,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.jgit.lib.Repository;
@@ -137,9 +140,42 @@ public class GitResourceVariantTreeSubscriber extends
 	@Override
 	public void refresh(IResource[] resources, int depth,
 			IProgressMonitor monitor) throws TeamException {
-		// refresh cache
-		GitSyncCache newCache = GitSyncCache.getAllData(gsds, monitor);
-		cache.merge(newCache);
+		for (IResource resource : resources) {
+			// check to see if there is a full refresh
+			if (resource.getType() == IResource.ROOT) {
+				// refresh entire cache
+				GitSyncCache newCache = GitSyncCache.getAllData(gsds, monitor);
+				cache.merge(newCache);
+				super.refresh(resources, depth, monitor);
+				return;
+			}
+		}
+
+		// not refreshing the workspace, locate and collect target resources
+		List<String> paths = new ArrayList<String>();
+		for (IResource resource : resources) {
+			IProject project = resource.getProject();
+			if (gsds.contains(project)) {
+				RepositoryMapping mapping = RepositoryMapping
+						.getMapping(project);
+				// mapping may be null if the project has been closed
+				if (mapping != null) {
+					String path = mapping.getRepoRelativePath(resource);
+					// don't feed empty paths
+					if (path.length() != 0) {
+						paths.add(path);
+					}
+				}
+			}
+		}
+
+		// scan only the desired resources
+		if (!paths.isEmpty()) {
+			// refresh cache
+			GitSyncCache newCache = GitSyncCache.getAllData(gsds, paths,
+					monitor);
+			cache.merge(newCache);
+		}
 
 		super.refresh(resources, depth, monitor);
 	}
