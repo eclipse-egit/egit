@@ -16,6 +16,24 @@
       "revId": "f0a3097647300edfa540e35196ef2cce7ea14faa",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///0k\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-30T13:08:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOB3///4k\u003d",
+      "revId": "f0a3097647300edfa540e35196ef2cce7ea14faa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
