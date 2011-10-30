@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOB3///60\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-28T20:52:21Z",
+      "side": 1,
+      "message": "is this really needed here ?",
+      "revId": "7c74de2d4db63060f7fdc9572e2eff19d7fc2728",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///6w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-28T20:52:21Z",
+      "side": 1,
+      "message": "IMHO this null check here isn\u0027t really needed\n\nstyle nit, you can remove here brackets",
+      "revId": "7c74de2d4db63060f7fdc9572e2eff19d7fc2728",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///6Y\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-28T20:52:21Z",
+      "side": 1,
+      "message": "getRepoRelativePath() can return an empty string, in such situation you\u0027ll get an \"IllegalArgumentException: Empty path not permitted\" from PathFilter.create()",
+      "revId": "7c74de2d4db63060f7fdc9572e2eff19d7fc2728",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
