@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 IBM Corporation and others.
+ * Copyright (c) 2010, 2011 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,6 +14,7 @@ package org.eclipse.egit.core.synchronize;
 import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 import static org.eclipse.team.core.Team.isIgnoredHint;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,6 +28,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.jgit.lib.Repository;
@@ -137,9 +139,50 @@ public class GitResourceVariantTreeSubscriber extends
 	@Override
 	public void refresh(IResource[] resources, int depth,
 			IProgressMonitor monitor) throws TeamException {
-		// refresh cache
-		GitSyncCache newCache = GitSyncCache.getAllData(gsds, monitor);
-		cache.merge(newCache);
+		for (IResource resource : resources) {
+			// check to see if there is a full refresh
+			if (resource.getType() == IResource.ROOT) {
+				// refresh entire cache
+				GitSyncCache newCache = GitSyncCache.getAllData(gsds, monitor);
+				cache.merge(newCache);
+				super.refresh(resources, depth, monitor);
+				return;
+			}
+		}
+
+		// not refreshing the workspace, locate and collect target resources
+		Map<GitSynchronizeData, Collection<String>> updateRequests = new HashMap<GitSynchronizeData, Collection<String>>();
+		for (IResource resource : resources) {
+			IProject project = resource.getProject();
+			GitSynchronizeData data = gsds.getData(project.getName());
+			if (data != null) {
+				RepositoryMapping mapping = RepositoryMapping
+						.getMapping(project);
+				// mapping may be null if the project has been closed
+				if (mapping != null) {
+					Collection<String> paths = updateRequests.get(data);
+					if (paths == null) {
+						paths = new ArrayList<String>();
+						updateRequests.put(data, paths);
+					}
+
+					String path = mapping.getRepoRelativePath(resource);
+					// null path may be returned, check for this
+					if (path == null)
+						// unknown, force a refresh of the whole repository
+						path = ""; //$NON-NLS-1$
+					paths.add(path);
+				}
+			}
+		}
+
+		// scan only the repositories that were affected
+		if (!updateRequests.isEmpty()) {
+			// refresh cache
+			GitSyncCache newCache = GitSyncCache.getAllData(updateRequests,
+					monitor);
+			cache.merge(newCache);
+		}
 
 		super.refresh(resources, depth, monitor);
 	}
