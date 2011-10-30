@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOBn///Y4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-25T13:49:13Z",
+      "side": 1,
+      "message": "IResourceDelta.CONTENT is not a kind constant, as illustrated by the value of ALL_WITH_PHANTOMS.",
+      "revId": "b6b7e41391400432f58dc7fcda62ff51b68e26c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///Yk\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
         "patchSetId": 1
@@ -20,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AABOBn///Y0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-25T13:49:13Z",
+      "side": 1,
+      "message": "This assumption is invalid, resource change events can come from multiple projects spread across multiple repositories and also projects that aren\u0027t even under version control.",
+      "revId": "b6b7e41391400432f58dc7fcda62ff51b68e26c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///Yg\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
         "patchSetId": 1
@@ -32,6 +66,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABOBn///Y0\u003d",
+      "revId": "b6b7e41391400432f58dc7fcda62ff51b68e26c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///Yw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-25T13:49:13Z",
+      "side": 1,
+      "message": "This means that the first repository of a valid resource that is encountered will be reused for all other resources iterated over afterwards even if the resource being iterated over is a) versioned under a different Git repository or b) not even under version control.",
       "revId": "b6b7e41391400432f58dc7fcda62ff51b68e26c6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
