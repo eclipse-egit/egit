@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2010, 2011 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -266,10 +266,14 @@ public class GitMergeEditorInput extends CompareEditorInput {
 					suffixFilters.add(PathFilter.create(filterPath));
 				TreeFilter otf = OrTreeFilter.create(suffixFilters);
 				tw.setFilter(AndTreeFilter.create(otf, notIgnoredFilter));
-			} else if (filterPaths.size() > 0)
-				tw.setFilter(AndTreeFilter.create(PathFilter.create(filterPaths
-						.get(0)), notIgnoredFilter));
-			else
+			} else if (filterPaths.size() > 0) {
+				String path = filterPaths.get(0);
+				if (path.length() == 0)
+					tw.setFilter(notIgnoredFilter);
+				else
+					tw.setFilter(AndTreeFilter.create(PathFilter.create(path),
+							notIgnoredFilter));
+			} else
 				tw.setFilter(notIgnoredFilter);
 
 			tw.setRecursive(true);
