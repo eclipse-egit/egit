@@ -2,6 +2,7 @@
  * Copyright (C) 2006, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2011, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2011, IBM Corporation
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,7 +12,6 @@
 package org.eclipse.egit.ui.internal.history;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -33,7 +33,7 @@ class GraphLabelProvider extends BaseLabelProvider implements
 	private boolean relativeDate;
 
 	GraphLabelProvider() {
-		absoluteFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
+		absoluteFormatter = DateFormat.getDateTimeInstance();
 	}
 
 	public String getColumnText(final Object element, final int columnIndex) {
