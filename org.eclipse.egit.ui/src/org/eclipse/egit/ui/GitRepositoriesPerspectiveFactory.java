@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2011 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - EGit must not pollute toolbars of perspectives it doesn't own - http://bugs.eclipse.org/356554
  *******************************************************************************/
 package org.eclipse.egit.ui;
 
@@ -45,6 +46,8 @@ public class GitRepositoriesPerspectiveFactory implements IPerspectiveFactory {
 		layout.addShowViewShortcut(StagingView.VIEW_ID);
 		// shortcut to Reflog view
 		layout.addShowViewShortcut(ReflogView.VIEW_ID);
+
+		layout.addActionSet("org.eclipse.egit.ui.navigation"); //$NON-NLS-1$
 	}
 
 }
