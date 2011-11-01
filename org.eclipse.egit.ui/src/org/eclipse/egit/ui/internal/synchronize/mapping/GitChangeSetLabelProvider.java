@@ -1,15 +1,18 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2010, 2011 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * Contributors:
+ *     Dariusz Luksza <dariusz@luksza.org> - initial API and implementation
+ *     Daniel Megert <daniel_megert@ch.ibm.com> - EGit should not offer date formatting preference - http://bugs.eclipse.org/356052
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.mapping;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -55,8 +58,7 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider impl
 
 	private IPreferenceStore store = org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore();
 
-	private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
-			store.getString(UIPreferences.DATE_FORMAT));
+	private final DateFormat DATE_FORMAT = DateFormat.getDateTimeInstance();
 
 	private GitLabelProvider delegateLabelProvider;
 

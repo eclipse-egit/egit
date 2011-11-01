@@ -3,6 +3,7 @@
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2011, IBM Corporation
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,6 +11,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 package org.eclipse.egit.ui;
+
+import java.text.DateFormat;
 
 
 
@@ -119,7 +122,9 @@ public class UIPreferences {
 	public final static String SYNC_VIEW_LAST_SELECTED_MODEL = "sync_view_last_selected_model"; //$NON-NLS-1$
 	/** */
 	public static final String SYNC_VIEW_FETCH_BEFORE_LAUNCH = "sync_view_fetch_before_launch"; //$NON-NLS-1$
-	/** */
+	/**
+	 * @deprecated As of 1.2, replaced by using {@link DateFormat#getDateTimeInstance()}
+	 */
 	public final static String DATE_FORMAT = "date_format"; //$NON-NLS-1$
 	/** */
 	public static final String REFESH_ON_INDEX_CHANGE = "refesh_on_index_change"; //$NON-NLS-1$
