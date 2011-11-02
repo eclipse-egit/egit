@@ -23,6 +23,7 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -228,8 +229,13 @@ public class GitModelBlob extends GitModelCommit implements IResourceProvider {
 	public IResource getResource() {
 		String absoluteFilePath = getRepository().getWorkTree()
 				.getAbsolutePath() + "/" + gitPath; //$NON-NLS-1$
-		IFile file = ResourcesPlugin.getWorkspace().getRoot()
-				.getFileForLocation(new Path(absoluteFilePath));
+		Path path = new Path(absoluteFilePath);
+		IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+		IFile file = workspaceRoot.getFileForLocation(path);
+
+		if (file == null)
+			file = workspaceRoot.getFile(path);
+
 		return file;
 	}
 
