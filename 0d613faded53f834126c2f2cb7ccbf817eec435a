@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOB3///wo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-31T10:43:52Z",
+      "side": 1,
+      "message": "NPE is still possible if getDefault() returns null.\n\nCaused by: java.lang.NullPointerException\n\tat org.eclipse.egit.core.synchronize.GitSubscriberMergeContext.dispose(GitSubscriberMergeContext.java:110)\n\tat org.eclipse.team.ui.synchronize.ModelSynchronizeParticipant.dispose(ModelSynchronizeParticipant.java:253)\n\tat org.eclipse.team.internal.ui.synchronize.SynchronizeManager.dispose(SynchronizeManager.java:574)\n\tat org.eclipse.team.internal.ui.TeamUIPlugin.stop(TeamUIPlugin.java:250)\n\tat org.eclipse.osgi.framework.internal.core.BundleContextImpl$2.run(BundleContextImpl.java:771)\n\tat java.security.AccessController.doPrivileged(Native Method)\n\tat org.eclipse.osgi.framework.internal.core.BundleContextImpl.stop(BundleContextImpl.java:764)",
+      "revId": "0d613faded53f834126c2f2cb7ccbf817eec435a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOB3///w0\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
         "patchSetId": 2
