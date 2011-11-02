@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOB3///x0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-30T23:02:58Z",
+      "side": 1,
+      "message": "This seems to be causing NPEs on shutdown for me.",
+      "revId": "175a68c847bbcc61dcee5f5c8d91e7a3fd2c3c3d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOB3///xo\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
         "patchSetId": 1
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABOB3///x0\u003d",
+      "revId": "175a68c847bbcc61dcee5f5c8d91e7a3fd2c3c3d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///xw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-30T23:02:58Z",
+      "side": 1,
+      "message": "Instead of using the array of ResourceTraversals, perhaps we could instead use the collection of changed file resources from the diff data if available (check for null return)? This would significantly reduce the number of resources that need to be iterated over.\n\nRight now the refresh operation for me takes about 200ms when saving a file in the JGit repository. If the refresh is only on the one target file then the time is reduced to less than 10ms.",
       "revId": "175a68c847bbcc61dcee5f5c8d91e7a3fd2c3c3d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
