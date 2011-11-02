@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOB3///w0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-31T10:43:52Z",
+      "side": 1,
+      "message": "A null check is needed also. An NPE will be thrown if reopening a very large project.\n\njava.lang.NullPointerException\n\tat org.eclipse.egit.core.synchronize.GitSubscriberMergeContext.handleResourceChange(GitSubscriberMergeContext.java:141)\n\tat org.eclipse.egit.core.synchronize.GitSubscriberMergeContext.access$1(GitSubscriberMergeContext.java:137)\n\tat org.eclipse.egit.core.synchronize.GitSubscriberMergeContext$2.indexDiffChanged(GitSubscriberMergeContext.java:69)\n\tat org.eclipse.egit.core.internal.indexdiff.IndexDiffCache.notifyListeners(IndexDiffCache.java:94)\n\tat org.eclipse.egit.core.internal.indexdiff.IndexDiffCache.access$0(IndexDiffCache.java:86)\n\tat org.eclipse.egit.core.internal.indexdiff.IndexDiffCache$1.indexDiffChanged(IndexDiffCache.java:81)\n\tat org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry.notifyListeners(IndexDiffCacheEntry.java:313)\n\tat org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry.access$6(IndexDiffCacheEntry.java:306)\n\tat org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry$3.run(IndexDiffCacheEntry.java:171)\n\tat org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)",
+      "revId": "0d613faded53f834126c2f2cb7ccbf817eec435a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
