@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOB3///sY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-11-02T03:03:32Z",
+      "side": 1,
+      "message": "This means we return on non-empty collections. I think you mean to return for empty collections.",
+      "revId": "692750368c48aee132ab8cfa04984ed505a60802",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOB3///sQ\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
         "patchSetId": 4
