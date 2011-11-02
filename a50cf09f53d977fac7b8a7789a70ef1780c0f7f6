@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOB3///u4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-31T23:23:16Z",
+      "side": 1,
+      "message": "Need null check here, getDelta() may return null per the API.\n\njava.lang.NullPointerException\n\tat org.eclipse.egit.core.synchronize.GitSubscriberMergeContext$2.resourceChanged(GitSubscriberMergeContext.java:68)\n\tat org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)\n\tat org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)\n\tat org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)\n\tat org.eclipse.core.internal.events.NotificationManager.handleEvent(NotificationManager.java:249)\n\tat org.eclipse.core.internal.resources.Workspace.broadcastEvent(Workspace.java:390)\n\tat org.eclipse.core.internal.resources.Project.close(Project.java:199)\n\tat org.eclipse.ui.actions.CloseResourceAction.invokeOperation(CloseResourceAction.java:129)\n\tat org.eclipse.ui.actions.WorkspaceAction.execute(WorkspaceAction.java:164)\n\tat org.eclipse.ui.actions.WorkspaceAction$2.runInWorkspace(WorkspaceAction.java:485)\n\tat org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:38)\n\tat org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)",
+      "revId": "a50cf09f53d977fac7b8a7789a70ef1780c0f7f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOB3///tw\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
         "patchSetId": 3
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABOB3///u4\u003d",
+      "revId": "a50cf09f53d977fac7b8a7789a70ef1780c0f7f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///u0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-31T23:23:16Z",
+      "side": 1,
+      "message": "Need null check here. getMapping(IResource) can return null for inaccessible projects (closed).\n\njava.lang.NullPointerException\n\tat org.eclipse.egit.core.synchronize.GitSubscriberMergeContext$2.resourceChanged(GitSubscriberMergeContext.java:70)\n\tat org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)\n\tat org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)\n\tat org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)\n\tat org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)\n\tat org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)\n\tat org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)\n\tat org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:45)\n\tat org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)",
       "revId": "a50cf09f53d977fac7b8a7789a70ef1780c0f7f6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -38,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "AABOB3///uo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-31T23:23:16Z",
+      "side": 1,
+      "message": "The error(String, Throwable) returns an IStatus. We should actually log the error.",
+      "revId": "a50cf09f53d977fac7b8a7789a70ef1780c0f7f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOB3///to\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
         "patchSetId": 3
@@ -56,6 +107,23 @@
     },
     {
       "key": {
+        "uuid": "AABOB3///uw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-31T23:23:16Z",
+      "side": 1,
+      "message": "No need to do a null check and isEmpty() every iteration. Should just do it once in the beginning of the method and then decide whether we need to iterate over the data or not.",
+      "revId": "a50cf09f53d977fac7b8a7789a70ef1780c0f7f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOB3///tk\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
         "patchSetId": 3
@@ -68,6 +136,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABOB3///uw\u003d",
+      "revId": "a50cf09f53d977fac7b8a7789a70ef1780c0f7f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///us\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 63
+      },
+      "writtenOn": "2011-10-31T23:23:16Z",
+      "side": 1,
+      "message": "The error(String, Throwable) returns an IStatus. We should actually log the error.",
       "revId": "a50cf09f53d977fac7b8a7789a70ef1780c0f7f6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
