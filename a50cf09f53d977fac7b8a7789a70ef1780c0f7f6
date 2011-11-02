@@ -1,0 +1,76 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOB3///tw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-01T04:51:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOB3///u4\u003d",
+      "revId": "a50cf09f53d977fac7b8a7789a70ef1780c0f7f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///ts\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-01T04:51:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOB3///u0\u003d",
+      "revId": "a50cf09f53d977fac7b8a7789a70ef1780c0f7f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///to\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-01T04:51:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOB3///uo\u003d",
+      "revId": "a50cf09f53d977fac7b8a7789a70ef1780c0f7f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///tk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-01T04:51:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOB3///uw\u003d",
+      "revId": "a50cf09f53d977fac7b8a7789a70ef1780c0f7f6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
