@@ -28,8 +28,8 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.DialogSettings;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -103,7 +103,19 @@ public class GitCreatePatchWizard extends Wizard {
 		this.commit = commit;
 		this.db = db;
 
-		setDialogSettings(DialogSettings.getOrCreateSection(Activator.getDefault().getDialogSettings(), "GitCreatePatchWizard")); //$NON-NLS-1$
+		setDialogSettings(getOrCreateSection(Activator.getDefault().getDialogSettings(), "GitCreatePatchWizard")); //$NON-NLS-1$
+	}
+
+	/*
+	 * Copy of org.eclipse.jface.dialogs.DialogSettings.getOrCreateSection(IDialogSettings, String)
+	 * which is not available in 3.5.
+	 */
+	private static IDialogSettings getOrCreateSection(IDialogSettings settings,
+			String sectionName) {
+		IDialogSettings section = settings.getSection(sectionName);
+		if (section == null)
+			section = settings.addNewSection(sectionName);
+		return section;
 	}
 
 	@Override
