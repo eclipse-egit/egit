@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, SAP AG
+ * Copyright (c) 2010, 2011 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - Create Patch... dialog should not set file location - http://bugs.eclipse.org/361405
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
@@ -19,6 +20,7 @@ import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.CreatePatchOperation;
@@ -26,6 +28,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.DialogSettings;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -99,6 +102,8 @@ public class GitCreatePatchWizard extends Wizard {
 	public GitCreatePatchWizard(RevCommit commit, Repository db) {
 		this.commit = commit;
 		this.db = db;
+
+		setDialogSettings(DialogSettings.getOrCreateSection(Activator.getDefault().getDialogSettings(), "GitCreatePatchWizard")); //$NON-NLS-1$
 	}
 
 	@Override
@@ -190,6 +195,8 @@ public class GitCreatePatchWizard extends Wizard {
 	 */
 	public class LocationPage extends WizardPage {
 
+		private static final String PATH_KEY = "GitCreatePatchWizard.LocationPage.path"; //$NON-NLS-1$
+
 		private Button cpRadio;
 
 		private Button fsRadio;
@@ -275,7 +282,10 @@ public class GitCreatePatchWizard extends Wizard {
 			fsPathText.addModifyListener(new ModifyListener() {
 
 				public void modifyText(ModifyEvent e) {
-					validatePage();
+					if (validatePage()) {
+						IPath filePath= Path.fromOSString(fsPathText.getText()).removeLastSegments(1);
+						getDialogSettings().put(PATH_KEY, filePath.toPortableString());
+					}
 				}
 			});
 
@@ -305,8 +315,11 @@ public class GitCreatePatchWizard extends Wizard {
 
 		private String createFileName() {
 			String suggestedFileName = CreatePatchOperation.suggestFileName(commit);
-			String defaultPath = db.getWorkTree().getAbsolutePath();
-			return (new File(defaultPath, suggestedFileName)).getPath();
+			String path = getDialogSettings().get(PATH_KEY);
+			if (path != null)
+				return Path.fromPortableString(path).append(suggestedFileName).toOSString();
+
+			return (new File(System.getProperty("user.dir", ""), suggestedFileName)).getPath(); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		/**
