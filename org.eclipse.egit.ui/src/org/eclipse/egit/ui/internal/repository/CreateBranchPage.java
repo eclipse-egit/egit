@@ -162,40 +162,37 @@ class CreateBranchPage extends WizardPage {
 		GridDataFactory.fillDefaults().span(2, 1).grab(true, false).applyTo(
 				this.branchCombo);
 
+		List<String> refs = new ArrayList<String>();
+		RefDatabase refDatabase = myRepository.getRefDatabase();
+		try {
+			for (Ref ref : refDatabase.getAdditionalRefs())
+				refs.add(ref.getName());
+
+			Set<Entry<String, Ref>> entrys = refDatabase.getRefs(RefDatabase.ALL).entrySet();
+			for (Entry<String, Ref> ref : entrys)
+					refs.add(ref.getValue().getName());
+		} catch (IOException e1) {
+			// ignore here
+		}
+
+		Collections.sort(refs, CommonUtils.STRING_ASCENDING_COMPARATOR);
+		for (String refName : refs)
+			this.branchCombo.add(refName);
+
+		this.branchCombo.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				upstreamConfig = getDefaultUpstreamConfig(myRepository,
+						branchCombo.getText());
+				checkPage();
+			}
+		});
 		if (this.myBaseCommit != null) {
 			this.branchCombo.add(myBaseCommit.name());
 			this.branchCombo.setText(myBaseCommit.name());
-			this.branchCombo.setEnabled(false);
-		} else {
-			List<String> refs = new ArrayList<String>();
-			RefDatabase refDatabase = myRepository.getRefDatabase();
-			try {
-				for (Ref ref : refDatabase.getAdditionalRefs())
-					refs.add(ref.getName());
-
-				Set<Entry<String, Ref>> entrys = refDatabase.getRefs(RefDatabase.ALL).entrySet();
-				for (Entry<String, Ref> ref : entrys)
-						refs.add(ref.getValue().getName());
-			} catch (IOException e1) {
-				// ignore here
-			}
-
-			Collections.sort(refs, CommonUtils.STRING_ASCENDING_COMPARATOR);
-			for (String refName : refs)
-				this.branchCombo.add(refName);
-
-			this.branchCombo.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					upstreamConfig = getDefaultUpstreamConfig(myRepository,
-							branchCombo.getText());
-					checkPage();
-				}
-			});
-			// select the current branch in the drop down
-			if (myBaseRef != null)
-				this.branchCombo.setText(myBaseRef);
-		}
+		} else if (myBaseRef != null)
+		// select the current branch in the drop down
+			this.branchCombo.setText(myBaseRef);
 
 		Label nameLabel = new Label(main, SWT.NONE);
 		nameLabel.setText(UIText.CreateBranchPage_BranchNameLabel);
