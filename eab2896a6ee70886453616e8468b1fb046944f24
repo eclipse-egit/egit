@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCH///8o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-03T18:04:06Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly braces for single line blocks",
+      "revId": "eab2896a6ee70886453616e8468b1fb046944f24",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
