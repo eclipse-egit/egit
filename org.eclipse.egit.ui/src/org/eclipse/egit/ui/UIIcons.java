@@ -122,6 +122,9 @@ public class UIIcons {
 	/** New Repository button */
 	public final static ImageDescriptor NEW_REPOSITORY;
 
+	/** Create Repository button */
+	public final static ImageDescriptor CREATE_REPOSITORY;
+
 	/** Remote Repository tree node */
 	public final static ImageDescriptor REMOTE_REPOSITORY;
 
@@ -271,6 +274,7 @@ public class UIIcons {
 		OVR_ERROR = map("ovr/error.png"); //$NON-NLS-1$
 		MERGE = map("obj16/merge.gif"); //$NON-NLS-1$
 		TAG_ANNOTATED = map("obj16/annotated-tag.gif"); //$NON-NLS-1$
+		CREATE_REPOSITORY = map("etool16/createRepository.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
