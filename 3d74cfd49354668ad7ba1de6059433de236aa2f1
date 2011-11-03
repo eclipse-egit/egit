@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCH////Q\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-03T12:13:24Z",
+      "side": 1,
+      "message": "Apologies if my first comment wasn\u0027t clear, but the first line of the commit message should be a concise summary of the changes made.\n\nIf you were fixing a freeze you wouldn\u0027t describe your fix as \"EGit must not must freeze\".  Instead you would write something like \"Remove deadlock during clones of multiple repositories\".\n\nI\u0027m really not trying to be picky about this, it is just about a general level of consistency and readability when other developers and users are looking at the changes being made.\n\nI do appreciate you contributing this change and I believe that the fix you submitted should be applied.",
+      "revId": "3d74cfd49354668ad7ba1de6059433de236aa2f1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
