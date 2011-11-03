@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCH////k\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-03T11:56:26Z",
+      "side": 1,
+      "message": "Could you use commit messages that describe the changes made?\n\nAn example for this change would be:\n\nDisplay navigation action set only in Git perspective\n\nThe navigation action set is no longer visible by default in all perspectives and is instead added explicitly to the Git Repository Exploring perspective layout.",
+      "revId": "0eba4e1f8e00a14334c1c53931b3f091b9f64619",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
