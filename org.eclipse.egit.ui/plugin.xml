@@ -3887,12 +3887,13 @@
             searchResultClass="org.eclipse.egit.ui.internal.search.CommitSearchResult">
       </viewPage>
    </extension>
+
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
             id="org.eclipse.egit.ui.navigation"
             label="%NavigationActionSet.label"
-            visible="true">
+            visible="false">
         <action
                class="org.eclipse.egit.ui.internal.commit.OpenCommitAction"
                icon="icons/obj16/open-commit.gif"
@@ -3904,6 +3905,31 @@
                tooltip="%OpenCommitAction.tooltip"/>
        </actionSet>
    </extension>
+   <extension
+         point="org.eclipse.ui.actionSetPartAssociations">
+      <actionSetPartAssociation
+            targetID="org.eclipse.egit.ui.navigation">
+         <part
+               id="org.eclipse.egit.ui.RepositoriesView">
+         </part>
+         <part
+               id="org.eclipse.egit.ui.StagingView">
+         </part>
+         <part
+               id="org.eclipse.egit.ui.CompareTreeView">
+         </part>
+         <part
+               id="org.eclipse.egit.ui.ReflogView">
+         </part>
+         <part
+               id="org.eclipse.egit.ui.commitEditor">
+         </part>
+         <part
+               id="org.eclipse.team.ui.GenericHistoryView">
+         </part>
+      </actionSetPartAssociation>
+   </extension>
+
   <extension
 	point="org.eclipse.core.variables.dynamicVariables">
      <variable
