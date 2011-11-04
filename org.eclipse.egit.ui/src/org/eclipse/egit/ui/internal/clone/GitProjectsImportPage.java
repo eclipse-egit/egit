@@ -15,7 +15,6 @@
 package org.eclipse.egit.ui.internal.clone;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,11 +24,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CachedCheckboxTreeViewer;
@@ -45,7 +42,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -61,7 +57,6 @@ import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PatternFilter;
 import org.eclipse.ui.dialogs.WorkingSetGroup;
-import org.eclipse.ui.statushandlers.StatusManager;
 
 /**
  * The GitWizardProjectsImportPage is the page that allows the user to import
@@ -419,69 +414,9 @@ public class GitProjectsImportPage extends WizardPage {
 	 * @return boolean <code>true</code> if the operation was completed.
 	 */
 	private boolean collectProjectFilesFromDirectory(Collection<File> files,
-			File directory, Set<String> visistedDirs,
-			IProgressMonitor monitor) {
-
-		Set<String> directoriesVisited;
-
-		if (monitor.isCanceled()) {
-			return false;
-		}
-		monitor.subTask(NLS.bind(
-				UIText.WizardProjectsImportPage_CheckingMessage, directory
-						.getPath()));
-		File[] contents = directory.listFiles();
-		if (contents == null)
-			return false;
-
-		// Initialize recursion guard for recursive symbolic links
-		if (visistedDirs == null) {
-			directoriesVisited = new HashSet<String>();
-			try {
-				directoriesVisited.add(directory.getCanonicalPath());
-			} catch (IOException exception) {
-				StatusManager.getManager().handle(
-						new Status(IStatus.ERROR, Activator.getPluginId(),
-								exception.getLocalizedMessage(), exception));
-			}
-		} else {
-			directoriesVisited = visistedDirs;
-		}
-
-		// first look for project description files
-		final String dotProject = IProjectDescription.DESCRIPTION_FILE_NAME;
-		for (int i = 0; i < contents.length; i++) {
-			File file = contents[i];
-			if (file.isFile() && file.getName().equals(dotProject)) {
-				files.add(file);
-				// don't search sub-directories since we can't have nested
-				// projects
-				return true;
-			}
-		}
-		// no project description found, so recurse into sub-directories
-		for (int i = 0; i < contents.length; i++) {
-			if (contents[i].isDirectory()) {
-				if (!contents[i].getName().equals(METADATA_FOLDER)) {
-					try {
-						String canonicalPath = contents[i].getCanonicalPath();
-						if (!directoriesVisited.add(canonicalPath)) {
-							// already been here --> do not recurse
-							continue;
-						}
-					} catch (IOException exception) {
-						StatusManager.getManager().handle(
-								new Status(IStatus.ERROR, Activator
-										.getPluginId(), exception
-										.getLocalizedMessage(), exception));
-
-					}
-					collectProjectFilesFromDirectory(files, contents[i],
-							directoriesVisited, monitor);
-				}
-			}
-		}
-		return true;
+			File directory, Set<String> visistedDirs, IProgressMonitor monitor) {
+		return ProjectUtil.findProjectFiles(files, directory, visistedDirs,
+				monitor);
 	}
 
 	/**
