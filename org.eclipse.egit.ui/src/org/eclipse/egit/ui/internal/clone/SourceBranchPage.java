@@ -123,17 +123,8 @@ class SourceBranchPage extends WizardPage {
 		label = new Label(panel, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
-		PatternFilter filter = new PatternFilter() {
-			@Override
-			public boolean isElementVisible(Viewer viewer, Object element) {
-				if (getSelectedBranches().contains(element))
-					return true;
-				return super.isElementVisible(viewer, element);
-			}
-		};
-
-		FilteredCheckboxTree fTree = new FilteredCheckboxTree(panel, null, SWT.NONE,
-				filter);
+		FilteredCheckboxTree fTree = new FilteredCheckboxTree(panel, null,
+				SWT.NONE, new PatternFilter());
 		refsViewer = fTree.getCheckboxTreeViewer();
 
 		ITreeContentProvider provider = new ITreeContentProvider() {
