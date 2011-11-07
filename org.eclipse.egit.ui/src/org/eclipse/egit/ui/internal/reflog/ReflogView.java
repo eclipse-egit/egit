@@ -167,7 +167,7 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 			@Override
 			public String getText(Object element) {
 				final ReflogEntry entry = (ReflogEntry) element;
-				return entry.getNewId().abbreviate(6).name();
+				return entry.getNewId().abbreviate(7).name();
 			}
 
 			@Override
