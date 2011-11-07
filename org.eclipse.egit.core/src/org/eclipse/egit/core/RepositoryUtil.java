@@ -235,20 +235,27 @@ public class RepositoryUtil {
 	 * @param repository
 	 * @return the name
 	 */
-	public String getRepositoryName(Repository repository) {
-		synchronized (repositoryNameCache) {
-			File gitDir = repository.getDirectory();
-			if (gitDir != null) {
-				String name = repositoryNameCache.get(gitDir.getPath()
-						.toString());
-				if (name != null)
-					return name;
-				name = gitDir.getParentFile().getName();
-				repositoryNameCache.put(gitDir.getPath().toString(), name);
-				return name;
-			}
+	public String getRepositoryName(final Repository repository) {
+		File gitDir = repository.getDirectory();
+		if (gitDir == null)
+			return ""; //$NON-NLS-1$
+
+		// Use parent file for non-bare repositories
+		if (!repository.isBare()) {
+			gitDir = gitDir.getParentFile();
+			if (gitDir == null)
+				return ""; //$NON-NLS-1$
 		}
-		return ""; //$NON-NLS-1$
+
+		synchronized (repositoryNameCache) {
+			final String path = gitDir.getPath().toString();
+			String name = repositoryNameCache.get(path);
+			if (name != null)
+				return name;
+			name = gitDir.getName();
+			repositoryNameCache.put(path, name);
+			return name;
+		}
 	}
 
 	/**
