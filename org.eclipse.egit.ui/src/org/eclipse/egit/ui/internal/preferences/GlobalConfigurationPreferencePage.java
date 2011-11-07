@@ -247,12 +247,17 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 		}
 	}
 
+	private String getName(final Repository repo) {
+		return Activator.getDefault().getRepositoryUtil()
+				.getRepositoryName(repo);
+	}
+
 	private void sortRepositoriesByName() {
 		Collections.sort(repositories, new Comparator<Repository>() {
 
 			public int compare(Repository repo1, Repository repo2) {
-				String repo1Name = repo1.getDirectory().getParentFile().getName();
-				String repo2Name = repo2.getDirectory().getParentFile().getName();
+				String repo1Name = getName(repo1);
+				String repo2Name = getName(repo2);
 				return repo1Name.compareTo(repo2Name);
 			}
 		});
@@ -261,8 +266,9 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	private String[] getRepositoryComboItems() {
 		List<String> items = new ArrayList<String>();
 		for (Repository repository : repositories) {
-			String repoName = repository.getDirectory().getParentFile().getName();
-			items.add(repoName);
+			String repoName = getName(repository);
+			if (repoName.length() > 0)
+				items.add(repoName);
 		}
 		return items.toArray(new String[items.size()]);
 	}
