@@ -236,9 +236,11 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 			List<String> repoPaths = Activator.getDefault().getRepositoryUtil().getConfiguredRepositories();
 			RepositoryCache repositoryCache = org.eclipse.egit.core.Activator.getDefault().getRepositoryCache();
 			for (String repoPath : repoPaths) {
+				File gitDir = new File(repoPath);
+				if (!gitDir.exists())
+					continue;
 				try {
-					Repository repository = repositoryCache.lookupRepository(new File(repoPath));
-					repositories.add(repository);
+					repositories.add(repositoryCache.lookupRepository(gitDir));
 				} catch (IOException e) {
 					continue;
 				}
@@ -247,13 +249,16 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 		}
 	}
 
+	private String getName(final Repository repo) {
+		return Activator.getDefault().getRepositoryUtil()
+				.getRepositoryName(repo);
+	}
+
 	private void sortRepositoriesByName() {
 		Collections.sort(repositories, new Comparator<Repository>() {
 
 			public int compare(Repository repo1, Repository repo2) {
-				String repo1Name = repo1.getDirectory().getParentFile().getName();
-				String repo2Name = repo2.getDirectory().getParentFile().getName();
-				return repo1Name.compareTo(repo2Name);
+				return getName(repo1).compareTo(getName(repo2));
 			}
 		});
 	}
@@ -261,8 +266,9 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 	private String[] getRepositoryComboItems() {
 		List<String> items = new ArrayList<String>();
 		for (Repository repository : repositories) {
-			String repoName = repository.getDirectory().getParentFile().getName();
-			items.add(repoName);
+			String repoName = getName(repository);
+			if (repoName.length() > 0)
+				items.add(repoName);
 		}
 		return items.toArray(new String[items.size()]);
 	}
