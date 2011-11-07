@@ -51,8 +51,11 @@ public class CompareTargetSelectionDialog extends AbstractBranchSelectionDialog 
 
 	@Override
 	protected String getTitle() {
-		return NLS.bind(UIText.CompareTargetSelectionDialog_CompareTitle,
-				pathString);
+		if (pathString != null && pathString.length() > 0)
+			return NLS.bind(UIText.CompareTargetSelectionDialog_CompareTitle,
+					pathString);
+		else
+			return UIText.CompareTargetSelectionDialog_CompareTitleEmptyPath;
 	}
 
 	@Override
