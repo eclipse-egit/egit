@@ -2158,6 +2158,36 @@
                         <test
                               property="GitRepository.canMerge">
                         </test>
+                        <test
+                              property="GitRepository.isRefCheckedOut">
+                        </test>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                        </instanceof>
+                        <test
+                             property="GitRepository.isLocalBranch">
+                        </test>
+                     </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewRebase"
+               icon="icons/obj16/rebase.gif"
+               label="%RebaseCommand.label2"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <test
+                              property="GitRepository.canMerge">
+                        </test>
                         <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                         </instanceof>
