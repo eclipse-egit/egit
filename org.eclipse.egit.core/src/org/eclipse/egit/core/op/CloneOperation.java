@@ -19,11 +19,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
+import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
@@ -55,6 +59,8 @@ public class CloneOperation {
 	private final int timeout;
 
 	private CredentialsProvider credentialsProvider;
+
+	private boolean importProjects;
 
 	private List<PostCloneTask> postCloneTasks;
 
@@ -103,6 +109,17 @@ public class CloneOperation {
 	}
 
 	/**
+	 * Set to import projects when done
+	 *
+	 * @param importProjects
+	 * @return true to import, false otherwise
+	 */
+	public CloneOperation setImportProjects(final boolean importProjects) {
+		this.importProjects = importProjects;
+		return this;
+	}
+
+	/**
 	 * @param pm
 	 *            the monitor to be used for reporting progress and responding
 	 *            to cancellation. The monitor is never <code>null</code>
@@ -141,11 +158,29 @@ public class CloneOperation {
 			}
 			Git git = cloneRepository.call();
 			repository = git.getRepository();
-			synchronized (this) {
+
+			if (importProjects)
+				try {
+					final Repository clonedRepo = repository;
+					ResourcesPlugin.getWorkspace().run(
+							new IWorkspaceRunnable() {
+								public void run(IProgressMonitor importMonitor)
+										throws CoreException {
+									ProjectUtil.createProjects(clonedRepo,
+											monitor);
+								}
+							}, monitor);
+				} catch (OperationCanceledException e) {
+					throw new InterruptedException();
+				} catch (CoreException e) {
+					throw new InvocationTargetException(e);
+				}
+				synchronized (this) {
 				if (postCloneTasks != null)
 					for (PostCloneTask task : postCloneTasks)
 						task.execute(git.getRepository(), monitor);
 			}
+
 		} catch (final Exception e) {
 			try {
 				if (repository != null)

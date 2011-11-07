@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.egit.core.project.ProjectRecord;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.IWorkingSet;

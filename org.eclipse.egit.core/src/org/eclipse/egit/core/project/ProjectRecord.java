@@ -13,7 +13,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package org.eclipse.egit.ui.internal.clone;
+package org.eclipse.egit.core.project;
 
 import java.io.File;
 
