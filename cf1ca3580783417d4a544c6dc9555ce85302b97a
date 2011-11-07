@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCH///xc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/GitRepositoriesPerspectiveFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-04T13:58:02Z",
+      "side": 1,
+      "message": "I think we should also add the synchronize view",
+      "revId": "cf1ca3580783417d4a544c6dc9555ce85302b97a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
