@@ -48,7 +48,6 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 		if (currentSelection instanceof IStructuredSelection) {
 			IStructuredSelection selection = (IStructuredSelection) currentSelection;
 			Object selected = selection.getFirstElement();
-
 			ref = getRef(selected);
 		} else
 			ref = null;
@@ -56,6 +55,13 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 		final Repository repository = getRepository(event);
 
 		BasicConfigurationDialog.show(repository);
+
+		try {
+			if (ref != null && ref.getName().equals(repository.getFullBranch()))
+				ref = null;
+		} catch (IOException ignored) {
+			// Ignored
+		}
 
 		if (ref == null) {
 			RebaseTargetSelectionDialog rebaseTargetSelectionDialog = new RebaseTargetSelectionDialog(
