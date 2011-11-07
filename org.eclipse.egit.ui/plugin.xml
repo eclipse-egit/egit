@@ -2149,21 +2149,44 @@
                style="push">
             <visibleWhen
                   checkEnabled="false">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate>
-                     <and>
-                        <test
-                              property="GitRepository.canMerge">
-                        </test>
-                        <instanceof
-                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                        </instanceof>
-                     </and>
-                  </iterate>
-               </and>
+               <or>
+	               <and>
+	                  <count
+	                        value="1">
+	                  </count>
+	                  <iterate>
+	                     <and>
+	                        <test
+	                              property="GitRepository.canMerge">
+	                        </test>
+	                        <instanceof
+	                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+	                        </instanceof>
+	                     </and>
+	                  </iterate>
+	               </and>
+	               <and>
+	                  <count
+	                        value="1">
+	                  </count>
+	                  <iterate>
+	                     <and>
+	                        <test
+	                              property="GitRepository.canMerge">
+	                        </test>
+	                        <test
+	                              property="GitRepository.isRefCheckedOut">
+	                        </test>
+	                        <instanceof
+	                              value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+	                        </instanceof>
+	                        <test
+	                             property="GitRepository.isLocalBranch">
+	                        </test>
+	                     </and>
+	                  </iterate>
+	               </and>
+               </or>
             </visibleWhen>
          </command>
          <menu
