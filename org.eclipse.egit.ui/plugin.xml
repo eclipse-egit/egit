@@ -1403,6 +1403,15 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
+            locationURI="popup:org.eclipse.egit.ui.internal.reflogview.popup">
+         <command
+               commandId="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
+               icon="icons/obj16/checkout.gif"
+               label="%RefLogViewCheckout.label"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
             locationURI="popup:org.eclipse.egit.ui.RepositoriesView">
          <separator
                name="##Branch-1"
@@ -3261,6 +3270,10 @@
             icon="icons/obj16/checkout.gif">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
+            icon="icons/obj16/checkout.gif">
+      </image>
+      <image
             commandId="org.eclipse.egit.ui.RepositoriesViewImportProjects"
             icon="icons/obj16/import_prj.gif">
       </image>
@@ -3772,6 +3785,11 @@
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.CheckoutCommitHandler"
             id="org.eclipse.egit.ui.history.CheckoutCommand"
+            name="%CheckoutCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.reflog.command.CheckoutHandler"
+            id="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
             name="%CheckoutCommand.name">
       </command>
       <command
