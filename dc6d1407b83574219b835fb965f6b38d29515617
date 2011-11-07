@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOBn///kE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/ReflogView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-22T23:13:42Z",
+      "side": 1,
+      "message": "Isn\u0027t this a bit boring? \n\nYou could display \"You\" when the entry matches the committer and the full name only when it it doesn\u0027t?\n\nI\u0027m not sure why you want this, though there are rare cases where you want the changer. \n\nThe timestamp I fully understand.",
+      "revId": "dc6d1407b83574219b835fb965f6b38d29515617",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///bA\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/ReflogView.java",
         "patchSetId": 5
