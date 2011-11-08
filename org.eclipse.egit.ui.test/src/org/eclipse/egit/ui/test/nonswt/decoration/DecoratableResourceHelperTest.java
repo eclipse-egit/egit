@@ -12,9 +12,12 @@ package org.eclipse.egit.ui.test.nonswt.decoration;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.Collections;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -47,6 +50,14 @@ public class DecoratableResourceHelperTest extends LocalDiskRepositoryTestCase {
 	private static final String TEST_PROJECT = "TestProject";
 
 	private static final String TEST_FILE = "TestFile";
+	
+	private static final String TEST_FILE2 = "TestFolder2/TestFile2";
+
+	private static final String TEST_FOLDER = "TestFolder";
+	
+	private static final String TEST_FOLDER2 = "TestFolder2";
+	
+	private static final String SUB_FOLDER = "SubFolder";
 
 	private File gitDir;
 
@@ -75,6 +86,10 @@ public class DecoratableResourceHelperTest extends LocalDiskRepositoryTestCase {
 		project.create(null);
 		project.open(null);
 
+		project.getFolder(TEST_FOLDER2).create(true, true, null);
+		IFile testFile2 = project.getFile(TEST_FILE2);
+		testFile2.create(new ByteArrayInputStream("content".getBytes()), true, null);
+		
 		RepositoryMapping mapping = new RepositoryMapping(project, gitDir);
 
 		GitProjectData projectData = new GitProjectData(project);
@@ -130,6 +145,45 @@ public class DecoratableResourceHelperTest extends LocalDiskRepositoryTestCase {
 			assertTrue(expectedDRs[i].equals(actualDRs[i]));
 	}
 
+	@Test
+	public void testDecorationNewFolder() throws Exception {
+		// Create new folder with sub folder
+		IFolder folder = project.getFolder(TEST_FOLDER);
+		folder.create(true, true, null);
+		IFolder subFolder = folder.getFolder(SUB_FOLDER);
+		subFolder.create(true, true, null);
+
+		IDecoratableResource[] expectedDRs = new IDecoratableResource[] {
+				new TestDecoratableResource(project, true, false, false, false,
+						Staged.NOT_STAGED),
+				new TestDecoratableResource(folder, false, false, false, false,
+						Staged.NOT_STAGED),
+				new TestDecoratableResource(subFolder, false, false, false, false,
+						Staged.NOT_STAGED) };
+
+		waitForIndexDiffUpdate(true);
+		IDecoratableResource[] actualDRs = DecoratableResourceHelper
+				.createDecoratableResources(new IResource[] { project, folder, subFolder });
+
+		for (int i = 0; i < expectedDRs.length; i++)
+			assertTrue(expectedDRs[i].equals(actualDRs[i]));
+	}
+
+	@Test
+	public void testDecorationFolderPrefixOfOtherFolder() throws Exception {
+		project.getFolder(TEST_FOLDER).create(true, true, null);
+		IFolder testFolder2 = project.getFolder(TEST_FOLDER2);
+
+		IDecoratableResource[] expectedDRs = new IDecoratableResource[] { new TestDecoratableResource(
+				testFolder2, true, false, false, false, Staged.NOT_STAGED) };
+		waitForIndexDiffUpdate(true);
+		IDecoratableResource[] actualDRs = DecoratableResourceHelper
+				.createDecoratableResources(new IResource[] { testFolder2 });
+
+		for (int i = 0; i < expectedDRs.length; i++)
+			assertTrue(expectedDRs[i].equals(actualDRs[i]));
+	}
+	
 	@Test
 	public void testDecorationNewFile() throws Exception {
 		// Create new file
