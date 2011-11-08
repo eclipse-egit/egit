@@ -1718,6 +1718,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private TreeWalk createFileWalker(Repository db, List<FilterPath> paths) {
 		final TreeWalk fileWalker = new TreeWalk(db);
 		fileWalker.setRecursive(true);
+		fileWalker.setFilter(TreeFilter.ANY_DIFF);
 		if (store.getBoolean(UIPreferences.RESOURCEHISTORY_FOLLOW_RENAMES)
 				&& !paths.isEmpty()
 				&& allRegularFiles(paths)) {
@@ -1729,10 +1730,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 			TreeFilter followFilter = createFollowFilterFor(selectedPaths);
 			currentWalk.setTreeFilter(followFilter);
-			// for the fileViewer, we start with a simple path filter, until we know
-			// all its names from the rename-history (see updateFollowFilter)
-			fileWalker.setFilter(AndTreeFilter.create(PathFilterGroup
-					.createFromStrings(selectedPaths), TreeFilter.ANY_DIFF));
 		} else if (paths.size() > 0) {
 			pathFilters = paths;
 			List<String> stringPaths = new ArrayList<String>(paths.size());
@@ -1741,12 +1738,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 			currentWalk.setTreeFilter(AndTreeFilter.create(PathFilterGroup
 					.createFromStrings(stringPaths), TreeFilter.ANY_DIFF));
-			fileWalker.setFilter(currentWalk.getTreeFilter().clone());
-
 		} else {
 			pathFilters = null;
 			currentWalk.setTreeFilter(TreeFilter.ALL);
-			fileWalker.setFilter(TreeFilter.ANY_DIFF);
 		}
 		return fileWalker;
 	}
