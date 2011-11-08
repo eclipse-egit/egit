@@ -3263,6 +3263,10 @@
             commandId="org.eclipse.egit.ui.commit.CreateBranch"
             icon="icons/obj16/new_branch_obj.gif">
       </image>
+       <image
+            commandId="org.eclipse.egit.ui.commit.Checkout"
+            icon="icons/obj16/checkout.gif">
+      </image>
       <image
             commandId="org.eclipse.egit.ui.CheckoutCommand"
             icon="icons/obj16/checkout.gif">
@@ -3840,6 +3844,11 @@
             defaultHandler="org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler"
             id="org.eclipse.egit.ui.commit.CreateBranch"
             name="%CreateBranchCommand">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commit.command.CheckoutHandler"
+            id="org.eclipse.egit.ui.commit.Checkout"
+            name="%CheckoutCommand">
       </command>
    </extension>
    <extension

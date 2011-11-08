@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.commit.command.CheckoutHandler;
 import org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler;
 import org.eclipse.egit.ui.internal.commit.command.CreateTagHandler;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
@@ -184,6 +185,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 		toolbar.add(repositoryLabelControl);
 		toolbar.add(createCommandContributionItem(CreateTagHandler.ID));
 		toolbar.add(createCommandContributionItem(CreateBranchHandler.ID));
+		toolbar.add(createCommandContributionItem(CheckoutHandler.ID));
 		addContributions(toolbar);
 		toolbar.update(true);
 	}
