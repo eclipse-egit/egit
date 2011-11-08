@@ -34,10 +34,12 @@ import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.commands.ActionHandler;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.ITextListener;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.MarginPainter;
 import org.eclipse.jface.text.Position;
+import org.eclipse.jface.text.TextEvent;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.quickassist.IQuickAssistInvocationContext;
@@ -189,8 +191,6 @@ public class SpellcheckableMessageArea extends Composite {
 		final SourceViewerDecorationSupport support = configureAnnotationPreferences();
 		final IHandlerActivation handlerActivation = installQuickFixActionHandler();
 
-		configureContextMenu();
-
 		Document document = new Document(initialText);
 
 		sourceViewer.configure(new TextSourceViewerConfiguration(EditorsUI
@@ -228,6 +228,8 @@ public class SpellcheckableMessageArea extends Composite {
 
 		});
 		sourceViewer.setDocument(document, annotationModel);
+
+		configureContextMenu();
 
 		getTextWidget().addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent disposeEvent) {
@@ -277,30 +279,48 @@ public class SpellcheckableMessageArea extends Composite {
 	}
 
 	private void configureContextMenu() {
-		final TextViewerAction cutAction = new TextViewerAction(sourceViewer, ITextOperationTarget.CUT);
+		final TextViewerAction cutAction = new TextViewerAction(sourceViewer,
+				ITextOperationTarget.CUT);
 		cutAction.setText(UIText.SpellCheckingMessageArea_cut);
 		cutAction.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_CUT);
 
-		final TextViewerAction copyAction = new TextViewerAction(sourceViewer, ITextOperationTarget.COPY);
+		final TextViewerAction copyAction = new TextViewerAction(sourceViewer,
+				ITextOperationTarget.COPY);
 		copyAction.setText(UIText.SpellCheckingMessageArea_copy);
 		copyAction.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_COPY);
 
-		final TextViewerAction pasteAction = new TextViewerAction(sourceViewer, ITextOperationTarget.PASTE);
+		final TextViewerAction pasteAction = new TextViewerAction(sourceViewer,
+				ITextOperationTarget.PASTE);
 		pasteAction.setText(UIText.SpellCheckingMessageArea_paste);
-		pasteAction.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_PASTE);
+		pasteAction
+				.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_PASTE);
 
-		final TextViewerAction selectAllAction = new TextViewerAction(sourceViewer, ITextOperationTarget.SELECT_ALL);
+		final TextViewerAction selectAllAction = new TextViewerAction(
+				sourceViewer, ITextOperationTarget.SELECT_ALL);
 		selectAllAction.setText(UIText.SpellCheckingMessageArea_selectAll);
-		selectAllAction.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_SELECT_ALL);
+		selectAllAction
+				.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_SELECT_ALL);
+
+		final TextViewerAction undoAction = new TextViewerAction(sourceViewer,
+				ITextOperationTarget.UNDO);
+		undoAction.setText(UIText.SpellcheckableMessageArea_undo);
+		undoAction.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_UNDO);
+
+		final TextViewerAction redoAction = new TextViewerAction(sourceViewer,
+				ITextOperationTarget.REDO);
+		redoAction.setText(UIText.SpellcheckableMessageArea_redo);
+		redoAction.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_REDO);
 
 		MenuManager contextMenu = new MenuManager();
 		contextMenu.add(cutAction);
 		contextMenu.add(copyAction);
 		contextMenu.add(pasteAction);
 		contextMenu.add(selectAllAction);
+		contextMenu.add(undoAction);
+		contextMenu.add(redoAction);
 		contextMenu.add(new Separator());
 
-		if(isEditable(sourceViewer)) {
+		if (isEditable(sourceViewer)) {
 			final SubMenuManager quickFixMenu = new SubMenuManager(contextMenu);
 			quickFixMenu.setVisible(true);
 			quickFixMenu.addMenuListener(new IMenuListener() {
@@ -316,53 +336,90 @@ public class SpellcheckableMessageArea extends Composite {
 		getTextWidget().addFocusListener(new FocusListener() {
 
 			private IHandlerActivation cutHandlerActivation;
+
 			private IHandlerActivation copyHandlerActivation;
+
 			private IHandlerActivation pasteHandlerActivation;
+
 			private IHandlerActivation selectAllHandlerActivation;
+
+			private IHandlerActivation undoHandlerActivation;
+
+			private IHandlerActivation redoHandlerActivation;
 
 			public void focusGained(FocusEvent e) {
 				cutAction.update();
 				copyAction.update();
-				IHandlerService service = (IHandlerService) PlatformUI.getWorkbench().getService(IHandlerService.class);
-				this.cutHandlerActivation = service.activateHandler(IWorkbenchCommandConstants.EDIT_CUT, new ActionHandler(cutAction), new ActiveShellExpression(getParent().getShell()));
-	            this.copyHandlerActivation = service.activateHandler(IWorkbenchCommandConstants.EDIT_COPY, new ActionHandler(copyAction), new ActiveShellExpression(getParent().getShell()));
-	            this.pasteHandlerActivation = service.activateHandler(IWorkbenchCommandConstants.EDIT_PASTE, new ActionHandler(pasteAction), new ActiveShellExpression(getParent().getShell()));
-	            this.selectAllHandlerActivation = service.activateHandler(IWorkbenchCommandConstants.EDIT_SELECT_ALL, new ActionHandler(selectAllAction), new ActiveShellExpression(getParent().getShell()));
+				IHandlerService service = (IHandlerService) PlatformUI
+						.getWorkbench().getService(IHandlerService.class);
+				cutHandlerActivation = service.activateHandler(
+						IWorkbenchCommandConstants.EDIT_CUT, new ActionHandler(
+								cutAction), new ActiveShellExpression(
+								getParent().getShell()));
+				copyHandlerActivation = service.activateHandler(
+						IWorkbenchCommandConstants.EDIT_COPY,
+						new ActionHandler(copyAction),
+						new ActiveShellExpression(getParent().getShell()));
+				pasteHandlerActivation = service.activateHandler(
+						IWorkbenchCommandConstants.EDIT_PASTE,
+						new ActionHandler(pasteAction),
+						new ActiveShellExpression(getParent().getShell()));
+				selectAllHandlerActivation = service.activateHandler(
+						IWorkbenchCommandConstants.EDIT_SELECT_ALL,
+						new ActionHandler(selectAllAction),
+						new ActiveShellExpression(getParent().getShell()));
+				undoHandlerActivation = service.activateHandler(
+						IWorkbenchCommandConstants.EDIT_UNDO,
+						new ActionHandler(undoAction),
+						new ActiveShellExpression(getParent().getShell()));
+				redoHandlerActivation = service.activateHandler(
+						IWorkbenchCommandConstants.EDIT_REDO,
+						new ActionHandler(redoAction),
+						new ActiveShellExpression(getParent().getShell()));
 			}
 
-			/* (non-Javadoc)
-			 * @see org.eclipse.swt.events.FocusAdapter#focusLost(org.eclipse.swt.events.FocusEvent)
-			 */
 			public void focusLost(FocusEvent e) {
-				IHandlerService service = (IHandlerService) PlatformUI.getWorkbench().getService(IHandlerService.class);
+				IHandlerService service = (IHandlerService) PlatformUI
+						.getWorkbench().getService(IHandlerService.class);
 
-				if (cutHandlerActivation != null) {
+				if (cutHandlerActivation != null)
 					service.deactivateHandler(cutHandlerActivation);
-				}
 
-				if (copyHandlerActivation != null) {
+				if (copyHandlerActivation != null)
 					service.deactivateHandler(copyHandlerActivation);
-				}
 
-				if (pasteHandlerActivation != null) {
+				if (pasteHandlerActivation != null)
 					service.deactivateHandler(pasteHandlerActivation);
-				}
 
-				if (selectAllHandlerActivation != null) {
+				if (selectAllHandlerActivation != null)
 					service.deactivateHandler(selectAllHandlerActivation);
-				}
+
+				if (undoHandlerActivation != null)
+					service.deactivateHandler(undoHandlerActivation);
+
+				if (redoHandlerActivation != null)
+					service.deactivateHandler(redoHandlerActivation);
 			}
 
 		});
 
-        sourceViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		sourceViewer
+				.addSelectionChangedListener(new ISelectionChangedListener() {
 
 					public void selectionChanged(SelectionChangedEvent event) {
 						cutAction.update();
 						copyAction.update();
 					}
 
-        });
+				});
+
+		sourceViewer.addTextListener(new ITextListener() {
+
+			public void textChanged(TextEvent event) {
+				undoAction.update();
+				redoAction.update();
+			}
+		});
 	}
 
 	private void addProposals(final SubMenuManager quickFixMenu) {
