@@ -10,7 +10,9 @@ package org.eclipse.egit.core.synchronize.dto;
 
 import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.eclipse.jgit.lib.Constants.R_HEADS;
+import static org.eclipse.jgit.lib.Constants.R_REMOTES;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -18,7 +20,6 @@ import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.junit.Before;
 import org.junit.Test;
@@ -80,7 +81,7 @@ public class GitSynchronizeDataTest extends GitTestCase {
 		git.branchCreate().setName("test3").setStartPoint("refs/heads/master")
 				.setUpstreamMode(SetupUpstreamMode.TRACK).call();
 		git.checkout().setName("test3").call();
-		repo.renameRef(R_HEADS + "test3", Constants.R_REMOTES + "origin/master").rename();
+		repo.renameRef(R_HEADS + "test3", R_REMOTES + "origin/master").rename();
 		GitSynchronizeData gsd = new GitSynchronizeData(repo, "refs/remotes/origin/master",
 				HEAD, false);
 
@@ -89,6 +90,24 @@ public class GitSynchronizeDataTest extends GitTestCase {
 
 		// then
 		assertThat(srcMerge, is("refs/heads/master"));
+	}
+
+	@Test
+	public void shouldCreateGitSynchronizeDataForRemoteBranchWithoutRemoteName()
+			throws Exception {
+		// given
+		Git git = new Git(repo);
+		String remoteBranchName = R_REMOTES + "no-remote-name";
+		git.branchCreate().setName(remoteBranchName).call();
+
+		// when
+		GitSynchronizeData gsd = new GitSynchronizeData(repo, HEAD,
+				remoteBranchName, false);
+
+		// then
+		assertThat(gsd.getDstRemoteName(), nullValue());
+		assertThat(gsd.getDstRevCommit().getId(),
+				is(repo.resolve(remoteBranchName)));
 	}
 
 }
