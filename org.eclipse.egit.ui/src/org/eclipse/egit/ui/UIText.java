@@ -4090,6 +4090,12 @@ public class UIText extends NLS {
 	/** */
 	public static String GitModelSynchonize_fetchGitDataJobName;
 
+	/** */
+	public static String FetchChangeFromGerritCommand_noRepositorySelectedTitle;
+
+	/** */
+	public static String FetchChangeFromGerritCommand_noRepositorySelectedMessage;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
