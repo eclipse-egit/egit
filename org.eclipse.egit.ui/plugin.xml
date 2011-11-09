@@ -804,6 +804,11 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.OpenCommit"
+            name="%OpenCommit">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.Reset"
             name="%ResetCommand.name">
       </command>
@@ -3896,6 +3901,7 @@
             visible="false">
         <action
                class="org.eclipse.egit.ui.internal.commit.OpenCommitAction"
+               definitionId="org.eclipse.egit.ui.team.OpenCommit"
                icon="icons/obj16/open-commit.gif"
                id="org.eclipse.egit.ui.commit.OpenCommitAction"
                label="%OpenCommitAction.label"
