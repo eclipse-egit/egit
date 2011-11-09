@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCH///YA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/command/AbstractReflogCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-09T21:35:47Z",
+      "side": 1,
+      "message": "personally I would prefer to have an empty line between class definition and first member/method",
+      "revId": "b93fe4ec49ee54881ad931dad9d8c40b3f5fa969",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///X8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/command/AbstractReflogCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-09T21:35:47Z",
+      "side": 1,
+      "message": "style-nit: remove curly brackets around single line block",
+      "revId": "b93fe4ec49ee54881ad931dad9d8c40b3f5fa969",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
