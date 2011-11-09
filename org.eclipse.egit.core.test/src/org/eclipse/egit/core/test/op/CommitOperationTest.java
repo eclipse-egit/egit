@@ -70,7 +70,7 @@ public class CommitOperationTest extends GitTestCase {
 		testUtils.addFileToProject(project.getProject(), "foo/a.txt", "some text");
 		resources.add(project.getProject().getFolder("foo"));
 		new AddToIndexOperation(resources).execute(null);
-		CommitOperation commitOperation = new CommitOperation(null, null, null, TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
+		CommitOperation commitOperation = new CommitOperation(null, null, TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
 		commitOperation.setCommitAll(true);
 		commitOperation.setRepository(repository);
 		commitOperation.execute(null);
@@ -89,7 +89,7 @@ public class CommitOperationTest extends GitTestCase {
 		assertTrue(!project.getProject().getFile("zar/b.txt").exists());
 
 		IFile[] filesToCommit = new IFile[] { project.getProject().getFile("zar/b.txt") };
-		commitOperation = new CommitOperation(filesToCommit, Arrays.asList(filesToCommit), null, TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
+		commitOperation = new CommitOperation(filesToCommit, null, TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
 		commitOperation.setRepository(repository);
 		try {
 			commitOperation.execute(null);
@@ -120,9 +120,8 @@ public class CommitOperationTest extends GitTestCase {
 
 		resources.add(project.getProject().getFolder("sub"));
 		new AddToIndexOperation(resources).execute(null);
-		CommitOperation commitOperation = new CommitOperation(null, null, null,
-				TestUtils.AUTHOR, TestUtils.COMMITTER,
-				"first commit");
+		CommitOperation commitOperation = new CommitOperation(null, null, TestUtils.AUTHOR,
+				TestUtils.COMMITTER, "first commit");
 		commitOperation.setCommitAll(true);
 		commitOperation.setRepository(repository);
 		commitOperation.execute(null);
@@ -136,9 +135,8 @@ public class CommitOperationTest extends GitTestCase {
 
 		testUtils.changeContentOfFile(project.getProject(), file1, "changed text");
 
-		commitOperation = new CommitOperation(null, null, null,
-				TestUtils.AUTHOR, TestUtils.COMMITTER,
-				"second commit");
+		commitOperation = new CommitOperation(null, null, TestUtils.AUTHOR,
+				TestUtils.COMMITTER, "second commit");
 		commitOperation.setCommitAll(true);
 		commitOperation.setRepository(repository);
 		commitOperation.execute(null);
@@ -166,9 +164,8 @@ public class CommitOperationTest extends GitTestCase {
 		resources.add(project.getProject().getFolder("sub1"));
 		resources.add(project.getProject().getFolder("sub2"));
 		new AddToIndexOperation(resources).execute(null);
-		CommitOperation commitOperation = new CommitOperation(null, null, null,
-				TestUtils.AUTHOR, TestUtils.COMMITTER,
-				"first commit");
+		CommitOperation commitOperation = new CommitOperation(null, null, TestUtils.AUTHOR,
+				TestUtils.COMMITTER, "first commit");
 		commitOperation.setCommitAll(true);
 		commitOperation.setRepository(repository);
 		commitOperation.execute(null);
@@ -195,7 +192,7 @@ public class CommitOperationTest extends GitTestCase {
 		ArrayList<IFile> notIndexed = new ArrayList<IFile>();
 		notIndexed.add(filesToCommit[0]);
 		ArrayList<IFile> notTracked = new ArrayList<IFile>();
-		commitOperation = new CommitOperation(filesToCommit, notIndexed, notTracked, TestUtils.AUTHOR, TestUtils.COMMITTER, "second commit");
+		commitOperation = new CommitOperation(filesToCommit, notTracked, TestUtils.AUTHOR, TestUtils.COMMITTER, "second commit");
 		commitOperation.setCommitAll(false);
 		commitOperation.execute(null);
 
@@ -223,8 +220,8 @@ public class CommitOperationTest extends GitTestCase {
 				"some text");
 		IFile[] filesToCommit = { fileA, fileB };
 		CommitOperation commitOperation = new CommitOperation(filesToCommit,
-				EMPTY_FILE_LIST, Arrays.asList(filesToCommit),
-				TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
+				Arrays.asList(filesToCommit), TestUtils.AUTHOR,
+				TestUtils.COMMITTER, "first commit");
 		commitOperation.execute(null);
 		testUtils.assertRepositoryContainsFiles(repository, getRepoRelativePaths(filesToCommit));
 	}
@@ -244,8 +241,8 @@ public class CommitOperationTest extends GitTestCase {
 				"foo/b.txt", "some text");
 		IFile[] filesToCommit = { fileA, fileB };
 		CommitOperation commitOperation = new CommitOperation(filesToCommit,
-				EMPTY_FILE_LIST, Arrays.asList(filesToCommit),
-				TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
+				Arrays.asList(filesToCommit), TestUtils.AUTHOR,
+				TestUtils.COMMITTER, "first commit");
 		commitOperation.execute(null);
 		testUtils.changeContentOfFile(project.getProject(), fileA,
 				"new content of A");
@@ -255,8 +252,7 @@ public class CommitOperationTest extends GitTestCase {
 		resources.add(fileB);
 		new AddToIndexOperation(resources).execute(null);
 		commitOperation = new CommitOperation(filesToCommit, EMPTY_FILE_LIST,
-				EMPTY_FILE_LIST, TestUtils.AUTHOR, TestUtils.COMMITTER,
-				"second commit");
+				TestUtils.AUTHOR, TestUtils.COMMITTER, "second commit");
 		commitOperation.execute(null);
 
 		testUtils.assertRepositoryContainsFilesWithContent(repository,
@@ -272,8 +268,8 @@ public class CommitOperationTest extends GitTestCase {
 				"foo/b.txt", "some text");
 		IFile[] filesToCommit = { fileA, fileB };
 		CommitOperation commitOperation = new CommitOperation(filesToCommit,
-				EMPTY_FILE_LIST, Arrays.asList(filesToCommit),
-				TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
+				Arrays.asList(filesToCommit), TestUtils.AUTHOR,
+				TestUtils.COMMITTER, "first commit");
 		commitOperation.execute(null);
 		testUtils.changeContentOfFile(project.getProject(), fileA,
 				"new content of A");
@@ -284,8 +280,7 @@ public class CommitOperationTest extends GitTestCase {
 		new AddToIndexOperation(resources).execute(null);
 		IFile[] filesToCommit2 = { fileA };
 		commitOperation = new CommitOperation(filesToCommit2, EMPTY_FILE_LIST,
-				EMPTY_FILE_LIST, TestUtils.AUTHOR, TestUtils.COMMITTER,
-				"second commit");
+				TestUtils.AUTHOR, TestUtils.COMMITTER, "second commit");
 		commitOperation.execute(null);
 
 		testUtils.assertRepositoryContainsFilesWithContent(repository,
@@ -300,8 +295,8 @@ public class CommitOperationTest extends GitTestCase {
 				"foo/b.txt", "some text");
 		IFile[] filesToCommit = { fileA, fileB };
 		CommitOperation commitOperation = new CommitOperation(filesToCommit,
-				EMPTY_FILE_LIST, Arrays.asList(filesToCommit),
-				TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
+				Arrays.asList(filesToCommit), TestUtils.AUTHOR,
+				TestUtils.COMMITTER, "first commit");
 		commitOperation.execute(null);
 
 		testUtils.changeContentOfFile(project.getProject(), fileA,
@@ -311,8 +306,8 @@ public class CommitOperationTest extends GitTestCase {
 		resources.add(fileA);
 		resources.add(fileB);
 		commitOperation = new CommitOperation(filesToCommit,
-				Arrays.asList(filesToCommit), EMPTY_FILE_LIST,
-				TestUtils.AUTHOR, TestUtils.COMMITTER, "first commit");
+				EMPTY_FILE_LIST, TestUtils.AUTHOR,
+				TestUtils.COMMITTER, "first commit");
 		commitOperation.execute(null);
 
 		testUtils.assertRepositoryContainsFilesWithContent(repository,

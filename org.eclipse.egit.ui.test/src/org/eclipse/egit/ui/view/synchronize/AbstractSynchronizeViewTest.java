@@ -310,8 +310,8 @@ public abstract class AbstractSynchronizeViewTest extends
 		untracked.addAll(Arrays.asList(commitables));
 
 		CommitOperation op = new CommitOperation(commitables,
-				new ArrayList<IFile>(), untracked, TestUtil.TESTAUTHOR,
-				TestUtil.TESTCOMMITTER, "Add .gitignore file");
+				untracked, TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER,
+				"Add .gitignore file");
 		op.execute(null);
 	}
 
