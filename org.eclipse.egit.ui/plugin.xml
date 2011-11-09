@@ -3740,6 +3740,12 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+C">
       </key>
+      <key
+            commandId="org.eclipse.egit.ui.RepositoriesViewRemoveRemote"
+            contextId="org.eclipse.egit.ui.RepositoriesView"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="DEL">
+      </key>
    </extension>
    <extension
          name="%HistoryViewCommands.extension.name"
