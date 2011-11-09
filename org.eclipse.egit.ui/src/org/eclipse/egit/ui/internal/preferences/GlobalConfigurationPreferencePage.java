@@ -27,6 +27,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
@@ -123,7 +124,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 		sysTabItem.setText(UIText.GlobalConfigurationPreferencePage_systemSettingTabTitle);
 
 		Composite repoTab = new Composite(tabFolder, SWT.NONE);
-		repoTab.setLayout(new GridLayout(1, false));
+		GridLayoutFactory.swtDefaults().margins(0, 0).applyTo(repoTab);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(repoTab);
 		Composite repositoryComposite = new Composite(repoTab, SWT.NONE);
 		repositoryComposite.setLayout(new GridLayout(2, false));
