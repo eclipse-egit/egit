@@ -177,6 +177,9 @@ public class ProjectUtil {
 	public static boolean findProjectFiles(final Collection<File> files,
 			final File directory, final Set<String> visistedDirs,
 			final IProgressMonitor monitor) {
+		if (directory == null)
+			return false;
+
 		IProgressMonitor pm = monitor;
 		if (pm == null)
 			pm = new NullProgressMonitor();
