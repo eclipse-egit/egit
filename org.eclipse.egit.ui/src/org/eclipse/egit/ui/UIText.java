@@ -1918,6 +1918,12 @@ public class UIText extends NLS {
 	public static String GlobalConfigurationPreferencePage_repositorySettingNoRepositories;
 
 	/** */
+	public static String SpellcheckableMessageArea_redo;
+
+	/** */
+	public static String SpellcheckableMessageArea_undo;
+
+	/** */
 	public static String SpellCheckingMessageArea_copy;
 
 	/** */
