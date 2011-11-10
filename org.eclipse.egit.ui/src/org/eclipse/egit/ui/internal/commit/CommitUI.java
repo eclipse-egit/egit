@@ -68,6 +68,8 @@ public class CommitUI  {
 
 	private Set<String> indexChanges;
 
+	private Set<String> removed;
+
 	private Set<String> notTracked;
 
 	private Set<String> files;
@@ -185,10 +187,10 @@ public class CommitUI  {
 
 		final CommitOperation commitOperation;
 		try {
-			commitOperation= new CommitOperation(
-					repo,
-					commitDialog.getSelectedFiles(), notTracked, commitDialog.getAuthor(),
-					commitDialog.getCommitter(), commitDialog.getCommitMessage());
+			commitOperation = new CommitOperation(repo,
+					commitDialog.getSelectedFiles(), notTracked, removed,
+					commitDialog.getAuthor(), commitDialog.getCommitter(),
+					commitDialog.getCommitMessage());
 		} catch (CoreException e1) {
 			Activator.handleError(UIText.CommitUI_commitFailed, e1, true);
 			return;
@@ -275,6 +277,7 @@ public class CommitUI  {
 		files = new LinkedHashSet<String>();
 		notIndexed = new LinkedHashSet<String>();
 		indexChanges = new LinkedHashSet<String>();
+		removed = new LinkedHashSet<String>();
 		notTracked = new LinkedHashSet<String>();
 		amending = false;
 		indexDiff = null;
@@ -341,7 +344,7 @@ public class CommitUI  {
 
 		includeList(indexDiff.getAdded(), indexChanges);
 		includeList(indexDiff.getChanged(), indexChanges);
-		includeList(indexDiff.getRemoved(), indexChanges);
+		includeList(indexDiff.getRemoved(), removed);
 		includeList(indexDiff.getMissing(), notIndexed);
 		includeList(indexDiff.getModified(), notIndexed);
 		includeList(indexDiff.getUntracked(), notTracked);
