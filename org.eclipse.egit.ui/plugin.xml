@@ -789,11 +789,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            id="org.eclipse.egit.ui.team.DeleteTag"
-            name="%DeleteTagCommand.name">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.Synchronize"
             name="%SynchronizeCommand.name">
       </command>
@@ -1096,7 +1091,7 @@
          </activeWhen>
       </handler>
       <handler
-            commandId="org.eclipse.egit.ui.team.DeleteTag">
+            commandId="org.eclipse.ui.edit.delete">
          <class
                class="org.eclipse.egit.ui.internal.repository.tree.command.DeleteTagCommand">
          </class>
@@ -1108,6 +1103,56 @@
               <iterate>
                  <instanceof
                         value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
+                  </instanceof>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.ui.edit.delete">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.DeleteBranchCommand">
+         </class>
+         <activeWhen>
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate>
+                     <and>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                           </instanceof>
+                           <test
+                                 property="GitRepository.isLocalBranch">
+                           </test>
+                        </or>
+                        <not>
+                           <test
+                                 property="GitRepository.isRefCheckedOut">
+                           </test>
+                        </not>
+                     </and>
+                  </iterate>
+               </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.ui.edit.delete">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.RemoveRemoteCommand">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.RemoteNode">
                   </instanceof>
                </iterate>
             </and>
@@ -1526,7 +1571,7 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewDeleteBranch"
+               commandId="org.eclipse.ui.edit.delete"
                icon="icons/obj16/delete_obj.gif"
                label="%RepoViewDeleteBranch.label"
                style="push">
@@ -1595,7 +1640,7 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.egit.ui.team.DeleteTag"
+               commandId="org.eclipse.ui.edit.delete"
                label="%DeleteTagCommand.name"
                style="push">
             <visibleWhen
@@ -1951,7 +1996,7 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.egit.ui.RepositoriesViewRemoveRemote"
+               commandId="org.eclipse.ui.edit.delete"
                icon="icons/obj16/delete_obj.gif"
                label="%RepoViewRemoveRemote.label"
                style="push">
@@ -3080,12 +3125,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.DeleteBranchCommand"
-            id="org.eclipse.egit.ui.RepositoriesViewDeleteBranch"
-            name="%DeleteBranchCommand">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.RenameBranchCommand"
             id="org.eclipse.egit.ui.RepositoriesViewRenameBranch"
             name="%RenameBranchCommand">
@@ -3143,12 +3182,6 @@
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ConfigurePushCommand"
             id="org.eclipse.egit.ui.RepositoriesViewConfigurePush"
             name="%ConfigurePushCommand">
-      </command>
-      <command
-            categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.RemoveRemoteCommand"
-            id="org.eclipse.egit.ui.RepositoriesViewRemoveRemote"
-            name="%DeleteRemoteCommand">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
@@ -3346,32 +3379,12 @@
             icon="icons/obj16/import_prj.gif">
       </image>
       <image
-            commandId="org.eclipse.egit.ui.RepositoriesViewDeleteBranch"
-            icon="icons/obj16/delete_obj.gif">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.RepositoriesViewDeleteFetch"
-            icon="icons/obj16/delete_obj.gif">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.RepositoriesViewDeletePush"
-            icon="icons/obj16/delete_obj.gif">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.RepositoriesViewRemoveRemote"
-            icon="icons/obj16/delete_obj.gif">
-      </image>
-      <image
             commandId="org.eclipse.egit.ui.RepositoriesViewOpenProperties"
             icon="icons/obj16/properties.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewCreateRepository"
             icon="icons/etool16/createRepository.gif">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.RepositoriesViewDelete"
-            icon="icons/obj16/delete_obj.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.RepositoriesToggleBranchHierarchy"
@@ -3492,10 +3505,6 @@
       <image
             commandId="org.eclipse.egit.ui.team.RenameBranch"
             icon="icons/obj16/editconfig.gif">
-      </image>
-      <image
-            commandId="org.eclipse.egit.ui.team.DeleteTag"
-            icon="icons/obj16/delete_obj.gif">
       </image>
    </extension>
    <extension
@@ -3784,12 +3793,6 @@
             contextId="org.eclipse.egit.ui.RepositoriesView"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+C">
-      </key>
-      <key
-            commandId="org.eclipse.egit.ui.RepositoriesViewRemoveRemote"
-            contextId="org.eclipse.egit.ui.RepositoriesView"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="DEL">
       </key>
    </extension>
    <extension
