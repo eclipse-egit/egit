@@ -255,9 +255,9 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		ArrayList<IFile> untracked = new ArrayList<IFile>();
 		untracked.addAll(Arrays.asList(commitables));
 		// commit to stable
-		CommitOperation op = new CommitOperation(commitables,
-				untracked, TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER,
-				"Initial commit");
+		CommitOperation op = new CommitOperation(commitables, untracked,
+				new ArrayList<IFile>(), TestUtil.TESTAUTHOR,
+				TestUtil.TESTCOMMITTER, "Initial commit");
 		op.execute(null);
 
 		// now create a stable branch (from master)
@@ -435,9 +435,9 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 			message = newContent;
 		// TODO: remove after replacing GitIndex in CommitOperation
 		waitInUI();
-		CommitOperation op = new CommitOperation(commitables,
-				untracked, TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER,
-				message);
+		CommitOperation op = new CommitOperation(commitables, untracked,
+				new ArrayList<IFile>(), TestUtil.TESTAUTHOR,
+				TestUtil.TESTCOMMITTER, message);
 		op.execute(null);
 	}
 
@@ -449,9 +449,9 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		IFile[] commitables = new IFile[] { file };
 		ArrayList<IFile> untracked = new ArrayList<IFile>();
 		untracked.addAll(Arrays.asList(commitables));
-		CommitOperation op = new CommitOperation(commitables,
-				untracked, TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER,
-				commitMessage);
+		CommitOperation op = new CommitOperation(commitables, untracked,
+				new ArrayList<IFile>(), TestUtil.TESTAUTHOR,
+				TestUtil.TESTCOMMITTER, commitMessage);
 		op.execute(null);
 	}
 
