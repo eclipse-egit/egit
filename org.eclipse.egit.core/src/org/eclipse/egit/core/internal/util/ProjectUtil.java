@@ -22,21 +22,26 @@ import java.util.Set;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.egit.core.project.ProjectRecord;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 
 /**
- * This class contains utility methods related to projects
- * TODO: rename to RefreshUtil or ResourceUtil?
+ * This class contains utility methods related to projects TODO: rename to
+ * RefreshUtil or ResourceUtil?
  */
 public class ProjectUtil {
 
@@ -237,5 +242,65 @@ public class ProjectUtil {
 			findProjectFiles(files, contents[i], directoriesVisited, pm);
 		}
 		return true;
+	}
+
+	/**
+	 * Create all projects found in repository's working directory
+	 *
+	 * @param repository
+	 * @param monitor
+	 * @throws CoreException
+	 */
+	public static void createProjects(final Repository repository,
+			final IProgressMonitor monitor) throws CoreException {
+		List<File> projects = new ArrayList<File>();
+		if (ProjectUtil.findProjectFiles(projects, repository.getWorkTree(),
+				null, monitor))
+			for (File file : projects)
+				ProjectUtil.createProject(repository, file, monitor);
+	}
+
+	/**
+	 * Create project and associate with repository
+	 *
+	 * @param repository
+	 * @param file
+	 * @param monitor
+	 * @throws CoreException
+	 */
+	public static void createProject(final Repository repository,
+			final File file, final IProgressMonitor monitor)
+			throws CoreException {
+		final ProjectRecord record = new ProjectRecord(file);
+		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		String projectName = record.getProjectName();
+		final IProject project = workspace.getRoot().getProject(projectName);
+		if (project.exists())
+			return;
+		if (record.getProjectDescription() == null) {
+			record.setProjectDescription(workspace
+					.newProjectDescription(projectName));
+			IPath locationPath = new Path(record.getProjectSystemFile()
+					.getAbsolutePath());
+
+			if (Platform.getLocation().isPrefixOf(locationPath))
+				record.getProjectDescription().setLocation(null);
+			else
+				record.getProjectDescription().setLocation(locationPath);
+		} else
+			record.getProjectDescription().setName(projectName);
+
+		monitor.subTask(NLS.bind(CoreText.ProjectUtil_taskImportingProject,
+				file.getPath()));
+		try {
+			project.create(record.getProjectDescription(),
+					new SubProgressMonitor(monitor, 30));
+			project.open(IResource.BACKGROUND_REFRESH, new SubProgressMonitor(
+					monitor, 50));
+		} finally {
+			monitor.done();
+		}
+		new ConnectProviderOperation(project, repository.getDirectory())
+				.execute(monitor);
 	}
 }
