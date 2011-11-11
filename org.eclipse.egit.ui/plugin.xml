@@ -1261,6 +1261,26 @@
             </and>
          </activeWhen>
       </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.RepositoriesViewRemoveRemote">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.RemoveRemoteCommand">
+         </class>
+         <activeWhen>
+             <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RemoteNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -3105,7 +3125,6 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
-            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.RemoveRemoteCommand"
             id="org.eclipse.egit.ui.RepositoriesViewRemoveRemote"
             name="%DeleteRemoteCommand">
       </command>
