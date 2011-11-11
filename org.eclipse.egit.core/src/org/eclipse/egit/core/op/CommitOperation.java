@@ -66,8 +66,6 @@ public class CommitOperation implements IEGitOperation {
 
 	private Repository repo;
 
-	Collection<String> notIndexed;
-
 	Collection<String> notTracked;
 
 	private boolean createChangeId;
@@ -79,8 +77,6 @@ public class CommitOperation implements IEGitOperation {
 	/**
 	 * @param filesToCommit
 	 *            a list of files which will be included in the commit
-	 * @param notIndexed
-	 *            a list of all files with changes not in the index
 	 * @param notTracked
 	 *            a list of all untracked files
 	 * @param author
@@ -91,9 +87,8 @@ public class CommitOperation implements IEGitOperation {
 	 *            the commit message
 	 * @throws CoreException
 	 */
-	public CommitOperation(IFile[] filesToCommit, Collection<IFile> notIndexed,
-			Collection<IFile> notTracked, String author, String committer,
-			String message) throws CoreException {
+	public CommitOperation(IFile[] filesToCommit, Collection<IFile> notTracked,
+			String author, String committer, String message) throws CoreException {
 		this.author = author;
 		this.committer = committer;
 		this.message = message;
@@ -101,8 +96,6 @@ public class CommitOperation implements IEGitOperation {
 			setRepository(filesToCommit[0]);
 		if (filesToCommit != null)
 			commitFileList = buildFileList(Arrays.asList(filesToCommit));
-		if (notIndexed != null)
-			this.notIndexed = buildFileList(notIndexed);
 		if (notTracked != null)
 			this.notTracked = buildFileList(notTracked);
 	}
@@ -111,8 +104,6 @@ public class CommitOperation implements IEGitOperation {
 	 * @param repository
 	 * @param filesToCommit
 	 *            a list of files which will be included in the commit
-	 * @param notIndexed
-	 *            a list of all files with changes not in the index
 	 * @param notTracked
 	 *            a list of all untracked files
 	 * @param author
@@ -123,17 +114,14 @@ public class CommitOperation implements IEGitOperation {
 	 *            the commit message
 	 * @throws CoreException
 	 */
-	public CommitOperation(Repository repository, Collection<String> filesToCommit, Collection<String> notIndexed,
-			Collection<String> notTracked, String author, String committer,
-			String message) throws CoreException {
+	public CommitOperation(Repository repository, Collection<String> filesToCommit, Collection<String> notTracked,
+			String author, String committer, String message) throws CoreException {
 		this.repo = repository;
 		this.author = author;
 		this.committer = committer;
 		this.message = message;
 		if (filesToCommit != null)
 			commitFileList = new HashSet<String>(filesToCommit);
-		if (notIndexed != null)
-			this.notIndexed = new HashSet<String>(notIndexed);
 		if (notTracked != null)
 			this.notTracked = new HashSet<String>(notTracked);
 	}

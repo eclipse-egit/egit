@@ -141,9 +141,9 @@ public abstract class GitRepositoriesViewTestBase extends
 		untracked.addAll(Arrays.asList(commitables));
 		// commit to stable
 		CommitOperation op = new CommitOperation(commitables,
-				new ArrayList<IFile>(), untracked,
-				"Test Author <test.author@test.com>",
-				"Test Committer <test.commiter@test.com>", "Initial commit");
+				untracked, "Test Author <test.author@test.com>",
+				"Test Committer <test.commiter@test.com>",
+				"Initial commit");
 		op.execute(null);
 
 		// now create a stable branch (from master)

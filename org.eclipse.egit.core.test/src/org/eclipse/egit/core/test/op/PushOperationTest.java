@@ -156,8 +156,8 @@ public class PushOperationTest extends DualRepositoryTestCase {
 
 		AddToIndexOperation trop = new AddToIndexOperation(files);
 		trop.execute(null);
-		CommitOperation cop = new CommitOperation(fileArr, files, files,
-				TestUtils.AUTHOR, TestUtils.COMMITTER, "Added file");
+		CommitOperation cop = new CommitOperation(fileArr, files, TestUtils.AUTHOR,
+				TestUtils.COMMITTER, "Added file");
 		cop.execute(null);
 
 		proj.delete(false, false, null);
