@@ -33,6 +33,8 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
+import org.eclipse.egit.ui.internal.commit.CommitEditor;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
@@ -53,6 +55,8 @@ import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -711,6 +715,20 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 		graph.setRelativeDate(Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE));
+		graph.getTableView().addDoubleClickListener(new IDoubleClickListener() {
+
+			public void doubleClick(DoubleClickEvent event) {
+				ISelection selection = event.getSelection();
+				if(selection instanceof IStructuredSelection) {
+					IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+					Object commit = structuredSelection.getFirstElement();
+					if(commit != null && commit instanceof SWTCommit) {
+						SWTCommit swtCommit = (SWTCommit) commit;
+						CommitEditor.openQuiet(new RepositoryCommit(currentRepo, swtCommit));
+					}
+				}
+			}
+		});
 		Activator.getDefault().getPreferenceStore()
 				.addPropertyChangeListener(listener);
 
