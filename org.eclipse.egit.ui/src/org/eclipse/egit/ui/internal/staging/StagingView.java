@@ -39,8 +39,12 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.IteratorService;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -220,6 +224,28 @@ public class StagingView extends ViewPart {
 		public void onIndexChanged(IndexChangedEvent event) {
 			reload(event.getRepository());
 		}
+	};
+
+	private final IPreferenceChangeListener prefListener = new IPreferenceChangeListener() {
+
+		public void preferenceChange(PreferenceChangeEvent event) {
+			if (!RepositoryUtil.PREFS_DIRECTORIES.equals(event.getKey()))
+				return;
+
+			final Repository repo = currentRepository;
+			if (repo == null)
+				return;
+
+			if (Activator.getDefault().getRepositoryUtil().contains(repo))
+				return;
+
+			asyncExec(new Runnable() {
+				public void run() {
+					reload(null);
+				}
+			});
+		}
+
 	};
 
 	private Action signedOffByAction;
@@ -432,6 +458,10 @@ public class StagingView extends ViewPart {
 		else
 			preferenceStore.setDefault(UIPreferences.STAGING_VIEW_SYNC_SELECTION, true);
 
+		InstanceScope.INSTANCE.getNode(
+				org.eclipse.egit.core.Activator.getPluginId())
+				.addPreferenceChangeListener(prefListener);
+
 		resourceChangeListener = new IResourceChangeListener() {
 			public void resourceChanged(IResourceChangeEvent event) {
 				final Collection<String> resourcesToUpdate = new HashSet<String>();
@@ -551,6 +581,12 @@ public class StagingView extends ViewPart {
 	}
 
 	private void enableCommitWidgets(boolean enabled) {
+		if (!enabled) {
+			commitMessageText.setText(""); //$NON-NLS-1$
+			committerText.setText(""); //$NON-NLS-1$
+			authorText.setText(""); //$NON-NLS-1$
+		}
+
 		commitMessageText.setEnabled(enabled);
 		committerText.setEnabled(enabled);
 		authorText.setEnabled(enabled);
@@ -997,6 +1033,24 @@ public class StagingView extends ViewPart {
 	}
 
 	private void reload(final Repository repository) {
+		if (repository == null) {
+			if (currentRepository == null)
+				return;
+			saveCommitMessageComponentState();
+			currentRepository = null;
+			StagingViewUpdate update = new StagingViewUpdate(null, null, null);
+			unstagedTableViewer.setInput(update);
+			stagedTableViewer.setInput(update);
+			enableCommitWidgets(false);
+			updateSectionText();
+			form.setText(UIText.StagingView_NoSelectionTitle);
+			return;
+		}
+
+		// Ignore bare repositories that are selected
+		if (repository.isBare())
+			return;
+
 		final boolean repositoryChanged = currentRepository != repository;
 
 		final AtomicReference<IndexDiff> results = new AtomicReference<IndexDiff>();
@@ -1199,9 +1253,10 @@ public class StagingView extends ViewPart {
 	}
 
 	private void saveCommitMessageComponentState() {
-		CommitMessageComponentStateManager.persistState(
-				commitMessageComponent.getRepository(),
-				commitMessageComponent.getState());
+		final Repository repo = commitMessageComponent.getRepository();
+		if (repo != null)
+			CommitMessageComponentStateManager.persistState(repo,
+					commitMessageComponent.getState());
 	}
 
 	private void deleteCommitMessageComponentState() {
@@ -1267,6 +1322,9 @@ public class StagingView extends ViewPart {
 				ISelectionService.class);
 		srv.removePostSelectionListener(selectionChangedListener);
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
+		InstanceScope.INSTANCE.getNode(
+				org.eclipse.egit.core.Activator.getPluginId())
+				.removePreferenceChangeListener(prefListener);
 
 		removeListeners();
 		if (reloadJob != null) {

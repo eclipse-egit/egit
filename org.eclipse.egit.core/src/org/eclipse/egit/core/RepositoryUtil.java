@@ -289,6 +289,14 @@ public class RepositoryUtil {
 		}
 	}
 
+	private String getPath(File repositoryDir) {
+		try {
+			return repositoryDir.getCanonicalPath();
+		} catch (IOException e) {
+			return repositoryDir.getAbsolutePath();
+		}
+	}
+
 	/**
 	 *
 	 * @param repositoryDir
@@ -304,12 +312,7 @@ public class RepositoryUtil {
 			if (!FileKey.isGitRepository(repositoryDir, FS.DETECTED))
 				throw new IllegalArgumentException();
 
-			String dirString;
-			try {
-				dirString = repositoryDir.getCanonicalPath();
-			} catch (IOException e) {
-				dirString = repositoryDir.getAbsolutePath();
-			}
+			String dirString = getPath(repositoryDir);
 
 			List<String> dirStrings = getConfiguredRepositories();
 			if (dirStrings.contains(dirString)) {
@@ -331,12 +334,7 @@ public class RepositoryUtil {
 	public boolean removeDir(File file) {
 		synchronized (prefs) {
 
-			String dir;
-			try {
-				dir = file.getCanonicalPath();
-			} catch (IOException e1) {
-				dir = file.getAbsolutePath();
-			}
+			String dir = getPath(file);
 
 			Set<String> dirStrings = new HashSet<String>();
 			dirStrings.addAll(getConfiguredRepositories());
@@ -365,4 +363,26 @@ public class RepositoryUtil {
 		}
 	}
 
+	/**
+	 * Does the collection of repository returned by
+	 * {@link #getConfiguredRepositories()} contain the given repository?
+	 *
+	 * @param repository
+	 * @return true if contains repository, false otherwise
+	 */
+	public boolean contains(final Repository repository) {
+		return contains(getPath(repository.getDirectory()));
+	}
+
+	/**
+	 * Does the collection of repository returned by
+	 * {@link #getConfiguredRepositories()} contain the given repository
+	 * directory?
+	 *
+	 * @param repositoryDir
+	 * @return true if contains repository directory, false otherwise
+	 */
+	public boolean contains(final String repositoryDir) {
+		return getConfiguredRepositories().contains(repositoryDir);
+	}
 }
