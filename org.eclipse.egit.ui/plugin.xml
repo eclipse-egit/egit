@@ -1934,7 +1934,8 @@
                name="##Repo-0">
          </separator>
          <menu
-                   label="%SwitchToMenu.label">
+                   label="%SwitchToMenu.label"
+                   icon="icons/obj16/branches_obj.gif">
                <dynamic
                      class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
                      id="org.eclipse.egit.ui.switchToMenu">
@@ -2722,7 +2723,8 @@
                   name="org.eclipse.egit.ui.branchSeparator">
             </separator>
             <menu
-                  label="%SwitchToMenu.label">
+                  label="%SwitchToMenu.label"
+                  icon="icons/obj16/branches_obj.gif">
                <dynamic
                      class="org.eclipse.egit.ui.internal.actions.SwitchToMenu"
                      id="org.eclipse.egit.ui.switchToMenu">
