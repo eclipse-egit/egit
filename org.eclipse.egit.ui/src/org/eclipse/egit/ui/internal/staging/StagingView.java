@@ -458,7 +458,7 @@ public class StagingView extends ViewPart {
 		else
 			preferenceStore.setDefault(UIPreferences.STAGING_VIEW_SYNC_SELECTION, true);
 
-		InstanceScope.INSTANCE.getNode(
+		new InstanceScope().getNode(
 				org.eclipse.egit.core.Activator.getPluginId())
 				.addPreferenceChangeListener(prefListener);
 
@@ -1322,7 +1322,7 @@ public class StagingView extends ViewPart {
 				ISelectionService.class);
 		srv.removePostSelectionListener(selectionChangedListener);
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
-		InstanceScope.INSTANCE.getNode(
+		new InstanceScope().getNode(
 				org.eclipse.egit.core.Activator.getPluginId())
 				.removePreferenceChangeListener(prefListener);
 
