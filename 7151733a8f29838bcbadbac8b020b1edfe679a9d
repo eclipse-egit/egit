@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCH///tE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-04T22:04:49Z",
+      "side": 1,
+      "message": "how about the following ? I find this easier to read :\n\n while (selIterator.hasNext()) {\n     Object sel \u003d selIterator.next();\n     ...\n }",
+      "revId": "7151733a8f29838bcbadbac8b020b1edfe679a9d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
