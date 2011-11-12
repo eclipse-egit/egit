@@ -186,7 +186,7 @@ public class ProjectUtil {
 		else if (pm.isCanceled())
 			return false;
 
-		monitor.subTask(NLS.bind(CoreText.ProjectUtil_taskCheckingDirectory,
+		pm.subTask(NLS.bind(CoreText.ProjectUtil_taskCheckingDirectory,
 				directory.getPath()));
 
 		final File[] contents = directory.listFiles();
