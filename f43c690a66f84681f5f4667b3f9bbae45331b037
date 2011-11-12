@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCH///6M\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-11-03T21:07:44Z",
+      "side": 1,
+      "message": "Improve the spelling of checkout and maybe reprase a little\n\"Allow deletion of multiple branches in the checkout dialog\"",
+      "revId": "f43c690a66f84681f5f4667b3f9bbae45331b037",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///6I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-11-03T21:07:44Z",
+      "side": 1,
+      "message": "So if I select a tag and a branch I can rename?\n\nRename should be disabled unless we can rename all new/* to old/* or somethng like that. Anyway would be single selection in he dialog... I think\n\nAnd new should not be enabled at all for multiple selection.",
+      "revId": "f43c690a66f84681f5f4667b3f9bbae45331b037",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///6E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-11-03T21:07:44Z",
+      "side": 1,
+      "message": "Java has much nicer syntax for for.loops",
+      "revId": "f43c690a66f84681f5f4667b3f9bbae45331b037",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///6A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-11-03T21:07:44Z",
+      "side": 1,
+      "message": "else return false?",
+      "revId": "f43c690a66f84681f5f4667b3f9bbae45331b037",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
