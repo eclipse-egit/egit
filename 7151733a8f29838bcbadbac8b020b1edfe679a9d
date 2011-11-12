@@ -16,6 +16,24 @@
       "revId": "7151733a8f29838bcbadbac8b020b1edfe679a9d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///qs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-06T10:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCH///tE\u003d",
+      "revId": "7151733a8f29838bcbadbac8b020b1edfe679a9d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
