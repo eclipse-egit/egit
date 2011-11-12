@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCH///zg\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-04T11:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCH///6M\u003d",
+      "revId": "f43c690a66f84681f5f4667b3f9bbae45331b037",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCH///6I\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutDialog.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2011-11-03T21:07:44Z",
       "side": 1,
       "message": "So if I select a tag and a branch I can rename?\n\nRename should be disabled unless we can rename all new/* to old/* or somethng like that. Anyway would be single selection in he dialog... I think\n\nAnd new should not be enabled at all for multiple selection.",
+      "revId": "f43c690a66f84681f5f4667b3f9bbae45331b037",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///zo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-04T11:33:05Z",
+      "side": 1,
+      "message": "Rename and new branch operations doesn\u0027t make sense for multiple selection",
+      "parentUuid": "AABOCH///6I\u003d",
       "revId": "f43c690a66f84681f5f4667b3f9bbae45331b037",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCH///zs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-04T11:33:05Z",
+      "side": 1,
+      "message": "Java\u0027s for-each (for with a colon) loop applies only fot Iterable, not Iterator. Therefore I used here this syntax",
+      "parentUuid": "AABOCH///6E\u003d",
+      "revId": "f43c690a66f84681f5f4667b3f9bbae45331b037",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCH///6A\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutDialog.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2011-11-03T21:07:44Z",
       "side": 1,
       "message": "else return false?",
+      "revId": "f43c690a66f84681f5f4667b3f9bbae45331b037",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///zk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-04T11:33:05Z",
+      "side": 1,
+      "message": "good catch",
+      "parentUuid": "AABOCH///6A\u003d",
       "revId": "f43c690a66f84681f5f4667b3f9bbae45331b037",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
