@@ -233,23 +233,23 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 
 			public Image getImage(Object element) {
 				String comment = ((ReflogEntry) element).getComment();
-				if (comment.startsWith("commit:")) //$NON-NLS-1$
+				if (comment.startsWith("commit:") || comment.startsWith("commit (initial):")) //$NON-NLS-1$ //$NON-NLS-2$
 					return (Image) resourceManager.get(UIIcons.COMMIT);
 				if (comment.startsWith("commit (amend):")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.AMEND_COMMIT);
-				if (comment.startsWith("pull ")) //$NON-NLS-1$
+				if (comment.startsWith("pull")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.PULL);
-				if (comment.startsWith("clone:")) //$NON-NLS-1$
+				if (comment.startsWith("clone")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.CLONEGIT);
-				if (comment.startsWith("rebase ")) //$NON-NLS-1$
+				if (comment.startsWith("rebase")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.REBASE);
-				if (comment.startsWith("merge ")) //$NON-NLS-1$
+				if (comment.startsWith("merge")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.MERGE);
-				if (comment.startsWith("fetch:")) //$NON-NLS-1$
+				if (comment.startsWith("fetch")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.FETCH);
-				if (comment.startsWith("branch:")) //$NON-NLS-1$
+				if (comment.startsWith("branch")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.CREATE_BRANCH);
-				if (comment.startsWith("checkout:")) //$NON-NLS-1$
+				if (comment.startsWith("checkout")) //$NON-NLS-1$
 					return (Image) resourceManager.get(UIIcons.CHECKOUT);
 				return null;
 			}
