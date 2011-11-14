@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAL33///qo\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2011-03-30T15:00:39Z",
+      "side": 1,
+      "message": "spelling: rename",
+      "revId": "f2e1c7d1ac216c081cf81719fc9b2c3604925fbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///qk\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2011-03-30T15:00:39Z",
+      "side": 1,
+      "message": "spelling: actually",
+      "revId": "f2e1c7d1ac216c081cf81719fc9b2c3604925fbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL3n///c4\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
         "patchSetId": 2
@@ -89,6 +123,23 @@
     },
     {
       "key": {
+        "uuid": "AAAL33///qM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2011-03-30T15:00:39Z",
+      "side": 1,
+      "message": "source already is a project, thus calling getProject() is not necessary",
+      "revId": "f2e1c7d1ac216c081cf81719fc9b2c3604925fbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL3n///ck\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
         "patchSetId": 2
@@ -100,6 +151,23 @@
       "writtenOn": "2011-03-20T01:46:08Z",
       "side": 1,
       "message": "style nit: this line looks a bit wide ...",
+      "revId": "f2e1c7d1ac216c081cf81719fc9b2c3604925fbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///qQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 100
+      },
+      "writtenOn": "2011-03-30T15:00:39Z",
+      "side": 1,
+      "message": "formatting: move bracket to new line",
       "revId": "f2e1c7d1ac216c081cf81719fc9b2c3604925fbd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
