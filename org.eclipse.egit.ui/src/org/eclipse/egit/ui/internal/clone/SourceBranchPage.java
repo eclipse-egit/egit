@@ -24,6 +24,8 @@ import java.util.List;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
@@ -62,6 +64,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PatternFilter;
+import org.eclipse.ui.progress.WorkbenchJob;
 
 class SourceBranchPage extends WizardPage {
 
@@ -124,7 +127,26 @@ class SourceBranchPage extends WizardPage {
 		label.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
 		FilteredCheckboxTree fTree = new FilteredCheckboxTree(panel, null,
-				SWT.NONE, new PatternFilter());
+				SWT.NONE, new PatternFilter()) {
+			/*
+			 * Overridden to check page when refreshing is done.
+			 */
+			protected WorkbenchJob doCreateRefreshJob() {
+				WorkbenchJob refreshJob = super.doCreateRefreshJob();
+				refreshJob.addJobChangeListener(new JobChangeAdapter() {
+					public void done(IJobChangeEvent event) {
+						if (event.getResult().isOK()) {
+							getDisplay().asyncExec(new Runnable() {
+								public void run() {
+									checkPage();
+								}
+							});
+						}
+					}
+				});
+				return refreshJob;
+			}
+		};
 		refsViewer = fTree.getCheckboxTreeViewer();
 
 		ITreeContentProvider provider = new ITreeContentProvider() {
