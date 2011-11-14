@@ -33,6 +33,23 @@
       "revId": "9a9aa5f31106e732b8eae6142e1068cab4b7a14e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+oY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-08-22T15:31:01Z",
+      "side": 1,
+      "message": "This leads to a java.lang.StringIndexOutOfBoundsException if I rename a project which has a repository in the project folder and which is located outside the eclipse workspace. In this case the location does not change. \n\nThis error had been there before. I think it is the same as was reported in comment 2 of bug 334112. Mabe we could fix it in another change, but you could mention it in the commit message as a further limitation.",
+      "revId": "9a9aa5f31106e732b8eae6142e1068cab4b7a14e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
