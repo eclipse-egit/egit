@@ -36,19 +36,23 @@ import org.eclipse.osgi.util.NLS;
  * "Resets" a repository
  */
 public class ResetCommand extends
-		RepositoriesViewCommandHandler<RepositoryTreeNode<Ref>> implements
+		RepositoriesViewCommandHandler<RepositoryTreeNode<?>> implements
 		IHandler {
 
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 
-		final RepositoryTreeNode<Ref> node = getSelectedNodes(event).get(0);
+		final RepositoryTreeNode<?> node = getSelectedNodes(event).get(0);
 		final String currentBranch;
 		try {
 			currentBranch = node.getRepository().getFullBranch();
 		} catch (IOException e1) {
 			throw new ExecutionException(e1.getMessage(), e1);
 		}
-		final String targetBranch = node.getObject().getName();
+		final String targetBranch;
+		if (node.getObject() instanceof Ref)
+			targetBranch = ((Ref) node.getObject()).getName();
+		else
+			targetBranch = currentBranch;
 		final String repoName = Activator.getDefault().getRepositoryUtil()
 				.getRepositoryName(node.getRepository());
 
@@ -83,13 +87,13 @@ public class ResetCommand extends
 										InterruptedException {
 
 									String jobname = NLS.bind(
-											UIText.ResetAction_reset, node
-													.getObject().getName());
+											UIText.ResetAction_reset,
+											targetBranch);
 									final ResetOperation operation = new ResetOperation(
-											node.getRepository(), node
-													.getObject().getName(),
+											node.getRepository(), targetBranch,
 											resetType);
-									JobUtil.scheduleUserJob(operation, jobname, JobFamilies.RESET);
+									JobUtil.scheduleUserJob(operation, jobname,
+											JobFamilies.RESET);
 								}
 							});
 				} catch (InvocationTargetException ite) {
