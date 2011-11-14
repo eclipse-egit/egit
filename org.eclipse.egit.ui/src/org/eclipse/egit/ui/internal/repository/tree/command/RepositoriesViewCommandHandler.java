@@ -19,7 +19,7 @@ import java.util.List;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.expressions.EvaluationContext;
+import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
@@ -136,11 +136,11 @@ abstract class RepositoriesViewCommandHandler<T> extends AbstractHandler {
 	 * @param evaluationContext
 	 */
 	protected void enableWorkingDirCommand(Object evaluationContext) {
-		if (!(evaluationContext instanceof EvaluationContext)) {
+		if (!(evaluationContext instanceof IEvaluationContext)) {
 			setBaseEnabled(false);
 			return;
 		}
-		EvaluationContext context = (EvaluationContext) evaluationContext;
+		IEvaluationContext context = (IEvaluationContext) evaluationContext;
 		Object selection = context
 				.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
 		if (!(selection instanceof TreeSelection)) {
