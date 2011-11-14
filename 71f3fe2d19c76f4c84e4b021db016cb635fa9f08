@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBH///+0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-08-30T21:40:28Z",
+      "side": 1,
+      "message": "No. The resources framework does not allow this, so we do not need to allow.",
+      "parentUuid": "AABOAn//+PM\u003d",
+      "revId": "71f3fe2d19c76f4c84e4b021db016cb635fa9f08",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBH///+g\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
         "patchSetId": 11
@@ -82,6 +100,24 @@
       "side": 1,
       "message": "I thought of something like \n\nif (sourceLocation.isPrefixOf(newLocation) \u0026\u0026 !sourceLocation.equals(newLocation)) \n\nto catch the case where a project is renamed but not moved to another location. I think this works in eclipse and we should react on that by renewing the repository mapping. We could even skip the step of moveIndexContent in this case because the relative paths do not change.\n\nHowever, I propose to handle the case of renaming a project in another change. If you agree, you could just remove or change the test testMoveProjectContainingGitRepo and then we can submit this change. Afterwards I can make a proposal about what I have in mind about the rename case.",
       "parentUuid": "AABOBH///+0\u003d",
+      "revId": "71f3fe2d19c76f4c84e4b021db016cb635fa9f08",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///cA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-09-08T00:59:35Z",
+      "side": 1,
+      "message": "right...",
+      "parentUuid": "AABOBH///+g\u003d",
       "revId": "71f3fe2d19c76f4c84e4b021db016cb635fa9f08",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
