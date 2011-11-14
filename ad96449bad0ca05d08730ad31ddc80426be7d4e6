@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCH///FQ\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-11-13T19:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOB3///wA\u003d",
+      "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOB3///wM\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
         "patchSetId": 19
