@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL3n///YA\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-03-21T22:10:34Z",
+      "side": 1,
+      "message": "This just documents the behavior. I actually think its wrong, hence my comment. Otoh that is probably best taken care of as a follow-up patch.",
+      "parentUuid": "AAAL3n///cs\u003d",
+      "revId": "f2e1c7d1ac216c081cf81719fc9b2c3604925fbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL33///h0\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
         "patchSetId": 2
