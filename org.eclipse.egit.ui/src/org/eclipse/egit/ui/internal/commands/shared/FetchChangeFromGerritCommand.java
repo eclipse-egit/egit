@@ -12,9 +12,12 @@ package org.eclipse.egit.ui.internal.commands.shared;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.fetch.FetchGerritChangeWizard;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -23,6 +26,17 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class FetchChangeFromGerritCommand extends AbstractSharedCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repository = getRepository(event);
+		if (repository == null) {
+			Shell shell = getShell(event);
+			MessageDialog
+					.openInformation(
+							shell,
+							UIText.FetchChangeFromGerritCommand_noRepositorySelectedTitle,
+							UIText.FetchChangeFromGerritCommand_noRepositorySelectedMessage);
+
+			return null;
+		}
+
 		FetchGerritChangeWizard wiz = new FetchGerritChangeWizard(repository);
 		WizardDialog dlg = new WizardDialog(HandlerUtil
 				.getActiveShellChecked(event), wiz);
