@@ -159,7 +159,8 @@ public class UIPreferences {
 	public static final String BLAME_IGNORE_WHITESPACE = "Blame_IgnoreWhitespace"; //$NON-NLS-1$
 	/** */
 	public static final String CLONE_WIZARD_STORE_SECURESTORE = "CloneWizard_StoreInSecureStore"; //$NON-NLS-1$
-
+	/** */
+	public static final String CLONE_WIZARD_IMPORT_PROJECTS = "CloneWizard_ImportProjects"; //$NON-NLS-1$
 
 	/**
 	 * Converts a persisted String separated with commas to an integer array

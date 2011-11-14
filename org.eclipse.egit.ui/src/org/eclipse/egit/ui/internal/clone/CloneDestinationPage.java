@@ -21,6 +21,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -43,7 +44,9 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.WorkingSetGroup;
 
 /**
  * Wizard page that allows the user entering the location of a repository to be
@@ -65,6 +68,10 @@ class CloneDestinationPage extends WizardPage {
 
 	private Text remoteText;
 
+	private Button importProjectsButton;
+
+	private WorkingSetGroup workingSetGroup;
+
 	private String helpContext = null;
 
 	CloneDestinationPage() {
@@ -80,6 +87,8 @@ class CloneDestinationPage extends WizardPage {
 
 		createDestinationGroup(panel);
 		createConfigGroup(panel);
+		createProjectGroup(panel);
+
 		Dialog.applyDialogFont(panel);
 		setControl(panel);
 		checkPage();
@@ -188,6 +197,34 @@ class CloneDestinationPage extends WizardPage {
 		});
 	}
 
+	private void createProjectGroup(final Composite parent) {
+		final Group group = createGroup(parent,
+				"Projects"); //$NON-NLS-1$
+
+		GridLayoutFactory.swtDefaults().applyTo(group);
+		importProjectsButton = new Button(group, SWT.CHECK);
+		importProjectsButton.setText(UIText.CloneDestinationPage_importButton);
+		importProjectsButton.setSelection(Activator.getDefault()
+				.getPreferenceStore()
+				.getBoolean(UIPreferences.CLONE_WIZARD_IMPORT_PROJECTS));
+		importProjectsButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				Activator
+						.getDefault()
+						.getPreferenceStore()
+						.setValue(UIPreferences.CLONE_WIZARD_IMPORT_PROJECTS,
+								importProjectsButton.getSelection());
+			}
+		});
+
+		// TODO: replace hardcoded ids once bug 245106 is fixed
+		String[] workingSetTypes = new String[] {
+				"org.eclipse.ui.resourceWorkingSetPage", //$NON-NLS-1$
+				"org.eclipse.jdt.ui.JavaWorkingSetPage" //$NON-NLS-1$
+		};
+		workingSetGroup = new WorkingSetGroup(group, null, workingSetTypes);
+	}
+
 	private static Group createGroup(final Composite parent, final String text) {
 		final Group g = new Group(parent, SWT.NONE);
 		final GridLayout layout = new GridLayout();
@@ -207,6 +244,20 @@ class CloneDestinationPage extends WizardPage {
 
 	private static GridData createFieldGridData() {
 		return new GridData(SWT.FILL, SWT.DEFAULT, true, false);
+	}
+
+	/**
+	 * @return true to import projects, false otherwise
+	 */
+	public boolean isImportProjects() {
+		return importProjectsButton.getSelection();
+	}
+
+	/**
+	 * @return selected working sets
+	 */
+	public IWorkingSet[] getWorkingSets() {
+		return workingSetGroup.getSelectedWorkingSets();
 	}
 
 	/**
