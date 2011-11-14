@@ -12,7 +12,9 @@ package org.eclipse.egit.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
+import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -21,16 +23,21 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.team.IMoveDeleteHook;
 import org.eclipse.core.resources.team.IResourceTree;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheBuilder;
 import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEntry;
+import org.eclipse.team.core.RepositoryProvider;
+import org.eclipse.team.core.TeamException;
 
 class GitMoveDeleteHook implements IMoveDeleteHook {
 	private static final boolean I_AM_DONE = true;
@@ -181,43 +188,163 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		return true;
 	}
 
+	private void mapProject(final IProject source,
+			final IProjectDescription description,
+			final IProgressMonitor monitor, IPath gitDir) throws CoreException,
+			TeamException {
+		IProject destination = source.getWorkspace().getRoot()
+				.getProject(description.getName());
+		GitProjectData projectData = new GitProjectData(destination);
+		RepositoryMapping repositoryMapping = new RepositoryMapping(
+				destination, gitDir.toFile());
+		projectData.setRepositoryMappings(Arrays
+				.asList(repositoryMapping));
+		projectData.store();
+		GitProjectData.add(destination, projectData);
+		RepositoryProvider
+				.map(destination, GitProvider.class.getName());
+		destination.refreshLocal(IResource.DEPTH_INFINITE,
+				new SubProgressMonitor(monitor, 50));
+	}
+
+	private boolean unmapProject(final IResourceTree tree, final IProject source) {
+		// The Repository mapping does not support moving
+		// projects, so just disconnect/reconnect for now
+		try {
+			RepositoryProvider.unmap(source);
+		} catch (TeamException e) {
+			tree.failed(new Status(IStatus.ERROR, Activator
+					.getPluginId(), 0,
+					CoreText.MoveDeleteHook_operationError, e));
+					return true; // Do not let Eclipse complete the operation
+		}
+		return false;
+	}
+
 	public boolean moveProject(final IResourceTree tree, final IProject source,
 			final IProjectDescription description, final int updateFlags,
 			final IProgressMonitor monitor) {
 		final RepositoryMapping srcm = RepositoryMapping.getMapping(source);
 		if (srcm == null)
 			return false;
-		File newLocation = new File(description.getLocationURI().getPath());
-		// check if new location is below the same repository
-		if(newLocation.getAbsolutePath().contains(srcm.getRepository().getWorkTree().getAbsolutePath())) {
-			final String sPath = srcm.getRepoRelativePath(source);
-			final String dPath = new Path(newLocation.getAbsolutePath().substring(
-					srcm.getRepository().getWorkTree().getAbsolutePath().length() + 1) + "/").toPortableString(); //$NON-NLS-1$
-			try {
-				MoveResult result = moveIndexContent(dPath, srcm, sPath);
-				switch (result) {
-				case SUCCESS:
-					break;
-				case FAILED:
-					tree.failed(new Status(IStatus.ERROR, Activator
-							.getPluginId(), 0,
-							CoreText.MoveDeleteHook_operationError, null));
-					break;
-				case UNTRACKED:
-					// we are not responsible for moving untracked files
-					return FINISH_FOR_ME;
-				}
-
-				tree.standardMoveProject(source, description, updateFlags,
-						monitor);
-			} catch (IOException e) {
-				tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(), 0,
-						CoreText.MoveDeleteHook_operationError, e));
-			}
+		IPath newLocation = null;
+		if (description.getLocationURI() != null)
+			newLocation = URIUtil.toPath(description.getLocationURI());
+		else
+			newLocation = source.getWorkspace().getRoot().getLocation()
+					.append(description.getName());
+		IPath sourceLocation = source.getLocation();
+		// Prevent a serious error.
+		if (sourceLocation.isPrefixOf(newLocation)
+				&& sourceLocation.segmentCount() != newLocation.segmentCount()
+				&& !"true".equals(System.getProperty("egit.assume_307140_fixed"))) { //$NON-NLS-1$//$NON-NLS-2$
+			// Graceful handling of bug, i.e. refuse to destroy your code
+			tree.failed(new Status(
+					IStatus.ERROR,
+					Activator.getPluginId(),
+					0,
+					"Cannot move project. See https://bugs.eclipse.org/bugs/show_bug.cgi?id=307140 (not resolved in 3.7)", //$NON-NLS-1$
+					null));
 			return true;
 		}
+		File newLocationFile = newLocation.toFile();
+		// check if new location is below the same repository
+		Path workTree = new Path(srcm.getRepository().getWorkTree().getAbsolutePath());
+		int matchingFirstSegments = workTree.matchingFirstSegments(newLocation);
+		if (matchingFirstSegments == workTree.segmentCount()) {
+			return moveProjectHelperMoveOnlyProject(tree, source, description, updateFlags,
+					monitor, srcm, newLocationFile);
+		} else {
+			int dstAboveSrcRepo = newLocation.matchingFirstSegments(RepositoryMapping
+					.getMapping(source).getGitDirAbsolutePath());
+			int srcAboveSrcRepo = sourceLocation.matchingFirstSegments(RepositoryMapping.getMapping(source).getGitDirAbsolutePath());
+			if (dstAboveSrcRepo > 0 && srcAboveSrcRepo > 0) {
+				return moveProjectHelperMoveRepo(tree, source, description, updateFlags, monitor,
+					srcm, newLocation, sourceLocation);
+			} else {
+				return FINISH_FOR_ME;
+			}
+		}
+	}
 
-		return FINISH_FOR_ME;
+	private boolean moveProjectHelperMoveOnlyProject(final IResourceTree tree,
+			final IProject source, final IProjectDescription description,
+			final int updateFlags, final IProgressMonitor monitor,
+			final RepositoryMapping srcm, File newLocationFile) {
+		final String sPath = srcm.getRepoRelativePath(source);
+		final String absoluteWorkTreePath = srcm.getRepository().getWorkTree().getAbsolutePath();
+		final String newLocationAbsolutePath = newLocationFile.getAbsolutePath();
+		final String dPath;
+		if (newLocationAbsolutePath.equals(absoluteWorkTreePath))
+			dPath = ""; //$NON-NLS-1$
+		else
+			dPath = new Path(
+					newLocationAbsolutePath.substring(absoluteWorkTreePath
+							.length() + 1) + "/").toPortableString(); //$NON-NLS-1$
+		try {
+			IPath gitDir = srcm.getGitDirAbsolutePath();
+			if (unmapProject(tree, source))
+				return true;
+
+			monitor.worked(100);
+
+			MoveResult result = moveIndexContent(dPath, srcm, sPath);
+			switch (result) {
+			case SUCCESS:
+				break;
+			case FAILED:
+				tree.failed(new Status(IStatus.ERROR, Activator
+						.getPluginId(), 0,
+						CoreText.MoveDeleteHook_operationError, null));
+				break;
+			case UNTRACKED:
+				// we are not responsible for moving untracked files
+				return FINISH_FOR_ME;
+			}
+
+			tree.standardMoveProject(source, description, updateFlags,
+					monitor);
+
+			// Reconnect
+			mapProject(
+					source.getWorkspace().getRoot()
+							.getProject(description.getName()),
+					description, monitor, gitDir);
+		} catch (IOException e) {
+			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
+					0, CoreText.MoveDeleteHook_operationError, e));
+		} catch (CoreException e) {
+			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
+					0, CoreText.MoveDeleteHook_operationError, e));
+		}
+		return true;
+	}
+
+	private boolean moveProjectHelperMoveRepo(final IResourceTree tree, final IProject source,
+			final IProjectDescription description, final int updateFlags,
+			final IProgressMonitor monitor, final RepositoryMapping srcm,
+			IPath newLocation, IPath sourceLocation) {
+		// Moving repo, we need to unplug the previous location and
+		// Re-plug it again with the new location.
+		IPath gitDir = srcm.getGitDirAbsolutePath();
+		if (unmapProject(tree, source))
+			return true; // Error information in tree
+
+		monitor.worked(100);
+
+		IPath relativeGitDir = gitDir.makeRelativeTo(sourceLocation);
+		tree.standardMoveProject(source, description, updateFlags,
+				monitor);
+
+		IPath newGitDir = newLocation.append(relativeGitDir);
+		// Reconnect
+		try {
+			mapProject(source, description, monitor, newGitDir);
+		} catch (CoreException e) {
+			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(),
+					0, CoreText.MoveDeleteHook_operationError, e));
+		}
+		return true; // We're done with the move
 	}
 
 	enum MoveResult{SUCCESS, FAILED, UNTRACKED}
@@ -233,7 +360,8 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 
 		final DirCacheEditor sEdit = sCache.editor();
 		sEdit.add(new DirCacheEditor.DeleteTree(sPath));
-		final int sPathLen = sPath.length() + 1;
+		final int sPathLen = sPath.length() == 0 ? sPath.length() : sPath
+				.length() + 1;
 		for (final DirCacheEntry se : sEnt) {
 			final String p = se.getPathString().substring(sPathLen);
 			sEdit.add(new DirCacheEditor.PathEdit(dPath + p) {
