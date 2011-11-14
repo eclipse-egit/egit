@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL4H//+9M\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-04-20T17:12:57Z",
+      "side": 1,
+      "message": "Just checking the quality of the code review :)\nDone.",
+      "parentUuid": "AAAL33///LM\u003d",
+      "revId": "7c624085a09e13d270d2ef8efe961b624fb81106",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL33///LE\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL4H//+9U\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-04-20T17:12:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL33///LE\u003d",
+      "revId": "7c624085a09e13d270d2ef8efe961b624fb81106",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL33///LI\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2011-04-05T22:55:06Z",
       "side": 1,
       "message": "typo: s|YEY\u003c/em\u003c|YET \u003c/em\u003e|",
+      "revId": "7c624085a09e13d270d2ef8efe961b624fb81106",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H//+9Q\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-04-20T17:12:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL33///LI\u003d",
       "revId": "7c624085a09e13d270d2ef8efe961b624fb81106",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
