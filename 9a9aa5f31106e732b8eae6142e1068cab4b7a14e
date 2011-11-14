@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+ok\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-08-22T15:31:01Z",
+      "side": 1,
+      "message": "No. That\u0027s not a simple rename. If you rename a project in the default location (the eclipse workspace), the folder where the project is located is also renamed. This case is still not handled by the GitMoveDeleteHook. \n\nIt should work if you rename a project that is not located in the default location.",
+      "revId": "9a9aa5f31106e732b8eae6142e1068cab4b7a14e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+oo\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-08-22T15:31:01Z",
+      "side": 1,
+      "message": "This test fails on my machine (Version: 3.7.0 Build id: I20110613-1736). Why should it ever work? Bug 307410 does only prevent the user from entering a subfolder of the current folder into the \"move\" dialog.\n\nWhat do you think about just removing this test?",
+      "revId": "9a9aa5f31106e732b8eae6142e1068cab4b7a14e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
