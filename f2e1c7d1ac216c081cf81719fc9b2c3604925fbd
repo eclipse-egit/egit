@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3n///c4\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-20T01:46:08Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "f2e1c7d1ac216c081cf81719fc9b2c3604925fbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///cs\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-20T01:46:08Z",
+      "side": 1,
+      "message": "is that correct behavior ?",
+      "revId": "f2e1c7d1ac216c081cf81719fc9b2c3604925fbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL33///h0\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-30T23:18:29Z",
+      "side": 1,
+      "message": "yeah, this makes sense",
+      "parentUuid": "AAAL3n///YA\u003d",
+      "revId": "f2e1c7d1ac216c081cf81719fc9b2c3604925fbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///co\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-20T01:46:08Z",
+      "side": 1,
+      "message": "do we need these pure formatting changes ?",
+      "revId": "f2e1c7d1ac216c081cf81719fc9b2c3604925fbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///ck\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-20T01:46:08Z",
+      "side": 1,
+      "message": "style nit: this line looks a bit wide ...",
+      "revId": "f2e1c7d1ac216c081cf81719fc9b2c3604925fbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///cg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-20T01:46:08Z",
+      "side": 1,
+      "message": "pure formatting change",
+      "revId": "f2e1c7d1ac216c081cf81719fc9b2c3604925fbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
