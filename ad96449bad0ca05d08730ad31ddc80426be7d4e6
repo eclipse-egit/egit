@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCH///oc\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-11-07T13:16:28Z",
+      "side": 1,
+      "message": "Why do you think that it is not reliable?",
+      "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///wA\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-11-07T13:16:28Z",
+      "side": 1,
+      "message": "In fact the project is not moved. Don\u0027t you think that the test method name is misleading?",
+      "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///wM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-11-07T13:16:28Z",
+      "side": 1,
+      "message": "The two variables above are only needed in line 257. Please move them just before that line.",
+      "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///oY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-11-07T13:16:28Z",
+      "side": 1,
+      "message": "The method moveProject gets really long. Could you extract this and other blocks as methods?",
+      "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///og\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-11-07T13:16:28Z",
+      "side": 1,
+      "message": "You test for this scenario: \n\nnewLocation: C:/Eclipse/workspaces/junit-workspace/P2\ngitDir: C:/Eclipse/workspaces/junit-workspace/Project-1/.git\n\nThe condition would also apply if we moved a project from within a repository to a location below the folder containing the repo: \n\nnewLocation: C:/myfolder/P2\ngitDir: C:/myfolder/myrepo/.git\nsourceLocation: C:/myfolder/myrepo/Project-1\n\nBut moving projects outside of the repo never had worked before, therefore we may ignore this one here.",
+      "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///ok\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-11-07T13:16:28Z",
+      "side": 1,
+      "message": "Why do we need this here?\n\nProject.move already acquires scheduling rules for the move operation.",
+      "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
