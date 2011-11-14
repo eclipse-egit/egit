@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn///BI\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-08-17T14:40:29Z",
+      "side": 1,
+      "message": "We should remove this test because the fix of Bug 307140 will still not allow for moving a project to a subfolder.",
+      "revId": "93b8d4fe4a75a69b0ad09855e539661a9fcd8d94",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///BY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-08-17T14:40:29Z",
+      "side": 1,
+      "message": "We should remove this check because moving to a subfolder does still not work in eclipse 3.7.0. \n\nThe fix to Bug 307140 does not allow for moving to a subfolder but it only prevents to enter such a location into the \"MoveProject\" dialog, in order to avoid the deletion of the project.",
+      "revId": "93b8d4fe4a75a69b0ad09855e539661a9fcd8d94",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
