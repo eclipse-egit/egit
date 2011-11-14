@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH////8\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-08-30T15:46:23Z",
+      "side": 1,
+      "message": "typo? s/we/will",
+      "revId": "71f3fe2d19c76f4c84e4b021db016cb635fa9f08",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+Pc\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-08-30T15:46:23Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be P2 now? The test succeeds, but only because the GitMoveDeleteHook does nothing, and eclipse moves the RepositoryProvider property, and the GitProvider still contains the old RepositoryMapping.\n\nThe GitMoveDeleteHook does nothing wrt RepositoryMapping, the condition \n\nnewLocationFile.getAbsolutePath().contains(\n\t\tsrcm.getRepository().getWorkTree().getAbsolutePath()) \n\nin line 217 is not fulfilled.\n\nIf the project were outside the eclipse workspace, the GitMoveDeleteHook would try to do something, but it would fail with java.lang.StringIndexOutOfBoundsException in line 231.",
+      "revId": "71f3fe2d19c76f4c84e4b021db016cb635fa9f08",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+PY\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/TestProject.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-08-30T15:46:23Z",
+      "side": 1,
+      "message": "If path is simple, i.e. just the project name, then ppath.lastSegment().equals(path) is true and as a consequence locatioURI is set to null (the default location). The parameter insidews is not taken into account in this case. Please fix that.\n\nI think (!ppath.lastSegment().equals(path) || !insidews) would work.",
+      "revId": "71f3fe2d19c76f4c84e4b021db016cb635fa9f08",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+PM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-08-30T15:46:23Z",
+      "side": 1,
+      "message": "Please check additionally if the sourceLocation is equal to the newLocation. This is the case for a simple rename. We should allow that.",
+      "revId": "71f3fe2d19c76f4c84e4b021db016cb635fa9f08",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///+g\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-08-31T07:21:26Z",
+      "side": 1,
+      "message": "I thought of something like \n\nif (sourceLocation.isPrefixOf(newLocation) \u0026\u0026 !sourceLocation.equals(newLocation)) \n\nto catch the case where a project is renamed but not moved to another location. I think this works in eclipse and we should react on that by renewing the repository mapping. We could even skip the step of moveIndexContent in this case because the relative paths do not change.\n\nHowever, I propose to handle the case of renaming a project in another change. If you agree, you could just remove or change the test testMoveProjectContainingGitRepo and then we can submit this change. Afterwards I can make a proposal about what I have in mind about the rename case.",
+      "parentUuid": "AABOBH///+0\u003d",
+      "revId": "71f3fe2d19c76f4c84e4b021db016cb635fa9f08",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
