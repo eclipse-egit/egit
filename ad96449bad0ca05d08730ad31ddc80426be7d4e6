@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCH///es\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-11-13T19:36:31Z",
+      "side": 1,
+      "message": "I was thinking of rebuilds and windows. Moving a lot of files in Windows is scary, but then this doesn\u0027t change that and hopefully the resource rules protects what can be protected.",
+      "parentUuid": "AABOCH///oc\u003d",
+      "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOB3///wA\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
         "patchSetId": 19
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCH///Fg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-11-13T19:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOB3///wM\u003d",
+      "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCH///oY\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
         "patchSetId": 19
@@ -64,6 +100,24 @@
       "writtenOn": "2011-11-07T13:16:28Z",
       "side": 1,
       "message": "The method moveProject gets really long. Could you extract this and other blocks as methods?",
+      "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///FM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-11-13T19:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCH///oY\u003d",
       "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCH///FY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-11-13T19:36:31Z",
+      "side": 1,
+      "message": "Done. Right, moving in and out of repositories should be handled too. Any takers?",
+      "parentUuid": "AABOCH///og\u003d",
+      "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCH///ok\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
         "patchSetId": 19
@@ -98,6 +170,24 @@
       "writtenOn": "2011-11-07T13:16:28Z",
       "side": 1,
       "message": "Why do we need this here?\n\nProject.move already acquires scheduling rules for the move operation.",
+      "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///Fc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-11-13T19:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCH///ok\u003d",
       "revId": "ad96449bad0ca05d08730ad31ddc80426be7d4e6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
