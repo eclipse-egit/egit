@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn//+SU\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-08-29T20:52:28Z",
+      "side": 1,
+      "message": "(Simple as in SOAP).\nOk, not simple. Done",
+      "parentUuid": "AABOAn//+ok\u003d",
+      "revId": "9a9aa5f31106e732b8eae6142e1068cab4b7a14e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+oo\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn//+dU\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/GitMoveDeleteHookTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-08-29T20:52:28Z",
+      "side": 1,
+      "message": "It has happened more than once that I\u0027ve mistakenly created the repo in the project, so I want an extra directory level. It\u0027s non-trivial, but that\u0027s what tools are for.\n\nThe tests fails because I assumed it was fixed with 3.7.0.\nI might add an @ignore instead the version logic.",
+      "parentUuid": "AABOAn//+oo\u003d",
+      "revId": "9a9aa5f31106e732b8eae6142e1068cab4b7a14e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+oY\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2011-08-22T15:31:01Z",
       "side": 1,
       "message": "This leads to a java.lang.StringIndexOutOfBoundsException if I rename a project which has a repository in the project folder and which is located outside the eclipse workspace. In this case the location does not change. \n\nThis error had been there before. I think it is the same as was reported in comment 2 of bug 334112. Mabe we could fix it in another change, but you could mention it in the commit message as a further limitation.",
+      "revId": "9a9aa5f31106e732b8eae6142e1068cab4b7a14e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+SQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitMoveDeleteHook.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-08-29T20:52:28Z",
+      "side": 1,
+      "message": "Adding as a code comment. Done",
+      "parentUuid": "AABOAn//+oY\u003d",
       "revId": "9a9aa5f31106e732b8eae6142e1068cab4b7a14e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
