@@ -47,6 +47,8 @@ class GitDocument extends Document implements RefsChangedListener {
 
 	private ListenerHandle myRefsChangedHandle;
 
+	private boolean disposed;
+
 	static Map<GitDocument, Repository> doc2repo = new WeakHashMap<GitDocument, Repository>();
 
 	static GitDocument create(final IResource resource) throws IOException {
@@ -98,7 +100,7 @@ class GitDocument extends Document implements RefsChangedListener {
 					GitTraceLocation.QUICKDIFF.getLocation(), resource);
 
 		// Do not populate if already disposed
-		if (myRefsChangedHandle == null)
+		if (disposed)
 			return;
 
 		TreeWalk tw = null;
@@ -223,6 +225,7 @@ class GitDocument extends Document implements RefsChangedListener {
 			myRefsChangedHandle.remove();
 			myRefsChangedHandle = null;
 		}
+		disposed = true;
 	}
 
 	public void onRefsChanged(final RefsChangedEvent e) {
