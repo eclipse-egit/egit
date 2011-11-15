@@ -358,6 +358,11 @@
          <adapter type="org.eclipse.core.resources.mapping.ResourceMapping"/>
          <adapter type="org.eclipse.core.resources.IResource"/>
       </factory>
+      <factory
+            adaptableType="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.ui.model.IWorkbenchAdapter"/>
+      </factory>
    </extension>
 
    <extension point="org.eclipse.ui.preferencePages">

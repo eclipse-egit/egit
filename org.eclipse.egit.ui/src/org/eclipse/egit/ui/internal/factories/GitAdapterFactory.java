@@ -2,6 +2,7 @@
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2007, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2011, IBM Corporation
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,14 +17,18 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.egit.ui.internal.history.GitHistoryPageSource;
+import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.synchronize.mapping.GitModelWorkbenchAdapter;
 import org.eclipse.egit.ui.internal.synchronize.mapping.GitObjectMapping;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelTree;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.team.ui.history.IHistoryPageSource;
 import org.eclipse.team.ui.mapping.ISynchronizationCompareAdapter;
 import org.eclipse.ui.model.IWorkbenchAdapter;
+import org.eclipse.ui.model.WorkbenchAdapter;
 
 /**
  * This class is an intelligent "cast" operation for getting
@@ -45,6 +50,9 @@ public class GitAdapterFactory implements IAdapterFactory {
 		}
 
 		if (IWorkbenchAdapter.class == adapterType) {
+			if (adaptableObject instanceof RepositoryNode)
+				return getRepsitoryNodeWorkbenchAdapter((RepositoryNode)adaptableObject);
+
 			if (gitModelWorkbenchAdapter == null)
 				gitModelWorkbenchAdapter = new GitModelWorkbenchAdapter();
 			return gitModelWorkbenchAdapter;
@@ -81,7 +89,16 @@ public class GitAdapterFactory implements IAdapterFactory {
 	public Class[] getAdapterList() {
 		return new Class[] { IHistoryPageSource.class,
 				ISynchronizationCompareAdapter.class, ResourceMapping.class,
-				IResource.class };
+				IResource.class, IWorkbenchAdapter.class };
 	}
 
+	private static IWorkbenchAdapter getRepsitoryNodeWorkbenchAdapter(final RepositoryNode node) {
+		return new WorkbenchAdapter() {
+			@Override
+			public String getLabel(Object object) {
+				ILabelProvider labelProvider= new RepositoriesViewLabelProvider();
+				return labelProvider.getText(node);
+			}
+		};
+	}
 }
