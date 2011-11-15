@@ -5,6 +5,9 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Tomasz Zarna <Tomasz.Zarna@pl.ibm.com>
  *******************************************************************************/
 package org.eclipse.egit.core.test;
 
@@ -13,6 +16,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +29,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProjectSetCapability;
+import org.eclipse.egit.core.internal.GitURI;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.api.Git;
@@ -32,8 +37,10 @@ import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.team.core.ProjectSetSerializationContext;
+import org.eclipse.team.core.ScmUrlImportDescription;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -189,6 +196,76 @@ public class GitProjectSetCapabilityTest {
 		RepositoryMapping xbMapping = RepositoryMapping.getMapping(xbImported);
 		assertNotNull(xbMapping);
 		assertEquals("stable", xbMapping.getRepository().getBranch());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidScmUri() throws Exception {
+		URI.create("scm:git:git://git.eclipse.org/gitroot/platform/eclipse.platform.team.git;path=\"bundles/org.eclipse.team.core\"");
+		// expected IAE, " are not allowed in a URI reference
+	}
+
+	// ScmUrlImportDescription can handle " in Strings expected to be URI refs
+	@Test
+	public void testScmUri1() throws Exception {
+		ScmUrlImportDescription description = new ScmUrlImportDescription(
+				"scm:git:git://git.eclipse.org/gitroot/platform/eclipse.platform.team.git;path=\"bundles/org.eclipse.team.core\"",
+				null);
+		URI uri = description.getUri();
+		GitURI gitUri = GitURI.fromUri(uri);
+		assertEquals("bundles/org.eclipse.team.core", gitUri.getPath()
+				.toString());
+		URIish uriish = new URIish(
+				"git://git.eclipse.org/gitroot/platform/eclipse.platform.team.git");
+		assertEquals(uriish, gitUri.getRepository());
+		assertEquals(Constants.MASTER, gitUri.getTag());
+
+		String refString = new GitProjectSetCapability().asReference(uri,
+				"org.eclipse.team.core");
+		assertEquals(
+				"1.0,git://git.eclipse.org/gitroot/platform/eclipse.platform.team.git,master,bundles/org.eclipse.team.core",
+				refString);
+	}
+
+	@Test
+	public void testScmUri2() throws Exception {
+		ScmUrlImportDescription description = new ScmUrlImportDescription(
+				"scm:git:git://git.eclipse.org/gitroot/platform/eclipse.platform.ui.git;path=\"bundles/org.eclipse.jface\";tag=v20111107-2125",
+				null);
+		URI uri = description.getUri();
+		GitURI gitUri = GitURI.fromUri(uri);
+		assertEquals("bundles/org.eclipse.jface", gitUri.getPath().toString());
+		URIish uriish = new URIish(
+				"git://git.eclipse.org/gitroot/platform/eclipse.platform.ui.git");
+		assertEquals(uriish, gitUri.getRepository());
+		assertEquals("v20111107-2125", gitUri.getTag());
+
+		String refString = new GitProjectSetCapability().asReference(uri,
+				"org.eclipse.jface");
+		assertEquals(
+				"1.0,git://git.eclipse.org/gitroot/platform/eclipse.platform.ui.git,v20111107-2125,bundles/org.eclipse.jface",
+				refString);
+	}
+
+	@Test
+	public void testScmUri3() throws Exception {
+		ScmUrlImportDescription description = new ScmUrlImportDescription(
+				"scm:git:git://git.eclipse.org/gitroot/equinox/rt.equinox.bundles.git;path=\"bundles/org.eclipse.equinox.http.jetty6\";project=\"org.eclipse.equinox.http.jetty\";tag=v20111010-1614",
+				null);
+		URI uri = description.getUri();
+		GitURI gitUri = GitURI.fromUri(uri);
+		assertEquals("bundles/org.eclipse.equinox.http.jetty6", gitUri
+				.getPath().toString());
+		URIish uriish = new URIish(
+				"git://git.eclipse.org/gitroot/equinox/rt.equinox.bundles.git");
+		assertEquals(uriish, gitUri.getRepository());
+		assertEquals("v20111010-1614", gitUri.getTag());
+		assertEquals("org.eclipse.equinox.http.jetty", gitUri.getProjectName());
+
+		String refString = new GitProjectSetCapability().asReference(uri,
+				"org.eclipse.equinox.http.jetty");
+		assertEquals(
+				"1.0,git://git.eclipse.org/gitroot/equinox/rt.equinox.bundles.git,v20111010-1614,bundles/org.eclipse.equinox.http.jetty6",
+				refString);
 	}
 
 	private IProject createProject(String name) throws CoreException {
