@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///+U\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewRemoteHandlingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-15T17:17:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///+k\u003d",
+      "revId": "147ba916b4d5506c67cec9ab6588e1e7c06e8f30",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///+g\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewTest.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2011-11-15T17:13:02Z",
       "side": 1,
       "message": "same here",
+      "revId": "147ba916b4d5506c67cec9ab6588e1e7c06e8f30",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///+Q\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-15T17:17:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///+g\u003d",
       "revId": "147ba916b4d5506c67cec9ab6588e1e7c06e8f30",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
