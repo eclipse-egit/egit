@@ -100,8 +100,9 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 
 		// test the properties view on remote
 		remotesItem.getNode("test").select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
-				.getPluginLocalizedValue("OpenPropertiesCommand"));
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue("ShowIn"),
+				myUtil.getPluginLocalizedValue("RepoViewOpenProperties.label"));
 		waitInUI();
 		assertEquals("org.eclipse.ui.views.PropertySheet", bot.activeView()
 				.getReference().getId());
