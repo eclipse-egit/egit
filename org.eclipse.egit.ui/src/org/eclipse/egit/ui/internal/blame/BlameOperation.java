@@ -14,17 +14,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.op.IEGitOperation;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.jface.text.revisions.RevisionInformation;
 import org.eclipse.jgit.api.BlameCommand;
 import org.eclipse.jgit.blame.BlameResult;
 import org.eclipse.jgit.diff.RawTextComparator;
+import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
@@ -40,7 +41,11 @@ public class BlameOperation implements IEGitOperation {
 
 	private Repository repository;
 
-	private IFile file;
+	private IStorage storage;
+
+	private String path;
+
+	private AnyObjectId startCommit;
 
 	private Shell shell;
 
@@ -50,14 +55,18 @@ public class BlameOperation implements IEGitOperation {
 	 * Create annotate operation
 	 *
 	 * @param repository
-	 * @param file
+	 * @param storage
+	 * @param path
+	 * @param startCommit
 	 * @param shell
 	 * @param page
 	 */
-	public BlameOperation(Repository repository, IFile file, Shell shell,
-			IWorkbenchPage page) {
+	public BlameOperation(Repository repository, IStorage storage, String path,
+			AnyObjectId startCommit, Shell shell, IWorkbenchPage page) {
 		this.repository = repository;
-		this.file = file;
+		this.storage = storage;
+		this.path = path;
+		this.startCommit = startCommit;
 		this.shell = shell;
 		this.page = page;
 	}
@@ -67,14 +76,11 @@ public class BlameOperation implements IEGitOperation {
 		info.setHoverControlCreator(new BlameInformationControlCreator(false));
 		info.setInformationPresenterControlCreator(new BlameInformationControlCreator(
 				true));
-		RepositoryMapping mapping = RepositoryMapping.getMapping(file
-				.getProject());
-		if (mapping == null)
-			return;
 
 		final BlameCommand command = new BlameCommand(repository)
-				.setFollowFileRenames(true).setFilePath(
-						mapping.getRepoRelativePath(file));
+				.setFollowFileRenames(true).setFilePath(path);
+		if (startCommit != null)
+			command.setStartCommit(startCommit);
 		if (Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.BLAME_IGNORE_WHITESPACE))
 			command.setTextComparator(RawTextComparator.WS_IGNORE_ALL);
@@ -122,8 +128,13 @@ public class BlameOperation implements IEGitOperation {
 		shell.getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				try {
-					AbstractDecoratedTextEditor editor = RevisionAnnotationController
-							.openEditor(page, file);
+					AbstractDecoratedTextEditor editor;
+					if (storage instanceof IFile)
+						editor = RevisionAnnotationController.openEditor(page,
+								(IFile) storage);
+					else
+						editor = RevisionAnnotationController.openEditor(page,
+								storage, storage);
 					if (editor != null)
 						editor.showRevisionInformation(info,
 								"org.eclipse.egit.ui.internal.decorators.GitQuickDiffProvider"); //$NON-NLS-1$
