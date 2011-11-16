@@ -69,6 +69,13 @@ public class StagingEntry implements IAdaptable {
 	}
 
 	/**
+	 * @return the repository for this node
+	 */
+	public Repository getRepisotry() {
+		return repository;
+	}
+
+	/**
 	 * @return the state for this node
 	 */
 	public State getState() {
