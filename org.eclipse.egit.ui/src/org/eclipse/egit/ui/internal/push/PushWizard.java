@@ -57,10 +57,6 @@ import org.eclipse.ui.PlatformUI;
 public class PushWizard extends Wizard {
 	private static final String HELP_CONTEXT = "org.eclipse.egit.ui.PushWizard"; //$NON-NLS-1$
 
-	/** The default RefSpec */
-	public static final RefSpec DEFAULT_FETCH_REF_SPEC = new RefSpec(
-			"refs/heads/*:refs/heads/*"); //$NON-NLS-1$
-
 	private static String getURIsString(final Collection<URIish> uris) {
 		final StringBuilder sb = new StringBuilder();
 		boolean first = true;
@@ -216,22 +212,11 @@ public class PushWizard extends Wizard {
 				// obtain the push ref specs from the configuration
 				// use our own list here, as the config returns a non-modifiable
 				// list
-				final Collection<RefSpec> fetchSpecs = new ArrayList<RefSpec>();
-				fetchSpecs.addAll(config.getPushRefSpecs());
-				if (fetchSpecs.isEmpty())
-					// add the default if there are no specs in the
-					// configuration
-					fetchSpecs.add(DEFAULT_FETCH_REF_SPEC);
+				final Collection<RefSpec> pushSpecs = new ArrayList<RefSpec>();
+				pushSpecs.addAll(config.getPushRefSpecs());
 				final Collection<RemoteRefUpdate> updates = Transport
-						.findRemoteRefUpdatesFor(localDb, fetchSpecs,
-								fetchSpecs);
-				if (updates.isEmpty()) {
-					ErrorDialog.openError(getShell(),
-							UIText.PushWizard_missingRefsTitle, null,
-							new Status(IStatus.ERROR, Activator.getPluginId(),
-									UIText.PushWizard_missingRefsMessage));
-					return null;
-				}
+						.findRemoteRefUpdatesFor(localDb, pushSpecs,
+								pushSpecs);
 				spec = new PushOperationSpecification();
 				for (final URIish uri : repoPage.getSelection().getPushURIs())
 					spec.addURIRefUpdates(uri, ConfirmationPage
