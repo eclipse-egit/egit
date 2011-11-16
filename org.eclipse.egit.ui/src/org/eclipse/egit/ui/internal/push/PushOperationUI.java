@@ -41,10 +41,6 @@ import org.eclipse.osgi.util.NLS;
  * UI Wrapper for {@link PushOperation}
  */
 public class PushOperationUI {
-	/** The default RefSpec */
-	public static final RefSpec DEFAULT_PUSH_REF_SPEC = new RefSpec(
-			"refs/heads/*:refs/heads/*"); //$NON-NLS-1$
-
 	private final Repository repository;
 
 	private final int timeout;
@@ -176,9 +172,6 @@ public class PushOperationUI {
 
 			List<RefSpec> pushRefSpecs = new ArrayList<RefSpec>();
 			pushRefSpecs.addAll(config.getPushRefSpecs());
-			if (pushRefSpecs.isEmpty())
-				// default push to all branches
-				pushRefSpecs.add(DEFAULT_PUSH_REF_SPEC);
 
 			for (URIish uri : urisToPush) {
 				try {
