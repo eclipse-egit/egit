@@ -16,15 +16,23 @@ package org.eclipse.egit.ui.internal.clone;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.core.op.CloneOperation;
+import org.eclipse.egit.core.op.CloneOperation.PostCloneTask;
 import org.eclipse.egit.core.op.ConfigureFetchAfterCloneTask;
 import org.eclipse.egit.core.op.ConfigurePushAfterCloneTask;
 import org.eclipse.egit.core.op.ListRemoteOperation;
@@ -51,6 +59,7 @@ import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.ui.IWorkingSet;
 
 /**
  * Import Git Repository Wizard. A front end to a git clone operation.
@@ -136,6 +145,17 @@ public class GitCloneWizard extends Wizard {
 	 */
 	public void setCallerRunsCloneOperation(boolean newValue) {
 		callerRunsCloneOperation = newValue;
+	}
+
+	/**
+	 * Set whether to show project import options on the destination page
+	 *
+	 * @param show
+	 * @return this wizard
+	 */
+	public GitCloneWizard setShowProjectImport(boolean show) {
+		cloneDestination.setShowProjectImport(show);
+		return this;
 	}
 
 	@Override
@@ -234,6 +254,16 @@ public class GitCloneWizard extends Wizard {
 			doGerritConfiguration(remoteName, op, hasReviewNotes);
 		}
 
+		if (cloneDestination.isImportProjects()) {
+			final IWorkingSet[] sets = cloneDestination.getWorkingSets();
+			op.addPostCloneTask(new PostCloneTask() {
+				public void execute(Repository repository,
+						IProgressMonitor monitor) throws CoreException {
+					importProjects(repository, sets);
+				}
+			});
+		}
+
 		alreadyClonedInto = workdir.getPath();
 
 		cloneSource.saveUriInPrefs();
@@ -242,6 +272,37 @@ public class GitCloneWizard extends Wizard {
 		else
 			cloneOperation = op;
 		return true;
+	}
+
+	private void importProjects(final Repository repository,
+			final IWorkingSet[] sets) {
+		String repoName = Activator.getDefault().getRepositoryUtil()
+				.getRepositoryName(repository);
+		Job importJob = new Job(MessageFormat.format(
+				UIText.GitCloneWizard_jobImportProjects, repoName)) {
+
+			protected IStatus run(IProgressMonitor monitor) {
+				List<File> files = new ArrayList<File>();
+				ProjectUtil.findProjectFiles(files, repository.getWorkTree(),
+						null, monitor);
+				if (files.isEmpty())
+					return Status.OK_STATUS;
+
+				Set<ProjectRecord> records = new LinkedHashSet<ProjectRecord>();
+				for (File file : files)
+					records.add(new ProjectRecord(file));
+				try {
+					ProjectUtils.createProjects(records, repository, sets,
+							monitor);
+				} catch (InvocationTargetException e) {
+					Activator.logError(e.getLocalizedMessage(), e);
+				} catch (InterruptedException e) {
+					Activator.logError(e.getLocalizedMessage(), e);
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		importJob.schedule();
 	}
 
 	private boolean hasReviewNotes(final URIish uri, int timeout,

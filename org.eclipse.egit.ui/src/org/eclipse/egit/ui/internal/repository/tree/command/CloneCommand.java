@@ -40,8 +40,9 @@ public class CloneCommand extends
 	}
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		WizardDialog dlg = new WizardDialog(getShell(event),
-				new GitCloneWizard(presetURI));
+		GitCloneWizard wizard = new GitCloneWizard(presetURI);
+		wizard.setShowProjectImport(true);
+		WizardDialog dlg = new WizardDialog(getShell(event), wizard);
 		dlg.setHelpAvailable(true);
 		dlg.open();
 		return null;
