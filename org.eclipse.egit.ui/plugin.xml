@@ -1555,6 +1555,10 @@
             </contentExtension>
          </includes>
       </viewerContentBinding>
+      <dragAssistant
+            viewerId="org.eclipse.egit.ui.RepositoriesView"
+            class="org.eclipse.egit.ui.internal.repository.RepositoryDragAssistant">
+      </dragAssistant>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
