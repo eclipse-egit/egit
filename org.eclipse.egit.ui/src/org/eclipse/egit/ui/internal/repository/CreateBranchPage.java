@@ -296,14 +296,22 @@ class CreateBranchPage extends WizardPage {
 		Dialog.applyDialogFont(main);
 		setControl(main);
 		nameText.setFocus();
-		if (myBaseRef != null
-				&& (myBaseRef.startsWith(Constants.R_REMOTES) || myBaseRef
-						.startsWith(Constants.R_TAGS))) {
-			// additional convenience: the last part of the name is suggested
-			// as name for the local branch
-			nameText.setText(myBaseRef
-					.substring(myBaseRef.lastIndexOf('/') + 1));
-			nameText.selectAll();
+		if (myBaseRef != null) {
+			String shortened;
+			if (myBaseRef.startsWith(Constants.R_REMOTES)) {
+				shortened = myBaseRef.substring(Constants.R_REMOTES.length());
+				int postSlash = shortened.indexOf('/') + 1;
+				if (postSlash > 0 && postSlash < shortened.length())
+					shortened = shortened.substring(postSlash);
+			} else if (myBaseRef.startsWith(Constants.R_TAGS))
+				shortened = myBaseRef.substring(Constants.R_TAGS.length());
+			else
+				shortened = null;
+			if (shortened != null) {
+				nameText.setText(shortened);
+				nameText.selectAll();
+			} else
+				setPageComplete(false);
 		} else
 			// in any case, we will have to enter the name
 			setPageComplete(false);
