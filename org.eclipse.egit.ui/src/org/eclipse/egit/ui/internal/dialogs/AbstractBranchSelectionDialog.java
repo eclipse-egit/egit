@@ -5,6 +5,7 @@
  * Copyright (C) 2010, Chris Aniszczyk <caniszczyk@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2011, Daniel Megert <daniel_megert@ch.ibm.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,10 +34,10 @@ import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.viewers.IOpenListener;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -231,9 +232,8 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		});
 
 		// double-click support
-		branchTree.addOpenListener(new IOpenListener() {
-
-			public void open(OpenEvent event) {
+		branchTree.addDoubleClickListener(new IDoubleClickListener() {
+			public void doubleClick(DoubleClickEvent event) {
 				RepositoryTreeNode node = (RepositoryTreeNode) ((IStructuredSelection) branchTree
 						.getSelection()).getFirstElement();
 				if (node == null)
@@ -246,7 +246,6 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 							!branchTree.getExpandedState(node));
 				else if (getButton(Window.OK).isEnabled())
 					buttonPressed(OK);
-
 			}
 		});
 
