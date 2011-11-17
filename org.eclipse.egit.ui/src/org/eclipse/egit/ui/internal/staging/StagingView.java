@@ -216,13 +216,13 @@ public class StagingView extends ViewPart {
 		public void onRefsChanged(RefsChangedEvent event) {
 			// refs change when files are committed, we naturally want to remove
 			// committed files from the view
-			reload(event.getRepository());
+			asyncReload(event.getRepository());
 		}
 	};
 
 	private final IndexChangedListener myIndexChangedListener = new IndexChangedListener() {
 		public void onIndexChanged(IndexChangedEvent event) {
-			reload(event.getRepository());
+			asyncReload(event.getRepository());
 		}
 	};
 
@@ -239,11 +239,7 @@ public class StagingView extends ViewPart {
 			if (Activator.getDefault().getRepositoryUtil().contains(repo))
 				return;
 
-			asyncExec(new Runnable() {
-				public void run() {
-					reload(null);
-				}
-			});
+			asyncReload(null);
 		}
 
 	};
@@ -1033,12 +1029,30 @@ public class StagingView extends ViewPart {
 		}
 	}
 
+	private boolean isValidRepo(final Repository repository) {
+		return repository != null
+				&& !repository.isBare()
+				&& repository.getWorkTree().exists()
+				&& org.eclipse.egit.core.Activator.getDefault()
+						.getRepositoryUtil().contains(repository);
+	}
+
+	private void asyncReload(final Repository repository) {
+		asyncExec(new Runnable() {
+
+			public void run() {
+				reload(repository);
+			}
+		});
+	}
+
 	private void reload(final Repository repository) {
+		if (form.isDisposed())
+			return;
 		if (repository == null) {
-			if (currentRepository == null)
-				return;
 			saveCommitMessageComponentState();
 			currentRepository = null;
+			removeListeners();
 			StagingViewUpdate update = new StagingViewUpdate(null, null, null);
 			unstagedTableViewer.setInput(update);
 			stagedTableViewer.setInput(update);
@@ -1048,8 +1062,7 @@ public class StagingView extends ViewPart {
 			return;
 		}
 
-		// Ignore bare repositories that are selected
-		if (repository.isBare())
+		if (!isValidRepo(repository))
 			return;
 
 		final boolean repositoryChanged = currentRepository != repository;
