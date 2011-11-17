@@ -17,8 +17,8 @@ import java.util.List;
 
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
@@ -221,46 +221,28 @@ class CommitMessageViewer extends TextViewer implements
 	}
 
 	void addDoneListenerToFormatJob() {
-		formatJob.addJobChangeListener(new IJobChangeListener() {
-
-			public void sleeping(IJobChangeEvent event) {
-				// empty
-			}
-
-			public void scheduled(IJobChangeEvent event) {
-				// empty
-			}
-
-			public void running(IJobChangeEvent event) {
-				// empty
-			}
+		formatJob.addJobChangeListener(new JobChangeAdapter() {
 
 			public void done(IJobChangeEvent event) {
-				if (event.getResult().isOK()) {
-					if (getTextWidget().isDisposed())
-						return;
-					final FormatJob job = (FormatJob) event.getJob();
-					getTextWidget().getDisplay().asyncExec(new Runnable() {
-						public void run() {
-							if (getTextWidget().isDisposed())
-								return;
-							setDocument(new Document(job.getFormatResult().getCommitInfo()));
-							getTextWidget().setStyleRanges(job.getFormatResult().getStyleRange());
-						}
-					});
-				}
-			}
-
-			public void awake(IJobChangeEvent event) {
-				// empty
-			}
-
-			public void aboutToRun(IJobChangeEvent event) {
-				// empty
+				if (!event.getResult().isOK())
+					return;
+				final StyledText text = getTextWidget();
+				if (text == null || text.isDisposed())
+					return;
+				final FormatJob job = (FormatJob) event.getJob();
+				text.getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						if (text.isDisposed())
+							return;
+						setDocument(new Document(job.getFormatResult()
+								.getCommitInfo()));
+						text.setStyleRanges(job.getFormatResult()
+								.getStyleRange());
+					}
+				});
 			}
 		});
 	}
-
 
 	@Override
 	protected void handleDispose() {
