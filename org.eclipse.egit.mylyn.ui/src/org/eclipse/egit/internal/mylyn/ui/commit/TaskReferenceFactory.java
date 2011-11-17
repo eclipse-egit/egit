@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.egit.internal.mylyn.ui.commit;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -88,7 +89,9 @@ public class TaskReferenceFactory implements IAdapterFactory {
 					message = revCommit.getFullMessage();
 					timestamp = (long)revCommit.getCommitTime() * 1000;
 				}
-			} catch (Exception e) {
+			} catch (IOException e) {
+				continue;
+			} catch (RuntimeException e) {
 				continue;
 			}
 
