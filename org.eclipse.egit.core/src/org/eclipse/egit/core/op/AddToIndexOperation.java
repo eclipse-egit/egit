@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -27,12 +26,56 @@ import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.RmCommand;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.lib.Repository;
 
 /**
+ * Operation to stage adds and deletes in the index
  */
 public class AddToIndexOperation implements IEGitOperation {
+
+	private static class IndexCommand {
+
+		private final RepositoryMapping mapping;
+
+		private AddCommand addCommand;
+
+		private RmCommand rmCommand;
+
+		public IndexCommand(final RepositoryMapping mapping) {
+			this.mapping = mapping;
+		}
+
+		private String getFilePattern(final IResource resource) {
+			String pattern = mapping.getRepoRelativePath(resource);
+			return "".equals(pattern) ? "." : pattern; //$NON-NLS-1$ //$NON-NLS-2$
+		}
+
+		public void add(final IResource resource) {
+			if (resource.exists()) {
+				if (addCommand == null) {
+					Repository repo = mapping.getRepository();
+					AdaptableFileTreeIterator it = new AdaptableFileTreeIterator(
+							repo, resource.getWorkspace().getRoot());
+					addCommand = new Git(repo).add().setWorkingTreeIterator(it);
+				}
+				addCommand.addFilepattern(getFilePattern(resource));
+			} else {
+				if (rmCommand == null)
+					rmCommand = new Git(mapping.getRepository()).rm();
+				rmCommand.addFilepattern(getFilePattern(resource));
+			}
+		}
+
+		public void call() throws NoFilepatternException {
+			if (addCommand != null)
+				addCommand.call();
+			if (rmCommand != null)
+				rmCommand.call();
+		}
+	}
+
 	private final Collection<? extends IResource> rsrcList;
 
 	/**
@@ -57,9 +100,6 @@ public class AddToIndexOperation implements IEGitOperation {
 		rsrcList = Arrays.asList(resources);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.egit.core.op.IEGitOperation#execute(org.eclipse.core.runtime.IProgressMonitor)
-	 */
 	public void execute(IProgressMonitor m) throws CoreException {
 		IProgressMonitor monitor;
 		if (m == null)
@@ -67,50 +107,38 @@ public class AddToIndexOperation implements IEGitOperation {
 		else
 			monitor = m;
 
-		Map<RepositoryMapping, AddCommand> addCommands = new HashMap<RepositoryMapping, AddCommand>();
+		Map<RepositoryMapping, IndexCommand> commands = new HashMap<RepositoryMapping, IndexCommand>();
 		try {
-			for (IResource obj : rsrcList) {
-				addToCommand(obj, addCommands);
+			for (IResource resource : rsrcList) {
+				addToCommand(resource, commands);
 				monitor.worked(200);
 			}
-
-			for (AddCommand command : addCommands.values()) {
+			for (IndexCommand command : commands.values())
 				command.call();
-			}
 		} catch (RuntimeException e) {
 			throw new CoreException(Activator.error(CoreText.AddToIndexOperation_failed, e));
 		} catch (NoFilepatternException e) {
 			throw new CoreException(Activator.error(CoreText.AddToIndexOperation_failed, e));
 		} finally {
-			for (final RepositoryMapping rm : addCommands.keySet())
+			for (final RepositoryMapping rm : commands.keySet())
 				rm.fireRepositoryChanged();
 			monitor.done();
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.egit.core.op.IEGitOperation#getSchedulingRule()
-	 */
 	public ISchedulingRule getSchedulingRule() {
 		return new MultiRule(rsrcList.toArray(new IResource[rsrcList.size()]));
 	}
 
-	private void addToCommand(IResource resource, Map<RepositoryMapping, AddCommand> addCommands) {
-		IProject project = resource.getProject();
-		RepositoryMapping map = RepositoryMapping.getMapping(project);
-		AddCommand command = addCommands.get(map);
+	private void addToCommand(IResource resource,
+			Map<RepositoryMapping, IndexCommand> commands) {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(resource
+				.getProject());
+		IndexCommand command = commands.get(mapping);
 		if (command == null) {
-			Repository repo = map.getRepository();
-			Git git = new Git(repo);
-			AdaptableFileTreeIterator it = new AdaptableFileTreeIterator(repo,
-					resource.getWorkspace().getRoot());
-			command = git.add().setWorkingTreeIterator(it);
-			addCommands.put(map, command);
+			command = new IndexCommand(mapping);
+			commands.put(mapping, command);
 		}
-		String filepattern = map.getRepoRelativePath(resource);
-		if ("".equals(filepattern)) //$NON-NLS-1$
-			filepattern = "."; //$NON-NLS-1$
-		command.addFilepattern(filepattern);
+		command.add(resource);
 	}
-
 }
