@@ -51,4 +51,16 @@ public class ResourceUtil {
 		}
 		return result;
 	}
+
+	/**
+	 * Determine if given resource is imported into workspace or not
+	 *
+	 * @param resource
+	 * @return {@code true} when given resource is not imported into workspace,
+	 *         {@code false} otherwise
+	 */
+	public static boolean isNonWorkspace(IResource resource) {
+		return resource.getLocation() == null;
+	}
+
 }
