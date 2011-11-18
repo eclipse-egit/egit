@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOB3///+o\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Helpers.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-28T09:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOB3////8\u003d",
+      "revId": "ce7bcb45702c3db993133b1fcef3c530494061e1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///Ig\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Helpers.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2011-10-28T08:47:21Z",
       "side": 1,
       "message": "better: Determine if given resource is imported into workspace or not",
+      "revId": "ce7bcb45702c3db993133b1fcef3c530494061e1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///+k\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Helpers.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-28T09:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBn///Ig\u003d",
       "revId": "ce7bcb45702c3db993133b1fcef3c530494061e1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOB3///+g\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Helpers.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-28T09:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBn///Ic\u003d",
+      "revId": "ce7bcb45702c3db993133b1fcef3c530494061e1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOB3////w\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AABOB3///+c\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-28T09:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOB3////w\u003d",
+      "revId": "ce7bcb45702c3db993133b1fcef3c530494061e1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOB3////s\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/action/GitOpenInCompareAction.java",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2011-10-28T08:47:21Z",
       "side": 1,
       "message": "again same typo",
+      "revId": "ce7bcb45702c3db993133b1fcef3c530494061e1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///+Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/action/GitOpenInCompareAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-28T09:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOB3////s\u003d",
       "revId": "ce7bcb45702c3db993133b1fcef3c530494061e1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
