@@ -19,7 +19,6 @@ import java.io.IOException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.ui.internal.synchronize.compare.ComparisonDataSource;
 import org.eclipse.egit.ui.internal.synchronize.compare.GitCompareInput;
-import org.eclipse.egit.ui.internal.synchronize.compare.GitLocalCompareInput;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
 
@@ -36,8 +35,10 @@ public class GitModelWorkingFile extends GitModelBlob {
 	@Override
 	protected GitCompareInput getCompareInput(ComparisonDataSource baseData,
 			ComparisonDataSource remoteData, ComparisonDataSource ancestorData) {
-		return new GitLocalCompareInput(getRepository(), ancestorData,
-				baseData, remoteData, gitPath);
+		// currently shouldn't be used. Compare editor for working tree files is
+		// opened directly from GitOpenInCompareAction
+		throw new UnsupportedOperationException(
+				"Compare editor for working tree files is should be opened directly from GitOpenInCompareAction"); //$NON-NLS-1$
 	}
 
 	@Override
