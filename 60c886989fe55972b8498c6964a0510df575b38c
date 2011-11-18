@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCH///Kc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-11T23:43:05Z",
+      "side": 1,
+      "message": "I updated the directory being searched.\n\nThe import is done in a subtask of the Clone progress monitor so it should show the project being imported in the Progress view.\n\nIt could be done as a separate job as well that runs after the clone completes, is that what you are suggesting?",
+      "parentUuid": "AABOCH///LA\u003d",
+      "revId": "60c886989fe55972b8498c6964a0510df575b38c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCH///K8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/CloneDestinationPage.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2011-11-11T23:19:27Z",
       "side": 1,
       "message": "text needs to be externalized",
+      "revId": "60c886989fe55972b8498c6964a0510df575b38c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///KY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/CloneDestinationPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-11T23:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCH///K8\u003d",
       "revId": "60c886989fe55972b8498c6964a0510df575b38c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
