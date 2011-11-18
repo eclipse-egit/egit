@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///sk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 8
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-11-18T08:06:49Z",
+      "side": 1,
+      "message": "Maybe \"Import all existing projects...\" would be a little bit clearer...",
+      "revId": "432880d6cf9f90cd959a173eac2fc0165ac2e452",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
