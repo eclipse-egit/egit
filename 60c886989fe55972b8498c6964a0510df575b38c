@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCH///LA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-11T23:19:27Z",
+      "side": 1,
+      "message": "this is one level too high, searching the parent of the working tree might also find projects not located in the working tree of the newly cloned repository, also this may run a long time if this parent directory is big\n\nalso the text displayed by the progress monitor is still \"Cloning ...\" instead of \"Searching projects to auto-import\"",
+      "revId": "60c886989fe55972b8498c6964a0510df575b38c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///K8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/CloneDestinationPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-11T23:19:27Z",
+      "side": 1,
+      "message": "text needs to be externalized",
+      "revId": "60c886989fe55972b8498c6964a0510df575b38c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
