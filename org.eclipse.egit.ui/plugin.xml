@@ -794,6 +794,11 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.DeleteTag"
+            name="%DeleteTagCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.Synchronize"
             name="%SynchronizeCommand.name">
       </command>
@@ -1097,6 +1102,24 @@
                      </or>
                   </iterate>
                </and>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.DeleteTag">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.DeleteTagCommand">
+         </class>
+         <activeWhen>
+            <and>
+              <count
+                     value="+">
+              </count>
+              <iterate>
+                 <instanceof
+                        value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
+                  </instanceof>
+               </iterate>
             </and>
          </activeWhen>
       </handler>
@@ -1597,6 +1620,24 @@
                            </test>
                         </not>
                      </and>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.team.DeleteTag"
+               label="%DeleteTagCommand.name"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
+                     </instanceof>
                   </iterate>
                </and>
             </visibleWhen>
@@ -3502,6 +3543,10 @@
       <image
             commandId="org.eclipse.egit.ui.team.RenameBranch"
             icon="icons/obj16/editconfig.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.DeleteTag"
+            icon="icons/obj16/delete_obj.gif">
       </image>
    </extension>
    <extension

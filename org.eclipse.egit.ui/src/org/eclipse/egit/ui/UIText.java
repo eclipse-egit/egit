@@ -2683,6 +2683,18 @@ public class UIText extends NLS {
 	public static String DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox;
 
 	/** */
+	public static String DeleteTagCommand_messageConfirmMultipleTag;
+
+	/** */
+	public static String DeleteTagCommand_messageConfirmSingleTag;
+
+	/** */
+	public static String DeleteTagCommand_taskName;
+
+	/** */
+	public static String DeleteTagCommand_titleConfirm;
+
+	/** */
 	public static String IgnoreActionHandler_addToGitignore;
 
 	/** */
