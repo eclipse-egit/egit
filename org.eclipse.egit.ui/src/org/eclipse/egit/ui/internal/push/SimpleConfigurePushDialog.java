@@ -573,9 +573,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 			uriViewer.setInput(null);
 
 		if (config.getPushRefSpecs().isEmpty())
-			specViewer.setInput(new String[] { NLS.bind(
-					UIText.SimpleConfigurePushDialog_PushAllBranchesMessage,
-					PushOperationUI.DEFAULT_PUSH_REF_SPEC) });
+			specViewer.setInput(new String[] { UIText.SimpleConfigurePushDialog_DefaultPushNoRefspec});
 		else
 			specViewer.setInput(config.getPushRefSpecs());
 
