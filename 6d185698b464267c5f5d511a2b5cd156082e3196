@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCH///NU\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-11T20:48:51Z",
+      "side": 1,
+      "message": "there is a confirmation dialog, hence \"Delete Tag...\"",
+      "revId": "6d185698b464267c5f5d511a2b5cd156082e3196",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
