@@ -19,12 +19,18 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.LocalResourceTypedElement;
 
-class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
+/**
+ * Specialized resource node for non-workspace files
+ */
+public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 
 	private final String path;
 
 	private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace().getRoot();
 
+	/**
+	 * @param path absolute path to non-workspace file
+	 */
 	public LocalNonWorkspaceTypedElement(String path) {
 		super(ROOT.getFile(new Path(path)));
 		this.path = path;
