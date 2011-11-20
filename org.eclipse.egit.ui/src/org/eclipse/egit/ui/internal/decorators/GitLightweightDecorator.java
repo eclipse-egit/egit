@@ -620,15 +620,13 @@ public class GitLightweightDecorator extends LabelProvider implements
 			}
 
 			String prefixString = prefix.toString().replaceAll("^\\s+", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			if (prefixString != null) {
+			if (prefixString.length() > 0)
 				decoration.addPrefix(TextProcessor.process(prefixString,
 						"()[].")); //$NON-NLS-1$
-			}
 			String suffixString = suffix.toString().replaceAll("\\s+$", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			if (suffixString != null) {
+			if (suffixString.length() > 0)
 				decoration.addSuffix(TextProcessor.process(suffixString,
 						"()[].")); //$NON-NLS-1$
-			}
 		}
 	}
 
