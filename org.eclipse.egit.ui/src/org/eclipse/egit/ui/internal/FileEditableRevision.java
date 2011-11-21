@@ -15,6 +15,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -40,7 +41,7 @@ public class FileEditableRevision extends EditableRevision {
 	 */
 	public FileEditableRevision(IFileRevision fileRevision, IFile file,
 			IRunnableContext runnableContext) {
-		super(fileRevision);
+		super(fileRevision, CompareCoreUtils.getResourceEncoding(file));
 		this.file = file;
 		Assert.isNotNull(runnableContext);
 		this.runnableContext = runnableContext;
