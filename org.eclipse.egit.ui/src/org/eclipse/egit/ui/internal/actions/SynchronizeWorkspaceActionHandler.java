@@ -8,7 +8,13 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
+import static org.eclipse.egit.core.synchronize.dto.GitSynchronizeData.BRANCH_NAME_PATTERN;
+import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_BRANCH_SECTION;
+import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_MERGE;
+import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_REMOTE;
 import static org.eclipse.jgit.lib.Constants.HEAD;
+import static org.eclipse.jgit.lib.Constants.R_HEADS;
+import static org.eclipse.jgit.lib.Constants.R_REMOTES;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,8 +32,11 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
 
 /**
  * An action that launch synchronization with selected repository
@@ -46,10 +55,14 @@ public class SynchronizeWorkspaceActionHandler extends RepositoryActionHandler {
 		if (containerMap.isEmpty())
 			return null;
 
+		boolean launchFetch = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH);
 		GitSynchronizeDataSet gsdSet = new GitSynchronizeDataSet();
 		for (Entry<Repository, Set<IContainer>> entry : containerMap.entrySet())
 			try {
-				GitSynchronizeData data = new GitSynchronizeData(entry.getKey(), HEAD, HEAD, true);
+				Repository repo = entry.getKey();
+				String dstRef = getDstRef(repo, launchFetch);
+				GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, dstRef, true);
 				Set<IContainer> containers = entry.getValue();
 				if (!containers.isEmpty())
 					data.setIncludedPaths(containers);
@@ -84,6 +97,39 @@ public class SynchronizeWorkspaceActionHandler extends RepositoryActionHandler {
 		}
 
 		return result;
+	}
+
+	private String getDstRef(Repository repo, boolean launchFetch) {
+		if (launchFetch) {
+			String realName = getRealBranchName(repo);
+			String name = BRANCH_NAME_PATTERN.matcher(realName).replaceAll(""); //$NON-NLS-1$
+			StoredConfig config = repo.getConfig();
+			String remote = config.getString(CONFIG_BRANCH_SECTION, name,
+					CONFIG_KEY_REMOTE);
+			String merge = config.getString(CONFIG_BRANCH_SECTION, name,
+					CONFIG_KEY_MERGE);
+			if (remote == null || merge == null)
+				return HEAD;
+
+			String mergeBranchName = merge.replace(R_HEADS, ""); //$NON-NLS-1$
+			return R_REMOTES + remote + "/" + mergeBranchName; //$NON-NLS-1$
+		} else
+			return HEAD;
+	}
+
+	private String getRealBranchName(Repository repo) {
+		Ref ref;
+
+		try {
+			ref = repo.getRef(HEAD);
+		} catch (IOException e) {
+			ref = null;
+		}
+
+		if (ref != null && ref.isSymbolic())
+			return ref.getTarget().getName();
+		else
+			return HEAD;
 	}
 
 }
