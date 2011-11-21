@@ -8,7 +8,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.merge;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -34,10 +33,10 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
-import org.eclipse.egit.ui.internal.EditableRevision;
+import org.eclipse.egit.ui.internal.FileEditableRevision;
 import org.eclipse.egit.ui.internal.LocalFileRevision;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput.EmptyTypedElement;
-import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
@@ -339,34 +338,11 @@ public class GitMergeEditorInput extends CompareEditorInput {
 					rev = GitFileRevision.inCommit(repository, headCommit,
 							gitPath, null);
 
-				EditableRevision leftEditable = new EditableRevision(rev) {
-					@Override
-					public void setContent(final byte[] newContent) {
-						try {
-							run(false, false, new IRunnableWithProgress() {
-								public void run(IProgressMonitor myMonitor)
-										throws InvocationTargetException,
-										InterruptedException {
-									try {
-										file.setContents(
-												new ByteArrayInputStream(
-														newContent), false,
-												true, myMonitor);
-									} catch (CoreException e) {
-										throw new InvocationTargetException(e);
-									}
-								}
-							});
-						} catch (InvocationTargetException e) {
-							Activator
-									.handleError(e.getTargetException()
-											.getMessage(), e
-											.getTargetException(), true);
-						} catch (InterruptedException e) {
-							// ignore here
-						}
-					}
-				};
+				IRunnableContext runnableContext = getContainer();
+				if (runnableContext == null)
+					runnableContext = PlatformUI.getWorkbench().getProgressService();
+
+				FileEditableRevision leftEditable = new FileEditableRevision(rev, file, runnableContext);
 				// make sure we don't need a round trip later
 				try {
 					leftEditable.cacheContents(monitor);
