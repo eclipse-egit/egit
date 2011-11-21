@@ -34,6 +34,23 @@
       "revId": "30ee1b9b50b1efad9104fe16d8e1f63d4b276e06",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///yM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-17T18:12:10Z",
+      "side": 1,
+      "message": "Looks like a trailing whitespace made it in here, could you remove it?",
+      "revId": "30ee1b9b50b1efad9104fe16d8e1f63d4b276e06",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
