@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///s0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2011-11-18T08:03:21Z",
+      "side": 1,
+      "message": "Often people only have the source and then it is good if they can just open the bug from it. I don\u0027t see any value in suppresing that information.\n\nDo you still want me to remove the bug number?",
+      "parentUuid": "AABOCX///ww\u003d",
+      "revId": "30ee1b9b50b1efad9104fe16d8e1f63d4b276e06",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///ag\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2011-11-17T18:12:10Z",
       "side": 1,
       "message": "Looks like a trailing whitespace made it in here, could you remove it?",
+      "revId": "30ee1b9b50b1efad9104fe16d8e1f63d4b276e06",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///sw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2011-11-18T08:03:21Z",
+      "side": 1,
+      "message": "Not really. If you look at the left side you will see that the trailing space was there before and is also in \u0027master\u0027.\n\nBut I can of course remove it for you if you want.",
+      "parentUuid": "AABOCX///yM\u003d",
       "revId": "30ee1b9b50b1efad9104fe16d8e1f63d4b276e06",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
