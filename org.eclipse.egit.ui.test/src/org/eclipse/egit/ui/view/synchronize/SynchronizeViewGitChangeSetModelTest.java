@@ -17,6 +17,7 @@ import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.allOf;
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.widgetOfType;
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withRegex;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
@@ -32,6 +33,11 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.Status;
+import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.SWTBot;
@@ -303,6 +309,61 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		SWTBotStyledText right = editor.bot().styledText("");
 		// to be complete sure assert that both sides are not the same
 		assertNotSame(left, right);
+	}
+
+	@Test
+	public void shouldStagePartialChangeInCompareEditor() throws Exception {
+		// given
+		resetRepositoryToCreateInitialTag();
+		changeFilesInProject();
+		launchSynchronization(HEAD, HEAD, true);
+		setGitChangeSetPresentationModel();
+		getCompareEditorForFileInGitChangeSet(FILE1, true).bot();
+
+		// when
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				CommonUtils.runCommand("org.eclipse.compare.copyLeftToRight",
+						null);
+			}
+		});
+		bot.activeEditor().save();
+
+
+		// then file FILE1 should be in index
+		FileRepository repo = lookupRepository(repositoryFile);
+		Status status = new Git(repo).status().call();
+		assertThat(Long.valueOf(status.getChanged().size()),
+				is(Long.valueOf(1L)));
+		assertThat(status.getChanged().iterator().next(), is(PROJ1 + "/"
+				+ FOLDER + "/" + FILE1));
+	}
+
+	@Test
+	public void shouldUnStagePartialChangeInCompareEditor() throws Exception {
+		// given
+		resetRepositoryToCreateInitialTag();
+		changeFilesInProject();
+		launchSynchronization(HEAD, HEAD, true);
+		setGitChangeSetPresentationModel();
+		getCompareEditorForFileInGitChangeSet(FILE1, true).bot();
+
+		// when
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				CommonUtils.runCommand("org.eclipse.compare.copyRightToLeft",
+						null);
+			}
+		});
+		bot.activeEditor().save();
+
+		// then file FILE1 should be unchanged in working tree
+		FileRepository repo = lookupRepository(repositoryFile);
+		Status status = new Git(repo).status().call();
+		assertThat(Long.valueOf(status.getModified().size()),
+				is(Long.valueOf(1)));
+		assertThat(status.getModified().iterator().next(), is(PROJ1 + "/"
+				+ FOLDER + "/" + FILE2));
 	}
 
 	// this test always fails with cause:
