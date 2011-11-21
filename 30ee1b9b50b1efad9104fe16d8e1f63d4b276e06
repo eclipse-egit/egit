@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///ww\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-17T21:49:13Z",
+      "side": 1,
+      "message": "don\u0027t repeat the bug reference here, it\u0027s already available in the commit message",
+      "revId": "30ee1b9b50b1efad9104fe16d8e1f63d4b276e06",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///ag\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-20T22:54:38Z",
+      "side": 1,
+      "message": "yes, please remove it. See my comment in change I893777e519d73f557e65cedad2c2f107a58270f5",
+      "parentUuid": "AABOCX///s0\u003d",
+      "revId": "30ee1b9b50b1efad9104fe16d8e1f63d4b276e06",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
