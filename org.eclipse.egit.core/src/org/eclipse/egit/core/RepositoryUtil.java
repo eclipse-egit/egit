@@ -265,28 +265,28 @@ public class RepositoryUtil {
 		return prefs;
 	}
 
+	private Set<String> getRepositories() {
+		String dirs;
+		synchronized (prefs) {
+			dirs = prefs.get(PREFS_DIRECTORIES, ""); //$NON-NLS-1$
+		}
+		if (dirs == null || dirs.length() == 0)
+			return Collections.emptySet();
+		Set<String> configuredStrings = new HashSet<String>();
+		StringTokenizer tok = new StringTokenizer(dirs, File.pathSeparator);
+		while (tok.hasMoreTokens())
+			configuredStrings.add(tok.nextToken());
+		return configuredStrings;
+	}
+
 	/**
 	 *
 	 * @return the list of configured Repository paths; will be sorted
 	 */
 	public List<String> getConfiguredRepositories() {
-		synchronized (prefs) {
-			Set<String> configuredStrings = new HashSet<String>();
-
-			String dirs = prefs.get(PREFS_DIRECTORIES, ""); //$NON-NLS-1$
-			if (dirs != null && dirs.length() > 0) {
-				StringTokenizer tok = new StringTokenizer(dirs,
-						File.pathSeparator);
-				while (tok.hasMoreTokens()) {
-					String dirName = tok.nextToken();
-					configuredStrings.add(dirName);
-				}
-			}
-			List<String> result = new ArrayList<String>();
-			result.addAll(configuredStrings);
-			Collections.sort(result);
-			return result;
-		}
+		final List<String> repos = new ArrayList<String>(getRepositories());
+		Collections.sort(repos);
+		return repos;
 	}
 
 	private String getPath(File repositoryDir) {
@@ -383,6 +383,6 @@ public class RepositoryUtil {
 	 * @return true if contains repository directory, false otherwise
 	 */
 	public boolean contains(final String repositoryDir) {
-		return getConfiguredRepositories().contains(repositoryDir);
+		return getRepositories().contains(repositoryDir);
 	}
 }
