@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///tY\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-18T07:46:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///uY\u003d",
+      "revId": "4df2bfda79dc3e61e1258c911f78c98eaa679f7d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///uk\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///tU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-18T07:46:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///ug\u003d",
+      "revId": "4df2bfda79dc3e61e1258c911f78c98eaa679f7d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///uc\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
         "patchSetId": 1
@@ -64,6 +100,24 @@
       "writtenOn": "2011-11-17T23:59:17Z",
       "side": 1,
       "message": "this looks inconsistent and also doesn\u0027t really simplify this, here you are extracting logging an exception, a few lines above (line 182) you inline a similar method call. I think you should rather stick with the inlined method call even if this is used twice.",
+      "revId": "4df2bfda79dc3e61e1258c911f78c98eaa679f7d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///tQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-18T07:46:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///uc\u003d",
       "revId": "4df2bfda79dc3e61e1258c911f78c98eaa679f7d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
