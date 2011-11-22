@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///uY\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-17T23:59:17Z",
+      "side": 1,
+      "message": "typo: s/as/is/",
+      "revId": "4df2bfda79dc3e61e1258c911f78c98eaa679f7d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///uk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-17T23:59:17Z",
+      "side": 1,
+      "message": "misleading method name, inside you are calling updateRevs() (not updateRefs())",
+      "revId": "4df2bfda79dc3e61e1258c911f78c98eaa679f7d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///ug\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-17T23:59:17Z",
+      "side": 1,
+      "message": "style nit: unnecessary blank line",
+      "revId": "4df2bfda79dc3e61e1258c911f78c98eaa679f7d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///uc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitSubscriberMergeContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-17T23:59:17Z",
+      "side": 1,
+      "message": "this looks inconsistent and also doesn\u0027t really simplify this, here you are extracting logging an exception, a few lines above (line 182) you inline a similar method call. I think you should rather stick with the inlined method call even if this is used twice.",
+      "revId": "4df2bfda79dc3e61e1258c911f78c98eaa679f7d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
