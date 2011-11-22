@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///YM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-21T16:07:53Z",
+      "side": 1,
+      "message": "asyncReload is not required if reload can be called from any thread (see comment below).",
+      "revId": "e3054699e5b00764d5cccb7e27dfef04544eda79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///YQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-21T16:07:53Z",
+      "side": 1,
+      "message": "I think reload should be callable from any thread.\nThis can be achieved by moving the repository \u003d\u003d null block into an asyncExec.",
+      "revId": "e3054699e5b00764d5cccb7e27dfef04544eda79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
