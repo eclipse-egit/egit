@@ -239,11 +239,7 @@ public class StagingView extends ViewPart {
 			if (Activator.getDefault().getRepositoryUtil().contains(repo))
 				return;
 
-			asyncExec(new Runnable() {
-				public void run() {
-					reload(null);
-				}
-			});
+			reload(null);
 		}
 
 	};
@@ -1033,23 +1029,45 @@ public class StagingView extends ViewPart {
 		}
 	}
 
+	private boolean isValidRepo(final Repository repository) {
+		return repository != null
+				&& !repository.isBare()
+				&& repository.getWorkTree().exists()
+				&& org.eclipse.egit.core.Activator.getDefault()
+						.getRepositoryUtil().contains(repository);
+	}
+
+	/**
+	 * Clear the view's state.
+	 * <p>
+	 * This method must be called from the UI-thread
+	 */
+	private void clearRepository() {
+		saveCommitMessageComponentState();
+		currentRepository = null;
+		removeListeners();
+		StagingViewUpdate update = new StagingViewUpdate(null, null, null);
+		unstagedTableViewer.setInput(update);
+		stagedTableViewer.setInput(update);
+		enableCommitWidgets(false);
+		updateSectionText();
+		form.setText(UIText.StagingView_NoSelectionTitle);
+	}
+
 	private void reload(final Repository repository) {
+		if (form.isDisposed())
+			return;
 		if (repository == null) {
-			if (currentRepository == null)
-				return;
-			saveCommitMessageComponentState();
-			currentRepository = null;
-			StagingViewUpdate update = new StagingViewUpdate(null, null, null);
-			unstagedTableViewer.setInput(update);
-			stagedTableViewer.setInput(update);
-			enableCommitWidgets(false);
-			updateSectionText();
-			form.setText(UIText.StagingView_NoSelectionTitle);
+			asyncExec(new Runnable() {
+
+				public void run() {
+					clearRepository();
+				}
+			});
 			return;
 		}
 
-		// Ignore bare repositories that are selected
-		if (repository.isBare())
+		if (!isValidRepo(repository))
 			return;
 
 		final boolean repositoryChanged = currentRepository != repository;
