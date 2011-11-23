@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCH///rI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-11-05T23:10:38Z",
+      "side": 1,
+      "message": "Integer.valueOf is preferrable",
+      "revId": "e8138d215ced73e23494662bbb5f9bd8ba690f02",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///rE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-11-05T23:10:38Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be fixed too? IsIgnored should not  be checked if the resource is tracked despite the ignore rules",
+      "revId": "e8138d215ced73e23494662bbb5f9bd8ba690f02",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
