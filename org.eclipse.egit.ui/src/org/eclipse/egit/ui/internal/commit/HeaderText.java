@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,11 +7,13 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - Added context menu to the Commit Editor's header text
  *****************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
 import java.lang.reflect.Field;
 
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.TextViewer;
@@ -21,9 +23,13 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.internal.forms.widgets.BusyIndicator;
 import org.eclipse.ui.internal.forms.widgets.FormHeading;
@@ -76,6 +82,7 @@ public class HeaderText {
 					titleLabel.setSelection(0);
 				}
 			});
+			createContextMenu(titleLabel);
 
 			Point size = titleLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 			Image emptyImage = new Image(heading.getDisplay(), size.x, size.y);
@@ -112,4 +119,35 @@ public class HeaderText {
 		int y = (titleLabel.getParent().getSize().y - size.y) / 2;
 		titleLabel.setBounds(busyLabel.getLocation().x, y, size.x, size.y);
 	}
+
+	private static void createContextMenu(final StyledText styledText) {
+		Menu menu = new Menu(styledText);
+
+		final MenuItem copyItem = new MenuItem(menu, SWT.PUSH);
+		copyItem.setText(UIText.Header_contextMenu_copy);
+		copyItem.setEnabled(false);
+		copyItem.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				styledText.copy();
+			}
+		});
+		styledText.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				copyItem.setEnabled(styledText.getSelectionCount() > 0);
+			}
+		});
+
+		new MenuItem(menu, SWT.SEPARATOR);
+
+		final MenuItem selectAllItem = new MenuItem(menu, SWT.PUSH);
+		selectAllItem.setText(UIText.Header_contextMenu_selectAll);
+		selectAllItem.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				styledText.selectAll();
+			}
+		});
+
+		styledText.setMenu(menu);
+	}
+
 }
