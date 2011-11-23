@@ -12,10 +12,12 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.indexdiff;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
@@ -45,7 +47,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 
 	private final Collection<String> filesToUpdate;
 
-	private final Collection<IFile> fileResourcesToUpdate;
+	private final Collection<IResource> resourcesToUpdate;
 
 	private boolean gitIgnoreChanged = false;
 
@@ -60,7 +62,7 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		this.repository = repository;
 
 		filesToUpdate = new HashSet<String>();
-		fileResourcesToUpdate = new HashSet<IFile>();
+		resourcesToUpdate = new HashSet<IResource>();
 	}
 
 	public boolean visit(IResourceDelta delta) throws CoreException {
@@ -68,6 +70,20 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		// Don't include ignored resources
 		if (Team.isIgnoredHint(resource))
 			return false;
+		// If the resource is not part of a project under
+		// Git revision control
+		final RepositoryMapping mapping = RepositoryMapping
+				.getMapping(resource);
+		if (mapping == null || mapping.getRepository() != repository)
+			// Ignore the change
+			return true;
+
+		if (resource instanceof IFolder
+				&& delta.getKind() == IResourceDelta.ADDED) {
+			filesToUpdate.add(mapping.getRepoRelativePath(resource) + "/"); //$NON-NLS-1$
+			resourcesToUpdate.add(resource);
+			return true;
+		}
 
 		// If the file has changed but not in a way that we
 		// care about (e.g. marker changes to files) then
@@ -80,14 +96,6 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 		if (resource.getType() != IResource.FILE)
 			return true;
 
-		// If the resource is not part of a project under
-		// Git revision control
-		final RepositoryMapping mapping = RepositoryMapping
-				.getMapping(resource);
-		if (mapping == null || mapping.getRepository() != repository)
-			// Ignore the change
-			return true;
-
 		if (resource.getName().equals(GITIGNORE_NAME)) {
 			gitIgnoreChanged = true;
 			return false;
@@ -95,20 +103,31 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 
 		String repoRelativePath = mapping.getRepoRelativePath(resource);
 		filesToUpdate.add(repoRelativePath);
-		fileResourcesToUpdate.add((IFile) resource);
+		resourcesToUpdate.add(resource);
 
 		return true;
 	}
 
 	/**
-	 * @return collection of resources to update
+	 * @return collection of files to update
 	 */
 	public Collection<IFile> getFileResourcesToUpdate() {
-		return fileResourcesToUpdate;
+		Collection<IFile> result = new ArrayList<IFile>();
+		for (IResource resource : resourcesToUpdate)
+			if (resource instanceof IFile)
+				result.add((IFile) resource);
+		return result;
 	}
 
 	/**
-	 * @return collection of files to update
+	 * @return collection of resources to update
+	 */
+	public Collection<IResource> getResourcesToUpdate() {
+		return resourcesToUpdate;
+	}
+
+	/**
+	 * @return collection of files / folders to update. Folder paths end with /
 	 */
 	public Collection<String> getFilesToUpdate() {
 		return filesToUpdate;
