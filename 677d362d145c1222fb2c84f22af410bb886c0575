@@ -16,6 +16,24 @@
       "revId": "677d362d145c1222fb2c84f22af410bb886c0575",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///N0\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2011-11-23T11:10:39Z",
+      "side": 1,
+      "message": "Note that the properties file is a stored form of a Properties instance. If you look at its Javadoc one speaks of  \"entries\" and not \"messages\".\n\nAnyway, Kevin already merged the fix into \u0027master\u0027.",
+      "parentUuid": "AABOCX///Yk\u003d",
+      "revId": "677d362d145c1222fb2c84f22af410bb886c0575",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
