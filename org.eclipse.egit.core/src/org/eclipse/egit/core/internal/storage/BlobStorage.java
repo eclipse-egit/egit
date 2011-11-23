@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2006, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.storage;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -56,6 +58,9 @@ class BlobStorage implements IStorage {
 
 	private InputStream open() throws IOException, CoreException,
 			IncorrectObjectTypeException {
+		if (blobId == null)
+			return new ByteArrayInputStream(new byte[0]);
+
 		try {
 			return db.open(blobId, Constants.OBJ_BLOB).openStream();
 		} catch (MissingObjectException notFound) {
