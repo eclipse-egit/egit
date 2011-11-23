@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///OA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-23T08:41:26Z",
+      "side": 1,
+      "message": "The action \"Replace with file in Git Index\" does not perform an unstaging operation. It replaces the working tree version of a file with the version in the Git Index. Effect:\nFile is staged and modified \u003d\u003e file is replaced with the staged version\nFile is modified and not staged: file is replaced with the HEAD version.",
+      "parentUuid": "AABOCX///Sk\u003d",
+      "revId": "9e14a1a936bfa8289ab7afc1f308eb99df84fe97",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
