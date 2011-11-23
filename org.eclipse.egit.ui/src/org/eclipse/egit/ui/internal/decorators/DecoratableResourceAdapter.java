@@ -121,13 +121,13 @@ class DecoratableResourceAdapter extends DecoratableResource {
 		String repoRelativePath = makeRepoRelative(resource) + "/"; //$NON-NLS-1$
 
 		Set<String> ignoredFiles = indexDiffData.getIgnoredNotInIndex();
+		Set<String> untrackedFolders = indexDiffData.getUntrackedFolders();
 		ignored = containsPrefixPath(ignoredFiles, repoRelativePath);
 
-		// only file can be not tracked.
 		if (ignored)
 			tracked = false;
 		else
-			tracked = true; // TODO: implement decoration for untracked folders
+			tracked = !containsPrefixPath(untrackedFolders, repoRelativePath);
 
 		// containers are marked as staged whenever file was added, removed or
 		// changed

@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.jgit.lib.IndexDiff;
 
 /**
@@ -37,11 +37,13 @@ public class IndexDiffData {
 
 	private final Set<String> untracked;
 
+	private final Set<String> untrackedFolders;
+
 	private final Set<String> conflicts;
 
 	private final Set<String> ignored;
 
-	private final Collection<IFile> changedFileResources;
+	private final Collection<IResource> changedResources;
 
 	/**
 	 * @param indexDiff
@@ -59,11 +61,19 @@ public class IndexDiffData {
 				.getModified()));
 		untracked = Collections.unmodifiableSet(new HashSet<String>(indexDiff
 				.getUntracked()));
+		untrackedFolders = Collections.unmodifiableSet(getUntrackedFolders(indexDiff));
 		conflicts = Collections.unmodifiableSet(new HashSet<String>(indexDiff
 				.getConflicting()));
 		ignored = Collections.unmodifiableSet(new HashSet<String>(indexDiff
 				.getIgnoredNotInIndex()));
-		changedFileResources = null;
+		changedResources = null;
+	}
+
+	private Set<String> getUntrackedFolders(IndexDiff indexDiff) {
+		HashSet<String> result = new HashSet<String>();
+		for (String folder:indexDiff.getUntrackedFolders())
+			result.add(folder + "/"); //$NON-NLS-1$
+		return result;
 	}
 
 	/**
@@ -73,21 +83,23 @@ public class IndexDiffData {
 	 *
 	 * @param baseDiff
 	 * @param changedFiles
-	 * @param changedFileResources
+	 *            collection of changed files / folders. folders must end with /
+	 * @param changedResources
 	 * @param diffForChangedFiles
 	 */
 	public IndexDiffData(IndexDiffData baseDiff,
 			Collection<String> changedFiles,
-			Collection<IFile> changedFileResources,
+			Collection<IResource> changedResources,
 			IndexDiff diffForChangedFiles) {
-		this.changedFileResources = Collections
-				.unmodifiableCollection(new HashSet<IFile>(changedFileResources));
+		this.changedResources = Collections
+				.unmodifiableCollection(new HashSet<IResource>(changedResources));
 		Set<String> added2 = new HashSet<String>(baseDiff.getAdded());
 		Set<String> changed2 = new HashSet<String>(baseDiff.getChanged());
 		Set<String> removed2 = new HashSet<String>(baseDiff.getRemoved());
 		Set<String> missing2 = new HashSet<String>(baseDiff.getMissing());
 		Set<String> modified2 = new HashSet<String>(baseDiff.getModified());
 		Set<String> untracked2 = new HashSet<String>(baseDiff.getUntracked());
+		Set<String> untrackedFolders2 = new HashSet<String>(baseDiff.getUntrackedFolders());
 		Set<String> conflicts2 = new HashSet<String>(baseDiff.getConflicting());
 		Set<String> ignored2 = new HashSet<String>(baseDiff.getIgnoredNotInIndex());
 
@@ -97,6 +109,7 @@ public class IndexDiffData {
 		mergeList(missing2, changedFiles, diffForChangedFiles.getMissing());
 		mergeList(modified2, changedFiles, diffForChangedFiles.getModified());
 		mergeList(untracked2, changedFiles, diffForChangedFiles.getUntracked());
+		mergeList(untrackedFolders2, changedFiles, getUntrackedFolders(diffForChangedFiles));
 		mergeList(conflicts2, changedFiles,
 				diffForChangedFiles.getConflicting());
 		mergeList(ignored2, changedFiles,
@@ -108,6 +121,7 @@ public class IndexDiffData {
 		missing = Collections.unmodifiableSet(missing2);
 		modified = Collections.unmodifiableSet(modified2);
 		untracked = Collections.unmodifiableSet(untracked2);
+		untrackedFolders = Collections.unmodifiableSet(untrackedFolders2);
 		conflicts = Collections.unmodifiableSet(conflicts2);
 		ignored = Collections.unmodifiableSet(ignored2);
 	}
@@ -168,6 +182,14 @@ public class IndexDiffData {
 	}
 
 	/**
+	 * @return list of folders containing only untracked files/folders
+	 * The folder paths end with /
+	 */
+	public Set<String> getUntrackedFolders() {
+		return untrackedFolders;
+	}
+
+	/**
 	 * @return list of files that are in conflict
 	 */
 	public Set<String> getConflicting() {
@@ -185,8 +207,8 @@ public class IndexDiffData {
 	/**
 	 * @return the changed files
 	 */
-	public Collection<IFile> getChangedFileResources() {
-		return changedFileResources;
+	public Collection<IResource> getChangedResources() {
+		return changedResources;
 	}
 
 	@Override
@@ -198,10 +220,11 @@ public class IndexDiffData {
 		dumpList(builder, "missing", missing); //$NON-NLS-1$
 		dumpList(builder, "modified", modified); //$NON-NLS-1$
 		dumpList(builder, "untracked", untracked); //$NON-NLS-1$
+		dumpList(builder, "untrackedFolders", untrackedFolders); //$NON-NLS-1$
 		dumpList(builder, "conflicts", conflicts); //$NON-NLS-1$
 		dumpList(builder, "ignored", ignored); //$NON-NLS-1$
-		dumpFileResourceList(builder,
-				"changedFileResources", changedFileResources); //$NON-NLS-1$
+		dumpResourceList(builder,
+				"changedResources", changedResources); //$NON-NLS-1$
 		return builder.toString();
 	}
 
@@ -216,13 +239,13 @@ public class IndexDiffData {
 		builder.append(NEW_LINE);
 	}
 
-	private void dumpFileResourceList(StringBuilder builder, String listName,
-			Collection<IFile> list) {
+	private void dumpResourceList(StringBuilder builder, String listName,
+			Collection<IResource> list) {
 		if (list == null)
 			return;
 		builder.append(listName);
 		builder.append(NEW_LINE);
-		for (IFile file : list) {
+		for (IResource file : list) {
 			builder.append(file.getFullPath().toOSString());
 			builder.append(NEW_LINE);
 		}
