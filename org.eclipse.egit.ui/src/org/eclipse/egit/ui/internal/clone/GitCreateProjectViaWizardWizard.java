@@ -29,6 +29,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.ProjectRecord;
+import org.eclipse.egit.ui.ProjectUtils;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.IWizardPage;
