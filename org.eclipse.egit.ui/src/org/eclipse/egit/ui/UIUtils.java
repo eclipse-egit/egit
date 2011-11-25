@@ -20,6 +20,7 @@ import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.ui.internal.clone.GitSelectRepositoryPage;
 import org.eclipse.egit.ui.internal.components.RefContentProposal;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
@@ -591,5 +592,14 @@ public class UIUtils {
 		} catch (NotHandledException e) {
 			Activator.handleError(e.getMessage(), e, false);
 		}
+	}
+
+	/**
+	 * Creates and returns a wizard page that can be used to allow selection of a repository.
+	 *
+	 * @return the newly instantiated wizard page.
+	 */
+	public static IGitSelectRepositoryWizardPage createSelectRepositoryPage() {
+		return new GitSelectRepositoryPage();
 	}
 }
