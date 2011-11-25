@@ -211,6 +211,9 @@ public class UIText extends NLS {
 	public static String EGitCredentialsProvider_errorReadingCredentials;
 
 	/** */
+	public static String EGitCredentialsProvider_FailedToClearCredentials;
+
+	/** */
 	public static String EgitUiUtils_CouldNotOpenEditorMessage;
 
 	/** */
