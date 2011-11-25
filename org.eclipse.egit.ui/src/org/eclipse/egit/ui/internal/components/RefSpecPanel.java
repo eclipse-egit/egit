@@ -1374,7 +1374,8 @@ public class RefSpecPanel {
 				}
 			}
 			if (remoteConfig != null && src.startsWith(Constants.R_HEADS)) {
-				final String newDst = Constants.R_REMOTES + remoteConfig + '/'
+				final String newDst = Constants.R_REMOTES
+						+ remoteConfig.getName() + '/'
 						+ src.substring(Constants.R_HEADS.length());
 				creationDstCombo.setText(newDst);
 			}
