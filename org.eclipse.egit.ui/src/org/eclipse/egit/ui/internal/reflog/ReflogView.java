@@ -54,8 +54,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
@@ -119,8 +117,6 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 	private ListenerHandle addRefsChangedListener;
 
 	private final DateFormat absoluteFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
-
-	private String myEmail;
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -258,33 +254,6 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 				resourceManager.dispose();
 				super.dispose();
 			}
-		});
-
-		TreeViewerColumn whoColumn = createColumn(layout,
-				UIText.ReflogView_CommitterColumnHeader, 15, SWT.LEFT);
-		whoColumn.setLabelProvider(new ColumnLabelProvider() {
-
-			@Override
-			public String getText(Object element) {
-				final ReflogEntry entry = (ReflogEntry) element;
-				final PersonIdent who = entry.getWho();
-				String email = who.getEmailAddress();
-				if (email.equals(myEmail))
-					return UIText.ReflogView_CommitterMe;
-				return who.getName() + " <" + email + ">";  //$NON-NLS-1$//$NON-NLS-2$
-			}
-
-			@Override
-			public String getToolTipText(Object element) {
-				final ReflogEntry entry = (ReflogEntry) element;
-				return entry.getNewId().name();
-			}
-
-			@Override
-			public Image getImage(Object element) {
-				return null;
-			}
-
 		});
 
 		refLogTableTreeViewer.addOpenListener(new IOpenListener() {
@@ -480,15 +449,10 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 	 */
 	private void showReflogFor(Repository repository, String ref) {
 		if (repository != null && ref != null) {
-			Config c = repository.getConfig();
-			if (c != null)
-				myEmail = c.getString(ConfigConstants.CONFIG_USER_SECTION,
-						null, ConfigConstants.CONFIG_KEY_EMAIL);
 			refLogTableTreeViewer.setInput(new ReflogInput(repository, ref));
 			updateRefLink(ref);
 			form.setText(getRepositoryName(repository));
-		} else
-			myEmail = null;
+		}
 	}
 
 	private TreeViewerColumn createColumn(
