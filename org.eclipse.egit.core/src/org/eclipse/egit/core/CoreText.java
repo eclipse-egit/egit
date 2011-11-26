@@ -174,6 +174,9 @@ public class CoreText extends NLS {
 	public static String ResetOperation_updatingFailed;
 
 	/** */
+	public static String MergeOperation_CheckoutConflict;
+
+	/** */
 	public static String MergeOperation_InternalError;
 
 	/** */
