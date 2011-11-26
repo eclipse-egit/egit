@@ -229,7 +229,8 @@ class CommitGraphTable {
 					int relativeX = e.x - item.getBounds().x;
 					for (int i = 0; i < commit.getRefCount(); i++) {
 						Point textSpan = renderer.getRefHSpan(commit.getRef(i));
-						if ((relativeX >= textSpan.x && relativeX <= textSpan.y)) {
+						if ((textSpan != null)
+								&& (relativeX >= textSpan.x && relativeX <= textSpan.y)) {
 							hoverShell = new Shell(getTableView().getTable()
 									.getShell(), SWT.ON_TOP | SWT.NO_FOCUS
 									| SWT.TOOL);
