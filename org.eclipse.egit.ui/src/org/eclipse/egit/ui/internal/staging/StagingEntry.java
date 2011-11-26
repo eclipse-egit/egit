@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2011, Bernard Leach <leachbj@bouncycastle.org>
+ * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -87,6 +88,8 @@ public class StagingEntry implements IAdaptable {
 			IPath absolutePath = new Path(repository.getWorkTree().getAbsolutePath()).append(path);
 			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 			IResource resource = root.getFileForLocation(absolutePath);
+			if (resource == null)
+				resource = root.getFile(absolutePath);
 			return resource;
 		}
 		return null;

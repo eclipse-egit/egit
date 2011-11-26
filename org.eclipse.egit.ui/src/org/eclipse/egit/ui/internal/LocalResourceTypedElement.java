@@ -61,7 +61,7 @@ public class LocalResourceTypedElement extends ResourceNode implements
 	 */
 	public LocalResourceTypedElement(IResource resource) {
 		super(resource);
-		exists = resource.exists();
+		exists = resource.getFullPath().toFile().exists();
 	}
 
 	public void setContent(byte[] contents) {
