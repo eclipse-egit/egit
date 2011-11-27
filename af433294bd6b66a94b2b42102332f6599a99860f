@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBn///J8\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-27T21:27:27Z",
+      "side": 1,
+      "message": "typo: s/gived/gives/",
+      "revId": "af433294bd6b66a94b2b42102332f6599a99860f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///J4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/FileChecker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-27T21:27:27Z",
+      "side": 1,
+      "message": "typo: s/described/describes/",
+      "revId": "af433294bd6b66a94b2b42102332f6599a99860f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///J0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/FileChecker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-27T21:27:27Z",
+      "side": 1,
+      "message": "typo: s/reposrted/reported/",
+      "revId": "af433294bd6b66a94b2b42102332f6599a99860f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///Jw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-27T21:27:27Z",
+      "side": 1,
+      "message": "typo: s/Plaese/Please/",
+      "revId": "af433294bd6b66a94b2b42102332f6599a99860f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
