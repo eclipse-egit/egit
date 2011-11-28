@@ -38,6 +38,9 @@ public class HistoryViewCommands {
 	/** "Create Branch" */
 	public static final String CREATE_BRANCH = "org.eclipse.egit.ui.history.CreateBranch"; //$NON-NLS-1$
 
+	/** "Delete Branch" */
+	public static final String DELETE_BRANCH = "org.eclipse.egit.ui.history.DeleteBranch"; //$NON-NLS-1$
+
 	/** "Create Patch" */
 	public static final String CREATE_PATCH = "org.eclipse.egit.ui.history.CreatePatch"; //$NON-NLS-1$
 

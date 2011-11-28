@@ -705,12 +705,17 @@ class CommitGraphTable {
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.CHECKOUT,
 						UIText.GitHistoryPage_CheckoutMenuLabel));
+				popupMgr.add(new Separator());
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.CREATE_BRANCH,
 						UIText.GitHistoryPage_CreateBranchMenuLabel));
 				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.DELETE_BRANCH,
+						"&Delete Branch...")); //$NON-NLS-1$ TODO
+				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.CREATE_TAG,
 						UIText.GitHistoryPage_CreateTagMenuLabel));
+				popupMgr.add(new Separator());
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.CREATE_PATCH,
 						UIText.GitHistoryPage_CreatePatchMenuLabel));

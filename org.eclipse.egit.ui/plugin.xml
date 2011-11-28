@@ -3548,6 +3548,10 @@
             commandId="org.eclipse.egit.ui.team.DeleteTag"
             icon="icons/obj16/delete_obj.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.history.DeleteBranch"
+            icon="icons/obj16/delete_obj.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -3880,6 +3884,11 @@
             defaultHandler="org.eclipse.egit.ui.internal.history.command.CreateBranchOnCommitHandler"
             id="org.eclipse.egit.ui.history.CreateBranch"
             name="%CreateBranchCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.DeleteBranchOnCommitHandler"
+            id="org.eclipse.egit.ui.history.DeleteBranch"
+            name="Delete Branch">
       </command>
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.CreateTagOnCommitHandler"
