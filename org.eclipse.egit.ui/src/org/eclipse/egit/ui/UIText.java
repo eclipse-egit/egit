@@ -3593,6 +3593,21 @@ public class UIText extends NLS {
 	public static String RenameBranchDialog_WindowTitle;
 
 	/** */
+	public static String RevertFailureDialog_Message;
+
+	/** */
+	public static String RevertFailureDialog_ReasonChangesInIndex;
+
+	/** */
+	public static String RevertFailureDialog_ReasonChangesInWorkingDirectory;
+
+	/** */
+	public static String RevertFailureDialog_ReasonDeleteFailure;
+
+	/** */
+	public static String RevertFailureDialog_Title;
+
+	/** */
 	public static String RevertHandler_AlreadyRevertedMessae;
 
 	/** */
