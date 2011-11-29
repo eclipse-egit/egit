@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCn////8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/DeleteBranchOnCommitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-28T16:43:26Z",
+      "side": 1,
+      "message": "I think the dialog should be shown in any case because the user expects a dialog if the action label ends with ...",
+      "revId": "1334503510ef170b78e51891d2cb3e1c71a91e69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCn////4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/DeleteBranchOnCommitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-28T16:43:26Z",
+      "side": 1,
+      "message": "How can it happen that there are unmerged commits? The currently checked out branch is not deleted by the action. Thus commits will not be lost.",
+      "revId": "1334503510ef170b78e51891d2cb3e1c71a91e69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///Bs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/DeleteBranchOnCommitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-28T16:43:26Z",
+      "side": 1,
+      "message": "Does it make sense to continue here? Or just return false.",
+      "revId": "1334503510ef170b78e51891d2cb3e1c71a91e69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCn////0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/DeleteBranchOnCommitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-28T16:43:26Z",
+      "side": 1,
+      "message": "nearly the same as in lines 224-233",
+      "revId": "1334503510ef170b78e51891d2cb3e1c71a91e69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
