@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2010,2011 Dariusz Luksza <dariusz@luksza.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -295,7 +295,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		assertEquals(2, syncViewTree.getAllItems().length);
 		workingTree.expand().getNode(name).doubleClick();
 
-		SWTBotEditor editor = bot.editorByTitle(name);
+		SWTBotEditor editor = getCompareEditorForNonWorkspaceFileInGitChangeSet(name);
 		editor.setFocus();
 
 		// the WidgetNotFoundException will be thrown when widget with given content cannot be not found

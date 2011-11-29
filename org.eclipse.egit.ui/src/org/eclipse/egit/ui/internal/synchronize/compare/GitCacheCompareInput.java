@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2010,2011 Dariusz Luksza <dariusz@luksza.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,10 +8,13 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.compare;
 
-import static org.eclipse.egit.ui.internal.CompareUtils.getFileCachedRevisionTypedElement;
+import static org.eclipse.egit.ui.internal.CompareUtils.getHeadTypedElement;
 import static org.eclipse.egit.ui.internal.CompareUtils.getFileRevisionTypedElement;
 
+import java.io.IOException;
+
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.ui.mapping.ISynchronizationCompareInput;
 
@@ -21,11 +24,15 @@ import org.eclipse.team.ui.mapping.ISynchronizationCompareInput;
  */
 public class GitCacheCompareInput extends GitCompareInput {
 
+	private final IFile baseFile;
+
 	/**
 	 * Creates {@link GitCacheCompareInput}
 	 *
 	 * @param repo
 	 *            repository that is connected with this object
+	 * @param baseFile
+	 *            base file
 	 * @param ancestorDataSource
 	 *            data that should be use to obtain common ancestor object data
 	 * @param baseDataSource
@@ -36,15 +43,20 @@ public class GitCacheCompareInput extends GitCompareInput {
 	 *            repository relative path of object
 	 */
 	public GitCacheCompareInput(Repository repo,
-			ComparisonDataSource ancestorDataSource,
+			IFile baseFile, ComparisonDataSource ancestorDataSource,
 			ComparisonDataSource baseDataSource,
 			ComparisonDataSource remoteDataSource, String gitPath) {
 		super(repo, ancestorDataSource, baseDataSource, remoteDataSource,
 				gitPath);
+		this.baseFile = baseFile;
 	}
 
 	public ITypedElement getLeft() {
-		return getFileCachedRevisionTypedElement(gitPath, repo);
+		try {
+			return getHeadTypedElement(baseFile);
+		} catch (IOException e) {
+			return null;
+		}
 	}
 
 	public ITypedElement getRight() {
