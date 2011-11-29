@@ -27,7 +27,9 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
+import org.eclipse.egit.ui.internal.dialogs.RevertFailureDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -38,10 +40,11 @@ import org.eclipse.ui.PlatformUI;
  * Executes the RevertCommit
  */
 public class RevertHandler extends AbstractHistoryCommandHandler {
+
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repo = getRepository(event);
 		BasicConfigurationDialog.show(repo);
-		RevCommit commit = (RevCommit) getSelection(getPage())
+		final RevCommit commit = (RevCommit) getSelection(getPage())
 				.getFirstElement();
 
 		final Shell shell = getPart(event).getSite().getShell();
@@ -58,9 +61,7 @@ public class RevertHandler extends AbstractHistoryCommandHandler {
 					if (newHead != null && revertedRefs.isEmpty())
 						showRevertedDialog(shell);
 					if (newHead == null)
-						Activator
-								.showError(UIText.RevertOperation_Failed, null);
-
+						showFailureDialog(shell, commit, op.getFailingResult());
 				} catch (CoreException e) {
 					Activator.handleError(UIText.RevertOperation_InternalError,
 							e, true);
@@ -79,6 +80,16 @@ public class RevertHandler extends AbstractHistoryCommandHandler {
 		job.setRule(op.getSchedulingRule());
 		job.schedule();
 		return null;
+	}
+
+	private void showFailureDialog(final Shell shell, final RevCommit commit,
+			final MergeResult result) {
+		shell.getDisplay().syncExec(new Runnable() {
+
+			public void run() {
+				RevertFailureDialog.show(shell, commit, result);
+			}
+		});
 	}
 
 	private void showRevertedDialog(final Shell shell) {
