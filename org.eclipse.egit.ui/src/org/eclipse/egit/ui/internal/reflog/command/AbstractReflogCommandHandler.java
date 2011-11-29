@@ -13,9 +13,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.reflog.ReflogView;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -52,13 +49,4 @@ abstract class AbstractReflogCommandHandler extends AbstractHandler {
 			return null;
 		return (ReflogView) part;
 	}
-
-	protected IStructuredSelection getSelection(ReflogView view) {
-		ISelection pageSelection = view.getSelectionProvider().getSelection();
-		if (pageSelection instanceof IStructuredSelection)
-			return (IStructuredSelection) pageSelection;
-		else
-			return new StructuredSelection();
-	}
-
 }
