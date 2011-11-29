@@ -38,6 +38,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
@@ -47,16 +48,9 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Executes the Merge
  */
 public class MergeHandler extends AbstractHistoryCommandHandler {
-	private static final class BranchMessageDialog extends AmbiguousBranchDialog {
-
-		public BranchMessageDialog(Shell parentShell, List<RefNode> nodes) {
-			super(parentShell, nodes, UIText.MergeHandler_SelectBranchTitle,
-					UIText.MergeHandler_SelectBranchMessage);
-		}
-
-	}
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		RevCommit commit = (RevCommit) getSelection(getPage()).getFirstElement();
+		RevCommit commit = (RevCommit) getSelection(getPage())
+				.getFirstElement();
 		final Repository repository = getRepository(event);
 		if (repository == null)
 			return null;
@@ -71,8 +65,10 @@ public class MergeHandler extends AbstractHistoryCommandHandler {
 		else if (nodes.size() == 1)
 			refName = nodes.get(0).getObject().getName();
 		else {
-			BranchMessageDialog dlg = new BranchMessageDialog(HandlerUtil
-					.getActiveShellChecked(event), nodes);
+			BranchSelectionDialog<RefNode> dlg = new BranchSelectionDialog<RefNode>(
+					HandlerUtil.getActiveShellChecked(event), nodes,
+					UIText.MergeHandler_SelectBranchTitle,
+					UIText.MergeHandler_SelectBranchMessage, SWT.SINGLE);
 			if (dlg.open() == Window.OK) {
 				refName = dlg.getSelectedNode().getObject().getName();
 			} else
@@ -105,16 +101,14 @@ public class MergeHandler extends AbstractHistoryCommandHandler {
 							// execution has been triggered.
 							Shell shell = PlatformUI.getWorkbench()
 									.getActiveWorkbenchWindow().getShell();
-							MessageDialog
-									.openInformation(
-											shell,
-											UIText.MergeAction_MergeCanceledTitle,
-											UIText.MergeAction_MergeCanceledMessage);
+							MessageDialog.openInformation(shell,
+									UIText.MergeAction_MergeCanceledTitle,
+									UIText.MergeAction_MergeCanceledMessage);
 						}
 					});
 				} else if (!result.isOK()) {
-					Activator.handleError(result.getMessage(), result
-							.getException(), true);
+					Activator.handleError(result.getMessage(),
+							result.getException(), true);
 				} else {
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
@@ -131,9 +125,15 @@ public class MergeHandler extends AbstractHistoryCommandHandler {
 		return null;
 	}
 
-	/* copy of {@link org.eclipse.egit.ui.internal.repository.tree.command.MergeCommand#canMerge(Repository)}
+	/*
+	 * copy of {@link
+	 * org.eclipse.egit.ui.internal.repository.tree.command.MergeCommand
+	 * #canMerge(Repository)}
+	 *
 	 * @param repository
-	 * @return true of merge is allowed */
+	 *
+	 * @return true of merge is allowed
+	 */
 	private boolean canMerge(final Repository repository) {
 		String message = null;
 		Exception ex = null;
