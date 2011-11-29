@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2010,2011 Dariusz Luksza <dariusz@luksza.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -257,6 +257,20 @@ public abstract class AbstractSynchronizeViewTest extends
 		return getCompareEditor(projNode, fileName);
 	}
 
+	protected SWTBotEditor getCompareEditorForNonWorkspaceFileInGitChangeSet(
+			final String fileName) {
+		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
+
+		SWTBotTreeItem rootTree = waitForNodeWithText(syncViewTree,
+					GitModelWorkingTree_workingTree);
+		waitForNodeWithText(rootTree, fileName).doubleClick();
+
+		SWTBotEditor editor = bot
+				.editor(new CompareEditorTitleMatcher(fileName));
+
+		return editor;
+	}
+
 	protected SWTBotTreeItem waitForNodeWithText(SWTBotTree tree, String name) {
 		waitUntilTreeHasNodeContainsText(bot, tree, name, 10000);
 		return getTreeItemContainingText(tree.getAllItems(), name).expand();
@@ -326,11 +340,12 @@ public abstract class AbstractSynchronizeViewTest extends
 	}
 
 	private SWTBotEditor getCompareEditor(SWTBotTreeItem projectNode,
-			String fileName) {
+			final String fileName) {
 		SWTBotTreeItem folderNode = waitForNodeWithText(projectNode, FOLDER);
 		waitForNodeWithText(folderNode, fileName).doubleClick();
 
-		SWTBotEditor editor = bot.editorByTitle(fileName);
+		SWTBotEditor editor = bot
+				.editor(new CompareEditorTitleMatcher(fileName));
 		// Ensure that both StyledText widgets are enabled
 		SWTBotStyledText styledText = editor.toTextEditor().getStyledText();
 		bot.waitUntil(Conditions.widgetIsEnabled(styledText));

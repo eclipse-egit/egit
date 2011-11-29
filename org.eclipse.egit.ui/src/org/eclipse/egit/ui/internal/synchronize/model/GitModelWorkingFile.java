@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2010,2011 Dariusz Luksza <dariusz@luksza.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,9 +17,6 @@ import static org.eclipse.jgit.lib.ObjectId.zeroId;
 import java.io.IOException;
 
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.ui.internal.synchronize.compare.ComparisonDataSource;
-import org.eclipse.egit.ui.internal.synchronize.compare.GitCompareInput;
-import org.eclipse.egit.ui.internal.synchronize.compare.GitLocalCompareInput;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
 
@@ -31,13 +28,6 @@ public class GitModelWorkingFile extends GitModelBlob {
 	GitModelWorkingFile(GitModelObjectContainer parent,
 			RevCommit commit, ObjectId repoId, IPath location) throws IOException {
 		super(parent, commit, null, repoId, repoId, null, location);
-	}
-
-	@Override
-	protected GitCompareInput getCompareInput(ComparisonDataSource baseData,
-			ComparisonDataSource remoteData, ComparisonDataSource ancestorData) {
-		return new GitLocalCompareInput(getRepository(), ancestorData,
-				baseData, remoteData, gitPath);
 	}
 
 	@Override
