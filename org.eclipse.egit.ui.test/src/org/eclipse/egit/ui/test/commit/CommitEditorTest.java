@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.test.commit;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -18,14 +19,20 @@ import java.io.File;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotMultiPageEditor;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
@@ -89,5 +96,33 @@ public class CommitEditorTest extends LocalRepositoryTestCase {
 		for (String name : botEditor.getPagesTitles())
 			botEditor.activatePage(name);
 		botEditor.close();
+	}
+
+	@Test
+	public void showAnnotations() throws Exception {
+		final AtomicReference<IEditorPart> editorRef = new AtomicReference<IEditorPart>();
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+			public void run() {
+				RepositoryCommit repoCommit = new RepositoryCommit(repository,
+						commit);
+				editorRef.set(CommitEditor.openQuiet(repoCommit));
+			}
+		});
+		assertNotNull(editorRef.get());
+		SWTBotEditor commitEditor = bot.activeEditor();
+		SWTBotTable table = commitEditor.bot().table(0);
+		assertTrue(table.rowCount() > 0);
+		table.select(0);
+		ContextMenuHelper.clickContextMenu(table,
+				UIText.CommitFileDiffViewer_ShowAnnotationsMenuLabel);
+		TestUtil.joinJobs(JobFamilies.BLAME);
+		assertFalse(commitEditor.getReference().equals(
+				bot.activeEditor().getReference()));
+
+		final String content = getTestFileContent();
+		// Change working directory content to validate blame opens HEAD
+		setTestFileContent("updated content" + System.nanoTime());
+		assertEquals(content, bot.activeEditor().toTextEditor().getText());
 	}
 }
