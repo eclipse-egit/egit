@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///s8\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2011-11-18T07:50:29Z",
+      "side": 1,
+      "message": "Indeed ;-)",
+      "parentUuid": "AABOCX///wc\u003d",
+      "revId": "f72b748e00a0b5a8b43ce637331bda47bad68cbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///wo\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2011-11-17T22:05:23Z",
       "side": 1,
       "message": "don\u0027t repeat the bug number which is already available in the commit message",
+      "revId": "f72b748e00a0b5a8b43ce637331bda47bad68cbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///tc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2011-11-18T07:50:29Z",
+      "side": 1,
+      "message": "Often people only have the source and then it is good if they can just open the bug from it. I don\u0027t see any value in suppresing that information.\n\nDo you still want me to remove the bug number?",
+      "parentUuid": "AABOCX///wo\u003d",
       "revId": "f72b748e00a0b5a8b43ce637331bda47bad68cbd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -65,6 +101,24 @@
       "writtenOn": "2011-11-17T22:05:23Z",
       "side": 1,
       "message": "I think it would make sense to also enable this for additional refs like FETCH_HEAD (their context menu provides checkout command as well)",
+      "revId": "f72b748e00a0b5a8b43ce637331bda47bad68cbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///tA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2011-11-18T07:50:29Z",
+      "side": 1,
+      "message": "I agree with you but it is not related to the reported bug and in the EGit contributor guide it says to keep patches small and split work in smaller pieces.\n\nI have no problem adding it in my next patch though, if you want.",
+      "parentUuid": "AABOCX///wg\u003d",
       "revId": "f72b748e00a0b5a8b43ce637331bda47bad68cbd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
