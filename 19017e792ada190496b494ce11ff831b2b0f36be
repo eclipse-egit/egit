@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOKH///f8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-06-14T22:27:45Z",
+      "side": 1,
+      "message": "We should disable amend for all kinds of conflicts and this\ndoes not \"scale\". The problem is common enough to warrant\na solution in RepositoryState.",
+      "revId": "19017e792ada190496b494ce11ff831b2b0f36be",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
