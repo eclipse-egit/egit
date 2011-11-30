@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///1k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-11-17T07:49:48Z",
+      "side": 1,
+      "message": "Does it make sense to extract all these if-else AKA shortening logic) into separate class and unit test it?",
+      "revId": "47eb5abf7804cb20f42db1eb7e935c1ff1877286",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
