@@ -115,7 +115,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		return false;
 	}
 
-	private IResource getResource(@SuppressWarnings("unused") ICompareInput input) {
+	private IResource getResource() {
 		if (left instanceof IResourceProvider) {
 			IResourceProvider resourceProvider = (IResourceProvider) left;
 			return resourceProvider.getResource();
@@ -232,7 +232,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		if (getLeftRevision() != null) {
 			String leftLabel = getFileRevisionLabel(getLeftRevision());
 			cc.setLeftLabel(leftLabel);
-		} else if (getResource(input) != null) {
+		} else if (getResource() != null) {
 			String label = NLS.bind(UIText.GitCompareFileRevisionEditorInput_LocalLabel, new Object[]{ input.getLeft().getName() });
 			cc.setLeftLabel(label);
 		} else {
@@ -284,7 +284,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	 */
 	public Object getAdapter(Class adapter) {
 		if (adapter == IFile.class || adapter == IResource.class) {
-			return getResource(getCompareInput());
+			return getResource();
 		}
 		return super.getAdapter(adapter);
 	}
