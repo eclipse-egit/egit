@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///Ek\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ShowBlameActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-27T21:41:46Z",
+      "side": 1,
+      "message": "Show Annotations prior to this change didn\u0027t work with non-workspace files either therefore I\u0027m not sure that is a valid reason to -1 this change.\n\nJust because a feature doesn\u0027t support non-workspace files doesn\u0027t mean it doesn\u0027t have value to the users of Eclipse that will be using repositories that are part of their workspace.",
+      "parentUuid": "AABOCX///FY\u003d",
+      "revId": "47b9f5a6ddd450c7a6af59eb26dec52f295e4624",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOC3///5o\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ShowBlameActionHandler.java",
         "patchSetId": 2
