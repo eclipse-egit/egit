@@ -35,6 +35,24 @@
       "revId": "8bfc7dc21ed5e5edeb6ba891339325b13f06f12f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///3U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelWorkingFile.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-29T23:46:41Z",
+      "side": 1,
+      "message": "True, it isn\u0027t\n\nDone",
+      "parentUuid": "AABOC3///4A\u003d",
+      "revId": "8bfc7dc21ed5e5edeb6ba891339325b13f06f12f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
