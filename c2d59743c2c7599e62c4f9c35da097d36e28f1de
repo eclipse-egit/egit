@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///ts\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-18T19:57:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///vk\u003d",
+      "revId": "c2d59743c2c7599e62c4f9c35da097d36e28f1de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///vg\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/action/GitOpenInCompareAction.java",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///to\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/action/GitOpenInCompareAction.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-18T19:57:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///vg\u003d",
+      "revId": "c2d59743c2c7599e62c4f9c35da097d36e28f1de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///vI\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelWorkingFile.java",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2011-11-17T23:31:30Z",
       "side": 1,
       "message": "shouldn\u0027t we then better throw an exception to signal this ?",
+      "revId": "c2d59743c2c7599e62c4f9c35da097d36e28f1de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///tg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelWorkingFile.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-18T19:57:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///vI\u003d",
       "revId": "c2d59743c2c7599e62c4f9c35da097d36e28f1de",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false

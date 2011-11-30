@@ -16,6 +16,24 @@
       "revId": "366c43f6250a0298bb3853a11cbd0224ace3edd7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///tk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/GitCompareInput.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-18T19:57:29Z",
+      "side": 0,
+      "message": "It was move by mistake.",
+      "parentUuid": "AABOCX///vU\u003d",
+      "revId": "366c43f6250a0298bb3853a11cbd0224ace3edd7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
