@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///Vk\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/ComapreEditorTitleMatcher.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-23T17:11:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///h0\u003d",
+      "revId": "aa9a1b92bc707e7cc711e54832580cb59da0bdb0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///gA\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelWorkingFile.java",
         "patchSetId": 13
