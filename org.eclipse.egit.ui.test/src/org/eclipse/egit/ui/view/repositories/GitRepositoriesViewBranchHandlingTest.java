@@ -210,7 +210,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		ContextMenuHelper.clickContextMenu(bot.tree(), myUtil
 				.getPluginLocalizedValue("RepoViewDeleteBranch.label"));
 		SWTBotShell confirmPopup = bot
-				.shell(UIText.RepositoriesView_ConfirmDeleteTitle);
+				.shell(UIText.UnmergedBranchDialog_Title);
 		confirmPopup.activate();
 		confirmPopup.bot().button(IDialogConstants.OK_LABEL).click();
 		refreshAndWait();
