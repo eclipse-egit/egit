@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOC3///4Q\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/CompareEditorTitleMatcher.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-29T23:28:12Z",
+      "side": 1,
+      "message": "Should be \u0027contains\u0027",
+      "revId": "8bfc7dc21ed5e5edeb6ba891339325b13f06f12f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOC3///3c\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/CompareEditorTitleMatcher.java",
         "patchSetId": 16
@@ -20,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AABOC3///4E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-29T23:28:12Z",
+      "side": 1,
+      "message": "Variable name should be \u0027resource\u0027",
+      "revId": "8bfc7dc21ed5e5edeb6ba891339325b13f06f12f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOC3///3Y\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
         "patchSetId": 16
@@ -32,6 +66,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABOC3///4E\u003d",
+      "revId": "8bfc7dc21ed5e5edeb6ba891339325b13f06f12f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///4A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelWorkingFile.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-29T23:28:12Z",
+      "side": 1,
+      "message": "Is this method still needed if it only throws an exception?",
       "revId": "8bfc7dc21ed5e5edeb6ba891339325b13f06f12f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
