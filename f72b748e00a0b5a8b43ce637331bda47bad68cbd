@@ -51,6 +51,41 @@
       "revId": "f72b748e00a0b5a8b43ce637331bda47bad68cbd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///wg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-17T22:05:23Z",
+      "side": 1,
+      "message": "I think it would make sense to also enable this for additional refs like FETCH_HEAD (their context menu provides checkout command as well)",
+      "revId": "f72b748e00a0b5a8b43ce637331bda47bad68cbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///ao\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-20T22:53:09Z",
+      "side": 1,
+      "message": "you are right, this should be done in a separate patch. It just came across my mind when testing your change :-)",
+      "parentUuid": "AABOCX///tA\u003d",
+      "revId": "f72b748e00a0b5a8b43ce637331bda47bad68cbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
