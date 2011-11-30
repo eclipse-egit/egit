@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.egit.core.Activator;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
 
@@ -91,7 +92,12 @@ public class IndexDiffCache {
 					.toArray(new IndexDiffChangedListener[listeners.size()]);
 		}
 		for (int i = 0; i < tmpListeners.length; i++)
-			tmpListeners[i].indexDiffChanged(repository, indexDiffData);
+			try {
+				tmpListeners[i].indexDiffChanged(repository, indexDiffData);
+			} catch (RuntimeException e) {
+				Activator.logError(
+						"Exception occured in an IndexDiffChangedListener", e); //$NON-NLS-1$
+			}
 	}
 
 }
