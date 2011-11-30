@@ -16,6 +16,24 @@
       "revId": "47eb5abf7804cb20f42db1eb7e935c1ff1877286",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///XM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-21T18:52:23Z",
+      "side": 1,
+      "message": "I extracted to a static method and added unit tests.",
+      "parentUuid": "AABOCX///1k\u003d",
+      "revId": "47eb5abf7804cb20f42db1eb7e935c1ff1877286",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
