@@ -16,6 +16,24 @@
       "revId": "47b9f5a6ddd450c7a6af59eb26dec52f295e4624",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///5o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ShowBlameActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-29T20:44:24Z",
+      "side": 1,
+      "message": "I was pretty sure that \"Snow Annotations\" will work for non-workspace files. But if it doesn\u0027t work then -1 isn\u0027t valid",
+      "parentUuid": "AABOCX///Ek\u003d",
+      "revId": "47b9f5a6ddd450c7a6af59eb26dec52f295e4624",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
