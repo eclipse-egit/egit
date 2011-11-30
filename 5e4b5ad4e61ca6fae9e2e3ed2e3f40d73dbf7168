@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOC3///w0\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-30T22:45:34Z",
+      "side": 1,
+      "message": "typo: s/flowing/following/",
+      "revId": "5e4b5ad4e61ca6fae9e2e3ed2e3f40d73dbf7168",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///ww\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-30T22:45:34Z",
+      "side": 1,
+      "message": "typo: s/The/Then/",
+      "revId": "5e4b5ad4e61ca6fae9e2e3ed2e3f40d73dbf7168",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///ws\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-30T22:45:34Z",
+      "side": 1,
+      "message": "typo: s/width/with/",
+      "revId": "5e4b5ad4e61ca6fae9e2e3ed2e3f40d73dbf7168",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
