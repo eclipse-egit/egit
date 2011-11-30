@@ -852,6 +852,24 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.internal.reflog.CheckoutCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.reflog.command.CheckoutHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate>
+                  <adapt
+                        type="org.eclipse.jgit.storage.file.ReflogEntry">
+                  </adapt>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.team.Commit">
          <class
                class="org.eclipse.egit.ui.internal.actions.CommitActionHandler">
@@ -3984,7 +4002,6 @@
             name="%CheckoutCommand.name">
       </command>
       <command
-            defaultHandler="org.eclipse.egit.ui.internal.reflog.command.CheckoutHandler"
             id="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
             name="%CheckoutCommand.name">
       </command>
