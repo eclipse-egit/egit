@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///FY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ShowBlameActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-27T10:13:15Z",
+      "side": 1,
+      "message": "If selected resource is non-workspace, then you\u0027ll get first path element from getProject() method, and finally getMapping will return null. With change I929c3c32e getMapping for non-workspace files will return proper RepositoryMapping.",
+      "revId": "47b9f5a6ddd450c7a6af59eb26dec52f295e4624",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
