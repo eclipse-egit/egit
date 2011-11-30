@@ -156,6 +156,24 @@
       "revId": "69a31ac73f0c05837834a88d02243fe78e3c5127",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///zY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/action/GitOpenInCompareAction.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-18T06:59:04Z",
+      "side": 1,
+      "message": "Yes, initial implementation was copied from org.eclipse.team.internal.ui.synchronize.actions.OpenInCompareAction and then changed. Should I somehow change this contribution statement ?",
+      "parentUuid": "AABOBn///0o\u003d",
+      "revId": "69a31ac73f0c05837834a88d02243fe78e3c5127",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
