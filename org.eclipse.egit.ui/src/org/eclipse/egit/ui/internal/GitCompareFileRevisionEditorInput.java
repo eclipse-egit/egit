@@ -31,6 +31,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -282,8 +283,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		if (element instanceof FileRevisionTypedElement){
 			FileRevisionTypedElement fileRevisionElement = (FileRevisionTypedElement) element;
 			return fileRevisionElement.getName();
-		}
-		else if (element instanceof LocalResourceTypedElement){
+		} else if (element instanceof LocalResourceTypedElement){
 			LocalResourceTypedElement typedContent = (LocalResourceTypedElement) element;
 			return typedContent.getResource().getName();
 		}
