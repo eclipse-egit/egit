@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///wc\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-17T22:05:23Z",
+      "side": 1,
+      "message": "looks like there are two blanks between \"always\" and \"done\"",
+      "revId": "f72b748e00a0b5a8b43ce637331bda47bad68cbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///wo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-17T22:05:23Z",
+      "side": 1,
+      "message": "don\u0027t repeat the bug number which is already available in the commit message",
+      "revId": "f72b748e00a0b5a8b43ce637331bda47bad68cbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///as\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-20T22:53:09Z",
+      "side": 1,
+      "message": "yes, please remove it. You are the first contributor who wants that. If somebody wants to see which bugs have been fixed for a certain source he anyway needs to look at the history to find out what was changed to fix the bug. Also it\u0027s already a challenge to get this consistently maintained in the project\u0027s history, replicating this into the sources manually would most probably lead to inconsistent information. If you really want this we should generate a cross reference from the git history during the build which could be included into the source bundles. But I am not sure if this is worth the effort.",
+      "parentUuid": "AABOCX///tc\u003d",
+      "revId": "f72b748e00a0b5a8b43ce637331bda47bad68cbd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
