@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBn///zo\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-18T06:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBn///0g\u003d",
+      "revId": "69a31ac73f0c05837834a88d02243fe78e3c5127",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///0c\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBn///zg\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-18T06:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBn///0Y\u003d",
+      "revId": "69a31ac73f0c05837834a88d02243fe78e3c5127",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///0U\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -64,6 +100,24 @@
       "writtenOn": "2011-10-17T22:36:49Z",
       "side": 1,
       "message": "better:\n\nWe want this writable instead since we want to move ...",
+      "revId": "69a31ac73f0c05837834a88d02243fe78e3c5127",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///zc\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-10-18T06:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBn///0U\u003d",
       "revId": "69a31ac73f0c05837834a88d02243fe78e3c5127",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
