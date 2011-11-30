@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOC3///7E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/DeleteBranchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-29T16:53:03Z",
+      "side": 1,
+      "message": "Not required if you use UnmergedBranchDialog\u003cRefNode\u003e",
+      "revId": "942e7ab38b8badc241b00710132328b03bad5e47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///64\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/UnmergedBranchDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-29T16:53:03Z",
+      "side": 1,
+      "message": "2011",
+      "revId": "942e7ab38b8badc241b00710132328b03bad5e47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///7A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/BranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-29T16:53:03Z",
+      "side": 1,
+      "message": "2011",
+      "revId": "942e7ab38b8badc241b00710132328b03bad5e47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///68\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/BranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-29T16:53:03Z",
+      "side": 1,
+      "message": "Would it make sense to move this class to package org.eclipse.egit.ui.internal.dialogs?",
+      "revId": "942e7ab38b8badc241b00710132328b03bad5e47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///6w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/BranchSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-29T16:53:03Z",
+      "side": 1,
+      "message": "This method could be protected",
+      "revId": "942e7ab38b8badc241b00710132328b03bad5e47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOC3///7Y\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CheckoutCommitHandler.java",
         "patchSetId": 1
@@ -30,6 +115,23 @@
       "writtenOn": "2011-11-29T16:49:50Z",
       "side": 1,
       "message": "unrelated formatting change",
+      "revId": "942e7ab38b8badc241b00710132328b03bad5e47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///6k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/DeleteBranchOnCommitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-29T16:53:03Z",
+      "side": 1,
+      "message": "Not required if you use UnmergedBranchDialog\u003cRefNode\u003e",
       "revId": "942e7ab38b8badc241b00710132328b03bad5e47",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -81,6 +183,23 @@
       "writtenOn": "2011-11-29T16:49:50Z",
       "side": 1,
       "message": "unrelated formatting change",
+      "revId": "942e7ab38b8badc241b00710132328b03bad5e47",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///6g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/DeleteBranchCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-29T16:53:03Z",
+      "side": 1,
+      "message": "Not required if you use UnmergedBranchDialog\u003cRefNode\u003e",
       "revId": "942e7ab38b8badc241b00710132328b03bad5e47",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
