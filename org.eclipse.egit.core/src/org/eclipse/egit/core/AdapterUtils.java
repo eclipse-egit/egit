@@ -23,6 +23,7 @@ public class AdapterUtils {
 
 	/**
 	 * Adapt object to given target class type
+	 * @param <V>
 	 *
 	 * @param object
 	 * @param target
