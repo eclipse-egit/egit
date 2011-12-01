@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///+A\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-11-15T17:29:16Z",
+      "side": 1,
+      "message": "May be GitURI deserves for it\u0027s own test?",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///98\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
         "patchSetId": 1
@@ -99,6 +116,23 @@
       "side": 1,
       "message": "Return null and force user *always* check for null is not much better though...",
       "parentUuid": "AABOCX///0M\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///9Y\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-11-15T17:45:52Z",
+      "side": 1,
+      "message": "Do you have constants in o.e.team.* to replace these path, tag and project \u0027magic strings\u0027?",
       "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
