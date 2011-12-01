@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOB3///10\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-29T17:51:54Z",
+      "side": 1,
+      "message": "Still, is CR (only) a real issue or not? I don\u0027t think it is possible\nto run any remotely recent java or Git on that old Macs.\n\nIf so, only one replace would do the job more efficiently. After all\nthis is a utility that may be called from anywhere. I\u0027m not sure having constants for CRLF helps readbility here,\n\ns.replaceAll(\"\\r\\n?\",\"\\n\"); // replace any CRLFs or CRs\n\nI\u0027d prefer the one blow because if someone actually do get CR only, into their messages I\u0027d like to know and understand. Fixing\nhypotetical errors are often a source of unnecessary bugs, hard-to-maintain code and bad performance.\n\ns.replaceAll(\"\\r\\n\",\"\\n\"); // replace any CRLFs",
+      "revId": "1c686de9ecb8fab7de5a4951e27d355eeff290c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOB3///1M\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
         "patchSetId": 3
