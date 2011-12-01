@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///sM\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2011-11-18T10:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///+A\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///98\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
         "patchSetId": 1
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "Return null and force user *always* check for null is not much better though...",
       "parentUuid": "AABOCX///0M\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///pw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2011-11-18T17:22:15Z",
+      "side": 1,
+      "message": "Well, I would prefer to check for null rather than catch IAE to see if the given URI is valid. But I don\u0027t have strong feelings for the method, so the constructor is fine with me, if you insist ;)",
+      "parentUuid": "AABOCX///rI\u003d",
       "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
