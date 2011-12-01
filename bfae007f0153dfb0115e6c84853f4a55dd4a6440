@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///ps\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-18T17:19:59Z",
+      "side": 1,
+      "message": "that\u0027s fine, I usually do rebase when a proposal is close to be accepted to check if it applies cleanly to the current HEAD. Note that in theory any merge or rebase can introduce problems since these are text based algorithms which don\u0027t understand the semantics. But experience shows that this only happens rarely.",
+      "parentUuid": "AABOCX///p8\u003d",
+      "revId": "bfae007f0153dfb0115e6c84853f4a55dd4a6440",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
