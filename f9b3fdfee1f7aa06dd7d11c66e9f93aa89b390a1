@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOC3///uk\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-12-01T12:13:03Z",
+      "side": 1,
+      "message": "Could you please describe why do we need this empty java doc entry?\n\nI do not get a compile error in Eclipse without it.",
+      "revId": "f9b3fdfee1f7aa06dd7d11c66e9f93aa89b390a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///uU\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-12-01T12:40:34Z",
+      "side": 1,
+      "message": "I think the problem does not occur anymore in Indigo:\n\nhttp://help.eclipse.org/indigo/index.jsp?topic\u003d%2Forg.eclipse.jdt.doc.user%2FwhatsNew%2Fjdt_whatsnew.html:\n\n\"Missing Javadoc tags for method type parameters no longer reported by default\"\n\nI do not see why we should add empty Javadoc tags if not necessary.",
+      "parentUuid": "AABOC3///uc\u003d",
+      "revId": "f9b3fdfee1f7aa06dd7d11c66e9f93aa89b390a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
