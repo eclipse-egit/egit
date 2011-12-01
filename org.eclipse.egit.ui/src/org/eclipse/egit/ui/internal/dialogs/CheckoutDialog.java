@@ -203,7 +203,7 @@ public class CheckoutDialog extends AbstractBranchSelectionDialog {
 				try {
 					CommonUtils
 							.runCommand(
-									"org.eclipse.egit.ui.RepositoriesViewDeleteBranch", //$NON-NLS-1$
+									"org.eclipse.ui.edit.delete", //$NON-NLS-1$
 									(IStructuredSelection) branchTree.getSelection());
 					branchTree.refresh();
 				} catch (Throwable e) {
