@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOC3///uc\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-12-01T12:32:40Z",
+      "side": 1,
+      "message": "I have standard EGit project settings and I get a JavaDoc error. Other EGit classes have a tag for the type parameter in their JavaDoc",
+      "parentUuid": "AABOC3///uk\u003d",
+      "revId": "f9b3fdfee1f7aa06dd7d11c66e9f93aa89b390a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOC3///uU\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
