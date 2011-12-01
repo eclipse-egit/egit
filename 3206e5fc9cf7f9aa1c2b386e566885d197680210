@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///5U\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2011-11-16T10:25:06Z",
+      "side": 1,
+      "message": "Actually, they reside in GITFetchTaskFactory as private constants named KEY_PATH and KEY_ELEMENT_TAG. Only \"project\" doesn\u0027t seem to be extracted to a constant. \n\nGITFetchTaskFactory is in the egit-pde repo. I would need a separate (blocking) Change for it, wouldn\u0027t I?",
+      "parentUuid": "AABOCX///9Y\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///4Q\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
         "patchSetId": 1
