@@ -9,12 +9,14 @@
  *
  * Contributors:
  *     Manuel Doninger <manuel.doninger@googlemail.com>
+ *     Tomasz Zarna <Tomasz.Zarna@pl.ibm.com>
  *******************************************************************************/
 package org.eclipse.egit.core;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,6 +26,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspace;
@@ -33,6 +36,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.internal.GitURI;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -87,6 +91,10 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 		if (projectPath.equals("")) //$NON-NLS-1$
 			projectPath = "."; //$NON-NLS-1$
 
+		return asReference(url, branch, projectPath);
+	}
+
+	private String asReference(String url, String branch, String projectPath) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(VERSION);
@@ -205,6 +213,12 @@ public final class GitProjectSetCapability extends ProjectSetCapability {
 		final IProject[] result = importedProjects
 				.toArray(new IProject[importedProjects.size()]);
 		return result;
+	}
+
+	@Override
+	public String asReference(URI uri, String projectName) {
+		GitURI gitURI = new GitURI(uri);
+		return asReference(gitURI.getRepository().toString(), gitURI.getTag(), gitURI.getPath().toString());
 	}
 
 	private TeamException throwTeamException(Throwable th) throws TeamException{
