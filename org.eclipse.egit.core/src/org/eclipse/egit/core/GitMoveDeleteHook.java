@@ -53,6 +53,10 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 
 	public boolean deleteFile(final IResourceTree tree, final IFile file,
 			final int updateFlags, final IProgressMonitor monitor) {
+		// Linked resources are not files, hence not tracked by git
+		if (file.isLinked())
+			return false;
+
 		final boolean force = (updateFlags & IResource.FORCE) == IResource.FORCE;
 		if (!force && !tree.isSynchronized(file, IResource.DEPTH_ZERO))
 			return false;
