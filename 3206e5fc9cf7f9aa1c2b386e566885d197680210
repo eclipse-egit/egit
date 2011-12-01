@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///sQ\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2011-11-18T10:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///+o\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///+A\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///sI\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2011-11-18T10:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///98\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///68\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
         "patchSetId": 1
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///sE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2011-11-18T10:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///68\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///9g\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
         "patchSetId": 1
@@ -81,6 +135,24 @@
       "writtenOn": "2011-11-15T17:45:52Z",
       "side": 1,
       "message": "Does it make sense to create it public?",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///0Q\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2011-11-17T13:03:42Z",
+      "side": 1,
+      "message": "It\u0027s public so it\u0027s available in tests. Notice it\u0027s in an internal package.",
+      "parentUuid": "AABOCX///9g\u003d",
       "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -205,6 +277,24 @@
       "side": 1,
       "message": "I think we should not make egit.core depending on  org.eclipse.egit.fetchfactory as it requires a newer platform version compared to what egit currently can work on. Also I think introducing a dependency on a library dedicated for PDE build support isn\u0027t a good thing for egit.core as it pulls in transitive dependencies on pde.build we don\u0027t want for egit.",
       "parentUuid": "AABOCX///3g\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///sA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2011-11-18T10:07:51Z",
+      "side": 1,
+      "message": "Makes sense to me, in the latest Patch Set I left the \"magic strings\" untouched.",
+      "parentUuid": "AABOCX///wA\u003d",
       "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
