@@ -34,6 +34,24 @@
       "revId": "1c686de9ecb8fab7de5a4951e27d355eeff290c3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///KA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-11-25T15:26:27Z",
+      "side": 1,
+      "message": "I re-implemeted normalizeLineEndings without using the slow replaceAll method (supports regular expressions).\nThe new implementation also cares for single \\r characters, but without additional cost. As you can see in the related bug it \"somehow\" happened that a single \\r made it into the commit message. So I\u0027d like to keep removing single \\r characters.",
+      "parentUuid": "AABOB3///10\u003d",
+      "revId": "1c686de9ecb8fab7de5a4951e27d355eeff290c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
