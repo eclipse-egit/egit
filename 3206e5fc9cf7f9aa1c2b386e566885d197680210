@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOCX///+o\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-11-15T17:29:16Z",
+      "side": 1,
+      "message": "Please reflect \u0027 \" not allowed\u0027 from the comment below in a method\u0027s name",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///98\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-11-15T17:29:16Z",
+      "side": 1,
+      "message": "Should go into GitURI\u0027s test, no?",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///68\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
         "patchSetId": 1
@@ -36,6 +70,59 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///9c\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-11-15T17:45:52Z",
+      "side": 1,
+      "message": "Why not a constructor that accepts URI as a parameter?",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///rI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-11-18T16:13:48Z",
+      "side": 1,
+      "message": "Return null and force user *always* check for null is not much better though...",
+      "parentUuid": "AABOCX///0M\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///4Q\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-11-16T13:33:16Z",
+      "side": 1,
+      "message": "Would using constants from GITFetchTaskFactory introduce a new dependency for EGit? Right now I\u0027m not sure if it a bad thing to add such dependency VS \u0027magic string\u0027.",
+      "parentUuid": "AABOCX///5U\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///wA\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
         "patchSetId": 1
@@ -48,6 +135,24 @@
       "side": 1,
       "message": "I think we should not make egit.core depending on  org.eclipse.egit.fetchfactory as it requires a newer platform version compared to what egit currently can work on. Also I think introducing a dependency on a library dedicated for PDE build support isn\u0027t a good thing for egit.core as it pulls in transitive dependencies on pde.build we don\u0027t want for egit.",
       "parentUuid": "AABOCX///3g\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///rM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-11-18T16:13:48Z",
+      "side": 1,
+      "message": "Could we change direction for this dependency: declare these constants here, in GitURI, and use them in GITFetchTaskFactory? In any case the intent of GitURI class is to make egit-pde happy, this very class has some logic dependent on these values.",
+      "parentUuid": "AABOCX///sA\u003d",
       "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
