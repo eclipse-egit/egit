@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///68\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-17T22:44:24Z",
+      "side": 1,
+      "message": "missing javadoc for public class",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///wA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-17T22:44:24Z",
+      "side": 1,
+      "message": "I think we should not make egit.core depending on  org.eclipse.egit.fetchfactory as it requires a newer platform version compared to what egit currently can work on. Also I think introducing a dependency on a library dedicated for PDE build support isn\u0027t a good thing for egit.core as it pulls in transitive dependencies on pde.build we don\u0027t want for egit.",
+      "parentUuid": "AABOCX///3g\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
