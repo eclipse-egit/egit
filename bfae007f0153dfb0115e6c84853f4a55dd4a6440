@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///p8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2011-11-18T17:08:41Z",
+      "side": 1,
+      "message": "I\u0027ve rebased the patch with master, before submitting it. Is that something I shouldn\u0027t do?",
+      "parentUuid": "AABOCX///rE\u003d",
+      "revId": "bfae007f0153dfb0115e6c84853f4a55dd4a6440",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///ps\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
         "patchSetId": 3
