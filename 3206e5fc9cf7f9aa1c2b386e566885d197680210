@@ -104,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///0M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2011-11-17T13:03:42Z",
+      "side": 1,
+      "message": "What if the URI is not valid? Do you think throwing IllegalArgExc is better?",
+      "parentUuid": "AABOCX///9c\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///rI\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
         "patchSetId": 1
@@ -157,6 +175,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///3g\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2011-11-16T17:23:29Z",
+      "side": 1,
+      "message": "Yes, that would require a new dep on org.eclipse.egit.fetchfactory, which is in egit-pde. How about opening a new bug for this particular issue? I agree with other comments, so I could prepare a new patch and move this forward.",
+      "parentUuid": "AABOCX///4Q\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///wA\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
         "patchSetId": 1
@@ -187,6 +223,24 @@
       "side": 1,
       "message": "Could we change direction for this dependency: declare these constants here, in GitURI, and use them in GITFetchTaskFactory? In any case the intent of GitURI class is to make egit-pde happy, this very class has some logic dependent on these values.",
       "parentUuid": "AABOCX///sA\u003d",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///p0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2011-11-18T17:22:15Z",
+      "side": 1,
+      "message": "Good point, agreed.",
+      "parentUuid": "AABOCX///rM\u003d",
       "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
