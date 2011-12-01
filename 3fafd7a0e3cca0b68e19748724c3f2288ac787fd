@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBn///MQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-27T19:28:37Z",
+      "side": 1,
+      "message": "I agree with Jens. It would also create an unecessary dependency to the implementation. A test should not have a dependency on the implementation other than testing it.",
+      "parentUuid": "AABOBn///NE\u003d",
+      "revId": "3fafd7a0e3cca0b68e19748724c3f2288ac787fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///Kg\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
         "patchSetId": 2
@@ -31,6 +49,23 @@
       "side": 1,
       "message": "yeah, you are right",
       "parentUuid": "AABOBn///MQ\u003d",
+      "revId": "3fafd7a0e3cca0b68e19748724c3f2288ac787fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///MM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-27T19:28:37Z",
+      "side": 1,
+      "message": "Who uses CR as a line delimiter nowadays?",
       "revId": "3fafd7a0e3cca0b68e19748724c3f2288ac787fd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
