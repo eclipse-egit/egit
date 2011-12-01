@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///9g\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-11-15T17:45:52Z",
+      "side": 1,
+      "message": "Does it make sense to create it public?",
+      "revId": "3206e5fc9cf7f9aa1c2b386e566885d197680210",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///wA\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
         "patchSetId": 1
