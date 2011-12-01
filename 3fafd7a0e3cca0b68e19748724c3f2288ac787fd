@@ -1,0 +1,57 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBn///Qk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-26T22:15:14Z",
+      "side": 1,
+      "message": "why don\u0027t you use these constants in UtilTest ?",
+      "revId": "3fafd7a0e3cca0b68e19748724c3f2288ac787fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///Kg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-27T21:09:13Z",
+      "side": 1,
+      "message": "yeah, you are right",
+      "parentUuid": "AABOBn///MQ\u003d",
+      "revId": "3fafd7a0e3cca0b68e19748724c3f2288ac787fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBn///KU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-27T21:09:13Z",
+      "side": 1,
+      "message": "maybe we can ignore Mac OS 9, its latest version was published end of 2001, so probably the only chance to see this today is in some old repos (e.g. CVS) which have been migrated to git",
+      "parentUuid": "AABOBn///MM\u003d",
+      "revId": "3fafd7a0e3cca0b68e19748724c3f2288ac787fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
