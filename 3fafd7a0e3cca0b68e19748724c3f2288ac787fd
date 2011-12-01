@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBn///NE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-10-27T14:32:45Z",
+      "side": 1,
+      "message": "What would be the benefit? It becomes harder to construct the test strings.",
+      "parentUuid": "AABOBn///Qk\u003d",
+      "revId": "3fafd7a0e3cca0b68e19748724c3f2288ac787fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBn///MQ\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
         "patchSetId": 2
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "maybe we can ignore Mac OS 9, its latest version was published end of 2001, so probably the only chance to see this today is in some old repos (e.g. CVS) which have been migrated to git",
       "parentUuid": "AABOBn///MM\u003d",
+      "revId": "3fafd7a0e3cca0b68e19748724c3f2288ac787fd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3////4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-10-28T08:41:46Z",
+      "side": 1,
+      "message": "I think we should do replaceAll(CR, LF) even if a single CR should not occur. Accidents can always happen that produce garbage.",
+      "parentUuid": "AABOBn///KU\u003d",
       "revId": "3fafd7a0e3cca0b68e19748724c3f2288ac787fd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
