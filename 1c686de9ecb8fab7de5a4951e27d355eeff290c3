@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOB3///1M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-29T22:36:13Z",
+      "side": 1,
+      "message": "I agree to Robin\u0027s proposal",
+      "parentUuid": "AABOB3///10\u003d",
+      "revId": "1c686de9ecb8fab7de5a4951e27d355eeff290c3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
