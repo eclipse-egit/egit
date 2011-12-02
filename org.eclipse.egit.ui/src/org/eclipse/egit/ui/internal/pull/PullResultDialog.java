@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.pull;
 
+import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.fetch.FetchResultDialog;
@@ -28,6 +29,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -35,8 +37,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Display the result of a pull.
@@ -129,30 +129,20 @@ public class PullResultDialog extends Dialog {
 			dlg.createDialogArea(mergeResultGroup);
 		} else if (hasRebaseResults()) {
 			Status status = result.getRebaseResult().getStatus();
-			GridLayoutFactory.fillDefaults().applyTo(mergeResultGroup);
-			switch (status) {
-			case OK:
-				// fall through
-			case FAST_FORWARD:
-				// fall through
-			case UP_TO_DATE:
-				// fall through
-			case FAILED:
-				// fall through
-			case ABORTED:
-				break;
-			case STOPPED:
+			GridLayoutFactory.swtDefaults().applyTo(mergeResultGroup);
+			Image image = UIIcons.getStatusImage(status);
+			if (image != null) {
 				Label errorLabel = new Label(mergeResultGroup, SWT.NONE);
-				errorLabel.setImage(PlatformUI.getWorkbench().getSharedImages()
-						.getImage(ISharedImages.IMG_OBJS_ERROR_TSK));
+				errorLabel.setImage(image);
 				Text errorText = new Text(mergeResultGroup, SWT.READ_ONLY);
 				errorText.setText(UIText.PullResultDialog_RebaseStoppedMessage);
-				break;
+				GridDataFactory.defaultsFor(errorText).grab(true, false).applyTo(errorText);
 			}
 			Label statusLabel = new Label(mergeResultGroup, SWT.NONE);
 			statusLabel.setText(UIText.PullResultDialog_RebaseStatusLabel);
 			Text statusText = new Text(mergeResultGroup, SWT.READ_ONLY);
 			statusText.setText(status.name());
+			GridDataFactory.defaultsFor(statusText).grab(true, false).applyTo(statusText);
 		} else {
 			GridLayoutFactory.swtDefaults().applyTo(mergeResultGroup);
 			Label noResult = new Label(mergeResultGroup, SWT.NONE);

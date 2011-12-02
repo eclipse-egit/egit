@@ -15,6 +15,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jgit.api.RebaseResult;
+import org.eclipse.jgit.api.MergeResult.MergeStatus;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * Icons for the the Eclipse plugin. Mostly decorations.
@@ -275,6 +280,94 @@ public class UIIcons {
 		MERGE = map("obj16/merge.gif"); //$NON-NLS-1$
 		TAG_ANNOTATED = map("obj16/annotated-tag.gif"); //$NON-NLS-1$
 		CREATE_REPOSITORY = map("etool16/createRepository.gif"); //$NON-NLS-1$
+	}
+
+	/**
+	 * Returns an image depicting the merge status, or <code>null</code>
+	 * if there is no matching image
+	 * @param status
+	 * @return a merge status image, or <code>null</code>
+	 */
+	public static Image getStatusImage(MergeStatus status) {
+		switch (status) {
+		case ALREADY_UP_TO_DATE:
+			// fall through
+		case FAST_FORWARD:
+			// nothing really interesting, so just return null
+			return null;
+		case MERGED:
+			return getInfoImage();
+		case CONFLICTING:
+			return getWarningImage();
+		case FAILED:
+			// fall through
+		case NOT_SUPPORTED:
+			return getErrorImage();
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns an image depicting the rebase status, or <code>null</code>
+	 * if there is no matching image
+	 * @param status
+	 * @return a rebase status image, or <code>null</code>
+	 */
+	public static Image getStatusImage(RebaseResult.Status status) {
+		switch (status) {
+		case OK:
+			// fall through
+		case UP_TO_DATE:
+			// fall through
+		case ABORTED:
+			// fall through
+		case FAST_FORWARD:
+			// nothing really interesting, so just return null
+			return null;
+		case STOPPED:
+			return getWarningImage();
+		case FAILED:
+			return getErrorImage();
+		}
+
+		return null;
+	}
+
+	/**
+	 * Return the <code>Image</code> to be used when displaying an error.
+	 *
+	 * @return image the error image
+	 */
+	public static Image getErrorImage() {
+		return getSWTImage(SWT.ICON_ERROR);
+	}
+
+	/**
+	 * Return the <code>Image</code> to be used when displaying a warning.
+	 *
+	 * @return image the warning image
+	 */
+	public static Image getWarningImage() {
+		return getSWTImage(SWT.ICON_WARNING);
+	}
+
+	/**
+	 * Return the <code>Image</code> to be used when displaying information.
+	 *
+	 * @return image the information image
+	 */
+	public static Image getInfoImage() {
+		return getSWTImage(SWT.ICON_INFORMATION);
+	}
+
+	private static Image getSWTImage(int imageID) {
+		Display display = Display.getCurrent();
+		if (display == null)
+			display = Display.getDefault();
+		if (display.isDisposed())
+			return null;
+		return Display.getCurrent().getSystemImage(imageID);
 	}
 
 	private static ImageDescriptor map(final String icon) {
