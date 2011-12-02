@@ -101,6 +101,11 @@ class CreateBranchPage extends WizardPage {
 
 	private Text nameText;
 
+	/**
+	 * Whether the contents of {@code nameText} is a suggestion or was entered by the user.
+	 */
+	private boolean nameIsSuggestion;
+
 	private Button checkout;
 
 	private Combo branchCombo;
@@ -213,8 +218,9 @@ class CreateBranchPage extends WizardPage {
 			this.branchCombo.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					upstreamConfig = getDefaultUpstreamConfig(myRepository,
-							branchCombo.getText());
+					String ref = branchCombo.getText();
+					suggestBranchName(ref);
+					upstreamConfig = getDefaultUpstreamConfig(myRepository, ref);
 					checkPage();
 				}
 			});
@@ -236,6 +242,11 @@ class CreateBranchPage extends WizardPage {
 		nameLabel.addTraverseListener(new TraverseListener() {
 			public void keyTraversed(TraverseEvent e) {
 				nameText.setFocus();
+			}
+		});
+		nameText.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				nameIsSuggestion = false;
 			}
 		});
 		// enable testing with SWTBot
@@ -322,13 +333,7 @@ class CreateBranchPage extends WizardPage {
 		Dialog.applyDialogFont(main);
 		setControl(main);
 		nameText.setFocus();
-		String targetName = getProposedTargetName(myBaseRef);
-		if (targetName != null) {
-			nameText.setText(targetName);
-			nameText.selectAll();
-		} else
-			// in any case, we will have to enter the name
-			setPageComplete(false);
+		suggestBranchName(myBaseRef);
 		checkPage();
 		// add the listener just now to avoid unneeded checkPage()
 		nameText.addModifyListener(new ModifyListener() {
@@ -452,5 +457,16 @@ class CreateBranchPage extends WizardPage {
 		if (setupRebase)
 			return UpstreamConfig.REBASE;
 		return UpstreamConfig.MERGE;
+	}
+
+	private void suggestBranchName(String ref) {
+		if (nameText.getText().length() == 0 || nameIsSuggestion) {
+			String branchNameSuggestion = getProposedTargetName(ref);
+			if (branchNameSuggestion != null) {
+				nameText.setText(branchNameSuggestion);
+				nameText.selectAll();
+				nameIsSuggestion = true;
+			}
+		}
 	}
 }
