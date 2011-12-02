@@ -14,13 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.dialogs.IconAndMessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
@@ -57,7 +58,7 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
  * Dialog for displaying a MergeResult
  *
  */
-public class MergeResultDialog extends Dialog {
+public class MergeResultDialog extends IconAndMessageDialog {
 
 	private static final String SPACE = " "; //$NON-NLS-1$
 
@@ -87,9 +88,36 @@ public class MergeResultDialog extends Dialog {
 				true);
 	}
 
+	protected Control createContents(Composite parent) {
+		// overridden from superclass to avoid wasted space
+		Composite composite = new Composite(parent, 0);
+		GridLayout layout = new GridLayout();
+		layout.verticalSpacing = 0;
+		composite.setLayout(layout);
+		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
+		applyDialogFont(composite);
+		// initialize the dialog units
+		initializeDialogUnits(composite);
+		// create the dialog area and button bar
+		dialogArea = createDialogArea(composite);
+		buttonBar = createButtonBar(composite);
+
+		return composite;
+	}
+
 	@Override
 	public Control createDialogArea(final Composite parent) {
 		final Composite composite = (Composite) super.createDialogArea(parent);
+
+		Image image = getImage();
+		if (image != null) {
+			imageLabel = new Label(composite, SWT.NULL);
+			image.setBackground(imageLabel.getBackground());
+			imageLabel.setImage(image);
+			GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.BEGINNING).span(2, 1)
+			.applyTo(imageLabel);
+		}
+
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 2;
 		composite.setLayout(gridLayout);
@@ -245,5 +273,10 @@ public class MergeResultDialog extends Dialog {
 
 	protected IDialogSettings getDialogBoundsSettings() {
 		return UIUtils.getDialogBoundSettings(getClass());
+	}
+
+	@Override
+	protected Image getImage() {
+		return UIIcons.getStatusImage(mergeResult.getMergeStatus());
 	}
 }
