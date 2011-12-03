@@ -239,12 +239,6 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 			}
 
 			@Override
-			public String getToolTipText(Object element) {
-				final ReflogEntry entry = (ReflogEntry) element;
-				return entry.getNewId().name();
-			}
-
-			@Override
 			public Image getImage(Object element) {
 				return null;
 			}
@@ -310,7 +304,9 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 			@Override
 			public String getToolTipText(Object element) {
 				final ReflogEntry entry = (ReflogEntry) element;
-				return entry.getNewId().name();
+				final PersonIdent who = entry.getWho();
+				String email = who.getEmailAddress();
+				return who.getName() + " <" + email + ">";  //$NON-NLS-1$//$NON-NLS-2$
 			}
 
 			@Override
