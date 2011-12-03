@@ -3102,7 +3102,7 @@
                   <adapt
                      type="org.eclipse.core.resources.IFile">
                      <test
-                        property="GitResource.isShared" />>
+                        property="GitResource.isShared" />
                   </adapt>
                </with>
             </visibleWhen>
