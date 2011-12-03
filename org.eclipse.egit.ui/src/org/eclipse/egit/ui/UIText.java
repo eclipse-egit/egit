@@ -1219,6 +1219,9 @@ public class UIText extends NLS {
 	public static String ReflogView_CommitColumnHeader;
 
 	/** */
+	public static String ReflogView_CommitMessageColumnHeader;
+
+	/** */
 	public static String RefSelectionDialog_Messsage;
 
 	/** */
