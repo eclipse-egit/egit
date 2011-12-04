@@ -214,12 +214,6 @@ public class ReflogView extends ViewPart implements RefsChangedListener {
 				}
 				return c;
 			}
-
-			@Override
-			public Image getImage(Object element) {
-				return branchImage;
-			}
-
 		});
 
 		TreeViewerColumn dateColumn = createColumn(layout,
