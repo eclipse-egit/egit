@@ -16,6 +16,24 @@
       "revId": "f63df95268bae2af772f65d63d6ee9ba44ddf5db",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///Ww\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWorkspaceActionHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-21T21:14:28Z",
+      "side": 1,
+      "message": "True, I\u0027ll just remove refs/heads/ prefix from mergeBranchName and it should work for all cases",
+      "parentUuid": "AABOCX///Z8\u003d",
+      "revId": "f63df95268bae2af772f65d63d6ee9ba44ddf5db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
