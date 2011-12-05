@@ -16,6 +16,24 @@
       "revId": "57f7c48ad53508f6013966029b7de9094815312d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///nQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/dto/GitSynchronizeData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-07T17:05:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCH///oQ\u003d",
+      "revId": "57f7c48ad53508f6013966029b7de9094815312d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
