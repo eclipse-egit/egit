@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///Z8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWorkspaceActionHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-20T23:45:59Z",
+      "side": 1,
+      "message": "I think this is only correct for branches with only one path segment, but for hierarchical branch names like \"refs/heads/feature/xyz\" it yields wrong results, for this example you would end up with mergeBranchName \u003d \"/xyz\" instead of \"/feature/xyz\".\n\nAlso the variable name is a bit misleading as this always starts with a leading slash which isn\u0027t common for a branch name.",
+      "revId": "f63df95268bae2af772f65d63d6ee9ba44ddf5db",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
