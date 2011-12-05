@@ -33,6 +33,96 @@
       "revId": "eca9de1c613c45b833f4d87793cf3a8999683943",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///qQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/dto/GitSynchronizeData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-06T13:56:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOBn///RU\u003d",
+      "revId": "eca9de1c613c45b833f4d87793cf3a8999683943",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///qU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/dto/GitSynchronizeData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-06T13:56:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCH///rU\u003d",
+      "revId": "eca9de1c613c45b833f4d87793cf3a8999683943",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///qM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWorkspaceActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-06T13:56:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCH///rk\u003d",
+      "revId": "eca9de1c613c45b833f4d87793cf3a8999683943",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///qI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWorkspaceActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-06T13:56:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCH///rg\u003d",
+      "revId": "eca9de1c613c45b833f4d87793cf3a8999683943",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCH///qE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWorkspaceActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-06T13:56:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCH///rc\u003d",
+      "revId": "eca9de1c613c45b833f4d87793cf3a8999683943",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
