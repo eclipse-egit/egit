@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBH///nQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-09-06T01:13:15Z",
+      "side": 1,
+      "message": "Stefan: That code is, I think obsolete since if you check out a remote branch/tag you\u0027ll get a detached head and that code only works from the \"current\" branch when the dialog is initialized.\n\nThe \"New branch\" dialog as I see it is pretty useless with many remote branches. It might be better to integrate the \"New\" option into the \"Other..\" menu which brings up a tree view, which is easier to browse and has some filtering capability.\n\nOther than that, I also thing the suggestion should only be present for remote branches and tags.",
+      "parentUuid": "AABOBH///zM\u003d",
+      "revId": "ad71e02bd4787acd25bf28d9cf1ad0b5561527e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBH///nI\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
         "patchSetId": 1
