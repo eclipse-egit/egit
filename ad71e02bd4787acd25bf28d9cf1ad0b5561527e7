@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH///zM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-09-02T13:43:53Z",
+      "side": 1,
+      "message": "There is already coding for that in line 311 ff which is used when the dialog is opened. There the suggestion is only made if the base ref starts with \"remotes\" or is a tag. I think it makes sense. E.g., I have a local branch created by the \"Fetch from Gerrit...\" funcionality called \"change/3435/1\" and the suggested name then is 1.\n\nI do not care much about this, but what I think is more important is that the behavior should be consistent for the two cases: opening the dialog on a branch and switching the \"Source ref\" in the dialog with the drop down. This should be reflected in the coding also.",
+      "revId": "ad71e02bd4787acd25bf28d9cf1ad0b5561527e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///nI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-09-06T07:12:31Z",
+      "side": 1,
+      "message": "Robin: No, I don\u0027t think it\u0027s obsolete. You can open the dialog from a remote branch node in the Repositories View by selecting \"Create Branch...\". Then the branch is preselected in the Combo Box.",
+      "parentUuid": "AABOBH///nQ\u003d",
+      "revId": "ad71e02bd4787acd25bf28d9cf1ad0b5561527e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
