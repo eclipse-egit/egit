@@ -52,6 +52,24 @@
       "revId": "ad71e02bd4787acd25bf28d9cf1ad0b5561527e7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///m8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-09-06T08:00:19Z",
+      "side": 1,
+      "message": "Robin R: What you\u0027re describing is similar to how it worked before, isn\u0027t it? Where there was a \"Team -\u003e Branch...\" menu and then different Buttons (Checkout and Create Branch, IIRC). I agree that the \"New branch\" dialog is not very usable at the moment.",
+      "parentUuid": "AABOBH///nQ\u003d",
+      "revId": "ad71e02bd4787acd25bf28d9cf1ad0b5561527e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
