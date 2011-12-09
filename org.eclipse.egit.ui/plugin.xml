@@ -3661,6 +3661,10 @@
             commandId="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
             icon="icons/obj16/open-commit.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
+            icon="icons/obj16/open-commit.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
