@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOC3///MU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/command/OpenInCommitViewerHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-12-09T00:52:33Z",
+      "side": 1,
+      "message": "Style nit: curlies not needed",
+      "revId": "1e9ebb7fdabd71b83e8bf9fc82304366425fdf96",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOC3///L0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/command/OpenInCommitViewerHandler.java",
         "patchSetId": 4
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABOC3///MU\u003d",
+      "revId": "1e9ebb7fdabd71b83e8bf9fc82304366425fdf96",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///MQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/command/OpenInCommitViewerHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-12-09T00:52:33Z",
+      "side": 1,
+      "message": "You can just call CommitEditor.openQuiet which logs the PartInitException and doesn\u0027t throw it",
       "revId": "1e9ebb7fdabd71b83e8bf9fc82304366425fdf96",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
