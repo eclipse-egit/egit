@@ -2,6 +2,24 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOC3///L0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/command/OpenInCommitViewerHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-09T08:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOC3///MU\u003d",
+      "revId": "1e9ebb7fdabd71b83e8bf9fc82304366425fdf96",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOC3///Lw\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/reflog/command/OpenInCommitViewerHandler.java",
         "patchSetId": 4
