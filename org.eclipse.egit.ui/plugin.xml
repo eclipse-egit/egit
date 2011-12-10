@@ -870,6 +870,24 @@
          </activeWhen>
       </handler>
       <handler
+            commandId="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.reflog.command.OpenInCommitViewerHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate>
+                  <adapt
+                        type="org.eclipse.jgit.storage.file.ReflogEntry">
+                  </adapt>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
             commandId="org.eclipse.egit.ui.team.Commit">
          <class
                class="org.eclipse.egit.ui.internal.actions.CommitActionHandler">
@@ -1586,6 +1604,11 @@
                commandId="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
                icon="icons/obj16/checkout.gif"
                label="%RefLogViewCheckout.label"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
+               label="%RefLogViewOpenInCommitViewer.label"
                style="push">
          </command>
       </menuContribution>
@@ -3222,7 +3245,7 @@
                   <adapt
                      type="org.eclipse.core.resources.IFile">
                      <test
-                        property="GitResource.isShared" />>
+                        property="GitResource.isShared" />
                   </adapt>
                </with>
             </visibleWhen>
@@ -3634,6 +3657,14 @@
             commandId="org.eclipse.egit.ui.history.DeleteBranch"
             icon="icons/obj16/delete_obj.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
+            icon="icons/obj16/open-commit.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
+            icon="icons/obj16/open-commit.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -4004,6 +4035,10 @@
       <command
             id="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
             name="%CheckoutCommand.name">
+      </command>
+      <command
+            id="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
+            name="%OpenInCommitViewerCommand.name">
       </command>
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.OpenInTextEditorHandler"

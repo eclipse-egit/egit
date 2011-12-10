@@ -21,13 +21,16 @@ import org.eclipse.egit.core.CoreText;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.team.core.ProjectSetCapability;
 
 /**
  * This URI like construct used for a Git SCM URL. See
  * http://maven.apache.org/scm/scm-url-format.html for the format description.
  */
 public class GitURI {
+	// TODO replace with org.eclipse.team.core.ProjectSetCapability.SCHEME_SCM
+	// when we drop support for Galileo
+	private static final String SCHEME_SCM = "scm"; //$NON-NLS-1$
+
 	private static final String SCHEME_GIT = "git"; //$NON-NLS-1$
 
 	private static final String KEY_PATH = "path"; //$NON-NLS-1$
@@ -52,7 +55,7 @@ public class GitURI {
 	 */
 	public GitURI(URI uri) {
 		try {
-			if (ProjectSetCapability.SCHEME_SCM.equals(uri.getScheme())) {
+			if (SCHEME_SCM.equals(uri.getScheme())) {
 				final String ssp = uri.getSchemeSpecificPart();
 				if (ssp.startsWith(SCHEME_GIT)) {
 					int indexOfSemicolon = ssp.indexOf(';');
