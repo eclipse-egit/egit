@@ -11,6 +11,7 @@ package org.eclipse.egit.core.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.team.core.ProjectSetSerializationContext;
+import org.eclipse.team.core.TeamException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -113,10 +115,10 @@ public class GitProjectSetCapabilityTest {
 		createRepository(cPath, "notused", "stable");
 		cProject.delete(false, true, null);
 
-		String aReference = "1.0," + aPath.toFile().toURI().toString() + ",master,.";
-		String baReference = "1.0," + bPath.toFile().toURI().toString() + ",master,ba";
-		String bbReference = "1.0," + bPath.toFile().toURI().toString() + ",master,bb";
-		String cReference = "1.0," + cPath.toFile().toURI().toString() + ",stable,.";
+		String aReference = createProjectReference(aPath, "master", ".");
+		String baReference = createProjectReference(bPath, "master", "ba");
+		String bbReference = createProjectReference(bPath, "master", "bb");
+		String cReference = createProjectReference(cPath, "stable", ".");
 		String[] references = new String[] { aReference, baReference, bbReference, cReference };
 
 		capability.addToWorkspace(references,
@@ -163,8 +165,8 @@ public class GitProjectSetCapabilityTest {
 		xaProject.delete(false, true, null);
 		xbProject.delete(false, true, null);
 
-		String xaMasterReference = "1.0," + xPath.toFile().toURI().toString() + ",master,xa";
-		String xbStableReference = "1.0," + xPath.toFile().toURI().toString() + ",stable,xb";
+		String xaMasterReference = createProjectReference(xPath, "master", "xa");
+		String xbStableReference = createProjectReference(xPath, "stable", "xb");
 		String[] references = new String[] { xaMasterReference, xbStableReference };
 
 		capability.addToWorkspace(references,
@@ -189,6 +191,50 @@ public class GitProjectSetCapabilityTest {
 		RepositoryMapping xbMapping = RepositoryMapping.getMapping(xbImported);
 		assertNotNull(xbMapping);
 		assertEquals("stable", xbMapping.getRepository().getBranch());
+	}
+
+	@Test
+	public void testImportWithMultipleCallsForSameDestinationRepo() throws Exception {
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IPath reposPath = root.getLocation().append("repos");
+		pathsToClean.add(reposPath.toFile());
+
+		IPath xPath = reposPath.append("x");
+		IProject xaProject = createProject(xPath, "xa");
+		IProject xbProject = createProject(xPath, "xb");
+		String url = createUrl(xPath);
+		createRepository(xPath, url, "stable");
+		xaProject.delete(false, true, null);
+		xbProject.delete(false, true, null);
+
+		String xaReference = createProjectReference(xPath, "master", "xa");
+		String xbReference = createProjectReference(xPath, "master", "xb");
+
+		// This should work because there is not yet a repo at the destination
+		capability.addToWorkspace(new String[] { xaReference },
+				new ProjectSetSerializationContext(),
+				new NullProgressMonitor());
+
+		// This should work because the repo that is already there is for the
+		// same remote URL. It's assumed to be ok and will skip cloning and
+		// directly import the project.
+		capability.addToWorkspace(new String[] { xbReference },
+				new ProjectSetSerializationContext(),
+				new NullProgressMonitor());
+
+		pathsToClean.add(root.getLocation().append("x").toFile());
+
+		IPath otherPathWithX = reposPath.append("other").append("x");
+		String otherReferenceWithDifferentUrl = createProjectReference(otherPathWithX, "master", "xb");
+
+		try {
+			capability.addToWorkspace(new String[] { otherReferenceWithDifferentUrl },
+					new ProjectSetSerializationContext(),
+					new NullProgressMonitor());
+			fail("Should throw TeamException when a repo exists at the place but doesn't have the same URL.");
+		} catch (TeamException e) {
+			// This is expected
+		}
 	}
 
 	private IProject createProject(String name) throws CoreException {
@@ -236,5 +282,13 @@ public class GitProjectSetCapabilityTest {
 		ConnectProviderOperation operation = new ConnectProviderOperation(
 				project.getProject(), gitDir);
 		operation.execute(null);
+	}
+
+	private static String createProjectReference(IPath repoPath, String branch, String projectPath) {
+		return "1.0," + createUrl(repoPath) + "," + branch + "," + projectPath;
+	}
+
+	private static String createUrl(IPath repoPath) {
+		return repoPath.toFile().toURI().toString();
 	}
 }
