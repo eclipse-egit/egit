@@ -31,7 +31,10 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryCache.FileKey;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -182,6 +185,10 @@ public class ProjectUtil {
 			final File directory, final Set<String> visistedDirs,
 			final IProgressMonitor monitor) {
 		if (directory == null)
+			return false;
+
+		if (directory.getName().equals(Constants.DOT_GIT)
+				&& FileKey.isGitRepository(directory, FS.DETECTED))
 			return false;
 
 		IProgressMonitor pm = monitor;
