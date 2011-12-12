@@ -113,7 +113,7 @@ perl -pi~ -e '
 		$seen_version = 0;
 		$old_argv = $ARGV;
 	}
-	if ($seen_version < 4) {
+	if ($seen_version < 2) {
 		$seen_version++ if (!/<\?xml/ &&
 		s/(version=")[^"]*(")/${1}'"$OSGI_V"'${2}/);
 	}
