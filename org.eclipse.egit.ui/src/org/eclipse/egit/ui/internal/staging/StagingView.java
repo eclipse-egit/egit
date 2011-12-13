@@ -1293,8 +1293,8 @@ public class StagingView extends ViewPart {
 				.getPreviousCommit()));
 		commitMessageComponent.setAmendAllowed(helper.amendAllowed());
 		commitMessageComponent.setAmending(false);
-		commitMessageComponent.setSignedOff(false);
-		commitMessageComponent.setCreateChangeId(false);
+		// set the defaults for change id and signed off buttons.
+		commitMessageComponent.setDefaults();
 		commitMessageComponent.updateUI();
 		commitMessageComponent.enableListers(true);
 	}
