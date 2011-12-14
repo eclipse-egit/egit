@@ -53,8 +53,8 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * A wizard for creating a patch file by running the git diff command.
@@ -76,17 +76,16 @@ public class GitCreatePatchWizard extends Wizard {
 
 	/**
 	 *
-	 * @param part
+	 * @param shell
 	 * @param commit
 	 * @param db
 	 */
-	public static void run(IWorkbenchPart part, final RevCommit commit,
+	public static void run(Shell shell, final RevCommit commit,
 			Repository db) {
 		final String title = UIText.GitCreatePatchWizard_CreatePatchTitle;
 		final GitCreatePatchWizard wizard = new GitCreatePatchWizard(commit, db);
 		wizard.setWindowTitle(title);
-		WizardDialog dialog = new WizardDialog(part.getSite().getShell(),
-				wizard);
+		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.setMinimumPageSize(INITIAL_WIDTH, INITIAL_HEIGHT);
 		dialog.setHelpAvailable(false);
 		dialog.open();
@@ -326,7 +325,9 @@ public class GitCreatePatchWizard extends Wizard {
 		}
 
 		private String createFileName() {
-			String suggestedFileName = CreatePatchOperation.suggestFileName(commit);
+			String suggestedFileName = commit != null ? CreatePatchOperation
+					.suggestFileName(commit) : db.getWorkTree().getName()
+					.concat(".patch"); //$NON-NLS-1$
 			String path = getDialogSettings().get(PATH_KEY);
 			if (path != null)
 				return Path.fromPortableString(path).append(suggestedFileName).toOSString();
