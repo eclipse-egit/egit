@@ -3,6 +3,31 @@
 	<name>org.eclipse.egit</name>
 	<comment></comment>
 	<projects>
+		<project>com.google.protobuf</project>
+		<project>com.jcraft.jsch</project>
+		<project>javax.servlet</project>
+		<project>org.eclipse.jgit</project>
+		<project>org.eclipse.jgit.ant</project>
+		<project>org.eclipse.jgit.ant.test</project>
+		<project>org.eclipse.jgit.console</project>
+		<project>org.eclipse.jgit.feature</project>
+		<project>org.eclipse.jgit.generated.storage.dht.proto</project>
+		<project>org.eclipse.jgit.http.server</project>
+		<project>org.eclipse.jgit.http.test</project>
+		<project>org.eclipse.jgit.iplog</project>
+		<project>org.eclipse.jgit.junit</project>
+		<project>org.eclipse.jgit.junit.feature</project>
+		<project>org.eclipse.jgit.junit.http</project>
+		<project>org.eclipse.jgit.pgm</project>
+		<project>org.eclipse.jgit.source.feature</project>
+		<project>org.eclipse.jgit.storage.dht</project>
+		<project>org.eclipse.jgit.storage.dht.test</project>
+		<project>org.eclipse.jgit.test</project>
+		<project>org.eclipse.jgit.ui</project>
+		<project>org.eclipse.jgit.updatesite</project>
+		<project>org.kohsuke.args4j</project>
+		<project>org.mockito</project>
+		<project>org.objenesis</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
