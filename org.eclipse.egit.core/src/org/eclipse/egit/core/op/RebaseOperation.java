@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -17,10 +18,12 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
+import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.api.RebaseResult;
@@ -86,7 +89,7 @@ public class RebaseOperation implements IEGitOperation {
 			monitor = new NullProgressMonitor();
 		else
 			monitor = m;
-
+		final IProject[] validProjects = ProjectUtil.getValidOpenProjects(repository);
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 			public void run(IProgressMonitor actMonitor) throws CoreException {
 				RebaseCommand cmd = new Git(repository).rebase()
@@ -106,10 +109,22 @@ public class RebaseOperation implements IEGitOperation {
 					throw new CoreException(Activator.error(e.getMessage(), e));
 				} catch (GitAPIException e) {
 					throw new CoreException(Activator.error(e.getMessage(), e));
+				} finally {
+					if (refreshNeeded())
+						ProjectUtil.refreshValidProjects(validProjects,
+								new SubProgressMonitor(actMonitor, 1));
 				}
 			}
 		};
 		ResourcesPlugin.getWorkspace().run(action, monitor);
+	}
+
+	private boolean refreshNeeded() {
+		if (result == null)
+			return true;
+		if (result.getStatus() == RebaseResult.Status.UP_TO_DATE)
+			return false;
+		return true;
 	}
 
 	public ISchedulingRule getSchedulingRule() {
