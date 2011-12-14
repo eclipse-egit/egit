@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+lo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CleanOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T18:43:50Z",
+      "side": 1,
+      "message": "actually I didn\u0027t think about this, I was rather thinking about situation when getRepository(res) \u003d\u003d null, in such situation Git class constructor will thrown NPE.",
+      "revId": "6d5c02e434f2ec96186ddfae807bc082f6c3a0d0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+ls\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T18:43:50Z",
+      "side": 1,
+      "message": "we have specialized activator class in UI fragment; org.eclipse.egit.ui.Activator,",
+      "revId": "6d5c02e434f2ec96186ddfae807bc082f6c3a0d0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
