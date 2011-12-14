@@ -53,6 +53,40 @@
     },
     {
       "key": {
+        "uuid": "AABOAn//+go\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-24T09:04:42Z",
+      "side": 1,
+      "message": "I think Chris moved to another company, check with him which copyright notice to use.",
+      "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+gs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-24T09:04:42Z",
+      "side": 1,
+      "message": "why is this member public ?",
+      "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+gw\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
         "patchSetId": 7
