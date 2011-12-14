@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+gc\u003d",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-24T09:04:42Z",
+      "side": 1,
+      "message": "egit core should not depend on egit ui",
+      "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+gk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CleanOperation.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-24T09:04:42Z",
+      "side": 1,
+      "message": "chris moved to another company, so I suspect you need a different mail address here.",
+      "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+gg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CleanOperation.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-24T09:04:42Z",
+      "side": 1,
+      "message": "why does this need to be static ?",
+      "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+gw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-24T09:04:42Z",
+      "side": 1,
+      "message": "Why is this commented out ? We don\u0027t like dead code ending up in the repository.",
+      "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
