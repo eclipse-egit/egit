@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOAn//+lE\u003d",
+        "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T19:40:47Z",
+      "side": 1,
+      "message": "I\u0027m guessing that you add this import to use org.eclipse.egit.ui.Activator in core fragment. In org.eclipse.egit.core we have also specialized Activator, in egit.ui we use ui.Activator and in egit.core we use core.Activator ;)",
+      "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn//+gc\u003d",
         "filename": "org.eclipse.egit.core/META-INF/MANIFEST.MF",
         "patchSetId": 7
@@ -30,6 +47,74 @@
       "writtenOn": "2011-08-24T09:04:42Z",
       "side": 1,
       "message": "chris moved to another company, so I suspect you need a different mail address here.",
+      "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+lA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CleanOperation.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T19:40:47Z",
+      "side": 1,
+      "message": "here you should use org.eclipse.egit.core.Activator here ;)",
+      "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+k8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CleanOperation.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T19:40:47Z",
+      "side": 1,
+      "message": "this is already checked in CleanActionHandler (actually org.eclipse.egit.ui.internal.actions.RepositoryActionHandler.getSelectedResources(ExecutionEvent) will never return null)",
+      "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+k4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CleanOperation.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T19:40:47Z",
+      "side": 1,
+      "message": "this is also already checked in CleanActionHandler.",
+      "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+k0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CleanOperation.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T19:40:47Z",
+      "side": 1,
+      "message": "Here is what I was thinking about:\n\nRepository repo \u003d getRepository(res);\nif (repo \u003d\u003d null)\n    continue;\nRepoTree \u003d new Git(repo);\n...\n\nsame in line 84",
       "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -81,6 +166,23 @@
       "writtenOn": "2011-08-24T09:04:42Z",
       "side": 1,
       "message": "why is this member public ?",
+      "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+lI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T19:40:47Z",
+      "side": 1,
+      "message": "not really yet, but we are closer ... I would prefer that we reuse org.eclipse.egit.ui.Activator.logError(String, Throwable) static method. Or if you want to log it as a info I would suggest to add org.eclipse.egit.ui.Activator.logInfo(String, Throwable) method",
       "revId": "e48fd1821e19ab026bb6b4ef2cd4aef75c43e417",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
