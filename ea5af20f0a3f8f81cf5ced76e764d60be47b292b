@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+mk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CleanOperation.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T15:30:48Z",
+      "side": 1,
+      "message": "you will get NPE if getRepository() return null (when given resource isn\u0027t in project shared by git).",
+      "revId": "ea5af20f0a3f8f81cf5ced76e764d60be47b292b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+mg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CleanOperation.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T15:30:48Z",
+      "side": 1,
+      "message": "here same as above",
+      "revId": "ea5af20f0a3f8f81cf5ced76e764d60be47b292b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+mc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T15:30:48Z",
+      "side": 1,
+      "message": "we don\u0027t use curly brackets around one line statements",
+      "revId": "ea5af20f0a3f8f81cf5ced76e764d60be47b292b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+mY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T15:30:48Z",
+      "side": 1,
+      "message": "you should at least log this exception",
+      "revId": "ea5af20f0a3f8f81cf5ced76e764d60be47b292b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+mU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T15:30:48Z",
+      "side": 1,
+      "message": "remove TODO",
+      "revId": "ea5af20f0a3f8f81cf5ced76e764d60be47b292b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+mQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T15:30:48Z",
+      "side": 1,
+      "message": "remove TODO",
+      "revId": "ea5af20f0a3f8f81cf5ced76e764d60be47b292b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+mM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T15:30:48Z",
+      "side": 1,
+      "message": "remove TODO",
+      "revId": "ea5af20f0a3f8f81cf5ced76e764d60be47b292b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+mI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T15:30:48Z",
+      "side": 1,
+      "message": "remove TODO",
+      "revId": "ea5af20f0a3f8f81cf5ced76e764d60be47b292b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn//+mE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-08-23T15:30:48Z",
+      "side": 1,
+      "message": "remove TODO",
+      "revId": "ea5af20f0a3f8f81cf5ced76e764d60be47b292b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
