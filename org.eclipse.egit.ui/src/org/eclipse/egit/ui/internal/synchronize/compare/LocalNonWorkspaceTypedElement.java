@@ -168,6 +168,11 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 		return Platform.getAdapterManager().getAdapter(this, adapter);
 	}
 
+	public void setSharedDocumentListener(
+			EditableSharedDocumentAdapter.ISharedDocumentAdapterListener sharedDocumentListener) {
+		this.sharedDocumentListener = sharedDocumentListener;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
