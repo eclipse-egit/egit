@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODH///uc\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "we use [DRAFT] or [RFC] to mark unfinished changes",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///vQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "? this is an action handler, the operation is another class or do I miss something ?",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///vM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CleanActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "I think this is obvious, I would consider removing this comment",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///vI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CleanTreeDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "don\u0027t you want to use a consistent email address throughout this commit ?",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///vY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CleanTreeDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "we don\u0027t use author tags, but we want javadoc for non-trivial public stuff",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///vE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CleanTreeDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "this comment seems unnecessary, this looks obvious",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///vA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CleanTreeDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "what the heck is this? We are not handling tags here ...",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///u8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CleanTreeDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "how does this relate to tags ?",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///u4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CleanTreeDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "why do we need a tag list here ?",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///u0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CleanTreeDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "? again why tags here ?",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///uw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CleanTreeDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "tags ?",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///us\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CleanTreeDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "don\u0027t use slang, better use setRepository()",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///uo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CleanTreeDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "better name this getRepository()",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///uk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CleanTreeDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "again why tags here ?",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///ug\u003d",
+        "filename": "org.eclipse.egit/.project",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-15T22:32:33Z",
+      "side": 1,
+      "message": "add the OSGi dependencies in the manifest, project dependencies only work in Eclipse but won\u0027t in the maven build",
+      "revId": "ab2866dcec8afbc7599fe474a2412acba552e24f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
