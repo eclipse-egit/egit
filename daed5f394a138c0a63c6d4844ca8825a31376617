@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOC3///xQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IGitSelectRepositoryWizardPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-30T22:15:32Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "daed5f394a138c0a63c6d4844ca8825a31376617",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
