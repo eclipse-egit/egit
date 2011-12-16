@@ -56,11 +56,19 @@ public class RevertFailureDialog extends MessageDialog {
 	 * @param result
 	 */
 	public static void show(Shell shell, RevCommit commit, MergeResult result) {
-		String message = MessageFormat
-				.format(UIText.RevertFailureDialog_Message, commit
-						.abbreviate(7).name());
+		String message;
+		Map<String, MergeFailureReason> reasons = result != null ? result
+				.getFailingPaths() : null;
+		if (reasons != null && !reasons.isEmpty())
+			message = MessageFormat.format(UIText.RevertFailureDialog_Message,
+					commit.abbreviate(7).name());
+		else
+			message = MessageFormat.format(
+					UIText.RevertFailureDialog_MessageNoFiles, commit
+							.abbreviate(7).name());
+
 		RevertFailureDialog dialog = new RevertFailureDialog(shell, message,
-				result);
+				reasons);
 		dialog.setShellStyle(dialog.getShellStyle() | SWT.SHEET | SWT.RESIZE);
 		dialog.open();
 	}
@@ -144,23 +152,23 @@ public class RevertFailureDialog extends MessageDialog {
 		}
 	}
 
-	private final MergeResult result;
+	private final Map<String, MergeFailureReason> reasons;
 
 	/**
 	 * Create dialog for merge result
 	 *
 	 * @param shell
 	 * @param message
-	 * @param result
+	 * @param reasons
 	 */
-	public RevertFailureDialog(Shell shell, String message, MergeResult result) {
+	public RevertFailureDialog(Shell shell, String message,
+			Map<String, MergeFailureReason> reasons) {
 		super(shell, UIText.RevertFailureDialog_Title, null, message, ERROR,
 				new String[] { IDialogConstants.OK_LABEL }, 0);
-		this.result = result;
+		this.reasons = reasons;
 	}
 
 	protected Control createCustomArea(Composite parent) {
-		Map<String, MergeFailureReason> reasons = result.getFailingPaths();
 		if (reasons == null || reasons.isEmpty())
 			return null;
 
