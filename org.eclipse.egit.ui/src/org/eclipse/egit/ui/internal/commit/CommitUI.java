@@ -49,6 +49,7 @@ import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
@@ -225,6 +226,9 @@ public class CommitUI  {
 					if (mapping != null)
 						mapping.fireRepositoryChanged();
 				} catch (CoreException e) {
+					if (e.getCause() instanceof JGitInternalException)
+						return Activator.createErrorStatus(
+								e.getLocalizedMessage(), e.getCause());
 					return Activator.createErrorStatus(
 							UIText.CommitAction_CommittingFailed, e);
 				} finally {
