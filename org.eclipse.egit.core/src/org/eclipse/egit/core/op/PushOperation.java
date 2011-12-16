@@ -21,7 +21,6 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
@@ -29,8 +28,8 @@ import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
-import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.RemoteRefUpdate.Status;
+import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -205,7 +204,7 @@ public class PushOperation {
 										CoreText.PushOperation_InternalExceptionOccurredMessage,
 										errorMessage);
 						handleException(uri, e, userMessage);
-					} catch (InvalidRemoteException e) {
+					} catch (Exception e) {
 						handleException(uri, e, e.getMessage());
 					}
 
@@ -236,7 +235,7 @@ public class PushOperation {
 						errorMessage);
 				URIish uri = getPushURIForErrorHandling();
 				handleException(uri, e, userMessage);
-			} catch (InvalidRemoteException e) {
+			} catch (Exception e) {
 				URIish uri = getPushURIForErrorHandling();
 				handleException(uri, e, e.getMessage());
 			}
