@@ -7,12 +7,15 @@
  *
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
+ *    Sascha Scholz (SAP) - improvements
  *******************************************************************************/
+
 package org.eclipse.egit.ui.internal.clone;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,6 +37,7 @@ import org.eclipse.egit.core.op.ConfigureFetchAfterCloneTask;
 import org.eclipse.egit.core.op.ConfigurePushAfterCloneTask;
 import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.op.SetChangeIdTask;
+import org.eclipse.egit.core.op.SetRepositoryConfigPropertyTask;
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
@@ -41,6 +45,9 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo;
+import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo.PushInfo;
+import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo.RepositoryConfigProperty;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -151,6 +158,24 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 	 */
 	protected boolean performClone(URIish uri,
 			UserPasswordCredentials credentials) {
+		try {
+			GitRepositoryInfo info = new GitRepositoryInfo(uri.toString());
+			info.setCredentials(credentials.getUser(), credentials.getPassword());
+			return performClone(info);
+		} catch (URISyntaxException e) {
+			Activator.error(e.getMessage(), e);
+			return false;
+		}
+	}
+
+	/**
+	 * @param gitRepositoryInfo
+	 * @return if clone was successful
+	 * @throws URISyntaxException
+	 */
+	protected boolean performClone(GitRepositoryInfo gitRepositoryInfo) throws URISyntaxException {
+		URIish uri = new URIish(gitRepositoryInfo.getCloneUri());
+		UserPasswordCredentials credentials = gitRepositoryInfo.getCredentials();
 		setWindowTitle(NLS.bind(UIText.GitCloneWizard_jobName, uri.toString()));
 		final boolean allSelected;
 		final Collection<Ref> selectedBranches;
@@ -189,6 +214,10 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 			op.setCredentialsProvider(new UsernamePasswordCredentialsProvider(
 					credentials.getUser(), credentials.getPassword()));
 
+		configureFetchSpec(op, gitRepositoryInfo, remoteName);
+		configurePush(op, gitRepositoryInfo, remoteName);
+		configureRepositoryConfig(op, gitRepositoryInfo);
+
 		if (gerritConfiguration != null
 				&& gerritConfiguration.configureGerrit()) {
 			boolean hasReviewNotes = hasReviewNotes(uri, timeout, credentials);
@@ -216,6 +245,34 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		else
 			cloneOperation = op;
 		return true;
+	}
+
+	private void configureFetchSpec(CloneOperation op,
+			GitRepositoryInfo gitRepositoryInfo, String remoteName) {
+		for (String fetchRefSpec : gitRepositoryInfo.getFetchRefSpecs()) {
+			op.addPostCloneTask(new ConfigureFetchAfterCloneTask(remoteName, fetchRefSpec));
+		}
+	}
+
+	private void configurePush(CloneOperation op,
+			GitRepositoryInfo gitRepositoryInfo, String remoteName) {
+		for (PushInfo pushInfo : gitRepositoryInfo.getPushInfos()) {
+			try {
+				URIish uri = pushInfo.pushUri != null ? new URIish(pushInfo.pushUri) : null;
+				ConfigurePushAfterCloneTask task = new ConfigurePushAfterCloneTask(
+						remoteName, pushInfo.pushRefSpec, uri);
+				op.addPostCloneTask(task);
+			} catch (URISyntaxException e) {
+				Activator.handleError(UIText.GitCloneWizard_failed, e, true);
+			}
+		}
+	}
+
+	private void configureRepositoryConfig(CloneOperation op, GitRepositoryInfo gitRepositoryInfo) {
+		for (RepositoryConfigProperty p : gitRepositoryInfo.getRepositoryConfigProperties()) {
+			SetRepositoryConfigPropertyTask task = new SetRepositoryConfigPropertyTask(p.section, p.subsection, p.name, p.value);
+			op.addPostCloneTask(task);
+		}
 	}
 
 	private void importProjects(final Repository repository,
