@@ -53,10 +53,10 @@ public class GitCloneWizard extends AbstractGitCloneWizard {
 		setWindowTitle(UIText.GitCloneWizard_title);
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 		setNeedsProgressMonitor(true);
-		cloneSource = new RepositorySelectionPage(true, presetURI);
-		cloneSource.setHelpContext(HELP_CONTEXT);
 		validSource.setHelpContext(HELP_CONTEXT);
 		cloneDestination.setHelpContext(HELP_CONTEXT);
+		cloneSource = new RepositorySelectionPage(true, presetURI);
+		cloneSource.setHelpContext(HELP_CONTEXT);
 		gerritConfiguration = new GerritConfigurationPage() {
 
 			@Override

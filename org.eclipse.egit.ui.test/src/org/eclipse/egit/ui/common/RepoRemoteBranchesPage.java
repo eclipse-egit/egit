@@ -11,8 +11,13 @@ package org.eclipse.egit.ui.common;
 
 import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertEnabled;
 import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertNotEnabled;
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.allOf;
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.widgetOfType;
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withText;
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.widgetIsEnabled;
+import static org.eclipse.swtbot.swt.finder.waits.Conditions.waitForWidget;
 
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
@@ -52,8 +57,11 @@ public class RepoRemoteBranchesPage {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void assertErrorMessage(String errorMessage) {
-		bot.text(" " + errorMessage);
+		bot.waitUntil(
+				waitForWidget(allOf(widgetOfType(Text.class), withText(" "
+						+ errorMessage))), 20000);
 	}
 
 	public void assertNextIsDisabled() {
