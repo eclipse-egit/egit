@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.wizards.share;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,12 +41,8 @@ import org.eclipse.egit.ui.common.SharingWizard;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.NoFilepatternException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.NoMessageException;
-import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
@@ -60,7 +57,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 
 @RunWith(SWTBotJunit4ClassRunner.class)
@@ -196,9 +192,7 @@ public class SharingWizardTest extends LocalRepositoryTestCase {
 
 	@Test
 	public void shareProjectWithAlreadyCreatedRepos() throws IOException,
-			InterruptedException, NoFilepatternException, NoHeadException,
-			NoMessageException, ConcurrentRefUpdateException,
-			JGitInternalException, WrongRepositoryStateException {
+			InterruptedException, JGitInternalException, GitAPIException {
 		FileRepository repo1 = new FileRepository(new File(
 				createProject(projectName1), "../.git"));
 		repo1.create();

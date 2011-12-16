@@ -23,11 +23,7 @@ import org.eclipse.egit.core.op.ConfigurePushAfterCloneTask;
 import org.eclipse.egit.core.test.DualRepositoryTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
-import org.eclipse.jgit.api.errors.NoFilepatternException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.NoMessageException;
-import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.UnmergedPathException;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
@@ -155,9 +151,8 @@ public class CloneOperationTest extends DualRepositoryTestCase {
 		assertEquals(1, clonedGit.notesList().setNotesRef("refs/notes/review").call().size());
 	}
 
-	protected void createNoteInOrigin() throws NoFilepatternException, NoHeadException,
-			NoMessageException, UnmergedPathException,
-			ConcurrentRefUpdateException, WrongRepositoryStateException {
+	protected void createNoteInOrigin() throws UnmergedPathException,
+			GitAPIException {
 		Git git = new Git(repository1.getRepository());
 		git.add().addFilepattern("file.txt").call();
 		RevCommit commit = git.commit().setMessage("Initial commit").call();

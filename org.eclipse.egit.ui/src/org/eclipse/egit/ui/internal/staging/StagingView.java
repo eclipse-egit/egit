@@ -977,12 +977,16 @@ public class StagingView extends ViewPart {
 				add.call();
 			} catch (NoFilepatternException e1) {
 				// cannot happen
+			} catch (Exception e2) {
+				Activator.error(e2.getMessage(), e2);
 			}
 		if (rm != null)
 			try {
 				rm.call();
 			} catch (NoFilepatternException e) {
 				// cannot happen
+			} catch (Exception e2) {
+				Activator.error(e2.getMessage(), e2);
 			}
 
 		reload(currentRepository);
