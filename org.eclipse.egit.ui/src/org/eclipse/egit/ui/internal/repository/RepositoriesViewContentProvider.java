@@ -168,7 +168,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 						children.add(new RefNode(node, node.getRepository(),
 								ref));
 					}
-				} catch (IOException e) {
+				} catch (Exception e) {
 					return handleException(e, node);
 				}
 				return children.toArray();
@@ -181,7 +181,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 							refs.add(new RefNode(node, repo, refEntry
 									.getValue()));
 					}
-				} catch (IOException e) {
+				} catch (Exception e) {
 					return handleException(e, node);
 				}
 				return refs.toArray();
@@ -202,7 +202,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 						children.add(new RefNode(node, node.getRepository(),
 								ref));
 					}
-				} catch (IOException e) {
+				} catch (Exception e) {
 					return handleException(e, node);
 				}
 				return children.toArray();
@@ -215,7 +215,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 							refs.add(new RefNode(node, repo, refEntry
 									.getValue()));
 					}
-				} catch (IOException e) {
+				} catch (Exception e) {
 					return handleException(e, node);
 				}
 
@@ -267,7 +267,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 				}
 				for (Ref r : repo.getRefDatabase().getAdditionalRefs())
 					refs.add(new AdditionalRefNode(node, repo, r));
-			} catch (IOException e) {
+			} catch (Exception e) {
 				return handleException(e, node);
 			}
 			return refs.toArray();
