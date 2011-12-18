@@ -18,10 +18,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.WeakHashMap;
 
 import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
@@ -55,6 +58,9 @@ import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jgit.events.ListenerHandle;
+import org.eclipse.jgit.events.RefsChangedEvent;
+import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefDatabase;
@@ -76,6 +82,10 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 	private final State commandState;
 
 	private boolean branchHierarchyMode = false;
+
+	private Map<Repository, Map<String, Ref>> branchRefs = new WeakHashMap<Repository, Map<String, Ref>>();
+
+	private Map<Repository, ListenerHandle> refsChangedListeners = new WeakHashMap<Repository, ListenerHandle>();
 
 	/**
 	 * Constructs this instance
@@ -136,6 +146,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 	public void dispose() {
 		commandState.removeListener(this);
+		for (ListenerHandle handle : refsChangedListeners.values())
+			handle.remove();
+		refsChangedListeners.clear();
 	}
 
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
@@ -177,8 +190,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			} else {
 				List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
 				try {
-					for (Entry<String, Ref> refEntry : repo.getRefDatabase()
-							.getRefs(Constants.R_HEADS).entrySet()) {
+					for (Entry<String, Ref> refEntry : getRefs(repo, Constants.R_HEADS).entrySet()) {
 						if (!refEntry.getValue().isSymbolic())
 							refs.add(new RefNode(node, repo, refEntry
 									.getValue()));
@@ -211,8 +223,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			} else {
 				List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
 				try {
-					for (Entry<String, Ref> refEntry : repo.getRefDatabase()
-							.getRefs(Constants.R_REMOTES).entrySet()) {
+					for (Entry<String, Ref> refEntry : getRefs(repo, Constants.R_REMOTES).entrySet()) {
 						if (!refEntry.getValue().isSymbolic())
 							refs.add(new RefNode(node, repo, refEntry
 									.getValue()));
@@ -260,8 +271,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		case ADDITIONALREFS: {
 			List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
 			try {
-				for (Entry<String, Ref> refEntry : repo.getRefDatabase()
-						.getRefs(RefDatabase.ALL).entrySet()) {
+				for (Entry<String, Ref> refEntry : getRefs(repo, RefDatabase.ALL).entrySet()) {
 					String name=refEntry.getKey();
 					if (!(name.startsWith(Constants.R_HEADS) || name.startsWith(Constants.R_TAGS)|| name.startsWith(Constants.R_REMOTES)))
 						refs.add(new AdditionalRefNode(node, repo, refEntry
@@ -505,4 +515,33 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			Activator.handleError(e.getMessage(), e, false);
 		}
 	}
+
+	private synchronized Map<String, Ref> getRefs(final Repository repo, final String prefix) throws IOException {
+		Map<String, Ref> allRefs = branchRefs.get(repo);
+		if (allRefs == null) {
+			allRefs = repo.getRefDatabase().getRefs(RefDatabase.ALL);
+			branchRefs.put(repo, allRefs);
+			if (refsChangedListeners.get(repo) == null) {
+				RefsChangedListener listener = new RefsChangedListener() {
+					public void onRefsChanged(RefsChangedEvent event) {
+						synchronized (RepositoriesViewContentProvider.this) {
+							branchRefs.remove(repo);
+						}
+					}
+				};
+				refsChangedListeners.put(repo, repo.getListenerList()
+						.addRefsChangedListener(listener));
+			}
+		}
+		if (prefix.equals(RefDatabase.ALL))
+			return allRefs;
+
+		Map<String, Ref> filtered = new HashMap<String, Ref>();
+		for (Map.Entry<String, Ref> entry : allRefs.entrySet()) {
+			if (entry.getKey().startsWith(prefix))
+				filtered.put(entry.getKey(), entry.getValue());
+		}
+		return filtered;
+	}
+
 }
