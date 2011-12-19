@@ -65,8 +65,9 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		if (map == null)
 			return false;
 
+		DirCache dirc = null;
 		try {
-			final DirCache dirc = map.getRepository().lockDirCache();
+			dirc = map.getRepository().lockDirCache();
 			final int first = dirc.findEntry(map.getRepoRelativePath(file));
 			if (first < 0) {
 				dirc.unlock();
@@ -86,6 +87,9 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		} catch (IOException e) {
 			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(), 0,
 					CoreText.MoveDeleteHook_operationError, e));
+		} finally {
+			if (dirc != null)
+				dirc.unlock();
 		}
 		return true;
 	}
@@ -122,8 +126,9 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 			return false;
 		final RepositoryMapping dstm = RepositoryMapping.getMapping(dstf);
 
+		DirCache sCache = null;
 		try {
-			final DirCache sCache = srcm.getRepository().lockDirCache();
+			sCache = srcm.getRepository().lockDirCache();
 			final String sPath = srcm.getRepoRelativePath(srcf);
 			final DirCacheEntry sEnt = sCache.getEntry(sPath);
 			if (sEnt == null) {
@@ -150,6 +155,9 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		} catch (IOException e) {
 			tree.failed(new Status(IStatus.ERROR, Activator.getPluginId(), 0,
 					CoreText.MoveDeleteHook_operationError, e));
+		} finally {
+			if (sCache != null)
+				sCache.unlock();
 		}
 		return true;
 	}
@@ -355,31 +363,36 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 
 	private MoveResult moveIndexContent(String dPath,
 			final RepositoryMapping srcm, final String sPath) throws IOException {
+
 		final DirCache sCache = srcm.getRepository().lockDirCache();
-		final DirCacheEntry[] sEnt = sCache.getEntriesWithin(sPath);
-		if (sEnt.length == 0) {
-			sCache.unlock();
-			return MoveResult.UNTRACKED;
-		}
+		try {
+			final DirCacheEntry[] sEnt = sCache.getEntriesWithin(sPath);
+			if (sEnt.length == 0) {
+				sCache.unlock();
+				return MoveResult.UNTRACKED;
+			}
 
-		final DirCacheEditor sEdit = sCache.editor();
-		sEdit.add(new DirCacheEditor.DeleteTree(sPath));
-		final int sPathLen = sPath.length() == 0 ? sPath.length() : sPath
-				.length() + 1;
-		for (final DirCacheEntry se : sEnt) {
-			final String p = se.getPathString().substring(sPathLen);
-			sEdit.add(new DirCacheEditor.PathEdit(dPath + p) {
-				@Override
-				public void apply(final DirCacheEntry dEnt) {
-					dEnt.copyMetaData(se);
-				}
-			});
+			final DirCacheEditor sEdit = sCache.editor();
+			sEdit.add(new DirCacheEditor.DeleteTree(sPath));
+			final int sPathLen = sPath.length() == 0 ? sPath.length() : sPath
+					.length() + 1;
+			for (final DirCacheEntry se : sEnt) {
+				final String p = se.getPathString().substring(sPathLen);
+				sEdit.add(new DirCacheEditor.PathEdit(dPath + p) {
+					@Override
+					public void apply(final DirCacheEntry dEnt) {
+						dEnt.copyMetaData(se);
+					}
+				});
+			}
+			if (sEdit.commit())
+				return MoveResult.SUCCESS;
+			else
+				return MoveResult.FAILED;
+		} finally {
+			if (sCache != null)
+				sCache.unlock();
 		}
-		if (sEdit.commit())
-			return MoveResult.SUCCESS;
-		else
-			return MoveResult.FAILED;
-
 	}
 
 	private boolean cannotModifyRepository(final IResourceTree tree) {

@@ -101,6 +101,8 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 		} finally {
 			for (final RepositoryMapping rm : mappings.keySet())
 				rm.fireRepositoryChanged();
+			for (DirCache cache:caches.values())
+				cache.unlock();
 			caches.clear();
 			mappings.clear();
 			monitor.done();
