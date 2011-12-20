@@ -4255,6 +4255,7 @@
         point="org.eclipse.egit.ui.cloneSourceProvider">
      <source
            hasFixLocation="true"
+           icon="/icons/obj16/editconfig.gif"
            label="Custom URI">
      </source>
      <repositorySearchPage
