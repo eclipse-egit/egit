@@ -31,7 +31,7 @@ public class GitCloneWizardHttpTest extends GitCloneWizardTestBase {
 				.getLocation().toFile(), "test" + System.nanoTime());
 
 		importWizard.openWizard();
-		RepoPropertiesPage propertiesPage = importWizard.openCloneWizard();
+		RepoPropertiesPage propertiesPage = importWizard.openRepoPropertiesPage();
 		propertiesPage.setURI(r.getUri());
 		propertiesPage.setUser("agitter");
 		propertiesPage.setPassword("letmein");

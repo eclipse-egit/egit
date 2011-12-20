@@ -19,8 +19,6 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 
 public class WorkingCopyPage {
 
@@ -38,7 +36,7 @@ public class WorkingCopyPage {
 		assertText(remoteName, bot.textWithLabel("Remote name:"));
 	}
 
-	public void waitForCreate() {
+	public void waitForCreate()  throws Exception {
 		// calculate the expected target directory
 		String targetDir = bot.textWithLabel("Directory:").getText()
 				+ File.separatorChar + Constants.DOT_GIT;
@@ -47,16 +45,12 @@ public class WorkingCopyPage {
 				Activator.getDefault().getRepositoryUtil()
 						.getConfiguredRepositories().contains(targetDir));
 
-		SWTBotShell dialogShell = bot.shell("Import Projects from Git");
-		SWTBotTree tree = dialogShell.bot().tree();
-		int expectedRowCount = tree.rowCount() + 1;
-		bot.button("Finish").click();
+		bot.button("Next >").click();
 
 		// wait until clone operation finished.
 		// wizard executes clone operation using getContainer.run
-		// wait until the repository table gets an additional entry
-		bot.waitUntil(Conditions.treeHasRows(tree, expectedRowCount), 20000);
-
+		
+		bot.waitUntil(Conditions.widgetIsEnabled(bot.radioInGroup("Wizard for project import")));
 
 		// depending on the timing, the clone job may already be run
 		// but the repository is not yet added to our list, of
@@ -74,7 +68,7 @@ public class WorkingCopyPage {
 	}
 
 	@SuppressWarnings("boxing")
-	public void assertWorkingCopyExists() {
+	public void assertWorkingCopyExists() throws Exception {
 		// get the destination directory from the wizard
 		String dirName = bot.textWithLabel("Directory:").getText();
 		File dir = new File(dirName);
