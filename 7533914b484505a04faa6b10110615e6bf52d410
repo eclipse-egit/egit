@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODH///Yk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareIndexWithHeadActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-12-20T15:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODH///Y0\u003d",
+      "revId": "7533914b484505a04faa6b10110615e6bf52d410",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
