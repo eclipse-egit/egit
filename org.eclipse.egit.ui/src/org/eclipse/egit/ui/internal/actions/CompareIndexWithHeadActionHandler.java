@@ -16,6 +16,7 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -82,7 +83,9 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 			return false;
 
 		IResource resource = (IResource) getAdapter(selection.getFirstElement(), IResource.class);
-		if (resource == null)
+		// action is only working on files. Avoid calculation
+		// of unnecessary expensive IndexDiff on a folder
+		if (resource == null || resource instanceof IFolder)
 			return false;
 
 		Repository repository = getRepository();
