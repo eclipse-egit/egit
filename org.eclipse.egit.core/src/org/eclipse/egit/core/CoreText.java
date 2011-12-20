@@ -66,6 +66,9 @@ public class CoreText extends NLS {
 	public static String CommitOperation_couldNotFindRepositoryMapping;
 
 	/** */
+	public static String ConfigureFetchAfterCloneTask_couldNotFetch;
+
+	/** */
 	public static String ConnectProviderOperation_connecting;
 
 	/** */
