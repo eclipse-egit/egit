@@ -38,11 +38,12 @@
 		<p>To build a repository, you invoke flavors of 
 			<b>RepositoryBuilder</b>.
 		</p>
-		<pre>FileRepositoryBuilder builder = new RepositoryBuilder();
-Repository repository = builder.setGitDir("/my/git/directory")
-.readEnvironment() // scan environment GIT_* variables
-.findGitDir() // scan up the file system tree
-.build();
+		<pre class="source-java">FileRepositoryBuilder builder = new FileRepositoryBuilder();
+Repository repository = builder.setGitDir(new File("/my/git/directory"))
+  .readEnvironment() // scan environment GIT_* variables
+  .findGitDir() // scan up the file system tree
+  .build();
+
 </pre>
 		<h3 id="Git_Objects">Git Objects</h3>
 		<p>All objects are represented by a SHA-1 id in the Git object model. In JGit, this is represented by the 
@@ -111,7 +112,7 @@ RevTag tag = walk.parseTag(objectIdOfTag);
 		<p>A 
 			<b>RevTree</b> represents a tree in the Git object model.
 		</p>
-		<p>To parse a commit, simply use a 
+		<p>To parse a tree, simply use a 
 			<b>RevWalk</b> instance:
 		</p>
 		<pre>RevWalk walk = new RevWalk(repository);

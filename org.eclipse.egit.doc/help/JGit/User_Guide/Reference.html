@@ -80,7 +80,7 @@ RevTag tag = git.tag().setName("tag").call();
 		</ul>
 		<p>Here's a quick example of how get some log messages.</p>
 		<pre>Git git = new Git(db);
-LogCommand log = git.log().call();
+Iterable&lt;RevCommit&gt; log = git.log().call();
 </pre>
 		<h3 id="MergeCommand_.28git-merge.29">MergeCommand (git-merge)</h3>
 		<p>TODO</p>
