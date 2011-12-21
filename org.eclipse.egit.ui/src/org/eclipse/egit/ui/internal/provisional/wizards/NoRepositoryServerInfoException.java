@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.provisional.wizards;
 
-import java.util.Collection;
-
 /**
  * <p>
  * <strong>EXPERIMENTAL</strong>. This class or interface has been added as part
@@ -20,15 +18,26 @@ import java.util.Collection;
  * the egit team.
  * </p>
  *
- * Provides info about servers which host git repositories.
+ * Exception that indicates that an implementor of the extension point could not
+ * create a {@code RepositoryServerInfo} object
  */
-public interface IRepositoryServerProvider {
+public class NoRepositoryServerInfoException extends Exception {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @return List of server infos
-	 * @throws NoRepositoryServerInfoException
-	 *             if an error occured when constructing a
-	 *             {@code RepositoryServerInfo} object
+	 * @param message
+	 * @param cause
 	 */
-	public Collection<RepositoryServerInfo> getRepositoryServerInfos() throws NoRepositoryServerInfoException;
+	public NoRepositoryServerInfoException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	/**
+	 * @param message
+	 */
+	public NoRepositoryServerInfoException(String message) {
+		super(message);
+	}
+
 }
