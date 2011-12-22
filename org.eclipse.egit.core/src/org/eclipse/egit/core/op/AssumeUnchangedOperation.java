@@ -23,9 +23,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.dircache.DirCache;
@@ -113,7 +113,7 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 	 * @see org.eclipse.egit.core.op.IEGitOperation#getSchedulingRule()
 	 */
 	public ISchedulingRule getSchedulingRule() {
-		return new MultiRule(rsrcList.toArray(new IResource[rsrcList.size()]));
+		return RuleUtil.getRuleForRepositories(rsrcList.toArray(new IResource[rsrcList.size()]));
 	}
 
 	private void assumeValid(final IResource resource) throws CoreException {
