@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.egit.psf"
       label="%featureName"
-      version="1.2.0.qualifier"
+      version="1.2.0.201112221803-r"
       provider-name="%providerName">
 
    <description>
