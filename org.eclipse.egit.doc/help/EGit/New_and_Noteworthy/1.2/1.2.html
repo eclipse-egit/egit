@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 1.2 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 1.2 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bugs-Closed.html" title="Bugs Closed">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bugs Closed</td>
+			</tr>
+		</table><hr/>
+		<h1 id="New_Features">New Features</h1>
+		<h2 id="Improved_decorator_performance">Improved decorator performance</h2>
+		<ul>
+			<li>An IndexDiff cache and a new resource decorator have been implemented to improve performance of resource decoration.</li>
+		</ul>
+		<h2 id="Support_for_project_rename_and_move_for_some_cases">Support for project rename and move for some cases</h2>
+		<p>EGit can now move and rename projects within a repository for a number
+			of cases. Moving a project to a subdirectory does not work and since
+			Eclipse actually destroys the project, we simply forbid it for now
+			(Platform bug 307140). The bug is only worked around in Eclipse 3.7,
+			i.e. forbidden in the UI.</p>
+		<h2 id="Option_to_auto-share_projects_on_import_when_located_in_a_working_tree">Option to auto-share projects on import when located in a working tree</h2>
+		<p>When the new preference 
+			<b>Team &gt; Git Projects &gt; Auto share project located in a git repository</b> is enabled projects which are located in the working tree of a git repository are automatically shared with the Git team provider when the project is imported into the workspace.
+		</p>
+		<h2 id="Interactive_adding_in_Compare_Editors">Interactive adding in Compare Editors</h2>
+		<p>You can stage only part of file and save it in git index. Also reverting selected hunk of code (from git index to working tree and from HEAD to working tree) is supported. For more detailed description you can watch this 
+			<a href="http://www.youtube.com/watch?v=d94RI9QA-RU" target="egit_external">example movie</a>
+		</p>
+		<h2 id="Repositories_View">Repositories View</h2>
+		<h3 id="Pull_with_multi-selection">Pull with multi-selection</h3>
+		<p>The 
+			<b>Pull</b> command now also works if resources are selected from more than one repository. 
+		</p>
+		<h3 id="Property_page_for_repository_configuration">Property page for repository configuration</h3>
+		<p>In the Git Repositories view, there is a new 
+			<b>Properties</b> action in the context menu, which will open a configuration dialog allowing to edit the Repository Configuration. Here, key value pairs can be added, changed or deleted. The 
+			<b>Open</b> button allows to open the Repository Configuration file in a text editor.
+		</p>
+		<h3 id="Delete_tag_command">Delete tag command</h3>
+		<p>On a tag, you may now click 
+			<b>Delete Tag</b> to delete a tag.
+		</p>
+		<h3 id="Drag_file_from_working_tree_to_open_editor">Drag file from working tree to open editor</h3>
+		<p>Files can now be opened by dragging them from the Working Directory to the Editor Area.</p>
+		<h2 id="History_View">History View</h2>
+		<h3 id="Option_to_follow_renames">Option to follow renames</h3>
+		<p>The new Preference 
+			<b>Preferences &gt; Team &gt; Git &gt; Views &gt; Follow Renames</b> allows to toggle whether renames of a selected resource should be followed in the History View, if the  "Resource" filter is used. This preference can also be configured from the History View's menu 
+			<b>Show &gt; Follow Renames</b>
+		</p>
+		<h3 id="Delete_Branch_Command">Delete Branch Command</h3>
+		<p>In the commit graph area, there is a new context menu action "Delete Branch" allowing to delete a branch. It will be enabled if a branch exists for the currently selected commit, which is not checked out. If there is a single branch on this commit, which is not checked out, this action will delete this branch immediately. If multiple such branches exist, a dialog will be shown asking which branches should be deleted. If commits become unreachable on "Delete Branch" a confirmation dialog will be shown to prevent accidental unreachability of commits.</p>
+		<h3 id="Show_annotations_from_file_table_in_history_view">Show annotations from file table in history view</h3>
+		<p>In the revision details area, there is a new context menu action 
+			<b>Show Annotations</b>. On selected files it will open the file in a (read-only) editor and display an annotation ruler with commit and author information ("blame annotations") for each line in a file.
+		</p>
+		<h2 id="Reflog_View">Reflog View</h2>
+		<h3 id="Show_Timestamp_and_Commit_Short_Message">Show Timestamp and Commit Short Message</h3>
+		<p>A reflog entry now additionally shows the timestamp of the reflog entry and the short message of the associated commit.</p>
+		<h3 id="New_Commands">New Commands</h3>
+		<p>The new context menu action 
+			<b>Checkout</b> will checkout the selected commit and the HEAD will become detached. The new action 
+			<b>Open in Commit Viewer</b> will open the commit matching the reflog entry, the same action can be triggered by double-clicking the reflog entry.
+		</p>
+		<h2 id="Commit_Editor">Commit Editor</h2>
+		<h3 id="Checkout_Command">Checkout Command</h3>
+		<p>A new 
+			<b>Checkout</b> button allows to check out the commit displayed in the commit viewer. The HEAD pointer will become detached.
+		</p>
+		<h3 id="Cherry-Pick_Command">Cherry-Pick Command</h3>
+		<p>A new 
+			<b>Cherry-Pick</b> button allows to cherry-pick the displayed commit. This applies the change introduced by the displayed commit on top of the currently checked out commit or branch.
+		</p>
+		<h2 id="GitHub_Mylyn_Connector">GitHub Mylyn Connector</h2>
+		<ul>
+			<li>You can now create Gists from selections in the 
+				<b>Console</b> view.
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Gist-from-console.png"/>
+		</p>
+		<ul>
+			<li>Support for 
+				<a href="https://enterprise.github.com/" target="egit_external">GitHub Enterprise</a>
+			</li>
+			<li>GitHub Java API updates
+				<ul>
+					<li>OAuth API support</li>
+					<li>Service Hook support</li>
+					<li>Repository contributors, languages, branches, and teams</li>
+				</ul>
+			</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bugs-Closed.html" title="Bugs Closed">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bugs Closed</td>
+			</tr>
+		</table>
+	</body>
+</html>

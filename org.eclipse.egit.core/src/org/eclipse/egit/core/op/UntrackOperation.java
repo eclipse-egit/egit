@@ -96,6 +96,9 @@ public class UntrackOperation implements IEGitOperation {
 		} finally {
 			for (final RepositoryMapping rm : mappings.keySet())
 				rm.fireRepositoryChanged();
+			for (DirCacheEditor editor:edits.values())
+				if (editor.getDirCache() != null)
+					editor.getDirCache().unlock();
 			edits.clear();
 			mappings.clear();
 			monitor.done();

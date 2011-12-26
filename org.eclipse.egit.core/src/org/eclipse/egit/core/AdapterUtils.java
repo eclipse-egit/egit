@@ -26,6 +26,7 @@ public class AdapterUtils {
 	 *
 	 * @param object
 	 * @param target
+	 * @param <V> type of target
 	 * @return adapted
 	 */
 	@SuppressWarnings("unchecked")

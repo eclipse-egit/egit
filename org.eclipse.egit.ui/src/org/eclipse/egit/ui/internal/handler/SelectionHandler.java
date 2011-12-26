@@ -48,6 +48,7 @@ public abstract class SelectionHandler extends AbstractHandler {
 	 *
 	 * @param itemClass
 	 * @param event
+	 * @param <V> type of itemClass
 	 * @return non-null but possibly empty list
 	 */
 	protected <V> V getSelectedItem(final Class<V> itemClass,
@@ -61,6 +62,7 @@ public abstract class SelectionHandler extends AbstractHandler {
 	 *
 	 * @param itemClass
 	 * @param event
+	 * @param <V> type of itemClass
 	 * @return non-null but possibly empty list
 	 */
 	protected <V> List<V> getSelectedItems(Class<V> itemClass,
