@@ -203,6 +203,9 @@ public class UIIcons {
 	/** Annotated tag icon */
 	public final static ImageDescriptor TAG_ANNOTATED;
 
+	/** Submodules icon */
+	public final static ImageDescriptor SUBMODULES;
+
 	/** base URL */
 	public final static URL base;
 
@@ -275,6 +278,7 @@ public class UIIcons {
 		MERGE = map("obj16/merge.gif"); //$NON-NLS-1$
 		TAG_ANNOTATED = map("obj16/annotated-tag.gif"); //$NON-NLS-1$
 		CREATE_REPOSITORY = map("etool16/createRepository.gif"); //$NON-NLS-1$
+		SUBMODULES = map("obj16/submodules.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
