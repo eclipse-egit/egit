@@ -28,10 +28,12 @@ import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
+import org.eclipse.jgit.diff.DiffFormatter;
+import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.treewalk.FileTreeIterator;
 
 /**
  * Creates a patch for a specific commit
@@ -66,9 +68,6 @@ public class CreatePatchOperation implements IEGitOperation {
 		if (repository == null)
 			throw new IllegalArgumentException(
 					CoreText.CreatePatchOperation_repoRequired);
-		if (commit == null)
-			throw new IllegalArgumentException(
-					CoreText.CreatePatchOperation_commitRequired);
 		this.repository = repository;
 		this.commit = commit;
 	}
@@ -102,32 +101,38 @@ public class CreatePatchOperation implements IEGitOperation {
 		diffFmt.setProgressMonitor(gitMonitor);
 		diffFmt.setContext(contextLines);
 
-		RevCommit[] parents = commit.getParents();
-		if (parents.length > 1)
-			throw new IllegalStateException(
-					"Cannot create patch for merge commit"); //$NON-NLS-1$
-
-		if (parents.length == 0)
-			throw new IllegalStateException(
-					"Cannot create patch for first commit"); //$NON-NLS-1$
-
 		if (useGitFormat)
 			writeGitPatchHeader(sb);
 
+		diffFmt.setRepository(repository);
+
 		try {
-			diffFmt.setRepository(repository);
-			List<DiffEntry> diffs = diffFmt.scan(parents[0].getId(), commit.getId());
-			for (DiffEntry ent : diffs) {
-				String path;
-				if (ChangeType.DELETE.equals(ent.getChangeType()))
-					path = ent.getOldPath();
-				else
-					path = ent.getNewPath();
-				currentEncoding = CompareCoreUtils.getResourceEncoding(repository, path);
-				diffFmt.format(ent);
+			if (commit != null) {
+				RevCommit[] parents = commit.getParents();
+				if (parents.length > 1)
+					throw new IllegalStateException(
+							CoreText.CreatePatchOperation_cannotCreatePatchForMergeCommit);
+				if (parents.length == 0)
+					throw new IllegalStateException(
+							CoreText.CreatePatchOperation_cannotCreatePatchForFirstCommit);
+
+				List<DiffEntry> diffs = diffFmt.scan(parents[0].getId(),commit.getId());
+				for (DiffEntry ent : diffs) {
+					String path;
+					if (ChangeType.DELETE.equals(ent.getChangeType()))
+						path = ent.getOldPath();
+					else
+						path = ent.getNewPath();
+					currentEncoding = CompareCoreUtils.getResourceEncoding(repository, path);
+					diffFmt.format(ent);
+				}
+			} else {
+				diffFmt.format(
+						new DirCacheIterator(repository.readDirCache()),
+						new FileTreeIterator(repository));
 			}
 		} catch (IOException e) {
-			Activator.logError("Patch file could not be written", e); //$NON-NLS-1$
+			Activator.logError(CoreText.CreatePatchOperation_patchFileCouldNotBeWritten, e);
 		}
 
 		patchContent = sb.toString();
