@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBX///CM\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-29T22:12:04Z",
+      "side": 1,
+      "message": "the \u0027I\u0027 is missing in front of the SHA-1 hence it\u0027s not rendered as a hyperlink\n\ns/17c1c67b79b44abd4ea00733d6137bfe48151777/I17c1c67b79b44abd4ea00733d6137bfe48151777/\n\ns/review/change/",
+      "revId": "54ad315fda275781fa5c83a8d48b5218b3e757fe",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
