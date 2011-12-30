@@ -58,14 +58,14 @@ public enum RepositoryTreeNodeType {
 	FETCH(UIIcons.FETCH.createImage()), //
 	/**	 */
 	PUSH(UIIcons.PUSH.createImage()), //
+	/** */
+	SUBMODULES(UIIcons.SUBMODULES.createImage()),
 	/**	 */
 	WORKINGDIR(PlatformUI.getWorkbench().getSharedImages().getImage(
 			ISharedImages.IMG_OBJ_FOLDER)), //
 	/** */
 	ERROR(PlatformUI.getWorkbench().getSharedImages().getImage(
-			ISharedImages.IMG_ELCL_STOP)) // TODO icon?
-
-	;
+			ISharedImages.IMG_ELCL_STOP)); // TODO icon?
 
 	private final Image myImage;
 
@@ -80,7 +80,4 @@ public enum RepositoryTreeNodeType {
 	public Image getIcon() {
 		return myImage;
 	}
-
-
-
 }

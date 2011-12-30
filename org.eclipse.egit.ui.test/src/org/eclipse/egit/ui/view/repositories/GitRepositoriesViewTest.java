@@ -86,7 +86,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		SWTBotTreeItem item = myRepoViewUtil.getRootItem(tree, repositoryFile)
 				.expand();
 		SWTBotTreeItem[] children = item.getItems();
-		assertEquals("Wrong number of children", 5, children.length);
+		assertEquals("Wrong number of children", 6, children.length);
 	}
 
 	/**

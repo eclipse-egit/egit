@@ -261,6 +261,52 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 		}
 	}
 
+	/**
+	 * Get styled text for submodule repository node
+	 *
+	 * @param node
+	 * @return styled string
+	 */
+	protected StyledString getStyledTextForSubmodule(RepositoryTreeNode node) {
+		StyledString string = new StyledString();
+		Repository repository = (Repository) node.getObject();
+		String path = Repository.stripWorkDir(node.getParent().getRepository()
+				.getWorkTree(), repository.getWorkTree());
+		string.append(path);
+
+		Ref head;
+		try {
+			head = repository.getRef(Constants.HEAD);
+		} catch (IOException e) {
+			return string;
+		}
+		if (head != null) {
+			string.append(' ');
+			string.append('[', StyledString.DECORATIONS_STYLER);
+			if (head.isSymbolic())
+				string.append(
+						Repository.shortenRefName(head.getLeaf().getName()),
+						StyledString.DECORATIONS_STYLER);
+			else
+				string.append(head.getObjectId().abbreviate(7).name(),
+						StyledString.DECORATIONS_STYLER);
+			string.append(']', StyledString.DECORATIONS_STYLER);
+			if (verboseBranchMode) {
+				RevWalk walk = new RevWalk(repository);
+				RevCommit commit;
+				try {
+					commit = walk.parseCommit(head.getObjectId());
+					string.append(' ');
+					string.append(commit.getShortMessage(),
+							StyledString.QUALIFIER_STYLER);
+				} catch (IOException ignored) {
+					// Ignored
+				}
+			}
+		}
+		return string;
+	}
+
 	public StyledString getStyledText(Object element) {
 		if (!(element instanceof RepositoryTreeNode))
 			return null;
@@ -270,8 +316,10 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 		try {
 			switch (node.getType()) {
 			case REPO:
-				Repository repository = (Repository) node.getObject();
-				return getStyledTextFor(repository);
+				if (node.getParent() != null
+						&& node.getParent().getType() == RepositoryTreeNodeType.SUBMODULES)
+					return getStyledTextForSubmodule(node);
+				return getStyledTextFor((Repository) node.getObject());
 			case ADDITIONALREF:
 				Ref ref = (Ref) node.getObject();
 				// shorten the name
@@ -346,6 +394,8 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 				// fall through
 			case REMOTE:
 				// fall through
+			case SUBMODULES:
+				// fall through
 			case ERROR: {
 				String label = getSimpleText(node);
 				if (label != null)
@@ -385,6 +435,8 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 			return UIText.RepositoriesViewLabelProvider_SymbolicRefNodeText;
 		case REMOTES:
 			return UIText.RepositoriesView_RemotesNodeText;
+		case SUBMODULES:
+			return UIText.RepositoriesViewLabelProvider_SubmodulesNodeText;
 		case REF:
 			// fall through
 		case TAG: {
