@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOC3///RM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitInfoBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-12-08T17:07:37Z",
+      "side": 1,
+      "message": "On a repo with a long history this might cost a lot of memory. Wouldn\u0027t it make sense to limit the size of the cutOff list? Even a incomplete cutOff list helps.\n\nAnother idea: can\u0027t we mark the direct parents of commit as \"uninteresting\" in the RevWalk?",
+      "revId": "a81874502416df018c8e7d620c7179ae4f9d3712",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///OM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitInfoBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-12-08T22:08:01Z",
+      "side": 1,
+      "message": "Again I found the answer myself: If you have added multiple starting points and you do find the commit then you still don\u0027t know which of the starting points has led you to the commit. But that\u0027s exactly what you want to know: which of the starting refs lead me to the commit.",
+      "parentUuid": "AABOC3///RI\u003d",
+      "revId": "a81874502416df018c8e7d620c7179ae4f9d3712",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
