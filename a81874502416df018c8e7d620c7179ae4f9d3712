@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX///7Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitInfoBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-12-28T00:35:34Z",
+      "side": 1,
+      "message": "I was thinking about making the cutoff list smaller, but I\u0027m not sure how to do it. One way is this: For most practical purposes we can exclude branches by looking at the tip, i.e. if the tip of  a branch is older than the commit we are looking at, it is very unlikely to be a candidate. Do I add some time skew to be sure?",
+      "parentUuid": "AABOC3///RM\u003d",
+      "revId": "a81874502416df018c8e7d620c7179ae4f9d3712",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOC3///RI\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitInfoBuilder.java",
         "patchSetId": 1
