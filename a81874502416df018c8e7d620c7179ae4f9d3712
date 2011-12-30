@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "AABOC3///RI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitInfoBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-12-08T17:07:37Z",
+      "side": 1,
+      "message": "We are doing a depth first search here - one ref after the other. If I look the RevWalk API we could also mark all refs as starting refs. Why aren\u0027t we using that and do a breadth first search?",
+      "revId": "a81874502416df018c8e7d620c7179ae4f9d3712",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOC3///OM\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitInfoBuilder.java",
         "patchSetId": 1
