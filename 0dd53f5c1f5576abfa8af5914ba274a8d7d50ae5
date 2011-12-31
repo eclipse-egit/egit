@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABODH///hI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2011-12-19T11:39:53Z",
+      "side": 1,
+      "message": "I agree that error handling can be improved but I don\u0027t think it should be part of this bug/change. I would like to keep it as small as possible. I\u0027m fine with filing a separate bug for what you suggested and moving the discussion there. However, I would deal with IOException as suggested in the change if this is how it\u0027s currently done in EGit.",
+      "parentUuid": "AABODH///mA\u003d",
+      "revId": "0dd53f5c1f5576abfa8af5914ba274a8d7d50ae5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODH///U4\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
         "patchSetId": 2
