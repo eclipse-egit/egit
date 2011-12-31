@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODH///zM\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-14T22:41:13Z",
+      "side": 1,
+      "message": "- style nit: trailing whitespace\n- better explain what this change adds instead of explaining what\u0027s missing",
+      "revId": "8b6ad7cf14424bb72b744b115b60521cb1640d36",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///zc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-14T22:39:56Z",
+      "side": 1,
+      "message": "externalize error messages",
+      "revId": "8b6ad7cf14424bb72b744b115b60521cb1640d36",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///zU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CreatePatchAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-14T22:39:56Z",
+      "side": 1,
+      "message": "style nit: unnecessary blank line",
+      "revId": "8b6ad7cf14424bb72b744b115b60521cb1640d36",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
