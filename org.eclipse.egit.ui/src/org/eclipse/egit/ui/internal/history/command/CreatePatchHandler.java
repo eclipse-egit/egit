@@ -10,8 +10,8 @@ package org.eclipse.egit.ui.internal.history.command;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.internal.history.GitCreatePatchWizard;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
+import org.eclipse.egit.ui.internal.patch.PatchOperationUI;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -25,8 +25,8 @@ public class CreatePatchHandler extends AbstractHistoryCommandHandler {
 		IStructuredSelection selection = getSelection(getPage());
 		if (selection.size() == 1) {
 			RevCommit commit = (RevCommit) selection.getFirstElement();
-            Repository repo = getRepository(event);
-			GitCreatePatchWizard.run(getPart(event), commit, repo);
+			Repository repo = getRepository(event);
+			PatchOperationUI.createPatch(getPart(event), commit, repo).start();
 		}
 		return null;
 	}
