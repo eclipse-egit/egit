@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODH///mA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-12-17T00:12:07Z",
+      "side": 1,
+      "message": "I think we should start catching Exception here and similar places where we\u0027d otherwise just fall off the end. \n\nProgramming errors resulting in NPE or similar seems to be much more common than I/O exceptions.\n\nMajor rework like this constitutes a good time to improve error handling.",
+      "revId": "0dd53f5c1f5576abfa8af5914ba274a8d7d50ae5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///U4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-12-23T11:56:53Z",
+      "side": 1,
+      "message": "It can be fixed separately,",
+      "parentUuid": "AABODH///hI\u003d",
+      "revId": "0dd53f5c1f5576abfa8af5914ba274a8d7d50ae5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///lM\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-12-17T00:12:07Z",
+      "side": 1,
+      "message": "Fix indentation.",
+      "revId": "0dd53f5c1f5576abfa8af5914ba274a8d7d50ae5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///l8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CreatePatchActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-12-17T00:12:07Z",
+      "side": 1,
+      "message": "fix indentation",
+      "revId": "0dd53f5c1f5576abfa8af5914ba274a8d7d50ae5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///l4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CreatePatchHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-12-17T00:12:07Z",
+      "side": 1,
+      "message": "fix indentation, includiing the line you didn\u0027t change",
+      "revId": "0dd53f5c1f5576abfa8af5914ba274a8d7d50ae5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
