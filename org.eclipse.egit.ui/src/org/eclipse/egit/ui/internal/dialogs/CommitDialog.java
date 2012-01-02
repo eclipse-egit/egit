@@ -122,15 +122,20 @@ public class CommitDialog extends TitleAreaDialog {
 		private ResourceManager resourceManager = new LocalResourceManager(
 				JFaceResources.getResources());
 
+		private final Image SUBMODULE = UIIcons.SUBMODULES.createImage();
+
 		private Image getEditorImage(CommitItem item) {
-			Image image = DEFAULT;
-			String name = new Path(item.path).lastSegment();
-			if (name != null) {
-				ImageDescriptor descriptor = PlatformUI.getWorkbench()
-						.getEditorRegistry().getImageDescriptor(name);
-				image = (Image) this.resourceManager.get(descriptor);
-			}
-			return image;
+			if (!item.submodule) {
+				Image image = DEFAULT;
+				String name = new Path(item.path).lastSegment();
+				if (name != null) {
+					ImageDescriptor descriptor = PlatformUI.getWorkbench()
+							.getEditorRegistry().getImageDescriptor(name);
+					image = (Image) this.resourceManager.get(descriptor);
+				}
+				return image;
+			} else
+				return SUBMODULE;
 		}
 
 		private Image getDecoratedImage(Image base, ImageDescriptor decorator) {
@@ -171,6 +176,7 @@ public class CommitDialog extends TitleAreaDialog {
 		}
 
 		public void dispose() {
+			SUBMODULE.dispose();
 			resourceManager.dispose();
 			super.dispose();
 		}
@@ -398,6 +404,7 @@ public class CommitDialog extends TitleAreaDialog {
 		for (String path : paths) {
 			CommitItem item = new CommitItem();
 			item.status = getFileStatus(path, indexDiff);
+			item.submodule = indexDiff.isSubmodule(path);
 			item.path = path;
 			items.add(item);
 		}
@@ -1073,6 +1080,8 @@ class CommitItem {
 	Status status;
 
 	String path;
+
+	boolean submodule;
 
 	/** The ordinal of this {@link Enum} is used to provide the "native" sorting of the list */
 	public static enum Status {
