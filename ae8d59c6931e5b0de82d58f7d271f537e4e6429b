@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABODH///fo\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-12-19T16:39:51Z",
+      "side": 1,
+      "message": "please add signed-off tag",
+      "revId": "ae8d59c6931e5b0de82d58f7d271f537e4e6429b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODH///dE\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
