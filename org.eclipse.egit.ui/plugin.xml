@@ -4258,4 +4258,11 @@
 			<property name="component" value="Mylyn"/>
 		</mapping>
   </extension>
+  <extension
+        point="org.eclipse.team.ui.scmUrlImportPages">
+     <scmUrlImportPage
+           page="org.eclipse.egit.ui.internal.GitScmUrlImportWizardPage"
+           repository="org.eclipse.egit.core.GitProvider">
+     </scmUrlImportPage>
+  </extension>
 </plugin>

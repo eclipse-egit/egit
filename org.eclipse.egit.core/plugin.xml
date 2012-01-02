@@ -8,6 +8,7 @@
   <extension point="org.eclipse.team.core.repository">
 	<repository
        class="org.eclipse.egit.core.GitProvider"
+       fileSystemScheme="git"
        id="org.eclipse.egit.core.GitProvider"
        typeClass="org.eclipse.egit.core.internal.GitRepositoryProviderType">
 	</repository>
@@ -20,5 +21,16 @@
      <ignore
            enabled="true"
            pattern="*/.git/*"/>
+  </extension>
+  <extension
+        point="org.eclipse.team.core.bundleImporters">
+     <importer
+           id="org.eclipse.egit.core.importer"
+           name="%gitBundleImporter"
+           repository="org.eclipse.egit.core.GitProvider">
+        <supports
+              prefix="scm:git:">
+        </supports>
+     </importer>
   </extension>
 </plugin>
