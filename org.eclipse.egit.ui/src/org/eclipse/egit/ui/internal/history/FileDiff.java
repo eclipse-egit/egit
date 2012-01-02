@@ -306,7 +306,13 @@ public class FileDiff extends WorkbenchAdapter {
 	}
 
 	public ImageDescriptor getImageDescriptor(Object object) {
-		final ImageDescriptor base = UIUtils.getEditorImage(getPath());
+		final boolean submodule = diffEntry.getNewMode() == FileMode.GITLINK
+				|| diffEntry.getOldMode() == FileMode.GITLINK;
+		final ImageDescriptor base;
+		if (!submodule)
+			base = UIUtils.getEditorImage(getPath());
+		else
+			base = UIIcons.REPOSITORY;
 		switch (getChange()) {
 		case ADD:
 			return new DecorationOverlayDescriptor(base,
