@@ -1156,6 +1156,9 @@ public class UIText extends NLS {
 	public static String CloneDestinationPage_browseButton;
 
 	/** */
+	public static String CloneDestinationPage_cloneSubmodulesButton;
+
+	/** */
 	public static String CloneDestinationPage_DefaultRepoFolderTooltip;
 
 	/** */

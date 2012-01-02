@@ -244,6 +244,7 @@ public class GitCloneWizard extends Wizard {
 		if (credentials != null)
 			op.setCredentialsProvider(new UsernamePasswordCredentialsProvider(
 					credentials.getUser(), credentials.getPassword()));
+		op.setCloneSubmodules(cloneDestination.isCloneSubmodules());
 
 		if (gerritConfiguration.configureGerrit()) {
 			boolean hasReviewNotes = hasReviewNotes(uri, timeout, credentials);
