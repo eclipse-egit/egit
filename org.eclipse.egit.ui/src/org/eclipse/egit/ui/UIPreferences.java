@@ -61,6 +61,10 @@ public class UIPreferences {
 	public final static String COMMIT_DIALOG_HARD_WRAP_MESSAGE = "commit_dialog_hard_wrap_message"; //$NON-NLS-1$
 	/** */
 	public final static String COMMIT_DIALOG_SIGNED_OFF_BY = "commit_dialog_signed_off_by"; //$NON-NLS-1$
+	/** */
+	public final static String COMMIT_DIALOG_HISTORY_SIZE = "commit_dialog_history_size"; //$NON-NLS-1$
+	/** */
+	public final static String COMMIT_DIALOG_HISTORY_MESSAGES = "commit_dialog_history_messages"; //$NON-NLS-1$
 
 	/** */
 	public final static String THEME_CommitGraphNormalFont = "org.eclipse.egit.ui.CommitGraphNormalFont"; //$NON-NLS-1$

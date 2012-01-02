@@ -11,12 +11,15 @@
 package org.eclipse.egit.ui.internal.commit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
@@ -34,6 +37,23 @@ import org.eclipse.swt.graphics.Image;
  * Commit proposal processor
  */
 public class CommitProposalProcessor implements IContentAssistProcessor {
+
+	/**
+	 * Replace all non single space whitespace characters with a single space
+	 *
+	 * @param value
+	 * @return replaced string
+	 */
+	private static final String escapeWhitespace(String value) {
+		final StringBuilder escaped = new StringBuilder(value);
+		final int length = escaped.length();
+		for (int i = 0; i < length; i++) {
+			char c = escaped.charAt(i);
+			if (c != ' ' && Character.isWhitespace(c))
+				escaped.setCharAt(i, ' ');
+		}
+		return escaped.toString();
+	}
 
 	private static final ICompletionProposal[] NO_PROPOSALS = new ICompletionProposal[0];
 
@@ -68,7 +88,7 @@ public class CommitProposalProcessor implements IContentAssistProcessor {
 		public boolean equals(Object other) {
 			if (!(other instanceof CommitFile))
 				return false;
-			return (this.compareTo((CommitFile)other) == 0);
+			return (this.compareTo((CommitFile) other) == 0);
 		}
 
 		public Image getImage() {
@@ -81,14 +101,22 @@ public class CommitProposalProcessor implements IContentAssistProcessor {
 		}
 	}
 
-	private Set<CommitFile> files = new TreeSet<CommitFile>();
+	private final Set<String> messages;
+
+	private final Set<CommitFile> files = new TreeSet<CommitFile>();
 
 	/**
 	 * Create process with path proposals
 	 *
+	 * @param messages
 	 * @param paths
 	 */
-	public CommitProposalProcessor(String[] paths) {
+	public CommitProposalProcessor(String[] messages, String[] paths) {
+		if (messages != null && messages.length > 0)
+			this.messages = new TreeSet<String>(Arrays.asList(messages));
+		else
+			this.messages = Collections.emptySet();
+
 		for (String path : paths) {
 			String name = new Path(path).lastSegment();
 			if (name == null)
@@ -140,9 +168,22 @@ public class CommitProposalProcessor implements IContentAssistProcessor {
 				if (file.matches(prefix))
 					proposals.add(file.createProposal(replacementOffset,
 							replacementLength));
-		} else
+			for (String message : messages)
+				if (message.startsWith(prefix))
+					proposals.add(new CompletionProposal(message,
+							replacementOffset, replacementLength, message
+									.length(), (Image) resourceManager
+									.get(UIIcons.ELCL16_COMMENTS),
+							escapeWhitespace(message), null, null));
+		} else {
+			for (String message : messages)
+				proposals.add(new CompletionProposal(message, offset, 0,
+						message.length(), (Image) resourceManager
+								.get(UIIcons.ELCL16_COMMENTS),
+						escapeWhitespace(message), null, null));
 			for (CommitFile file : files)
 				proposals.add(file.createProposal(offset, 0));
+		}
 		return proposals.toArray(new ICompletionProposal[proposals.size()]);
 	}
 

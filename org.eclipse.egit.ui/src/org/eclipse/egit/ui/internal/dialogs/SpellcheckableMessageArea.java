@@ -36,6 +36,7 @@ import org.eclipse.jface.commands.ActionHandler;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.ITextListener;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.MarginPainter;
@@ -609,6 +610,13 @@ public class SpellcheckableMessageArea extends Composite {
 	 */
 	public String getText() {
 		return getTextWidget().getText();
+	}
+
+	/**
+	 * @return document
+	 */
+	public IDocument getDocument() {
+		return sourceViewer.getDocument();
 	}
 
 	/**

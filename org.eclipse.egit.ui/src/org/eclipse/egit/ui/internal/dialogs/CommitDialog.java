@@ -15,6 +15,8 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.URI;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -44,12 +47,15 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.source.ISourceViewer;
@@ -100,8 +106,11 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.team.core.RepositoryProvider;
+import org.eclipse.ui.IMemento;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.WorkbenchException;
+import org.eclipse.ui.XMLMemento;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
@@ -113,6 +122,77 @@ import org.eclipse.ui.forms.widgets.Section;
  * selected portion of the tree are shown.
  */
 public class CommitDialog extends TitleAreaDialog {
+
+	private static final String KEY_MESSAGE = "message"; //$NON-NLS-1$
+
+	private static final String KEY_MESSAGES = "messages"; //$NON-NLS-1$
+
+	private static IPreferenceStore getPreferenceStore() {
+		return org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore();
+	}
+
+	private static Set<String> getCommitHistory() {
+		String all = getPreferenceStore().getString(
+				UIPreferences.COMMIT_DIALOG_HISTORY_MESSAGES);
+		if (all.length() == 0)
+			return Collections.emptySet();
+		int max = getCommitHistorySize();
+		if (max < 1)
+			return Collections.emptySet();
+		XMLMemento memento;
+		try {
+			memento = XMLMemento.createReadRoot(new StringReader(all));
+		} catch (WorkbenchException e) {
+			org.eclipse.egit.ui.Activator.logError(
+					"Error reading commit message history", e); //$NON-NLS-1$
+			return Collections.emptySet();
+		}
+		Set<String> messages = new LinkedHashSet<String>();
+		for (IMemento child : memento.getChildren(KEY_MESSAGE)) {
+			messages.add(child.getTextData());
+			if (messages.size() == max)
+				break;
+		}
+		return messages;
+	}
+
+	private static void saveCommitHistory(String message) {
+		if (message == null || message.length() == 0)
+			return;
+		int size = getCommitHistorySize();
+		if (size < 1)
+			return;
+
+		XMLMemento memento = XMLMemento.createWriteRoot(KEY_MESSAGES);
+		memento.createChild(KEY_MESSAGE).putTextData(message);
+
+		int count = 1;
+		if (count < size) {
+			Set<String> history = getCommitHistory();
+			history.remove(message);
+			for (String previous : history) {
+				memento.createChild(KEY_MESSAGE).putTextData(previous);
+				count++;
+				if (count == size)
+					break;
+			}
+		}
+		StringWriter writer = new StringWriter();
+		try {
+			memento.save(writer);
+			getPreferenceStore().setValue(
+					UIPreferences.COMMIT_DIALOG_HISTORY_MESSAGES,
+					writer.toString());
+		} catch (IOException e) {
+			org.eclipse.egit.ui.Activator.logError(
+					"Error writing commit message history", e); //$NON-NLS-1$
+		}
+	}
+
+	private static int getCommitHistorySize() {
+		return getPreferenceStore().getInt(
+				UIPreferences.COMMIT_DIALOG_HISTORY_SIZE);
+	}
 
 	static class CommitStatusLabelProvider extends ColumnLabelProvider {
 
@@ -608,7 +688,9 @@ public class CommitDialog extends TitleAreaDialog {
 				ContentAssistant assistant = new ContentAssistant();
 				assistant.enableAutoInsert(true);
 				Collection<String> paths = getFileList();
+				Collection<String> messages = getCommitHistory();
 				final CommitProposalProcessor processor = new CommitProposalProcessor(
+						messages.toArray(new String[messages.size()]),
 						paths.toArray(new String[paths.size()]));
 				viewer.getTextWidget().addDisposeListener(
 						new DisposeListener() {
@@ -891,7 +973,16 @@ public class CommitDialog extends TitleAreaDialog {
 				updateMessage();
 			}
 		};
-		commitText.getTextWidget().addModifyListener(validator);
+		commitText.getDocument().addDocumentListener(new IDocumentListener() {
+
+			public void documentChanged(DocumentEvent event) {
+				updateMessage();
+			}
+
+			public void documentAboutToBeChanged(DocumentEvent event) {
+				// Intentionally empty
+			}
+		});
 		authorText.addModifyListener(validator);
 		committerText.addModifyListener(validator);
 		filesViewer.addCheckStateListener(new ICheckStateListener() {
@@ -1050,6 +1141,7 @@ public class CommitDialog extends TitleAreaDialog {
 		IDialogSettings settings = org.eclipse.egit.ui.Activator
 			.getDefault().getDialogSettings();
 		settings.put(SHOW_UNTRACKED_PREF, showUntracked);
+		saveCommitHistory(getCommitMessage());
 		super.okPressed();
 	}
 
