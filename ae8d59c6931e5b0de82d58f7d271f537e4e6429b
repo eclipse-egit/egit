@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODH///dE\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-19T21:49:37Z",
+      "side": 1,
+      "message": "AFAIK this isn\u0027t required as per the contributor guide",
+      "parentUuid": "AABODH///fo\u003d",
+      "revId": "ae8d59c6931e5b0de82d58f7d271f537e4e6429b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
