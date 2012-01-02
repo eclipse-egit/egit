@@ -8,7 +8,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
-import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
@@ -19,17 +18,12 @@ import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Label provider for {@link FileDiff} objects
  */
 public class FileDiffLabelProvider extends BaseLabelProvider implements
 		ITableLabelProvider {
-
-	private Image DEFAULT = PlatformUI.getWorkbench().getSharedImages()
-			.getImage(ISharedImages.IMG_OBJ_FILE);
 
 	private ResourceManager resourceManager = new LocalResourceManager(
 			JFaceResources.getResources());
@@ -43,14 +37,7 @@ public class FileDiffLabelProvider extends BaseLabelProvider implements
 	}
 
 	private Image getEditorImage(FileDiff diff) {
-		Image image = DEFAULT;
-		String name = new Path(diff.getPath()).lastSegment();
-		if (name != null) {
-			ImageDescriptor descriptor = PlatformUI.getWorkbench()
-					.getEditorRegistry().getImageDescriptor(name);
-			image = (Image) this.resourceManager.get(descriptor);
-		}
-		return image;
+		return (Image) this.resourceManager.get(diff.getImageDescriptor(diff));
 	}
 
 	private Image getDecoratedImage(Image base, ImageDescriptor decorator) {
