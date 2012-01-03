@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -24,6 +28,7 @@ import org.eclipse.egit.ui.internal.components.RefContentProposal;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
@@ -34,8 +39,11 @@ import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jgit.errors.LockFailedException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.LockFile;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -49,6 +57,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Resource;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
@@ -591,5 +600,44 @@ public class UIUtils {
 		} catch (NotHandledException e) {
 			Activator.handleError(e.getMessage(), e, false);
 		}
+	}
+
+	/**
+	 * Handle a user interaction to delete a file's lock
+	 *
+	 * @param exception
+	 * @return true if lock file was deleted, false otherwise
+	 */
+	public static boolean handleLockDelete(final LockFailedException exception) {
+		if (!promptToDeleteLock(exception))
+			return false;
+		File lock = LockFile.getLockFile(exception.getFile());
+		try {
+			FileUtils.delete(lock, FileUtils.RETRY | FileUtils.SKIP_MISSING);
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
+	}
+
+	/**
+	 * Prompt to delete the lock file
+	 *
+	 * @param exception
+	 * @return true to delete, false otherwise
+	 */
+	public static boolean promptToDeleteLock(final LockFailedException exception) {
+		final AtomicBoolean confirmed = new AtomicBoolean();
+		final Display display = PlatformUI.getWorkbench().getDisplay();
+		display.syncExec(new Runnable() {
+
+			public void run() {
+				confirmed.set(MessageDialog.openQuestion(display
+						.getActiveShell(), UIText.UIUtils_TitleLockFailed,
+						MessageFormat.format(UIText.UIUtils_MessageLockFailed,
+								exception.getFile().getAbsolutePath())));
+			}
+		});
+		return confirmed.get();
 	}
 }
