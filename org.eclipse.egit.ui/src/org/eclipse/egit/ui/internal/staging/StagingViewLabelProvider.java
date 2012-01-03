@@ -92,7 +92,7 @@ public class StagingViewLabelProvider extends BaseLabelProvider implements
 		final StagingEntry c = (StagingEntry) element;
 		if (c.getState() == StagingEntry.State.MODIFIED
 				|| c.getState() == StagingEntry.State.PARTIALLY_MODIFIED)
-			styled.append('>').append(' ');
+			styled.append('>', StyledString.DECORATIONS_STYLER).append(' ');
 		if (fileNameMode) {
 			IPath parsed = Path.fromOSString(c.getPath());
 			if (parsed.segmentCount() > 1) {
