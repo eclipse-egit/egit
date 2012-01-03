@@ -3157,10 +3157,16 @@ public class UIText extends NLS {
 	public static String UIUtils_ExpandAll;
 
 	/** */
+	public static String UIUtils_MessageLockFailed;
+
+	/** */
 	public static String UIUtils_PressShortcutMessage;
 
 	/** */
 	public static String UIUtils_StartTypingForPreviousValuesMessage;
+
+	/** */
+	public static String UIUtils_TitleLockFailed;
 
 	/** */
 	public static String UnmergedBranchDialog_Message;
