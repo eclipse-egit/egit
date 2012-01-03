@@ -21,6 +21,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -71,6 +72,8 @@ class CloneDestinationPage extends WizardPage {
 	private Text remoteText;
 
 	private Button importProjectsButton;
+
+	private Button cloneSubmodulesButton;
 
 	private WorkingSetGroup workingSetGroup;
 
@@ -183,6 +186,11 @@ class CloneDestinationPage extends WizardPage {
 					return ((Ref)element).getName().substring(Constants.R_HEADS.length());
 				return ((Ref)element).getName();
 			} });
+
+		cloneSubmodulesButton = new Button(g, SWT.CHECK);
+		cloneSubmodulesButton
+				.setText(UIText.CloneDestinationPage_cloneSubmodulesButton);
+		GridDataFactory.swtDefaults().span(2, 1).applyTo(cloneSubmodulesButton);
 	}
 
 	private void createConfigGroup(final Composite parent) {
@@ -255,6 +263,14 @@ class CloneDestinationPage extends WizardPage {
 	public boolean isImportProjects() {
 		return importProjectsButton != null
 				&& importProjectsButton.getSelection();
+	}
+
+	/**
+	 * @return true to clone submodules, false otherwise
+	 */
+	public boolean isCloneSubmodules() {
+		return cloneSubmodulesButton != null
+				&& cloneSubmodulesButton.getSelection();
 	}
 
 	/**

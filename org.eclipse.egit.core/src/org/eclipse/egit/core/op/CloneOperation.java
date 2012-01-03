@@ -42,6 +42,8 @@ public class CloneOperation {
 
 	private final boolean allSelected;
 
+	private boolean cloneSubmodules;
+
 	private final Collection<Ref> selectedBranches;
 
 	private final File workdir;
@@ -103,6 +105,14 @@ public class CloneOperation {
 	}
 
 	/**
+	 * @param cloneSubmodules
+	 *            true to initialize and update submodules
+	 */
+	public void setCloneSubmodules(boolean cloneSubmodules) {
+		this.cloneSubmodules = cloneSubmodules;
+	}
+
+	/**
 	 * @param pm
 	 *            the monitor to be used for reporting progress and responding
 	 *            to cancellation. The monitor is never <code>null</code>
@@ -133,6 +143,7 @@ public class CloneOperation {
 			cloneRepository.setURI(uri.toString());
 			cloneRepository.setTimeout(timeout);
 			cloneRepository.setCloneAllBranches(allSelected);
+			cloneRepository.setCloneSubmodules(cloneSubmodules);
 			if (selectedBranches != null) {
 				List<String> branches = new ArrayList<String>();
 				for (Ref branch : selectedBranches)
@@ -164,7 +175,6 @@ public class CloneOperation {
 				repository.close();
 		}
 	}
-
 
 	/**
 	 * @return The git directory which will contain the repository
