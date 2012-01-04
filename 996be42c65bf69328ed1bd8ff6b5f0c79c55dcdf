@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBX//+7A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitProposalProcessor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-30T22:42:49Z",
+      "side": 1,
+      "message": "this will replace CRLF to 2 blanks, is this intended ?",
+      "revId": "996be42c65bf69328ed1bd8ff6b5f0c79c55dcdf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
