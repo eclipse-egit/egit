@@ -2,6 +2,7 @@
  * Copyright (C) 2009, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2010, Ketan Padegaonkar <KetanPadegaonkar@gmail.com>
  * Copyright (C) 2010, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2011, Benjamin Muskalla <benjamin.muskalla@tasktop.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,15 +17,23 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
+import org.eclipse.core.internal.resources.ModelObjectWriter;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.common.RepoPropertiesPage;
 import org.eclipse.egit.ui.common.RepoRemoteBranchesPage;
 import org.eclipse.egit.ui.common.WorkingCopyPage;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -272,6 +281,65 @@ public class GitCloneWizardTest extends GitCloneWizardTestBase {
 				.assertErrorMessage("git://www.example.com/EGIT: Connection timed out");
 		remoteBranches.assertCannotProceed();
 		remoteBranches.cancel();
+	}
+	
+	@Test
+	public void importFlatProjects() throws Exception {
+		File repositoryFile = createProjectAndCommitToRepository();
+		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
+				repositoryFile);
+		
+		importWizard.openWizard();
+		bot.tree().select(0);
+		bot.button("Next >").click();
+		bot.button("Next >").click();
+		
+		// assert repo has 2 projects
+		assertEquals(2, bot.tree().getAllItems().length);
+	}
+
+	@Test
+	public void importSubProjects() throws Exception {
+		File repositoryFile = createProjectAndCommitToRepository();
+		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
+				repositoryFile);
+		createProjectsInSubfolder(repositoryFile);
+		
+		importWizard.openWizard();
+		bot.tree().select(0);
+		bot.button("Next >").click();
+		bot.button("Next >").click();
+		
+		// assert repo has 2 projects and one subfolder
+		assertEquals(3, bot.tree().getAllItems().length);
+		
+		// expand subfolder
+		SWTBotTreeItem subFolder = bot.tree().expandNode("componentA");
+		assertEquals(1, subFolder.getItems().length);
+		
+		SWTBotTreeItem swtBotTreeItem = subFolder.getItems()[0];
+		swtBotTreeItem.check();
+		
+		bot.button("Finish").click();
+		
+		SWTBotTree projectExplorerTree = bot.viewById(
+				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		assertNotNull(getProjectItem(projectExplorerTree, "subprojectA1"));
+		
+	}
+	private void createProjectsInSubfolder(File repositoryFile) throws Exception {
+		Repository repository = new FileRepository(repositoryFile);
+		
+		Git git = new Git(repository);
+		File subFolderA = new File(repository.getWorkTree(), "componentA");
+		File projectA1Folder = new File(subFolderA, "projectA1");
+		projectA1Folder.mkdirs();
+		IProjectDescription descA1 = ResourcesPlugin.getWorkspace().newProjectDescription("subprojectA1");
+		descA1.setLocation(new Path(new File(new File(repository.getWorkTree(), "componentA"),"subprojectA1")
+				.getPath()));
+		new ModelObjectWriter().write(descA1, new FileOutputStream(new File(projectA1Folder, ".project")));
+		git.add().addFilepattern("componentA").call();
+		git.commit().setMessage("added subproject").call();
 	}
 
 }
