@@ -23,7 +23,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -39,10 +38,10 @@ class DecoratableResourceAdapter extends DecoratableResource {
 
 	private IndexDiffData indexDiffData;
 
-	@SuppressWarnings("fallthrough")
-	public DecoratableResourceAdapter(IResource resourceToWrap)
+	public DecoratableResourceAdapter(IndexDiffData indexDiffData, IResource resourceToWrap)
 			throws IOException {
 		super(resourceToWrap);
+		this.indexDiffData = indexDiffData;
 		trace = GitTraceLocation.DECORATION.isActive();
 		long start = 0;
 		if (trace) {
@@ -63,20 +62,16 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			repositoryName = DecoratableResourceHelper
 					.getRepositoryName(repository);
 			branch = DecoratableResourceHelper.getShortBranch(repository);
-
-			indexDiffData = Activator.getDefault().getIndexDiffCache()
-					.getIndexDiffCacheEntry(repository).getIndexDiff();
-			if (indexDiffData != null)
-				switch (resource.getType()) {
-				case IResource.FILE:
-					extractResourceProperties();
-					break;
-				case IResource.PROJECT:
-					tracked = true;
-				case IResource.FOLDER:
-					extractContainerProperties();
-					break;
-				}
+			switch (resource.getType()) {
+			case IResource.FILE:
+				extractResourceProperties();
+				break;
+			case IResource.PROJECT:
+				tracked = true;
+			case IResource.FOLDER:
+				extractContainerProperties();
+				break;
+			}
 		} finally {
 			if (trace)
 				GitTraceLocation
