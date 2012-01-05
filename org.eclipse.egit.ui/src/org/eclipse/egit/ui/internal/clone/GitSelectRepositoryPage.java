@@ -24,7 +24,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
-import org.eclipse.egit.ui.internal.repository.RepositorySearchDialog;
+import org.eclipse.egit.ui.internal.repository.RepositorySearchWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.Dialog;
@@ -150,13 +150,13 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
 				List<String> configuredDirs = util.getConfiguredRepositories();
-				RepositorySearchDialog dlg = new RepositorySearchDialog(
-						getShell(), configuredDirs);
-				if (dlg.open() == Window.OK && dlg.getDirectories().size() > 0) {
-
-					Set<String> dirs = dlg.getDirectories();
+				RepositorySearchWizard wizard = new RepositorySearchWizard(
+						configuredDirs);
+				WizardDialog dlg = new WizardDialog(getShell(), wizard);
+				if (dlg.open() == Window.OK
+						&& !wizard.getDirectories().isEmpty()) {
+					Set<String> dirs = wizard.getDirectories();
 					for (String dir : dirs)
 						util.addConfiguredRepository(new File(dir));
 					checkPage();
