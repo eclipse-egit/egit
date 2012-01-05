@@ -278,7 +278,7 @@ public class GitRepositoriesViewRepoHandlingTest extends
 		shell.bot().textWithLabel(UIText.RepositorySearchDialog_directory)
 				.setText(getTestDirectory().getPath());
 		shell.bot().button(UIText.RepositorySearchDialog_Search).click();
-		shell.bot().button(IDialogConstants.OK_LABEL).click();
+		shell.bot().button(IDialogConstants.FINISH_LABEL).click();
 		refreshAndWait();
 		assertHasRepo(repositoryFile);
 	}
