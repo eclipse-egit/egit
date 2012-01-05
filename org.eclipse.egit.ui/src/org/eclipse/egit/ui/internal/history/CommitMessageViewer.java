@@ -123,7 +123,13 @@ class CommitMessageViewer extends TextViewer implements
 					return;
 				}
 
-				final StyleRange r = t.getStyleRangeAtOffset(o);
+				final StyleRange r;
+				try {
+					r = t.getStyleRangeAtOffset(o);
+				} catch (IllegalArgumentException err) {
+					t.setCursor(sys_normalCursor);
+					return;
+				}
 				if (r instanceof ObjectLink)
 					t.setCursor(SYS_LINK_CURSOR);
 				else
@@ -146,7 +152,12 @@ class CommitMessageViewer extends TextViewer implements
 					return;
 				}
 
-				final StyleRange r = t.getStyleRangeAtOffset(o);
+				final StyleRange r;
+				try {
+					r = t.getStyleRangeAtOffset(o);
+				} catch (IllegalArgumentException err) {
+					return;
+				}
 				if (r instanceof ObjectLink) {
 					final RevCommit c = ((ObjectLink) r).targetCommit;
 					for (final Object l : navListeners.getListeners())
