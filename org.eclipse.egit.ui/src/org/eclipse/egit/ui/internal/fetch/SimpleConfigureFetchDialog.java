@@ -148,6 +148,8 @@ public class SimpleConfigureFetchDialog extends TitleAreaDialog {
 			Activator.handleError(e.getMessage(), e, true);
 			return null;
 		}
+		if (branch == null)
+			return null;
 
 		String remoteName;
 		if (ObjectId.isId(branch)) {
