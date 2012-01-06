@@ -29,8 +29,8 @@ import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CheckoutResult;
-import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.CheckoutResult.Status;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Ref;
@@ -43,12 +43,12 @@ import org.eclipse.osgi.util.NLS;
  * This class implements checkouts of a specific revision. A check is made that
  * this can be done without data loss.
  */
-public class BranchOperation implements IEGitOperation {
-	private final Repository repository;
+public class BranchOperation extends BaseOperation {
 
 	private final String target;
 
 	private CheckoutResult result;
+
 
 	/**
 	 * Construct a {@link BranchOperation} object for a {@link Ref}.
@@ -58,7 +58,7 @@ public class BranchOperation implements IEGitOperation {
 	 *            a {@link Ref} name or {@link RevCommit} id
 	 */
 	public BranchOperation(Repository repository, String target) {
-		this.repository = repository;
+		super(repository);
 		this.target = target;
 	}
 
@@ -72,6 +72,8 @@ public class BranchOperation implements IEGitOperation {
 		IWorkspaceRunnable action = new IWorkspaceRunnable() {
 
 			public void run(IProgressMonitor pm) throws CoreException {
+				preExecute(pm);
+
 				IProject[] validProjects = ProjectUtil
 						.getValidOpenProjects(repository);
 				pm.beginTask(NLS.bind(
@@ -95,6 +97,8 @@ public class BranchOperation implements IEGitOperation {
 				ProjectUtil.refreshValidProjects(validProjects,
 						new SubProgressMonitor(pm, 1));
 				pm.worked(1);
+
+				postExecute(pm);
 
 				pm.done();
 			}
