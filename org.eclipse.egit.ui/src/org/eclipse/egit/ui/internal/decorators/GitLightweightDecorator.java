@@ -185,9 +185,11 @@ public class GitLightweightDecorator extends LabelProvider implements
 		// Don't decorate the workspace root
 		if (resource.getType() == IResource.ROOT)
 			return;
+		
 
 		// Don't decorate non-existing resources
-		if (!resource.exists() && !resource.isPhantom())
+		if (resource.getType() != IResource.PROJECT && !resource.exists()
+				&& !resource.isPhantom())
 			return;
 
 		// Make sure we're dealing with a project under Git revision control
