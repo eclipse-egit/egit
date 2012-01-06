@@ -51,6 +51,30 @@ public class ProjectUtils {
 			final Repository repository,
 			final IWorkingSet[] selectedWorkingSets, IProgressMonitor monitor)
 			throws InvocationTargetException, InterruptedException {
+		createProjects(projectsToCreate, false, repository,
+				selectedWorkingSets, monitor);
+	}
+
+	/**
+	 * @param projectsToCreate
+	 *            the projects to create
+	 * @param open
+	 *            true to open existing projects, false to leave in current
+	 *            state
+	 * @param repository
+	 *            if not null, the projects will be automatically shared
+	 * @param selectedWorkingSets
+	 *            the workings sets to add the created projects to, may be null
+	 *            or empty
+	 * @param monitor
+	 * @throws InvocationTargetException
+	 * @throws InterruptedException
+	 */
+	public static void createProjects(
+			final Set<ProjectRecord> projectsToCreate, final boolean open,
+			final Repository repository,
+			final IWorkingSet[] selectedWorkingSets, IProgressMonitor monitor)
+			throws InvocationTargetException, InterruptedException {
 		IWorkspaceRunnable wsr = new IWorkspaceRunnable() {
 			public void run(IProgressMonitor actMonitor) throws CoreException {
 				IWorkingSetManager workingSetManager = PlatformUI
@@ -64,7 +88,7 @@ public class ProjectUtils {
 							throw new OperationCanceledException();
 						actMonitor.setTaskName(projectRecord.getProjectLabel());
 						IProject project = createExistingProject(projectRecord,
-								new SubProgressMonitor(actMonitor, 1));
+								open, new SubProgressMonitor(actMonitor, 1));
 						if (project == null)
 							continue;
 						if (repository != null) {
@@ -92,12 +116,20 @@ public class ProjectUtils {
 	}
 
 	private static IProject createExistingProject(final ProjectRecord record,
-			IProgressMonitor monitor) throws CoreException {
+			final boolean open, IProgressMonitor monitor) throws CoreException {
 		String projectName = record.getProjectName();
 		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		final IProject project = workspace.getRoot().getProject(projectName);
-		if (project.exists())
+		if (project.exists()) {
+			if (open && !project.isOpen()) {
+				IPath location = project.getLocation();
+				if (location != null
+						&& location.toFile().equals(
+								record.getProjectSystemFile()))
+					project.open(monitor);
+			}
 			return null;
+		}
 		if (record.getProjectDescription() == null) {
 			// error case
 			record.setProjectDescription(workspace

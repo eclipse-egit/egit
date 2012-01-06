@@ -35,6 +35,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.util.FS;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -97,6 +98,29 @@ public class ProjectUtil {
 	 */
 	public static void refreshValidProjects(IProject[] projects,
 			IProgressMonitor monitor) throws CoreException {
+		refreshValidProjects(projects, true, monitor);
+	}
+
+	/**
+	 * The method refreshes the given projects. Projects with missing .project
+	 * file are deleted. The method should be called in the following flow:<br>
+	 * <ol>
+	 * <li>Call {@link ProjectUtil#getValidOpenProjects(Repository)}
+	 * <li>Perform a workdir checkout (e.g. branch, reset)
+	 * <li>Call
+	 * {@link ProjectUtil#refreshValidProjects(IProject[], IProgressMonitor)}
+	 * </ol>
+	 *
+	 * @param projects
+	 *            list of valid projects before workdir checkout.
+	 * @param delete
+	 *            true to delete projects, false to close them
+	 * @param monitor
+	 *
+	 * @throws CoreException
+	 */
+	public static void refreshValidProjects(IProject[] projects,
+			boolean delete, IProgressMonitor monitor) throws CoreException {
 		try {
 			monitor.beginTask(CoreText.ProjectUtil_refreshingProjects,
 					projects.length);
@@ -110,17 +134,57 @@ public class ProjectUtil {
 						IProjectDescription.DESCRIPTION_FILE_NAME).toOSString();
 				File projectFile = new File(projectFilePath);
 				if (projectFile.exists())
-						p.refreshLocal(IResource.DEPTH_INFINITE,
-								new SubProgressMonitor(monitor, 1));
-
-				 else
+					p.refreshLocal(IResource.DEPTH_INFINITE,
+							new SubProgressMonitor(monitor, 1));
+				else if (delete)
 					p.delete(false, true, new SubProgressMonitor(monitor, 1));
-
+				else
+					closeMissingProject(p, projectFile, monitor);
 				monitor.worked(1);
 			}
 		} finally {
 			monitor.done();
 		}
+	}
+
+	private static void closeMissingProject(IProject p, File projectFile,
+			IProgressMonitor monitor) throws CoreException {
+		// Create temporary .project file so it can be closed
+		boolean closeFailed = false;
+		File projectRoot = projectFile.getParentFile();
+		if (!projectRoot.isFile()) {
+			boolean hasRoot = projectRoot.exists();
+			if (!hasRoot)
+				projectRoot.mkdirs();
+			try {
+				if (projectFile.createNewFile())
+					p.close(new SubProgressMonitor(monitor, 1));
+				else
+					closeFailed = true;
+			} catch (IOException e) {
+				closeFailed = true;
+			} finally {
+				// Clean up created .project file
+				try {
+					FileUtils.delete(projectFile, FileUtils.RETRY
+							| FileUtils.SKIP_MISSING);
+				} catch (IOException e) {
+					closeFailed = true;
+				}
+				// Clean up created folder
+				if (hasRoot)
+					try {
+						FileUtils.delete(projectRoot, FileUtils.RETRY
+								| FileUtils.SKIP_MISSING | FileUtils.RECURSIVE);
+					} catch (IOException e) {
+						closeFailed = true;
+					}
+			}
+		} else
+			closeFailed = true;
+		// Delete projects that can't be closed
+		if (closeFailed)
+			p.delete(false, true, new SubProgressMonitor(monitor, 1));
 	}
 
 	/**
