@@ -12,6 +12,7 @@ import org.eclipse.core.resources.IResourceRuleFactory;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  * interface for EGit operations
@@ -37,4 +38,44 @@ public interface IEGitOperation {
 	 * @see IResourceRuleFactory
 	 */
 	ISchedulingRule getSchedulingRule();
+
+	/**
+	 * A task to be performed before execution begins
+	 */
+	interface PreExecuteTask {
+
+		/**
+		 * Executes the task
+		 *
+		 * @param repository
+		 *            the git repository
+		 *
+		 * @param monitor
+		 *            a progress monitor, or <code>null</code> if progress
+		 *            reporting and cancellation are not desired
+		 * @throws CoreException
+		 */
+		void preExecute(Repository repository, IProgressMonitor monitor)
+				throws CoreException;
+	}
+
+	/**
+	 * A task to be performed after execution completes
+	 */
+	interface PostExecuteTask {
+
+		/**
+		 * Executes the task
+		 *
+		 * @param repository
+		 *            the git repository
+		 *
+		 * @param monitor
+		 *            a progress monitor, or <code>null</code> if progress
+		 *            reporting and cancellation are not desired
+		 * @throws CoreException
+		 */
+		void postExecute(Repository repository, IProgressMonitor monitor)
+				throws CoreException;
+	}
 }
