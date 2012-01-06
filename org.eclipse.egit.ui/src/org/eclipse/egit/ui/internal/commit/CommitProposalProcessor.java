@@ -11,8 +11,6 @@
 package org.eclipse.egit.ui.internal.commit;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -101,7 +99,7 @@ public class CommitProposalProcessor implements IContentAssistProcessor {
 		}
 	}
 
-	private final Set<String> messages;
+	private final String[] messages;
 
 	private final Set<CommitFile> files = new TreeSet<CommitFile>();
 
@@ -112,10 +110,10 @@ public class CommitProposalProcessor implements IContentAssistProcessor {
 	 * @param paths
 	 */
 	public CommitProposalProcessor(String[] messages, String[] paths) {
-		if (messages != null && messages.length > 0)
-			this.messages = new TreeSet<String>(Arrays.asList(messages));
+		if (messages != null)
+			this.messages = messages;
 		else
-			this.messages = Collections.emptySet();
+			this.messages = new String[0];
 
 		for (String path : paths) {
 			String name = new Path(path).lastSegment();
