@@ -592,6 +592,9 @@ public class UIText extends NLS {
 	public static String ProjectsPreferencePage_AutoShareProjects;
 
 	/** */
+	public static String ProjectsPreferencePage_RestoreBranchProjects;
+
+	/** */
 	public static String GitProjectPropertyPage_LabelBranch;
 
 	/** */
