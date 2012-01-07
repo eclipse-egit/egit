@@ -48,8 +48,6 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.RESOURCEHISTORY_COMPARE_MODE, false);
 
 		store.setDefault(UIPreferences.DECORATOR_RECOMPUTE_ANCESTORS, true);
-		store.setDefault(UIPreferences.DECORATOR_RECURSIVE_LIMIT,
-				Integer.MAX_VALUE);
 		store.setDefault(UIPreferences.DECORATOR_FILETEXT_DECORATION,
 				GitLightweightDecorator.DecorationHelper.FILE_FORMAT_DEFAULT);
 		store.setDefault(UIPreferences.DECORATOR_FOLDERTEXT_DECORATION,
