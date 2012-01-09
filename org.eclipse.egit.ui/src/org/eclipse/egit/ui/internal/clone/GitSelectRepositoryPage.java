@@ -63,8 +63,6 @@ public class GitSelectRepositoryPage extends WizardPage {
 
 	private Button addRepo;
 
-	private Button cloneRepo;
-
 	private IPreferenceChangeListener configChangeListener;
 
 	/**
@@ -119,27 +117,6 @@ public class GitSelectRepositoryPage extends WizardPage {
 		Composite tb = new Composite(main, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(tb);
 		GridDataFactory.fillDefaults().grab(false, true).applyTo(tb);
-
-		cloneRepo = new Button(tb, SWT.PUSH);
-		cloneRepo.setText(UIText.GitSelectRepositoryPage_CloneButton);
-		cloneRepo.setToolTipText(UIText.GitSelectRepositoryPage_CloneTooltip);
-
-		GridDataFactory.fillDefaults().grab(false, false).align(SWT.FILL,
-				SWT.BEGINNING).applyTo(cloneRepo);
-
-		cloneRepo.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent event) {
-				GitCloneWizard cloneWizard = new GitCloneWizard();
-				cloneWizard.setCallerRunsCloneOperation(true);
-				WizardDialog dlg = new WizardDialog(getShell(), cloneWizard);
-				dlg.setHelpAvailable(true);
-				if (dlg.open() == Window.OK)
-					cloneWizard.runCloneOperation(getContainer());
-				checkPage();
-			}
-
-		});
 
 		addRepo = new Button(tb, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL,
