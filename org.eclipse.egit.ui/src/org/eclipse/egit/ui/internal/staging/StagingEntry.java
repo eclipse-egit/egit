@@ -50,6 +50,8 @@ public class StagingEntry implements IAdaptable {
 
 	private String path;
 
+	private boolean submodule;
+
 	/**
 	 *
 	 * @param repository TODO
@@ -60,6 +62,20 @@ public class StagingEntry implements IAdaptable {
 		this.repository = repository;
 		this.state = modified;
 		this.path = file;
+	}
+
+	/**
+	 * @param submodule
+	 */
+	public void setSubmodule(final boolean submodule) {
+		this.submodule = submodule;
+	}
+
+	/**
+	 * @return true if submodule, false otherwise
+	 */
+	public boolean isSubmodule() {
+		return submodule;
 	}
 
 	/**

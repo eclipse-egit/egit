@@ -25,6 +25,7 @@ import java.util.TreeSet;
 import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewUpdate;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
 
@@ -96,6 +97,8 @@ public class StagingViewContentProvider implements
 			for (String file : indexDiff.getRemoved())
 				nodes.add(new StagingEntry(repository, REMOVED, file));
 		}
+		for (StagingEntry entry : nodes)
+			entry.setSubmodule(indexDiff.getIndexMode(entry.getPath()) == FileMode.GITLINK);
 		content = nodes.toArray(new StagingEntry[nodes.size()]);
 	}
 
