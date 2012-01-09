@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX///fY\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-05T15:07:41Z",
+      "side": 1,
+      "message": "Isn\u0027t it Bug 367707?",
+      "revId": "c6330e1f3b29b6c513fc326f9cc30ff0de38c7a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
