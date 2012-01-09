@@ -11,32 +11,25 @@ package org.eclipse.egit.core.op;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.CoreText;
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TransportException;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.LsRemoteCommand;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.Connection;
 import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
 
 /**
  * Operation of listing remote repository advertised refs.
  */
 public class ListRemoteOperation {
-	private final Repository localDb;
+	private final LsRemoteCommand rc;
 
-	private final URIish uri;
-
-	private final int timeout;
-
-	private Map<String, Ref> remoteRefsMap;
-
-	private CredentialsProvider credentialsProvider;
+	private Collection<Ref> remoteRefs;
 
 	/**
 	 * Create listing operation for specified local repository (needed by
@@ -52,9 +45,9 @@ public class ListRemoteOperation {
 	 */
 	public ListRemoteOperation(final Repository localDb, final URIish uri,
 			int timeout) {
-		this.localDb = localDb;
-		this.uri = uri;
-		this.timeout = timeout;
+		Git git = new Git(localDb);
+		rc = git.lsRemote();
+		rc.setRemote(uri.toString()).setTimeout(timeout);
 	}
 
 	/**
@@ -64,7 +57,7 @@ public class ListRemoteOperation {
 	 */
 	public Collection<Ref> getRemoteRefs() {
 		checkState();
-		return remoteRefsMap.values();
+		return remoteRefs;
 	}
 
 	/**
@@ -76,7 +69,10 @@ public class ListRemoteOperation {
 	 */
 	public Ref getRemoteRef(final String refName) {
 		checkState();
-		return remoteRefsMap.get(refName);
+		for (Ref r: remoteRefs)
+			if (r.getName().equals(refName))
+				return r;
+		return null;
 	}
 
 	/**
@@ -84,7 +80,7 @@ public class ListRemoteOperation {
 	 * @param credentialsProvider
 	 */
 	public void setCredentialsProvider(CredentialsProvider credentialsProvider) {
-		this.credentialsProvider = credentialsProvider;
+		rc.setCredentialsProvider(credentialsProvider);
 	}
 
 	/**
@@ -96,35 +92,22 @@ public class ListRemoteOperation {
 	 */
 	public void run(IProgressMonitor pm) throws InvocationTargetException,
 			InterruptedException {
-		Transport transport = null;
-		Connection connection = null;
+		if (pm != null)
+			pm.beginTask(CoreText.ListRemoteOperation_title,
+					IProgressMonitor.UNKNOWN);
 		try {
-			transport = Transport.open(localDb, uri);
-			if (credentialsProvider != null)
-				transport.setCredentialsProvider(credentialsProvider);
-			transport.setTimeout(this.timeout);
-
-			if (pm != null)
-				pm.beginTask(CoreText.ListRemoteOperation_title,
-						IProgressMonitor.UNKNOWN);
-			connection = transport.openFetch();
-			remoteRefsMap = connection.getRefsMap();
-		} catch (NotSupportedException e) {
+			remoteRefs = rc.call();
+		} catch (JGitInternalException e) {
 			throw new InvocationTargetException(e);
-		} catch (TransportException e) {
+		} catch (GitAPIException e) {
 			throw new InvocationTargetException(e);
-		} finally {
-			if (connection != null)
-				connection.close();
-			if (transport != null)
-				transport.close();
-			if (pm != null)
-				pm.done();
 		}
+		if (pm != null)
+			pm.done();
 	}
 
 	private void checkState() {
-		if (remoteRefsMap == null)
+		if (remoteRefs == null)
 			throw new IllegalStateException(
 					"Error occurred during remote repo " +  //$NON-NLS-1$
 					"listing, no refs available"); //$NON-NLS-1$
