@@ -16,6 +16,24 @@
       "revId": "c6330e1f3b29b6c513fc326f9cc30ff0de38c7a1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX///eo\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-01-05T17:20:43Z",
+      "side": 1,
+      "message": "Good catch Stefan, thanks, updated it and rebased.",
+      "parentUuid": "AABODX///fY\u003d",
+      "revId": "c6330e1f3b29b6c513fc326f9cc30ff0de38c7a1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
