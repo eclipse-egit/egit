@@ -42,7 +42,6 @@ import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -445,8 +444,12 @@ public class CommitInfoBuilder {
 		StringBuilder sb = new StringBuilder();
 		Map<String, Ref> tagsMap = db.getTags();
 		for (Entry<String, Ref> tagEntry : tagsMap.entrySet()) {
-			ObjectId peeledId = tagEntry.getValue().getPeeledObjectId();
-			if (peeledId != null && peeledId.equals(commit)) {
+			Ref tag = tagEntry.getValue();
+			tag = db.peel(tag);
+			Object id = tag.getPeeledObjectId();
+			if(id == null)
+				id = tag.getObjectId();
+			if (commit.equals(id)) {
 				if (sb.length() > 0)
 					sb.append(", "); //$NON-NLS-1$
 				sb.append(tagEntry.getKey());
