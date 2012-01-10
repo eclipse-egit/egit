@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,7 +47,7 @@ import org.eclipse.osgi.util.NLS;
 public class PullOperation implements IEGitOperation {
 	private final Repository[] repositories;
 
-	private final Map<Repository, Object> results = new HashMap<Repository, Object>();
+	private final Map<Repository, Object> results = new LinkedHashMap<Repository, Object>();
 
 	private final int timeout;
 

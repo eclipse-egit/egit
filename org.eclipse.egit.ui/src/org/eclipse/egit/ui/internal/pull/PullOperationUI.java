@@ -11,7 +11,7 @@
 package org.eclipse.egit.ui.internal.pull;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -49,7 +49,7 @@ public class PullOperationUI extends JobChangeAdapter implements
 
 	private final Repository[] repositories;
 
-	private final Map<Repository, Object> results = new HashMap<Repository, Object>();
+	private final Map<Repository, Object> results = new LinkedHashMap<Repository, Object>();
 
 	private final PullOperation pullOperation;
 
