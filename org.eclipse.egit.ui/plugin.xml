@@ -434,9 +434,18 @@
       </page>
       <page
             category="org.eclipse.egit.ui.GitPreferences"
-            class="org.eclipse.egit.ui.internal.preferences.ViewsPreferencePage"
-            id="org.eclipse.egit.ui.internal.preferences.ViewsPreferencePage"
-            name="%ViewsPreferencePage.name">
+            class="org.eclipse.egit.ui.internal.preferences.SynchronizePreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.SynchronizePreferencePage"
+            name="%SynchronizePreferencePage.name">
+         <keywordReference
+               id="org.eclipse.egit.ui.keyword.git">
+         </keywordReference>
+      </page>
+      <page
+            category="org.eclipse.egit.ui.GitPreferences"
+            class="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"
+            name="%HistoryPreferencePage.name">
          <keywordReference
                id="org.eclipse.egit.ui.keyword.git">
          </keywordReference>
