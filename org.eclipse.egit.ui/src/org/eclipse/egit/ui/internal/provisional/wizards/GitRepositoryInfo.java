@@ -30,6 +30,7 @@ public class GitRepositoryInfo {
 
 	private final String cloneUri;
 	private UserPasswordCredentials credentials;
+	private boolean shouldSaveCredentialsInSecureStore;
 	private String repositoryName;
 	private List<String> fetchRefSpecs = new ArrayList<String>();
 
@@ -106,6 +107,22 @@ public class GitRepositoryInfo {
 	 */
 	public UserPasswordCredentials getCredentials() {
 		return credentials;
+	}
+
+	/**
+	 * @param shouldSaveCredentialsInSecureStore
+	 *            whether the credentials should be saved after successful clone
+	 */
+	public void setShouldSaveCredentialsInSecureStore(
+			boolean shouldSaveCredentialsInSecureStore) {
+		this.shouldSaveCredentialsInSecureStore = shouldSaveCredentialsInSecureStore;
+	}
+
+	/**
+	 * @return whether the credentials should be saved after successful clone
+	 */
+	public boolean shouldSaveCredentialsInSecureStore() {
+		return shouldSaveCredentialsInSecureStore;
 	}
 
 	/**
