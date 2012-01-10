@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.pull;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -60,7 +60,7 @@ public class MultiPullResultDialog extends Dialog {
 	private static final int DETAIL_BUTTON = 99;
 
 	// the value is either a PullResult or an IStatus
-	private final Map<Repository, Object> results = new HashMap<Repository, Object>();
+	private final Map<Repository, Object> results = new LinkedHashMap<Repository, Object>();
 
 	private TableViewer tv;
 

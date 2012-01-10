@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -81,7 +81,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 */
 	private IProject[] getProjectsForSelectedResources(
 			IStructuredSelection selection) {
-		Set<IProject> ret = new HashSet<IProject>();
+		Set<IProject> ret = new LinkedHashSet<IProject>();
 		for (IResource resource : (IResource[]) getSelectedAdaptables(
 				selection, IResource.class))
 			ret.add(resource.getProject());
@@ -91,7 +91,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	}
 
 	private Set<IProject> extractProjectsFromMappings(IStructuredSelection selection) {
-		Set<IProject> ret = new HashSet<IProject>();
+		Set<IProject> ret = new LinkedHashSet<IProject>();
 		for (ResourceMapping mapping : (ResourceMapping[]) getSelectedAdaptables(
 				selection, ResourceMapping.class)) {
 			IProject[] projects = mapping.getProjects();
@@ -122,7 +122,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 * @return the repositories that projects map to iff all projects are mapped
 	 */
 	protected Repository[] getRepositoriesFor(final IProject[] projects) {
-		Set<Repository> ret = new HashSet<Repository>();
+		Set<Repository> ret = new LinkedHashSet<Repository>();
 		for (IProject project : projects) {
 			RepositoryMapping repositoryMapping = RepositoryMapping
 					.getMapping(project);
@@ -169,7 +169,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 */
 	private IProject[] getProjectsInRepositoryOfSelectedResources(
 			IStructuredSelection selection) {
-		Set<IProject> ret = new HashSet<IProject>();
+		Set<IProject> ret = new LinkedHashSet<IProject>();
 		Repository[] repositories = getRepositoriesFor(getProjectsForSelectedResources(selection));
 		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
@@ -455,7 +455,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	 * @return the resources in the selection
 	 */
 	private IResource[] getSelectedResources(IStructuredSelection selection) {
-		Set<IResource> result = new HashSet<IResource>();
+		Set<IResource> result = new LinkedHashSet<IResource>();
 		for (Object o : selection.toList()) {
 			IResource resource = (IResource) getAdapter(o, IResource.class);
 			if (resource != null)
