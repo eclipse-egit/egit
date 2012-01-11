@@ -49,7 +49,8 @@ public class FetchResultDialog extends TitleAreaDialog {
 	public FetchResultDialog(final Shell parentShell, final Repository localDb,
 			final FetchOperationResult result, final String sourceString) {
 		super(parentShell);
-		setShellStyle(getShellStyle() | SWT.RESIZE);
+		setShellStyle(getShellStyle() & ~SWT.APPLICATION_MODAL | SWT.ON_TOP | SWT.RESIZE);
+		setBlockOnOpen(false);
 		this.localDb = localDb;
 		this.result = result;
 		this.sourceString = sourceString;
@@ -88,7 +89,8 @@ public class FetchResultDialog extends TitleAreaDialog {
 	public FetchResultDialog(final Shell parentShell, final Repository localDb,
 			final FetchResult result, final String sourceString) {
 		super(parentShell);
-		setShellStyle(getShellStyle() | SWT.RESIZE);
+		setShellStyle(getShellStyle() & ~SWT.APPLICATION_MODAL | SWT.ON_TOP | SWT.RESIZE);
+		setBlockOnOpen(false);
 		this.localDb = localDb;
 		this.result = new FetchOperationResult(result.getURI(), result);
 		this.sourceString = sourceString;

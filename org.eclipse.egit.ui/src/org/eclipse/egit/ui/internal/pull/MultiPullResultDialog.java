@@ -152,7 +152,8 @@ public class MultiPullResultDialog extends Dialog {
 	protected MultiPullResultDialog(Shell parentShell,
 			Map<Repository, Object> results) {
 		super(parentShell);
-		setShellStyle(getShellStyle() | SWT.SHELL_TRIM);
+		setShellStyle(getShellStyle() & ~SWT.APPLICATION_MODAL | SWT.ON_TOP | SWT.SHELL_TRIM);
+		setBlockOnOpen(false);
 		this.results.putAll(results);
 	}
 
