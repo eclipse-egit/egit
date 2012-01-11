@@ -23,6 +23,7 @@ import org.eclipse.egit.core.op.ResetOperation.ResetType;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.operations.LockOperation;
 import org.eclipse.egit.ui.internal.repository.SelectResetTypePage;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -92,8 +93,10 @@ public class ResetCommand extends
 									final ResetOperation operation = new ResetOperation(
 											node.getRepository(), targetBranch,
 											resetType);
-									JobUtil.scheduleUserJob(operation, jobname,
-											JobFamilies.RESET);
+									final LockOperation lockWrapper = new LockOperation(
+											operation);
+									JobUtil.scheduleUserJob(lockWrapper,
+											jobname, JobFamilies.RESET);
 								}
 							});
 				} catch (InvocationTargetException ite) {
