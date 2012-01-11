@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODH///fc\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-12-19T16:48:46Z",
+      "side": 1,
+      "message": "Please add signed-off tag.",
+      "revId": "a8ea84f1a92a6ff6518655af5fda044d3edef88a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODH///fg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-12-19T16:48:46Z",
+      "side": 1,
+      "message": "Why is this done only for JGitInternalException? It would also make sense for e.g. GitAPIException. So perhaps we could always return the cause (if not null).",
+      "revId": "a8ea84f1a92a6ff6518655af5fda044d3edef88a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
