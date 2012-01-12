@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODH///c4\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-19T22:02:53Z",
+      "side": 1,
+      "message": "AFAIK we don\u0027t require sign-off as per the contributor guide",
+      "parentUuid": "AABODH///fw\u003d",
+      "revId": "97e793480c6434cb08ea4759420b074272520ca8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
