@@ -79,6 +79,13 @@ public class CommitDialogPreferencePage extends FieldEditorPreferencePage
 				UIPreferences.COMMIT_DIALOG_HISTORY_SIZE,
 				UIText.CommitDialogPreferencePage_commitMessageHistory, main);
 		addField(historySize);
+
+		BooleanFieldEditor includeUntracked = new BooleanFieldEditor(
+				UIPreferences.COMMIT_DIALOG_INCLUDE_UNTRACKED,
+				UIText.CommitDialogPreferencePage_includeUntrackedFiles, main);
+		includeUntracked.getDescriptionControl(main).setToolTipText(
+				UIText.CommitDialogPreferencePage_includeUntrackedFilesTooltip);
+		addField(includeUntracked);
 	}
 
 	private void updateMargins(Group group) {
