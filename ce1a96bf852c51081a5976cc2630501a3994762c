@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX///FE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2012-01-11T16:47:52Z",
+      "side": 1,
+      "message": "This sends a dialog to the user while the operation is running and holding locks (e.g. Workspace Root). This might be problematic (dead locks).",
+      "revId": "ce1a96bf852c51081a5976cc2630501a3994762c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX///FI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/LockOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2012-01-11T16:47:52Z",
+      "side": 1,
+      "message": "Exceptions other than LockException need to be re-thrown. Otherwise Jobs executing the operation are treated as executed successfully.\nOther question: can a Job executing an operation be treated as successful if the following happens:\n1. Operation fails with lock failure\n2. User removes lock by confirming pop up",
+      "revId": "ce1a96bf852c51081a5976cc2630501a3994762c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
