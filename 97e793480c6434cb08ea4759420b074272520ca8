@@ -17,6 +17,42 @@
       "revId": "97e793480c6434cb08ea4759420b074272520ca8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX///7c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-12-28T00:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODH///f4\u003d",
+      "revId": "97e793480c6434cb08ea4759420b074272520ca8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX///7Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-12-28T00:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODH///f0\u003d",
+      "revId": "97e793480c6434cb08ea4759420b074272520ca8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
