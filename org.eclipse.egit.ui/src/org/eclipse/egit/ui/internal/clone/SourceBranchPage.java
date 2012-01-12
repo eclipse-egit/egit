@@ -4,6 +4,7 @@
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (c) 2010, Benjamin Muskalla <bmuskalla@eclipsesource.com>
+ * Copyright (c) 2012, IBM Corporation
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -342,15 +343,20 @@ class SourceBranchPage extends WizardPage {
 
 		final Ref idHEAD = listRemoteOp.getRemoteRef(Constants.HEAD);
 		head = null;
+		boolean headIsMaster = false;
+		final String masterBranchRef = Constants.R_HEADS + Constants.MASTER;
 		for (final Ref r : listRemoteOp.getRemoteRefs()) {
 			final String n = r.getName();
 			if (!n.startsWith(Constants.R_HEADS))
 				continue;
 			availableRefs.add(r);
-			if (idHEAD == null || head != null)
+			if (idHEAD == null || headIsMaster)
 				continue;
-			if (r.getObjectId().equals(idHEAD.getObjectId()))
-				head = r;
+			if (r.getObjectId().equals(idHEAD.getObjectId())) {
+				headIsMaster = masterBranchRef.equals(r.getName());
+				if (head == null || headIsMaster)
+					head = r;
+			}
 		}
 		Collections.sort(availableRefs, new Comparator<Ref>() {
 			public int compare(final Ref o1, final Ref o2) {
