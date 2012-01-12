@@ -164,4 +164,8 @@ public class CommitDialogTester {
 				.styledTextWithLabel(UIText.CommitDialog_CommitMessage)
 				.getText();
 	}
+
+	public boolean isEntryChecked(int rowIndex) {
+		return commitDialog.bot().table().getTableItem(rowIndex).isChecked();
+	}
 }

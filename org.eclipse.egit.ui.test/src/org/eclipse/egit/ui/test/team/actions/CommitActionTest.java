@@ -12,15 +12,21 @@
 package org.eclipse.egit.ui.test.team.actions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.TagOperation;
+import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.common.CommitDialogTester;
 import org.eclipse.egit.ui.common.CommitDialogTester.NoFilesToCommitPopup;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
@@ -211,4 +217,39 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 		assertTrue(headCommit.getFullMessage().indexOf(changeId) > 0);
 	}
 
+	@Test
+	public void testIncludeUntracked() throws Exception {
+		boolean include = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.COMMIT_DIALOG_INCLUDE_UNTRACKED);
+		try {
+			Activator
+					.getDefault()
+					.getPreferenceStore()
+					.setValue(UIPreferences.COMMIT_DIALOG_INCLUDE_UNTRACKED,
+							true);
+			IProject prj = ResourcesPlugin.getWorkspace().getRoot().getProject(
+					PROJ1);
+			if (!prj.isAccessible())
+				throw new IllegalStateException("No project found");
+			IFile file = prj.getFile("untracked.txt");
+			assertFalse(file.exists());
+			file.create(
+					new ByteArrayInputStream("new file".getBytes(prj
+							.getDefaultCharset())), 0, null);
+			assertTrue(file.exists());
+			CommitDialogTester commitDialogTester = CommitDialogTester
+					.openCommitDialog(PROJ1);
+			assertEquals(1, commitDialogTester.getRowCount());
+			assertTrue(commitDialogTester.isEntryChecked(0));
+			String path = RepositoryMapping.getMapping(file)
+					.getRepoRelativePath(file);
+			assertEquals(path, commitDialogTester.getEntryText(0));
+		} finally {
+			Activator
+					.getDefault()
+					.getPreferenceStore()
+					.setValue(UIPreferences.COMMIT_DIALOG_INCLUDE_UNTRACKED,
+							include);
+		}
+	}
 }

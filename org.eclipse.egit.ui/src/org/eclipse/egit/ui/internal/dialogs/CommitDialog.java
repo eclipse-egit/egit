@@ -865,6 +865,11 @@ public class CommitDialog extends TitleAreaDialog {
 		ColumnViewerToolTipSupport.enableFor(filesViewer);
 		filesViewer.setContentProvider(ArrayContentProvider.getInstance());
 		filesViewer.setUseHashlookup(true);
+		IDialogSettings settings = org.eclipse.egit.ui.Activator.getDefault()
+				.getDialogSettings();
+		if (settings.get(SHOW_UNTRACKED_PREF) != null)
+			showUntracked = Boolean.valueOf(settings.get(SHOW_UNTRACKED_PREF))
+					.booleanValue();
 		filesViewer.addFilter(new CommitItemFilter());
 		filesViewer.setInput(items.toArray());
 		filesViewer.getTable().setMenu(getContextMenu());
@@ -881,12 +886,6 @@ public class CommitDialog extends TitleAreaDialog {
 		showUntrackedItem.setImage(showUntrackedImage);
 		showUntrackedItem
 				.setToolTipText(UIText.CommitDialog_ShowUntrackedFiles);
-		IDialogSettings settings = org.eclipse.egit.ui.Activator.getDefault()
-				.getDialogSettings();
-		if (settings.get(SHOW_UNTRACKED_PREF) != null) {
-			showUntracked = Boolean.valueOf(settings.get(SHOW_UNTRACKED_PREF))
-					.booleanValue();
-		}
 		showUntrackedItem.setSelection(showUntracked);
 		showUntrackedItem.addSelectionListener(new SelectionAdapter() {
 
@@ -948,11 +947,16 @@ public class CommitDialog extends TitleAreaDialog {
 			filesViewer.setAllGrayed(true);
 			filesViewer.setAllChecked(true);
 		} else {
+			final boolean includeUntracked = getPreferenceStore().getBoolean(
+					UIPreferences.COMMIT_DIALOG_INCLUDE_UNTRACKED);
 			for (CommitItem item : items) {
-				if ((preselectAll || preselectedFiles.contains(item.path)) &&
-						item.status != Status.UNTRACKED &&
-						item.status != Status.ASSUME_UNCHANGED)
-					filesViewer.setChecked(item, true);
+				if (!preselectAll && !preselectedFiles.contains(item.path))
+					continue;
+				if (item.status == Status.ASSUME_UNCHANGED)
+					continue;
+				if (!includeUntracked && item.status == Status.UNTRACKED)
+					continue;
+				filesViewer.setChecked(item, true);
 			}
 		}
 

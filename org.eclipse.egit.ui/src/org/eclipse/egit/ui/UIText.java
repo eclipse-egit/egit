@@ -2563,6 +2563,12 @@ public class UIText extends NLS {
 	public static String CommitDialogPreferencePage_formatting;
 
 	/** */
+	public static String CommitDialogPreferencePage_includeUntrackedFiles;
+
+	/** */
+	public static String CommitDialogPreferencePage_includeUntrackedFilesTooltip;
+
+	/** */
 	public static String CommitDialogPreferencePage_signedOffBy;
 
 	/** */
