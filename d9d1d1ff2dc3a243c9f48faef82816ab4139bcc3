@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX///Eo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-01-11T22:40:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX///FY\u003d",
+      "revId": "d9d1d1ff2dc3a243c9f48faef82816ab4139bcc3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX///Ek\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-01-11T22:40:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX///Fc\u003d",
+      "revId": "d9d1d1ff2dc3a243c9f48faef82816ab4139bcc3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
