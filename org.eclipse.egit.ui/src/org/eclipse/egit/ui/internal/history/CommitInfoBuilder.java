@@ -445,8 +445,10 @@ public class CommitInfoBuilder {
 		StringBuilder sb = new StringBuilder();
 		Map<String, Ref> tagsMap = db.getTags();
 		for (Entry<String, Ref> tagEntry : tagsMap.entrySet()) {
-			ObjectId peeledId = tagEntry.getValue().getPeeledObjectId();
-			if (peeledId != null && peeledId.equals(commit)) {
+			ObjectId target = tagEntry.getValue().getPeeledObjectId();
+			if (target == null)
+				target = tagEntry.getValue().getObjectId();
+			if (target != null && target.equals(commit)) {
 				if (sb.length() > 0)
 					sb.append(", "); //$NON-NLS-1$
 				sb.append(tagEntry.getKey());
