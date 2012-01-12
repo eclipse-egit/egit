@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX///Gw\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-01-10T23:55:43Z",
+      "side": 1,
+      "message": "Which commit editor does this refer to?",
+      "revId": "f024bdc03028732997b8bae887543198d55bd2c7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
