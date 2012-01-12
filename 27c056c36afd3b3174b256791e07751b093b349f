@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX///Gg\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-01-11T00:10:20Z",
+      "side": 1,
+      "message": "Should be [historyView]",
+      "revId": "27c056c36afd3b3174b256791e07751b093b349f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
