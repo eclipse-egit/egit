@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2012 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Daniel Megert (IBM) - Hide submodules not if there are no submodules (http://bugs.eclipse.org/367955)
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -309,7 +310,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			nodeList.add(new AdditionalRefsNode(node, repo));
 			nodeList.add(new WorkingDirNode(node, repo));
 			nodeList.add(new RemotesNode(node, repo));
-			if (!repo.isBare())
+			if (!repo.isBare() && hasSubmodules(node, repo))
 				nodeList.add(new SubmodulesNode(node, repo));
 
 			return nodeList.toArray();
@@ -455,6 +456,20 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 	}
 
+	private boolean hasSubmodules(RepositoryTreeNode node, Repository repo) {
+		try {
+			SubmoduleWalk walk = SubmoduleWalk.forIndex(repo);
+			while (walk.next()) {
+				Repository subRepo = walk.getRepository();
+				if (subRepo != null)
+					return true;
+			}
+		} catch (IOException e) {
+			return true;
+		}
+		return false;
+	}
+
 	private Object[] handleException(Exception e, RepositoryTreeNode parentNode) {
 		Activator.handleError(e.getMessage(), e, false);
 		// add a node indicating that there was an Exception
@@ -486,7 +501,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		case ADDITIONALREFS:
 			return true;
 		case SUBMODULES:
-			return true;
+			return hasSubmodules(node, repo);
 		case TAGS:
 			try {
 				return !repo.getRefDatabase().getRefs(Constants.R_TAGS)
