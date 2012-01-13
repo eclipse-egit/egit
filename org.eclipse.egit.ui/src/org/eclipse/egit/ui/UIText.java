@@ -1129,6 +1129,9 @@ public class UIText extends NLS {
 	public static String SourceBranchPage_cannotCreateTemp;
 
 	/** */
+	public static String SourceBranchPage_CompositeTransportErrorMessage;
+
+	/** */
 	public static String CloneDestinationPage_title;
 
 	/** */
