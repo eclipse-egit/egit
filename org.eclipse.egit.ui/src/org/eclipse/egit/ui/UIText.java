@@ -1621,6 +1621,12 @@ public class UIText extends NLS {
 	public static String HistoryPage_findbar_notFound;
 
 	/** */
+	public static String HistoryPreferencePage_MaxBranchLength;
+
+	/** */
+	public static String HistoryPreferencePage_MaxTagLength;
+
+	/** */
 	public static String PullOperationUI_ConnectionProblem;
 
 	/** */
