@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX///UE\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-08T20:49:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX///VM\u003d",
+      "revId": "ea20a635acd788bb6452516d5c671e183214eb63",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
