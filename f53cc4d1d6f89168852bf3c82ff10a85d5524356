@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX///KQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ListRemoteOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-10T17:20:55Z",
+      "side": 1,
+      "message": "Extracting the cause from a JGitInternalException to handle certain error cases in the application using jgit feels odd. I think we should instead alter LsRemoteCommand to wrap those exceptions clients might want to handle as appropriate subclasses of GitAPIException similar to what FetchCommand does.\n\nI\u0027ll propose another change for LsRemoteCommand  soon to implement this and also update this change accordingly.",
+      "revId": "f53cc4d1d6f89168852bf3c82ff10a85d5524356",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
