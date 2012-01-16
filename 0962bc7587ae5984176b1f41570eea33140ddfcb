@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOC3///mQ\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-12-02T18:07:11Z",
+      "side": 1,
+      "message": "I thought about this for some time, but decided that ? for ahead and ? for behind is more intuitive (the way it is in the patch).\n\nThe arrows point from the remote tracking (\"the original\"), to the current branch. It\u0027s the current branch\u0027s status we want to show. It says \"the current branch is up there, compared to the remote branch\". Flipping the arrows would reverse that, changing the meaning to \"the remote branch is down there\".\n\nI think it also corresponds better with the wording of \"git status\", which says:\n\n  Your branch is ahead of \u0027origin/master\u0027 by 1 commit.\n\nAhead sounds more like ? than ?, no?\n\nMaybe we need to have a vote on that, maybe my thinking is non-intuitive here.",
+      "parentUuid": "AABOCX///EI\u003d",
+      "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///EE\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -65,6 +83,24 @@
       "writtenOn": "2011-11-27T22:38:31Z",
       "side": 1,
       "message": "do not prepend a blank here, if I want to move this decoration e.g. to the beginning of the text decorator I wouldn\u0027t be able to remove it and would have to waste one blank worth of horizontal space",
+      "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///mI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-12-02T18:07:11Z",
+      "side": 1,
+      "message": "Hm, the problem here is that, when I don\u0027t prepend a blank here, the default format would have to look like this (see GitLightweightDecorator):\n\nPROJECT_FORMAT_DEFAULT \u003d\"{dirty:\u003e} {name} [{repository} {branch} {branch_status}]\";\n\n(Notice the space between {branch} and {branch_status}.)\n\nWith this default format, there would always be a blank, even if the current branch isn\u0027t different from the remote tracking branch. It would then look like this:\n\nproject [repo branch ]\n\nIs that acceptable? Or is there a way to avoid this?",
+      "parentUuid": "AABOCX///EQ\u003d",
       "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -134,6 +170,24 @@
       "writtenOn": "2011-11-27T22:38:31Z",
       "side": 1,
       "message": "maybe move this to RevWalk, also would deserve some unit tests",
+      "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///mA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-12-02T18:07:11Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "AABOCX///EY\u003d",
       "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
