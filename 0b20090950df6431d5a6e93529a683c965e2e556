@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///RY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-22T19:51:14Z",
+      "side": 1,
+      "message": "Should this return null instead of empty String to be consistent with other non-decorating return cases in this method?",
+      "revId": "0b20090950df6431d5a6e93529a683c965e2e556",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///Rc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2011-11-22T19:51:14Z",
+      "side": 1,
+      "message": "Do you think this should be configurable?\n\nSimilar to the dirty flag that defaults to \u0027\u003e\u0027 but can be changed?",
+      "revId": "0b20090950df6431d5a6e93529a683c965e2e556",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
