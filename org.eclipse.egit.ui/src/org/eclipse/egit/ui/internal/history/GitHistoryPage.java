@@ -595,11 +595,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 	// react on changes to the relative date preference
 	private final IPropertyChangeListener listener = new IPropertyChangeListener() {
-		@SuppressWarnings("boxing")
 		public void propertyChange(PropertyChangeEvent event) {
 			if (UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE.equals(event
 					.getProperty()))
-				graph.setRelativeDate(((Boolean) event.getNewValue()));
+				graph.setRelativeDate(isShowingRelativeDates());
 				graph.getTableView().refresh();
 			}
 	};
