@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOB3///5w\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-28T21:10:01Z",
+      "side": 1,
+      "message": "style nits: \n- trailing whitespace \n- we don\u0027t want the bug number in the commit message header but in a footer immediately preceding the Change-Id footer in the last paragraph of the commit message as specified in [1].\n\n[1] http://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "540e24243124922184629774b8077c37eba8f5a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///54\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GraphLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-28T21:10:01Z",
+      "side": 1,
+      "message": "I tried this on Mac OS X 10.6.8 with Language set to English but German date format. It seems the German date format set in Mac System Preferences isn\u0027t respected in Eclipse, I always get short EN_us date format in the History View when this change is used.",
+      "revId": "540e24243124922184629774b8077c37eba8f5a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///1c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GraphLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-10-29T22:19:21Z",
+      "side": 1,
+      "message": "I tried to use getDateTimeInstance() instead, but I still get US date formatting and 12 hour time with AM/PM instead of 24 hour time format which I defined in system preference",
+      "parentUuid": "AABOB3///1o\u003d",
+      "revId": "540e24243124922184629774b8077c37eba8f5a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
