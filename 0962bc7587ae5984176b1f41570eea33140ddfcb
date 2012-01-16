@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AABOC3///mM\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-12-02T18:07:11Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "AABOCX///EE\u003d",
+      "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///EQ\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceHelper.java",
         "patchSetId": 1
@@ -81,6 +99,24 @@
       "writtenOn": "2011-11-27T22:38:31Z",
       "side": 1,
       "message": "yes, Repository looks like a better home for this method, would deserve some unit tests",
+      "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///mE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-12-02T18:07:11Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "AABOCX///Ec\u003d",
       "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
