@@ -676,6 +676,9 @@ public class UIText extends NLS {
 	public static String RebaseResultDialog_NextStepsDoNothing;
 
 	/** */
+	public static String RebaseResultDialog_NothingToCommit;
+
+	/** */
 	public static String RebaseResultDialog_notInWorkspace;
 
 	/** */
