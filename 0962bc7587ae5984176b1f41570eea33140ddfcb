@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///EI\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-27T22:38:31Z",
+      "side": 1,
+      "message": "I would tend to flip the arrows, this way the arrows would always point from the current branch in direction towards the corresponding remote tracking branch",
+      "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///EE\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-27T22:38:31Z",
+      "side": 1,
+      "message": "s/helps prevent/helps to prevent/",
+      "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///EQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-27T22:38:31Z",
+      "side": 1,
+      "message": "do not prepend a blank here, if I want to move this decoration e.g. to the beginning of the text decorator I wouldn\u0027t be able to remove it and would have to waste one blank worth of horizontal space",
+      "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///EU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-27T22:38:31Z",
+      "side": 1,
+      "message": "I would tend to flip the arrows, this way the arrows would always point from the current branch in direction towards the corresponding remote tracking branch",
+      "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///Ec\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-27T22:38:31Z",
+      "side": 1,
+      "message": "yes, Repository looks like a better home for this method, would deserve some unit tests",
+      "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///EY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-27T22:38:31Z",
+      "side": 1,
+      "message": "maybe move this to RevWalk, also would deserve some unit tests",
+      "revId": "0962bc7587ae5984176b1f41570eea33140ddfcb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
