@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AABOB3///1o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GraphLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-29T21:56:53Z",
+      "side": 1,
+      "message": "I think it sort respect the settings, but it depends on the variant you request. getDateTimeInstance() is better.",
+      "parentUuid": "AABOB3///54\u003d",
+      "revId": "540e24243124922184629774b8077c37eba8f5a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOB3///1c\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GraphLabelProvider.java",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I tried to use getDateTimeInstance() instead, but I still get US date formatting and 12 hour time with AM/PM instead of 24 hour time format which I defined in system preference",
       "parentUuid": "AABOB3///1o\u003d",
+      "revId": "540e24243124922184629774b8077c37eba8f5a2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOB3///vU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GraphLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-31T21:35:12Z",
+      "side": 1,
+      "message": "Seems java doesn\u0027t support en_DE either, stupid thing...",
+      "parentUuid": "AABOB3///1c\u003d",
       "revId": "540e24243124922184629774b8077c37eba8f5a2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
