@@ -63,6 +63,12 @@ public interface IDecoratableResource {
 	String getBranch();
 
 	/**
+	 * @return a symbol indicating the branch status relative to the remote
+	 *         tracking branch, or <code>null</code> if not applicable
+	 */
+	String getBranchStatus();
+
+	/**
 	 * Returns whether or not the resource is tracked by Git
 	 *
 	 * @return whether or not the resource is tracked by Git

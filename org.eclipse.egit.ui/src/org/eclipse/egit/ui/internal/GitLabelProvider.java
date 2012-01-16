@@ -35,6 +35,7 @@ import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.jgit.lib.BranchTrackingStatus;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
@@ -54,6 +55,29 @@ public class GitLabelProvider extends LabelProvider implements
 	private ResourceManager imageCache;
 
 	private LabelProvider workbenchLabelProvider;
+
+	/**
+	 * Format the branch tracking status suitable for displaying in decorations and labels.
+	 *
+	 * @param status
+	 * @return the branch tracking status as a string
+	 */
+	public static String formatBranchTrackingStatus(BranchTrackingStatus status) {
+		StringBuilder sb = new StringBuilder();
+		int ahead = status.getAheadCount();
+		int behind = status.getBehindCount();
+		if (ahead != 0) {
+			sb.append('↑');
+			sb.append(ahead);
+		}
+		if (behind != 0) {
+			if (sb.length() != 0)
+				sb.append(' ');
+			sb.append('↓');
+			sb.append(status.getBehindCount());
+		}
+		return sb.toString();
+	}
 
 	@Override
 	public String getText(Object element) {
@@ -146,6 +170,15 @@ public class GitLabelProvider extends LabelProvider implements
 				string.append(" - ", StyledString.DECORATIONS_STYLER); //$NON-NLS-1$
 				string.append(repositoryState.getDescription(),
 						StyledString.DECORATIONS_STYLER);
+			}
+
+			BranchTrackingStatus trackingStatus = BranchTrackingStatus.of(repository, branch);
+			if (trackingStatus != null
+					&& (trackingStatus.getAheadCount() != 0 || trackingStatus
+							.getBehindCount() != 0)) {
+				String formattedTrackingStatus = formatBranchTrackingStatus(trackingStatus);
+				string.append(' ');
+				string.append(formattedTrackingStatus, StyledString.DECORATIONS_STYLER);
 			}
 			string.append(']', StyledString.DECORATIONS_STYLER);
 		}

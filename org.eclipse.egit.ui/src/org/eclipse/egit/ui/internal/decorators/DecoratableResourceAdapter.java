@@ -62,6 +62,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			repositoryName = DecoratableResourceHelper
 					.getRepositoryName(repository);
 			branch = DecoratableResourceHelper.getShortBranch(repository);
+			branchStatus = DecoratableResourceHelper.getBranchStatus(repository);
 			switch (resource.getType()) {
 			case IResource.FILE:
 				extractResourceProperties();
