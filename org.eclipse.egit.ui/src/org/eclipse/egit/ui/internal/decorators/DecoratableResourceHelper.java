@@ -14,6 +14,8 @@ import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.GitLabelProvider;
+import org.eclipse.jgit.lib.BranchTrackingStatus;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -55,5 +57,21 @@ public class DecoratableResourceHelper {
 			return UIText.DecoratableResourceHelper_noHead;
 
 		return repository.getBranch();
+	}
+
+	static String getBranchStatus(Repository repo) throws IOException {
+		String branchName = repo.getBranch();
+		if (branchName == null)
+			return null;
+
+		BranchTrackingStatus status = BranchTrackingStatus.of(repo, branchName);
+		if (status == null)
+			return null;
+
+		if (status.getAheadCount() == 0 && status.getBehindCount() == 0)
+			return null;
+
+		String formattedStatus = GitLabelProvider.formatBranchTrackingStatus(status);
+		return formattedStatus;
 	}
 }
