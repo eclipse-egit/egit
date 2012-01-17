@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOC3///Fg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReferenceImporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-12-10T17:02:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOC3///GE\u003d",
+      "revId": "1f0bc72cae3278b56f107a645a701019caf67cee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOC3///GA\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReferenceImporter.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2011-12-10T15:17:39Z",
       "side": 1,
       "message": "It\u0027s not a simple refactoring AKA extract class. It has logic that is different from original one and it changes original functionality.",
+      "revId": "1f0bc72cae3278b56f107a645a701019caf67cee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///Fc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ProjectReferenceImporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-12-10T17:02:29Z",
+      "side": 1,
+      "message": "What are you referring to specifically? The lines above were already present.",
+      "parentUuid": "AABOC3///GA\u003d",
       "revId": "1f0bc72cae3278b56f107a645a701019caf67cee",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
