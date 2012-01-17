@@ -94,6 +94,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.STAGING_VIEW_FILENAME_MODE, true);
 		store.setDefault(UIPreferences.CLONE_WIZARD_STORE_SECURESTORE, false);
 		store.setDefault(UIPreferences.COMMIT_DIALOG_HISTORY_SIZE, 10);
+		store.setDefault(UIPreferences.CHECKOUT_PROJECT_RESTORE, true);
 	}
 
 }
