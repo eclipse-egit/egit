@@ -555,7 +555,7 @@ public class CommitMessageComponent {
 			int endOfChangeId = findNextEOL(changeIdOffset,
 					previousCommitMessage);
 			if (endOfChangeId < 0)
-				endOfChangeId = previousCommitMessage.length() - 1;
+				endOfChangeId = previousCommitMessage.length();
 			int sha1Offset = changeIdOffset + Text.DELIMITER.length() + "Change-Id: I".length(); //$NON-NLS-1$
 			try {
 				originalChangeId = ObjectId.fromString(previousCommitMessage
