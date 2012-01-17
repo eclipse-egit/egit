@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX///WQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-01-07T17:52:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX///XY\u003d",
+      "revId": "3b14f96d1171a748e70d2b3a1634dd99e4d1e0dc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX///Xw\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchProjectTracker.java",
         "patchSetId": 8
