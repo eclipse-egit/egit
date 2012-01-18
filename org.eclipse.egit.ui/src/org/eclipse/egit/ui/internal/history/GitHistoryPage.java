@@ -597,10 +597,14 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private final IPropertyChangeListener listener = new IPropertyChangeListener() {
 		public void propertyChange(PropertyChangeEvent event) {
 			if (UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE.equals(event
-					.getProperty()))
-				graph.setRelativeDate(isShowingRelativeDates());
-				graph.getTableView().refresh();
+					.getProperty())) {
+				Object oldValue = event.getOldValue();
+				if (oldValue == null || !oldValue.equals(event.getNewValue())) {
+					graph.setRelativeDate(isShowingRelativeDates());
+					graph.getTableView().refresh();
+				}
 			}
+		}
 	};
 
 	/**
