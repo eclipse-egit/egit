@@ -210,6 +210,9 @@ public class CoreText extends NLS {
 	public static String Error_CanonicalFile;
 
 	/** */
+	public static String CleanOperation_title;
+
+	/** */
 	public static String CloneOperation_checkingOutFiles;
 
 	/** */
