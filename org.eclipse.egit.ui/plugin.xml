@@ -3503,7 +3503,29 @@
                   </visibleWhen>
                </command>
                <separator
-                     name="org.eclipse.egit.ui.TeamAdvancedFileSeparator"
+                     name="org.eclipse.egit.ui.TeamAdvancedFileSeparator1"
+                     visible="true">
+               </separator>
+               <command
+                     commandId="org.eclipse.egit.ui.team.Clean"
+                     label="%CleanAction_label"
+                     style="push">
+                  <visibleWhen
+                        checkEnabled="false">
+                    <iterate>
+                       <and>
+                          <adapt
+                                type="org.eclipse.core.resources.IProject">
+                             <test
+                                   property="GitResource.isShared">
+                             </test>
+                          </adapt>
+                       </and>
+                    </iterate>
+                  </visibleWhen>
+               </command>
+               <separator
+                     name="org.eclipse.egit.ui.TeamAdvancedFileSeparator2"
                      visible="true">
                </separator>
                <command
@@ -4088,6 +4110,10 @@
             icon="icons/obj16/new_tag_obj.gif">
       </image>
       <image
+            commandId="org.eclipse.egit.ui.team.Clean"
+            icon="icons/obj16/clean_obj.gif">
+      </image>      
+      <image
             commandId="org.eclipse.egit.ui.team.AssumeUnchanged"
             icon="icons/obj16/assume-unchanged.gif">
       </image>
@@ -4393,6 +4419,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.NoAssumeUnchangedActionHandler"
             id="org.eclipse.egit.ui.team.NoAssumeUnchanged"
             name="No Assume Unchanged">
+      </command>
+            <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.CleanActionHandler"
+            id="org.eclipse.egit.ui.team.Clean"
+            name="Clean">
       </command>
    </extension>
    <extension
