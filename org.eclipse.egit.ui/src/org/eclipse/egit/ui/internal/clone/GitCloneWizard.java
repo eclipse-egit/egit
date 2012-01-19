@@ -22,6 +22,7 @@ import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.provisional.wizards.NoRepositoryInfoException;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jgit.util.FileUtils;
 
 /**
@@ -101,6 +102,19 @@ public class GitCloneWizard extends AbstractGitCloneWizard {
 	@Override
 	protected void addPostClonePages() {
 		addPage(gerritConfiguration);
+	}
+
+	@Override
+	public IWizardPage getNextPage(IWizardPage page) {
+		IWizardPage nextPage = super.getNextPage(page);
+		try {
+			if (nextPage == gerritConfiguration &&
+					currentSearchResult.getGitRepositoryInfo().providesGerritConfiguration())
+				return null;
+		} catch (NoRepositoryInfoException e) {
+			Activator.error(UIText.GitImportWizard_noRepositoryInfo, e);
+		}
+		return super.getNextPage(page);
 	}
 
 	@Override
