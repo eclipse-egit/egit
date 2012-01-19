@@ -206,6 +206,9 @@ public class UIIcons {
 	/** Submodules icon */
 	public final static ImageDescriptor SUBMODULES;
 
+	/**	Clean icon */
+	public static ImageDescriptor CLEAN;
+
 	/** base URL */
 	public final static URL base;
 
@@ -241,6 +244,7 @@ public class UIIcons {
 		CHECKBOX_ENABLED_UNCHECKED = map("checkboxes/enabled_unchecked.gif"); //$NON-NLS-1$
 		CHECKBOX_DISABLED_CHECKED = map("checkboxes/disabled_checked.gif"); //$NON-NLS-1$
 		CHECKBOX_DISABLED_UNCHECKED = map("checkboxes/disabled_unchecked.gif"); //$NON-NLS-1$
+		CLEAN = map("obj16/clean_obj.gif"); //$NON-NLS-1$
 		FILTERRESOURCE = map("elcl16/filterresource.gif"); //$NON-NLS-1$
 		FILTERPROJECT = map("elcl16/filterproject.gif"); //$NON-NLS-1$
 		FILTERFOLDER = map("elcl16/filterfolder.gif"); //$NON-NLS-1$

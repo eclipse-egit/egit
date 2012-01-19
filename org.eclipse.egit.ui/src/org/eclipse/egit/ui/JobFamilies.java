@@ -79,6 +79,11 @@ public class JobFamilies {
 	public final static Object ASSUME_NOASSUME_UNCHANGED = new Object();
 
 	/**
+	 * Clean
+	 */
+	public final static Object CLEAN = new Object();
+
+	/**
 	 * Untrack
 	 */
 	public final static Object UNTRACK = new Object();
