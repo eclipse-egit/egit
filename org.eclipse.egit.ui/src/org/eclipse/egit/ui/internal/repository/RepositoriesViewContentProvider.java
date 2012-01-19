@@ -303,11 +303,11 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		case REPO: {
 
 			List<RepositoryTreeNode<? extends Object>> nodeList = new ArrayList<RepositoryTreeNode<? extends Object>>();
-
 			nodeList.add(new BranchesNode(node, repo));
 			nodeList.add(new TagsNode(node, repo));
 			nodeList.add(new AdditionalRefsNode(node, repo));
-			nodeList.add(new WorkingDirNode(node, repo));
+			if (!repo.isBare())
+				nodeList.add(new WorkingDirNode(node, repo));
 			nodeList.add(new RemotesNode(node, repo));
 			if (!repo.isBare())
 				nodeList.add(new SubmodulesNode(node, repo));
