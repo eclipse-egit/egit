@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
@@ -201,10 +203,15 @@ class BranchProjectTracker {
 			return new String[0];
 		}
 		IMemento[] children = memento.getChildren(KEY_PROJECT);
-		String[] projects = new String[children.length];
-		for (int i = 0; i < children.length; i++)
-			projects[i] = children[i].getTextData();
-		return projects;
+		if (children.length == 0)
+			return new String[0];
+		List<String> projects = new ArrayList<String>(children.length);
+		for (int i = 0; i < children.length; i++) {
+			String path = children[i].getTextData();
+			if (path != null && path.length() > 0)
+				projects.add(path);
+		}
+		return projects.toArray(new String[projects.size()]);
 	}
 
 	/**
