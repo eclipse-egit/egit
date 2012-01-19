@@ -32,6 +32,7 @@ public class GitRepositoryInfo {
 	private UserPasswordCredentials credentials;
 	private boolean shouldSaveCredentialsInSecureStore;
 	private String repositoryName;
+	private boolean providesGerritConfiguration = false;
 	private final List<String> fetchRefSpecs = new ArrayList<String>();
 
 	/**
@@ -228,6 +229,20 @@ public class GitRepositoryInfo {
 	 */
 	public List<RepositoryConfigProperty> getRepositoryConfigProperties() {
 		return repositoryConfigProperties;
+	}
+
+	/**
+	 * @return whether the info contains configuration of a remote Gerrit server
+	 */
+	public boolean providesGerritConfiguration() {
+		return providesGerritConfiguration;
+	}
+
+	/**
+	 * @param providesGerritConfiguration whether the info contains configuration of a remote Gerrit server
+	 */
+	public void setProvidesGerritConfiguration(boolean providesGerritConfiguration) {
+		this.providesGerritConfiguration = providesGerritConfiguration;
 	}
 
 }
