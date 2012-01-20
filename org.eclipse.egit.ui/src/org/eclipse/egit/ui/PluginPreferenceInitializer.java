@@ -95,6 +95,8 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.CLONE_WIZARD_STORE_SECURESTORE, false);
 		store.setDefault(UIPreferences.COMMIT_DIALOG_HISTORY_SIZE, 10);
 		store.setDefault(UIPreferences.CHECKOUT_PROJECT_RESTORE, true);
+		store.setDefault(UIPreferences.HISTORY_MAX_TAG_LENGTH, 15);
+		store.setDefault(UIPreferences.HISTORY_MAX_BRANCH_LENGTH, 15);
 	}
 
 }
