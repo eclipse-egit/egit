@@ -16,6 +16,42 @@
       "revId": "2c3f7996f172426b91e428fbad6e162019453d50",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Q0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2012-01-20T14:42:58Z",
+      "side": 1,
+      "message": "There are two CheckoutConflictException classes:\n\norg.eclipse.jgit.errors.CheckoutConflictException which is used internally in jgit and by all user\u0027s not using the API in org.eclipse.jgit.api.\n\norg.eclipse.jgit.api.errors.CheckoutConflictException which should be the only checkout exception thrown by the API in org.eclipse.jgit.api.\n\nSince you are using the API you should ideally use the exception in org.eclipse.jgit.api. A good example how it should look like is in MergeOperation.java (line 120). But there seems to be a bug in MergeCommand.java that it throws org.eclipse.jgit.errors.CheckoutConflictException instead of org.eclipse.jgit.api.errors.CheckoutConflictException. Maybe we have to solve this first. The change http://egit.eclipse.org/r/#change,4178 is addressing this ... but not yet accepted. I\u0027ll try to trigger that this change solves the problem.",
+      "parentUuid": "AABODX//+Q8\u003d",
+      "revId": "2c3f7996f172426b91e428fbad6e162019453d50",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Qs\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2012-01-20T16:07:03Z",
+      "side": 1,
+      "message": "The change I wanted to trigger will take some time, because it\u0027s an API change which can come only in a new major release. Therefore I suggest that you fix it like you proposed it here. You have to check that e.getCause() returns back a org.eclipse.jgit.errors.CheckoutConflictException . That\u0027s what you propose here. So +1 from me. Just fix the style nit about curly braces.",
+      "parentUuid": "AABODX//+Q0\u003d",
+      "revId": "2c3f7996f172426b91e428fbad6e162019453d50",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
