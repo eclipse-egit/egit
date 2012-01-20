@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX//+RM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T08:31:52Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly braces around single line blocks\n\nCheckoutConflictException shouldn\u0027t be wrapped as an internal exception. Could you check why JGit doesn\u0027t throw the API exception org.eclipse.jgit.api.errors.CheckoutConflictException instead ?",
+      "revId": "2c3f7996f172426b91e428fbad6e162019453d50",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
