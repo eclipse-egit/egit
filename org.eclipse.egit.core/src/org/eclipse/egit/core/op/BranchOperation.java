@@ -33,6 +33,7 @@ import org.eclipse.jgit.api.CheckoutResult.Status;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.errors.CheckoutConflictException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -101,7 +102,11 @@ public class BranchOperation extends BaseOperation {
 				try {
 					co.call();
 				} catch (JGitInternalException e) {
-					throw new CoreException(Activator.error(e.getMessage(), e));
+					if(e.getCause() instanceof CheckoutConflictException) {
+						return;
+					} else {
+						throw new CoreException(Activator.error(e.getMessage(), e));
+					}
 				} catch (GitAPIException e) {
 					throw new CoreException(Activator.error(e.getMessage(), e));
 				} finally {
