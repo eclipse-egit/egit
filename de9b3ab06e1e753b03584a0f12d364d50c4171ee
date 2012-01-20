@@ -16,6 +16,24 @@
       "revId": "de9b3ab06e1e753b03584a0f12d364d50c4171ee",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Pk\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/CompareActionsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-20T22:22:35Z",
+      "side": 1,
+      "message": "damn ... I forgot to delete thi \u0027debug\u0027 statement ;)",
+      "parentUuid": "AABODX//+Ps\u003d",
+      "revId": "de9b3ab06e1e753b03584a0f12d364d50c4171ee",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
