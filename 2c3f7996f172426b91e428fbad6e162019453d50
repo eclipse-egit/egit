@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+Q8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-01-20T11:46:36Z",
+      "side": 1,
+      "message": "hm, i\u0027m also a little confused about /which/ CheckoutConflictException would be the correct one in which location, as there are two of them... ?! :/",
+      "parentUuid": "AABODX//+RE\u003d",
+      "revId": "2c3f7996f172426b91e428fbad6e162019453d50",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+Q0\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
         "patchSetId": 1
