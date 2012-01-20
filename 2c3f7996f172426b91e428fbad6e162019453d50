@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+RE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-01-20T09:20:19Z",
+      "side": 1,
+      "message": "hm, i checked. jgit does indeed throw a CheckoutConflictException in CheckoutCommand.java:169, /but/ it immediately after that catches it itself again on line 215, since CheckoutConflictException is an IOException, which is catched here. an internal exception is rethrown from there.\n\nAlso CheckoutConflictException is not part of the signature, as it should be. Adding it is an API breakage though i guess... how should i best proceed? i can do the changes if thats wanted... :)",
+      "parentUuid": "AABODX//+RM\u003d",
+      "revId": "2c3f7996f172426b91e428fbad6e162019453d50",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+Q0\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
         "patchSetId": 1
