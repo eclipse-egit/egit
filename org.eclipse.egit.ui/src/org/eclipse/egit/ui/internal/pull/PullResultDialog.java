@@ -57,7 +57,7 @@ public class PullResultDialog extends Dialog {
 	 */
 	public PullResultDialog(Shell shell, Repository repo, PullResult result) {
 		super(shell);
-		setShellStyle(getShellStyle() & ~SWT.APPLICATION_MODAL | SWT.ON_TOP | SWT.SHELL_TRIM);
+		setShellStyle(getShellStyle() & ~SWT.APPLICATION_MODAL | SWT.SHELL_TRIM);
 		setBlockOnOpen(false);
 		this.repo = repo;
 		this.result = result;
