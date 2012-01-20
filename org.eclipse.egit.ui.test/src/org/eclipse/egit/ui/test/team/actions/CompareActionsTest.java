@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test.team.actions;
 
-import static org.eclipse.swtbot.eclipse.finder.waits.Conditions.waitForView;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
@@ -41,9 +40,6 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
-import org.eclipse.ui.IViewReference;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -114,7 +110,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		assertEquals(3, dialog.bot().table().rowCount());
 		dialog.bot().table().select(0);
 		dialog.bot().button(IDialogConstants.OK_LABEL).click();
-		waitUntilCompareTreeViewShows();
+		TestUtil.waitUntilViewWithGivenIdShows(CompareTreeView.ID);
 		assertEquals(0, bot.viewById(CompareTreeView.ID).bot().tree()
 				.getAllItems().length);
 		// use the second (previous) -> should have a change
@@ -236,23 +232,6 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 	private void waitUntilCompareTreeViewTreeHasNodeCount(int nodeCount) {
 		SWTBotTree tree = bot.viewById(CompareTreeView.ID).bot().tree();
 		bot.waitUntil(Conditions.treeHasRows(tree, nodeCount), 10000);
-	}
-
-	private void waitUntilCompareTreeViewShows() {
-		waitForView(new BaseMatcher<IViewReference>() {
-			public boolean matches(Object item) {
-				if (item instanceof IViewReference) {
-					return CompareTreeView.ID.equals(((IViewReference) item)
-							.getId());
-				}
-				return false;
-			}
-
-			public void describeTo(Description description) {
-				description.appendText("Wait for view with ID="
-						+ CompareTreeView.ID);
-			}
-		});
 	}
 
 }
