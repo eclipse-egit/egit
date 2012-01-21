@@ -256,9 +256,10 @@ public class GitCloneWizardTest extends GitCloneWizardTestBase {
 		RepoPropertiesPage repoProperties = importWizard.openCloneWizard();
 		RepoRemoteBranchesPage remoteBranches = repoProperties
 				.nextToRemoteBranches("git://localhost:80/EGIT");
-		remoteBranches
-				.assertErrorMessage("Exception caught during execution of ls-remote command:\n"
-						+ "git://localhost:80/EGIT: Connection refused");
+		remoteBranches.assertErrorMessage(NLS.bind(
+				UIText.SourceBranchPage_CompositeTransportErrorMessage,
+				"Exception caught during execution of ls-remote command",
+				"git://localhost:80/EGIT: Connection refused"));
 		remoteBranches.assertCannotProceed();
 		remoteBranches.cancel();
 	}
