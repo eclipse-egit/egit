@@ -18,6 +18,7 @@ import java.io.File;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.op.CreatePatchOperation;
+import org.eclipse.egit.core.op.CreatePatchOperation.DiffHeaderFormat;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Constants;
@@ -98,7 +99,7 @@ public class CreatePatchOperationTest extends GitTestCase {
 		CreatePatchOperation operation = new CreatePatchOperation(
 				testRepository.getRepository(), secondCommit);
 
-		operation.useGitFormat(false);
+		operation.setHeaderFormat(DiffHeaderFormat.NONE);
 		operation.execute(new NullProgressMonitor());
 
 		String patchContent = operation.getPatchContent();
