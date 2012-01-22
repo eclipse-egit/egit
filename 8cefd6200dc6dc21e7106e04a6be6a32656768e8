@@ -50,6 +50,24 @@
       "revId": "8cefd6200dc6dc21e7106e04a6be6a32656768e8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///FU\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2011-12-10T17:03:45Z",
+      "side": 1,
+      "message": "Ok, I removed the changes to the existing tests, will push a separate change after this one.",
+      "parentUuid": "AABOC3///F4\u003d",
+      "revId": "8cefd6200dc6dc21e7106e04a6be6a32656768e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
