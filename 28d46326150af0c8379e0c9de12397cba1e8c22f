@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX//+Ms\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:08:29Z",
+      "side": 1,
+      "message": "I would prefer annotate this test case with:\n\n@Test(expected \u003d TeamException.class)\n\ninstead of having try-catch block in test logick",
+      "revId": "28d46326150af0c8379e0c9de12397cba1e8c22f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+J0\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-22T12:17:58Z",
+      "side": 1,
+      "message": "True, in @Test(expected) you cannot assure that exception is thrown from given place in test case, so lets leave it how it is.",
+      "parentUuid": "AABODX//+KM\u003d",
+      "revId": "28d46326150af0c8379e0c9de12397cba1e8c22f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Mo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ProjectReferenceImporter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:08:29Z",
+      "side": 1,
+      "message": "I would rather check all configured remotes not only default one.",
+      "revId": "28d46326150af0c8379e0c9de12397cba1e8c22f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
