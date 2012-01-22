@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+KM\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-01-22T10:35:57Z",
+      "side": 1,
+      "message": "I want to make sure that it\u0027s thrown for the last import, i.e. it shouldn\u0027t throw for the second import. Is there a way to make sure of that using @Test(expected)?",
+      "parentUuid": "AABODX//+Ms\u003d",
+      "revId": "28d46326150af0c8379e0c9de12397cba1e8c22f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+J0\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "writtenOn": "2012-01-21T14:08:29Z",
       "side": 1,
       "message": "I would rather check all configured remotes not only default one.",
+      "revId": "28d46326150af0c8379e0c9de12397cba1e8c22f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+KA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ProjectReferenceImporter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-01-22T10:35:57Z",
+      "side": 1,
+      "message": "Good idea, thanks. Done.",
+      "parentUuid": "AABODX//+Mo\u003d",
       "revId": "28d46326150af0c8379e0c9de12397cba1e8c22f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
