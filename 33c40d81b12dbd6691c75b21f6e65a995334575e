@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///Wg\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-21T21:19:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///aY\u003d",
+      "revId": "33c40d81b12dbd6691c75b21f6e65a995334575e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///aQ\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOCX///WY\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-21T21:19:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///aQ\u003d",
+      "revId": "33c40d81b12dbd6691c75b21f6e65a995334575e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOCX///aU\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2011-11-20T23:13:05Z",
       "side": 1,
       "message": "I get a boxing warning here",
+      "revId": "33c40d81b12dbd6691c75b21f6e65a995334575e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///Wc\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2011-11-21T21:19:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOCX///aU\u003d",
       "revId": "33c40d81b12dbd6691c75b21f6e65a995334575e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
