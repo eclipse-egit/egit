@@ -9,6 +9,7 @@
 package org.eclipse.egit.core.internal;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -35,7 +36,10 @@ import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.ProjectReference;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
@@ -80,27 +84,35 @@ public class ProjectReferenceImporter {
 
 				final IPath workDir = getWorkingDir(gitUrl, branch,
 						branches.keySet());
+				final File repositoryPath = workDir.append(
+						Constants.DOT_GIT_EXT).toFile();
+
+				boolean shouldClone = true;
+
 				if (workDir.toFile().exists()) {
-					final Collection<String> projectNames = new LinkedList<String>();
-					for (final ProjectReference projectReference : projects)
-						projectNames.add(projectReference.getProjectDir());
-					throw new TeamException(
-							NLS.bind(
-									CoreText.GitProjectSetCapability_CloneToExistingDirectory,
-									new Object[] { workDir, projectNames,
-											gitUrl }));
+					if (repositoryAlreadyExistsForUrl(repositoryPath, gitUrl))
+						shouldClone = false;
+					else {
+						final Collection<String> projectNames = new LinkedList<String>();
+						for (final ProjectReference projectReference : projects)
+							projectNames.add(projectReference.getProjectDir());
+						throw new TeamException(
+								NLS.bind(
+										CoreText.GitProjectSetCapability_CloneToExistingDirectory,
+										new Object[] { workDir, projectNames,
+												gitUrl }));
+					}
 				}
 
 				try {
-					int timeout = 60;
-					String refName = Constants.R_HEADS + branch;
-					final CloneOperation cloneOperation = new CloneOperation(
-							gitUrl, true, null, workDir.toFile(), refName,
-							Constants.DEFAULT_REMOTE_NAME, timeout);
-					cloneOperation.run(monitor);
-
-					final File repositoryPath = workDir.append(
-							Constants.DOT_GIT_EXT).toFile();
+					if (shouldClone) {
+						int timeout = 60;
+						String refName = Constants.R_HEADS + branch;
+						final CloneOperation cloneOperation = new CloneOperation(
+								gitUrl, true, null, workDir.toFile(), refName,
+								Constants.DEFAULT_REMOTE_NAME, timeout);
+						cloneOperation.run(monitor);
+					}
 
 					Activator.getDefault().getRepositoryUtil()
 							.addConfiguredRepository(repositoryPath);
@@ -174,6 +186,39 @@ public class ProjectReferenceImporter {
 			extendedName = humanishName + "_" + branch; //$NON-NLS-1$
 		final IPath workDir = workspaceLocation.append(extendedName);
 		return workDir;
+	}
+
+	private static boolean repositoryAlreadyExistsForUrl(File repositoryPath,
+			URIish gitUrl) {
+		if (repositoryPath.exists()) {
+			try {
+				FileRepository existingRepository = new FileRepository(
+						repositoryPath);
+				boolean exists = containsRemoteForUrl(
+						existingRepository.getConfig(), gitUrl);
+				existingRepository.close();
+				return exists;
+			} catch (IOException e) {
+				return false;
+			} catch (URISyntaxException e) {
+				return false;
+			}
+		}
+		return false;
+	}
+
+	private static boolean containsRemoteForUrl(Config config, URIish url) throws URISyntaxException {
+		Set<String> remotes = config.getSubsections(ConfigConstants.CONFIG_REMOTE_SECTION);
+		for (String remote : remotes) {
+			String remoteUrl = config.getString(
+					ConfigConstants.CONFIG_REMOTE_SECTION,
+					remote,
+					ConfigConstants.CONFIG_KEY_URL);
+			URIish existingUrl = new URIish(remoteUrl);
+			if (existingUrl.equals(url))
+				return true;
+		}
+		return false;
 	}
 
 	private List<IProject> importProjects(final Set<ProjectReference> projects,
