@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX//+Jo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ProjectReferenceImporter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-22T12:20:34Z",
+      "side": 1,
+      "message": "style-nit: we don\u0027t use curly brackets around single line blocks",
+      "revId": "8d1ad29bfe7edd404e4ee68ad800a8a1f6bfc2d3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Js\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ProjectReferenceImporter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-22T12:20:34Z",
+      "side": 1,
+      "message": "style-nit: we don\u0027t use curly brackets around single line blocks",
+      "revId": "8d1ad29bfe7edd404e4ee68ad800a8a1f6bfc2d3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
