@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOC3///F0\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-12-10T15:26:47Z",
+      "side": 1,
+      "message": "See my last comment.",
+      "revId": "8cefd6200dc6dc21e7106e04a6be6a32656768e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///Fw\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-12-10T15:26:47Z",
+      "side": 1,
+      "message": "See my last comment.",
+      "revId": "8cefd6200dc6dc21e7106e04a6be6a32656768e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///F4\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitProjectSetCapabilityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-12-10T15:26:47Z",
+      "side": 1,
+      "message": "+1 for such refactoring in general but it\u0027s unrelated to the main goal of current changeset. Could you move it in a separate independent changeset?",
+      "revId": "8cefd6200dc6dc21e7106e04a6be6a32656768e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
