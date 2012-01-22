@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOCX///aY\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-20T23:13:05Z",
+      "side": 1,
+      "message": "I get a boxing warning here",
+      "revId": "33c40d81b12dbd6691c75b21f6e65a995334575e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///aQ\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-20T23:13:05Z",
+      "side": 1,
+      "message": "typo s/shouldn\u0027t been change/shouldn\u0027t be changed/\n\nor (maybe easier to understand): \"should be unchanged in working tree\"",
+      "revId": "33c40d81b12dbd6691c75b21f6e65a995334575e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOCX///aU\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-20T23:13:05Z",
+      "side": 1,
+      "message": "I get a boxing warning here",
+      "revId": "33c40d81b12dbd6691c75b21f6e65a995334575e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
