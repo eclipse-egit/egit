@@ -16,6 +16,7 @@ import java.util.WeakHashMap;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
@@ -82,8 +83,9 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 	}
 
 	public boolean isEnabled() {
-		return resource == null ? false : RepositoryProvider
-				.getProvider(resource.getProject()) != null;
+		return resource != null
+				&& RepositoryProvider.getProvider(resource.getProject(),
+						GitProvider.ID) != null;
 	}
 
 	public void setActiveEditor(ITextEditor editor) {
