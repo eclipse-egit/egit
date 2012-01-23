@@ -16,6 +16,24 @@
       "revId": "19c562e36a21b962e5d2205bd8020a65316a8421",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//9/8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitDocument.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-01-23T20:04:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+As\u003d",
+      "revId": "19c562e36a21b962e5d2205bd8020a65316a8421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
