@@ -112,6 +112,10 @@ class GitDocument extends Document implements RefsChangedListener {
 				return;
 			}
 			final String gitPath = mapping.getRepoRelativePath(resource);
+			if (gitPath == null || gitPath.length() == 0) {
+				setResolved(null, null, null, ""); //$NON-NLS-1$
+				return;
+			}
 			final Repository repository = mapping.getRepository();
 			String baseline = GitQuickDiffProvider.baseline.get(repository);
 			if (baseline == null)
