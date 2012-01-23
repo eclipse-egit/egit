@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX//+As\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitDocument.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-01-23T18:53:30Z",
+      "side": 1,
+      "message": "Can length() really be 0 for a non-directory resource?\nIf not, just test for null",
+      "revId": "19c562e36a21b962e5d2205bd8020a65316a8421",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
