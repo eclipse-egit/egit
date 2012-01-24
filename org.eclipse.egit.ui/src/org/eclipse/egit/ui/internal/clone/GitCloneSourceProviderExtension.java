@@ -18,9 +18,13 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.internal.provisional.wizards.IRepositorySearchResult;
 import org.eclipse.egit.ui.internal.provisional.wizards.IRepositoryServerProvider;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
+import org.osgi.framework.Bundle;
 
 /**
  * Provides access to the extensions of the cloneSourceProvider extension point
@@ -48,28 +52,42 @@ public class GitCloneSourceProviderExtension {
 	private static void addCloneSourceProvider(
 			List<CloneSourceProvider> cloneSourceProvider,
 			IConfigurationElement[] config, int index) {
-		int myIndex = index;
-		String label = config[myIndex].getAttribute("label"); //$NON-NLS-1$
-		boolean hasFixLocation = Boolean.valueOf(
-				config[myIndex].getAttribute("hasFixLocation")).booleanValue(); //$NON-NLS-1$
-		myIndex++;
-		IConfigurationElement serverProviderElement = null;
-		if (myIndex < config.length
-				&& config[myIndex].getName().equals("repositoryServerProvider")) { //$NON-NLS-1$
-			serverProviderElement = config[myIndex];
+		try {
+			int myIndex = index;
+			String label = config[myIndex].getAttribute("label"); //$NON-NLS-1$
+			boolean hasFixLocation = Boolean.valueOf(
+					config[myIndex].getAttribute("hasFixLocation")).booleanValue(); //$NON-NLS-1$
+
+
+			String iconPath = config[myIndex].getAttribute("icon"); //$NON-NLS-1$
+			ImageDescriptor icon = null;
+			if (iconPath != null) {
+				Bundle declaringBundle = Platform.getBundle(config[myIndex]
+						.getDeclaringExtension().getNamespaceIdentifier());
+				icon = ImageDescriptor.createFromURL(declaringBundle.getResource(iconPath));
+			}
 			myIndex++;
+			IConfigurationElement serverProviderElement = null;
+			if (myIndex < config.length
+					&& config[myIndex].getName().equals("repositoryServerProvider")) { //$NON-NLS-1$
+				serverProviderElement = config[myIndex];
+				myIndex++;
+			}
+			IConfigurationElement pageElement = null;
+			if (myIndex < config.length
+					&& config[myIndex].getName().equals("repositorySearchPage")) { //$NON-NLS-1$
+				pageElement = config[myIndex];
+				myIndex++;
+			}
+			cloneSourceProvider.add(new CloneSourceProvider(label,
+					serverProviderElement, pageElement, hasFixLocation, icon));
+			if (myIndex == config.length)
+				return;
+			addCloneSourceProvider(cloneSourceProvider, config, myIndex);
+		} catch (Exception e) {
+			Activator.logError("Could not create extension provided by " + //$NON-NLS-1$
+					Platform.getBundle(config[index].getDeclaringExtension().getNamespaceIdentifier()), e);
 		}
-		IConfigurationElement pageElement = null;
-		if (myIndex < config.length
-				&& config[myIndex].getName().equals("repositorySearchPage")) { //$NON-NLS-1$
-			pageElement = config[myIndex];
-			myIndex++;
-		}
-		cloneSourceProvider.add(new CloneSourceProvider(label,
-				serverProviderElement, pageElement, hasFixLocation));
-		if (myIndex == config.length)
-			return;
-		addCloneSourceProvider(cloneSourceProvider, config, myIndex);
 	}
 
 	/**
@@ -82,7 +100,9 @@ public class GitCloneSourceProviderExtension {
 		 * The constant provider used for local repositories
 		 */
 		public static final CloneSourceProvider LOCAL = new CloneSourceProvider(
-				UIText.GitCloneSourceProviderExtension_Local, null, null, true);
+				UIText.GitCloneSourceProviderExtension_Local, null, null, true, UIIcons.REPOSITORY);
+
+		private static final ImageDescriptor defaultImage = UIIcons.REPOSITORY;
 
 		private final String label;
 
@@ -92,14 +112,18 @@ public class GitCloneSourceProviderExtension {
 
 		private boolean hasFixLocation = false;
 
+		private ImageDescriptor image = UIIcons.REPOSITORY;
+
 		private CloneSourceProvider(String label,
 				IConfigurationElement repositoryServerProviderElement,
 				IConfigurationElement repositorySearchPageElement,
-				boolean hasFixLocation) {
+				boolean hasFixLocation,
+				ImageDescriptor image) {
 			this.label = label;
 			this.repositoryServerProviderElement = repositoryServerProviderElement;
 			this.repositorySearchPageELement = repositorySearchPageElement;
 			this.hasFixLocation = hasFixLocation;
+			this.image = image;
 		}
 
 		/**
@@ -108,6 +132,13 @@ public class GitCloneSourceProviderExtension {
 		 */
 		public String getLabel() {
 			return label;
+		}
+
+		/**
+		 * @return the image
+		 */
+		public ImageDescriptor getImage() {
+			return image != null ? image : defaultImage;
 		}
 
 		/**
