@@ -15,10 +15,10 @@ import static org.eclipse.egit.core.internal.util.ResourceUtil.isNonWorkspace;
 import static org.eclipse.jgit.lib.ObjectId.zeroId;
 import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
@@ -42,7 +42,7 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 
 	private final GitSynchronizeDataSet gsds;
 
-	private final Map<IResource, IResourceVariant> cache = new HashMap<IResource, IResourceVariant>();
+	private final Map<IResource, IResourceVariant> cache = new WeakHashMap<IResource, IResourceVariant>();
 
 
 	GitResourceVariantTree(ResourceVariantByteStore store,
@@ -62,6 +62,16 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 					roots.add(container.getProject());
 
 		return roots.toArray(new IResource[roots.size()]);
+	}
+
+	/**
+	 * Disposes all nested resources
+	 */
+	public void dispose() {
+		if (gsds != null)
+			gsds.dispose();
+
+		cache.clear();
 	}
 
 	@Override
