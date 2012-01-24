@@ -4187,6 +4187,12 @@ public class UIText extends NLS {
 	public static String StagingView_StageItemMenuLabel;
 
 	/** */
+	public static String SubmoduleUpdateCommand_Title;
+
+	/** */
+	public static String SubmoduleUpdateCommand_UpdateError;
+
+	/** */
 	public static String SynchronizeWithMenu_custom;
 
 	/** */
