@@ -18,17 +18,26 @@ package org.eclipse.egit.ui.internal.provisional.wizards;
  * the egit team.
  * </p>
  *
- * Provides information of a Git repository
+ * Exception that indicates that an implementor of the extension point could not
+ * create a {@code GitRepositoryInfo} object
  */
-public interface IRepositorySearchResult {
+public class NoRepositoryInfoException extends Exception {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @return an object encapsulating info about a git repository
-	 * @throws NoRepositoryInfoException
-	 *             if an error occured when constructing a
-	 *             {@code GitRepositoryInfo} object
+	 * @param message
+	 * @param cause
 	 */
-	public GitRepositoryInfo getGitRepositoryInfo()
-			throws NoRepositoryInfoException;
+	public NoRepositoryInfoException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	/**
+	 * @param message
+	 */
+	public NoRepositoryInfoException(String message) {
+		super(message);
+	}
 
 }

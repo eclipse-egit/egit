@@ -985,6 +985,9 @@ public class UIText extends NLS {
 	public static String RepositoryLocationPage_title;
 
 	/** */
+	public static String RepositoryLocationContentProvider_errorProvidingRepoServer;
+
+	/** */
 	public static String RepositorySearchDialog_browse;
 
 	/** */
@@ -3038,6 +3041,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GitImportWizard_errorParsingURI;
+
+	/** */
+	public static String GitImportWizard_noRepositoryInfo;
 
 	/** */
 	public static String GitImportWizard_WizardTitle;
