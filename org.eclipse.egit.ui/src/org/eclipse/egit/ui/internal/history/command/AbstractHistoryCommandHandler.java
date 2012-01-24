@@ -23,6 +23,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
@@ -97,6 +98,11 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 			}
 
 		}
+
+		Repository repo = AdapterUtils.adapt(input, Repository.class);
+		if (repo != null)
+			return repo;
+
 		throw new ExecutionException(
 				UIText.AbstractHistoryCommanndHandler_CouldNotGetRepositoryMessage);
 	}
