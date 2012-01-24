@@ -97,8 +97,12 @@ public abstract class AbstractSharedCommandHandler extends AbstractHandler {
 			IResource resource = (IResource) activeEditor
 					.getAdapter(IResource.class);
 
-			if (resource != null)
-				return RepositoryMapping.getMapping(resource).getRepository();
+			if (resource != null) {
+				RepositoryMapping mapping = RepositoryMapping
+						.getMapping(resource);
+				if (mapping != null)
+					return mapping.getRepository();
+			}
 		}
 		return null;
 	}
