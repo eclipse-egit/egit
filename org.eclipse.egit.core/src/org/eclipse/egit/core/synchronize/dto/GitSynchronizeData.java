@@ -260,6 +260,16 @@ public class GitSynchronizeData {
 	}
 
 	/**
+	 * Disposes all nested resources
+	 */
+	public void dispose() {
+		if (projects != null)
+			projects.clear();
+		if (includedPaths != null)
+			includedPaths.clear();
+	}
+
+	/**
 	 * @return instance of {@link TreeFilter} when synchronization was launched
 	 *         from nested node (like folder) or {@code null} otherwise
 	 */
