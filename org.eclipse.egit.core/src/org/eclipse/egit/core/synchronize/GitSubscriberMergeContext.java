@@ -114,7 +114,11 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 
 	@Override
 	public void dispose() {
-		IndexDiffCache indexDiffCache = Activator.getDefault().getIndexDiffCache();
+		Activator activator = Activator.getDefault();
+		if (activator == null)
+			return;
+
+		IndexDiffCache indexDiffCache = activator.getIndexDiffCache();
 		if (indexDiffCache != null)
 			indexDiffCache.removeIndexDiffChangedListener(indexChangeListener);
 
