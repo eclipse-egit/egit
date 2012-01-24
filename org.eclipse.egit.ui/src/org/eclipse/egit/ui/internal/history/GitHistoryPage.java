@@ -833,15 +833,14 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				}
 
 				final PlotCommit<?> c = (PlotCommit<?>) sel.getFirstElement();
+				commentViewer.setInput(c);
 				final PlotWalk walk = new PlotWalk(input.getRepository());
 				try {
 					final RevCommit unfilteredCommit = walk.parseCommit(c);
 					for (RevCommit parent : unfilteredCommit.getParents())
 						walk.parseBody(parent);
-					commentViewer.setInput(unfilteredCommit);
 					fileViewer.setInput(unfilteredCommit);
 				} catch (IOException e) {
-					commentViewer.setInput(c);
 					fileViewer.setInput(c);
 				} finally {
 					walk.dispose();
