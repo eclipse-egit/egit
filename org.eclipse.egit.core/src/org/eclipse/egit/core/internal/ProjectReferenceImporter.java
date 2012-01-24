@@ -191,17 +191,20 @@ public class ProjectReferenceImporter {
 	private static boolean repositoryAlreadyExistsForUrl(File repositoryPath,
 			URIish gitUrl) {
 		if (repositoryPath.exists()) {
+			FileRepository existingRepository;
 			try {
-				FileRepository existingRepository = new FileRepository(
-						repositoryPath);
-				boolean exists = containsRemoteForUrl(
-						existingRepository.getConfig(), gitUrl);
-				existingRepository.close();
-				return exists;
+				existingRepository = new FileRepository(repositoryPath);
 			} catch (IOException e) {
 				return false;
+			}
+			try {
+				boolean exists = containsRemoteForUrl(
+						existingRepository.getConfig(), gitUrl);
+				return exists;
 			} catch (URISyntaxException e) {
 				return false;
+			} finally {
+				existingRepository.close();
 			}
 		}
 		return false;
