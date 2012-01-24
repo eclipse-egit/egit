@@ -142,6 +142,13 @@ public class GitCommitsModelCache {
 			return children;
 		}
 
+		/**
+		 * Disposes nested resources
+		 */
+		public void dispose() {
+			children.clear();
+		}
+
 	}
 
 	/**
