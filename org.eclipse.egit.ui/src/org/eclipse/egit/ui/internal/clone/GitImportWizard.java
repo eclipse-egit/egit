@@ -31,20 +31,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
-import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.clone.GitCloneSourceProviderExtension.CloneSourceProvider;
-import org.eclipse.egit.ui.internal.components.RepositorySelection;
-import org.eclipse.egit.ui.internal.provisional.wizards.IRepositorySearchResult;
 import org.eclipse.egit.ui.internal.provisional.wizards.NoRepositoryInfoException;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.URIish;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkingSet;
@@ -55,8 +51,6 @@ import org.eclipse.ui.actions.NewProjectAction;
  * A wizard which allows to optionally clone a repository and to import projects from a repository.
  */
 public class GitImportWizard extends AbstractGitCloneWizard implements IImportWizard {
-
-	private List<CloneSourceProvider> repositoryImports;
 
 	private GitSelectRepositoryPage selectRepoPage = new GitSelectRepositoryPage();
 
@@ -88,8 +82,6 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 
 	private GitCreateGeneralProjectPage createGeneralProjectPage = new GitCreateGeneralProjectPage();
 
-	private IRepositorySearchResult currentSearchResult;
-
 	/**
 	 * The default constructor
 	 */
@@ -101,8 +93,6 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 
 	@Override
 	protected void addPreClonePages() {
-		repositoryImports = GitCloneSourceProviderExtension.getCloneSourceProvider();
-		addPage(new RepositoryLocationPage(repositoryImports));
 		addPage(selectRepoPage);
 	}
 
@@ -113,37 +103,15 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 		addPage(createGeneralProjectPage);
 	}
 
+	@Override
+	protected List<CloneSourceProvider> getCloneSourceProvider() {
+		List<CloneSourceProvider> cloneSourceProvider = super.getCloneSourceProvider();
+		cloneSourceProvider.add(0, CloneSourceProvider.LOCAL);
+		return cloneSourceProvider;
+	}
+
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		// nothing to do
-	}
-
-	@Override
-	protected RepositorySelection getRepositorySelection() {
-		try {
-			return (new RepositorySelection(new URIish(currentSearchResult.getGitRepositoryInfo().getCloneUri()), null));
-		} catch (URISyntaxException e) {
-			Activator.error(UIText.GitImportWizard_errorParsingURI, e);
-			return null;
-		} catch (NoRepositoryInfoException e) {
-			Activator.error(UIText.GitImportWizard_noRepositoryInfo, e);
-			return null;
-		} catch (Exception e) {
-			Activator.error(e.getMessage(), e);
-			return null;
-		}
-	}
-
-	@Override
-	protected UserPasswordCredentials getCredentials() {
-		try {
-			return currentSearchResult.getGitRepositoryInfo().getCredentials();
-		} catch (NoRepositoryInfoException e) {
-			Activator.error(UIText.GitImportWizard_noRepositoryInfo, e);
-			return null;
-		} catch (Exception e) {
-			Activator.error(e.getMessage(), e);
-			return null;
-		}
 	}
 
 	@Override
@@ -152,10 +120,6 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 			importWithDirectoriesPage.setRepository(selectRepoPage
 					.getRepository());
 			return importWithDirectoriesPage;
-		}
-		else if (page instanceof IRepositorySearchResult) {
-			currentSearchResult = (IRepositorySearchResult)page;
-			return validSource;
 		} else if (page == cloneDestination) {
 			importWithDirectoriesPage.setRepository(getClonedRepository());
 			return importWithDirectoriesPage;
