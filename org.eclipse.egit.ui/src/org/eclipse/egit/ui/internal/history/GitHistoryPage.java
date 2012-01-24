@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
@@ -649,13 +650,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		if (object instanceof RepositoryTreeNode)
 			return true;
 
-		if (object instanceof IAdaptable) {
-			IResource resource = (IResource) ((IAdaptable) object)
-					.getAdapter(IResource.class);
-			return resource == null ? false : typeOk(resource);
-		}
+		IResource resource = AdapterUtils.adapt(object, IResource.class);
+		if (resource != null && typeOk(resource))
+			return true;
 
-		return false;
+		return AdapterUtils.adapt(object, Repository.class) != null;
 	}
 
 	private static boolean typeOk(final IResource object) {
@@ -1092,6 +1091,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			boolean showRef = false;
 			boolean showTag = false;
 			Repository repo = null;
+			RevCommit selection = null;
 			Ref ref = null;
 			if (o instanceof IResource) {
 				RepositoryMapping mapping = RepositoryMapping
@@ -1149,6 +1149,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 							new IResource[] { resource });
 				}
 			}
+			if (repo == null) {
+				repo = AdapterUtils.adapt(o, Repository.class);
+				if (repo != null)
+					input = new HistoryPageInput(repo);
+			}
+			selection = AdapterUtils.adapt(o, RevCommit.class);
+
 			if (input == null) {
 				this.name = ""; //$NON-NLS-1$
 				setErrorMessage(UIText.GitHistoryPage_NoInputMessage);
@@ -1193,6 +1200,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				showRef(ref, repo);
 			if (showTag)
 				showTag(ref, repo);
+			if (selection != null)
+				graph.selectCommitStored(selection);
 
 			return true;
 		} finally {
