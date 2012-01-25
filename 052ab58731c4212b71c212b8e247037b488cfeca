@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODn///58\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-24T23:30:01Z",
+      "side": 1,
+      "message": "is there any reason why didn\u0027t you use foreach loop here ?",
+      "revId": "052ab58731c4212b71c212b8e247037b488cfeca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///54\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-24T23:30:01Z",
+      "side": 1,
+      "message": "style-nit: we don\u0027t use brackets around single line blocks",
+      "revId": "052ab58731c4212b71c212b8e247037b488cfeca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///50\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-24T23:30:01Z",
+      "side": 1,
+      "message": "style-nit: we don\u0027t use brackets around single line blocks",
+      "revId": "052ab58731c4212b71c212b8e247037b488cfeca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
