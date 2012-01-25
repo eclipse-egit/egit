@@ -264,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+G8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-23T00:05:50Z",
+      "side": 1,
+      "message": "If you try replace one of markStart with markUniteresting you\u0027ll notice that all test cases will fail. AFAIR I was investigating markStart/markUninteresting combinations and only two markStart produces proper results",
+      "parentUuid": "AABODX//+Ig\u003d",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+IY\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
         "patchSetId": 9
@@ -316,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+HA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-23T00:05:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+I0\u003d",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+Is\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
         "patchSetId": 9
@@ -327,6 +363,24 @@
       "writtenOn": "2012-01-22T22:51:44Z",
       "side": 1,
       "message": "why is it ok to ignore changes in merge commits ?",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+HY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-23T00:05:50Z",
+      "side": 1,
+      "message": "In such case you\u0027ll have doubled list of changes made by merged committs, IMHO this should lead to some misunderstanding (eg. why my changes was applied to times, ones with my commit and second time with \"merge commit\")",
+      "parentUuid": "AABODX//+Is\u003d",
       "revId": "45fa94730a57f8571203dca885804ea000b034c2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
