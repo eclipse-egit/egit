@@ -495,7 +495,7 @@
             location="BOTTOM_RIGHT"
             id="org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator">
             <enablement>
-              <objectClass name="org.eclipse.core.resources.IResource"/>
+              <objectClass name="org.eclipse.core.resources.mapping.ResourceMapping"/>
             </enablement>
          <description>
             %Decorator_description
