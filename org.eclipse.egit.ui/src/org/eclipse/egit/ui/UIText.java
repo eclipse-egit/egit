@@ -2980,7 +2980,7 @@ public class UIText extends NLS {
 	public static String GitCreatePatchWizard_File;
 
 	/** */
-	public static String GitCreatePatchWizard_GitFormat;
+	public static String GitCreatePatchWizard_Format;
 
 	/** */
 	public static String GitCreatePatchWizard_InternalError;
