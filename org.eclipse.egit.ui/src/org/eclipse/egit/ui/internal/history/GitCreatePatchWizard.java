@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.CreatePatchOperation;
+import org.eclipse.egit.core.op.CreatePatchOperation.DiffHeaderFormat;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
@@ -33,6 +34,13 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
@@ -137,8 +145,7 @@ public class GitCreatePatchWizard extends Wizard {
 	public boolean performFinish() {
 		final CreatePatchOperation operation = new CreatePatchOperation(db,
 				commit);
-		boolean useGitFormat = optionsPage.gitFormat.getSelection();
-		operation.useGitFormat(useGitFormat);
+		operation.setHeaderFormat(optionsPage.getSelectedHeaderFormat());
 		operation.setContextLines(Integer.parseInt(optionsPage.contextLines.getText()));
 
 		final boolean isFile = locationPage.fsRadio.getSelection();
@@ -404,7 +411,8 @@ public class GitCreatePatchWizard extends Wizard {
 	 * A wizard Page used to specify options of the created patch
 	 */
 	public class OptionsPage extends WizardPage {
-		private Button gitFormat;
+		private Label formatLabel;
+		private ComboViewer formatCombo;
 		private Text contextLines;
 		private Label contextLinesLabel;
 
@@ -427,10 +435,29 @@ public class GitCreatePatchWizard extends Wizard {
 
 			GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
 			gd.horizontalSpan = 2;
-			gitFormat = new Button(composite, SWT.CHECK);
-			gitFormat.setText(UIText.GitCreatePatchWizard_GitFormat);
-			gitFormat.setLayoutData(gd);
-			gitFormat.setEnabled(commit != null);
+
+			formatLabel = new Label(composite, SWT.NONE);
+			formatLabel.setText(UIText.GitCreatePatchWizard_Format);
+
+			formatCombo = new ComboViewer(composite, SWT.DROP_DOWN | SWT.READ_ONLY);
+			formatCombo.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.DEFAULT, true, false));
+			formatCombo.setContentProvider(ArrayContentProvider.getInstance());
+			formatCombo.setLabelProvider(new LabelProvider() {
+				@Override
+				public String getText(Object element) {
+					return ((DiffHeaderFormat) element).getDescription();
+				}
+			});
+			formatCombo.setInput(DiffHeaderFormat.values());
+			formatCombo.setFilters(new ViewerFilter[] { new ViewerFilter() {
+				@Override
+				public boolean select(Viewer viewer, Object parentElement,
+						Object element) {
+					return commit != null
+							|| !((DiffHeaderFormat) element).isCommitRequired();
+				}
+			}});
+			formatCombo.setSelection(new StructuredSelection(DiffHeaderFormat.NONE));
 
 			contextLinesLabel = new Label(composite, SWT.NONE);
 			contextLinesLabel.setText(UIText.GitCreatePatchWizard_LinesOfContext);
@@ -476,6 +503,12 @@ public class GitCreatePatchWizard extends Wizard {
 				}
 			}
 			return true;
+		}
+
+		DiffHeaderFormat getSelectedHeaderFormat() {
+			IStructuredSelection selection = (IStructuredSelection) formatCombo
+					.getSelection();
+			return (DiffHeaderFormat) selection.getFirstElement();
 		}
 	}
 }

@@ -18,6 +18,7 @@ import java.io.File;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.op.CreatePatchOperation;
+import org.eclipse.egit.core.op.CreatePatchOperation.DiffHeaderFormat;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Constants;
@@ -33,6 +34,15 @@ public class CreatePatchOperationTest extends GitTestCase {
 			+ "Date: Sat, 15 Aug 2009 20:12:58 -0330\n"
 			+ "Subject: [PATCH] 2nd commit\n"
 			+ "\n"
+			+ "diff --git a/test-file b/test-file\n"
+			+ "index e69de29..eb5f2c9 100644\n"
+			+ "--- a/test-file\n"
+			+ "+++ b/test-file\n"
+			+ "@@ -0,0 +1 @@\n"
+			+ "+another line\n"
+			+ "\\ No newline at end of file";
+
+	private static final String SIMPLE_ONELINE_PATCH_CONTENT = "6dcd097c7d39e9ba0b31a380981d3fb46017d6c2 2nd commit\n"
 			+ "diff --git a/test-file b/test-file\n"
 			+ "index e69de29..eb5f2c9 100644\n"
 			+ "--- a/test-file\n"
@@ -88,6 +98,17 @@ public class CreatePatchOperationTest extends GitTestCase {
 		String patchContent = operation.getPatchContent();
 		assertNotNull(patchContent);
 		assertGitPatch(SIMPLE_GIT_PATCH_CONTENT, patchContent);
+
+		// repeat setting the header format explicitly
+		operation = new CreatePatchOperation(
+				testRepository.getRepository(), secondCommit);
+
+		operation.setHeaderFormat(DiffHeaderFormat.EMAIL);
+		operation.execute(new NullProgressMonitor());
+
+		patchContent = operation.getPatchContent();
+		assertNotNull(patchContent);
+		assertGitPatch(SIMPLE_GIT_PATCH_CONTENT, patchContent);
 	}
 
 	@Test
@@ -98,12 +119,28 @@ public class CreatePatchOperationTest extends GitTestCase {
 		CreatePatchOperation operation = new CreatePatchOperation(
 				testRepository.getRepository(), secondCommit);
 
-		operation.useGitFormat(false);
+		operation.setHeaderFormat(DiffHeaderFormat.NONE);
 		operation.execute(new NullProgressMonitor());
 
 		String patchContent = operation.getPatchContent();
 		assertNotNull(patchContent);
 		assertPatch(SIMPLE_PATCH_CONTENT, patchContent);
+	}
+
+	@Test
+	public void testOnelineHeaderPatch() throws Exception {
+		RevCommit secondCommit = testRepository.appendContentAndCommit(
+				project.getProject(), file, "another line", "2nd commit");
+
+		CreatePatchOperation operation = new CreatePatchOperation(
+				testRepository.getRepository(), secondCommit);
+
+		operation.setHeaderFormat(DiffHeaderFormat.ONELINE);
+		operation.execute(new NullProgressMonitor());
+
+		String patchContent = operation.getPatchContent();
+		assertNotNull(patchContent);
+		assertPatch(SIMPLE_ONELINE_PATCH_CONTENT, patchContent);
 	}
 
 	@Test(expected = IllegalStateException.class)
