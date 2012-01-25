@@ -213,11 +213,7 @@ class CommitGraphTable {
 			@Override
 			public void mouseHover(MouseEvent e) {
 				synchronized (this) {
-					if (hoverShell != null) {
-						hoverShell.setVisible(false);
-						hoverShell.dispose();
-						hoverShell = null;
-					}
+					disposeHover();
 
 					TableItem item = table.getTable().getItem(
 							new Point(e.x, e.y));
@@ -264,11 +260,7 @@ class CommitGraphTable {
 		table.getTable().addMouseMoveListener(new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
 				synchronized (this) {
-					if (hoverShell == null || hoverShell.isDisposed())
-						return;
-					hoverShell.setVisible(false);
-					hoverShell.dispose();
-					hoverShell = null;
+					disposeHover();
 				}
 			}
 		});
@@ -280,6 +272,7 @@ class CommitGraphTable {
 					allCommits.dispose();
 				if (renderer != null)
 					renderer.dispose();
+				disposeHover();
 			}
 		});
 
@@ -351,6 +344,13 @@ class CommitGraphTable {
 		c.setMenu(menuMgr.createContextMenu(c));
 		c.addMenuDetectListener(menuListener = new MenuListener(menuMgr,
 				getTableView(), site, copy));
+	}
+
+	void disposeHover() {
+		if (hoverShell == null)
+			return;
+		hoverShell.dispose();
+		hoverShell = null;
 	}
 
 	Control getControl() {
