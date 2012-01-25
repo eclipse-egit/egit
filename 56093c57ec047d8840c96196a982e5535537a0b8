@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODn///4Y\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitCommitsModelCacheTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-25T23:07:02Z",
+      "side": 1,
+      "message": "s/asserts/assertions/\n\nthere are more occurrences of this typo in this class",
+      "revId": "56093c57ec047d8840c96196a982e5535537a0b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///4U\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitCommitsModelCacheTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-25T23:07:02Z",
+      "side": 1,
+      "message": "s/asserts/assertions/",
+      "revId": "56093c57ec047d8840c96196a982e5535537a0b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///4c\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/GitCommitsModelCacheTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-25T23:07:02Z",
+      "side": 1,
+      "message": "typo: s/Assertations/Assertions/",
+      "revId": "56093c57ec047d8840c96196a982e5535537a0b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///4M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitCommitsModelCache.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-25T23:07:02Z",
+      "side": 1,
+      "message": "s/list of checked in commits/list of commits/",
+      "revId": "56093c57ec047d8840c96196a982e5535537a0b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///4Q\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitCommitsModelDirectionException.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-25T23:07:02Z",
+      "side": 1,
+      "message": "s/Thrown when cannot determinate commit direction during/Thrown when commit direction cannot be determined in/",
+      "revId": "56093c57ec047d8840c96196a982e5535537a0b8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
