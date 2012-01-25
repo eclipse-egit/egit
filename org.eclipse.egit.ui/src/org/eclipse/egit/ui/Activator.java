@@ -331,7 +331,8 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 				ISchedulingRule rule = p.getWorkspace().getRuleFactory().refreshRule(p);
 				try {
 					getJobManager().beginRule(rule, monitor);
-					p.refreshLocal(IResource.DEPTH_INFINITE, new SubProgressMonitor(monitor, 1));
+					if(p.exists()) // handle missing projects after branch switch
+						p.refreshLocal(IResource.DEPTH_INFINITE, new SubProgressMonitor(monitor, 1));
 				} catch (CoreException e) {
 					handleError(UIText.Activator_refreshFailed, e, false);
 					return new Status(IStatus.ERROR, getPluginId(), e.getMessage());
