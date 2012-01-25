@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+FU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceMapping.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-01-23T07:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+Ro\u003d",
+      "revId": "326f0cf55f5e15f06e70536d5eff6dc1401c9fff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+Rk\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-01-20T08:24:37Z",
       "side": 1,
       "message": "this local variable isn\u0027t needed",
+      "revId": "326f0cf55f5e15f06e70536d5eff6dc1401c9fff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+FQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-01-23T07:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+Rk\u003d",
       "revId": "326f0cf55f5e15f06e70536d5eff6dc1401c9fff",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+FM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-01-23T07:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+Rg\u003d",
+      "revId": "326f0cf55f5e15f06e70536d5eff6dc1401c9fff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+Rc\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2012-01-20T08:24:37Z",
       "side": 1,
       "message": "this comment seems unnecessary, if you really want a comment add javadoc to the called method",
+      "revId": "326f0cf55f5e15f06e70536d5eff6dc1401c9fff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+FI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-01-23T07:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+Rc\u003d",
       "revId": "326f0cf55f5e15f06e70536d5eff6dc1401c9fff",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+FE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-01-23T07:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+RY\u003d",
+      "revId": "326f0cf55f5e15f06e70536d5eff6dc1401c9fff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+RU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2012-01-20T08:24:37Z",
       "side": 1,
       "message": "is this a TODO ?",
+      "revId": "326f0cf55f5e15f06e70536d5eff6dc1401c9fff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+FA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-01-23T07:47:24Z",
+      "side": 1,
+      "message": "don\u0027t know. actually 99% percent of this methods code are just extracted/moved from the original decorate(), so i can re-use from the new mapping decoration code.",
+      "parentUuid": "AABODX//+RU\u003d",
       "revId": "326f0cf55f5e15f06e70536d5eff6dc1401c9fff",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
