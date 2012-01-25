@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODn///zk\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-25T22:11:58Z",
+      "side": 1,
+      "message": "s/shows/show/",
+      "revId": "a8ff68a42b04531fba387927e124b90403be6de7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///zg\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-25T22:11:58Z",
+      "side": 1,
+      "message": "s/check does it appears, this change ensures that it shown/check if it does appear, this change ensures that it is shown/",
+      "revId": "a8ff68a42b04531fba387927e124b90403be6de7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///zo\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/TestUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-25T22:11:58Z",
+      "side": 1,
+      "message": "where is this used in this change ?",
+      "revId": "a8ff68a42b04531fba387927e124b90403be6de7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///zs\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/TestUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-25T22:11:58Z",
+      "side": 1,
+      "message": "style nit: no curly braces here",
+      "revId": "a8ff68a42b04531fba387927e124b90403be6de7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
