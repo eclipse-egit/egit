@@ -12,6 +12,8 @@ package org.eclipse.egit.ui.common;
 
 import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellCloses;
 
+import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -39,6 +41,8 @@ public class GitImportRepoWizard {
 		bot.button("Clone...").click();
 
 		bot.shell("Clone Git Repository").activate();
+
+		TestUtil.waitUntilViewWithGivenTitleShows(UIText.GitCloneWizard_title);
 
 		return new RepoPropertiesPage();
 	}
