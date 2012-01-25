@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+IA\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/ChangeTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-23T00:05:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+IQ\u003d",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+IM\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCacheTest.java",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2012-01-22T22:51:44Z",
       "side": 1,
       "message": "instead of copying you may consider to move the reusable stuff in RepositoryTestCase to the jgit.junit bundle",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+HE\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCacheTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-23T00:05:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+IM\u003d",
       "revId": "45fa94730a57f8571203dca885804ea000b034c2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+Gg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-23T00:05:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+Io\u003d",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+II\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2012-01-22T22:51:44Z",
       "side": 1,
       "message": "can\u0027t this lead to wrong results if abbreviated IDs are ambiguous in a large repository ?",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+H8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-23T00:05:50Z",
+      "side": 1,
+      "message": "According to AbbreviatedObjectId it should be unique within repository it was generated from",
+      "parentUuid": "AABODX//+II\u003d",
       "revId": "45fa94730a57f8571203dca885804ea000b034c2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+H4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-23T00:05:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+I8\u003d",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+I4\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
         "patchSetId": 9
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+H0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-23T00:05:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+I4\u003d",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+Ic\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
         "patchSetId": 9
@@ -115,6 +223,24 @@
       "writtenOn": "2012-01-22T22:51:44Z",
       "side": 1,
       "message": "it\u0027s unclear what source and destination mean here",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Hw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-23T00:05:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+Ic\u003d",
       "revId": "45fa94730a57f8571203dca885804ea000b034c2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -149,6 +275,24 @@
       "writtenOn": "2012-01-22T22:51:44Z",
       "side": 1,
       "message": "why do we retreive author time as a Date and committer time as an int ?",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Hc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-23T00:05:50Z",
+      "side": 1,
+      "message": "Good catch. I\u0027ll remove commitTime and use time from author ident as a commit time",
+      "parentUuid": "AABODX//+IY\u003d",
       "revId": "45fa94730a57f8571203dca885804ea000b034c2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -206,6 +350,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+HU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-23T00:05:50Z",
+      "side": 1,
+      "message": "fixed typo, but I cannot remove \u0027Abb\u0027 from this variable name since \u0027remoteCommit\u0027 is already used",
+      "parentUuid": "AABODX//+Iw\u003d",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+IU\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
         "patchSetId": 9
@@ -217,6 +379,24 @@
       "writtenOn": "2012-01-22T22:51:44Z",
       "side": 1,
       "message": "so CHANGE can be a content or a mode change, right ?",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+HQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-23T00:05:50Z",
+      "side": 1,
+      "message": "yes, for now I would leave it as it is, in feature we could change this behavior",
+      "parentUuid": "AABODX//+IU\u003d",
       "revId": "45fa94730a57f8571203dca885804ea000b034c2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
