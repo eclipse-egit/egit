@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX//+IQ\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/ChangeTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-22T22:51:44Z",
+      "side": 1,
+      "message": "I wouldn\u0027t use ZERO_ID here as it is a special ID",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+IM\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCacheTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-22T22:51:44Z",
+      "side": 1,
+      "message": "instead of copying you may consider to move the reusable stuff in RepositoryTestCase to the jgit.junit bundle",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Io\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-22T22:51:44Z",
+      "side": 1,
+      "message": "This looks strange, commits which are not checked in don\u0027t exist, right ?\n\nSo you also need a better class name.",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+II\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-22T22:51:44Z",
+      "side": 1,
+      "message": "can\u0027t this lead to wrong results if abbreviated IDs are ambiguous in a large repository ?",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+I8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-22T22:51:44Z",
+      "side": 1,
+      "message": "s/does/if/",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+I4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-22T22:51:44Z",
+      "side": 1,
+      "message": "s/does this change in/if this change is/",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Ic\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-22T22:51:44Z",
+      "side": 1,
+      "message": "it\u0027s unclear what source and destination mean here",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Ig\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-22T22:51:44Z",
+      "side": 1,
+      "message": "I would expect that one of these commits points at the end of what this call is interested in, so I would expect one call to rw.markUninteresting(RevCommit) or do I miss something here ?",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+IY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-22T22:51:44Z",
+      "side": 1,
+      "message": "why do we retreive author time as a Date and committer time as an int ?",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+I0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-22T22:51:44Z",
+      "side": 1,
+      "message": "if this should never happen you better throw an exception, right ?",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Is\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-22T22:51:44Z",
+      "side": 1,
+      "message": "why is it ok to ignore changes in merge commits ?",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Iw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-22T22:51:44Z",
+      "side": 1,
+      "message": "typo in variable name s/remoteComitAbb/remoteCommitAbb/\n\nAlso naming is inconsistent here you mention that this is abbreviated for actualCommit you don\u0027t do that. As this has local scope only I would remove \"Abb\" from variable name.",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+IU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/CheckedInCommitsCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-22T22:51:44Z",
+      "side": 1,
+      "message": "so CHANGE can be a content or a mode change, right ?",
+      "revId": "45fa94730a57f8571203dca885804ea000b034c2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
