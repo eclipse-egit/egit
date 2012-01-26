@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODn///xc\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/AbstractCacheTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-26T00:42:19Z",
+      "side": 1,
+      "message": "reuse the method you just moved to jgit.junit JGitTestUtil",
+      "revId": "40ea39c2930515bec44f08a5e889d0a92ca9aa40",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///xY\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/synchronize/AbstractCacheTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-26T00:42:19Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "40ea39c2930515bec44f08a5e889d0a92ca9aa40",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
