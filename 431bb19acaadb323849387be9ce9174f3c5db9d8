@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODn///9A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-01-24T16:36:40Z",
+      "side": 1,
+      "message": "This causes the index to be read into memory which may cause some slowness for larger repositories if done on the UI thread.\n\nAnother approach would be to guess if the repository has submodules without reading the index by checking if a .gitmodules file exists at the root of the working directory or if the repository\u0027s config contains any submodule entries.\n\nDo you want to try that approach?  Or I could push a new change doing that, let me know",
+      "revId": "431bb19acaadb323849387be9ce9174f3c5db9d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
