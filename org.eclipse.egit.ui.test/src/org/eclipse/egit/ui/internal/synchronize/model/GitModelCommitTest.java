@@ -8,10 +8,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
-import static org.eclipse.compare.structuremergeviewer.Differencer.LEFT;
 import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import java.io.File;
 
@@ -24,7 +24,8 @@ public class GitModelCommitTest extends GitModelTestCase {
 	@Test public void shouldReturnEqualForSameInstance() throws Exception {
 		// given
 		GitModelCommit left = new GitModelCommit(createModelRepository(),
-				getCommit(leftRepoFile, HEAD), LEFT);
+				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
+				null);
 
 		// when
 		boolean actual = left.equals(left);
@@ -37,9 +38,11 @@ public class GitModelCommitTest extends GitModelTestCase {
 			throws Exception {
 		// given
 		GitModelCommit left = new GitModelCommit(createModelRepository(),
-				getCommit(leftRepoFile, HEAD), LEFT);
+				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
+				null);
 		GitModelCommit right = new GitModelCommit(createModelRepository(),
-				getCommit(leftRepoFile, HEAD + "~1"), LEFT);
+				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD
+						+ "~1"), null);
 
 		// when
 		boolean actual = left.equals(right);
@@ -56,9 +59,11 @@ public class GitModelCommitTest extends GitModelTestCase {
 		GitModelRepository rightGsd = new GitModelRepository(
 				getGSD(lookupRepository(localRightRepoFile)));
 		GitModelCommit left = new GitModelCommit(createModelRepository(),
-				getCommit(leftRepoFile, HEAD), LEFT);
+				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
+				null);
 		GitModelCommit right = new GitModelCommit(rightGsd,
-				getCommit(localRightRepoFile, HEAD), LEFT);
+				lookupRepository(leftRepoFile), getCommit(localRightRepoFile,
+						HEAD), null);
 
 		// when
 		boolean actual = left.equals(right);
@@ -71,9 +76,11 @@ public class GitModelCommitTest extends GitModelTestCase {
 			throws Exception {
 		// given
 		GitModelCommit left = new GitModelCommit(createModelRepository(),
-				getCommit(leftRepoFile, HEAD), LEFT);
+				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
+				null);
 		GitModelCommit right = new GitModelCommit(createModelRepository(),
-				getCommit(leftRepoFile, HEAD), LEFT);
+				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
+				null);
 
 		// when
 		boolean actual = left.equals(right);
@@ -86,9 +93,9 @@ public class GitModelCommitTest extends GitModelTestCase {
 			throws Exception {
 		// given
 		GitModelCommit left = new GitModelCommit(createModelRepository(),
-				getCommit(leftRepoFile, HEAD), LEFT);
-		GitModelCache right = new GitModelCache(createModelRepository(),
-				getCommit(leftRepoFile, HEAD));
+				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
+				null);
+		GitModelCache right = mock(GitModelCache.class);
 
 		// when
 		boolean actual = left.equals(right);
@@ -101,9 +108,9 @@ public class GitModelCommitTest extends GitModelTestCase {
 			throws Exception {
 		// given
 		GitModelCommit left = new GitModelCommit(createModelRepository(),
-				getCommit(leftRepoFile, HEAD), LEFT);
-		GitModelTree right = new GitModelTree(left,
-				getCommit(leftRepoFile, HEAD), null, null, null, null, null);
+				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
+				null);
+		GitModelTree right = mock(GitModelTree.class);
 
 		// when
 		boolean actual = left.equals(right);
@@ -116,10 +123,9 @@ public class GitModelCommitTest extends GitModelTestCase {
 			throws Exception {
 		// given
 		GitModelCommit left = new GitModelCommit(createModelRepository(),
-				getCommit(leftRepoFile, HEAD), LEFT);
-		GitModelBlob right = new GitModelBlob(left,
-				getCommit(leftRepoFile, HEAD), null, null, null, null,
-				getFile1Location());
+				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
+				null);
+		GitModelBlob right = mock(GitModelBlob.class);
 
 		// when
 		boolean actual = left.equals(right);
