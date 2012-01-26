@@ -47,6 +47,9 @@ public class HistoryViewCommands {
 	/** "Create Tag" */
 	public static final String CREATE_TAG = "org.eclipse.egit.ui.history.CreateTag"; //$NON-NLS-1$
 
+	/** "Push Commit" */
+	public static final String PUSH_COMMIT = "org.eclipse.egit.ui.history.PushCommit"; //$NON-NLS-1$
+
 	/** "Open" */
 	public static final String OPEN = "org.eclipse.egit.ui.history.ShowVersions"; //$NON-NLS-1$
 

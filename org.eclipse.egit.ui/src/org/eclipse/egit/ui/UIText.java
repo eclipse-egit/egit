@@ -532,6 +532,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_ListIncompleteWarningMessage;
 
 	/** */
+	public static String GitHistoryPage_pushCommit;
+
+	/** */
 	public static String GitHistoryPage_ShowSubMenuLabel;
 
 	/** */
@@ -3954,6 +3957,15 @@ public class UIText extends NLS {
 
 	/** */
 	public static String SimplePushActionHandler_NothingToPushDialogTitle;
+
+	/** */
+	public static String SimplePushSpecPage_message;
+
+	/** */
+	public static String SimplePushSpecPage_TargetRefName;
+
+	/** */
+	public static String SimplePushSpecPage_title;
 
 	/** */
 	public static String SkipRebaseCommand_CancelDialogMessage;

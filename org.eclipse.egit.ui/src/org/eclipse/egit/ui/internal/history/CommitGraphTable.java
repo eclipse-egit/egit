@@ -276,7 +276,8 @@ class CommitGraphTable {
 			}
 		});
 
-		Transfer[] transferTypes = new Transfer[] {TextTransfer.getInstance(), FileTransfer.getInstance()};
+		Transfer[] transferTypes = new Transfer[] { TextTransfer.getInstance(),
+				FileTransfer.getInstance() };
 		table.addDragSupport(DND.DROP_DEFAULT | DND.DROP_COPY, transferTypes,
 				new CommitDragSourceListener());
 	}
@@ -316,8 +317,8 @@ class CommitGraphTable {
 						.getService(IHandlerService.class);
 				Command cmd = srv.getCommand(HistoryViewCommands.SHOWVERSIONS);
 				Parameterization[] parms;
-				if (Activator.getDefault().getPreferenceStore().getBoolean(
-						UIPreferences.RESOURCEHISTORY_COMPARE_MODE)) {
+				if (Activator.getDefault().getPreferenceStore()
+						.getBoolean(UIPreferences.RESOURCEHISTORY_COMPARE_MODE)) {
 					try {
 						IParameter parm = cmd
 								.getParameter(HistoryViewCommands.COMPARE_MODE_PARAM);
@@ -331,8 +332,8 @@ class CommitGraphTable {
 					parms = null;
 				ParameterizedCommand pcmd = new ParameterizedCommand(cmd, parms);
 				try {
-					hsrv.executeCommandInContext(pcmd, null, hsrv
-							.getCurrentState());
+					hsrv.executeCommandInContext(pcmd, null,
+							hsrv.getCurrentState());
 				} catch (Exception e) {
 					Activator.handleError(e.getMessage(), e, true);
 				}
@@ -601,7 +602,7 @@ class CommitGraphTable {
 			String patchName = "egit-patch" + commit.getId().name(); //$NON-NLS-1$
 			File patchDir = new File(tmpDir, patchName);
 			int counter = 1;
-			while(patchDir.exists()) {
+			while (patchDir.exists()) {
 				patchDir = new File(tmpDir, patchName + "_" + counter); //$NON-NLS-1$
 				counter++;
 			}
@@ -619,7 +620,8 @@ class CommitGraphTable {
 			CreatePatchOperation operation = new CreatePatchOperation(
 					repository, commit);
 			operation.setHeaderFormat(DiffHeaderFormat.EMAIL);
-			operation.setContextLines(CreatePatchOperation.DEFAULT_CONTEXT_LINES);
+			operation
+					.setContextLines(CreatePatchOperation.DEFAULT_CONTEXT_LINES);
 			try {
 				operation.execute(null);
 			} catch (CoreException e) {
@@ -683,15 +685,13 @@ class CommitGraphTable {
 			if (input.isSingleFile()) {
 				if (selectionSize == 1)
 					if (input.getSingleFile() instanceof IResource)
-						popupMgr
-								.add(getCommandContributionItem(
-										HistoryViewCommands.COMPARE_WITH_TREE,
-										UIText.GitHistoryPage_CompareWithWorkingTreeMenuMenuLabel));
+						popupMgr.add(getCommandContributionItem(
+								HistoryViewCommands.COMPARE_WITH_TREE,
+								UIText.GitHistoryPage_CompareWithWorkingTreeMenuMenuLabel));
 					else
-						popupMgr
-								.add(getCommandContributionItem(
-										HistoryViewCommands.COMPARE_WITH_TREE,
-										UIText.GitHistoryPage_CompareWithCurrentHeadMenu));
+						popupMgr.add(getCommandContributionItem(
+								HistoryViewCommands.COMPARE_WITH_TREE,
+								UIText.GitHistoryPage_CompareWithCurrentHeadMenu));
 				if (selectionSize > 0) {
 					popupMgr.add(getCommandContributionItem(
 							HistoryViewCommands.OPEN,
@@ -707,6 +707,9 @@ class CommitGraphTable {
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.CHECKOUT,
 						UIText.GitHistoryPage_CheckoutMenuLabel));
+				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.PUSH_COMMIT,
+						UIText.GitHistoryPage_pushCommit));
 				popupMgr.add(new Separator());
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.CREATE_BRANCH,
@@ -761,10 +764,9 @@ class CommitGraphTable {
 						HistoryViewCommands.COMPARE_VERSIONS,
 						UIText.GitHistoryPage_CompareWithEachOtherMenuLabel));
 				if (!input.isSingleFile())
-					popupMgr
-							.add(getCommandContributionItem(
-									HistoryViewCommands.COMPARE_VERSIONS_IN_TREE,
-									UIText.CommitGraphTable_CompareWithEachOtherInTreeMenuLabel));
+					popupMgr.add(getCommandContributionItem(
+							HistoryViewCommands.COMPARE_VERSIONS_IN_TREE,
+							UIText.CommitGraphTable_CompareWithEachOtherInTreeMenuLabel));
 			}
 			popupMgr.add(new Separator());
 
