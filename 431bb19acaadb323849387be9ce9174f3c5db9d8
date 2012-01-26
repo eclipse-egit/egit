@@ -16,6 +16,24 @@
       "revId": "431bb19acaadb323849387be9ce9174f3c5db9d8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///vk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2012-01-26T14:56:04Z",
+      "side": 1,
+      "message": "I\u0027d appreciate if you could push such a fix.",
+      "parentUuid": "AABODn///9A\u003d",
+      "revId": "431bb19acaadb323849387be9ce9174f3c5db9d8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
