@@ -1544,6 +1544,41 @@
                </and>
          </activeWhen>
       </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.submodule.add">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.SubmoduleAddCommand">
+         </class>
+         <activeWhen>
+             <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <and>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                           </instanceof>
+                           <not>
+                              <test
+                                    property="GitRepository.isSubmodule">
+                              </test>
+                           </not>
+                           <not>
+                              <test
+                                    property="GitRepository.isBare">
+                              </test>
+                           </not>
+                        </and>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.SubmodulesNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -2443,6 +2478,41 @@
                            <test
                                  property="GitRepository.isSubmodule">
                            </test>
+                        </and>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.SubmodulesNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.team.submodule.add"
+               label="%SubmoduleAddCommand.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <and>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                           </instanceof>
+                           <not>
+                              <test
+                                    property="GitRepository.isSubmodule">
+                              </test>
+                           </not>
+                           <not>
+                              <test
+                                    property="GitRepository.isBare">
+                              </test>
+                           </not>
                         </and>
                         <instanceof
                               value="org.eclipse.egit.ui.internal.repository.tree.SubmodulesNode">
@@ -3602,6 +3672,11 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.submodule.sync"
             name="%SubmoduleSyncCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.submodule.add"
+            name="%SubmoduleAddCommand.name">
       </command>
    </extension>
    <extension
