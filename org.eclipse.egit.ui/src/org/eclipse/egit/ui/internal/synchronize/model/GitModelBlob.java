@@ -127,6 +127,11 @@ public class GitModelBlob extends GitModelObject implements
 	}
 
 	@Override
+	public void dispose() {
+		// there is nothing to dispose
+	}
+
+	@Override
 	public String toString() {
 		return "ModelBlob[objectId=" + change.getObjectId() + ", location=" + getLocation() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
