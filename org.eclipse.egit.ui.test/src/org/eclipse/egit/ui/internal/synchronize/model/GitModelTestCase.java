@@ -8,8 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
-import static org.eclipse.compare.structuremergeviewer.Differencer.LEFT;
 import static org.eclipse.jgit.lib.Constants.HEAD;
+import static org.mockito.Mockito.mock;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,13 +17,14 @@ import java.io.IOException;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Commit;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.jgit.lib.AbbreviatedObjectId;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.storage.file.FileRepository;
+import org.mockito.Mockito;
 
 abstract class GitModelTestCase extends LocalRepositoryTestCase {
 
@@ -36,16 +37,20 @@ abstract class GitModelTestCase extends LocalRepositoryTestCase {
 	}
 
 	protected GitModelCommit createModelCommit() throws Exception {
-		return new GitModelCommit(createModelRepository(), getCommit(
-				leftRepoFile,
-				HEAD), LEFT);
+		return new GitModelCommit(createModelRepository(),
+				lookupRepository(leftRepoFile), getCommit(leftRepoFile, HEAD),
+				null);
 	}
 
-	protected RevCommit getCommit(File repoDir, String revStr)
-			throws Exception {
-		FileRepository repo = lookupRepository(repoDir);
-		return new RevWalk(repo).parseCommit(repo
-				.resolve(revStr));
+	protected Commit getCommit(File repoFile, String rev) throws Exception {
+		Repository repo = lookupRepository(repoFile);
+		ObjectId revId = repo.resolve(rev);
+
+		Commit commit = mock(Commit.class);
+		Mockito.when(commit.getId()).thenReturn(
+				AbbreviatedObjectId.fromObjectId(revId));
+
+		return commit;
 	}
 
 	protected GitSynchronizeData getGSD(Repository repo) throws IOException {
