@@ -20,6 +20,7 @@ import java.net.URISyntaxException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.gerrit.GerritConfigurationPage;
 import org.eclipse.egit.ui.internal.provisional.wizards.NoRepositoryInfoException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.util.FileUtils;
@@ -57,7 +58,7 @@ public class GitCloneWizard extends AbstractGitCloneWizard {
 			@Override
 			public void setVisible(boolean visible) {
 				if (visible)
-					setSelection(getRepositorySelection());
+					setSelection(getRepositorySelection().getURI());
 				super.setVisible(visible);
 			}
 		};
