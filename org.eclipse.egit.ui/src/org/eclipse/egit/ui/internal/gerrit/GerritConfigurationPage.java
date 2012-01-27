@@ -7,14 +7,13 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.ui.internal.clone;
+package org.eclipse.egit.ui.internal.gerrit;
 
 import java.net.URISyntaxException;
 
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.SWTUtils;
-import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage.Protocol;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.wizard.WizardPage;
@@ -43,7 +42,7 @@ public class GerritConfigurationPage extends WizardPage {
 
 	private final static int GERRIT_DEFAULT_SSH_PORT = 29418;
 
-	private static final String GERRIT_HTTP_PATH_PREFIX = "/r/p"; //$NON-NLS-1$
+	private static final String GERRIT_HTTP_PATH_PREFIX = "/p"; //$NON-NLS-1$
 
 	private String helpContext = null;
 
@@ -67,8 +66,24 @@ public class GerritConfigurationPage extends WizardPage {
 
 	private int eventDepth;
 
-	GerritConfigurationPage() {
+	private boolean createGerritCheckbox = true;
+
+	/**
+	 *
+	 */
+	public GerritConfigurationPage() {
 		super(GerritConfigurationPage.class.getName());
+		setTitle(UIText.GerritConfigurationPage_title);
+		setDescription(UIText.GerritConfigurationPage_PageDescription);
+
+	}
+
+	/**
+	 * @param createGerritCheckbox
+	 */
+	public GerritConfigurationPage(boolean createGerritCheckbox) {
+		super(GerritConfigurationPage.class.getName());
+		this.createGerritCheckbox  = createGerritCheckbox;
 		setTitle(UIText.GerritConfigurationPage_title);
 		setDescription(UIText.GerritConfigurationPage_PageDescription);
 	}
@@ -79,7 +94,8 @@ public class GerritConfigurationPage extends WizardPage {
 		layout.numColumns = 1;
 		panel.setLayout(layout);
 
-		createGerritCheckbox(panel);
+		if (createGerritCheckbox)
+			createGerritCheckbox(panel);
 		createURIGroup(panel);
 		createPushConfigurationGroup(panel);
 		createFetchConfigurationGroup(panel);
@@ -87,7 +103,7 @@ public class GerritConfigurationPage extends WizardPage {
 		Dialog.applyDialogFont(panel);
 		setControl(panel);
 		UIUtils.setEnabledRecursively(pushConfigurationGroup,
-				configureGerrit.getSelection());
+				configureGerrit());
 	}
 
 	private void createGerritCheckbox(Composite panel) {
@@ -206,7 +222,7 @@ public class GerritConfigurationPage extends WizardPage {
 	 * @return true if Gerrit configuration should be done
 	 */
 	public boolean configureGerrit() {
-		return configureGerrit.getSelection();
+		return createGerritCheckbox == false || configureGerrit.getSelection();
 	}
 
 	/**
@@ -239,22 +255,31 @@ public class GerritConfigurationPage extends WizardPage {
 	}
 
 	/**
-	 * @param selection the source repository
+	 * @param uri the URI of the source repository
 	 */
-	public void setSelection(RepositorySelection selection) {
-		setDefaults(selection);
+	public void setSelection(URIish uri) {
+		setSelection(uri, null);
+	}
+
+	/**
+	 * @param uri
+	 *            the URI of the source repository
+	 * @param targetBranch
+	 */
+	public void setSelection(URIish uri, String targetBranch) {
+
+		setDefaults(uri, targetBranch);
 		checkPage();
 		updateEnablement();
 	}
 
 	private void updateEnablement() {
 		UIUtils.setEnabledRecursively(pushConfigurationGroup,
-				configureGerrit.getSelection());
-		UIUtils.setEnabledRecursively(uriGroup, configureGerrit.getSelection());
+				configureGerrit());
+		UIUtils.setEnabledRecursively(uriGroup, configureGerrit());
 	}
 
-	private void setDefaults(RepositorySelection selection) {
-		URIish uri = selection.getURI();
+	private void setDefaults(URIish uri, String targetBranch) {
 		URIish newPushURI = uri;
 		if (Protocol.SSH.handles(uri)) {
 			newPushURI = newPushURI.setPort(GERRIT_DEFAULT_SSH_PORT);
@@ -268,7 +293,7 @@ public class GerritConfigurationPage extends WizardPage {
 		final String uriScheme = newPushURI.getScheme();
 		if (uriScheme != null)
 			scheme.select(scheme.indexOf(uriScheme));
-		branch.setText(Constants.MASTER);
+		branch.setText(targetBranch != null ? targetBranch : Constants.MASTER);
 	}
 
 	private boolean isHttpProtocol(URIish uri) {
