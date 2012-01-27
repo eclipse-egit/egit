@@ -49,6 +49,7 @@ import org.eclipse.egit.ui.internal.SecureStoreUtils;
 import org.eclipse.egit.ui.internal.clone.GitCloneSourceProviderExtension.CloneSourceProvider;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.ui.internal.gerrit.GerritConfigurationPage;
 import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo;
 import org.eclipse.egit.ui.internal.provisional.wizards.IRepositorySearchResult;
 import org.eclipse.egit.ui.internal.provisional.wizards.NoRepositoryInfoException;
