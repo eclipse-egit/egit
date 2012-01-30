@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX//+TE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/SetRepositoryConfigPropertyTask.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T07:38:13Z",
+      "side": 1,
+      "message": "typo: s/propertes/properties/",
+      "revId": "14febfd7699844c556a0ab3bb71676975c15a0e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+TA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/AbstractGitCloneWizard.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T07:38:13Z",
+      "side": 1,
+      "message": "style nit: no curly braces around single line blocks",
+      "revId": "14febfd7699844c556a0ab3bb71676975c15a0e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
