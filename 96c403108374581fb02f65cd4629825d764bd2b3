@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOEH///9M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/AbstractGitCloneWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-30T09:22:25Z",
+      "side": 1,
+      "message": "s/on/on a/",
+      "revId": "96c403108374581fb02f65cd4629825d764bd2b3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOEH///9I\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/AbstractGitCloneWizard.java",
         "patchSetId": 2
