@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODH///bw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/AbstractGitCloneWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-20T00:01:06Z",
+      "side": 1,
+      "message": "this isn\u0027t true, you are moving quite some code written by others, so also move their copyright",
+      "revId": "28d5621b61c36b74385811d9e72c001f85cdb3c6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
