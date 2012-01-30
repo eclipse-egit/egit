@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABODn////c\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-24T13:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+SM\u003d",
+      "revId": "137dfe478bcb28960e91d04c6f6fd40a12635d49",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+SI\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
