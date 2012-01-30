@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOEH///9o\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-30T08:28:39Z",
+      "side": 1,
+      "message": "I reformatted this line because it was too long.",
+      "revId": "fd6cc4ca6f7fd07505093c02db9fa32529bcf1d3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
