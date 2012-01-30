@@ -45,15 +45,20 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.SecureStoreUtils;
+import org.eclipse.egit.ui.internal.clone.GitCloneSourceProviderExtension.CloneSourceProvider;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo;
+import org.eclipse.egit.ui.internal.provisional.wizards.IRepositorySearchResult;
+import org.eclipse.egit.ui.internal.provisional.wizards.NoRepositoryInfoException;
 import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo.PushInfo;
 import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo.RepositoryConfigProperty;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.IWizardContainer;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -93,6 +98,11 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 	 * whether the clone operation is done later on by the caller of the wizard
 	 */
 	protected boolean callerRunsCloneOperation;
+
+	/**
+	 * the result which was found when the last search was done
+	 */
+	protected IRepositorySearchResult currentSearchResult;
 
 	private CloneOperation cloneOperation;
 
@@ -135,18 +145,9 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 	 */
 	protected abstract void addPostClonePages();
 
-	/**
-	 * @return the currently selected repository to clone
-	 */
-	protected abstract RepositorySelection getRepositorySelection();
-
-	/**
-	 * @return credentials
-	 */
-	protected abstract UserPasswordCredentials getCredentials();
-
 	@Override
 	final public void addPages() {
+		addPage(new RepositoryLocationPage(getCloneSourceProvider()));
 		addPreClonePages();
 		addPage(validSource);
 		addPage(cloneDestination);
@@ -154,27 +155,16 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 	}
 
 	/**
-	 * Do the clone using data which were collected on the pages
-	 * {@code validSource} and {@code cloneDestination}
-	 *
-	 * @param uri
-	 * @param credentials
-	 * @return if clone was successful
+	 * @return a list of CloneSourceProviders, may be extended by a subclass
 	 */
-	protected boolean performClone(URIish uri,
-			UserPasswordCredentials credentials) {
-		try {
-			GitRepositoryInfo info = new GitRepositoryInfo(uri.toString());
-			if (credentials != null)
-				info.setCredentials(credentials.getUser(), credentials.getPassword());
-			return performClone(info);
-		} catch (URISyntaxException e) {
-			Activator.error(e.getMessage(), e);
-			return false;
-		}
+	protected List<CloneSourceProvider> getCloneSourceProvider() {
+		return GitCloneSourceProviderExtension.getCloneSourceProvider();
 	}
 
 	/**
+	 * Do the clone using data which were collected on the pages
+	 * {@code validSource} and {@code cloneDestination}
+	 *
 	 * @param gitRepositoryInfo
 	 * @return if clone was successful
 	 * @throws URISyntaxException
@@ -252,6 +242,48 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		else
 			cloneOperation = op;
 		return true;
+	}
+
+	@Override
+	public IWizardPage getNextPage(IWizardPage page) {
+		if (page instanceof IRepositorySearchResult) {
+			currentSearchResult = (IRepositorySearchResult)page;
+			return validSource;
+		}
+		return super.getNextPage(page);
+	}
+
+	/**
+	 * @return the repository selected by the user
+	 */
+	protected RepositorySelection getRepositorySelection() {
+		try {
+			return (new RepositorySelection(new URIish(currentSearchResult.getGitRepositoryInfo().getCloneUri()), null));
+		} catch (URISyntaxException e) {
+			Activator.error(UIText.GitImportWizard_errorParsingURI, e);
+			return null;
+		} catch (NoRepositoryInfoException e) {
+			Activator.error(UIText.GitImportWizard_noRepositoryInfo, e);
+			return null;
+		} catch (Exception e) {
+			Activator.error(e.getMessage(), e);
+			return null;
+		}
+	}
+
+	/**
+	 * @return the credentials
+	 */
+	protected UserPasswordCredentials getCredentials() {
+		try {
+			return currentSearchResult.getGitRepositoryInfo().getCredentials();
+		} catch (NoRepositoryInfoException e) {
+			Activator.error(UIText.GitImportWizard_noRepositoryInfo, e);
+			return null;
+		} catch (Exception e) {
+			Activator.error(e.getMessage(), e);
+			return null;
+		}
 	}
 
 	private void configureFetchSpec(CloneOperation op,
@@ -417,6 +449,14 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 
 		op.run(monitor);
 		util.addConfiguredRepository(op.getGitDir());
+		try {
+			if (currentSearchResult.getGitRepositoryInfo().shouldSaveCredentialsInSecureStore()) {
+				SecureStoreUtils.storeCredentials(currentSearchResult.getGitRepositoryInfo().getCredentials(),
+						new URIish(currentSearchResult.getGitRepositoryInfo().getCloneUri()));
+			}
+		} catch (Exception e) {
+			Activator.error(e.getMessage(), e);
+		}
 		return Status.OK_STATUS;
 	}
 
