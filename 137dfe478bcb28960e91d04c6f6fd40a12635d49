@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX//+SM\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T07:50:11Z",
+      "side": 1,
+      "message": "don\u0027t use non-standard abbrevations to improve readability: s/conf/configuration/",
+      "revId": "137dfe478bcb28960e91d04c6f6fd40a12635d49",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+SI\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T07:50:11Z",
+      "side": 1,
+      "message": "s/repo/repository/\n\ns/provides Gerrit/provides a Gerrit/",
+      "revId": "137dfe478bcb28960e91d04c6f6fd40a12635d49",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
