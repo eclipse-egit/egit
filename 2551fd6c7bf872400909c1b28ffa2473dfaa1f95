@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+CQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/AbstractGitCloneWizard.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-24T13:39:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+T8\u003d",
+      "revId": "2551fd6c7bf872400909c1b28ffa2473dfaa1f95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+T4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/AbstractGitCloneWizard.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2012-01-20T00:22:20Z",
       "side": 1,
       "message": "missing description what this method does",
+      "revId": "2551fd6c7bf872400909c1b28ffa2473dfaa1f95",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+CM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/AbstractGitCloneWizard.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-24T13:39:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+T4\u003d",
       "revId": "2551fd6c7bf872400909c1b28ffa2473dfaa1f95",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
