@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+CI\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-24T13:39:58Z",
+      "side": 1,
+      "message": "On my machine the behavior of this and the following test is the same with and without this change. Therefore I remove my changes here.",
+      "parentUuid": "AABODX//+Tw\u003d",
+      "revId": "0b215320db35399459be91be328221d916f4d4f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+Ts\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitImportWizard.java",
         "patchSetId": 7
