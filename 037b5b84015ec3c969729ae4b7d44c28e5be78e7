@@ -1,0 +1,40 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOEH////A\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 4304,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-30T08:28:18Z",
+      "side": 1,
+      "message": "Changed to \"URI\". In my opinion this is sufficient here.\n\nI think URI needs not to be externalized.",
+      "parentUuid": "AABOD3////0\u003d",
+      "revId": "037b5b84015ec3c969729ae4b7d44c28e5be78e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOEH///90\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-30T08:28:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOD3////w\u003d",
+      "revId": "037b5b84015ec3c969729ae4b7d44c28e5be78e7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
