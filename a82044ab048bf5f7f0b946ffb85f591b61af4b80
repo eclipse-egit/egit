@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX//+U4\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "s/search for/search for/",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+U0\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "incomplete sentence",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Uw\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "s/which contains/containing/",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+VA\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "typo s/argumnents/arguments/",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Us\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "typo: s/argumnents/arguments/",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Uo\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "?",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Uk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "style nit: no curlies here",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Ug\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "typo: s/for used/used/",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Uc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "typo s/contains/contain/",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+UY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "typo s/Provides/provides/",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+UU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "s/A client is responsible of caching/Clients are responsible to cache/",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+UQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "typo s/can can/can/",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+UM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "see comment above",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+UI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "I would add a blank line above this one",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+UE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/RepositoryServerInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-20T00:17:40Z",
+      "side": 1,
+      "message": "s/needed for/needed to/",
+      "revId": "a82044ab048bf5f7f0b946ffb85f591b61af4b80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
