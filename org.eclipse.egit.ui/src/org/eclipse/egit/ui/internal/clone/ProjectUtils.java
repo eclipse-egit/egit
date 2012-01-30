@@ -12,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -122,7 +123,9 @@ public class ProjectUtils {
 		final IProject project = workspace.getRoot().getProject(projectName);
 		if (project.exists()) {
 			if (open && !project.isOpen()) {
-				IPath location = project.getLocation();
+				IPath location = project.getFile(
+						IProjectDescription.DESCRIPTION_FILE_NAME)
+						.getLocation();
 				if (location != null
 						&& location.toFile().equals(
 								record.getProjectSystemFile()))

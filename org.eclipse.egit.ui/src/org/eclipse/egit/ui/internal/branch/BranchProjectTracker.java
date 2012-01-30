@@ -243,10 +243,11 @@ class BranchProjectTracker {
 			File root = new File(parent, path);
 			if (!root.isDirectory())
 				continue;
-			if (!new File(root, IProjectDescription.DESCRIPTION_FILE_NAME)
-					.exists())
+			File projectDescription = new File(root,
+					IProjectDescription.DESCRIPTION_FILE_NAME);
+			if (!projectDescription.isFile())
 				continue;
-			records.add(new ProjectRecord(root));
+			records.add(new ProjectRecord(projectDescription));
 		}
 		if (records.isEmpty())
 			return;
