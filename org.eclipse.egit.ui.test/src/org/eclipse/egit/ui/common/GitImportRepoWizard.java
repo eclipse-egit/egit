@@ -35,12 +35,12 @@ public class GitImportRepoWizard {
 		bot.button("Next >").click();
 	}
 
-	public RepoPropertiesPage openCloneWizard() {
+	public RepoPropertiesPage openRepoPropertiesPage() {
 		bot.shell("Import Projects from Git").activate();
 
-		bot.button("Clone...").click();
+		bot.tree().select("URI");
 
-		bot.shell("Clone Git Repository").activate();
+		bot.button("Next >").click();
 
 		TestUtil.waitUntilViewWithGivenTitleShows(UIText.GitCloneWizard_title);
 
