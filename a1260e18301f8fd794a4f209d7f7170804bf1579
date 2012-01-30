@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOEX///90\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2012-01-30T17:22:31Z",
+      "side": 1,
+      "message": "I think the error should be logged",
+      "revId": "a1260e18301f8fd794a4f209d7f7170804bf1579",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
