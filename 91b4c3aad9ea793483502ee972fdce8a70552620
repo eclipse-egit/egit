@@ -16,6 +16,24 @@
       "revId": "91b4c3aad9ea793483502ee972fdce8a70552620",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn////o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/NoRepositoryInfoException.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-24T13:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+So\u003d",
+      "revId": "91b4c3aad9ea793483502ee972fdce8a70552620",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
