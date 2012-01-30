@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABODn////0\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-24T13:40:17Z",
+      "side": 1,
+      "message": "I think that this is a bug in the form based editor. When I indent it in the source, the editor will include all the spaces into the test box which looks ugly. What should we prefer?",
+      "parentUuid": "AABODX//+Sw\u003d",
+      "revId": "667efb870e898fe606335c4678da799aa2af239b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+S4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABODn////w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-24T13:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+S4\u003d",
+      "revId": "667efb870e898fe606335c4678da799aa2af239b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+S0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/RepositoryLocationLabelProvider.java",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2012-01-20T07:41:33Z",
       "side": 1,
       "message": "style nit: no braces around single line blocks",
+      "revId": "667efb870e898fe606335c4678da799aa2af239b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn////s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/RepositoryLocationLabelProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-24T13:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+S0\u003d",
       "revId": "667efb870e898fe606335c4678da799aa2af239b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
