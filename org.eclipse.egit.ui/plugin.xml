@@ -4301,7 +4301,7 @@
         point="org.eclipse.egit.ui.cloneSourceProvider">
      <source
            hasFixLocation="true"
-           label="URI">
+           label="%CloneUri.label">
      </source>
      <repositorySearchPage
            class="org.eclipse.egit.ui.internal.components.RepositorySelectionPage"></repositorySearchPage>
