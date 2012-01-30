@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABODX//+i8\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "this property seams to be not used",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+cQ\u003d",
         "filename": "org.eclipse.egit.ui/plugin.properties",
         "patchSetId": 3
@@ -14,6 +31,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABODX//+i8\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+i4\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "tyle nit: trailing whitespace",
       "revId": "dab146baccef472be08a52982b544f16d6390e10",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -38,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+i0\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "tyle nit: trailing whitespace",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+cI\u003d",
         "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
         "patchSetId": 3
@@ -50,6 +101,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABODX//+i0\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+iw\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "tyle nit: trailing whitespace",
       "revId": "dab146baccef472be08a52982b544f16d6390e10",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -74,6 +142,23 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+is\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "tyle nit: trailing whitespace",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+cA\u003d",
         "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
         "patchSetId": 3
@@ -86,6 +171,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABODX//+is\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+ic\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "this can be final",
       "revId": "dab146baccef472be08a52982b544f16d6390e10",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -110,6 +212,23 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+iY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "this can be final",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+b4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
         "patchSetId": 3
@@ -122,6 +241,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABODX//+iY\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+iU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "this can be final",
       "revId": "dab146baccef472be08a52982b544f16d6390e10",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -146,6 +282,23 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+iQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use curly brackets around single line blocks",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+bw\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
         "patchSetId": 3
@@ -158,6 +311,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABODX//+iQ\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+iM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "style nit: curly brackets",
       "revId": "dab146baccef472be08a52982b544f16d6390e10",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -182,6 +352,23 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+iI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "this can be final",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+bo\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
         "patchSetId": 3
@@ -194,6 +381,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABODX//+iI\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+iE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "missing java doc",
       "revId": "dab146baccef472be08a52982b544f16d6390e10",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -218,6 +422,23 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+iA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "can be final, why it its publicly accessible and don\u0027t you use getters/setters ?",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+bg\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
         "patchSetId": 3
@@ -230,6 +451,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABODX//+iA\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+h8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "same as above",
       "revId": "dab146baccef472be08a52982b544f16d6390e10",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -254,6 +492,23 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+h4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+bY\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
         "patchSetId": 3
@@ -266,6 +521,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABODX//+h4\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+h0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "same as aboce",
       "revId": "dab146baccef472be08a52982b544f16d6390e10",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -290,6 +562,23 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+hw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+bQ\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
         "patchSetId": 3
@@ -302,6 +591,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABODX//+hw\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+hs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "same as above",
       "revId": "dab146baccef472be08a52982b544f16d6390e10",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -326,6 +632,23 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+ho\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "can be marked as final",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+bI\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
         "patchSetId": 3
@@ -338,6 +661,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABODX//+ho\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+hk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/IRepositorySearchResult.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "I would add empty line between method name and closing \"}\"",
       "revId": "dab146baccef472be08a52982b544f16d6390e10",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -362,6 +702,23 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+hg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/IRepositoryServerProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "I would add empty line between method and closing \"}\"",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+bA\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/IRepositoryServerProvider.java",
         "patchSetId": 3
@@ -374,6 +731,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABODX//+hg\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+hc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/RepositoryServerInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-17T10:54:05Z",
+      "side": 1,
+      "message": "uri and label fields can be marked as final",
       "revId": "dab146baccef472be08a52982b544f16d6390e10",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
