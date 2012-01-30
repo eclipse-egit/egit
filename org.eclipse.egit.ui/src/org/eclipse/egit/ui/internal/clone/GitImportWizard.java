@@ -35,6 +35,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.clone.GitCloneSourceProviderExtension.CloneSourceProvider;
+import org.eclipse.egit.ui.internal.provisional.wizards.IRepositorySearchResult;
 import org.eclipse.egit.ui.internal.provisional.wizards.NoRepositoryInfoException;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -86,14 +87,26 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 	 * The default constructor
 	 */
 	public GitImportWizard() {
+		this(null);
+	}
+
+	/**
+	 * Construct the import wizard based on given repository search result. The
+	 * wizard skips the repository location page in this case.
+	 *
+	 * @param searchResult
+	 *            the search result to initialize the import wizard with.
+	 */
+	public GitImportWizard(IRepositorySearchResult searchResult) {
+		super(searchResult);
 		setWindowTitle(UIText.GitImportWizard_WizardTitle);
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 	}
 
-
 	@Override
 	protected void addPreClonePages() {
-		addPage(selectRepoPage);
+		if (!hasSearchResult())
+			addPage(selectRepoPage);
 	}
 
 	@Override
@@ -104,8 +117,8 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 	}
 
 	@Override
-	protected List<CloneSourceProvider> getCloneSourceProvider() {
-		List<CloneSourceProvider> cloneSourceProvider = super.getCloneSourceProvider();
+	protected List<CloneSourceProvider> getCloneSourceProviders() {
+		List<CloneSourceProvider> cloneSourceProvider = super.getCloneSourceProviders();
 		cloneSourceProvider.add(0, CloneSourceProvider.LOCAL);
 		return cloneSourceProvider;
 	}

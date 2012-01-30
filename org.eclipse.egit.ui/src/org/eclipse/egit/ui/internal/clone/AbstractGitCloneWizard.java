@@ -55,6 +55,7 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.URIish;
@@ -95,7 +96,23 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 	private CloneOperation cloneOperation;
 
 	/**
-	 * adds some basic functionality
+	 * Construct the clone wizard based on given repository search result. If
+	 * the search result is an instance of org.eclipse.jface.wizard.WizardPage,
+	 * then the page is shown in the wizard before the repository info is read.
+	 * The repository location page that allows the repository info to be
+	 * provided by different search providers is not shown.
+	 *
+	 * @param searchResult
+	 *            the search result to initialize the clone wizard with.
+	 */
+	public AbstractGitCloneWizard(IRepositorySearchResult searchResult) {
+		this();
+		this.currentSearchResult = searchResult;
+	}
+
+	/**
+	 * Construct the clone wizard with a repository location page that allows
+	 * the repository info to be provided by different search providers.
 	 */
 	public AbstractGitCloneWizard() {
 		setNeedsProgressMonitor(true);
@@ -135,7 +152,10 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 
 	@Override
 	final public void addPages() {
-		addPage(new RepositoryLocationPage(getCloneSourceProvider()));
+		if (hasSearchResult())
+			addRepositorySearchPage();
+		else
+			addRepositoryLocationPage();
 		addPreClonePages();
 		addPage(validSource);
 		addPage(cloneDestination);
@@ -143,9 +163,39 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 	}
 
 	/**
+	 * @return if the search result is set
+	 */
+	protected boolean hasSearchResult() {
+		return currentSearchResult != null;
+	}
+
+	private void addRepositorySearchPage() {
+		if (currentSearchResult instanceof WizardPage) {
+			addPage((WizardPage)currentSearchResult);
+		}
+	}
+
+	private void addRepositoryLocationPage() {
+		List<CloneSourceProvider> cloneSourceProviders = getCloneSourceProviders();
+		if (hasSingleCloneSourceProviderWithFixedLocation(cloneSourceProviders))
+			try {
+				addPage(cloneSourceProviders.get(0).getRepositorySearchPage());
+			} catch (CoreException e) {
+				Activator.logError(e.getLocalizedMessage(), e);
+			}
+		else
+			addPage(new RepositoryLocationPage(cloneSourceProviders));
+	}
+
+	private boolean hasSingleCloneSourceProviderWithFixedLocation(
+			List<CloneSourceProvider> cloneSourceProviders) {
+		return cloneSourceProviders.size() == 1 && cloneSourceProviders.get(0).hasFixLocation();
+	}
+
+	/**
 	 * @return a list of CloneSourceProviders, may be extended by a subclass
 	 */
-	protected List<CloneSourceProvider> getCloneSourceProvider() {
+	protected List<CloneSourceProvider> getCloneSourceProviders() {
 		return GitCloneSourceProviderExtension.getCloneSourceProvider();
 	}
 

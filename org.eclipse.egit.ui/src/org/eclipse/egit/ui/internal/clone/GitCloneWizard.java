@@ -6,7 +6,7 @@
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2010, Benjamin Muskalla <bmuskalla@eclipsesource.com>
  *
- * All rights reserved. This program and the accompanying materials
+ * All rights reserved. This program and the acco	mpanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -20,6 +20,8 @@ import java.net.URISyntaxException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
+import org.eclipse.egit.ui.internal.provisional.wizards.IRepositorySearchResult;
 import org.eclipse.egit.ui.internal.provisional.wizards.NoRepositoryInfoException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.util.FileUtils;
@@ -32,21 +34,40 @@ public class GitCloneWizard extends AbstractGitCloneWizard {
 	private static final String HELP_CONTEXT = "org.eclipse.egit.ui.GitCloneWizard"; //$NON-NLS-1$
 
 	/**
-	 * The default constructor
+	 * Construct the clone wizard with a repository location page that allows
+	 * the repository info to be provided by different search providers.
 	 */
 	public GitCloneWizard() {
-		this(null);
+		initialize();
 	}
 
 	/**
-	 * Construct Clone Wizard
+	 * Construct the clone wizard with a preset URI. The wizard skips the
+	 * repository location page in this case. Instead, it starts with the Custom
+	 * URI repository selection page.
 	 *
-	 * @param presetURI
+	 * @param presetUri
 	 *            the clone URI to prepopulate the URI field of the clone wizard
 	 *            with.
 	 */
-	public GitCloneWizard(String presetURI) {
-		super();
+	public GitCloneWizard(String presetUri) {
+		super(new RepositorySelectionPage(true, presetUri));
+		initialize();
+	}
+
+	/**
+	 * Construct the clone wizard based on given repository search result. The
+	 * wizard skips the repository location page in this case.
+	 *
+	 * @param searchResult
+	 *            the search result to initialize the clone wizard with.
+	 */
+	public GitCloneWizard(IRepositorySearchResult searchResult) {
+		super(searchResult);
+		initialize();
+	}
+
+	private void initialize() {
 		setWindowTitle(UIText.GitCloneWizard_title);
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 		setNeedsProgressMonitor(true);
