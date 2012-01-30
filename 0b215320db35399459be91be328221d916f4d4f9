@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+CE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitImportWizard.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-24T13:39:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+Ts\u003d",
+      "revId": "0b215320db35399459be91be328221d916f4d4f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+To\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 7
@@ -47,6 +65,24 @@
       "writtenOn": "2012-01-20T00:34:25Z",
       "side": 1,
       "message": "s/to clone/to be cloned/",
+      "revId": "0b215320db35399459be91be328221d916f4d4f9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+CA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 7
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-24T13:39:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+To\u003d",
       "revId": "0b215320db35399459be91be328221d916f4d4f9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
