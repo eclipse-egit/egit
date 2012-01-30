@@ -2,6 +2,204 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABODX//+cQ\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+i8\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+cM\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+i4\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+cI\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+i0\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+cE\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+iw\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+cA\u003d",
+        "filename": "org.eclipse.egit.ui/schema/cloneSourceProvider.exsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+is\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+b8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+ic\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+b4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+iY\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+b0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+iU\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+bw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+iQ\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+bs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneSourceProviderExtension.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+iM\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+bo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+iI\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+bk\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
         "patchSetId": 3
@@ -56,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "AABODX//+bY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+h4\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODX//+bU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
         "patchSetId": 3
@@ -104,6 +320,60 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AABODX//+hs\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+bI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/GitRepositoryInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+ho\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+bE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/IRepositorySearchResult.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+hk\u003d",
+      "revId": "dab146baccef472be08a52982b544f16d6390e10",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+bA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/provisional/wizards/IRepositoryServerProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-01-19T12:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODX//+hg\u003d",
       "revId": "dab146baccef472be08a52982b544f16d6390e10",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
