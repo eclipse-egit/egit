@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import org.eclipse.compare.ITypedElement;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -27,6 +30,7 @@ import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.blame.BlameOperation;
+import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
@@ -42,6 +46,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -61,6 +66,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -95,6 +101,8 @@ public class CommitFileDiffViewer extends TableViewer {
 	private IAction openWorkingTreeVersion;
 
 	private IAction compare;
+
+	private IAction compareWorkingTreeVersion;
 
 	private final IWorkbenchSite site;
 
@@ -255,9 +263,22 @@ public class CommitFileDiffViewer extends TableViewer {
 			}
 		};
 
+		compareWorkingTreeVersion = new Action(
+				UIText.CommitFileDiffViewer_CompareWorkingDirectoryMenuLabel) {
+			@Override
+			public void run() {
+				final ISelection s = getSelection();
+				if (s.isEmpty() || !(s instanceof IStructuredSelection))
+					return;
+				final IStructuredSelection iss = (IStructuredSelection) s;
+				showWorkingDirectoryFileDiff((FileDiff) iss.getFirstElement());
+			}
+		};
+
 		mgr.add(open);
 		mgr.add(openWorkingTreeVersion);
 		mgr.add(compare);
+		mgr.add(compareWorkingTreeVersion);
 		mgr.add(blame);
 
 		mgr.add(new Separator());
@@ -298,6 +319,14 @@ public class CommitFileDiffViewer extends TableViewer {
 		open.setEnabled(!sel.isEmpty());
 		openWorkingTreeVersion.setEnabled(!sel.isEmpty());
 		compare.setEnabled(sel.size() == 1);
+
+		if (sel.size() == 1) {
+			FileDiff diff = (FileDiff) sel.getFirstElement();
+			String path = new Path(getRepository().getWorkTree()
+					.getAbsolutePath()).append(diff.getPath()).toOSString();
+			compareWorkingTreeVersion.setEnabled(new File(path).exists());
+		} else
+			compareWorkingTreeVersion.setEnabled(false);
 	}
 
 	private IAction createStandardAction(final ActionFactory af) {
@@ -445,6 +474,35 @@ public class CommitFileDiffViewer extends TableViewer {
 		CompareUtils.openInCompare(site.getWorkbenchWindow().getActivePage(),
 				in);
 
+	}
+
+	void showWorkingDirectoryFileDiff(final FileDiff d) {
+		final GitCompareFileRevisionEditorInput in;
+
+		final String p = d.getPath();
+		final RevCommit c = d.getCommit();
+		final ObjectId[] blobs = d.getBlobs();
+		final ITypedElement base;
+		final ITypedElement next;
+
+		String path = new Path(getRepository().getWorkTree().getAbsolutePath())
+				.append(p).toOSString();
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IFile[] files = root.findFilesForLocationURI(new File(path).toURI());
+		if (files.length > 0)
+			next = SaveableCompareEditorInput.createFileElement(files[0]);
+		else
+			next = new LocalNonWorkspaceTypedElement(path);
+
+		if (d.getChange().equals(ChangeType.DELETE))
+			base = new GitCompareFileRevisionEditorInput.EmptyTypedElement(""); //$NON-NLS-1$
+		else
+			base = CompareUtils.getFileRevisionTypedElement(p, c,
+					getRepository(), blobs[blobs.length - 1]);
+
+		in = new GitCompareFileRevisionEditorInput(next, base, null);
+		CompareUtils.openInCompare(site.getWorkbenchWindow().getActivePage(),
+				in);
 	}
 
 	TreeWalk getTreeWalk() {
