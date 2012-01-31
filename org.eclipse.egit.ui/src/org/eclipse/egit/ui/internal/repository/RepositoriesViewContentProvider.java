@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.eclipse.core.commands.IStateListener;
@@ -35,15 +35,16 @@ import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
+import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
 import org.eclipse.egit.ui.internal.repository.tree.BranchHierarchyNode;
 import org.eclipse.egit.ui.internal.repository.tree.BranchesNode;
+import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.ErrorNode;
 import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
-import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
-import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
 import org.eclipse.egit.ui.internal.repository.tree.PushNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
@@ -51,6 +52,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemotesNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.egit.ui.internal.repository.tree.StashNode;
 import org.eclipse.egit.ui.internal.repository.tree.SubmodulesNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
@@ -58,6 +60,7 @@ import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.internal.repository.tree.command.ToggleBranchHierarchyCommand;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
@@ -66,6 +69,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
@@ -307,10 +311,13 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			nodeList.add(new BranchesNode(node, repo));
 			nodeList.add(new TagsNode(node, repo));
 			nodeList.add(new AdditionalRefsNode(node, repo));
-			if (!repo.isBare())
+			final boolean bare = repo.isBare();
+			if (!bare)
 				nodeList.add(new WorkingDirNode(node, repo));
 			nodeList.add(new RemotesNode(node, repo));
-			if (!repo.isBare() && hasConfiguredSubmodules(repo))
+			if(!bare && hasStashedCommits(repo))
+				nodeList.add(new StashNode(node, repo));
+			if (!bare && hasConfiguredSubmodules(repo))
 				nodeList.add(new SubmodulesNode(node, repo));
 
 			return nodeList.toArray();
@@ -435,6 +442,17 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 				handleException(e, node);
 			}
 			return children.toArray();
+		case STASH:
+			List<StashedCommitNode> stashNodes = new ArrayList<StashedCommitNode>();
+			int index = 0;
+			try {
+				for (RevCommit commit : Git.wrap(repo).stashList().call())
+					stashNodes.add(new StashedCommitNode(node, repo, index++,
+							commit));
+			} catch (Exception e) {
+				handleException(e, node);
+			}
+			return stashNodes.toArray();
 		case FILE:
 			// fall through
 		case REF:
@@ -446,6 +464,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		case FETCH:
 			// fall through
 		case ERROR:
+			// fall through
+		case STASHED_COMMIT:
 			// fall through
 		case ADDITIONALREF:
 			return null;
@@ -561,5 +581,22 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		return !repository.getConfig()
 				.getSubsections(ConfigConstants.CONFIG_SUBMODULE_SECTION)
 				.isEmpty();
+	}
+
+	/**
+	 * Does the repository have any stashed commits?
+	 * <p>
+	 * This method checks for a {@link Constants#R_STASH} ref in the given
+	 * repository
+	 *
+	 * @param repository
+	 * @return true if stashed commits, false otherwise
+	 */
+	private boolean hasStashedCommits(final Repository repository) {
+		try {
+			return repository.getRef(Constants.R_STASH) != null;
+		} catch (IOException e) {
+			return false;
+		}
 	}
 }
