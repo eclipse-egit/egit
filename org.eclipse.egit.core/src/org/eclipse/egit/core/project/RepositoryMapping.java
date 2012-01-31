@@ -274,6 +274,8 @@ public class RepositoryMapping {
 				.getProjects();
 
 		for (IProject project : projects) {
+			if (isNonWorkspace(project))
+				continue;
 			RepositoryMapping mapping = getMapping(project);
 			if (mapping == null)
 				continue;
