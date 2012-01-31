@@ -15,6 +15,7 @@ import java.io.File;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
  * A node in the Git Repositories view tree
@@ -134,6 +135,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 			// fall through
 		case SUBMODULES:
 			// fall through
+		case STASH:
+			// fall through
 		case WORKINGDIR:
 			result = prime
 					* result
@@ -167,6 +170,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 		case FETCH:
 			// fall through
 		case BRANCHHIERARCHY:
+			// fall through
+		case STASHED_COMMIT:
 			// fall through
 		case ERROR:
 			result = prime * result
@@ -250,6 +255,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 			// fall through
 		case SUBMODULES:
 			// fall through
+		case STASH:
+			// fall through
 		case WORKINGDIR:
 			return 0;
 
@@ -265,6 +272,9 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 		case FOLDER:
 			return ((File) myObject).getName().compareTo(
 					((File) otherNode.getObject()).getName());
+		case STASHED_COMMIT:
+			return ((RevCommit) myObject).compareTo(((RevCommit) otherNode
+					.getObject()));
 		case TAG:
 			// fall through
 		case ADDITIONALREF:
@@ -314,6 +324,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 			// fall through
 		case SUBMODULES:
 			// fall through
+		case STASH:
+			// fall through
 		case WORKINGDIR:
 			return ((Repository) myObject).getDirectory().equals(
 					((Repository) otherObject).getDirectory());
@@ -338,6 +350,8 @@ public abstract class RepositoryTreeNode<T> extends PlatformObject implements Co
 		case PUSH:
 			// fall through
 		case BRANCHHIERARCHY:
+			// fall through
+		case STASHED_COMMIT:
 			// fall through
 		case TAGS:
 			return myObject.equals(otherObject);
