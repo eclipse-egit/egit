@@ -104,6 +104,8 @@ public class ConfigurationEditorComponent {
 
 	private Button addValue;
 
+	private Button newValue;
+
 	private Button remove;
 
 	private Button deleteValue;
@@ -280,10 +282,10 @@ public class ConfigurationEditorComponent {
 		Composite buttonPanel = new Composite(main, SWT.NONE);
 		buttonPanel.setLayout(new GridLayout(2, false));
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(buttonPanel);
-		final Button newEntry = new Button(buttonPanel, SWT.PUSH);
-		GridDataFactory.fillDefaults().applyTo(newEntry);
-		newEntry.setText(UIText.ConfigurationEditorComponent_NewValueButton);
-		newEntry.addSelectionListener(new SelectionAdapter() {
+		newValue = new Button(buttonPanel, SWT.PUSH);
+		GridDataFactory.fillDefaults().applyTo(newValue);
+		newValue.setText(UIText.ConfigurationEditorComponent_NewValueButton);
+		newValue.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
@@ -511,6 +513,7 @@ public class ConfigurationEditorComponent {
 								configFile.getPath()));
 				} else {
 					location.setText(UIText.ConfigurationEditorComponent_NoConfigLocationKnown);
+					newValue.setEnabled(false);
 				}
 			}
 		} catch (IOException e) {
