@@ -104,6 +104,8 @@ public class ConfigurationEditorComponent {
 
 	private Button addValue;
 
+	private Button newValue;
+
 	private Button remove;
 
 	private Button deleteValue;
@@ -280,10 +282,10 @@ public class ConfigurationEditorComponent {
 		Composite buttonPanel = new Composite(main, SWT.NONE);
 		buttonPanel.setLayout(new GridLayout(2, false));
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(buttonPanel);
-		final Button newEntry = new Button(buttonPanel, SWT.PUSH);
-		GridDataFactory.fillDefaults().applyTo(newEntry);
-		newEntry.setText(UIText.ConfigurationEditorComponent_NewValueButton);
-		newEntry.addSelectionListener(new SelectionAdapter() {
+		newValue = new Button(buttonPanel, SWT.PUSH);
+		GridDataFactory.fillDefaults().applyTo(newValue);
+		newValue.setText(UIText.ConfigurationEditorComponent_NewValueButton);
+		newValue.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
@@ -503,15 +505,15 @@ public class ConfigurationEditorComponent {
 			if (editableConfig instanceof FileBasedConfig) {
 				FileBasedConfig fileConfig = (FileBasedConfig) editableConfig;
 				File configFile = fileConfig.getFile();
-				if (configFile != null) {
+				if (configFile != null)
 					if (isWriteable(configFile))
 						location.setText(configFile.getPath());
 					else
 						location.setText(NLS.bind(UIText.ConfigurationEditorComponent_ReadOnlyLocationFormat,
 								configFile.getPath()));
-				} else {
+				else
 					location.setText(UIText.ConfigurationEditorComponent_NoConfigLocationKnown);
-				}
+				newValue.setEnabled(configFile != null);
 			}
 		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, true);
