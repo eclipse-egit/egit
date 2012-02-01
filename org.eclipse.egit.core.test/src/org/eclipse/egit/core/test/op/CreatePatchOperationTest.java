@@ -16,11 +16,15 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.CreatePatchOperation;
 import org.eclipse.egit.core.op.CreatePatchOperation.DiffHeaderFormat;
 import org.eclipse.egit.core.test.GitTestCase;
+import org.eclipse.egit.core.test.TestProject;
 import org.eclipse.egit.core.test.TestRepository;
+import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.After;
@@ -55,6 +59,16 @@ public class CreatePatchOperationTest extends GitTestCase {
 			+ "index e69de29..eb5f2c9 100644\n"
 			+ "--- a/test-file\n"
 			+ "+++ b/test-file\n"
+			+ "@@ -0,0 +1 @@\n"
+			+ "+another line\n"
+			+ "\\ No newline at end of file";
+
+	private static final String SIMPLE_WORKSPACE_PATCH_CONTENT = "### Eclipse Workspace Patch 1.0\n"
+			+ "#P Project-1\n"
+			+ "diff --git test-file test-file\n"
+			+ "index e69de29..eb5f2c9 100644\n"
+			+ "--- test-file\n"
+			+ "+++ test-file\n"
 			+ "@@ -0,0 +1 @@\n"
 			+ "+another line\n"
 			+ "\\ No newline at end of file";
@@ -190,6 +204,71 @@ public class CreatePatchOperationTest extends GitTestCase {
 		aCommit = testRepository.appendContentAndCommit(
 				project.getProject(), file, "another line", "Add collapse/expand all utility method for tree viewers.");
 		assertEquals("Add-collapse-expand-all-utility-method-for-tree-view.patch", CreatePatchOperation.suggestFileName(aCommit));
+	}
+
+	@Test
+	public void testProcessPath() throws Exception {
+		DiffFormatter diffFmt = new DiffFormatter(null);
+		IPath oldPath = CreatePatchOperation.processPath(
+				new Path("a/test-file"), project.getProject(),
+				new Path(diffFmt.getOldPrefix()));
+		IPath newPath = CreatePatchOperation.processPath(
+				new Path("b/test-file"), project.getProject(),
+				new Path(diffFmt.getNewPrefix()));
+		assertPatch("test-file", oldPath.toString());
+		assertPatch("test-file", newPath.toString());
+	}
+
+	@Test
+	public void testProcessPathRepoAboveProject() throws Exception {
+		testRepository.disconnect(project.getProject());
+
+		// new setUp
+		project = new TestProject(true, "repo/bundles/Project-1", true, null);
+		File repo = new File(project.getProject().getLocationURI().getPath()).getParentFile().getParentFile();
+		gitDir = new File(repo, Constants.DOT_GIT);
+		testRepository = new TestRepository(gitDir);
+		testRepository.connect(project.getProject());
+
+
+		DiffFormatter diffFmt = new DiffFormatter(null);
+		IPath oldPath = CreatePatchOperation.processPath(new Path(
+				"a/bundles/Project-1/test-file"), project.getProject(), new Path(
+				diffFmt.getOldPrefix()));
+		IPath newPath = CreatePatchOperation.processPath(new Path(
+				"b/bundles/Project-1/test-file"), project.getProject(), new Path(
+				diffFmt.getNewPrefix()));
+		assertPatch("test-file", oldPath.toString());
+		assertPatch("test-file", newPath.toString());
+	}
+
+	@Test
+	public void testUpdateWorkspacePatchPrefixes() throws Exception {
+		DiffFormatter diffFmt = new DiffFormatter(null);
+		StringBuilder sb = new StringBuilder(SIMPLE_PATCH_CONTENT);
+		CreatePatchOperation.updateWorkspacePatchPrefixes(sb, project
+				.getProject().findMember("test-file"), diffFmt);
+		// add workspace header
+		StringBuilder sb1 = new StringBuilder("### Eclipse Workspace Patch 1.0\n#P ")
+				.append(project.getProject().getName()).append("\n").append(sb);
+
+		assertPatch(SIMPLE_WORKSPACE_PATCH_CONTENT, sb1.toString());
+	}
+
+	@Test
+	public void testWorkspacePatch() throws Exception {
+		RevCommit secondCommit = testRepository.appendContentAndCommit(
+				project.getProject(), file, "another line", "2nd commit");
+
+		CreatePatchOperation operation = new CreatePatchOperation(
+				testRepository.getRepository(), secondCommit, project.getProject());
+
+		operation.setHeaderFormat(DiffHeaderFormat.WORKSPACE);
+		operation.execute(new NullProgressMonitor());
+
+		String patchContent = operation.getPatchContent();
+		assertNotNull(patchContent);
+		assertPatch(SIMPLE_WORKSPACE_PATCH_CONTENT, patchContent);
 	}
 
 	private void assertGitPatch(String expected, String actual) {

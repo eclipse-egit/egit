@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -71,11 +72,14 @@ public class GitCreatePatchWizard extends Wizard {
 
 	private RevCommit commit;
 
+	private IResource resource;
+
 	private Repository db;
 
 	private LocationPage locationPage;
 
 	private OptionsPage optionsPage;
+
 
 	// The initial size of this wizard.
 	private final static int INITIAL_WIDTH = 300;
@@ -86,12 +90,13 @@ public class GitCreatePatchWizard extends Wizard {
 	 *
 	 * @param shell
 	 * @param commit
+	 * @param resource
 	 * @param db
 	 */
 	public static void run(Shell shell, final RevCommit commit,
-			Repository db) {
+			IResource resource, Repository db) {
 		final String title = UIText.GitCreatePatchWizard_CreatePatchTitle;
-		final GitCreatePatchWizard wizard = new GitCreatePatchWizard(commit, db);
+		final GitCreatePatchWizard wizard = new GitCreatePatchWizard(commit, resource, db);
 		wizard.setWindowTitle(title);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.setMinimumPageSize(INITIAL_WIDTH, INITIAL_HEIGHT);
@@ -104,10 +109,12 @@ public class GitCreatePatchWizard extends Wizard {
 	 * commit.
 	 *
 	 * @param commit
+	 * @param resource
 	 * @param db
 	 */
-	public GitCreatePatchWizard(RevCommit commit, Repository db) {
+	public GitCreatePatchWizard(RevCommit commit, IResource resource, Repository db) {
 		this.commit = commit;
+		this.resource = resource;
 		this.db = db;
 
 		setDialogSettings(getOrCreateSection(Activator.getDefault().getDialogSettings(), "GitCreatePatchWizard")); //$NON-NLS-1$
@@ -144,7 +151,7 @@ public class GitCreatePatchWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		final CreatePatchOperation operation = new CreatePatchOperation(db,
-				commit);
+				commit, resource);
 		operation.setHeaderFormat(optionsPage.getSelectedHeaderFormat());
 		operation.setContextLines(Integer.parseInt(optionsPage.contextLines.getText()));
 
