@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOEn////c\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-31T19:09:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOEX///78\u003d",
+      "revId": "ca40a24727bb162eb539c6a51c84517062b1d22e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOEX///74\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-01-31T08:23:15Z",
       "side": 1,
       "message": "I do not understand how this can happen. Workspace.getRoot().getProjects returns projects with location null? Do these projects exist in the filesystem?",
+      "revId": "ca40a24727bb162eb539c6a51c84517062b1d22e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOEn////Y\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-31T19:09:01Z",
+      "side": 1,
+      "message": "In deed, one of my friend some time ago hit this problem, but I cannot reproduce it. I only  have his stacktrace and base on it I\u0027ve added this guard against potential SOE",
+      "parentUuid": "AABOEX///74\u003d",
       "revId": "ca40a24727bb162eb539c6a51c84517062b1d22e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
