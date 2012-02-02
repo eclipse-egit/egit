@@ -14,6 +14,9 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.ui.internal.commit.CommitEditor;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
@@ -38,6 +41,9 @@ public class OpenCommand extends
 			return new CheckoutCommand().execute(event);
 		if (node instanceof FileNode)
 			return new OpenInEditorCommand().execute(event);
+		if (node instanceof StashedCommitNode)
+			CommitEditor.openQuiet(new RepositoryCommit(node.getRepository(),
+					((StashedCommitNode) node).getObject()));
 
 		return null;
 	}
