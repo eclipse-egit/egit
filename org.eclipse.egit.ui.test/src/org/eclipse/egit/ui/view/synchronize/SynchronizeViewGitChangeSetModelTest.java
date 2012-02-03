@@ -87,7 +87,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		SWTBotTreeItem[] syncItems = syncViewTree.getAllItems();
-		assertEquals(GitModelWorkingTree_workingTree, syncItems[0].getText());
+		assertEquals("> " + GitModelWorkingTree_workingTree, syncItems[0].getText());
 	}
 
 	@Test
@@ -409,7 +409,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		// preconditions - sync result should contain two uncommitted changes
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		SWTBotTreeItem[] syncItems = syncViewTree.getAllItems();
-		assertEquals(GitModelWorkingTree_workingTree, syncItems[0].getText());
+		assertEquals("> " + GitModelWorkingTree_workingTree, syncItems[0].getText());
 		syncItems[0].doubleClick();
 		assertEquals(2,
 				syncItems[0].getItems()[0].getItems()[0].getItems().length);
