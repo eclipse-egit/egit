@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.egit.core.Activator;
@@ -33,7 +35,6 @@ import org.eclipse.jface.text.hyperlink.AbstractHyperlinkDetector;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -46,6 +47,9 @@ import org.eclipse.swt.widgets.Shell;
  * the commit editor.
  */
 public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
+
+	private static final Pattern PATTERN_COMMIT_ID = Pattern
+			.compile("(?<!\\w)([0-9a-f]{8}([0-9a-f]{32})?)"); //$NON-NLS-1$
 
 	private static class CommitHyperlink implements IHyperlink {
 
@@ -136,67 +140,69 @@ public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
 
 		}
 
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("CommitHyperlink [region="); //$NON-NLS-1$
+			builder.append(region);
+			builder.append(", objectId="); //$NON-NLS-1$
+			builder.append(objectId);
+			builder.append("]"); //$NON-NLS-1$
+			return builder.toString();
+		}
+
 	}
 
 	/**
-	 * Detects and returns all available hyperlinks for the given {@link TextViewer} which link to a Git commit.
+	 * Detects and returns all available hyperlinks for the given
+	 * {@link TextViewer} which link to a Git commit.
 	 */
 	public IHyperlink[] detectHyperlinks(ITextViewer textViewer,
-			IRegion region, boolean canShowMultipleHyperlinks) {
-
+			final IRegion region, boolean canShowMultipleHyperlinks) {
 		IDocument document = textViewer.getDocument();
-		if (document == null || document.getLength() == 0)
-			return null;
-
-		String content;
-		int offset = region.getOffset();
-		int length = region.getLength();
-		try {
-			if (length == 0) {
-				IRegion lineInformation = document
-						.getLineInformationOfOffset(offset);
-				offset = lineInformation.getOffset();
-				length = lineInformation.getLength();
-			}
-			content = document.get(offset, length);
-		} catch (BadLocationException e) {
+		if (document == null || document.getLength() == 0) {
 			return null;
 		}
 
-		List<IHyperlink> hyperlinks = new ArrayList<IHyperlink>();
-		String[] words = content.split(" "); //$NON-NLS-1$
-		Shell shell = textViewer.getTextWidget().getShell();
-		for (String potentialId : words) {
-			String foundId = null;
-			int foundOffset = 0;
-			if (ObjectId.isId(potentialId)) {
-				foundId = potentialId;
-				foundOffset = offset;
-			} else if (potentialId.length() > Constants.OBJECT_ID_STRING_LENGTH) {
-				// could be beginning or end of a sentence
-				String potentialIdAtBeginning = potentialId.substring(0,
-						Constants.OBJECT_ID_STRING_LENGTH);
-				if (ObjectId.isId(potentialIdAtBeginning)) {
-					foundId = potentialIdAtBeginning;
-					foundOffset = offset;
+		String content;
+		int contentOffset;
+		int index;
+		try {
+			if (region.getLength() == 0) {
+				// expand the region to include the whole line
+				IRegion lineInfo = document.getLineInformationOfOffset(region
+						.getOffset());
+				int lineLength = lineInfo.getLength();
+				int lineOffset = lineInfo.getOffset();
+				int lineEnd = lineOffset + lineLength;
+				int regionEnd = region.getOffset() + region.getLength();
+				if (lineOffset < region.getOffset()) {
+					int regionLength = Math.max(regionEnd, lineEnd)
+							- lineOffset;
+					contentOffset = lineOffset;
+					content = document.get(lineOffset, regionLength);
+					index = region.getOffset() - lineOffset;
 				} else {
-					String potentialIdAtEnd = potentialId.substring(potentialId
-							.length() - Constants.OBJECT_ID_STRING_LENGTH);
-					if (ObjectId.isId(potentialIdAtEnd)) {
-						foundId = potentialIdAtEnd;
-						foundOffset = potentialId.length()
-								- Constants.OBJECT_ID_STRING_LENGTH;
-					}
-
+					// the line starts after region, may never happen
+					int regionLength = Math.max(regionEnd, lineEnd)
+							- region.getOffset();
+					contentOffset = region.getOffset();
+					content = document.get(contentOffset, regionLength);
+					index = 0;
 				}
+			} else {
+				content = document.get(region.getOffset(), region.getLength());
+				contentOffset = region.getOffset();
+				index = -1;
 			}
-			if (foundId != null) {
-				CommitHyperlink hyperlink = new CommitHyperlink(new Region(
-						foundOffset, Constants.OBJECT_ID_STRING_LENGTH),
-						foundId, shell);
-				hyperlinks.add(hyperlink);
-			}
-			offset += potentialId.length() + 1;
+		} catch (BadLocationException ex) {
+			return null;
+		}
+
+		List<IHyperlink> hyperlinks = detectHyperlinks(textViewer, content,
+				index, contentOffset);
+		if (hyperlinks == null) {
+			return null;
 		}
 
 		// filter hyperlinks that do not match original region
@@ -204,15 +210,39 @@ public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
 			for (Iterator<IHyperlink> it = hyperlinks.iterator(); it.hasNext();) {
 				IHyperlink hyperlink = it.next();
 				IRegion hyperlinkRegion = hyperlink.getHyperlinkRegion();
-				if (!isInRegion(region, hyperlinkRegion))
+				if (!isInRegion(region, hyperlinkRegion)) {
 					it.remove();
+				}
 			}
 		}
-
-		if (hyperlinks.isEmpty())
+		if (hyperlinks.isEmpty()) {
 			return null;
-
+		}
 		return hyperlinks.toArray(new IHyperlink[hyperlinks.size()]);
+	}
+
+	private List<IHyperlink> detectHyperlinks(ITextViewer textViewer,
+			String content, int index, int contentOffset) {
+		Shell shell = textViewer.getTextWidget().getShell();
+		List<IHyperlink> links = null;
+		Matcher matcher = PATTERN_COMMIT_ID.matcher(content);
+		while (matcher.find()) {
+			if (index != -1
+					&& (index < matcher.start() || index > matcher.end())) {
+				continue;
+			}
+			if (links == null) {
+				links = new ArrayList<IHyperlink>();
+			}
+			int start = matcher.start(1);
+			Region region = new Region(contentOffset + start, matcher.end(1)
+					- start);
+
+			CommitHyperlink hyperlink = new CommitHyperlink(region,
+					matcher.group(1), shell);
+			links.add(hyperlink);
+		}
+		return links;
 	}
 
 	private boolean isInRegion(IRegion detectInRegion, IRegion hyperlinkRegion) {
