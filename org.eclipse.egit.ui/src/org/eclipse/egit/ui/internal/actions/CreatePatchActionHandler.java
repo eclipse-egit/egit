@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Tomasz Zarna <Tomasz.Zarna@pl.ibm.com>
+ * Copyright (C) 2011, 2012 Tomasz Zarna <Tomasz.Zarna@pl.ibm.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,12 +18,12 @@ import org.eclipse.egit.ui.internal.patch.PatchOperationUI;
 public class CreatePatchActionHandler extends RepositoryActionHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		PatchOperationUI.createPatch(getPart(event), getRepository()).start();
+		PatchOperationUI.createPatch(getPart(event), getSelectedResources(event)[0]).start();
 		return null;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return getRepository() != null;
+		return getRepository() != null && getSelectedResources().length == 1;
 	}
 }
