@@ -230,6 +230,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 		IWorkbenchAction showAllBranchesAction;
 
+		IWorkbenchAction showAdditionalRefsAction;
+
 		BooleanPrefAction followRenamesAction;
 
 		IWorkbenchAction reuseCompareEditorAction;
@@ -257,6 +259,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			createCompareModeAction();
 			createReuseCompareEditorAction();
 			createShowAllBranchesAction();
+			createShowAdditionalRefsAction();
 			createShowCommentAction();
 			createShowFilesAction();
 			createShowRelativeDateAction();
@@ -366,6 +369,19 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			showAllBranchesAction
 					.setToolTipText(UIText.GitHistoryPage_showAllBranches);
 			actionsToDispose.add(showAllBranchesAction);
+		}
+
+		private void createShowAdditionalRefsAction() {
+			showAdditionalRefsAction = new BooleanPrefAction(
+					UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS,
+					UIText.GitHistoryPage_ShowAdditionalRefsMenuLabel) {
+
+				@Override
+				void apply(boolean value) {
+					historyPage.refresh();
+				}
+			};
+			actionsToDispose.add(showAdditionalRefsAction);
 		}
 
 		private void createFollowRenamesAction() {
@@ -589,6 +605,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private Repository currentRepo;
 
 	private boolean currentShowAllBranches;
+
+	private boolean currentShowAdditionalRefs;
 
 	private boolean currentShowNotes;
 
@@ -901,6 +919,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				UIText.GitHistoryPage_ShowSubMenuLabel);
 		viewMenuMgr.add(showSubMenuMgr);
 		showSubMenuMgr.add(actions.showAllBranchesAction);
+		showSubMenuMgr.add(actions.showAdditionalRefsAction);
 		showSubMenuMgr.add(actions.showNotesAction);
 		showSubMenuMgr.add(actions.followRenamesAction);
 		showSubMenuMgr.add(new Separator());
@@ -1522,6 +1541,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		currentShowAllBranches = store
 			.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES);
 
+		boolean additionalRefsChange = currentShowAdditionalRefs != store
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS);
+		currentShowAdditionalRefs = store
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS);
+
 		boolean showNotesChanged = currentShowNotes != store
 				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_NOTES);
 		currentShowNotes = store
@@ -1536,7 +1560,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 		return pathChanged
 			|| currentWalk == null || headChanged || repoChanged || allBranchesChanged
-			|| showNotesChanged || followRenamesChanged;
+			|| additionalRefsChange || showNotesChanged || followRenamesChanged;
 	}
 
 	/**
@@ -1654,9 +1678,12 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			currentWalk.release();
 		currentWalk = new SWTWalk(db);
 		try {
-			currentWalk.addAdditionalRefs(db.getRefDatabase().getAdditionalRefs());
-			currentWalk.addAdditionalRefs(db.getRefDatabase().
-					getRefs(Constants.R_NOTES).values());
+			if (store
+					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS))
+				currentWalk.addAdditionalRefs(db.getRefDatabase()
+						.getAdditionalRefs());
+			currentWalk.addAdditionalRefs(db.getRefDatabase()
+					.getRefs(Constants.R_NOTES).values());
 		} catch (IOException e) {
 			throw new IllegalStateException(NLS.bind(
 					UIText.GitHistoryPage_errorReadingAdditionalRefs, Activator
@@ -1675,6 +1702,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				markStartAllRefs(Constants.R_HEADS);
 				markStartAllRefs(Constants.R_REMOTES);
 				markStartAllRefs(Constants.R_TAGS);
+			}
+			if (store
+					.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS)) {
 				markStartAdditionalRefs();
 			}
 			if (store
