@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOEn///+I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 440
+      },
+      "writtenOn": "2012-02-02T07:10:41Z",
+      "side": 1,
+      "message": "The button is still enabled when the configFile is not writable. I propose to instead use setEnabled(false) at the beginning of this method and setEnabled(true) inside the isWritable(...) block.",
+      "revId": "614c93c704a58ac26b691a753a9ff97ae037bef9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOEn///8k\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
         "patchSetId": 3
