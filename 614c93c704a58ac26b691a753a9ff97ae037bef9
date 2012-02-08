@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOEn///8k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/ConfigurationEditorComponent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-02-02T17:16:36Z",
+      "side": 1,
+      "message": "That was intentional to be consistent with the other buttons to change and remove entries since they are still enabled when the file is not writable.\n\nThinking about it more I think I may broaden this commit to cover these cases as well so all buttons are consistent when the file is missing or not writable.",
+      "parentUuid": "AABOEn///+I\u003d",
+      "revId": "614c93c704a58ac26b691a753a9ff97ae037bef9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
