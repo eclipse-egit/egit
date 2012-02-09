@@ -127,7 +127,8 @@ public class CommitFileDiffViewer extends TableViewer {
 	 *
 	 * @param parent
 	 * @param site
-	 * @param style SWT style bits
+	 * @param style
+	 *            SWT style bits
 	 */
 	public CommitFileDiffViewer(final Composite parent,
 			final IWorkbenchSite site, final int style) {
@@ -160,8 +161,8 @@ public class CommitFileDiffViewer extends TableViewer {
 					return;
 				final IStructuredSelection iss = (IStructuredSelection) s;
 				final FileDiff d = (FileDiff) iss.getFirstElement();
-				if (Activator.getDefault().getPreferenceStore().getBoolean(
-						UIPreferences.RESOURCEHISTORY_COMPARE_MODE)) {
+				if (Activator.getDefault().getPreferenceStore()
+						.getBoolean(UIPreferences.RESOURCEHISTORY_COMPARE_MODE)) {
 					if (d.getBlobs().length <= 2)
 						showTwoWayFileDiff(d);
 					else
@@ -314,19 +315,36 @@ public class CommitFileDiffViewer extends TableViewer {
 		IStructuredSelection sel = (IStructuredSelection) selection;
 		boolean allSelected = !sel.isEmpty()
 				&& sel.size() == getTable().getItemCount();
+		boolean submoduleSelected = false;
+		for (Object item : sel.toArray())
+			if (((FileDiff) item).isSubmodule()) {
+				submoduleSelected = true;
+				break;
+			}
+
 		selectAll.setEnabled(!allSelected);
 		copy.setEnabled(!sel.isEmpty());
-		open.setEnabled(!sel.isEmpty());
-		openWorkingTreeVersion.setEnabled(!sel.isEmpty());
-		compare.setEnabled(sel.size() == 1);
 
-		if (sel.size() == 1) {
-			FileDiff diff = (FileDiff) sel.getFirstElement();
-			String path = new Path(getRepository().getWorkTree()
-					.getAbsolutePath()).append(diff.getPath()).toOSString();
-			compareWorkingTreeVersion.setEnabled(new File(path).exists());
-		} else
+		if (!submoduleSelected) {
+			open.setEnabled(!sel.isEmpty());
+			openWorkingTreeVersion.setEnabled(!sel.isEmpty());
+			compare.setEnabled(sel.size() == 1);
+			blame.setEnabled(true);
+			if (sel.size() == 1) {
+				FileDiff diff = (FileDiff) sel.getFirstElement();
+				String path = new Path(getRepository().getWorkTree()
+						.getAbsolutePath()).append(diff.getPath()).toOSString();
+				compareWorkingTreeVersion.setEnabled(new File(path).exists()
+						&& !submoduleSelected);
+			} else
+				compareWorkingTreeVersion.setEnabled(false);
+		} else {
+			open.setEnabled(false);
+			openWorkingTreeVersion.setEnabled(false);
+			compare.setEnabled(false);
+			blame.setEnabled(false);
 			compareWorkingTreeVersion.setEnabled(false);
+		}
 	}
 
 	private IAction createStandardAction(final ActionFactory af) {
@@ -382,7 +400,8 @@ public class CommitFileDiffViewer extends TableViewer {
 				.getActiveWorkbenchWindow();
 		File file = new File(filePath);
 		if (!file.exists()) {
-			String message = NLS.bind(UIText.CommitFileDiffViewer_FileDoesNotExist, filePath);
+			String message = NLS.bind(
+					UIText.CommitFileDiffViewer_FileDoesNotExist, filePath);
 			Activator.showError(message, null);
 		}
 		IWorkbenchPage page = window.getActivePage();
@@ -404,8 +423,8 @@ public class CommitFileDiffViewer extends TableViewer {
 						new NullProgressMonitor());
 			else {
 				String message = NLS.bind(
-						UIText.CommitFileDiffViewer_notContainedInCommit, d
-								.getPath(), d.getCommit().getId().getName());
+						UIText.CommitFileDiffViewer_notContainedInCommit,
+						d.getPath(), d.getCommit().getId().getName());
 				Activator.showError(message, null);
 			}
 		} catch (IOException e) {
