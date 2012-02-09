@@ -788,6 +788,8 @@ public class StagingView extends ViewPart {
 		if (selection.isEmpty())
 			return;
 		StagingEntry stagingEntry = (StagingEntry) selection.getFirstElement();
+		if (stagingEntry.isSubmodule())
+			return;
 		switch (stagingEntry.getState()) {
 		case ADDED:
 		case CHANGED:
@@ -818,13 +820,22 @@ public class StagingView extends ViewPart {
 				if (selection.isEmpty())
 					return;
 
-				menuMgr.add(new Action(
+				boolean submoduleSelected = false;
+				for (Object item : selection.toArray())
+					if (((StagingEntry) item).isSubmodule()) {
+						submoduleSelected = true;
+						break;
+					}
+
+				Action openWorkingTreeVersion = new Action(
 						UIText.CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel) {
-							@Override
-							public void run() {
-								openSelectionInEditor(tableViewer.getSelection());
-							}
-						});
+					@Override
+					public void run() {
+						openSelectionInEditor(tableViewer.getSelection());
+					}
+				};
+				openWorkingTreeVersion.setEnabled(!submoduleSelected);
+				menuMgr.add(openWorkingTreeVersion);
 
 				StagingEntry stagingEntry = (StagingEntry) selection.getFirstElement();
 				switch (stagingEntry.getState()) {
