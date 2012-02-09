@@ -77,6 +77,8 @@ public class GitCreatePatchWizard extends Wizard {
 
 	private RevCommit commit;
 
+	private IResource resource;
+
 	private Repository db;
 
 	private Collection<? extends IResource> resources;
@@ -84,6 +86,7 @@ public class GitCreatePatchWizard extends Wizard {
 	private LocationPage locationPage;
 
 	private OptionsPage optionsPage;
+
 
 	// The initial size of this wizard.
 	private final static int INITIAL_WIDTH = 300;
@@ -155,7 +158,7 @@ public class GitCreatePatchWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		final CreatePatchOperation operation = new CreatePatchOperation(db,
-				commit);
+				commit, resource);
 		operation.setHeaderFormat(optionsPage.getSelectedHeaderFormat());
 		operation.setContextLines(Integer.parseInt(optionsPage.contextLines.getText()));
 		operation.setPathFilter(createPathFilter(resources));

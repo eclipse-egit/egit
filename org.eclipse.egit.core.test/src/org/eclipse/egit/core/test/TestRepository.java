@@ -244,6 +244,21 @@ public class TestRepository {
 			throw new IOException(e.getMessage());
 		}
 	}
+	/**
+	 * Removes file from version control
+	 *
+	 * @param file
+	 * @throws IOException
+	 */
+	public void untrack(File file) throws IOException {
+		String repoPath = getRepoRelativePath(new Path(file.getPath())
+				.toString());
+		try {
+			new Git(repository).rm().addFilepattern(repoPath).call();
+		} catch (NoFilepatternException e) {
+			throw new IOException(e.getMessage());
+		}
+	}
 
 	/**
 	 * Creates a new branch and immediately checkout it.
