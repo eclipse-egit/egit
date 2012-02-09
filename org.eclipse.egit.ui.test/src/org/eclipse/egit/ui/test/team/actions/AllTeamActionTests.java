@@ -15,15 +15,15 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses( { BranchAndResetActionTest.class, //
+@SuiteClasses({ BranchAndResetActionTest.class, //
 		TagActionTest.class, //
 		CommitActionTest.class, //
 		PushActionTest.class, //
 		FetchAndMergeActionTest.class, //
 		DisconnectConnectTest.class, //
 		ShowInTest.class, //
-		CompareActionsTest.class
-})
+		CompareActionsTest.class, //
+		CreatePatchActionTest.class })
 public class AllTeamActionTests {
 	// nothing
 }
