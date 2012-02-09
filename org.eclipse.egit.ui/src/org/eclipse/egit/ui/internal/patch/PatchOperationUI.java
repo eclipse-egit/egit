@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Tomasz Zarna <Tomasz.Zarna@pl.ibm.com>
+ * Copyright (C) 2011, 2012 Tomasz Zarna <Tomasz.Zarna@pl.ibm.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.patch;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.op.CreatePatchOperation;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.history.GitCreatePatchWizard;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -30,6 +32,8 @@ public class PatchOperationUI {
 
 	private RevCommit commit;
 
+	private IResource resource;
+
 	private PatchOperationUI(IWorkbenchPart part, Repository repo) {
 		this.part = part;
 		this.repository = repo;
@@ -39,6 +43,11 @@ public class PatchOperationUI {
 			RevCommit commit) {
 		this(part, repo);
 		this.commit = commit;
+	}
+
+	private PatchOperationUI(IWorkbenchPart part, Repository repo, IResource resource) {
+		this(part, repo);
+		this.resource = resource;
 	}
 
 	/**
@@ -63,13 +72,21 @@ public class PatchOperationUI {
 	 *
 	 * @param part
 	 *            the part
-	 * @param repo
-	 *            the repository
+	 * @param resource
+	 *            the resource
 	 * @return the {@link PatchOperationUI}
 	 */
 	public static PatchOperationUI createPatch(IWorkbenchPart part,
-			Repository repo) {
-		return new PatchOperationUI(null, repo);
+			IResource resource) {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+		if (mapping == null) {
+			MessageDialog.openError(getShell(part),
+					UIText.RepositoryAction_errorFindingRepoTitle,
+					UIText.RepositoryAction_errorFindingRepo);
+			return null;
+		}
+
+		return new PatchOperationUI(null, mapping.getRepository(), resource);
 	}
 
 	/**
@@ -77,7 +94,7 @@ public class PatchOperationUI {
 	 */
 	public void start() {
 		if (commit != null) {
-			GitCreatePatchWizard.run(getShell(), commit, repository);
+			GitCreatePatchWizard.run(getShell(), commit, null /*TODO*/, repository);
 			return;
 		} else
 
@@ -87,7 +104,7 @@ public class PatchOperationUI {
 					UIText.GitCreatePatchAction_workingTreeClean);
 			return;
 		}
-		GitCreatePatchWizard.run(getShell(), null, repository);
+		GitCreatePatchWizard.run(getShell(), null, resource , repository);
 	}
 
 	private boolean isWorkingTreeClean() {
@@ -107,6 +124,10 @@ public class PatchOperationUI {
 	}
 
 	private Shell getShell() {
+		return getShell(part);
+	}
+
+	private static Shell getShell(IWorkbenchPart part) {
 		if (part != null)
 			return part.getSite().getShell();
 		return PlatformUI.getWorkbench().getDisplay().getActiveShell();
