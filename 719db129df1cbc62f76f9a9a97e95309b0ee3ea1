@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH///lc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-09-06T15:30:06Z",
+      "side": 1,
+      "message": "Please check for null. myBaseRef is null if I create a new branch on a commit in history view.In that case myBaseCommit is different from null.",
+      "revId": "719db129df1cbc62f76f9a9a97e95309b0ee3ea1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///lY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-09-06T15:30:06Z",
+      "side": 1,
+      "message": "whitespace error",
+      "revId": "719db129df1cbc62f76f9a9a97e95309b0ee3ea1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
