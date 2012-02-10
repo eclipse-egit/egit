@@ -16,6 +16,24 @@
       "revId": "3cc3a902f539d5b27b505d3fdd649110bf70dee5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///mQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-10T12:21:35Z",
+      "side": 1,
+      "message": "Reimplemented the same strategy, had to move some util methods into core.",
+      "parentUuid": "AABOAX//+js\u003d",
+      "revId": "3cc3a902f539d5b27b505d3fdd649110bf70dee5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
