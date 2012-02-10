@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOFX////c\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:39:24Z",
+      "side": 1,
+      "message": "1.3 is already closed, this change will rather go to 2.0",
+      "revId": "4256dec16517bf61a238e9742620ef2716b041bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX////Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/SimplePushSpecPage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:39:24Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "4256dec16517bf61a238e9742620ef2716b041bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX////U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:39:24Z",
+      "side": 1,
+      "message": "please remove this, irrelevant code formatting change",
+      "revId": "4256dec16517bf61a238e9742620ef2716b041bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX////Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:39:24Z",
+      "side": 1,
+      "message": "please remove this, irrelevant code formatting change",
+      "revId": "4256dec16517bf61a238e9742620ef2716b041bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX////M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:39:24Z",
+      "side": 1,
+      "message": "please remove this, irrelevant code formatting change",
+      "revId": "4256dec16517bf61a238e9742620ef2716b041bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX////I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:39:24Z",
+      "side": 1,
+      "message": "please remove this, irrelevant code formatting change",
+      "revId": "4256dec16517bf61a238e9742620ef2716b041bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX////E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:39:24Z",
+      "side": 1,
+      "message": "please remove this, irrelevant code formatting change",
+      "revId": "4256dec16517bf61a238e9742620ef2716b041bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX////A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:39:24Z",
+      "side": 1,
+      "message": "please remove this, irrelevant code formatting change",
+      "revId": "4256dec16517bf61a238e9742620ef2716b041bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX///+8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:39:24Z",
+      "side": 1,
+      "message": "please remove this, irrelevant code formatting change",
+      "revId": "4256dec16517bf61a238e9742620ef2716b041bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX///+4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:39:24Z",
+      "side": 1,
+      "message": "please remove this, irrelevant code formatting change",
+      "revId": "4256dec16517bf61a238e9742620ef2716b041bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX///+0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/SimplePushRefWizard.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:39:24Z",
+      "side": 1,
+      "message": "You can try use here AbbreviatedObjectId.fromObjectId instead of hadrcoding abbreviation length",
+      "revId": "4256dec16517bf61a238e9742620ef2716b041bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
