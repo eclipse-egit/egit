@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOFX////k\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/common/LocalRepositoryTestCase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:23:02Z",
+      "side": 1,
+      "message": "not relevant code formatting change",
+      "revId": "70bc768a9ce8eaa81351a4ea86790d56e5d543fc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
