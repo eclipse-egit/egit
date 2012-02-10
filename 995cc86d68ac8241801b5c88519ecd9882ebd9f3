@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn///M0\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-05-09T09:24:40Z",
+      "side": 1,
+      "message": "Currently i register the TaskActivationListener in the start method of this bundle, so without autostart, the listener wouldn\u0027t be registered:\n\nmanager \u003d TasksUi.getTaskActivityManager();\nlistener \u003d new TaskActivationListener();\nmanager.addActivationListener(listener);\n\nI\u0027ll check if there\u0027s an extension point in Mylyn, which we can use.",
+      "parentUuid": "AABOIn///Nc\u003d",
+      "revId": "995cc86d68ac8241801b5c88519ecd9882ebd9f3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn///NY\u003d",
         "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/AutoStart.java",
         "patchSetId": 3
