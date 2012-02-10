@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODH///gA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/compare/LocalNonWorkspaceTypedElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2011-12-19T15:23:24Z",
+      "side": 1,
+      "message": "I wonder if this is enough. E.G. method setContent also modifies object state and is not synchronized.",
+      "revId": "2c92ae2ffa762d41f81d20e5823932dbe1c435c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
