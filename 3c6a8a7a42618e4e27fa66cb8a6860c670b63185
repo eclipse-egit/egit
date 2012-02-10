@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX//+MU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "IMHO you should also add yourself to contributors list",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+MQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "style-nit: don\u0027t use curly brackets around single line blocks",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+ME\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "remove this empty line",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+MM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "is there any purpose to use javadosc inside private method body ?",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+MI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "is there any purpose to use javadosc inside private method body ?",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+MA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "I would consider extracting this class into standalone file",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+L4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "is there any reasons why you didn\u0027t mark this class as a private ?",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Lw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "sytle-nit: we prefer to have a space before and after \u0027\u003d\u0027 character",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Lo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "why didn\u0027t you use here a foreach loop ?",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Ls\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "sytle-nit: don\u0027t use curly brackets around single line blocks",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+L0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "is there any reasons why you didn\u0027t mark this class as a private ?",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Lk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "style-nit: don\u0027t use curly brackets around single line blocks",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+Lg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "style-nit: don\u0027t use curly brackets around single line blocks",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+LU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "style-nit: add space after equals character",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+LQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-21T14:42:18Z",
+      "side": 1,
+      "message": "style-nit: don\u0027t use curly brackets around single line blocks",
+      "revId": "3c6a8a7a42618e4e27fa66cb8a6860c670b63185",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
