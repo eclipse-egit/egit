@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOC3///xE\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-30T22:21:17Z",
+      "side": 1,
+      "message": "Start the commit message header in uppercase",
+      "revId": "1ccf42352a9fe4472c05876e5d9c9f1df93834af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///xI\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-30T22:21:17Z",
+      "side": 1,
+      "message": "superfluous empty line",
+      "revId": "1ccf42352a9fe4472c05876e5d9c9f1df93834af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///xA\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-30T22:21:17Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "1ccf42352a9fe4472c05876e5d9c9f1df93834af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///w8\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/UIProjectUtilsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-30T22:21:17Z",
+      "side": 1,
+      "message": "lots of trailing whitespace in this patch",
+      "revId": "1ccf42352a9fe4472c05876e5d9c9f1df93834af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
