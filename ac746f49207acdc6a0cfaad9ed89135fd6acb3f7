@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX//+NY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitMessageViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-21T00:15:33Z",
+      "side": 1,
+      "message": "you should either log this or rethrow an exception (if we can\u0027t get branches we should maybe let the user know about this)",
+      "revId": "ac746f49207acdc6a0cfaad9ed89135fd6acb3f7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
