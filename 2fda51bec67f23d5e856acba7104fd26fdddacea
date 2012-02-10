@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3H///xw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5
+      },
+      "writtenOn": "2011-03-02T16:53:43Z",
+      "side": 1,
+      "message": "I think this code should be in JGit. What you suggest is a \"git checkout -- \u003cpath\u003e\", right? That\u0027s pure git logic and we should try to  keep such things in JGit. A good place for that would be in  CheckoutCommand. If we would add a method \"addPath(String path)\" there then we could move this code to the right location. Then other user\u0027s of the JGit API could make use of this code.\n\nSorry, I know I am late with this comment - and I was about to let commit this change and refactor it directly afterwards. But: officially copying code from EGit to JGit is because of the licenses not so easy.\nSo better put the code right now.",
+      "revId": "2fda51bec67f23d5e856acba7104fd26fdddacea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
