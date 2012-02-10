@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODH///zA\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-12-14T22:46:52Z",
+      "side": 1,
+      "message": "style nits: \n- start with an uppercase letter \n- use a shorter title (put the rest into the body of the commit message)\n- avoid trailing whitespace\n- title should rather explain what this change does instead of describing the problem symptom, e.g. Fix very slow typing ...",
+      "revId": "5b7d9be67a5db93ab770a7d89e35147978c2b83e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
