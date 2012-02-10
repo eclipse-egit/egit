@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOB3///YA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/CreateBranchCommand.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-02T17:08:20Z",
+      "side": 1,
+      "message": "I think you should not resolve the commit since then the user doesn\u0027t see anymore that he is basing the new branch on a certain remote tracking branch, also setup of tracking relationship (used by pull) can\u0027t work with that. So instead use the remote tracking branch\u0027s ref",
+      "revId": "52fe49cdb01e38bee4c101dbf41bd55365730d28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
