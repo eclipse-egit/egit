@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOAn///EQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/CompareCoreUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 74
+      },
+      "writtenOn": "2011-08-17T10:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOAn///kM\u003d",
+      "revId": "c304000620328cd788dbd1f0fd53f23dd4b0361c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOAn///j4\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
         "patchSetId": 2
