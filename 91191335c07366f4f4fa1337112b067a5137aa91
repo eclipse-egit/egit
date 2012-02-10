@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABODX//+KU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/LocationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-24T23:12:13Z",
+      "side": 1,
+      "message": "IMHO you should preserve authorship for previous company ... but I could be wrong ...",
+      "revId": "91191335c07366f4f4fa1337112b067a5137aa91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+KQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/LocationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-24T23:12:13Z",
+      "side": 1,
+      "message": "IMHO you should also mention that this was extracted from GitCreatePatchWizard",
+      "revId": "91191335c07366f4f4fa1337112b067a5137aa91",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
