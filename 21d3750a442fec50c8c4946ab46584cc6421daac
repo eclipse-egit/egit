@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOEH////8\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCacheTreeTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-28T09:23:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODn///ss\u003d",
+      "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODn///so\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2012-01-26T22:10:01Z",
       "side": 1,
       "message": "why does the assertion change ?",
+      "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOEH////U\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-28T09:23:30Z",
+      "side": 1,
+      "message": "previously only \"\u003cworkin tree\u003e\" node was show, now also the \"\u003cstaged changes\u003e\" node will appear. this\u0027ll allow stage changes using drag \u0026 drop",
+      "parentUuid": "AABODn///so\u003d",
       "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOEH////4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitObjectMapping.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-28T09:23:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODn///sg\u003d",
+      "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODn///sc\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitObjectMapping.java",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2012-01-26T22:10:01Z",
       "side": 1,
       "message": "style nit: remove unnecessary blank line",
+      "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOEH////0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitObjectMapping.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-28T09:23:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODn///sc\u003d",
       "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AABOEH////w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/HasProjects.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-28T09:23:30Z",
+      "side": 1,
+      "message": "Done, changed to GitModelWithProjects",
+      "parentUuid": "AABODn///sY\u003d",
+      "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODn///sU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2012-01-26T22:10:01Z",
       "side": 1,
       "message": "typo: s/retrive/retrieve/",
+      "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOEH////s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 10
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-01-28T09:23:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABODn///sU\u003d",
       "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
