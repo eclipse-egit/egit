@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL4H///3w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitFileRevisionReference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-06T21:25:22Z",
+      "side": 1,
+      "message": "Copyright statement is missing",
+      "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///3M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitFileRevisionReference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-06T21:25:22Z",
+      "side": 1,
+      "message": "this should rather be : initial implementation\n\nsame issue in all other new files",
+      "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///2E\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-06T21:25:22Z",
+      "side": 1,
+      "message": "I don\u0027t get why any EGit action label has to start with \"EGit: \" this looks very weird",
+      "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///3s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareSelectedWithHeadAction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-06T21:25:22Z",
+      "side": 1,
+      "message": "missing copyright, see other sources for an example",
+      "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///3g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareSelectedWithHeadAction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-06T21:25:22Z",
+      "side": 1,
+      "message": "this should rather be : initial implementation",
+      "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///3o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareSelectedWithParentAction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-06T21:25:22Z",
+      "side": 1,
+      "message": "missing copyright",
+      "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///3k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareSelectedWithWorkspaceAction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-06T21:25:22Z",
+      "side": 1,
+      "message": "missing copyright",
+      "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///3c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/OpenFileAtHeadRevisionAction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-06T21:25:22Z",
+      "side": 1,
+      "message": "missing copyright",
+      "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///3Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/OpenFileAtRevisionAction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-06T21:25:22Z",
+      "side": 1,
+      "message": "missing copyright",
+      "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///3U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/OpenFileAtRevisionAction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-06T21:25:22Z",
+      "side": 1,
+      "message": "typo s/it\u0027s/its/",
+      "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL4H///3Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/OpenWorkspaceVersionAction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-06T21:25:22Z",
+      "side": 1,
+      "message": "missing copyright",
+      "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
