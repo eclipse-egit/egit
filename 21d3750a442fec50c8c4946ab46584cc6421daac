@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABODn///ss\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCacheTreeTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-26T22:10:01Z",
+      "side": 1,
+      "message": "typo in method name s/cateCacheTree/createCacheTree/",
+      "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///so\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-26T22:10:01Z",
+      "side": 1,
+      "message": "why does the assertion change ?",
+      "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABODn///sg\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitObjectMapping.java",
         "patchSetId": 10
@@ -13,6 +47,57 @@
       "writtenOn": "2012-01-26T22:10:01Z",
       "side": 1,
       "message": "style nit: remove unnecessary blank line",
+      "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///sc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitObjectMapping.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-26T22:10:01Z",
+      "side": 1,
+      "message": "style nit: remove unnecessary blank line",
+      "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///sY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/HasProjects.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-26T22:10:01Z",
+      "side": 1,
+      "message": "this is a weird interface name",
+      "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODn///sU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 10
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-01-26T22:10:01Z",
+      "side": 1,
+      "message": "typo: s/retrive/retrieve/",
       "revId": "21d3750a442fec50c8c4946ab46584cc6421daac",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
