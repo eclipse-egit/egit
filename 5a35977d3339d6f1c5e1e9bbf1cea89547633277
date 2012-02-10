@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBX///CE\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelBlobTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-29T22:39:28Z",
+      "side": 1,
+      "message": "typo s/relays/relies/",
+      "revId": "5a35977d3339d6f1c5e1e9bbf1cea89547633277",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///CA\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelBlobTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-29T22:39:28Z",
+      "side": 1,
+      "message": "typo s/relays/relies/",
+      "revId": "5a35977d3339d6f1c5e1e9bbf1cea89547633277",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///B8\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCacheFileTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-29T22:39:28Z",
+      "side": 1,
+      "message": "typo s/relays/relies/",
+      "revId": "5a35977d3339d6f1c5e1e9bbf1cea89547633277",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///B4\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCacheFileTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-29T22:39:28Z",
+      "side": 1,
+      "message": "typo s/relays/relies/",
+      "revId": "5a35977d3339d6f1c5e1e9bbf1cea89547633277",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX///B0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelCache.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-29T22:39:28Z",
+      "side": 1,
+      "message": "nit: trailing whitespace, more below",
+      "revId": "5a35977d3339d6f1c5e1e9bbf1cea89547633277",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
