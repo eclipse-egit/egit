@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///1Y\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-02-12T07:20:11Z",
+      "side": 0,
+      "message": "Please fix \u0027TAB vs space\u0027 changes.",
+      "revId": "09467bcf12c3e6fbf5b6e9b6945c59c2ad48ec88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
