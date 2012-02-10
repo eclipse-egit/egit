@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "AAAL3n///vU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/GitFileRevisionReference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-03-17T09:11:25Z",
+      "side": 1,
+      "message": "drop this mailto please",
+      "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL4H///2E\u003d",
         "filename": "org.eclipse.egit.ui/plugin.properties",
         "patchSetId": 4
@@ -47,6 +64,23 @@
       "writtenOn": "2011-04-06T21:25:22Z",
       "side": 1,
       "message": "I don\u0027t get why any EGit action label has to start with \"EGit: \" this looks very weird",
+      "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3n///vE\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-03-17T09:11:25Z",
+      "side": 1,
+      "message": "may be a nitpick, but anyway - this line actually was not changed",
       "revId": "71d0ad16035d6bcedb22146cecb971ee1080bb8f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
