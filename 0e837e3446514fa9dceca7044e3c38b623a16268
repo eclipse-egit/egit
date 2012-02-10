@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "AABOBH///dg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2011-09-07T22:16:04Z",
+      "side": 1,
+      "message": "Because the IOException would be thrown by repository.getRef(sourceRef). So when there is an error, the operation would have the current behaviour.",
+      "parentUuid": "AABOBH///fQ\u003d",
+      "revId": "0e837e3446514fa9dceca7044e3c38b623a16268",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBH///fU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
         "patchSetId": 3
