@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAABX///+M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-01T01:07:16Z",
+      "side": 1,
+      "message": "Don\u0027t you mean:\n\n  \u0026\u0026 (delta.getFlags() \u0026 IResourceDelta.OPEN) !\u003d 0\n\nhere?  If I understand the Javadoc of getFlags() correctly we would want to verify the OPEN bit was set.",
+      "revId": "da294165aa8e635f56cf379e3e064ca9318f09be",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX///+I\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-01T01:07:16Z",
+      "side": 1,
+      "message": "Given how deeply nested this is, I wonder if the better way to open the method is to just say:\n\n  if (delta \u003d\u003d null\n   || delta.getKind !\u003d IResourceDelta.CHANGED\n   || (delta.getFlags() \u0026 IResourceDelta.OPEN) \u003d\u003d 0)\n    return;\n\nas it removes two levels of indentation.  Though the negated logic may seem strange to some readers.",
+      "revId": "da294165aa8e635f56cf379e3e064ca9318f09be",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAABX///+E\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2009-12-01T01:07:16Z",
+      "side": 1,
+      "message": "These should go through Activator.logError so they are recorded inside of the workbench\u0027s Error Log view.",
+      "revId": "da294165aa8e635f56cf379e3e064ca9318f09be",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
