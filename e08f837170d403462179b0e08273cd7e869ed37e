@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOFX///9I\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-02-09T12:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOFX////8\u003d",
+      "revId": "e08f837170d403462179b0e08273cd7e869ed37e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOFX////4\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-02-07T19:17:43Z",
       "side": 1,
       "message": "is this code format change really neccessary ?",
+      "revId": "e08f837170d403462179b0e08273cd7e869ed37e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX///9U\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-02-09T12:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOFX////4\u003d",
       "revId": "e08f837170d403462179b0e08273cd7e869ed37e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOFX///9Q\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-02-09T12:51:40Z",
+      "side": 1,
+      "message": "The thing is that I didn\u0027t want to make the method public, but I need to call in the test. Any clue how to solve this? Reflection is one way...",
+      "parentUuid": "AABOFX////w\u003d",
+      "revId": "e08f837170d403462179b0e08273cd7e869ed37e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOFX////0\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AABOFX///9M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-02-09T12:51:40Z",
+      "side": 1,
+      "message": "The thing is that I didn\u0027t want to make the method public, but I need to call in the test. Any clue how to solve this? Reflection is one way...",
+      "parentUuid": "AABOFX////0\u003d",
+      "revId": "e08f837170d403462179b0e08273cd7e869ed37e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOFX////s\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/patch/PatchOperationUI.java",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2012-02-07T19:17:43Z",
       "side": 1,
       "message": "what this TODO really mean ?",
+      "revId": "e08f837170d403462179b0e08273cd7e869ed37e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX///9E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/patch/PatchOperationUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-02-09T12:51:40Z",
+      "side": 1,
+      "message": "I need to figure out what resource has to be used when creating a patch for a commit. Null is fine if you don\u0027t want to generate \"workspace patches\" from the History view.",
+      "parentUuid": "AABOFX////s\u003d",
       "revId": "e08f837170d403462179b0e08273cd7e869ed37e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
