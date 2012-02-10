@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIX///xY\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-04-28T09:35:33Z",
+      "side": 1,
+      "message": "spelling: pastes",
+      "revId": "a8f8d334685f309992d06d10243e8bd10b75fbfb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIX///xU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-04-28T09:35:33Z",
+      "side": 1,
+      "message": "Currently the action does nothing when more than one file is selected. Either disable the action or do anything, e.g. paste all file names separated by comma.",
+      "revId": "a8f8d334685f309992d06d10243e8bd10b75fbfb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIX///xQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-04-28T09:35:33Z",
+      "side": 1,
+      "message": "spelling: \"Commit Message\" as in the dialog",
+      "revId": "a8f8d334685f309992d06d10243e8bd10b75fbfb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
