@@ -16,6 +16,24 @@
       "revId": "f95c105980fc8dc1c356665bb796f256d62bf1ca",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABODX//+DU\u003d",
+        "filename": "org.eclipse.egit.core.test/.settings/org.eclipse.jdt.ui.prefs",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-01-23T10:30:18Z",
+      "side": 1,
+      "message": "It\u0027s a setting that was not available when this file was originally created, Eclipse adds it when it\u0027s not already there. false is the default value, and means \"do nothing\" (for all the cleanup actions I think).",
+      "parentUuid": "AABODX//+Dc\u003d",
+      "revId": "f95c105980fc8dc1c356665bb796f256d62bf1ca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
