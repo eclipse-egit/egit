@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAX//+js\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-07-28T08:22:11Z",
+      "side": 1,
+      "message": "This field was introduced in commit 0c90acfe in order to store the encoding of the currently processed file for use inside the DiffFormatter.\n\nI admit that there is no test for files with different encoding (or even no test at all), but I think that now it does not work anymore. Could you please check this?",
+      "revId": "3cc3a902f539d5b27b505d3fdd649110bf70dee5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
