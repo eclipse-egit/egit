@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn///jw\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/CreatePatchOperationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-10T21:54:55Z",
+      "side": 1,
+      "message": "style nit: unnecessary blank line",
+      "revId": "c304000620328cd788dbd1f0fd53f23dd4b0361c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///kQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/CompareCoreUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-10T21:54:55Z",
+      "side": 1,
+      "message": "you moved some code to this class, so you should also put the copyright of the original authors here\n\nlooks weird that you use different copyright style in different files of the same patch",
+      "revId": "c304000620328cd788dbd1f0fd53f23dd4b0361c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///kM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/CompareCoreUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-10T21:54:55Z",
+      "side": 1,
+      "message": "style nit: unnecessary blank line",
+      "revId": "c304000620328cd788dbd1f0fd53f23dd4b0361c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///j4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-10T21:54:55Z",
+      "side": 1,
+      "message": "add the copyright statements of the authors of the code you moved from other classes to this one",
+      "revId": "c304000620328cd788dbd1f0fd53f23dd4b0361c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///kU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-10T21:54:55Z",
+      "side": 1,
+      "message": "typo: s/contents/content/",
+      "revId": "c304000620328cd788dbd1f0fd53f23dd4b0361c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///kI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-10T21:54:55Z",
+      "side": 1,
+      "message": "this formatting change looks unnecessary",
+      "revId": "c304000620328cd788dbd1f0fd53f23dd4b0361c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOAn///kE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-10T21:54:55Z",
+      "side": 1,
+      "message": "this formatting change looks unnecessary",
+      "revId": "c304000620328cd788dbd1f0fd53f23dd4b0361c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
