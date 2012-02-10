@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOAn//+hA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/PasteCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-08-24T08:54:34Z",
+      "side": 1,
+      "message": "no need for this anymore as http://egit.eclipse.org/r/#change,4058 has already been merged. Sorry, I wasn\u0027t aware that you are working on this.",
+      "revId": "15b1f4ed31ef8119528825020a87ddb19df113e5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
