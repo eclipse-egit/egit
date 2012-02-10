@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///l8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ReplaceFromHEADOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-02-16T23:45:45Z",
+      "side": 1,
+      "message": "this line looks a bit wide, do you use the proper formatting settings ?",
+      "revId": "b06f73c0b6af036479ba084d77bf4c4203860e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///mA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ReplaceFromHEADOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-02-16T23:45:45Z",
+      "side": 1,
+      "message": "style nit: one before the comment is sufficient",
+      "revId": "b06f73c0b6af036479ba084d77bf4c4203860e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///mI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ReplaceFromHEADOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-02-16T23:45:45Z",
+      "side": 1,
+      "message": "typo: s/Let\u0027 //",
+      "revId": "b06f73c0b6af036479ba084d77bf4c4203860e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///mE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ReplaceFromHEADOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-02-16T23:45:45Z",
+      "side": 1,
+      "message": "string should be externalized",
+      "revId": "b06f73c0b6af036479ba084d77bf4c4203860e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///l4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ReplaceFromIndexOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-02-16T23:45:45Z",
+      "side": 1,
+      "message": "this is not precise, you are replacing the changes in the working tree with the staged file contents",
+      "revId": "b06f73c0b6af036479ba084d77bf4c4203860e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///l0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ReplaceFromIndexOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-02-16T23:45:45Z",
+      "side": 1,
+      "message": "class should be named ReplaceWithIndexOperation",
+      "revId": "b06f73c0b6af036479ba084d77bf4c4203860e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///lw\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-02-16T23:45:45Z",
+      "side": 1,
+      "message": "improve key name and value:\n\nReplaceWithHead_label\u003dHEAD revision\n\n- this yields the menu entry \"Replace with \u003e HEAD revision\"\n- this looks better than \"Replace with \u003e From HEAD revision\"",
+      "revId": "b06f73c0b6af036479ba084d77bf4c4203860e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///ls\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-02-16T23:45:45Z",
+      "side": 1,
+      "message": "don\u0027t unnecessarily touch whitespace (also more occurrences below)\n\nyou should use the formatter settings coming with the project",
+      "revId": "b06f73c0b6af036479ba084d77bf4c4203860e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///lg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CheckoutResourcesFromHEADAction.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-02-16T23:45:45Z",
+      "side": 1,
+      "message": "use camel case for class names",
+      "revId": "b06f73c0b6af036479ba084d77bf4c4203860e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
