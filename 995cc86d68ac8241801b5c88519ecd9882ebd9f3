@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///Nc\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2011-05-08T23:56:06Z",
+      "side": 1,
+      "message": "why do we need this at all? Autostarting bundles is bad...",
+      "revId": "995cc86d68ac8241801b5c88519ecd9882ebd9f3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///NY\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/AutoStart.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2
+      },
+      "writtenOn": "2011-05-08T23:56:06Z",
+      "side": 1,
+      "message": "Why do we need this?",
+      "revId": "995cc86d68ac8241801b5c88519ecd9882ebd9f3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
