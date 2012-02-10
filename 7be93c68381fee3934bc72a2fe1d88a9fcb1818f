@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///+A\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-07T07:13:10Z",
+      "side": 1,
+      "message": "Is this supposed to fix bug 326638? If yes, please add the bug number here.",
+      "revId": "7be93c68381fee3934bc72a2fe1d88a9fcb1818f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///+Q\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ReplaceFromHEADOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-07T07:13:10Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we use 2011 here?",
+      "revId": "7be93c68381fee3934bc72a2fe1d88a9fcb1818f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///+M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ReplaceFromIndexOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-07T07:13:10Z",
+      "side": 1,
+      "message": "2011",
+      "revId": "7be93c68381fee3934bc72a2fe1d88a9fcb1818f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///+I\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-07T07:13:10Z",
+      "side": 1,
+      "message": "Please use proper formatting here (spaces instead of tabs)",
+      "revId": "7be93c68381fee3934bc72a2fe1d88a9fcb1818f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///+E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CheckoutResourcesFromHEADAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2011-02-07T07:13:10Z",
+      "side": 1,
+      "message": "2011",
+      "revId": "7be93c68381fee3934bc72a2fe1d88a9fcb1818f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
