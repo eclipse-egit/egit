@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBX///8Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-09-09T08:10:01Z",
+      "side": 1,
+      "message": "The constant has changed now in JGit (Change-Id: Iea944e11e80134fbafc4c47383457d5ed11a4164).",
+      "revId": "cee8cbf87b5940ca511bbc9dc385a5995d71b8e6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
