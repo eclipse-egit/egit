@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL4n///7M\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-04-22T23:16:57Z",
+      "side": 1,
+      "message": "The commit message should always have a header explaining what this change is all about, e.g.:\n\n [repoView] Enable pasting remote git URLs\n\n Bug: 343309\n Change-Id: I77223331569cdb4f50e9a226cdc1faa286247c98\n Signed-off-by: Nitin Dahyabhai \u003cnitind@us.ibm.com\u003e",
+      "revId": "9225e5c7086c69f387076c047b0b02edae77d93e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
