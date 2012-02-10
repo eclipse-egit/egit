@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL3H///2Q\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-01T16:01:49Z",
+      "side": 1,
+      "message": "Use NLS.bind() to bind arguments :\n\n Can\u0027t write to file {0}",
+      "revId": "ac4a9a2b3654180d5af014a8a68b5cbe941d89ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///2M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-01T16:01:49Z",
+      "side": 1,
+      "message": "Use NLS.bind() to bind arguments :\n\n Can\u0027t clear indexed version of file {0}",
+      "revId": "ac4a9a2b3654180d5af014a8a68b5cbe941d89ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///2E\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-01T16:01:49Z",
+      "side": 1,
+      "message": "make case consistent with other menus:\n\ns/HEAD revision/HEAD Revision/",
+      "revId": "ac4a9a2b3654180d5af014a8a68b5cbe941d89ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL3H///2I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesActionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-03-01T16:01:49Z",
+      "side": 1,
+      "message": "I think if this should never happen we should throw an exception",
+      "revId": "ac4a9a2b3654180d5af014a8a68b5cbe941d89ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
