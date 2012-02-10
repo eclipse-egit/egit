@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAL23///mM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ReplaceFromHEADOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-02-16T23:45:45Z",
+      "side": 1,
+      "message": "I would prefer if this class would be named \"ReplaceWithHeadOperation\" as that\u0027s what this operation is supposed to do",
+      "revId": "b06f73c0b6af036479ba084d77bf4c4203860e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL23///l8\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ReplaceFromHEADOperation.java",
         "patchSetId": 3
@@ -132,6 +149,23 @@
       "writtenOn": "2011-02-16T23:45:45Z",
       "side": 1,
       "message": "don\u0027t unnecessarily touch whitespace (also more occurrences below)\n\nyou should use the formatter settings coming with the project",
+      "revId": "b06f73c0b6af036479ba084d77bf4c4203860e7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///lk\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-02-16T23:45:45Z",
+      "side": 1,
+      "message": "improve id to \n\"...ReplaceResourcesWithHeadAction\"",
       "revId": "b06f73c0b6af036479ba084d77bf4c4203860e7f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
