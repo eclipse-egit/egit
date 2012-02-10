@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBH///fM\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-07T21:24:14Z",
+      "side": 1,
+      "message": "style nit:   s/Create branch dialog/\"Create Branch\" dialog/",
+      "revId": "0e837e3446514fa9dceca7044e3c38b623a16268",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///fI\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-07T21:24:14Z",
+      "side": 1,
+      "message": "s/\"Switch\" to/\"Switch to\"/",
+      "revId": "0e837e3446514fa9dceca7044e3c38b623a16268",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///fQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SwitchToMenu.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-07T21:24:14Z",
+      "side": 1,
+      "message": "I would expect different error handling. Why do you expect starting BranchOperationUI again would work here if it failed earlier ?",
+      "revId": "0e837e3446514fa9dceca7044e3c38b623a16268",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBH///fU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-09-07T21:24:14Z",
+      "side": 1,
+      "message": "style nit: unmotivated whitespace change in an unrelated class",
+      "revId": "0e837e3446514fa9dceca7044e3c38b623a16268",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
