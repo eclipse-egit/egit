@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOEn///9U\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-02-02T10:44:28Z",
+      "side": 1,
+      "message": "I don\u0027t think we actually need to compile all the patterns in front",
+      "revId": "f36f8aefb5760cc9a233d5dc7c479aa1561d0cb2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOEn///9Q\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-02-02T10:44:28Z",
+      "side": 1,
+      "message": "The patterns won\u0027t work for additions and deletions ie /dev/null !",
+      "revId": "f36f8aefb5760cc9a233d5dc7c479aa1561d0cb2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOE3////4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-02-06T15:17:15Z",
+      "side": 1,
+      "message": "Not true. They work fine. See updated tests in the latest patch set.",
+      "parentUuid": "AABOEn///9Q\u003d",
+      "revId": "f36f8aefb5760cc9a233d5dc7c479aa1561d0cb2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
