@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBX///0Q\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2011-09-12T14:48:12Z",
+      "side": 1,
+      "message": "Please change the commit message to  the new name of the constant.",
+      "revId": "c07b47d3a75a8827dfa520ecaa4e643a5aae2add",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
