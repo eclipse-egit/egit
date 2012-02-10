@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOFX////8\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:17:43Z",
+      "side": 1,
+      "message": "style-nit: tailing white space\n\ncould you please more elaborate what do you mean by \"workspace patches\" in commit body ?",
+      "revId": "e08f837170d403462179b0e08273cd7e869ed37e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX////4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:17:43Z",
+      "side": 1,
+      "message": "is this code format change really neccessary ?",
+      "revId": "e08f837170d403462179b0e08273cd7e869ed37e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX////w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:17:43Z",
+      "side": 1,
+      "message": "update javadoc",
+      "revId": "e08f837170d403462179b0e08273cd7e869ed37e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX////0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/CreatePatchOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:17:43Z",
+      "side": 1,
+      "message": "update javadoc",
+      "revId": "e08f837170d403462179b0e08273cd7e869ed37e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX////s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/patch/PatchOperationUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-07T19:17:43Z",
+      "side": 1,
+      "message": "what this TODO really mean ?",
+      "revId": "e08f837170d403462179b0e08273cd7e869ed37e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
