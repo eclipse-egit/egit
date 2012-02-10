@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL23///1A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareSelectedWithHeadAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-02-12T13:34:22Z",
+      "side": 1,
+      "message": "Inconsistent use of \u0027final\u0027 keyword  inside method.",
+      "revId": "9fed6fb90f66a0dffbfc21dbf8d8dadb4ae56cca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///04\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareSelectedWithHeadAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-02-12T13:34:22Z",
+      "side": 1,
+      "message": "Why not move this down, inside try block...",
+      "revId": "9fed6fb90f66a0dffbfc21dbf8d8dadb4ae56cca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///00\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareSelectedWithHeadAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-02-12T13:34:22Z",
+      "side": 1,
+      "message": "... and these two lines up, inside try?",
+      "revId": "9fed6fb90f66a0dffbfc21dbf8d8dadb4ae56cca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL23///08\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareSelectedWithHeadAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2011-02-12T13:34:22Z",
+      "side": 1,
+      "message": "return statement as a last statement in void method?",
+      "revId": "9fed6fb90f66a0dffbfc21dbf8d8dadb4ae56cca",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
