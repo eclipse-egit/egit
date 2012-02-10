@@ -215,7 +215,6 @@
          </action>
          <action
                class="org.eclipse.egit.ui.internal.actions.CreatePatchAction"
-               enablesFor="1"
                id="org.eclipse.egit.ui.internal.actions.CreatePatchAction"
                label="%CreatePatchAction.label"
                menubarPath="team.main/group6"

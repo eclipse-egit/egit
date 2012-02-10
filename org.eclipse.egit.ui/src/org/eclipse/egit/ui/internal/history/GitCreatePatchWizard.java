@@ -9,6 +9,7 @@
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
  *    Daniel Megert <daniel_megert@ch.ibm.com> - Create Patch... dialog should not set file location - http://bugs.eclipse.org/361405
+ *    Tomasz Zarna <Tomasz.Zarna@pl.ibm.com> - bug 370332
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
@@ -18,13 +19,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.CreatePatchOperation;
 import org.eclipse.egit.core.op.CreatePatchOperation.DiffHeaderFormat;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
@@ -46,6 +52,9 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -73,6 +82,8 @@ public class GitCreatePatchWizard extends Wizard {
 
 	private Repository db;
 
+	private Collection<? extends IResource> resources;
+
 	private LocationPage locationPage;
 
 	private OptionsPage optionsPage;
@@ -87,11 +98,12 @@ public class GitCreatePatchWizard extends Wizard {
 	 * @param shell
 	 * @param commit
 	 * @param db
+	 * @param resources
 	 */
 	public static void run(Shell shell, final RevCommit commit,
-			Repository db) {
+			Repository db, Collection<? extends IResource> resources) {
 		final String title = UIText.GitCreatePatchWizard_CreatePatchTitle;
-		final GitCreatePatchWizard wizard = new GitCreatePatchWizard(commit, db);
+		final GitCreatePatchWizard wizard = new GitCreatePatchWizard(commit, db, resources);
 		wizard.setWindowTitle(title);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.setMinimumPageSize(INITIAL_WIDTH, INITIAL_HEIGHT);
@@ -105,10 +117,12 @@ public class GitCreatePatchWizard extends Wizard {
 	 *
 	 * @param commit
 	 * @param db
+	 * @param resources
 	 */
-	public GitCreatePatchWizard(RevCommit commit, Repository db) {
+	public GitCreatePatchWizard(RevCommit commit, Repository db, Collection<? extends IResource> resources) {
 		this.commit = commit;
 		this.db = db;
+		this.resources = resources;
 
 		setDialogSettings(getOrCreateSection(Activator.getDefault().getDialogSettings(), "GitCreatePatchWizard")); //$NON-NLS-1$
 	}
@@ -147,6 +161,7 @@ public class GitCreatePatchWizard extends Wizard {
 				commit);
 		operation.setHeaderFormat(optionsPage.getSelectedHeaderFormat());
 		operation.setContextLines(Integer.parseInt(optionsPage.contextLines.getText()));
+		operation.setPathFilter(createPathFilter(resources));
 
 		final boolean isFile = locationPage.fsRadio.getSelection();
 		final String fileName = locationPage.fsPathText.getText();
@@ -159,11 +174,10 @@ public class GitCreatePatchWizard extends Wizard {
 						operation.execute(monitor);
 
 						String content = operation.getPatchContent();
-						if (isFile) {
+						if (isFile)
 							writeToFile(fileName, content);
-						} else {
+						else
 							copyToClipboard(content);
-						}
 					} catch (IOException e) {
 						throw new InvocationTargetException(e);
 					} catch (CoreException e) {
@@ -196,12 +210,28 @@ public class GitCreatePatchWizard extends Wizard {
 		});
 	}
 
+	private TreeFilter createPathFilter(final Collection<? extends IResource> rs) {
+		if (rs == null || rs.isEmpty())
+			return null;
+		final List<PathFilter> filters = new ArrayList<PathFilter>();
+		for (IResource r : rs) {
+			RepositoryMapping rm = RepositoryMapping.getMapping(r);
+			String repoRelativePath = rm.getRepoRelativePath(r);
+			if (repoRelativePath != null)
+				filters.add(PathFilter.create(repoRelativePath));
+		}
+		if (filters.size() == 0)
+			return null;
+		if (filters.size() == 1)
+			return filters.get(0);
+		return PathFilterGroup.create(filters);
+	}
+
 	private void writeToFile(final String fileName, String content)
 			throws IOException {
 		Writer output = new BufferedWriter(new FileWriter(fileName));
 		try {
-			// FileWriter always assumes default encoding is
-			// OK!
+			// FileWriter always assumes default encoding is OK!
 			output.write(content);
 		} finally {
 			output.close();
@@ -315,9 +345,8 @@ public class GitCreatePatchWizard extends Wizard {
 						final File file = new File(fsPathText.getText());
 						dialog.setFilterPath(file.getParent());
 						dialog.setFileName(file.getName());
-					} else {
+					} else
 						dialog.setFileName(""); //$NON-NLS-1$
-					}
 					dialog.setText(""); //$NON-NLS-1$
 					final String path = dialog.open();
 					if (path != null)
@@ -348,11 +377,10 @@ public class GitCreatePatchWizard extends Wizard {
 		 * @return page is valid
 		 */
 		protected boolean validatePage() {
-			if (fsRadio.getSelection()) {
+			if (fsRadio.getSelection())
 				pageValid = validateFilesystemLocation();
-			} else if (cpRadio.getSelection()) {
+			else if (cpRadio.getSelection())
 				pageValid = true;
-			}
 
 			/**
 			 * Avoid draw flicker by clearing error message if all is valid.
@@ -496,12 +524,11 @@ public class GitCreatePatchWizard extends Wizard {
 			text = text.trim();
 
 			char[] charArray = text.toCharArray();
-			for (char c : charArray) {
+			for (char c : charArray)
 				if(!Character.isDigit(c)) {
 					setErrorMessage(UIText.GitCreatePatchWizard_ContextMustBePositiveInt);
 					return false;
 				}
-			}
 			return true;
 		}
 
