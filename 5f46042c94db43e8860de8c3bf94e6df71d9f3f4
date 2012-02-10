@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOEn///7Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1544,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-02-03T12:43:08Z",
+      "side": 1,
+      "message": "s/additionalRefsChange/additionalRefsChanged/",
+      "revId": "5f46042c94db43e8860de8c3bf94e6df71d9f3f4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
