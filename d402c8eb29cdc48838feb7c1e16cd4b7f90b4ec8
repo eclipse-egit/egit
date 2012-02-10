@@ -1,0 +1,429 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///Qs\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/AutoStart.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Q4\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/AutoStart.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use @author tags",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Qo\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/EGitMylynUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Qk\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/EGitMylynUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Qg\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/EGitMylynUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///QY\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/QueryBranchMappingDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Qc\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/QueryBranchMappingDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "stle nit: we don\u0027t use author tags\n\nmissing javadoc for public class",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///QU\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/RepositoryAndBranchSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "why do you use Chris\u0027 copyright and not yours ?",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///QQ\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/RepositoryAndBranchSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "style nit: no author tags\n\nmissing javadoc",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///QM\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/RepositoryAndBranchSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "missing javadoc",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///QI\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/RepositoryAndBranchSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "texts shown to users must be externalized for translation",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///QE\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/RepositoryAndBranchSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "why can we ignore this exception ?",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///QA\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/RepositoryAndBranchSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "texts must be externalized",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///P8\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/RepositoryAndBranchSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "texts must be externalized",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///P4\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/RepositoryAndBranchSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///P0\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/RepositoryAndBranchSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "style nit: no braces around single line blocks",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Pw\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/TaskActivationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "did Chris participate here ?",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Ps\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/TaskActivationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "no author tags instead add javadoc for public class",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Po\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/TaskActivationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "what if there are multiple repositories ? Why is the first one the right one ?",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Pk\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/TaskActivationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "instead of \"origin\" use DEFAULT_REMOTE_NAME from org.eclipse.jgit.lib.Constants",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Pg\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/TaskActivationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "no braces around single line blocks",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Pc\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/TaskActivationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "no braces around single line blocks",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///PY\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/TaskActivationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "why \"local-1\" what are semantics of this name ?",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///PU\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/TaskActivationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "properly handle exceptions",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Q0\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/tasks/TaskActivationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-05-08T21:26:57Z",
+      "side": 1,
+      "message": "replace auto-generated comment by something more meaningful",
+      "revId": "d402c8eb29cdc48838feb7c1e16cd4b7f90b4ec8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
