@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOC3///xs\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-30T21:50:46Z",
+      "side": 0,
+      "message": "I would tend to use braces here to make clear what\u0027s the scope of this loop",
+      "revId": "75a1cf972c4a501ef0a991c1346ca95e66c9eb5a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOC3///xo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2011-11-30T21:50:46Z",
+      "side": 0,
+      "message": "I would tend to use braces here to make clear what\u0027s the scope of this loop",
+      "revId": "75a1cf972c4a501ef0a991c1346ca95e66c9eb5a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
