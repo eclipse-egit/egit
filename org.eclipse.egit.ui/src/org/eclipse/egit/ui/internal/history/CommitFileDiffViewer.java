@@ -314,19 +314,36 @@ public class CommitFileDiffViewer extends TableViewer {
 		IStructuredSelection sel = (IStructuredSelection) selection;
 		boolean allSelected = !sel.isEmpty()
 				&& sel.size() == getTable().getItemCount();
+		boolean submoduleSelected = false;
+		for (Object item : sel.toArray())
+			if (((FileDiff) item).isSubmodule()) {
+				submoduleSelected = true;
+				break;
+			}
+
 		selectAll.setEnabled(!allSelected);
 		copy.setEnabled(!sel.isEmpty());
-		open.setEnabled(!sel.isEmpty());
-		openWorkingTreeVersion.setEnabled(!sel.isEmpty());
-		compare.setEnabled(sel.size() == 1);
 
-		if (sel.size() == 1) {
-			FileDiff diff = (FileDiff) sel.getFirstElement();
-			String path = new Path(getRepository().getWorkTree()
-					.getAbsolutePath()).append(diff.getPath()).toOSString();
-			compareWorkingTreeVersion.setEnabled(new File(path).exists());
-		} else
+		if (!submoduleSelected) {
+			open.setEnabled(!sel.isEmpty());
+			openWorkingTreeVersion.setEnabled(!sel.isEmpty());
+			compare.setEnabled(sel.size() == 1);
+			blame.setEnabled(true);
+			if (sel.size() == 1) {
+				FileDiff diff = (FileDiff) sel.getFirstElement();
+				String path = new Path(getRepository().getWorkTree()
+						.getAbsolutePath()).append(diff.getPath()).toOSString();
+				compareWorkingTreeVersion.setEnabled(new File(path).exists()
+						&& !submoduleSelected);
+			} else
+				compareWorkingTreeVersion.setEnabled(false);
+		} else {
+			open.setEnabled(false);
+			openWorkingTreeVersion.setEnabled(false);
+			compare.setEnabled(false);
+			blame.setEnabled(false);
 			compareWorkingTreeVersion.setEnabled(false);
+		}
 	}
 
 	private IAction createStandardAction(final ActionFactory af) {
