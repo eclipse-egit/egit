@@ -9,6 +9,7 @@
 package org.eclipse.egit.ui.view.repositories;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 
@@ -16,6 +17,8 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.api.SubmoduleAddCommand;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -70,5 +73,51 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		assertEmpty();
 		assertProjectExistence(PROJ1, false);
 		assertFalse(repositoryFile.exists());
+	}
+
+	@Test
+	public void testDeleteSubmoduleRepository() throws Exception {
+		deleteAllProjects();
+		assertProjectExistence(PROJ1, false);
+		clearView();
+		Activator.getDefault().getRepositoryUtil()
+				.addConfiguredRepository(repositoryFile);
+		shareProjects(repositoryFile);
+		assertProjectExistence(PROJ1, true);
+		refreshAndWait();
+		assertHasRepo(repositoryFile);
+
+		Repository db = lookupRepository(repositoryFile);
+		SubmoduleAddCommand command = new SubmoduleAddCommand(db);
+		String path = "sub";
+		command.setPath(path);
+		String uri = db.getDirectory().toURI().toString();
+		command.setURI(uri);
+		Repository subRepo = command.call();
+		assertNotNull(subRepo);
+
+		refreshAndWait();
+
+		SWTBotTree tree = getOrOpenView().bot().tree();
+		tree.getAllItems()[0]
+				.expand()
+				.expandNode(
+						UIText.RepositoriesViewLabelProvider_SubmodulesNodeText)
+				.getItems()[0].select();
+		ContextMenuHelper.clickContextMenu(tree, myUtil
+				.getPluginLocalizedValue(DELETE_REPOSITORY_CONTEXT_MENU_LABEL));
+		SWTBotShell shell = bot
+				.shell(UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryWindowTitle);
+		shell.activate();
+		String workDir = subRepo.getWorkTree().getPath();
+		String checkboxLabel = NLS
+				.bind(UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox,
+						workDir);
+		shell.bot().checkBox(checkboxLabel).select();
+		shell.bot().button(IDialogConstants.OK_LABEL).click();
+		waitInUI();
+		refreshAndWait();
+		assertFalse(subRepo.getDirectory().exists());
+		assertFalse(subRepo.getWorkTree().exists());
 	}
 }
