@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Stefan Lay <stefan.lay@sap.com>
+ * Copyright (C) 2011-2012, Stefan Lay <stefan.lay@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,11 +11,13 @@ package org.eclipse.egit.core.op;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.op.CloneOperation.PostCloneTask;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * Adds a fetch specification of the cloned repository and performs a fetch
@@ -50,7 +52,11 @@ public class ConfigureFetchAfterCloneTask implements PostCloneTask {
 			configToUse.update(repository.getConfig());
 			repository.getConfig().save();
 			Git git = new Git(repository);
-			git.fetch().setRemote(remoteName).call();
+			try {
+				git.fetch().setRemote(remoteName).call();
+			} catch (Exception e) {
+				Activator.logError(NLS.bind(CoreText.ConfigureFetchAfterCloneTask_couldNotFetch, fetchRefSpec), e);
+			}
 		} catch (Exception e) {
 			throw new CoreException(Activator.error(e.getMessage(), e));
 		}

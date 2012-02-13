@@ -59,6 +59,10 @@ public enum RepositoryTreeNodeType {
 	PUSH(UIIcons.PUSH.createImage()), //
 	/** */
 	SUBMODULES(UIIcons.SUBMODULES.createImage()),
+	/** */
+	STASH(UIIcons.STASH.createImage()),
+	/** */
+	STASHED_COMMIT(UIIcons.CHANGESET.createImage()),
 	/**	 */
 	WORKINGDIR(PlatformUI.getWorkbench().getSharedImages().getImage(
 			ISharedImages.IMG_OBJ_FOLDER)), //

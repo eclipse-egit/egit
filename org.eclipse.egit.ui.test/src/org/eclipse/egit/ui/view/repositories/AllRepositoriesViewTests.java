@@ -17,6 +17,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses( { GitRepositoriesViewBranchHandlingTest.class,//
 		GitRepositoriesViewRepoHandlingTest.class,//
+		GitRepositoriesViewRepoDeletionTest.class,//
 		GitRepositoriesViewRemoteHandlingTest.class,//
 		GitRepositoriesViewFetchAndPushTest.class,//
 		GitRepositoriesViewTagHandlingTest.class,//

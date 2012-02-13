@@ -127,4 +127,19 @@ public class JobFamilies {
 	 * Show annotations git job
 	 */
 	public static final Object BLAME = new Object();
+
+	/**
+	 * Submodule add git job
+	 */
+	public static final Object SUBMODULE_ADD = new Object();
+
+	/**
+	 * Submodule sync git job
+	 */
+	public static final Object SUBMODULE_SYNC = new Object();
+
+	/**
+	 * Submodule update git job
+	 */
+	public static final Object SUBMODULE_UPDATE = new Object();
 }

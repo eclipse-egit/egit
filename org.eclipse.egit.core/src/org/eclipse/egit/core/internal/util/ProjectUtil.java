@@ -184,7 +184,7 @@ public class ProjectUtil {
 					closeFailed = true;
 				}
 				// Clean up created folder
-				if (hasRoot)
+				if (!hasRoot)
 					try {
 						FileUtils.delete(projectRoot, FileUtils.RETRY
 								| FileUtils.SKIP_MISSING | FileUtils.RECURSIVE);
