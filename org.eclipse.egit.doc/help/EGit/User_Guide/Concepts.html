@@ -38,6 +38,7 @@
 		<ul>
 			<li>comparing two objects boils down to comparing two SHA-1 hashes</li>
 			<li>since object names are computed from the object content in the same way in every git repository the same object will be stored under the same name in all repositories which happen to contain this object</li>
+			<li>an object never changes once created (obvious since changing the contents means a new hash must be calculated and a new name assigned)</li>
 			<li>repository corruption can easily be detected by checking if the SHA-1 object name still is the secure hash of the object's content</li>
 		</ul>
 		<p>Git has four object types :</p>
@@ -51,8 +52,8 @@
 				<b>Tree objects</b> together with their file system names and modes
 			</li>
 			<li>A 
-				<b>Commit object</b> represents a snapshot of the directory structure at the time of the commit and has links to its predecessor and successor 
-				<b>Commit objects</b> which form an acyclic graph of the repository revisions forming the repository history.
+				<b>Commit object</b> represents a snapshot of the directory structure at the time of the commit and has a link to its predecessor 
+				<b>Commit object</b> which form an acyclic graph of the repository revisions forming the repository history.
 			</li>
 			<li>A 
 				<b>Tag object</b> is a symbolic named link to another repository object which contains the object name and type of the referenced object and optionally information about the one who created the tag and signing information.

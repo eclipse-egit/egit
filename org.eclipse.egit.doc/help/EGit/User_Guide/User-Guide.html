@@ -64,7 +64,7 @@
 		<h4 id="Setting_up_the_Home_Directory_on_Windows">Setting up the Home Directory on Windows</h4>
 		<p>Add the environment variable <code>HOME</code> to your environment variables.</p>
 		<ol>
-			<li>In Windows 7, type "enviroment window" at the start menu</li>
+			<li>In Windows 7, type "environment" at the start menu</li>
 			<li>Select "Edit environment variables for your account"</li>
 			<li>Click the "New" button.</li>
 			<li>Enter "HOME" in the name field</li>
@@ -78,7 +78,7 @@
 		</p>
 		<p>If the <code>HOME</code> variable is not defined the home directory will be calculated by concatenating <code>HOMEDRIVE</code> and <code>HOMEPATH</code>.</p>
 		<p>If both <code>HOME</code> and <code>HOMEDRIVE</code> are not defined <code>HOMESHARE</code> will be used.</p>
-		<p>EGit shows a warning if <code>HOME</code> is not defined explicitly:</p>
+		<p>EGit shows a warning if <code>HOME</code> is not defined explicitly. Keep in mind that if you set the HOME environment variable while Eclipse is running, you will still see following warning. You will have to restart Eclipse for it to recognize the HOME value.</p>
 		<p>
 			<img border="0" src="images/Egit_no_home.png"/>
 		</p>
@@ -129,7 +129,8 @@
 		<h3 id="Track_Changes">Track Changes</h3>
 		<ul>
 			<li>Click 
-				<b>Team &gt; Add</b> on the project node
+				<b>Team &gt; Add</b> on the project node. (This menu item may read 
+				<b>Add to Index</b> on recent versions of Egit)
 			</li>
 			<li>The 
 				<i>+</i> decorators show that now the project's files have been added to version control
@@ -150,6 +151,20 @@
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.11-getstarted-ignore-added.png"/>
+		</p>
+		<ul>
+			<li>You may have to set your Package Explorer filters in order to see <code>.gitignore</code> displayed in the Package Explorer. To access filters, select the down arrow at right of Package Explorer tab to display View Menu.</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Pe_downarrow1.png"/>
+		</p>
+		<ul>
+			<li>Select 
+				<b>Filters...</b> from the View Menu and you will be presented with the Java Element Filters dialog. Unselect the top entry to display files that begin with . (period) such as <code>.gitignore</code>.
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Filters.png"/>
 		</p>
 		<ul>
 			<li>Click 
