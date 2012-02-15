@@ -399,6 +399,8 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		assertNotNull(syncItems[0].getNode(PROJ1).getNode(newFileName));
 	}
 
+	// TODO: stabilize test and reenable it
+	@Ignore
 	@Test
 	public void shouldRefreshSyncResultAfterRepositoryChange() throws Exception {
 		// given
