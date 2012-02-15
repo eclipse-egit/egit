@@ -16,6 +16,24 @@
       "revId": "1b6f10f81b7e2c0e45ff0a34aef8ea72a0f60bc4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOF3///1E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-02-15T09:49:10Z",
+      "side": 0,
+      "message": "I haven\u0027t done it on purpose. It\u0027s the result of clean up action triggered on save. They have added by Robin in f95c105980fc8dc1c356665bb796f256d62bf1ca. I\u0027m fine with removing them now, but I think you should consider reformating all the source code. Otherwise, this kind of situation will happen each time a contributor edits a file where a formatting change could be applied.",
+      "parentUuid": "AABOF3///3A\u003d",
+      "revId": "1b6f10f81b7e2c0e45ff0a34aef8ea72a0f60bc4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }

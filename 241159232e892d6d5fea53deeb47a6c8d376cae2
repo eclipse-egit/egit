@@ -16,6 +16,41 @@
       "revId": "241159232e892d6d5fea53deeb47a6c8d376cae2",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOF3///1A\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-02-15T09:49:10Z",
+      "side": 1,
+      "message": "Cool, so I\u0027m killing two birds with one stone :)",
+      "parentUuid": "AABOF3///28\u003d",
+      "revId": "241159232e892d6d5fea53deeb47a6c8d376cae2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOF3///04\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-02-15T09:49:10Z",
+      "side": 1,
+      "message": "^^^ The action is added to the context menu ^^^",
+      "revId": "241159232e892d6d5fea53deeb47a6c8d376cae2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
