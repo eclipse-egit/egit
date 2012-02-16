@@ -34,6 +34,24 @@
       "revId": "1b6f10f81b7e2c0e45ff0a34aef8ea72a0f60bc4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOF3///wk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-02-16T06:51:28Z",
+      "side": 0,
+      "message": "I wasn\u0027t aware that Robin introduced a clean up action to fix this nasty nit. Under this condition I would say you don\u0027t need to remove these unrelated formatting changes. I\u0027ll have a look how big a complete reformatting change would be. It may happen that it creates a mess for all changes currently in flight.",
+      "parentUuid": "AABOF3///1E\u003d",
+      "revId": "1b6f10f81b7e2c0e45ff0a34aef8ea72a0f60bc4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
