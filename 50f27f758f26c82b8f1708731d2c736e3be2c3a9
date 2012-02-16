@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOF3///v8\u003d",
+        "filename": "org.eclipse.egit.core/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2012-02-16T16:29:40Z",
+      "side": 1,
+      "message": "I couldn\u0027t find corresponding org.eclipse.core.filesystem.filesystems with scheme\u003dgit.",
+      "revId": "50f27f758f26c82b8f1708731d2c736e3be2c3a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
