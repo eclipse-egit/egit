@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, Benjamin Muskalla <bmuskalla@eclipsesource.com>
  * Copyright (C) 2011, Matthias Sohn <matthias.sohn@sap.com>
- * Copyright (C) 2011, IBM Corporation
+ * Copyright (C) 2011-2012, IBM Corporation
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,6 +10,7 @@
  *
  * Contributors:
  *    Benjamin Muskalla (EclipseSource) - initial implementation
+ *    Tomasz Zarna (IBM) - show whitespace action, bug 371353
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
@@ -19,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.internal.Utils;
 import org.eclipse.egit.ui.Activator;
@@ -33,15 +35,19 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.commands.ActionHandler;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.Document;
-import org.eclipse.jface.text.ITextListener;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IPainter;
+import org.eclipse.jface.text.ITextListener;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.jface.text.ITextViewerExtension2;
 import org.eclipse.jface.text.MarginPainter;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextEvent;
+import org.eclipse.jface.text.WhitespaceCharacterPainter;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.quickassist.IQuickAssistInvocationContext;
@@ -54,6 +60,8 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.ISharedTextColors;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewer;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -77,6 +85,7 @@ import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.handlers.IHandlerActivation;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.AnnotationPreference;
 import org.eclipse.ui.texteditor.DefaultMarkerAnnotationAccess;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
@@ -123,18 +132,77 @@ public class SpellcheckableMessageArea extends Composite {
 			boolean isEnabled= (fOperationTarget != null && fOperationTarget.canDoOperation(fOperationCode));
 			setEnabled(isEnabled);
 
-			if (wasEnabled != isEnabled) {
+			if (wasEnabled != isEnabled)
 				firePropertyChange(ENABLED, wasEnabled ? Boolean.TRUE : Boolean.FALSE, isEnabled ? Boolean.TRUE : Boolean.FALSE);
-			}
 		}
 
 		/**
 		 * @see Action#run()
 		 */
 		public void run() {
-			if (fOperationCode != -1 && fOperationTarget != null) {
+			if (fOperationCode != -1 && fOperationTarget != null)
 				fOperationTarget.doOperation(fOperationCode);
+		}
+	}
+
+	private static abstract class TextEditorPropertyAction extends Action implements IPropertyChangeListener {
+
+		private SourceViewer viewer;
+		private String preferenceKey;
+		private IPreferenceStore store;
+
+		public TextEditorPropertyAction(String label, SourceViewer viewer, String preferenceKey) {
+			super(label, IAction.AS_CHECK_BOX);
+			this.viewer = viewer;
+			this.preferenceKey = preferenceKey;
+			this.store = EditorsUI.getPreferenceStore();
+			if (store != null)
+				store.addPropertyChangeListener(this);
+			synchronizeWithPreference();
+		}
+
+		public void propertyChange(PropertyChangeEvent event) {
+			if (event.getProperty().equals(getPreferenceKey()))
+				synchronizeWithPreference();
+		}
+
+		protected void synchronizeWithPreference() {
+			boolean checked = false;
+			if (store != null)
+				checked = store.getBoolean(getPreferenceKey());
+			if (checked != isChecked()) {
+				setChecked(checked);
+				toggleState(checked);
+			} else if (checked) {
+				toggleState(false);
+				toggleState(true);
 			}
+		}
+
+		private String getPreferenceKey() {
+			return preferenceKey;
+		}
+
+		@Override
+		public void run() {
+			toggleState(isChecked());
+			if (store != null)
+				store.setValue(getPreferenceKey(), isChecked());
+		}
+
+		public void dispose() {
+			if (store != null)
+				store.removePropertyChangeListener(this);
+		}
+
+		/**
+		 * @param checked
+		 *            new state
+		 */
+		abstract protected void toggleState(boolean checked);
+
+		protected ITextViewer getTextViewer() {
+			return viewer;
 		}
 	}
 
@@ -255,28 +323,24 @@ public class SpellcheckableMessageArea extends Composite {
 					private boolean active = true;
 
 					public void modifyText(ModifyEvent e) {
-						if (!active) {
+						if (!active)
 							return;
-						}
 						String lineDelimiter = textWidget.getLineDelimiter();
 						List<WrapEdit> wrapEdits = calculateWrapEdits(
 								textWidget.getText(), MAX_LINE_WIDTH,
 								lineDelimiter);
 						// Prevent infinite loop because replaceTextRange causes a ModifyEvent
 						active = false;
-						for (WrapEdit wrapEdit : wrapEdits) {
+						for (WrapEdit wrapEdit : wrapEdits)
 							textWidget.replaceTextRange(wrapEdit.getStart(), wrapEdit.getLength(), lineDelimiter);
-						}
 						active = true;
 					}
 				};
 				textWidget.addModifyListener(hardWrapModifyListener);
 			}
-		} else {
-			if (hardWrapModifyListener != null) {
-				getTextWidget().removeModifyListener(hardWrapModifyListener);
-				hardWrapModifyListener = null;
-			}
+		} else if (hardWrapModifyListener != null) {
+			getTextWidget().removeModifyListener(hardWrapModifyListener);
+			hardWrapModifyListener = null;
 		}
 	}
 
@@ -307,6 +371,48 @@ public class SpellcheckableMessageArea extends Composite {
 		redoAction.setText(UIText.SpellcheckableMessageArea_redo);
 		redoAction.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_REDO);
 
+		final TextEditorPropertyAction showWhitespaceAction = new TextEditorPropertyAction(
+				UIText.SpellcheckableMessageArea_showWhitespace,
+				sourceViewer,
+				AbstractTextEditor.PREFERENCE_SHOW_WHITESPACE_CHARACTERS) {
+
+			private IPainter whitespaceCharPainter;
+
+			@Override
+			protected void toggleState(boolean checked) {
+				if (checked)
+					installPainter();
+				else
+					uninstallPainter();
+			}
+
+			/**
+			 * Installs the painter on the viewer.
+			 */
+			private void installPainter() {
+				Assert.isTrue(whitespaceCharPainter == null);
+				ITextViewer v = getTextViewer();
+				if (v instanceof ITextViewerExtension2) {
+					whitespaceCharPainter = new WhitespaceCharacterPainter(v);
+					((ITextViewerExtension2) v).addPainter(whitespaceCharPainter);
+				}
+			}
+
+			/**
+			 * Remove the painter from the viewer.
+			 */
+			private void uninstallPainter() {
+				if (whitespaceCharPainter == null)
+					return;
+				ITextViewer v = getTextViewer();
+				if (v instanceof ITextViewerExtension2)
+					((ITextViewerExtension2) v)
+							.removePainter(whitespaceCharPainter);
+				whitespaceCharPainter.deactivate(true);
+				whitespaceCharPainter = null;
+			}
+		};
+
 		MenuManager contextMenu = new MenuManager();
 		contextMenu.add(cutAction);
 		contextMenu.add(copyAction);
@@ -314,6 +420,8 @@ public class SpellcheckableMessageArea extends Composite {
 		contextMenu.add(selectAllAction);
 		contextMenu.add(undoAction);
 		contextMenu.add(redoAction);
+		contextMenu.add(new Separator());
+		contextMenu.add(showWhitespaceAction);
 		contextMenu.add(new Separator());
 
 		if(isEditable(sourceViewer)) {
@@ -359,21 +467,17 @@ public class SpellcheckableMessageArea extends Composite {
 			public void focusLost(FocusEvent e) {
 				IHandlerService service = (IHandlerService) PlatformUI.getWorkbench().getService(IHandlerService.class);
 
-				if (cutHandlerActivation != null) {
+				if (cutHandlerActivation != null)
 					service.deactivateHandler(cutHandlerActivation);
-				}
 
-				if (copyHandlerActivation != null) {
+				if (copyHandlerActivation != null)
 					service.deactivateHandler(copyHandlerActivation);
-				}
 
-				if (pasteHandlerActivation != null) {
+				if (pasteHandlerActivation != null)
 					service.deactivateHandler(pasteHandlerActivation);
-				}
 
-				if (selectAllHandlerActivation != null) {
+				if (selectAllHandlerActivation != null)
 					service.deactivateHandler(selectAllHandlerActivation);
-				}
 
 				if (undoHandlerActivation != null)
 					service.deactivateHandler(undoHandlerActivation);
@@ -398,6 +502,12 @@ public class SpellcheckableMessageArea extends Composite {
 			public void textChanged(TextEvent event) {
 				undoAction.update();
 				redoAction.update();
+			}
+		});
+
+		getTextWidget().addDisposeListener(new DisposeListener() {
+			public void widgetDisposed(DisposeEvent disposeEvent) {
+				showWhitespaceAction.dispose();
 			}
 		});
 	}
@@ -441,9 +551,8 @@ public class SpellcheckableMessageArea extends Composite {
 
 			public ImageDescriptor getImageDescriptor() {
 				Image image = proposal.getImage();
-				if (image != null) {
+				if (image != null)
 					return ImageDescriptor.createFromImage(image);
-				}
 				return null;
 			}
 		};
@@ -685,9 +794,8 @@ public class SpellcheckableMessageArea extends Composite {
 				lineLength += wordLength;
 			}
 
-			if (chunkIndex != chunks.length - 1) {
+			if (chunkIndex != chunks.length - 1)
 				offset += lineDelimiterLength;
-			}
 		}
 
 		return wrapEdits;
