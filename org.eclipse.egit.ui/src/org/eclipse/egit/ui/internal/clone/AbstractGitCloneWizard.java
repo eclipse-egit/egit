@@ -170,9 +170,8 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 	}
 
 	private void addRepositorySearchPage() {
-		if (currentSearchResult instanceof WizardPage) {
+		if (currentSearchResult instanceof WizardPage)
 			addPage((WizardPage)currentSearchResult);
-		}
 	}
 
 	private void addRepositoryLocationPage() {
@@ -266,7 +265,7 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		alreadyClonedInto = workdir.getPath();
 
 		if (!callerRunsCloneOperation)
-			runAsJob(uri, op);
+			runAsJob(uri, op, gitRepositoryInfo);
 		else
 			cloneOperation = op;
 		return true;
@@ -322,7 +321,7 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 
 	private void configurePush(CloneOperation op,
 			GitRepositoryInfo gitRepositoryInfo, String remoteName) {
-		for (PushInfo pushInfo : gitRepositoryInfo.getPushInfos()) {
+		for (PushInfo pushInfo : gitRepositoryInfo.getPushInfos())
 			try {
 				URIish uri = pushInfo.getPushUri() != null ? new URIish(
 						pushInfo.getPushUri()) : null;
@@ -332,7 +331,6 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 			} catch (URISyntaxException e) {
 				Activator.handleError(UIText.GitCloneWizard_failed, e, true);
 			}
-		}
 	}
 
 	private void configureRepositoryConfig(CloneOperation op, GitRepositoryInfo gitRepositoryInfo) {
@@ -377,13 +375,14 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 
 	/**
 	 * @param container
+	 * @param repositoryInfo
 	 */
-	public void runCloneOperation(IWizardContainer container) {
+	public void runCloneOperation(IWizardContainer container, final GitRepositoryInfo repositoryInfo) {
 		try {
 			container.run(true, true, new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor)
 						throws InvocationTargetException, InterruptedException {
-					executeCloneOperation(cloneOperation, monitor);
+					executeCloneOperation(cloneOperation, repositoryInfo, monitor);
 				}
 			});
 		} catch (InvocationTargetException e) {
@@ -394,13 +393,14 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		}
 	}
 
-	private void runAsJob(final URIish uri, final CloneOperation op) {
+	private void runAsJob(final URIish uri, final CloneOperation op,
+			final GitRepositoryInfo repositoryInfo) {
 		final Job job = new Job(NLS.bind(UIText.GitCloneWizard_jobName,
 				uri.toString())) {
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
 				try {
-					return executeCloneOperation(op, monitor);
+					return executeCloneOperation(op, repositoryInfo, monitor);
 				} catch (InterruptedException e) {
 					return Status.CANCEL_STATUS;
 				} catch (InvocationTargetException e) {
@@ -422,6 +422,7 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 	}
 
 	private IStatus executeCloneOperation(final CloneOperation op,
+			final GitRepositoryInfo repositoryInfo,
 			final IProgressMonitor monitor) throws InvocationTargetException,
 			InterruptedException {
 
@@ -430,10 +431,9 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 		op.run(monitor);
 		util.addConfiguredRepository(op.getGitDir());
 		try {
-			if (currentSearchResult.getGitRepositoryInfo().shouldSaveCredentialsInSecureStore()) {
-				SecureStoreUtils.storeCredentials(currentSearchResult.getGitRepositoryInfo().getCredentials(),
-						new URIish(currentSearchResult.getGitRepositoryInfo().getCloneUri()));
-			}
+			if (repositoryInfo.shouldSaveCredentialsInSecureStore())
+				SecureStoreUtils.storeCredentials(repositoryInfo.getCredentials(),
+						new URIish(repositoryInfo.getCloneUri()));
 		} catch (Exception e) {
 			Activator.error(e.getMessage(), e);
 		}
