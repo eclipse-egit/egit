@@ -3958,6 +3958,10 @@
             commandId="org.eclipse.egit.ui.history.OpenInCommitViewerCommand"
             icon="icons/obj16/open-commit.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.history.Revert"
+            icon="icons/obj16/revert.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
