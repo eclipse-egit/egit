@@ -30,15 +30,22 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.BaseLabelProvider;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.ICellEditorListener;
+import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.jface.viewers.IFontProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.IShellProvider;
 import org.eclipse.jface.window.SameShellProvider;
@@ -49,8 +56,6 @@ import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
@@ -98,17 +103,11 @@ public class ConfigurationEditorComponent {
 
 	private Composite contents;
 
-	private Text valueText;
-
-	private Button changeValue;
-
 	private Button addValue;
 
 	private Button newValue;
 
 	private Button remove;
-
-	private Button deleteValue;
 
 	private TreeViewer tv;
 
@@ -173,14 +172,14 @@ public class ConfigurationEditorComponent {
 	 */
 	public Control createContents() {
 		final Composite main = new Composite(parent, SWT.NONE);
-		main.setLayout(new GridLayout(1, false));
+		main.setLayout(new GridLayout(2, false));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
 
 		if (editableConfig instanceof FileBasedConfig) {
 			Composite locationPanel = new Composite(main, SWT.NONE);
 			locationPanel.setLayout(new GridLayout(4, false));
-			GridDataFactory.fillDefaults().grab(true, false).applyTo(
-					locationPanel);
+			GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
+					.applyTo(locationPanel);
 			Label locationLabel = new Label(locationPanel, SWT.NONE);
 			locationLabel
 					.setText(UIText.ConfigurationEditorComponent_ConfigLocationLabel);
@@ -234,7 +233,6 @@ public class ConfigurationEditorComponent {
 				});
 			}
 			Button openEditor = new Button(locationPanel, SWT.PUSH);
-			// GridDataFactory.fillDefaults().applyTo(openEditor);
 			openEditor
 					.setText(UIText.ConfigurationEditorComponent_OpenEditorButton);
 			openEditor
@@ -265,9 +263,54 @@ public class ConfigurationEditorComponent {
 		key.setText(UIText.ConfigurationEditorComponent_KeyColumnHeader);
 		key.setWidth(150);
 
+		final TextCellEditor editor = new TextCellEditor(tree);
+		editor.setValidator(new ICellEditorValidator() {
+
+			public String isValid(Object value) {
+				String editedValue = value.toString();
+				return editedValue.length() > 0 ? null
+						: UIText.ConfigurationEditorComponent_EmptyStringNotAllowed;
+			}
+		});
+		editor.addListener(new ICellEditorListener() {
+
+			public void editorValueChanged(boolean oldValidState,
+					boolean newValidState) {
+				setErrorMessage(editor.getErrorMessage());
+			}
+
+			public void cancelEditor() {
+				setErrorMessage(null);
+			}
+
+			public void applyEditorValue() {
+				setErrorMessage(null);
+			}
+		});
+
 		TreeColumn value = new TreeColumn(tree, SWT.NONE);
 		value.setText(UIText.ConfigurationEditorComponent_ValueColumnHeader);
 		value.setWidth(250);
+		new TreeViewerColumn(tv, value)
+				.setEditingSupport(new EditingSupport(tv) {
+
+					protected void setValue(Object element, Object newValue) {
+						((Entry) element).changeValue(newValue.toString());
+						markDirty();
+					}
+
+					protected Object getValue(Object element) {
+						return ((Entry) element).value;
+					}
+
+					protected CellEditor getCellEditor(Object element) {
+						return editor;
+					}
+
+					protected boolean canEdit(Object element) {
+						return editable;
+					}
+				});
 
 		tv.setContentProvider(new ConfigEditorContentProvider());
 		Font defaultFont;
@@ -280,10 +323,9 @@ public class ConfigurationEditorComponent {
 		tree.setHeaderVisible(true);
 		tree.setLinesVisible(true);
 
-		// if section or subsection is selected, we show the remove button
 		Composite buttonPanel = new Composite(main, SWT.NONE);
-		buttonPanel.setLayout(new GridLayout(2, false));
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(buttonPanel);
+		GridLayoutFactory.fillDefaults().applyTo(buttonPanel);
+		GridDataFactory.fillDefaults().grab(false, false).applyTo(buttonPanel);
 		newValue = new Button(buttonPanel, SWT.PUSH);
 		GridDataFactory.fillDefaults().applyTo(newValue);
 		newValue.setText(UIText.ConfigurationEditorComponent_NewValueButton);
@@ -370,6 +412,9 @@ public class ConfigurationEditorComponent {
 								section.name);
 						markDirty();
 					}
+				} else if (first instanceof Entry) {
+					((Entry) first).removeValue();
+					markDirty();
 				} else {
 					Activator
 							.handleError(
@@ -381,54 +426,7 @@ public class ConfigurationEditorComponent {
 			}
 		});
 
-		// if an entry is selected, then we show the value plus change button
-		Composite valuePanel = new Composite(main, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(valuePanel);
-		valuePanel.setLayout(new GridLayout(3, false));
-		new Label(valuePanel, SWT.NONE)
-				.setText(UIText.ConfigurationEditorComponent_ValueLabel);
-		valueText = new Text(valuePanel, SWT.BORDER);
-		valueText
-				.setText(UIText.ConfigurationEditorComponent_NoEntrySelectedMessage);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true,
-				false).applyTo(valueText);
-		// make the buttons equal width
-		Composite buttonContainer = new Composite(valuePanel, SWT.NONE);
-		buttonContainer.setLayout(new GridLayout(3, true));
-		changeValue = new Button(buttonContainer, SWT.PUSH);
-		GridDataFactory.fillDefaults().applyTo(changeValue);
-		changeValue.setText(UIText.ConfigurationEditorComponent_ChangeButton);
-		changeValue.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection sel = (IStructuredSelection) tv
-						.getSelection();
-				Object first = sel.getFirstElement();
-				if (first instanceof Entry) {
-					Entry entry = (Entry) first;
-					entry.changeValue(valueText.getText());
-					markDirty();
-				}
-			}
-		});
-		deleteValue = new Button(buttonContainer, SWT.PUSH);
-		GridDataFactory.fillDefaults().applyTo(deleteValue);
-		deleteValue.setText(UIText.ConfigurationEditorComponent_DeleteButton);
-		deleteValue.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection sel = (IStructuredSelection) tv
-						.getSelection();
-				Object first = sel.getFirstElement();
-				if (first instanceof Entry) {
-					Entry entry = (Entry) first;
-					entry.removeValue();
-					markDirty();
-				}
-
-			}
-		});
-		addValue = new Button(buttonContainer, SWT.PUSH);
+		addValue = new Button(buttonPanel, SWT.PUSH);
 		GridDataFactory.fillDefaults().applyTo(addValue);
 		addValue.setText(UIText.ConfigurationEditorComponent_AddButton);
 		addValue.addSelectionListener(new SelectionAdapter() {
@@ -439,7 +437,7 @@ public class ConfigurationEditorComponent {
 				Object first = sel.getFirstElement();
 				if (first instanceof Entry) {
 					Entry entry = (Entry) first;
-					entry.addValue(valueText.getText());
+					entry.addValue(entry.value);
 					markDirty();
 				}
 
@@ -449,18 +447,6 @@ public class ConfigurationEditorComponent {
 		tv.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				updateEnablement();
-			}
-		});
-
-		valueText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				if (valueText.getText().length() == 0) {
-					setErrorMessage(UIText.ConfigurationEditorComponent_EmptyStringNotAllowed);
-					changeValue.setEnabled(false);
-				} else {
-					setErrorMessage(null);
-					changeValue.setEnabled(true);
-				}
 			}
 		});
 
@@ -560,19 +546,9 @@ public class ConfigurationEditorComponent {
 				.getFirstElement();
 
 		boolean entrySelected = selected instanceof Entry;
-		boolean sectionOrSubSectionSelected = (selected instanceof Section || selected instanceof SubSection);
 
-		if (entrySelected)
-			valueText.setText(((Entry) selected).value);
-		else
-			valueText
-					.setText(UIText.ConfigurationEditorComponent_NoEntrySelectedMessage);
-		changeValue.setEnabled(false);
-		valueText.setEnabled(entrySelected);
-		valueText.setEditable(editable && entrySelected);
-		deleteValue.setEnabled(editable && entrySelected);
 		addValue.setEnabled(editable && entrySelected);
-		remove.setEnabled(editable && sectionOrSubSectionSelected);
+		remove.setEnabled(editable);
 		newValue.setEnabled(editable);
 	}
 
