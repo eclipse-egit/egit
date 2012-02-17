@@ -9,6 +9,7 @@
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
  *    Daniel Megert <daniel_megert@ch.ibm.com> - Create Patch... dialog should not set file location - http://bugs.eclipse.org/361405
+ *    Tomasz Zarna <Tomasz.Zarna@pl.ibm.com> - Allow to save patches in Workspace
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
@@ -20,9 +21,7 @@ import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.CreatePatchOperation;
 import org.eclipse.egit.core.op.CreatePatchOperation.DiffHeaderFormat;
 import org.eclipse.egit.ui.Activator;
@@ -31,6 +30,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -52,15 +52,10 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -148,8 +143,11 @@ public class GitCreatePatchWizard extends Wizard {
 		operation.setHeaderFormat(optionsPage.getSelectedHeaderFormat());
 		operation.setContextLines(Integer.parseInt(optionsPage.contextLines.getText()));
 
-		final boolean isFile = locationPage.fsRadio.getSelection();
-		final String fileName = locationPage.fsPathText.getText();
+		final File file = !locationPage.fsRadio.getSelection() ? locationPage
+				.getFile() : null;
+
+		if (!(file == null || validateFile(file)))
+			return false;
 
 		try {
 			getContainer().run(true, true, new IRunnableWithProgress() {
@@ -159,11 +157,10 @@ public class GitCreatePatchWizard extends Wizard {
 						operation.execute(monitor);
 
 						String content = operation.getPatchContent();
-						if (isFile) {
-							writeToFile(fileName, content);
-						} else {
+						if (file != null)
+							writeToFile(file, content);
+						else
 							copyToClipboard(content);
-						}
 					} catch (IOException e) {
 						throw new InvocationTargetException(e);
 					} catch (CoreException e) {
@@ -196,9 +193,9 @@ public class GitCreatePatchWizard extends Wizard {
 		});
 	}
 
-	private void writeToFile(final String fileName, String content)
+	private void writeToFile(final File file, String content)
 			throws IOException {
-		Writer output = new BufferedWriter(new FileWriter(fileName));
+		Writer output = new BufferedWriter(new FileWriter(file));
 		try {
 			// FileWriter always assumes default encoding is
 			// OK!
@@ -208,202 +205,31 @@ public class GitCreatePatchWizard extends Wizard {
 		}
 	}
 
-	/**
-	 * A wizard page to choose the target location
-	 */
-	public class LocationPage extends WizardPage {
+	private boolean validateFile(File file) {
+		if (file == null)
+			return false;
 
-		private static final String PATH_KEY = "GitCreatePatchWizard.LocationPage.path"; //$NON-NLS-1$
-
-		private Button cpRadio;
-
-		private Button fsRadio;
-
-		private Text fsPathText;
-
-		private Button fsBrowseButton;
-
-		private boolean pageValid;
-
-		/**
-		 * @param pageName
-		 * @param title
-		 * @param titleImage
-		 */
-		protected LocationPage(String pageName, String title,
-				ImageDescriptor titleImage) {
-			super(pageName, title, titleImage);
-		}
-
-		public void createControl(Composite parent) {
-			final Composite composite = new Composite(parent, SWT.NULL);
-			GridLayout gridLayout = new GridLayout();
-			gridLayout.numColumns = 3;
-			composite.setLayout(gridLayout);
-			composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-			initializeDialogUnits(composite);
-
-			// clipboard
-			GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-			gd.horizontalSpan = 3;
-			cpRadio = new Button(composite, SWT.RADIO);
-			cpRadio.setText(UIText.GitCreatePatchWizard_Clipboard);
-			cpRadio.setLayoutData(gd);
-			cpRadio.setSelection(true);
-
-			// filesystem
-			fsRadio = new Button(composite, SWT.RADIO);
-			fsRadio.setText(UIText.GitCreatePatchWizard_File);
-			fsRadio.setSelection(false);
-
-			fsPathText = new Text(composite, SWT.BORDER);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			fsPathText.setLayoutData(gd);
-			fsPathText.setText(createFileName());
-			fsPathText.setEnabled(false);
-
-			fsBrowseButton = new Button(composite, SWT.PUSH);
-			fsBrowseButton.setText(UIText.GitCreatePatchWizard_Browse);
-			GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-			int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
-			Point minSize = fsBrowseButton.computeSize(SWT.DEFAULT,
-					SWT.DEFAULT, true);
-			data.widthHint = Math.max(widthHint, minSize.x);
-			fsBrowseButton.setLayoutData(data);
-			fsBrowseButton.setEnabled(false);
-
-			cpRadio.addListener(SWT.Selection, new Listener() {
-				public void handleEvent(Event event) {
-					// disable other input controls
-					if (((Button) event.widget).getSelection()) {
-						fsPathText.setEnabled(false);
-						fsBrowseButton.setEnabled(false);
-						validatePage();
-					}
-				}
-			});
-
-			fsRadio.addListener(SWT.Selection, new Listener() {
-
-				public void handleEvent(Event event) {
-					if (((Button) event.widget).getSelection()) {
-						// enable filesystem input controls
-						fsPathText.setEnabled(true);
-						fsBrowseButton.setEnabled(true);
-						// set focus to filesystem input text control
-						fsPathText.setFocus();
-						validatePage();
-					}
-				}
-			});
-
-			fsPathText.addModifyListener(new ModifyListener() {
-
-				public void modifyText(ModifyEvent e) {
-					if (validatePage()) {
-						IPath filePath= Path.fromOSString(fsPathText.getText()).removeLastSegments(1);
-						getDialogSettings().put(PATH_KEY, filePath.toPortableString());
-					}
-				}
-			});
-
-			fsBrowseButton.addListener(SWT.Selection, new Listener() {
-				public void handleEvent(Event event) {
-					final FileDialog dialog = new FileDialog(getShell(),
-							SWT.PRIMARY_MODAL | SWT.SAVE);
-					if (pageValid) {
-						final File file = new File(fsPathText.getText());
-						dialog.setFilterPath(file.getParent());
-						dialog.setFileName(file.getName());
-					} else {
-						dialog.setFileName(""); //$NON-NLS-1$
-					}
-					dialog.setText(""); //$NON-NLS-1$
-					final String path = dialog.open();
-					if (path != null)
-						fsPathText.setText(new Path(path).toOSString());
-					validatePage();
-				}
-			});
-
-			Dialog.applyDialogFont(composite);
-			setControl(composite);
-
-		}
-
-		private String createFileName() {
-			String suggestedFileName = commit != null ? CreatePatchOperation
-					.suggestFileName(commit) : db.getWorkTree().getName()
-					.concat(".patch"); //$NON-NLS-1$
-			String path = getDialogSettings().get(PATH_KEY);
-			if (path != null)
-				return Path.fromPortableString(path).append(suggestedFileName).toOSString();
-
-			return (new File(System.getProperty("user.dir", ""), suggestedFileName)).getPath(); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-
-		/**
-		 * Allow the user to finish if a valid file has been entered.
-		 *
-		 * @return page is valid
-		 */
-		protected boolean validatePage() {
-			if (fsRadio.getSelection()) {
-				pageValid = validateFilesystemLocation();
-			} else if (cpRadio.getSelection()) {
-				pageValid = true;
-			}
-
-			/**
-			 * Avoid draw flicker by clearing error message if all is valid.
-			 */
-			if (pageValid) {
-				setMessage(null);
-				setErrorMessage(null);
-			}
-			setPageComplete(pageValid);
-			return pageValid;
-		}
-
-		/**
-		 * The following conditions must hold for the file system location to be
-		 * valid: - the path must be valid and non-empty - the path must be
-		 * absolute - the specified file must be of type file - the parent must
-		 * exist (new folders can be created via the browse button)
-		 *
-		 * @return if the location is valid
-		 */
-		private boolean validateFilesystemLocation() {
-			final String pathString = fsPathText.getText().trim();
-			if (pathString.length() == 0
-					|| !new Path("").isValidPath(pathString)) { //$NON-NLS-1$
-				setErrorMessage(UIText.GitCreatePatchWizard_FilesystemError);
-				return false;
-			}
-
-			final File file = new File(pathString);
-			if (!file.isAbsolute()) {
-				setErrorMessage(UIText.GitCreatePatchWizard_FilesystemInvalidError);
-				return false;
-			}
-
-			if (file.isDirectory()) {
-				setErrorMessage(UIText.GitCreatePatchWizard_FilesystemDirectoryError);
-				return false;
-			}
-
-			if (pathString.endsWith("/") || pathString.endsWith("\\")) { //$NON-NLS-1$//$NON-NLS-2$
-				setErrorMessage(UIText.GitCreatePatchWizard_FilesystemDirectoryNotExistsError);
-				return false;
-			}
-
-			final File parent = file.getParentFile();
-			if (!(parent.exists() && parent.isDirectory())) {
-				setErrorMessage(UIText.GitCreatePatchWizard_FilesystemDirectoryNotExistsError);
-				return false;
-			}
+		// Consider file valid if it doesn't exist for now.
+		if (!file.exists())
 			return true;
+
+		// The file exists.
+		if (!file.canWrite()) {
+			final String title= UIText.GitCreatePatchWizard_ReadOnlyTitle;
+			final String msg= UIText.GitCreatePatchWizard_ReadOnlyMsg;
+			final MessageDialog dialog= new MessageDialog(getShell(), title, null, msg, MessageDialog.ERROR, new String[] { IDialogConstants.OK_LABEL }, 0);
+			dialog.open();
+			return false;
 		}
+
+		final String title = UIText.GitCreatePatchWizard_OverwriteTitle;
+		final String msg = UIText.GitCreatePatchWizard_OverwriteMsg;
+		final MessageDialog dialog = new MessageDialog(getShell(), title, null, msg, MessageDialog.QUESTION, new String[] { IDialogConstants.YES_LABEL, IDialogConstants.CANCEL_LABEL }, 0);
+		dialog.open();
+		if (dialog.getReturnCode() != 0)
+			return false;
+
+		return true;
 	}
 
 	/**
@@ -496,12 +322,11 @@ public class GitCreatePatchWizard extends Wizard {
 			text = text.trim();
 
 			char[] charArray = text.toCharArray();
-			for (char c : charArray) {
+			for (char c : charArray)
 				if(!Character.isDigit(c)) {
 					setErrorMessage(UIText.GitCreatePatchWizard_ContextMustBePositiveInt);
 					return false;
 				}
-			}
 			return true;
 		}
 
@@ -510,5 +335,13 @@ public class GitCreatePatchWizard extends Wizard {
 					.getSelection();
 			return (DiffHeaderFormat) selection.getFirstElement();
 		}
+	}
+
+	Repository getRepository() {
+		return db;
+	}
+
+	RevCommit getCommit() {
+		return commit;
 	}
 }
