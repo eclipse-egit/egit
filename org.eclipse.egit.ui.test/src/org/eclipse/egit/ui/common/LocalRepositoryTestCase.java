@@ -223,19 +223,19 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 		new ConnectProviderOperation(firstProject, gitDir).execute(null);
 
-		IProject secondPoject = ResourcesPlugin.getWorkspace().getRoot()
+		IProject secondProject = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(PROJ2);
 
-		if (secondPoject.exists())
-			secondPoject.delete(true, null);
+		if (secondProject.exists())
+			secondProject.delete(true, null);
 
 		desc = ResourcesPlugin.getWorkspace().newProjectDescription(PROJ2);
 		desc.setLocation(new Path(new File(myRepository.getWorkTree(), PROJ2)
 				.getPath()));
-		secondPoject.create(desc, null);
-		secondPoject.open(null);
+		secondProject.create(desc, null);
+		secondProject.open(null);
 
-		IFolder secondfolder = secondPoject.getFolder(FOLDER);
+		IFolder secondfolder = secondProject.getFolder(FOLDER);
 		secondfolder.create(false, true, null);
 		IFile secondtextFile = secondfolder.getFile(FILE1);
 		secondtextFile.create(new ByteArrayInputStream("Hello, world"
@@ -248,7 +248,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		// gitignore.create(new ByteArrayInputStream("/.project\n"
 		// .getBytes(firstProject.getDefaultCharset())), false, null);
 
-		new ConnectProviderOperation(secondPoject, gitDir).execute(null);
+		new ConnectProviderOperation(secondProject, gitDir).execute(null);
 
 		IFile[] commitables = new IFile[] { firstProject.getFile(".project"),
 				textFile, textFile2, secondtextFile, secondtextFile2 };
@@ -413,19 +413,29 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	}
 
 	/**
+	 * Modify with a random content and commit.
+	 *
 	 * @param commitMessage
 	 *            may be null
 	 * @throws Exception
 	 */
 	protected static void touchAndSubmit(String commitMessage) throws Exception {
-		IProject prj = ResourcesPlugin.getWorkspace().getRoot().getProject(
-				PROJ1);
-		if (!prj.isAccessible())
-			throw new IllegalStateException("No project to touch");
-		IFile file = prj.getFile(new Path("folder/test.txt"));
 		String newContent = "Touched at " + System.currentTimeMillis();
-		file.setContents(new ByteArrayInputStream(newContent.getBytes(prj
-				.getDefaultCharset())), 0, null);
+		touchAndSubmit(newContent, commitMessage);
+	}
+
+	/**
+	 * Modify with the given content and commit.
+	 *
+	 * @param newContent
+	 *            new file content
+	 * @param commitMessage
+	 *            may be null
+	 * @throws Exception
+	 */
+	protected static void touchAndSubmit(String newContent, String commitMessage)
+			throws Exception {
+		IFile file = touch(newContent);
 
 		IFile[] commitables = new IFile[] { file };
 		ArrayList<IFile> untracked = new ArrayList<IFile>();
@@ -439,6 +449,26 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				untracked, TestUtil.TESTAUTHOR, TestUtil.TESTCOMMITTER,
 				message);
 		op.execute(null);
+	}
+
+	/**
+	 * Modify with the given content.
+	 *
+	 * @param newContent
+	 *            new file content
+	 * @return the modified file
+	 * @throws Exception
+	 */
+	protected static IFile touch(final String newContent) throws Exception {
+		IProject prj = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(PROJ1);
+		if (!prj.isAccessible())
+			throw new IllegalStateException("No project to touch");
+		IFile file = prj.getFile(new Path("folder/test.txt"));
+		file.setContents(
+				new ByteArrayInputStream(newContent.getBytes(prj
+						.getDefaultCharset())), 0, null);
+		return file;
 	}
 
 	protected static void addAndCommit(IFile file, String commitMessage)
