@@ -1903,13 +1903,7 @@ public class UIText extends NLS {
 	public static String ConfigurationEditorComponent_CannotChangeGitPrefixError;
 
 	/** */
-	public static String ConfigurationEditorComponent_ChangeButton;
-
-	/** */
 	public static String ConfigurationEditorComponent_ConfigLocationLabel;
-
-	/** */
-	public static String ConfigurationEditorComponent_DeleteButton;
 
 	/** */
 	public static String ConfigurationEditorComponent_EmptyStringNotAllowed;
@@ -1967,9 +1961,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String ConfigurationEditorComponent_ValueColumnHeader;
-
-	/** */
-	public static String ConfigurationEditorComponent_ValueLabel;
 
 	/** */
 	public static String ConfigurationEditorComponent_WrongNumberOfTokensMessage;
