@@ -8,15 +8,15 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
-import static org.eclipse.jgit.lib.Constants.HEAD;
-import static org.eclipse.jgit.lib.ObjectId.fromString;
-import static org.eclipse.jgit.lib.ObjectId.zeroId;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache.FileModelFactory;
+import org.eclipse.jgit.lib.Repository;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -24,7 +24,7 @@ public class GitModelCacheTreeTest extends GitModelTestCase {
 
 	@Test public void shouldReturnEqualForSameInstance() throws Exception {
 		// given
-		GitModelCacheTree left = crateCacheTree(zeroId(), getTreeLocation());
+		GitModelCacheTree left = crateCacheTree(getTreeLocation());
 
 		// when
 		boolean actual = left.equals(left);
@@ -35,8 +35,8 @@ public class GitModelCacheTreeTest extends GitModelTestCase {
 
 	@Test public void shouldReturnEqualForSameData() throws Exception {
 		// given
-		GitModelCacheTree left = crateCacheTree(zeroId(), getTreeLocation());
-		GitModelCacheTree right = crateCacheTree(zeroId(), getTreeLocation());
+		GitModelCacheTree left = crateCacheTree(getTreeLocation());
+		GitModelCacheTree right = crateCacheTree(getTreeLocation());
 
 		// when
 		boolean actual = left.equals(right);
@@ -45,25 +45,11 @@ public class GitModelCacheTreeTest extends GitModelTestCase {
 		assertTrue(actual);
 	}
 
-	@Test public void shouldReturnNotEqualForDifferetnRepoId() throws Exception {
-		// given
-		GitModelCacheTree left = crateCacheTree(zeroId(), getTreeLocation());
-		GitModelCacheTree right = crateCacheTree(
-				fromString("4c879313cd1332e594b1ad20b1485bdff9533034"),
-				getTreeLocation());
-
-		// when
-		boolean actual = left.equals(right);
-
-		// then
-		assertFalse(actual);
-	}
-
 	@Test public void shouldReturnNotEqualForDifferetnLocation()
 			throws Exception {
 		// given
-		GitModelCacheTree left = crateCacheTree(zeroId(), getTreeLocation());
-		GitModelCacheTree right = crateCacheTree(zeroId(), getTree1Location());
+		GitModelCacheTree left = crateCacheTree(getTreeLocation());
+		GitModelCacheTree right = crateCacheTree(getTree1Location());
 
 		// when
 		boolean actual = left.equals(right);
@@ -75,9 +61,8 @@ public class GitModelCacheTreeTest extends GitModelTestCase {
 	@Test public void shouldReturnNotEqualWhenComparingCacheTreeAndTree()
 			throws Exception {
 		// given
-		GitModelCacheTree left = crateCacheTree(zeroId(), getTreeLocation());
-		GitModelTree right = new GitModelTree(createModelCommit(), getCommit(
-				leftRepoFile, HEAD), null, null, null, null, getTreeLocation());
+		GitModelCacheTree left = crateCacheTree(getTreeLocation());
+		GitModelTree right = mock(GitModelTree.class);
 
 		// when
 		boolean actual = left.equals(right);
@@ -93,9 +78,17 @@ public class GitModelCacheTreeTest extends GitModelTestCase {
 				.addConfiguredRepository(leftRepoFile);
 	}
 
-	private GitModelCacheTree crateCacheTree(ObjectId repoId, IPath location)
+	private GitModelCacheTree crateCacheTree(IPath location)
 			throws Exception {
-		return new GitModelCacheTree(createModelCommit(), getCommit(
-				leftRepoFile, HEAD), repoId, null, location, null);
+		return new GitModelCacheTree(createModelCommit(),
+				lookupRepository(leftRepoFile), location, new FileModelFactory() {
+					public boolean isWorkingTree() {
+						return false;
+					}
+					public GitModelBlob createFileModel(GitModelObjectContainer objParent,
+							Repository repo, Change change, IPath fullPath) {
+						return null;
+					}
+				});
 	}
 }

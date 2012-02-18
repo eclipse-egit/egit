@@ -173,9 +173,8 @@ public class SynchronizeViewGitChangeSetModelTest extends
 
 		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-		SWTBotTreeItem commitTree = waitForNodeWithText(syncViewTree,
-				GitModelWorkingTree_workingTree);
-		assertEquals(1, syncViewTree.getAllItems().length);
+		SWTBotTreeItem commitTree = expandWorkingTreeNode(syncViewTree);
+		assertEquals(2, syncViewTree.getAllItems().length);
 		SWTBotTreeItem projectTree = waitForNodeWithText(commitTree,
 				EMPTY_PROJECT);
 		assertEquals(2, projectTree.getItems().length);
@@ -249,7 +248,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		// then
 		// asserts for Git Change Set model
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-		syncViewTree.expandNode(UIText.GitModelWorkingTree_workingTree);
+		expandWorkingTreeNode(syncViewTree);
 		assertEquals(2, syncViewTree.getAllItems().length);
 		SWTBotTreeItem proj1Node = syncViewTree.getAllItems()[0];
 		proj1Node.getItems()[0].expand();
@@ -275,8 +274,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 
 		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-		SWTBotTreeItem workingTree = syncViewTree
-				.expandNode(UIText.GitModelWorkingTree_workingTree);
+		SWTBotTreeItem workingTree = expandWorkingTreeNode(syncViewTree);
 		assertEquals(2, syncViewTree.getAllItems().length);
 		assertEquals(1, workingTree.getNodes(name).size());
 	}
@@ -300,8 +298,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 
 		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
-		SWTBotTreeItem workingTree = syncViewTree
-				.expandNode(UIText.GitModelWorkingTree_workingTree);
+		SWTBotTreeItem workingTree = expandWorkingTreeNode(syncViewTree);
 		assertEquals(2, syncViewTree.getAllItems().length);
 		workingTree.expand().getNode(name).doubleClick();
 
@@ -460,6 +457,21 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		// then
 		SWTBotTree syncViewTree = bot.viewByTitle("Synchronize").bot().tree();
 		assertEquals(8, syncViewTree.getAllItems().length);
+	}
+
+	private SWTBotTreeItem expandWorkingTreeNode(SWTBotTree syncViewTree) {
+		String workingTreeNodeNameString = getWorkingTreeNodeName(syncViewTree);
+		return syncViewTree.expandNode(workingTreeNodeNameString);
+	}
+
+	private String getWorkingTreeNodeName(SWTBotTree syncViewTree) {
+		for (SWTBotTreeItem item : syncViewTree.getAllItems()) {
+			String nodeName = item.getText();
+			if (nodeName.contains(UIText.GitModelWorkingTree_workingTree))
+				return nodeName;
+		}
+
+		return UIText.GitModelWorkingTree_workingTree;
 	}
 
 }
