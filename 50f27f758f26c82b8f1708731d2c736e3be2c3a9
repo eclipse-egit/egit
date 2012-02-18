@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AABOF3///sw\u003d",
+        "filename": "org.eclipse.egit.scm-feature/feature.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-02-18T01:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOF3///tU\u003d",
+      "revId": "50f27f758f26c82b8f1708731d2c736e3be2c3a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOF3///tQ\u003d",
         "filename": "org.eclipse.egit.scm-feature/pom.xml",
         "patchSetId": 2
@@ -47,6 +65,41 @@
       "writtenOn": "2012-02-18T00:24:00Z",
       "side": 1,
       "message": "update to 2.0.0-SNAPSHOT",
+      "revId": "50f27f758f26c82b8f1708731d2c736e3be2c3a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOF3///ss\u003d",
+        "filename": "org.eclipse.egit.scm-feature/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-02-18T01:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOF3///tQ\u003d",
+      "revId": "50f27f758f26c82b8f1708731d2c736e3be2c3a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOF3///so\u003d",
+        "filename": "org.eclipse.egit.scm.ui/.classpath",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-02-18T01:15:00Z",
+      "side": 1,
+      "message": "should be Java 5",
       "revId": "50f27f758f26c82b8f1708731d2c736e3be2c3a9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -70,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "AABOF3///sk\u003d",
+        "filename": "org.eclipse.egit.scm.ui/.settings/org.eclipse.jdt.core.prefs",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-02-18T01:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOF3///tA\u003d",
+      "revId": "50f27f758f26c82b8f1708731d2c736e3be2c3a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOF3///tM\u003d",
         "filename": "org.eclipse.egit.scm.ui/META-INF/MANIFEST.MF",
         "patchSetId": 2
@@ -81,6 +152,24 @@
       "writtenOn": "2012-02-18T00:24:00Z",
       "side": 1,
       "message": "update to 2.0.0.qualifier",
+      "revId": "50f27f758f26c82b8f1708731d2c736e3be2c3a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOF3///sg\u003d",
+        "filename": "org.eclipse.egit.scm.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-02-18T01:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOF3///tM\u003d",
       "revId": "50f27f758f26c82b8f1708731d2c736e3be2c3a9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -104,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "AABOF3///sc\u003d",
+        "filename": "org.eclipse.egit.scm.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-02-18T01:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOF3///tI\u003d",
+      "revId": "50f27f758f26c82b8f1708731d2c736e3be2c3a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOF3///s8\u003d",
         "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
         "patchSetId": 2
@@ -115,6 +222,24 @@
       "writtenOn": "2012-02-18T00:24:00Z",
       "side": 1,
       "message": "update to 2.0.0",
+      "revId": "50f27f758f26c82b8f1708731d2c736e3be2c3a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOF3///sY\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-02-18T01:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOF3///s8\u003d",
       "revId": "50f27f758f26c82b8f1708731d2c736e3be2c3a9",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
