@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "AABOF3///sM\u003d",
+        "filename": "org.eclipse.egit.scm.ui/.classpath",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-02-18T01:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOF3///so\u003d",
+      "revId": "50f27f758f26c82b8f1708731d2c736e3be2c3a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOF3///tA\u003d",
         "filename": "org.eclipse.egit.scm.ui/.settings/org.eclipse.jdt.core.prefs",
         "patchSetId": 2
