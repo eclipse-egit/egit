@@ -8,6 +8,7 @@
   <extension point="org.eclipse.team.core.repository">
 	<repository
        class="org.eclipse.egit.core.GitProvider"
+       fileSystemScheme="git"
        id="org.eclipse.egit.core.GitProvider"
        typeClass="org.eclipse.egit.core.internal.GitRepositoryProviderType">
 	</repository>
