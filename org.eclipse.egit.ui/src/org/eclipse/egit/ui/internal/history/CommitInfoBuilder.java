@@ -22,7 +22,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -91,16 +91,20 @@ public class CommitInfoBuilder {
 
 	private Color linesRemovedColor;
 
+	private final Collection<Ref> allRefs;
+
 	/**
 	 * @param db the repository
 	 * @param commit the commit the info should be shown for
 	 * @param currentDiffs list of current diffs
 	 * @param fill whether to fill the available space
+	 * @param allRefs all Ref's to examine regarding marge bases
 	 */
-	public CommitInfoBuilder(Repository db, PlotCommit commit, List<FileDiff> currentDiffs, boolean fill) {
+	public CommitInfoBuilder(Repository db, PlotCommit commit, List<FileDiff> currentDiffs, boolean fill, Collection<Ref> allRefs) {
 		this.db = db;
 		this.commit = commit;
 		this.fill = fill;
+		this.allRefs = allRefs;
 		this.currentDiffs = new ArrayList<FileDiff>(currentDiffs);
 	}
 
@@ -188,7 +192,7 @@ public class CommitInfoBuilder {
 			d.append(LF);
 		}
 
-		List<Ref> branches = getBranches();
+		List<Ref> branches = getBranches(allRefs);
 		if (!branches.isEmpty()) {
 			d.append(UIText.CommitMessageViewer_branches);
 			d.append(": "); //$NON-NLS-1$
@@ -308,10 +312,10 @@ public class CommitInfoBuilder {
 		addLink(d, to.getId().name(), styles, to);
 	}
 
-	/**
+	/*
 	 * @return List of heads from those current commit is reachable
 	 */
-	private List<Ref> getBranches() {
+	private List<Ref> getBranches(Collection<Ref> allRefs) {
 		RevWalk revWalk = new RevWalk(db);
 		List<Ref> result = new ArrayList<Ref>();
 
@@ -320,14 +324,10 @@ public class CommitInfoBuilder {
 			// search-for commit is found. This is quite likely, so optimize for this.
 			revWalk.markStart(Arrays.asList(commit.getParents()));
 			ObjectIdSubclassMap<ObjectId> cutOff = new ObjectIdSubclassMap<ObjectId>();
-			Map<String, Ref> refsMap = new HashMap<String, Ref>();
-			refsMap.putAll(db.getRefDatabase().getRefs(Constants.R_HEADS));
-			// add remote heads to search
-			refsMap.putAll(db.getRefDatabase().getRefs(Constants.R_REMOTES));
 
 			final int SKEW = 24*3600; // one day clock skew
 
-			for (Ref ref : refsMap.values()) {
+			for (Ref ref : allRefs) {
 				RevCommit headCommit = revWalk.parseCommit(ref.getObjectId());
 
 				// if commit is in the ref branch, then the tip of ref should be
