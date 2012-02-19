@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOFX///+s\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewFetchAndPushTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-19T13:13:33Z",
+      "side": 1,
+      "message": "style-nit: tailing white space",
+      "revId": "8f5390e68e134f651535843ed098ffcd782eae61",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX///+o\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewFetchAndPushTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-19T13:13:33Z",
+      "side": 1,
+      "message": "style-nit: tailing white space",
+      "revId": "8f5390e68e134f651535843ed098ffcd782eae61",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOFX///+k\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewFetchAndPushTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-19T13:13:33Z",
+      "side": 1,
+      "message": "style-nit: tailing white space",
+      "revId": "8f5390e68e134f651535843ed098ffcd782eae61",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
