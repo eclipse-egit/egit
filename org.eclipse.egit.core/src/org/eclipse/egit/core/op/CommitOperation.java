@@ -198,9 +198,8 @@ public class CommitOperation implements IEGitOperation {
 					actMonitor.worked(10);
 				} else if (commitWorkingDirChanges) {
 					// TODO commit -a
-				} else {
-					// TODO commit
-				}
+				} else
+					commit();
 			}
 
 		};
@@ -217,13 +216,12 @@ public class CommitOperation implements IEGitOperation {
 				addCommand.addFilepattern(path);
 				fileAdded = true;
 			}
-		if (fileAdded) {
+		if (fileAdded)
 			try {
 				addCommand.call();
 			} catch (NoFilepatternException e) {
 				throw new CoreException(Activator.error(e.getMessage(), e));
 			}
-		}
 	}
 
 	public ISchedulingRule getSchedulingRule() {
