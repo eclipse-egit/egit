@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOF3///o4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/blame/BlameRevision.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-19T14:35:18Z",
+      "side": 1,
+      "message": "Is this interface really required by this change ?\n\nIt seams that without implementing IAdaptable interface this change also works properly.",
+      "revId": "869a902839141682d1f0bbcdf7e8a4505493d380",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
