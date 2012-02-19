@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOF3///qA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIProjectUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-19T12:45:05Z",
+      "side": 1,
+      "message": "why don\u0027t you use here org.eclipse.core.runtime.Assert.isNotNull(Object) ?",
+      "revId": "1ecde6b46bdee6d56fe3c5d4b0c257b6053f96dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOF3///p4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIProjectUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-19T12:45:05Z",
+      "side": 1,
+      "message": "illegal state of what ?\n\nplease add appopriate exception message",
+      "revId": "1ecde6b46bdee6d56fe3c5d4b0c257b6053f96dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOF3///p8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIProjectUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-19T12:45:05Z",
+      "side": 1,
+      "message": "illegal state of what ?\n\nplease add appopriate exception message",
+      "revId": "1ecde6b46bdee6d56fe3c5d4b0c257b6053f96dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOF3///p0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIProjectUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-02-19T12:45:05Z",
+      "side": 1,
+      "message": "illegal state of what ?\n\nplease add appopriate exception message",
+      "revId": "1ecde6b46bdee6d56fe3c5d4b0c257b6053f96dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
