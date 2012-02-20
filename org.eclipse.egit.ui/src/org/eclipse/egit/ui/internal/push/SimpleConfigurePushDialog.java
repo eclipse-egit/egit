@@ -582,7 +582,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 		addRefSpec.setEnabled(anyUri);
 		addRefSpecAdvanced.setEnabled(anyUri);
 		changeCommonUri.setEnabled(!anyPushUri);
-		deleteCommonUri.setEnabled(!anyPushUri);
+		deleteCommonUri.setEnabled(!anyPushUri && anyUri);
 		commonUriText.setEnabled(!anyPushUri);
 
 		getButton(OK).setEnabled(anyUri);
