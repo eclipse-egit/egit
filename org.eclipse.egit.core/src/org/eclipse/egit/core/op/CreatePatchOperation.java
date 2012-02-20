@@ -9,6 +9,7 @@
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
  *    Benjamin Muskalla (Tasktop Technologies) - extract into operation
+ *    Tomasz Zarna (IBM Corporation) - bug 370332
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -35,6 +36,7 @@ import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
 
 /**
  * Creates a patch for a specific commit
@@ -111,12 +113,13 @@ public class CreatePatchOperation implements IEGitOperation {
 	private DiffHeaderFormat headerFormat = DiffHeaderFormat.EMAIL;
 
 	// the encoding for the currently processed file
-	 private String currentEncoding = null;
+	private String currentEncoding = null;
 
 	private String patchContent;
 
 	private int contextLines = DEFAULT_CONTEXT_LINES;
 
+	private TreeFilter pathFilter = null;
 	/**
 	 * Creates the new operation.
 	 *
@@ -164,6 +167,7 @@ public class CreatePatchOperation implements IEGitOperation {
 			writeGitPatchHeader(sb);
 
 		diffFmt.setRepository(repository);
+		diffFmt.setPathFilter(pathFilter);
 
 		try {
 			if (commit != null) {
@@ -185,11 +189,10 @@ public class CreatePatchOperation implements IEGitOperation {
 					currentEncoding = CompareCoreUtils.getResourceEncoding(repository, path);
 					diffFmt.format(ent);
 				}
-			} else {
+			} else
 				diffFmt.format(
 						new DirCacheIterator(repository.readDirCache()),
 						new FileTreeIterator(repository));
-			}
 		} catch (IOException e) {
 			Activator.logError(CoreText.CreatePatchOperation_patchFileCouldNotBeWritten, e);
 		}
@@ -315,4 +318,12 @@ public class CreatePatchOperation implements IEGitOperation {
 		return null;
 	}
 
+	/**
+	 * Set the filter to produce patch for specified paths only.
+	 *
+	 * @param pathFilter the filter
+	 */
+	public void setPathFilter(TreeFilter pathFilter) {
+		this.pathFilter = pathFilter;
+	}
 }
