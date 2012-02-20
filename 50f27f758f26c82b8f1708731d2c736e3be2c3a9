@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOF3///m0\u003d",
+        "filename": "org.eclipse.egit.core/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-02-20T13:03:18Z",
+      "side": 1,
+      "message": "Nice catch! After having a closer look at Platform/Team code it turned out to be a bug in org.eclipse.team.ui.TeamUI.getPages(...), see bug 372020. A file system is not required by the import operation whatsoever, the scheme is only used to check if the SCM URL can be processed by the given provider.",
+      "parentUuid": "AABOF3///v8\u003d",
+      "revId": "50f27f758f26c82b8f1708731d2c736e3be2c3a9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOF3///tU\u003d",
         "filename": "org.eclipse.egit.scm-feature/feature.xml",
         "patchSetId": 2
