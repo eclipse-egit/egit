@@ -185,7 +185,10 @@ public class ConfigurationEditorComponent {
 			locationLabel
 					.setText(UIText.ConfigurationEditorComponent_ConfigLocationLabel);
 			// GridDataFactory.fillDefaults().applyTo(locationLabel);
-			location = new Text(locationPanel, SWT.BORDER);
+			int locationStyle = SWT.BORDER;
+			if (!changeablePath)
+				locationStyle |= SWT.READ_ONLY;
+			location = new Text(locationPanel, locationStyle);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 					.grab(true, false).applyTo(location);
 			if (changeablePath) {
