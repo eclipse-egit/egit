@@ -16,6 +16,24 @@
       "revId": "55ae89c14a08a446e5d720a51638e5f846eab1bc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOF3///mM\u003d",
+        "filename": "org.eclipse.egit.core/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-02-20T15:28:09Z",
+      "side": 1,
+      "message": "if your inline comment is shown as draft on patchset #2 you need to click the review button on the patchset #2 this draft is residing in and click \"Publish Comments\", this should publish this draft comment",
+      "parentUuid": "AABOF3///mc\u003d",
+      "revId": "55ae89c14a08a446e5d720a51638e5f846eab1bc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
