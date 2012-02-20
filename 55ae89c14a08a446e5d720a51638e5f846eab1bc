@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOF3///mc\u003d",
+        "filename": "org.eclipse.egit.core/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2012-02-20T14:19:30Z",
+      "side": 1,
+      "message": "As original comment had been places into patcheset #2 and stays as a Draft (forever? why?)...\n\nIf fix for 372020 will break current implementation, does it make sense to implement org.eclipse.core.filesystem.filesystems right now?",
+      "revId": "55ae89c14a08a446e5d720a51638e5f846eab1bc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
