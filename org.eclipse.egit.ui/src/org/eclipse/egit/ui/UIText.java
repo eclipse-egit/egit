@@ -520,6 +520,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_SetAsBaselineMenuLabel;
 
 	/** */
+	public static String GitHistoryPage_ShowAdditionalRefsMenuLabel;
+
+	/** */
 	public static String GitHistoryPage_ShowAllBranchesMenuLabel;
 
 	/** */
@@ -1645,6 +1648,12 @@ public class UIText extends NLS {
 	public static String HistoryPreferencePage_MaxTagLength;
 
 	/** */
+	public static String HistoryPreferencePage_toggleAdditionalRefs;
+
+	/** */
+	public static String HistoryPreferencePage_toggleAllBranches;
+
+	/** */
 	public static String PullOperationUI_ConnectionProblem;
 
 	/** */
@@ -2345,6 +2354,12 @@ public class UIText extends NLS {
 
 	/** */
 	public static String FetchDestinationPage_TrackingBranchNotFoundMessage;
+
+	/** */
+	public static String FetchGerritChangePage_ActivateAdditionalRefsButton;
+
+	/** */
+	public static String FetchGerritChangePage_ActivateAdditionalRefsTooltip;
 
 	/** */
 	public static String FetchGerritChangePage_AfterFetchGroup;
