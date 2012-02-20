@@ -3785,9 +3785,6 @@ public class UIText extends NLS {
 	public static String SimpleConfigureFetchDialog_AddRefSpecButton;
 
 	/** */
-	public static String SimpleConfigureFetchDialog_AdvancedCompositeButton;
-
-	/** */
 	public static String SimpleConfigureFetchDialog_BranchLabel;
 
 	/** */
