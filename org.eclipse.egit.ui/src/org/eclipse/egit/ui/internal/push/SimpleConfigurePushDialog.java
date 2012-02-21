@@ -28,6 +28,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -55,7 +56,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -153,13 +153,12 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 			return null;
 
 		String remoteName;
-		if (ObjectId.isId(branch)) {
+		if (ObjectId.isId(branch))
 			remoteName = Constants.DEFAULT_REMOTE_NAME;
-		} else {
+		else
 			remoteName = repository.getConfig().getString(
 					ConfigConstants.CONFIG_BRANCH_SECTION, branch,
 					ConfigConstants.CONFIG_REMOTE_SECTION);
-		}
 
 		// check if we find the configured and default Remotes
 		List<RemoteConfig> allRemotes;
@@ -211,22 +210,14 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 		main.setLayout(new GridLayout(1, false));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
 
-		Composite repositoryGroup = new Composite(main, SWT.SHADOW_ETCHED_IN);
-		repositoryGroup.setLayout(new GridLayout(2, false));
-		GridDataFactory.fillDefaults().grab(true, true)
-				.applyTo(repositoryGroup);
-		Label repositoryLabel = new Label(repositoryGroup, SWT.NONE);
-		repositoryLabel
-				.setText(UIText.SimpleConfigurePushDialog_RepositoryLabel);
-		Text repositoryText = new Text(repositoryGroup, SWT.BORDER
-				| SWT.READ_ONLY);
-		GridDataFactory.fillDefaults().grab(true, false)
-				.applyTo(repositoryText);
-		repositoryText.setText(Activator.getDefault().getRepositoryUtil()
-				.getRepositoryName(repository));
-
 		if (showBranchInfo) {
-			Label branchLabel = new Label(repositoryGroup, SWT.NONE);
+			Composite branchArea = new Composite(main, SWT.NONE);
+			GridLayoutFactory.swtDefaults().numColumns(2).equalWidth(false)
+					.applyTo(branchArea);
+			GridDataFactory.fillDefaults().grab(true, false)
+					.applyTo(branchArea);
+
+			Label branchLabel = new Label(branchArea, SWT.NONE);
 			branchLabel.setText(UIText.SimpleConfigurePushDialog_BranchLabel);
 			String branch;
 			try {
@@ -234,31 +225,17 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 			} catch (IOException e2) {
 				branch = null;
 			}
-			if (branch == null || ObjectId.isId(branch)) {
+			if (branch == null || ObjectId.isId(branch))
 				branch = UIText.SimpleConfigurePushDialog_DetachedHeadMessage;
-			}
-			Text branchText = new Text(repositoryGroup, SWT.BORDER
-					| SWT.READ_ONLY);
+			Text branchText = new Text(branchArea, SWT.BORDER | SWT.READ_ONLY);
 			GridDataFactory.fillDefaults().grab(true, false)
 					.applyTo(branchText);
 			branchText.setText(branch);
 		}
 
-		Group remoteGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
-		remoteGroup.setLayout(new GridLayout());
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(remoteGroup);
-		remoteGroup.setText(NLS.bind(
-				UIText.SimpleConfigurePushDialog_RemoteGroupTitle, config
-						.getName()));
+		addDefaultOriginWarningIfNeeded(main);
 
-		addDefaultOriginWarningIfNeeded(remoteGroup);
-
-		Group uriGroup = new Group(remoteGroup, SWT.SHADOW_ETCHED_IN);
-		uriGroup.setLayout(new GridLayout(1, false));
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(uriGroup);
-		uriGroup.setText(UIText.SimpleConfigurePushDialog_UriGroup);
-
-		final Composite sameUriDetails = new Composite(uriGroup, SWT.NONE);
+		final Composite sameUriDetails = new Composite(main, SWT.NONE);
 		sameUriDetails.setLayout(new GridLayout(4, false));
 		GridDataFactory.fillDefaults().grab(true, false)
 				.applyTo(sameUriDetails);
@@ -280,9 +257,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 				if (new WizardDialog(getShell(), wiz).open() == Window.OK) {
 					if (commonUriText.getText().length() > 0)
 						try {
-							config
-									.removeURI(new URIish(commonUriText
-											.getText()));
+							config.removeURI(new URIish(commonUriText.getText()));
 						} catch (URISyntaxException ex) {
 							Activator.handleError(ex.getMessage(), ex, true);
 						}
@@ -311,18 +286,34 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 			}
 		});
 
-		final Composite pushUriDetails = new Composite(uriGroup, SWT.NONE);
-		pushUriDetails.setLayout(new GridLayout(3, false));
+		ExpandableComposite pushUriArea = new ExpandableComposite(main,
+				ExpandableComposite.TREE_NODE
+						| ExpandableComposite.CLIENT_INDENT);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(pushUriArea);
+		pushUriArea.setExpanded(!config.getPushURIs().isEmpty());
+		pushUriArea.addExpansionListener(new ExpansionAdapter() {
+
+			public void expansionStateChanged(ExpansionEvent e) {
+				main.layout(true, true);
+			}
+		});
+		pushUriArea.setText(UIText.SimpleConfigurePushDialog_PushUrisLabel);
+		final Composite pushUriDetails = new Composite(pushUriArea, SWT.NONE);
+		pushUriArea.setClient(pushUriDetails);
+		pushUriDetails.setLayout(new GridLayout(2, false));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(pushUriDetails);
-		Label urisLabel = new Label(pushUriDetails, SWT.NONE);
-		urisLabel.setText(UIText.SimpleConfigurePushDialog_PushUrisLabel);
-		GridDataFactory.fillDefaults().span(3, 1).applyTo(urisLabel);
 		uriViewer = new TableViewer(pushUriDetails, SWT.BORDER | SWT.MULTI);
-		GridDataFactory.fillDefaults().grab(true, true).span(3, 1).minSize(
-				SWT.DEFAULT, 30).applyTo(uriViewer.getTable());
+		GridDataFactory.fillDefaults().grab(true, true)
+				.minSize(SWT.DEFAULT, 30).applyTo(uriViewer.getTable());
 		uriViewer.setContentProvider(ArrayContentProvider.getInstance());
-		Button addUri = new Button(pushUriDetails, SWT.PUSH);
+
+		final Composite uriButtonArea = new Composite(pushUriDetails, SWT.NONE);
+		GridLayoutFactory.fillDefaults().applyTo(uriButtonArea);
+		GridDataFactory.fillDefaults().grab(false, true).applyTo(uriButtonArea);
+
+		Button addUri = new Button(uriButtonArea, SWT.PUSH);
 		addUri.setText(UIText.SimpleConfigurePushDialog_AddPushUriButton);
+		GridDataFactory.fillDefaults().applyTo(addUri);
 		addUri.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -334,8 +325,10 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 			}
 
 		});
-		final Button changeUri = new Button(pushUriDetails, SWT.PUSH);
+
+		final Button changeUri = new Button(uriButtonArea, SWT.PUSH);
 		changeUri.setText(UIText.SimpleConfigurePushDialog_ChangePushUriButton);
+		GridDataFactory.fillDefaults().applyTo(changeUri);
 		changeUri.setEnabled(false);
 		changeUri.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -351,8 +344,9 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 				}
 			}
 		});
-		final Button deleteUri = new Button(pushUriDetails, SWT.PUSH);
+		final Button deleteUri = new Button(uriButtonArea, SWT.PUSH);
 		deleteUri.setText(UIText.SimpleConfigurePushDialog_DeletePushUriButton);
+		GridDataFactory.fillDefaults().applyTo(deleteUri);
 		deleteUri.setEnabled(false);
 		deleteUri.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -372,68 +366,48 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 			}
 		});
 
-		final Group refSpecGroup = new Group(remoteGroup, SWT.SHADOW_ETCHED_IN);
+		final Group refSpecGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(refSpecGroup);
 		refSpecGroup.setText(UIText.SimpleConfigurePushDialog_RefMappingGroup);
-		refSpecGroup.setLayout(new GridLayout(5, false));
-
-		ExpandableComposite advanced = new ExpandableComposite(refSpecGroup,
-				ExpandableComposite.TREE_NODE
-						| ExpandableComposite.CLIENT_INDENT);
-		if (advancedMode)
-			advanced.setExpanded(true);
-		advanced.setText(UIText.SimpleConfigurePushDialog_AdvancedButton);
-		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL)
-				.span(5, 1).grab(true, false).applyTo(advanced);
-		advanced.addExpansionListener(new ExpansionAdapter() {
-			@Override
-			public void expansionStateChanged(ExpansionEvent e) {
-				Activator.getDefault().getPreferenceStore().setValue(
-						ADVANCED_MODE_PREFERENCE, e.getState());
-				GridData data = (GridData) changeRefSpec.getLayoutData();
-				data.exclude = !e.getState();
-				changeRefSpec.setVisible(!data.exclude);
-				refSpecGroup.layout(true);
-			}
-		});
-
-		Label refSpecLabel = new Label(refSpecGroup, SWT.NONE);
-		refSpecLabel.setText(UIText.SimpleConfigurePushDialog_RefSpecLabel);
-		GridDataFactory.fillDefaults().span(5, 1).applyTo(refSpecLabel);
+		refSpecGroup.setLayout(new GridLayout(2, false));
 
 		specViewer = new TableViewer(refSpecGroup, SWT.BORDER | SWT.MULTI);
 		specViewer.setContentProvider(ArrayContentProvider.getInstance());
-		GridDataFactory.fillDefaults().span(5, 1).grab(true, true).minSize(
-				SWT.DEFAULT, 30).applyTo(specViewer.getTable());
+		GridDataFactory.fillDefaults().grab(true, true)
+				.minSize(SWT.DEFAULT, 30).applyTo(specViewer.getTable());
 		specViewer.getTable().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.stateMask == SWT.MOD1 && e.keyCode == 'v') {
+				if (e.stateMask == SWT.MOD1 && e.keyCode == 'v')
 					doPaste();
-				}
 			}
 		});
 
-		addRefSpec = new Button(refSpecGroup, SWT.PUSH);
+		final Composite refButtonArea = new Composite(refSpecGroup, SWT.NONE);
+		GridLayoutFactory.fillDefaults().applyTo(refButtonArea);
+		GridDataFactory.fillDefaults().grab(false, true).applyTo(refButtonArea);
+
+		addRefSpec = new Button(refButtonArea, SWT.PUSH);
 		addRefSpec.setText(UIText.SimpleConfigurePushDialog_AddRefSpecButton);
+		GridDataFactory.fillDefaults().applyTo(addRefSpec);
 		addRefSpec.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				RefSpecDialog dlg = new RefSpecDialog(getShell(), repository,
 						config, true);
-				if (dlg.open() == Window.OK) {
+				if (dlg.open() == Window.OK)
 					config.addPushRefSpec(dlg.getSpec());
-				}
 				updateControls();
 			}
 		});
 
-		changeRefSpec = new Button(refSpecGroup, SWT.PUSH);
+		changeRefSpec = new Button(refButtonArea, SWT.PUSH);
 		changeRefSpec
 				.setText(UIText.SimpleConfigurePushDialog_ChangeRefSpecButton);
+		GridDataFactory.fillDefaults().applyTo(changeRefSpec);
 		changeRefSpec.setEnabled(false);
-		GridDataFactory.fillDefaults().exclude(!advancedMode).applyTo(
-				changeRefSpec);
+		GridDataFactory.fillDefaults().exclude(!advancedMode)
+				.applyTo(changeRefSpec);
 		changeRefSpec.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -448,24 +422,24 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 				updateControls();
 			}
 		});
-		final Button deleteRefSpec = new Button(refSpecGroup, SWT.PUSH);
+		final Button deleteRefSpec = new Button(refButtonArea, SWT.PUSH);
 		deleteRefSpec
 				.setText(UIText.SimpleConfigurePushDialog_DeleteRefSpecButton);
+		GridDataFactory.fillDefaults().applyTo(deleteRefSpec);
 		deleteRefSpec.setEnabled(false);
 		deleteRefSpec.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				for (Object spec : ((IStructuredSelection) specViewer
-						.getSelection()).toArray()) {
+						.getSelection()).toArray())
 					config.removePushRefSpec((RefSpec) spec);
-
-				}
 				updateControls();
 			}
 		});
 
-		final Button copySpec = new Button(refSpecGroup, SWT.PUSH);
+		final Button copySpec = new Button(refButtonArea, SWT.PUSH);
 		copySpec.setText(UIText.SimpleConfigurePushDialog_CopyRefSpecButton);
+		GridDataFactory.fillDefaults().applyTo(copySpec);
 		copySpec.setEnabled(false);
 		copySpec.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -482,8 +456,9 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 			}
 		});
 
-		final Button pasteSpec = new Button(refSpecGroup, SWT.PUSH);
+		final Button pasteSpec = new Button(refButtonArea, SWT.PUSH);
 		pasteSpec.setText(UIText.SimpleConfigurePushDialog_PasteRefSpecButton);
+		GridDataFactory.fillDefaults().applyTo(pasteSpec);
 		pasteSpec.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -491,13 +466,10 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 			}
 		});
 
-		addRefSpecAdvanced = new Button(advanced, SWT.PUSH);
-		advanced.setClient(addRefSpecAdvanced);
-		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL)
-				.span(3, 1).applyTo(addRefSpecAdvanced);
-
+		addRefSpecAdvanced = new Button(refButtonArea, SWT.PUSH);
 		addRefSpecAdvanced
 				.setText(UIText.SimpleConfigurePushDialog_EditAdvancedButton);
+		GridDataFactory.fillDefaults().applyTo(addRefSpecAdvanced);
 		addRefSpecAdvanced.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -539,11 +511,8 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 	@Override
 	public void create() {
 		super.create();
-		String repoName = Activator.getDefault().getRepositoryUtil()
-				.getRepositoryName(repository);
-
 		setTitle(NLS.bind(UIText.SimpleConfigurePushDialog_DialogTitle,
-				repoName, config.getName()));
+				config.getName()));
 		setMessage(UIText.SimpleConfigurePushDialog_DialogMessage);
 
 		updateControls();
@@ -557,11 +526,10 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 		if (!anyUri)
 			setErrorMessage(UIText.SimpleConfigurePushDialog_MissingUriMessage);
 
-		if (anyFetchUri) {
+		if (anyFetchUri)
 			commonUriText.setText(config.getURIs().get(0).toPrivateString());
-		} else {
+		else
 			commonUriText.setText(""); //$NON-NLS-1$
-		}
 		uriViewer.getTable().setEnabled(anyPushUri);
 		if (anyPushUri)
 			uriViewer.setInput(config.getPushURIs());
@@ -635,8 +603,8 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 		}
 		if (buttonId == REVERT) {
 			try {
-				config = new RemoteConfig(repository.getConfig(), config
-						.getName());
+				config = new RemoteConfig(repository.getConfig(),
+						config.getName());
 				updateControls();
 			} catch (URISyntaxException e) {
 				Activator.handleError(e.getMessage(), e, true);
@@ -650,7 +618,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 			} catch (IOException e) {
 				Activator.handleError(e.getMessage(), e, true);
 			}
-			if (buttonId == OK) {
+			if (buttonId == OK)
 				try {
 					new ProgressMonitorDialog(getShell()).run(false, true,
 							new IRunnableWithProgress() {
@@ -662,7 +630,8 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 											.getPreferenceStore()
 											.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
 									PushOperationUI op = new PushOperationUI(
-											repository, config.getName(), timeout, false);
+											repository, config.getName(),
+											timeout, false);
 									op.start();
 								}
 							});
@@ -671,7 +640,6 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 				} catch (InterruptedException e) {
 					Activator.handleError(e.getMessage(), e, true);
 				}
-			}
 			okPressed();
 			return;
 		}
@@ -683,13 +651,12 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 		try {
 			String content = (String) clipboard.getContents(TextTransfer
 					.getInstance());
-			if (content == null) {
+			if (content == null)
 				MessageDialog
 						.openConfirm(
 								getShell(),
 								UIText.SimpleConfigurePushDialog_EmptyClipboardDialogTitle,
 								UIText.SimpleConfigurePushDialog_EmptyClipboardDialogMessage);
-			}
 			try {
 				RefSpec spec = new RefSpec(content);
 				Ref source;
