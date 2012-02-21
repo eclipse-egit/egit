@@ -19,6 +19,7 @@ import org.eclipse.egit.ui.common.GitImportRepoWizard;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.common.RepoRemoteBranchesPage;
 import org.eclipse.egit.ui.common.WorkingCopyPage;
+import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.Constants;
@@ -28,6 +29,7 @@ import org.eclipse.jgit.util.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 
@@ -89,6 +91,11 @@ public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 		// No project has been imported
 		assertEquals(0,
 				ResourcesPlugin.getWorkspace().getRoot().getProjects().length);
+	}
+
+	@BeforeClass
+	public static void disableSecureStorage() {
+		SecurePreferencesFactory.getDefault().removeNode();
 	}
 
 	@Before
