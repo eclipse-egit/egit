@@ -40,6 +40,10 @@ import org.eclipse.ui.PlatformUI;
  * Executes the RevertCommit
  */
 public class RevertHandler extends AbstractHistoryCommandHandler {
+	/**
+	 * Command id
+	 */
+	public static final String ID = "org.eclipse.egit.ui.history.Revert"; //$NON-NLS-1$
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Repository repo = getRepository(event);
@@ -82,7 +86,14 @@ public class RevertHandler extends AbstractHistoryCommandHandler {
 		return null;
 	}
 
-	private void showFailureDialog(final Shell shell, final RevCommit commit,
+	/**
+	 * Shows a dialog with failing result of revert.
+	 *
+	 * @param shell the shell to parent the dialog from
+	 * @param commit the commit
+	 * @param result the failing result
+	 */
+	public static void showFailureDialog(final Shell shell, final RevCommit commit,
 			final MergeResult result) {
 		shell.getDisplay().syncExec(new Runnable() {
 
@@ -92,13 +103,18 @@ public class RevertHandler extends AbstractHistoryCommandHandler {
 		});
 	}
 
-	private void showRevertedDialog(final Shell shell) {
+	/**
+	 * Shows the "No revert performed" dialog.
+	 *
+	 * @param shell the shell to parent the dialog from
+	 */
+	public static void showRevertedDialog(final Shell shell) {
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
 			public void run() {
 				MessageDialog.openWarning(shell,
 						UIText.RevertHandler_NoRevertTitle,
-						UIText.RevertHandler_AlreadyRevertedMessae);
+						UIText.RevertHandler_AlreadyRevertedMessage);
 			}
 		});
 	}
