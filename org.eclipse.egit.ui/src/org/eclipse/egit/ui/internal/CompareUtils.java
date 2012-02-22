@@ -283,7 +283,7 @@ public class CompareUtils {
 	 */
 	public static class ReuseCompareEditorAction extends Action implements
 			IPreferenceChangeListener, IWorkbenchAction {
-		IEclipsePreferences node = new InstanceScope().getNode(TEAM_UI_PLUGIN);
+		IEclipsePreferences node = InstanceScope.INSTANCE.getNode(TEAM_UI_PLUGIN);
 
 		/**
 		 * Default constructor
@@ -310,14 +310,14 @@ public class CompareUtils {
 	}
 
 	private static boolean isReuseOpenEditor() {
-		boolean defaultReuse = new DefaultScope().getNode(TEAM_UI_PLUGIN)
+		boolean defaultReuse = DefaultScope.INSTANCE.getNode(TEAM_UI_PLUGIN)
 				.getBoolean(REUSE_COMPARE_EDITOR_PREFID, false);
-		return new InstanceScope().getNode(TEAM_UI_PLUGIN).getBoolean(
+		return InstanceScope.INSTANCE.getNode(TEAM_UI_PLUGIN).getBoolean(
 				REUSE_COMPARE_EDITOR_PREFID, defaultReuse);
 	}
 
 	private static void setReuseOpenEditor(boolean value) {
-		new InstanceScope().getNode(TEAM_UI_PLUGIN).putBoolean(
+		InstanceScope.INSTANCE.getNode(TEAM_UI_PLUGIN).putBoolean(
 				REUSE_COMPARE_EDITOR_PREFID, value);
 	}
 

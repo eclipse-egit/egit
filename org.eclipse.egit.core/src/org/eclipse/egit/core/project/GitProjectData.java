@@ -269,8 +269,8 @@ public class GitProjectData {
 	 */
 	public static void reconfigureWindowCache() {
 		final WindowCacheConfig c = new WindowCacheConfig();
-		IEclipsePreferences d = new DefaultScope().getNode(Activator.getPluginId());
-		IEclipsePreferences p = new InstanceScope().getNode(Activator.getPluginId());
+		IEclipsePreferences d = DefaultScope.INSTANCE.getNode(Activator.getPluginId());
+		IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator.getPluginId());
 		c.setPackedGitLimit(p.getInt(GitCorePreferences.core_packedGitLimit, d.getInt(GitCorePreferences.core_packedGitLimit, 0)));
 		c.setPackedGitWindowSize(p.getInt(GitCorePreferences.core_packedGitWindowSize, d.getInt(GitCorePreferences.core_packedGitWindowSize, 0)));
 		c.setPackedGitMMAP(p.getBoolean(GitCorePreferences.core_packedGitMMAP, d.getBoolean(GitCorePreferences.core_packedGitMMAP, false)));

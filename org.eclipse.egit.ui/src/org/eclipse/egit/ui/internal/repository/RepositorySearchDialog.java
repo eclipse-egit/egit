@@ -100,7 +100,7 @@ public class RepositorySearchDialog extends WizardPage {
 	private final ResourceManager fImageCache = new LocalResourceManager(
 			JFaceResources.getResources());
 
-	private final IEclipsePreferences prefs = new InstanceScope()
+	private final IEclipsePreferences prefs = InstanceScope.INSTANCE
 			.getNode(Activator.getPluginId());
 
 	private static final class ContentProvider implements ITreeContentProvider {
