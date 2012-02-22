@@ -139,9 +139,11 @@ class DecoratableResourceAdapter extends DecoratableResource {
 		Set<String> conflicting = indexDiffData.getConflicting();
 		conflicts = containsPrefix(conflicting, repoRelativePath);
 
-		// locally modified
+		// locally modified / untracked
 		Set<String> modified = indexDiffData.getModified();
-		dirty = containsPrefix(modified, repoRelativePath);
+		Set<String> untracked = indexDiffData.getUntracked();
+		dirty = containsPrefix(modified, repoRelativePath)
+				|| containsPrefix(untracked, repoRelativePath);
 	}
 
 	private String makeRepoRelative(IResource res) {
