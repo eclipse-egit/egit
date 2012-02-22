@@ -13,12 +13,18 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.List;
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.preferences.ConfigurationScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.egit.ui.common.GitImportRepoWizard;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.common.RepoRemoteBranchesPage;
 import org.eclipse.egit.ui.common.WorkingCopyPage;
+import org.eclipse.equinox.internal.security.storage.PasswordProviderSelector;
+import org.eclipse.equinox.internal.security.storage.PasswordProviderSelector.ExtStorageModule;
+import org.eclipse.equinox.internal.security.storage.friends.IStorageConstants;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.Constants;
@@ -28,6 +34,7 @@ import org.eclipse.jgit.util.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 
@@ -89,6 +96,18 @@ public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 		// No project has been imported
 		assertEquals(0,
 				ResourcesPlugin.getWorkspace().getRoot().getProjects().length);
+	}
+
+	@BeforeClass
+	public static void disableSecureStoragePasswordProviders() {
+		List availableModules = PasswordProviderSelector.getInstance().findAvailableModules(null);
+		StringBuffer tmp = new StringBuffer();
+		for (Object module : availableModules) {
+			ExtStorageModule storageModule = (ExtStorageModule) module;
+			tmp.append(storageModule.moduleID).append(",");
+		}
+		IEclipsePreferences node = ConfigurationScope.INSTANCE.getNode("org.eclipse.equinox.security");
+		node.put(IStorageConstants.DISABLED_PROVIDERS_KEY, tmp.toString());
 	}
 
 	@Before
