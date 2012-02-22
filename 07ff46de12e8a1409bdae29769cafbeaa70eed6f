@@ -16,6 +16,24 @@
       "revId": "07ff46de12e8a1409bdae29769cafbeaa70eed6f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOF3///go\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTestBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-02-22T20:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOF3///g4\u003d",
+      "revId": "07ff46de12e8a1409bdae29769cafbeaa70eed6f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
