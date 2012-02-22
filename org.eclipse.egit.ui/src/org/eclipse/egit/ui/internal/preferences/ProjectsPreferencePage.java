@@ -30,7 +30,7 @@ public class ProjectsPreferencePage extends FieldEditorPreferencePage implements
 	public ProjectsPreferencePage() {
 		super(GRID);
 		ScopedPreferenceStore store = new ScopedPreferenceStore(
-				new InstanceScope(), Activator.getPluginId());
+				InstanceScope.INSTANCE, Activator.getPluginId());
 		setPreferenceStore(store);
 	}
 

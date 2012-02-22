@@ -253,10 +253,9 @@ public class GitProjectData {
 	}
 
 	private synchronized static void uncache(final IProject p) {
-		if (projectDataCache.remove(p) != null) {
+		if (projectDataCache.remove(p) != null)
 			trace("uncacheDataFor(" //$NON-NLS-1$
 				+ p.getName() + ")"); //$NON-NLS-1$
-		}
 	}
 
 	private synchronized static GitProjectData lookup(final IProject p) {
@@ -268,8 +267,8 @@ public class GitProjectData {
 	 */
 	public static void reconfigureWindowCache() {
 		final WindowCacheConfig c = new WindowCacheConfig();
-		IEclipsePreferences d = new DefaultScope().getNode(Activator.getPluginId());
-		IEclipsePreferences p = new InstanceScope().getNode(Activator.getPluginId());
+		IEclipsePreferences d = DefaultScope.INSTANCE.getNode(Activator.getPluginId());
+		IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator.getPluginId());
 		c.setPackedGitLimit(p.getInt(GitCorePreferences.core_packedGitLimit, d.getInt(GitCorePreferences.core_packedGitLimit, 0)));
 		c.setPackedGitWindowSize(p.getInt(GitCorePreferences.core_packedGitWindowSize, d.getInt(GitCorePreferences.core_packedGitWindowSize, 0)));
 		c.setPackedGitMMAP(p.getBoolean(GitCorePreferences.core_packedGitMMAP, d.getBoolean(GitCorePreferences.core_packedGitMMAP, false)));
@@ -324,7 +323,7 @@ public class GitProjectData {
 				continue; // Not fully mapped yet?
 
 			final IResource dotGit = c.findMember(Constants.DOT_GIT);
-			if (dotGit != null) {
+			if (dotGit != null)
 				try {
 					final Repository r = rm.getRepository();
 					final File dotGitDir = dotGit.getLocation().toFile()
@@ -336,7 +335,6 @@ public class GitProjectData {
 				} catch (IOException err) {
 					throw new CoreException(Activator.error(CoreText.Error_CanonicalFile, err));
 				}
-			}
 		}
 	}
 
@@ -402,16 +400,14 @@ public class GitProjectData {
 			final FileOutputStream o = new FileOutputStream(tmp);
 			try {
 				final Properties p = new Properties();
-				for (final RepositoryMapping repoMapping : mappings) {
+				for (final RepositoryMapping repoMapping : mappings)
 					repoMapping.store(p);
-				}
 				p.store(o, "GitProjectData");  //$NON-NLS-1$
 				ok = true;
 			} finally {
 				o.close();
-				if (!ok && tmp.exists()) {
+				if (!ok && tmp.exists())
 					FileUtils.delete(tmp);
-				}
 			}
 			if (dat.exists())
 				FileUtils.delete(dat);
@@ -449,9 +445,8 @@ public class GitProjectData {
 			mappings.clear();
 			for (final Object keyObj : p.keySet()) {
 				final String key = keyObj.toString();
-				if (RepositoryMapping.isInitialKey(key)) {
+				if (RepositoryMapping.isInitialKey(key))
 					mappings.add(new RepositoryMapping(p, key));
-				}
 			}
 		} finally {
 			o.close();
@@ -463,9 +458,8 @@ public class GitProjectData {
 
 	private void remapAll() {
 		protectedResources.clear();
-		for (final RepositoryMapping repoMapping : mappings) {
+		for (final RepositoryMapping repoMapping : mappings)
 			map(repoMapping);
-		}
 	}
 
 	private void map(final RepositoryMapping m) {
@@ -476,11 +470,10 @@ public class GitProjectData {
 
 		m.clear();
 		r = getProject().findMember(m.getContainerPath());
-		if (r instanceof IContainer) {
+		if (r instanceof IContainer)
 			c = (IContainer) r;
-		} else if (r != null) {
+		else if (r != null)
 			c = (IContainer) r.getAdapter(IContainer.class);
-		}
 
 		if (c == null) {
 			Activator.logError(CoreText.GitProjectData_mappedResourceGone,
@@ -523,9 +516,8 @@ public class GitProjectData {
 		}
 
 		dotGit = c.findMember(Constants.DOT_GIT);
-		if (dotGit != null && dotGit.getLocation().toFile().equals(git)) {
+		if (dotGit != null && dotGit.getLocation().toFile().equals(git))
 			protect(dotGit);
-		}
 	}
 
 	private void protect(IResource resource) {

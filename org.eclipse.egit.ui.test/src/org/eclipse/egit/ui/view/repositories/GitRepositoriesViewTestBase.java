@@ -71,7 +71,7 @@ public abstract class GitRepositoriesViewTestBase extends
 	 * remove all configured repositories from the view
 	 */
 	protected static void clearView() {
-		new InstanceScope().getNode(Activator.getPluginId()).remove(
+		InstanceScope.INSTANCE.getNode(Activator.getPluginId()).remove(
 				RepositoryUtil.PREFS_DIRECTORIES);
 	}
 
@@ -214,9 +214,9 @@ public abstract class GitRepositoriesViewTestBase extends
 	}
 
 	protected SWTBotView getOrOpenView() throws Exception {
-		if (viewbot == null) {
+		if (viewbot == null)
 			viewbot = myRepoViewUtil.openRepositoriesView(bot);
-		} else
+		else
 			viewbot.setFocus();
 		return viewbot;
 	}
@@ -225,13 +225,12 @@ public abstract class GitRepositoriesViewTestBase extends
 		final SWTBotTree tree = getOrOpenView().bot().tree();
 		final SWTBotTreeItem[] items = tree.getAllItems();
 		boolean found = false;
-		for (SWTBotTreeItem item : items) {
+		for (SWTBotTreeItem item : items)
 			if (item.getText().startsWith(
 					repositoryDir.getParentFile().getName())) {
 				found = true;
 				break;
 			}
-		}
 		assertTrue("Tree should have item with correct text", found);
 	}
 

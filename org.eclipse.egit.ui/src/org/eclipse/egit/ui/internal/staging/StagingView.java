@@ -498,7 +498,7 @@ public class StagingView extends ViewPart {
 		else
 			preferenceStore.setDefault(UIPreferences.STAGING_VIEW_SYNC_SELECTION, true);
 
-		new InstanceScope().getNode(
+		InstanceScope.INSTANCE.getNode(
 				org.eclipse.egit.core.Activator.getPluginId())
 				.addPreferenceChangeListener(prefListener);
 
@@ -936,9 +936,8 @@ public class StagingView extends ViewPart {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(project);
 		if (mapping == null)
 			return;
-		if (mapping.getRepository() != currentRepository) {
+		if (mapping.getRepository() != currentRepository)
 			reload(mapping.getRepository());
-		}
 	}
 
 	private void attachListeners(Repository repository) {
@@ -1065,7 +1064,7 @@ public class StagingView extends ViewPart {
 				try {
 					final TreeWalk tw = TreeWalk.forPath(currentRepository,
 							entry.getPath(), headRev.getTree());
-					if (tw != null) {
+					if (tw != null)
 						edit.add(new DirCacheEditor.PathEdit(entry.getPath()) {
 							@Override
 							public void apply(DirCacheEntry ent) {
@@ -1075,7 +1074,6 @@ public class StagingView extends ViewPart {
 								ent.setLastModified(0);
 							}
 						});
-					}
 				} catch (IOException e) {
 					// TODO fix text
 					MessageDialog.openError(getSite().getShell(),
@@ -1239,21 +1237,18 @@ public class StagingView extends ViewPart {
 				deleteCommitMessageComponentState();
 			oldState = loadCommitMessageComponentState();
 			commitMessageComponent.setRepository(currentRepository);
-			if (oldState == null) {
+			if (oldState == null)
 				loadInitialState(helper);
-			} else {
+			else
 				loadExistingState(helper, oldState);
-			}
-		} else {
-			// repository did not change
-			if (userEnteredCommmitMessage()) {
-				if (!commitMessageComponent.getHeadCommit().equals(
-						helper.getPreviousCommit()))
-					addHeadChangedWarning(commitMessageComponent
-							.getCommitMessage());
-			} else
-				loadInitialState(helper);
-		}
+		} else // repository did not change
+		if (userEnteredCommmitMessage()) {
+			if (!commitMessageComponent.getHeadCommit().equals(
+					helper.getPreviousCommit()))
+				addHeadChangedWarning(commitMessageComponent
+						.getCommitMessage());
+		} else
+			loadInitialState(helper);
 		amendPreviousCommitAction.setChecked(commitMessageComponent
 				.isAmending());
 		amendPreviousCommitAction.setEnabled(helper.amendAllowed());
@@ -1275,14 +1270,12 @@ public class StagingView extends ViewPart {
 				.getPreviousCommit()));
 		boolean amendAllowed = helper.amendAllowed();
 		commitMessageComponent.setAmendAllowed(amendAllowed);
-		if (!amendAllowed) {
+		if (!amendAllowed)
 			commitMessageComponent.setAmending(false);
-		} else {
-			if (!headCommitChanged && oldState.getAmend())
-				commitMessageComponent.setAmending(true);
-			else
-				commitMessageComponent.setAmending(false);
-		}
+		else if (!headCommitChanged && oldState.getAmend())
+			commitMessageComponent.setAmending(true);
+		else
+			commitMessageComponent.setAmending(false);
 		commitMessageComponent.updateUIFromState();
 		commitMessageComponent.updateSignedOffAndChangeIdButton();
 		commitMessageComponent.enableListers(true);
@@ -1395,7 +1388,7 @@ public class StagingView extends ViewPart {
 				ISelectionService.class);
 		srv.removePostSelectionListener(selectionChangedListener);
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
-		new InstanceScope().getNode(
+		InstanceScope.INSTANCE.getNode(
 				org.eclipse.egit.core.Activator.getPluginId())
 				.removePreferenceChangeListener(prefListener);
 

@@ -219,7 +219,7 @@ public class ConfigurationEditorComponent {
 							}
 							location.setText(file);
 							try {
-								IEclipsePreferences node = new InstanceScope()
+								IEclipsePreferences node = InstanceScope.INSTANCE
 										.getNode(org.eclipse.egit.core.Activator
 												.getPluginId());
 								node.put(GitCorePreferences.core_gitPrefix,
@@ -373,12 +373,11 @@ public class ConfigurationEditorComponent {
 								section.name);
 						markDirty();
 					}
-				} else {
+				} else
 					Activator
 							.handleError(
 									UIText.ConfigurationEditorComponent_NoSectionSubsectionMessage,
 									null, true);
-				}
 
 				super.widgetSelected(e);
 			}
@@ -489,7 +488,7 @@ public class ConfigurationEditorComponent {
 			else
 				return false;
 		// no file, can we create one
-		for (File d = f.getParentFile(); d != null; d = d.getParentFile()) {
+		for (File d = f.getParentFile(); d != null; d = d.getParentFile())
 			if (d.isDirectory())
 				if (d.canWrite())
 					return true;
@@ -499,7 +498,6 @@ public class ConfigurationEditorComponent {
 				if (d.exists())
 					return false;
 				// else continue
-		}
 		return false;
 	}
 
