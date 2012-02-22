@@ -568,7 +568,7 @@ public class StagingView extends ViewPart {
 		else
 			preferenceStore.setDefault(UIPreferences.STAGING_VIEW_SYNC_SELECTION, true);
 
-		new InstanceScope().getNode(
+		InstanceScope.INSTANCE.getNode(
 				org.eclipse.egit.core.Activator.getPluginId())
 				.addPreferenceChangeListener(prefListener);
 
@@ -1614,7 +1614,7 @@ public class StagingView extends ViewPart {
 		if (undoRedoActionGroup != null)
 			undoRedoActionGroup.dispose();
 
-		new InstanceScope().getNode(
+		InstanceScope.INSTANCE.getNode(
 				org.eclipse.egit.core.Activator.getPluginId())
 				.removePreferenceChangeListener(prefListener);
 	}

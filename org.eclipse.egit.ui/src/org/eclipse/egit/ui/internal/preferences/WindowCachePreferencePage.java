@@ -31,7 +31,7 @@ public class WindowCachePreferencePage extends FieldEditorPreferencePage
 		super(GRID);
 		setTitle(UIText.WindowCachePreferencePage_title);
 		ScopedPreferenceStore store = new ScopedPreferenceStore(
-				new InstanceScope(), Activator.getPluginId());
+				InstanceScope.INSTANCE, Activator.getPluginId());
 		setPreferenceStore(store);
 	}
 

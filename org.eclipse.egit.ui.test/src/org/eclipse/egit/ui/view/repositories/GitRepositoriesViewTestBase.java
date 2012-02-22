@@ -75,7 +75,7 @@ public abstract class GitRepositoriesViewTestBase extends
 	 * remove all configured repositories from the view
 	 */
 	protected static void clearView() {
-		new InstanceScope().getNode(Activator.getPluginId()).remove(
+		InstanceScope.INSTANCE.getNode(Activator.getPluginId()).remove(
 				RepositoryUtil.PREFS_DIRECTORIES);
 	}
 
