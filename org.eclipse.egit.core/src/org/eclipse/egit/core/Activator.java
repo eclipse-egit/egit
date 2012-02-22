@@ -125,7 +125,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		}
 		GitProjectData.attachToWorkspace(true);
 
-		IEclipsePreferences node = new InstanceScope().getNode(Activator.getPluginId());
+		IEclipsePreferences node = InstanceScope.INSTANCE.getNode(Activator.getPluginId());
 		String gitPrefix = node.get(GitCorePreferences.core_gitPrefix, null);
 		if (gitPrefix != null)
 			FS.DETECTED.setGitPrefix(new File(gitPrefix));
@@ -198,9 +198,9 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		}
 
 		private boolean doAutoShare() {
-			IEclipsePreferences d = new DefaultScope().getNode(Activator
+			IEclipsePreferences d = DefaultScope.INSTANCE.getNode(Activator
 					.getPluginId());
-			IEclipsePreferences p = new InstanceScope().getNode(Activator
+			IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
 					.getPluginId());
 			return p.getBoolean(GitCorePreferences.core_autoShareProjects, d
 					.getBoolean(GitCorePreferences.core_autoShareProjects,

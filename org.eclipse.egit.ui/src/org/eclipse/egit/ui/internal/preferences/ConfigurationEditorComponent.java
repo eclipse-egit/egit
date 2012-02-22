@@ -243,7 +243,7 @@ public class ConfigurationEditorComponent {
 							}
 							location.setText(file);
 							try {
-								IEclipsePreferences node = new InstanceScope()
+								IEclipsePreferences node = InstanceScope.INSTANCE
 										.getNode(org.eclipse.egit.core.Activator
 												.getPluginId());
 								node.put(GitCorePreferences.core_gitPrefix,
