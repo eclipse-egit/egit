@@ -15,8 +15,6 @@ import java.util.StringTokenizer;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -39,22 +37,16 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 
 	private String value;
 
-	private final Config currentConfig;
-
 	private final String suggestedKey;
 
 	/**
 	 * @param parentShell
-	 * @param config
-	 *            the configuration
 	 * @param suggestedKey
 	 *            may be null
 	 */
-	public AddConfigEntryDialog(Shell parentShell, Config config,
-			String suggestedKey) {
+	public AddConfigEntryDialog(Shell parentShell, String suggestedKey) {
 		super(parentShell);
 		setHelpAvailable(false);
-		currentConfig = config;
 		this.suggestedKey = suggestedKey;
 		setHelpAvailable(false);
 	}
@@ -116,20 +108,6 @@ public class AddConfigEntryDialog extends TitleAreaDialog {
 			StringTokenizer st = new StringTokenizer(keyText.getText(), "."); //$NON-NLS-1$
 			if (st.countTokens() < 2 || st.countTokens() > 3) {
 				setErrorMessage(UIText.AddConfigEntryDialog_KeyComponentsMessage);
-				hasError = true;
-				return;
-			}
-			boolean exists = false;
-			if (st.countTokens() == 2)
-				exists = currentConfig.getString(st.nextToken(), null, st
-						.nextToken()) != null;
-			if (st.countTokens() == 3)
-				exists = currentConfig.getString(st.nextToken(),
-						st.nextToken(), st.nextToken()) != null;
-			if (exists) {
-				setErrorMessage(NLS.bind(
-						UIText.AddConfigEntryDialog_EntryExistsMessage, keyText
-								.getText()));
 				hasError = true;
 				return;
 			}
