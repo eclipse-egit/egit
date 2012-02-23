@@ -142,4 +142,9 @@ public class JobFamilies {
 	 * Submodule update git job
 	 */
 	public static final Object SUBMODULE_UPDATE = new Object();
+
+	/**
+	 * Stash git job
+	 */
+	public static final Object STASH = new Object();
 }

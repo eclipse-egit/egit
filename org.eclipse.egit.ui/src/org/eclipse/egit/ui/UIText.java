@@ -4265,6 +4265,18 @@ public class UIText extends NLS {
 	public static String StagingView_StageItemMenuLabel;
 
 	/** */
+	public static String StashCreateCommand_jobTitle;
+
+	/** */
+	public static String StashCreateCommand_messageNoChanges;
+
+	/** */
+	public static String StashCreateCommand_stashFailed;
+
+	/** */
+	public static String StashCreateCommand_titleNoChanges;
+
+	/** */
 	public static String SubmoduleAddCommand_AddError;
 
 	/** */
