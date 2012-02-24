@@ -23,6 +23,11 @@ import org.eclipse.jgit.lib.Repository;
 public class CommitCommand extends
 		RepositoriesViewCommandHandler<RepositoryNode> {
 
+	/**
+	 * Command id
+	 */
+	public static final String ID = "org.eclipse.egit.ui.team.Commit"; //$NON-NLS-1$
+
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		RepositoryNode node = getSelectedNodes(event).get(0);
 		Repository repository = node.getRepository();

@@ -14,11 +14,16 @@ import java.io.File;
 import java.util.List;
 
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.dialogs.NonDeletedFilesDialog;
 import org.eclipse.egit.ui.internal.dialogs.NonDeletedFilesTree;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
+import org.eclipse.egit.ui.internal.repository.tree.command.CommitCommand;
+import org.eclipse.egit.ui.internal.repository.tree.command.ResetCommand;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -64,12 +69,11 @@ public class BranchResultDialog extends MessageDialog {
 			// double-check if the files are still there
 			boolean show = false;
 			List<String> pathList = result.getUndeletedList();
-			for (String path : pathList) {
+			for (String path : pathList)
 				if (new File(repository.getWorkTree(), path).exists()) {
 					show = true;
 					break;
 				}
-			}
 			if (!show)
 				return;
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
@@ -93,7 +97,8 @@ public class BranchResultDialog extends MessageDialog {
 			CheckoutResult result, String target) {
 		super(shell, UIText.BranchResultDialog_CheckoutConflictsTitle, INFO,
 				NLS.bind(UIText.BranchResultDialog_CheckoutConflictsMessage,
-						target), MessageDialog.INFORMATION,
+						Repository.shortenRefName(target)),
+				MessageDialog.INFORMATION,
 				new String[] { IDialogConstants.OK_LABEL }, 0);
 		setShellStyle(getShellStyle() | SWT.SHELL_TRIM);
 		this.repository = repository;
@@ -104,11 +109,34 @@ public class BranchResultDialog extends MessageDialog {
 	protected Control createCustomArea(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
-		GridDataFactory.fillDefaults().indent(0, 0).grab(true, true).applyTo(
-				main);
+		GridDataFactory.fillDefaults().indent(0, 0).grab(true, true)
+				.applyTo(main);
 		new NonDeletedFilesTree(main, repository, this.result.getConflictList());
 		applyDialogFont(main);
 
 		return main;
+	}
+
+	protected void buttonPressed(int buttonId) {
+		switch (buttonId) {
+		case IDialogConstants.PROCEED_ID:
+			CommonUtils.runCommand(CommitCommand.ID, new StructuredSelection(
+					new RepositoryNode(null, repository)));
+			break;
+		case IDialogConstants.ABORT_ID:
+			CommonUtils.runCommand(ResetCommand.ID, new StructuredSelection(
+					new RepositoryNode(null, repository)));
+			break;
+		}
+		super.buttonPressed(buttonId);
+	}
+
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		super.createButtonsForButtonBar(parent);
+		createButton(parent, IDialogConstants.ABORT_ID,
+				UIText.BranchResultDialog_buttonReset, false);
+		createButton(parent, IDialogConstants.PROCEED_ID,
+				UIText.BranchResultDialog_buttonCommit, false);
 	}
 }
