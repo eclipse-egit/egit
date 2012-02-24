@@ -213,9 +213,8 @@ public class RepositoriesView extends CommonNavigator {
 						reactOnSelection(new StructuredSelection(
 								((IFileEditorInput) input).getFile()));
 
-				} else {
+				} else
 					reactOnSelection(selection);
-				}
 			}
 		};
 	}
@@ -368,9 +367,8 @@ public class RepositoriesView extends CommonNavigator {
 				TreeSelection sel = (TreeSelection) event.getSelection();
 				RepositoryTreeNode element = (RepositoryTreeNode) sel
 						.getFirstElement();
-				if (element instanceof RefNode || element instanceof TagNode) {
+				if (element instanceof RefNode || element instanceof TagNode)
 					executeOpenCommand();
-				}
 			}
 		});
 		// handle open event for the working directory
@@ -491,17 +489,15 @@ public class RepositoriesView extends CommonNavigator {
 
 			boolean added = repositoryUtil.addConfiguredRepository(mapping
 					.getRepository().getDirectory());
-			if (added) {
+			if (added)
 				scheduleRefresh(0);
-			}
 
-			if (this.scheduledJob != null) {
+			if (this.scheduledJob != null)
 				try {
 					this.scheduledJob.join();
 				} catch (InterruptedException e) {
 					Activator.handleError(e.getMessage(), e, false);
 				}
-			}
 
 			RepositoryTreeNode currentNode = null;
 			ITreeContentProvider cp = (ITreeContentProvider) getCommonViewer()
@@ -524,7 +520,7 @@ public class RepositoriesView extends CommonNavigator {
 
 			IPath relPath = new Path(repoPath);
 
-			for (String segment : relPath.segments()) {
+			for (String segment : relPath.segments())
 				for (Object child : cp.getChildren(currentNode)) {
 					RepositoryTreeNode<File> childNode = (RepositoryTreeNode<File>) child;
 					if (childNode.getObject().getName().equals(segment)) {
@@ -532,7 +528,6 @@ public class RepositoriesView extends CommonNavigator {
 						break;
 					}
 				}
-			}
 
 			final RepositoryTreeNode selNode = currentNode;
 
@@ -611,7 +606,7 @@ public class RepositoriesView extends CommonNavigator {
 
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
-						if (tv.getTree().isDisposed())
+						if (!UIUtils.isUsable(tv))
 							return;
 						long start = 0;
 						boolean traceActive = GitTraceLocation.REPOSITORIESVIEW
@@ -630,10 +625,10 @@ public class RepositoriesView extends CommonNavigator {
 						IStructuredSelection sel = (IStructuredSelection) tv
 								.getSelection();
 
-						if (needsNewInput) {
+						if (needsNewInput)
 							tv.setInput(ResourcesPlugin.getWorkspace()
 									.getRoot());
-						} else
+						else
 							tv.refresh(true);
 						tv.setExpandedElements(expanded);
 
