@@ -49,7 +49,7 @@ public class RepoRemoteBranchesPage {
 	public void deselectAllBranches() {
 		SWTBotTree tree = bot.tree();
 
-		bot.waitUntil(widgetIsEnabled(tree));
+		bot.waitUntil(widgetIsEnabled(tree), 60000);
 
 		SWTBotTreeItem[] items = tree.getAllItems();
 		for (int i = 0; i < items.length; i++) {
