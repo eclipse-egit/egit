@@ -3977,6 +3977,10 @@
             commandId="org.eclipse.egit.ui.history.Revert"
             icon="icons/obj16/revert.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.commit.Revert"
+            icon="icons/obj16/revert.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -4370,6 +4374,11 @@
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.RevertHandler"
             id="org.eclipse.egit.ui.history.Revert"
+            name="%RevertCommand.name">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.commit.command.RevertHandler"
+            id="org.eclipse.egit.ui.commit.Revert"
             name="%RevertCommand.name">
       </command>
       <command
