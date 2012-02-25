@@ -42,7 +42,7 @@ class GraphLabelProvider extends BaseLabelProvider implements
 			return c.getId().abbreviate(8).name() + "..."; //$NON-NLS-1$
 		if (columnIndex == 1 || columnIndex == 2) {
 			final PersonIdent author = authorOf(c);
-			if (author != null) {
+			if (author != null)
 				switch (columnIndex) {
 				case 1:
 					return author.getName()
@@ -50,14 +50,17 @@ class GraphLabelProvider extends BaseLabelProvider implements
 				case 2:
 					return getDateFormatter().formatDate(author);
 				}
-			}
 		}
-		if (columnIndex == 4) {
+		if (columnIndex == 4 || columnIndex == 5) {
 			final PersonIdent committer = committerOf(c);
-			if (committer != null) {
-				return committer.getName()
-						+ " <" + committer.getEmailAddress() + ">"; //$NON-NLS-1$ //$NON-NLS-2$
-			}
+			if (committer != null)
+				switch (columnIndex) {
+				case 4:
+					return committer.getName()
+							+ " <" + committer.getEmailAddress() + ">"; //$NON-NLS-1$ //$NON-NLS-2$
+				case 5:
+					return getDateFormatter().formatDate(committer);
+				}
 		}
 
 		return ""; //$NON-NLS-1$
