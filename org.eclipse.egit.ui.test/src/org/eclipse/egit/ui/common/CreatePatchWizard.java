@@ -10,6 +10,7 @@ package org.eclipse.egit.ui.common;
 
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
+import org.eclipse.egit.ui.test.team.actions.LocationPage;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -56,5 +57,13 @@ public class CreatePatchWizard {
 
 	public void close() {
 		shell.close();
+	}
+
+	public LocationPage getLocationPage() {
+		return new LocationPage(shell);
+	}
+
+	public SWTBotShell getShell() {
+		return shell;
 	}
 }
