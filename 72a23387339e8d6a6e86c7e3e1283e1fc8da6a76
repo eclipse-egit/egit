@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOGH///28\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-02-26T14:04:38Z",
+      "side": 1,
+      "message": "missing colon: s/Bug/Bug:/",
+      "revId": "72a23387339e8d6a6e86c7e3e1283e1fc8da6a76",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOGH///3A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitCreatePatchWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-02-26T14:04:38Z",
+      "side": 1,
+      "message": "style nit: this line is too wide, use the jgit format coming in ./tools/eclipse-JGit-Format.xml",
+      "revId": "72a23387339e8d6a6e86c7e3e1283e1fc8da6a76",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
