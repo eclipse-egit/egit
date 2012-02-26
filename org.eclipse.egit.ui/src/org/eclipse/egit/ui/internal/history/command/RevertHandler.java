@@ -12,94 +12,41 @@
 
 package org.eclipse.egit.ui.internal.history.command;
 
-import java.text.MessageFormat;
-import java.util.List;
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.op.RevertCommitOperation;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
-import org.eclipse.egit.ui.internal.dialogs.RevertFailureDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jgit.api.MergeResult;
-import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Executes the RevertCommit
  */
 public class RevertHandler extends AbstractHistoryCommandHandler {
+	/**
+	 * Command id
+	 */
+	public static final String ID = "org.eclipse.egit.ui.history.Revert"; //$NON-NLS-1$
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Repository repo = getRepository(event);
-		BasicConfigurationDialog.show(repo);
 		final RevCommit commit = (RevCommit) getSelection(getPage())
 				.getFirstElement();
+		if (commit == null)
+			return null;
+		Repository repo = getRepository(event);
+		if (repo == null)
+			return null;
+		BasicConfigurationDialog.show(repo);
 
-		final Shell shell = getPart(event).getSite().getShell();
-		final RevertCommitOperation op = new RevertCommitOperation(repo, commit);
-
-		Job job = new Job(MessageFormat.format(UIText.RevertHandler_JobName,
-				commit.name())) {
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				try {
-					op.execute(monitor);
-					RevCommit newHead = op.getNewHead();
-					List<Ref> revertedRefs = op.getRevertedRefs();
-					if (newHead != null && revertedRefs.isEmpty())
-						showRevertedDialog(shell);
-					if (newHead == null)
-						showFailureDialog(shell, commit, op.getFailingResult());
-				} catch (CoreException e) {
-					Activator.handleError(UIText.RevertOperation_InternalError,
-							e, true);
-				}
-				return Status.OK_STATUS;
-			}
-
-			@Override
-			public boolean belongsTo(Object family) {
-				if (JobFamilies.REVERT_COMMIT.equals(family))
-					return true;
-				return super.belongsTo(family);
-			}
-		};
-		job.setUser(true);
-		job.setRule(op.getSchedulingRule());
-		job.schedule();
+		final IStructuredSelection selected = new StructuredSelection(
+				new RepositoryCommit(repo, commit));
+		CommonUtils
+				.runCommand(
+						org.eclipse.egit.ui.internal.commit.command.RevertHandler.ID,
+						selected);
 		return null;
-	}
-
-	private void showFailureDialog(final Shell shell, final RevCommit commit,
-			final MergeResult result) {
-		shell.getDisplay().syncExec(new Runnable() {
-
-			public void run() {
-				RevertFailureDialog.show(shell, commit, result);
-			}
-		});
-	}
-
-	private void showRevertedDialog(final Shell shell) {
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-
-			public void run() {
-				MessageDialog.openWarning(shell,
-						UIText.RevertHandler_NoRevertTitle,
-						UIText.RevertHandler_AlreadyRevertedMessae);
-			}
-		});
 	}
 }
