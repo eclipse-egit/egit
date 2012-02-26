@@ -12,19 +12,27 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import java.util.List;
 
+import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.dialogs.FileTreeContentProvider.Mode;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
 /**
  * UI to show a tree with files within a Repository
@@ -33,12 +41,6 @@ public class NonDeletedFilesTree extends TreeViewer {
 
 	private final List<String> filePaths;
 
-	private Button showRepoRelative;
-
-	private Button showFull;
-
-	private Button showResource;
-
 	/**
 	 * @param parent
 	 * @param repository
@@ -46,28 +48,48 @@ public class NonDeletedFilesTree extends TreeViewer {
 	 */
 	public NonDeletedFilesTree(Composite parent, Repository repository,
 			List<String> pathList) {
-		super(createComposite(parent, repository), SWT.BORDER);
+		super(createComposite(parent), SWT.BORDER);
 		this.filePaths = pathList;
 
 		Composite main = getTree().getParent();
 
-		GridDataFactory.fillDefaults().span(2, 1).grab(true, true).applyTo(
-				getTree());
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(getTree());
 
 		final FileTreeContentProvider cp = new FileTreeContentProvider(
 				repository);
-
-		GridDataFactory.fillDefaults().span(2, 1).grab(true, true).applyTo(
-				getTree());
 
 		setContentProvider(cp);
 		setLabelProvider(new FileTreeLabelProvider());
 		setInput(this.filePaths);
 		expandAll();
 
-		showRepoRelative = new Button(main, SWT.RADIO);
-		GridDataFactory.fillDefaults().span(2, 1).grab(true, false).applyTo(
-				showRepoRelative);
+		final ToolBar dropDownBar = new ToolBar(main, SWT.FLAT | SWT.RIGHT);
+		GridDataFactory.swtDefaults().align(SWT.BEGINNING, SWT.BEGINNING)
+				.grab(false, false).applyTo(dropDownBar);
+		final ToolItem dropDownItem = new ToolItem(dropDownBar, SWT.DROP_DOWN);
+		Image dropDownImage = UIIcons.HIERARCHY.createImage();
+		UIUtils.hookDisposal(dropDownItem, dropDownImage);
+		dropDownItem.setImage(dropDownImage);
+		final Menu menu = new Menu(dropDownBar);
+		dropDownItem.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				menu.dispose();
+			}
+		});
+		dropDownItem.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+				Rectangle b = dropDownItem.getBounds();
+				Point p = dropDownItem.getParent().toDisplay(
+						new Point(b.x, b.y + b.height));
+				menu.setLocation(p.x, p.y);
+				menu.setVisible(true);
+			}
+
+		});
+
+		final MenuItem showRepoRelative = new MenuItem(menu, SWT.RADIO);
 		showRepoRelative
 				.setText(UIText.NonDeletedFilesTree_RepoRelativePathsButton);
 		showRepoRelative.setSelection(true);
@@ -82,9 +104,7 @@ public class NonDeletedFilesTree extends TreeViewer {
 			}
 		});
 
-		showFull = new Button(main, SWT.RADIO);
-		GridDataFactory.fillDefaults().span(2, 1).grab(true, false).applyTo(
-				showFull);
+		final MenuItem showFull = new MenuItem(menu, SWT.RADIO);
 		showFull.setText(UIText.NonDeletedFilesTree_FileSystemPathsButton);
 		showFull.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -97,9 +117,7 @@ public class NonDeletedFilesTree extends TreeViewer {
 			}
 		});
 
-		showResource = new Button(main, SWT.RADIO);
-		GridDataFactory.fillDefaults().span(2, 1).grab(true, false).applyTo(
-				showResource);
+		final MenuItem showResource = new MenuItem(menu, SWT.RADIO);
 		showResource.setText(UIText.NonDeletedFilesTree_ResourcePathsButton);
 		showResource.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -113,18 +131,12 @@ public class NonDeletedFilesTree extends TreeViewer {
 		});
 	}
 
-	private static Composite createComposite(Composite parent,
-			Repository repository) {
+	private static Composite createComposite(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
-		GridDataFactory.fillDefaults().indent(0, 0).grab(true, true).applyTo(
-				main);
-		main.setLayout(new GridLayout(2, false));
-		Label repoLabel = new Label(main, SWT.NONE);
-		repoLabel.setText(UIText.NonDeletedFilesTree_RepositoryLabel);
-		Text repoPath = new Text(main, SWT.BORDER | SWT.READ_ONLY);
-		repoPath.setText(repository.getWorkTree().getPath());
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(repoPath);
-
+		GridDataFactory.fillDefaults().indent(0, 0).grab(true, true)
+				.applyTo(main);
+		GridLayoutFactory.fillDefaults().spacing(0, 0).numColumns(2)
+				.applyTo(main);
 		return main;
 	}
 }

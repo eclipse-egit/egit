@@ -209,6 +209,9 @@ public class UIIcons {
 	/** Stash icon */
 	public final static ImageDescriptor STASH;
 
+	/** Hierarchy layout icon */
+	public final static ImageDescriptor HIERARCHY;
+
 	/** base URL */
 	public final static URL base;
 
@@ -283,16 +286,16 @@ public class UIIcons {
 		CREATE_REPOSITORY = map("etool16/createRepository.gif"); //$NON-NLS-1$
 		SUBMODULES = map("obj16/submodules.gif"); //$NON-NLS-1$
 		STASH = map("obj16/stash.png"); //$NON-NLS-1$
+		HIERARCHY = map("elcl16/hierarchicalLayout.gif"); //$NON-NLS-1$
 	}
 
 	private static ImageDescriptor map(final String icon) {
-		if (base != null) {
+		if (base != null)
 			try {
 				return ImageDescriptor.createFromURL(new URL(base, icon));
 			} catch (MalformedURLException mux) {
 				Activator.logError(UIText.UIIcons_errorLoadingPluginImage, mux);
 			}
-		}
 		return ImageDescriptor.getMissingImageDescriptor();
 	}
 
