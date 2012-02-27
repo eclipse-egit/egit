@@ -22,7 +22,6 @@ import org.eclipse.egit.ui.common.EGitTestCase;
 import org.eclipse.egit.ui.test.Eclipse;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
@@ -102,29 +101,27 @@ public class GlobalConfigurationPageTest {
 			SWTBotTreeItem sectionItem = configTree.getTreeItem(section);
 			for (String subsection : config.getSubsections(section)) {
 				SWTBotTreeItem subsectionItem = sectionItem.getNode(subsection);
-				for (String entryName : config.getNames(section, subsection)) {
+				for (String entryName : config.getNames(section, subsection))
 					try {
 						subsectionItem.getNode(entryName);
 					} catch (WidgetNotFoundException e) {
 						subsectionItem.getNode(entryName + "[0]");
 					}
-				}
 
 			}
-			for (String entryName : config.getNames(section)) {
+			for (String entryName : config.getNames(section))
 				try {
 					sectionItem.getNode(entryName);
 				} catch (WidgetNotFoundException e) {
 					sectionItem.getNode(entryName + "[0]");
 				}
-			}
 		}
 	}
 
 	@Test
 	public void testAddSectionEntry() throws Exception {
 		preferencePage.bot().button(
-				UIText.ConfigurationEditorComponent_NewValueButton).click();
+				UIText.ConfigurationEditorComponent_AddButton).click();
 		SWTBotShell addDialog = bot
 				.shell(UIText.AddConfigEntryDialog_AddConfigTitle);
 		addDialog.activate();
@@ -149,7 +146,7 @@ public class GlobalConfigurationPageTest {
 	@Test
 	public void testAddSubSectionEntry() throws Exception {
 		preferencePage.bot().button(
-				UIText.ConfigurationEditorComponent_NewValueButton).click();
+				UIText.ConfigurationEditorComponent_AddButton).click();
 		SWTBotShell addDialog = bot
 				.shell(UIText.AddConfigEntryDialog_AddConfigTitle);
 		addDialog.activate();
@@ -181,7 +178,7 @@ public class GlobalConfigurationPageTest {
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTSUBSECTION).select();
 		preferencePage.bot().button(
-				UIText.ConfigurationEditorComponent_NewValueButton).click();
+				UIText.ConfigurationEditorComponent_AddButton).click();
 		SWTBotShell addDialog = bot
 				.shell(UIText.AddConfigEntryDialog_AddConfigTitle);
 		addDialog.activate();
@@ -192,90 +189,12 @@ public class GlobalConfigurationPageTest {
 	}
 
 	@Test
-	public void testChangeValue() throws Exception {
-		config.setString(TESTSECTION, null, TESTNAME, "true");
-		config.save();
-		getGitConfigurationPreferencePage();
-		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(TESTNAME)
-				.select();
-		String text = preferencePage.bot().textWithLabel(
-				UIText.ConfigurationEditorComponent_ValueLabel).getText();
-		assertEquals("true", text);
-		preferencePage.bot().textWithLabel(
-				UIText.ConfigurationEditorComponent_ValueLabel)
-				.setText("false");
-		bot.button(UIText.ConfigurationEditorComponent_ChangeButton).click();
-		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(TESTNAME)
-				.select();
-		text = preferencePage.bot().textWithLabel(
-				UIText.ConfigurationEditorComponent_ValueLabel).getText();
-		assertEquals("false", text);
-		List<String> list = new ArrayList<String>(1);
-		list.add("first");
-		list.add("second");
-		config.setStringList(TESTSECTION, null, TESTNAME, list);
-		config.save();
-		getGitConfigurationPreferencePage();
-		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
-				TESTNAME + "[1]").select();
-		text = preferencePage.bot().textWithLabel(
-				UIText.ConfigurationEditorComponent_ValueLabel).getText();
-		assertEquals("second", text);
-		preferencePage.bot().textWithLabel(
-				UIText.ConfigurationEditorComponent_ValueLabel).setText("new");
-		bot.button(UIText.ConfigurationEditorComponent_ChangeButton).click();
-		// close the editor
-		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
-		config.load();
-		assertEquals(1, Arrays.asList(
-				config.getStringList(TESTSECTION, null, TESTNAME)).indexOf(
-				"new"));
-	}
-
-	@Test
-	public void testAddValue() throws Exception {
-		config.setString(TESTSECTION, null, TESTNAME, "true");
-		config.save();
-		getGitConfigurationPreferencePage();
-		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(TESTNAME)
-				.select();
-		preferencePage.bot().textWithLabel(
-				UIText.ConfigurationEditorComponent_ValueLabel).setText(
-				"second");
-		bot.button(UIText.ConfigurationEditorComponent_AddButton).click();
-		// press apply
-		preferencePage.bot().button(JFaceResources.getString("apply")).click();
-		config.load();
-		List<String> values = Arrays.asList(config.getStringList(TESTSECTION,
-				null, TESTNAME));
-		assertEquals("Wrong number of values", 2, values.size());
-		assertTrue(values.contains("true"));
-		assertTrue(values.contains("second"));
-		// add another value
-		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
-				TESTNAME + "[1]").select();
-		preferencePage.bot().textWithLabel(
-				UIText.ConfigurationEditorComponent_ValueLabel).setText(
-				"middle");
-		bot.button(UIText.ConfigurationEditorComponent_AddButton).click();
-		// close the editor
-		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
-		config.load();
-		values = Arrays.asList(config
-				.getStringList(TESTSECTION, null, TESTNAME));
-		assertEquals("Wrong number of values", 3, values.size());
-		assertTrue(values.contains("true"));
-		assertEquals(1, values.indexOf("middle"));
-		assertTrue(values.contains("second"));
-	}
-
-	@Test
-	public void testCantCreateSameEntryValue() throws Exception {
+	public void testCanCreateSameEntryValue() throws Exception {
 		config.setString(TESTSECTION, null, TESTNAME, "already");
 		config.save();
 		getGitConfigurationPreferencePage();
 		preferencePage.bot().button(
-				UIText.ConfigurationEditorComponent_NewValueButton).click();
+				UIText.ConfigurationEditorComponent_AddButton).click();
 		SWTBotShell addDialog = bot
 				.shell(UIText.AddConfigEntryDialog_AddConfigTitle);
 		addDialog.activate();
@@ -283,7 +202,7 @@ public class GlobalConfigurationPageTest {
 				.setText(TESTSECTION + "." + TESTNAME);
 		addDialog.bot().textWithLabel(UIText.AddConfigEntryDialog_ValueLabel)
 				.setText("true");
-		assertTrue(!addDialog.bot().button(IDialogConstants.OK_LABEL)
+		assertTrue(addDialog.bot().button(IDialogConstants.OK_LABEL)
 				.isEnabled());
 		addDialog.close();
 	}
@@ -291,7 +210,7 @@ public class GlobalConfigurationPageTest {
 	@Test
 	public void testChecksForKey() throws Exception {
 		preferencePage.bot().button(
-				UIText.ConfigurationEditorComponent_NewValueButton).click();
+				UIText.ConfigurationEditorComponent_AddButton).click();
 		SWTBotShell addDialog = bot
 				.shell(UIText.AddConfigEntryDialog_AddConfigTitle);
 		addDialog.activate();
@@ -339,7 +258,7 @@ public class GlobalConfigurationPageTest {
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTNAME + "[0]").select();
 
-		bot.button(UIText.ConfigurationEditorComponent_DeleteButton).click();
+		bot.button(UIText.ConfigurationEditorComponent_RemoveButton).click();
 		// close the editor
 		preferencePage.bot().button(IDialogConstants.OK_LABEL).click();
 		config.load();
@@ -361,7 +280,7 @@ public class GlobalConfigurationPageTest {
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).getNode(
 				TESTSUBSECTION).select();
 
-		bot.button(UIText.ConfigurationEditorComponent_RemoveAllButton).click();
+		bot.button(UIText.ConfigurationEditorComponent_RemoveButton).click();
 		SWTBotShell confirm = bot
 				.shell(UIText.ConfigurationEditorComponent_RemoveSubsectionTitle);
 		confirm.activate();
@@ -384,7 +303,7 @@ public class GlobalConfigurationPageTest {
 		getGitConfigurationPreferencePage();
 		preferencePage.bot().tree(1).getTreeItem(TESTSECTION).select();
 
-		bot.button(UIText.ConfigurationEditorComponent_RemoveAllButton).click();
+		bot.button(UIText.ConfigurationEditorComponent_RemoveButton).click();
 		SWTBotShell confirm = bot
 				.shell(UIText.ConfigurationEditorComponent_RemoveSectionTitle);
 		confirm.activate();
