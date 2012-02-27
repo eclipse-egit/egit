@@ -52,6 +52,24 @@
       "revId": "55ae89c14a08a446e5d720a51638e5f846eab1bc",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOGH///yw\u003d",
+        "filename": "org.eclipse.egit.core/plugin.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-02-27T21:49:48Z",
+      "side": 1,
+      "message": "I\u0027ve removed the hack in the latest patch set. In order to work bug 372020 needs to be fixed first. It\u0027s already marked as blocker.",
+      "parentUuid": "AABOF3///mA\u003d",
+      "revId": "55ae89c14a08a446e5d720a51638e5f846eab1bc",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
