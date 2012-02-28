@@ -80,6 +80,17 @@ public class ContextMenuHelper {
 		});
 	}
 
+	public static boolean contextMenuItemExists(final AbstractSWTBot<?> bot,
+			final String... texts) {
+		final MenuItem menuItem = UIThreadRunnable
+				.syncExec(new WidgetResult<MenuItem>() {
+					public MenuItem run() {
+						return getMenuItem(bot, texts);
+					}
+				});
+		return menuItem != null;
+	}
+
 	@SuppressWarnings("unchecked")
 	private static MenuItem getMenuItem(final AbstractSWTBot<?> bot,
 			final String... texts) {
