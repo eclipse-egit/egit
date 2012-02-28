@@ -412,6 +412,8 @@ class CommitGraphTable {
 			final SWTCommit[] asArray, HistoryPageInput input) {
 		setHistoryPageInput(input);
 		final SWTCommitList oldList = allCommits;
+		if (oldList != null && oldList != list)
+			oldList.dispose();
 		highlight = hFlag;
 		allCommits = list;
 		table.setInput(asArray);
