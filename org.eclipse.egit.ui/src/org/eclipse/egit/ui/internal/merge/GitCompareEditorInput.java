@@ -301,8 +301,8 @@ public class GitCompareEditorInput extends CompareEditorInput {
 								compareVersionIterator.getEntryPathString());
 
 					add(result, baseVersionIterator.getEntryPathString(),
-							new DiffNode(new FileRevisionTypedElement(baseRev),
-									new FileRevisionTypedElement(compareRev)));
+							new DiffNode(new FileRevisionTypedElement(compareRev),
+									new FileRevisionTypedElement(baseRev)));
 
 				} else if (baseVersionIterator != null
 						&& compareVersionIterator == null) {
@@ -314,7 +314,7 @@ public class GitCompareEditorInput extends CompareEditorInput {
 									.getEntryPathString(), tw
 									.getObjectId(baseTreeIndex));
 					add(result, baseVersionIterator.getEntryPathString(),
-							new DiffNode(Differencer.DELETION, null, null,
+							new DiffNode(Differencer.DELETION | Differencer.RIGHT, null, null,
 									new FileRevisionTypedElement(baseRev)));
 				} else if (compareVersionIterator != null
 						&& baseVersionIterator == null) {
@@ -326,8 +326,8 @@ public class GitCompareEditorInput extends CompareEditorInput {
 									.getEntryPathString(), tw
 									.getObjectId(compareTreeIndex));
 					add(result, compareVersionIterator.getEntryPathString(),
-							new DiffNode(Differencer.ADDITION, null, null,
-									new FileRevisionTypedElement(compareRev)));
+							new DiffNode(Differencer.ADDITION | Differencer.RIGHT, null,
+									new FileRevisionTypedElement(compareRev), null));
 				}
 
 				if (monitor.isCanceled())
