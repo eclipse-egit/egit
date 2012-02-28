@@ -9,6 +9,7 @@
  * Contributors:
  *    Tomasz Zarna <Tomasz.Zarna@pl.ibm.com> - Allow to save patches in Workspace
  *    Daniel Megert <daniel_megert@ch.ibm.com> - Create Patch... should remember previously chosen location
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - Create Patch wizard must validate initial input
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
@@ -482,6 +483,7 @@ public class LocationPage extends WizardPage {
 		Dialog.applyDialogFont(composite);
 		setControl(composite);
 
+		validatePage();
 	}
 
 	private String createFileName() {
