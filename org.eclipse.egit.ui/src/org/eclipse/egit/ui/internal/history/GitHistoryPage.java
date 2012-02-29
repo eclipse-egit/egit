@@ -108,6 +108,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
@@ -888,9 +889,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 	private void setupViewMenu() {
 		IMenuManager viewMenuMgr = getSite().getActionBars().getMenuManager();
-		viewMenuMgr.add(actions.refreshAction);
-
-		viewMenuMgr.add(new Separator());
+		if (getSite().getActionBars().getGlobalActionHandler(
+				ActionFactory.REFRESH.getId()) == null) {
+			viewMenuMgr.add(actions.refreshAction);
+			viewMenuMgr.add(new Separator());
+		}
 		IMenuManager showSubMenuMgr = new MenuManager(
 				UIText.GitHistoryPage_ShowSubMenuLabel);
 		viewMenuMgr.add(showSubMenuMgr);
