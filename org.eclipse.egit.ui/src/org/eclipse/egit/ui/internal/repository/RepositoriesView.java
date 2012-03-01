@@ -152,11 +152,11 @@ public class RepositoriesView extends CommonNavigator {
 
 	private StackLayout layout;
 
-	private long lastInputChange = 0L;
+	private volatile long lastInputChange = 0L;
 
-	private long lastRepositoryChange = 0L;
+	private volatile long lastRepositoryChange = 0L;
 
-	private long lastInputUpdate = -1L;
+	private volatile long lastInputUpdate = -1L;
 
 	private boolean reactOnSelection = false;
 
