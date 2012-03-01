@@ -708,6 +708,9 @@ class CommitGraphTable {
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.CHECKOUT,
 						UIText.GitHistoryPage_CheckoutMenuLabel));
+				popupMgr.add(getCommandContributionItem(
+						HistoryViewCommands.PUSH_COMMIT,
+						UIText.GitHistoryPage_pushCommit));
 				popupMgr.add(new Separator());
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.CREATE_BRANCH,
