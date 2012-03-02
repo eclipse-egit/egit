@@ -189,6 +189,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		assertEquals(FILE2, fileTree.getText());
 	}
 
+	@Ignore
 	@Test public void shouldExchangeCompareEditorSidesBetweenIncomingAndOutgoingChanges()
 			throws Exception {
 		// given
