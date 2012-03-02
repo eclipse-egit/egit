@@ -26,6 +26,7 @@
 
   <properties>
     <local-egit-site>file:/${basedir}/../org.eclipse.egit-updatesite/target/site</local-egit-site>
+    <uitest.vmparams>-Dorg.eclipse.swtbot.search.timeout=10000 -Xmx1024m -XX:MaxPermSize=384m</uitest.vmparams>
   </properties>
 
   <repositories>
@@ -57,7 +58,7 @@
         </os>
       </activation>
       <properties>
-        <ui.test.vmargs>-Xmx1024m -XX:MaxPermSize=384m -XstartOnFirstThread</ui.test.vmargs>
+        <ui.test.vmargs>${uitest.vmparams} -XstartOnFirstThread</ui.test.vmargs>
       </properties>
     </profile>
     <profile>
@@ -69,7 +70,7 @@
         </os>
       </activation>
       <properties>
-        <ui.test.vmargs>-Xmx1024m -XX:MaxPermSize=384m</ui.test.vmargs>
+        <ui.test.vmargs>${uitest.vmparams}</ui.test.vmargs>
       </properties>
     </profile>
   </profiles>
