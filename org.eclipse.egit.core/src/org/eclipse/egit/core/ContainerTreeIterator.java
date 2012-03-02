@@ -120,9 +120,6 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		super(p);
 		node = base;
 		init(entries());
-		Repository repository = RepositoryMapping.getMapping(base)
-				.getRepository();
-		initRootIterator(repository);
 	}
 
 	@Override
@@ -225,12 +222,11 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 
 		@Override
 		public long getLength() {
-			if (length < 0) {
+			if (length < 0)
 				if (rsrc instanceof IFile)
 					length = asFile().length();
 				else
 					length = 0;
-			}
 			return length;
 		}
 
@@ -241,7 +237,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 
 		@Override
 		public InputStream openInputStream() throws IOException {
-			if (rsrc.getType() == IResource.FILE) {
+			if (rsrc.getType() == IResource.FILE)
 				try {
 					return ((IFile) rsrc).getContents(true);
 				} catch (CoreException err) {
@@ -249,7 +245,6 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 					ioe.initCause(err);
 					throw ioe;
 				}
-			}
 			throw new IOException("Not a regular file: " + rsrc);  //$NON-NLS-1$
 		}
 
