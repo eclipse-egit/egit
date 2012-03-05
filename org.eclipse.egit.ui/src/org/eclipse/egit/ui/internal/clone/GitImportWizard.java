@@ -58,7 +58,7 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 
 	private GitSelectWizardPage importWithDirectoriesPage = new GitSelectWizardPage(){
 		public void setVisible(boolean visible) {
-			if (visible && (cloneDestination.cloneSettingsChanged())) {
+			if (existingRepo == null && visible && (cloneDestination.cloneSettingsChanged())) {
 				setCallerRunsCloneOperation(true);
 				try {
 					final GitRepositoryInfo repositoryInfo = currentSearchResult.getGitRepositoryInfo();
