@@ -88,15 +88,14 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 				});
 		table.getTableView().addOpenListener(new IOpenListener() {
 			public void open(OpenEvent event) {
-				if (getButton(OK).isEnabled()) {
+				if (getButton(OK).isEnabled())
 					buttonPressed(OK);
-				}
 			}
 		});
 		// allow for some room here
 		GridDataFactory.fillDefaults().grab(true, true).minSize(SWT.DEFAULT,
 				400).applyTo(table.getControl());
-		allCommits = new SWTCommitList(getShell().getDisplay());
+		allCommits = new SWTCommitList(table.getControl());
 		return main;
 	}
 
