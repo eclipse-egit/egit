@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.commands.shared;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -23,10 +24,12 @@ import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.ISources;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -72,7 +75,7 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 			@Override
 			public void done(IJobChangeEvent cevent) {
 				IStatus result = cevent.getJob().getResult();
-				if (result.getSeverity() == IStatus.CANCEL) {
+				if (result.getSeverity() == IStatus.CANCEL)
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
 							// don't use getShell(event) here since
@@ -85,12 +88,25 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 									dialogMessage);
 						}
 					});
-				} else if (result.isOK()) {
+				else if (result.isOK())
 					RebaseResultDialog.show(rebase.getResult(), repository);
-				}
 			}
 		});
 		job.schedule();
 		return null;
+	}
+
+	/**
+	 * Retrieve the current selection. The global selection is used if the menu
+	 * selection is not available.
+	 *
+	 * @param ctx
+	 * @return the selection
+	 */
+	protected Object getSelection(IEvaluationContext ctx) {
+		Object selection = ctx.getVariable(ISources.ACTIVE_MENU_SELECTION_NAME);
+		if (selection == null || !(selection instanceof ISelection))
+			selection = ctx.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
+		return selection;
 	}
 }
