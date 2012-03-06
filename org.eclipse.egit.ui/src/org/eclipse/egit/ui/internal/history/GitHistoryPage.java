@@ -696,7 +696,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		preferencesLink.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String preferencePageId = "org.eclipse.egit.ui.GitPreferences"; //$NON-NLS-1$
+				String preferencePageId = "org.eclipse.egit.ui.internal.preferences.HistoryPreferencePage"; //$NON-NLS-1$
 				PreferenceDialog dialog = PreferencesUtil
 						.createPreferenceDialogOn(getSite().getShell(), preferencePageId,
 								new String[] { preferencePageId }, null);
