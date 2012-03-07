@@ -376,9 +376,11 @@ public class StagingView extends ViewPart {
 				new Transfer[] { LocalSelectionTransfer.getTransfer() },
 				new DropTargetAdapter() {
 					public void drop(DropTargetEvent event) {
-						final IStructuredSelection selection = (IStructuredSelection) stagedTableViewer
-								.getSelection();
-						unstage(selection);
+						if (event.data instanceof IStructuredSelection) {
+							final IStructuredSelection selection = (IStructuredSelection) event.data;
+							if (selection.getFirstElement() instanceof StagingEntry)
+								unstage(selection);
+						}
 					}
 
 					public void dragOver(DropTargetEvent event) {
@@ -459,9 +461,11 @@ public class StagingView extends ViewPart {
 				new Transfer[] { LocalSelectionTransfer.getTransfer() },
 				new DropTargetAdapter() {
 					public void drop(DropTargetEvent event) {
-						final IStructuredSelection selection = (IStructuredSelection) unstagedTableViewer
-								.getSelection();
-						stage(selection);
+						if (event.data instanceof IStructuredSelection) {
+							final IStructuredSelection selection = (IStructuredSelection) event.data;
+							if (selection.getFirstElement() instanceof StagingEntry)
+								stage(selection);
+						}
 					}
 
 					public void dragOver(DropTargetEvent event) {
