@@ -8,11 +8,11 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
-import static org.eclipse.compare.structuremergeviewer.Differencer.ADDITION;
-import static org.eclipse.compare.structuremergeviewer.Differencer.CHANGE;
-import static org.eclipse.compare.structuremergeviewer.Differencer.DELETION;
-import static org.eclipse.compare.structuremergeviewer.Differencer.LEFT;
-import static org.eclipse.compare.structuremergeviewer.Differencer.RIGHT;
+import static org.eclipse.egit.core.synchronize.GitCommitsModelCache.ADDITION;
+import static org.eclipse.egit.core.synchronize.GitCommitsModelCache.CHANGE;
+import static org.eclipse.egit.core.synchronize.GitCommitsModelCache.DELETION;
+import static org.eclipse.egit.core.synchronize.GitCommitsModelCache.LEFT;
+import static org.eclipse.egit.core.synchronize.GitCommitsModelCache.RIGHT;
 import static org.eclipse.jgit.junit.JGitTestUtil.deleteTrashFile;
 import static org.eclipse.jgit.junit.JGitTestUtil.writeTrashFile;
 import static org.eclipse.jgit.lib.ObjectId.zeroId;
