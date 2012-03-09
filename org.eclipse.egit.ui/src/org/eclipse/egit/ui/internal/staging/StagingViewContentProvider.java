@@ -17,17 +17,20 @@ import static org.eclipse.egit.ui.internal.staging.StagingEntry.State.PARTIALLY_
 import static org.eclipse.egit.ui.internal.staging.StagingEntry.State.REMOVED;
 import static org.eclipse.egit.ui.internal.staging.StagingEntry.State.UNTRACKED;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.staging.StagingView.StagingViewUpdate;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.submodule.SubmoduleWalk;
 
 /**
  * ContentProvider for staged and unstaged table nodes
@@ -73,18 +76,17 @@ public class StagingViewContentProvider implements
 						nodes.remove(entry);
 		}
 
-		final IndexDiff indexDiff = update.indexDiff;
+		final IndexDiffData indexDiff = update.indexDiff;
 		final Repository repository = update.repository;
 		if (isWorkspace) {
 			for (String file : indexDiff.getMissing())
 				nodes.add(new StagingEntry(repository, MISSING, file));
-			for (String file : indexDiff.getModified()) {
+			for (String file : indexDiff.getModified())
 				if (indexDiff.getChanged().contains(file))
 					nodes.add(new StagingEntry(repository, PARTIALLY_MODIFIED,
 							file));
 				else
 					nodes.add(new StagingEntry(repository, MODIFIED, file));
-			}
 			for (String file : indexDiff.getUntracked())
 				nodes.add(new StagingEntry(repository, UNTRACKED, file));
 			for (String file : indexDiff.getConflicting())
@@ -97,8 +99,16 @@ public class StagingViewContentProvider implements
 			for (String file : indexDiff.getRemoved())
 				nodes.add(new StagingEntry(repository, REMOVED, file));
 		}
-		for (StagingEntry entry : nodes)
-			entry.setSubmodule(indexDiff.getIndexMode(entry.getPath()) == FileMode.GITLINK);
+
+		try {
+		SubmoduleWalk walk = SubmoduleWalk.forIndex(repository);
+		while(walk.next())
+			for (StagingEntry entry : nodes)
+				entry.setSubmodule(entry.getPath().equals(walk.getPath()));
+		} catch(IOException e) {
+			Activator.error(UIText.StagingViewContentProvider_SubmoduleError, e);
+		}
+
 		content = nodes.toArray(new StagingEntry[nodes.size()]);
 	}
 
