@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
-import static org.eclipse.compare.structuremergeviewer.Differencer.RIGHT;
+import static org.eclipse.egit.core.synchronize.GitCommitsModelCache.RIGHT;
 import static org.eclipse.egit.core.synchronize.GitCommitsModelCache.calculateAndSetChangeKind;
 import static org.eclipse.jgit.treewalk.filter.TreeFilter.ANY_DIFF;
 
