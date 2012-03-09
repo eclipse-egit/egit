@@ -19,9 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IProject;
@@ -33,22 +31,17 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
@@ -95,11 +88,6 @@ import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.events.IndexChangedEvent;
-import org.eclipse.jgit.events.IndexChangedListener;
-import org.eclipse.jgit.events.ListenerHandle;
-import org.eclipse.jgit.events.RefsChangedEvent;
-import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.ObjectId;
@@ -149,7 +137,6 @@ import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 /**
  * A GitX style staging view with embedded commit dialog.
@@ -185,8 +172,6 @@ public class StagingView extends ViewPart {
 
 	private boolean reactOnSelection = true;
 
-	private final List<ListenerHandle> myListeners = new LinkedList<ListenerHandle>();
-
 	private ISelectionListener selectionChangedListener;
 
 	private IResourceChangeListener resourceChangeListener;
@@ -195,11 +180,11 @@ public class StagingView extends ViewPart {
 
 	static class StagingViewUpdate {
 		Repository repository;
-		IndexDiff indexDiff;
+		IndexDiffData indexDiff;
 		Collection<String> changedResources;
 
 		StagingViewUpdate(Repository theRepository,
-				IndexDiff theIndexDiff, Collection<String> theChanges) {
+				IndexDiffData theIndexDiff, Collection<String> theChanges) {
 			this.repository = theRepository;
 			this.indexDiff = theIndexDiff;
 			this.changedResources = theChanges;
@@ -264,20 +249,6 @@ public class StagingView extends ViewPart {
 			| IResourceDelta.OPEN | IResourceDelta.REPLACED
 			| IResourceDelta.TYPE;
 
-	private final RefsChangedListener myRefsChangedListener = new RefsChangedListener() {
-		public void onRefsChanged(RefsChangedEvent event) {
-			// refs change when files are committed, we naturally want to remove
-			// committed files from the view
-			reload(event.getRepository());
-		}
-	};
-
-	private final IndexChangedListener myIndexChangedListener = new IndexChangedListener() {
-		public void onIndexChanged(IndexChangedEvent event) {
-			reload(event.getRepository());
-		}
-	};
-
 	private final IPreferenceChangeListener prefListener = new IPreferenceChangeListener() {
 
 		public void preferenceChange(PreferenceChangeEvent event) {
@@ -312,7 +283,14 @@ public class StagingView extends ViewPart {
 
 	private SashForm stagingSashForm;
 
-	private Job reloadJob;
+	private IndexDiffChangedListener myIndexDiffListener = new IndexDiffChangedListener() {
+		public void indexDiffChanged(Repository repository,
+				IndexDiffData indexDiffData) {
+			reload(repository);
+		}
+	};
+
+	private IndexDiffCacheEntry cacheEntry;
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -560,7 +538,7 @@ public class StagingView extends ViewPart {
 						throw new RuntimeException(e);
 					}
 
-					final StagingViewUpdate update = new StagingViewUpdate(currentRepository, indexDiff, resourcesToUpdate);
+					final StagingViewUpdate update = new StagingViewUpdate(currentRepository, new IndexDiffData(indexDiff), resourcesToUpdate);
 					asyncExec(new Runnable() {
 						public void run() {
 							if (form.isDisposed())
@@ -940,22 +918,8 @@ public class StagingView extends ViewPart {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(project);
 		if (mapping == null)
 			return;
-		if (mapping.getRepository() != currentRepository) {
+		if (mapping.getRepository() != currentRepository)
 			reload(mapping.getRepository());
-		}
-	}
-
-	private void attachListeners(Repository repository) {
-		myListeners.add(repository.getListenerList().addIndexChangedListener(
-				myIndexChangedListener));
-		myListeners.add(repository.getListenerList().addRefsChangedListener(
-				myRefsChangedListener));
-	}
-
-	private void removeListeners() {
-		for (ListenerHandle lh : myListeners)
-			lh.remove();
-		myListeners.clear();
 	}
 
 	private void stage(IStructuredSelection selection) {
@@ -999,8 +963,6 @@ public class StagingView extends ViewPart {
 			} catch (NoFilepatternException e) {
 				// cannot happen
 			}
-
-		reload(currentRepository);
 	}
 
 	private void unstage(IStructuredSelection selection) {
@@ -1050,8 +1012,6 @@ public class StagingView extends ViewPart {
 		} finally {
 			dirCache.unlock();
 		}
-
-		reload(currentRepository);
 	}
 
 	private void updateDirCache(IStructuredSelection selection,
@@ -1069,7 +1029,7 @@ public class StagingView extends ViewPart {
 				try {
 					final TreeWalk tw = TreeWalk.forPath(currentRepository,
 							entry.getPath(), headRev.getTree());
-					if (tw != null) {
+					if (tw != null)
 						edit.add(new DirCacheEditor.PathEdit(entry.getPath()) {
 							@Override
 							public void apply(DirCacheEntry ent) {
@@ -1079,7 +1039,6 @@ public class StagingView extends ViewPart {
 								ent.setLastModified(0);
 							}
 						});
-					}
 				} catch (IOException e) {
 					// TODO fix text
 					MessageDialog.openError(getSite().getShell(),
@@ -1109,7 +1068,6 @@ public class StagingView extends ViewPart {
 	private void clearRepository() {
 		saveCommitMessageComponentState();
 		currentRepository = null;
-		removeListeners();
 		StagingViewUpdate update = new StagingViewUpdate(null, null, null);
 		unstagedTableViewer.setInput(update);
 		stagedTableViewer.setInput(update);
@@ -1123,7 +1081,6 @@ public class StagingView extends ViewPart {
 			return;
 		if (repository == null) {
 			asyncExec(new Runnable() {
-
 				public void run() {
 					clearRepository();
 				}
@@ -1136,95 +1093,36 @@ public class StagingView extends ViewPart {
 
 		final boolean repositoryChanged = currentRepository != repository;
 
-		final AtomicReference<IndexDiff> results = new AtomicReference<IndexDiff>();
-
-		final String jobTitle = MessageFormat.format(UIText.StagingView_IndexDiffReload,
-				StagingView.getRepositoryName(repository));
-
-		if (reloadJob != null)
-			reloadJob.cancel();
-		reloadJob = new Job(jobTitle) {
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				IndexDiff indexDiff = doReload(repository, monitor, jobTitle);
-				results.set(indexDiff);
-				if (monitor.isCanceled())
-					return Status.CANCEL_STATUS;
-				return Status.OK_STATUS;
-			}
-
-			@Override
-			public boolean belongsTo(Object family) {
-				if (family.equals(JobFamilies.STAGING_VIEW_REFRESH))
-					return true;
-				return super.belongsTo(family);
-			}
-
-		};
-
-		reloadJob.setUser(false);
-		reloadJob.setRule(ResourcesPlugin.getWorkspace().getRoot());
-
-		reloadJob.addJobChangeListener(new JobChangeAdapter() {
-			public void done(final IJobChangeEvent event) {
-				if (!event.getResult().isOK())
+		asyncExec(new Runnable() {
+			public void run() {
+				if (form.isDisposed())
 					return;
-				asyncExec(new Runnable() {
-					public void run() {
-						if (form.isDisposed())
-							return;
-						final IndexDiff indexDiff = results.get();
-						final StagingViewUpdate update = new StagingViewUpdate(currentRepository, indexDiff, null);
-						unstagedTableViewer.setInput(update);
-						stagedTableViewer.setInput(update);
-						enableCommitWidgets(true);
-						commitAction.setEnabled(repository.getRepositoryState()
-								.canCommit());
-						form.setText(StagingView.getRepositoryName(repository));
-						updateCommitMessageComponent(repositoryChanged);
-						updateSectionText();
-					}
-
-				});
+				final IndexDiffData indexDiff = doReload(repository);
+				final StagingViewUpdate update = new StagingViewUpdate(currentRepository, indexDiff, null);
+				unstagedTableViewer.setInput(update);
+				stagedTableViewer.setInput(update);
+				enableCommitWidgets(true);
+				commitAction.setEnabled(repository.getRepositoryState()
+						.canCommit());
+				form.setText(StagingView.getRepositoryName(repository));
+				updateCommitMessageComponent(repositoryChanged);
+				updateSectionText();
 			}
 		});
-
-		schedule(reloadJob);
 	}
 
-	private void schedule(final Job j) {
-		IWorkbenchPartSite site = getSite();
-		if (site != null) {
-			final IWorkbenchSiteProgressService p;
-			p = (IWorkbenchSiteProgressService) site
-					.getAdapter(IWorkbenchSiteProgressService.class);
-			if (p != null) {
-				p.schedule(j, 0, true /* use half-busy cursor */);
-				return;
-			}
-		}
-		j.schedule();
-	}
-
-	private IndexDiff doReload(final Repository repository, IProgressMonitor monitor, String jobTitle) {
+	private IndexDiffData doReload(final Repository repository) {
 		currentRepository = repository;
 
-		EclipseGitProgressTransformer jgitMonitor = new EclipseGitProgressTransformer(
-				monitor);
+		IndexDiffCacheEntry entry = org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache().getIndexDiffCacheEntry(currentRepository);
 
-		final IndexDiff indexDiff;
-		try {
-			WorkingTreeIterator iterator = new FileTreeIterator(repository);
-			indexDiff = new IndexDiff(repository, Constants.HEAD, iterator);
-			indexDiff.diff(jgitMonitor, 0, 0, jobTitle);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		if(cacheEntry != null && cacheEntry != entry)
+			cacheEntry.removeIndexDiffChangedListener(myIndexDiffListener);
 
-		removeListeners();
-		attachListeners(repository);
+		cacheEntry = entry;
+		cacheEntry.addIndexDiffChangedListener(myIndexDiffListener);
 
-		return indexDiff;
+		return cacheEntry.getIndexDiff();
 	}
 
 	private void clearCommitMessageToggles() {
@@ -1243,13 +1141,11 @@ public class StagingView extends ViewPart {
 				deleteCommitMessageComponentState();
 			oldState = loadCommitMessageComponentState();
 			commitMessageComponent.setRepository(currentRepository);
-			if (oldState == null) {
+			if (oldState == null)
 				loadInitialState(helper);
-			} else {
+			else
 				loadExistingState(helper, oldState);
-			}
-		} else {
-			// repository did not change
+		} else // repository did not change
 			if (userEnteredCommmitMessage()) {
 				if (!commitMessageComponent.getHeadCommit().equals(
 						helper.getPreviousCommit()))
@@ -1257,7 +1153,6 @@ public class StagingView extends ViewPart {
 							.getCommitMessage());
 			} else
 				loadInitialState(helper);
-		}
 		amendPreviousCommitAction.setChecked(commitMessageComponent
 				.isAmending());
 		amendPreviousCommitAction.setEnabled(helper.amendAllowed());
@@ -1279,14 +1174,12 @@ public class StagingView extends ViewPart {
 				.getPreviousCommit()));
 		boolean amendAllowed = helper.amendAllowed();
 		commitMessageComponent.setAmendAllowed(amendAllowed);
-		if (!amendAllowed) {
+		if (!amendAllowed)
 			commitMessageComponent.setAmending(false);
-		} else {
-			if (!headCommitChanged && oldState.getAmend())
-				commitMessageComponent.setAmending(true);
-			else
-				commitMessageComponent.setAmending(false);
-		}
+		else if (!headCommitChanged && oldState.getAmend())
+			commitMessageComponent.setAmending(true);
+		else
+			commitMessageComponent.setAmending(false);
 		commitMessageComponent.updateUIFromState();
 		commitMessageComponent.updateSignedOffAndChangeIdButton();
 		commitMessageComponent.enableListers(true);
@@ -1399,15 +1292,13 @@ public class StagingView extends ViewPart {
 				ISelectionService.class);
 		srv.removePostSelectionListener(selectionChangedListener);
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
+
+		if(cacheEntry != null)
+			cacheEntry.removeIndexDiffChangedListener(myIndexDiffListener);
+
 		new InstanceScope().getNode(
 				org.eclipse.egit.core.Activator.getPluginId())
 				.removePreferenceChangeListener(prefListener);
-
-		removeListeners();
-		if (reloadJob != null) {
-			reloadJob.cancel();
-			reloadJob = null;
-		}
 	}
 
 	private void asyncExec(Runnable runnable) {
