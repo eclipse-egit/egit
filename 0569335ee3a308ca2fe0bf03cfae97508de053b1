@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///x8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-09T07:17:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3///yg\u003d",
+      "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///yc\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-03-09T06:55:37Z",
       "side": 1,
       "message": "don\u0027t leave dead code",
+      "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///x4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-09T07:17:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3///yc\u003d",
       "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///x0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-09T07:17:51Z",
+      "side": 1,
+      "message": "ah, well - i missed that :)",
+      "parentUuid": "AABOG3///yM\u003d",
+      "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///yQ\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2012-03-09T06:55:37Z",
       "side": 1,
       "message": "style nit: missing indentation level",
+      "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///xw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-09T07:17:51Z",
+      "side": 1,
+      "message": "interesting - seems this was the auto-format; i didn\u0027t touch this place...",
+      "parentUuid": "AABOG3///yQ\u003d",
       "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///xk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-09T07:17:51Z",
+      "side": 1,
+      "message": "the problem is that i cannot ask the IndexDiffData for the mode of a file. this is the quickest fix i found - i\u0027m not really sure whether this is \"good\" or \"correct\".",
+      "parentUuid": "AABOG3///yI\u003d",
+      "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///yE\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2012-03-09T06:55:37Z",
       "side": 1,
       "message": "Shouldn\u0027t this problem be displayed to the user instead of silently logging an error ? Then the error message needs to be externalized.\n\nstyle nit: start the error message with an uppercase character",
+      "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///xg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-09T07:17:51Z",
+      "side": 1,
+      "message": "do i have to call another method to display it to the user too? or is externalization enough (i have done it).",
+      "parentUuid": "AABOG3///yE\u003d",
       "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
