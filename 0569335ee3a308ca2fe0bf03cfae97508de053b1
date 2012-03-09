@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3///yg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-09T06:55:37Z",
+      "side": 1,
+      "message": "don\u0027t leave dead code",
+      "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///yc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-09T06:55:37Z",
+      "side": 1,
+      "message": "don\u0027t leave dead code",
+      "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///yM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-09T06:55:37Z",
+      "side": 1,
+      "message": "where is the corresponding unregistration ? I would expect we use removeIndexDiffChangedListener() to revert this registration when we don\u0027t need to be informed about updates  anymore",
+      "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///yQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-09T06:55:37Z",
+      "side": 1,
+      "message": "style nit: missing indentation level",
+      "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///yI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-09T06:55:37Z",
+      "side": 1,
+      "message": "is this an independent fix ? Why didn\u0027t we need this walk before ?",
+      "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///yE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingViewContentProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-09T06:55:37Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this problem be displayed to the user instead of silently logging an error ? Then the error message needs to be externalized.\n\nstyle nit: start the error message with an uppercase character",
+      "revId": "0569335ee3a308ca2fe0bf03cfae97508de053b1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
