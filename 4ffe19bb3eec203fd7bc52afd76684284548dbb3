@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3///uo\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-09T12:29:28Z",
+      "side": 1,
+      "message": "s/Bug-Id/Bug/",
+      "revId": "4ffe19bb3eec203fd7bc52afd76684284548dbb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///us\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-09T12:29:28Z",
+      "side": 1,
+      "message": "Maybe you could add the term \"using Rebase \u003e Skip\" somehow to make it clearer what the user should do.",
+      "revId": "4ffe19bb3eec203fd7bc52afd76684284548dbb3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
