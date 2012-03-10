@@ -21,6 +21,7 @@ import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelTree;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
@@ -39,8 +40,8 @@ class GitTreeTraversal extends ResourceTraversal {
 	private static FileTreeIterator fileTreeIterator;
 
 	public GitTreeTraversal(GitModelTree modelTree) {
-		this(modelTree.getRepository(), modelTree.getBaseId(), modelTree
-				.getRemoteId(), modelTree.getLocation());
+		super(getResourcesImpl(modelTree.getChildren()), IResource.DEPTH_INFINITE,
+				IResource.NONE);
 	}
 
 	public GitTreeTraversal(Repository repo, RevCommit commit) {
@@ -116,4 +117,24 @@ class GitTreeTraversal extends ResourceTraversal {
 
 		return result.toArray(new IResource[result.size()]);
 	}
+
+	private static IResource[] getResourcesImpl(GitModelObject[] children) {
+		IResource[] result = new IResource[children.length];
+
+		for (int i = 0; i < children.length; i++) {
+			IResource resource = null;
+			IPath childPath = children[i].getLocation();
+			if (children[i].isContainer())
+				resource = ROOT.getContainerForLocation(childPath);
+			else
+				resource = ROOT.getFileForLocation(childPath);
+
+			if (resource != null)
+				result[i] = resource;
+		}
+
+		return result;
+
+	}
+
 }

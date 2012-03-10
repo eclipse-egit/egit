@@ -8,17 +8,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
-import static org.eclipse.jgit.treewalk.filter.TreeFilter.ANY_DIFF;
-
 import java.io.IOException;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.treewalk.TreeWalk;
 
 /**
  * Abstract representation of all object that are included in Git ChangeSet
@@ -43,6 +38,25 @@ public abstract class GitModelObject extends PlatformObject {
 	}
 
 	/**
+	 * @param parent
+	 */
+	public GitModelObject(GitModelObject parent) {
+		this.parent = parent;
+	}
+
+	/**
+	 * @return parent
+	 */
+	public GitModelObject getParent() {
+		return parent;
+	}
+
+	/**
+	 * @return repository hash code
+	 */
+	public abstract int repositoryHashCode();
+
+	/**
 	 * @return child's of particular model object
 	 */
 	public abstract GitModelObject[] getChildren();
@@ -62,9 +76,10 @@ public abstract class GitModelObject extends PlatformObject {
 	public abstract String getName();
 
 	/**
-	 * @return list of projects that are connected with particular object model
+	 *
+	 * @return change kind
 	 */
-	public abstract IProject[] getProjects();
+	public abstract int getKind();
 
 	/**
 	 * @return location of resource associated with particular model object
@@ -78,46 +93,5 @@ public abstract class GitModelObject extends PlatformObject {
 	 *         <code>false</code> otherwise.
 	 */
 	public abstract boolean isContainer();
-
-	/**
-	 *
-	 * @param parent
-	 *            of particular model object
-	 */
-	protected GitModelObject(GitModelObject parent) {
-		this.parent = parent;
-	}
-
-	/**
-	 * @return parent of particular model object, or <code>null</code> if object
-	 *         is root node
-	 */
-	public GitModelObject getParent() {
-		return parent;
-	}
-
-	/**
-	 * @return repository associated with particular model object
-	 */
-	public Repository getRepository() {
-		return parent.getRepository();
-	}
-
-	/**
-	 * Returns preinitialized instance of {@link TreeWalk}. Set of
-	 * initialization call's is common for all model object's.
-	 *
-	 * @return tree walk
-	 */
-	protected TreeWalk createTreeWalk() {
-		Repository repo = getRepository();
-		TreeWalk tw = new TreeWalk(repo);
-
-		tw.reset();
-		tw.setRecursive(false);
-
-		tw.setFilter(ANY_DIFF);
-		return tw;
-	}
 
 }

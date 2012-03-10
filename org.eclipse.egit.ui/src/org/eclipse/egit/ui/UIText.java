@@ -4399,6 +4399,9 @@ public class UIText extends NLS {
 	/** */
 	public static String RebasePulldownAction_Abort;
 
+	/** */
+	public static String GitOpenInCompareAction_cannotRetriveCommitWithId;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
