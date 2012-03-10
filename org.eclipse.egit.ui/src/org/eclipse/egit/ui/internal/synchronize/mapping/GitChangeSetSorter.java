@@ -8,14 +8,14 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.mapping;
 
+import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Commit;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache;
+import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelTree;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingTree;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
-import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
  * Ensure proper ordering of nodes in Git Change Set.
@@ -59,10 +59,10 @@ public class GitChangeSetSorter extends ViewerSorter {
 			return 1;
 
 		if (e1 instanceof GitModelCommit && e2 instanceof GitModelCommit) {
-			RevCommit rc1 = ((GitModelCommit) e1).getBaseCommit();
-			RevCommit rc2 = ((GitModelCommit) e2).getBaseCommit();
+			Commit rc1 = ((GitModelCommit) e1).getCachedCommitObj();
+			Commit rc2 = ((GitModelCommit) e2).getCachedCommitObj();
 
-			return rc2.getCommitTime() - rc1.getCommitTime();
+			return rc2.getCommitDate().compareTo(rc1.getCommitDate());
 		}
 
 		return super.compare(viewer, e1, e2);

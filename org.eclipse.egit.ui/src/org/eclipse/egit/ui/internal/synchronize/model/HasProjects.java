@@ -6,22 +6,18 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.jgit.revwalk;
+package org.eclipse.egit.ui.internal.synchronize.model;
 
-import org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetSorterTest;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
+import org.eclipse.core.resources.IProject;
 
 /**
- * The only reason of this class existence is to tests {@link GitModelCommit}
- * ordering in {@link GitChangeSetSorterTest}
- * 
- * DO NOT USE IT ELSEWERE!
+ * Indicates does contains list of projects
  */
-public class MockRevCommit extends RevCommit {
+public interface HasProjects {
 
-	public MockRevCommit(int commitTime) {
-		super(zeroId());
-		this.commitTime = commitTime;
-	}
+	/**
+	 * @return list of projects
+	 */
+	IProject[] getProjects();
 
 }
