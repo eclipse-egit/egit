@@ -163,7 +163,9 @@ public class CloneOperation {
 					repository.close();
 				FileUtils.delete(workdir, FileUtils.RECURSIVE);
 			} catch (IOException ioe) {
-				throw new InvocationTargetException(ioe);
+				throw new InvocationTargetException(e, NLS.bind(
+						CoreText.CloneOperation_failed_cleanup,
+						ioe.getLocalizedMessage()));
 			}
 			if (monitor.isCanceled())
 				throw new InterruptedException();
