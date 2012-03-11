@@ -69,7 +69,22 @@ public abstract class RepositoryAction extends AbstractHandler implements
 	}
 
 	public void run(IAction action) {
-        IServiceLocator locator = getServiceLocator();
+        ExecutionEvent event = createExecutionEvent();
+
+		try {
+			this.handler.execute(event);
+		} catch (ExecutionException e) {
+			Activator.handleError(e.getMessage(), e, true);
+		}
+	}
+
+	/**
+	 * Creates {@link ExecutionEvent} based on current selection
+	 *
+	 * @return {@link ExecutionEvent} with current selection
+	 */
+	protected ExecutionEvent createExecutionEvent() {
+		IServiceLocator locator = getServiceLocator();
 		ICommandService srv = (ICommandService) locator
 				.getService(ICommandService.class);
 		IHandlerService hsrv = (IHandlerService) locator
@@ -77,16 +92,10 @@ public abstract class RepositoryAction extends AbstractHandler implements
 		Command command = srv.getCommand(commandId);
 
 		ExecutionEvent event = hsrv.createExecutionEvent(command, null);
-		if (event.getApplicationContext() instanceof IEvaluationContext) {
+		if (event.getApplicationContext() instanceof IEvaluationContext)
 			((IEvaluationContext) event.getApplicationContext()).addVariable(
 					ISources.ACTIVE_CURRENT_SELECTION_NAME, mySelection);
-		}
-
-		try {
-			this.handler.execute(event);
-		} catch (ExecutionException e) {
-			Activator.handleError(e.getMessage(), e, true);
-		}
+		return event;
 	}
 
 	private IServiceLocator getServiceLocator() {

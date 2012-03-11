@@ -43,7 +43,7 @@ public abstract class AbstractSharedCommandHandler extends AbstractHandler {
 	 * @return a {@link Repository} if all elements in the current selection map
 	 *         to the same {@link Repository}, otherwise null
 	 */
-	protected Repository getRepository(ExecutionEvent event) {
+	public static Repository getRepository(ExecutionEvent event) {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		return getRepository(selection);
 	}
@@ -55,7 +55,7 @@ public abstract class AbstractSharedCommandHandler extends AbstractHandler {
 	 * @return a {@link Repository} if all elements in the current selection map
 	 *         to the same {@link Repository}, otherwise null
 	 */
-	protected Repository getRepository(ISelection selection) {
+	protected static Repository getRepository(ISelection selection) {
 		if (selection == null || selection.isEmpty())
 			return null;
 		if (selection instanceof IStructuredSelection) {
@@ -63,10 +63,10 @@ public abstract class AbstractSharedCommandHandler extends AbstractHandler {
 			Repository result = null;
 			for (Object element : ssel.toList()) {
 				Repository elementRepository = null;
-				if (element instanceof RepositoryTreeNode) {
+				if (element instanceof RepositoryTreeNode)
 					elementRepository = ((RepositoryTreeNode) element)
 							.getRepository();
-				} else if (element instanceof IResource) {
+				else if (element instanceof IResource) {
 					IResource resource = (IResource) element;
 					RepositoryMapping mapping = RepositoryMapping
 							.getMapping(resource.getProject());
