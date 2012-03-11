@@ -3668,12 +3668,6 @@ public class UIText extends NLS {
 	public static String RemoteConnectionPreferencePage_ZeroValueTooltip;
 
 	/** */
-	public static String RemoteSelectionCombo_sourceName;
-
-	/** */
-	public static String RemoteSelectionCombo_sourceRef;
-
-	/** */
 	public static String RefreshPreferencesPage_RefreshOnlyWhenActive;
 
 	/** */
@@ -3690,12 +3684,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RefUpdateElement_UrisDecoration;
-
-	/** */
-	public static String RemoteSelectionCombo_destinationName;
-
-	/** */
-	public static String RemoteSelectionCombo_destinationRef;
 
 	/** */
 	public static String RemoveCommand_ConfirmDeleteBareRepositoryMessage;
@@ -3759,21 +3747,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RevertOperation_InternalError;
-
-	/** */
-	public static String SelectSynchronizeResourceDialog_header;
-
-	/** */
-	public static String SelectSynchronizeResourceDialog_selectProject;
-
-	/** */
-	public static String SelectSynchronizeResourceDialog_srcRef;
-
-	/** */
-	public static String SelectSynchronizeResourceDialog_dstRef;
-
-	/** */
-	public static String SelectSynchronizeResourceDialog_includeUncommitedChanges;
 
 	/** */
 	public static String SelectUriWiazrd_Title;
@@ -4014,12 +3987,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String SwitchToMenu_OtherMenuLabel;
-
-	/** */
-	public static String SynchronizeWithAction_localRepoName;
-
-	/** */
-	public static String SynchronizeWithAction_tagsName;
 
 	/** */
 	public static String ValidationUtils_CanNotResolveRefMessage;
@@ -4347,6 +4314,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String FetchChangeFromGerritCommand_noRepositorySelectedMessage;
+
+	/** */
+	public static String SynchronizeCommand_jobName;
 
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
