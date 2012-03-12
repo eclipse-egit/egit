@@ -1317,8 +1317,11 @@ public class StagingView extends ViewPart {
 	private boolean userEnteredCommmitMessage() {
 		if (commitMessageComponent.getRepository() == null)
 			return false;
-		String message = commitMessageComponent.getCommitMessage();
+		String message = commitMessageComponent.getCommitMessage().replace(UIText.StagingView_headCommitChanged, ""); //$NON-NLS-1$
 		if (message == null || message.trim().length() == 0)
+			return false;
+		if(commitMessageComponent.getCreateChangeId() &&
+				message.trim().equals("Change-Id: I" + ObjectId.zeroId().name())) //$NON-NLS-1$
 			return false;
 		return true;
 	}
