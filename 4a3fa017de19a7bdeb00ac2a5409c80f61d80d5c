@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///a8\u003d",
+        "filename": "org.eclipse.egit.import/plugin.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-12T23:53:40Z",
+      "side": 1,
+      "message": "don\u0027t know how to fix this",
+      "parentUuid": "AABOG3///bQ\u003d",
+      "revId": "4a3fa017de19a7bdeb00ac2a5409c80f61d80d5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///bM\u003d",
         "filename": "org.eclipse.egit.import/src/org/eclipse/egit/internal/importing/GitScmUrlImportWizardPage.java",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2012-03-12T23:48:45Z",
       "side": 1,
       "message": "compiler raises error that the following methods need to be implemented by this class:\n\n public void setProvider(RepositoryProviderType provider)\n public RepositoryProviderType getProvider()",
+      "revId": "4a3fa017de19a7bdeb00ac2a5409c80f61d80d5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///a4\u003d",
+        "filename": "org.eclipse.egit.import/src/org/eclipse/egit/internal/importing/GitScmUrlImportWizardPage.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-12T23:53:40Z",
+      "side": 1,
+      "message": "added trivial implementation, not sure if this is correct, please check",
+      "parentUuid": "AABOG3///bM\u003d",
       "revId": "4a3fa017de19a7bdeb00ac2a5409c80f61d80d5c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
