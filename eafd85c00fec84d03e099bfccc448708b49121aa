@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3///mU\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-12T08:03:49Z",
+      "side": 1,
+      "message": "did you mean\n\"Merge selected branch into current HEAD\" ?",
+      "revId": "eafd85c00fec84d03e099bfccc448708b49121aa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
