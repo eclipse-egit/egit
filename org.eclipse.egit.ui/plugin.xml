@@ -705,6 +705,17 @@
            tooltip="%ResetAction_tooltip">
 		 </action>
 		 <action
+           class="org.eclipse.egit.ui.internal.actions.MergeAction"
+           definitionId="org.eclipse.egit.ui.team.Merge"
+           icon="icons/obj16/merge.gif"
+           id="org.eclipse.egit.ui.actionmerge"
+           label="%MergeAction_label"
+           menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
+           style="push"
+           toolbarPath="Normal/additions"
+           tooltip="%MergeAction_tooltip">
+		 </action>
+		 <action
            class="org.eclipse.egit.ui.internal.actions.RebaseAction"
            definitionId="org.eclipse.egit.ui.team.Rebase"
            icon="icons/obj16/rebase.gif"
