@@ -31,9 +31,10 @@ import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.api.CheckoutResult.Status;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.CheckoutConflictException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.CheckoutConflictException;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -99,13 +100,19 @@ public class BranchOperation extends BaseOperation {
 				CheckoutCommand co = new Git(repository).checkout();
 				co.setName(target);
 
+				Ref headRef = null;
+				Ref newRef = null;
+
 				try {
-					co.call();
+					 headRef = repository.getRef(Constants.HEAD);
+					 newRef = co.call();
 				} catch (CheckoutConflictException e) {
 					return;
 				} catch (JGitInternalException e) {
 					throw new CoreException(Activator.error(e.getMessage(), e));
 				} catch (GitAPIException e) {
+					throw new CoreException(Activator.error(e.getMessage(), e));
+				} catch (IOException e) {
 					throw new CoreException(Activator.error(e.getMessage(), e));
 				} finally {
 					BranchOperation.this.result = co.getResult();
@@ -113,8 +120,10 @@ public class BranchOperation extends BaseOperation {
 				if (result.getStatus() == Status.NONDELETED)
 					retryDelete(result.getUndeletedList());
 				pm.worked(1);
-				ProjectUtil.refreshValidProjects(validProjects, delete,
-						new SubProgressMonitor(pm, 1));
+
+				if(headRef == null || newRef == null || !headRef.getObjectId().equals(newRef.getObjectId()))
+					ProjectUtil.refreshValidProjects(validProjects, delete,
+							new SubProgressMonitor(pm, 1));
 				pm.worked(1);
 
 				postExecute(pm);
