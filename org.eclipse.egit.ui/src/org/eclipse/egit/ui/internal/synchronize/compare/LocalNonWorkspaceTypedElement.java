@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jgit.events.IndexChangedEvent;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
 
@@ -114,17 +115,17 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	/** {@inheritDoc} */
 	@Override
 	public void commit(IProgressMonitor monitor) throws CoreException {
-		if (isDirty()) {
-			if (isConnected()) {
+		if (isDirty())
+			if (isConnected())
 				super.commit(monitor);
-			} else {
+			else {
 				IResource resource = getResource();
 				if (resource instanceof IFile) {
 					FileOutputStream out = null;
 					File file = ((IFile) resource).getFullPath().toFile();
 					try {
 						if (!file.exists())
-							file.createNewFile();
+							FileUtils.createNewFile(file);
 						out = new FileOutputStream(file);
 						out.write(getContent());
 						fDirty = false;
@@ -135,9 +136,8 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 					} finally {
 						fireContentChanged();
 						RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
-						if (mapping != null) {
+						if (mapping != null)
 							mapping.getRepository().fireEvent(new IndexChangedEvent());
-						}
 						if (out != null)
 							try {
 								out.close();
@@ -146,12 +146,11 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 					}
 				}
 			}
-		}
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public boolean isDirty() {
+	public synchronized boolean isDirty() {
 		return fDirty || (sharedDocumentAdapter != null && sharedDocumentAdapter.hasBufferedContents());
 	}
 
@@ -159,12 +158,11 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
 	 */
 	public Object getAdapter(Class adapter) {
-		if (adapter == ISharedDocumentAdapter.class) {
+		if (adapter == ISharedDocumentAdapter.class)
 			if (isSharedDocumentsEnable())
 				return getSharedDocumentAdapter();
 			else
 				return null;
-		}
 		return Platform.getAdapterManager().getAdapter(this, adapter);
 	}
 
