@@ -325,10 +325,11 @@ public class CommitFileDiffViewer extends TableViewer {
 		copy.setEnabled(!sel.isEmpty());
 
 		if (!submoduleSelected) {
-			open.setEnabled(!sel.isEmpty());
-			openWorkingTreeVersion.setEnabled(!sel.isEmpty());
+			boolean oneOrMoreSelected = !sel.isEmpty();
+			open.setEnabled(oneOrMoreSelected);
+			openWorkingTreeVersion.setEnabled(oneOrMoreSelected);
 			compare.setEnabled(sel.size() == 1);
-			blame.setEnabled(true);
+			blame.setEnabled(oneOrMoreSelected);
 			if (sel.size() == 1) {
 				FileDiff diff = (FileDiff) sel.getFirstElement();
 				String path = new Path(getRepository().getWorkTree()
