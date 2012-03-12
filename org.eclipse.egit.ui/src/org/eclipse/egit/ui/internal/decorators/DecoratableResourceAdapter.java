@@ -69,6 +69,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 				break;
 			case IResource.PROJECT:
 				tracked = true;
+				//$FALL-THROUGH$
 			case IResource.FOLDER:
 				extractContainerProperties();
 				break;
