@@ -16,6 +16,24 @@
       "revId": "415fb8adebc050fbdc701b44b6a2fb3544cbc37d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///eA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/MergeTargetSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-03-12T17:52:48Z",
+      "side": 1,
+      "message": "I don\u0027t think so since it currently doesn\u0027t handle getting the upstream branch when it is another local branch which is the case when the remote config is \".\"",
+      "parentUuid": "AABOG3///qM\u003d",
+      "revId": "415fb8adebc050fbdc701b44b6a2fb3544cbc37d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
