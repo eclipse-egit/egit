@@ -38,6 +38,8 @@ import org.eclipse.jgit.events.RefsChangedEvent;
 import org.eclipse.jgit.events.RefsChangedListener;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
@@ -66,6 +68,8 @@ public class IndexDiffCacheEntry {
 
 	private IResourceChangeListener resourceChangeListener;
 
+	private ObjectId lastCommitId = null;
+
 	/**
 	 * @param repository
 	 */
@@ -80,6 +84,24 @@ public class IndexDiffCacheEntry {
 		repository.getListenerList().addRefsChangedListener(
 				new RefsChangedListener() {
 					public void onRefsChanged(RefsChangedEvent event) {
+						try {
+							Ref ref = event.getRepository().getRef(Constants.HEAD);
+							ObjectId objectId = ref.getObjectId();
+
+							// objectId may be null if renaming a branch - HEAD
+							// points to the new Ref, but the Ref still points
+							// nowhere.
+							if (objectId != null) {
+								boolean skipThis = (objectId
+										.equals(lastCommitId));
+								lastCommitId = objectId;
+
+								if (skipThis)
+									return;
+							}
+						} catch (IOException e) {
+							// ignore and do the refresh.
+						}
 						scheduleReloadJob("RefsChanged"); //$NON-NLS-1$
 					}
 				});
@@ -155,11 +177,10 @@ public class IndexDiffCacheEntry {
 					notifyListeners();
 					return Status.OK_STATUS;
 				} catch (RuntimeException e) {
-					if (GitTraceLocation.INDEXDIFFCACHE.isActive()) {
+					if (GitTraceLocation.INDEXDIFFCACHE.isActive())
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.INDEXDIFFCACHE.getLocation(),
 								"Calculating IndexDiff failed", e); //$NON-NLS-1$
-					}
 					scheduleReloadJob("Recalculation due to Exception in reload job"); //$NON-NLS-1$
 					return Status.OK_STATUS;
 				} finally {
@@ -244,11 +265,10 @@ public class IndexDiffCacheEntry {
 					notifyListeners();
 					return Status.OK_STATUS;
 				} catch (RuntimeException e) {
-					if (GitTraceLocation.INDEXDIFFCACHE.isActive()) {
+					if (GitTraceLocation.INDEXDIFFCACHE.isActive())
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.INDEXDIFFCACHE.getLocation(),
 								"Calculating IndexDiff failed", e); //$NON-NLS-1$
-					}
 					scheduleReloadJob("Recalculation due to Exception in update job"); //$NON-NLS-1$
 					return Status.OK_STATUS;
 				} finally {
@@ -293,14 +313,13 @@ public class IndexDiffCacheEntry {
 			tmpListeners = listeners
 					.toArray(new IndexDiffChangedListener[listeners.size()]);
 		}
-		for (int i = 0; i < tmpListeners.length; i++) {
+		for (int i = 0; i < tmpListeners.length; i++)
 			try {
 				tmpListeners[i].indexDiffChanged(repository, indexDiffData);
 			} catch (RuntimeException e) {
 				Activator.logError(
 						"Exception occured in an IndexDiffChangedListener", e); //$NON-NLS-1$
 			}
-		}
 	}
 
 	private IndexDiff calcIndexDiff(IProgressMonitor monitor, String jobName) {
