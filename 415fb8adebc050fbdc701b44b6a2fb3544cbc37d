@@ -34,6 +34,24 @@
       "revId": "415fb8adebc050fbdc701b44b6a2fb3544cbc37d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///Xk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/MergeTargetSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-13T10:10:57Z",
+      "side": 1,
+      "message": "Ah, I see; and in the use-case where BranchConfig.getRemoteTrackingBranch() is used (show branch status) we behave like native git - only show branch status relative to remote branches.",
+      "parentUuid": "AABOG3///eA\u003d",
+      "revId": "415fb8adebc050fbdc701b44b6a2fb3544cbc37d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
