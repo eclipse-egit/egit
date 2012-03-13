@@ -91,8 +91,6 @@ public class BranchOperation extends BaseOperation {
 			public void run(IProgressMonitor pm) throws CoreException {
 				preExecute(pm);
 
-				IProject[] validProjects = ProjectUtil
-						.getValidOpenProjects(repository);
 				pm.beginTask(NLS.bind(
 						CoreText.BranchOperation_performingBranch, target), 1);
 
@@ -113,6 +111,8 @@ public class BranchOperation extends BaseOperation {
 				if (result.getStatus() == Status.NONDELETED)
 					retryDelete(result.getUndeletedList());
 				pm.worked(1);
+				IProject[] validProjects = ProjectUtil
+						.getValidOpenProjectsContaining(repository, co.getResult().getModifiedList());
 				ProjectUtil.refreshValidProjects(validProjects, delete,
 						new SubProgressMonitor(pm, 1));
 				pm.worked(1);
