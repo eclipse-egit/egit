@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///XE\u003d",
+        "filename": "org.eclipse.egit.import/plugin.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-03-13T12:31:44Z",
+      "side": 1,
+      "message": "You will need to update Eclipse to 3.8 M6, which is coming out this week, or one of the latest I-builds. The change causing this has been introduced in bug 372020. This should also fix the problem you see in the page class.",
+      "parentUuid": "AABOG3///a8\u003d",
+      "revId": "4a3fa017de19a7bdeb00ac2a5409c80f61d80d5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///bM\u003d",
         "filename": "org.eclipse.egit.import/src/org/eclipse/egit/internal/importing/GitScmUrlImportWizardPage.java",
         "patchSetId": 7
