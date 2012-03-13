@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.AdapterUtils;
@@ -113,7 +114,8 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 /** Graphical commit history viewer. */
-public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
+public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
+		ISchedulingRule {
 
 	/** actions used in GitHistoryPage **/
 	private static class GitHistoryPageActions {
@@ -1153,20 +1155,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 				setErrorMessage(UIText.GitHistoryPage_NoInputMessage);
 				return false;
 			}
-			Repository db = input.getRepository();
-			if (resolveHead(db, true) == null) {
-				this.name = ""; //$NON-NLS-1$
-				setErrorMessage(UIText.GitHistoryPage_NoInputMessage);
-				return false;
-			}
 
 			final IResource[] inResources = input.getItems();
 			final File[] inFiles = input.getFileList();
-			if (inResources != null && inResources.length == 0) {
-				this.name = ""; //$NON-NLS-1$
-				setErrorMessage(UIText.GitHistoryPage_NoInputMessage);
-				return false;
-			}
 
 			this.name = calculateName(input);
 
@@ -1474,8 +1465,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 			}
 
 			AnyObjectId headId = resolveHead(db, true);
-			if (headId == null)
+			if (headId == null) {
+				graph.getTableView().setInput(new SWTCommit[0]);
+				currentHeadId = null;
 				return;
+			}
 
 			List<FilterPath> paths = buildFilterPaths(input.getItems(), input
 					.getFileList(), db);
@@ -1506,7 +1500,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 
 	private boolean shouldRedraw(Repository db, AnyObjectId headId, List<FilterPath> paths) {
 		boolean pathChanged = pathChanged(pathFilters, paths);
-		boolean headChanged = !headId.equals(currentHeadId);
+		boolean headChanged = headId == null || !headId.equals(currentHeadId);
 		boolean repoChanged = false;
 
 		boolean allBranchesChanged = currentShowAllBranches != store
@@ -1759,6 +1753,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 		final SWTCommitList list = new SWTCommitList(graph.getControl());
 		list.source(currentWalk);
 		final GenerateHistoryJob rj = new GenerateHistoryJob(this, list);
+		rj.setRule(this);
 		rj.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(final IJobChangeEvent event) {
@@ -1855,17 +1850,19 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener {
 	private void cancelRefreshJob() {
 		if (job != null && job.getState() != Job.NONE) {
 			job.cancel();
-			try {
-				job.join();
-			} catch (InterruptedException e) {
-				cancelRefreshJob();
-				return;
-			}
 			job = null;
 		}
 	}
 
 	private boolean isShowingRelativeDates() {
 		return Activator.getDefault().getPreferenceStore().getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE);
+	}
+
+	public boolean contains(ISchedulingRule rule) {
+		return this == rule;
+	}
+
+	public boolean isConflicting(ISchedulingRule rule) {
+		return this == rule;
 	}
 }
