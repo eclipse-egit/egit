@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///VQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-13T15:28:48Z",
+      "side": 1,
+      "message": "yep, you\u0027re right - i removed it and it seems to work just as well.",
+      "parentUuid": "AABOG3///WI\u003d",
+      "revId": "6124a03632aba13782037197b0ae3e8095d3d68a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///Wc\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///VM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-13T15:28:48Z",
+      "side": 1,
+      "message": "done, i guess it /is/ enough to just return in the null case?",
+      "parentUuid": "AABOG3///Wc\u003d",
+      "revId": "6124a03632aba13782037197b0ae3e8095d3d68a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///Wg\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2012-03-13T14:38:31Z",
       "side": 1,
       "message": "The returned IndexDiffData can be null.This can occur if the very first calculation of IndexDiffData is still running.",
+      "revId": "6124a03632aba13782037197b0ae3e8095d3d68a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///VI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-13T15:28:48Z",
+      "side": 1,
+      "message": "ok, null handled in the reload() method.",
+      "parentUuid": "AABOG3///Wg\u003d",
       "revId": "6124a03632aba13782037197b0ae3e8095d3d68a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
