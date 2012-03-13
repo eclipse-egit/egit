@@ -14,8 +14,8 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 
+import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.common.StagingViewTester;
 import org.eclipse.egit.ui.test.CommitMessageUtil;
@@ -61,7 +61,7 @@ public class StagingViewTest extends LocalRepositoryTestCase {
 		StagingViewTester stagingViewTester = StagingViewTester
 				.openStagingView();
 		selectRepositoryNode();
-		TestUtil.joinJobs(JobFamilies.STAGING_VIEW_REFRESH);
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		stagingViewTester.setAuthor(TestUtil.TESTAUTHOR);
 		stagingViewTester.setCommitter(TestUtil.TESTCOMMITTER);
 		stagingViewTester.setCommitMessage("The new commit");
