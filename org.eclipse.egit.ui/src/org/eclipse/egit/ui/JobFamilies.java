@@ -89,11 +89,6 @@ public class JobFamilies {
 	public final static Object DISCONNECT = new Object();
 
 	/**
-	 * Staging View refresh
-	 */
-	public static final Object STAGING_VIEW_REFRESH = new Object();
-
-	/**
 	 * Add to index job
 	 */
 	public static final Object ADD_TO_INDEX = new Object();
