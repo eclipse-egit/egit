@@ -73,9 +73,8 @@ public class ProjectUtil {
 			if (projectFile.exists()) {
 				final File file = p.getLocation().toFile();
 				if (file.getAbsolutePath().startsWith(
-						parentFile.getAbsolutePath())) {
+						parentFile.getAbsolutePath()))
 					result.add(p);
-				}
 			}
 		}
 		return result.toArray(new IProject[result.size()]);
@@ -236,15 +235,60 @@ public class ProjectUtil {
 		List<IProject> result = new ArrayList<IProject>();
 		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
-		for (IProject project : projects) {
+		for (IProject project : projects)
 			if (project.isAccessible()) {
 				RepositoryMapping mapping = RepositoryMapping
 						.getMapping(project);
 				if (mapping != null && mapping.getRepository() == repository)
 					result.add(project);
 			}
-		}
 		return result.toArray(new IProject[result.size()]);
+	}
+
+	/**
+	 * The method returns all projects containing at least one of the given
+	 * paths.
+	 *
+	 * @param repository
+	 * @param fileList
+	 * @return valid projects containing one of the paths
+	 * @throws CoreException
+	 */
+	public static IProject[] getProjectsContaining(Repository repository,
+			List<String> fileList) throws CoreException {
+		List<IProject> result = new ArrayList<IProject>();
+
+		/*
+		 * don't use getProjects() as this will remove projects without mapping,
+		 * which we want to have too (projects removed by a branch switch).
+		 */
+		IProject[] allProjects = ResourcesPlugin.getWorkspace().getRoot()
+				.getProjects();
+
+		for (IProject prj : allProjects)
+			for (String member : fileList)
+				try {
+					if (makePrjRelativePath(repository, prj, member) != null) {
+						result.add(prj);
+						break;
+					}
+				} catch (IOException e) {
+					// the given project seems invalid, so we ignore it.
+				}
+
+		return result.toArray(new IProject[result.size()]);
+	}
+
+	private static String makePrjRelativePath(Repository repository,
+			IProject prj, String member) throws IOException {
+		String canonicalMember = new File(repository.getWorkTree(), member)
+				.getCanonicalPath();
+		String canonicalPrj = prj.getLocation().toFile().getCanonicalPath();
+
+		if (canonicalMember.startsWith(canonicalPrj))
+			return canonicalMember.substring(canonicalPrj.length());
+
+		return null;
 	}
 
 	/**
@@ -313,10 +357,9 @@ public class ProjectUtil {
 				continue;
 			try {
 				String canonicalPath = contents[i].getCanonicalPath();
-				if (!directoriesVisited.add(canonicalPath)) {
+				if (!directoriesVisited.add(canonicalPath))
 					// already been here --> do not recurse
 					continue;
-				}
 			} catch (IOException exception) {
 				Activator.logError(exception.getLocalizedMessage(), exception);
 
