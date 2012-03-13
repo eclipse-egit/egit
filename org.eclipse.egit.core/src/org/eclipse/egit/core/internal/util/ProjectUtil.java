@@ -73,9 +73,8 @@ public class ProjectUtil {
 			if (projectFile.exists()) {
 				final File file = p.getLocation().toFile();
 				if (file.getAbsolutePath().startsWith(
-						parentFile.getAbsolutePath())) {
+						parentFile.getAbsolutePath()))
 					result.add(p);
-				}
 			}
 		}
 		return result.toArray(new IProject[result.size()]);
@@ -161,6 +160,10 @@ public class ProjectUtil {
 	 */
 	private static void closeMissingProject(IProject p, File projectFile,
 			IProgressMonitor monitor) throws CoreException {
+		// Don't close/delete if already closed
+		if (p.exists() && !p.isOpen())
+			return;
+
 		// Create temporary .project file so it can be closed
 		boolean closeFailed = false;
 		File projectRoot = projectFile.getParentFile();
@@ -236,14 +239,13 @@ public class ProjectUtil {
 		List<IProject> result = new ArrayList<IProject>();
 		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
-		for (IProject project : projects) {
+		for (IProject project : projects)
 			if (project.isAccessible()) {
 				RepositoryMapping mapping = RepositoryMapping
 						.getMapping(project);
 				if (mapping != null && mapping.getRepository() == repository)
 					result.add(project);
 			}
-		}
 		return result.toArray(new IProject[result.size()]);
 	}
 
@@ -313,10 +315,9 @@ public class ProjectUtil {
 				continue;
 			try {
 				String canonicalPath = contents[i].getCanonicalPath();
-				if (!directoriesVisited.add(canonicalPath)) {
+				if (!directoriesVisited.add(canonicalPath))
 					// already been here --> do not recurse
 					continue;
-				}
 			} catch (IOException exception) {
 				Activator.logError(exception.getLocalizedMessage(), exception);
 
