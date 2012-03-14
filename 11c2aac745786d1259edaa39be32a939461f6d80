@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3///KI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/SimplePushSpecPage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-14T13:48:34Z",
+      "side": 1,
+      "message": "Strictly seen this only makes real sense if the user pushes to the repo which is configured for this branch. But if he pushes to another one, I would say that it is not wrong to suggest the same remote branch if there happens to be one with the same name.",
+      "revId": "11c2aac745786d1259edaa39be32a939461f6d80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///KQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/SimplePushSpecPage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-14T13:48:34Z",
+      "side": 1,
+      "message": "There is a NPE if the user selects a URI to push to because then assist has no config. This did not occur before because RefContentAssistProvider was only used for a given remote.\n\nI think the fix would be to somehow pass the URI to the RefContentAssistProvider in SimplePushRefWizard.",
+      "revId": "11c2aac745786d1259edaa39be32a939461f6d80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
