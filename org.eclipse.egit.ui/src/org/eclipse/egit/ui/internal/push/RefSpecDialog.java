@@ -8,24 +8,16 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.op.ListRemoteOperation;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IRefListProvider;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.egit.ui.internal.components.RefContentAssistProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
@@ -64,10 +56,6 @@ public class RefSpecDialog extends TitleAreaDialog {
 	private Text specString;
 
 	private boolean autoSuggestDestination;
-
-	private List<Ref> sourceRefs;
-
-	private List<Ref> destinationRefs;
 
 	/**
 	 * Create a {@link RefSpec}
@@ -128,6 +116,19 @@ public class RefSpecDialog extends TitleAreaDialog {
 		Composite main = new Composite(parent, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
 		main.setLayout(new GridLayout(2, false));
+
+		URIish uriToCheck;
+		if (pushMode) {
+			if (config.getPushURIs().isEmpty())
+				uriToCheck = config.getURIs().get(0);
+			else
+				uriToCheck = config.getPushURIs().get(0);
+		} else
+			uriToCheck = config.getURIs().get(0);
+
+		final RefContentAssistProvider assistProvider = new RefContentAssistProvider(
+				repo, uriToCheck, getShell());
+
 		// source
 		Label sourceLabel = new Label(main, SWT.NONE);
 		if (pushMode)
@@ -161,7 +162,7 @@ public class RefSpecDialog extends TitleAreaDialog {
 		UIUtils.addRefContentProposalToText(sourceText, repo,
 				new IRefListProvider() {
 					public List<Ref> getRefList() {
-						return getRefsForContentAssist(true);
+						return assistProvider.getRefsForContentAssist(true, pushMode);
 					}
 				});
 
@@ -201,7 +202,7 @@ public class RefSpecDialog extends TitleAreaDialog {
 		UIUtils.addRefContentProposalToText(destinationText, repo,
 				new IRefListProvider() {
 					public List<Ref> getRefList() {
-						return getRefsForContentAssist(false);
+						return assistProvider.getRefsForContentAssist(false, pushMode);
 					}
 				});
 
@@ -256,15 +257,12 @@ public class RefSpecDialog extends TitleAreaDialog {
 		String newDestinationText = spec.getDestination() != null ? spec
 				.getDestination() : ""; //$NON-NLS-1$
 		String newStringText = spec.toString();
-		if (!sourceText.getText().equals(newSourceText)) {
+		if (!sourceText.getText().equals(newSourceText))
 			sourceText.setText(newSourceText);
-		}
-		if (!destinationText.getText().equals(newDestinationText)) {
+		if (!destinationText.getText().equals(newDestinationText))
 			destinationText.setText(newDestinationText);
-		}
-		if (!specString.getText().equals(newStringText)) {
+		if (!specString.getText().equals(newStringText))
 			specString.setText(newStringText);
-		}
 		forceButton.setSelection(spec.isForceUpdate());
 		if (sourceText.getText().length() == 0
 				|| destinationText.getText().length() == 0)
@@ -274,76 +272,4 @@ public class RefSpecDialog extends TitleAreaDialog {
 						&& destinationText.getText().length() > 0);
 	}
 
-	private List<Ref> getRefsForContentAssist(boolean source) {
-		if (source) {
-			if (sourceRefs != null)
-				return sourceRefs;
-		} else if (destinationRefs != null)
-			return destinationRefs;
-
-		List<Ref> result = new ArrayList<Ref>();
-		try {
-			boolean local = pushMode == source;
-			if (!local) {
-				URIish uriToCheck;
-				if (pushMode) {
-					if (config.getPushURIs().isEmpty())
-						uriToCheck = config.getURIs().get(0);
-					else
-						uriToCheck = config.getPushURIs().get(0);
-				} else
-					uriToCheck = config.getURIs().get(0);
-				final ListRemoteOperation lop = new ListRemoteOperation(repo,
-						uriToCheck,
-						Activator.getDefault().getPreferenceStore().getInt(
-								UIPreferences.REMOTE_CONNECTION_TIMEOUT));
-
-				new ProgressMonitorDialog(getShell()).run(false, true,
-						new IRunnableWithProgress() {
-
-							public void run(IProgressMonitor monitor)
-									throws InvocationTargetException,
-									InterruptedException {
-								monitor
-										.beginTask(
-												UIText.RefSpecDialog_GettingRemoteRefsMonitorMessage,
-												IProgressMonitor.UNKNOWN);
-								lop.run(monitor);
-								monitor.done();
-							}
-						});
-				for (Ref ref : lop.getRemoteRefs()) {
-					if (ref.getName().startsWith(Constants.R_HEADS)
-							|| (!pushMode && ref.getName().startsWith(
-									Constants.R_TAGS)))
-						result.add(ref);
-				}
-
-			} else {
-				if (pushMode)
-					for (Ref ref : repo.getRefDatabase().getRefs(
-							RefDatabase.ALL).values()) {
-						if (ref.getName().startsWith(Constants.R_REMOTES)) {
-							continue;
-						}
-						result.add(ref);
-					}
-				else
-					for (Ref ref : repo.getRefDatabase().getRefs(
-							Constants.R_REMOTES).values()) {
-						result.add(ref);
-					}
-			}
-		} catch (RuntimeException e) {
-			throw e;
-		} catch (Exception e) {
-			Activator.handleError(e.getMessage(), e, true);
-			return result;
-		}
-		if (source)
-			sourceRefs = result;
-		else
-			destinationRefs = result;
-		return result;
-	}
 }
