@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///Hw\u003d",
+        "filename": "org.eclipse.egit.import/plugin.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-14T22:27:30Z",
+      "side": 1,
+      "message": "where can I find the p2 repo for I20120313-2000 in order to update my version ?",
+      "parentUuid": "AABOG3///H8\u003d",
+      "revId": "4a3fa017de19a7bdeb00ac2a5409c80f61d80d5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///bM\u003d",
         "filename": "org.eclipse.egit.import/src/org/eclipse/egit/internal/importing/GitScmUrlImportWizardPage.java",
         "patchSetId": 7
