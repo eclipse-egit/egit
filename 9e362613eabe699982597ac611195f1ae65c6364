@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3///Ns\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefContentAssistProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-14T09:44:52Z",
+      "side": 1,
+      "message": "Missing licence header.\n\nYou could add Mathias as author.",
+      "revId": "9e362613eabe699982597ac611195f1ae65c6364",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///No\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/SimplePushSpecPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-14T09:44:52Z",
+      "side": 1,
+      "message": "TODO Can be removed",
+      "revId": "9e362613eabe699982597ac611195f1ae65c6364",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///Nk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/SimplePushSpecPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-14T09:44:52Z",
+      "side": 1,
+      "message": "Even better would be if you looked for the remote tracking branch which is configured for sourceName.\n\nYou could reuse jgit\u0027s BranchConfig.getRemoteTrackingBranch()",
+      "revId": "9e362613eabe699982597ac611195f1ae65c6364",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
