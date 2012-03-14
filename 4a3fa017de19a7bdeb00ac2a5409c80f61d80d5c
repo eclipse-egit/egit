@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///H8\u003d",
+        "filename": "org.eclipse.egit.import/plugin.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-14T22:16:34Z",
+      "side": 1,
+      "message": "I tried eclipse-SDK-I20120312-1200-macosx-cocoa.tar.gz and I am on Mac OS X 10.6.8\n\nWill try to update to the build you mentioned.",
+      "parentUuid": "AABOG3///Mo\u003d",
+      "revId": "4a3fa017de19a7bdeb00ac2a5409c80f61d80d5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///bM\u003d",
         "filename": "org.eclipse.egit.import/src/org/eclipse/egit/internal/importing/GitScmUrlImportWizardPage.java",
         "patchSetId": 7
