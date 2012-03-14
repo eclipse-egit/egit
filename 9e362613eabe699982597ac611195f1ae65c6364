@@ -104,6 +104,24 @@
       "revId": "9e362613eabe699982597ac611195f1ae65c6364",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///MM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/SimplePushSpecPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-14T11:10:22Z",
+      "side": 1,
+      "message": "That sounds good.",
+      "parentUuid": "AABOG3///Mg\u003d",
+      "revId": "9e362613eabe699982597ac611195f1ae65c6364",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
