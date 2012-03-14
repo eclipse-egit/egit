@@ -128,8 +128,10 @@ public class ProjectUtils {
 						.getLocation();
 				if (location != null
 						&& location.toFile().equals(
-								record.getProjectSystemFile()))
+								record.getProjectSystemFile())) {
 					project.open(monitor);
+					project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
+				}
 			}
 			return null;
 		}
