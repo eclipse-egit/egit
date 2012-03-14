@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///PU\u003d",
+        "filename": "org.eclipse.egit.import/plugin.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-14T00:32:24Z",
+      "side": 1,
+      "message": "could you point me to a working I-build ? I tried I20120312 but didn\u0027t succeed to compile egit.ui and egit.mylyn.ui with that version as it couldn\u0027t resolve some swt widget dependencies:\n\nThe type org.eclipse.swt.widgets.Display cannot be resolved. It is indirectly referenced from required .class files\tGitVariableResolver.java\t/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/variables\t\n\nThe type org.eclipse.swt.widgets.Shell cannot be resolved. It is indirectly referenced from required .class files\tCommitHyperlinkDetector.java\t/org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui",
+      "parentUuid": "AABOG3///XE\u003d",
+      "revId": "4a3fa017de19a7bdeb00ac2a5409c80f61d80d5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///bM\u003d",
         "filename": "org.eclipse.egit.import/src/org/eclipse/egit/internal/importing/GitScmUrlImportWizardPage.java",
         "patchSetId": 7
