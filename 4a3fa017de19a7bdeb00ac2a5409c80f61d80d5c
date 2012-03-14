@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///Ho\u003d",
+        "filename": "org.eclipse.egit.import/plugin.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-14T22:38:44Z",
+      "side": 1,
+      "message": "found http://download.eclipse.org/eclipse/updates/4.2-I-builds and will try today\u0027s build",
+      "parentUuid": "AABOG3///Hw\u003d",
+      "revId": "4a3fa017de19a7bdeb00ac2a5409c80f61d80d5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///bM\u003d",
         "filename": "org.eclipse.egit.import/src/org/eclipse/egit/internal/importing/GitScmUrlImportWizardPage.java",
         "patchSetId": 7
