@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///J8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/SimplePushSpecPage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-14T15:20:12Z",
+      "side": 1,
+      "message": "you\u0027re right, but i also think that it is ok the way it is. if somebody thinks different, chime in :)",
+      "parentUuid": "AABOG3///KI\u003d",
+      "revId": "11c2aac745786d1259edaa39be32a939461f6d80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///KQ\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/SimplePushSpecPage.java",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2012-03-14T13:48:34Z",
       "side": 1,
       "message": "There is a NPE if the user selects a URI to push to because then assist has no config. This did not occur before because RefContentAssistProvider was only used for a given remote.\n\nI think the fix would be to somehow pass the URI to the RefContentAssistProvider in SimplePushRefWizard.",
+      "revId": "11c2aac745786d1259edaa39be32a939461f6d80",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///J4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/SimplePushSpecPage.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-14T15:20:12Z",
+      "side": 1,
+      "message": "i changed the RefContentAssist to work with URIish\u0027s and the two callers to pass them in.",
+      "parentUuid": "AABOG3///KQ\u003d",
       "revId": "11c2aac745786d1259edaa39be32a939461f6d80",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
