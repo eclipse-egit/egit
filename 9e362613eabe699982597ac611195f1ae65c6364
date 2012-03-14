@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///Mw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/RefContentAssistProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-14T10:43:47Z",
+      "side": 1,
+      "message": "ah, again... :) of course adding mathias is just right",
+      "parentUuid": "AABOG3///Ns\u003d",
+      "revId": "9e362613eabe699982597ac611195f1ae65c6364",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///No\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/SimplePushSpecPage.java",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///Ms\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/SimplePushSpecPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-14T10:43:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3///No\u003d",
+      "revId": "9e362613eabe699982597ac611195f1ae65c6364",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///Nk\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/SimplePushSpecPage.java",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2012-03-14T09:44:52Z",
       "side": 1,
       "message": "Even better would be if you looked for the remote tracking branch which is configured for sourceName.\n\nYou could reuse jgit\u0027s BranchConfig.getRemoteTrackingBranch()",
+      "revId": "9e362613eabe699982597ac611195f1ae65c6364",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///Mg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/components/SimplePushSpecPage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-14T10:43:47Z",
+      "side": 1,
+      "message": "ah, good idea - currently looking into it. i\u0027m pre-filling the text field with the remote tracking name if available, then try to get a branch with the same name on the remote, and if all fails, leave it empty; does that sound reasonable?",
+      "parentUuid": "AABOG3///Nk\u003d",
       "revId": "9e362613eabe699982597ac611195f1ae65c6364",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
