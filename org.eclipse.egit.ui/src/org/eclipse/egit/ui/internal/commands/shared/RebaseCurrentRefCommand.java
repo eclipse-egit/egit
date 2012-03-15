@@ -52,6 +52,8 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 			ref = null;
 
 		final Repository repository = getRepository(event);
+		if (repository == null)
+			return null;
 
 		BasicConfigurationDialog.show(repository);
 

@@ -722,7 +722,7 @@
            id="org.eclipse.egit.ui.actionrebase"
            label="%RebaseAction_label"
            menubarPath="org.eclipse.egit.ui.gitmenu/repositoryGroup"
-           style="push"
+           style="pulldown"
            toolbarPath="Normal/additions"
            tooltip="%RebaseAction_tooltip">
          </action>
