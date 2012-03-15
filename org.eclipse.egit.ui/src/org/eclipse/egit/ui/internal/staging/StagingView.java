@@ -1058,6 +1058,10 @@ public class StagingView extends ViewPart {
 			else
 				loadExistingState(helper, oldState);
 		} else // repository did not change
+
+			// assure that the repository was set (sometimes not the case).
+			commitMessageComponent.setRepository(currentRepository);
+
 			if (userEnteredCommmitMessage()) {
 				if (!commitMessageComponent.getHeadCommit().equals(
 						helper.getPreviousCommit()))
