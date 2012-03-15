@@ -32,8 +32,9 @@ public class RebaseTargetSelectionDialog extends AbstractBranchSelectionDialog {
 	 * @param repo
 	 */
 	public RebaseTargetSelectionDialog(Shell parentShell, Repository repo) {
-		super(parentShell, repo, SHOW_LOCAL_BRANCHES | SHOW_REMOTE_BRANCHES
-				| EXPAND_REMOTE_BRANCHES_NODE);
+		super(parentShell, repo, getMergeTarget(repo), SHOW_LOCAL_BRANCHES
+				| SHOW_REMOTE_BRANCHES | EXPAND_REMOTE_BRANCHES_NODE
+				| getSelectSetting(repo));
 	}
 
 	@Override
