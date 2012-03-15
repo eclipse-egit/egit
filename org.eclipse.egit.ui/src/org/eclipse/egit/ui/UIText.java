@@ -3208,7 +3208,13 @@ public class UIText extends NLS {
 	public static String MergeTargetSelectionDialog_SelectRef;
 
 	/** */
+	public static String MergeTargetSelectionDialog_SelectRefWithBranch;
+
+	/** */
 	public static String MergeTargetSelectionDialog_TitleMerge;
+
+	/** */
+	public static String MergeTargetSelectionDialog_TitleMergeWithBranch;
 
 	/** */
 	public static String MixedResetToRevisionAction_mixedReset;
