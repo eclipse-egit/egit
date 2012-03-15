@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3///D4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/RebaseTargetSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-15T13:45:17Z",
+      "side": 1,
+      "message": "Please format the line, it is too long.",
+      "revId": "338547a1de6befb73fa49e3b9068cffed887a52e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///Ds\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/RebaseTargetSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-15T13:45:17Z",
+      "side": 1,
+      "message": "Could you extract a method for this logic?",
+      "revId": "338547a1de6befb73fa49e3b9068cffed887a52e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///D0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/RebaseTargetSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-15T13:45:17Z",
+      "side": 1,
+      "message": "Please format the line, it is too long.",
+      "revId": "338547a1de6befb73fa49e3b9068cffed887a52e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3///Dw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/RebaseTargetSelectionDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-15T13:45:17Z",
+      "side": 1,
+      "message": "Please format the line, it is too long.",
+      "revId": "338547a1de6befb73fa49e3b9068cffed887a52e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
