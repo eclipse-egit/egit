@@ -145,6 +145,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3///BE\u003d",
+        "filename": "org.eclipse.egit.import/plugin.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-03-16T10:46:04Z",
+      "side": 1,
+      "message": "I\u0027ve downloaded Eclipse 4.2.0 I20120313-1735 for Cocoa x64_64, cloned JGit and EGit, imported required deps from Orbit, fetched 4899/7 from Gerrit. The only errors I see are related to API usage/compatibility, all from JGit. I\u0027ve got no clue why you\u0027re seeing those SWT errors. Can we have someone else to look at this?",
+      "parentUuid": "AABOG3///Ho\u003d",
+      "revId": "4a3fa017de19a7bdeb00ac2a5409c80f61d80d5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3///bM\u003d",
         "filename": "org.eclipse.egit.import/src/org/eclipse/egit/internal/importing/GitScmUrlImportWizardPage.java",
         "patchSetId": 7
