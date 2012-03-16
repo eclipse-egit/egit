@@ -13,30 +13,47 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import static org.eclipse.jgit.lib.Constants.encodeASCII;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
+import org.eclipse.jgit.diff.DiffEntry.Side;
 import org.eclipse.jgit.diff.DiffFormatter;
+import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.dircache.DirCacheIterator;
+import org.eclipse.jgit.errors.CorruptObjectException;
+import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * Creates a patch for a specific commit
@@ -52,6 +69,11 @@ public class CreatePatchOperation implements IEGitOperation {
 		 * No header
 		 */
 		NONE(CoreText.DiffHeaderFormat_None, false, null),
+
+		/**
+		 * Workspace patch
+		 */
+		WORKSPACE(CoreText.DiffHeaderFormat_Workspace, false, "### Eclipse Workspace Patch 1.0\n"), //$NON-NLS-1$
 
 		/**
 		 * Email header
@@ -120,6 +142,7 @@ public class CreatePatchOperation implements IEGitOperation {
 	private int contextLines = DEFAULT_CONTEXT_LINES;
 
 	private TreeFilter pathFilter = null;
+
 	/**
 	 * Creates the new operation.
 	 *
@@ -151,14 +174,32 @@ public class CreatePatchOperation implements IEGitOperation {
 						super.write(b, off, len);
 						if (currentEncoding == null)
 							sb.append(toString());
-						else try {
-							sb.append(toString(currentEncoding));
-						} catch (UnsupportedEncodingException e) {
-							sb.append(toString());
-						}
+						else
+							try {
+								sb.append(toString(currentEncoding));
+							} catch (UnsupportedEncodingException e) {
+								sb.append(toString());
+							}
 						reset();
 					}
-				});
+				}) {
+			private IProject project;
+
+			@Override
+			public void format(DiffEntry ent) throws IOException,
+					CorruptObjectException, MissingObjectException {
+				// for "workspace patches" add project header each time project changes
+				if (DiffHeaderFormat.WORKSPACE == headerFormat) {
+					IProject p = getProject(ent);
+					if (!p.equals(project)) {
+						project = p;
+						getOutputStream().write(
+								encodeASCII("#P " + project.getName() + "\n")); //$NON-NLS-1$ //$NON-NLS-2$
+					}
+				}
+				super.format(ent);
+			}
+		};
 
 		diffFmt.setProgressMonitor(gitMonitor);
 		diffFmt.setContext(contextLines);
@@ -197,10 +238,28 @@ public class CreatePatchOperation implements IEGitOperation {
 			Activator.logError(CoreText.CreatePatchOperation_patchFileCouldNotBeWritten, e);
 		}
 
-		patchContent = sb.toString();
+		if (DiffHeaderFormat.WORKSPACE == headerFormat)
+			updateWorkspacePatchPrefixes(sb, diffFmt);
+
 		// trim newline
-		if (patchContent.endsWith("\n")) //$NON-NLS-1$
-			patchContent = patchContent.substring(0, patchContent.length() - 1);
+		if (sb.charAt(sb.length() - 1) == '\n')
+			sb.setLength(sb.length() - 1);
+
+		patchContent = sb.toString();
+	}
+
+	private IProject getProject(final DiffEntry ent) {
+		Side side = ent.getChangeType() == ChangeType.ADD ? Side.NEW : Side.OLD;
+		String path = ent.getPath(side);
+		return getProject(path);
+	}
+
+	private IProject getProject(String path) {
+		URI pathUri = repository.getWorkTree().toURI().resolve(path);
+		IFile[] files = ResourcesPlugin.getWorkspace().getRoot()
+				.findFilesForLocationURI(pathUri);
+		Assert.isLegal(files.length == 1, NLS.bind(CoreText.CreatePatchOperation_couldNotFindProject, path, repository));
+		return files[0].getProject();
 	}
 
 	/**
@@ -267,6 +326,84 @@ public class CreatePatchOperation implements IEGitOperation {
 			return null;
 		}
 	}
+
+	/**
+	 * Updates prefixes to workspace paths
+	 *
+	 * @param sb
+	 * @param diffFmt
+	 */
+	public void updateWorkspacePatchPrefixes(StringBuilder sb, DiffFormatter diffFmt) {
+		RawText rt = new RawText(sb.toString().getBytes());
+
+		final String oldPrefix = diffFmt.getOldPrefix();
+		final String newPrefix = diffFmt.getNewPrefix();
+
+		StringBuilder newSb = new StringBuilder();
+		final Pattern diffPattern = Pattern
+				.compile("^diff --git (" + oldPrefix + "(.+)) (" + newPrefix + "(.+))$"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		final Pattern oldPattern = Pattern
+				.compile("^--- (" + oldPrefix + "(.+))$"); //$NON-NLS-1$ //$NON-NLS-2$
+		final Pattern newPattern = Pattern
+				.compile("^\\+\\+\\+ (" + newPrefix + "(.+))$"); //$NON-NLS-1$ //$NON-NLS-2$
+
+		int i = 0;
+		while (i < rt.size()) {
+			String line = rt.getString(i);
+
+			Matcher diffMatcher = diffPattern.matcher(line);
+			Matcher oldMatcher = oldPattern.matcher(line);
+			Matcher newMatcher = newPattern.matcher(line);
+			if (diffMatcher.find()) {
+				String group = diffMatcher.group(2); // old path
+				IProject project = getProject(group);
+				IPath newPath = computeWorkspacePath(new Path(group), project);
+				line = line.replaceAll(diffMatcher.group(1), newPath.toString());
+				group = diffMatcher.group(4); // new path
+				newPath = computeWorkspacePath(new Path(group), project);
+				line = line.replaceAll(diffMatcher.group(3), newPath.toString());
+			} else if (oldMatcher.find()) {
+				String group = oldMatcher.group(2);
+				IProject project = getProject(group);
+				IPath newPath = computeWorkspacePath(new Path(group), project);
+				line = line.replaceAll(oldMatcher.group(1), newPath.toString());
+			} else if (newMatcher.find()) {
+				String group = newMatcher.group(2);
+				IProject project = getProject(group);
+				IPath newPath = computeWorkspacePath(new Path(group), project);
+				line = line.replaceAll(newMatcher.group(1), newPath.toString());
+			}
+			newSb.append(line);
+
+			i++;
+			if (i < rt.size() || !rt.isMissingNewlineAtEnd())
+				newSb.append(rt.getLineDelimiter());
+		}
+		// reset sb to newSb
+		sb.setLength(0);
+		sb.append(newSb);
+	}
+
+	/**
+	 * Returns a workspace path
+	 *
+	 * @param path
+	 * @param project
+	 * @return path
+	 */
+	public static IPath computeWorkspacePath(final IPath path, final IProject project) {
+		RepositoryMapping rm = RepositoryMapping.getMapping(project);
+		String repoRelativePath = rm.getRepoRelativePath(project);
+		// the relative path cannot be determined, return unchanged
+		if (repoRelativePath == null)
+			return path;
+		// repository and project at the same level
+		if (repoRelativePath.equals("")) //$NON-NLS-1$
+			return path;
+		return path.removeFirstSegments(path.matchingFirstSegments(new Path(
+				repoRelativePath)));
+	}
+
 
 	/**
 	 * Change the format of diff header

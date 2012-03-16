@@ -31,4 +31,9 @@ public class LocationPage {
 		shell.bot().radio(UIText.GitCreatePatchWizard_Workspace).click();
 		shell.bot().text(1).setText(path);
 	}
+
+	OptionsPage nextToOptionsPage() {
+		shell.bot().button("Next >").click();
+		return new OptionsPage(shell);
+	}
 }
