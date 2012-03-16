@@ -12,6 +12,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.internal.commands.shared.RebaseCurrentRefCommand;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  * An action to rebase the current branch on top of given branch.
@@ -26,6 +27,7 @@ public class RebaseActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return getRepository() != null && containsHead();
+		Repository repo = getRepository();
+		return repo != null && isLocalBranchCheckedout(repo);
 	}
 }

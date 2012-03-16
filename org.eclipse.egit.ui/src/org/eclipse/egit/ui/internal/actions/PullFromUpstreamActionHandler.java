@@ -41,7 +41,7 @@ public class PullFromUpstreamActionHandler extends RepositoryActionHandler {
 		// we don't do the full canMerge check here, but
 		// ensure that a branch is checked out
 		Repository[] repos = getRepositories();
-		for (Repository repo : repos) {
+		for (Repository repo : repos)
 			try {
 				String fullBranch = repo.getFullBranch();
 				if (fullBranch == null
@@ -52,7 +52,6 @@ public class PullFromUpstreamActionHandler extends RepositoryActionHandler {
 				Activator.handleError(e.getMessage(), e, false);
 				return false;
 			}
-		}
-		return true;
+		return repos.length > 0;
 	}
 }

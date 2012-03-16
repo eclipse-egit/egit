@@ -28,6 +28,7 @@ public class DeleteBranchActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return getRepository() != null && containsHead();
+		Repository repo = getRepository();
+		return repo != null && containsHead(repo);
 	}
 }
