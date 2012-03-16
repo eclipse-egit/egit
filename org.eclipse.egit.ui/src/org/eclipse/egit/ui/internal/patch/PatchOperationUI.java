@@ -120,6 +120,10 @@ public class PatchOperationUI {
 	}
 
 	private Shell getShell() {
+		return getShell(part);
+	}
+
+	private static Shell getShell(IWorkbenchPart part) {
 		if (part != null)
 			return part.getSite().getShell();
 		return PlatformUI.getWorkbench().getDisplay().getActiveShell();
