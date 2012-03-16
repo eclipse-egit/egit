@@ -73,7 +73,7 @@ public class MergeActionHandler extends RepositoryActionHandler {
 				@Override
 				public void done(IJobChangeEvent cevent) {
 					IStatus result = cevent.getJob().getResult();
-					if (result.getSeverity() == IStatus.CANCEL) {
+					if (result.getSeverity() == IStatus.CANCEL)
 						Display.getDefault().asyncExec(new Runnable() {
 							public void run() {
 								// don't use getShell(event) here since
@@ -88,19 +88,18 @@ public class MergeActionHandler extends RepositoryActionHandler {
 												UIText.MergeAction_MergeCanceledMessage);
 							}
 						});
-					} else if (!result.isOK()) {
+					else if (!result.isOK())
 						Activator.handleError(result.getMessage(), result
 								.getException(), true);
-					} else {
+					else
 						Display.getDefault().asyncExec(new Runnable() {
 							public void run() {
 								Shell shell = PlatformUI.getWorkbench()
 										.getActiveWorkbenchWindow().getShell();
-								new MergeResultDialog(shell, repository, op
+								MergeResultDialog.getDialog(shell, repository, op
 										.getResult()).open();
 							}
 						});
-					}
 				}
 			});
 			job.schedule();
