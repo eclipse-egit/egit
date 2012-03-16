@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3//+/w\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-16T16:40:19Z",
+      "side": 1,
+      "message": "typo: s/Propperly/Properly/\n\ndon\u0027t use non-commonly used abbrevations (CCE) instead you may use a title like:\n\n\"Properly handle checkout conflict exceptions\"\n\nand put all additional information into the commit message body.",
+      "revId": "031ee34e9e697ca188c8eadf9953a0ff17619cf3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+/0\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-16T16:40:19Z",
+      "side": 1,
+      "message": "please add a footer referencing the jgit change needed to compile this change:\n\nJGit-Dependency: I48d9bdcc1e98095576513a54a225a42409f301f3",
+      "revId": "031ee34e9e697ca188c8eadf9953a0ff17619cf3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+/4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutConflictDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-16T16:40:19Z",
+      "side": 1,
+      "message": "missing license header",
+      "revId": "031ee34e9e697ca188c8eadf9953a0ff17619cf3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
