@@ -17,7 +17,6 @@ package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.internal.commit.CommitUI;
 import org.eclipse.egit.ui.internal.operations.GitScopeUtil;
@@ -31,14 +30,17 @@ import org.eclipse.ui.IWorkbenchPart;
 public class CommitActionHandler extends RepositoryActionHandler {
 
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
-		final Repository[] repos = getRepositoriesFor(getProjectsForSelectedResources(event));
+		final Repository[] repos = getRepositories(event);
 		final Shell shell = getShell(event);
 		IResource[] resourcesInScope;
 		try {
 			IResource[] selectedResources = getSelectedResources(event);
-			IWorkbenchPart part = getPart(event);
-			resourcesInScope = GitScopeUtil.getRelatedChanges(part,
-					selectedResources);
+			if (selectedResources.length > 0) {
+				IWorkbenchPart part = getPart(event);
+				resourcesInScope = GitScopeUtil.getRelatedChanges(part,
+						selectedResources);
+			} else
+				resourcesInScope = new IResource[0];
 		} catch (InterruptedException e) {
 			// ignore, we will not show the commit dialog in case the user
 			// cancels the scope operation
@@ -52,8 +54,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		IProject[] projects = getProjectsForSelectedResources();
-		return getRepositoriesFor(projects).length == 1;
+		return getRepositories().length > 0;
 	}
 
 }

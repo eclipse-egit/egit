@@ -121,18 +121,17 @@ public class TagActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return getRepository() != null && containsHead();
+		Repository repo = getRepository();
+		return repo != null && containsHead(repo);
 	}
 
 	private RevObject getTagTarget(ObjectId objectId) throws IOException {
 		RevWalk rw = new RevWalk(repo);
 		try {
-			if (objectId == null) {
+			if (objectId == null)
 				return rw.parseAny(repo.resolve(Constants.HEAD));
-
-			} else {
+			else
 				return rw.parseAny(objectId);
-			}
 		} finally {
 			rw.release();
 		}
