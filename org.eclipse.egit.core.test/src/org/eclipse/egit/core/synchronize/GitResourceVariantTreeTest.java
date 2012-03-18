@@ -103,34 +103,38 @@ public class GitResourceVariantTreeTest extends GitTestCase {
 		// when
 		// create second project
 		TestProject secondProject = new TestProject(true, "Project-2");
-		IProject secondIProject = secondProject.project;
-		// add connect project with repository
-		new ConnectProviderOperation(secondIProject, gitDir).execute(null);
-		new Git(repo).commit().setAuthor("JUnit", "junit@egit.org")
-				.setMessage("Initial commit").call();
-		GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, HEAD,
-				false);
-		GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
+		try {
+			IProject secondIProject = secondProject.project;
+			// add connect project with repository
+			new ConnectProviderOperation(secondIProject, gitDir).execute(null);
+			new Git(repo).commit().setAuthor("JUnit", "junit@egit.org")
+					.setMessage("Initial commit").call();
+			GitSynchronizeData data = new GitSynchronizeData(repo, HEAD, HEAD,
+					false);
+			GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
 
-		// given
-		GitResourceVariantTree grvt = new GitTestResourceVariantTree(dataSet,
-				null, null);
+			// given
+			GitResourceVariantTree grvt = new GitTestResourceVariantTree(dataSet,
+					null, null);
 
-		// then
-		IResource[] roots = grvt.roots();
-		// sort in order to be able to assert the project instances
-		Arrays.sort(roots, new Comparator<IResource>() {
-			public int compare(IResource r1, IResource r2) {
-				String path1 = r1.getFullPath().toString();
-				String path2 = r2.getFullPath().toString();
-				return path1.compareTo(path2);
-			}
-		});
-		assertEquals(2, roots.length);
-		IResource actualProject = roots[0];
-		assertEquals(this.project.project, actualProject);
-		IResource actualProject1 = roots[1];
-		assertEquals(secondIProject, actualProject1);
+			// then
+			IResource[] roots = grvt.roots();
+			// sort in order to be able to assert the project instances
+			Arrays.sort(roots, new Comparator<IResource>() {
+				public int compare(IResource r1, IResource r2) {
+					String path1 = r1.getFullPath().toString();
+					String path2 = r2.getFullPath().toString();
+					return path1.compareTo(path2);
+				}
+			});
+			assertEquals(2, roots.length);
+			IResource actualProject = roots[0];
+			assertEquals(this.project.project, actualProject);
+			IResource actualProject1 = roots[1];
+			assertEquals(secondIProject, actualProject1);
+		} finally {
+			secondProject.dispose();
+		}
 	}
 
 	/**
