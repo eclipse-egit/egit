@@ -158,7 +158,7 @@ public class ProjectUtil {
 	 * @param monitor
 	 * @throws CoreException
 	 */
-	private static void closeMissingProject(IProject p, File projectFile,
+	static void closeMissingProject(IProject p, File projectFile,
 			IProgressMonitor monitor) throws CoreException {
 		// Don't close/delete if already closed
 		if (p.exists() && !p.isOpen())
