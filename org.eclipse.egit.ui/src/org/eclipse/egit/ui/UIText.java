@@ -727,13 +727,22 @@ public class UIText extends NLS {
 	public static String RebaseTargetSelectionDialog_DialogMessage;
 
 	/** */
+	public static String RebaseTargetSelectionDialog_DialogMessageWithBranch;
+
+	/** */
 	public static String RebaseTargetSelectionDialog_DialogTitle;
+
+	/** */
+	public static String RebaseTargetSelectionDialog_DialogTitleWithBranch;
 
 	/** */
 	public static String RebaseTargetSelectionDialog_RebaseButton;
 
 	/** */
 	public static String RebaseTargetSelectionDialog_RebaseTitle;
+
+	/** */
+	public static String RebaseTargetSelectionDialog_RebaseTitleWithBranch;
 
 	/** */
 	public static String ReplaceTargetSelectionDialog_ReplaceButton;
@@ -3208,7 +3217,13 @@ public class UIText extends NLS {
 	public static String MergeTargetSelectionDialog_SelectRef;
 
 	/** */
+	public static String MergeTargetSelectionDialog_SelectRefWithBranch;
+
+	/** */
 	public static String MergeTargetSelectionDialog_TitleMerge;
+
+	/** */
+	public static String MergeTargetSelectionDialog_TitleMergeWithBranch;
 
 	/** */
 	public static String MixedResetToRevisionAction_mixedReset;
