@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3//+2Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ReplaceWithPreviousAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-03-19T16:32:56Z",
+      "side": 1,
+      "message": "This is incorrect I believe",
+      "revId": "2e37a8751e1d114bd0eb522bbff26c00f8873be9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+2g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ReplaceWithPreviousActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-03-19T16:32:56Z",
+      "side": 1,
+      "message": "This is incorrect I believe.",
+      "revId": "2e37a8751e1d114bd0eb522bbff26c00f8873be9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+2c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitSelectDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-03-19T16:32:56Z",
+      "side": 1,
+      "message": "Add license header",
+      "revId": "2e37a8751e1d114bd0eb522bbff26c00f8873be9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
