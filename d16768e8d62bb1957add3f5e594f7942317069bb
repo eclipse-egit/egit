@@ -16,6 +16,24 @@
       "revId": "d16768e8d62bb1957add3f5e594f7942317069bb",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+3Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/MergeTargetSelectionDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-03-19T16:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3///EA\u003d",
+      "revId": "d16768e8d62bb1957add3f5e594f7942317069bb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
