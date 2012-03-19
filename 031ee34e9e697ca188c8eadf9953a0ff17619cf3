@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3//+6c\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-19T07:25:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//+/w\u003d",
+      "revId": "031ee34e9e697ca188c8eadf9953a0ff17619cf3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3//+/0\u003d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3//+6Y\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-19T07:25:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//+/0\u003d",
+      "revId": "031ee34e9e697ca188c8eadf9953a0ff17619cf3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3//+/4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutConflictDialog.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2012-03-16T16:40:19Z",
       "side": 1,
       "message": "missing license header",
+      "revId": "031ee34e9e697ca188c8eadf9953a0ff17619cf3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+6g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CheckoutConflictDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-19T07:25:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//+/4\u003d",
       "revId": "031ee34e9e697ca188c8eadf9953a0ff17619cf3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
