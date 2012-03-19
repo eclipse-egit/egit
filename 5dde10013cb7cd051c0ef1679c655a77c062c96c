@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3//+7w\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-19T00:01:58Z",
+      "side": 1,
+      "message": "typo: s/Propperly/Properly/",
+      "revId": "5dde10013cb7cd051c0ef1679c655a77c062c96c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+7k\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-19T00:01:58Z",
+      "side": 1,
+      "message": "shouldn\u0027t the delimiters added in line 1100 also be removed here ?",
+      "revId": "5dde10013cb7cd051c0ef1679c655a77c062c96c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+7g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-19T00:01:58Z",
+      "side": 1,
+      "message": "also Signed-off-by footer can be auto-generated, see preference Git \u003e Team \u003e Git \u003e Commit Dialog \u003e Insert Signed-off-by",
+      "revId": "5dde10013cb7cd051c0ef1679c655a77c062c96c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
