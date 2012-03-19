@@ -250,6 +250,52 @@ public class ProjectUtil {
 	}
 
 	/**
+	 * The method returns all projects containing at least one of the given
+	 * paths.
+	 *
+	 * @param repository
+	 * @param fileList
+	 * @return valid projects containing one of the paths
+	 * @throws CoreException
+	 */
+	public static IProject[] getProjectsContaining(Repository repository,
+			Collection<String> fileList) throws CoreException {
+		List<IProject> result = new ArrayList<IProject>();
+
+		/*
+		 * don't use getProjects() as this will remove projects without mapping,
+		 * which we want to have too (projects removed by a branch switch).
+		 */
+		IProject[] allProjects = ResourcesPlugin.getWorkspace().getRoot()
+				.getProjects();
+
+		for (IProject prj : allProjects)
+			for (String member : fileList)
+				try {
+					if (makePrjRelativePath(repository, prj, member) != null) {
+						result.add(prj);
+						break;
+					}
+				} catch (IOException e) {
+					// the given project seems invalid, so we ignore it.
+				}
+
+		return result.toArray(new IProject[result.size()]);
+	}
+
+	private static String makePrjRelativePath(Repository repository,
+			IProject prj, String member) throws IOException {
+		String canonicalMember = new File(repository.getWorkTree(), member)
+				.getCanonicalPath();
+		String canonicalPrj = prj.getLocation().toFile().getCanonicalPath();
+
+		if (canonicalMember.startsWith(canonicalPrj))
+			return canonicalMember.substring(canonicalPrj.length());
+
+		return null;
+	}
+
+	/**
 	 * Find directories containing .project files recursively starting at given
 	 * directory
 	 *
