@@ -19,7 +19,10 @@ import org.eclipse.jgit.util.GitDateFormatter;
 import org.eclipse.jgit.util.GitDateFormatter.Format;
 import org.eclipse.swt.graphics.Image;
 
-class GraphLabelProvider extends BaseLabelProvider implements
+/**
+ * A Label Provider for Commits
+ */
+public class GraphLabelProvider extends BaseLabelProvider implements
 		ITableLabelProvider {
 	private GitDateFormatter dateFormatter;
 
@@ -31,7 +34,10 @@ class GraphLabelProvider extends BaseLabelProvider implements
 
 	private Format format = Format.LOCALE;
 
-	GraphLabelProvider() {
+	/**
+	 * Default constructor
+	 */
+	public GraphLabelProvider() {
 	}
 
 	public String getColumnText(final Object element, final int columnIndex) {

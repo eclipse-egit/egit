@@ -748,6 +748,12 @@ public class UIText extends NLS {
 	public static String ReplaceTargetSelectionDialog_ReplaceWindowTitle;
 
 	/** */
+	public static String ReplaceWithPreviousActionHandler_NoParentCommitDialogMessage;
+
+	/** */
+	public static String ReplaceWithPreviousActionHandler_NoParentCommitDialogTitle;
+
+	/** */
 	public static String RepositoryPropertySource_EditConfigButton;
 
 	/** */
@@ -4125,6 +4131,27 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitSearchResult_LabelSingle;
+
+	/** */
+	public static String CommitSelectDialog_AuthoColumn;
+
+	/** */
+	public static String CommitSelectDialog_DateColumn;
+
+	/** */
+	public static String CommitSelectDialog_IdColumn;
+
+	/** */
+	public static String CommitSelectDialog_Message;
+
+	/** */
+	public static String CommitSelectDialog_MessageColumn;
+
+	/** */
+	public static String CommitSelectDialog_Title;
+
+	/** */
+	public static String CommitSelectDialog_WindowTitle;
 
 	/** */
 	public static String CommitSelectionDialog_BuildingCommitListMessage;
