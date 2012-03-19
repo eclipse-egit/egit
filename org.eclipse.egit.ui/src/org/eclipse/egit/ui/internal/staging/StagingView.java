@@ -82,6 +82,7 @@ import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEditor;
 import org.eclipse.jgit.dircache.DirCacheEntry;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -1121,9 +1122,33 @@ public class StagingView extends ViewPart {
 	private boolean userEnteredCommmitMessage() {
 		if (commitMessageComponent.getRepository() == null)
 			return false;
-		String message = commitMessageComponent.getCommitMessage();
+		String message = commitMessageComponent.getCommitMessage().replace(
+				UIText.StagingView_headCommitChanged, ""); //$NON-NLS-1$
 		if (message == null || message.trim().length() == 0)
 			return false;
+
+		String chIdLine = "Change-Id: I" + ObjectId.zeroId().name(); //$NON-NLS-1$
+
+		if (currentRepository.getConfig().getBoolean(
+				ConfigConstants.CONFIG_GERRIT_SECTION,
+				ConfigConstants.CONFIG_KEY_CREATECHANGEID, false)
+				&& commitMessageComponent.getCreateChangeId()) {
+			if (message.trim().equals(chIdLine))
+				return false;
+
+			// change id was added automatically, but ther is more in the
+			// message; strip the id, and check for the signed-off-by tag
+			message = message.replace(chIdLine, ""); //$NON-NLS-1$
+		}
+
+		if (org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY)
+				&& commitMessageComponent.isSignedOff()
+				&& message.trim().equals(
+						Constants.SIGNED_OFF_BY_TAG
+								+ commitMessageComponent.getCommitter()))
+			return false;
+
 		return true;
 	}
 
