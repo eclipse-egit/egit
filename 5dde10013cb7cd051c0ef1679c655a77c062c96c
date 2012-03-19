@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3//+6w\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-19T07:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//+7w\u003d",
+      "revId": "5dde10013cb7cd051c0ef1679c655a77c062c96c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3//+7k\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3//+7A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-19T07:19:53Z",
+      "side": 1,
+      "message": "is it reasonable to assume that DELIMITER can be a non-whitespace ever? if it is not, i don\u0027t need to do extra handling as the string is trimmed anyway",
+      "parentUuid": "AABOG3//+7k\u003d",
+      "revId": "5dde10013cb7cd051c0ef1679c655a77c062c96c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3//+7g\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2012-03-19T00:01:58Z",
       "side": 1,
       "message": "also Signed-off-by footer can be auto-generated, see preference Git \u003e Team \u003e Git \u003e Commit Dialog \u003e Insert Signed-off-by",
+      "revId": "5dde10013cb7cd051c0ef1679c655a77c062c96c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+68\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-03-19T07:19:53Z",
+      "side": 1,
+      "message": "ok - i added logic for it.",
+      "parentUuid": "AABOG3//+7g\u003d",
       "revId": "5dde10013cb7cd051c0ef1679c655a77c062c96c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
