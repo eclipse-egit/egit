@@ -56,15 +56,16 @@ public class OpenInTextEditorHandler extends AbstractHistoryCommandHandler {
 				RevCommit commit = (RevCommit) it.next();
 				IFileRevision rev = null;
 				try {
-					rev = CompareUtils.getFileRevision(gitPath, commit, map
-							.getRepository(), null);
+					rev = CompareUtils.getFileRevision(
+							getRenamedPath(gitPath, commit), commit,
+							map.getRepository(), null);
 				} catch (IOException e) {
 					Activator.logError(NLS.bind(
 							UIText.GitHistoryPage_errorLookingUpPath, gitPath,
 							commit.getId()), e);
 					errorOccurred = true;
 				}
-				if (rev != null) {
+				if (rev != null)
 					try {
 						EgitUiEditorUtils.openTextEditor(getPart(event)
 								.getSite().getPage(), rev, null);
@@ -72,9 +73,8 @@ public class OpenInTextEditorHandler extends AbstractHistoryCommandHandler {
 						Activator.logError(e.getMessage(), e);
 						errorOccurred = true;
 					}
-				} else {
+				else
 					ids.add(commit.getId());
-				}
 			}
 		}
 		if (input instanceof File) {
@@ -94,7 +94,7 @@ public class OpenInTextEditorHandler extends AbstractHistoryCommandHandler {
 							commit.getId()), e);
 					errorOccurred = true;
 				}
-				if (rev != null) {
+				if (rev != null)
 					try {
 						EgitUiEditorUtils.openTextEditor(getPart(event)
 								.getSite().getPage(), rev, null);
@@ -102,9 +102,8 @@ public class OpenInTextEditorHandler extends AbstractHistoryCommandHandler {
 						Activator.logError(e.getMessage(), e);
 						errorOccurred = true;
 					}
-				} else {
+				else
 					ids.add(commit.getId());
-				}
 			}
 		}
 		if (errorOccurred)

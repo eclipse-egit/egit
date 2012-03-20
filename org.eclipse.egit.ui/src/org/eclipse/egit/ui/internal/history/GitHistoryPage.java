@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.RenameTracker;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
@@ -627,6 +628,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 	private List<FilterPath> pathFilters;
 
 	private Runnable refschangedRunnable;
+
+	private final RenameTracker renameTracker = new RenameTracker();
 
 	/**
 	 * Determine if the input can be shown in this viewer.
@@ -1647,6 +1650,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		}
 		currentWalk.sort(RevSort.COMMIT_TIME_DESC, true);
 		currentWalk.sort(RevSort.BOUNDARY, true);
+		renameTracker.reset();
+		if (getFollowRenames())
+			currentWalk.setRevFilter(renameTracker.getFilter());
 		highlightFlag = currentWalk.newFlag("highlight"); //$NON-NLS-1$
 	}
 
@@ -1728,8 +1734,11 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			throw new IllegalArgumentException("paths must not be null nor empty"); //$NON-NLS-1$
 
 		List<TreeFilter> followFilters = new ArrayList<TreeFilter>(paths.size());
-		for (String path : paths)
-			followFilters.add(FollowFilter.create(path));
+		for (String path : paths) {
+			FollowFilter followFilter = FollowFilter.create(path);
+			followFilter.setRenameCallback(renameTracker.getCallback());
+			followFilters.add(followFilter);
+		}
 
 		if (followFilters.size() == 1)
 			return followFilters.get(0);
@@ -1864,5 +1873,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	public boolean isConflicting(ISchedulingRule rule) {
 		return this == rule;
+	}
+
+	/**
+	 * Get renamed path in given commit with initial starting path
+	 *
+	 * @param path
+	 * @param commit
+	 * @return actual path in commit
+	 */
+	public String getRenamedPath(String path, ObjectId commit) {
+		return renameTracker.getPath(graph.getCommits(), commit, path);
 	}
 }

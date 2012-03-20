@@ -53,6 +53,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
@@ -819,6 +820,15 @@ class CommitGraphTable {
 			parameter.label = menuLabel;
 			parameter.parameters = parameters;
 			return new CommandContributionItem(parameter);
+		}
+	}
+
+	ObjectId[] getCommits() {
+		final Map<String, PlotCommit> commits = commitsMap;
+		if (commits == null)
+			return new ObjectId[0];
+		synchronized (commits) {
+			return commits.values().toArray(new ObjectId[commits.size()]);
 		}
 	}
 }

@@ -65,10 +65,11 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 			Iterator<?> it = selection.iterator();
 			while (it.hasNext()) {
 				RevCommit commit = (RevCommit) it.next();
+				String commitPath = getRenamedPath(gitPath, commit);
 				IFileRevision rev = null;
 				try {
-					rev = CompareUtils.getFileRevision(gitPath, commit, map
-							.getRepository(), null);
+					rev = CompareUtils.getFileRevision(commitPath, commit,
+							map.getRepository(), null);
 				} catch (IOException e) {
 					Activator.logError(NLS.bind(
 							UIText.GitHistoryPage_errorLookingUpPath, gitPath,
@@ -78,8 +79,8 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 				if (rev != null) {
 					if (compareMode) {
 						ITypedElement right = CompareUtils
-								.getFileRevisionTypedElement(gitPath, commit,
-										map.getRepository());
+								.getFileRevisionTypedElement(commitPath,
+										commit, map.getRepository());
 						final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 								SaveableCompareEditorInput
 										.createFileElement(resource), right,
@@ -89,7 +90,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 						} catch (Exception e) {
 							errorOccurred = true;
 						}
-					} else {
+					} else
 						try {
 							EgitUiEditorUtils.openEditor(getPart(event)
 									.getSite().getPage(), rev,
@@ -99,10 +100,8 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 									UIText.GitHistoryPage_openFailed, e);
 							errorOccurred = true;
 						}
-					}
-				} else {
+				} else
 					ids.add(commit.getId());
-				}
 			}
 		}
 		if (input instanceof File) {
@@ -112,18 +111,19 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 			Iterator<?> it = selection.iterator();
 			while (it.hasNext()) {
 				RevCommit commit = (RevCommit) it.next();
+				String commitPath = getRenamedPath(gitPath, commit);
 				IFileRevision rev = null;
 				try {
-					rev = CompareUtils.getFileRevision(gitPath, commit, repo,
-							null);
+					rev = CompareUtils.getFileRevision(commitPath, commit,
+							repo, null);
 				} catch (IOException e) {
 					Activator.logError(NLS.bind(
-							UIText.GitHistoryPage_errorLookingUpPath, gitPath,
-							commit.getId()), e);
+							UIText.GitHistoryPage_errorLookingUpPath,
+							commitPath, commit.getId()), e);
 					errorOccurred = true;
 				}
 				if (rev != null) {
-					if (compareMode) {
+					if (compareMode)
 						try {
 							ITypedElement left = CompareUtils
 									.getFileRevisionTypedElement(gitPath,
@@ -131,7 +131,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 													.resolve(Constants.HEAD)),
 											repo);
 							ITypedElement right = CompareUtils
-									.getFileRevisionTypedElement(gitPath,
+									.getFileRevisionTypedElement(commitPath,
 											commit, repo);
 							final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 									left, right, null);
@@ -139,7 +139,7 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 						} catch (IOException e) {
 							errorOccurred = true;
 						}
-					} else {
+					else
 						try {
 							EgitUiEditorUtils.openEditor(getPart(event)
 									.getSite().getPage(), rev,
@@ -149,19 +149,16 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 									UIText.GitHistoryPage_openFailed, e);
 							errorOccurred = true;
 						}
-					}
-				} else {
+				} else
 					ids.add(commit.getId());
-				}
 			}
 		}
 		if (errorOccurred)
 			Activator.showError(UIText.GitHistoryPage_openFailed, null);
 		if (ids.size() > 0) {
 			StringBuilder idList = new StringBuilder(""); //$NON-NLS-1$
-			for (ObjectId objectId : ids) {
+			for (ObjectId objectId : ids)
 				idList.append(objectId.getName()).append(' ');
-			}
 			MessageDialog.openError(getPart(event).getSite().getShell(),
 					UIText.GitHistoryPage_fileNotFound, NLS.bind(
 							UIText.GitHistoryPage_notContainedInCommits,
