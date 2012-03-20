@@ -628,6 +628,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	private Runnable refschangedRunnable;
 
+	private final RenameTracker renameTracker = new RenameTracker();
+
 	/**
 	 * Determine if the input can be shown in this viewer.
 	 *
@@ -952,6 +954,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				if (i instanceof IWorkbenchAction)
 					((IWorkbenchAction) i).dispose();
 		}
+		renameTracker.reset(null);
 		super.dispose();
 	}
 
@@ -1731,8 +1734,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		for (String path : paths)
 			followFilters.add(FollowFilter.create(path));
 
-		if (followFilters.size() == 1)
+		if (followFilters.size() == 1) {
+			FollowFilter followFilter = (FollowFilter) followFilters.get(0);
+			renameTracker.reset(followFilter.getPath());
+			followFilter.setRenameCallback(renameTracker.getCallback());
+			currentWalk.setRevFilter(renameTracker.getFilter());
 			return followFilters.get(0);
+		}
 
 		return OrTreeFilter.create(followFilters);
 	}
@@ -1864,5 +1872,16 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	public boolean isConflicting(ISchedulingRule rule) {
 		return this == rule;
+	}
+
+	/**
+	 * Get renamed path in given commit with initial starting path
+	 *
+	 * @param path
+	 * @param commit
+	 * @return actual path in commit
+	 */
+	public String getRenamedPath(String path, ObjectId commit) {
+		return renameTracker.getPath(commit, path);
 	}
 }
