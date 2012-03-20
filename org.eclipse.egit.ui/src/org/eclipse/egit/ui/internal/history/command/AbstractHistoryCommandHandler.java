@@ -35,6 +35,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -125,13 +126,12 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		Collection<Ref> revTags = repo.getTags().values();
 		List<RevTag> tags = new ArrayList<RevTag>();
 		RevWalk walk = new RevWalk(repo);
-		for (Ref ref : revTags) {
+		for (Ref ref : revTags)
 			try {
 				tags.add(walk.parseTag(repo.resolve(ref.getName())));
 			} catch (IOException e) {
 				throw new ExecutionException(e.getMessage(), e);
 			}
-		}
 		return tags;
 	}
 
@@ -178,10 +178,9 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 		try {
 			Map<String, Ref> branches = repo.getRefDatabase().getRefs(
 					refPrefix);
-			for (Ref branch : branches.values()) {
+			for (Ref branch : branches.values())
 				if (branch.getLeaf().getObjectId().equals(commit.getId()))
 					availableBranches.add(branch);
-			}
 			RepositoryNode repoNode = new RepositoryNode(null, repo);
 			for (Ref ref : availableBranches)
 				nodes.add(new RefNode(repoNode, repo, ref));
@@ -190,5 +189,16 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 			// ignore here
 		}
 		return nodes;
+	}
+
+	/**
+	 * Get renamed path in commit
+	 *
+	 * @param path
+	 * @param commit
+	 * @return path respecting renames
+	 */
+	protected String getRenamedPath(final String path, final ObjectId commit) {
+		return getPage().getRenamedPath(path, commit);
 	}
 }
