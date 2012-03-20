@@ -29,6 +29,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
@@ -367,8 +368,9 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		ContextMenuHelper.clickContextMenu(tree, myUtil
 				.getPluginLocalizedValue("RepoViewMerge.label"));
 
-		String title = NLS.bind(UIText.MergeTargetSelectionDialog_TitleMerge,
-				clonedRepositoryFile.getPath().toString());
+		String title = NLS.bind(
+				UIText.MergeTargetSelectionDialog_TitleMergeWithBranch,
+				new FileRepository(clonedRepositoryFile).getBranch());
 
 		SWTBotShell mergeDialog = bot.shell(title);
 		// TODO do some merge here

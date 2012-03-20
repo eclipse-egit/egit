@@ -90,7 +90,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 		SWTBotShell fetchDialog = openFetchDialog();
 		fetchDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
 		fetchDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
-		
+
 		String uri = lookupRepository(childRepositoryFile).getConfig()
 				.getString(ConfigConstants.CONFIG_REMOTE_SECTION, "origin",
 						ConfigConstants.CONFIG_KEY_URL);
@@ -152,8 +152,8 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 				menuString);
 		Repository repo = lookupRepository(childRepositoryFile);
 		SWTBotShell dialog = bot.shell(NLS.bind(
-				UIText.MergeTargetSelectionDialog_TitleMerge, repo
-						.getDirectory().toString()));
+				UIText.MergeTargetSelectionDialog_TitleMergeWithBranch,
+				repo.getBranch()));
 		return dialog;
 	}
 }
