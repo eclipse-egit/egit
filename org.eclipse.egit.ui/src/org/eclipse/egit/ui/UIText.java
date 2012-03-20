@@ -4262,6 +4262,9 @@ public class UIText extends NLS {
 	public static String StagingView_replaceWithFileInGitIndex;
 
 	/** */
+	public static String StagingView_replaceWithHeadRevision;
+
+	/** */
 	public static String StagingView_UnstageItemMenuLabel;
 
 	/** */
