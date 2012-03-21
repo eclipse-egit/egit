@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3//+rA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/ReplaceWithPreviousActionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-03-21T19:36:27Z",
+      "side": 1,
+      "message": "A path limited RevWalk is needed here to find the commit that last modified the file at the selected path or else the previous commit may contain the exact same version of the file as the HEAD version.\n\nSee CompareWithPreviousActionHandler for an example to use.",
+      "revId": "2303a222c497b47da0a05f23635d6f657929adeb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+rE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-03-21T19:36:27Z",
+      "side": 1,
+      "message": "These should be the same as CompareWithPreviousActionHandler_MessageRevisionNotFound and CompareWithPreviousActionHandler_TitleRevisionNotFound",
+      "revId": "2303a222c497b47da0a05f23635d6f657929adeb",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
