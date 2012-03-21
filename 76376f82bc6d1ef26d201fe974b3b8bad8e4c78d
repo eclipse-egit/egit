@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3//+r4\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-03-21T18:44:08Z",
+      "side": 1,
+      "message": "This should go before the ReplaceWithHeadAction declaration to mirror the Compare With menu ordering.",
+      "revId": "76376f82bc6d1ef26d201fe974b3b8bad8e4c78d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+r8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitSelectDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-03-21T18:44:08Z",
+      "side": 1,
+      "message": "Double click on this table should cause the dialog to close and the selected commit to be used.",
+      "revId": "76376f82bc6d1ef26d201fe974b3b8bad8e4c78d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
