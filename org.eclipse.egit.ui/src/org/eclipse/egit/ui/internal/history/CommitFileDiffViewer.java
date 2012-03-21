@@ -25,7 +25,6 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
@@ -52,8 +51,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -85,10 +82,6 @@ public class CommitFileDiffViewer extends TableViewer {
 	private TreeWalk walker;
 
 	private Clipboard clipboard;
-
-	private StyledText noInputText;
-
-	private final StackLayout stackLayout;
 
 	private IAction selectAll;
 
@@ -131,23 +124,9 @@ public class CommitFileDiffViewer extends TableViewer {
 	 */
 	public CommitFileDiffViewer(final Composite parent,
 			final IWorkbenchSite site, final int style) {
-		// since out parent is a SashForm, we can't add the alternate
-		// text to be displayed in case of no input directly to that
-		// parent; we create our own parent instead and set the
-		// StackLayout on it instead
-		super(new Composite(parent, SWT.NONE), style);
+		super(parent, style);
 		this.site = site;
 		final Table rawTable = getTable();
-		Composite main = rawTable.getParent();
-		stackLayout = new StackLayout();
-		main.setLayout(stackLayout);
-
-		// this is the text to be displayed if there is no input
-		noInputText = new StyledText(main, SWT.NONE);
-		// use the same font as in message viewer
-		noInputText.setFont(UIUtils
-				.getFont(UIPreferences.THEME_CommitMessageFont));
-		noInputText.setText(UIText.CommitFileDiffViewer_SelectOneCommitMessage);
 
 		rawTable.setLinesVisible(true);
 
@@ -202,9 +181,8 @@ public class CommitFileDiffViewer extends TableViewer {
 				if (s.isEmpty() || !(s instanceof IStructuredSelection))
 					return;
 				final IStructuredSelection iss = (IStructuredSelection) s;
-				for (Iterator<FileDiff> it = iss.iterator(); it.hasNext();) {
+				for (Iterator<FileDiff> it = iss.iterator(); it.hasNext();)
 					openFileInEditor(it.next());
-				}
 			}
 		};
 
@@ -369,12 +347,10 @@ public class CommitFileDiffViewer extends TableViewer {
 
 			@Override
 			public void run() {
-				if (af == ActionFactory.SELECT_ALL) {
+				if (af == ActionFactory.SELECT_ALL)
 					doSelectAll();
-				}
-				if (af == ActionFactory.COPY) {
+				if (af == ActionFactory.COPY)
 					doCopy();
-				}
 			}
 		};
 		action.setEnabled(true);
@@ -385,13 +361,6 @@ public class CommitFileDiffViewer extends TableViewer {
 	protected void inputChanged(final Object input, final Object oldInput) {
 		if (oldInput == null && input == null)
 			return;
-		if (input == null && stackLayout.topControl != noInputText) {
-			stackLayout.topControl = noInputText;
-			getTable().getParent().layout(false);
-		} else if (input != null && stackLayout.topControl != getTable()) {
-			stackLayout.topControl = getTable();
-			getTable().getParent().layout(false);
-		}
 		super.inputChanged(input, oldInput);
 	}
 
