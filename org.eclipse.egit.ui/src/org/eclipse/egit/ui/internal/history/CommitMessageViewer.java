@@ -22,7 +22,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -306,8 +305,7 @@ class CommitMessageViewer extends TextViewer implements
 
 	private void format() {
 		if (commit == null) {
-			setDocument(new Document(
-					UIText.CommitMessageViewer_SelectOneCommitMessage));
+			setDocument(new Document("")); //$NON-NLS-1$
 			return;
 		}
 		if (formatJob != null && formatJob.getState() != Job.NONE)
