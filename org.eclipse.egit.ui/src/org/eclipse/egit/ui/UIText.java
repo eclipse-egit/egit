@@ -2575,6 +2575,9 @@ public class UIText extends NLS {
 	public static String BranchResultDialog_buttonReset;
 
 	/** */
+	public static String BranchResultDialog_buttonStash;
+
+	/** */
 	public static String BranchResultDialog_CheckoutConflictsMessage;
 
 	/** */
