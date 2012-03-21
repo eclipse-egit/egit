@@ -36,6 +36,11 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class StashCreateCommand extends
 		RepositoriesViewCommandHandler<RepositoryNode> {
 
+	/**
+	 * Command id
+	 */
+	public static final String ID = "org.eclipse.egit.ui.team.stash.create"; //$NON-NLS-1$
+
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		List<RepositoryNode> nodes = getSelectedNodes(event);
 		if (nodes.isEmpty())
