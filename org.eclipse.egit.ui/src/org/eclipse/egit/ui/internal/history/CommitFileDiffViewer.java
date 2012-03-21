@@ -11,6 +11,7 @@ package org.eclipse.egit.ui.internal.history;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
@@ -45,10 +46,14 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.FollowFilter;
+import org.eclipse.jgit.revwalk.RenameCallback;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -202,9 +207,8 @@ public class CommitFileDiffViewer extends TableViewer {
 				if (s.isEmpty() || !(s instanceof IStructuredSelection))
 					return;
 				final IStructuredSelection iss = (IStructuredSelection) s;
-				for (Iterator<FileDiff> it = iss.iterator(); it.hasNext();) {
+				for (Iterator<FileDiff> it = iss.iterator(); it.hasNext();)
 					openFileInEditor(it.next());
-				}
 			}
 		};
 
@@ -369,12 +373,10 @@ public class CommitFileDiffViewer extends TableViewer {
 
 			@Override
 			public void run() {
-				if (af == ActionFactory.SELECT_ALL) {
+				if (af == ActionFactory.SELECT_ALL)
 					doSelectAll();
-				}
-				if (af == ActionFactory.COPY) {
+				if (af == ActionFactory.COPY)
 					doCopy();
-				}
 			}
 		};
 		action.setEnabled(true);
@@ -467,18 +469,51 @@ public class CommitFileDiffViewer extends TableViewer {
 		}
 	}
 
+	String findPreviousPath(final String path, final RevCommit commit) {
+		final AtomicReference<String> previousPath = new AtomicReference<String>();
+		RevWalk rw = new RevWalk(db);
+		try {
+			FollowFilter filter = FollowFilter.create(path);
+			filter.setRenameCallback(new RenameCallback() {
+
+				public void renamed(DiffEntry entry) {
+					previousPath.set(entry.getOldPath());
+				}
+			});
+			rw.setTreeFilter(filter);
+			rw.markStart(commit);
+			if (rw.next() != null)
+				rw.next();
+			return previousPath.get();
+		} catch (IOException e) {
+			return null;
+		} finally {
+			rw.dispose();
+		}
+	}
+
 	void showTwoWayFileDiff(final FileDiff d) {
 		final GitCompareFileRevisionEditorInput in;
 
 		final String p = d.getPath();
 		final RevCommit c = d.getCommit();
-		final ITypedElement base;
+		ITypedElement base = null;
 		final ITypedElement next;
 
-		if (d.getBlobs().length == 2 && !d.getChange().equals(ChangeType.ADD))
-			base = CompareUtils.getFileRevisionTypedElement(p, c.getParent(0),
-					getRepository(), d.getBlobs()[0]);
-		else
+		if (d.getBlobs().length == 2) {
+			if (d.getChange().equals(ChangeType.ADD)) {
+				final String previousPath = findPreviousPath(p, c);
+				if (previousPath != null)
+					base = CompareUtils.getFileRevisionTypedElement(
+							previousPath, c.getParent(0), getRepository(),
+							d.getBlobs()[0]);
+				else
+					base = new GitCompareFileRevisionEditorInput.EmptyTypedElement(
+							""); //$NON-NLS-1$
+			} else
+				base = CompareUtils.getFileRevisionTypedElement(p,
+						c.getParent(0), getRepository(), d.getBlobs()[0]);
+		} else
 			// Initial import
 			base = new GitCompareFileRevisionEditorInput.EmptyTypedElement(""); //$NON-NLS-1$
 
