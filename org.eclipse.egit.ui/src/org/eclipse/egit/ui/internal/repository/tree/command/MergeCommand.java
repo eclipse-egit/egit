@@ -80,11 +80,10 @@ public class MergeCommand extends
 		else {
 			MergeTargetSelectionDialog mergeTargetSelectionDialog = new MergeTargetSelectionDialog(
 					getShell(event), repository);
-			if (mergeTargetSelectionDialog.open() == IDialogConstants.OK_ID) {
+			if (mergeTargetSelectionDialog.open() == IDialogConstants.OK_ID)
 				refName = mergeTargetSelectionDialog.getRefName();
-			} else {
+			else
 				return null;
-			}
 		}
 
 		String jobname = NLS.bind(UIText.MergeAction_JobNameMerge, refName);
@@ -106,7 +105,7 @@ public class MergeCommand extends
 			@Override
 			public void done(IJobChangeEvent jobEvent) {
 				IStatus result = jobEvent.getJob().getResult();
-				if (result.getSeverity() == IStatus.CANCEL) {
+				if (result.getSeverity() == IStatus.CANCEL)
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
 							// don't use getShell(event) here since
@@ -119,18 +118,17 @@ public class MergeCommand extends
 									UIText.MergeAction_MergeCanceledMessage);
 						}
 					});
-				} else if (!result.isOK()) {
+				else if (!result.isOK())
 					Activator.handleError(result.getMessage(), result
 							.getException(), true);
-				} else {
+				else
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
 							Shell shell = PlatformUI.getWorkbench()
 									.getActiveWorkbenchWindow().getShell();
-							new MergeResultDialog(shell, repository, op.getResult()).open();
+							MergeResultDialog.getDialog(shell, repository, op.getResult()).open();
 						}
 					});
-				}
 			}
 		});
 		job.schedule();
@@ -159,9 +157,8 @@ public class MergeCommand extends
 			ex = e;
 		}
 
-		if (message != null) {
+		if (message != null)
 			Activator.handleError(UIText.MergeAction_CannotMerge, ex, true);
-		}
 		return (message == null);
 	}
 }
