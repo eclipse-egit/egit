@@ -96,7 +96,7 @@ public class MergeActionHandler extends RepositoryActionHandler {
 							public void run() {
 								Shell shell = PlatformUI.getWorkbench()
 										.getActiveWorkbenchWindow().getShell();
-								new MergeResultDialog(shell, repository, op
+								MergeResultDialog.getDialog(shell, repository, op
 										.getResult()).open();
 							}
 						});
