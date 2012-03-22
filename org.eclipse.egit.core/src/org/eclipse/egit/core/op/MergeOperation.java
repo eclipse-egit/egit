@@ -14,7 +14,6 @@
 package org.eclipse.egit.core.op;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -131,17 +130,8 @@ public class MergeOperation implements IEGitOperation {
 				} catch (ConcurrentRefUpdateException e) {
 					throw new TeamException(CoreText.MergeOperation_MergeFailedRefUpdate, e);
 				} catch (CheckoutConflictException e) {
-					StringBuilder builder = new StringBuilder();
-					for (String f : e.getConflictingPaths()) {
-						builder.append("\n"); //$NON-NLS-1$
-						builder.append(f);
-					}
-					throw new TeamException(
-								new Status(
-									IStatus.INFO,
-									Activator.getPluginId(),
-									MessageFormat.format(CoreText.MergeOperation_CheckoutConflict,
-									builder.toString())));
+					mergeResult = new MergeResult(e.getConflictingPaths());
+					return;
 				} catch (GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(), e.getCause());
 				} finally {
