@@ -20,6 +20,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.dialogs.CheckoutConflictDialog;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -70,6 +71,19 @@ public class MergeResultDialog extends Dialog {
 	private final Repository repository;
 
 	private ObjectReader objectReader;
+
+	/**
+	 * @param parentShell
+	 * @param repository
+	 * @param mergeResult
+	 * @return the created dialog
+	 */
+	public static Dialog getDialog(Shell parentShell, Repository repository, MergeResult mergeResult) {
+		if(mergeResult.getMergeStatus() == MergeStatus.CHECKOUT_CONFLICT)
+			return new CheckoutConflictDialog(parentShell, repository, mergeResult.getCheckoutConflicts());
+		else
+			return new MergeResultDialog(parentShell, repository, mergeResult);
+	}
 
 	/**
 	 * @param parentShell
