@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3//+h4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//+ik\u003d",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3//+ig\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3//+h0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//+ig\u003d",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3//+ic\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2012-03-23T23:38:43Z",
       "side": 1,
       "message": "externalize",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+hw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//+ic\u003d",
       "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3//+hs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/BranchPropertySource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//+iY\u003d",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3//+iU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/BranchPropertySource.java",
         "patchSetId": 2
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3//+ho\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/BranchPropertySource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//+iU\u003d",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3//+iM\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertySourceProvider.java",
         "patchSetId": 2
@@ -115,6 +205,24 @@
       "writtenOn": "2012-03-23T23:38:43Z",
       "side": 1,
       "message": "use an enum instead",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+hk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertySourceProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//+iM\u003d",
       "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
