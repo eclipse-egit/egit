@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3//+ik\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:38:43Z",
+      "side": 1,
+      "message": "style nit: unnecessary blank line",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+ig\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:38:43Z",
+      "side": 1,
+      "message": "externalize string",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+ic\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:38:43Z",
+      "side": 1,
+      "message": "externalize",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+iI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:38:43Z",
+      "side": 1,
+      "message": "what does a \".\" remote mean ?",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+iY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/BranchPropertySource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:38:43Z",
+      "side": 1,
+      "message": "2012",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+iU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/BranchPropertySource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:38:43Z",
+      "side": 1,
+      "message": "externalize strings",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+iM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertySourceProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:38:43Z",
+      "side": 1,
+      "message": "use an enum instead",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+iQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ConfigureBranchCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-03-23T23:38:43Z",
+      "side": 1,
+      "message": "2012",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
