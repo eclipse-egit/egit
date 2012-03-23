@@ -74,6 +74,9 @@ public class ActionCommands {
 	/** "Replace with Ref" action command id */
 	public static final String REPLACE_WITH_REF_ACTION = "org.eclipse.egit.ui.team.ReplaceWithRef"; //$NON-NLS-1$
 
+	/** "Replace with previous version id */
+	public static final String REPLACE_WITH_PREVIOUS_ACTION = "org.eclipse.egit.ui.team.ReplaceWithPrevious"; //$NON-NLS-1$
+
 	/** "Disconnect" action command id */
 	public static final String DISCONNECT_ACTION = "org.eclipse.egit.ui.internal.actions.Disconnect"; //$NON-NLS-1$
 
