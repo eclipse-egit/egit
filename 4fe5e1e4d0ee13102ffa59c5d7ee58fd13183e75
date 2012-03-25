@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3//+gE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-25T16:29:52Z",
+      "side": 1,
+      "message": "This method does not do what is expected. It does not return the path the file was renamed from in the given commit. Instead it returns the first path the file ever had.\n\nI investigated further and found out that the RenameCallback does not work properly. As soon as the rw.next is called the first time the method \"renamed\" is called for all the renames which had ever happened.\n\nThe testcase RevWalkFollowFilterTest does not reveal that because it only tests if all the renames are detected, but not if they are detected for the right commit. I\u0027ll push a failing testcase for that.\n\nCompareWithPreviousActionHandler also does not work properly. E.g., rename a file and do a follow-up commit on that file. Then do Compare with Preivious on the last commit. It tries to use the old path and does not find it in the parent commit.",
+      "revId": "4fe5e1e4d0ee13102ffa59c5d7ee58fd13183e75",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
