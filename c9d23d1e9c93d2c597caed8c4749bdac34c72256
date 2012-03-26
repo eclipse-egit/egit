@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3//+eo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2012-03-26T10:11:10Z",
+      "side": 1,
+      "message": "It is the placeholder for the local Repository.",
+      "parentUuid": "AABOG3//+iI\u003d",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3//+iY\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/BranchPropertySource.java",
         "patchSetId": 2
@@ -240,6 +258,24 @@
       "writtenOn": "2012-03-23T23:38:43Z",
       "side": 1,
       "message": "2012",
+      "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+eY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/ConfigureBranchCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2012-03-26T10:11:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//+iQ\u003d",
       "revId": "c9d23d1e9c93d2c597caed8c4749bdac34c72256",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
