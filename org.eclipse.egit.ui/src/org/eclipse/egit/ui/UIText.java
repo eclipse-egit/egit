@@ -2581,10 +2581,49 @@ public class UIText extends NLS {
 	public static String BranchAction_repositoryState;
 
 	/** */
+	public static String BranchConfigurationDialog_BranchConfiguration;
+
+	/** */
+	public static String BranchConfigurationDialog_BranchConfigurationTitle;
+
+	/** */
+	public static String BranchConfigurationDialog_EditBranchConfigMessage;
+
+	/** */
+	public static String BranchConfigurationDialog_ExceptionGettingRefs;
+
+	/** */
+	public static String BranchConfigurationDialog_RebaseLabel;
+
+	/** */
+	public static String BranchConfigurationDialog_RemoteLabel;
+
+	/** */
+	public static String BranchConfigurationDialog_SaveBranchConfigFailed;
+
+	/** */
+	public static String BranchConfigurationDialog_UpstreamBranchLabel;
+
+	/** */
 	public static String BranchOperationUI_DetachedHeadTitle;
 
 	/** */
 	public static String BranchOperationUI_DetachedHeadMessage;
+
+	/** */
+	public static String BranchPropertySource_RebaseDescriptor;
+
+	/** */
+	public static String BranchPropertySource_RemoteDescriptor;
+
+	/** */
+	public static String BranchPropertySource_UpstreamBranchDescriptor;
+
+	/** */
+	public static String BranchPropertySource_UpstreamConfigurationCategory;
+
+	/** */
+	public static String BranchPropertySource_ValueNotSet;
 
 	/** */
 	public static String BranchResultDialog_buttonCommit;
