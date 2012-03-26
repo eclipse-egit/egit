@@ -16,6 +16,24 @@
       "revId": "b5238d60b0a379ebfe7145e44a1786104f4c7e1b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+ds\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2507,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-03-26T12:22:49Z",
+      "side": 1,
+      "message": "I think the diff just looks weird here but if you pull it down and view it in the Eclipse compare editor it should make more sense.",
+      "parentUuid": "AABOG3//+f0\u003d",
+      "revId": "b5238d60b0a379ebfe7145e44a1786104f4c7e1b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
