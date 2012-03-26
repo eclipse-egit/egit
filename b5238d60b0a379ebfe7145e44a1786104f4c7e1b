@@ -34,6 +34,24 @@
       "revId": "b5238d60b0a379ebfe7145e44a1786104f4c7e1b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+So\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2507,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-03-26T15:27:26Z",
+      "side": 1,
+      "message": "Oh, I see!",
+      "parentUuid": "AABOG3//+ds\u003d",
+      "revId": "b5238d60b0a379ebfe7145e44a1786104f4c7e1b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
