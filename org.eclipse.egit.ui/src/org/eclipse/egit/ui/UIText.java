@@ -3546,6 +3546,9 @@ public class UIText extends NLS {
 	public static String CommitGraphTable_OpenCommitLabel;
 
 	/** */
+	public static String CommitGraphTable_RenameBranchMenuLabel;
+
+	/** */
 	public static String CommitGraphTable_UnableToCreatePatch;
 
 	/** */
@@ -3766,6 +3769,18 @@ public class UIText extends NLS {
 
 	/** */
 	public static String RenameBranchDialog_WindowTitle;
+
+	/** */
+	public static String RenameBranchOnCommitHandler_RenameDialogMessage;
+
+	/** */
+	public static String RenameBranchOnCommitHandler_RenameDialogTitle;
+
+	/** */
+	public static String RenameBranchOnCommitHandler_SelectBranchDialogMessage;
+
+	/** */
+	public static String RenameBranchOnCommitHandler_SelectBranchDialogTitle;
 
 	/** */
 	public static String RevertFailureDialog_Message;
