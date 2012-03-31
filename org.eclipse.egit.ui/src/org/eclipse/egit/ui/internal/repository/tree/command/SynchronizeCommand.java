@@ -56,9 +56,8 @@ public class SynchronizeCommand extends
 		final boolean includeLocal = getSelectedNodes(event).size() == 1;
 
 		final Repository repo = node.getRepository();
-		Job job = new Job(NLS.bind(
-				UIText.SelectSynchronizeResourceDialog_selectProject, repo
-						.getDirectory())) {
+		Job job = new Job(NLS.bind(UIText.SynchronizeCommand_jobName,
+				repo.getDirectory())) {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
