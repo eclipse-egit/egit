@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3//+F8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-03-31T23:18:51Z",
+      "side": 1,
+      "message": "This would mean \"a/b.txt\" matches \"a/b\". Seems wrong.",
+      "revId": "5165ab5b75b1f56c5e28bd635afd65754c8d44cf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
