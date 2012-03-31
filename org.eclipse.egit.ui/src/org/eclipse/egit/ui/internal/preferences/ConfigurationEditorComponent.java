@@ -546,6 +546,7 @@ public class ConfigurationEditorComponent {
 
 	private void markDirty() {
 		setDirty(true);
+		((GitConfig) tv.getInput()).refresh();
 		tv.refresh();
 	}
 
@@ -557,6 +558,11 @@ public class ConfigurationEditorComponent {
 
 		GitConfig(Config config) {
 			this.config = config;
+		}
+
+		GitConfig refresh() {
+			children = null;
+			return this;
 		}
 
 		public Object[] getChildren(Object o) {
