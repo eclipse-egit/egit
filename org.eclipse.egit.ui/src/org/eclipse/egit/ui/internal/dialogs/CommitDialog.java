@@ -336,9 +336,8 @@ public class CommitDialog extends TitleAreaDialog {
 		public void widgetDefaultSelected(SelectionEvent e) {
 			IStructuredSelection selection = (IStructuredSelection) filesViewer.getSelection();
 			CommitItem commitItem = (CommitItem) selection.getFirstElement();
-			if (commitItem == null) {
+			if (commitItem == null)
 				return;
-			}
 			IFile file = findFile(commitItem.path);
 			if (file == null
 					|| RepositoryProvider.getProvider(file.getProject()) == null)
@@ -355,13 +354,12 @@ public class CommitDialog extends TitleAreaDialog {
 		public boolean select(Viewer viewer, Object parentElement,
 				Object element) {
 			boolean result = true;
-			if (!showUntracked || !allowToChangeSelection) {
+			if (!showUntracked || !allowToChangeSelection)
 				if (element instanceof CommitItem) {
 					CommitItem item = (CommitItem) element;
 					if (item.status == Status.UNTRACKED)
 						result = false;
 				}
-			}
 			return result;
 		}
 	}
@@ -420,6 +418,8 @@ public class CommitDialog extends TitleAreaDialog {
 	private boolean allowToChangeSelection = true;
 
 	private Repository repository;
+
+	private IndexDiff indexDiff;
 
 	/**
 	 * @param parentShell
@@ -481,6 +481,7 @@ public class CommitDialog extends TitleAreaDialog {
 	public void setFiles(Repository repository, Set<String> paths,
 			IndexDiff indexDiff) {
 		this.repository = repository;
+		this.indexDiff = indexDiff;
 		items.clear();
 		for (String path : paths) {
 			CommitItem item = new CommitItem();
@@ -729,9 +730,9 @@ public class CommitDialog extends TitleAreaDialog {
 		commitText.getTextWidget().addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent event) {
 				if (event.keyCode == SWT.CR
-						&& (event.stateMask & SWT.CONTROL) > 0) {
+						&& (event.stateMask & SWT.CONTROL) > 0)
 					okPressed();
-				} else if (event.keyCode == SWT.TAB
+				else if (event.keyCode == SWT.TAB
 						&& (event.stateMask & SWT.SHIFT) == 0) {
 					event.doit = false;
 					commitText.traverse(SWT.TRAVERSE_TAB_NEXT);
@@ -1011,7 +1012,7 @@ public class CommitDialog extends TitleAreaDialog {
 	private void updateMessage() {
 		String message = commitMessageComponent.getMessage();
 		if (message == null && filesViewer.getCheckedElements().length == 0
-				&& !amendingItem.getSelection())
+				&& !amendingItem.getSelection() && indexDiff.getChanged().isEmpty())
 			message = UIText.CommitDialog_MessageNoFilesSelected;
 		setMessage(message, IMessageProvider.INFORMATION);
 		commitButton.setEnabled(message == null);
@@ -1019,9 +1020,8 @@ public class CommitDialog extends TitleAreaDialog {
 
 	private Collection<String> getFileList() {
 		Collection<String> result = new ArrayList<String>();
-		for (CommitItem item : items) {
+		for (CommitItem item : items)
 			result.add(item.path);
-		}
 		return result;
 	}
 
@@ -1047,9 +1047,8 @@ public class CommitDialog extends TitleAreaDialog {
 			public void handleEvent(Event arg0) {
 				IStructuredSelection sel = (IStructuredSelection) filesViewer
 						.getSelection();
-				if (sel.isEmpty()) {
+				if (sel.isEmpty())
 					return;
-				}
 				AddCommand addCommand = new Git(repository).add();
 				for (Iterator<?> it = sel.iterator(); it.hasNext();) {
 					CommitItem commitItem = (CommitItem) it.next();
@@ -1096,9 +1095,9 @@ public class CommitDialog extends TitleAreaDialog {
 	 * @return file status
 	 */
 	private static Status getFileStatus(String path, IndexDiff indexDiff) {
-		if (indexDiff.getAssumeUnchanged().contains(path)) {
+		if (indexDiff.getAssumeUnchanged().contains(path))
 			return Status.ASSUME_UNCHANGED;
-		} else if (indexDiff.getAdded().contains(path)) {
+		else if (indexDiff.getAdded().contains(path)) {
 			// added
 			if (indexDiff.getModified().contains(path))
 				return Status.ADDED_INDEX_DIFF;
@@ -1116,16 +1115,15 @@ public class CommitDialog extends TitleAreaDialog {
 				return Status.REMOVED_UNTRACKED;
 			else
 				return Status.UNTRACKED;
-		} else if (indexDiff.getRemoved().contains(path)) {
+		} else if (indexDiff.getRemoved().contains(path))
 			// removed
 			return Status.REMOVED;
-		} else if (indexDiff.getMissing().contains(path)) {
+		else if (indexDiff.getMissing().contains(path))
 			// missing
 			return Status.REMOVED_NOT_STAGED;
-		} else if (indexDiff.getModified().contains(path)) {
+		else if (indexDiff.getModified().contains(path))
 			// modified (and not changed!)
 			return Status.MODIFIED_NOT_STAGED;
-		}
 		return Status.UNKNOWN;
 	}
 
@@ -1145,7 +1143,7 @@ public class CommitDialog extends TitleAreaDialog {
 		committer = commitMessageComponent.getCommitter();
 		createChangeId = changeIdItem.getSelection();
 
-		if (selectedFiles.isEmpty() && !amending) {
+		if (selectedFiles.isEmpty() && !amending && indexDiff.getChanged().isEmpty()) {
 			MessageDialog.openWarning(getShell(), UIText.CommitDialog_ErrorNoItemsSelected, UIText.CommitDialog_ErrorNoItemsSelectedToBeCommitted);
 			return;
 		}
