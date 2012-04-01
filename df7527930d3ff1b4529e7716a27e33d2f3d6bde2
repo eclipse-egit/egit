@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3//+FY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitObjectMapping.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-01T00:19:36Z",
+      "side": 1,
+      "message": "prevent potential NPE",
+      "revId": "df7527930d3ff1b4529e7716a27e33d2f3d6bde2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+FU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/HasProjects.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-01T00:19:36Z",
+      "side": 1,
+      "message": "fixed copyright date",
+      "revId": "df7527930d3ff1b4529e7716a27e33d2f3d6bde2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+FQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/HasProjects.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-01T00:19:36Z",
+      "side": 1,
+      "message": "fixed typo",
+      "revId": "df7527930d3ff1b4529e7716a27e33d2f3d6bde2",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
