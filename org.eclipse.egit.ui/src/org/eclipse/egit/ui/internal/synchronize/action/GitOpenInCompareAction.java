@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.action;
 
+import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
 import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 import static org.eclipse.ui.PlatformUI.getWorkbench;
 
@@ -19,6 +20,11 @@ import java.util.Iterator;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
@@ -28,7 +34,11 @@ import org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingFile;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.ObjectWalk;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.internal.ui.synchronize.actions.OpenInCompareAction;
 import org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration;
 import org.eclipse.team.ui.synchronize.ISynchronizePageSite;
@@ -81,7 +91,7 @@ public class GitOpenInCompareAction extends Action {
 	private void handleGitObjectComparison(GitModelBlob obj, boolean reuseEditor) {
 		ITypedElement left;
 		ITypedElement right;
-		IFile file = (IFile) obj.getResource();
+		IFile file = getFileForBlob(obj);
 		if (obj instanceof GitModelWorkingFile) {
 			if (file.getLocation() == null)
 				left = new LocalNonWorkspaceTypedElement(file.getFullPath().toString());
@@ -91,6 +101,8 @@ public class GitOpenInCompareAction extends Action {
 		} else if (obj instanceof GitModelCacheFile) {
 			left = getCachedFileElement(file);
 			right = getHeadFileElement(obj);
+			if (right == null)
+				return;
 		} else {
 			oldAction.run();
 			return;
@@ -124,10 +136,32 @@ public class GitOpenInCompareAction extends Action {
 	}
 
 	private ITypedElement getHeadFileElement(GitModelBlob blob) {
-		Repository repo = blob.getRepository();
+		IFile file = getFileForBlob(blob);
+		Repository repo = RepositoryMapping.getMapping(file).getRepository();
 		String gitPath = stripWorkDir(repo.getWorkTree(), blob.getLocation().toFile());
+		ObjectWalk ow = new ObjectWalk(repo);
+		ObjectId objectId = blob.getBaseCommitId().toObjectId();
+		RevCommit commit;
+		try {
+			commit = ow.parseCommit(objectId);
+		} catch (IOException e) {
+			Activator.error(NLS.bind(UIText.GitOpenInCompareAction_cannotRetrieveCommitWithId,
+					objectId, repo.getDirectory()), e);
+			return null;
+		}
 
-		return CompareUtils.getFileRevisionTypedElement(gitPath, blob.getBaseCommit(), repo);
+		return CompareUtils.getFileRevisionTypedElement(gitPath, commit, repo);
+	}
+
+	private IFile getFileForBlob(GitModelBlob blob) {
+		IPath blobLocation = blob.getLocation();
+
+		IWorkspaceRoot root = getWorkspace().getRoot();
+		IFile file = root.getFileForLocation(blobLocation);
+		if (file == null)
+			file = root.getFile(blobLocation);
+
+		return file;
 	}
 
 }

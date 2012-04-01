@@ -8,42 +8,18 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
-import static org.eclipse.compare.structuremergeviewer.Differencer.ADDITION;
-import static org.eclipse.compare.structuremergeviewer.Differencer.CHANGE;
-import static org.eclipse.compare.structuremergeviewer.Differencer.LEFT;
-import static org.eclipse.compare.structuremergeviewer.Differencer.RIGHT;
-import static org.eclipse.jgit.lib.ObjectId.zeroId;
-
-import java.io.IOException;
-
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  * Representation of working file in Git Change Set model
  */
 public class GitModelWorkingFile extends GitModelBlob {
 
-	GitModelWorkingFile(GitModelObjectContainer parent,
-			RevCommit commit, ObjectId repoId, IPath location) throws IOException {
-		super(parent, commit, null, repoId, repoId, null, location);
-	}
-
-	@Override
-	public int getKind() {
-		if (kind != LEFT && kind != RIGHT)
-			return kind;
-
-		int changeKind;
-		if (zeroId().equals(baseId))
-			changeKind = ADDITION;
-		else
-			changeKind = CHANGE;
-
-		kind |= changeKind;
-
-		return kind;
+	GitModelWorkingFile(GitModelObjectContainer parent, Repository repo,
+			Change change, IPath path) {
+		super(parent, repo, change, path);
 	}
 
 	@Override
@@ -57,17 +33,14 @@ public class GitModelWorkingFile extends GitModelBlob {
 		if (obj.getClass() != getClass())
 			return false;
 
-		return ((GitModelWorkingFile) obj).getLocation().equals(getLocation());
+		GitModelWorkingFile objBlob = (GitModelWorkingFile) obj;
+
+		return hashCode() == objBlob.hashCode();
 	}
 
 	@Override
 	public int hashCode() {
-		return getLocation().hashCode();
-	}
-
-	@Override
-	public String toString() {
-		return "ModelWorkingFile[" + getLocation() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+		return super.hashCode() + 41;
 	}
 
 }

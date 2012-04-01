@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2012, Dariusz Luksza <dariusz@luksza.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,22 +8,16 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.model;
 
+import org.eclipse.core.resources.IProject;
+
 /**
- * An abstract class for all container models in change set.
+ * Indicates does contain projects
  */
-public abstract class GitModelObjectContainer extends GitModelObject {
+public interface HasProjects {
 
 	/**
-	 * @param parent
-	 *            parent object
+	 * @return list of projects
 	 */
-	public GitModelObjectContainer(GitModelObjectContainer parent) {
-		super(parent);
-	}
-
-	@Override
-	public boolean isContainer() {
-		return true;
-	}
+	IProject[] getProjects();
 
 }

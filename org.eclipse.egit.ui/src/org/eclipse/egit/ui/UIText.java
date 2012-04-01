@@ -4369,6 +4369,9 @@ public class UIText extends NLS {
 	/** */
 	public static String SynchronizeCommand_jobName;
 
+	/** */
+	public static String GitOpenInCompareAction_cannotRetrieveCommitWithId;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
