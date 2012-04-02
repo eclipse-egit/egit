@@ -30,7 +30,12 @@ import org.eclipse.team.core.subscribers.Subscriber;
  */
 public class GitRepositoryProviderType extends RepositoryProviderType {
 
-	public Subscriber getSubscriber() {
+	private final Subscriber subscriber;
+
+	/**
+	 * Creates {@link GitRepositoryProviderType}
+	 */
+	public GitRepositoryProviderType() {
 		GitSynchronizeDataSet set = new GitSynchronizeDataSet();
 		try {
 			Repository[] repositories = Activator.getDefault()
@@ -44,9 +49,13 @@ public class GitRepositoryProviderType extends RepositoryProviderType {
 			// do nothing
 		}
 
-		GitResourceVariantTreeSubscriber subscriber = new GitResourceVariantTreeSubscriber(set);
-		subscriber.init(new NullProgressMonitor());
+		GitResourceVariantTreeSubscriber gitSubscriber = new GitResourceVariantTreeSubscriber(set);
+		gitSubscriber.init(new NullProgressMonitor());
 
+		subscriber = gitSubscriber;
+	}
+
+	public Subscriber getSubscriber() {
 		return subscriber;
 	}
 

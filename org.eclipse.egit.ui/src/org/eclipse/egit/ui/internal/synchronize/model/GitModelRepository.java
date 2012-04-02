@@ -25,6 +25,7 @@ import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Commit;
 import org.eclipse.egit.core.synchronize.StagedChangeCache;
 import org.eclipse.egit.core.synchronize.WorkingTreeChangeCache;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -40,11 +41,7 @@ public class GitModelRepository extends GitModelObjectContainer implements HasPr
 
 	private final GitSynchronizeData gsd;
 
-	private final List<Commit> commitCache;
-
-	private final Map<String, Change> stagedChanges;
-
-	private final Map<String, Change> workingChanges;
+	private GitModelObject[] children;
 
 	/**
 	 * @param gsd
@@ -54,30 +51,36 @@ public class GitModelRepository extends GitModelObjectContainer implements HasPr
 	public GitModelRepository(GitSynchronizeData gsd) throws IOException {
 		super(null);
 		this.gsd = gsd;
-
-		Repository repo = gsd.getRepository();
-		stagedChanges = StagedChangeCache.build(repo);
-		workingChanges = WorkingTreeChangeCache.build(repo);
-
-		RevCommit srcRevCommit = gsd.getSrcRevCommit();
-		RevCommit dstRevCommit = gsd.getDstRevCommit();
-		TreeFilter pathFilter = gsd.getPathFilter();
-		if (srcRevCommit != null && dstRevCommit != null)
-			commitCache = GitCommitsModelCache.build(repo, srcRevCommit,
-					dstRevCommit, pathFilter);
-		else
-			commitCache = null;
 	}
 
 	@Override
 	public GitModelObject[] getChildren() {
-		List<GitModelObjectContainer> result = new ArrayList<GitModelObjectContainer>();
-		if (commitCache != null && !commitCache.isEmpty())
-			result.addAll(getListOfCommit());
+		if (children == null) {
+			List<GitModelObjectContainer> result = new ArrayList<GitModelObjectContainer>();
+			Repository repo = gsd.getRepository();
+			RevCommit srcRevCommit = gsd.getSrcRevCommit();
+			RevCommit dstRevCommit = gsd.getDstRevCommit();
+			TreeFilter pathFilter = gsd.getPathFilter();
+			List<Commit> commitCache;
+			if (srcRevCommit != null && dstRevCommit != null)
+				try {
+					commitCache = GitCommitsModelCache.build(repo, srcRevCommit,
+							dstRevCommit, pathFilter);
+				} catch (IOException e) {
+					Activator.logError(e.getMessage(), e);
+					commitCache = null;
+				}
+			else
+				commitCache = null;
+			if (commitCache != null && !commitCache.isEmpty())
+				result.addAll(getListOfCommit(commitCache));
 
-		result.addAll(getWorkingChanges());
+			result.addAll(getWorkingChanges());
 
-		return result.toArray(new GitModelObjectContainer[result.size()]);
+			children = result.toArray(new GitModelObjectContainer[result.size()]);
+		}
+
+		return children;
 	}
 
 	@Override
@@ -120,6 +123,12 @@ public class GitModelRepository extends GitModelObjectContainer implements HasPr
 	}
 
 	@Override
+	public void dispose() {
+		for (GitModelObject objects : children)
+			objects.dispose();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this)
 			return true;
@@ -143,7 +152,7 @@ public class GitModelRepository extends GitModelObjectContainer implements HasPr
 		return "ModelRepository[" + gsd.getRepository().getWorkTree() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	private List<GitModelObjectContainer> getListOfCommit() {
+	private List<GitModelObjectContainer> getListOfCommit(List<Commit> commitCache) {
 		Repository repo = gsd.getRepository();
 		Set<IProject> projectsSet = gsd.getProjects();
 		IProject[] projects = projectsSet.toArray(new IProject[projectsSet.size()]);
@@ -159,10 +168,12 @@ public class GitModelRepository extends GitModelObjectContainer implements HasPr
 		List<GitModelObjectContainer> result = new ArrayList<GitModelObjectContainer>();
 		if (gsd.shouldIncludeLocal()) {
 			Repository repo = gsd.getRepository();
+			Map<String, Change> stagedChanges = StagedChangeCache.build(repo);
 			GitModelCache gitCache = new GitModelCache(this, repo,
 					stagedChanges);
 			int gitCacheLen = gitCache.getChildren().length;
 
+			Map<String, Change> workingChanges = WorkingTreeChangeCache.build(repo);
 			GitModelWorkingTree gitWorkingTree = new GitModelWorkingTree(this,
 					repo, workingChanges);
 			int gitWorkingTreeLen = gitWorkingTree.getChildren().length;
