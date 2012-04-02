@@ -16,6 +16,24 @@
       "revId": "5165ab5b75b1f56c5e28bd635afd65754c8d44cf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//+DA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-04-02T05:22:00Z",
+      "side": 1,
+      "message": "huh? i don\u0027t understand your point. this method just checks whether the \"member\" has a prefix matching \"prj\". if it has, it returns the prj-relative path (so a substring of member starting right after the project prefix). it does not do any interpretation of the relative path. what comes in goes out again, just without the project path.",
+      "parentUuid": "AABOG3//+F8\u003d",
+      "revId": "5165ab5b75b1f56c5e28bd635afd65754c8d44cf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
