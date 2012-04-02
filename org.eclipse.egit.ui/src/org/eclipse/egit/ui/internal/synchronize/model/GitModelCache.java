@@ -174,6 +174,15 @@ public class GitModelCache extends GitModelObjectContainer {
 		return "ModelCache"; //$NON-NLS-1$
 	}
 
+	@Override
+	public void dispose() {
+		for (GitModelTree modelTree : cacheTreeMap.values())
+			modelTree.dispose();
+
+		cache.clear();
+		cacheTreeMap.clear();
+	}
+
 	private GitModelObject extractFromCache(Change change, String path) {
 		if (path.contains("/")) //$NON-NLS-1$
 			return handleCacheTree(change, path);
