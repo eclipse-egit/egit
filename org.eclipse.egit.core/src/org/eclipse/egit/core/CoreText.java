@@ -246,6 +246,9 @@ public class CoreText extends NLS {
 	public static String CreatePatchOperation_patchFileCouldNotBeWritten;
 
 	/** */
+	public static String IndexDiffCacheEntry_refreshingProjects;
+
+	/** */
 	public static String IndexDiffCacheEntry_reindexing;
 
 	/** */

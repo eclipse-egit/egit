@@ -538,7 +538,7 @@ public class StagingView extends ViewPart {
 		refreshAction = new Action(UIText.StagingView_Refresh, IAction.AS_PUSH_BUTTON) {
 			public void run() {
 				if(cacheEntry != null)
-					cacheEntry.refresh();
+					cacheEntry.refreshResourcesAndIndexDiff();
 			}
 		};
 		refreshAction.setImageDescriptor(UIIcons.ELCL16_REFRESH);
