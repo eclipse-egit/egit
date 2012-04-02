@@ -4232,6 +4232,9 @@ public class UIText extends NLS {
 	public static String StagingView_Commit;
 
 	/** */
+	public static String StagingView_checkoutFailed;
+
+	/** */
 	public static String StagingView_commitFailed;
 
 	/** */
@@ -4263,6 +4266,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String StagingView_exceptionMessage;
+
+	/** */
+	public static String StagingView_replaceWithFileInGitIndex;
 
 	/** */
 	public static String StagingView_UnstageItemMenuLabel;
