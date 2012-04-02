@@ -728,70 +728,103 @@ public class StagingView extends ViewPart {
 						openSelectionInEditor(tableViewer.getSelection());
 					}
 				};
+				boolean addReplaceWithFileInGitIndex = false;
+				boolean addReplaceWithHeadRevision = false;
+				boolean addStage = false;
+				boolean addUnstage = false;
+				boolean addLaunchMergeTool = false;
 				openWorkingTreeVersion.setEnabled(!submoduleSelected);
 				menuMgr.add(openWorkingTreeVersion);
 
 				StagingEntry stagingEntry = (StagingEntry) selection.getFirstElement();
 				switch (stagingEntry.getState()) {
 				case ADDED:
-				case CHANGED:
-				case REMOVED:
-					menuMgr.add(new Action(UIText.StagingView_UnstageItemMenuLabel) {
-						@Override
-						public void run() {
-							unstage((IStructuredSelection) tableViewer.getSelection());
-						}
-					});
+					addUnstage = true;
 					break;
-
+				case CHANGED:
+					addReplaceWithHeadRevision = true;
+					addUnstage = true;
+					break;
+				case REMOVED:
+					addReplaceWithHeadRevision = true;
+					addUnstage = true;
+					break;
 				case CONFLICTING:
-					menuMgr.add(createItem(ActionCommands.MERGE_TOOL_ACTION, tableViewer));
-					//$FALL-THROUGH$
+					addReplaceWithFileInGitIndex = true;
+					addReplaceWithHeadRevision = true;
+					addStage = true;
+					addLaunchMergeTool = true;
+					break;
 				case MISSING:
 				case MODIFIED:
 				case PARTIALLY_MODIFIED:
 				case UNTRACKED:
-				default:
-					boolean isNonResourceSelection = isNonResourceSelection(tableViewer.getSelection());
-					if (!isNonResourceSelection)
-						menuMgr.add(createItem(ActionCommands.DISCARD_CHANGES_ACTION, tableViewer));	// replace with index
+					addReplaceWithFileInGitIndex = true;
+					addReplaceWithHeadRevision = true;
+					addStage = true;
+					break;
+				}
+				if (addStage)
 					menuMgr.add(new Action(UIText.StagingView_StageItemMenuLabel) {
 						@Override
 						public void run() {
 							stage((IStructuredSelection) tableViewer.getSelection());
 						}
 					});
-					if (!submoduleSelected && isNonResourceSelection)
-						addNonResourceActions(menuMgr, (IStructuredSelection) tableViewer.getSelection());
-				}
-			}
-
-
-		});
-
-	}
-
-	private void addNonResourceActions(IMenuManager menuMgr,
-			final IStructuredSelection selection) {
-		menuMgr.add(new Action(UIText.StagingView_replaceWithFileInGitIndex) {
-			@Override
-			public void run() {
-				boolean performAction = MessageDialog.openConfirm(form.getShell(),
-						UIText.DiscardChangesAction_confirmActionTitle,
-						UIText.DiscardChangesAction_confirmActionMessage);
-				if (!performAction)
-					return ;
-				String[] files = getSelectedFiles(selection);
-				replaceWithFileInGitIndex(files);
+				if (addUnstage)
+					menuMgr.add(new Action(UIText.StagingView_UnstageItemMenuLabel) {
+						@Override
+						public void run() {
+							unstage((IStructuredSelection) tableViewer.getSelection());
+						}
+					});
+				boolean isNonResourceSelection = isNonResourceSelection(tableViewer.getSelection());
+				if (addReplaceWithFileInGitIndex)
+					if (isNonResourceSelection)
+						menuMgr.add(new ReplaceAction(UIText.StagingView_replaceWithFileInGitIndex, selection, false));
+					else
+						menuMgr.add(createItem(ActionCommands.DISCARD_CHANGES_ACTION, tableViewer));	// replace with index
+				if (addReplaceWithHeadRevision)
+					if (isNonResourceSelection)
+						menuMgr.add(new ReplaceAction(UIText.StagingView_replaceWithHeadRevision, selection, true));
+					else
+						menuMgr.add(createItem(ActionCommands.REPLACE_WITH_HEAD_ACTION, tableViewer));
+				if (addLaunchMergeTool)
+					menuMgr.add(createItem(ActionCommands.MERGE_TOOL_ACTION, tableViewer));
 			}
 		});
 
 	}
 
-	private void replaceWithFileInGitIndex(String[] files) {
+	private class ReplaceAction extends Action {
+
+		IStructuredSelection selection;
+		private final boolean headRevision;
+
+		ReplaceAction(String text, IStructuredSelection selection, boolean headRevision) {
+			super(text);
+			this.selection = selection;
+			this.headRevision = headRevision;
+		}
+
+		@Override
+		public void run() {
+			boolean performAction = MessageDialog.openConfirm(form.getShell(),
+					UIText.DiscardChangesAction_confirmActionTitle,
+					UIText.DiscardChangesAction_confirmActionMessage);
+			if (!performAction)
+				return ;
+			String[] files = getSelectedFiles(selection);
+			replaceWith(files, headRevision);
+		}
+	}
+
+	private void replaceWith(String[] files, boolean headRevision) {
 		if (files == null || files.length == 0)
 			return;
 		CheckoutCommand checkoutCommand = new Git(currentRepository).checkout();
+		if (headRevision)
+			checkoutCommand.setStartPoint(Constants.HEAD);
 		for (String path : files)
 			checkoutCommand.addPath(path);
 		try {
