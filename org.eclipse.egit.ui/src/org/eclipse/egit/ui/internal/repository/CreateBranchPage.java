@@ -17,13 +17,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SafeRunner;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation.UpstreamConfig;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.IBranchNameProvider;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.ValidationUtils;
@@ -31,6 +37,7 @@ import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.util.SafeRunnable;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
@@ -68,6 +75,8 @@ import org.eclipse.ui.PlatformUI;
  * suggested initially.
  */
 class CreateBranchPage extends WizardPage {
+
+	private static final String BRANCH_NAME_PROVIDER_ID = "org.eclipse.egit.ui.commitMessageProvider"; //$NON-NLS-1$
 
 	/**
 	 * Get proposed target branch name for given source branch name
@@ -202,18 +211,16 @@ class CreateBranchPage extends WizardPage {
 			try {
 				Map<String, Ref> map = myRepository.getRefDatabase().getRefs(
 						Constants.R_HEADS);
-				for (Entry<String, Ref> entry : map.entrySet()) {
+				for (Entry<String, Ref> entry : map.entrySet())
 					if (entry.getValue().getLeaf().getObjectId()
 							.equals(myBaseCommit))
 						this.branchCombo.add(entry.getValue().getName());
-				}
 				map = myRepository.getRefDatabase()
 						.getRefs(Constants.R_REMOTES);
-				for (Entry<String, Ref> entry : map.entrySet()) {
+				for (Entry<String, Ref> entry : map.entrySet())
 					if (entry.getValue().getLeaf().getObjectId()
 							.equals(myBaseCommit))
 						this.branchCombo.add(entry.getValue().getName());
-				}
 			} catch (IOException e) {
 				// bad luck, we can't extend the drop down; let's log an error
 				Activator.logError(
@@ -359,6 +366,7 @@ class CreateBranchPage extends WizardPage {
 		setControl(main);
 		nameText.setFocus();
 		suggestBranchName(myBaseRef);
+
 		checkPage();
 		// add the listener just now to avoid unneeded checkPage()
 		nameText.addModifyListener(new ModifyListener() {
@@ -487,9 +495,13 @@ class CreateBranchPage extends WizardPage {
 		return UpstreamConfig.MERGE;
 	}
 
+
 	private void suggestBranchName(String ref) {
 		if (nameText.getText().length() == 0 || nameIsSuggestion) {
-			String branchNameSuggestion = getProposedTargetName(ref);
+			String branchNameSuggestion = getBranchNameSuggestionFromProvider();
+			if (branchNameSuggestion == null)
+				branchNameSuggestion = getProposedTargetName(ref);
+
 			if (branchNameSuggestion != null) {
 				nameText.setText(branchNameSuggestion);
 				nameText.selectAll();
@@ -497,4 +509,34 @@ class CreateBranchPage extends WizardPage {
 			}
 		}
 	}
+
+	private IBranchNameProvider getBranchNameProvider() {
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IConfigurationElement[] config = registry
+				.getConfigurationElementsFor(BRANCH_NAME_PROVIDER_ID);
+		if (config.length > 0) {
+			Object provider;
+			try {
+				provider = config[0].createExecutableExtension("class"); //$NON-NLS-1$
+				if (provider instanceof IBranchNameProvider)
+					return (IBranchNameProvider) provider;
+			} catch (Throwable e) {
+				Activator.logError("Failed to create branch name provider", e); //$NON-NLS-1$
+			}
+		}
+		return null;
+	}
+
+	private String getBranchNameSuggestionFromProvider() {
+		final AtomicReference<String> ref = new AtomicReference<String>();
+		final IBranchNameProvider branchNameProvider = getBranchNameProvider();
+		if (branchNameProvider != null)
+			SafeRunner.run(new SafeRunnable() {
+				public void run() throws Exception {
+					ref.set(branchNameProvider.getBranchNameSuggestion());
+				}
+			});
+		return ref.get();
+	}
+
 }
