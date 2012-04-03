@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3//928\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-03T22:31:33Z",
+      "side": 1,
+      "message": "as this is based on work from Manuel you may consider to give credit to him by adding the additional footer\n\nAlsoBy: Manuel Doninger \u003cmanuel.doninger@googlemail.com\u003e",
+      "revId": "cb7a32764f43750e8de6b3173977bd7b64e5ffd4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//93E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IBranchNameProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-03T22:31:33Z",
+      "side": 1,
+      "message": "Is this really the copyright of Thorsten and Manuel or a consequence of copying the license header from somewhere else ?\n\nstyle nit: remove unnecessary second blank line",
+      "revId": "cb7a32764f43750e8de6b3173977bd7b64e5ffd4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
