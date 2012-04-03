@@ -16,6 +16,24 @@
       "revId": "3b2718620b09c99e836c1585c76c5aa9e13e923e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//93Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 83
+      },
+      "writtenOn": "2012-04-03T21:21:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//93s\u003d",
+      "revId": "3b2718620b09c99e836c1585c76c5aa9e13e923e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
