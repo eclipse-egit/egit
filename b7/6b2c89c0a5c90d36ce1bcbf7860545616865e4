@@ -1,0 +1,10 @@
+Code-Review+2: Mykola Nikishov <mn@mn.com.ua>
+IP-Clean+1: Mykola Nikishov <mn@mn.com.ua>
+Code-Review+1: Tomasz Zarna <Tomasz.Zarna@pl.ibm.com>
+Code-Review+1: Markus Duft <mduft@gentoo.org>
+Verified+1: Hudson CI
+Submitted-by: Mykola Nikishov <mn@mn.com.ua>
+Submitted-at: Tue, 03 Apr 2012 06:24:54 -0400
+Reviewed-on: https://git.eclipse.org/r/5519
+Project: egit/egit
+Branch: refs/heads/master
