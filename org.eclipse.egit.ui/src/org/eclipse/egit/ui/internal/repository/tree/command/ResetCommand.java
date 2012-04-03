@@ -30,6 +30,8 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -61,12 +63,16 @@ public class ResetCommand extends
 		final String repoName = Activator.getDefault().getRepositoryUtil()
 				.getRepositoryName(node.getRepository());
 
+		RevCommit latestCommit = getLatestCommit(node);
+		final String targetCommit = latestCommit.abbreviate(7).name() + ' '
+				+ latestCommit.getShortMessage();
+
 		Wizard wiz = new Wizard() {
 
 			@Override
 			public void addPages() {
 				addPage(new SelectResetTypePage(repoName, currentBranch,
-						targetBranch));
+						targetBranch, targetCommit));
 				setWindowTitle(UIText.ResetCommand_WizardTitle);
 			}
 
@@ -115,5 +121,17 @@ public class ResetCommand extends
 		dlg.open();
 
 		return null;
+	}
+
+	private RevCommit getLatestCommit(RepositoryTreeNode node) {
+		RevWalk walk = new RevWalk(node.getRepository());
+		walk.setRetainBody(true);
+		try {
+			return walk.parseCommit(((Ref) node.getObject()).getObjectId());
+		} catch (IOException ignored) {
+			return null;
+		} finally {
+			walk.release();
+		}
 	}
 }
