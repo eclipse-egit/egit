@@ -24,7 +24,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.Activator;
@@ -168,7 +168,7 @@ public class IndexDiffCacheEntry {
 		reloadJob = new Job(getReloadJobName()) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				waitForWorkspaceLock();
+				waitForWorkspaceLock(monitor);
 				if (monitor.isCanceled())
 					return Status.CANCEL_STATUS;
 				lock.lock();
@@ -227,7 +227,7 @@ public class IndexDiffCacheEntry {
 		return true;
 	}
 
-	private void waitForWorkspaceLock() {
+	private void waitForWorkspaceLock(IProgressMonitor monitor) {
 		// Wait for the workspace lock to avoid starting the calculation
 		// of an IndexDiff while the workspace changes (e.g. due to a
 		// branch switch).
@@ -236,10 +236,12 @@ public class IndexDiffCacheEntry {
 		try {
 			ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable() {
 
-				public void run(IProgressMonitor monitor) throws CoreException {
+				public void run(IProgressMonitor innerMonitor) throws CoreException {
 					// empty
 				}
-			}, new NullProgressMonitor());
+			}, monitor);
+		} catch (OperationCanceledException e) {
+			return;
 		} catch (CoreException e) {
 			throw new RuntimeException(e);
 		}
@@ -252,7 +254,7 @@ public class IndexDiffCacheEntry {
 		Job job = new Job(getReloadJobName()) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				waitForWorkspaceLock();
+				waitForWorkspaceLock(monitor);
 				if (monitor.isCanceled())
 					return Status.CANCEL_STATUS;
 				lock.lock();
