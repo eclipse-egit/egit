@@ -124,6 +124,11 @@
         <target-platform>egit-4.2</target-platform>
         <platform-version>[3.8,3.9)</platform-version>
       </properties>
+      <modules>
+        <module>org.eclipse.egit.import</module>
+        <module>org.eclipse.egit.import-feature</module>
+        <module>org.eclipse.egit-updatesite</module>
+      </modules>
     </profile>
     <profile>
       <id>platform-juno-staging</id>
@@ -138,6 +143,11 @@
         <target-platform>egit-4.2-staging</target-platform>
         <platform-version>[3.8,3.9)</platform-version>
       </properties>
+      <modules>
+        <module>org.eclipse.egit.import</module>
+        <module>org.eclipse.egit.import-feature</module>
+        <module>org.eclipse.egit-updatesite</module>
+      </modules>
     </profile>
     <profile>
       <id>static-checks</id>
@@ -170,7 +180,6 @@
 
     <module>org.eclipse.egit.doc</module>
     <module>org.eclipse.egit-feature</module>
-    <module>org.eclipse.egit-updatesite</module>
 
     <module>org.eclipse.egit.core.test</module>
     <module>org.eclipse.egit.ui.test</module>
