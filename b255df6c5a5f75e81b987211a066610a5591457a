@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3//9oM\u003d",
+        "filename": "org.eclipse.egit.target/egit-3.5.target",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2012-04-06T11:04:16Z",
+      "side": 1,
+      "message": "Could we use 3.6 here?",
+      "revId": "b255df6c5a5f75e81b987211a066610a5591457a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//9oQ\u003d",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2012-04-06T11:04:16Z",
+      "side": 1,
+      "message": "Unused jetty-site and orbit-site should be removed too",
+      "revId": "b255df6c5a5f75e81b987211a066610a5591457a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
