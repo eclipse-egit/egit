@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3//9m8\u003d",
+        "filename": "org.eclipse.egit.target/egit-3.5.target",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-07T01:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//9oM\u003d",
+      "revId": "b255df6c5a5f75e81b987211a066610a5591457a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3//9n4\u003d",
         "filename": "org.eclipse.egit.target/egit-3.5.target",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-04-06T13:55:15Z",
       "side": 1,
       "message": "mvn -P platform-galileo clean verify fails:\n\n[INFO] [Software being installed: org.eclipse.jetty.bundles.f.feature.group 8.1.0, Missing requirement: org.eclipse.jetty.nosql 8.1.1.v20120215 requires \u0027package com.mongodb 0.0.0\u0027 but it could not be found, Cannot satisfy dependency: org.eclipse.jetty.bundles.f.feature.group 8.1.0 depends on: org.eclipse.jetty.nosql [8.1.1.v20120215]]",
+      "revId": "b255df6c5a5f75e81b987211a066610a5591457a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//9m4\u003d",
+        "filename": "org.eclipse.egit.target/egit-3.5.target",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-07T01:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//9n4\u003d",
       "revId": "b255df6c5a5f75e81b987211a066610a5591457a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3//9nA\u003d",
+        "filename": "org.eclipse.egit.target/egit-3.6.target",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-07T01:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//9n0\u003d",
+      "revId": "b255df6c5a5f75e81b987211a066610a5591457a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3//9nw\u003d",
         "filename": "org.eclipse.egit.target/egit-3.7.target",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2012-04-06T13:55:15Z",
       "side": 1,
       "message": "mvn -P platform-indigo clean verify:\n\n[INFO] [You requested to install \u0027org.eclipse.mylyn.context.sdk.feature.group 0.0.0\u0027 but it could not be found]",
+      "revId": "b255df6c5a5f75e81b987211a066610a5591457a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//9nE\u003d",
+        "filename": "org.eclipse.egit.target/egit-3.7.target",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-07T01:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//9nw\u003d",
       "revId": "b255df6c5a5f75e81b987211a066610a5591457a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AABOG3//9nM\u003d",
+        "filename": "org.eclipse.egit.target/egit-4.2.target",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-07T01:02:38Z",
+      "side": 1,
+      "message": "Did you compile this against JGit I36f2add2e10e5aac46bdf8e38aa799a690c63226 ? You also need to run both JGit maven build steps to consume that from EGit maven build",
+      "parentUuid": "AABOG3//9no\u003d",
+      "revId": "b255df6c5a5f75e81b987211a066610a5591457a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3//9oQ\u003d",
         "filename": "pom.xml",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2012-04-06T11:04:16Z",
       "side": 1,
       "message": "Unused jetty-site and orbit-site should be removed too",
+      "revId": "b255df6c5a5f75e81b987211a066610a5591457a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//9nI\u003d",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-07T01:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//9oQ\u003d",
       "revId": "b255df6c5a5f75e81b987211a066610a5591457a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
