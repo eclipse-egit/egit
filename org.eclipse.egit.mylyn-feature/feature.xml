@@ -25,7 +25,7 @@
 
    <requires>
       <import feature="org.eclipse.egit" version="2.0.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.mylyn.team_feature" version="3.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.mylyn.team_feature" version="3.7.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
