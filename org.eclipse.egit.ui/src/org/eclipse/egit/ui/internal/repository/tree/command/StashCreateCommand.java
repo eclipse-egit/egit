@@ -24,7 +24,9 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
@@ -49,8 +51,18 @@ public class StashCreateCommand extends
 		if (repo == null)
 			return null;
 
-		final StashCreateOperation op = new StashCreateOperation(repo);
 		final Shell shell = HandlerUtil.getActiveShell(event);
+		InputDialog commitMessageDialog = new InputDialog(shell,
+				UIText.StashCreateCommand_titleEnterCommitMessage,
+				UIText.StashCreateCommand_messageEnterCommitMessage,
+				null, null);
+		if (commitMessageDialog.open() != Window.OK)
+			return null;
+		String message = commitMessageDialog.getValue();
+		if (message.length() == 0)
+			message = null;
+
+		final StashCreateOperation op = new StashCreateOperation(repo, message);
 		Job job = new Job(UIText.StashCreateCommand_jobTitle) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
