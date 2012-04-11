@@ -2551,6 +2551,9 @@ public class UIText extends NLS {
 	public static String WindowCachePreferencePage_packedGitMMAP;
 
 	/** */
+	public static String WindowCachePreferencePage_streamFileThreshold;
+
+	/** */
 	public static String BasicConfigurationDialog_DialogMessage;
 
 	/** */

@@ -55,6 +55,10 @@ public class WindowCachePreferencePage extends FieldEditorPreferencePage
 				GitCorePreferences.core_deltaBaseCacheLimit,
 				UIText.WindowCachePreferencePage_deltaBaseCacheLimit,
 				getFieldEditorParent(), 512, 1 * GB));
+		addField(new StorageSizeFieldEditor(
+				GitCorePreferences.core_streamFileThreshold,
+				UIText.WindowCachePreferencePage_streamFileThreshold,
+				getFieldEditorParent(), 10 * MB, 1 * GB));
 
 		addField(new BooleanFieldEditor(GitCorePreferences.core_packedGitMMAP,
 				UIText.WindowCachePreferencePage_packedGitMMAP,
