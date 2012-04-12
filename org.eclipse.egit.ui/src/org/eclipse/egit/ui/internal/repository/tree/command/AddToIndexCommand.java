@@ -22,7 +22,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.NoFilepatternException;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -61,7 +61,7 @@ public class AddToIndexCommand extends RepositoriesViewCommandHandler<FileNode> 
 		if (addCommand != null)
 			try {
 				addCommand.call();
-			} catch (NoFilepatternException e) {
+			} catch (GitAPIException e) {
 				Activator.logError(UIText.AddToIndexCommand_addingFilesFailed,
 						e);
 			}

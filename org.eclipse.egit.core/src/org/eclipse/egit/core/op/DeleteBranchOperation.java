@@ -24,6 +24,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.CannotDeleteCurrentBranchException;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NotMergedException;
 import org.eclipse.jgit.lib.Ref;
@@ -128,6 +129,8 @@ public class DeleteBranchOperation implements IEGitOperation {
 						status = REJECTED_CURRENT;
 						break;
 					} catch (JGitInternalException e) {
+						throw new CoreException(Activator.error(e.getMessage(), e));
+					} catch (GitAPIException e) {
 						throw new CoreException(Activator.error(e.getMessage(), e));
 					}
 					actMonitor.worked(1);
