@@ -3,9 +3,8 @@
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
- * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
- * Copyright (C) 2011, Matthias Sohn <matthias.sohn@sap.com>
- * Copyright (C) 2012, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2011-2012, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2011-2012, Matthias Sohn <matthias.sohn@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -38,6 +37,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.history.command.HistoryViewCommands;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
@@ -153,17 +153,35 @@ class CommitGraphTable {
 
 	private GraphLabelProvider graphLabelProvider;
 
-	CommitGraphTable(Composite parent) {
+	private final TableLoader tableLoader;
+
+	private boolean trace = GitTraceLocation.HISTORYVIEW.isActive();
+
+	CommitGraphTable(Composite parent, final TableLoader loader) {
 		nFont = UIUtils.getFont(UIPreferences.THEME_CommitGraphNormalFont);
 		hFont = highlightFont();
 		infoBackgroundColor = parent.getDisplay().getSystemColor(
 				SWT.COLOR_INFO_BACKGROUND);
+		tableLoader = loader;
 
-		Table rawTable = new Table(parent, SWT.MULTI | SWT.H_SCROLL
+		final Table rawTable = new Table(parent, SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
 		rawTable.setHeaderVisible(true);
 		rawTable.setLinesVisible(false);
 		rawTable.setFont(nFont);
+		rawTable.addListener(SWT.SetData, new Listener() {
+			public void handleEvent(Event event) {
+				if (tableLoader != null) {
+					TableItem item = (TableItem) event.item;
+					int index = rawTable.indexOf(item);
+					if (trace)
+						GitTraceLocation.getTrace().trace(
+								GitTraceLocation.HISTORYVIEW.getLocation(),
+								"Item " + index); //$NON-NLS-1$
+					tableLoader.loadItem(index);
+				}
+			}
+		});
 
 		final TableLayout layout = new TableLayout();
 		rawTable.setLayout(layout);
@@ -283,8 +301,8 @@ class CommitGraphTable {
 	}
 
 	CommitGraphTable(final Composite parent, final IPageSite site,
-			final MenuManager menuMgr) {
-		this(parent);
+			final MenuManager menuMgr, final TableLoader loader) {
+		this(parent, loader);
 
 		final IAction selectAll = createStandardAction(ActionFactory.SELECT_ALL);
 		getControl().addFocusListener(new FocusListener() {
@@ -367,6 +385,8 @@ class CommitGraphTable {
 			table.setSelection(new StructuredSelection(c), true);
 		else if (commitsMap != null) {
 			PlotCommit swtCommit = commitsMap.get(c.getId().name());
+			if (swtCommit == null && tableLoader != null)
+				tableLoader.loadCommit(swtCommit);
 			if (swtCommit != null)
 				table.setSelection(new StructuredSelection(swtCommit), true);
 		}
@@ -410,7 +430,10 @@ class CommitGraphTable {
 	}
 
 	void setInput(final RevFlag hFlag, final SWTCommitList list,
-			final SWTCommit[] asArray, HistoryPageInput input) {
+			final SWTCommit[] asArray, HistoryPageInput input, boolean keepPosition) {
+		int topIndex = -1;
+		if (keepPosition)
+			topIndex = table.getTable().getTopIndex();
 		setHistoryPageInput(input);
 		final SWTCommitList oldList = allCommits;
 		if (oldList != null && oldList != list)
@@ -425,6 +448,8 @@ class CommitGraphTable {
 			table.getTable().deselectAll();
 		if (commitToShow != null)
 			selectCommit(commitToShow);
+		if (keepPosition)
+			table.getTable().setTopIndex(topIndex);
 	}
 
 	void setHistoryPageInput(HistoryPageInput input) {
