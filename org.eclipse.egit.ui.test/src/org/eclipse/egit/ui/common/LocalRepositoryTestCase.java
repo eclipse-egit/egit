@@ -31,6 +31,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
@@ -458,15 +459,39 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 	 * @throws Exception
 	 */
 	protected static IFile touch(final String newContent) throws Exception {
+		return touch(PROJ1, "folder/test.txt", newContent);
+	}
+
+	/**
+	 * Modify the specified file with the given content.
+	 *
+	 * @param projectName
+	 *            project name
+	 * @param filePath
+	 *            file path under the given project
+	 * @param newContent
+	 *            new file content
+	 * @return the modified file
+	 * @throws Exception
+	 */
+	protected static IFile touch(String projectName, String filePath,
+			String newContent) throws Exception {
 		IProject prj = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(PROJ1);
+				.getProject(projectName);
 		if (!prj.isAccessible())
 			throw new IllegalStateException("No project to touch");
-		IFile file = prj.getFile(new Path("folder/test.txt"));
+		IFile file = prj.getFile(new Path(filePath));
 		file.setContents(
 				new ByteArrayInputStream(newContent.getBytes(prj
 						.getDefaultCharset())), 0, null);
 		return file;
+	}
+
+	protected static void stage(IFile file) throws Exception {
+		ArrayList<IFile> unstaged = new ArrayList<IFile>();
+		unstaged.addAll(Arrays.asList(new IFile[] { file }));
+		AddToIndexOperation op = new AddToIndexOperation(unstaged);
+		op.execute(null);
 	}
 
 	protected static void addAndCommit(IFile file, String commitMessage)

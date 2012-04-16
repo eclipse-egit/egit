@@ -8,15 +8,18 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.patch;
 
+import static org.eclipse.jgit.lib.Repository.stripWorkDir;
+
 import java.util.Collection;
+import java.util.Set;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.op.CreatePatchOperation;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.history.GitCreatePatchWizard;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Shell;
@@ -104,19 +107,39 @@ public class PatchOperationUI {
 	}
 
 	private boolean isWorkingTreeClean() {
-		Git git = new Git(repository);
-		try {
-			Status status = git.status().call();
-			return status.getModified().isEmpty()
-					&& status.getUntracked().isEmpty()
-					&& status.getMissing().isEmpty();
-		} catch (Exception e) {
-			MessageDialog.openError(getShell(),
-					UIText.GitCreatePatchAction_cannotCreatePatch, e
-							.getMessage() == null ? e.getMessage()
-							: UIText.GitCreatePatchWizard_InternalError);
+		IndexDiffCache diffCache = org.eclipse.egit.core.Activator.getDefault()
+				.getIndexDiffCache();
+		if (diffCache != null) {
+			IndexDiffData diffData = diffCache.getIndexDiffCacheEntry(
+					repository).getIndexDiff();
+			if (diffData != null) {
+				Set<String> modified = diffData.getModified();
+				Set<String> untracked = diffData.getUntracked();
+				Set<String> missing = diffData.getMissing();
+				for (IResource resource : resources) {
+					String repoRelativePath = makeRepoRelative(resource);
+					if (containsPrefix(modified, repoRelativePath))
+						return false;
+					if (containsPrefix(untracked, repoRelativePath))
+						return false;
+					if (containsPrefix(missing, repoRelativePath))
+						return false;
+				}
+			}
 		}
 		return true;
+	}
+
+	private String makeRepoRelative(IResource res) {
+		return stripWorkDir(repository.getWorkTree(), res.getLocation()
+				.toFile());
+	}
+
+	private boolean containsPrefix(Set<String> collection, String prefix) {
+		for (String path : collection)
+			if (path.startsWith(prefix))
+				return true;
+		return false;
 	}
 
 	private Shell getShell() {
