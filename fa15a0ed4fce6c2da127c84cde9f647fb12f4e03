@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3//9L8\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/ProjectSetConverter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-16T20:20:24Z",
+      "side": 1,
+      "message": "if this is a copy from Mylyn this should be explicitly mentioned here and a corresponding bug should be filed to remind us that we should remove the copy as soon as we fully rely on Mylyn 3.8 in a future version of EGit",
+      "revId": "fa15a0ed4fce6c2da127c84cde9f647fb12f4e03",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//9MA\u003d",
+        "filename": "org.eclipse.egit.mylyn.ui/src/org/eclipse/egit/internal/mylyn/ui/commit/ProjectSetConverter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-16T20:20:24Z",
+      "side": 1,
+      "message": "we don\u0027t use author tags",
+      "revId": "fa15a0ed4fce6c2da127c84cde9f647fb12f4e03",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
