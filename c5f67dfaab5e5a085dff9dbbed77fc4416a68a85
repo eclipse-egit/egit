@@ -16,6 +16,24 @@
       "revId": "c5f67dfaab5e5a085dff9dbbed77fc4416a68a85",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//9Jk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelRoot.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-16T23:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOG3//9J0\u003d",
+      "revId": "c5f67dfaab5e5a085dff9dbbed77fc4416a68a85",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
