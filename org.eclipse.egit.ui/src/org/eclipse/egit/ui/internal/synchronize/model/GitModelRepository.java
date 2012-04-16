@@ -55,30 +55,28 @@ public class GitModelRepository extends GitModelObjectContainer implements HasPr
 
 	@Override
 	public GitModelObject[] getChildren() {
-		if (children == null) {
-			List<GitModelObjectContainer> result = new ArrayList<GitModelObjectContainer>();
-			Repository repo = gsd.getRepository();
-			RevCommit srcRevCommit = gsd.getSrcRevCommit();
-			RevCommit dstRevCommit = gsd.getDstRevCommit();
-			TreeFilter pathFilter = gsd.getPathFilter();
-			List<Commit> commitCache;
-			if (srcRevCommit != null && dstRevCommit != null)
-				try {
-					commitCache = GitCommitsModelCache.build(repo, srcRevCommit,
-							dstRevCommit, pathFilter);
-				} catch (IOException e) {
-					Activator.logError(e.getMessage(), e);
-					commitCache = null;
-				}
-			else
+		List<GitModelObjectContainer> result = new ArrayList<GitModelObjectContainer>();
+		Repository repo = gsd.getRepository();
+		RevCommit srcRevCommit = gsd.getSrcRevCommit();
+		RevCommit dstRevCommit = gsd.getDstRevCommit();
+		TreeFilter pathFilter = gsd.getPathFilter();
+		List<Commit> commitCache;
+		if (srcRevCommit != null && dstRevCommit != null)
+			try {
+				commitCache = GitCommitsModelCache.build(repo, srcRevCommit,
+						dstRevCommit, pathFilter);
+			} catch (IOException e) {
+				Activator.logError(e.getMessage(), e);
 				commitCache = null;
-			if (commitCache != null && !commitCache.isEmpty())
-				result.addAll(getListOfCommit(commitCache));
+			}
+		else
+			commitCache = null;
+		if (commitCache != null && !commitCache.isEmpty())
+			result.addAll(getListOfCommit(commitCache));
 
-			result.addAll(getWorkingChanges());
-
-			children = result.toArray(new GitModelObjectContainer[result.size()]);
-		}
+		result.addAll(getWorkingChanges());
+		disposeOldChildren();
+		children = result.toArray(new GitModelObjectContainer[result.size()]);
 
 		return children;
 	}
@@ -124,8 +122,7 @@ public class GitModelRepository extends GitModelObjectContainer implements HasPr
 
 	@Override
 	public void dispose() {
-		for (GitModelObject objects : children)
-			objects.dispose();
+		disposeOldChildren();
 	}
 
 	@Override
@@ -192,6 +189,14 @@ public class GitModelRepository extends GitModelObjectContainer implements HasPr
 	 */
 	public Repository getRepository() {
 		return gsd.getRepository();
+	}
+
+	private void disposeOldChildren() {
+		if (children == null)
+			return;
+		for (GitModelObject child : children)
+			child.dispose();
+
 	}
 
 }

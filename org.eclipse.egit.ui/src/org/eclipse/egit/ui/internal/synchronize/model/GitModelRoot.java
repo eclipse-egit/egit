@@ -43,24 +43,19 @@ public class GitModelRoot {
 	 * @return children
 	 */
 	public GitModelObject[] getChildren() {
-		if (children == null)
-			children = getChildrenImpl();
-
-		return children;
+		return getChildrenImpl();
 	}
 
 	/**
 	 *  Disposes all nested resources
 	 */
 	public void dispose() {
-		for (GitModelObject child : children)
-			child.dispose();
-
+		disposeOldChildren();
 		gsds.dispose();
 	}
 
 	private GitModelObject[] getChildrenImpl() {
-		List<GitModelObject> restult = new ArrayList<GitModelObject>();
+		List<GitModelObject> result = new ArrayList<GitModelObject>();
 		try {
 			if (gsds.size() == 1) {
 				GitSynchronizeData gsd = gsds.iterator().next();
@@ -71,13 +66,22 @@ public class GitModelRoot {
 				for (GitSynchronizeData data : gsds) {
 					GitModelRepository repoModel = new GitModelRepository(data);
 					if (repoModel.getChildren().length > 0)
-						restult.add(repoModel);
+						result.add(repoModel);
 				}
 		} catch (IOException e) {
 				Activator.logError(e.getMessage(), e);
 		}
+		disposeOldChildren();
+		children = result.toArray(new GitModelObject[result.size()]);
 
-		return restult.toArray(new GitModelObject[restult.size()]);
+		return children;
+	}
+
+	private void disposeOldChildren() {
+		if (children == null)
+			return;
+		for (GitModelObject child : children)
+			child.dispose();
 	}
 
 }
