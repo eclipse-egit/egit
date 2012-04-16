@@ -31,9 +31,9 @@ three for packaging.
     Also packaging. This project is for building an Eclipse "feature"
     out of the plugins above.
 
-  org.eclipse.egit-updatesite/
+  org.eclipse.egit.repository/
 
-    This package is for producing and update site, i.e. a web site
+    This package is for producing a p2 repository, i.e. a web site
     you can point your eclipse at and just upgrade.
 
             == WARNINGS / CAVEATS              ==
@@ -112,7 +112,7 @@ For some operations it may just be the preferred solution also. There
 are not just a command line, there is e.g. git-gui that makes committing
 partial files simple.
 
-- Merging. 
+- Merging.
 
 - Repacking from within the plugin.
 

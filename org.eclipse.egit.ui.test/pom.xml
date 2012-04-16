@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-   Copyright (C) 2010, Matthias Sohn <matthias.sohn@sap.com>
+   Copyright (C) 2010-2012 Matthias Sohn <matthias.sohn@sap.com>
 
    All rights reserved. This program and the accompanying materials
    are made available under the terms of the Eclipse Public License v1.0
@@ -25,7 +25,7 @@
   <name>EGit UI Test Plug-in</name>
 
   <properties>
-    <local-egit-site>file:/${basedir}/../org.eclipse.egit-updatesite/target/site</local-egit-site>
+    <local-egit-site>file:/${basedir}/../org.eclipse.egit.repository/target/repository</local-egit-site>
     <uitest.vmparams>-Dorg.eclipse.swtbot.search.timeout=10000 -Xmx1024m -XX:MaxPermSize=384m</uitest.vmparams>
   </properties>
 
@@ -92,11 +92,13 @@
           <dependencies>
             <dependency>
               <type>p2-installable-unit</type>
+              <groupId>org.eclipse.egit.feature</groupId>
               <artifactId>org.eclipse.egit.feature.group</artifactId>
               <version>2.0.0</version>
             </dependency>
             <dependency>
               <type>p2-installable-unit</type>
+              <groupId>org.eclipse.jgit.feature</groupId>
               <artifactId>org.eclipse.jgit.feature.group</artifactId>
               <version>2.0.0</version>
             </dependency>

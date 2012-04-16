@@ -19,9 +19,10 @@
     <version>2.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>org.eclipse.egit.source-feature</artifactId>
+  <groupId>org.eclipse.egit.feature</groupId>
+  <artifactId>org.eclipse.egit.source</artifactId>
   <packaging>eclipse-feature</packaging>
 
-  <name>Eclipse EGit Sources Feature</name>
+  <name>Eclipse EGit Source Feature</name>
 
 </project>

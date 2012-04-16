@@ -169,7 +169,7 @@ perl -pi~ -e '
 		$seen_version++ if
 		s{<(version)>[^<\$]*</\1>}{<${1}>'"$POM_V"'</${1}>};
 	}
-	' org.eclipse.egit-updatesite/pom.xml
+	' org.eclipse.egit.repository/pom.xml
 
 perl -pi~ -e '
 	if ($ARGV ne $old_argv) {

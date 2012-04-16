@@ -25,7 +25,7 @@
   <name>EGit Mylyn UI Test Plug-in</name>
 
   <properties>
-    <local-egit-site>file:/${basedir}/../org.eclipse.egit-updatesite/target/site</local-egit-site>
+    <local-egit-site>file:/${basedir}/../org.eclipse.egit.repository/target/repository</local-egit-site>
   </properties>
 
   <repositories>
