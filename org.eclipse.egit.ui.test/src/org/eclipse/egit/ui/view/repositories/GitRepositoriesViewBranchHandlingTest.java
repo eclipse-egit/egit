@@ -319,12 +319,11 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		refreshAndWait();
 
 		SWTBotShell renameDialog = bot
-				.shell(UIText.RepositoriesView_RenameBranchTitle);
-		SWTBotText newBranchNameText = renameDialog.bot().text(0);
-		assertEquals("master", newBranchNameText.getText());
+				.shell(UIText.BranchRenameDialog_WindowTitle);
+		SWTBotText newBranchNameText = renameDialog.bot().textWithLabel(UIText.BranchRenameDialog_NewNameLabel);
 		newBranchNameText.setText("invalid~name");
 
-		renameDialog.bot().text(
+		renameDialog.bot().text(" " + // the text is now in the error message, and the MessageAreaDialog seems to add a space
 				NLS.bind(UIText.ValidationUtils_InvalidRefNameMessage,
 						"refs/heads/invalid~name"));
 		assertFalse(renameDialog.bot().button(IDialogConstants.OK_LABEL)
@@ -342,9 +341,8 @@ public class GitRepositoriesViewBranchHandlingTest extends
 				.getPluginLocalizedValue("RepoViewRenameBranch.label"));
 		refreshAndWait();
 
-		renameDialog = bot.shell(UIText.RepositoriesView_RenameBranchTitle);
+		renameDialog = bot.shell(UIText.BranchRenameDialog_WindowTitle);
 		newBranchNameText = renameDialog.bot().text(0);
-		assertEquals("newmaster", newBranchNameText.getText());
 
 		newBranchNameText.setText("master");
 		renameDialog.bot().button(IDialogConstants.OK_LABEL).click();
