@@ -149,6 +149,13 @@
                label="%IgnoreAction_label"
                menubarPath="team.main/group8"/>
          <action
+               class="org.eclipse.egit.ui.internal.actions.RemoveFromIndexAction"
+               definitionId="org.eclipse.egit.ui.team.RemoveFromIndex"
+               icon="$nl$/icons/obj16/unstage.gif"
+               id="org.eclipse.egit.ui.internal.actions.RemoveFromIndexAction"
+               label="%RemoveFromIndexAction_label"
+               menubarPath="team.main/group9"/>
+         <action
                class="org.eclipse.egit.ui.internal.actions.AddToIndexAction"
                definitionId="org.eclipse.egit.ui.team.AddToIndex"
                icon="$nl$/icons/obj16/add.gif"
