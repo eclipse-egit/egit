@@ -1968,6 +1968,24 @@
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.egit.ui.RepositoriesViewConfigureBranch"
+               label="%ConfigurBranchCommand.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.ui.edit.delete"
                label="%RepoViewDeleteBranch.label"
                style="push">
@@ -3017,6 +3035,9 @@
                            <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.PushNode">
                            </instanceof>
+                           <instanceof
+                                 value="org.eclipse.egit.ui.internal.repository.tree.RefNode">
+                           </instanceof>
                         </or>
                      </iterate>
                   </and>
@@ -3964,6 +3985,12 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.stash.drop"
             name="%StashDropCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ConfigureBranchCommand"
+            id="org.eclipse.egit.ui.RepositoriesViewConfigureBranch"
+            name="Configure Branch">
       </command>
    </extension>
    <extension
