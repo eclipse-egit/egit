@@ -233,11 +233,15 @@ class GitDocument extends Document implements RefsChangedListener {
 	}
 
 	public void onRefsChanged(final RefsChangedEvent e) {
-		try {
-			populate();
-		} catch (IOException e1) {
-			Activator.logError(UIText.GitDocument_errorRefreshQuickdiff, e1);
-		}
+		Activator.getDefault().getWorkbench().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				try {
+					populate();
+				} catch (Exception e1) {
+					Activator.logError(UIText.GitDocument_errorRefreshQuickdiff, e1);
+				}
+			}
+		});
 	}
 
 	private Repository getRepository() {
