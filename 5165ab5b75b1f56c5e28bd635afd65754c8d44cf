@@ -34,6 +34,24 @@
       "revId": "5165ab5b75b1f56c5e28bd635afd65754c8d44cf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//8tw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-04-22T10:15:10Z",
+      "side": 1,
+      "message": "If you have a project alpha and another called alphabeta, this method will think alphabeta/x is a member of alpha because  \"fullpath/alphabeta/x\".startsWith(\"fullpath/alpha\"). Eclipse has an API for checking things like this without falling into the trap.\n\nI wonder about the performance too.\n\n#projects x #files is ofta a large number. It should be possible to perform a single pass over all files with an performance more like #projects + #files instead\n\nThird, you only check whether this method return null or not, so you can avoid the substring by making the method return a boolean.\n\nIs it necessary to canonicalize the path? The operation is very expensive. getAbsolutePath has worked this far.",
+      "parentUuid": "AABOG3//+DA\u003d",
+      "revId": "5165ab5b75b1f56c5e28bd635afd65754c8d44cf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
