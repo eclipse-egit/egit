@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, Markus Duft <markus.duft@salomon.at>
+ * Copyright (C) 2012 Markus Duft <markus.duft@salomon.at> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -160,8 +160,7 @@ public class SimplePushSpecPage extends WizardPage {
 
 	@Override
 	public boolean isPageComplete() {
-		return remoteRefName.getText() != null
-				&& remoteRefName.getText().length() > 0;
+		return remoteRefName.getText().length() > 0;
 	}
 
 	/**
