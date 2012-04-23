@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2011 SAP AG and others.
+ * Copyright (c) 2010, 2012 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,6 +11,7 @@
  *    Daniel Megert <daniel_megert@ch.ibm.com> - Create Patch... dialog should not set file location - http://bugs.eclipse.org/361405
  *    Tomasz Zarna <Tomasz.Zarna@pl.ibm.com> - Allow to save patches in Workspace
  *    Tomasz Zarna <Tomasz.Zarna@pl.ibm.com> - Team > Create Patch... doesn't observe selection, bug 370332
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - Create Patch wizard's options page should remember values - http://bugs.eclipse.org/377390
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
@@ -90,6 +91,10 @@ public class GitCreatePatchWizard extends Wizard {
 	private final static int INITIAL_WIDTH = 300;
 
 	private final static int INITIAL_HEIGHT = 150;
+
+	private static final String FORMAT_KEY = "GitCreatePatchWizard.OptionsPage.format"; //$NON-NLS-1$
+	private static final String CONTEXT_LINES_KEY = "GitCreatePatchWizard.OptionsPage.contextLines"; //$NON-NLS-1$
+
 
 	/**
 	 *
@@ -201,6 +206,10 @@ public class GitCreatePatchWizard extends Wizard {
 			Activator.logError("Patch file was not written", e); //$NON-NLS-1$
 			return false;
 		}
+
+		getDialogSettings().put(FORMAT_KEY, optionsPage.getSelectedHeaderFormat().name());
+		getDialogSettings().put(CONTEXT_LINES_KEY, optionsPage.contextLines.getText());
+
 		return true;
 	}
 
@@ -327,13 +336,27 @@ public class GitCreatePatchWizard extends Wizard {
 							|| !((DiffHeaderFormat) element).isCommitRequired();
 				}
 			}});
-			formatCombo.setSelection(new StructuredSelection(DiffHeaderFormat.NONE));
+
+			String formatName = getDialogSettings().get(FORMAT_KEY);
+			DiffHeaderFormat selection = DiffHeaderFormat.NONE;
+			if (formatName != null)
+				try {
+					selection = DiffHeaderFormat.valueOf(formatName);
+				} catch (IllegalArgumentException ex) {
+					// Use default
+				}
+			formatCombo.setSelection(new StructuredSelection(selection));
+
 
 			contextLinesLabel = new Label(composite, SWT.NONE);
 			contextLinesLabel.setText(UIText.GitCreatePatchWizard_LinesOfContext);
 
+			String contextLineSetting = getDialogSettings().get(CONTEXT_LINES_KEY);
+			if (contextLineSetting == null)
+				contextLineSetting = String.valueOf(CreatePatchOperation.DEFAULT_CONTEXT_LINES);
 			contextLines = new Text(composite, SWT.BORDER | SWT.RIGHT);
-			contextLines.setText(String.valueOf(CreatePatchOperation.DEFAULT_CONTEXT_LINES));
+			contextLines.setText(contextLineSetting);
+			validatePage();
 			contextLines.addModifyListener(new ModifyListener() {
 
 				public void modifyText(ModifyEvent e) {
