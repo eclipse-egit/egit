@@ -73,7 +73,7 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
-		table = new CommitGraphTable(main);
+		table = new CommitGraphTable(main, null);
 		table.getTableView().addSelectionChangedListener(
 				new ISelectionChangedListener() {
 					public void selectionChanged(SelectionChangedEvent event) {
@@ -198,7 +198,7 @@ public class CommitSelectionDialog extends TitleAreaDialog {
 				.toString()));
 		setMessage(UIText.CommitSelectionDialog_DialogMessage);
 		table.setInput(highlightFlag, allCommits, allCommits
-				.toArray(new SWTCommit[allCommits.size()]), null);
+				.toArray(new SWTCommit[allCommits.size()]), null, true);
 	}
 
 	private void markStartAllRefs(RevWalk currentWalk, String prefix)
