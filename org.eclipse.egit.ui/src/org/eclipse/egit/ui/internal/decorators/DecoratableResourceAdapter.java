@@ -83,12 +83,18 @@ class DecoratableResourceAdapter extends DecoratableResource {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "DecoratableResourceAdapter[" + getName() + (isTracked() ? ", tracked" : "") + (isIgnored() ? ", ignored" : "") + (isDirty() ? ", dirty" : "") + (hasConflicts() ? ",conflicts" : "") + ", staged=" + staged + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$//$NON-NLS-7$//$NON-NLS-8$//$NON-NLS-9$//$NON-NLS-10$//$NON-NLS-11$
+	}
+
 	private void extractResourceProperties() {
 		String repoRelativePath = makeRepoRelative(resource);
 
 		// ignored
 		Set<String> ignoredFiles = indexDiffData.getIgnoredNotInIndex();
-		ignored = containsPrefixPath(ignoredFiles, repoRelativePath);
+		ignored = ignoredFiles.contains(repoRelativePath)
+				|| containsPrefixPath(ignoredFiles, repoRelativePath);
 		Set<String> untracked = indexDiffData.getUntracked();
 		tracked = !untracked.contains(repoRelativePath) && !ignored;
 
@@ -165,7 +171,7 @@ class DecoratableResourceAdapter extends DecoratableResource {
 
 	private boolean containsPrefixPath(Set<String> collection, String path) {
 		for (String entry : collection)
-			if (path.startsWith(entry))
+			if (path.startsWith(entry + "/")) //$NON-NLS-1$
 				return true;
 		return false;
 	}
