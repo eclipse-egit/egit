@@ -12,6 +12,11 @@ package org.eclipse.egit.ui.internal.preferences;
 
 import java.io.File;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.variables.IStringVariableManager;
+import org.eclipse.core.variables.VariablesPlugin;
+
+import org.eclipse.debug.ui.StringVariableSelectionDialog;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
@@ -24,8 +29,12 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IWorkbench;
@@ -74,24 +83,65 @@ public class GitPreferenceRoot extends FieldEditorPreferencePage implements
 		DirectoryFieldEditor editor = new DirectoryFieldEditor(
 				UIPreferences.DEFAULT_REPO_DIR,
 				UIText.GitPreferenceRoot_DefaultRepoFolderLabel, cloningGroup) {
+
+			/** The own control is the variableButton */
+			private static final int NUMBER_OF_OWN_CONTROLS = 1;
+
 			@Override
 			protected boolean doCheckState() {
 				String fileName = getTextControl().getText();
 				fileName = fileName.trim();
-				if (fileName.length() == 0 && isEmptyStringAllowed()) {
+				if (fileName.length() == 0 && isEmptyStringAllowed())
 					return true;
+
+				IStringVariableManager manager = VariablesPlugin.getDefault().getStringVariableManager();
+				String substitutedFileName;
+				try {
+					substitutedFileName = manager.performStringSubstitution(fileName);
+				} catch (CoreException e) {
+					// It's apparently invalid
+					return false;
 				}
-				File file = new File(fileName);
+
+				File file = new File(substitutedFileName);
 				// other than the super implementation, we don't
 				// require the file to exist
 				return !file.exists() || file.isDirectory();
 			}
 
 			@Override
+			public int getNumberOfControls() {
+				return super.getNumberOfControls() + NUMBER_OF_OWN_CONTROLS;
+			}
+
+			@Override
+			protected void doFillIntoGrid(Composite parent, int numColumns) {
+				super.doFillIntoGrid(parent, numColumns - NUMBER_OF_OWN_CONTROLS);
+			}
+
+			@Override
+			protected void adjustForNumColumns(int numColumns) {
+				super.adjustForNumColumns(numColumns - NUMBER_OF_OWN_CONTROLS);
+			}
+
+			@Override
 			protected void createControl(Composite parent) {
 				// setting validate strategy using the setter method is too late
 				super.setValidateStrategy(StringFieldEditor.VALIDATE_ON_KEY_STROKE);
+
 				super.createControl(parent);
+
+				Button variableButton = new Button(parent, SWT.PUSH);
+				variableButton.setText(UIText.GitPreferenceRoot_DefaultRepoFolderVariableButton);
+
+				variableButton.addSelectionListener(new SelectionAdapter() {
+					public void widgetSelected(SelectionEvent e) {
+						StringVariableSelectionDialog dialog = new StringVariableSelectionDialog(getShell());
+						int returnCode = dialog.open();
+						if (returnCode == Window.OK)
+							setStringValue(dialog.getVariableExpression());
+					}
+				});
 			}
 		};
 		updateMargins(cloningGroup);
