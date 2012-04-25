@@ -2584,9 +2584,6 @@ public class UIText extends NLS {
 	public static String BranchAction_repositoryState;
 
 	/** */
-	public static String BranchConfigurationDialog_BranchConfiguration;
-
-	/** */
 	public static String BranchConfigurationDialog_BranchConfigurationTitle;
 
 	/** */
