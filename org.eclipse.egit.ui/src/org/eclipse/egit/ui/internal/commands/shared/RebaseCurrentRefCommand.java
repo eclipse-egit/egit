@@ -105,7 +105,8 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 
 	private boolean hasHead(Repository repo) {
 		try {
-			return repo.getRef(Constants.HEAD).getObjectId() != null;
+			Ref headRef = repo.getRef(Constants.HEAD);
+			return headRef != null && headRef.getObjectId() != null;
 		} catch (IOException e) {
 			return false;
 		}
