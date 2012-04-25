@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOG3//8Zs\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewBranchHandlingTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-25T22:58:57Z",
+      "side": 1,
+      "message": "button(Window.OK) seems not to be able to find the ok button hence no event is fired, I found that button(\"OK\") works :-)\n\nwith that we don\u0027t need the wait loop",
+      "revId": "62fd06f62653b2e83bb6d9a1ebb72ed037ad685e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//8Zo\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewBranchHandlingTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-25T22:58:57Z",
+      "side": 1,
+      "message": "s/gotten/received/",
+      "revId": "62fd06f62653b2e83bb6d9a1ebb72ed037ad685e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//8Zk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-25T22:58:57Z",
+      "side": 1,
+      "message": "should be BranchConfigurationDialog_BranchConfigurationTitle instead",
+      "revId": "62fd06f62653b2e83bb6d9a1ebb72ed037ad685e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//8Zg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/BranchConfigurationDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-25T22:58:57Z",
+      "side": 1,
+      "message": "style nit: remove unnecessary curly braces",
+      "revId": "62fd06f62653b2e83bb6d9a1ebb72ed037ad685e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//8Zc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 9
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-25T22:58:57Z",
+      "side": 1,
+      "message": "unnecessary string, the next entry (BranchConfigurationDialog_BranchConfigurationTitle) is sufficient",
+      "revId": "62fd06f62653b2e83bb6d9a1ebb72ed037ad685e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//8ZY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 9
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-25T22:58:57Z",
+      "side": 1,
+      "message": "wrong case: s/Upstream/upstream s/Branch/branch/",
+      "revId": "62fd06f62653b2e83bb6d9a1ebb72ed037ad685e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOG3//8ZU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 9
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-25T22:58:57Z",
+      "side": 1,
+      "message": "wrong case",
+      "revId": "62fd06f62653b2e83bb6d9a1ebb72ed037ad685e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
