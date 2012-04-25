@@ -13,9 +13,12 @@ package org.eclipse.egit.ui.view.repositories;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.CloneOperation;
@@ -26,6 +29,12 @@ import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jgit.api.CreateBranchCommand.SetupUpstreamMode;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.events.ConfigChangedEvent;
+import org.eclipse.jgit.events.ConfigChangedListener;
+import org.eclipse.jgit.events.ListenerHandle;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
@@ -373,5 +382,126 @@ public class GitRepositoriesViewBranchHandlingTest extends
 		SWTBotShell mergeDialog = bot.shell(title);
 		// TODO do some merge here
 		mergeDialog.close();
+	}
+
+	@Test
+	public void testBranchConfiguration() throws Exception {
+		Repository repo = lookupRepository(clonedRepositoryFile);
+		Git git = new Git(repo);
+		git.branchCreate().setName("configTest")
+				.setStartPoint("refs/remotes/origin/master")
+				.setUpstreamMode(SetupUpstreamMode.TRACK).call();
+
+		boolean rebase = repo.getConfig().getBoolean(
+				ConfigConstants.CONFIG_BRANCH_SECTION, "configTest",
+				ConfigConstants.CONFIG_KEY_REBASE, false);
+		assertFalse(rebase);
+
+		Activator.getDefault().getRepositoryUtil()
+				.addConfiguredRepository(clonedRepositoryFile);
+
+		SWTBotView view = getOrOpenView();
+
+		SWTBotTreeItem localItem = myRepoViewUtil.getLocalBranchesItem(view
+				.bot().tree(), clonedRepositoryFile);
+		localItem.expand().getNode("configTest").select();
+
+		ContextMenuHelper.clickContextMenu(view.bot().tree(),
+				myUtil.getPluginLocalizedValue("ShowIn"),
+				myUtil.getPluginLocalizedValue("RepoViewOpenProperties.label"));
+
+		SWTBotView propsView = bot.viewByTitle("Properties");
+		SWTBotTreeItem rootItem = propsView
+				.bot()
+				.tree()
+				.getTreeItem(
+						UIText.BranchPropertySource_UpstreamConfigurationCategory);
+		SWTBotTreeItem rebaseItem = rootItem.expand().getNode(
+				UIText.BranchPropertySource_RebaseDescriptor);
+		assertEquals(UIText.BranchPropertySource_ValueNotSet,
+				rebaseItem.cell(1));
+
+		SWTBotTreeItem remoteItem = rootItem.expand().getNode(
+				UIText.BranchPropertySource_RemoteDescriptor);
+		assertEquals("origin", remoteItem.cell(1));
+
+		SWTBotTreeItem upstreamItem = rootItem.expand().getNode(
+				UIText.BranchPropertySource_UpstreamBranchDescriptor);
+		assertEquals("refs/heads/master", upstreamItem.cell(1));
+
+		view = getOrOpenView();
+
+		localItem = myRepoViewUtil.getLocalBranchesItem(view.bot().tree(),
+				clonedRepositoryFile);
+		localItem.expand().getNode("configTest").select();
+
+		ContextMenuHelper.clickContextMenu(view.bot().tree(),
+				myUtil.getPluginLocalizedValue("ConfigurBranchCommand.label"));
+
+		SWTBotShell configureBranchDialog = bot
+				.shell(UIText.BranchConfigurationDialog_BranchConfigurationTitle);
+		assertEquals(MessageFormat.format(
+				UIText.BranchConfigurationDialog_EditBranchConfigMessage,
+				"configTest"), configureBranchDialog.bot().text().getText());
+		assertEquals(
+				"refs/heads/master",
+				configureBranchDialog
+						.bot()
+						.comboBoxWithLabel(
+								UIText.BranchConfigurationDialog_UpstreamBranchLabel)
+						.getText());
+		assertEquals(
+				"origin",
+				configureBranchDialog
+						.bot()
+						.comboBoxWithLabel(
+								UIText.BranchConfigurationDialog_RemoteLabel)
+						.getText());
+		assertFalse(configureBranchDialog.bot()
+				.checkBox(UIText.BranchConfigurationDialog_RebaseLabel)
+				.isChecked());
+
+		configureBranchDialog.bot()
+				.checkBox(UIText.BranchConfigurationDialog_RebaseLabel)
+				.select();
+		// add a listener to wait for the configuration changed event
+		final AtomicBoolean changed = new AtomicBoolean();
+		ConfigChangedListener listener =
+		new ConfigChangedListener() {
+			public void onConfigChanged(ConfigChangedEvent event) {
+				changed.set(true);
+			}
+		};
+		ListenerHandle handle = repo.getConfig().addChangeListener(listener);
+		// only now click ok
+		configureBranchDialog.bot().button("OK").click();
+
+		// cleanup behind ourselves
+		handle.remove();
+		if (!changed.get())
+			fail("We should have received a config change event");
+
+		rebase = repo.getConfig().getBoolean(
+				ConfigConstants.CONFIG_BRANCH_SECTION, "configTest",
+				ConfigConstants.CONFIG_KEY_REBASE, false);
+		assertTrue(rebase);
+
+		localItem = myRepoViewUtil.getLocalBranchesItem(view.bot().tree(),
+				clonedRepositoryFile);
+		localItem.expand().getNode("configTest").select();
+
+		ContextMenuHelper.clickContextMenu(view.bot().tree(),
+				myUtil.getPluginLocalizedValue("ShowIn"),
+				myUtil.getPluginLocalizedValue("RepoViewOpenProperties.label"));
+
+		propsView = bot.viewByTitle("Properties");
+		rootItem = propsView
+				.bot()
+				.tree()
+				.getTreeItem(
+						UIText.BranchPropertySource_UpstreamConfigurationCategory);
+		rebaseItem = rootItem.expand().getNode(
+				UIText.BranchPropertySource_RebaseDescriptor);
+		assertEquals("true", rebaseItem.cell(1));
 	}
 }
