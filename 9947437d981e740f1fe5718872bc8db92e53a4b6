@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHH///+g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-04-26T20:54:04Z",
+      "side": 0,
+      "message": "Now that this is gone, is there a reason that currentWalk is stored as a field in GitHistoryPage aside from not having to pass it as an argument to the methods? Turns out it\u0027s a dangerous thing, and if there\u0027d be no reference to it, there\u0027d be no chance to accidentally misuse it.\n\nIn other words, we could return it from createNewWalk and pass it as an argument to the following methods.",
+      "revId": "9947437d981e740f1fe5718872bc8db92e53a4b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
