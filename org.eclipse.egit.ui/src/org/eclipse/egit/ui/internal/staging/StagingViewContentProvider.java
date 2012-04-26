@@ -48,6 +48,10 @@ public class StagingViewContentProvider implements
 		return content;
 	}
 
+	StagingEntry[] getStagingEntries() {
+		return content;
+	}
+
 	public void inputChanged(Viewer viewer, Object oldInput,
 			Object newInput) {
 		if (!(newInput instanceof StagingViewUpdate))

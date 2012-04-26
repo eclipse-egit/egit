@@ -47,7 +47,10 @@ import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.actions.BooleanPrefAction;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
+import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
+import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.commit.CommitUI;
+import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponent;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentState;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
@@ -365,12 +368,30 @@ public class StagingView extends ViewPart {
 		GridLayoutFactory.fillDefaults().numColumns(1)
 				.extendedMargins(2, 2, 2, 2).applyTo(commitMessageComposite);
 
-		commitMessageText = new SpellcheckableMessageArea(
-				commitMessageComposite, EMPTY_STRING, toolkit.getBorderStyle());
+		final CommitProposalProcessor commitProposalProcessor = new CommitProposalProcessor() {
+			@Override
+			protected Collection<String> computeFileNameProposals() {
+				return getStagedFileNames();
+			}
+
+			@Override
+			protected Collection<String> computeMessageProposals() {
+				return CommitMessageHistory.getCommitHistory();
+			}
+		};
+		commitMessageText = new CommitMessageArea(
+				commitMessageComposite, EMPTY_STRING, toolkit.getBorderStyle()) {
+			@Override
+			protected CommitProposalProcessor getCommitProposalProcessor() {
+				return commitProposalProcessor;
+			}
+		};
 		commitMessageText.setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TEXT_BORDER);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(commitMessageText);
+		UIUtils.addBulbDecorator(commitMessageText.getTextWidget(),
+				UIText.CommitDialog_ContentAssist);
 
 		Composite composite = toolkit.createComposite(commitMessageComposite);
 		toolkit.paintBordersFor(composite);
@@ -663,6 +684,10 @@ public class StagingView extends ViewPart {
 		IStyledLabelProvider styled = ((DelegatingStyledCellLabelProvider) base)
 				.getStyledStringProvider();
 		return (StagingViewLabelProvider) styled;
+	}
+
+	private StagingViewContentProvider getContentProvider(ContentViewer viewer) {
+		return (StagingViewContentProvider) viewer.getContentProvider();
 	}
 
 	private void updateSectionText() {
@@ -1295,6 +1320,15 @@ public class StagingView extends ViewPart {
 			return repoName;
 	}
 
+	private Collection<String> getStagedFileNames() {
+		StagingViewContentProvider stagedContentProvider = getContentProvider(stagedTableViewer);
+		StagingEntry[] entries = stagedContentProvider.getStagingEntries();
+		List<String> files = new ArrayList<String>();
+		for (StagingEntry entry : entries)
+			files.add(entry.getPath());
+		return files;
+	}
+
 	private void commit() {
 		if (stagedTableViewer.getTable().getItemCount() == 0
 				&& !amendPreviousCommitAction.isChecked()) {
@@ -1306,12 +1340,13 @@ public class StagingView extends ViewPart {
 		if (!commitMessageComponent.checkCommitInfo())
 			return;
 		final Repository repository = currentRepository;
+		String commitMessage = commitMessageComponent.getCommitMessage();
 		CommitOperation commitOperation = null;
 		try {
 			commitOperation = new CommitOperation(repository,
 					commitMessageComponent.getAuthor(),
 					commitMessageComponent.getCommitter(),
-					commitMessageComponent.getCommitMessage());
+					commitMessage);
 		} catch (CoreException e) {
 			Activator.handleError(UIText.StagingView_commitFailed, e, true);
 			return;
@@ -1321,6 +1356,7 @@ public class StagingView extends ViewPart {
 		commitOperation.setComputeChangeId(addChangeIdAction.isChecked());
 		CommitUI.performCommit(currentRepository, commitOperation,
 				openNewCommitsAction.isChecked());
+		CommitMessageHistory.saveCommitHistory(commitMessage);
 		clearCommitMessageToggles();
 		commitMessageText.setText(EMPTY_STRING);
 	}
