@@ -1,0 +1,12 @@
+Code-Review+2: Christian Halstrick <christian.halstrick@sap.com>
+IP-Clean+1: Christian Halstrick <christian.halstrick@sap.com>
+Verified+1: Christian Halstrick <christian.halstrick@sap.com>
+Code-Review+1: Stefan Lay <stefan.lay@sap.com>
+Code-Review+2: Robin Stocker <robin@nibor.org>
+Verified+1: Robin Stocker <robin@nibor.org>
+Code-Review-1: Hudson CI
+Submitted-by: Christian Halstrick <christian.halstrick@sap.com>
+Submitted-at: Fri, 27 Apr 2012 07:36:52 -0400
+Reviewed-on: https://git.eclipse.org/r/5670
+Project: egit/egit
+Branch: refs/heads/master
