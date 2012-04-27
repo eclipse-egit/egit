@@ -16,6 +16,24 @@
       "revId": "9947437d981e740f1fe5718872bc8db92e53a4b6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///84\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-04-27T07:01:22Z",
+      "side": 0,
+      "message": "That\u0027s sounds very reasonable. In fact, Chris and me discussed exactly about that yesterday.\n\nGitHistoryPage should be refactored in general, but the change you mention would be a good first step. I thinks we could do it with this change or a follow-up change.",
+      "parentUuid": "AABOHH///+g\u003d",
+      "revId": "9947437d981e740f1fe5718872bc8db92e53a4b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
