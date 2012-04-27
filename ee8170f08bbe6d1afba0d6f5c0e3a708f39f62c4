@@ -33,6 +33,24 @@
       "revId": "ee8170f08bbe6d1afba0d6f5c0e3a708f39f62c4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///yg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-04-27T19:34:42Z",
+      "side": 1,
+      "message": "I agree: Just walk would be better.",
+      "parentUuid": "AABOHH///zw\u003d",
+      "revId": "ee8170f08bbe6d1afba0d6f5c0e3a708f39f62c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
