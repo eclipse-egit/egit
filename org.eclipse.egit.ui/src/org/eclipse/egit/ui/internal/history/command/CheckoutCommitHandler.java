@@ -46,12 +46,11 @@ public class CheckoutCommitHandler extends AbstractHistoryCommandHandler {
 					HandlerUtil.getActiveShellChecked(event), nodes,
 					UIText.CheckoutHandler_SelectBranchTitle,
 					UIText.CheckoutHandler_SelectBranchMessage, SWT.SINGLE);
-			if (dlg.open() == Window.OK) {
+			if (dlg.open() == Window.OK)
 				op = BranchOperationUI.checkout(repo, dlg.getSelectedNode()
 						.getObject().getName());
-			} else {
+			else
 				op = null;
-			}
 		}
 
 		if (op == null)

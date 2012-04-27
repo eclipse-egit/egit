@@ -89,7 +89,7 @@ public class ProjectReferenceImporter {
 
 				boolean shouldClone = true;
 
-				if (workDir.toFile().exists()) {
+				if (workDir.toFile().exists())
 					if (repositoryAlreadyExistsForUrl(repositoryPath, gitUrl))
 						shouldClone = false;
 					else {
@@ -102,7 +102,6 @@ public class ProjectReferenceImporter {
 										new Object[] { workDir, projectNames,
 												gitUrl }));
 					}
-				}
 
 				try {
 					if (shouldClone) {
@@ -136,7 +135,7 @@ public class ProjectReferenceImporter {
 			throws TeamException {
 		final Map<URIish, Map<String, Set<ProjectReference>>> repositories = new LinkedHashMap<URIish, Map<String, Set<ProjectReference>>>();
 
-		for (final String reference : referenceStrings) {
+		for (final String reference : referenceStrings)
 			try {
 				final ProjectReference projectReference = new ProjectReference(
 						reference);
@@ -161,7 +160,6 @@ public class ProjectReferenceImporter {
 			} catch (final URISyntaxException e) {
 				throw new TeamException(reference, e);
 			}
-		}
 
 		return repositories;
 	}

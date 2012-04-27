@@ -250,13 +250,12 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 	private String getTitle() {
 		String title = ""; //$NON-NLS-1$
-		if (branchName != null) {
+		if (branchName != null)
 			title = NLS.bind(UIText.CreateTagDialog_questionNewTagTitle,
 					branchName);
-		} else if (commitId != null) {
+		else if (commitId != null)
 			title = NLS.bind(UIText.CreateTagDialog_CreateTagOnCommitTitle,
 					CompareUtils.truncatedRevision(commitId.getName()));
-		}
 		return title;
 	}
 
@@ -341,9 +340,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 		createExistingTagsSection(mainForm);
 
 		mainForm.setWeights(new int[] { 70, 30 });
-		if (tag != null) {
+		if (tag != null)
 			setTagImpl();
-		}
 
 		applyDialogFont(parent);
 		return composite;
@@ -581,9 +579,8 @@ public class CreateTagDialog extends TitleAreaDialog {
 
 	private void validateInput() {
 		// don't validate if dialog is disposed
-		if (getShell() == null) {
+		if (getShell() == null)
 			return;
-		}
 
 		// validate tag name
 		String tagNameMessage = tagNameValidator.isValid(tagNameText.getText());

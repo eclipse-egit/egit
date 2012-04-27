@@ -222,12 +222,11 @@ public class BranchAndResetActionTest extends LocalRepositoryTestCase {
 			for (int i = 0; i < path.segmentCount(); i++) {
 				boolean found = false;
 				String segment = path.segment(i);
-				for (SWTBotTreeItem item : items) {
+				for (SWTBotTreeItem item : items)
 					if (item.getText().equals(segment)) {
 						found = true;
 						items = item.getItems();
 					}
-				}
 				assertTrue(found);
 			}
 

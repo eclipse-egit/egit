@@ -102,24 +102,21 @@ public class RepositoryUtil {
 			boolean refresh) {
 		synchronized (commitMappingCache) {
 
-			if (!ObjectId.isId(commitId)) {
+			if (!ObjectId.isId(commitId))
 				return null;
-			}
 
 			Map<String, String> cacheEntry = commitMappingCache.get(repository
 					.getDirectory().toString());
 			if (!refresh && cacheEntry != null
-					&& cacheEntry.containsKey(commitId)) {
+					&& cacheEntry.containsKey(commitId))
 				// this may be null in fact
 				return cacheEntry.get(commitId);
-			}
 			if (cacheEntry == null) {
 				cacheEntry = new HashMap<String, String>();
 				commitMappingCache.put(repository.getDirectory().getPath(),
 						cacheEntry);
-			} else {
+			} else
 				cacheEntry.clear();
-			}
 
 			Map<String, Date> tagMap = new HashMap<String, Date>();
 			try {
@@ -132,9 +129,9 @@ public class RepositoryUtil {
 						RevTag tag = (RevTag) any;
 						if (tag.getObject().name().equals(commitId)) {
 							Date timestamp;
-							if (tag.getTaggerIdent() != null) {
+							if (tag.getTaggerIdent() != null)
 								timestamp = tag.getTaggerIdent().getWhen();
-							} else {
+							else
 								try {
 									RevCommit commit = rw.parseCommit(tag.getObject());
 									timestamp = commit.getCommitterIdent().getWhen();
@@ -142,7 +139,6 @@ public class RepositoryUtil {
 									// not referencing a comit.
 									timestamp = null;
 								}
-							}
 							tagMap.put(tagRef.getName(), timestamp);
 						}
 					} else if (any instanceof RevCommit) {
@@ -160,22 +156,20 @@ public class RepositoryUtil {
 			if (!tagMap.isEmpty()) {
 				// we try to obtain the "latest" tag
 				Date compareDate = new Date(0);
-				for (Map.Entry<String, Date> tagEntry : tagMap.entrySet()) {
+				for (Map.Entry<String, Date> tagEntry : tagMap.entrySet())
 					if (tagEntry.getValue() != null
 							&& tagEntry.getValue().after(compareDate)) {
 						compareDate = tagEntry.getValue();
 						cacheValue = tagEntry.getKey();
 					}
-				}
 				// if we don't have time stamps, we sort
 				if (cacheValue == null) {
 					String compareString = ""; //$NON-NLS-1$
-					for (String tagName : tagMap.keySet()) {
+					for (String tagName : tagMap.keySet())
 						if (tagName.compareTo(compareString) >= 0) {
 							cacheValue = tagName;
 							compareString = tagName;
 						}
-					}
 				}
 			}
 
@@ -186,19 +180,16 @@ public class RepositoryUtil {
 				try {
 					Map<String, Ref> remoteBranches = repository
 							.getRefDatabase().getRefs(Constants.R_HEADS);
-					for (Ref branch : remoteBranches.values()) {
-						if (branch.getObjectId().name().equals(commitId)) {
+					for (Ref branch : remoteBranches.values())
+						if (branch.getObjectId().name().equals(commitId))
 							branchNames.add(branch.getName());
-						}
-					}
 				} catch (IOException e) {
 					// ignore here
 				}
-				if (!branchNames.isEmpty()) {
+				if (!branchNames.isEmpty())
 					// get the last (sorted) entry
 					cacheValue = branchNames.toArray(new String[branchNames
 							.size()])[branchNames.size() - 1];
-				}
 			}
 
 			if (cacheValue == null) {
@@ -208,16 +199,13 @@ public class RepositoryUtil {
 				try {
 					Map<String, Ref> remoteBranches = repository
 							.getRefDatabase().getRefs(Constants.R_REMOTES);
-					for (Ref branch : remoteBranches.values()) {
-						if (branch.getObjectId().name().equals(commitId)) {
+					for (Ref branch : remoteBranches.values())
+						if (branch.getObjectId().name().equals(commitId))
 							branchNames.add(branch.getName());
-						}
-					}
-					if (!branchNames.isEmpty()) {
+					if (!branchNames.isEmpty())
 						// get the last (sorted) entry
 						cacheValue = branchNames.toArray(new String[branchNames
 								.size()])[branchNames.size() - 1];
-					}
 				} catch (IOException e) {
 					// ignore here
 				}
@@ -315,9 +303,9 @@ public class RepositoryUtil {
 			String dirString = getPath(repositoryDir);
 
 			List<String> dirStrings = getConfiguredRepositories();
-			if (dirStrings.contains(dirString)) {
+			if (dirStrings.contains(dirString))
 				return false;
-			} else {
+			else {
 				Set<String> dirs = new HashSet<String>();
 				dirs.addAll(dirStrings);
 				dirs.add(dirString);

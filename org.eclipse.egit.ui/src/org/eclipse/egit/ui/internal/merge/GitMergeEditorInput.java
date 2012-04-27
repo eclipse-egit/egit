@@ -388,11 +388,9 @@ public class GitMergeEditorInput extends CompareEditorInput {
 
 	private DiffNode getOrCreateChild(IDiffContainer parent, final String name,
 			final boolean projectMode) {
-		for (IDiffElement child : parent.getChildren()) {
-			if (child.getName().equals(name)) {
+		for (IDiffElement child : parent.getChildren())
+			if (child.getName().equals(name))
 				return ((DiffNode) child);
-			}
-		}
 		DiffNode child = new DiffNode(parent, Differencer.NO_CHANGE) {
 
 			@Override

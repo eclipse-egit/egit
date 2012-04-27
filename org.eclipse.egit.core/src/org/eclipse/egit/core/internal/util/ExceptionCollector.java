@@ -82,9 +82,9 @@ public class ExceptionCollector {
 	 *         if the collector is empty.
 	 */
 	public IStatus getStatus() {
-		if (statuses.isEmpty()) {
+		if (statuses.isEmpty())
 			return Status.OK_STATUS;
-		} else {
+		else {
 			final MultiStatus multiStatus = new MultiStatus(pluginId, severity,
 					message, null);
 			final Iterator it = statuses.iterator();
@@ -105,9 +105,8 @@ public class ExceptionCollector {
 	 *            the exception to collect
 	 */
 	public void handleException(CoreException exception) {
-		if (log != null) {
+		if (log != null)
 			log.log(new Status(severity, pluginId, 0, message, exception));
-		}
 
 		// Record each status individually to flatten the resulting multi-status
 		final IStatus exceptionStatus = exception.getStatus();

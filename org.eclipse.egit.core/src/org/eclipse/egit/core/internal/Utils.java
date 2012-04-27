@@ -49,14 +49,12 @@ public class Utils {
 						// CRLF -> LF
 						result.append(LF_CHAR);
 						i += 1;
-					} else {
+					} else
 						// CR not followed by LF
 						result.append(LF_CHAR);
-					}
-				} else {
+				} else
 					// CR at end of string
 					result.append(LF_CHAR);
-				}
 			} else
 				result.append(s.charAt(i));
 			i++;

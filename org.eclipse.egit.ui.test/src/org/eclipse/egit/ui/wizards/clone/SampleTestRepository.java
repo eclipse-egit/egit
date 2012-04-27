@@ -120,10 +120,9 @@ public class SampleTestRepository {
 
 		// create some random commits
 		RevCommit X = A;
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++)
 			X = src.commit().parent(X)
 					.add(randomAsciiString(), randomAsciiString()).create();
-		}
 
 		B = src.commit().parent(X).add(A_txt_name, "C").add("B", "B").create();
 		src.update(Constants.R_HEADS + Constants.MASTER, B);

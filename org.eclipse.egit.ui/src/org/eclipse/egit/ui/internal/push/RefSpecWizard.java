@@ -53,9 +53,9 @@ public class RefSpecWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		if (pushMode) {
+		if (pushMode)
 			config.setPushRefSpecs(page.getRefSpecs());
-		} else {
+		else {
 			config.setFetchRefSpecs(page.getRefSpecs());
 			config.setTagOpt(page.getTagOpt());
 		}

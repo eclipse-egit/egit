@@ -84,9 +84,8 @@ public class TestUtils {
 		StringBuilder stringBuilder = new StringBuilder();
 		try {
 			int ch;
-			while ((ch = inputStream.read()) != -1) {
+			while ((ch = inputStream.read()) != -1)
 				stringBuilder.append((char) ch);
-			}
 		} finally {
 			inputStream.close();
 		}
@@ -111,11 +110,10 @@ public class TestUtils {
 		IPath filePath = new Path(path);
 		IFolder folder = null;
 		for (int i = 0; i < filePath.segmentCount() - 1; i++) {
-			if (folder == null) {
+			if (folder == null)
 				folder = project.getFolder(filePath.segment(i));
-			} else {
+			else
 				folder = folder.getFolder(filePath.segment(i));
-			}
 			if (!folder.exists())
 				folder.create(false, true, null);
 		}
@@ -155,9 +153,8 @@ public class TestUtils {
 			String projectName) throws Exception {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(projectName);
-		if (project.exists()) {
+		if (project.exists())
 			project.delete(true, null);
-		}
 		File testFile = new File(parentFile, projectName);
 		if (testFile.exists())
 			FileUtils.delete(testFile, FileUtils.RECURSIVE | FileUtils.RETRY);
@@ -226,12 +223,11 @@ public class TestUtils {
 			byte[] expectedContent = expectedfiles.get(path).getBytes();
 			byte[] repoContent = treeWalk.getObjectReader().open(objectId)
 					.getBytes();
-			if (!Arrays.equals(repoContent, expectedContent)) {
+			if (!Arrays.equals(repoContent, expectedContent))
 				fail("File " + path + " has repository content "
 						+ new String(repoContent)
 						+ " instead of expected content "
 						+ new String(expectedContent));
-			}
 			expectedfiles.remove(path);
 		}
 		if (expectedfiles.size() > 0) {
@@ -249,9 +245,8 @@ public class TestUtils {
 		if ((args.length % 2) > 0)
 			throw new IllegalArgumentException("needs to be pairs");
 		HashMap<String, String> map = new HashMap<String, String>();
-		for (int i = 0; i < args.length; i += 2) {
+		for (int i = 0; i < args.length; i += 2)
 			map.put(args[i], args[i+1]);
-		}
 		return map;
 	}
 

@@ -85,11 +85,10 @@ public class DisconnectProviderOperation implements IEGitOperation {
 	private void unmarkTeamPrivate(final IContainer p) throws CoreException {
 		final IResource[] c;
 		c = p.members(IContainer.INCLUDE_TEAM_PRIVATE_MEMBERS);
-		if (c != null) {
+		if (c != null)
 			for (int k = 0; k < c.length; k++) {
-				if (c[k] instanceof IContainer) {
+				if (c[k] instanceof IContainer)
 					unmarkTeamPrivate((IContainer) c[k]);
-				}
 				if (c[k].isTeamPrivateMember()) {
 					// TODO is this the right location?
 					if (GitTraceLocation.CORE.isActive())
@@ -99,6 +98,5 @@ public class DisconnectProviderOperation implements IEGitOperation {
 					c[k].setTeamPrivateMember(false);
 				}
 			}
-		}
 	}
 }

@@ -186,11 +186,11 @@ public class FileDiff extends WorkbenchAdapter {
 		final FileMode mode1 = getModes()[0];
 		final FileMode mode2 = getModes()[1];
 
-		if (id1.equals(ObjectId.zeroId())) {
+		if (id1.equals(ObjectId.zeroId()))
 			d.append("new file mode " + mode2).append("\n"); //$NON-NLS-1$//$NON-NLS-2$
-		} else if (id2.equals(ObjectId.zeroId())) {
+		else if (id2.equals(ObjectId.zeroId()))
 			d.append("deleted file mode " + mode1).append("\n"); //$NON-NLS-1$//$NON-NLS-2$
-		} else if (!mode1.equals(mode2)) {
+		else if (!mode1.equals(mode2)) {
 			d.append("old mode " + mode1); //$NON-NLS-1$
 			d.append("new mode " + mode2).append("\n"); //$NON-NLS-1$//$NON-NLS-2$
 		}

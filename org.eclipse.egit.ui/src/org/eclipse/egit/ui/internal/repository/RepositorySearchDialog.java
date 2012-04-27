@@ -388,9 +388,8 @@ public class RepositorySearchDialog extends WizardPage {
 	private void findGitDirsRecursive(File root, Set<String> strings,
 			IProgressMonitor monitor, boolean lookForNestedRepositories) {
 
-		if (!root.exists() || !root.isDirectory()) {
+		if (!root.exists() || !root.isDirectory())
 			return;
-		}
 		File[] children = root.listFiles();
 		// simply ignore null
 		if (children == null)
@@ -475,9 +474,8 @@ public class RepositorySearchDialog extends WizardPage {
 							.log(new Status(IStatus.ERROR, Activator
 									.getPluginId(), ex.getMessage(), ex));
 				}
-				if (monitor.isCanceled()) {
+				if (monitor.isCanceled())
 					throw new InterruptedException();
-				}
 			}
 		};
 		try {
@@ -493,13 +491,11 @@ public class RepositorySearchDialog extends WizardPage {
 
 		final TreeSet<String> validDirs = new TreeSet<String>();
 
-		for (String foundDir : directories) {
-			if (!fExistingDirectories.contains(foundDir)) {
+		for (String foundDir : directories)
+			if (!fExistingDirectories.contains(foundDir))
 				validDirs.add(foundDir);
-			} else {
+			else
 				foundOld++;
-			}
-		}
 
 		if (foundOld > 0) {
 			String message = NLS.bind(
@@ -522,11 +518,11 @@ public class RepositorySearchDialog extends WizardPage {
 	private void setNeedsSearch() {
 		fTreeViewer.setInput(null);
 		final File file = new File(dir.getText());
-		if (!file.exists()) {
+		if (!file.exists())
 			setErrorMessage(NLS.bind(
 					UIText.RepositorySearchDialog_DirectoryNotFoundMessage, dir
 							.getText()));
-		} else {
+		else {
 			setErrorMessage(null);
 			setMessage(UIText.RepositorySearchDialog_NoSearchAvailableMessage,
 					IMessageProvider.INFORMATION);

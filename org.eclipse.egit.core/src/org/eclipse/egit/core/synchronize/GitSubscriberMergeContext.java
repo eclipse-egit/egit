@@ -168,10 +168,9 @@ public class GitSubscriberMergeContext extends SubscriberMergeContext {
 			if (files != null && files.isEmpty())
 				return;
 
-			for (GitSynchronizeData gsd : gsds) {
+			for (GitSynchronizeData gsd : gsds)
 				if (repo.equals(gsd.getRepository()))
 					refreshResources(files);
-			}
 		} catch (CoreException e) {
 			Activator.logError(e.getMessage(), e);
 		}

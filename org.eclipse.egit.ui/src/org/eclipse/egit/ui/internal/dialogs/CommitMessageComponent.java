@@ -458,9 +458,8 @@ public class CommitMessageComponent {
 			authorText.setText(previousAuthor);
 			saveOriginalChangeId();
 		} else {
-			if (!amendAllowed) {
+			if (!amendAllowed)
 				originalChangeId = null;
-			}
 			refreshSignedOffBy();
 			refreshChangeIdText();
 		}
@@ -498,10 +497,9 @@ public class CommitMessageComponent {
 	 * @return the calculated commit message
 	 */
 	private String calculateCommitMessage(Collection<String> paths) {
-		if (commitMessage != null) {
+		if (commitMessage != null)
 			// special case for merge
 			return commitMessage;
-		}
 
 		if (amending)
 			return previousCommitMessage;
@@ -538,13 +536,12 @@ public class CommitMessageComponent {
 		if (config.length > 0) {
 			Object provider;
 			provider = config[0].createExecutableExtension("class");//$NON-NLS-1$
-			if (provider instanceof ICommitMessageProvider) {
+			if (provider instanceof ICommitMessageProvider)
 				return (ICommitMessageProvider) provider;
-			} else {
+			else
 				Activator.logError(
 						UIText.CommitDialog_WrongTypeOfCommitMessageProvider,
 						null);
-			}
 		}
 		return null;
 	}

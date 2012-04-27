@@ -159,9 +159,8 @@ public class RepositoryPropertySource implements IPropertySource {
 			File configFile = ((FileBasedConfig) effectiveConfig).getFile();
 			repositoryConfig = new FileBasedConfig(configFile, repository
 					.getFS());
-		} else {
+		} else
 			repositoryConfig = effectiveConfig;
-		}
 
 		synchronized (myPage) {
 			// check if the actions are already there, if not, create them
@@ -177,9 +176,8 @@ public class RepositoryPropertySource implements IPropertySource {
 			if (editAction != null)
 				((EditAction) editAction.getAction()).setSource(this);
 
-			if (changeModeAction != null) {
+			if (changeModeAction != null)
 				return;
-			}
 
 			changeModeAction = new ActionContributionItem(new Action(
 					DisplayMode.REPO.getText(), IAction.AS_DROP_DOWN_MENU) {
@@ -195,7 +193,7 @@ public class RepositoryPropertySource implements IPropertySource {
 					ToolBar control = item.getParent();
 					final Menu ctxMenu = mgr.createContextMenu(control);
 
-					for (final DisplayMode aMode : DisplayMode.values()) {
+					for (final DisplayMode aMode : DisplayMode.values())
 						mgr.add(new Action(aMode.getText()) {
 							@Override
 							public void run() {
@@ -221,7 +219,6 @@ public class RepositoryPropertySource implements IPropertySource {
 								return IAction.AS_CHECK_BOX;
 							}
 						});
-					}
 
 					ctxMenu.setVisible(true);
 				}
@@ -276,10 +273,9 @@ public class RepositoryPropertySource implements IPropertySource {
 
 	private DisplayMode getCurrentMode() {
 		String actionText = changeModeAction.getAction().getText();
-		for (DisplayMode aMode : DisplayMode.values()) {
+		for (DisplayMode aMode : DisplayMode.values())
 			if (aMode.getText().equals(actionText))
 				return aMode;
-		}
 		return null;
 	}
 
@@ -305,9 +301,8 @@ public class RepositoryPropertySource implements IPropertySource {
 			section = tok.nextToken();
 			subsection = tok.nextToken();
 			name = tok.nextToken();
-		} else {
+		} else
 			return ""; //$NON-NLS-1$
-		}
 
 		if (getSingleValueMode())
 			valueList = new String[] { config.getString(section, subsection,
@@ -318,9 +313,8 @@ public class RepositoryPropertySource implements IPropertySource {
 		if (valueList == null || valueList.length == 0)
 			return null;
 
-		if (valueList.length == 1) {
+		if (valueList.length == 1)
 			return valueList[0];
-		}
 
 		StringBuilder sb = new StringBuilder();
 		for (String value : valueList) {
@@ -362,10 +356,9 @@ public class RepositoryPropertySource implements IPropertySource {
 		case REPO: {
 			prefix = REPO_ID_PREFIX;
 			String location = ""; //$NON-NLS-1$
-			if (repositoryConfig instanceof FileBasedConfig) {
+			if (repositoryConfig instanceof FileBasedConfig)
 				location = ((FileBasedConfig) repositoryConfig).getFile()
 						.getAbsolutePath();
-			}
 			category = NLS
 					.bind(
 							UIText.RepositoryPropertySource_RepositoryConfigurationCategory,
@@ -402,7 +395,7 @@ public class RepositoryPropertySource implements IPropertySource {
 				desc.setCategory(category);
 				resultList.add(desc);
 			}
-			for (String sub : config.getSubsections(key)) {
+			for (String sub : config.getSubsections(key))
 				for (String sectionItem : config.getNames(key, sub)) {
 					String sectionId = key + "." + sub + "." + sectionItem; //$NON-NLS-1$ //$NON-NLS-2$
 					PropertyDescriptor desc = new PropertyDescriptor(prefix
@@ -410,7 +403,6 @@ public class RepositoryPropertySource implements IPropertySource {
 					desc.setCategory(category);
 					resultList.add(desc);
 				}
-			}
 		}
 
 		return resultList.toArray(new IPropertyDescriptor[0]);
@@ -419,15 +411,14 @@ public class RepositoryPropertySource implements IPropertySource {
 	public Object getPropertyValue(Object id) {
 		String actId = ((String) id);
 		Object value = null;
-		if (actId.startsWith(SYSTEM_ID_PREFIX)) {
+		if (actId.startsWith(SYSTEM_ID_PREFIX))
 			value = getValueFromConfig(systemConfig, actId.substring(4));
-		} else if (actId.startsWith(USER_ID_PREFIX)) {
+		else if (actId.startsWith(USER_ID_PREFIX))
 			value = getValueFromConfig(userHomeConfig, actId.substring(4));
-		} else if (actId.startsWith(REPO_ID_PREFIX)) {
+		else if (actId.startsWith(REPO_ID_PREFIX))
 			value = getValueFromConfig(repositoryConfig, actId.substring(4));
-		} else if (actId.startsWith(EFFECTIVE_ID_PREFIX)) {
+		else if (actId.startsWith(EFFECTIVE_ID_PREFIX))
 			value = getValueFromConfig(effectiveConfig, actId.substring(4));
-		}
 		if (value == null)
 			// the text editor needs this to work
 			return ""; //$NON-NLS-1$

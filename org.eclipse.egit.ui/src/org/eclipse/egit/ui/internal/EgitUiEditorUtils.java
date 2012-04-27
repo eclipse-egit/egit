@@ -56,11 +56,11 @@ public class EgitUiEditorUtils {
 			IFileRevision revision, IProgressMonitor monitor)
 			throws CoreException {
 		IStorage file = revision.getStorage(monitor);
-		if (file instanceof IFile) {
+		if (file instanceof IFile)
 			// if this is the current workspace file, open it
 			return IDE.openEditor(page, (IFile) file, OpenStrategy
 					.activateOnOpen());
-		} else {
+		else {
 			FileRevisionEditorInput fileRevEditorInput = FileRevisionEditorInput
 					.createEditorInputFor(revision, monitor);
 			IEditorPart part = openEditor(page, fileRevEditorInput);
@@ -113,18 +113,16 @@ public class EgitUiEditorUtils {
 		try {
 			IEditorPart part = page.openEditor(editorInput, editorId,
 					OpenStrategy.activateOnOpen());
-			if (part == null) {
+			if (part == null)
 				throw new PartInitException(NLS.bind(
 						UIText.EgitUiUtils_CouldNotOpenEditorMessage, editorId));
-			}
 			return part;
 		} catch (PartInitException e) {
-			if (editorId.equals("org.eclipse.ui.DefaultTextEditor")) { //$NON-NLS-1$
+			if (editorId.equals("org.eclipse.ui.DefaultTextEditor")) //$NON-NLS-1$
 				throw e;
-			} else {
+			else
 				return page.openEditor(editorInput,
 						"org.eclipse.ui.DefaultTextEditor"); //$NON-NLS-1$
-			}
 		}
 	}
 
@@ -141,14 +139,14 @@ public class EgitUiEditorUtils {
 			return;
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IFile[] files = root.findFilesForLocationURI(file.toURI());
-		if (files.length > 0) {
+		if (files.length > 0)
 			try {
 				IDE.openEditor(page, files[0], OpenStrategy.activateOnOpen());
 			} catch (PartInitException e) {
 				Activator.handleError(UIText.EgitUiEditorUtils_openFailed, e,
 						true);
 			}
-		} else {
+		else {
 			IFileStore store = EFS.getLocalFileSystem().getStore(
 					new Path(file.getAbsolutePath()));
 			try {
@@ -173,11 +171,10 @@ public class EgitUiEditorUtils {
 		IEditorDescriptor descriptor = registry
 				.getDefaultEditor(fileName, type);
 		String id;
-		if (descriptor == null || descriptor.isOpenExternal()) {
+		if (descriptor == null || descriptor.isOpenExternal())
 			id = "org.eclipse.ui.DefaultTextEditor"; //$NON-NLS-1$
-		} else {
+		else
 			id = descriptor.getId();
-		}
 		return id;
 	}
 
@@ -205,18 +202,16 @@ public class EgitUiEditorUtils {
 	private static IContentType getContentType(String fileName,
 			InputStream contents) {
 		IContentType type = null;
-		if (contents != null) {
+		if (contents != null)
 			try {
 				type = Platform.getContentTypeManager().findContentTypeFor(
 						contents, fileName);
 			} catch (IOException e) {
 				Activator.handleError(e.getMessage(), e, false);
 			}
-		}
-		if (type == null) {
+		if (type == null)
 			type = Platform.getContentTypeManager()
 					.findContentTypeFor(fileName);
-		}
 		return type;
 	}
 }

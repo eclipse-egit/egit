@@ -93,13 +93,12 @@ public class GitCloneWizard extends AbstractGitCloneWizard {
 			if (test.exists()
 					&& MessageDialog.openQuestion(getShell(),
 							UIText.GitCloneWizard_abortingCloneTitle,
-							UIText.GitCloneWizard_abortingCloneMsg)) {
+							UIText.GitCloneWizard_abortingCloneMsg))
 				try {
 					FileUtils.delete(test, FileUtils.RECURSIVE | FileUtils.RETRY);
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				}
-			}
 		}
 		return true;
 	}

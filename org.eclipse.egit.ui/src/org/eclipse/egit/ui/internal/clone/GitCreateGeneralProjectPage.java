@@ -220,22 +220,18 @@ public class GitCreateGeneralProjectPage extends WizardPage {
 	}
 
 	private IProject[] getProjectsInWorkspace() {
-		if (wsProjects == null) {
+		if (wsProjects == null)
 			wsProjects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-		}
 		return wsProjects;
 	}
 
 	private boolean isProjectInWorkspace(String projectName) {
-		if (projectName == null) {
+		if (projectName == null)
 			return false;
-		}
 		IProject[] workspaceProjects = getProjectsInWorkspace();
-		for (int i = 0; i < workspaceProjects.length; i++) {
-			if (projectName.equals(workspaceProjects[i].getName())) {
+		for (int i = 0; i < workspaceProjects.length; i++)
+			if (projectName.equals(workspaceProjects[i].getName()))
 				return true;
-			}
-		}
 		return false;
 	}
 

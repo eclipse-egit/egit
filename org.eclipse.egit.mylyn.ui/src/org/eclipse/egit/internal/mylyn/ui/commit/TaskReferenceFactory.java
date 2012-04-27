@@ -166,8 +166,8 @@ public class TaskReferenceFactory implements IAdapterFactory {
 		if (repositories.size() == 1)
 			return repositories.iterator().next();
 
-		for (TaskRepository repository : repositories) {
-			if (!repository.isOffline()) {
+		for (TaskRepository repository : repositories)
+			if (!repository.isOffline())
 				try {
 					URL url = new URL(repository.getRepositoryUrl());
 
@@ -176,8 +176,6 @@ public class TaskReferenceFactory implements IAdapterFactory {
 				} catch (MalformedURLException e) {
 					// We cannot do anything.
 				}
-			}
-		}
 		return null;
 	}
 

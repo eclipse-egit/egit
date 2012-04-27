@@ -118,13 +118,10 @@ public class GitLightweightDecorator extends LabelProvider implements
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
 				ITheme theme  = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
-				for (int i = 0; i < actColors.length; i++) {
+				for (int i = 0; i < actColors.length; i++)
 					theme.getColorRegistry().get(actColors[i]);
-
-				}
-				for (int i = 0; i < actFonts.length; i++) {
+				for (int i = 0; i < actFonts.length; i++)
 					theme.getFontRegistry().get(actFonts[i]);
-				}
 			}
 		});
 	}
@@ -162,13 +159,12 @@ public class GitLightweightDecorator extends LabelProvider implements
 		final IResource resource = getResource(element);
 		if (resource == null)
 			decorateResourceMapping(element, decoration);
-		else {
+		else
 			try {
 				decorateResource(resource, decoration);
 			} catch(CoreException e) {
 				handleException(resource, e);
 			}
-		}
 	}
 
 	/**
@@ -305,9 +301,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 			}
 
 			public ImageData getImageData() {
-				if (data == null) {
+				if (data == null)
 					data = descriptor.getImageData();
-				}
 				return data;
 			}
 		}
@@ -375,9 +370,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 		private void decorateFontAndColour(IDecoration decoration,
 				IDecoratableResource resource) {
 			ITheme current = PlatformUI.getWorkbench().getThemeManager().getCurrentTheme();
-			if (resource.isIgnored()) {
+			if (resource.isIgnored())
 				return;
-			}
 			if (!resource.isTracked()
 					|| resource.isDirty()
 					|| resource.staged() != Staged.NOT_STAGED) {
@@ -438,20 +432,18 @@ public class GitLightweightDecorator extends LabelProvider implements
 				// Staged overrides tracked
 				Staged staged = resource.staged();
 				if (store.getBoolean(UIPreferences.DECORATOR_SHOW_STAGED_ICON)
-						&& staged != Staged.NOT_STAGED) {
+						&& staged != Staged.NOT_STAGED)
 					if (staged == Staged.ADDED)
 						overlay = stagedAddedImage;
 					else if (staged == Staged.REMOVED)
 						overlay = stagedRemovedImage;
 					else
 						overlay = stagedImage;
-				}
 
 				// Dirty overrides staged
 				if(store
-						.getBoolean(UIPreferences.DECORATOR_SHOW_DIRTY_ICON) && resource.isDirty()) {
+						.getBoolean(UIPreferences.DECORATOR_SHOW_DIRTY_ICON) && resource.isDirty())
 					overlay = dirtyImage;
-				}
 
 				// Conflicts override everything
 				if (store
@@ -460,9 +452,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 					overlay = conflictImage;
 
 			} else if (store
-					.getBoolean(UIPreferences.DECORATOR_SHOW_UNTRACKED_ICON)) {
+					.getBoolean(UIPreferences.DECORATOR_SHOW_UNTRACKED_ICON))
 				overlay = untrackedImage;
-			}
 
 			// Overlays can only be added once, so do it at the end
 			decoration.addOverlay(overlay);
@@ -490,7 +481,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 			int length = format.length();
 			int start = -1;
 			int end = length;
-			while (true) {
+			while (true)
 				if ((end = format.indexOf('{', start)) > -1) {
 					output.append(format.substring(start + 1, end));
 					if ((start = format.indexOf('}', end)) > -1) {
@@ -524,9 +515,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 						if (key.equals(BINDING_RESOURCE_NAME)) {
 							output = suffix;
 							s = null;
-						} else {
+						} else
 							s = bindings.get(key);
-						}
 
 						if (s != null) {
 							if (spaceBefore)
@@ -540,9 +530,8 @@ public class GitLightweightDecorator extends LabelProvider implements
 							int curLength = output.length();
 							if (curLength > 0) {
 								char c = output.charAt(curLength - 1);
-								if (c == ':' || c == '@') {
+								if (c == ':' || c == '@')
 									output.deleteCharAt(curLength - 1);
-								}
 							}
 						}
 					} else {
@@ -553,7 +542,6 @@ public class GitLightweightDecorator extends LabelProvider implements
 					output.append(format.substring(start + 1, length));
 					break;
 				}
-			}
 
 			String prefixString = prefix.toString().replaceAll("^\\s+", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			if (prefixString.length() > 0)
@@ -593,9 +581,9 @@ public class GitLightweightDecorator extends LabelProvider implements
 		// If the property is of any interest to us
 		if (prop.equals(TeamUI.GLOBAL_IGNORES_CHANGED)
 				|| prop.equals(TeamUI.GLOBAL_FILE_TYPES_CHANGED)
-				|| prop.equals(Activator.DECORATORS_CHANGED)) {
+				|| prop.equals(Activator.DECORATORS_CHANGED))
 			postLabelEvent();
-		} else if (prop.equals(UIPreferences.THEME_UncommittedChangeBackgroundColor)
+		else if (prop.equals(UIPreferences.THEME_UncommittedChangeBackgroundColor)
 				|| prop.equals(UIPreferences.THEME_UncommittedChangeFont)
 				|| prop.equals(UIPreferences.THEME_UncommittedChangeForegroundColor)) {
 			ensureFontAndColorsCreated(fonts, colors);
@@ -612,14 +600,13 @@ public class GitLightweightDecorator extends LabelProvider implements
 
 	private static IResource getResource(Object actElement) {
 		Object element = actElement;
-		if (element instanceof ResourceMapping) {
+		if (element instanceof ResourceMapping)
 			element = ((ResourceMapping) element).getModelObject();
-		}
 
 		IResource resource = null;
-		if (element instanceof IResource) {
+		if (element instanceof IResource)
 			resource = (IResource) element;
-		} else if (element instanceof IAdaptable) {
+		else if (element instanceof IAdaptable) {
 			final IAdaptable adaptable = (IAdaptable) element;
 			resource = (IResource) adaptable.getAdapter(IResource.class);
 			if (resource == null) {

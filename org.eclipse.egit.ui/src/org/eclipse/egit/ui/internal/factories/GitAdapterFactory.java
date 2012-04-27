@@ -45,9 +45,8 @@ public class GitAdapterFactory implements IAdapterFactory {
 
 	@SuppressWarnings("unchecked")
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
-		if (adapterType.isAssignableFrom(IHistoryPageSource.class)) {
+		if (adapterType.isAssignableFrom(IHistoryPageSource.class))
 			return historyPageSource;
-		}
 
 		if (IWorkbenchAdapter.class == adapterType) {
 			if (adaptableObject instanceof RepositoryNode)

@@ -47,7 +47,7 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 	 */
 	public List<IPath> getChildPaths() throws IOException {
 		List<IPath> result = new ArrayList<IPath>();
-		for (IPath myPath : getPathList()) {
+		for (IPath myPath : getPathList())
 			if (getObject().isPrefixOf(myPath)) {
 				int segmentDiff = myPath.segmentCount()
 						- getObject().segmentCount();
@@ -58,7 +58,6 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 						result.add(newPath);
 				}
 			}
-		}
 		return result;
 	}
 
@@ -68,7 +67,7 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 	 */
 	public List<Ref> getChildRefs() throws IOException {
 		List<Ref> childRefs = new ArrayList<Ref>();
-		for (IPath myPath : getPathList()) {
+		for (IPath myPath : getPathList())
 			if (getObject().isPrefixOf(myPath)) {
 				int segmentDiff = myPath.segmentCount()
 						- getObject().segmentCount();
@@ -77,7 +76,6 @@ public class BranchHierarchyNode extends RepositoryTreeNode<IPath> {
 					childRefs.add(ref);
 				}
 			}
-		}
 		return childRefs;
 	}
 

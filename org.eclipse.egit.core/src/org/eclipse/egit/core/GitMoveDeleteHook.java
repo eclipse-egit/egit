@@ -119,11 +119,10 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		// Deleting a GIT repository which is in use is a pretty bad idea. To
 		// delete disconnect the team provider first.
 		//
-		if (data.isProtected(folder)) {
+		if (data.isProtected(folder))
 			return cannotModifyRepository(tree);
-		} else {
+		else
 			return FINISH_FOR_ME;
-		}
 	}
 
 	public boolean deleteProject(final IResourceTree tree,
@@ -283,19 +282,18 @@ class GitMoveDeleteHook implements IMoveDeleteHook {
 		// check if new location is below the same repository
 		Path workTree = new Path(srcm.getRepository().getWorkTree().getAbsolutePath());
 		int matchingFirstSegments = workTree.matchingFirstSegments(newLocation);
-		if (matchingFirstSegments == workTree.segmentCount()) {
+		if (matchingFirstSegments == workTree.segmentCount())
 			return moveProjectHelperMoveOnlyProject(tree, source, description, updateFlags,
 					monitor, srcm, newLocationFile);
-		} else {
+		else {
 			int dstAboveSrcRepo = newLocation.matchingFirstSegments(RepositoryMapping
 					.getMapping(source).getGitDirAbsolutePath());
 			int srcAboveSrcRepo = sourceLocation.matchingFirstSegments(RepositoryMapping.getMapping(source).getGitDirAbsolutePath());
-			if (dstAboveSrcRepo > 0 && srcAboveSrcRepo > 0) {
+			if (dstAboveSrcRepo > 0 && srcAboveSrcRepo > 0)
 				return moveProjectHelperMoveRepo(tree, source, description, updateFlags, monitor,
 					srcm, newLocation, sourceLocation);
-			} else {
+			else
 				return FINISH_FOR_ME;
-			}
 		}
 	}
 

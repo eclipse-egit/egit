@@ -30,26 +30,23 @@ public class ApplyPatchActionHandler extends RepositoryActionHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IResource[] resources = getSelectedResources(event);
 		IResource resource = null;
-		if (resources.length > 0) {
+		if (resources.length > 0)
 			resource = resources[0];
-		}
 		boolean isPatch = false;
-		if (resource instanceof IFile) {
+		if (resource instanceof IFile)
 			try {
 				isPatch = ApplyPatchOperation.isPatch((IFile) resource);
 			} catch (CoreException e) {
 				Activator.handleError(e.getMessage(), e, false);
 			}
-		}
 
 		final ApplyPatchOperation op;
-		if (isPatch) {
+		if (isPatch)
 			op = new ApplyPatchOperation(HandlerUtil.getActivePart(event),
 					(IFile) resource, null, new CompareConfiguration());
-		} else {
+		else
 			op = new ApplyPatchOperation(HandlerUtil.getActivePart(event),
 					resource);
-		}
 		BusyIndicator.showWhile(Display.getDefault(), op);
 		return null;
 	}

@@ -88,32 +88,28 @@ public class LocalFileRevision extends FileRevision {
 	}
 
 	public IStorage getStorage(IProgressMonitor monitor) throws CoreException {
-		if (file != null) {
+		if (file != null)
 			return file;
-		}
 		return state;
 	}
 
 	public String getName() {
-		if (file != null) {
+		if (file != null)
 			return file.getName();
-		}
 
 		return state.getName();
 	}
 
 	public long getTimestamp() {
-		if (file != null) {
+		if (file != null)
 			return file.getLocalTimeStamp();
-		}
 
 		return state.getModificationTime();
 	}
 
 	public boolean exists() {
-		if (file != null) {
+		if (file != null)
 			return file.exists();
-		}
 
 		return state.exists();
 	}

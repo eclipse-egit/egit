@@ -98,10 +98,9 @@ public class FileRevisionTypedElement extends StorageTypedElement {
 	}
 
 	public IEditorInput getDocumentKey(Object element) {
-		if (element == this && getBufferedStorage() != null) {
+		if (element == this && getBufferedStorage() != null)
 			return new FileRevisionEditorInput(fileRevision,
 					getBufferedStorage(), getLocalEncoding());
-		}
 		return null;
 	}
 

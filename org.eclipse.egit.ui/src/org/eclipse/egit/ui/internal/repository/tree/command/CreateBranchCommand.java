@@ -62,11 +62,11 @@ public class CreateBranchCommand extends
 			Ref branch;
 			try {
 				if (node.getRepository().getFullBranch().startsWith(
-						Constants.R_HEADS)) {
+						Constants.R_HEADS))
 					// simple case: local branch checked out
 					branch = node.getRepository().getRef(
 							node.getRepository().getFullBranch());
-				} else {
+				else {
 					// remote branch or tag checked out: resolve the commit
 					String ref = Activator
 							.getDefault()
@@ -75,14 +75,12 @@ public class CreateBranchCommand extends
 									node.getRepository().getFullBranch(), false);
 					if (ref == null)
 						branch = null;
-					else {
-						if (ref.startsWith(Constants.R_TAGS))
-							// if a tag is checked out, we don't suggest
-							// anything
-							branch = null;
-						else
-							branch = node.getRepository().getRef(ref);
-					}
+					else if (ref.startsWith(Constants.R_TAGS))
+						// if a tag is checked out, we don't suggest
+						// anything
+						branch = null;
+					else
+						branch = node.getRepository().getRef(ref);
 				}
 			} catch (IOException e) {
 				branch = null;

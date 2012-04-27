@@ -160,9 +160,8 @@ public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
 	public IHyperlink[] detectHyperlinks(ITextViewer textViewer,
 			final IRegion region, boolean canShowMultipleHyperlinks) {
 		IDocument document = textViewer.getDocument();
-		if (document == null || document.getLength() == 0) {
+		if (document == null || document.getLength() == 0)
 			return null;
-		}
 
 		String content;
 		int contentOffset;
@@ -201,23 +200,19 @@ public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
 
 		List<IHyperlink> hyperlinks = detectHyperlinks(textViewer, content,
 				index, contentOffset);
-		if (hyperlinks == null) {
+		if (hyperlinks == null)
 			return null;
-		}
 
 		// filter hyperlinks that do not match original region
-		if (region.getLength() == 0) {
+		if (region.getLength() == 0)
 			for (Iterator<IHyperlink> it = hyperlinks.iterator(); it.hasNext();) {
 				IHyperlink hyperlink = it.next();
 				IRegion hyperlinkRegion = hyperlink.getHyperlinkRegion();
-				if (!isInRegion(region, hyperlinkRegion)) {
+				if (!isInRegion(region, hyperlinkRegion))
 					it.remove();
-				}
 			}
-		}
-		if (hyperlinks.isEmpty()) {
+		if (hyperlinks.isEmpty())
 			return null;
-		}
 		return hyperlinks.toArray(new IHyperlink[hyperlinks.size()]);
 	}
 
@@ -228,12 +223,10 @@ public class CommitHyperlinkDetector extends AbstractHyperlinkDetector {
 		Matcher matcher = PATTERN_COMMIT_ID.matcher(content);
 		while (matcher.find()) {
 			if (index != -1
-					&& (index < matcher.start() || index > matcher.end())) {
+					&& (index < matcher.start() || index > matcher.end()))
 				continue;
-			}
-			if (links == null) {
+			if (links == null)
 				links = new ArrayList<IHyperlink>();
-			}
 			int start = matcher.start(1);
 			Region region = new Region(contentOffset + start, matcher.end(1)
 					- start);

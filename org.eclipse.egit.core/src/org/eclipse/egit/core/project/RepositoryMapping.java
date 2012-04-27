@@ -95,14 +95,12 @@ public class RepositoryMapping {
 		} else if (gLocParent.isPrefixOf(cLoc)) {
 			int cnt = cLoc.segmentCount() - cLoc.matchingFirstSegments(gLocParent);
 			StringBuilder p = new StringBuilder("");  //$NON-NLS-1$
-			while (cnt-- > 0) {
+			while (cnt-- > 0)
 				p.append("../");  //$NON-NLS-1$
-			}
 			p.append(gLoc.segment(gLoc.segmentCount() - 1));
 			gitDirPathString = p.toString();
-		} else {
+		} else
 			gitDirPathString = gLoc.toPortableString();
-		}
 	}
 
 	/**

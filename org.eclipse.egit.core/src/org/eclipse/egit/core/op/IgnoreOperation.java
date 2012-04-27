@@ -105,9 +105,8 @@ public class IgnoreOperation implements IEGitOperation {
 		while (walk.next()) {
 			WorkingTreeIterator workingTreeIterator = walk.getTree(0,
 					WorkingTreeIterator.class);
-			if (walk.getPathString().equals(path)) {
+			if (walk.getPathString().equals(path))
 				return workingTreeIterator.isEntryIgnored();
-			}
 			if (workingTreeIterator.getEntryFileMode().equals(FileMode.TREE))
 				walk.enterSubtree();
 		}

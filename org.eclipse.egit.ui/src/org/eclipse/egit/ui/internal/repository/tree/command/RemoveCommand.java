@@ -89,9 +89,9 @@ public class RemoveCommand extends
 		boolean removeProjects = false;
 		final List<IProject> projectsToDelete = findProjectsToDelete(selectedNodes);
 		if (delete) {
-			if (selectedNodes.size() > 1) {
+			if (selectedNodes.size() > 1)
 				return;
-			} else if (selectedNodes.size() == 1) {
+			else if (selectedNodes.size() == 1) {
 				Repository repository = selectedNodes.get(0).getObject();
 				if (repository.isBare()) {
 					// simple confirm dialog
@@ -114,26 +114,23 @@ public class RemoveCommand extends
 					removeProjects = dlg.shouldRemoveProjects();
 				}
 			}
-		}
-		else {
-			if (!projectsToDelete.isEmpty()) {
-				final boolean[] confirmedCanceled = new boolean[] { false,
-						false };
-				Display.getDefault().syncExec(new Runnable() {
+		} else if (!projectsToDelete.isEmpty()) {
+			final boolean[] confirmedCanceled = new boolean[] { false,
+					false };
+			Display.getDefault().syncExec(new Runnable() {
 
-					public void run() {
-						try {
-							confirmedCanceled[0] = confirmProjectDeletion(
-									projectsToDelete, event);
-						} catch (OperationCanceledException e) {
-							confirmedCanceled[1] = true;
-						}
+				public void run() {
+					try {
+						confirmedCanceled[0] = confirmProjectDeletion(
+								projectsToDelete, event);
+					} catch (OperationCanceledException e) {
+						confirmedCanceled[1] = true;
 					}
-				});
-				if (confirmedCanceled[1])
-					return;
-				removeProjects = confirmedCanceled[0];
-			}
+				}
+			});
+			if (confirmedCanceled[1])
+				return;
+			removeProjects = confirmedCanceled[0];
 		}
 
 		final boolean deleteWorkDir = deleteWorkingDir;
@@ -147,22 +144,19 @@ public class RemoveCommand extends
 				monitor
 						.setTaskName(UIText.RepositoriesView_DeleteRepoDeterminProjectsMessage);
 
-				if (removeProj) {
+				if (removeProj)
 					// confirmed deletion
 					deleteProjects(delete, projectsToDelete,
 							monitor);
-				}
-				for (RepositoryNode node : selectedNodes) {
+				for (RepositoryNode node : selectedNodes)
 					util.removeDir(node.getRepository().getDirectory());
-				}
 
-				if (delete) {
+				if (delete)
 					try {
 						deleteRepositoryContent(selectedNodes, deleteWorkDir);
 					} catch (IOException e) {
 						return Activator.createErrorStatus(e.getMessage(), e);
 					}
-				}
 				return Status.OK_STATUS;
 			}
 		};
@@ -201,11 +195,10 @@ public class RemoveCommand extends
 			if (!repo.isBare() && deleteWorkDir) {
 				File[] files = repo.getWorkTree().listFiles();
 				if (files != null)
-					for (File file : files) {
+					for (File file : files)
 						if (isTracked(file, repo))
 							FileUtils.delete(file,
 									FileUtils.RECURSIVE | FileUtils.RETRY);
-					}
 			}
 			repo.close();
 			FileUtils.delete(repo.getDirectory(),
@@ -254,11 +247,9 @@ public class RemoveCommand extends
 			File workDir = node.getRepository().getWorkTree();
 			final IPath wdPath = new Path(workDir.getAbsolutePath());
 			for (IProject prj : ResourcesPlugin.getWorkspace()
-					.getRoot().getProjects()) {
-				if (wdPath.isPrefixOf(prj.getLocation())) {
+					.getRoot().getProjects())
+				if (wdPath.isPrefixOf(prj.getLocation()))
 					projectsToDelete.add(prj);
-				}
-			}
 		}
 		return projectsToDelete;
 	}

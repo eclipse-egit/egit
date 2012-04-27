@@ -184,9 +184,8 @@ public class GitProjectsImportPage extends WizardPage {
 
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				ProjectRecord element = (ProjectRecord) event.getElement();
-				if (isProjectInWorkspace(element.getProjectName())) {
+				if (isProjectInWorkspace(element.getProjectName()))
 					projectsList.setChecked(element, false);
-				}
 				enableSelectAllButtons();
 			}
 		});
@@ -323,11 +322,10 @@ public class GitProjectsImportPage extends WizardPage {
 
 		final File directory = new File(path);
 		long modified = directory.lastModified();
-		if (path.equals(lastPath) && lastModified == modified) {
+		if (path.equals(lastPath) && lastModified == modified)
 			// since the file/folder was not modified and the path did not
 			// change, no refreshing is required
 			return;
-		}
 
 		setErrorMessage(null);
 
@@ -348,9 +346,8 @@ public class GitProjectsImportPage extends WizardPage {
 					if (directory.isDirectory()) {
 
 						if (!collectProjectFilesFromDirectory(files, directory,
-								null, monitor)) {
+								null, monitor))
 							return;
-						}
 						Iterator<File> filesIterator = files.iterator();
 						selectedProjects = new ProjectRecord[files.size()];
 						int index = 0;
@@ -370,9 +367,8 @@ public class GitProjectsImportPage extends WizardPage {
 									setErrorMessage(UIText.GitProjectsImportPage_NoProjectsMessage);
 								}
 							});
-					} else {
+					} else
 						monitor.worked(60);
-					}
 					monitor.done();
 				}
 
@@ -384,12 +380,11 @@ public class GitProjectsImportPage extends WizardPage {
 		}
 
 		projectsList.refresh(true);
-		if (getValidProjects().length < selectedProjects.length) {
+		if (getValidProjects().length < selectedProjects.length)
 			setMessage(UIText.WizardProjectsImportPage_projectsInWorkspace,
 					WARNING);
-		} else {
+		else
 			setMessage(UIText.WizardProjectsImportPage_ImportProjectsDescription);
-		}
 		selectAllNewProjects();
 		enableSelectAllButtons();
 		checkPageComplete();
@@ -434,9 +429,8 @@ public class GitProjectsImportPage extends WizardPage {
 	 * @return IProject[] array of IProject in the current workspace
 	 */
 	private IProject[] getProjectsInWorkspace() {
-		if (wsProjects == null) {
+		if (wsProjects == null)
 			wsProjects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-		}
 		return wsProjects;
 	}
 
@@ -454,11 +448,9 @@ public class GitProjectsImportPage extends WizardPage {
 	 */
 	public ProjectRecord[] getValidProjects() {
 		List<ProjectRecord> validProjects = new ArrayList<ProjectRecord>();
-		for (int i = 0; i < selectedProjects.length; i++) {
-			if (!isProjectInWorkspace(selectedProjects[i].getProjectName())) {
+		for (int i = 0; i < selectedProjects.length; i++)
+			if (!isProjectInWorkspace(selectedProjects[i].getProjectName()))
 				validProjects.add(selectedProjects[i]);
-			}
-		}
 		return validProjects.toArray(new ProjectRecord[validProjects.size()]);
 	}
 
@@ -471,15 +463,12 @@ public class GitProjectsImportPage extends WizardPage {
 	 *         workspace
 	 */
 	private boolean isProjectInWorkspace(String projectName) {
-		if (projectName == null) {
+		if (projectName == null)
 			return false;
-		}
 		IProject[] workspaceProjects = getProjectsInWorkspace();
-		for (int i = 0; i < workspaceProjects.length; i++) {
-			if (projectName.equals(workspaceProjects[i].getName())) {
+		for (int i = 0; i < workspaceProjects.length; i++)
+			if (projectName.equals(workspaceProjects[i].getName()))
 				return true;
-			}
-		}
 		return false;
 	}
 

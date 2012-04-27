@@ -400,24 +400,21 @@ public class GitCompareEditorInput extends CompareEditorInput {
 				child = getOrCreateChild(child, path.segment(i));
 			return child;
 		} else {
-			for (Entry<IPath, IDiffContainer> entry : diffRoots.entrySet()) {
+			for (Entry<IPath, IDiffContainer> entry : diffRoots.entrySet())
 				if (entry.getKey().isPrefixOf(path)) {
 					for (int i = entry.getKey().segmentCount(); i < path
 							.segmentCount() - 1; i++)
 						child = getOrCreateChild(child, path.segment(i));
 					return child;
 				}
-			}
 			return null;
 		}
 	}
 
 	private DiffNode getOrCreateChild(IDiffContainer parent, final String name) {
-		for (IDiffElement child : parent.getChildren()) {
-			if (child.getName().equals(name)) {
+		for (IDiffElement child : parent.getChildren())
+			if (child.getName().equals(name))
 				return ((DiffNode) child);
-			}
-		}
 		DiffNode child = new DiffNode(parent, Differencer.NO_CHANGE) {
 
 			@Override
@@ -439,19 +436,17 @@ public class GitCompareEditorInput extends CompareEditorInput {
 			List<IResource> resourceList = new ArrayList<IResource>(
 					input.length);
 			List<IPath> allPaths = new ArrayList<IPath>(input.length);
-			for (IResource originalInput : input) {
+			for (IResource originalInput : input)
 				allPaths.add(originalInput.getFullPath());
-			}
 			for (IResource originalInput : input) {
 				boolean skip = false;
-				for (IPath path : allPaths) {
+				for (IPath path : allPaths)
 					if (path.isPrefixOf(originalInput.getFullPath())
 							&& path.segmentCount() < originalInput
 									.getFullPath().segmentCount()) {
 						skip = true;
 						break;
 					}
-				}
 				if (!skip)
 					resourceList.add(originalInput);
 			}

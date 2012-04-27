@@ -132,13 +132,12 @@ public class PushOperation {
 			throw new IllegalStateException(CoreText.OperationAlreadyExecuted);
 
 		if (this.specification != null)
-			for (URIish uri : this.specification.getURIs()) {
+			for (URIish uri : this.specification.getURIs())
 				for (RemoteRefUpdate update : this.specification
 						.getRefUpdates(uri))
 					if (update.getStatus() != Status.NOT_ATTEMPTED)
 						throw new IllegalStateException(
 								CoreText.RemoteRefUpdateCantBeReused);
-			}
 		IProgressMonitor monitor;
 		if (actMonitor == null)
 			monitor = new NullProgressMonitor();
@@ -225,9 +224,8 @@ public class PushOperation {
 						remoteName).setDryRun(dryRun).setTimeout(timeout)
 						.setProgressMonitor(gitMonitor).setCredentialsProvider(
 								credentialsProvider).call();
-				for (PushResult result : results) {
+				for (PushResult result : results)
 					operationResult.addOperationResult(result.getURI(), result);
-				}
 			} catch (JGitInternalException e) {
 				String errorMessage = e.getCause() != null ? e.getCause()
 						.getMessage() : e.getMessage();

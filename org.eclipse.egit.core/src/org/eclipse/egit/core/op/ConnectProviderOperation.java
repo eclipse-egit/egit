@@ -88,11 +88,10 @@ public class ConnectProviderOperation implements IEGitOperation {
 	 */
 	public void execute(IProgressMonitor m) throws CoreException {
 		IProgressMonitor monitor;
-		if (m == null) {
+		if (m == null)
 			monitor = new NullProgressMonitor();
-		} else {
+		else
 			monitor = m;
-		}
 
 		monitor.beginTask(CoreText.ConnectProviderOperation_connecting,
 				100 * projects.size());
@@ -182,10 +181,9 @@ public class ConnectProviderOperation implements IEGitOperation {
 	 */
 	private RepositoryMapping findActualRepository(
 			Collection<RepositoryMapping> repos, File suggestedRepo) {
-		for (RepositoryMapping rm : repos) {
+		for (RepositoryMapping rm : repos)
 			if (rm.getGitDirAbsolutePath().equals(Path.fromOSString(suggestedRepo.getPath())))
 				return rm;
-		}
 		return null;
 	}
 }

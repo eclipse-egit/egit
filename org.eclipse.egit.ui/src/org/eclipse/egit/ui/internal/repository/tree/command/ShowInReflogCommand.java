@@ -33,9 +33,8 @@ public class ShowInReflogCommand extends
 		Repository repo = null;
 		if (selectedNodes.size() == 1) {
 			RepositoryTreeNode selectedNode = selectedNodes.get(0);
-			if (selectedNode.getType() == RepositoryTreeNodeType.REPO) {
+			if (selectedNode.getType() == RepositoryTreeNodeType.REPO)
 				repo = selectedNode.getRepository();
-			}
 
 			final Repository repoToShow = repo;
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {

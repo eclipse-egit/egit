@@ -242,7 +242,7 @@ class FetchResultTable {
 
 			@Override
 			public String getToolTipText(final Object element) {
-				if (element instanceof FetchResultAdapter) {
+				if (element instanceof FetchResultAdapter)
 					switch (((FetchResultAdapter) element).update.getResult()) {
 					case FAST_FORWARD:
 						return UIText.FetchResultTable_statusDetailFastForward;
@@ -256,7 +256,6 @@ class FetchResultTable {
 					default:
 						return super.getToolTipText(element);
 					}
-				}
 				return super.getToolTipText(element);
 			}
 

@@ -50,13 +50,11 @@ public enum GitTraceLocation implements ITraceLocation {
 						false);
 				loc.setActive(active);
 			}
-		} else {
+		} else
 			// if the plug-in switch is off, we don't set the trace instance
 			// to null to avoid problems with possibly running trace calls
-			for (GitTraceLocation loc : values()) {
+			for (GitTraceLocation loc : values())
 				loc.setActive(false);
-			}
-		}
 	}
 
 	private final String location;

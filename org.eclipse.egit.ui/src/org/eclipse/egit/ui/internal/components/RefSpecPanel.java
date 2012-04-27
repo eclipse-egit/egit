@@ -140,10 +140,10 @@ public class RefSpecPanel {
 	}
 
 	private static boolean isValidRefExpression(final String s) {
-		if (RefSpec.isWildcard(s)) {
+		if (RefSpec.isWildcard(s))
 			// replace wildcard with some legal name just for checking
 			return isValidRefExpression(s.substring(0, s.length() - 1) + 'X');
-		} else
+		else
 			return Repository.isValidRefName(s)
 					|| Repository.isValidRefName(Constants.R_HEADS + s)
 					|| Repository.isValidRefName(Constants.R_TAGS + s);
@@ -172,10 +172,9 @@ public class RefSpecPanel {
 		final int i;
 		if (RefSpec.isWildcard(comp))
 			return comp;
-		if (comp == null || (i = comp.lastIndexOf('/')) == -1) {
+		if (comp == null || (i = comp.lastIndexOf('/')) == -1)
 			// That's somewhat ugly. What better can we do here?
 			return UIText.RefSpecPanel_refChooseSomeWildcard;
-		}
 		return comp.substring(0, i + 1) + '*';
 	}
 
@@ -602,12 +601,11 @@ public class RefSpecPanel {
 
 	private int indexOfSpec(final RefSpec spec) {
 		int i;
-		for (i = 0; i < specs.size(); i++) {
+		for (i = 0; i < specs.size(); i++)
 			// we have to compare references, not use List#indexOf,
 			// as equals is implemented in RefSpec
 			if (specs.get(i) == spec)
 				break;
-		}
 		if (i == specs.size())
 			return -1;
 		return i;
@@ -1063,13 +1061,12 @@ public class RefSpecPanel {
 			@Override
 			protected void setValue(final Object element, final Object value) {
 				if (value == null || ((String) value).length() == 0
-						|| ObjectId.zeroId().name().equals(value)) {
+						|| ObjectId.zeroId().name().equals(value))
 					// Ignore empty strings or null objects - do not set them in
 					// model.User won't loose any information if we just fall
 					// back to the old value.
 					// If user want to delete ref, let change the mode.
 					return;
-				}
 
 				final RefSpec oldSpec = (RefSpec) element;
 				final RefSpec newSpec = setRefSpecSource(oldSpec,
@@ -1138,12 +1135,11 @@ public class RefSpecPanel {
 
 			@Override
 			protected void setValue(final Object element, final Object value) {
-				if (value == null || ((String) value).length() == 0) {
+				if (value == null || ((String) value).length() == 0)
 					// Ignore empty strings - do not set them in model.
 					// User won't loose any information if we just fall back
 					// to the old value.
 					return;
-				}
 
 				final RefSpec oldSpec = (RefSpec) element;
 				final RefSpec newSpec = setRefSpecDestination(oldSpec,
@@ -1302,10 +1298,9 @@ public class RefSpecPanel {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				final List<RefSpec> specsCopy = new ArrayList<RefSpec>(specs);
-				for (final RefSpec spec : specsCopy) {
+				for (final RefSpec spec : specsCopy)
 					if (!isDeleteRefSpec(spec))
 						setRefSpec(spec, spec.setForceUpdate(true));
-				}
 			}
 		});
 		forceUpdateAllButton
@@ -1351,10 +1346,9 @@ public class RefSpecPanel {
 			return;
 		}
 
-		if (!isValidRefExpression(src)) {
+		if (!isValidRefExpression(src))
 			// no way to be smarter than user here
 			return;
-		}
 
 		// dst is empty, src is ref or wildcard, so we can rewrite it as user
 		// would perhaps
@@ -1365,14 +1359,13 @@ public class RefSpecPanel {
 					Constants.R_HEADS.substring(Constants.R_REFS.length()));
 			creationDstCombo.setText(newDst);
 		} else {
-			for (final RefSpec spec : predefinedConfigured) {
+			for (final RefSpec spec : predefinedConfigured)
 				if (spec.matchSource(src)) {
 					final String newDst = spec.expandFromSource(src)
 							.getDestination();
 					creationDstCombo.setText(newDst);
 					return;
 				}
-			}
 			if (remoteConfig != null && src.startsWith(Constants.R_HEADS)) {
 				final String newDst = Constants.R_REMOTES
 						+ remoteConfig.getName() + '/'
@@ -1447,28 +1440,26 @@ public class RefSpecPanel {
 				else
 					creationSrcDecoration.hide();
 			}
+		} else if (!srcWildcard && !isRemoteRef(src))
+			setControlDecoration(
+					creationSrcDecoration,
+					FieldDecorationRegistry.DEC_ERROR,
+					NLS
+							.bind(
+									UIText.RefSpecPanel_validationRefNonExistingRemote,
+									src));
+		else if (srcWildcard && !isMatchingAny(src, remoteRefNames)) {
+			setControlDecoration(
+					creationSrcDecoration,
+					FieldDecorationRegistry.DEC_WARNING,
+					NLS
+							.bind(
+									UIText.RefSpecPanel_validationRefNonMatchingRemote,
+									src));
+			srcOk = true;
 		} else {
-			if (!srcWildcard && !isRemoteRef(src))
-				setControlDecoration(
-						creationSrcDecoration,
-						FieldDecorationRegistry.DEC_ERROR,
-						NLS
-								.bind(
-										UIText.RefSpecPanel_validationRefNonExistingRemote,
-										src));
-			else if (srcWildcard && !isMatchingAny(src, remoteRefNames)) {
-				setControlDecoration(
-						creationSrcDecoration,
-						FieldDecorationRegistry.DEC_WARNING,
-						NLS
-								.bind(
-										UIText.RefSpecPanel_validationRefNonMatchingRemote,
-										src));
-				srcOk = true;
-			} else {
-				srcOk = true;
-				creationSrcDecoration.hide();
-			}
+			srcOk = true;
+			creationSrcDecoration.hide();
 		}
 
 		// check dst ref field
@@ -1562,7 +1553,7 @@ public class RefSpecPanel {
 
 		// check src
 		if (pushSpecs) {
-			if (!isDeleteRefSpec(spec)) {
+			if (!isDeleteRefSpec(spec))
 				if (src.length() == 0)
 					return UIText.RefSpecPanel_validationSrcUpdateRequired;
 				else if (!wildcard && !isLocalRef(src))
@@ -1573,17 +1564,14 @@ public class RefSpecPanel {
 							UIText.RefSpecPanel_validationRefInvalidExpression,
 							src);
 				// ignore non-matching wildcard specs
-			}
-		} else {
-			if (src == null || src.length() == 0)
-				return UIText.RefSpecPanel_validationSrcUpdateRequired;
-			else if (!wildcard && !isRemoteRef(src))
-				return NLS
-						.bind(
-								UIText.RefSpecPanel_validationRefNonExistingRemote,
-								src);
-			// ignore non-matching wildcard specs
-		}
+		} else if (src == null || src.length() == 0)
+			return UIText.RefSpecPanel_validationSrcUpdateRequired;
+		else if (!wildcard && !isRemoteRef(src))
+			return NLS
+					.bind(
+							UIText.RefSpecPanel_validationRefNonExistingRemote,
+							src);
+		// ignore non-matching wildcard specs
 
 		// check dst
 		if (dst == null || dst.length() == 0) {
@@ -1608,7 +1596,7 @@ public class RefSpecPanel {
 	private void validateSpecsCrossDst() {
 		final Map<String, RefSpec> dstsSpecsMap = new HashMap<String, RefSpec>();
 		try {
-			for (final RefSpec spec : specs) {
+			for (final RefSpec spec : specs)
 				if (!spec.isWildcard()) {
 					if (!tryAddDestination(dstsSpecsMap, spec.getDestination(),
 							spec))
@@ -1620,16 +1608,14 @@ public class RefSpecPanel {
 					else
 						srcNames = remoteRefNames;
 
-					for (final String src : srcNames) {
+					for (final String src : srcNames)
 						if (spec.matchSource(src)) {
 							final String dst = spec.expandFromSource(src)
 									.getDestination();
 							if (!tryAddDestination(dstsSpecsMap, dst, spec))
 								return;
 						}
-					}
 				}
-			}
 		} finally {
 			matchingAnyRefs = !dstsSpecsMap.isEmpty();
 		}
@@ -1653,14 +1639,12 @@ public class RefSpecPanel {
 	private void updateAddPredefinedButton(final Button button,
 			final List<RefSpec> predefined) {
 		boolean enable = false;
-		if (predefined != null) {
-			for (final RefSpec pre : predefined) {
+		if (predefined != null)
+			for (final RefSpec pre : predefined)
 				if (!specs.contains(pre)) {
 					enable = true;
 					break;
 				}
-			}
-		}
 		button.setEnabled(enable);
 	}
 
@@ -1671,12 +1655,11 @@ public class RefSpecPanel {
 
 	private void updateForceUpdateAllButton() {
 		boolean enable = false;
-		for (final RefSpec spec : specs) {
+		for (final RefSpec spec : specs)
 			if (!isDeleteRefSpec(spec) && !spec.isForceUpdate()) {
 				enable = true;
 				break;
 			}
-		}
 		forceUpdateAllButton.setEnabled(enable);
 	}
 
@@ -1699,10 +1682,9 @@ public class RefSpecPanel {
 	}
 
 	private void addPredefinedRefSpecs(final List<RefSpec> predefined) {
-		for (final RefSpec pre : predefined) {
+		for (final RefSpec pre : predefined)
 			if (!specs.contains(pre))
 				addRefSpec(pre);
-		}
 	}
 
 	private List<RefContentProposal> createContentProposals(
@@ -1733,10 +1715,8 @@ public class RefSpecPanel {
 				if (content.equals(Constants.HEAD)
 						|| content.startsWith(Constants.R_HEADS))
 					result.add(p);
-			} else {
-				if (content.startsWith(Constants.R_REMOTES))
-					result.add(p);
-			}
+			} else if (content.startsWith(Constants.R_REMOTES))
+				result.add(p);
 		}
 		return result;
 	}

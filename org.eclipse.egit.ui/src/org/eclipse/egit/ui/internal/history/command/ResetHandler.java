@@ -32,15 +32,14 @@ public class ResetHandler extends AbstractHistoryCommandHandler {
 		String type = event.getParameter(HistoryViewCommands.RESET_MODE);
 		final ResetType resetType;
 
-		if (type.equals("Hard")) { //$NON-NLS-1$
+		if (type.equals("Hard")) //$NON-NLS-1$
 			resetType = ResetType.HARD;
-		} else if (type.equals("Mixed")) { //$NON-NLS-1$
+		else if (type.equals("Mixed")) //$NON-NLS-1$
 			resetType = ResetType.MIXED;
-		} else if (type.equals("Soft")) { //$NON-NLS-1$
+		else if (type.equals("Soft")) //$NON-NLS-1$
 			resetType = ResetType.SOFT;
-		} else {
+		else
 			throw new ExecutionException("Could not determine the reset type"); //$NON-NLS-1$ TODO
-		}
 
 		String jobName = "Reset"; //$NON-NLS-1$
 		switch (resetType) {

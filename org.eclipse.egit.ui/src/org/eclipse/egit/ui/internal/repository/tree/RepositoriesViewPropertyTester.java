@@ -47,10 +47,10 @@ public class RepositoriesViewPropertyTester extends PropertyTester {
 				return false;
 			Ref ref = (Ref) node.getObject();
 			try {
-				if (ref.getName().startsWith(Constants.R_REFS)) {
+				if (ref.getName().startsWith(Constants.R_REFS))
 					return ref.getName().equals(
 							node.getRepository().getFullBranch());
-				} else if (ref.getName().equals(Constants.HEAD))
+				else if (ref.getName().equals(Constants.HEAD))
 					return true;
 				else {
 					String leafname = ref.getLeaf().getName();
@@ -72,7 +72,7 @@ public class RepositoriesViewPropertyTester extends PropertyTester {
 			Ref ref = (Ref) node.getObject();
 			return ref.getName().startsWith(Constants.R_HEADS);
 		}
-		if (property.equals("fetchExists")) { //$NON-NLS-1$
+		if (property.equals("fetchExists")) //$NON-NLS-1$
 			if (node instanceof RemoteNode) {
 				String configName = ((RemoteNode) node).getObject();
 
@@ -87,8 +87,7 @@ public class RepositoriesViewPropertyTester extends PropertyTester {
 				return !rconfig.getFetchRefSpecs().isEmpty()
 						&& !rconfig.getURIs().isEmpty();
 			}
-		}
-		if (property.equals("pushExists")) { //$NON-NLS-1$
+		if (property.equals("pushExists")) //$NON-NLS-1$
 			if (node instanceof RemoteNode) {
 				String configName = ((RemoteNode) node).getObject();
 
@@ -104,7 +103,6 @@ public class RepositoriesViewPropertyTester extends PropertyTester {
 						&& (!rconfig.getPushURIs().isEmpty() || !rconfig
 								.getURIs().isEmpty());
 			}
-		}
 		if (property.equals("canMerge")) { //$NON-NLS-1$
 			Repository rep = node.getRepository();
 			if (rep.getRepositoryState() != RepositoryState.SAFE)

@@ -143,14 +143,13 @@ class ConfirmationPage extends WizardPage {
 
 	private void checkPreviousPagesSelections(RepositorySelection repositorySelection,  List<RefSpec> refSpecs) {
 		if (!repositorySelection.equals(displayedRepoSelection)
-				|| !refSpecs.equals(displayedRefSpecs)) {
+				|| !refSpecs.equals(displayedRefSpecs))
 			// Allow user to finish by skipping confirmation...
 			setPageComplete(true);
-		} else {
+		else
 			// ... but if user doesn't skip confirmation, allow only when no
 			// critical errors occurred
 			setPageComplete(confirmedResult != null);
-		}
 	}
 
 	private void revalidate(RepositorySelection repositorySelection, List<RefSpec> refSpecs) {

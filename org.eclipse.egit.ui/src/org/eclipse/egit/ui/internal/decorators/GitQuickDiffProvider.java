@@ -77,9 +77,8 @@ public class GitQuickDiffProvider implements IQuickDiffReferenceProvider {
 				Activator.error(UIText.QuickDiff_failedLoading, e);
 			}
 			return document;
-		} else {
+		} else
 			return null;
-		}
 	}
 
 	public boolean isEnabled() {

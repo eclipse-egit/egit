@@ -66,13 +66,12 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 			db = rm.getRepository();
 			walk = new KidWalk(db);
 			gitPath = rm.getRepoRelativePath(resource);
-			if (gitPath == null || gitPath.length() == 0) {
+			if (gitPath == null || gitPath.length() == 0)
 				walk.setTreeFilter(TreeFilter.ANY_DIFF);
-			} else {
+			else
 				walk.setTreeFilter(AndTreeFilter.create(PathFilterGroup
 						.createFromStrings(Collections.singleton(gitPath)),
 						TreeFilter.ANY_DIFF));
-			}
 		}
 
 		revisions = buildRevisions(monitor, flags);
@@ -175,10 +174,9 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 			return new IndexFileRevision(db, gitPath);
 
 		// Only return a revision if it was matched by this filtered history
-		for (IFileRevision r : revisions) {
+		for (IFileRevision r : revisions)
 			if (r.getContentIdentifier().equals(id))
 				return r;
-		}
 		return null;
 	}
 

@@ -66,16 +66,14 @@ public class GitURI {
 					String pn = null;
 					String[] params = ssp.substring(indexOfSemicolon)
 							.split(";"); //$NON-NLS-1$
-					for (String param : params) {
-						if (param.startsWith(KEY_PATH + '=')) {
+					for (String param : params)
+						if (param.startsWith(KEY_PATH + '='))
 							p = new Path(
 									param.substring(param.indexOf('=') + 1));
-						} else if (param.startsWith(KEY_TAG + '=')) {
+						else if (param.startsWith(KEY_TAG + '='))
 							t = param.substring(param.indexOf('=') + 1);
-						} else if (param.startsWith(KEY_PROJECT + '=')) {
+						else if (param.startsWith(KEY_PROJECT + '='))
 							pn = param.substring(param.indexOf('=') + 1);
-						}
-					}
 					this.repository = r;
 					this.path = p;
 					this.tag = t;

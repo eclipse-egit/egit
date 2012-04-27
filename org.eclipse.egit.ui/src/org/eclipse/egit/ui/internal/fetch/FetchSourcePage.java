@@ -106,10 +106,9 @@ public class FetchSourcePage extends WizardPage {
 			return;
 		}
 		boolean found = false;
-		for (Ref ref : getRemoteRefs()) {
+		for (Ref ref : getRemoteRefs())
 			if (ref.getName().equals(sourceText.getText()))
 				found = true;
-		}
 		if (!found)
 			setMessage(NLS.bind(UIText.FetchSourcePage_RefNotFoundMessage,
 					sourceText.getText()), IMessageProvider.WARNING);
@@ -152,11 +151,10 @@ public class FetchSourcePage extends WizardPage {
 								monitor.done();
 							}
 						});
-				for (Ref ref : lop.getRemoteRefs()) {
+				for (Ref ref : lop.getRemoteRefs())
 					if (ref.getName().startsWith(Constants.R_HEADS)
 							|| ref.getName().startsWith(Constants.R_TAGS))
 						proposals.add(ref);
-				}
 				Collections.sort(proposals, new Comparator<Ref>() {
 					public int compare(Ref o1, Ref o2) {
 						return o1.getName().compareTo(o2.getName());

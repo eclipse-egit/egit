@@ -43,17 +43,16 @@ class EclipseSshSessionFactory extends JschConfigSessionFactory {
 			final String user, final String host, final int port, FS fs)
 			throws JSchException {
 		final JSch jsch = getJSch(hc, FS.DETECTED);
-		if (jsch == provider.getJSch()) {
+		if (jsch == provider.getJSch())
 			// If its the default JSch desired, let the provider
 			// manage the session creation for us.
 			//
 			return provider.createSession(host, port, user);
-		} else {
+		else
 			// This host configuration is using a different IdentityFile,
 			// one that is not available through the default JSch.
 			//
 			return jsch.getSession(user, host, port);
-		}
 	}
 
 	@Override

@@ -63,37 +63,29 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 			// Add the item (or its children) to the cache
 
 			ITreeContentProvider contentProvider = null;
-			if (getContentProvider() instanceof ITreeContentProvider) {
+			if (getContentProvider() instanceof ITreeContentProvider)
 				contentProvider = (ITreeContentProvider) getContentProvider();
-			}
 
 			if (contentProvider != null) {
 				Object[] children = contentProvider.getChildren(element);
-				if (children != null && children.length > 0) {
-					for (int i = 0; i < children.length; i++) {
+				if (children != null && children.length > 0)
+					for (int i = 0; i < children.length; i++)
 						updateCheckState(children[i], state);
-					}
-				} else {
+				else
 					checkState.add(element);
-				}
-			} else {
+			} else
 				checkState.add(element);
-			}
 		} else if (checkState != null) {
 			// Remove the item (or its children) from the cache
 			ITreeContentProvider contentProvider = null;
-			if (getContentProvider() instanceof ITreeContentProvider) {
+			if (getContentProvider() instanceof ITreeContentProvider)
 				contentProvider = (ITreeContentProvider) getContentProvider();
-			}
 
 			if (contentProvider != null) {
 				Object[] children = contentProvider.getChildren(element);
-				if (children !=null && children.length > 0) {
-					for (int i = 0; i < children.length; i++) {
+				if (children !=null && children.length > 0)
+					for (int i = 0; i < children.length; i++)
 						updateCheckState(children[i], state);
-					}
-
-				}
 			}
 			checkState.remove(element);
 		}
@@ -133,9 +125,8 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 	 * @return checked leaf elements
 	 */
 	public Object[] getCheckedLeafElements() {
-		if (checkState == null) {
+		if (checkState == null)
 			return new Object[0];
-		}
 		return checkState.toArray(new Object[checkState.size()]);
 	}
 
@@ -147,9 +138,8 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 	 * @return number of leaf nodes checked according to the cached check state
 	 */
 	public int getCheckedLeafCount() {
-		if (checkState == null) {
+		if (checkState == null)
 			return 0;
-		}
 		return checkState.size();
 	}
 
@@ -169,17 +159,14 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 			checkState.clear();
 
 		ITreeContentProvider contentProvider = null;
-		if (getContentProvider() instanceof ITreeContentProvider) {
+		if (getContentProvider() instanceof ITreeContentProvider)
 			contentProvider = (ITreeContentProvider) getContentProvider();
-		}
 
 		for (int i = 0; i < elements.length; i++) {
 			Object[] children = contentProvider != null ? contentProvider.getChildren(elements[i]) : null;
-			if (!getGrayed(elements[i]) && (children == null || children.length == 0)) {
-				if (!checkState.contains(elements[i])) {
+			if (!getGrayed(elements[i]) && (children == null || children.length == 0))
+				if (!checkState.contains(elements[i]))
 					checkState.add(elements[i]);
-				}
-			}
 		}
 	}
 
@@ -195,29 +182,23 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 			Object[] visible = getFilteredChildren(getRoot());
 
 			ITreeContentProvider contentProvider = null;
-			if (getContentProvider() instanceof ITreeContentProvider) {
+			if (getContentProvider() instanceof ITreeContentProvider)
 				contentProvider = (ITreeContentProvider) getContentProvider();
-			}
 
-			if (contentProvider == null) {
-				for (int i = 0; i < visible.length; i++) {
+			if (contentProvider == null)
+				for (int i = 0; i < visible.length; i++)
 					checkState.add(visible[i]);
-				}
-			} else {
+			else {
 				Set<Object> toCheck = new HashSet<Object>();
-				for (int i = 0; i < visible.length; i++) {
+				for (int i = 0; i < visible.length; i++)
 					addFilteredChildren(visible[i], contentProvider, toCheck);
-				}
 				checkState.addAll(toCheck);
 			}
-		} else {
-			// Remove any item in the check state that is visible (passes the filters)
-			if (checkState != null) {
-				Object[] visible = filter(checkState.toArray());
-				for (int i = 0; i < visible.length; i++) {
-					checkState.remove(visible[i]);
-				}
-			}
+		} else // Remove any item in the check state that is visible (passes the filters)
+		if (checkState != null) {
+			Object[] visible = filter(checkState.toArray());
+			for (int i = 0; i < visible.length; i++)
+				checkState.remove(visible[i]);
 		}
 	}
 
@@ -231,13 +212,12 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 	 * @param result collection to collect leaf nodes in
 	 */
 	private void addFilteredChildren(Object element, ITreeContentProvider contentProvider, Collection<Object> result) {
-		if (!contentProvider.hasChildren(element)) {
+		if (!contentProvider.hasChildren(element))
 			result.add(element);
-		} else {
+		else {
 			Object[] visibleChildren = getFilteredChildren(element);
-			for (int i = 0; i < visibleChildren.length; i++) {
+			for (int i = 0; i < visibleChildren.length; i++)
 				addFilteredChildren(visibleChildren[i], contentProvider, result);
-			}
 		}
 	}
 
@@ -245,9 +225,8 @@ public class CachedCheckboxTreeViewer extends ContainerCheckedTreeViewer {
 	 * @see org.eclipse.jface.viewers.AbstractTreeViewer#remove(java.lang.Object[])
 	 */
 	public void remove(Object[] elementsOrTreePaths) {
-		for (int i = 0; i < elementsOrTreePaths.length; i++) {
+		for (int i = 0; i < elementsOrTreePaths.length; i++)
 			updateCheckState(elementsOrTreePaths[i], false);
-		}
 		super.remove(elementsOrTreePaths);
 	}
 

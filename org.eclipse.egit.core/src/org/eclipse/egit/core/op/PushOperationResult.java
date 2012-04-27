@@ -88,10 +88,9 @@ public class PushOperationResult {
 	 *         otherwise.
 	 */
 	public boolean isSuccessfulConnectionForAnyURI() {
-		for (final URIish uri : getURIs()) {
+		for (final URIish uri : getURIs())
 			if (isSuccessfulConnection(uri))
 				return true;
-		}
 		return false;
 	}
 
@@ -218,17 +217,15 @@ public class PushOperationResult {
 
 		// Check successful connections/URIs two-ways:
 		final Set<URIish> otherURIs = other.getURIs();
-		for (final URIish uri : getURIs()) {
+		for (final URIish uri : getURIs())
 			if (isSuccessfulConnection(uri)
 					&& (!otherURIs.contains(uri) || !other
 							.isSuccessfulConnection(uri)))
 				return false;
-		}
-		for (final URIish uri : other.getURIs()) {
+		for (final URIish uri : other.getURIs())
 			if (other.isSuccessfulConnection(uri)
 					&& (!urisEntries.containsKey(uri) || !isSuccessfulConnection(uri)))
 				return false;
-		}
 
 		for (final URIish uri : getURIs()) {
 			if (!isSuccessfulConnection(uri))

@@ -223,13 +223,13 @@ public class CompareTreeView extends ViewPart {
 			left = new FileEditableRevision(revision, res, PlatformUI.getWorkbench().getProgressService());
 			GitFileRevision rightRevision = compareVersionMap.get(new Path(
 					repositoryMapping.getRepoRelativePath(res)));
-			if (rightRevision == null) {
+			if (rightRevision == null)
 				right = new GitCompareFileRevisionEditorInput.EmptyTypedElement(
 						NLS
 								.bind(
 										UIText.CompareTreeView_ItemNotFoundInVersionMessage,
 										res.getName(), getCompareVersion()));
-			} else {
+			else {
 				String encoding = CompareCoreUtils.getResourceEncoding(res);
 				right = new FileRevisionTypedElement(rightRevision, encoding);
 			}
@@ -344,19 +344,17 @@ public class CompareTreeView extends ViewPart {
 			// we must make sure to only show the topmost resources as roots
 			List<IResource> resources = new ArrayList<IResource>(input.length);
 			List<IPath> allPaths = new ArrayList<IPath>(input.length);
-			for (IResource originalInput : input) {
+			for (IResource originalInput : input)
 				allPaths.add(originalInput.getFullPath());
-			}
 			for (IResource originalInput : input) {
 				boolean skip = false;
-				for (IPath path : allPaths) {
+				for (IPath path : allPaths)
 					if (path.isPrefixOf(originalInput.getFullPath())
 							&& path.segmentCount() < originalInput
 									.getFullPath().segmentCount()) {
 						skip = true;
 						break;
 					}
-				}
 				if (!skip)
 					resources.add(originalInput);
 			}
@@ -472,9 +470,9 @@ public class CompareTreeView extends ViewPart {
 					|| repositoryMapping.getRepository() == null)
 				return;
 			repo = repositoryMapping.getRepository();
-		} else if (input instanceof Repository) {
+		} else if (input instanceof Repository)
 			repo = (Repository) input;
-		} else
+		else
 			return;
 		final RevCommit baseCommit;
 		final RevCommit compareCommit;
@@ -772,22 +770,18 @@ public class CompareTreeView extends ViewPart {
 		@Override
 		protected ImageDescriptor decorateImage(ImageDescriptor baseImage,
 				Object element) {
-			if (!(element instanceof IFile)) {
+			if (!(element instanceof IFile))
 				return super.decorateImage(baseImage, element);
-			}
 			IPath elementPath = new Path(repositoryMapping
 					.getRepoRelativePath((IFile) element));
 			// decorate with + for files not found in the repository and = for
 			// "same" files
-			if (addedPaths.contains(elementPath)) {
+			if (addedPaths.contains(elementPath))
 				return UIIcons.ELCL16_ADD;
-			}
-			if (deletedPaths.contains(elementPath)) {
+			if (deletedPaths.contains(elementPath))
 				return UIIcons.ELCL16_DELETE;
-			}
-			if (equalContentPaths.contains(elementPath)) {
+			if (equalContentPaths.contains(elementPath))
 				return UIIcons.ELCL16_SYNCED;
-			}
 			return super.decorateImage(baseImage, element);
 		}
 	}
@@ -813,9 +807,8 @@ public class CompareTreeView extends ViewPart {
 		public int category(Object element) {
 			IResource adapter = (IResource) getAdapter(element, IResource.class);
 			if (adapter != null) {
-				if (adapter instanceof IContainer) {
+				if (adapter instanceof IContainer)
 					return FOLDERCATEGORY;
-				}
 				if (adapter instanceof IFile) {
 					IFile file = (IFile) adapter;
 					IPath path = new Path(repositoryMapping
@@ -871,9 +864,8 @@ public class CompareTreeView extends ViewPart {
 
 		@Override
 		public int category(Object element) {
-			if (element instanceof PathNode) {
+			if (element instanceof PathNode)
 				return ((PathNode) element).type.ordinal();
-			}
 			return UNKNOWNCATEGORY;
 		}
 	}
@@ -975,15 +967,13 @@ public class CompareTreeView extends ViewPart {
 			PathNode parentNode = (PathNode) parentElement;
 			IPath parent = parentNode.path;
 			List<PathNode> children = new ArrayList<PathNode>();
-			for (IPath childPath : baseVersionPathsWithChildren) {
+			for (IPath childPath : baseVersionPathsWithChildren)
 				if (childPath.segmentCount() > 0
-						&& childPath.removeLastSegments(1).equals(parent)) {
+						&& childPath.removeLastSegments(1).equals(parent))
 					children.add(new PathNode(childPath, Type.FOLDER));
-				}
-			}
-			for (IPath mapPath : baseVersionMap.keySet()) {
+			for (IPath mapPath : baseVersionMap.keySet())
 				if (mapPath.removeLastSegments(1).equals(parent)
-						&& (showEquals || !equalContentPaths.contains(mapPath))) {
+						&& (showEquals || !equalContentPaths.contains(mapPath)))
 					if (addedPaths.contains(mapPath))
 						children.add(new PathNode(mapPath, Type.FILE_ADDED));
 					else if (equalContentPaths.contains(mapPath))
@@ -992,8 +982,6 @@ public class CompareTreeView extends ViewPart {
 					else
 						children.add(new PathNode(mapPath,
 								Type.FILE_BOTH_SIDES_DIFFER));
-				}
-			}
 			if (parentNode.type == Type.FOLDER) {
 				List<PathNodeAdapter> deletedChildren = compareVersionPathsWithChildren
 						.get(parent);
@@ -1009,16 +997,13 @@ public class CompareTreeView extends ViewPart {
 			if (!(element instanceof PathNode))
 				return false;
 			IPath parent = ((PathNode) element).path;
-			for (IPath childPath : baseVersionPathsWithChildren) {
+			for (IPath childPath : baseVersionPathsWithChildren)
 				if (childPath.removeLastSegments(1).equals(parent))
 					return true;
-			}
-			for (IPath mapPath : baseVersionMap.keySet()) {
+			for (IPath mapPath : baseVersionMap.keySet())
 				if (mapPath.removeLastSegments(1).equals(parent)
-						&& (showEquals || !equalContentPaths.contains(mapPath))) {
+						&& (showEquals || !equalContentPaths.contains(mapPath)))
 					return true;
-				}
-			}
 			return false;
 		}
 

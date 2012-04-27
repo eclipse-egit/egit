@@ -41,7 +41,7 @@ public abstract class SubmoduleCommand<V> extends
 	protected Map<Repository, List<String>> getSubmodules(
 			final List<RepositoryTreeNode<?>> nodes) {
 		final Map<Repository, List<String>> repoPaths = new HashMap<Repository, List<String>>();
-		for (RepositoryTreeNode<?> node : nodes) {
+		for (RepositoryTreeNode<?> node : nodes)
 			if (node.getType() == RepositoryTreeNodeType.REPO) {
 				Repository parent = node.getParent().getRepository();
 				String path = Repository.stripWorkDir(parent.getWorkTree(),
@@ -53,7 +53,6 @@ public abstract class SubmoduleCommand<V> extends
 				}
 				paths.add(path);
 			}
-		}
 		for (RepositoryTreeNode<?> node : nodes)
 			if (node.getType() == RepositoryTreeNodeType.SUBMODULES)
 				// Clear paths so all submodules are updated

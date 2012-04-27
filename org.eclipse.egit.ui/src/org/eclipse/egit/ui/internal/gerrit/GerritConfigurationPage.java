@@ -139,13 +139,12 @@ class GerritConfigurationPage extends WizardPage {
 			public void modifyText(final ModifyEvent e) {
 				eventDepth++;
 				try {
-					if (eventDepth == 1) {
+					if (eventDepth == 1)
 						if (pushURI != null) {
 							pushURI = pushURI.setUser(user.getText());
 							uriText.setText(pushURI.toString());
 							checkPage();
 						}
-					}
 				} finally {
 					eventDepth--;
 				}
@@ -170,9 +169,8 @@ class GerritConfigurationPage extends WizardPage {
 			}
 		});
 
-		for (Protocol p : Protocol.values()) {
+		for (Protocol p : Protocol.values())
 			scheme.add(p.getDefaultScheme());
-		}
 		scheme.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
 				URIish oldPushURI = pushURI;
@@ -281,14 +279,13 @@ class GerritConfigurationPage extends WizardPage {
 
 	private void setDefaults(URIish uri, String targetBranch) {
 		URIish newPushURI = uri;
-		if (Protocol.SSH.handles(uri)) {
+		if (Protocol.SSH.handles(uri))
 			newPushURI = newPushURI.setPort(GERRIT_DEFAULT_SSH_PORT);
-		} else if (Protocol.GIT.handles(uri)) {
+		else if (Protocol.GIT.handles(uri)) {
 			newPushURI = newPushURI.setScheme(Protocol.SSH.getDefaultScheme());
 			newPushURI = newPushURI.setPort(GERRIT_DEFAULT_SSH_PORT);
-		} else if (isHttpProtocol(uri)) {
+		} else if (isHttpProtocol(uri))
 			newPushURI = prependGerritHttpPathPrefix(newPushURI);
-		}
 		uriText.setText(newPushURI.toString());
 		final String uriScheme = newPushURI.getScheme();
 		if (uriScheme != null)

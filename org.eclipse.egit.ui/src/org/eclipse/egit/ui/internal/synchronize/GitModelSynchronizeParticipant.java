@@ -91,16 +91,15 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 		String modelProvider = WORKSPACE_MODEL_PROVIDER_ID;
 		final IPreferenceStore preferenceStore = Activator.getDefault()
 				.getPreferenceStore();
-		if (!gsds.containsFolderLevelSynchronizationRequest()) {
+		if (!gsds.containsFolderLevelSynchronizationRequest())
 			if (preferenceStore
-					.getBoolean(UIPreferences.SYNC_VIEW_ALWAYS_SHOW_CHANGESET_MODEL)) {
+					.getBoolean(UIPreferences.SYNC_VIEW_ALWAYS_SHOW_CHANGESET_MODEL))
 				modelProvider = GitChangeSetModelProvider.ID;
-			} else {
+			else {
 				String lastSelectedModel = preferenceStore.getString(UIPreferences.SYNC_VIEW_LAST_SELECTED_MODEL);
 				if (!"".equals(lastSelectedModel)) //$NON-NLS-1$
 					modelProvider = lastSelectedModel;
 			}
-		}
 
 		configuration.setProperty(
 				ModelSynchronizeParticipant.P_VISIBLE_MODEL_PROVIDER,

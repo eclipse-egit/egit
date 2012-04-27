@@ -346,9 +346,8 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 					OptionNode node = (OptionNode) data;
 					props = optionsMap.get(node.getPlugin());
 					key = node.getOption();
-				} else {
+				} else
 					return false;
-				}
 				boolean active = Boolean.valueOf(props.getProperty(key))
 						.booleanValue();
 				return active;
@@ -358,9 +357,8 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 		tv.setInput(PLUGIN_LIST);
 		tv.expandAll();
 
-		if (platformSwitch.getSelection() != options.isDebugEnabled()) {
+		if (platformSwitch.getSelection() != options.isDebugEnabled())
 			platformSwitch.setSelection(options.isDebugEnabled());
-		}
 
 		traceFileLocation.setText(getOptions().getFile().getPath());
 		updateEnablement();
@@ -417,13 +415,12 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 			if (platformSwitch.getSelection()) {
 				// if this is off, we won't be able to save anything
 				List<String> checkedKeys = new ArrayList<String>();
-				for (Object checked : Arrays.asList(tv.getCheckedElements())) {
+				for (Object checked : Arrays.asList(tv.getCheckedElements()))
 					if (checked instanceof PluginNode)
 						checkedKeys.add(((PluginNode) checked).getPlugin()
 								+ MAINSWITCH);
 					else if (checked instanceof OptionNode)
 						checkedKeys.add(((OptionNode) checked).getOption());
-				}
 
 				for (PluginNode plugin : optionsMap.keySet()) {
 					Properties props = optionsMap.get(plugin);
@@ -431,11 +428,10 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 						String key = (String) keyObject;
 						boolean isOn = options.getBooleanOption(key, false);
 						boolean shouldBeOn = checkedKeys.contains(key);
-						if (isOn != shouldBeOn) {
+						if (isOn != shouldBeOn)
 							options
 									.setOption(key, Boolean
 											.toString(shouldBeOn));
-						}
 					}
 				}
 			}
@@ -475,7 +471,7 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 
 		boolean dirty = false;
 		if (oldValues.keySet().containsAll(newValues.keySet())
-				&& newValues.keySet().containsAll(oldValues.keySet())) {
+				&& newValues.keySet().containsAll(oldValues.keySet()))
 			for (Entry<String, String> oldValueEntry : oldValues.entrySet()) {
 				String key = oldValueEntry.getKey();
 				// don't in-line key here, as it would disquiet findbugs
@@ -485,9 +481,8 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 					break;
 				}
 			}
-		} else {
+		else
 			dirty = true;
-		}
 		if (dirty)
 			setDirty(true);
 	}

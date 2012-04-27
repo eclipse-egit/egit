@@ -74,11 +74,10 @@ public class FilteredCheckboxTree extends FilteredTree {
 	protected TreeViewer doCreateTreeViewer(Composite actParent, int style) {
 		int treeStyle = style | SWT.CHECK | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER;
 		Tree tree = null;
-		if (fToolkit != null) {
+		if (fToolkit != null)
 			tree = fToolkit.createTree(actParent, treeStyle);
-		} else {
+		else
 			tree = new Tree(actParent, treeStyle);
-		}
 
 		checkboxViewer = new CachedCheckboxTreeViewer(tree);
 		return checkboxViewer;
@@ -93,7 +92,7 @@ public class FilteredCheckboxTree extends FilteredTree {
 		WorkbenchJob filterJob = super.doCreateRefreshJob();
 		filterJob.addJobChangeListener(new JobChangeAdapter() {
 			public void done(IJobChangeEvent event) {
-				if (event.getResult().isOK()) {
+				if (event.getResult().isOK())
 					getDisplay().asyncExec(new Runnable() {
 						public void run() {
 							if (checkboxViewer.getTree().isDisposed())
@@ -101,7 +100,6 @@ public class FilteredCheckboxTree extends FilteredTree {
 							checkboxViewer.restoreLeafCheckState();
 						}
 					});
-				}
 			}
 		});
 		return filterJob;

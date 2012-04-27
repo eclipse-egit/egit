@@ -59,7 +59,7 @@ class FileRevisionEditorInput extends PlatformObject implements
 			final String charset) {
 		if (charset == null)
 			return storage;
-		if (storage instanceof IFileState) {
+		if (storage instanceof IFileState)
 			return new IFileState() {
 				public Object getAdapter(Class adapter) {
 					return storage.getAdapter(adapter);
@@ -93,7 +93,6 @@ class FileRevisionEditorInput extends PlatformObject implements
 					return ((IFileState) storage).getModificationTime();
 				}
 			};
-		}
 
 		return new IEncodedStorage() {
 			public Object getAdapter(Class adapter) {
@@ -237,9 +236,8 @@ class FileRevisionEditorInput extends PlatformObject implements
 	 * @return the revision
 	 */
 	public IFileRevision getFileRevision() {
-		if (fileRevision instanceof IFileRevision) {
+		if (fileRevision instanceof IFileRevision)
 			return (IFileRevision) fileRevision;
-		}
 		return null;
 	}
 

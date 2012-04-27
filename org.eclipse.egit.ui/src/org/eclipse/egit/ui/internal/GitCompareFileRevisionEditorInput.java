@@ -67,35 +67,31 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	}
 
 	FileRevisionTypedElement getRightRevision() {
-		if (right instanceof FileRevisionTypedElement) {
+		if (right instanceof FileRevisionTypedElement)
 			return (FileRevisionTypedElement) right;
-		}
 		return null;
 	}
 
 	FileRevisionTypedElement getLeftRevision() {
-		if (left instanceof FileRevisionTypedElement) {
+		if (left instanceof FileRevisionTypedElement)
 			return (FileRevisionTypedElement) left;
-		}
 		return null;
 	}
 
 	private static void ensureContentsCached(FileRevisionTypedElement left, FileRevisionTypedElement right,
 			IProgressMonitor monitor) {
-		if (left != null) {
+		if (left != null)
 			try {
 				left.cacheContents(monitor);
 			} catch (CoreException e) {
 				Activator.logError(e.getMessage(), e);
 			}
-		}
-		if (right != null) {
+		if (right != null)
 			try {
 				right.cacheContents(monitor);
 			} catch (CoreException e) {
 				Activator.logError(e.getMessage(), e);
 			}
-		}
 	}
 
 	private boolean isLeftEditable(ICompareInput input) {
@@ -109,9 +105,8 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	}
 
 	private boolean isEditable(Object object) {
-		if (object instanceof IEditableContent) {
+		if (object instanceof IEditableContent)
 			return ((IEditableContent) object).isEditable();
-		}
 		return false;
 	}
 
@@ -150,11 +145,9 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 					diffNode.add(childDiffNode);
 					if (ln.getType().equals(ITypedElement.FOLDER_TYPE)) {
 						ITypedElement[] children = (ITypedElement[])((IStructureComparator)ln).getChildren();
-						if(children != null && children.length > 0) {
-							for (ITypedElement child : children) {
+						if(children != null && children.length > 0)
+							for (ITypedElement child : children)
 								childDiffNode.add(addDirectoryFiles(child, Differencer.ADDITION));
-							}
-						}
 					}
 					++li;
 				} else {
@@ -162,11 +155,9 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 					diffNode.add(childDiffNode);
 					if (rn.getType().equals(ITypedElement.FOLDER_TYPE)) {
 						ITypedElement[] children = (ITypedElement[])((IStructureComparator)rn).getChildren();
-						if(children != null && children.length > 0) {
-							for (ITypedElement child : children) {
+						if(children != null && children.length > 0)
+							for (ITypedElement child : children)
 								childDiffNode.add(addDirectoryFiles(child, Differencer.DELETION));
-							}
-						}
 					}
 					++ri;
 				}
@@ -177,11 +168,9 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 				diffNode.add(childDiffNode);
 				if (ln.getType().equals(ITypedElement.FOLDER_TYPE)) {
 					ITypedElement[] children = (ITypedElement[])((IStructureComparator)ln).getChildren();
-					if(children != null && children.length > 0) {
-						for (ITypedElement child : children) {
+					if(children != null && children.length > 0)
+						for (ITypedElement child : children)
 							childDiffNode.add(addDirectoryFiles(child, Differencer.ADDITION));
-						}
-					}
 				}
 				++li;
 			}
@@ -191,40 +180,34 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 				diffNode.add(childDiffNode);
 				if (rn.getType().equals(ITypedElement.FOLDER_TYPE)) {
 					ITypedElement[] children = (ITypedElement[])((IStructureComparator)rn).getChildren();
-					if(children != null && children.length > 0) {
-						for (ITypedElement child : children) {
+					if(children != null && children.length > 0)
+						for (ITypedElement child : children)
 							childDiffNode.add(addDirectoryFiles(child, Differencer.DELETION));
-						}
-					}
 				}
 				++ri;
 			}
 			return diffNode;
-		} else {
+		} else
 			return new DiffNode(actLeft, actRight);
-		}
 	}
 
 	private DiffNode addDirectoryFiles(ITypedElement elem, int diffType) {
 		ITypedElement l = null;
 		ITypedElement r = null;
-		if (diffType == Differencer.DELETION) {
+		if (diffType == Differencer.DELETION)
 			r = elem;
-		} else {
+		else
 			l = elem;
-		}
 
 		if (elem.getType().equals(ITypedElement.FOLDER_TYPE)) {
 			DiffNode diffNode = null;
 			diffNode = new DiffNode(null,Differencer.CHANGE,null,l,r);
 			ITypedElement[] children = (ITypedElement[])((IStructureComparator)elem).getChildren();
-			for (ITypedElement child : children) {
+			for (ITypedElement child : children)
 				diffNode.add(addDirectoryFiles(child, diffType));
-			}
 			return diffNode;
-		} else {
+		} else
 			return new DiffNode(diffType, null, l, r);
-		}
 	}
 
 	private void initLabels(ICompareInput input) {
@@ -235,26 +218,23 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		} else if (getResource() != null) {
 			String label = NLS.bind(UIText.GitCompareFileRevisionEditorInput_LocalLabel, new Object[]{ input.getLeft().getName() });
 			cc.setLeftLabel(label);
-		} else {
+		} else
 			cc.setLeftLabel(left.getName());
-		}
 		if (getRightRevision() != null) {
 			String rightLabel = getFileRevisionLabel(getRightRevision());
 			cc.setRightLabel(rightLabel);
-		} else {
+		} else
 			cc.setRightLabel(right.getName());
-		}
 
 	}
 
 	private String getFileRevisionLabel(FileRevisionTypedElement element) {
 		Object fileObject = element.getFileRevision();
-		if (fileObject instanceof LocalFileRevision){
+		if (fileObject instanceof LocalFileRevision)
 			return NLS.bind(UIText.GitCompareFileRevisionEditorInput_LocalHistoryLabel, new Object[]{element.getName(), element.getTimestamp()});
-		} else {
+		else
 			return NLS.bind(UIText.GitCompareFileRevisionEditorInput_RevisionLabel, new Object[]{element.getName(),
 					CompareUtils.truncatedRevision(element.getContentIdentifier()), element.getAuthor()});
-		}
 	}
 
 	/* (non-Javadoc)
@@ -283,9 +263,8 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	 * @see org.eclipse.compare.CompareEditorInput#getAdapter(java.lang.Class)
 	 */
 	public Object getAdapter(Class adapter) {
-		if (adapter == IFile.class || adapter == IResource.class) {
+		if (adapter == IFile.class || adapter == IResource.class)
 			return getResource();
-		}
 		return super.getAdapter(adapter);
 	}
 
@@ -316,25 +295,23 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		if (element instanceof FileRevisionTypedElement){
 			FileRevisionTypedElement fileRevisionElement = (FileRevisionTypedElement) element;
 			Object fileObject = fileRevisionElement.getFileRevision();
-			if (fileObject instanceof LocalFileRevision){
+			if (fileObject instanceof LocalFileRevision)
 				try {
 					IStorage storage = ((LocalFileRevision) fileObject).getStorage(new NullProgressMonitor());
-					if (CompareUtils.getAdapter(storage, IFileState.class) != null){
+					if (CompareUtils.getAdapter(storage, IFileState.class) != null)
 						//local revision
 						return UIText.GitCompareFileRevisionEditorInput_LocalRevision;
-					} else if (CompareUtils.getAdapter(storage, IFile.class) != null) {
+					else if (CompareUtils.getAdapter(storage, IFile.class) != null)
 						//current revision
 						return UIText.GitCompareFileRevisionEditorInput_CurrentRevision;
-					}
 				} catch (CoreException e) {
 					Activator
 							.logError(
 									UIText.GitCompareFileRevisionEditorInput_contentIdentifier,
 									e);
 				}
-			} else {
+			else
 				return fileRevisionElement.getContentIdentifier();
-			}
 		}
 		return UIText.GitCompareFileRevisionEditorInput_CurrentTitle;
 	}
@@ -378,16 +355,14 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	private void flatDiffView(DiffNode rootNode, DiffNode currentNode) {
 		if(currentNode != null) {
 			IDiffElement[] dElems = currentNode.getChildren();
-			if(dElems != null) {
+			if(dElems != null)
 				for(IDiffElement dElem : dElems) {
 					DiffNode dNode = (DiffNode) dElem;
-					if(dNode.getChildren() != null && dNode.getChildren().length > 0) {
+					if(dNode.getChildren() != null && dNode.getChildren().length > 0)
 						flatDiffView(rootNode, dNode);
-					} else {
+					else
 						rootNode.add(dNode);
-					}
 				}
-			}
 		}
 	}
 	/**
@@ -438,11 +413,10 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 			ITypedElement element = left;
 			if (element instanceof LocalResourceTypedElement) {
 				lrte = (LocalResourceTypedElement) element;
-				if (lrte.isConnected()) {
+				if (lrte.isConnected())
 					registerSaveable(true);
-				} else {
+				else
 					lrte.setSharedDocumentListener(this);
-				}
 			}
 		}
 

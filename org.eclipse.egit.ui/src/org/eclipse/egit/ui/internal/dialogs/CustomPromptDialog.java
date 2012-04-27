@@ -66,9 +66,8 @@ public class CustomPromptDialog extends TrayDialog {
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		if (title != null) {
+		if (title != null)
 			newShell.setText(title);
-		}
 	}
 
 	/**
@@ -124,15 +123,12 @@ public class CustomPromptDialog extends TrayDialog {
 	 */
 	private boolean hasEditingItems() {
 		for (CredentialItem item : credentialItems) {
-			if (item instanceof StringType) {
+			if (item instanceof StringType)
 				return true;
-			}
-			if (item instanceof CharArrayType) {
+			if (item instanceof CharArrayType)
 				return true;
-			}
-			if (item instanceof YesNoType) {
+			if (item instanceof YesNoType)
 				return true;
-			}
 		}
 		return false;
 	}
@@ -149,7 +145,7 @@ public class CustomPromptDialog extends TrayDialog {
 	 * user-supplied values.
 	 */
 	private void updateValues() {
-		for (Control control : editingControls) {
+		for (Control control : editingControls)
 			if (control instanceof Text) {
 				Text textControl = (Text) control;
 				CredentialItem itemToUpdate = (CredentialItem) textControl.getData(KEY_ITEM);
@@ -161,7 +157,6 @@ public class CustomPromptDialog extends TrayDialog {
 				boolean value = checkBoxControl.getSelection();
 				updateValue(itemToUpdate, value);
 			}
-		}
 	}
 
 	/**
@@ -170,13 +165,12 @@ public class CustomPromptDialog extends TrayDialog {
 	 * @param value the new value
 	 */
 	protected void updateValue(CredentialItem itemToUpdate, String value) {
-		if (itemToUpdate instanceof CharArrayType) {
+		if (itemToUpdate instanceof CharArrayType)
 			((CharArrayType) itemToUpdate).setValueNoCopy(value.toCharArray());
-		} else if (itemToUpdate instanceof StringType) {
+		else if (itemToUpdate instanceof StringType)
 			((StringType) itemToUpdate).setValue(value);
-		} else {
+		else
 			throw new IllegalArgumentException("Cannot handle item of type " + itemToUpdate.getClass()); //$NON-NLS-1$
-		}
 	}
 
 	/**
@@ -185,10 +179,9 @@ public class CustomPromptDialog extends TrayDialog {
 	 * @param value the new value
 	 */
 	protected void updateValue(CredentialItem itemToUpdate, boolean value) {
-		if (itemToUpdate instanceof YesNoType) {
+		if (itemToUpdate instanceof YesNoType)
 			((YesNoType) itemToUpdate).setValue(value);
-		} else {
+		else
 			throw new IllegalArgumentException("Cannot handle item of type " + itemToUpdate.getClass()); //$NON-NLS-1$
-		}
 	}
 }

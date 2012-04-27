@@ -80,9 +80,8 @@ public class CreateRepositoryPage extends WizardPage {
 				File previousFile = new File(previous);
 				String result;
 				DirectoryDialog dialog = new DirectoryDialog(getShell());
-				if (previousFile.exists() && previousFile.isDirectory()) {
+				if (previousFile.exists() && previousFile.isDirectory())
 					dialog.setFilterPath(previousFile.getPath());
-				}
 				result = dialog.open();
 				if (result != null)
 					directoryText.setText(result);

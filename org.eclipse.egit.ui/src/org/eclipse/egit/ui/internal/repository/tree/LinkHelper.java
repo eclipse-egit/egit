@@ -56,13 +56,12 @@ public class LinkHelper implements ILinkHelper {
 							return;
 						}
 					}
-					if (input instanceof IURIEditorInput) {
+					if (input instanceof IURIEditorInput)
 						if (((IURIEditorInput) input).getURI().equals(
 								file.toURI())) {
 							aPage.activate(part);
 							return;
 						}
-					}
 				}
 			}
 		} catch (Exception e) {
@@ -75,9 +74,8 @@ public class LinkHelper implements ILinkHelper {
 	 */
 	@SuppressWarnings("unchecked")
 	public IStructuredSelection findSelection(IEditorInput anInput) {
-		if (!(anInput instanceof IURIEditorInput)) {
+		if (!(anInput instanceof IURIEditorInput))
 			return null;
-		}
 
 		URI uri = ((IURIEditorInput) anInput).getURI();
 
@@ -107,19 +105,18 @@ public class LinkHelper implements ILinkHelper {
 				RepositoryNode repoNode = new RepositoryNode(null, repository);
 				RepositoryTreeNode result = null;
 
-				for (Object child : cp.getChildren(repoNode)) {
+				for (Object child : cp.getChildren(repoNode))
 					if (child instanceof WorkingDirNode) {
 						result = (WorkingDirNode) child;
 						break;
 					}
-				}
 
 				if (result == null)
 					return null;
 
 				IPath remainingPath = new Path(file.getPath().substring(
 						repository.getWorkTree().getPath().length()));
-				for (String segment : remainingPath.segments()) {
+				for (String segment : remainingPath.segments())
 					for (Object child : cp.getChildren(result)) {
 						RepositoryTreeNode<File> fileNode;
 						try {
@@ -132,7 +129,6 @@ public class LinkHelper implements ILinkHelper {
 							break;
 						}
 					}
-				}
 
 				return new StructuredSelection(result);
 			}

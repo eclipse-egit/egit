@@ -69,9 +69,8 @@ public class ConfigureGerritWizard extends Wizard {
 	private void configurePage() {
 		try {
 			findRemoteConfig();
-			if (remoteConfig != null) {
+			if (remoteConfig != null)
 				gerritConfiguration.setSelection(getUri(), getProposedTargetBranch());
-			}
 		} catch (URISyntaxException e) {
 			gerritConfiguration.setErrorMessage("Error in configured URI"); //$NON-NLS-1$
 			Activator.logError("Configured URI could not be read", e); //$NON-NLS-1$
@@ -80,10 +79,9 @@ public class ConfigureGerritWizard extends Wizard {
 
 	private void findRemoteConfig() throws URISyntaxException {
 		List<RemoteConfig> allRemoteConfigs = RemoteConfig.getAllRemoteConfigs(config);
-		for (RemoteConfig rc : allRemoteConfigs) {
+		for (RemoteConfig rc : allRemoteConfigs)
 			if (rc.getName().equals(remoteName))
 				remoteConfig = rc;
-		}
 	}
 
 	private URIish getUri() {
@@ -135,9 +133,8 @@ public class ConfigureGerritWizard extends Wizard {
 
 	private void configurePushURI() {
 		List<URIish> pushURIs = new ArrayList<URIish>(remoteConfig.getPushURIs());
-		for (URIish urIish : pushURIs) {
+		for (URIish urIish : pushURIs)
 			remoteConfig.removePushURI(urIish);
-		}
 		URIish pushURI = gerritConfiguration.getURI();
 		remoteConfig.addPushURI(pushURI);
 	}
@@ -145,19 +142,17 @@ public class ConfigureGerritWizard extends Wizard {
 	private void configurePushRefSpec() {
 		String gerritBranch = gerritConfiguration.getBranch();
 		List<RefSpec> pushRefSpecs = new ArrayList<RefSpec>(remoteConfig.getPushRefSpecs());
-		for (RefSpec refSpec : pushRefSpecs) {
+		for (RefSpec refSpec : pushRefSpecs)
 			remoteConfig.removePushRefSpec(refSpec);
-		}
 		remoteConfig.addPushRefSpec(new RefSpec( "HEAD:refs/for/" + gerritBranch)); //$NON-NLS-1$
 	}
 
 	private void configureFetchNotes() {
 		String notesRef = Constants.R_NOTES + "*"; //$NON-NLS-1$
 		List<RefSpec> fetchRefSpecs = remoteConfig.getFetchRefSpecs();
-		for (RefSpec refSpec : fetchRefSpecs) {
+		for (RefSpec refSpec : fetchRefSpecs)
 			if(refSpec.matchSource(notesRef))
 				return;
-		}
 		remoteConfig.addFetchRefSpec(new RefSpec(notesRef + ":" + notesRef)); //$NON-NLS-1$
 	}
 

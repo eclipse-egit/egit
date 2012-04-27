@@ -38,14 +38,12 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 	}
 
 	public boolean compare(IResource local, IResourceVariant remote) {
-		if (!local.exists() || remote == null) {
+		if (!local.exists() || remote == null)
 			return false;
-		}
 
 		if (local instanceof IFile) {
-			if (remote.isContainer()) {
+			if (remote.isContainer())
 				return false;
-			}
 
 			InputStream stream = null;
 			InputStream remoteStream = null;
@@ -58,20 +56,18 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 
 				int remoteRead = remoteStream.read(remoteBytes);
 				int read = stream.read(bytes);
-				if (remoteRead != read) {
+				if (remoteRead != read)
 					return false;
-				}
 
 				while (Arrays.equals(bytes, remoteBytes)) {
 					remoteRead = remoteStream.read(remoteBytes);
 					read = stream.read(bytes);
-					if (remoteRead != read) {
+					if (remoteRead != read)
 						// didn't read the same amount, it's uneven
 						return false;
-					} else if (read == -1) {
+					else if (read == -1)
 						// both at EOF, check their contents
 						return Arrays.equals(bytes, remoteBytes);
-					}
 				}
 			} catch (IOException e) {
 				logException(e);
@@ -138,13 +134,12 @@ class GitResourceVariantComparator implements IResourceVariantComparator {
 	}
 
 	private void closeStream(InputStream stream) {
-		if (stream != null) {
+		if (stream != null)
 			try {
 				stream.close();
 			} catch (IOException e) {
 				logException(e);
 			}
-		}
 	}
 
 }

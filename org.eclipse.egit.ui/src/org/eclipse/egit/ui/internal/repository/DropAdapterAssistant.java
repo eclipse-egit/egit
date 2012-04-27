@@ -66,9 +66,8 @@ public class DropAdapterAssistant extends CommonDropAdapterAssistant {
 			return Status.CANCEL_STATUS;
 		for (String folder : folders) {
 			File repoFile = new File(folder);
-			if (FileKey.isGitRepository(repoFile, FS.DETECTED)) {
+			if (FileKey.isGitRepository(repoFile, FS.DETECTED))
 				continue;
-			}
 			// convenience: also allow the direct parent of .git
 			if (!repoFile.getName().equals(Constants.DOT_GIT)) {
 				File dotgitfile = new File(repoFile, Constants.DOT_GIT);

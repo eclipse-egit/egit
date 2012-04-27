@@ -58,12 +58,10 @@ public class ShowInHistoryCommand extends
 				if (repo != node.getRepository())
 					throw new ExecutionException(
 							UIText.AbstractHistoryCommanndHandler_NoUniqueRepository);
-				if (node.getType() == RepositoryTreeNodeType.FOLDER) {
+				if (node.getType() == RepositoryTreeNodeType.FOLDER)
 					fileList.add(((FolderNode) node).getObject());
-				}
-				if (node.getType() == RepositoryTreeNodeType.FILE) {
+				if (node.getType() == RepositoryTreeNodeType.FILE)
 					fileList.add(((FileNode) node).getObject());
-				}
 			}
 		final Repository repoToShow = repo;
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
@@ -74,10 +72,9 @@ public class ShowInHistoryCommand extends
 							.getActivePage().showView(IHistoryView.VIEW_ID);
 					if (nodeToShow != null)
 						part.showHistoryFor(nodeToShow);
-					else {
+					else
 						part.showHistoryFor(new HistoryPageInput(repoToShow,
 								fileList.toArray(new File[fileList.size()])));
-					}
 				} catch (PartInitException e1) {
 					Activator.handleError(e1.getMessage(), e1, true);
 				}

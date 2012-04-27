@@ -114,18 +114,17 @@ public class MultiPullResultDialog extends Dialog {
 				if (item.getValue() instanceof IStatus)
 					return UIText.MultiPullResultDialog_UnknownStatus;
 				PullResult pullRes = (PullResult) item.getValue();
-				if (pullRes.getMergeResult() != null) {
+				if (pullRes.getMergeResult() != null)
 					return NLS.bind(
 							UIText.MultiPullResultDialog_MergeResultMessage,
 							pullRes.getMergeResult().getMergeStatus().name());
-				} else if (pullRes.getRebaseResult() != null) {
+				else if (pullRes.getRebaseResult() != null) {
 					RebaseResult res = pullRes.getRebaseResult();
 					return NLS.bind(
 							UIText.MultiPullResultDialog_RebaseResultMessage,
 							res.getStatus().name());
-				} else {
+				} else
 					return UIText.MultiPullResultDialog_NothingUpdatedStatus;
-				}
 			}
 			case 3:
 				if (item.getValue() instanceof IStatus) {

@@ -98,9 +98,8 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider impl
 	 */
 	public static String formatName(final String format, Map<String, String> bindings) {
 		String result = format;
-		for (Entry<String, String> e : bindings.entrySet()) {
+		for (Entry<String, String> e : bindings.entrySet())
 			result = result.replace(e.getKey(), e.getValue());
-		}
 		return result;
 	}
 

@@ -147,18 +147,18 @@ public class PullOperationUI extends JobChangeAdapter implements
 						.getValue()).open();
 			else {
 				IStatus status = (IStatus) entry.getValue();
-				if (status == NOT_TRIED_STATUS) {
+				if (status == NOT_TRIED_STATUS)
 					MessageDialog
 							.openInformation(
 									shell,
 									UIText.PullOperationUI_PullCanceledWindowTitle,
 									UIText.PullOperationUI_PullOperationCanceledMessage);
-				} else if (status.getException() instanceof TransportException) {
+				else if (status.getException() instanceof TransportException)
 					ErrorDialog.openError(shell,
 							UIText.PullOperationUI_PullFailed,
 							UIText.PullOperationUI_ConnectionProblem,
 							status);
-				} else
+				else
 					Activator.handleError(status.getMessage(), status
 							.getException(), true);
 			}

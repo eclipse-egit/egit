@@ -157,9 +157,8 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 				});
 				return true;
 			} catch (Throwable e) {
-				if (e instanceof InvocationTargetException) {
+				if (e instanceof InvocationTargetException)
 					e = e.getCause();
-				}
 				if (e instanceof CoreException) {
 					IStatus status = ((CoreException) e).getStatus();
 					e = status.getException();

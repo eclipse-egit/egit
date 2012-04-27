@@ -257,31 +257,28 @@ public class FileTreeContentProvider implements ITreeContentProvider {
 				path = new Path(pathString);
 			if (path == null) {
 				path = repositoryRoot.append(pathString);
-				if (noResourceNode == null) {
+				if (noResourceNode == null)
 					noResourceNode = new NoResourceNode(
 							virtualNode,
 							UIText.FileTreeContentProvider_NonWorkspaceResourcesNode);
-				}
 				parentNode = noResourceNode;
 			} else
 				parentNode = virtualNode;
 			for (int i = 0; i < path.segmentCount(); i++) {
 				String segment = path.segment(i);
 				Node foundNode = null;
-				for (Node node : parentNode.getChildren()) {
+				for (Node node : parentNode.getChildren())
 					if (node.getName().equals(segment)) {
 						foundNode = node;
 						break;
 					}
-				}
 				if (foundNode == null) {
 					if (i < path.segmentCount() - 1)
 						parentNode = new FolderNode(parentNode, segment);
 					else
 						new FileNode(parentNode, segment);
-				} else {
+				} else
 					parentNode = foundNode;
-				}
 			}
 		}
 
@@ -289,12 +286,10 @@ public class FileTreeContentProvider implements ITreeContentProvider {
 	}
 
 	private IPath resolveResourcePath(IPath fullPath) {
-		for (IPath projectPath : getProjectPaths()) {
-			if (projectPath.isPrefixOf(fullPath)) {
+		for (IPath projectPath : getProjectPaths())
+			if (projectPath.isPrefixOf(fullPath))
 				return fullPath
 						.removeFirstSegments(projectPath.segmentCount() - 1);
-			}
-		}
 		return null;
 	}
 
@@ -306,9 +301,8 @@ public class FileTreeContentProvider implements ITreeContentProvider {
 				RepositoryMapping mapping = RepositoryMapping
 						.getMapping(project);
 				if (mapping != null
-						&& mapping.getRepository().equals(repository)) {
+						&& mapping.getRepository().equals(repository))
 					projectPaths.add(project.getLocation());
-				}
 			}
 		}
 		return projectPaths;

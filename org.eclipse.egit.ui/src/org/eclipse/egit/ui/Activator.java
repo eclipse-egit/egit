@@ -382,9 +382,8 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 					RepositoryMapping mapping = RepositoryMapping.getMapping(p);
 					if (mapping != null
 							&& repositoriesChanged.contains(mapping
-									.getRepository())) {
+									.getRepository()))
 						toRefresh.add(p);
-					}
 				}
 				repositoriesChanged.clear();
 			}
@@ -426,14 +425,13 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 			// choice.
 
 			if (Activator.getDefault().getPreferenceStore()
-					.getBoolean(UIPreferences.REFESH_ONLY_WHEN_ACTIVE)) {
+					.getBoolean(UIPreferences.REFESH_ONLY_WHEN_ACTIVE))
 				if (!isActive()) {
 					monitor.done();
 					if (doReschedule)
 						schedule(REPO_SCAN_INTERVAL);
 					return Status.OK_STATUS;
 				}
-			}
 
 			monitor.beginTask(UIText.Activator_scanningRepositories,
 					repos.length);
@@ -480,10 +478,9 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		final ServiceReference ssh;
 
 		ssh = context.getServiceReference(IJSchService.class.getName());
-		if (ssh != null) {
+		if (ssh != null)
 			SshSessionFactory.setInstance(new EclipseSshSessionFactory(
 					(IJSchService) context.getService(ssh)));
-		}
 	}
 
 	private void setupProxy(final BundleContext context) {

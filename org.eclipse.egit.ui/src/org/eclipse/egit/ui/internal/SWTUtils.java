@@ -547,9 +547,8 @@ public class SWTUtils {
 		final int size = calculateControlSize(converter, controls, start, end);
 		for (int i = start; i <= end; i++) {
 			final Control button = controls[i];
-			if (button.getLayoutData() instanceof GridData) {
+			if (button.getLayoutData() instanceof GridData)
 				((GridData) button.getLayoutData()).widthHint = size;
-			}
 		}
 	}
 

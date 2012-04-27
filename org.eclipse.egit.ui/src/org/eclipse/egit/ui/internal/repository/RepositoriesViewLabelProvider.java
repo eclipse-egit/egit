@@ -138,9 +138,8 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 	public void dispose() {
 		verboseBranchModeState.removeListener(this);
 		// dispose of our decorated images
-		for (Image image : decoratedImages.values()) {
+		for (Image image : decoratedImages.values())
 			image.dispose();
-		}
 		resourceManager.dispose();
 		decoratedImages.clear();
 		annotatedTagImage.dispose();
@@ -170,10 +169,10 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 				branchName = node.getRepository().getFullBranch();
 				if (branchName == null)
 					return image;
-				if (refName.startsWith(Constants.R_HEADS)) {
+				if (refName.startsWith(Constants.R_HEADS))
 					// local branch: HEAD would be on the branch
 					compareString = refName;
-				} else if (refName.startsWith(Constants.R_TAGS)) {
+				else if (refName.startsWith(Constants.R_TAGS)) {
 					// tag: HEAD would be on the commit id to which the tag is
 					// pointing
 					ObjectId id = node.getRepository().resolve(refName);
@@ -213,9 +212,8 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 				return image;
 			}
 
-			if (compareString.equals(branchName)) {
+			if (compareString.equals(branchName))
 				return getDecoratedImage(image);
-			}
 
 			return image;
 
@@ -480,15 +478,14 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 			Ref ref = (Ref) node.getObject();
 			// shorten the name
 			String refName = Repository.shortenRefName(ref.getName());
-			if (ref.isSymbolic()) {
+			if (ref.isSymbolic())
 				refName = refName
 						+ " - " //$NON-NLS-1$
 						+ ref.getLeaf().getName()
 						+ " - " + ObjectId.toString(ref.getLeaf().getObjectId()); //$NON-NLS-1$
-			} else {
+			else
 				refName = refName + " - " //$NON-NLS-1$
 						+ ObjectId.toString(ref.getObjectId());
-			}
 			return refName;
 		}
 		case WORKINGDIR:

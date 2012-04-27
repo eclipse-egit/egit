@@ -62,8 +62,7 @@ public class ClickableCellEditor extends CellEditor {
 	}
 
 	public void activate(ColumnViewerEditorActivationEvent activationEvent) {
-		if (activationEvent.eventType != ColumnViewerEditorActivationEvent.TRAVERSAL) {
+		if (activationEvent.eventType != ColumnViewerEditorActivationEvent.TRAVERSAL)
 			super.activate(activationEvent);
-		}
 	}
 }

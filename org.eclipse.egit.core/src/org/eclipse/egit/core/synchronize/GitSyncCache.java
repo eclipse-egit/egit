@@ -146,9 +146,8 @@ class GitSyncCache {
 	private static ObjectId getTree(RevCommit commit) {
 		if (commit != null)
 			return commit.getTree();
-		else {
+		else
 			return ObjectId.zeroId();
-		}
 	}
 
 	private GitSyncCache() {

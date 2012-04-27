@@ -192,7 +192,7 @@ public class FindToolbar extends Composite {
 							+ itemBounds.height);
 					prefsMenu.setLocation(point);
 					prefsMenu.setVisible(true);
-				} else {
+				} else
 					switch (store.getInt(UIPreferences.FINDTOOLBAR_FIND_IN)) {
 					case PREFS_FINDIN_COMMENTS:
 						commentsItem.notifyListeners(SWT.Selection, null);
@@ -207,7 +207,6 @@ public class FindToolbar extends Composite {
 						committerItem.notifyListeners(SWT.Selection, null);
 						break;
 					}
-				}
 			}
 		});
 
@@ -269,24 +268,21 @@ public class FindToolbar extends Composite {
 					int newIx = -1;
 					if (event.widget == nextButton) {
 						newIx = findResults.getIndexAfter(currentIx);
-						if (newIx == -1) {
+						if (newIx == -1)
 							newIx = findResults.getFirstIndex();
-						}
 					} else {
 						newIx = findResults.getIndexBefore(currentIx);
-						if (newIx == -1) {
+						if (newIx == -1)
 							newIx = findResults.getLastIndex();
-						}
 					}
 					sendEvent(event.widget, newIx);
 
 					String current = null;
 					int currentValue = findResults.getMatchNumberFor(newIx);
-					if (currentValue == -1) {
+					if (currentValue == -1)
 						current = "-"; //$NON-NLS-1$
-					} else {
+					else
 						current = String.valueOf(currentValue);
-					}
 					currentPositionLabel.setText(current + "/" //$NON-NLS-1$
 							+ findResults.size());
 				}
@@ -305,12 +301,11 @@ public class FindToolbar extends Composite {
 						event.widget = nextButton;
 						findButtonsListener.handleEvent(event);
 					}
-				} else if (e.keyCode == SWT.ARROW_UP) {
+				} else if (e.keyCode == SWT.ARROW_UP)
 					if (previousButton.isEnabled()) {
 						event.widget = previousButton;
 						findButtonsListener.handleEvent(event);
 					}
-				}
 			}
 		});
 
@@ -318,13 +313,12 @@ public class FindToolbar extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				store.setValue(UIPreferences.FINDTOOLBAR_IGNORE_CASE,
 						caseItem.getSelection());
-				if (store.needsSaving()){
+				if (store.needsSaving())
 					try {
 						store.save();
 					} catch (IOException e1) {
 						Activator.handleError(e1.getMessage(), e1, false);
 					}
-				}
 				clear();
 			}
 		});
@@ -414,13 +408,12 @@ public class FindToolbar extends Composite {
 
 	private void prefsItemChanged(int findin, MenuItem item) {
 		store.setValue(UIPreferences.FINDTOOLBAR_FIND_IN, findin);
-		if (store.needsSaving()){
+		if (store.needsSaving())
 			try {
 				store.save();
 			} catch (IOException e) {
 				Activator.handleError(e.getMessage(), e, false);
 			}
-		}
 		commitIdItem.setSelection(false);
 		commentsItem.setSelection(false);
 		authorItem.setSelection(false);
@@ -466,13 +459,12 @@ public class FindToolbar extends Composite {
 	void findCompletionUpdate(String pattern, boolean overflow) {
 		int total = findResults.size();
 		if (total > 0) {
-			if (overflow) {
+			if (overflow)
 				currentPositionLabel
 						.setText(UIText.HistoryPage_findbar_exceeded + " 1/" //$NON-NLS-1$
 								+ total);
-			} else {
+			else
 				currentPositionLabel.setText("1/" + total); //$NON-NLS-1$
-			}
 			int ix = findResults.getFirstIndex();
 			sendEvent(null, ix);
 
@@ -480,28 +472,26 @@ public class FindToolbar extends Composite {
 			nextButton.setEnabled(true);
 			previousButton.setEnabled(true);
 			lastErrorPattern = null;
-		} else {
-			if (pattern.length() > 0) {
-				patternField.setBackground(errorBackgroundColor);
-				currentPositionLabel
-						.setText(UIText.HistoryPage_findbar_notFound);
-				// Don't keep beeping every time if the user is deleting
-				// a long not found pattern
-				if (lastErrorPattern == null
-						|| (lastErrorPattern != null && !lastErrorPattern
-								.startsWith(pattern))) {
-					getDisplay().beep();
-					nextButton.setEnabled(false);
-					previousButton.setEnabled(false);
-				}
-				lastErrorPattern = pattern;
-			} else {
-				patternField.setBackground(null);
-				currentPositionLabel.setText(""); //$NON-NLS-1$
+		} else if (pattern.length() > 0) {
+			patternField.setBackground(errorBackgroundColor);
+			currentPositionLabel
+					.setText(UIText.HistoryPage_findbar_notFound);
+			// Don't keep beeping every time if the user is deleting
+			// a long not found pattern
+			if (lastErrorPattern == null
+					|| (lastErrorPattern != null && !lastErrorPattern
+							.startsWith(pattern))) {
+				getDisplay().beep();
 				nextButton.setEnabled(false);
 				previousButton.setEnabled(false);
-				lastErrorPattern = null;
 			}
+			lastErrorPattern = pattern;
+		} else {
+			patternField.setBackground(null);
+			currentPositionLabel.setText(""); //$NON-NLS-1$
+			nextButton.setEnabled(false);
+			previousButton.setEnabled(false);
+			lastErrorPattern = null;
 		}
 		progressBar.setSelection(0);
 		historyTable.clearAll();
@@ -511,9 +501,8 @@ public class FindToolbar extends Composite {
 			currentPositionLabel.setForeground(display
 					.getSystemColor(SWT.COLOR_RED));
 			display.beep();
-		} else {
+		} else
 			currentPositionLabel.setForeground(null);
-		}
 	}
 
 	/**
@@ -534,9 +523,8 @@ public class FindToolbar extends Composite {
 		lastErrorPattern = null;
 
 		findResults.clear();
-		if (historyTable != null) {
+		if (historyTable != null)
 			historyTable.clearAll();
-		}
 
 		FindToolbarThread.updateGlobalThreadIx();
 	}
@@ -547,9 +535,8 @@ public class FindToolbar extends Composite {
 		event.index = index;
 		event.widget = widget;
 		event.data = fileRevisions[index];
-		for (Listener listener : eventList) {
+		for (Listener listener : eventList)
 			listener.handleEvent(event);
-		}
 	}
 
 	/**

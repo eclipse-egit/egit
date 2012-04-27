@@ -58,14 +58,13 @@ public class RebaseHelper {
 					rebase.execute(monitor);
 				} catch (final CoreException e) {
 					if (!repository.getRepositoryState().equals(
-							RepositoryState.SAFE)) {
+							RepositoryState.SAFE))
 						try {
 							new RebaseOperation(repository, Operation.ABORT)
 									.execute(monitor);
 						} catch (CoreException e1) {
 							return createMultiStatus(e, e1);
 						}
-					}
 					return e.getStatus();
 				}
 				return Status.OK_STATUS;
@@ -77,7 +76,7 @@ public class RebaseHelper {
 			@Override
 			public void done(IJobChangeEvent cevent) {
 				IStatus result = cevent.getJob().getResult();
-				if (result.getSeverity() == IStatus.CANCEL) {
+				if (result.getSeverity() == IStatus.CANCEL)
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
 							// don't use getShell(event) here since
@@ -92,9 +91,8 @@ public class RebaseHelper {
 											UIText.RebaseCurrentRefCommand_RebaseCanceledMessage);
 						}
 					});
-				} else if (result.isOK()) {
+				else if (result.isOK())
 					RebaseResultDialog.show(rebase.getResult(), repository);
-				}
 			}
 		});
 		job.schedule();

@@ -139,7 +139,7 @@ public class GitResourceVariantTreeSubscriber extends
 	@Override
 	public void refresh(IResource[] resources, int depth,
 			IProgressMonitor monitor) throws TeamException {
-		for (IResource resource : resources) {
+		for (IResource resource : resources)
 			// check to see if there is a full refresh
 			if (resource.getType() == IResource.ROOT) {
 				// refresh entire cache
@@ -148,7 +148,6 @@ public class GitResourceVariantTreeSubscriber extends
 				super.refresh(resources, depth, monitor);
 				return;
 			}
-		}
 
 		// not refreshing the workspace, locate and collect target resources
 		Map<GitSynchronizeData, Collection<String>> updateRequests = new HashMap<GitSynchronizeData, Collection<String>>();

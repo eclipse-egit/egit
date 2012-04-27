@@ -371,7 +371,7 @@ class ExistingOrNewPage extends WizardPage {
 				try {
 					Repository repository = new FileRepository(gitDir);
 					repository.create();
-					for (IProject project : getProjects(false).keySet()) {
+					for (IProject project : getProjects(false).keySet())
 						// If we don't refresh the project directories right
 						// now we won't later know that a .git directory
 						// exists within it and we won't mark the .git
@@ -384,7 +384,6 @@ class ExistingOrNewPage extends WizardPage {
 						if (!gitDir.toString().contains("..")) //$NON-NLS-1$
 							project.refreshLocal(IResource.DEPTH_ONE,
 									new NullProgressMonitor());
-					}
 					util.addConfiguredRepository(gitDir);
 				} catch (IOException e1) {
 					String msg = NLS
@@ -509,10 +508,9 @@ class ExistingOrNewPage extends WizardPage {
 						RevTree headTree = headCommit.getTree();
 						TreeWalk projectInRepo = TreeWalk.forPath(repo,
 								repoRelativePath, headTree);
-						if (projectInRepo != null) {
+						if (projectInRepo != null)
 							// the .project file is tracked by this repo
 							treeItem.setChecked(true);
-						}
 						revWalk.dispose();
 					}
 				}
@@ -602,11 +600,10 @@ class ExistingOrNewPage extends WizardPage {
 				}
 			}
 			minumumPath = p;
-			if (p != null) {
+			if (p != null)
 				repositoryToCreate.setText(p.toOSString());
-			} else {
+			else
 				repositoryToCreate.setText(""); //$NON-NLS-1$
-			}
 			button.setEnabled(p != null);
 			repositoryToCreate.setEnabled(p != null);
 			dotGitSegment.setEnabled(p != null);
@@ -615,13 +612,12 @@ class ExistingOrNewPage extends WizardPage {
 			for (Object checkedElement : viewer.getCheckedElements()) {
 				String path = ((ProjectAndRepo) checkedElement).getRepo();
 				if (((ProjectAndRepo) checkedElement).getRepo() != null
-						&& path.equals("")) { //$NON-NLS-1$
+						&& path.equals("")) //$NON-NLS-1$
 					pageComplete = false;
-				}
 			}
 			setPageComplete(pageComplete);
 			// provide a warning if Repository is created in workspace
-			for (IProject project : myWizard.projects) {
+			for (IProject project : myWizard.projects)
 				if (button.isEnabled()
 						&& ResourcesPlugin.getWorkspace().getRoot()
 								.getLocation()
@@ -631,7 +627,6 @@ class ExistingOrNewPage extends WizardPage {
 							IMessageProvider.WARNING);
 					break;
 				}
-			}
 		}
 
 		externalComposite.setVisible(!internalMode);
@@ -673,7 +668,7 @@ class ExistingOrNewPage extends WizardPage {
 		}
 
 		Map<IProject, File> ret = new HashMap<IProject, File>(elements.length);
-		for (Object ti : elements) {
+		for (Object ti : elements)
 			if (!internalMode) {
 				File workdir = selectedRepository.getWorkTree();
 				IProject project = (IProject) ti;
@@ -687,13 +682,11 @@ class ExistingOrNewPage extends WizardPage {
 				String path = ((ProjectAndRepo) ti).getRepo();
 				final IPath selectedRepo = Path.fromOSString(path);
 				IPath localPathToRepo = selectedRepo;
-				if (!selectedRepo.isAbsolute()) {
+				if (!selectedRepo.isAbsolute())
 					localPathToRepo = project.getLocation()
 							.append(selectedRepo);
-				}
 				ret.put(project, localPathToRepo.toFile());
 			}
-		}
 		return ret;
 	}
 

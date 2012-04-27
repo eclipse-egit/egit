@@ -112,14 +112,13 @@ public class TestProject {
 		String projectName = ppath.lastSegment();
 		URI locationURI;
 		URI top;
-		if (insidews) {
+		if (insidews)
 			top = root.getRawLocationURI();
-		} else {
+		else
 			top = URIUtil.toURI(workspaceSupplement.getAbsolutePath());
-		}
-		if (!insidews || !ppath.lastSegment().equals(path)) {
+		if (!insidews || !ppath.lastSegment().equals(path))
 			locationURI = URIUtil.toURI(URIUtil.toPath(top).append(path));
-		} else
+		else
 			locationURI = null;
 		IProjectDescription description = ResourcesPlugin.getWorkspace()
 				.newProjectDescription(projectName);

@@ -93,13 +93,11 @@ public class CommitHelper {
 		final String committerEmail = config.getCommitterEmail();
 		committer = committer + " <" + committerEmail + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 
-		if (isMergedResolved || isCherryPickResolved) {
+		if (isMergedResolved || isCherryPickResolved)
 			commitMessage = getMergeResolveMessage(mergeRepository);
-		}
 
-		if (isCherryPickResolved) {
+		if (isCherryPickResolved)
 			author = getCherryPickOriginalAuthor(mergeRepository);
-		}
 	}
 
 	private static RevCommit getHeadCommit(Repository repository) {

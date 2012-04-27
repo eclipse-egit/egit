@@ -202,18 +202,16 @@ class CreateBranchPage extends WizardPage {
 			try {
 				Map<String, Ref> map = myRepository.getRefDatabase().getRefs(
 						Constants.R_HEADS);
-				for (Entry<String, Ref> entry : map.entrySet()) {
+				for (Entry<String, Ref> entry : map.entrySet())
 					if (entry.getValue().getLeaf().getObjectId()
 							.equals(myBaseCommit))
 						this.branchCombo.add(entry.getValue().getName());
-				}
 				map = myRepository.getRefDatabase()
 						.getRefs(Constants.R_REMOTES);
-				for (Entry<String, Ref> entry : map.entrySet()) {
+				for (Entry<String, Ref> entry : map.entrySet())
 					if (entry.getValue().getLeaf().getObjectId()
 							.equals(myBaseCommit))
 						this.branchCombo.add(entry.getValue().getName());
-				}
 			} catch (IOException e) {
 				// bad luck, we can't extend the drop down; let's log an error
 				Activator.logError(

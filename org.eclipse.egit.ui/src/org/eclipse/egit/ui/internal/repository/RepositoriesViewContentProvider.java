@@ -118,7 +118,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		RepositoryUtil repositoryUtil = Activator.getDefault()
 				.getRepositoryUtil();
 
-		if (inputElement instanceof Collection) {
+		if (inputElement instanceof Collection)
 			for (Iterator it = ((Collection) inputElement).iterator(); it
 					.hasNext();) {
 				Object next = it.next();
@@ -127,11 +127,10 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 				else if (next instanceof String)
 					directories.add((String) next);
 			}
-		} else if (inputElement instanceof IWorkspaceRoot) {
+		else if (inputElement instanceof IWorkspaceRoot)
 			directories.addAll(repositoryUtil.getConfiguredRepositories());
-		}
 
-		for (String directory : directories) {
+		for (String directory : directories)
 			try {
 				File gitDir = new File(directory);
 				if (gitDir.exists()) {
@@ -143,7 +142,6 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			} catch (IOException e) {
 				// ignore for now
 			}
-		}
 
 		Collections.sort(nodes);
 		return nodes.toArray();
@@ -180,14 +178,12 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 						repo, new Path(Constants.R_HEADS));
 				List<RepositoryTreeNode> children = new ArrayList<RepositoryTreeNode>();
 				try {
-					for (IPath path : hierNode.getChildPaths()) {
+					for (IPath path : hierNode.getChildPaths())
 						children.add(new BranchHierarchyNode(node, node
 								.getRepository(), path));
-					}
-					for (Ref ref : hierNode.getChildRefs()) {
+					for (Ref ref : hierNode.getChildRefs())
 						children.add(new RefNode(node, node.getRepository(),
 								ref));
-					}
 				} catch (Exception e) {
 					return handleException(e, node);
 				}
@@ -195,11 +191,10 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			} else {
 				List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
 				try {
-					for (Entry<String, Ref> refEntry : getRefs(repo, Constants.R_HEADS).entrySet()) {
+					for (Entry<String, Ref> refEntry : getRefs(repo, Constants.R_HEADS).entrySet())
 						if (!refEntry.getValue().isSymbolic())
 							refs.add(new RefNode(node, repo, refEntry
 									.getValue()));
-					}
 				} catch (Exception e) {
 					return handleException(e, node);
 				}
@@ -213,14 +208,12 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 						repo, new Path(Constants.R_REMOTES));
 				List<RepositoryTreeNode> children = new ArrayList<RepositoryTreeNode>();
 				try {
-					for (IPath path : hierNode.getChildPaths()) {
+					for (IPath path : hierNode.getChildPaths())
 						children.add(new BranchHierarchyNode(node, node
 								.getRepository(), path));
-					}
-					for (Ref ref : hierNode.getChildRefs()) {
+					for (Ref ref : hierNode.getChildRefs())
 						children.add(new RefNode(node, node.getRepository(),
 								ref));
-					}
 				} catch (Exception e) {
 					return handleException(e, node);
 				}
@@ -228,11 +221,10 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			} else {
 				List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
 				try {
-					for (Entry<String, Ref> refEntry : getRefs(repo, Constants.R_REMOTES).entrySet()) {
+					for (Entry<String, Ref> refEntry : getRefs(repo, Constants.R_REMOTES).entrySet())
 						if (!refEntry.getValue().isSymbolic())
 							refs.add(new RefNode(node, repo, refEntry
 									.getValue()));
-					}
 				} catch (Exception e) {
 					return handleException(e, node);
 				}
@@ -245,13 +237,11 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			BranchHierarchyNode hierNode = (BranchHierarchyNode) node;
 			List<RepositoryTreeNode> children = new ArrayList<RepositoryTreeNode>();
 			try {
-				for (IPath path : hierNode.getChildPaths()) {
+				for (IPath path : hierNode.getChildPaths())
 					children.add(new BranchHierarchyNode(node, node
 							.getRepository(), path));
-				}
-				for (Ref ref : hierNode.getChildRefs()) {
+				for (Ref ref : hierNode.getChildRefs())
 					children.add(new RefNode(node, node.getRepository(), ref));
-				}
 			} catch (IOException e) {
 				return handleException(e, node);
 			}
@@ -263,9 +253,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 
 			try {
 				for (Entry<String, Ref> refEntry : repo.getRefDatabase()
-						.getRefs(Constants.R_TAGS).entrySet()) {
+						.getRefs(Constants.R_TAGS).entrySet())
 					refs.add(new TagNode(node, repo, refEntry.getValue()));
-				}
 			} catch (IOException e) {
 				return handleException(e, node);
 			}
@@ -298,9 +287,8 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			Set<String> configNames = rep.getConfig().getSubsections(
 					RepositoriesView.REMOTE);
 
-			for (String configName : configNames) {
+			for (String configName : configNames)
 				remotes.add(new RemoteNode(node, repo, configName));
-			}
 
 			return remotes.toArray();
 		}
@@ -336,23 +324,19 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			Arrays.sort(childFiles, new Comparator<File>() {
 				public int compare(File o1, File o2) {
 					if (o1.isDirectory()) {
-						if (o2.isDirectory()) {
+						if (o2.isDirectory())
 							return o1.compareTo(o2);
-						}
 						return -1;
-					} else if (o2.isDirectory()) {
+					} else if (o2.isDirectory())
 						return 1;
-					}
 					return o1.compareTo(o2);
 				}
 			});
-			for (File file : childFiles) {
-				if (file.isDirectory()) {
+			for (File file : childFiles)
+				if (file.isDirectory())
 					children.add(new FolderNode(node, repo, file));
-				} else {
+				else
 					children.add(new FileNode(node, repo, file));
-				}
-			}
 
 			return children.toArray();
 		}
@@ -366,23 +350,19 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			Arrays.sort(childFiles, new Comparator<File>() {
 				public int compare(File o1, File o2) {
 					if (o1.isDirectory()) {
-						if (o2.isDirectory()) {
+						if (o2.isDirectory())
 							return o1.compareTo(o2);
-						}
 						return -1;
-					} else if (o2.isDirectory()) {
+					} else if (o2.isDirectory())
 						return 1;
-					}
 					return o1.compareTo(o2);
 				}
 			});
-			for (File file : childFiles) {
-				if (file.isDirectory()) {
+			for (File file : childFiles)
+				if (file.isDirectory())
 					children.add(new FolderNode(node, repo, file));
-				} else {
+				else
 					children.add(new FileNode(node, repo, file));
-				}
-			}
 
 			return children.toArray();
 		}
@@ -558,10 +538,9 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			return allRefs;
 
 		Map<String, Ref> filtered = new HashMap<String, Ref>();
-		for (Map.Entry<String, Ref> entry : allRefs.entrySet()) {
+		for (Map.Entry<String, Ref> entry : allRefs.entrySet())
 			if (entry.getKey().startsWith(prefix))
 				filtered.put(entry.getKey(), entry.getValue());
-		}
 		return filtered;
 	}
 

@@ -73,9 +73,8 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 			if (repositories.length == 0)
 				return false;
 			Repository repository = repositories[0];
-			if (!repository.getRepositoryState().equals(RepositoryState.SAFE)) {
+			if (!repository.getRepositoryState().equals(RepositoryState.SAFE))
 				return false;
-			}
 		}
 		return true;
 	}

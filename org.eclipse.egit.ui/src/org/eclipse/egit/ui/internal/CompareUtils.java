@@ -238,9 +238,8 @@ public class CompareUtils {
 				else
 					workBenchPage.bringToTop(editor);
 			}
-		} else {
+		} else
 			CompareUI.openCompareEditor(input);
-		}
 	}
 
 	private static IEditorPart findReusableCompareEditor(
@@ -252,22 +251,19 @@ public class CompareUtils {
 			if (part != null
 					&& (part.getEditorInput() instanceof GitCompareFileRevisionEditorInput || part.getEditorInput() instanceof GitCompareEditorInput)
 					&& part instanceof IReusableEditor
-					&& part.getEditorInput().equals(input)) {
+					&& part.getEditorInput().equals(input))
 				return part;
-			}
 		}
 		// if none found and "Reuse open compare editors" preference is on use
 		// a non-dirty editor
-		if (isReuseOpenEditor()) {
+		if (isReuseOpenEditor())
 			for (int i = 0; i < editorRefs.length; i++) {
 				IEditorPart part = editorRefs[i].getEditor(false);
 				if (part != null
 						&& (part.getEditorInput() instanceof SaveableCompareEditorInput)
-						&& part instanceof IReusableEditor && !part.isDirty()) {
+						&& part instanceof IReusableEditor && !part.isDirty())
 					return part;
-				}
 			}
-		}
 		// no re-usable editor found
 		return null;
 	}
@@ -476,11 +472,9 @@ public class CompareUtils {
 					diffNode.add(childDiffNode);
 					if (ln.getType().equals(ITypedElement.FOLDER_TYPE)) {
 						ITypedElement[] children = (ITypedElement[])((IStructureComparator)ln).getChildren();
-						if(children != null && children.length > 0) {
-							for (ITypedElement child : children) {
+						if(children != null && children.length > 0)
+							for (ITypedElement child : children)
 								childDiffNode.add(addDirectoryFiles(child, Differencer.ADDITION));
-							}
-						}
 					}
 					++li;
 				} else {
@@ -488,11 +482,9 @@ public class CompareUtils {
 					diffNode.add(childDiffNode);
 					if (rn.getType().equals(ITypedElement.FOLDER_TYPE)) {
 						ITypedElement[] children = (ITypedElement[])((IStructureComparator)rn).getChildren();
-						if(children != null && children.length > 0) {
-							for (ITypedElement child : children) {
+						if(children != null && children.length > 0)
+							for (ITypedElement child : children)
 								childDiffNode.add(addDirectoryFiles(child, Differencer.DELETION));
-							}
-						}
 					}
 					++ri;
 				}
@@ -503,11 +495,9 @@ public class CompareUtils {
 				diffNode.add(childDiffNode);
 				if (ln.getType().equals(ITypedElement.FOLDER_TYPE)) {
 					ITypedElement[] children = (ITypedElement[])((IStructureComparator)ln).getChildren();
-					if(children != null && children.length > 0) {
-						for (ITypedElement child : children) {
+					if(children != null && children.length > 0)
+						for (ITypedElement child : children)
 							childDiffNode.add(addDirectoryFiles(child, Differencer.ADDITION));
-						}
-					}
 				}
 				++li;
 			}
@@ -517,18 +507,15 @@ public class CompareUtils {
 				diffNode.add(childDiffNode);
 				if (rn.getType().equals(ITypedElement.FOLDER_TYPE)) {
 					ITypedElement[] children = (ITypedElement[])((IStructureComparator)rn).getChildren();
-					if(children != null && children.length > 0) {
-						for (ITypedElement child : children) {
+					if(children != null && children.length > 0)
+						for (ITypedElement child : children)
 							childDiffNode.add(addDirectoryFiles(child, Differencer.DELETION));
-						}
-					}
 				}
 				++ri;
 			}
 			return diffNode;
-		} else {
+		} else
 			return new DiffNode(actLeft, actRight);
-		}
 	}
 
 	/**
@@ -540,23 +527,20 @@ public class CompareUtils {
 	private static DiffNode addDirectoryFiles(ITypedElement elem, int diffType) {
 		ITypedElement l = null;
 		ITypedElement r = null;
-		if (diffType == Differencer.DELETION) {
+		if (diffType == Differencer.DELETION)
 			r = elem;
-		} else {
+		else
 			l = elem;
-		}
 
 		if (elem.getType().equals(ITypedElement.FOLDER_TYPE)) {
 			DiffNode diffNode = null;
 			diffNode = new DiffNode(null,Differencer.CHANGE,null,l,r);
 			ITypedElement[] children = (ITypedElement[])((IStructureComparator)elem).getChildren();
-			for (ITypedElement child : children) {
+			for (ITypedElement child : children)
 				diffNode.add(addDirectoryFiles(child, diffType));
-			}
 			return diffNode;
-		} else {
+		} else
 			return new DiffNode(diffType, null, l, r);
-		}
 	}
 
 	private static class DirCacheEntryEditor extends DirCacheEditor.PathEdit {

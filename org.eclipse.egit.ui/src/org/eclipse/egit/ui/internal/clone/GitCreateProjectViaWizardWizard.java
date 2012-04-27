@@ -102,9 +102,8 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 			}
 			return super.getNextPage(page);
 		} else if (page == myCreateGeneralProjectPage
-				|| page == myProjectsImportPage) {
+				|| page == myProjectsImportPage)
 			return null;
-		}
 		return super.getNextPage(page);
 	}
 
@@ -179,13 +178,12 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 						throws CoreException {
 					IProject[] currentProjects = ResourcesPlugin.getWorkspace()
 							.getRoot().getProjects();
-					for (IProject current : currentProjects) {
+					for (IProject current : currentProjects)
 						if (!previousProjects.contains(current)) {
 							ConnectProviderOperation cpo = new ConnectProviderOperation(
 									current, myRepository.getDirectory());
 							cpo.execute(actMonitor);
 						}
-					}
 
 				}
 			};

@@ -64,9 +64,8 @@ public class CommonUtils {
 					result = o1Part.length() - o2Part.length();
 					if (result == 0)
 						result = o1Part.compareTo(o2Part);
-				} else {
+				} else
 					result = o1Part.compareTo(o2Part);
-				}
 
 				if (result != 0)
 					return result;

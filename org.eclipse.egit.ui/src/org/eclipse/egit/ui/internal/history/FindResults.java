@@ -61,13 +61,12 @@ public class FindResults {
 	public synchronized int getIndexAfter(int index) {
 		Integer[] matches = getkeysArray();
 		int sres = Arrays.binarySearch(matches, Integer.valueOf(index));
-		if (sres >= 0 && sres != matches.length - 1) {
+		if (sres >= 0 && sres != matches.length - 1)
 			return matches[sres + 1].intValue();
-		} else if (sres < 0) {
+		else if (sres < 0) {
 			sres = -sres - 1;
-			if (sres < matches.length) {
+			if (sres < matches.length)
 				return matches[sres].intValue();
-			}
 		}
 
 		return -1;
@@ -85,9 +84,9 @@ public class FindResults {
 	public synchronized int getIndexBefore(int index) {
 		Integer[] matches = getkeysArray();
 		int sres = Arrays.binarySearch(matches, Integer.valueOf(index));
-		if (sres >= 0 && sres != 0) {
+		if (sres >= 0 && sres != 0)
 			return matches[sres - 1].intValue();
-		} else if (sres < -1) {
+		else if (sres < -1) {
 			sres = -sres;
 			return matches[sres - 2].intValue();
 		}
@@ -104,9 +103,8 @@ public class FindResults {
 	 */
 	public synchronized int getFirstIndex() {
 		Iterator iter = matchesMap.keySet().iterator();
-		if (iter.hasNext()) {
+		if (iter.hasNext())
 			return ((Integer) iter.next()).intValue();
-		}
 
 		return -1;
 	}
@@ -120,9 +118,8 @@ public class FindResults {
 	 */
 	public synchronized int getLastIndex() {
 		Integer[] matches = getkeysArray();
-		if (matches.length > 0) {
+		if (matches.length > 0)
 			return matches[matches.length - 1].intValue();
-		}
 
 		return -1;
 	}
@@ -138,9 +135,8 @@ public class FindResults {
 	 */
 	public synchronized int getMatchNumberFor(int index) {
 		Integer ix = matchesMap.get(Integer.valueOf(index));
-		if (ix != null) {
+		if (ix != null)
 			return ix.intValue();
-		}
 
 		return -1;
 	}
@@ -156,11 +152,9 @@ public class FindResults {
 	 * Cleans the find results. All match item indexes are removed.
 	 */
 	public synchronized void clear() {
-		if (highlight != null) {
-			for (RevObject o : revObjList) {
+		if (highlight != null)
+			for (RevObject o : revObjList)
 				o.remove(highlight);
-			}
-		}
 		matchesMap.clear();
 		revObjList.clear();
 		keysArray = null;
@@ -185,18 +179,16 @@ public class FindResults {
 	}
 
 	private Integer[] getkeysArray() {
-		if (keysArray == null) {
+		if (keysArray == null)
 			keysArray = matchesMap.keySet().toArray(
 					new Integer[matchesMap.size()]);
-		}
 
 		return keysArray;
 	}
 
 	synchronized void setHighlightFlag(RevFlag hFlag) {
-		if (highlight != null) {
+		if (highlight != null)
 			clear();
-		}
 		this.highlight = hFlag;
 	}
 }

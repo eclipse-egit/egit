@@ -128,7 +128,7 @@ public class GitVariableResolver implements IDynamicVariableResolver {
 						.getPluginId(), UIText.GitVariableResolver_NoSelectedResource));
 		} else {
 			res = ResourcesPlugin.getWorkspace().getRoot().findMember(argument);
-			if (res == null || !res.exists()) {
+			if (res == null || !res.exists())
 				throw new CoreException(
 						new Status(
 								IStatus.ERROR,
@@ -136,7 +136,6 @@ public class GitVariableResolver implements IDynamicVariableResolver {
 								NLS.bind(
 										UIText.GitVariableResolver_VariableReferencesNonExistentResource,
 										argument)));
-			}
 		}
 		return res;
 	}

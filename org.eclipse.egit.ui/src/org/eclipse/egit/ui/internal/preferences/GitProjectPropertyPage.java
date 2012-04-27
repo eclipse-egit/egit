@@ -82,19 +82,18 @@ public class GitProjectPropertyPage extends PropertyPage {
 		// Get the project that is the source of this property page
 		IProject project = null;
 		final IAdaptable element = getElement();
-		if (element instanceof IResource) {
+		if (element instanceof IResource)
 			project = ((IResource) element).getProject();
-		} else {
+		else {
 			Object adapter = element.getAdapter(IResource.class);
-			if (adapter instanceof IResource) {
+			if (adapter instanceof IResource)
 				project = ((IResource) adapter).getProject();
-			}
 		}
 
 		Repository repository = RepositoryMapping.getMapping(project)
 				.getRepository();
 
-		if (repository != null) {
+		if (repository != null)
 			try {
 				createHeadLink(repository, composite);
 				fillValues(repository);
@@ -102,7 +101,6 @@ public class GitProjectPropertyPage extends PropertyPage {
 				if (GitTraceLocation.UI.isActive())
 					GitTraceLocation.getTrace().trace(GitTraceLocation.UI.getLocation(), e.getMessage(), e);
 			}
-		}
 
 		return composite;
 	}

@@ -46,10 +46,10 @@ public class DecoratableResourceHelper {
 					.getRepositoryUtil()
 					.mapCommitToRef(repository, repository.getFullBranch(),
 							false);
-			if (refString != null) {
+			if (refString != null)
 				return repository.getFullBranch().substring(0, 7)
 						+ "... (" + refString + ")"; //$NON-NLS-1$ //$NON-NLS-2$
-			} else
+			else
 				return repository.getFullBranch().substring(0, 7) + "..."; //$NON-NLS-1$
 		}
 

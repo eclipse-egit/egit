@@ -87,10 +87,10 @@ public class RevertFailureDialog extends MessageDialog {
 
 		public ImageDescriptor getImageDescriptor(Object object) {
 			String name = new org.eclipse.core.runtime.Path(path).lastSegment();
-			if (name != null) {
+			if (name != null)
 				return PlatformUI.getWorkbench().getEditorRegistry()
 						.getImageDescriptor(name);
-			} else
+			else
 				return PlatformUI.getWorkbench().getSharedImages()
 						.getImageDescriptor(ISharedImages.IMG_OBJ_FILE);
 		}

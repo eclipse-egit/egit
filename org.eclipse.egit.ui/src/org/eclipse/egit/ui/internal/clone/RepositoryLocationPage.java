@@ -107,9 +107,8 @@ public class RepositoryLocationPage extends WizardPage {
 				if (repositoryImport.equals(CloneSourceProvider.LOCAL)
 						|| repositoryImport.hasFixLocation())
 					complete = true;
-			} else if (element instanceof RepositoryServerInfo) {
+			} else if (element instanceof RepositoryServerInfo)
 				complete = true;
-			}
 		}
 
 		setPageComplete(complete);
@@ -122,9 +121,9 @@ public class RepositoryLocationPage extends WizardPage {
 
 		if (selection.size() == 1) {
 			Object element = selection.getFirstElement();
-			if (element instanceof CloneSourceProvider) {
+			if (element instanceof CloneSourceProvider)
 				return getNextPage((CloneSourceProvider) element);
-			} else if (element instanceof RepositoryServerInfo) {
+			else if (element instanceof RepositoryServerInfo) {
 				Object parent = ((ITreeContentProvider) tv.getContentProvider())
 						.getParent(element);
 				if (parent instanceof CloneSourceProvider)

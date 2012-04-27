@@ -120,13 +120,11 @@ public class ResetTargetSelectionDialog extends AbstractBranchSelectionDialog {
 
 	@Override
 	protected void okPressed() {
-		if (resetType == ResetType.HARD) {
+		if (resetType == ResetType.HARD)
 			if (!MessageDialog.openQuestion(getShell(),
 					UIText.ResetTargetSelectionDialog_ResetQuestion,
-					UIText.ResetTargetSelectionDialog_ResetConfirmQuestion)) {
+					UIText.ResetTargetSelectionDialog_ResetConfirmQuestion))
 				return;
-			}
-		}
 		super.okPressed();
 	}
 

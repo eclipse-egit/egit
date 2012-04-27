@@ -128,15 +128,12 @@ public class IndexDiffData {
 
 	private void mergeList(Set<String> baseList,
 			Collection<String> changedFiles, Set<String> listForChangedFiles) {
-		for (String file : changedFiles) {
+		for (String file : changedFiles)
 			if (baseList.contains(file)) {
 				if (!listForChangedFiles.contains(file))
 					baseList.remove(file);
-			} else {
-				if (listForChangedFiles.contains(file))
-					baseList.add(file);
-			}
-		}
+			} else if (listForChangedFiles.contains(file))
+				baseList.add(file);
 	}
 
 	/**

@@ -146,15 +146,13 @@ public class PushWizard extends Wizard {
 		if (getContainer().getCurrentPage()==repoPage)
 			calledFromRepoPage = true;
 		if (repoPage.getSelection().isConfigSelected()
-				&& refSpecPage.isSaveRequested()) {
+				&& refSpecPage.isSaveRequested())
 			saveRefSpecs();
-		}
 
-		if (repoPage.getStoreInSecureStore()) {
+		if (repoPage.getStoreInSecureStore())
 			if (!SecureStoreUtils.storeCredentials(repoPage
 					.getCredentials(), repoPage.getSelection().getURI()))
 				return false;
-		}
 
 		final PushOperation operation = createPushOperation(calledFromRepoPage);
 		if (operation == null)
@@ -301,13 +299,12 @@ public class PushWizard extends Wizard {
 			}
 
 			final PushOperationResult result = operation.getOperationResult();
-			if (!result.isSuccessfulConnectionForAnyURI()) {
+			if (!result.isSuccessfulConnectionForAnyURI())
 				return new Status(IStatus.ERROR, Activator.getPluginId(), NLS
 						.bind(UIText.PushWizard_cantConnectToAny, result
 								.getErrorStringForAllURis()));
-			}
 
-			if (resultToCompare == null || !result.equals(resultToCompare)) {
+			if (resultToCompare == null || !result.equals(resultToCompare))
 				PlatformUI.getWorkbench().getDisplay().asyncExec(
 						new Runnable() {
 							public void run() {
@@ -319,7 +316,6 @@ public class PushWizard extends Wizard {
 								dialog.open();
 							}
 						});
-			}
 			return Status.OK_STATUS;
 		}
 	}

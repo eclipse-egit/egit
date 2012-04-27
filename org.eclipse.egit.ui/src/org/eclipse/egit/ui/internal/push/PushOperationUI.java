@@ -173,7 +173,7 @@ public class PushOperationUI {
 			List<RefSpec> pushRefSpecs = new ArrayList<RefSpec>();
 			pushRefSpecs.addAll(config.getPushRefSpecs());
 
-			for (URIish uri : urisToPush) {
+			for (URIish uri : urisToPush)
 				try {
 					spec.addURIRefUpdates(uri, Transport.open(repository, uri)
 							.findRemoteRefUpdatesFor(pushRefSpecs));
@@ -184,7 +184,6 @@ public class PushOperationUI {
 					throw new CoreException(Activator.createErrorStatus(
 							e.getMessage(), e));
 				}
-			}
 		}
 		op = new PushOperation(repository, spec, dryRun, timeout);
 	}

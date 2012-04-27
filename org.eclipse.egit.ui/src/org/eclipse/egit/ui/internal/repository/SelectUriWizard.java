@@ -54,10 +54,9 @@ public class SelectUriWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		uri = page.getSelection().getURI();
-		if (page.getStoreInSecureStore()) {
+		if (page.getStoreInSecureStore())
 			if (!SecureStoreUtils.storeCredentials(page.getCredentials(), uri))
 				return false;
-		}
 
 		return uri != null;
 	}

@@ -61,14 +61,13 @@ public class GitChangeSetDropAdapterAssistant extends
 
 		String operation = getOperationType(selection);
 
-		if (!UNSUPPORTED_OP.equals(operation)) {
+		if (!UNSUPPORTED_OP.equals(operation))
 			if (target instanceof GitModelWorkingTree) {
 				if (UNSTAGE_OP.equals(operation))
 					return Status.OK_STATUS;
 			} else if (STAGE_OP.equals(operation)
 					&& target instanceof GitModelCache)
 				return Status.OK_STATUS;
-		}
 
 		return Status.CANCEL_STATUS;
 	}

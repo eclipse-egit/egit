@@ -33,13 +33,12 @@ public class ValidationUtils {
 			final Repository repo, final String refPrefix, final boolean errorOnEmptyName) {
 		return new IInputValidator() {
 			public String isValid(String newText) {
-				if (newText.length() == 0) {
+				if (newText.length() == 0)
 					if (errorOnEmptyName)
 						return UIText.ValidationUtils_PleaseEnterNameMessage;
 					else
 						// ignore this
 						return null;
-				}
 				String testFor = refPrefix + newText;
 				try {
 					if (repo.resolve(testFor) != null)

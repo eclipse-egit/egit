@@ -199,12 +199,10 @@ class GitDocument extends Document implements RefsChangedListener {
 							.getTrace()
 							.trace(GitTraceLocation.QUICKDIFF.getLocation(),
 									"(GitDocument) has reference doc, size=" + s.length() + " bytes"); //$NON-NLS-1$ //$NON-NLS-2$
-			} else {
-				if (GitTraceLocation.QUICKDIFF.isActive())
-					GitTraceLocation.getTrace().trace(
-							GitTraceLocation.QUICKDIFF.getLocation(),
-							"(GitDocument) already resolved"); //$NON-NLS-1$
-			}
+			} else if (GitTraceLocation.QUICKDIFF.isActive())
+				GitTraceLocation.getTrace().trace(
+						GitTraceLocation.QUICKDIFF.getLocation(),
+						"(GitDocument) already resolved"); //$NON-NLS-1$
 		} finally {
 			if (tw != null)
 				tw.release();

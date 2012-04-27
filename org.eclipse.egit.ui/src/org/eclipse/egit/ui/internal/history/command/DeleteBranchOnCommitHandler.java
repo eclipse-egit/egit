@@ -87,26 +87,25 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 								for (Ref refNode : branchesToDelete) {
 									int result = deleteBranch(repository,
 											refNode, false);
-									if (result == DeleteBranchOperation.REJECTED_CURRENT) {
+									if (result == DeleteBranchOperation.REJECTED_CURRENT)
 										throw new CoreException(
 												Activator
 														.createErrorStatus(
 																UIText.DeleteBranchCommand_CannotDeleteCheckedOutBranch,
 																null));
-									} else if (result == DeleteBranchOperation.REJECTED_UNMERGED) {
+									else if (result == DeleteBranchOperation.REJECTED_UNMERGED)
 										unmergedBranches.add(refNode);
-									} else
+									else
 										monitor.worked(1);
 								}
 								if (!unmergedBranches.isEmpty()) {
 									MessageDialog messageDialog = new UnmergedBranchDialog<Ref>(
 											shell, unmergedBranches);
-									if (messageDialog.open() == Window.OK) {
+									if (messageDialog.open() == Window.OK)
 										for (Ref node : unmergedBranches) {
 											deleteBranch(repository, node, true);
 											monitor.worked(1);
 										}
-									}
 								}
 							} catch (CoreException ex) {
 								throw new InvocationTargetException(ex);

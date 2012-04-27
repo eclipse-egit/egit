@@ -217,8 +217,8 @@ public class GitSelectWizardPage extends WizardPage {
 				if (workdirPath.isPrefixOf(fullPath)) {
 					IPath relPath = fullPath.removeFirstSegments(workdirPath
 							.segmentCount());
-					for (String segment : relPath.segments()) {
-						for (Object child : cp.getChildren(parentNode)) {
+					for (String segment : relPath.segments())
+						for (Object child : cp.getChildren(parentNode))
 							if (child instanceof FolderNode) {
 								FolderNode childFolder = (FolderNode) child;
 								if (childFolder.getObject().getName().equals(
@@ -227,8 +227,6 @@ public class GitSelectWizardPage extends WizardPage {
 									break;
 								}
 							}
-						}
-					}
 					tv.setSelection(new StructuredSelection(parentNode));
 				}
 			}

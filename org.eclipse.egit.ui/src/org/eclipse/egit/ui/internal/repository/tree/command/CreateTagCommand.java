@@ -120,12 +120,10 @@ public class CreateTagCommand extends RepositoriesViewCommandHandler<RepositoryT
 		try {
 			RevWalk rw = new RevWalk(repo);
 			try {
-				if (objectId == null) {
+				if (objectId == null)
 					return rw.parseAny(repo.resolve(Constants.HEAD));
-
-				} else {
+				else
 					return rw.parseAny(objectId);
-				}
 			} finally {
 				rw.release();
 			}

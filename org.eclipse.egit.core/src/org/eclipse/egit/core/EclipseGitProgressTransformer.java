@@ -93,13 +93,12 @@ public class EclipseGitProgressTransformer implements ProgressMonitor {
 	}
 
 	public void endTask() {
-		if (task != null) {
+		if (task != null)
 			try {
 				task.done();
 			} finally {
 				task = null;
 			}
-		}
 	}
 
 	public boolean isCancelled() {

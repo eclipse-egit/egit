@@ -219,7 +219,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent e) {
-				if (navigatorPreview != null && changeSetPreview != null) {
+				if (navigatorPreview != null && changeSetPreview != null)
 					if (UIText.DecoratorPreferencesPage_otherDecorations.equals(e.item.getData())) {
 						navigatorPreview.hide();
 						changeSetPreview.show();
@@ -227,7 +227,6 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 						changeSetPreview.hide();
 						navigatorPreview.show();
 					}
-				}
 			}
 
 		});
@@ -470,9 +469,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		public void performOk(IPreferenceStore store) {
 			changeSetLabelFormat.performOk(store);
 
-			if (formatValid) {
+			if (formatValid)
 				store.setValue(UIPreferences.DATE_FORMAT, dateFormat.getText());
-			}
 		}
 
 		public void modifyText(ModifyEvent e) {
@@ -534,9 +532,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 			Object[] result = dialog.getResult();
 
-			for (int i = 0; i < result.length; i++) {
+			for (int i = 0; i < result.length; i++)
 				text.insert("{" + ((Map.Entry) result[i]).getKey() + "}"); //$NON-NLS-1$ //$NON-NLS-2$
-			}
 		}
 
 		public void performOk(IPreferenceStore store) {
@@ -689,7 +686,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 	public boolean performOk() {
 		IPreferenceStore store = getPreferenceStore();
 		final boolean okToClose = performOk(store);
-		if (store.needsSaving()) {
+		if (store.needsSaving())
 			try {
 				((IPersistentPreferenceStore)store).save();
 				Activator.broadcastPropertyChange(new PropertyChangeEvent(this,
@@ -697,7 +694,6 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			} catch (IOException e) {
 				Activator.handleError(e.getMessage(), e, true);
 			}
-		}
 		return okToClose;
 	}
 
@@ -1153,17 +1149,15 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		public String getPrefix() {
 			StringBuilder sb = new StringBuilder();
-			for (Iterator<String> iter = prefixes.iterator(); iter.hasNext();) {
+			for (Iterator<String> iter = prefixes.iterator(); iter.hasNext();)
 				sb.append(iter.next());
-			}
 			return sb.toString();
 		}
 
 		public String getSuffix() {
 			StringBuilder sb = new StringBuilder();
-			for (Iterator<String> iter = suffixes.iterator(); iter.hasNext();) {
+			for (Iterator<String> iter = suffixes.iterator(); iter.hasNext();)
 				sb.append(iter.next());
-			}
 			return sb.toString();
 		}
 

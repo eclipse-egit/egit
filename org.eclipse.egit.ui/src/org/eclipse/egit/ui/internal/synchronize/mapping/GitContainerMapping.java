@@ -42,12 +42,11 @@ class GitContainerMapping extends GitObjectMapping {
 				.getChildren();
 		List<ResourceTraversal> result = new ArrayList<ResourceTraversal>();
 
-		for (GitModelObject child : children) {
+		for (GitModelObject child : children)
 			if (child.isContainer())
 				result.addAll(createTraversalForContainer(child));
 			else
 				result.add(createTraversalForFile(child));
-		}
 		result.removeAll(Collections.singleton(null));
 		return result.toArray(new ResourceTraversal[result.size()]);
 	}
@@ -55,12 +54,11 @@ class GitContainerMapping extends GitObjectMapping {
 	private List<ResourceTraversal> createTraversalForContainer(GitModelObject child) {
 		GitModelObject[] containerChildren = child.getChildren();
 		List<ResourceTraversal> result = new ArrayList<ResourceTraversal>();
-		for (GitModelObject aChild : containerChildren) {
+		for (GitModelObject aChild : containerChildren)
 			if(aChild.isContainer())
 				result.addAll(createTraversalForContainer(aChild));
 			else
 				result.add(createTraversalForFile(aChild));
-		}
 		return result;
 	}
 
@@ -68,9 +66,8 @@ class GitContainerMapping extends GitObjectMapping {
 		IPath childLocation = aChild.getLocation();
 		IFile file = ROOT.getFileForLocation(childLocation);
 
-		if (file == null) {
+		if (file == null)
 			file = ROOT.getFile(childLocation);
-		}
 		ResourceTraversal traversal = new ResourceTraversal(
 				new IResource[] { file }, DEPTH_ONE, ALLOW_MISSING_LOCAL);
 		return traversal;

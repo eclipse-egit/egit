@@ -141,12 +141,11 @@ public class FileChecker {
 				continue;
 			}
 			boolean mappedResourceFound = false;
-			for (IFile file : filesForLocation) {
+			for (IFile file : filesForLocation)
 				if (RepositoryMapping.getMapping(file) != null) {
 					mappedResourceFound = true;
 					break;
 				}
-			}
 			if (!mappedResourceFound)
 				result.addEntry(filePath, new CheckResultEntry(true, false));
 		}

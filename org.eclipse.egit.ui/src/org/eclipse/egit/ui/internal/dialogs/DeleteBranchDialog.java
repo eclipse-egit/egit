@@ -96,7 +96,7 @@ public class DeleteBranchDialog extends AbstractBranchSelectionDialog {
 
 	@Override
 	protected void buttonPressed(int buttonId) {
-		if (buttonId == Window.OK) {
+		if (buttonId == Window.OK)
 			try {
 				int result = deleteBranch(selectedRefs, false);
 				if (result == DeleteBranchOperation.REJECTED_UNMERGED) {
@@ -117,7 +117,6 @@ public class DeleteBranchDialog extends AbstractBranchSelectionDialog {
 			} catch (CoreException e) {
 				Activator.handleError(e.getMessage(), e, true);
 			}
-		}
 
 		super.buttonPressed(buttonId);
 	}

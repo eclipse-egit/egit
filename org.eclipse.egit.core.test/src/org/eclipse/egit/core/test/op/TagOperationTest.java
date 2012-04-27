@@ -61,7 +61,7 @@ public class TagOperationTest extends DualRepositoryTestCase {
 		project.accept(new IResourceVisitor() {
 
 			public boolean visit(IResource resource) throws CoreException {
-				if (resource instanceof IFile) {
+				if (resource instanceof IFile)
 					try {
 						repository1
 								.track(EFS.getStore(resource.getLocationURI())
@@ -70,7 +70,6 @@ public class TagOperationTest extends DualRepositoryTestCase {
 						throw new CoreException(Activator.error(e.getMessage(),
 								e));
 					}
-				}
 				return true;
 			}
 		});

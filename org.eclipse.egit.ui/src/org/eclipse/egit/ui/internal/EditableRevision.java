@@ -66,9 +66,8 @@ public class EditableRevision extends FileRevisionTypedElement implements
 			 * Notifies all registered <code>IContentChangeListener</code>s of a content change.
 			 */
 			public void fireContentChanged() {
-				if (isEmpty()) {
+				if (isEmpty())
 					return;
-				}
 				// Legacy listeners may expect to be notified in the UI thread.
 				Runnable runnable = new Runnable() {
 					public void run() {
@@ -86,11 +85,10 @@ public class EditableRevision extends FileRevisionTypedElement implements
 						}
 					}
 				};
-				if (Display.getCurrent() == null) {
+				if (Display.getCurrent() == null)
 					Display.getDefault().syncExec(runnable);
-				} else {
+				else
 					runnable.run();
-				}
 			}
 
 			/**
@@ -126,9 +124,8 @@ public class EditableRevision extends FileRevisionTypedElement implements
 
 	@Override
 	public InputStream getContents() throws CoreException {
-		if (modifiedContent != null) {
+		if (modifiedContent != null)
 			return new ByteArrayInputStream(modifiedContent);
-		}
 		return super.getContents();
 	}
 
@@ -152,9 +149,8 @@ public class EditableRevision extends FileRevisionTypedElement implements
 	}
 
 	public Object getAdapter(Class adapter) {
-		if (adapter == ISharedDocumentAdapter.class) {
+		if (adapter == ISharedDocumentAdapter.class)
 			return getSharedDocumentAdapter();
-		}
 		return Platform.getAdapterManager().getAdapter(this, adapter);
 	}
 
@@ -204,9 +200,8 @@ public class EditableRevision extends FileRevisionTypedElement implements
 	 * change.
 	 */
 	protected void fireContentChanged() {
-		if (fChangeNotifier == null || fChangeNotifier.isEmpty()) {
+		if (fChangeNotifier == null || fChangeNotifier.isEmpty())
 			return;
-		}
 		fChangeNotifier.fireContentChanged();
 	}
 

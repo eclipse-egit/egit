@@ -132,10 +132,9 @@ public class FetchResultDialog extends TitleAreaDialog {
 		if (result.getErrorMessage() != null)
 			setErrorMessage(result.getErrorMessage());
 		else if (result.getFetchResult() != null
-				&& result.getFetchResult().getTrackingRefUpdates().isEmpty()) {
+				&& result.getFetchResult().getTrackingRefUpdates().isEmpty())
 			setMessage(NLS.bind(UIText.FetchResultDialog_labelEmptyResult,
 					sourceString));
-		}
 
 		createFetchResultTable(composite);
 

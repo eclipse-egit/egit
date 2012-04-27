@@ -50,12 +50,10 @@ abstract class StorageTypedElement implements ITypedElement,
 	}
 
 	public InputStream getContents() throws CoreException {
-		if (bufferedContents == null) {
+		if (bufferedContents == null)
 			cacheContents(new NullProgressMonitor());
-		}
-		if (bufferedContents != null) {
+		if (bufferedContents != null)
 			return bufferedContents.getContents();
-		}
 		return null;
 	}
 
@@ -108,9 +106,8 @@ abstract class StorageTypedElement implements ITypedElement,
 	public String getCharset() throws CoreException {
 		if (localEncoding != null)
 			return localEncoding;
-		if (bufferedContents == null) {
+		if (bufferedContents == null)
 			cacheContents(new NullProgressMonitor());
-		}
 		if (bufferedContents instanceof IEncodedStorage) {
 			String charset = ((IEncodedStorage) bufferedContents).getCharset();
 			return charset;
@@ -119,7 +116,7 @@ abstract class StorageTypedElement implements ITypedElement,
 	}
 
 	public Object getAdapter(Class adapter) {
-		if (adapter == ISharedDocumentAdapter.class) {
+		if (adapter == ISharedDocumentAdapter.class)
 			synchronized (this) {
 				if (sharedDocumentAdapter == null)
 					sharedDocumentAdapter = new SharedDocumentAdapter() {
@@ -136,7 +133,6 @@ abstract class StorageTypedElement implements ITypedElement,
 					};
 				return sharedDocumentAdapter;
 			}
-		}
 		return Platform.getAdapterManager().getAdapter(this, adapter);
 	}
 

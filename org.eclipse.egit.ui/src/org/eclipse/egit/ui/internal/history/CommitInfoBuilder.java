@@ -203,14 +203,13 @@ public class CommitInfoBuilder {
 				try {
 					p = new RevWalk(db).parseCommit(head.getObjectId());
 					addLink(d, formatHeadRef(head), styles, p);
-					if (i.hasNext()) {
-						if (count++ <= MAXBRANCHES) {
+					if (i.hasNext())
+						if (count++ <= MAXBRANCHES)
 							d.append(", "); //$NON-NLS-1$
-						} else {
+						else {
 							d.append(NLS.bind(UIText.CommitMessageViewer_MoreBranches, Integer.valueOf(branches.size() - MAXBRANCHES)));
 							break;
 						}
-					}
 				} catch (MissingObjectException e) {
 					Activator.logError(e.getMessage(), e);
 				} catch (IncorrectObjectTypeException e) {
@@ -281,10 +280,9 @@ public class CommitInfoBuilder {
 		d.append(LF);
 
 		Matcher matcher = p.matcher(msg);
-		while (matcher.find()) {
+		while (matcher.find())
 			styles.add(new StyleRange(h0 + matcher.start(), matcher.end()
 					- matcher.start(), null, null, SWT.ITALIC));
-		}
 
 		if (!currentDiffs.isEmpty())
 			buildDiffs(d, styles, monitor, trace);

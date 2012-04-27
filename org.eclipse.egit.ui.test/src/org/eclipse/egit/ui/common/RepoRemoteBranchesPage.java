@@ -28,17 +28,15 @@ public class RepoRemoteBranchesPage {
 	public void assertRemoteBranches(String... branches) {
 		SWTBotTree tree = bot.tree();
 		bot.waitUntil(widgetIsEnabled(tree), 20000);
-		for (String branch : branches) {
+		for (String branch : branches)
 			tree.getTreeItem(branch);
-		}
 	}
 
 	public void selectBranches(String... branches) {
 		SWTBotTree tree = bot.tree();
 		bot.waitUntil(widgetIsEnabled(tree));
-		for (String branch : branches) {
+		for (String branch : branches)
 			tree.getTreeItem(branch).check();
-		}
 	}
 
 	public WorkingCopyPage nextToWorkingCopy() {
@@ -52,9 +50,8 @@ public class RepoRemoteBranchesPage {
 		bot.waitUntil(widgetIsEnabled(tree), 60000);
 
 		SWTBotTreeItem[] items = tree.getAllItems();
-		for (int i = 0; i < items.length; i++) {
+		for (int i = 0; i < items.length; i++)
 			items[i].uncheck();
-		}
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

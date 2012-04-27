@@ -138,10 +138,10 @@ public class AssumeUnchangedOperation implements IEGitOperation {
 		}
 
 		final String path = rm.getRepoRelativePath(resource);
-		if (resource instanceof IContainer) {
+		if (resource instanceof IContainer)
 			for (final DirCacheEntry ent : cache.getEntriesWithin(path))
 				ent.setAssumeValid(assumeUnchanged);
-		} else {
+		else {
 			final DirCacheEntry ent = cache.getEntry(path);
 			if (ent != null)
 				ent.setAssumeValid(assumeUnchanged);

@@ -46,9 +46,8 @@ public class SimpleFetchRefSpecWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		StringBuilder sb = new StringBuilder();
-		if (destinationPage.isForce()) {
+		if (destinationPage.isForce())
 			sb.append('+');
-		}
 		sb.append(sourcePage.getSource());
 		sb.append(':');
 		sb.append(destinationPage.getDestination());
