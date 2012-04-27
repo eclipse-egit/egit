@@ -34,6 +34,24 @@
       "revId": "9947437d981e740f1fe5718872bc8db92e53a4b6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///7w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-04-27T10:52:51Z",
+      "side": 0,
+      "message": "Ok, let\u0027s submit this and do it in a follow-up change.",
+      "parentUuid": "AABOHH///84\u003d",
+      "revId": "9947437d981e740f1fe5718872bc8db92e53a4b6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
