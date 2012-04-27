@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHH///zQ\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/DiscardChangesOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-04-27T19:22:22Z",
+      "side": 1,
+      "message": "This should be a block for clarity",
+      "revId": "a47b2745e1351e26ad6b5c000eafbb4a49a01825",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///zM\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/ListRemoteOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-04-27T19:22:22Z",
+      "side": 1,
+      "message": "Should be a block",
+      "revId": "a47b2745e1351e26ad6b5c000eafbb4a49a01825",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///zI\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/PushOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-04-27T19:22:22Z",
+      "side": 1,
+      "message": "should be a block",
+      "revId": "a47b2745e1351e26ad6b5c000eafbb4a49a01825",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///zE\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/TagOperationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-04-27T19:22:22Z",
+      "side": 1,
+      "message": "Should be a block",
+      "revId": "a47b2745e1351e26ad6b5c000eafbb4a49a01825",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///zA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/EclipseGitProgressTransformer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-04-27T19:22:22Z",
+      "side": 1,
+      "message": "Should be a block",
+      "revId": "a47b2745e1351e26ad6b5c000eafbb4a49a01825",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///y8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/GitURI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-04-27T19:22:22Z",
+      "side": 1,
+      "message": "Should be a block",
+      "revId": "a47b2745e1351e26ad6b5c000eafbb4a49a01825",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///y4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ProjectReferenceImporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-04-27T19:22:22Z",
+      "side": 1,
+      "message": "Should DEFINITELY be a block",
+      "revId": "a47b2745e1351e26ad6b5c000eafbb4a49a01825",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///y0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/ProjectReferenceImporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-04-27T19:22:22Z",
+      "side": 1,
+      "message": "Should be a block",
+      "revId": "a47b2745e1351e26ad6b5c000eafbb4a49a01825",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///yw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-04-27T19:22:22Z",
+      "side": 1,
+      "message": "Deeply nested structures, please use blocks",
+      "revId": "a47b2745e1351e26ad6b5c000eafbb4a49a01825",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
