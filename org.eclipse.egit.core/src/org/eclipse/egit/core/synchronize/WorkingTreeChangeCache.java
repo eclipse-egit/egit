@@ -10,7 +10,7 @@ package org.eclipse.egit.core.synchronize;
 
 import static org.eclipse.egit.core.synchronize.GitCommitsModelCache.RIGHT;
 import static org.eclipse.egit.core.synchronize.GitCommitsModelCache.calculateAndSetChangeKind;
-import static org.eclipse.jgit.treewalk.filter.TreeFilter.ANY_DIFF;
+import static org.eclipse.jgit.treewalk.filter.TreeFilter.anyDiff;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -42,7 +42,7 @@ public class WorkingTreeChangeCache {
 		try {
 			tw.addTree(new FileTreeIterator(repo));
 			tw.addTree(new DirCacheIterator(repo.readDirCache()));
-			tw.setFilter(AndTreeFilter.create(new NotIgnoredFilter(0), ANY_DIFF));
+			tw.setFilter(AndTreeFilter.create(new NotIgnoredFilter(0), anyDiff(repo.getConfig())));
 			tw.setRecursive(true);
 
 			Map<String, Change> result = new HashMap<String, Change>();
