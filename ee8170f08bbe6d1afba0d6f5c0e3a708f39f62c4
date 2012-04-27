@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHH///z0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-04-27T18:03:26Z",
+      "side": 1,
+      "message": "This TODO is no longer possible now that the walk is no longer stored, right? -\u003e Remove",
+      "revId": "ee8170f08bbe6d1afba0d6f5c0e3a708f39f62c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///zw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-04-27T18:03:26Z",
+      "side": 1,
+      "message": "Would be nice if the argument was named the same everywhere (newWalk vs currentWalk). Maybe just walk?",
+      "revId": "ee8170f08bbe6d1afba0d6f5c0e3a708f39f62c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
