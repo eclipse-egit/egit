@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHH///6Q\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RevUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-04-27T13:05:45Z",
+      "side": 1,
+      "message": "I don\u0027t think getting the merge base with just one start point (or even no start point) makes any sense. What is the result of that?\n\nSo generally, shouldn\u0027t the caller check the arguments?",
+      "revId": "1abd400ba4a976977eb2bd43b8759dbeacf14f20",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
