@@ -215,7 +215,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 			return null;
 
 		// Cannot decorate linked resources
-		if (mapping.getRepoRelativePath(resource) == null)
+		if (mapping.getRepoRelativePath(resource) == null || resource.isLinked(IResource.CHECK_ANCESTORS))
 			return null;
 
 		IndexDiffData indexDiffData = org.eclipse.egit.core.Activator

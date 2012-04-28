@@ -96,6 +96,8 @@ public class AddToIndexOperation implements IEGitOperation {
 	}
 
 	private void addToCommand(IResource resource, Map<RepositoryMapping, AddCommand> addCommands) {
+		if (resource.isLinked(IResource.CHECK_ANCESTORS))
+			return;
 		IProject project = resource.getProject();
 		RepositoryMapping map = RepositoryMapping.getMapping(project);
 		AddCommand command = addCommands.get(map);

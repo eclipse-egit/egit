@@ -57,6 +57,6 @@ public class ShowHistoryActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return !getSelection().isEmpty();
+		return !getSelection().isEmpty() && !selectionContainsLinkedResources();
 	}
 }
