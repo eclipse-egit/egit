@@ -83,7 +83,7 @@ class GitTreeTraversal extends ResourceTraversal {
 
 		tw.reset();
 		tw.setRecursive(false);
-		tw.setFilter(TreeFilter.ANY_DIFF);
+		tw.setFilter(TreeFilter.anyDiff(repo.getConfig()));
 		try {
 			if (fileTreeIterator == null || !repo.equals(lastRepo)) {
 				lastRepo = repo;
