@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "AABOHH///jg\u003d",
+        "filename": "org.eclipse.egit.target/egit-4.2.target",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-04-30T22:50:28Z",
+      "side": 1,
+      "message": "Done, the tests for the jgit change now succeed",
+      "parentUuid": "AABOG3//9gM\u003d",
+      "revId": "b255df6c5a5f75e81b987211a066610a5591457a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOG3//9oQ\u003d",
         "filename": "pom.xml",
         "patchSetId": 2
