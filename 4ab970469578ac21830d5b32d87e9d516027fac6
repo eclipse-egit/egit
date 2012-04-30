@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHH///o8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-04-30T15:35:38Z",
+      "side": 1,
+      "message": "Is hasWalk really needed? It\u0027s initially set to false when GitHistoryPage is instantiated, but after the first time the history is displayed, the condition never changes (it\u0027s never set to false again).\n\nIn the initial case, headChanged should be true, because currentHeadId is null after instantiation, right? If so, the hasWalk condition is redundant.",
+      "revId": "4ab970469578ac21830d5b32d87e9d516027fac6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
