@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOHH///rA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-04-30T10:49:05Z",
+      "side": 1,
+      "message": "That\u0027s right. \n\nI hope that Matthias\u0027 Change Change-Id: I99c34657e6c5485a1303a13c4126b0049ea350d9 will improve response time of reading history, thus we would not need other optimizations anymore.",
+      "parentUuid": "AABOHH///z0\u003d",
+      "revId": "ee8170f08bbe6d1afba0d6f5c0e3a708f39f62c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOHH///zw\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I agree: Just walk would be better.",
       "parentUuid": "AABOHH///zw\u003d",
+      "revId": "ee8170f08bbe6d1afba0d6f5c0e3a708f39f62c4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///rk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-04-30T10:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOHH///yg\u003d",
       "revId": "ee8170f08bbe6d1afba0d6f5c0e3a708f39f62c4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
