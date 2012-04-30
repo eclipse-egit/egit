@@ -4349,10 +4349,16 @@ public class UIText extends NLS {
 	public static String StashCreateCommand_jobTitle;
 
 	/** */
+	public static String StashCreateCommand_messageEnterCommitMessage;
+
+	/** */
 	public static String StashCreateCommand_messageNoChanges;
 
 	/** */
 	public static String StashCreateCommand_stashFailed;
+
+	/** */
+	public static String StashCreateCommand_titleEnterCommitMessage;
 
 	/** */
 	public static String StashCreateCommand_titleNoChanges;
