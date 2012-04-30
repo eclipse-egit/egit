@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHH///qs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1701,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-04-30T10:54:32Z",
+      "side": 1,
+      "message": "Here also newWalk -\u003e walk",
+      "revId": "ede2761fea25bee93b6250e7a80acb82e7173084",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///qo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1823,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-04-30T10:54:32Z",
+      "side": 1,
+      "message": "Here also newWalk -\u003e walk",
+      "revId": "ede2761fea25bee93b6250e7a80acb82e7173084",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///qk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1834,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-04-30T10:54:32Z",
+      "side": 1,
+      "message": "Here also newWalk -\u003e walk",
+      "revId": "ede2761fea25bee93b6250e7a80acb82e7173084",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///qg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-04-30T10:54:32Z",
+      "side": 1,
+      "message": "Here also newWalk -\u003e walk",
+      "revId": "ede2761fea25bee93b6250e7a80acb82e7173084",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///qc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1848,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-04-30T10:54:32Z",
+      "side": 1,
+      "message": "Here also newWalk -\u003e walk",
+      "revId": "ede2761fea25bee93b6250e7a80acb82e7173084",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
