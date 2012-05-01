@@ -54,7 +54,8 @@ public class CommitActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return getRepositories().length > 0;
+		return getRepositories().length > 0
+				&& !selectionContainsLinkedResources();
 	}
 
 }

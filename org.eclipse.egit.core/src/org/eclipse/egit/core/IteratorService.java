@@ -44,7 +44,8 @@ public class IteratorService {
 
 	/**
 	 * The method searches a container resource related to the given file. The
-	 * container must reside in a project that is shared with Git
+	 * container must reside in a project that is shared with Git. Linked folders
+	 * are ignored.
 	 *
 	 * @param root
 	 *            the workspace root
@@ -59,7 +60,7 @@ public class IteratorService {
 		final IContainer[] containers = root.findContainersForLocationURI(file
 				.toURI());
 		for (IContainer container : containers)
-			if (container.isAccessible() && isProjectSharedWithGit(container))
+			if (container.isAccessible() && !container.isLinked() && isProjectSharedWithGit(container))
 				return container;
 		return null;
 	}

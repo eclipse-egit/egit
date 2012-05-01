@@ -68,6 +68,8 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 	@Override
 	public boolean isEnabled() {
 		for (IResource res : getSelectedResources()) {
+			if (res.isLinked(IResource.CHECK_ANCESTORS))
+				return false;
 			IProject[] proj = new IProject[] { res.getProject() };
 			Repository[] repositories = getRepositoriesFor(proj);
 			if (repositories.length == 0)

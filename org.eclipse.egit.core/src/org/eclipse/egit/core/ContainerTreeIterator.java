@@ -165,7 +165,8 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 
 	private boolean isEntryIgnoredByTeamProvider(IResource resource) {
 		if (resource.getType() == IResource.ROOT
-				|| resource.getType() == IResource.PROJECT)
+				|| resource.getType() == IResource.PROJECT
+				|| resource.isLinked(IResource.CHECK_ANCESTORS))
 			return false;
 		if (Team.isIgnoredHint(resource))
 			return true;
