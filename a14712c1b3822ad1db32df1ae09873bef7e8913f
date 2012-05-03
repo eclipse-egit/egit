@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHH///SQ\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-05-03T21:54:39Z",
+      "side": 1,
+      "message": "s/desn\u0027t/doesn\u0027t/",
+      "revId": "a14712c1b3822ad1db32df1ae09873bef7e8913f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///SM\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-05-03T21:54:39Z",
+      "side": 1,
+      "message": "s/with/which/",
+      "revId": "a14712c1b3822ad1db32df1ae09873bef7e8913f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///SI\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-05-03T21:54:39Z",
+      "side": 1,
+      "message": "s/Replacing it which/Replacing it with/",
+      "revId": "a14712c1b3822ad1db32df1ae09873bef7e8913f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
