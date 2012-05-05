@@ -21,7 +21,6 @@ import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -42,10 +41,8 @@ import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdSubclassMap;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -53,6 +50,7 @@ import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.revwalk.RevWalkUtils;
 import org.eclipse.jgit.util.io.SafeBufferedOutputStream;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -324,56 +322,10 @@ public class CommitInfoBuilder {
 			IOException {
 		RevWalk revWalk = new RevWalk(db);
 		try {
-			return findBranchesReachableFrom(commit, revWalk, allRefs);
+			return RevWalkUtils.findBranchesReachableFrom(commit, revWalk, allRefs);
 		} finally {
 			revWalk.dispose();
 		}
-	}
-
-	private static List<Ref> findBranchesReachableFrom(RevCommit commit,
-			RevWalk revWalk, Collection<Ref> refs)
-			throws MissingObjectException, IncorrectObjectTypeException,
-			IOException {
-
-		List<Ref> result = new ArrayList<Ref>();
-		// searches from branches can be cut off early if any parent of the
-		// search-for commit is found. This is quite likely, so optimize for this.
-		revWalk.markStart(Arrays.asList(commit.getParents()));
-		ObjectIdSubclassMap<ObjectId> cutOff = new ObjectIdSubclassMap<ObjectId>();
-
-		final int SKEW = 24*3600; // one day clock skew
-
-		for (Ref ref : refs) {
-			RevCommit headCommit = revWalk.parseCommit(ref.getObjectId());
-
-			// if commit is in the ref branch, then the tip of ref should be
-			// newer than the commit we are looking for. Allow for a large
-			// clock skew.
-			if (headCommit.getCommitTime() + SKEW < commit.getCommitTime())
-				continue;
-
-			List<ObjectId> maybeCutOff = new ArrayList<ObjectId>(cutOff.size()); // guess rough size
-			revWalk.resetRetain();
-			revWalk.markStart(headCommit);
-			RevCommit current;
-			Ref found = null;
-			while ((current = revWalk.next()) != null) {
-				if (AnyObjectId.equals(current, commit)) {
-					found = ref;
-					break;
-				}
-				if (cutOff.contains(current))
-					break;
-				maybeCutOff.add(current.toObjectId());
-			}
-			if (found != null)
-				result.add(ref);
-			else
-				for (ObjectId id : maybeCutOff)
-					cutOff.addIfAbsent(id);
-
-		}
-		return result;
 	}
 
 	private String formatHeadRef(Ref ref) {
