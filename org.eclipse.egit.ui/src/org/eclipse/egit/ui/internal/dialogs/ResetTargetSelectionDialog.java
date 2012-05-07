@@ -11,12 +11,12 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
-import org.eclipse.egit.core.op.ResetOperation.ResetType;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
