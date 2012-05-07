@@ -31,6 +31,9 @@ public class CommitActionHandler extends RepositoryActionHandler {
 
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		final Repository[] repos = getRepositories(event);
+		if (repos.length == 0)
+			return null;
+
 		final Shell shell = getShell(event);
 		IResource[] resourcesInScope;
 		try {
