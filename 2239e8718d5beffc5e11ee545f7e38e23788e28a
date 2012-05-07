@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHH//+3Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-05-07T22:16:48Z",
+      "side": 1,
+      "message": "I would prefer to use \"and\" instead of \"\u0026\u0026\" (also below)",
+      "revId": "2239e8718d5beffc5e11ee545f7e38e23788e28a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
