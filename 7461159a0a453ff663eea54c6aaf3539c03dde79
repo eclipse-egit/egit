@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHH//+38\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-05-07T22:11:56Z",
+      "side": 1,
+      "message": "Should these be in title case, as they appear as a menu item? I.e. HEAD, Index \u0026 Working Directory.",
+      "revId": "7461159a0a453ff663eea54c6aaf3539c03dde79",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
