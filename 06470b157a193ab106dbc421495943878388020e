@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHH//+3A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-05-07T22:25:46Z",
+      "side": 1,
+      "message": "Why the doubled spaces here?",
+      "revId": "06470b157a193ab106dbc421495943878388020e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
