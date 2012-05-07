@@ -12,7 +12,7 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.List;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
@@ -34,12 +34,15 @@ import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffEntry.ChangeType;
+import org.eclipse.jgit.diff.RenameDetector;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.NullProgressMonitor;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.FollowFilter;
-import org.eclipse.jgit.revwalk.RenameCallback;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.PartInitException;
@@ -120,36 +123,50 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 		}
 
 		private PreviousCommit findPreviousCommit() {
-			final AtomicReference<String> previousPath = new AtomicReference<String>();
 			RevWalk rw = new RevWalk(repository);
 			try {
 				String path = getRepositoryPath();
-				if (path.length() > 0) {
-					FollowFilter filter = FollowFilter.create(path);
-					filter.setRenameCallback(new RenameCallback() {
-
-						public void renamed(DiffEntry entry) {
-							if (previousPath.get() == null)
-								previousPath.set(entry.getOldPath());
-						}
-					});
-					rw.setTreeFilter(filter);
-				}
-
+				if (path.length() > 0)
+					rw.setTreeFilter(FollowFilter.create(path));
 				RevCommit headCommit = rw.parseCommit(repository.getRef(
 						Constants.HEAD).getObjectId());
 				rw.markStart(headCommit);
 				headCommit = rw.next();
-
 				if (headCommit == null)
 					return null;
+
 				RevCommit previousCommit = rw.next();
 				if (previousCommit == null)
 					return null;
 
-				if (previousPath.get() == null)
-					previousPath.set(getRepositoryPath());
-				return new PreviousCommit(previousCommit, previousPath.get());
+				if (path.length() > 0) {
+					TreeWalk walk = new TreeWalk(rw.getObjectReader());
+					walk.addTree(previousCommit.getTree());
+					walk.addTree(headCommit.getTree());
+					List<DiffEntry> entries = DiffEntry.scan(walk);
+					boolean isEdit = false;
+					for (DiffEntry diff : entries)
+						if (diff.getChangeType() == ChangeType.MODIFY
+								&& path.equals(diff.getNewPath())) {
+							isEdit = true;
+							break;
+						}
+					if (!isEdit && entries.size() >= 2) {
+						RenameDetector detector = new RenameDetector(repository);
+						detector.addAll(entries);
+						List<DiffEntry> renames = detector.compute(
+								walk.getObjectReader(),
+								NullProgressMonitor.INSTANCE);
+						for (DiffEntry diff : renames)
+							if (diff.getChangeType() == ChangeType.RENAME
+									&& path.equals(diff.getNewPath())) {
+								path = diff.getOldPath();
+								break;
+							}
+					}
+				}
+
+				return new PreviousCommit(previousCommit, path);
 			} catch (IOException e) {
 				Activator.handleError(e.getMessage(), e, true);
 			} finally {
