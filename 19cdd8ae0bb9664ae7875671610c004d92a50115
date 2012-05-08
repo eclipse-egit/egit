@@ -16,6 +16,24 @@
       "revId": "19cdd8ae0bb9664ae7875671610c004d92a50115",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHX///9c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitLabelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-05-08T22:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOHX///90\u003d",
+      "revId": "19cdd8ae0bb9664ae7875671610c004d92a50115",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
