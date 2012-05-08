@@ -15,9 +15,13 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jgit.events.ConfigChangedEvent;
 import org.eclipse.jgit.events.ConfigChangedListener;
+import org.eclipse.jgit.events.ListenerHandle;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
 import org.eclipse.ui.views.properties.PropertySheetPage;
@@ -41,12 +45,39 @@ public class RepositoryPropertySourceProvider implements
 
 	private SourceType lastSourceType = SourceType.UNDEFINED;
 
+	private ListenerHandle listenerHandle;
+
+	private DisposeListener disposeListener;
+
 	/**
 	 * @param page
 	 *            the page
 	 */
 	public RepositoryPropertySourceProvider(PropertySheetPage page) {
 		myPage = page;
+	}
+
+	private void registerDisposal() {
+		if (disposeListener != null)
+			return;
+
+		final Control control = myPage.getControl();
+		if (control == null)
+			return;
+
+		disposeListener = new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				removeListener();
+			}
+		};
+		control.addDisposeListener(disposeListener);
+	}
+
+	private void removeListener() {
+		final ListenerHandle handle = listenerHandle;
+		if (handle != null)
+			handle.remove();
 	}
 
 	public IPropertySource getPropertySource(Object object) {
@@ -57,8 +88,11 @@ public class RepositoryPropertySourceProvider implements
 		if (!(object instanceof RepositoryTreeNode))
 			return null;
 
+		registerDisposal();
+		removeListener();
+
 		RepositoryTreeNode node = (RepositoryTreeNode) object;
-		node.getRepository().getConfig()
+		listenerHandle = node.getRepository().getConfig()
 				.addChangeListener(new ConfigChangedListener() {
 					public void onConfigChanged(ConfigChangedEvent event) {
 						// force a refresh of the page
