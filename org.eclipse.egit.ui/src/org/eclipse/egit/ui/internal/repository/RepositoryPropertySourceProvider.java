@@ -92,8 +92,8 @@ public class RepositoryPropertySourceProvider implements
 		removeListener();
 
 		RepositoryTreeNode node = (RepositoryTreeNode) object;
-		listenerHandle = node.getRepository().getConfig()
-				.addChangeListener(new ConfigChangedListener() {
+		listenerHandle = node.getRepository().getListenerList()
+				.addConfigChangedListener(new ConfigChangedListener() {
 					public void onConfigChanged(ConfigChangedEvent event) {
 						// force a refresh of the page
 						lastObject = null;
