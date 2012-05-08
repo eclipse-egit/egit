@@ -547,6 +547,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_ShowSubMenuLabel;
 
 	/** */
+	public static String GitHistoryPage_toggleEmailAddresses;
+
+	/** */
 	public static String GitPreferenceRoot_automaticallyEnableChangesetModel;
 
 	/** */
@@ -1673,6 +1676,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String HistoryPreferencePage_toggleAllBranches;
+
+	/** */
+	public static String HistoryPreferencePage_toggleEmailAddresses;
 
 	/** */
 	public static String PullOperationUI_ConnectionProblem;
