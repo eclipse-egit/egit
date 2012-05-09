@@ -16,6 +16,24 @@
       "revId": "4eb4fd492e14fe1ef8b6f61f690ae02f2ec0f943",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHX///0M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-05-09T20:18:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOHX///0s\u003d",
+      "revId": "4eb4fd492e14fe1ef8b6f61f690ae02f2ec0f943",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
