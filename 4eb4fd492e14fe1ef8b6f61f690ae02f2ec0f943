@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHX///0s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/TagActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-05-09T20:10:39Z",
+      "side": 1,
+      "message": "I\u0027d prefer to remove the field itself. Feels a bit unclean to have a field which is only valid during the execute method. It should be a local variable in execute and passed as an argument to getTagTarget. What do you think?",
+      "revId": "4eb4fd492e14fe1ef8b6f61f690ae02f2ec0f943",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
