@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHX///zs\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-05-09T20:41:18Z",
+      "side": 1,
+      "message": "... by removing parameter and using field directly",
+      "revId": "6bb849886ab57ff445a6e36cfa0a7deb27f32958",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
