@@ -16,6 +16,24 @@
       "revId": "4ab970469578ac21830d5b32d87e9d516027fac6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHX///5c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/GitHistoryPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-05-09T07:15:16Z",
+      "side": 1,
+      "message": "Done\n\nGood catch!",
+      "parentUuid": "AABOHH///o8\u003d",
+      "revId": "4ab970469578ac21830d5b32d87e9d516027fac6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
