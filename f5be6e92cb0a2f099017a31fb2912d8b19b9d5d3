@@ -16,6 +16,24 @@
       "revId": "f5be6e92cb0a2f099017a31fb2912d8b19b9d5d3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHX///0U\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitInfoBuilder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-05-09T20:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOHX///1A\u003d",
+      "revId": "f5be6e92cb0a2f099017a31fb2912d8b19b9d5d3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
