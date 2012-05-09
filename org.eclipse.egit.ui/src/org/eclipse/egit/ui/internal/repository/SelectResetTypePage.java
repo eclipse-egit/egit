@@ -10,18 +10,30 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
+import java.io.IOException;
+
 import org.eclipse.egit.core.op.ResetOperation.ResetType;
+import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
 /**
@@ -31,33 +43,135 @@ public class SelectResetTypePage extends WizardPage {
 
 	private ResetType resetType = ResetType.MIXED;
 
+	private final Repository repo;
+
+	private final String current;
+
+	private final String target;
+
 	/**
 	 * @param repoName
 	 *            the repository name
+	 * @param repository
+	 *            the repository being reset
 	 * @param currentRef
 	 *            current ref (which will be overwritten)
 	 * @param targetRef
 	 *            target ref (which contains the new content)
-	 * @param targetCommit
-	 *            target commit
 	 */
-	public SelectResetTypePage(String repoName, String currentRef,
-			String targetRef, String targetCommit) {
+	public SelectResetTypePage(String repoName, Repository repository,
+			String currentRef, String targetRef) {
 		super(SelectResetTypePage.class.getName());
 		setTitle(NLS.bind(UIText.SelectResetTypePage_PageTitle, repoName));
-		if (currentRef.equals(targetRef))
-			setMessage(NLS.bind(UIText.SelectResetTypePage_PageMessage,
-					new String[] { currentRef, "HEAD", targetCommit })); //$NON-NLS-1$
+		setMessage(UIText.SelectResetTypePage_PageMessage);
+
+		repo = repository;
+		current = currentRef;
+		target = targetRef;
+	}
+
+	private Image getIcon(final String ref) {
+		if (ref.startsWith(Constants.R_TAGS))
+			return UIIcons.TAG.createImage();
+		else if (ref.startsWith(Constants.R_HEADS)
+				|| ref.startsWith(Constants.R_REMOTES))
+			return UIIcons.BRANCH.createImage();
 		else
-			setMessage(NLS.bind(UIText.SelectResetTypePage_PageMessage,
-					new String[] { currentRef, targetRef, targetCommit }));
+			return UIIcons.CHANGESET.createImage();
+	}
+
+	private boolean isCommit(final String ref) {
+		return !ref.startsWith(Constants.R_REFS);
+	}
+
+	private String formatCommit(final RevCommit commit) {
+		return commit.abbreviate(7).name() + ":  " + commit.getShortMessage(); //$NON-NLS-1$
+	}
+
+	private RevCommit getLatestCommit(String branch) {
+		ObjectId resolved;
+		try {
+			resolved = repo.resolve(branch);
+		} catch (IOException e) {
+			return null;
+		}
+		if (resolved == null)
+			return null;
+		RevWalk walk = new RevWalk(repo);
+		walk.setRetainBody(true);
+		try {
+			return walk.parseCommit(resolved);
+		} catch (IOException ignored) {
+			return null;
+		} finally {
+			walk.release();
+		}
 	}
 
 	public void createControl(Composite parent) {
-		Group g = new Group(parent, SWT.NONE);
+		Composite displayArea = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false)
+				.applyTo(displayArea);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(displayArea);
+
+		RevCommit currentCommit = getLatestCommit(current);
+
+		Label currentLabel = new Label(displayArea, SWT.NONE);
+		currentLabel.setText(UIText.SelectResetTypePage_labelCurrentHead);
+		currentLabel
+				.setToolTipText(UIText.SelectResetTypePage_tooltipCurrentHead);
+
+		CLabel currentValue = new CLabel(displayArea, SWT.NONE);
+		GridDataFactory.swtDefaults().applyTo(currentValue);
+		Image currentIcon = getIcon(current);
+		UIUtils.hookDisposal(currentValue, currentIcon);
+		currentValue.setImage(currentIcon);
+		currentValue.setText(Repository.shortenRefName(current));
+
+		if (currentCommit != null) {
+			if (isCommit(current))
+				currentValue.setText(formatCommit(currentCommit));
+			else {
+				new Label(displayArea, SWT.NONE);
+				CLabel commitLabel = new CLabel(displayArea, SWT.NONE);
+				Image commitIcon = UIIcons.CHANGESET.createImage();
+				UIUtils.hookDisposal(commitLabel, commitIcon);
+				commitLabel.setImage(commitIcon);
+				commitLabel.setText(formatCommit(currentCommit));
+			}
+		}
+
+		RevCommit targetCommit = getLatestCommit(target);
+
+		Label targetLabel = new Label(displayArea, SWT.NONE);
+		targetLabel.setText(UIText.SelectResetTypePage_labelResettingTo);
+		targetLabel
+				.setToolTipText(UIText.SelectResetTypePage_tooltipResettingTo);
+
+		CLabel targetValue = new CLabel(displayArea, SWT.NONE);
+		Image targetIcon = getIcon(target);
+		UIUtils.hookDisposal(targetValue, targetIcon);
+		targetValue.setImage(targetIcon);
+		targetValue.setText(Repository.shortenRefName(target));
+
+		if (targetCommit != null) {
+			if (isCommit(target))
+				targetValue.setText(formatCommit(targetCommit));
+			else {
+				new Label(displayArea, SWT.NONE);
+				CLabel commitLabel = new CLabel(displayArea, SWT.NONE);
+				Image commitIcon = UIIcons.CHANGESET.createImage();
+				UIUtils.hookDisposal(commitLabel, commitIcon);
+				commitLabel.setImage(commitIcon);
+				commitLabel.setText(formatCommit(targetCommit));
+			}
+		}
+
+		Group g = new Group(displayArea, SWT.NONE);
 		g.setText(UIText.ResetTargetSelectionDialog_ResetTypeGroup);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(g);
-		g.setLayout(new GridLayout(1, false));
+		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
+				.indent(0, 5).applyTo(g);
+		GridLayoutFactory.swtDefaults().applyTo(g);
 
 		Button soft = new Button(g, SWT.RADIO);
 		soft.setText(UIText.ResetTargetSelectionDialog_ResetTypeSoftButton);
@@ -86,8 +200,9 @@ public class SelectResetTypePage extends WizardPage {
 					resetType = ResetType.HARD;
 			}
 		});
-		Dialog.applyDialogFont(g);
-		setControl(g);
+
+		Dialog.applyDialogFont(displayArea);
+		setControl(displayArea);
 	}
 
 	/**
