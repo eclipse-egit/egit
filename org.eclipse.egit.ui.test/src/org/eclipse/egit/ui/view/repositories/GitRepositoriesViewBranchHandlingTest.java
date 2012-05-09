@@ -68,6 +68,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
+		setVerboseBranchMode(false);
 		repositoryFile = createProjectAndCommitToRepository();
 		remoteRepositoryFile = createRemoteRepository(repositoryFile);
 		// now let's clone the remote repository
