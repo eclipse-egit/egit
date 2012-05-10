@@ -216,8 +216,11 @@ class ExistingOrNewPage extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				DirectoryDialog dlg = new DirectoryDialog(getShell());
 				dlg.setFilterPath(selectedRepository.getWorkTree().getPath());
-				setRelativePath(dlg.open());
-				updateControls();
+				String directory = dlg.open();
+				if (directory != null) {
+					setRelativePath(directory);
+					updateControls();
+				}
 			}
 		});
 
