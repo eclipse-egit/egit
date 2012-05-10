@@ -235,7 +235,7 @@ class ExistingOrNewPage extends WizardPage {
 		TableColumn tc;
 		tc = new TableColumn(projectMoveTable, SWT.NONE);
 		tc.setText(UIText.ExistingOrNewPage_ProjectNameColumnHeader);
-		tc.setWidth(150);
+		tc.setWidth(100);
 
 		tc = new TableColumn(projectMoveTable, SWT.NONE);
 		tc.setText(UIText.ExistingOrNewPage_CurrentLocationColumnHeader);
