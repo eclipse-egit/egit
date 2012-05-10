@@ -79,6 +79,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE.SharedImages;
 
 /**
  * Wizard page for connecting projects to Git repositories.
@@ -321,15 +323,13 @@ class ExistingOrNewPage extends WizardPage {
 				RepositoryMapping m = mi.hasNext() ? mi.next() : null;
 				if (m == null) {
 					// no mapping found, enable repository creation
-					TreeItem treeItem = new TreeItem(tree, SWT.NONE);
-					treeItem.setText(0, project.getName());
+					TreeItem treeItem = createProjectTreeItem(project);
 					treeItem.setText(1, project.getLocation().toOSString());
 					treeItem.setText(2, ""); //$NON-NLS-1$
 					treeItem.setData(new ProjectAndRepo(project, "")); //$NON-NLS-1$
 				} else if (!mi.hasNext()) {
 					// exactly one mapping found
-					TreeItem treeItem = new TreeItem(tree, SWT.NONE);
-					treeItem.setText(0, project.getName());
+					TreeItem treeItem = createProjectTreeItem(project);
 					treeItem.setText(1, project.getLocation().toOSString());
 					fillTreeItemWithGitDirectory(m, treeItem, false);
 					treeItem.setData(new ProjectAndRepo(project, treeItem
@@ -338,20 +338,17 @@ class ExistingOrNewPage extends WizardPage {
 				}
 
 				else {
-					TreeItem treeItem = new TreeItem(tree, SWT.NONE);
-					treeItem.setText(0, project.getName());
+					TreeItem treeItem = createProjectTreeItem(project);
 					treeItem.setText(1, project.getLocation().toOSString());
 					treeItem.setData(new ProjectAndRepo(null, null));
 
-					TreeItem treeItem2 = new TreeItem(treeItem, SWT.NONE);
-					treeItem2.setText(0, project.getName());
+					TreeItem treeItem2 = createProjectTreeItem(project);
 					fillTreeItemWithGitDirectory(m, treeItem2, true);
 					treeItem2.setData(new ProjectAndRepo(project, treeItem2
 							.getText(2)));
 					while (mi.hasNext()) { // fill in additional mappings
 						m = mi.next();
-						treeItem2 = new TreeItem(treeItem, SWT.NONE);
-						treeItem2.setText(0, project.getName());
+						treeItem2 = createProjectTreeItem(project);
 						fillTreeItemWithGitDirectory(m, treeItem2, true);
 						treeItem2.setData(new ProjectAndRepo(m.getContainer()
 								.getProject(), treeItem2.getText(2)));
@@ -441,6 +438,15 @@ class ExistingOrNewPage extends WizardPage {
 
 		Dialog.applyDialogFont(main);
 		setControl(main);
+	}
+
+	private TreeItem createProjectTreeItem(IProject project) {
+		TreeItem treeItem = new TreeItem(tree, SWT.NONE);
+		treeItem.setImage(0,
+				PlatformUI.getWorkbench().getSharedImages()
+						.getImage(SharedImages.IMG_OBJ_PROJECT));
+		treeItem.setText(0, project.getName());
+		return treeItem;
 	}
 
 	protected void setRelativePath(String directory) {
