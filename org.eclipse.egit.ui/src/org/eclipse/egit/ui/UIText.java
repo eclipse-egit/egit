@@ -277,7 +277,7 @@ public class UIText extends NLS {
 	public static String ExistingOrNewPage_FolderWillBeCreatedMessage;
 
 	/** */
-	public static String ExistingOrNewPage_HeaderPath;
+	public static String ExistingOrNewPage_HeaderLocation;
 
 	/** */
 	public static String ExistingOrNewPage_HeaderProject;

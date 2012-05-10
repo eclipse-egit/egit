@@ -309,7 +309,7 @@ class ExistingOrNewPage extends WizardPage {
 		c1.setText(UIText.ExistingOrNewPage_HeaderProject);
 		c1.setWidth(100);
 		TreeColumn c2 = new TreeColumn(tree, SWT.NONE);
-		c2.setText(UIText.ExistingOrNewPage_HeaderPath);
+		c2.setText(UIText.ExistingOrNewPage_HeaderLocation);
 		c2.setWidth(400);
 		TreeColumn c3 = new TreeColumn(tree, SWT.NONE);
 		c3.setText(UIText.ExistingOrNewPage_HeaderRepository);
