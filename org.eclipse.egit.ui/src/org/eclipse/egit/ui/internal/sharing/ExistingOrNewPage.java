@@ -225,7 +225,7 @@ class ExistingOrNewPage extends WizardPage {
 		});
 
 		Table projectMoveTable = new Table(externalComposite, SWT.MULTI
-				| SWT.FULL_SELECTION | SWT.CHECK);
+				| SWT.FULL_SELECTION | SWT.CHECK | SWT.BORDER);
 		projectMoveViewer = new CheckboxTableViewer(projectMoveTable);
 		GridDataFactory.fillDefaults().span(3, 1).grab(true, true)
 				.applyTo(projectMoveTable);
