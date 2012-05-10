@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2012, Matthias Sohn <matthias.sohn@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,6 +25,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.revwalk.RevFlag;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -31,20 +33,23 @@ import org.eclipse.swt.widgets.Display;
 class GenerateHistoryJob extends Job {
 	private static final int BATCH_SIZE = 256;
 
-	private final int maxCommits = Activator.getDefault().getPreferenceStore()
-			.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
-
 	private final GitHistoryPage page;
 
-	private final SWTCommitList allCommits;
+	private final SWTCommitList loadedCommits;
+
+	private int itemToLoad = 1;
+
+	private RevCommit commitToLoad;
+
+	private RevCommit commitToShow;
 
 	private int lastUpdateCnt;
-
-	private long lastUpdateAt;
 
 	private boolean trace;
 
 	private final RevWalk walk;
+
+	private RevFlag highlightFlag;
 
 	GenerateHistoryJob(final GitHistoryPage ghp, Control control, RevWalk walk) {
 		super(NLS.bind(UIText.HistoryPage_refreshJob, Activator.getDefault()
@@ -52,18 +57,17 @@ class GenerateHistoryJob extends Job {
 						ghp.getInputInternal().getRepository())));
 		page = ghp;
 		this.walk = walk;
-		allCommits = new SWTCommitList(control);
-		allCommits.source(walk);
+		highlightFlag = walk.newFlag("highlight"); //$NON-NLS-1$
+		loadedCommits = new SWTCommitList(control);
+		loadedCommits.source(walk);
 		trace = GitTraceLocation.HISTORYVIEW.isActive();
-	}
-
-	public RevWalk getWalk() {
-		return walk;
 	}
 
 	@Override
 	protected IStatus run(final IProgressMonitor monitor) {
 		IStatus status = Status.OK_STATUS;
+		int maxCommits = Activator.getDefault().getPreferenceStore()
+					.getInt(UIPreferences.HISTORY_MAX_NUM_COMMITS);
 		boolean incomplete = false;
 		try {
 			if (trace)
@@ -71,40 +75,47 @@ class GenerateHistoryJob extends Job {
 						GitTraceLocation.HISTORYVIEW.getLocation());
 			try {
 				for (;;) {
-					final int oldsz = allCommits.size();
+					int oldsz = loadedCommits.size();
 					if (trace)
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.HISTORYVIEW.getLocation(),
 								"Filling commit list"); //$NON-NLS-1$
 					// ensure that filling (here) and reading (CommitGraphTable)
 					// the commit list is thread safe
-					synchronized (allCommits) {
-						allCommits.fillTo(oldsz + BATCH_SIZE - 1);
+					synchronized (loadedCommits) {
+						if (commitToLoad != null) {
+							loadedCommits.fillTo(commitToLoad, maxCommits);
+							commitToShow = commitToLoad;
+							commitToLoad = null;
+						} else
+							loadedCommits.fillTo(oldsz + BATCH_SIZE - 1);
 					}
 					if (monitor.isCanceled())
 						return Status.CANCEL_STATUS;
-					if (maxCommits > 0 && allCommits.size() > maxCommits)
+					final boolean loadIncrementally = !Activator.getDefault().getPreferenceStore()
+							.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_FINDTOOLBAR);
+					if (loadedCommits.size() > itemToLoad + (BATCH_SIZE / 2) + 1 && loadIncrementally)
+						break;
+					if (maxCommits > 0 && loadedCommits.size() > maxCommits)
 						incomplete = true;
-					if (incomplete || oldsz == allCommits.size())
+					if (incomplete || oldsz == loadedCommits.size())
 						break;
 
-					if (allCommits.size() != 1)
+					if (loadedCommits.size() != 1)
 						monitor.setTaskName(MessageFormat
 								.format(UIText.GenerateHistoryJob_taskFoundMultipleCommits,
-										Integer.valueOf(allCommits.size())));
+										Integer.valueOf(loadedCommits.size())));
 					else
 						monitor.setTaskName(UIText.GenerateHistoryJob_taskFoundSingleCommit);
-
-					final long now = System.currentTimeMillis();
-					if (now - lastUpdateAt < 2000 && lastUpdateCnt > 0)
-						continue;
-					updateUI(incomplete);
-					lastUpdateAt = now;
 				}
 			} catch (IOException e) {
 				status = new Status(IStatus.ERROR, Activator.getPluginId(),
 						UIText.GenerateHistoryJob_errorComputingHistory, e);
 			}
+			if (trace)
+				GitTraceLocation.getTrace().trace(
+						GitTraceLocation.HISTORYVIEW.getLocation(),
+						"Loaded " + loadedCommits.size() + " commits"); //$NON-NLS-1$ //$NON-NLS-2$
 			updateUI(incomplete);
 		} finally {
 			monitor.done();
@@ -115,19 +126,19 @@ class GenerateHistoryJob extends Job {
 		return status;
 	}
 
-	void updateUI(boolean incomplete) {
+	private void updateUI(boolean incomplete) {
 		if (trace)
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation());
 		try {
-			if (!incomplete && allCommits.size() == lastUpdateCnt)
+			if (!incomplete && loadedCommits.size() == lastUpdateCnt)
 				return;
 
-			final SWTCommit[] asArray = new SWTCommit[allCommits.size()];
-			allCommits.toArray(asArray);
-			RevFlag highlightFlag = walk.newFlag("highlight"); //$NON-NLS-1$
-			page.showCommitList(this, allCommits, asArray, incomplete, highlightFlag);
-			lastUpdateCnt = allCommits.size();
+			final SWTCommit[] asArray = new SWTCommit[loadedCommits.size()];
+			loadedCommits.toArray(asArray);
+			page.showCommitList(this, loadedCommits, asArray, commitToShow, incomplete, highlightFlag);
+			commitToShow = null;
+			lastUpdateCnt = loadedCommits.size();
 		} finally {
 			if (trace)
 				GitTraceLocation.getTrace().traceExit(
@@ -153,7 +164,7 @@ class GenerateHistoryJob extends Job {
 		Display.getDefault().asyncExec(new Runnable() {
 
 			public void run() {
-				allCommits.dispose();
+				loadedCommits.dispose();
 			}
 		});
 	}
@@ -165,4 +176,15 @@ class GenerateHistoryJob extends Job {
 		return super.belongsTo(family);
 	}
 
+	void setLoadHint(final int index) {
+		itemToLoad = index;
+	}
+
+	void setLoadHint(final RevCommit c) {
+		commitToLoad = c;
+	}
+
+	int loadMoreItemsThreshold() {
+		return loadedCommits.size() - (BATCH_SIZE / 2);
+	}
 }
