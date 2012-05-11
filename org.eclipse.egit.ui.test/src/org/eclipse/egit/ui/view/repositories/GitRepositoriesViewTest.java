@@ -70,6 +70,7 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 
 	@BeforeClass
 	public static void beforeClass() throws Exception {
+		setVerboseBranchMode(false);
 		repositoryFile = createProjectAndCommitToRepository();
 		Activator.getDefault().getRepositoryUtil().addConfiguredRepository(
 				repositoryFile);
