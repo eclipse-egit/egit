@@ -19,6 +19,7 @@
     <version>2.0.0-SNAPSHOT</version>
   </parent>
 
+  <groupId>org.eclipse.egit.feature</groupId>
   <artifactId>org.eclipse.egit.psf</artifactId>
   <packaging>eclipse-feature</packaging>
 
