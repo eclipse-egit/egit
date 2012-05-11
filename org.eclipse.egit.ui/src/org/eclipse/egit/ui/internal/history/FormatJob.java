@@ -60,16 +60,18 @@ class FormatJob extends Job {
 		final List<StyleRange> styles = new ArrayList<StyleRange>();
 		final String commitInfo;
 		CommitInfoBuilder builder;
-		synchronized(lock) {
-			builder = new CommitInfoBuilder(formatRequest.getRepository(), formatRequest.getCommit(),
-					formatRequest.getCurrentDiffs(), formatRequest.isFill(), formatRequest.getAllRefs());
-			builder.setColors(formatRequest.getLinkColor(),
-					formatRequest.getDarkGrey(),
-					formatRequest.getHunkheaderColor(),
-					formatRequest.getLinesAddedColor(),
-					formatRequest.getLinesRemovedColor());
-		}
 		try {
+			synchronized(lock) {
+				SWTCommit commit = (SWTCommit)formatRequest.getCommit();
+				commit.parseBody();
+				builder = new CommitInfoBuilder(formatRequest.getRepository(), commit,
+						formatRequest.getCurrentDiffs(), formatRequest.isFill(), formatRequest.getAllRefs());
+				builder.setColors(formatRequest.getLinkColor(),
+						formatRequest.getDarkGrey(),
+						formatRequest.getHunkheaderColor(),
+						formatRequest.getLinesAddedColor(),
+						formatRequest.getLinesRemovedColor());
+			}
 			commitInfo = builder.format(styles, monitor);
 		} catch (IOException e) {
 			return Activator.createErrorStatus(e.getMessage(), e);

@@ -1654,6 +1654,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		}
 		walk.sort(RevSort.COMMIT_TIME_DESC, true);
 		walk.sort(RevSort.BOUNDARY, true);
+		walk.setRetainBody(false);
 		return walk;
 	}
 
