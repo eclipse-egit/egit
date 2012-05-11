@@ -145,7 +145,7 @@ public class GitSynchronizeData {
 			ow.release();
 		}
 
-		if (this.dstRevCommit != null || this.srcRevCommit != null)
+		if (this.dstRevCommit != null && this.srcRevCommit != null)
 			this.ancestorRevCommit = getCommonAncestor(repo, this.srcRevCommit,
 					this.dstRevCommit);
 		else
