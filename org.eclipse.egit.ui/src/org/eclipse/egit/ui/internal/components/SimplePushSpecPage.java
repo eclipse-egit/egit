@@ -75,7 +75,10 @@ public class SimplePushSpecPage extends WizardPage {
 
 		Composite inputPanel = new Composite(main, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(inputPanel);
-		inputPanel.setLayout(new GridLayout(2, false));
+		GridLayout layout = new GridLayout(2, false);
+		layout.marginWidth= 0;
+		layout.marginHeight= 0;
+		inputPanel.setLayout(layout);
 
 		final Label lblRemote = new Label(inputPanel, SWT.NONE);
 		lblRemote.setText(UIText.SimplePushSpecPage_TargetRefName);
