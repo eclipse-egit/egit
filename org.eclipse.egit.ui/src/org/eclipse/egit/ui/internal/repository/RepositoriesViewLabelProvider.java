@@ -252,15 +252,30 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 	}
 
 	private RevCommit getLatestCommit(RepositoryTreeNode node) {
+		Ref ref = (Ref) node.getObject();
+		ObjectId id;
+		if (ref.isSymbolic())
+			id = ref.getLeaf().getObjectId();
+		else
+			id = ref.getObjectId();
+		if (id == null)
+			return null;
 		RevWalk walk = new RevWalk(node.getRepository());
 		walk.setRetainBody(true);
 		try {
-			return walk.parseCommit(((Ref) node.getObject()).getObjectId());
+			return walk.parseCommit(id);
 		} catch (IOException ignored) {
 			return null;
 		} finally {
 			walk.release();
 		}
+	}
+
+	private String abbreviate(final ObjectId id) {
+		if (id != null)
+			return id.abbreviate(7).name();
+		else
+			return ObjectId.zeroId().abbreviate(7).name();
 	}
 
 	/**
@@ -290,7 +305,7 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 						Repository.shortenRefName(head.getLeaf().getName()),
 						StyledString.DECORATIONS_STYLER);
 			else if (head.getObjectId() != null)
-				string.append(head.getObjectId().abbreviate(7).name(),
+				string.append(abbreviate(head.getObjectId()),
 						StyledString.DECORATIONS_STYLER);
 			string.append(']', StyledString.DECORATIONS_STYLER);
 			if (verboseBranchMode && head.getObjectId() != null) {
@@ -322,8 +337,7 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 				Constants.STASH, Integer.valueOf(node.getIndex())));
 		string.append(' ');
 		string.append('[', StyledString.DECORATIONS_STYLER);
-		string.append(commit.abbreviate(7).name(),
-				StyledString.DECORATIONS_STYLER);
+		string.append(abbreviate(commit), StyledString.DECORATIONS_STYLER);
 		string.append(']', StyledString.DECORATIONS_STYLER);
 		string.append(' ');
 		string.append(commit.getShortMessage(), StyledString.QUALIFIER_STYLER);
@@ -348,19 +362,29 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 				// shorten the name
 				StyledString refName = new StyledString(
 						Repository.shortenRefName(ref.getName()));
-				if (ref.isSymbolic()) {
-					refName.append(" - ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
-					refName.append(ref.getLeaf().getName(),
-							StyledString.QUALIFIER_STYLER);
-					refName.append(" - ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
-					refName.append(ObjectId.toString(ref.getLeaf()
-							.getObjectId()), StyledString.QUALIFIER_STYLER);
-				} else {
-					refName.append(" - ", StyledString.QUALIFIER_STYLER); //$NON-NLS-1$
-					refName.append(ObjectId.toString(ref.getObjectId()),
-							StyledString.QUALIFIER_STYLER);
 
-				}
+				ObjectId refId;
+				if (ref.isSymbolic()) {
+					refName.append(' ');
+					refName.append('[', StyledString.DECORATIONS_STYLER);
+					refName.append(ref.getLeaf().getName(),
+							StyledString.DECORATIONS_STYLER);
+					refName.append(']', StyledString.DECORATIONS_STYLER);
+					refId = ref.getLeaf().getObjectId();
+				} else
+					refId = ref.getObjectId();
+
+				refName.append(' ');
+				RevCommit commit = getLatestCommit(node);
+				if (commit != null)
+					refName.append(abbreviate(commit),
+							StyledString.QUALIFIER_STYLER)
+							.append(' ')
+							.append(commit.getShortMessage(),
+									StyledString.QUALIFIER_STYLER);
+				else
+					refName.append(abbreviate(refId),
+							StyledString.QUALIFIER_STYLER);
 				return refName;
 			case WORKINGDIR:
 				StyledString dirString = new StyledString(
@@ -380,9 +404,12 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 					if (verboseBranchMode) {
 						RevCommit latest = getLatestCommit(node);
 						if (latest != null)
-							styled.append(' ' + latest.abbreviate(7).name()
-									+ ' ' + latest.getShortMessage(),
-									StyledString.QUALIFIER_STYLER);
+							styled.append(' ')
+									.append(abbreviate(latest),
+											StyledString.QUALIFIER_STYLER)
+									.append(' ')
+									.append(latest.getShortMessage(),
+											StyledString.QUALIFIER_STYLER);
 					}
 				}
 				return styled;
