@@ -1,0 +1,8 @@
+Code-Review+2: Stefan Lay <stefan.lay@sap.com>
+IP-Clean+1: Stefan Lay <stefan.lay@sap.com>
+Verified+1: Hudson CI
+Submitted-by: Stefan Lay <stefan.lay@sap.com>
+Submitted-at: Fri, 11 May 2012 10:44:52 -0400
+Reviewed-on: https://git.eclipse.org/r/5943
+Project: egit/egit
+Branch: refs/heads/master
