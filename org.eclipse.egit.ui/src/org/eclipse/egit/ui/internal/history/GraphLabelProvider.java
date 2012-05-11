@@ -39,7 +39,7 @@ class GraphLabelProvider extends BaseLabelProvider implements
 		if (columnIndex == 0)
 			return c.getShortMessage();
 		if (columnIndex == 3)
-			return c.getId().abbreviate(8).name() + "..."; //$NON-NLS-1$
+			return c.getId().name();
 		if (columnIndex == 1 || columnIndex == 2) {
 			final PersonIdent author = authorOf(c);
 			if (author != null)
