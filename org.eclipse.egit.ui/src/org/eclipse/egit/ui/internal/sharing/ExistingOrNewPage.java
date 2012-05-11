@@ -314,6 +314,7 @@ class ExistingOrNewPage extends WizardPage {
 		TreeColumn c3 = new TreeColumn(tree, SWT.NONE);
 		c3.setText(UIText.ExistingOrNewPage_HeaderRepository);
 		c3.setWidth(200);
+		boolean allProjectsInExistingRepos = true;
 		for (IProject project : myWizard.projects) {
 			RepositoryFinder repositoryFinder = new RepositoryFinder(project);
 			try {
@@ -328,6 +329,7 @@ class ExistingOrNewPage extends WizardPage {
 					treeItem.setText(1, project.getLocation().toOSString());
 					treeItem.setText(2, ""); //$NON-NLS-1$
 					treeItem.setData(new ProjectAndRepo(project, "")); //$NON-NLS-1$
+					allProjectsInExistingRepos = false;
 				} else if (!mi.hasNext()) {
 					// exactly one mapping found
 					TreeItem treeItem = new TreeItem(tree, SWT.NONE);
@@ -359,6 +361,7 @@ class ExistingOrNewPage extends WizardPage {
 								.getProject(), treeItem2.getText(2)));
 					}
 					treeItem.setExpanded(true);
+					allProjectsInExistingRepos = false;
 				}
 			} catch (CoreException e) {
 				TreeItem treeItem2 = new TreeItem(tree, SWT.BOLD | SWT.ITALIC);
@@ -442,6 +445,12 @@ class ExistingOrNewPage extends WizardPage {
 
 		Dialog.applyDialogFont(main);
 		setControl(main);
+
+		if (allProjectsInExistingRepos) {
+			internalMode = true;
+			internalModeButton.setSelection(true);
+			updateControls();
+		}
 	}
 
 	private void updateProjectTreeItem(TreeItem item, IProject project) {
