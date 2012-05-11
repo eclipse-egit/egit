@@ -24,18 +24,6 @@
 
   <name>EGit Mylyn UI Test Plug-in</name>
 
-  <properties>
-    <local-egit-site>file:/${basedir}/../org.eclipse.egit-updatesite/target/site</local-egit-site>
-  </properties>
-
-  <repositories>
-    <repository>
-      <id>local-egit</id>
-      <layout>p2</layout>
-      <url>${local-egit-site}</url>
-    </repository>
-  </repositories>
-
   <profiles>
     <profile>
       <id>skip-ui-tests</id>
