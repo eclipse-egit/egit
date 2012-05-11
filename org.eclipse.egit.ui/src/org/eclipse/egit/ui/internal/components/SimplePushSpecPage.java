@@ -111,6 +111,17 @@ public class SimplePushSpecPage extends WizardPage {
 		setControl(main);
 	}
 
+	/*
+	 * @see org.eclipse.jface.dialogs.DialogPage#setVisible(boolean)
+	 * @since 2.0
+	 */
+	@Override
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+		if (visible)
+			remoteRefName.setFocus();
+	}
+
 	/**
 	 * pre-fills the destination box with a remote ref name if one exists that
 	 * matches the local branch name.
