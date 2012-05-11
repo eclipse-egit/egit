@@ -46,6 +46,10 @@ public class HistoryPreferencePage extends FieldEditorPreferencePage implements
 				UIText.ResourceHistory_toggleRelativeDate,
 				getFieldEditorParent()));
 		addField(new BooleanFieldEditor(
+				UIPreferences.RESOURCEHISTORY_SHOW_EMAIL_ADDRESSES,
+				UIText.HistoryPreferencePage_toggleEmailAddresses,
+				getFieldEditorParent()));
+		addField(new BooleanFieldEditor(
 				UIPreferences.RESOURCEHISTORY_SHOW_ALL_BRANCHES,
 				UIText.HistoryPreferencePage_toggleAllBranches, getFieldEditorParent()));
 		addField(new BooleanFieldEditor(

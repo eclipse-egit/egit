@@ -212,6 +212,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 		BooleanPrefAction showRelativeDateAction;
 
+		BooleanPrefAction showEmailAddressesAction;
+
 		BooleanPrefAction showNotesAction;
 
 		BooleanPrefAction wrapCommentAction;
@@ -263,6 +265,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			createShowCommentAction();
 			createShowFilesAction();
 			createShowRelativeDateAction();
+			createShowEmailAddressesAction();
 			createShowNotesAction();
 			createWrapCommentAction();
 			createFillCommentAction();
@@ -430,6 +433,18 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			};
 			showRelativeDateAction.apply(showRelativeDateAction.isChecked());
 			actionsToDispose.add(showRelativeDateAction);
+		}
+
+		private void createShowEmailAddressesAction() {
+			showEmailAddressesAction = new BooleanPrefAction(
+					UIPreferences.RESOURCEHISTORY_SHOW_EMAIL_ADDRESSES,
+					UIText.GitHistoryPage_toggleEmailAddresses) {
+				void apply(boolean date) {
+					// nothing, just set the Preference
+				}
+			};
+			showEmailAddressesAction.apply(showEmailAddressesAction.isChecked());
+			actionsToDispose.add(showEmailAddressesAction);
 		}
 
 		private void createShowNotesAction() {
@@ -619,6 +634,13 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					graph.getTableView().refresh();
 				}
 			}
+			if (UIPreferences.RESOURCEHISTORY_SHOW_EMAIL_ADDRESSES.equals(prop)) {
+				Object oldValue = event.getOldValue();
+				if (oldValue == null || !oldValue.equals(event.getNewValue())) {
+					graph.setShowEmailAddresses(isShowingEmailAddresses());
+					graph.getTableView().refresh();
+				}
+			}
 			if (UIPreferences.HISTORY_MAX_BRANCH_LENGTH.equals(prop)
 					|| UIPreferences.HISTORY_MAX_TAG_LENGTH.equals(prop))
 				graph.getTableView().refresh();
@@ -720,6 +742,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		graph = new CommitGraphTable(graphDetailSplit, getSite(), popupMgr);
 
 		graph.setRelativeDate(isShowingRelativeDates());
+		graph.setShowEmailAddresses(isShowingEmailAddresses());
 		Activator.getDefault().getPreferenceStore()
 				.addPropertyChangeListener(listener);
 
@@ -908,6 +931,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		showSubMenuMgr.add(actions.findAction);
 		showSubMenuMgr.add(actions.showFilesAction);
 		showSubMenuMgr.add(actions.showCommentAction);
+		showSubMenuMgr.add(new Separator());
+		showSubMenuMgr.add(actions.showRelativeDateAction);
+		showSubMenuMgr.add(actions.showEmailAddressesAction);
 
 		IMenuManager filterSubMenuMgr = new MenuManager(
 				UIText.GitHistoryPage_FilterSubMenuLabel);
@@ -924,9 +950,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		viewMenuMgr.add(new Separator());
 		viewMenuMgr.add(actions.wrapCommentAction);
 		viewMenuMgr.add(actions.fillCommentAction);
-
-		viewMenuMgr.add(new Separator());
-		viewMenuMgr.add(actions.showRelativeDateAction);
 	}
 
 	public void dispose() {
@@ -1866,6 +1889,10 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	private boolean isShowingRelativeDates() {
 		return Activator.getDefault().getPreferenceStore().getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE);
+	}
+
+	private boolean isShowingEmailAddresses() {
+		return Activator.getDefault().getPreferenceStore().getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_EMAIL_ADDRESSES);
 	}
 
 	public boolean contains(ISchedulingRule rule) {

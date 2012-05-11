@@ -384,6 +384,10 @@ class CommitGraphTable {
 		graphLabelProvider.setRelativeDate(booleanValue);
 	}
 
+	void setShowEmailAddresses(boolean booleanValue) {
+		graphLabelProvider.setShowEmailAddresses(booleanValue);
+	}
+
 	private boolean canDoCopy() {
 		return !table.getSelection().isEmpty();
 	}
