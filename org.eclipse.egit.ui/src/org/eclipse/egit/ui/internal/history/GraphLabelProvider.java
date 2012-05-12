@@ -39,20 +39,20 @@ class GraphLabelProvider extends BaseLabelProvider implements
 	public String getColumnText(final Object element, final int columnIndex) {
 		final RevCommit c = (RevCommit) element;
 		if (columnIndex == 0)
+			return c.getId().abbreviate(7).name();
+		if (columnIndex == 1)
 			return c.getShortMessage();
-		if (columnIndex == 3)
-			return c.getId().name();
-		if (columnIndex == 1 || columnIndex == 2) {
+		if (columnIndex == 2 || columnIndex == 3) {
 			final PersonIdent author = authorOf(c);
 			if (author != null)
 				switch (columnIndex) {
-				case 1:
+				case 2:
 					if (showEmail)
 						return author.getName()
 								+ " <" + author.getEmailAddress() + '>'; //$NON-NLS-1$
 					else
 						return author.getName();
-				case 2:
+				case 3:
 					return getDateFormatter().formatDate(author);
 				}
 		}
