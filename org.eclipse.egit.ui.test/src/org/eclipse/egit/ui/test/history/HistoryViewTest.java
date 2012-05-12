@@ -111,10 +111,10 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 
 		assertEquals("Wrong commit message", ADDEDMESSAGE,
 				getHistoryViewTable(PROJ1, SECONDFOLDER, ADDEDFILE)
-						.getTableItem(0).getText(0));
+						.getTableItem(0).getText(1));
 		assertEquals("Wrong commit message", "Initial commit",
 				getHistoryViewTable(PROJ1, FOLDER, FILE2).getTableItem(0)
-						.getText(0));
+						.getText(1));
 	}
 
 	@Test
@@ -220,7 +220,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		SWTBotTable table = getHistoryViewTable(PROJ1);
 		int rowCount = table.rowCount();
 		assertTrue(table.rowCount() > 0);
-		assertEquals(table.getTableItem(rowCount - 1).getText(0),
+		assertEquals(table.getTableItem(rowCount - 1).getText(1),
 				"Initial commit");
 	}
 
@@ -232,7 +232,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		int countAfter = getHistoryViewTable(PROJ1).rowCount();
 		assertEquals("Wrong number of entries", countBefore + 1, countAfter);
 		assertEquals("Wrong comit message", commitMessage,
-				getHistoryViewTable(PROJ1).getTableItem(0).getText(0));
+				getHistoryViewTable(PROJ1).getTableItem(0).getText(1));
 	}
 
 	/**
