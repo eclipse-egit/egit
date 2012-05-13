@@ -926,9 +926,15 @@ public class CommitDialog extends TitleAreaDialog {
 
 	private void updateMessage() {
 		String message = commitMessageComponent.getMessage();
+
+		String commitMsg = commitMessageComponent.getCommitMessage();
+		if (message == null && (commitMsg == null || commitMsg.trim().length() == 0))
+			message = UIText.CommitDialog_Message;
+
 		if (message == null && filesViewer.getCheckedElements().length == 0
 				&& !amendingItem.getSelection())
 			message = UIText.CommitDialog_MessageNoFilesSelected;
+
 		setMessage(message, IMessageProvider.INFORMATION);
 		commitButton.setEnabled(message == null);
 	}

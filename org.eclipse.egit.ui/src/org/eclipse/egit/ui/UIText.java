@@ -2062,6 +2062,9 @@ public class UIText extends NLS {
 	public static String CommitMessageComponent_MessageInvalidCommitter;
 
 	/** */
+	public static String CommitMessageComponent_AmendingCommitInRemoteBranch;
+
+	/** */
 	public static String CommitMessageViewer_author;
 
 	/** */
