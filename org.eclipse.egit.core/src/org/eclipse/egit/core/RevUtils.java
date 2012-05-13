@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,9 +10,12 @@
 package org.eclipse.egit.core;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jgit.lib.AnyObjectId;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -55,6 +59,41 @@ public class RevUtils {
 		result = rw.next();
 
 		return result != null ? result : null;
+	}
+
+	/**
+	 * Check if commit is contained in any of the passed refs.
+	 *
+	 * @param repo
+	 *            the repo the commit is in
+	 * @param commitId
+	 *            the commit ID to search for
+	 * @param refs
+	 *            the refs to check
+	 * @return true if the commit is contained, false otherwise
+	 * @throws IOException
+	 */
+	public static boolean isContainedInAnyRef(Repository repo,
+			ObjectId commitId, Collection<Ref> refs) throws IOException {
+		// It's likely that we don't have to walk commits at all, so
+		// check refs directly first.
+		for (Ref ref : refs)
+			if (commitId.equals(ref.getObjectId()))
+				return true;
+
+		RevWalk walk = new RevWalk(repo);
+		try {
+			RevCommit commit = walk.parseCommit(commitId);
+			for (Ref ref : refs) {
+				RevCommit refCommit = walk.parseCommit(ref.getObjectId());
+				boolean contained = walk.isMergedInto(commit, refCommit);
+				if (contained)
+					return true;
+			}
+		} finally {
+			walk.dispose();
+		}
+		return false;
 	}
 
 }

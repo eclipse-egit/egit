@@ -15,6 +15,7 @@
 package org.eclipse.egit.ui.internal.dialogs;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,6 +30,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.ui.ICommitMessageProvider;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
@@ -40,7 +42,9 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.util.ChangeIdUtil;
 import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.swt.events.ModifyEvent;
@@ -101,6 +105,8 @@ public class CommitMessageComponent {
 	private boolean amending = false;
 
 	private boolean amendAllowed = false;
+
+	private boolean amendingCommitInRemoteBranch = false;
 
 	private boolean createChangeId = false;
 
@@ -332,9 +338,6 @@ public class CommitMessageComponent {
 	 * @return information message or null if none
 	 */
 	public String getMessage() {
-		if (commitText.getText().trim().length() == 0)
-			return UIText.CommitDialog_Message;
-
 		String authorValue = authorText.getText();
 		if (authorValue.length() == 0
 				|| RawParseUtils.parsePersonIdent(authorValue) == null)
@@ -344,6 +347,9 @@ public class CommitMessageComponent {
 		if (committerValue.length() == 0
 				|| RawParseUtils.parsePersonIdent(committerValue) == null)
 			return UIText.CommitMessageComponent_MessageInvalidCommitter;
+
+		if (amending && amendingCommitInRemoteBranch)
+			return UIText.CommitMessageComponent_AmendingCommitInRemoteBranch;
 
 		return null;
 	}
@@ -479,8 +485,23 @@ public class CommitMessageComponent {
 
 	private void getHeadCommitInfo() {
 		CommitInfo headCommitInfo = CommitHelper.getHeadCommitInfo(repository);
+		RevCommit previousCommit = headCommitInfo.getCommit();
+
+		amendingCommitInRemoteBranch = isContainedInAnyRemoteBranch(previousCommit);
 		previousCommitMessage = headCommitInfo.getCommitMessage();
 		previousAuthor = headCommitInfo.getAuthor();
+	}
+
+	private boolean isContainedInAnyRemoteBranch(RevCommit commit) {
+		try {
+			Collection<Ref> refs = repository.getRefDatabase().getRefs(
+					Constants.R_REMOTES).values();
+			return RevUtils.isContainedInAnyRef(repository, commit, refs);
+		} catch (IOException e) {
+			// The result only affects a warning, so pretend there was no
+			// problem.
+			return false;
+		}
 	}
 
 	private String getSafeString(String string) {
