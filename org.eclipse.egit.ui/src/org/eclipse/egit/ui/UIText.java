@@ -4495,6 +4495,9 @@ public class UIText extends NLS {
 	/** */
 	public static String GitOpenInCompareAction_cannotRetrieveCommitWithId;
 
+	/** */
+	public static String EclipseSshSessionFactory_noIdentities;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
