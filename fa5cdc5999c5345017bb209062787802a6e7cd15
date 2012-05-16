@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHn///ys\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-05-16T22:15:30Z",
+      "side": 1,
+      "message": "s/ls-branches/ls-remotes/",
+      "revId": "fa5cdc5999c5345017bb209062787802a6e7cd15",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn///yw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SourceBranchFailureDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-05-16T22:15:30Z",
+      "side": 1,
+      "message": "s/ls-branches/ls-remotes/",
+      "revId": "fa5cdc5999c5345017bb209062787802a6e7cd15",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn///y0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-05-16T22:15:30Z",
+      "side": 1,
+      "message": "s/Please check yours:/Please check:/\n\ntrailing whitespace",
+      "revId": "fa5cdc5999c5345017bb209062787802a6e7cd15",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
