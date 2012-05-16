@@ -23,8 +23,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.op.ListRemoteOperation;
@@ -36,9 +34,9 @@ import org.eclipse.egit.ui.internal.CachedCheckboxTreeViewer;
 import org.eclipse.egit.ui.internal.FilteredCheckboxTree;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.ui.internal.dialogs.SourceBranchFailureDialog;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -328,11 +326,8 @@ class SourceBranchPage extends WizardPage {
 		} catch (InvocationTargetException e) {
 			Throwable why = e.getCause();
 			transportError(why);
-			ErrorDialog.openError(getShell(),
-					UIText.SourceBranchPage_transportError,
-					UIText.SourceBranchPage_cannotListBranches, new Status(
-							IStatus.ERROR, Activator.getPluginId(), 0, why
-									.getMessage(), why));
+			if (showDetailedFailureDialog())
+				SourceBranchFailureDialog.show(getShell(), transportError);
 			return;
 		} catch (IOException e) {
 			transportError(UIText.SourceBranchPage_cannotCreateTemp);
@@ -390,4 +385,13 @@ class SourceBranchPage extends WizardPage {
 			transportError = msg;
 			checkPage();
 	}
+
+	private boolean showDetailedFailureDialog() {
+		return Activator
+				.getDefault()
+				.getPreferenceStore()
+				.getBoolean(
+						UIPreferences.CLONE_WIZARD_SHOW_DETAILED_FAILURE_DIALOG);
+	}
+
 }
