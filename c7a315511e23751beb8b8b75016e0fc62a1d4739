@@ -16,6 +16,24 @@
       "revId": "c7a315511e23751beb8b8b75016e0fc62a1d4739",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn///tA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertySourceProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-05-17T19:48:31Z",
+      "side": 1,
+      "message": "Just to safeguard against multiple threads accessing and updating this field",
+      "parentUuid": "AABOHn///tI\u003d",
+      "revId": "c7a315511e23751beb8b8b75016e0fc62a1d4739",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
