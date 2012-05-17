@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHn///tI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoryPropertySourceProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-05-17T19:43:53Z",
+      "side": 1,
+      "message": "is there any reason why not use here listenerHandle directly ?",
+      "revId": "c7a315511e23751beb8b8b75016e0fc62a1d4739",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
