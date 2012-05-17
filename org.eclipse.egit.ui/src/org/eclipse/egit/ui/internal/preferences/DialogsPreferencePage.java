@@ -66,6 +66,10 @@ public class DialogsPreferencePage extends FieldEditorPreferencePage implements
 				UIText.DialogsPreferencePage_DetachedHeadCombo, confirmGroup));
 		addField(new BooleanFieldEditor(UIPreferences.SHOW_HOME_DIR_WARNING,
 				UIText.DialogsPreferencePage_HomeDirWarning, confirmGroup));
+		addField(new BooleanFieldEditor(
+				UIPreferences.CLONE_WIZARD_SHOW_DETAILED_FAILURE_DIALOG,
+				UIText.DialogsPreferencePage_ShowCloneFailedDialog,
+				confirmGroup));
 		updateMargins(confirmGroup);
 	}
 
