@@ -99,6 +99,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(UIPreferences.CHECKOUT_PROJECT_RESTORE, true);
 		store.setDefault(UIPreferences.HISTORY_MAX_TAG_LENGTH, 15);
 		store.setDefault(UIPreferences.HISTORY_MAX_BRANCH_LENGTH, 15);
+		store.setDefault(UIPreferences.CLONE_WIZARD_SHOW_DETAILED_FAILURE_DIALOG, true);
 	}
 
 }
