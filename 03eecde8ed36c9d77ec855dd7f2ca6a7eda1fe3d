@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHn///ds\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-05-19T23:47:03Z",
+      "side": 1,
+      "message": "amending always changes existing history, so we better say: s/existing/published/",
+      "revId": "03eecde8ed36c9d77ec855dd7f2ca6a7eda1fe3d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
