@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
+import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.After;
@@ -59,8 +60,8 @@ public class ResetOperationTest extends GitTestCase {
 	public void testHardReset() throws Exception {
 		setupRepository();
 		String fileInIndexPath = fileInIndex.getLocation().toPortableString();
-		new ResetOperation(repository, initialCommit.getName(),
-				ResetOperation.ResetType.HARD).execute(null);
+		new ResetOperation(repository, initialCommit.getName(), ResetType.HARD)
+				.execute(null);
 		// .project must disappear, related Eclipse project must be deleted
 		assertFalse(projectFile.exists());
 		assertFalse(project.getProject().exists());
@@ -78,8 +79,8 @@ public class ResetOperationTest extends GitTestCase {
 	public void testSoftReset() throws Exception {
 		setupRepository();
 		String fileInIndexPath = fileInIndex.getLocation().toPortableString();
-		new ResetOperation(repository, initialCommit.getName(),
-				ResetOperation.ResetType.SOFT).execute(null);
+		new ResetOperation(repository, initialCommit.getName(), ResetType.SOFT)
+				.execute(null);
 		// .project must remain
 		assertTrue(projectFile.exists());
 		assertTrue(project.getProject().exists());
@@ -98,8 +99,8 @@ public class ResetOperationTest extends GitTestCase {
 	public void testMixedReset() throws Exception {
 		setupRepository();
 		String fileInIndexPath = fileInIndex.getLocation().toPortableString();
-		new ResetOperation(repository, initialCommit.getName(),
-				ResetOperation.ResetType.MIXED).execute(null);
+		new ResetOperation(repository, initialCommit.getName(), ResetType.MIXED)
+				.execute(null);
 		// .project must remain
 		assertTrue(projectFile.exists());
 		assertTrue(project.getProject().exists());
