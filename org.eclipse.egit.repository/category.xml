@@ -18,9 +18,9 @@
     <feature url="features/org.eclipse.jgit_0.0.0.qualifier.jar" id="org.eclipse.jgit" version="0.0.0" patch="true">
       <category name="JGit"/>
    </feature>
-<!--   <feature url="features/org.eclipse.jgit.source_0.0.0.qualifier.jar" id="org.eclipse.jgit.source" version="0.0.0" patch="true">
+   <feature url="features/org.eclipse.jgit.source_0.0.0.qualifier.jar" id="org.eclipse.jgit.source" version="0.0.0" patch="true">
       <category name="JGit"/>
-   </feature>-->
+   </feature>
    <category-def name="Eclipse Git Team Provider" label="Eclipse Git Team Provider">
       <description>
          Eclipse Git Team Provider
