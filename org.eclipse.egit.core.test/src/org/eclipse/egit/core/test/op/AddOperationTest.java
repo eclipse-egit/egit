@@ -53,13 +53,14 @@ public class AddOperationTest extends GitTestCase {
 		IFile file1 = testUtils.addFileToProject(project.getProject(), "a.txt",
 				"some text");
 
+		assertFalse(testRepository.inIndex(file1.getLocation()
+				.toPortableString()));
+
 		resources.add(file1);
 		new AddToIndexOperation(resources).execute(null);
 
 		assertTrue(testRepository.inIndex(file1.getLocation()
 				.toPortableString()));
-		assertTrue(testRepository.getDirCacheEntryLength(file1.getLocation()
-				.toPortableString()) == 9);
 	}
 
 	@Test
@@ -69,6 +70,11 @@ public class AddOperationTest extends GitTestCase {
 		IFile file2 = testUtils.addFileToProject(project.getProject(),
 				"sub/b.txt", "some text");
 
+		assertFalse(testRepository.inIndex(file1.getLocation()
+				.toPortableString()));
+		assertFalse(testRepository.inIndex(file2.getLocation()
+				.toPortableString()));
+
 		resources.add(project.getProject().getFolder("sub"));
 		new AddToIndexOperation(resources).execute(null);
 
@@ -76,10 +82,6 @@ public class AddOperationTest extends GitTestCase {
 				.toPortableString()));
 		assertTrue(testRepository.inIndex(file2.getLocation()
 				.toPortableString()));
-		assertTrue(testRepository.getDirCacheEntryLength(file1.getLocation()
-				.toPortableString()) == 9);
-		assertTrue(testRepository.getDirCacheEntryLength(file2.getLocation()
-				.toPortableString()) == 9);
 	}
 
 	@Test
