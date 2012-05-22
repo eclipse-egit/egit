@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
    <description url="Eclipse Git Plugin">
-      This is a pure Java implementation of the Git version control system and integrates it into Eclipse.
+      This is a pure Java implementation of the Git version control system. The native Git version is also required in this version.
    </description>
    <feature url="features/org.eclipse.egit_0.0.0.qualifier.jar" id="org.eclipse.egit" version="0.0.0" patch="true">
       <category name="Eclipse Git Team Provider"/>
@@ -21,7 +21,7 @@
    <feature url="features/org.eclipse.jgit_0.0.0.qualifier.jar" id="org.eclipse.jgit" version="0.0.0" patch="true">
       <category name="JGit"/>
    </feature>
-   <feature url="features/org.eclipse.jgit.source_0.0.0.qualifier.jar" id="org.eclipse.jgit.source" version="0.0.0" patch="true">
+   <feature url="features/org.eclipse.jgit.sources_0.0.0.qualifier.jar" id="org.eclipse.jgit.source" version="0.0.0" patch="true">
       <category name="JGit"/>
    </feature>
    <category-def name="Eclipse Git Team Provider" label="Eclipse Git Team Provider">
