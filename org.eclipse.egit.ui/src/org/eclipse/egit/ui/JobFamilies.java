@@ -89,6 +89,12 @@ public class JobFamilies {
 	public final static Object DISCONNECT = new Object();
 
 	/**
+	 * Discard Changes
+	 */
+	public final static Object DISCARD_CHANGES = new Object();
+
+
+	/**
 	 * Add to index job
 	 */
 	public static final Object ADD_TO_INDEX = new Object();

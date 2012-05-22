@@ -12,6 +12,8 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.compare.CompareEditorInput;
@@ -26,20 +28,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.IEGitOperation;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
+import org.eclipse.egit.ui.internal.dialogs.CommitSelectDialog;
 import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.FollowFilter;
-import org.eclipse.jgit.revwalk.RenameCallback;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.PartInitException;
@@ -51,19 +49,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 
-	private static class CompareWithPreviousOperation implements IEGitOperation {
-
-		private static class PreviousCommit {
-
-			final RevCommit commit;
-
-			final String path;
-
-			PreviousCommit(final RevCommit commit, final String path) {
-				this.commit = commit;
-				this.path = path;
-			}
-		}
+	private class CompareWithPreviousOperation implements IEGitOperation {
 
 		private ExecutionEvent event;
 
@@ -78,27 +64,53 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 			this.resource = resource;
 		}
 
-		private String getRepositoryPath() {
-			return RepositoryMapping.getMapping(resource.getProject())
-					.getRepoRelativePath(resource);
-		}
-
 		public void execute(IProgressMonitor monitor) throws CoreException {
-			PreviousCommit previous = findPreviousCommit();
-			if (previous != null)
-				if (resource instanceof IFile) {
-					final ITypedElement base = SaveableCompareEditorInput
-							.createFileElement((IFile) resource);
-					ITypedElement next = CompareUtils
-							.getFileRevisionTypedElement(previous.path,
-									previous.commit, repository);
-					CompareEditorInput input = new GitCompareFileRevisionEditorInput(
-							base, next, null);
-					CompareUI.openCompareEditor(input);
-				} else
-					openCompareTreeView(previous.commit);
-			else
+			final List<PreviousCommit> previousList;
+			try {
+				previousList = findPreviousCommits();
+			} catch (IOException e) {
+				Activator.handleError(e.getMessage(), e, true);
+				return;
+			}
+			final AtomicReference<PreviousCommit> previous = new AtomicReference<PreviousCommit>();
+			if (previousList.size() == 0) {
 				showNotFoundDialog();
+				return;
+			} else if (previousList.size() > 1){
+				final List<RevCommit> commits = new ArrayList<RevCommit>();
+				for (PreviousCommit pc: previousList)
+					commits.add(pc.commit);
+				HandlerUtil.getActiveShell(event).getDisplay()
+						.syncExec(new Runnable() {
+							public void run() {
+								CommitSelectDialog dlg = new CommitSelectDialog(
+										HandlerUtil.getActiveShell(event),
+										commits);
+								if (dlg.open() == Window.OK)
+									for (PreviousCommit pc: previousList)
+										if (pc.commit.equals(dlg.getSelectedCommit())){
+											   previous.set(pc);
+											   break;
+										   }
+							}
+						});
+			}
+			else
+				previous.set(previousList.get(0));
+
+			if (previous.get() == null)
+				return;
+			if (resource instanceof IFile) {
+				final ITypedElement base = SaveableCompareEditorInput
+						.createFileElement((IFile) resource);
+				PreviousCommit pc = previous.get();
+				ITypedElement next = CompareUtils.getFileRevisionTypedElement(
+						pc.path, pc.commit, repository);
+				CompareEditorInput input = new GitCompareFileRevisionEditorInput(
+						base, next, null);
+				CompareUI.openCompareEditor(input);
+			} else
+				openCompareTreeView(previous.get().commit);
 		}
 
 		private void openCompareTreeView(final RevCommit previous) {
@@ -117,45 +129,6 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 					}
 				}
 			});
-		}
-
-		private PreviousCommit findPreviousCommit() {
-			final AtomicReference<String> previousPath = new AtomicReference<String>();
-			RevWalk rw = new RevWalk(repository);
-			try {
-				String path = getRepositoryPath();
-				if (path.length() > 0) {
-					FollowFilter filter = FollowFilter.create(path);
-					filter.setRenameCallback(new RenameCallback() {
-
-						public void renamed(DiffEntry entry) {
-							if (previousPath.get() == null)
-								previousPath.set(entry.getOldPath());
-						}
-					});
-					rw.setTreeFilter(filter);
-				}
-
-				RevCommit headCommit = rw.parseCommit(repository.getRef(
-						Constants.HEAD).getObjectId());
-				rw.markStart(headCommit);
-				headCommit = rw.next();
-
-				if (headCommit == null)
-					return null;
-				RevCommit previousCommit = rw.next();
-				if (previousCommit == null)
-					return null;
-
-				if (previousPath.get() == null)
-					previousPath.set(getRepositoryPath());
-				return new PreviousCommit(previousCommit, previousPath.get());
-			} catch (IOException e) {
-				Activator.handleError(e.getMessage(), e, true);
-			} finally {
-				rw.dispose();
-			}
-			return null;
 		}
 
 		private void showNotFoundDialog() {
@@ -196,5 +169,10 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 					UIText.CompareWithPreviousActionHandler_TaskGeneratingInput,
 					null);
 		return null;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled() && getSelectedResources().length == 1;
 	}
 }
