@@ -17,11 +17,8 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.DetachedHeadException;
-import org.eclipse.jgit.api.errors.InvalidRefNameException;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.RefAlreadyExistsException;
-import org.eclipse.jgit.api.errors.RefNotFoundException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
@@ -68,13 +65,7 @@ public class RenameBranchOperation implements IEGitOperation {
 							branch.getName()).setNewName(newName).call();
 				} catch (JGitInternalException e) {
 					throw new CoreException(Activator.error(e.getMessage(), e));
-				} catch (RefNotFoundException e) {
-					throw new CoreException(Activator.error(e.getMessage(), e));
-				} catch (InvalidRefNameException e) {
-					throw new CoreException(Activator.error(e.getMessage(), e));
-				} catch (RefAlreadyExistsException e) {
-					throw new CoreException(Activator.error(e.getMessage(), e));
-				} catch (DetachedHeadException e) {
+				} catch (GitAPIException e) {
 					throw new CoreException(Activator.error(e.getMessage(), e));
 				}
 				actMonitor.worked(1);

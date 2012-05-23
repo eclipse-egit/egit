@@ -15,7 +15,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -92,7 +91,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 						repository1
 								.track(EFS.getStore(resource.getLocationURI())
 										.toLocalFile(0, null));
-					} catch (IOException e) {
+					} catch (Exception e) {
 						throw new CoreException(Activator.error(e.getMessage(),
 								e));
 					}
