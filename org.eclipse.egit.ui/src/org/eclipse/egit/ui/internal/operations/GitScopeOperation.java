@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.operations;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +24,6 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
-import org.eclipse.jgit.errors.NoWorkTreeException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.mapping.ISynchronizationScopeManager;
 import org.eclipse.team.ui.synchronize.ModelOperation;
@@ -93,10 +91,7 @@ public class GitScopeOperation extends ModelOperation {
 			hasChanged |= repoStatus.getModified().contains(path);
 			hasChanged |= repoStatus.getRemoved().contains(path);
 			hasChanged |= repoStatus.getUntracked().contains(path);
-		} catch (NoWorkTreeException e) {
-			Activator.logError(UIText.GitScopeOperation_couldNotDetermineState,
-					e);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			Activator.logError(UIText.GitScopeOperation_couldNotDetermineState,
 					e);
 		}
