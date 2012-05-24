@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2012 SAP AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,13 +8,16 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Chris Aniszczyk <caniszczyk@gmail.com> - tag API changes
+ *    Mathias Kinzler (SAP AG) - compare with previous actions
  *******************************************************************************/
 package org.eclipse.egit.ui.test.team.actions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.op.BranchOperation;
 import org.eclipse.egit.core.op.ResetOperation;
@@ -32,6 +35,8 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.TagBuilder;
 import org.eclipse.jgit.util.RawParseUtils;
@@ -47,7 +52,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Tests for the Team->Branch action
+ * Tests for the Compare With actions
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class CompareActionsTest extends LocalRepositoryTestCase {
@@ -58,6 +63,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 	// private static String LOCAL_BRANCHES;
 	//
 	private static String TAGS;
+	private static ObjectId commitOfTag;
 
 	@BeforeClass
 	public static void setup() throws Exception {
@@ -72,6 +78,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		tag.setMessage("I'm just a little tag");
 		tag.setObjectId(repo.resolve(repo.getFullBranch()),
 				Constants.OBJ_COMMIT);
+		commitOfTag = tag.getObjectId();
 		TagOperation top = new TagOperation(repo, tag, false);
 		top.execute(null);
 		touchAndSubmit(null);
@@ -140,6 +147,41 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		dialog.bot().button(UIText.CompareTargetSelectionDialog_CompareButton)
 				.click();
 		waitUntilCompareTreeViewTreeHasNodeCount(1);
+	}
+
+	@Test
+	public void testCompareWithPrevious() throws Exception {
+		String menuLabel = util
+				.getPluginLocalizedValue("CompareWithPreviousAction.label");
+		clickCompareWith(menuLabel);
+		waitUntilCompareTreeViewTreeHasNodeCount(1);
+	}
+
+	@Test
+	public void testCompareWithPreviousWithMerge() throws Exception {
+		Repository repo = lookupRepository(repositoryFile);
+
+		Git git = new Git(repo);
+		ObjectId masterId = repo.resolve("refs/heads/master");
+		Ref newBranch = git.checkout().setCreateBranch(true)
+				.setStartPoint(commitOfTag.name()).setName("toMerge").call();
+		ByteArrayInputStream bis = new ByteArrayInputStream(
+				"Modified".getBytes());
+		ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ1)
+				.getFolder(FOLDER).getFile(FILE2)
+				.setContents(bis, false, false, null);
+		bis.close();
+		git.commit().setAll(true).setMessage("To be merged").call();
+		git.merge().include(masterId).call();
+		String menuLabel = util
+				.getPluginLocalizedValue("CompareWithPreviousAction.label");
+		clickCompareWith(menuLabel);
+		SWTBotShell selectDialog = bot.shell(UIText.CommitSelectDialog_WindowTitle);
+		assertEquals(2, selectDialog.bot().table().rowCount());
+		selectDialog.close();
+		// cleanup: checkout again master and delete merged branch
+		git.checkout().setName("refs/heads/master").call();
+		git.branchDelete().setBranchNames(newBranch.getName()).setForce(true).call();
 	}
 
 	@Test
@@ -220,11 +262,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 
 	private SWTBotShell openCompareWithDialog(String menuString,
 			String dialogTitle) {
-		SWTBotTree projectExplorerTree = bot.viewById(
-				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
-		getProjectItem(projectExplorerTree, PROJ1).select();
-		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Compare With",
-				menuString);
+			clickCompareWith(menuString);
 		SWTBotShell dialog = bot.shell(dialogTitle);
 		return dialog;
 	}
