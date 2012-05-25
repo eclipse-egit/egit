@@ -135,6 +135,8 @@ class CommitGraphTable {
 
 	private final Color infoBackgroundColor;
 
+	private final Color infoForegroundColor;
+
 	private SWTCommitList allCommits;
 
 	// used for resolving PlotCommit objects by ids
@@ -159,6 +161,8 @@ class CommitGraphTable {
 		hFont = highlightFont();
 		infoBackgroundColor = parent.getDisplay().getSystemColor(
 				SWT.COLOR_INFO_BACKGROUND);
+		infoForegroundColor = parent.getDisplay().getSystemColor(
+				SWT.COLOR_INFO_FOREGROUND);
 
 		Table rawTable = new Table(parent, SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
@@ -225,7 +229,7 @@ class CommitGraphTable {
 					if (commit == null || commit.getRefCount() == 0)
 						return;
 
-					int relativeX = e.x - item.getBounds().x;
+					int relativeX = e.x - table.getTable().getColumn(0).getWidth() - item.getBounds().x;
 					for (int i = 0; i < commit.getRefCount(); i++) {
 						Point textSpan = renderer.getRefHSpan(commit.getRef(i));
 						if ((textSpan != null)
@@ -243,6 +247,7 @@ class CommitGraphTable {
 							Label label = new Label(hoverShell, SWT.NONE);
 							label.setText(getHooverText(commit.getRef(i)));
 							label.setBackground(infoBackgroundColor);
+							label.setForeground(infoForegroundColor);
 							hoverShell.pack();
 							hoverShell.setVisible(true);
 						}
