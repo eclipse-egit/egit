@@ -533,7 +533,9 @@ class CommitGraphTable {
 				SWTCommit commit = (SWTCommit) item.getData();
 				if (commit != null && commit.getRefCount() > 0) {
 					Rectangle itemBounds = item.getBounds();
-					int relativeX = e.x - itemBounds.x;
+					int relativeX = e.x
+							- table.getTable().getColumn(0).getWidth()
+							- item.getBounds().x;
 					for (int i = 0; i < commit.getRefCount(); i++) {
 						Point textSpan = renderer.getRefHSpan(commit.getRef(i));
 						if ((textSpan != null)
