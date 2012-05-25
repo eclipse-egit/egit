@@ -225,7 +225,7 @@ class CommitGraphTable {
 					if (commit == null || commit.getRefCount() == 0)
 						return;
 
-					int relativeX = e.x - item.getBounds().x;
+					int relativeX = e.x - table.getTable().getColumn(0).getWidth() - item.getBounds().x;
 					for (int i = 0; i < commit.getRefCount(); i++) {
 						Point textSpan = renderer.getRefHSpan(commit.getRef(i));
 						if ((textSpan != null)
