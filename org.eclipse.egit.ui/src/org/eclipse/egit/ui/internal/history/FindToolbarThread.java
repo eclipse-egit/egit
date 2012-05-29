@@ -8,6 +8,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.io.IOException;
+
+import org.eclipse.egit.ui.Activator;
+
 /**
  * This class executes the search function for the find toolbar. Only one thread
  * is executed at a time.
@@ -114,6 +118,12 @@ public class FindToolbarThread extends Thread {
 				// Finds for the pattern in the revision history.
 				notFound = true;
 				SWTCommit revision = fileRevisions[i];
+				try {
+					revision.parseBody();
+				} catch (IOException e) {
+					Activator.error("Error parsing body", e); //$NON-NLS-1$
+					continue;
+				}
 
 				if (findInCommitId) {
 					String contentId = revision.getId().name();
