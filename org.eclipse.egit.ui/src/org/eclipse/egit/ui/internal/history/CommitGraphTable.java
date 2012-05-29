@@ -227,30 +227,35 @@ class CommitGraphTable {
 
 					int relativeX = e.x - item.getBounds().x;
 					for (int i = 0; i < commit.getRefCount(); i++) {
-						Point textSpan = renderer.getRefHSpan(commit.getRef(i));
+						Ref ref = commit.getRef(i);
+						Point textSpan = renderer.getRefHSpan(ref);
 						if ((textSpan != null)
-								&& (relativeX >= textSpan.x && relativeX <= textSpan.y)) {
-							hoverShell = new Shell(getTableView().getTable()
-									.getShell(), SWT.ON_TOP | SWT.NO_FOCUS
-									| SWT.TOOL);
-							hoverShell.setLayout(new FillLayout());
-							Point tableLocation = getTableView().getTable()
-									.toControl(0, 0);
-							hoverShell.setLocation(
-									-tableLocation.x + e.x,
-									-tableLocation.y + e.y
-											- renderer.getTextHeight());
-							Label label = new Label(hoverShell, SWT.NONE);
-							label.setText(getHooverText(commit.getRef(i)));
-							label.setBackground(infoBackgroundColor);
-							hoverShell.pack();
-							hoverShell.setVisible(true);
-						}
+								&& (relativeX >= textSpan.x && relativeX <= textSpan.y))
+							showHover(ref, e);
 					}
 				}
 			}
 
-			private String getHooverText(Ref r) {
+			private void showHover(Ref ref, MouseEvent e) {
+				hoverShell = new Shell(getTableView().getTable()
+						.getShell(), SWT.ON_TOP | SWT.NO_FOCUS
+						| SWT.TOOL);
+				hoverShell.setLayout(new FillLayout());
+				hoverShell.setLocation(getHoverLocation(e));
+				Label label = new Label(hoverShell, SWT.NONE);
+				label.setText(getHoverText(ref));
+				label.setBackground(infoBackgroundColor);
+				hoverShell.pack();
+				hoverShell.setVisible(true);
+			}
+
+			private Point getHoverLocation(MouseEvent e) {
+				Point tableLocation = getTableView().getTable().toControl(0, 0);
+				return new Point(-tableLocation.x + e.x,
+						-tableLocation.y + e.y - renderer.getTextHeight());
+			}
+
+			private String getHoverText(Ref r) {
 				String name = r.getName();
 				if (r.isSymbolic())
 					name += ": " + r.getLeaf().getName(); //$NON-NLS-1$
