@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHn//+e8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/CreateBranchPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-05-30T16:51:07Z",
+      "side": 1,
+      "message": "why did you move this code block (from lines 257 - 271) here ?",
+      "revId": "0a3021f3612f385f4985a73c158af91ccedd98c9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
