@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.SubmoduleSyncCommand;
-import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.TeamException;
 
@@ -68,7 +68,7 @@ public class SubmoduleSyncOperation implements IEGitOperation {
 					for (String path : paths)
 						sync.addPath(path);
 					updates = sync.call();
-				} catch (JGitInternalException e) {
+				} catch (GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
 				} finally {

@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
-import java.io.IOException;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -26,6 +24,7 @@ import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
@@ -93,7 +92,7 @@ public class ResetOperation implements IEGitOperation {
 		reset.setRef(refName);
 		try {
 			reset.call();
-		} catch (IOException e) {
+		} catch (GitAPIException e) {
 			throw new TeamException(e.getLocalizedMessage(), e.getCause());
 		}
 		monitor.worked(1);

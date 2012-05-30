@@ -186,7 +186,7 @@ public class RepositoryCommit extends WorkbenchAdapter implements IAdaptable {
 				}
 				notes = noteList.toArray(new RepositoryCommitNote[noteList
 						.size()]);
-			} catch (IOException e) {
+			} catch (Exception e) {
 				Activator.logError("Error showing notes", e); //$NON-NLS-1$
 				notes = new RepositoryCommitNote[0];
 			}

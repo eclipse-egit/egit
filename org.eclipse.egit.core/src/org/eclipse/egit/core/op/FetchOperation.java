@@ -17,7 +17,6 @@ import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
 import org.eclipse.jgit.api.FetchCommand;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
@@ -129,7 +128,7 @@ public class FetchOperation {
 		} catch (JGitInternalException e) {
 			throw new InvocationTargetException(e.getCause() != null ? e
 					.getCause() : e);
-		} catch (InvalidRemoteException e) {
+		} catch (Exception e) {
 			throw new InvocationTargetException(e);
 		}
 	}

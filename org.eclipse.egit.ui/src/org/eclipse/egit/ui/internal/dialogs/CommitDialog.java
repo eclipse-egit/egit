@@ -69,7 +69,6 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.IndexDiff;
@@ -979,7 +978,7 @@ public class CommitDialog extends TitleAreaDialog {
 				}
 				try {
 					addCommand.call();
-				} catch (NoFilepatternException e) {
+				} catch (Exception e) {
 					Activator.logError(UIText.CommitDialog_ErrorAddingFiles, e);
 				}
 				for (Iterator<?> it = sel.iterator(); it.hasNext();) {
