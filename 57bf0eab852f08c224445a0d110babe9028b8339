@@ -16,6 +16,24 @@
       "revId": "57bf0eab852f08c224445a0d110babe9028b8339",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn//+bo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitGraphTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-05-30T20:30:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOHn//+cU\u003d",
+      "revId": "57bf0eab852f08c224445a0d110babe9028b8339",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
