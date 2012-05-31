@@ -38,6 +38,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitHelper.CommitInfo;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
@@ -67,7 +68,8 @@ import org.eclipse.ui.PlatformUI;
  * interface {@link ICommitMessageComponentNotifications} about required changes
  * of the toggle selections.
  */
-public class CommitMessageComponent {
+public class CommitMessageComponent implements IMessageProvider {
+
 
 	private static final String EMPTY_STRING = "";  //$NON-NLS-1$
 
@@ -771,4 +773,20 @@ public class CommitMessageComponent {
 		return headCommitId;
 	}
 
+	public int getMessageType() {
+		String authorValue = authorText.getText();
+		if (authorValue.length() == 0
+				|| RawParseUtils.parsePersonIdent(authorValue) == null)
+			return ERROR;
+
+		String committerValue = committerText.getText();
+		if (committerValue.length() == 0
+				|| RawParseUtils.parsePersonIdent(committerValue) == null)
+			return ERROR;
+
+		if (amending && amendingCommitInRemoteBranch)
+			return WARNING;
+
+		return NONE;
+	}
 }
