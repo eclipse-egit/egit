@@ -4235,6 +4235,10 @@
             commandId="org.eclipse.egit.ui.history.RenameBranch"
             icon="icons/obj16/editconfig.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.history.ShowBlame"
+            icon="icons/etool16/annotate.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -4678,6 +4682,11 @@
             defaultHandler="org.eclipse.egit.ui.internal.commit.command.CheckoutHandler"
             id="org.eclipse.egit.ui.commit.Checkout"
             name="%CheckoutCommand">
+      </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.ShowBlameHandler"
+            id="org.eclipse.egit.ui.history.ShowBlame"
+            name="%ShowBlameCommand.name">
       </command>
    </extension>
    <extension

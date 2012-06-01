@@ -178,6 +178,9 @@ public class UIText extends NLS {
 	public static String SharingWizard_MoveProjectActionLabel;
 
 	/** */
+	public static String ShowBlameHandler_errorMessage;
+
+	/** */
 	public static String ShowBlameHandler_JobName;
 
 	/** */
