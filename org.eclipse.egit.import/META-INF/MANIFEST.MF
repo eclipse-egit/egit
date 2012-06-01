@@ -1,5 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
+Bundle-Localization: plugin
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.egit.import;singleton:=true
 Bundle-Version: 2.0.0.qualifier
