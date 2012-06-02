@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHn//+Oc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-06-02T13:25:15Z",
+      "side": 1,
+      "message": "This whole code is duplicated in getMessage(), except for the return value. Why don\u0027t we introduce a class Message here (with String getText(), int getType() methods), consolidate the logic into one method and adapt the calling code.\n\nThe IMessageProvider would no longer be directly implemented, but IMO no code duplication is more important here.",
+      "revId": "c7252354e2cdd175676442e1e2b4af4a5defb540",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn//+OY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-06-02T13:25:15Z",
+      "side": 1,
+      "message": "I like it, more concise.",
+      "revId": "c7252354e2cdd175676442e1e2b4af4a5defb540",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
