@@ -96,18 +96,21 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 			// determine if we have a lightweight tag and
 			// use the corresponding icon
 			RevObject any;
+			RevWalk walk = new RevWalk(node.getRepository());
 			try {
 				ObjectId id = node.getRepository().resolve(
 						((Ref) node.getObject()).getName());
 				if (id == null)
 					return null;
-				any = new RevWalk(node.getRepository()).parseAny(id);
+				any = walk.parseAny(id);
 			} catch (MissingObjectException e) {
 				Activator.logError(e.getMessage(), e);
 				return null;
 			} catch (IOException e) {
 				Activator.logError(e.getMessage(), e);
 				return null;
+			} finally {
+				walk.release();
 			}
 			if (any instanceof RevTag)
 				return decorateImage(annotatedTagImage, element);
@@ -185,6 +188,8 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 					} catch (IncorrectObjectTypeException e) {
 						// Ref is a lightweight tag, not an annotated tag
 						compareString = id.name();
+					} finally {
+						rw.release();
 					}
 				} else if (refName.startsWith(Constants.R_REMOTES)) {
 					// remote branch: HEAD would be on the commit id to which
@@ -193,8 +198,12 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 					if (id == null)
 						return image;
 					RevWalk rw = new RevWalk(node.getRepository());
-					RevCommit commit = rw.parseCommit(id);
-					compareString = commit.getId().name();
+					try {
+						RevCommit commit = rw.parseCommit(id);
+						compareString = commit.getId().name();
+					} finally {
+						rw.release();
+					}
 				} else if (refName.equals(Constants.HEAD))
 					return getDecoratedImage(image);
 				else {
@@ -318,6 +327,8 @@ public class RepositoriesViewLabelProvider extends GitLabelProvider implements
 							StyledString.QUALIFIER_STYLER);
 				} catch (IOException ignored) {
 					// Ignored
+				} finally {
+					walk.release();
 				}
 			}
 		}
