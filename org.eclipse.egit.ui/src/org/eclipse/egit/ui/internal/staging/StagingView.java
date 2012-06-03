@@ -731,7 +731,7 @@ public class StagingView extends ViewPart {
 	}
 
 	private void updateMessage() {
-		String message = commitMessageComponent.getMessage();
+		String message = commitMessageComponent.getStatus().getMessage();
 		boolean needsRedraw = false;
 		if (message != null) {
 			warningLabel.showMessage(message);
