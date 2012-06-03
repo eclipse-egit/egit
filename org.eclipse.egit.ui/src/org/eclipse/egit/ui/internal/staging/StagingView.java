@@ -731,6 +731,7 @@ public class StagingView extends ViewPart {
 	}
 
 	private void updateMessage() {
+		commitMessageComponent.validate();
 		String message = commitMessageComponent.getMessage();
 		boolean needsRedraw = false;
 		if (message != null) {

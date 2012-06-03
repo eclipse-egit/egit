@@ -924,18 +924,26 @@ public class CommitDialog extends TitleAreaDialog {
 	}
 
 	private void updateMessage() {
-		String message = commitMessageComponent.getMessage();
+		String message = null;
+		int type = IMessageProvider.NONE;
 
 		String commitMsg = commitMessageComponent.getCommitMessage();
-		if (message == null && (commitMsg == null || commitMsg.trim().length() == 0))
+		if (commitMsg == null || commitMsg.trim().length() == 0) {
 			message = UIText.CommitDialog_Message;
-
-		if (message == null && filesViewer.getCheckedElements().length == 0
-				&& !amendingItem.getSelection())
+			type = IMessageProvider.INFORMATION;
+		} else if (filesViewer.getCheckedElements().length == 0
+				&& !amendingItem.getSelection()) {
 			message = UIText.CommitDialog_MessageNoFilesSelected;
+			type = IMessageProvider.INFORMATION;
+		} else {
+			commitMessageComponent.validate();
+			message = commitMessageComponent.getMessage();
+			type = commitMessageComponent.getMessageType();
+		}
 
-		setMessage(message, IMessageProvider.INFORMATION);
-		commitButton.setEnabled(message == null);
+		setMessage(message, type);
+		commitButton.setEnabled(type == IMessageProvider.WARNING
+				|| type == IMessageProvider.NONE);
 	}
 
 	private Collection<String> getFileList() {
