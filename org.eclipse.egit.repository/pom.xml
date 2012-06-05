@@ -27,7 +27,7 @@
   <name>EGit P2 Repository</name>
 
   <properties>
-    <p2repo-zip-path>${project.build.directory}/org.eclipse.egit.repository.zip</p2repo-zip-path>
+    <p2repo-zip-path>${project.build.directory}/org.eclipse.egit.repository-${project.version}.zip</p2repo-zip-path>
   </properties>
 
   <profiles>
