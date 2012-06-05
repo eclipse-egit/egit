@@ -4295,9 +4295,6 @@ public class UIText extends NLS {
 	public static String GitVariableResolver_VariableReferencesNonExistentResource;
 
 	/** */
-	public static String DecoratableResourceHelper_noHead;
-
-	/** */
 	public static String StagingView_UnstagedChanges;
 
 	/** */
