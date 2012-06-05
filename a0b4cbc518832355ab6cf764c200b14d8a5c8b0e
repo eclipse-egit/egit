@@ -33,6 +33,24 @@
       "revId": "a0b4cbc518832355ab6cf764c200b14d8a5c8b0e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn//92M\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-06-05T17:19:52Z",
+      "side": 1,
+      "message": "I think that is overkill, I believe the odds of multiple SHA-1s in the same repository having the same 7 character prefix is incredibly small and other label providers don\u0027t worry about it.",
+      "parentUuid": "AABOHn//92U\u003d",
+      "revId": "a0b4cbc518832355ab6cf764c200b14d8a5c8b0e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
