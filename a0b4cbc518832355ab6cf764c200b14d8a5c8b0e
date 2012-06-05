@@ -87,6 +87,24 @@
       "revId": "a0b4cbc518832355ab6cf764c200b14d8a5c8b0e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn//91k\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-06-05T18:03:46Z",
+      "side": 1,
+      "message": "I agree that it should be done separately, and also not for 2.0. I was just wondering about it there.",
+      "parentUuid": "AABOHn//914\u003d",
+      "revId": "a0b4cbc518832355ab6cf764c200b14d8a5c8b0e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
