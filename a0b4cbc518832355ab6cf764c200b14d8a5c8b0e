@@ -69,6 +69,24 @@
       "revId": "a0b4cbc518832355ab6cf764c200b14d8a5c8b0e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn//914\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 208
+      },
+      "writtenOn": "2012-06-05T17:37:56Z",
+      "side": 1,
+      "message": "That is an interesting read and I\u0027m not oppose to changing it but it shouldn\u0027t be done in this commit affecting only a single place in the UI.\n\nThis commit was intended to clean up the presentation of checked out non-symbolic refs in the repositories view to be consistent with the project label decoration.\n\nPreviously 7 characters was shown with an ellipsis and I removed the ellipsis since SHA-1s are always 40 characters and  so showing the ellipsis is a waste of space in my opinion since it is dramatically shorter visually, 40 characters versus 7 characters and so I don\u0027t think the ellipsis adds any value.\n\nIf we want to change the 7 character abbreviation to actually verify the abbreviation is unique in the repository it should be done in a separate commit affecting all places in the UI consistently.",
+      "parentUuid": "AABOHn//92A\u003d",
+      "revId": "a0b4cbc518832355ab6cf764c200b14d8a5c8b0e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
