@@ -45,7 +45,10 @@ import org.osgi.service.prefs.BackingStoreException;
  */
 public class RepositoryUtil {
 
-	/** The preferences to store the directories known to the Git Repositories view */
+	/**
+	 * The preferences to store the directories known to the Git Repositories
+	 * view
+	 */
 	public static final String PREFS_DIRECTORIES = "GitRepositoriesView.GitDirectories"; //$NON-NLS-1$
 
 	private final Map<String, Map<String, String>> commitMappingCache = new HashMap<String, Map<String, String>>();
@@ -127,7 +130,8 @@ public class RepositoryUtil {
 				Map<String, Ref> tags = repository.getRefDatabase().getRefs(
 						Constants.R_TAGS);
 				for (Ref tagRef : tags.values()) {
-					RevObject any = rw.parseAny(repository.resolve(tagRef.getName()));
+					RevObject any = rw.parseAny(repository.resolve(tagRef
+							.getName()));
 					if (any instanceof RevTag) {
 						RevTag tag = (RevTag) any;
 						if (tag.getObject().name().equals(commitId)) {
@@ -136,8 +140,10 @@ public class RepositoryUtil {
 								timestamp = tag.getTaggerIdent().getWhen();
 							} else {
 								try {
-									RevCommit commit = rw.parseCommit(tag.getObject());
-									timestamp = commit.getCommitterIdent().getWhen();
+									RevCommit commit = rw.parseCommit(tag
+											.getObject());
+									timestamp = commit.getCommitterIdent()
+											.getWhen();
 								} catch (IncorrectObjectTypeException e) {
 									// not referencing a comit.
 									timestamp = null;
@@ -146,9 +152,10 @@ public class RepositoryUtil {
 							tagMap.put(tagRef.getName(), timestamp);
 						}
 					} else if (any instanceof RevCommit) {
-						RevCommit commit = ((RevCommit)any);
+						RevCommit commit = ((RevCommit) any);
 						if (commit.name().equals(commitId))
-							tagMap.put(tagRef.getName(), commit.getCommitterIdent().getWhen());
+							tagMap.put(tagRef.getName(), commit
+									.getCommitterIdent().getWhen());
 					} // else ignore here
 				}
 			} catch (IOException e) {
@@ -384,5 +391,28 @@ public class RepositoryUtil {
 	 */
 	public boolean contains(final String repositoryDir) {
 		return getRepositories().contains(repositoryDir);
+	}
+
+	/**
+	 * Get short branch text for given repository
+	 *
+	 * @param repository
+	 * @return short branch text
+	 * @throws IOException
+	 */
+	public String getShortBranch(Repository repository) throws IOException {
+		Ref head = repository.getRef(Constants.HEAD);
+		if (head == null || head.getObjectId() == null)
+			return CoreText.RepositoryUtil_noHead;
+
+		if (head.isSymbolic())
+			return repository.getBranch();
+
+		String id = head.getObjectId().name();
+		String ref = mapCommitToRef(repository, id, false);
+		if (ref != null)
+			return Repository.shortenRefName(ref) + ' ' + id.substring(0, 7);
+		else
+			return id.substring(0, 7);
 	}
 }
