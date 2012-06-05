@@ -63,7 +63,7 @@
 
   <properties>
     <egit-version>2.0.0-SNAPSHOT</egit-version>
-    <tycho-version>0.14.1</tycho-version>
+    <tycho-version>0.15.0</tycho-version>
     <mockito-version>1.8.4</mockito-version>
     <junit-version>4.8.1</junit-version>
     <jgit-site>file:/${basedir}/../../jgit/org.eclipse.jgit.packaging/org.eclipse.jgit.repository/target/site</jgit-site>
