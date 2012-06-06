@@ -11,10 +11,6 @@ package org.eclipse.egit.ui.internal.history;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jgit.revplot.PlotCommitList;
 import org.eclipse.jgit.revplot.PlotLane;
 import org.eclipse.swt.events.DisposeEvent;
@@ -57,18 +53,7 @@ class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> implements Dis
 	}
 
 	public void dispose() {
-		Job clearJob = new Job("Clearing commit list") { //$NON-NLS-1$
-
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				synchronized (SWTCommitList.this) {
-					clear();
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		clearJob.setSystem(true);
-		clearJob.schedule();
+		clear();
 
 		for (Color color : allColors)
 			color.dispose();

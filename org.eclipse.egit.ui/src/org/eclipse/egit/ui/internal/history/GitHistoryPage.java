@@ -1891,8 +1891,14 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 	private void releaseGenerateHistoryJob() {
 		if (job != null) {
-			if (job.getState() != Job.NONE)
+			if (job.getState() != Job.NONE) {
 				job.cancel();
+				try {
+					job.join();
+				} catch (InterruptedException e) {
+					// We don't care if it was interrupted or not
+				}
+			}
 			job.release();
 			job = null;
 		}
