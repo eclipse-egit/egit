@@ -16,6 +16,24 @@
       "revId": "3944ec194e0402aa8649655e009178e3ee116a92",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn//9uo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/DeleteBranchOnCommitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-06-06T10:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOHn//9u0\u003d",
+      "revId": "3944ec194e0402aa8649655e009178e3ee116a92",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
