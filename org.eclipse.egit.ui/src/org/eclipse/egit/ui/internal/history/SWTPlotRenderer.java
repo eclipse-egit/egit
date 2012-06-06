@@ -103,7 +103,6 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 		resources.dispose();
 	}
 
-	@SuppressWarnings("unchecked")
 	void paint(final Event event, Ref actHeadRef) {
 		g = event.gc;
 
