@@ -1430,6 +1430,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		return this.input;
 	}
 
+	@SuppressWarnings("boxing")
 	void showCommitList(final Job j, final SWTCommitList list,
 			final SWTCommit[] asArray, final RevCommit toSelect, final boolean incomplete, final RevFlag highlightFlag) {
 		if (trace)
