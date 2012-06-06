@@ -83,8 +83,8 @@ public class TestProject {
 	public TestProject(final boolean remove, String path, boolean insidews, File workspaceSupplement) throws CoreException {
 		this.workspaceSupplement = workspaceSupplement;
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IProjectDescription description = createDescription(remove, path,
-				insidews, root, workspaceSupplement);
+		IProjectDescription description = createDescription(path, insidews,
+				root, workspaceSupplement);
 		project = root.getProject(description.getName());
 		if (remove)
 			project.delete(true, null);
@@ -106,8 +106,8 @@ public class TestProject {
 		return workspaceSupplement;
 	}
 
-	private IProjectDescription createDescription(final boolean remove,
-			String path, boolean insidews, IWorkspaceRoot root, File workspaceSupplement) {
+	private IProjectDescription createDescription(String path,
+			boolean insidews, IWorkspaceRoot root, File workspaceSupplement) {
 		Path ppath = new Path(path);
 		String projectName = ppath.lastSegment();
 		URI locationURI;
