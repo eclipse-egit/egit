@@ -47,9 +47,11 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 		if (repository == null)
 			return null;
 
+		int totalBranchCount;
 		List<Ref> branchesOfCommit;
 		try {
-			branchesOfCommit = getBranchesOfCommit(page, repository);
+			totalBranchCount = getBranchesOfCommit(page, repository, false).size();
+			branchesOfCommit = getBranchesOfCommit(page, repository, true);
 		} catch (IOException e) {
 			throw new ExecutionException("Could not obtain current Branch", e); //$NON-NLS-1$
 		}
@@ -61,7 +63,12 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 		final Shell shell = getPart(event).getSite().getShell();
 
 		final List<Ref> branchesToDelete;
-		if (branchesOfCommit.size() > 1) {
+		// we will show the dialog if there are either multiple branches that might be
+		// deleted or if one of the branches is the current head (which we can't delete);
+		// in the latter case, we may show the dialog even if there is only one branch to
+		// delete instead of quietly deleting an unexpected one, for example a remote
+		// tracking branch
+		if (totalBranchCount > 1) {
 			BranchSelectionDialog<Ref> dlg = new BranchSelectionDialog<Ref>(
 					shell,
 					branchesOfCommit,
@@ -127,7 +134,7 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 	}
 
 	private List<Ref> getBranchesOfCommit(GitHistoryPage page,
-			final Repository repo) throws IOException {
+			final Repository repo, boolean hideCurrentBranch) throws IOException {
 		final List<Ref> branchesOfCommit = new ArrayList<Ref>();
 		IStructuredSelection selection = getSelection(page);
 		if (selection.isEmpty())
@@ -139,7 +146,7 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 		for (int i = 0; i < refCount; i++) {
 			Ref ref = commit.getRef(i);
 			String refName = ref.getName();
-			if (head != null && refName.equals(head))
+			if (hideCurrentBranch && head != null && refName.equals(head))
 				continue;
 			if (refName.startsWith(Constants.R_HEADS)
 					|| refName.startsWith(Constants.R_REMOTES))
@@ -176,7 +183,7 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 
 		List<Ref> branchesOfCommit;
 		try {
-			branchesOfCommit = getBranchesOfCommit(page, repository);
+			branchesOfCommit = getBranchesOfCommit(page, repository, true);
 		} catch (IOException e) {
 			Activator.logError("Could not calculate Enablement", e); //$NON-NLS-1$
 			return false;
