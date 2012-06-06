@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jgit.revplot.PlotCommitList;
 import org.eclipse.jgit.revplot.PlotLane;
 import org.eclipse.swt.events.DisposeEvent;
@@ -22,7 +23,6 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 
 class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> implements DisposeListener {
 
@@ -45,12 +45,11 @@ class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> implements Dis
 
 	private final Control control;
 
-	SWTCommitList(final Control control) {
+	SWTCommitList(final Control control, final ResourceManager resources) {
 		this.control = control;
-		Display d = control.getDisplay();
 		allColors = new ArrayList<Color>(COMMIT_RGB.length);
 		for (RGB rgb : COMMIT_RGB)
-			allColors.add(new Color(d, rgb));
+			allColors.add(resources.createColor(rgb));
 		availableColors = new LinkedList<Color>();
 		repackColors();
 		control.addDisposeListener(this);
@@ -70,8 +69,6 @@ class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> implements Dis
 		clearJob.setSystem(true);
 		clearJob.schedule();
 
-		for (Color color : allColors)
-			color.dispose();
 		if (!control.isDisposed())
 			control.removeDisposeListener(this);
 	}

@@ -23,6 +23,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
+import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jgit.revwalk.RevFlag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -51,14 +52,15 @@ class GenerateHistoryJob extends Job {
 
 	private RevFlag highlightFlag;
 
-	GenerateHistoryJob(final GitHistoryPage ghp, Control control, RevWalk walk) {
+	GenerateHistoryJob(final GitHistoryPage ghp, Control control, RevWalk walk,
+			ResourceManager resources) {
 		super(NLS.bind(UIText.HistoryPage_refreshJob, Activator.getDefault()
 				.getRepositoryUtil().getRepositoryName(
 						ghp.getInputInternal().getRepository())));
 		page = ghp;
 		this.walk = walk;
 		highlightFlag = walk.newFlag("highlight"); //$NON-NLS-1$
-		loadedCommits = new SWTCommitList(control);
+		loadedCommits = new SWTCommitList(control, resources);
 		loadedCommits.source(walk);
 		trace = GitTraceLocation.HISTORYVIEW.isActive();
 	}

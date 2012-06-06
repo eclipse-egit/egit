@@ -32,6 +32,7 @@ import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.lib.Ref;
@@ -444,6 +445,25 @@ public class UIUtils {
 
 			public void widgetDisposed(DisposeEvent e) {
 				resource.dispose();
+			}
+		});
+	}
+
+	/**
+	 * Dispose of the resource manager when the widget is disposed
+	 *
+	 * @param widget
+	 * @param resources
+	 */
+	public static void hookDisposal(Widget widget,
+			final ResourceManager resources) {
+		if (widget == null || resources == null)
+			return;
+
+		widget.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				resources.dispose();
 			}
 		});
 	}
