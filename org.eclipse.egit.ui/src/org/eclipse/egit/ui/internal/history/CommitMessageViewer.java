@@ -25,6 +25,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.DefaultTextDoubleClickStrategy;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
@@ -165,8 +166,13 @@ class CommitMessageViewer extends TextViewer implements
 				}
 			}
 		};
-		Activator.getDefault().getPreferenceStore().addPropertyChangeListener(
-				listener);
+
+		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		store.addPropertyChangeListener(listener);
+		fill = store
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL);
+		setWrap(store
+				.getBoolean(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP));
 
 		// global action handlers for select all and copy
 		final IAction selectAll = new Action() {
