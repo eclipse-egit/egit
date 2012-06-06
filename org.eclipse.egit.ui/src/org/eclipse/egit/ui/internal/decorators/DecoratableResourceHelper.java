@@ -13,11 +13,8 @@ package org.eclipse.egit.ui.internal.decorators;
 import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.jgit.lib.BranchTrackingStatus;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 
@@ -39,24 +36,8 @@ public class DecoratableResourceHelper {
 	}
 
 	static String getShortBranch(Repository repository) throws IOException {
-		Ref head = repository.getRef(Constants.HEAD);
-		if (head != null && !head.isSymbolic()) {
-			String refString = Activator
-					.getDefault()
-					.getRepositoryUtil()
-					.mapCommitToRef(repository, repository.getFullBranch(),
-							false);
-			if (refString != null) {
-				return repository.getFullBranch().substring(0, 7)
-						+ "... (" + refString + ")"; //$NON-NLS-1$ //$NON-NLS-2$
-			} else
-				return repository.getFullBranch().substring(0, 7) + "..."; //$NON-NLS-1$
-		}
-
-		if (head == null || head.getObjectId() == null)
-			return UIText.DecoratableResourceHelper_noHead;
-
-		return repository.getBranch();
+		return Activator.getDefault().getRepositoryUtil()
+				.getShortBranch(repository);
 	}
 
 	static String getBranchStatus(Repository repo) throws IOException {
