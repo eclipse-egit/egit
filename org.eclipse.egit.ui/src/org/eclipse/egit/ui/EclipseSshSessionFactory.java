@@ -43,8 +43,6 @@ class EclipseSshSessionFactory extends JschConfigSessionFactory {
 			final String user, final String host, final int port, FS fs)
 			throws JSchException {
 		final JSch jsch = getJSch(hc, FS.DETECTED);
-		if (jsch.getIdentityNames().isEmpty())
-			throw new JSchException(UIText.EclipseSshSessionFactory_noIdentities);
 		if (jsch == provider.getJSch()) {
 			// If its the default JSch desired, let the provider
 			// manage the session creation for us.
