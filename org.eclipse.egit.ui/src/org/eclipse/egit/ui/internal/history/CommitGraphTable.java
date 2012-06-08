@@ -37,6 +37,7 @@ import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.history.SWTCommitList.SWTLane;
 import org.eclipse.egit.ui.internal.history.command.HistoryViewCommands;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.Action;
@@ -477,6 +478,11 @@ class CommitGraphTable {
 
 	void doPaint(final Event event) {
 		final RevCommit c = (RevCommit) ((TableItem) event.item).getData();
+		if (c instanceof SWTCommit) {
+			final SWTLane lane = ((SWTCommit) c).getLane();
+			if (lane != null && lane.color.isDisposed())
+				return;
+		}
 		if (highlight != null && c.has(highlight))
 			event.gc.setFont(hFont);
 		else
