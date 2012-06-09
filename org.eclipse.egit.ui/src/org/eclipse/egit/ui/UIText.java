@@ -1196,6 +1196,9 @@ public class UIText extends NLS {
 	public static String SourceBranchPage_CompositeTransportErrorMessage;
 
 	/** */
+	public static String SourceBranchPage_AuthFailMessage;
+
+	/** */
 	public static String CloneDestinationPage_title;
 
 	/** */

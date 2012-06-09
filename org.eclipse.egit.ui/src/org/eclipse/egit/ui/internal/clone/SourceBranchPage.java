@@ -374,11 +374,17 @@ class SourceBranchPage extends WizardPage {
 	private void transportError(final Throwable why) {
 		Throwable cause = why.getCause();
 		if (why instanceof TransportException && cause != null)
-			transportError(NLS.bind(
-					UIText.SourceBranchPage_CompositeTransportErrorMessage,
-					why.getMessage(), cause.getMessage()));
+			transportError(NLS.bind(getMessage(why), why.getMessage(),
+					cause.getMessage()));
 		else
 			transportError(why.getMessage());
+	}
+
+	private String getMessage(final Throwable why) {
+		if (why.getMessage().endsWith("Auth fail")) //$NON-NLS-1$
+			return UIText.SourceBranchPage_AuthFailMessage;
+		else
+			return UIText.SourceBranchPage_CompositeTransportErrorMessage;
 	}
 
 	private void transportError(final String msg) {
