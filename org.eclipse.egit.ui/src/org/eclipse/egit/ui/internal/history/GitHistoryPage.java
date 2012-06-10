@@ -3,7 +3,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (c) 2010, Stefan Lay <stefan.lay@sap.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
- * Copyright (C) 2010-2011, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2010-2012, Matthias Sohn <matthias.sohn@sap.com>
  * Copyright (C) 2012, Daniel megert <daniel_megert@ch.ibm.com>
  *
  * All rights reserved. This program and the accompanying materials
@@ -24,10 +24,8 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -115,7 +113,9 @@ import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 /** Graphical commit history viewer. */
 public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
-		ISchedulingRule {
+		ISchedulingRule, TableLoader {
+
+	private static final int INITIAL_ITEM = -1;
 
 	/** actions used in GitHistoryPage **/
 	private static class GitHistoryPageActions {
@@ -739,7 +739,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		graphDetailSplit = new SashForm(historyControl, SWT.VERTICAL);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(
 				graphDetailSplit);
-		graph = new CommitGraphTable(graphDetailSplit, getSite(), popupMgr);
+		graph = new CommitGraphTable(graphDetailSplit, getSite(), popupMgr, this);
 
 		graph.setRelativeDate(isShowingRelativeDates());
 		graph.setShowEmailAddresses(isShowingEmailAddresses());
@@ -1430,8 +1430,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		return this.input;
 	}
 
+	@SuppressWarnings("boxing")
 	void showCommitList(final Job j, final SWTCommitList list,
-			final SWTCommit[] asArray, final boolean incomplete, final RevFlag highlightFlag) {
+			final SWTCommit[] asArray, final RevCommit toSelect, final boolean incomplete, final RevFlag highlightFlag) {
 		if (trace)
 			GitTraceLocation.getTrace().traceEntry(
 					GitTraceLocation.HISTORYVIEW.getLocation(),
@@ -1442,7 +1443,9 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		graph.getControl().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				if (!graph.getControl().isDisposed() && job == j) {
-					graph.setInput(highlightFlag, list, asArray, input);
+					graph.setInput(highlightFlag, list, asArray, input, true);
+					if (toSelect != null)
+						graph.selectCommit(toSelect);
 					if (trace)
 						GitTraceLocation.getTrace().trace(
 								GitTraceLocation.HISTORYVIEW.getLocation(),
@@ -1508,7 +1511,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 				setupFileViewer(walk, db, paths);
 				setupCommentViewer(db);
 
-				scheduleNewGenerateHistoryJob(walk);
+				loadHistory(INITIAL_ITEM, walk);
 			} else
 				// needed for context menu and double click
 				graph.setHistoryPageInput(input);
@@ -1675,6 +1678,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		}
 		walk.sort(RevSort.COMMIT_TIME_DESC, true);
 		walk.sort(RevSort.BOUNDARY, true);
+		walk.setRetainBody(false);
 		return walk;
 	}
 
@@ -1779,31 +1783,38 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		return true;
 	}
 
-	private void scheduleNewGenerateHistoryJob(RevWalk walk) {
-		final GenerateHistoryJob rj = new GenerateHistoryJob(this,
-				graph.getControl(), walk);
-		rj.setRule(this);
-		rj.addJobChangeListener(new JobChangeAdapter() {
-			@Override
-			public void done(final IJobChangeEvent event) {
-				rj.getWalk().release();
-				final Control graphctl = graph.getControl();
-				if (job != rj || graphctl.isDisposed())
-					return;
-				graphctl.getDisplay().asyncExec(new Runnable() {
-					public void run() {
-						if (job == rj)
-							job = null;
-					}
-				});
-			}
-		});
-		job = rj;
+	public void loadItem(int item) {
+		if (job == null || job.loadMoreItemsThreshold() < item)
+			loadHistory(item, null);
+	}
+
+	public void loadCommit(RevCommit c) {
+		if (job == null)
+			return;
+		job.setLoadHint(c);
 		if (trace)
 			GitTraceLocation.getTrace().trace(
 					GitTraceLocation.HISTORYVIEW.getLocation(),
 					"Scheduling GenerateHistoryJob"); //$NON-NLS-1$
-		schedule(rj);
+		schedule(job);
+	}
+
+	/**
+	 * Load history items incrementally
+	 * @param itemToLoad hint for index of item that should be loaded
+	 * @param walk the revwalk, used only if itemToLoad ==  INITIAL_ITEM
+	 */
+	private void loadHistory(final int itemToLoad, RevWalk walk) {
+		if (itemToLoad == INITIAL_ITEM) {
+			job = new GenerateHistoryJob(this, graph.getControl(), walk);
+			job.setRule(this);
+		}
+		job.setLoadHint(itemToLoad);
+		if (trace)
+			GitTraceLocation.getTrace().trace(
+					GitTraceLocation.HISTORYVIEW.getLocation(),
+					"Scheduling GenerateHistoryJob"); //$NON-NLS-1$
+		schedule(job);
 	}
 
 	private IWorkbenchPartSite getPartSite() {

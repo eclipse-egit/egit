@@ -174,7 +174,13 @@ public class BlameOperation implements IEGitOperation {
 				.getBoolean(UIPreferences.BLAME_IGNORE_WHITESPACE))
 			command.setTextComparator(RawTextComparator.WS_IGNORE_ALL);
 
-		final BlameResult result = command.call();
+		BlameResult result;
+		try {
+			result = command.call();
+		} catch (Exception e1) {
+			Activator.error(e1.getMessage(), e1);
+			return;
+		}
 		if (result == null)
 			return;
 

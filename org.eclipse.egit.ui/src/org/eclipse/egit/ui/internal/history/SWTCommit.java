@@ -8,20 +8,31 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import java.io.IOException;
+
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.revplot.PlotCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.swt.widgets.Widget;
 
 class SWTCommit extends PlotCommit<SWTCommitList.SWTLane> {
 	Widget widget;
+	private RevWalk walk;
 
-	SWTCommit(final AnyObjectId id) {
+	SWTCommit(final AnyObjectId id, RevWalk walk) {
 		super(id);
+		this.walk = walk;
 	}
 
 	@Override
 	public void reset() {
 		widget = null;
+		walk = null;
 		super.reset();
+	}
+
+	public void parseBody() throws IOException {
+		if (getRawBuffer() == null)
+			walk.parseBody(this);
 	}
 }

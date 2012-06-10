@@ -11,6 +11,10 @@ package org.eclipse.egit.ui.internal.history;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jgit.revplot.PlotCommitList;
 import org.eclipse.jgit.revplot.PlotLane;
 import org.eclipse.swt.events.DisposeEvent;
@@ -53,7 +57,19 @@ class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> implements Dis
 	}
 
 	public void dispose() {
-		clear();
+		Job clearJob = new Job("Clearing commit list") { //$NON-NLS-1$
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				synchronized (SWTCommitList.this) {
+					clear();
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		clearJob.setSystem(true);
+		clearJob.schedule();
+
 		for (Color color : allColors)
 			color.dispose();
 		if (!control.isDisposed())
@@ -66,11 +82,9 @@ class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> implements Dis
 
 	@Override
 	protected SWTLane createLane() {
-		final SWTLane lane = new SWTLane();
 		if (availableColors.isEmpty())
 			repackColors();
-		lane.color = availableColors.removeFirst();
-		return lane;
+		return new SWTLane(availableColors.removeFirst());
 	}
 
 	@Override
@@ -85,7 +99,12 @@ class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> implements Dis
 	static class SWTLane extends PlotLane {
 		private static final long serialVersionUID = 1L;
 
-		Color color;
+		final Color color;
+
+		public SWTLane(final Color color) {
+			this.color = color;
+		}
+
 		@Override
 		public boolean equals(Object o) {
 			return super.equals(o) && color.equals(((SWTLane)o).color);
