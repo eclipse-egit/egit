@@ -215,6 +215,9 @@ public class UIIcons {
 	/** Submodules icon */
 	public final static ImageDescriptor SUBMODULES;
 
+	/** Clean icon */
+	public final static ImageDescriptor CLEAN;
+
 	/** Stash icon */
 	public final static ImageDescriptor STASH;
 
@@ -297,6 +300,7 @@ public class UIIcons {
 		TAG_ANNOTATED = map("obj16/annotated-tag.gif"); //$NON-NLS-1$
 		CREATE_REPOSITORY = map("etool16/createRepository.gif"); //$NON-NLS-1$
 		SUBMODULES = map("obj16/submodules.gif"); //$NON-NLS-1$
+		CLEAN = map("obj16/clean_obj.gif"); //$NON-NLS-1$
 		STASH = map("obj16/stash.png"); //$NON-NLS-1$
 		HIERARCHY = map("elcl16/hierarchicalLayout.gif"); //$NON-NLS-1$
 	}
