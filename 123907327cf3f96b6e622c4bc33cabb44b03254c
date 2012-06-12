@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHn//9Yg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-06-12T08:41:14Z",
+      "side": 1,
+      "message": "we need a recursive tree walk otherwise this will only work for renames in the root of the repository, if the rename happens e.g. from \"a/x\" to \"a/y\" or \"a/x\" to \"b/y\" a non-recursive tree walk doesn\u0027t look at the rename.",
+      "revId": "123907327cf3f96b6e622c4bc33cabb44b03254c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
