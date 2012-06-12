@@ -16,6 +16,24 @@
       "revId": "123907327cf3f96b6e622c4bc33cabb44b03254c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn//9YU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-06-12T08:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOHn//9Yg\u003d",
+      "revId": "123907327cf3f96b6e622c4bc33cabb44b03254c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
