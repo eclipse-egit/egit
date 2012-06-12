@@ -1,0 +1,8 @@
+IP-Clean+1: Matthias Sohn <matthias.sohn@sap.com>
+Verified+1: Matthias Sohn <matthias.sohn@sap.com>
+Code-Review+2: Christian Halstrick <christian.halstrick@sap.com>
+Submitted-by: Matthias Sohn <matthias.sohn@sap.com>
+Submitted-at: Tue, 12 Jun 2012 05:23:19 -0400
+Reviewed-on: https://git.eclipse.org/r/6206
+Project: egit/egit
+Branch: refs/heads/stable-2.0
