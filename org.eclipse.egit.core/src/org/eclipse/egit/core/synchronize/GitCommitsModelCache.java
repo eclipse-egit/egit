@@ -9,6 +9,7 @@
 package org.eclipse.egit.core.synchronize;
 
 import static org.eclipse.jgit.lib.ObjectId.zeroId;
+import static org.eclipse.jgit.treewalk.filter.TreeFilter.ANY_DIFF;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -390,9 +391,9 @@ public class GitCommitsModelCache {
 
 		tw.setRecursive(true);
 		if (pathFilter == null)
-			tw.setFilter(TreeFilter.ANY_DIFF);
+			tw.setFilter(ANY_DIFF);
 		else
-			tw.setFilter(AndTreeFilter.create(TreeFilter.ANY_DIFF, pathFilter));
+			tw.setFilter(AndTreeFilter.create(ANY_DIFF, pathFilter));
 
 		final int localTreeId = direction == LEFT ? 1 : 0;
 		final int remoteTreeId = direction == LEFT ? 0 : 1;
