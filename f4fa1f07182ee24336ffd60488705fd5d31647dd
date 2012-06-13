@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHn//9Tk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-06-13T21:53:12Z",
+      "side": 1,
+      "message": "it seems this should be the javadoc for synUnlockUI and vice versa\n\ntypo: s/staged and unstage/staged and unstaged/\n\nI don\u0027t understand why you use the prefix \"sync\", I thought it\u0027s \"async\" ?? More occurrences below",
+      "revId": "f4fa1f07182ee24336ffd60488705fd5d31647dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
