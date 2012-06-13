@@ -18,12 +18,8 @@
 				<topic href="help/EGit/User_Guide/User-Guide.html#Eclipse_SSH_Configuration" label="Eclipse SSH Configuration"></topic>
 				<topic href="help/EGit/User_Guide/User-Guide.html#Push_Upstream" label="Push Upstream"></topic>
 			</topic>
-			<topic href="help/EGit/User_Guide/User-Guide.html#EGit_Tutorial_.28EclipseCon_March_2011.29" label="EGit Tutorial (EclipseCon March 2011)">
-				<topic href="help/EGit/User_Guide/User-Guide.html#Installation_and_Configuration" label="Installation and Configuration"></topic>
-				<topic href="help/EGit/User_Guide/User-Guide.html#Exercises" label="Exercises"></topic>
-			</topic>
-			<topic href="help/EGit/User_Guide/User-Guide.html#EGit_Tutorial_.28EclipseCon_Europe_Nov_2011.29" label="EGit Tutorial (EclipseCon Europe Nov 2011)">
-				<topic href="help/EGit/User_Guide/User-Guide.html#Exercises_2" label="Exercises"></topic>
+			<topic href="help/EGit/User_Guide/User-Guide.html#EclipseCon_2012_Git_Tutorial" label="EclipseCon 2012 Git Tutorial">
+				<topic href="help/EGit/User_Guide/User-Guide.html#EGit_Training_Packages" label="EGit Training Packages"></topic>
 			</topic>
 		</topic>
 		<topic href="help/EGit/User_Guide/Concepts.html" label="Concepts">
@@ -398,41 +394,41 @@
 		</topic>
 		<topic href="help/JGit/User_Guide/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/EGit/New_and_Noteworthy/1.3/1.3.html" label="EGit 1.3 New and Noteworthy">
-		<topic href="help/EGit/New_and_Noteworthy/1.3/1.3.html" label="Features">
-			<topic href="help/EGit/New_and_Noteworthy/1.3/1.3.html#Major" label="Major">
-				<topic href="help/EGit/New_and_Noteworthy/1.3/1.3.html#Branch_Status_Decoration" label="Branch Status Decoration"></topic>
-				<topic href="help/EGit/New_and_Noteworthy/1.3/1.3.html#Redesigned_Import.2FClone_Wizard" label="Redesigned Import/Clone Wizard"></topic>
-				<topic href="help/EGit/New_and_Noteworthy/1.3/1.3.html#Submodule_Support" label="Submodule Support"></topic>
-				<topic href="help/EGit/New_and_Noteworthy/1.3/1.3.html#Branch_Project_Tracking" label="Branch Project Tracking"></topic>
+	<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html" label="EGit 2.0 New and Noteworthy">
+		<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html" label="EGit Features">
+			<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html#Stash_Support" label="Stash Support"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html#Allow_push_of_single_Refs.2FCommits_from_Repositories_.26_History_Views" label="Allow push of single Refs/Commits from Repositories &amp; History Views"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html#Support_for_.22workspace_patches.22" label="Support for &quot;workspace patches&quot;"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html#Preemptively_close_missing_projects_when_switching_branches" label="Preemptively close missing projects when switching branches"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html#Support_for_Eclipse-SourceReferences_manifest_headers" label="Support for Eclipse-SourceReferences manifest headers"></topic>
+			<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html#Other_Improvements" label="Other Improvements">
+				<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html#History_View_Improvements" label="History View Improvements"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html#Staging_View_Improvements" label="Staging View Improvements"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html#Repositories_View_Improvements" label="Repositories View Improvements"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html#Configuration" label="Configuration"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html#Team_Menu_.26_Git_Actions_Toolbar" label="Team Menu &amp; Git Actions Toolbar"></topic>
+				<topic href="help/EGit/New_and_Noteworthy/2.0/2.0.html#Miscellaneous" label="Miscellaneous"></topic>
 			</topic>
-			<topic href="help/EGit/New_and_Noteworthy/1.3/1.3.html#Minor" label="Minor"></topic>
 		</topic>
-		<topic href="help/EGit/New_and_Noteworthy/1.3/Bugs-Closed.html" label="Bugs Closed"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/1.3/GitHub-Mylyn-Connector.html" label="GitHub Mylyn Connector"></topic>
-		<topic href="help/EGit/New_and_Noteworthy/1.3/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/2.0/GitHub-Mylyn-Connector-Features.html" label="GitHub Mylyn Connector Features"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/2.0/Bugs-Closed.html" label="Bugs Closed"></topic>
+		<topic href="help/EGit/New_and_Noteworthy/2.0/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
-	<topic href="help/JGit/New_and_Noteworthy/1.3/1.3.html" label="JGit 1.3 New and Noteworthy">
-		<topic href="help/JGit/New_and_Noteworthy/1.3/1.3.html" label="New Porcelain Commands">
-			<topic href="help/JGit/New_and_Noteworthy/1.3/1.3.html#.3Cspan_style.3D.22font-family:monospace.3B.22.3EStashListCommand.3C.2Fspan.3E" label="&lt;span style=&quot;font-family:monospace;&quot;&quot;StashListCommand&lt;/span&quot;"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/1.3/1.3.html#.3Cspan_style.3D.22font-family:monospace.3B.22.3ESubmodule_Commands.3C.2Fspan.3E" label="&lt;span style=&quot;font-family:monospace;&quot;&quot;Submodule Commands&lt;/span&quot;">
-				<topic href="help/JGit/New_and_Noteworthy/1.3/1.3.html#.3Cspan_style.3D.22font-family:monospace.3B.22.3ESubmoduleAddCommand.3C.2Fspan.3E" label="&lt;span style=&quot;font-family:monospace;&quot;&quot;SubmoduleAddCommand&lt;/span&quot;"></topic>
-				<topic href="help/JGit/New_and_Noteworthy/1.3/1.3.html#.3Cspan_style.3D.22font-family:monospace.3B.22.3ESubmoduleInitCommand.3C.2Fspan.3E" label="&lt;span style=&quot;font-family:monospace;&quot;&quot;SubmoduleInitCommand&lt;/span&quot;"></topic>
-				<topic href="help/JGit/New_and_Noteworthy/1.3/1.3.html#.3Cspan_style.3D.22font-family:monospace.3B.22.3ESubmoduleStatusCommand.3C.2Fspan.3E" label="&lt;span style=&quot;font-family:monospace;&quot;&quot;SubmoduleStatusCommand&lt;/span&quot;"></topic>
-				<topic href="help/JGit/New_and_Noteworthy/1.3/1.3.html#.3Cspan_style.3D.22font-family:monospace.3B.22.3ESubmoduleSyncCommand.3C.2Fspan.3E" label="&lt;span style=&quot;font-family:monospace;&quot;&quot;SubmoduleSyncCommand&lt;/span&quot;"></topic>
-				<topic href="help/JGit/New_and_Noteworthy/1.3/1.3.html#.3Cspan_style.3D.22font-family:monospace.3B.22.3ESubmoduleUpdateCommand.3C.2Fspan.3E" label="&lt;span style=&quot;font-family:monospace;&quot;&quot;SubmoduleUpdateCommand&lt;/span&quot;"></topic>
-			</topic>
+	<topic href="help/JGit/New_and_Noteworthy/2.0/2.0.html" label="JGit 2.0 New and Noteworthy">
+		<topic href="help/JGit/New_and_Noteworthy/2.0/2.0.html" label="New Porcelain Commands">
+			<topic href="help/JGit/New_and_Noteworthy/2.0/2.0.html#StashApplyCommand" label="StashApplyCommand"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/2.0/2.0.html#StashCreateCommand" label="StashCreateCommand"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/2.0/2.0.html#StashDropCommand" label="StashDropCommand"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/2.0/2.0.html#ApplyCommand" label="ApplyCommand"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/1.3/Updated-Porcelain-Commands.html" label="Updated Porcelain Commands">
-			<topic href="help/JGit/New_and_Noteworthy/1.3/Updated-Porcelain-Commands.html#.3Cspan_style.3D.22font-family:monospace.3B.22.3ECloneCommand.3C.2Fspan.3E" label="&lt;span style=&quot;font-family:monospace;&quot;&quot;CloneCommand&lt;/span&quot;"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/1.3/Updated-Porcelain-Commands.html#.3Cspan_style.3D.22font-family:monospace.3B.22.3EDiffCommand.3C.2Fspan.3E" label="&lt;span style=&quot;font-family:monospace;&quot;&quot;DiffCommand&lt;/span&quot;"></topic>
-			<topic href="help/JGit/New_and_Noteworthy/1.3/Updated-Porcelain-Commands.html#.3Cspan_style.3D.22font-family:monospace.3B.22.3ELogCommand.3C.2Fspan.3E" label="&lt;span style=&quot;font-family:monospace;&quot;&quot;LogCommand&lt;/span&quot;"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/2.0/Updated-Porcelain-Commands.html" label="Updated Porcelain Commands">
+			<topic href="help/JGit/New_and_Noteworthy/2.0/Updated-Porcelain-Commands.html#CloneCommand" label="CloneCommand"></topic>
+			<topic href="help/JGit/New_and_Noteworthy/2.0/Updated-Porcelain-Commands.html#CheckoutCommand" label="CheckoutCommand"></topic>
 		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/1.3/Bug-Fixes.html" label="Bug Fixes">
-			<topic href="help/JGit/New_and_Noteworthy/1.3/Bug-Fixes.html#Windows" label="Windows"></topic>
-		</topic>
-		<topic href="help/JGit/New_and_Noteworthy/1.3/Other-Notable-Changes.html" label="Other Notable Changes"></topic>
-		<topic href="help/JGit/New_and_Noteworthy/1.3/Updating-This-Document.html" label="Updating This Document"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/2.0/Other-Features.html" label="Other Features"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/2.0/Performance-improvements.html" label="Performance improvements"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/2.0/Bug-Fixes.html" label="Bug Fixes"></topic>
+		<topic href="help/JGit/New_and_Noteworthy/2.0/Updating-This-Document.html" label="Updating This Document"></topic>
 	</topic>
 	<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Git for Eclipse Users">
 		<topic href="help/EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" label="Centralised version control systems"></topic>

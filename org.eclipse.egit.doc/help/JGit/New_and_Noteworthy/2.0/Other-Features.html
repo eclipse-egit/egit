@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>JGit 2.0 New and Noteworthy - Other Features</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">Other Features</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Updated-Porcelain-Commands.html" title="Updated Porcelain Commands">
+						<img alt="Previous" border="0" src="../../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Performance-improvements.html" title="Performance improvements">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Updated Porcelain Commands</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Performance improvements</td>
+			</tr>
+		</table><hr/>
+		<h1 id="Other_Features">Other Features</h1>
+		<ul>
+			<li>Support for git configuration parameters <span style="font-family:monospace;">url.insteadOf</span> and <span style="font-family:monospace;">url.pushInsteadOf</span> supporting URL rewriting, e.g.</li>
+		</ul>
+		<pre style="width: 40em;">
+  [url "mirror1.example.org:/pub/git/"]
+    insteadOf = mirror1.example.org:/pub/git/core/
+</pre>
+		<ul>
+			<li>Support to write tests with git command line syntax</li>
+			<li>Enable large file support to add files with size over 2 GB.</li>
+			<li><span style="font-family:monospace;">DirCheckout</span> now validates paths to detect malformed, potentially malicious tree entries</li>
+			<li>Add <span style="font-family:monospace;">--all</span> switch to jgit command line interface</li>
+			<li>Add <span style="font-family:monospace;">config --list</span> command to jgit command line interface</li>
+			<li><span style="font-family:monospace;">core.autocrlf</span> support fixed, it defaults to false but is no longer set explicitly when a new repository is created</li>
+			<li>Cleaned up exceptions in <span style="font-family:monospace;">org.eclipse.jgit.api</span>, see 
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=366914" target="egit_external">bug 366914</a>
+			</li>
+			<li>Clirr API change report listing API changes between 1.3 and 2.0 will be published on the 
+				<a href="http://www.eclipse.org/jgit/download/" target="egit_external">JGit download page</a>
+			</li>
+			<li>New features <span style="font-family:monospace;">org.eclipse.jgit.pgm</span> and <span style="font-family:monospace;">org.eclipse.jgit.pgm.source</span> to provision the JGit command line interface bundle via the EGit p2 repository.</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left">
+					<a href="Updated-Porcelain-Commands.html" title="Updated Porcelain Commands">
+						<img alt="Previous" border="0" src="../../../images/prev.gif"/>
+					</a>
+				</td>
+				<td style="width: 60%" align="center">
+					<a href="2.0.html" title="JGit 2.0 New and Noteworthy">
+						<img alt="JGit 2.0 New and Noteworthy" border="0" src="../../../images/home.gif"/>
+					</a>
+				</td>
+				<td style="width: 20%" align="right">
+					<a href="Performance-improvements.html" title="Performance improvements">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top">Updated Porcelain Commands</td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Performance improvements</td>
+			</tr>
+		</table>
+	</body>
+</html>
