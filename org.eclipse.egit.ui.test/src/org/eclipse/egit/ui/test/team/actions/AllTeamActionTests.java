@@ -23,6 +23,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		DisconnectConnectTest.class, //
 		ShowInTest.class, //
 		CompareActionsTest.class, //
+		ReplaceActionsTest.class, //
 		CreatePatchActionTest.class })
 public class AllTeamActionTests {
 	// nothing

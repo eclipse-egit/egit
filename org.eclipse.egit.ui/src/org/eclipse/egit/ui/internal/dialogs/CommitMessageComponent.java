@@ -136,6 +136,10 @@ public class CommitMessageComponent {
 
 	private boolean amending = false;
 
+	private boolean commitAllowed = true;
+
+	private String cannotCommitMessage = null;
+
 	private boolean amendAllowed = false;
 
 	private boolean amendingCommitInRemoteBranch = false;
@@ -286,6 +290,25 @@ public class CommitMessageComponent {
 		this.amending = amending;
 	}
 
+
+	/**
+	 * Set whether commit is allowed at the moment.
+	 *
+	 * @param commitAllowed
+	 */
+	public void setCommitAllowed(boolean commitAllowed) {
+		this.commitAllowed = commitAllowed;
+	}
+
+	/**
+	 * Set the message to be shown about why the commit is not allowed.
+	 *
+	 * @param cannotCommitMessage
+	 */
+	public void setCannotCommitMessage(String cannotCommitMessage) {
+		this.cannotCommitMessage = cannotCommitMessage;
+	}
+
 	/**
 	 * Set whether the previous commit may be amended
 	 *
@@ -375,6 +398,9 @@ public class CommitMessageComponent {
 	 * @return non-null commit status
 	 */
 	public CommitStatus getStatus() {
+		if (!commitAllowed)
+			return new CommitStatus(cannotCommitMessage, IMessageProvider.ERROR);
+
 		String authorValue = authorText.getText();
 		if (authorValue.length() == 0
 				|| RawParseUtils.parsePersonIdent(authorValue) == null)

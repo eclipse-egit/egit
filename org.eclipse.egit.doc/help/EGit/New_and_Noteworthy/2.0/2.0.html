@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 2.0 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 2.0 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="GitHub-Mylyn-Connector-Features.html" title="GitHub Mylyn Connector Features">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">GitHub Mylyn Connector Features</td>
+			</tr>
+		</table><hr/>
+		<h1 id="EGit_Features">EGit Features</h1>
+		<h2 id="Stash_Support">Stash Support</h2>
+		<ul>
+			<li>Support to create stashed commits</li>
+		</ul>
+		<p>
+			<img border="0" src="images/EGit-20-stash-save.png"/>
+		</p>
+		<ul>
+			<li>Support to apply stashed commits to the index and working tree</li>
+			<li>Support for dropping stashed commits</li>
+		</ul>
+		<p>
+			<img border="0" src="images/EGit-20-stash-apply.png"/>
+		</p>
+		<ul>
+			<li>New stash option in branch result dialog. This allows to quickly stash any conflicting changes that are preventing a branch from being checked out.</li>
+		</ul>
+		<p>
+			<img border="0" src="images/EGit-20-stash-checkout.png"/>
+		</p>
+		<h2 id="Allow_push_of_single_Refs.2FCommits_from_Repositories_.26_History_Views">Allow push of single Refs/Commits from Repositories &amp; History Views</h2>
+		<p>This adds a new SimplePushWizard which allows selecting a target
+			remote and ref name. It then pushes out the selected Ref/Commit to the
+			selected target ref.</p>
+		<p>
+			<img border="0" src="images/Egit-2.0-push-commit.png"/>
+		</p>
+		<p>
+			<img border="0" src="images/Egit-2.0-push-tag.png"/>
+		</p>
+		<h2 id="Support_for_.22workspace_patches.22">Support for "workspace patches"</h2>
+		<p>Workspace-aware patches include comments to tell the Apply Patch wizard
+			about the target projects for individual diffs. They contain enough
+			information to allow the wizard to decide which resources need to be
+			patched.</p>
+		<p>Also allow to save patches in the workspace.</p>
+		<h2 id="Preemptively_close_missing_projects_when_switching_branches">Preemptively close missing projects when switching branches</h2>
+		<p>When checking out another branch look for projects that differ between the current branch, target branch, and working directory and
+			close any projects not available on target branch before checkout begins.</p>
+		<p>Reopened projects are now also refreshed after being opened
+			in order to keep the Eclipse resource model in sync with the
+			working directory changes.</p>
+		<h2 id="Support_for_Eclipse-SourceReferences_manifest_headers">Support for Eclipse-SourceReferences manifest headers</h2>
+		<p>This adds extensions required to clone/import a plug-in's git repository using SCM URL from its
+			MANIFEST.MF. To give it a try, open Plug-ins view, select a plug-in and click "Import As &gt; Project from a Repository...". Then follow
+			instructions in the wizard. Importing with a tag is not supported yet, see 
+			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=367712" target="egit_external">bug 367712</a>.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-2.0-import-bundle-as-repository.png"/>
+		</p>
+		<p>
+			<b>Note:</b> This feature can be installed on Eclipse 4.2 and higher since it requires at least Team API 3.6.100.
+		</p>
+		<p>
+			<img border="0" src="images/Egit-2.0-import-bundle-as-repository-projects.png"/>
+		</p>
+		<h2 id="Other_Improvements">Other Improvements</h2>
+		<h3 id="History_View_Improvements">History View Improvements</h3>
+		<ul>
+			<li>Table layout was improved</li>
+			<li>New option to allow hiding email address of committer and author</li>
+			<li>New "committed date" column</li>
+		</ul>
+		<p>
+			<img border="0" src="images/EGit-20-history-view-columns.png"/>
+		</p>
+		<ul>
+			<li>Incremental loading of history improves performance and significantly reduces memory footprint. Incremental loading is disabled if the find toolbar is enabled.</li>
+			<li>Add command to rename branches</li>
+			<li>New option to suppress displaying of additional Refs like FETCH_HEAD, ORIG_HEAD</li>
+			<li>Show commit in history view when annotation is selected. "Team &gt; Annotations" now  shows/selects the commit in the history view when a revision is selected.</li>
+			<li>New command "Show Annotations" in context menu of the history view table when the input is a single file.  Running the action will open the editor with the file blamed starting at the selected commit. The same command is added to the context menu of the file list in the History View's "Revision Details" pane.</li>
+			<li>When creating a new branch the first found remote referring to the selected commit is selected as the default source of the new branch.</li>
+		</ul>
+		<h3 id="Staging_View_Improvements">Staging View Improvements</h3>
+		<ul>
+			<li>Supports content assist for file names and commit messages (using Ctrl+Space):</li>
+		</ul>
+		<p>
+			<img border="0" src="images/EGit-20-staging-completion.png"/>
+		</p>
+		<ul>
+			<li>Add command "Replace with HEAD"</li>
+			<li>Support for discarding changes of non-workspace files</li>
+			<li>Staging View now uses the global IndexDiffCache, this reduces EGit's memory footprint and ensures consistency with resource decorations</li>
+			<li>Option to show whitespace characters in Staging View and Commit Dialog</li>
+			<li>Warns when amending a commit that is already pushed (when the commit is on a remote tracking branch)</li>
+			<li>New "Copy" command to copy the currently selected commit id into the clipboard</li>
+		</ul>
+		<h3 id="Repositories_View_Improvements">Repositories View Improvements</h3>
+		<ul>
+			<li>For references, branches and tags show the abbreviated SHA-1 followed by the short message of the commit that SHA-1 points to:</li>
+		</ul>
+		<p>
+			<img border="0" src="images/EGit-20-repositories-view-ref-label.png"/>
+		</p>
+		<ul>
+			<li>On branch nodes allow to show/edit branch configuration</li>
+			<li>Git command group actions now also work when selecting one or several repositories in the Repositories View</li>
+			<li>Simplified configure fetch and configure push dialogs</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-2.0-simple-configure-push.png"/>
+		</p>
+		<ul>
+			<li>Allow to fetch/push on remote nodes</li>
+		</ul>
+		<h3 id="Configuration">Configuration</h3>
+		<ul>
+			<li>Enable using variables to set the default clone destination in the preferences. With this, it's now possible to configure it to always clone into workspace, using <span style="font-family:monospace;">${workspace_loc</span>}</li>
+			<li>Add configuration option for <span style="font-family:monospace;">core.streamFileThreshold</span> in preferences</li>
+			<li>Configuration editor in preferences now supports editing configuration values directly in tree </li>
+		</ul>
+		<h3 id="Team_Menu_.26_Git_Actions_Toolbar">Team Menu &amp; Git Actions Toolbar</h3>
+		<ul>
+			<li>New command "Remove from Index" to enable unstaging staged changes from the team menu</li>
+			<li>New command "Replace with &gt; Previous Revision" to replace the selected resources with the version preceding HEAD</li>
+			<li>Rename support for "Compare With &gt; Previous Revision"</li>
+			<li>Add merge button to Git Actions Toolbar</li>
+		</ul>
+		<h3 id="Miscellaneous">Miscellaneous</h3>
+		<ul>
+			<li>Add Commit... and Reset... buttons to checkout conflict dialog</li>
+			<li>Add "Revert" action to Commit Editor</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="GitHub-Mylyn-Connector-Features.html" title="GitHub Mylyn Connector Features">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">GitHub Mylyn Connector Features</td>
+			</tr>
+		</table>
+	</body>
+</html>

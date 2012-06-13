@@ -173,6 +173,13 @@
                label="%ReplaceWithRefAction_label"
                menubarPath="replaceWithMenu/gitReplaceWithGroup"/>
          <action
+               class="org.eclipse.egit.ui.internal.actions.ReplaceWithPreviousAction"
+               enablesFor="1"
+               id="org.eclipse.egit.ui.internal.actions.ReplaceWithPreviousAction"
+               label="%replaceWithPreviousVersionAction.label"
+               menubarPath="replaceWithMenu/gitReplaceWithGroup">
+         </action>
+         <action
                class="org.eclipse.egit.ui.internal.actions.ReplaceWithHeadAction"
                id="org.eclipse.egit.ui.internal.actions.ReplaceWithHeadAction"
                label="%ReplaceWithHeadAction_label"
@@ -1679,6 +1686,24 @@
                </and>
          </activeWhen>
       </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.internal.reflog.CopyCommand">
+         <class
+               class="org.eclipse.egit.ui.internal.reflog.command.CopyHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate>
+                  <adapt
+                        type="org.eclipse.jgit.storage.file.ReflogEntry">
+                  </adapt>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -1835,6 +1860,11 @@
          <command
                commandId="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
                label="%RefLogViewOpenInCommitViewer.label"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.egit.ui.internal.reflog.CopyCommand"
+               label="%ReflogCopyCommand.label"
                style="push">
          </command>
       </menuContribution>
@@ -3990,7 +4020,7 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.ConfigureBranchCommand"
             id="org.eclipse.egit.ui.RepositoriesViewConfigureBranch"
-            name="Configure Branch">
+            name="%RepoViewConfigurBranchCommand.name">
       </command>
    </extension>
    <extension
@@ -4234,6 +4264,10 @@
       <image
             commandId="org.eclipse.egit.ui.history.RenameBranch"
             icon="icons/obj16/editconfig.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.history.ShowBlame"
+            icon="icons/etool16/annotate.gif">
       </image>
    </extension>
    <extension
@@ -4523,6 +4557,12 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+C">
       </key>
+      <key
+            commandId="org.eclipse.egit.ui.internal.reflog.CopyCommand"
+            contextId="org.eclipse.egit.ui.ReflogView"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+C">
+      </key>
    </extension>
    <extension
          name="%HistoryViewCommands.extension.name"
@@ -4613,14 +4653,6 @@
             name="%CheckoutCommand.name">
       </command>
       <command
-            id="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
-            name="%CheckoutCommand.name">
-      </command>
-      <command
-            id="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
-            name="%OpenInCommitViewerCommand.name">
-      </command>
-      <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.OpenInTextEditorHandler"
             id="org.eclipse.egit.ui.history.OpenInTextEditorCommand"
             name="%OpenInTextEditorCommand.name">
@@ -4679,6 +4711,11 @@
             id="org.eclipse.egit.ui.commit.Checkout"
             name="%CheckoutCommand">
       </command>
+      <command
+            defaultHandler="org.eclipse.egit.ui.internal.history.command.ShowBlameHandler"
+            id="org.eclipse.egit.ui.history.ShowBlame"
+            name="%ShowBlameCommand.name">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
@@ -4700,6 +4737,12 @@
       <context
             id="org.eclipse.egit.ui.RepositoriesView"
             name="%RepositoriesViewContext.name"
+            parentId="org.eclipse.ui.contexts.window">
+      </context>
+      <context
+            id="org.eclipse.egit.ui.ReflogView"
+            name="%ReflogViewContext"
+            parentId="org.eclipse.ui.contexts.window">
             parentId="org.eclipse.ui.contexts.window">
       </context>
    </extension>
@@ -4844,5 +4887,21 @@
      </source>
      <repositorySearchPage
            class="org.eclipse.egit.ui.internal.components.RepositorySelectionPage"></repositorySearchPage>
+  </extension>
+  <extension
+        name="%ReflogViewCommands"
+        point="org.eclipse.ui.commands">
+     <command
+           id="org.eclipse.egit.ui.internal.reflog.OpenInCommitViewerCommand"
+           name="%OpenInCommitViewerCommand.name">
+     </command>
+     <command
+           id="org.eclipse.egit.ui.internal.reflog.CheckoutCommand"
+           name="%CheckoutCommand.name">
+     </command>
+     <command
+           id="org.eclipse.egit.ui.internal.reflog.CopyCommand"
+           name="%ReflogCopyCommandName">
+     </command>
   </extension>
 </plugin>

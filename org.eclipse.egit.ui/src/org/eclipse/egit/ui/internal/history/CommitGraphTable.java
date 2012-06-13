@@ -740,6 +740,10 @@ class CommitGraphTable {
 							HistoryViewCommands.OPEN_IN_TEXT_EDITOR,
 							UIText.GitHistoryPage_OpenInTextEditorLabel));
 				}
+				if (selectionSize == 1)
+					popupMgr.add(getCommandContributionItem(
+							HistoryViewCommands.SHOW_BLAME,
+							UIText.CommitFileDiffViewer_ShowAnnotationsMenuLabel));
 			}
 
 			if (selectionSize == 1) {

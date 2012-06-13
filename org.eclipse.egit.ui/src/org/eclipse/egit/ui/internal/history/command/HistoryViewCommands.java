@@ -88,4 +88,7 @@ public class HistoryViewCommands {
 
 	/** Open in Commit Viewer */
 	public static final String OPEN_IN_COMMIT_VIEWER = "org.eclipse.egit.ui.history.OpenInCommitViewerCommand"; //$NON-NLS-1$
+
+	/** Show Blame Annotations */
+	public static final String SHOW_BLAME = "org.eclipse.egit.ui.history.ShowBlame"; //$NON-NLS-1$
 }
