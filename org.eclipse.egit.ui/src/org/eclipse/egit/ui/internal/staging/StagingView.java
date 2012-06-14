@@ -116,6 +116,8 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -179,6 +181,8 @@ public class StagingView extends ViewPart {
 	private ISelectionListener selectionChangedListener;
 
 	private Repository currentRepository;
+
+	private Thread stageThread;
 
 	static class StagingViewUpdate {
 		Repository repository;
@@ -1010,100 +1014,176 @@ public class StagingView extends ViewPart {
 			reload(mapping.getRepository());
 	}
 
-	private void stage(IStructuredSelection selection) {
-		Git git = new Git(currentRepository);
-		AddCommand add = null;
-		RmCommand rm = null;
-		Iterator iterator = selection.iterator();
-		while (iterator.hasNext()) {
-			StagingEntry entry = (StagingEntry) iterator.next();
-			switch (entry.getState()) {
-			case ADDED:
-			case CHANGED:
-			case REMOVED:
-				// already staged
-				break;
-			case CONFLICTING:
-			case MODIFIED:
-			case PARTIALLY_MODIFIED:
-			case UNTRACKED:
-				if (add == null)
-					add = git.add();
-				add.addFilepattern(entry.getPath());
-				break;
-			case MISSING:
-				if (rm == null)
-					rm = git.rm();
-				rm.addFilepattern(entry.getPath());
-				break;
+	/**
+	 * Asynchronously re-enables the staged and unstaged tables to re-enable
+	 * operations after staging/unstaging finished in background.
+	 */
+	protected void asyncUnlockUI() {
+		final Table staged = stagedTableViewer.getTable();
+		final Table unstaged = unstagedTableViewer.getTable();
+		asyncEnableTable(staged, true);
+		asyncEnableTable(unstaged, true);
+	}
+
+	/**
+	 * Asynchronously disables the staged and unstaged tables, so that no further
+	 * operations are possible until the staging threads finish.
+	 */
+	protected void asyncLockUI() {
+		final Table staged = stagedTableViewer.getTable();
+		final Table unstaged = unstagedTableViewer.getTable();
+		asyncEnableTable(staged, false);
+		asyncEnableTable(unstaged, false);
+	}
+
+	private void asyncEnableTable(final Table table, final boolean enable) {
+		table.getDisplay().syncExec(new Runnable() {
+			public void run() {
+				table.setEnabled(enable);
+			}
+		});
+	}
+
+	private void awaitStageThread() {
+		if(stageThread != null) {
+			try {
+				stageThread.join();
+			} catch(Exception ex) {
+				Activator.error("cannot await staging thread!", ex); //$NON-NLS-1$
 			}
 		}
 
-		if (add != null)
-			try {
-				add.call();
-			} catch (NoFilepatternException e1) {
-				// cannot happen
-			} catch (Exception e2) {
-				Activator.error(e2.getMessage(), e2);
-			}
-		if (rm != null)
-			try {
-				rm.call();
-			} catch (NoFilepatternException e) {
-				// cannot happen
-			} catch (Exception e2) {
-				Activator.error(e2.getMessage(), e2);
-			}
+		stageThread = null;
 	}
 
-	private void unstage(IStructuredSelection selection) {
+	private void stage(final IStructuredSelection selection) {
+		awaitStageThread();
+
+		stageThread = new Thread() {
+			public void run() {
+				asyncLockUI();
+				try {
+					Git git = new Git(currentRepository);
+					AddCommand add = null;
+					RmCommand rm = null;
+					Iterator iterator = selection.iterator();
+					while (iterator.hasNext()) {
+						StagingEntry entry = (StagingEntry) iterator.next();
+						switch (entry.getState()) {
+						case ADDED:
+						case CHANGED:
+						case REMOVED:
+							// already staged
+							break;
+						case CONFLICTING:
+						case MODIFIED:
+						case PARTIALLY_MODIFIED:
+						case UNTRACKED:
+							if (add == null)
+								add = git.add();
+							add.addFilepattern(entry.getPath());
+							break;
+						case MISSING:
+							if (rm == null)
+								rm = git.rm();
+							rm.addFilepattern(entry.getPath());
+							break;
+						}
+					}
+
+					if (add != null)
+						try {
+							add.call();
+						} catch (NoFilepatternException e1) {
+							// cannot happen
+						} catch (Exception e2) {
+							Activator.error(e2.getMessage(), e2);
+						}
+					if (rm != null)
+						try {
+							rm.call();
+						} catch (NoFilepatternException e) {
+							// cannot happen
+						} catch (Exception e2) {
+							Activator.error(e2.getMessage(), e2);
+						}
+				} finally {
+					asyncUnlockUI();
+				}
+			}
+		};
+		stageThread.start();
+	}
+
+
+	private void unstage(final IStructuredSelection selection) {
 		if (selection.isEmpty())
 			return;
 
-		RevCommit headRev = null;
-		try {
-			final Ref head = currentRepository.getRef(Constants.HEAD);
-			// head.getObjectId() is null if the repository does not contain any
-			// commit
-			if (head.getObjectId() != null)
-				headRev = new RevWalk(currentRepository).parseCommit(head
-						.getObjectId());
-		} catch (IOException e1) {
-			// TODO fix text
-			MessageDialog.openError(getSite().getShell(),
-					UIText.CommitAction_MergeHeadErrorTitle,
-					UIText.CommitAction_ErrorReadingMergeMsg);
-			return;
-		}
+		awaitStageThread();
 
-		final DirCache dirCache;
-		final DirCacheEditor edit;
-		try {
-			dirCache = currentRepository.lockDirCache();
-			edit = dirCache.editor();
-		} catch (IOException e) {
-			// TODO fix text
-			MessageDialog.openError(getSite().getShell(),
-					UIText.CommitAction_MergeHeadErrorTitle,
-					UIText.CommitAction_ErrorReadingMergeMsg);
-			return;
-		}
+		stageThread = new Thread() {
+			public void run() {
+				asyncLockUI();
 
-		try {
-			updateDirCache(selection, headRev, edit);
+				try {
+					RevCommit headRev = null;
+					try {
+						final Ref head = currentRepository.getRef(Constants.HEAD);
+						// head.getObjectId() is null if the repository does not contain any
+						// commit
+						if (head.getObjectId() != null)
+							headRev = new RevWalk(currentRepository).parseCommit(head
+									.getObjectId());
+					} catch (IOException e1) {
+						// TODO fix text
+						syncOpenError(getSite().getShell(),
+								UIText.CommitAction_MergeHeadErrorTitle,
+								UIText.CommitAction_ErrorReadingMergeMsg);
+						return;
+					}
 
-			try {
-				edit.commit();
-			} catch (IOException e) {
-				// TODO fix text
-				MessageDialog.openError(getSite().getShell(),
-						UIText.CommitAction_MergeHeadErrorTitle,
-						UIText.CommitAction_ErrorReadingMergeMsg);
+					final DirCache dirCache;
+					final DirCacheEditor edit;
+					try {
+						dirCache = currentRepository.lockDirCache();
+						edit = dirCache.editor();
+					} catch (IOException e) {
+						// TODO fix text
+						syncOpenError(getSite().getShell(),
+								UIText.CommitAction_MergeHeadErrorTitle,
+								UIText.CommitAction_ErrorReadingMergeMsg);
+						return;
+					}
+
+					try {
+						updateDirCache(selection, headRev, edit);
+
+						try {
+							edit.commit();
+						} catch (IOException e) {
+							// TODO fix text
+							syncOpenError(getSite().getShell(),
+									UIText.CommitAction_MergeHeadErrorTitle,
+									UIText.CommitAction_ErrorReadingMergeMsg);
+						}
+					} finally {
+						dirCache.unlock();
+					}
+				} finally {
+					asyncUnlockUI();
+				}
 			}
-		} finally {
-			dirCache.unlock();
-		}
+		};
+		stageThread.start();
+	}
+
+	private void syncOpenError(final Shell shell, final String title, final String message) {
+		shell.getDisplay().syncExec(new Runnable() {
+			public void run() {
+				MessageDialog.openError(shell, title, message);
+			}
+		});
 	}
 
 	private void updateDirCache(IStructuredSelection selection,
