@@ -157,6 +157,7 @@ public class ConfigurationEditorComponent {
 	 */
 	public void restore() throws IOException {
 		try {
+			editableConfig.clear();
 			editableConfig.load();
 			tv.refresh();
 		} catch (ConfigInvalidException e) {
