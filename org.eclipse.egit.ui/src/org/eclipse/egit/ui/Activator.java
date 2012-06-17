@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.ConfigurationChecker;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -206,6 +207,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 		setupRepoIndexRefresh();
 		setupFocusHandling();
 		setupCredentialsProvider();
+		ConfigurationChecker.checkConfiguration();
 	}
 
 	private void setupCredentialsProvider() {

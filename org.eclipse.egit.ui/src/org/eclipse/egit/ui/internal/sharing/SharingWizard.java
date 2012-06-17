@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.ConfigurationChecker;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Repository;
@@ -53,7 +52,6 @@ public class SharingWizard extends Wizard implements IConfigurationWizard,
 	public SharingWizard() {
 		setWindowTitle(UIText.SharingWizard_windowTitle);
 		setNeedsProgressMonitor(true);
-		ConfigurationChecker.checkConfiguration();
 	}
 
 	public void init(IWorkbench workbench, IProject[] p) {

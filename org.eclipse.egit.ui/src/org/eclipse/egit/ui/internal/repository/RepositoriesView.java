@@ -40,7 +40,6 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.internal.ConfigurationChecker;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
@@ -366,7 +365,6 @@ public class RepositoriesView extends CommonNavigator {
 
 	@Override
 	protected CommonViewer createCommonViewer(Composite aParent) {
-		ConfigurationChecker.checkConfiguration();
 		CommonViewer viewer = super.createCommonViewer(aParent);
 		// handle the double-click event for tags and branches
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
