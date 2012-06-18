@@ -52,6 +52,7 @@ import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -136,7 +137,13 @@ public class ConfigurationEditorComponent {
 
 	void setConfig(FileBasedConfig config) throws IOException {
 		editableConfig = config;
-		restore();
+		try {
+			editableConfig.clear();
+			editableConfig.load();
+		} catch (ConfigInvalidException e) {
+			throw new IOException(e.getMessage());
+		}
+		initControlsFromConfig();
 	}
 
 	/**
@@ -156,6 +163,27 @@ public class ConfigurationEditorComponent {
 	 * @throws IOException
 	 */
 	public void restore() throws IOException {
+		if (changeablePath) {
+			try {
+				IEclipsePreferences node = new InstanceScope()
+						.getNode(org.eclipse.egit.core.Activator
+								.getPluginId());
+				node.remove(GitCorePreferences.core_gitPrefix);
+				node.flush();
+				// Create a temporary FS instance to compute the Git prefix
+				File gitPrefix = FS.detect().gitPrefix();
+				// Update THE FS instance.
+				// TODO: This works today when there is only one FS
+				// instance, but much of the JGit code is actually
+				// written to work if there are multiple instances.
+				FS.DETECTED.setGitPrefix(gitPrefix);
+			} catch (Exception e1) {
+				Activator
+						.logError(
+								UIText.ConfigurationEditorComponent_CannotChangeGitPrefixError,
+								e1);
+			}
+		}
 		try {
 			editableConfig.clear();
 			editableConfig.load();
