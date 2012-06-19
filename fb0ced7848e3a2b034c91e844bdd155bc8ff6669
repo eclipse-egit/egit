@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHn//83o\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-06-19T21:44:02Z",
+      "side": 1,
+      "message": "Isn\u0027t the path absolute already?",
+      "revId": "fb0ced7848e3a2b034c91e844bdd155bc8ff6669",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
