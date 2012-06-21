@@ -877,6 +877,12 @@
             name="%ShowBlameCommand.name"
             defaultHandler="org.eclipse.egit.ui.internal.actions.ShowBlameActionHandler">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.commands.shared.PushHeadToGerritCommand"
+            id="org.eclipse.egit.ui.PushHeadToGerrit"
+            name="%PushToGerritCommand.label">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -2724,6 +2730,24 @@
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.egit.ui.PushHeadToGerrit"
+               label="%PushToGerritMenu.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.FetchGerritChange"
                label="%FetchFromGerritCommand.label"
                style="push">
@@ -3454,6 +3478,11 @@
                      label="%PushAction_label"
                      style="push">
                </command>
+               <command
+                     commandId="org.eclipse.egit.ui.PushHeadToGerrit"
+                     label="%PushToGerritMenu.label"
+                     style="push">
+               </command>
                <separator
                      name="org.eclipse.egit.ui.remote.group1"
                      visible="true">
@@ -4167,7 +4196,7 @@
       </image>
       <image
             commandId="org.eclipse.egit.ui.FetchGerritChange"
-            icon="icons/obj16/gerrit_obj.gif">
+            icon="icons/obj16/gerrit_fetch.gif">
       </image>
       <image
             commandId="org.eclipse.egit.ui.team.AddToIndex"
@@ -4268,6 +4297,10 @@
       <image
             commandId="org.eclipse.egit.ui.history.ShowBlame"
             icon="icons/etool16/annotate.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.PushHeadToGerrit"
+            icon="icons/obj16/gerrit_push.gif">
       </image>
    </extension>
    <extension
