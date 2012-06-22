@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHn//8qQ\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-06-22T21:47:34Z",
+      "side": 1,
+      "message": "s/Egit/EGit/\n\nfix line wrappings",
+      "revId": "9e3a8e403794b7df4ed009d45031df74b0229d3e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn//8qY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-06-22T21:47:34Z",
+      "side": 1,
+      "message": "s/of\\nof/of\\n/\n\ns/can be configure/can be configured/",
+      "revId": "9e3a8e403794b7df4ed009d45031df74b0229d3e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn//8qU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-06-22T21:47:34Z",
+      "side": 1,
+      "message": "EGit couldn\u0027t detect where Git is installed",
+      "revId": "9e3a8e403794b7df4ed009d45031df74b0229d3e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
