@@ -19,6 +19,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
@@ -34,11 +35,6 @@ public class ConfigurationChecker {
 	 * Windows is checked
 	 */
 	public static void checkConfiguration() {
-		if (!runsOnWindows())
-			return;
-		if (!Activator.getDefault().getPreferenceStore().getBoolean(
-				UIPreferences.SHOW_HOME_DIR_WARNING))
-			return;
 		// Schedule a job
 		// This avoids that the check is executed too early
 		// because in startup phase the JobManager is suspended
@@ -59,6 +55,31 @@ public class ConfigurationChecker {
 	}
 
 	private static void check() {
+		checkGitPrefix();
+		checkHome();
+	}
+
+	private static void checkGitPrefix() {
+		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
+		boolean hidden = !store
+				.getBoolean(UIPreferences.SHOW_GIT_PREFIX_WARNING);
+		if (!hidden) {
+			if (FS.DETECTED.gitPrefix() == null) {
+				MessageDialogWithToggle dialog = MessageDialogWithToggle
+						.openInformation(
+								PlatformUI.getWorkbench()
+										.getActiveWorkbenchWindow().getShell(),
+								UIText.ConfigurationChecker_gitPrefixWarningTitle,
+								UIText.ConfigurationChecker_gitPrefixWarningMessage,
+								UIText.ConfigurationChecker_doNotShowGitPrefixWarningAgain,
+								false, null, null);
+				store.setValue(UIPreferences.SHOW_GIT_PREFIX_WARNING,
+						!dialog.getToggleState());
+			}
+		}
+	}
+
+	private static void checkHome() {
 		String home = System.getenv("HOME"); //$NON-NLS-1$
 		if (home != null)
 			return; // home is set => ok
