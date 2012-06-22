@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOHn//8m8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/PushHeadToGerritCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-06-22T23:53:01Z",
+      "side": 1,
+      "message": "style nit: no braces around single line blocks",
+      "revId": "ed1c34c71471bafddb8757b4486f3bc0e57759cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn//8m4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-06-22T23:53:01Z",
+      "side": 1,
+      "message": "no braces here, more occurrences in this file",
+      "revId": "ed1c34c71471bafddb8757b4486f3bc0e57759cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHn//8mw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-06-22T23:53:01Z",
+      "side": 1,
+      "message": "typo Plese, I think we should leave out \"Please\" as it\u0027s unnecessary text to display",
+      "revId": "ed1c34c71471bafddb8757b4486f3bc0e57759cd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
