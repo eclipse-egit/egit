@@ -385,7 +385,7 @@ public class GitCompareEditorInput extends CompareEditorInput {
 		if (repository == null) {
 			if (other.repository != null)
 				return false;
-		} else if (!repository.getDirectory().equals(
+		} else if (other.repository == null || !repository.getDirectory().equals(
 				other.repository.getDirectory()))
 			return false;
 		if (!Arrays.equals(resources, other.resources))
