@@ -18,6 +18,7 @@ import java.io.File;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
@@ -75,6 +76,10 @@ public class GitRepositoriesViewFetchAndPushTest extends
 		op.run(null);
 
 		clonedRepositoryFile2 = new File(workdir, Constants.DOT_GIT);
+		Activator
+				.getDefault()
+				.getPreferenceStore()
+				.setValue(UIPreferences.DECORATOR_REPOSITORYTEXT_DECORATION, "");
 	}
 
 	@Before

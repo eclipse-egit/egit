@@ -353,10 +353,16 @@ public class UIText extends NLS {
 	public static String GitCloneWizard_MissingNotesTitle;
 
 	/** */
+	public static String GitDecoratorPreferencePage_addVariablesAction4;
+
+	/** */
 	public static String GitDecoratorPreferencePage_bindingRepositoryNameFlag;
 
 	/** */
 	public static String GitDecoratorPreferencePage_iconsShowDirty;
+
+	/** */
+	public static String GitDecoratorPreferencePage_repositoryFormatLabel;
 
 	/** */
 	public static String GitDocument_errorLoadCommit;
