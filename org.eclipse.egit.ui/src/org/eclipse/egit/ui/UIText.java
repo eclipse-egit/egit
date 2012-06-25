@@ -203,10 +203,10 @@ public class UIText extends NLS {
 	public static String GenerateHistoryJob_taskFoundSingleCommit;
 
 	/** */
-	public static String GerritConfigurationPage_ConfigureFetchReviewNotes;
+	public static String GerritConfigurationPage_BranchTooltipHover;
 
 	/** */
-	public static String GerritConfigurationPage_configurePushToGerrit;
+	public static String GerritConfigurationPage_ConfigureFetchReviewNotes;
 
 	/** */
 	public static String GerritConfigurationPage_errorBranchName;
@@ -228,6 +228,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String GerritConfigurationPage_title;
+
+	/** */
+	public static String GerritConfigurationPage_UserLabel;
 
 	/** */
 	public static String EGitCredentialsProvider_errorReadingCredentials;
