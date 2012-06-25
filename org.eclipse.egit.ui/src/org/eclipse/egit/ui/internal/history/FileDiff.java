@@ -2,6 +2,7 @@
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (c) 2010, Stefan Lay <stefan.lay@sap.com>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -44,6 +45,8 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.eclipse.jgit.treewalk.filter.TreeFilterMarker;
 import org.eclipse.ui.model.WorkbenchAdapter;
 
 /**
@@ -69,13 +72,14 @@ public class FileDiff extends WorkbenchAdapter {
 	 *
 	 * @param walk
 	 * @param commit
+	 * @param markTreeFilters optional filters for marking entries, see {@link #isMarked(int)}
 	 * @return non-null but possibly empty array of file diffs
 	 * @throws MissingObjectException
 	 * @throws IncorrectObjectTypeException
 	 * @throws CorruptObjectException
 	 * @throws IOException
 	 */
-	public static FileDiff[] compute(final TreeWalk walk, final RevCommit commit)
+	public static FileDiff[] compute(final TreeWalk walk, final RevCommit commit, final TreeFilter... markTreeFilters)
 			throws MissingObjectException, IncorrectObjectTypeException,
 			CorruptObjectException, IOException {
 		final ArrayList<FileDiff> r = new ArrayList<FileDiff>();
@@ -89,7 +93,7 @@ public class FileDiff extends WorkbenchAdapter {
 		}
 
 		if (walk.getTreeCount() <= 2) {
-			List<DiffEntry> entries = DiffEntry.scan(walk);
+			List<DiffEntry> entries = DiffEntry.scan(walk, false, markTreeFilters);
 			for (DiffEntry entry : entries) {
 				final FileDiff d = new FileDiff(commit, entry);
 				r.add(d);
@@ -98,11 +102,18 @@ public class FileDiff extends WorkbenchAdapter {
 		else { // DiffEntry does not support walks with more than two trees
 			final int nTree = walk.getTreeCount();
 			final int myTree = nTree - 1;
+
+			TreeFilterMarker treeFilterMarker = new TreeFilterMarker(
+					markTreeFilters);
+
 			while (walk.next()) {
 				if (matchAnyParent(walk, myTree))
 					continue;
 
-				final FileDiffForMerges d = new FileDiffForMerges(commit);
+				int treeFilterMarks = treeFilterMarker.getMarks(walk);
+
+				final FileDiffForMerges d = new FileDiffForMerges(commit,
+						treeFilterMarks);
 				d.path = walk.getPathString();
 				int m0 = 0;
 				for (int i = 0; i < myTree; i++)
@@ -121,6 +132,8 @@ public class FileDiff extends WorkbenchAdapter {
 					d.blobs[i] = walk.getObjectId(i);
 					d.modes[i] = walk.getFileMode(i);
 				}
+
+
 				r.add(d);
 			}
 
@@ -294,6 +307,17 @@ public class FileDiff extends WorkbenchAdapter {
 	}
 
 	/**
+	 * Whether the mark tree filter with the specified index matched during scan
+	 * or not, see {@link #compute(TreeWalk, RevCommit, TreeFilter...)}.
+	 *
+	 * @param index the tree filter index to check
+	 * @return true if it was marked, false otherwise
+	 */
+	public boolean isMarked(int index) {
+		return diffEntry != null && diffEntry.isMarked(index);
+	}
+
+	/**
 	 * Create a file diff for a specified {@link RevCommit} and
 	 * {@link DiffEntry}
 	 *
@@ -348,8 +372,11 @@ public class FileDiff extends WorkbenchAdapter {
 
 		private FileMode[] modes;
 
-		private FileDiffForMerges(final RevCommit c) {
+		private final int treeFilterMarks;
+
+		private FileDiffForMerges(final RevCommit c, int treeFilterMarks) {
 			super (c, null);
+			this.treeFilterMarks = treeFilterMarks;
 		}
 
 		@Override
@@ -370,6 +397,11 @@ public class FileDiff extends WorkbenchAdapter {
 		@Override
 		public FileMode[] getModes() {
 			return modes;
+		}
+
+		@Override
+		public boolean isMarked(int index) {
+			return (treeFilterMarks & (1L << index)) != 0;
 		}
 	}
 }
