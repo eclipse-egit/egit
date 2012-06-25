@@ -17,8 +17,6 @@ import java.util.Map;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.history.SWTCommitList.SWTLane;
-import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
@@ -74,8 +72,7 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 
 	private boolean enableAntialias = true;
 
-	private ResourceManager resources = new LocalResourceManager(
-			JFaceResources.getResources());
+	private final ResourceManager resources;
 
 	GC g;
 
@@ -89,18 +86,14 @@ class SWTPlotRenderer extends AbstractPlotRenderer<SWTLane, Color> {
 
 	private Ref headRef;
 
-	SWTPlotRenderer(final Display d) {
+	SWTPlotRenderer(final Display d, final ResourceManager resources) {
+		this.resources = resources;
 		sys_black = d.getSystemColor(SWT.COLOR_BLACK);
 		sys_gray = d.getSystemColor(SWT.COLOR_GRAY);
 		sys_white = d.getSystemColor(SWT.COLOR_WHITE);
-		commitDotFill = new Color(d, new RGB(220, 220, 220));
-		commitDotOutline = new Color(d, new RGB(110, 110, 110));
-	}
 
-	void dispose() {
-		commitDotFill.dispose();
-		commitDotOutline.dispose();
-		resources.dispose();
+		commitDotFill = resources.createColor(new RGB(220, 220, 220));
+		commitDotOutline = resources.createColor(new RGB(110, 110, 110));
 	}
 
 	void paint(final Event event, Ref actHeadRef) {
