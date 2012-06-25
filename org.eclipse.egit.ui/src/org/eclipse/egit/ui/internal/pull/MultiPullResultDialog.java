@@ -11,6 +11,7 @@
 package org.eclipse.egit.ui.internal.pull;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -168,19 +169,17 @@ public class MultiPullResultDialog extends Dialog {
 		Composite main = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
-		tv = new TableViewer(main, SWT.SINGLE | SWT.FULL_SELECTION | SWT.BORDER);
+		tv = new TableViewer(main, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
 		tv.setContentProvider(ArrayContentProvider.getInstance());
 
 		tv.addSelectionChangedListener(new ISelectionChangedListener() {
-			@SuppressWarnings("unchecked")
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection sel = (IStructuredSelection) event
 						.getSelection();
-				boolean enabled = !sel.isEmpty();
-				if (enabled) {
-					Entry<Repository, Object> entry = (Entry<Repository, Object>) sel
-							.getFirstElement();
-					enabled = entry.getValue() instanceof PullResult;
+				boolean enabled = false;
+				for (Entry<Repository, Object> entry : (List<Entry<Repository, Object>>) sel
+						.toList()) {
+					enabled |= entry.getValue() instanceof PullResult;
 				}
 				getButton(DETAIL_BUTTON).setEnabled(enabled);
 			}
@@ -225,17 +224,17 @@ public class MultiPullResultDialog extends Dialog {
 				true);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == DETAIL_BUTTON) {
 			IStructuredSelection sel = (IStructuredSelection) tv.getSelection();
-			Entry<Repository, Object> item = (Entry<Repository, Object>) sel
-					.getFirstElement();
-			if (item.getValue() instanceof PullResult) {
-				PullResultDialog dialog = new PullResultDialog(getShell(), item
-						.getKey(), (PullResult) item.getValue());
-				dialog.open();
+			for (Entry<Repository, Object> item : (List<Entry<Repository, Object>>) sel
+					.toList()) {
+				if (item.getValue() instanceof PullResult) {
+					PullResultDialog dialog = new PullResultDialog(getShell(),
+							item.getKey(), (PullResult) item.getValue());
+					dialog.open();
+				}
 			}
 		}
 		super.buttonPressed(buttonId);
