@@ -12,6 +12,7 @@ package org.eclipse.egit.ui.internal.history;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
@@ -542,5 +543,13 @@ public class CommitFileDiffViewer extends TableViewer {
 
 		clipboard.setContents(new Object[] { r.toString() },
 				new Transfer[] { TextTransfer.getInstance() }, DND.CLIPBOARD);
+	}
+
+	/**
+	 * @see FileDiffContentProvider#setInterestingPaths(Set)
+	 * @param interestingPaths
+	 */
+	void setInterestingPaths(Set<String> interestingPaths) {
+		((FileDiffContentProvider) getContentProvider()).setInterestingPaths(interestingPaths);
 	}
 }
