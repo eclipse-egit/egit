@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, 2012 Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
@@ -66,6 +67,8 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
@@ -79,6 +82,7 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.ShowInContext;
+import org.eclipse.ui.themes.ColorUtil;
 
 /**
  * Viewer to display {@link FileDiff} objects in a table.
@@ -139,7 +143,11 @@ public class CommitFileDiffViewer extends TableViewer {
 
 		rawTable.setLinesVisible(true);
 
-		setLabelProvider(new FileDiffLabelProvider());
+		Color fg = rawTable.getForeground();
+		Color bg = rawTable.getBackground();
+		RGB dimmedForegroundRgb = ColorUtil.blend(fg.getRGB(), bg.getRGB(), 60);
+
+		setLabelProvider(new FileDiffLabelProvider(dimmedForegroundRgb));
 		setContentProvider(new FileDiffContentProvider());
 		addOpenListener(new IOpenListener() {
 			public void open(final OpenEvent event) {
@@ -374,6 +382,7 @@ public class CommitFileDiffViewer extends TableViewer {
 		if (oldInput == null && input == null)
 			return;
 		super.inputChanged(input, oldInput);
+		revealFirstInterestingElement();
 	}
 
 	/**
@@ -578,5 +587,37 @@ public class CommitFileDiffViewer extends TableViewer {
 
 		clipboard.setContents(new Object[] { r.toString() },
 				new Transfer[] { TextTransfer.getInstance() }, DND.CLIPBOARD);
+	}
+
+	/**
+	 * @see FileDiffContentProvider#setInterestingPaths(Set)
+	 * @param interestingPaths
+	 */
+	void setInterestingPaths(Set<String> interestingPaths) {
+		((FileDiffContentProvider) getContentProvider()).setInterestingPaths(interestingPaths);
+	}
+
+	private void revealFirstInterestingElement() {
+		IStructuredContentProvider contentProvider = ((IStructuredContentProvider) getContentProvider());
+		Object[] elements = contentProvider.getElements(getInput());
+		if (elements.length <= 1)
+			return;
+
+		for (final Object element : elements) {
+			if (element instanceof FileDiff) {
+				FileDiff fileDiff = (FileDiff) element;
+				boolean marked = fileDiff.isMarked(FileDiffContentProvider.INTERESTING_MARK_TREE_FILTER_INDEX);
+				if (marked) {
+					// Does not yet work reliably, see comment on bug 393610.
+					getTable().getDisplay().asyncExec(new Runnable() {
+						public void run() {
+							reveal(element);
+						}
+					});
+					// Only reveal first
+					return;
+				}
+			}
+		}
 	}
 }
