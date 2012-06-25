@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, 2012 Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,6 +13,7 @@ package org.eclipse.egit.ui.internal.history;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
@@ -542,5 +544,13 @@ public class CommitFileDiffViewer extends TableViewer {
 
 		clipboard.setContents(new Object[] { r.toString() },
 				new Transfer[] { TextTransfer.getInstance() }, DND.CLIPBOARD);
+	}
+
+	/**
+	 * @see FileDiffContentProvider#setInterestingPaths(Set)
+	 * @param interestingPaths
+	 */
+	void setInterestingPaths(Set<String> interestingPaths) {
+		((FileDiffContentProvider) getContentProvider()).setInterestingPaths(interestingPaths);
 	}
 }
