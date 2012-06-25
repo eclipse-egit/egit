@@ -109,6 +109,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 	private static final Map<String, String> PROJECT_BINDINGS;
 
+	private static final Map<String, String> REPOSITORY_MAPPINGS;
+
 	private static final Map<String, String> CHANGESET_LABEL_BINDINGS;
 
 	private static IPropertyChangeListener themeListener;
@@ -186,6 +188,14 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 				UIText.DecoratorPreferencesPage_bindingChangeSetCommitter);
 		CHANGESET_LABEL_BINDINGS.put(removeBraces(GitChangeSetLabelProvider.BINDING_CHANGESET_SHORT_MESSAGE),
 				UIText.DecoratorPreferencesPage_bindingChangeSetShortMessage);
+
+		REPOSITORY_MAPPINGS = new HashMap<String, String>();
+		PROJECT_BINDINGS.put(DecorationHelper.BINDING_RESOURCE_NAME,
+				UIText.DecoratorPreferencesPage_bindingResourceName);
+		PROJECT_BINDINGS.put(DecorationHelper.BINDING_DIRTY_FLAG,
+				UIText.DecoratorPreferencesPage_bindingDirtyFlag);
+		PROJECT_BINDINGS.put(DecorationHelper.BINDING_STAGED_FLAG,
+				UIText.DecoratorPreferencesPage_bindingStagedFlag);
 	}
 
 	/**
@@ -349,6 +359,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		private final FormatEditor projectTextFormat;
 
+		private final FormatEditor repositoryTextFormat;
+
 		public TextDecorationTab(TabFolder parent) {
 			Composite composite = SWTUtils.createHVFillComposite(parent,
 					SWTUtils.MARGINS_DEFAULT, 3);
@@ -368,10 +380,16 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 					UIText.DecoratorPreferencesPage_addVariablesAction3,
 					PROJECT_BINDINGS,
 					UIPreferences.DECORATOR_PROJECTTEXT_DECORATION);
+			repositoryTextFormat = new FormatEditor(composite,
+					UIText.GitDecoratorPreferencePage_repositoryFormatLabel,
+					UIText.GitDecoratorPreferencePage_addVariablesAction4,
+					REPOSITORY_MAPPINGS,
+					UIPreferences.DECORATOR_REPOSITORYTEXT_DECORATION);
 
 			fileTextFormat.addModifyListener(this);
 			folderTextFormat.addModifyListener(this);
 			projectTextFormat.addModifyListener(this);
+			repositoryTextFormat.addModifyListener(this);
 
 			final TabItem tabItem = new TabItem(parent, SWT.NONE);
 			tabItem.setText(UIText.DecoratorPreferencesPage_textLabel);
@@ -382,18 +400,21 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			fileTextFormat.initializeValue(store);
 			folderTextFormat.initializeValue(store);
 			projectTextFormat.initializeValue(store);
+			repositoryTextFormat.initializeValue(store);
 		}
 
 		public void performDefaults(IPreferenceStore store) {
 			fileTextFormat.performDefaults(store);
 			folderTextFormat.performDefaults(store);
 			projectTextFormat.performDefaults(store);
+			repositoryTextFormat.performDefaults(store);
 		}
 
 		public void performOk(IPreferenceStore store) {
 			fileTextFormat.performOk(store);
 			folderTextFormat.performOk(store);
 			projectTextFormat.performOk(store);
+			repositoryTextFormat.performOk(store);
 		}
 
 		public void modifyText(ModifyEvent e) {
