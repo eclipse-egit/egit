@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -492,10 +493,11 @@ public class GitProjectData {
 		m.setContainer(c);
 
 		git = c.getLocation().append(m.getGitDirPath()).toFile();
-		if (!git.isDirectory()
-				|| !new File(git, "config").isFile()) {  //$NON-NLS-1$
-			Activator.logError(CoreText.GitProjectData_mappedResourceGone,
-					new FileNotFoundException(m.getContainerPath().toString()));
+		if (!git.isDirectory() || !new File(git, "config").isFile()) { //$NON-NLS-1$
+			String path = m.getContainerPath().toString();
+			Activator.logError(MessageFormat.format(
+					CoreText.GitProjectData_mappedResourceGone, path),
+					new FileNotFoundException(path));
 			m.clear();
 			return;
 		}
