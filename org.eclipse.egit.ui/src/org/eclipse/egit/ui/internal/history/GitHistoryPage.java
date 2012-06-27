@@ -219,6 +219,8 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 
 		BooleanPrefAction showNotesAction;
 
+		BooleanPrefAction showTagSequenceAction;
+
 		BooleanPrefAction wrapCommentAction;
 
 		BooleanPrefAction fillCommentAction;
@@ -270,6 +272,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			createShowRelativeDateAction();
 			createShowEmailAddressesAction();
 			createShowNotesAction();
+			createShowTagSequenceAction();
 			createWrapCommentAction();
 			createFillCommentAction();
 			createFollowRenamesAction();
@@ -460,6 +463,18 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			};
 			showNotesAction.apply(showNotesAction.isChecked());
 			actionsToDispose.add(showNotesAction);
+		}
+
+		private void createShowTagSequenceAction() {
+			showTagSequenceAction = new BooleanPrefAction(
+					UIPreferences.HISTORY_SHOW_TAG_SEQUENCE,
+					UIText.ResourceHistory_ShowTagSequence) {
+				void apply(boolean value) {
+					// nothing, just set the Preference
+				}
+			};
+			showTagSequenceAction.apply(showTagSequenceAction.isChecked());
+			actionsToDispose.add(showTagSequenceAction);
 		}
 
 		private void createWrapCommentAction() {
@@ -936,11 +951,18 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		showSubMenuMgr.add(actions.followRenamesAction);
 		showSubMenuMgr.add(new Separator());
 		showSubMenuMgr.add(actions.findAction);
-		showSubMenuMgr.add(actions.showFilesAction);
 		showSubMenuMgr.add(actions.showCommentAction);
+		showSubMenuMgr.add(actions.showFilesAction);
 		showSubMenuMgr.add(new Separator());
 		showSubMenuMgr.add(actions.showRelativeDateAction);
 		showSubMenuMgr.add(actions.showEmailAddressesAction);
+
+		IMenuManager showInMessageManager = new MenuManager(
+				UIText.GitHistoryPage_InRevisionCommentSubMenuLabel);
+		showSubMenuMgr.add(showInMessageManager);
+		showInMessageManager.add(actions.showTagSequenceAction);
+		showInMessageManager.add(actions.wrapCommentAction);
+		showInMessageManager.add(actions.fillCommentAction);
 
 		IMenuManager filterSubMenuMgr = new MenuManager(
 				UIText.GitHistoryPage_FilterSubMenuLabel);
@@ -953,10 +975,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		viewMenuMgr.add(new Separator());
 		viewMenuMgr.add(actions.compareModeAction);
 		viewMenuMgr.add(actions.reuseCompareEditorAction);
-
-		viewMenuMgr.add(new Separator());
-		viewMenuMgr.add(actions.wrapCommentAction);
-		viewMenuMgr.add(actions.fillCommentAction);
 	}
 
 	public void dispose() {
