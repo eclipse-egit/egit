@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOH3///8w\u003d",
+        "filename": "org.eclipse.egit.import/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-06-28T09:13:11Z",
+      "side": 1,
+      "message": "In other bundles we have versioned packages (version\u003d\"2.1.0\"). Please also add it here.",
+      "revId": "d92fd5aed773247c09f1b1c8092b046b9ceff358",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
