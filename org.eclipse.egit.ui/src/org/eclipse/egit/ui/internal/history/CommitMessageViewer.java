@@ -22,9 +22,13 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.actions.BooleanPrefAction;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.DefaultTextDoubleClickStrategy;
 import org.eclipse.jface.text.Document;
@@ -56,6 +60,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IWorkbenchPartSite;
@@ -164,6 +169,10 @@ class CommitMessageViewer extends TextViewer implements
 					setFill(((Boolean) event.getNewValue()).booleanValue());
 					return;
 				}
+				if (event.getProperty().equals(UIPreferences.HISTORY_SHOW_TAG_SEQUENCE)) {
+					format();
+					return;
+				}
 			}
 		};
 
@@ -216,6 +225,37 @@ class CommitMessageViewer extends TextViewer implements
 				site.getActionBars().updateActionBars();
 			}
 		});
+
+		final MenuManager mgr = new MenuManager();
+		Control c = getControl();
+		c.setMenu(mgr.createContextMenu(c));
+
+		IPersistentPreferenceStore pstore = (IPersistentPreferenceStore) store;
+
+		Action showTagSequence = new BooleanPrefAction(pstore, UIPreferences.HISTORY_SHOW_TAG_SEQUENCE, UIText.ResourceHistory_ShowTagSequence) {
+			@Override
+			protected void apply(boolean value) {
+				// nothing, just toggle
+			}
+		};
+		mgr.add(showTagSequence);
+
+		Action wrapComments = new BooleanPrefAction(pstore, UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP, UIText.ResourceHistory_toggleCommentWrap) {
+			@Override
+			protected void apply(boolean value) {
+				// nothing, just toggle
+			}
+		};
+		mgr.add(wrapComments);
+
+		Action fillParagraphs = new BooleanPrefAction(pstore, UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_FILL, UIText.ResourceHistory_toggleCommentFill) {
+			@Override
+			protected void apply(boolean value) {
+				// nothing, just toggle
+			}
+		};
+		mgr.add(fillParagraphs);
+
 	}
 
 	void addDoneListenerToFormatJob() {
