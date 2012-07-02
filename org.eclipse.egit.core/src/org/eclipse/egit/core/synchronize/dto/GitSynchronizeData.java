@@ -277,6 +277,20 @@ public class GitSynchronizeData {
 		return pathFilter;
 	}
 
+	/**
+	 * @return synchronization source rev
+	 */
+	public String getSrcRev() {
+		return srcRev;
+	}
+
+	/**
+	 * @return synchronization destination rev
+	 */
+	public String getDstRev() {
+		return dstRev;
+	}
+
 	private RemoteConfig extractRemoteName(String rev) {
 		if (rev.contains(R_REMOTES)) {
 			String remoteWithBranchName = rev.replaceAll(R_REMOTES, ""); //$NON-NLS-1$

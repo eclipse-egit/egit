@@ -4369,7 +4369,7 @@
             id="org.eclipse.egit.ui.modelCompareParticipant"
             name="%Synchronize_Name"
             icon="icons/obj16/gitrepository.gif"
-            persistent="false"/>
+            persistent="true"/>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.navigatorContent">
