@@ -16,6 +16,24 @@
       "revId": "fb0ced7848e3a2b034c91e844bdd155bc8ff6669",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIX///50\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-07-02T06:56:43Z",
+      "side": 1,
+      "message": "right, but i find the code clearer as is, and it does not harm, as according to the javadoc \"If this abstract pathname is already absolute, then the pathname string is simply returned as if by the getPath() method.\"\n\nbut i found another bug in this method regarding removed paths (which this should be able to handle too...). thus a new patchset, fixing the branch operation unit test, which seemed to fail previously (i must have missed that...)",
+      "parentUuid": "AABOHn//83o\u003d",
+      "revId": "fb0ced7848e3a2b034c91e844bdd155bc8ff6669",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
