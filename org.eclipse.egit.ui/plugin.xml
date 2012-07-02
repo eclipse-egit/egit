@@ -4302,6 +4302,10 @@
             commandId="org.eclipse.egit.ui.PushHeadToGerrit"
             icon="icons/obj16/gerrit_push.gif">
       </image>
+      <image
+            commandId="org.eclipse.egit.ui.RepositoriesViewConfigureGerritRemote"
+            icon="icons/obj16/gerrit_obj.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
