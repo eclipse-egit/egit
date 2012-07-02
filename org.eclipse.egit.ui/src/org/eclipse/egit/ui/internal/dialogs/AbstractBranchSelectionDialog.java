@@ -6,6 +6,7 @@
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2011, Daniel Megert <daniel_megert@ch.ibm.com>
+ * Copyright (C) 2012, Markus Keller <markus_keller@ch.ibm.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
@@ -32,6 +34,7 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagsNode;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -254,7 +257,7 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 		layout.verticalSpacing = convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_SPACING);
 		layout.horizontalSpacing = convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_SPACING);
 		composite.setLayout(layout);
-		composite.setLayoutData(GridDataFactory.fillDefaults().create());
+		composite.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
 
 		int selectionModel = -1;
 		if ((settings & ALLOW_MULTISELECTION) != 0)
@@ -479,4 +482,10 @@ public abstract class AbstractBranchSelectionDialog extends TitleAreaDialog {
 			return null;
 		}
 	}
+
+	@Override
+	protected IDialogSettings getDialogBoundsSettings() {
+		return UIUtils.getDialogBoundSettings(getClass());
+	}
+
 }
