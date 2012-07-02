@@ -19,6 +19,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
@@ -38,16 +39,16 @@ public class ConfigureGerritWizard extends Wizard {
 	private RemoteConfig remoteConfig;
 
 	/**
-	 * @param config the repository configuration
+	 * @param repository the repository
 	 * @param remoteName the name of the remote in the configuration
 	 *
 	 */
-	public ConfigureGerritWizard(StoredConfig config, String remoteName) {
+	public ConfigureGerritWizard(Repository repository, String remoteName) {
 		super();
 		setWindowTitle(UIText.ConfigureGerritWizard_title);
 		setDefaultPageImageDescriptor(UIIcons.WIZBAN_IMPORT_REPO);
 		setNeedsProgressMonitor(true);
-		gerritConfiguration = new GerritConfigurationPage(false) {
+		gerritConfiguration = new GerritConfigurationPage(repository, remoteName) {
 			@Override
 			public void setVisible(boolean visible) {
 				if (visible)
@@ -56,7 +57,7 @@ public class ConfigureGerritWizard extends Wizard {
 			}
 
 		};
-		this.config = config;
+		this.config = repository.getConfig();
 		this.remoteName = remoteName;
 
 	}
