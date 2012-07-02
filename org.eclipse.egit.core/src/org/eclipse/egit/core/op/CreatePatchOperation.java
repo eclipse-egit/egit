@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, SAP AG
+ * Copyright (c) 2010, 2012 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,6 +10,7 @@
  *    Stefan Lay (SAP AG) - initial implementation
  *    Benjamin Muskalla (Tasktop Technologies) - extract into operation
  *    Tomasz Zarna (IBM Corporation) - bug 370332
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - Allow spaces in path
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -26,6 +27,7 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -255,7 +257,7 @@ public class CreatePatchOperation implements IEGitOperation {
 	}
 
 	private IProject getProject(String path) {
-		URI pathUri = repository.getWorkTree().toURI().resolve(path);
+		URI pathUri = repository.getWorkTree().toURI().resolve(URIUtil.toURI(path));
 		IFile[] files = ResourcesPlugin.getWorkspace().getRoot()
 				.findFilesForLocationURI(pathUri);
 		Assert.isLegal(files.length == 1, NLS.bind(CoreText.CreatePatchOperation_couldNotFindProject, path, repository));
