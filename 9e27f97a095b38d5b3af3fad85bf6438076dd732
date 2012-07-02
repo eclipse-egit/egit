@@ -16,6 +16,24 @@
       "revId": "9e27f97a095b38d5b3af3fad85bf6438076dd732",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIX///4E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/gerrit/GerritConfigurationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 46
+      },
+      "writtenOn": "2012-07-02T08:39:35Z",
+      "side": 1,
+      "message": "Very good point indeed. Done.",
+      "parentUuid": "AABOH3///84\u003d",
+      "revId": "9e27f97a095b38d5b3af3fad85bf6438076dd732",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
