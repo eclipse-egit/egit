@@ -182,6 +182,11 @@ public class PullResultDialog extends Dialog {
 
 	@Override
 	protected IDialogSettings getDialogBoundsSettings() {
-		return hasUpdates ? UIUtils.getDialogBoundSettings(getClass()) : null;
+		return UIUtils.getDialogBoundSettings(getClass());
+	}
+
+	@Override
+	protected int getDialogBoundsStrategy() {
+		return hasUpdates ? DIALOG_PERSISTLOCATION | DIALOG_PERSISTSIZE : DIALOG_PERSISTLOCATION;
 	}
 }
