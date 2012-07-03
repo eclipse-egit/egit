@@ -46,6 +46,8 @@ public class IndexDiffCache {
 			entry = entries.get(repository);
 			if (entry != null)
 				return entry;
+			if (repository.isBare())
+				return null;
 			entry = new IndexDiffCacheEntry(repository);
 			entries.put(repository, entry);
 		}
