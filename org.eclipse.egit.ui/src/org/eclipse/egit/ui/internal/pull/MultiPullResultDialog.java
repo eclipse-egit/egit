@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 SAP AG.
+ * Copyright (c) 2011 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - remove unnecessary @SuppressWarnings
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.pull;
 
@@ -172,7 +173,6 @@ public class MultiPullResultDialog extends Dialog {
 		tv.setContentProvider(ArrayContentProvider.getInstance());
 
 		tv.addSelectionChangedListener(new ISelectionChangedListener() {
-			@SuppressWarnings("unchecked")
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection sel = (IStructuredSelection) event
 						.getSelection();
@@ -225,7 +225,6 @@ public class MultiPullResultDialog extends Dialog {
 				true);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == DETAIL_BUTTON) {

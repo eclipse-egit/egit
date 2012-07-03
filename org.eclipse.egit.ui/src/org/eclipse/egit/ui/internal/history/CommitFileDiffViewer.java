@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2008, 2012 Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -174,7 +175,6 @@ public class CommitFileDiffViewer extends TableViewer {
 		c.setMenu(mgr.createContextMenu(c));
 
 		open = new Action(UIText.CommitFileDiffViewer_OpenInEditorMenuLabel) {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				final ISelection s = getSelection();
@@ -189,7 +189,6 @@ public class CommitFileDiffViewer extends TableViewer {
 		blame = new Action(
 				UIText.CommitFileDiffViewer_ShowAnnotationsMenuLabel,
 				UIIcons.ANNOTATE) {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				final ISelection s = getSelection();
@@ -203,7 +202,6 @@ public class CommitFileDiffViewer extends TableViewer {
 
 		openWorkingTreeVersion = new Action(
 				UIText.CommitFileDiffViewer_OpenWorkingTreeVersionInEditorMenuLabel) {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				final ISelection s = getSelection();
@@ -528,7 +526,6 @@ public class CommitFileDiffViewer extends TableViewer {
 		setSelection(new StructuredSelection(el));
 	}
 
-	@SuppressWarnings("unchecked")
 	private void doCopy() {
 		final ISelection s = getSelection();
 		if (s.isEmpty() || !(s instanceof IStructuredSelection))

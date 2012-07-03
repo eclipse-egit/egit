@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2011 SAP AG and others.
+ * Copyright (c) 2010, 2012 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Dariusz Luksza (dariusz@luksza.org) - add initial implementation of
  *    										enableWhenRepositoryHaveHead(Object)
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - remove unnecessary @SuppressWarnings
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
@@ -53,7 +54,6 @@ abstract class RepositoriesViewCommandHandler<T> extends AbstractHandler {
 		return HandlerUtil.getActiveShell(event);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<T> getSelectedNodes(ExecutionEvent event)
 			throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelectionChecked(event);

@@ -1,6 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011 SAP AG.
- * Copyright (C) 2010, Benjamin Muskalla <bmuskalla@eclipsesource.com>
+ * Copyright (C) 2011, 2012 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +8,8 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Benjamin Muskalla <bmuskalla@eclipsesource.com>
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - remove unnecessary @SuppressWarnings
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.clone;
 
@@ -209,7 +210,6 @@ public class GitSelectRepositoryPage extends WizardPage {
 	}
 
 	private void refreshRepositoryList() {
-		@SuppressWarnings("unchecked")
 		List<String> dirsBefore = (List<String>) tv.getInput();
 		List<String> dirsAfter = util.getConfiguredRepositories();
 		if (!dirsBefore.containsAll(dirsAfter)) {
