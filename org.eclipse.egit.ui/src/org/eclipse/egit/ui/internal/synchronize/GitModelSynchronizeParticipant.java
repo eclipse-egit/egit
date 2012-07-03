@@ -20,6 +20,9 @@ import org.eclipse.core.resources.mapping.ModelProvider;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
@@ -38,6 +41,7 @@ import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.team.ui.TeamUI;
 import org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration;
 import org.eclipse.team.ui.synchronize.ModelSynchronizeParticipant;
+import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * Git model synchronization participant
@@ -176,6 +180,25 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 		}
 
 		return super.asCompareInput(object);
+	}
+
+	@Override
+	public void run(final IWorkbenchPart part) {
+ 		boolean launchFetch = Activator.getDefault().getPreferenceStore()
+				.getBoolean(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH);
+		if (launchFetch || gsds.forceFetch()) {
+			Job fetchJob = new SynchronizeFetchJob(gsds);
+			fetchJob.setUser(true);
+			fetchJob.addJobChangeListener(new JobChangeAdapter() {
+				@Override
+				public void done(IJobChangeEvent event) {
+					GitModelSynchronizeParticipant.super.run(part);
+				}
+			});
+
+			fetchJob.schedule();
+		} else
+			super.run(part);
 	}
 
 	private ICompareInput getFileFromGit(GitSynchronizeData gsd, IPath location) {
