@@ -9,6 +9,7 @@
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Daniel Megert <daniel_megert@ch.ibm.com> - remove unnecessary @SuppressWarnings
  *    Markus Keller <markus_keller@ch.ibm.com> - Open multiple detail dialogs from MultiPullResultDialog at once
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - Use correct syntax when a single ref was updated
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.pull;
 
@@ -110,6 +111,8 @@ public class MultiPullResultDialog extends Dialog {
 				else {
 					int updated = pullRes.getFetchResult()
 							.getTrackingRefUpdates().size();
+					if ( updated == 1)
+						return UIText.MultiPullResultDialog_UpdatedOneMessage;
 					return NLS.bind(
 							UIText.MultiPullResultDialog_UpdatedMessage,
 							Integer.valueOf(updated));
