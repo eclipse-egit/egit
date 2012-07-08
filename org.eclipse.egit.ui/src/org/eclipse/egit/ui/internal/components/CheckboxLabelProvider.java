@@ -91,6 +91,8 @@ public abstract class CheckboxLabelProvider extends CenteredImageLabelProvider {
 		layout.marginTop = 0;
 		layout.marginLeft = 0;
 		layout.marginBottom = 0;
+		layout.marginRight = 0;
+		layout.spacing = 0;
 		composite.setLayout(layout);
 		createButton(composite, gray, true, true);
 		createButton(composite, gray, false, true);
@@ -105,6 +107,8 @@ public abstract class CheckboxLabelProvider extends CenteredImageLabelProvider {
 
 		shell.open();
 		GC gc = new GC(composite);
+		composite.print(gc);
+
 		int buttonX = cSize.x / 4;
 		Image[] images = new Image[4];
 		Display display = shell.getShell().getDisplay();
