@@ -9,6 +9,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.staging;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -27,21 +30,53 @@ public class StagingEntry implements IAdaptable {
 	 */
 	public static enum State {
 		/** added to the index, not in the tree */
-		ADDED,
+		ADDED(EnumSet.of(Action.UNSTAGE)),
+
 		/** changed from tree to index */
-		CHANGED,
+		CHANGED(EnumSet.of(Action.REPLACE_WITH_HEAD_REVISION, Action.UNSTAGE)),
+
 		/** removed from index, but in tree */
-		REMOVED,
+		REMOVED(EnumSet.of(Action.REPLACE_WITH_HEAD_REVISION, Action.UNSTAGE)),
+
 		/** in index, but not filesystem */
-		MISSING,
+		MISSING(EnumSet.of(Action.REPLACE_WITH_FILE_IN_GIT_INDEX, Action.REPLACE_WITH_HEAD_REVISION, Action.STAGE)),
+
 		/** modified on disk relative to the index */
-		MODIFIED,
+		MODIFIED(EnumSet.of(Action.REPLACE_WITH_FILE_IN_GIT_INDEX, Action.REPLACE_WITH_HEAD_REVISION, Action.STAGE)),
+
 		/** partially staged, modified in workspace and in index */
-		PARTIALLY_MODIFIED,
+		PARTIALLY_MODIFIED(EnumSet.of(Action.REPLACE_WITH_FILE_IN_GIT_INDEX, Action.REPLACE_WITH_HEAD_REVISION, Action.STAGE)),
+
 		/** not ignored, and not in the index */
-		UNTRACKED,
+		UNTRACKED(EnumSet.of(Action.REPLACE_WITH_FILE_IN_GIT_INDEX, Action.REPLACE_WITH_HEAD_REVISION, Action.STAGE)),
+
 		/** in conflict */
-		CONFLICTING;
+		CONFLICTING(EnumSet.of(Action.REPLACE_WITH_FILE_IN_GIT_INDEX, Action.REPLACE_WITH_HEAD_REVISION,
+					Action.STAGE, Action.LAUNCH_MERGE_TOOL));
+
+		private final Set<Action> availableActions;
+
+		private State(Set<Action> availableActions) {
+			this.availableActions = availableActions;
+		}
+
+		/**
+		 * @return set of available actions for the current state
+		 */
+		public Set<Action> getAvailableActions() {
+			return availableActions;
+		}
+	}
+
+	/**
+	 * Possible actions available on a staging entry.
+	 */
+	enum Action {
+		REPLACE_WITH_FILE_IN_GIT_INDEX,
+		REPLACE_WITH_HEAD_REVISION,
+		STAGE,
+		UNSTAGE,
+		LAUNCH_MERGE_TOOL
 	}
 
 	private Repository repository;
@@ -97,6 +132,10 @@ public class StagingEntry implements IAdaptable {
 	 */
 	public State getState() {
 		return state;
+	}
+
+	Set<Action> getAvailableActions() {
+		return state.getAvailableActions();
 	}
 
 	public Object getAdapter(Class adapter) {
