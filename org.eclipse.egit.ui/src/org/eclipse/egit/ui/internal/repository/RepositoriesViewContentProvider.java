@@ -262,8 +262,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			List<RepositoryTreeNode<Ref>> refs = new ArrayList<RepositoryTreeNode<Ref>>();
 
 			try {
-				for (Entry<String, Ref> refEntry : repo.getRefDatabase()
-						.getRefs(Constants.R_TAGS).entrySet()) {
+				for (Entry<String, Ref> refEntry : getRefs(repo, Constants.R_TAGS).entrySet()) {
 					refs.add(new TagNode(node, repo, refEntry.getValue()));
 				}
 			} catch (IOException e) {
@@ -510,8 +509,7 @@ public class RepositoriesViewContentProvider implements ITreeContentProvider,
 			return true;
 		case TAGS:
 			try {
-				return !repo.getRefDatabase().getRefs(Constants.R_TAGS)
-						.isEmpty();
+				return !getRefs(repo, Constants.R_TAGS).isEmpty();
 			} catch (IOException e) {
 				return true;
 			}
