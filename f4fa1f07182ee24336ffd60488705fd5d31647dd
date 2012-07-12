@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "AABOIn///Wk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-12T19:51:27Z",
+      "side": 1,
+      "message": "Should the commit button also be disabled?",
+      "revId": "f4fa1f07182ee24336ffd60488705fd5d31647dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOHn//9Tc\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
         "patchSetId": 1
@@ -48,6 +65,24 @@
       "side": 1,
       "message": "is this really necessary here? the longest that i saw is ~20 seconds on our (really big an clunky) repo. And how should cancellation of the job be handled then? would it stop staging in the middle? \n\ni think (without proof) that the add.call and rm.call are the thinks that take a while (i saw updateSmudgedEntries in that area somewhere running a while - it checks the whole index, right? much for 33800 files). i think i cannot really cancel those? or can i?\n\nyou see - some confusion ;)",
       "parentUuid": "AABOHn//9Tc\u003d",
+      "revId": "f4fa1f07182ee24336ffd60488705fd5d31647dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Wo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-12T19:51:27Z",
+      "side": 1,
+      "message": "The ability to cancel a job can de disabled, right? Showing that an action is in progress (even if it doesn\u0027t have a progress bar) is useful to the user, so it should be done in a job.",
+      "parentUuid": "AABOHn//9SE\u003d",
       "revId": "f4fa1f07182ee24336ffd60488705fd5d31647dd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
