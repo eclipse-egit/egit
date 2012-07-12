@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///WA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-12T20:18:58Z",
+      "side": 1,
+      "message": "What about this one?",
+      "revId": "38d2b51129d37ea7f23abe18190f1aa81a1e4da8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///V8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/GitProjectData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-12T20:18:58Z",
+      "side": 1,
+      "message": "And this one?",
+      "revId": "38d2b51129d37ea7f23abe18190f1aa81a1e4da8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
