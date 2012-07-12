@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///Vc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-12T20:48:49Z",
+      "side": 1,
+      "message": "I see the others are also numbered, but it would be better as \"addVariablesActionForRepository\" or so.",
+      "revId": "83dce348f68f63f7819c021ab2183be39d2d2609",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Vw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-12T20:48:49Z",
+      "side": 1,
+      "message": "IOException seems unnecessary here.",
+      "revId": "83dce348f68f63f7819c021ab2183be39d2d2609",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///VM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableRepository.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-12T20:48:49Z",
+      "side": 1,
+      "message": "status.getChanged() is missing here.\n\nCould we move the dirty and staged logic to IndexDiffData? I see there is nearly the same login in DecoratableResourceAdapter#extractContainerProperties for containers, except that they also need to filter the paths there. But that could be controlled via a nullable argument.",
+      "revId": "83dce348f68f63f7819c021ab2183be39d2d2609",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Vk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/preferences/GitDecoratorPreferencePage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-12T20:48:49Z",
+      "side": 1,
+      "message": "These should be REPOSITORY_MAPPINGS.put, right?",
+      "revId": "83dce348f68f63f7819c021ab2183be39d2d2609",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
