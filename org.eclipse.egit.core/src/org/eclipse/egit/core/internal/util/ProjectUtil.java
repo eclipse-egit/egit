@@ -17,12 +17,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -248,6 +251,74 @@ public class ProjectUtil {
 					result.add(project);
 			}
 		return result.toArray(new IProject[result.size()]);
+	}
+
+	/**
+	 * The method returns all projects containing at least one of the given
+	 * paths.
+	 *
+	 * @param repository
+	 *            the repository who's working tree is used as base for lookup
+	 * @param fileList
+	 *            the list of files/directories to lookup
+	 * @return valid projects containing one of the paths
+	 * @throws CoreException
+	 */
+	public static IProject[] getProjectsContaining(Repository repository,
+			Collection<String> fileList) throws CoreException {
+		Set<IProject> result = new LinkedHashSet<IProject>();
+		File workTree = repository.getWorkTree();
+
+		for (String member : fileList) {
+			File file = new File(workTree, member);
+
+			IContainer container = findContainer(file);
+			if (container instanceof IProject)
+				result.add((IProject) container);
+		}
+
+		return result.toArray(new IProject[result.size()]);
+	}
+
+	/**
+	 * Looks up the IContainer containing the given file, if available. This is
+	 * done by path comparison, which is very cheap compared to
+	 * IWorkspaceRoot.findContainersForLocationURI()
+	 *
+	 * @param file
+	 *            the path to lookup a container for
+	 * @return the IContainer (either IProject or IWorkspaceRoot) or
+	 *         <code>null</code> if not found.
+	 */
+	public static IContainer findContainer(File file) {
+		String absFile = file.getAbsolutePath();
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IProject[] allProjects = root.getProjects();
+
+		for (IProject prj : allProjects)
+			if (checkContainerMatch(prj, absFile))
+				return prj;
+
+		if (checkContainerMatch(root, absFile))
+			return root;
+
+		return null;
+	}
+
+	private static boolean checkContainerMatch(IContainer container,
+			String absFile) {
+		String absPrj = container.getLocation().toFile().getAbsolutePath();
+		if (absPrj.length() == absFile.length()) {
+			if (absPrj.equals(absFile))
+				return true;
+		} else if (absPrj.length() < absFile.length()) {
+			char sepChar = absFile.charAt(absPrj.length());
+			if (absFile.startsWith(absPrj)
+					&& (sepChar == '/' || sepChar == '\\')) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
