@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn///S4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-07-13T06:14:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn///UU\u003d",
+      "revId": "49fef9877846a2643c4ddf9e1224b6d9d10f43af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn///UQ\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2012-07-12T21:26:25Z",
       "side": 1,
       "message": "Extract repository.getWorkTree() to outside the loop.",
+      "revId": "49fef9877846a2643c4ddf9e1224b6d9d10f43af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///S0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-07-13T06:14:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn///UQ\u003d",
       "revId": "49fef9877846a2643c4ddf9e1224b6d9d10f43af",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn///Sw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-07-13T06:14:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn///UI\u003d",
+      "revId": "49fef9877846a2643c4ddf9e1224b6d9d10f43af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn///UM\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2012-07-12T21:26:25Z",
       "side": 1,
       "message": "Is this necessary? Why would the caller pass duplicate paths?",
+      "revId": "49fef9877846a2643c4ddf9e1224b6d9d10f43af",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///Ss\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-07-13T06:14:39Z",
+      "side": 1,
+      "message": "uhm, it\u0027s more a left-over from a previous version where i used eclipse code to find containers, which is dead slow, and where i calculated the folder for a file, so potetially the same two paths (in the same folder) would have done the same check twice. but now .... it\u0027s ok without ;)",
+      "parentUuid": "AABOIn///UM\u003d",
       "revId": "49fef9877846a2643c4ddf9e1224b6d9d10f43af",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
