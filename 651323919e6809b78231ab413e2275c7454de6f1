@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn///M8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-07-13T15:19:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn///Wc\u003d",
+      "revId": "651323919e6809b78231ab413e2275c7454de6f1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn///WY\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-07-12T20:05:40Z",
       "side": 1,
       "message": "Would toPortableString (and Path.fromPortableString to load) be better?",
+      "revId": "651323919e6809b78231ab413e2275c7454de6f1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///M4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-07-13T15:19:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn///WY\u003d",
       "revId": "651323919e6809b78231ab413e2275c7454de6f1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
