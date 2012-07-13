@@ -16,6 +16,23 @@
       "revId": "bff6a4dec2283a53a5c194fe1a90f3f49d3db5d5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn///QA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-13T10:36:36Z",
+      "side": 1,
+      "message": "One more thing: I don\u0027t think \"Fast\" should be part of the method name. I\u0027d rather name it just findContainer.",
+      "revId": "bff6a4dec2283a53a5c194fe1a90f3f49d3db5d5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
