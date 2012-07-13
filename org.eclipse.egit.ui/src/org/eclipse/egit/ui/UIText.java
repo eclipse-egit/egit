@@ -4456,7 +4456,13 @@ public class UIText extends NLS {
 	public static String StagingView_UnstageItemMenuLabel;
 
 	/** */
+	public static String StagingView_Unstaging;
+
+	/** */
 	public static String StagingView_StageItemMenuLabel;
+
+	/** */
+	public static String StagingView_Staging;
 
 	/** */
 	public static String StagingViewContentProvider_SubmoduleError;
