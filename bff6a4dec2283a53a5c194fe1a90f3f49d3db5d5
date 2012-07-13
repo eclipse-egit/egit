@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///RM\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/internal/util/ProjectUtilTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-13T09:25:42Z",
+      "side": 1,
+      "message": "Could you add some more tests (use EclEmma for finding the cases that are not yet covered):\n\n* For the case where one project is called \"org.example\" and another one \"org.example.sub\" (for the pathSep logic)\n* For the case where the searched path is the project itself\n* For multiple files of the same project (the reason for the set)",
+      "revId": "bff6a4dec2283a53a5c194fe1a90f3f49d3db5d5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
