@@ -614,10 +614,18 @@ public class SpellcheckableMessageArea extends Composite {
 		};
 	}
 
-	private IHandlerService getHandlerService() {
-		final IHandlerService handlerService = (IHandlerService) PlatformUI
-		.getWorkbench().getService(IHandlerService.class);
-		return handlerService;
+	/**
+	 * Return <code>IHandlerService</code>. The default implementation uses the
+	 * workbench window's service locator. Subclasses may override to access the
+	 * service by using a local service locator.
+	 *
+	 * @return <code>IHandlerService</code> using the workbench window's service
+	 *         locator. Can be <code>null</code> if the service could not be
+	 *         found.
+	 */
+	protected IHandlerService getHandlerService() {
+		return (IHandlerService) PlatformUI.getWorkbench().getService(
+				IHandlerService.class);
 	}
 
 	private SourceViewerDecorationSupport configureAnnotationPreferences() {

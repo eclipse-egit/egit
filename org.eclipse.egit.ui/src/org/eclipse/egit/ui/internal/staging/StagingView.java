@@ -405,6 +405,10 @@ public class StagingView extends ViewPart {
 			protected CommitProposalProcessor getCommitProposalProcessor() {
 				return commitProposalProcessor;
 			}
+			@Override
+			protected IHandlerService getHandlerService() {
+				return (IHandlerService) getSite().getService(IHandlerService.class);
+			}
 		};
 		commitMessageText.setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TEXT_BORDER);
