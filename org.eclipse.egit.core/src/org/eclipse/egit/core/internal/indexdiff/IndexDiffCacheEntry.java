@@ -11,7 +11,9 @@ package org.eclipse.egit.core.internal.indexdiff;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -148,6 +150,16 @@ public class IndexDiffCacheEntry {
 	 */
 	public void refresh() {
 		scheduleReloadJob("Refresh called"); //$NON-NLS-1$
+	}
+
+	/**
+	 * Trigger a new index diff calculation manually for the passed files.
+	 *
+	 * @param filesToRefresh (repository-relative paths)
+	 */
+	public void refreshFiles(final Collection<String> filesToRefresh) {
+		List<IResource> resources = Collections.emptyList();
+		scheduleUpdateJob(filesToRefresh, resources);
 	}
 
 	/**
