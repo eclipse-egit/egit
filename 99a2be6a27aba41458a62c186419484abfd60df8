@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///GQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-14T19:21:49Z",
+      "side": 1,
+      "message": "Does \"gsd\" mean GitSynchronizeData (in that case, the \"data\" is duplicated with the above)? I\u0027d use the full string here.",
+      "revId": "99a2be6a27aba41458a62c186419484abfd60df8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
