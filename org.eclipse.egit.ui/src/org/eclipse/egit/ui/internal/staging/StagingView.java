@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.commands.operations.IUndoContext;
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -39,6 +40,7 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.op.CommitOperation;
+import org.eclipse.egit.core.op.DeleteResourcesOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
@@ -52,8 +54,8 @@ import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.commit.CommitUI;
-import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
 import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel;
+import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponent;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentState;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
@@ -61,6 +63,7 @@ import org.eclipse.egit.ui.internal.dialogs.ICommitMessageComponentNotifications
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -119,6 +122,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
@@ -130,6 +134,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.DeleteResourceAction;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.Form;
@@ -138,6 +143,7 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
+import org.eclipse.ui.operations.UndoRedoActionGroup;
 import org.eclipse.ui.part.ViewPart;
 
 /**
@@ -286,6 +292,8 @@ public class StagingView extends ViewPart {
 	};
 
 	private IndexDiffCacheEntry cacheEntry;
+
+	private UndoRedoActionGroup undoRedoActionGroup;
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -587,8 +595,8 @@ public class StagingView extends ViewPart {
 	}
 
 	private void updateToolbar() {
-		IToolBarManager toolbar = getViewSite().getActionBars()
-				.getToolBarManager();
+		IActionBars actionBars = getViewSite().getActionBars();
+		IToolBarManager toolbar = actionBars.getToolBarManager();
 
 		refreshAction = new Action(UIText.StagingView_Refresh, IAction.AS_PUSH_BUTTON) {
 			public void run() {
@@ -696,11 +704,16 @@ public class StagingView extends ViewPart {
 		fileNameModeAction.setChecked(getPreferenceStore().getBoolean(
 				UIPreferences.STAGING_VIEW_FILENAME_MODE));
 
-		IMenuManager dropdownMenu = getViewSite().getActionBars()
-				.getMenuManager();
+		IMenuManager dropdownMenu = actionBars.getMenuManager();
 		dropdownMenu.add(openNewCommitsAction);
 		dropdownMenu.add(columnLayoutAction);
 		dropdownMenu.add(fileNameModeAction);
+
+		// For the normal resource undo/redo actions to be active, so that files
+		// deleted via the "Delete" action in the staging view can be restored.
+		IUndoContext workspaceContext = (IUndoContext) ResourcesPlugin.getWorkspace().getAdapter(IUndoContext.class);
+		undoRedoActionGroup = new UndoRedoActionGroup(getViewSite(), workspaceContext, true);
+		undoRedoActionGroup.fillActionBars(actionBars);
 	}
 
 	private IBaseLabelProvider createLabelProvider() {
@@ -814,6 +827,7 @@ public class StagingView extends ViewPart {
 				boolean addReplaceWithHeadRevision = availableActions.contains(StagingEntry.Action.REPLACE_WITH_HEAD_REVISION);
 				boolean addStage = availableActions.contains(StagingEntry.Action.STAGE);
 				boolean addUnstage = availableActions.contains(StagingEntry.Action.UNSTAGE);
+				boolean addDelete = availableActions.contains(StagingEntry.Action.DELETE);
 				boolean addLaunchMergeTool = availableActions.contains(StagingEntry.Action.LAUNCH_MERGE_TOOL);
 
 				if (addStage)
@@ -830,17 +844,27 @@ public class StagingView extends ViewPart {
 							unstage((IStructuredSelection) tableViewer.getSelection());
 						}
 					});
-				boolean isNonResourceSelection = isNonResourceSelection(tableViewer.getSelection());
+				boolean selectionIncludesNonWorkspaceResources = selectionIncludesNonWorkspaceResources(tableViewer.getSelection());
 				if (addReplaceWithFileInGitIndex)
-					if (isNonResourceSelection)
+					if (selectionIncludesNonWorkspaceResources)
 						menuMgr.add(new ReplaceAction(UIText.StagingView_replaceWithFileInGitIndex, selection, false));
 					else
 						menuMgr.add(createItem(ActionCommands.DISCARD_CHANGES_ACTION, tableViewer));	// replace with index
 				if (addReplaceWithHeadRevision)
-					if (isNonResourceSelection)
+					if (selectionIncludesNonWorkspaceResources)
 						menuMgr.add(new ReplaceAction(UIText.StagingView_replaceWithHeadRevision, selection, true));
 					else
 						menuMgr.add(createItem(ActionCommands.REPLACE_WITH_HEAD_ACTION, tableViewer));
+				if (addDelete) {
+					if (selectionIncludesNonWorkspaceResources) {
+						menuMgr.add(new DeleteAction(selection));
+					} else {
+						DeleteResourceAction deleteResourceAction = new DeleteResourceAction(getSite());
+						deleteResourceAction.selectionChanged(selection);
+						ActionContributionItem item = new ActionContributionItem(deleteResourceAction);
+						menuMgr.add(item);
+					}
+				}
 				if (addLaunchMergeTool)
 					menuMgr.add(createItem(ActionCommands.MERGE_TOOL_ACTION, tableViewer));
 			}
@@ -871,6 +895,44 @@ public class StagingView extends ViewPart {
 		}
 	}
 
+	private class DeleteAction extends Action {
+
+		private final IStructuredSelection selection;
+
+		DeleteAction(IStructuredSelection selection) {
+			super(UIText.StagingView_DeleteItemMenuLabel);
+			this.selection = selection;
+		}
+
+		@Override
+		public void run() {
+			boolean performAction = MessageDialog.openConfirm(form.getShell(),
+					UIText.DeleteResourcesAction_confirmActionTitle,
+					UIText.DeleteResourcesAction_confirmActionMessage);
+			if (!performAction)
+				return;
+
+			List<IResource> resources = getSelectedResources();
+			DeleteResourcesOperation operation = new DeleteResourcesOperation(resources);
+
+			try {
+				operation.execute(null);
+			} catch (CoreException e) {
+				Activator.handleError(UIText.StagingView_deleteFailed, e, true);
+			}
+		}
+
+		private List<IResource> getSelectedResources() {
+			List<IResource> resources = new ArrayList<IResource>();
+			Iterator iterator = selection.iterator();
+			while (iterator.hasNext()) {
+				StagingEntry stagingEntry = (StagingEntry) iterator.next();
+				resources.add(stagingEntry.getFile());
+			}
+			return resources;
+		}
+	}
+
 	private void replaceWith(String[] files, boolean headRevision) {
 		if (files == null || files.length == 0)
 			return;
@@ -896,7 +958,11 @@ public class StagingView extends ViewPart {
 		return result.toArray(new String[result.size()]);
 	}
 
-	private boolean isNonResourceSelection(ISelection selection) {
+	/**
+	 * @param selection
+	 * @return true if the selection includes a non-workspace resource, false otherwise
+	 */
+	private boolean selectionIncludesNonWorkspaceResources(ISelection selection) {
 		if (!(selection instanceof IStructuredSelection))
 			return false;
 		IStructuredSelection structuredSelection = (IStructuredSelection) selection;
@@ -907,10 +973,10 @@ public class StagingView extends ViewPart {
 				return false;
 			StagingEntry stagingEntry = (StagingEntry) selectedObject;
 			String path = currentRepository.getWorkTree() + "/" + stagingEntry.getPath(); //$NON-NLS-1$
-			if (getResource(path) != null)
-				return false;
+			if (getResource(path) == null)
+				return true;
 		}
-		return true;
+		return false;
 	}
 
 	private IFile getResource(String path) {
@@ -1423,6 +1489,9 @@ public class StagingView extends ViewPart {
 
 		if(cacheEntry != null)
 			cacheEntry.removeIndexDiffChangedListener(myIndexDiffListener);
+
+		if (undoRedoActionGroup != null)
+			undoRedoActionGroup.dispose();
 
 		new InstanceScope().getNode(
 				org.eclipse.egit.core.Activator.getPluginId())
