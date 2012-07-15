@@ -205,7 +205,7 @@ public class GitScmUrlImportWizardPage extends WizardPage implements
 	 * Updates the count of bundles that will be imported
 	 */
 	private void updateCount() {
-		counterLabel.setText(NLS.bind(Messages.GitScmUrlImportWizardPage_counter, new Integer(descriptions.length)));
+		counterLabel.setText(NLS.bind(Messages.GitScmUrlImportWizardPage_counter, Integer.valueOf(descriptions.length)));
 		counterLabel.getParent().layout();
 	}
 
