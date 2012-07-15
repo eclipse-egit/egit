@@ -42,7 +42,7 @@ public class SubmoduleSyncTest extends GitRepositoriesViewTestBase {
 
 	private static final String SYNC_SUBMODULE_CONTEXT_MENU_LABEL = "SubmoduleSyncCommand.label";
 
-	private static File repositoryFile;
+	private File repositoryFile;
 
 	@Before
 	public void before() throws Exception {
