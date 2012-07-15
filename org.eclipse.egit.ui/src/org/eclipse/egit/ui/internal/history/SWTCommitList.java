@@ -96,7 +96,7 @@ class SWTCommitList extends PlotCommitList<SWTCommitList.SWTLane> implements Dis
 	static class SWTLane extends PlotLane {
 		private static final long serialVersionUID = 1L;
 
-		final Color color;
+		final transient Color color;
 
 		public SWTLane(final Color color) {
 			this.color = color;

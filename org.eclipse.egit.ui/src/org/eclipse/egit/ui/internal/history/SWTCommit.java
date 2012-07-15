@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Widget;
 
 class SWTCommit extends PlotCommit<SWTCommitList.SWTLane> {
 	Widget widget;
-	private RevWalk walk;
+	private transient RevWalk walk;
 
 	SWTCommit(final AnyObjectId id, RevWalk walk) {
 		super(id);
