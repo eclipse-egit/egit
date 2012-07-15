@@ -17,8 +17,10 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IFile;
@@ -803,42 +805,17 @@ public class StagingView extends ViewPart {
 						openSelectionInEditor(tableViewer.getSelection());
 					}
 				};
-				boolean addReplaceWithFileInGitIndex = false;
-				boolean addReplaceWithHeadRevision = false;
-				boolean addStage = false;
-				boolean addUnstage = false;
-				boolean addLaunchMergeTool = false;
 				openWorkingTreeVersion.setEnabled(!submoduleSelected);
 				menuMgr.add(openWorkingTreeVersion);
 
-				StagingEntry stagingEntry = (StagingEntry) selection.getFirstElement();
-				switch (stagingEntry.getState()) {
-				case ADDED:
-					addUnstage = true;
-					break;
-				case CHANGED:
-					addReplaceWithHeadRevision = true;
-					addUnstage = true;
-					break;
-				case REMOVED:
-					addReplaceWithHeadRevision = true;
-					addUnstage = true;
-					break;
-				case CONFLICTING:
-					addReplaceWithFileInGitIndex = true;
-					addReplaceWithHeadRevision = true;
-					addStage = true;
-					addLaunchMergeTool = true;
-					break;
-				case MISSING:
-				case MODIFIED:
-				case PARTIALLY_MODIFIED:
-				case UNTRACKED:
-					addReplaceWithFileInGitIndex = true;
-					addReplaceWithHeadRevision = true;
-					addStage = true;
-					break;
-				}
+				Set<StagingEntry.Action> availableActions = getAvailableActions(selection);
+
+				boolean addReplaceWithFileInGitIndex = availableActions.contains(StagingEntry.Action.REPLACE_WITH_FILE_IN_GIT_INDEX);
+				boolean addReplaceWithHeadRevision = availableActions.contains(StagingEntry.Action.REPLACE_WITH_HEAD_REVISION);
+				boolean addStage = availableActions.contains(StagingEntry.Action.STAGE);
+				boolean addUnstage = availableActions.contains(StagingEntry.Action.UNSTAGE);
+				boolean addLaunchMergeTool = availableActions.contains(StagingEntry.Action.LAUNCH_MERGE_TOOL);
+
 				if (addStage)
 					menuMgr.add(new Action(UIText.StagingView_StageItemMenuLabel) {
 						@Override
@@ -969,6 +946,18 @@ public class StagingView extends ViewPart {
 		}
 		IWorkbenchPage page = window.getActivePage();
 		EgitUiEditorUtils.openEditor(file, page);
+	}
+
+	private static Set<StagingEntry.Action> getAvailableActions(IStructuredSelection selection) {
+		Set<StagingEntry.Action> availableActions = EnumSet.noneOf(StagingEntry.Action.class);
+		for (Iterator it = selection.iterator(); it.hasNext(); ) {
+			StagingEntry stagingEntry = (StagingEntry) it.next();
+			if (availableActions.isEmpty())
+				availableActions.addAll(stagingEntry.getAvailableActions());
+			else
+				availableActions.retainAll(stagingEntry.getAvailableActions());
+		}
+		return availableActions;
 	}
 
 	private CommandContributionItem createItem(String itemAction, final TableViewer tableViewer) {
