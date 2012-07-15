@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jgit.events.IndexChangedEvent;
+import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;
 import org.eclipse.team.internal.ui.synchronize.LocalResourceTypedElement;
 
@@ -124,7 +125,7 @@ public class LocalNonWorkspaceTypedElement extends LocalResourceTypedElement {
 					File file = ((IFile) resource).getFullPath().toFile();
 					try {
 						if (!file.exists())
-							file.createNewFile();
+							FileUtils.createNewFile(file);
 						out = new FileOutputStream(file);
 						out.write(getContent());
 						fDirty = false;
