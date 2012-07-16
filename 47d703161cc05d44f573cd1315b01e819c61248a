@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn///Bw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-07-16T00:02:15Z",
+      "side": 1,
+      "message": "style nit: no curly braces around single line blocks",
+      "revId": "47d703161cc05d44f573cd1315b01e819c61248a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
