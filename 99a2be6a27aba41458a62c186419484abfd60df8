@@ -16,6 +16,24 @@
       "revId": "99a2be6a27aba41458a62c186419484abfd60df8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+z0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-07-17T11:12:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn///GQ\u003d",
+      "revId": "99a2be6a27aba41458a62c186419484abfd60df8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
