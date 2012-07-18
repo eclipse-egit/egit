@@ -94,7 +94,7 @@ public class SimplePushSpecPage extends WizardPage {
 				new IRefListProvider() {
 					public List<Ref> getRefList() {
 						if (assist != null)
-							return assist.getRefsForContentAssist(false, true);
+							return assist.getRefsForContentAssist(false);
 
 						return Collections.emptyList();
 					}
@@ -166,7 +166,7 @@ public class SimplePushSpecPage extends WizardPage {
 			if (checkRemote == null)
 				checkRemote = sourceName;
 
-			for (Ref ref : assist.getRefsForContentAssist(false, true))
+			for (Ref ref : assist.getRefsForContentAssist(false))
 				if (ref.getName().equals(checkRemote))
 					remoteRefName.setText(checkRemote);
 		}
