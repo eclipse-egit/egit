@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//+p0\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2012-07-18T10:55:40Z",
+      "side": 1,
+      "message": "The comment is not correct:\n- there is already a version range (just no max specified)\n- it does not add it for all dependencies just \u0027team\u0027\n\n\u003d\u003d\u003e I would add it for all required bundles",
+      "revId": "416303979dd3c0173faf17f32c8dc9254c289006",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
