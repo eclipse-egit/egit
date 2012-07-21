@@ -107,6 +107,7 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
@@ -118,6 +119,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -543,6 +545,20 @@ public class StagingView extends ViewPart {
 		commitMessageComponent.attachControls(commitMessageText, authorText,
 				committerText);
 
+		// allow to commit with ctrl-enter
+		commitMessageText.getTextWidget().addVerifyKeyListener(new VerifyKeyListener() {
+			public void verifyKey(VerifyEvent event) {
+				if (UIUtils.isSubmitKeyEvent(event)) {
+					event.doit = false;
+					commit();
+				} else if (event.keyCode == SWT.TAB
+						&& (event.stateMask & SWT.SHIFT) == 0) {
+					event.doit = false;
+					authorText.setFocus();
+				}
+			}
+		});
+
 		ModifyListener modifyListener = new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateMessage();
@@ -659,6 +675,11 @@ public class StagingView extends ViewPart {
 				IAction.AS_PUSH_BUTTON) {
 			public void run() {
 				commit();
+			}
+
+			@Override
+			public String getToolTipText() {
+				return MessageFormat.format(UIText.StagingView_CommitToolTip, UIUtils.SUBMIT_KEY_STROKE.format());
 			}
 		};
 		commitAction.setImageDescriptor(UIIcons.COMMIT);
