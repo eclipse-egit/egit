@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -17,9 +18,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
-import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -32,24 +30,18 @@ import org.eclipse.jgit.lib.Repository;
 public class AddToIndexCommand extends RepositoriesViewCommandHandler<FileNode> {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		AddCommand addCommand = null;
-		List selectedNodes = getSelectedNodes(event);
-		for (Object selectedNode : selectedNodes) {
-			RepositoryTreeNode node = (RepositoryTreeNode) selectedNode;
-			if (addCommand == null)
-				addCommand = new Git(node.getRepository()).add();
-			Repository repository = node.getRepository();
-			IPath path;
-			if (node.getType().equals(RepositoryTreeNodeType.FOLDER))
-				path = new Path(((FolderNode) node).getObject()
-						.getAbsolutePath());
-			else if (node.getType().equals(RepositoryTreeNodeType.FILE))
-				path = new Path(((FileNode) node).getObject().getAbsolutePath());
-			else
-				path = new Path(repository.getWorkTree().getAbsolutePath());
+		List<FileNode> selectedNodes = getSelectedNodes(event);
+		if (selectedNodes.isEmpty() || selectedNodes.get(0).getRepository() == null)
+			return null;
+
+		Repository repository = selectedNodes.get(0).getRepository();
+		IPath workTreePath = new Path(repository.getWorkTree().getAbsolutePath());
+
+		AddCommand addCommand = new Git(repository).add();
+
+		Collection<IPath> paths = getSelectedFileAndFolderPaths(event);
+		for (IPath path : paths) {
 			String repoRelativepath;
-			IPath workTreePath = new Path(repository.getWorkTree()
-					.getAbsolutePath());
 			if (path.equals(workTreePath))
 				repoRelativepath = "."; //$NON-NLS-1$
 			else
@@ -58,13 +50,12 @@ public class AddToIndexCommand extends RepositoriesViewCommandHandler<FileNode> 
 						.setDevice(null).toString();
 			addCommand.addFilepattern(repoRelativepath);
 		}
-		if (addCommand != null)
-			try {
-				addCommand.call();
-			} catch (GitAPIException e) {
-				Activator.logError(UIText.AddToIndexCommand_addingFilesFailed,
-						e);
-			}
+		try {
+			addCommand.call();
+		} catch (GitAPIException e) {
+			Activator.logError(UIText.AddToIndexCommand_addingFilesFailed,
+					e);
+		}
 		return null;
 	}
 
