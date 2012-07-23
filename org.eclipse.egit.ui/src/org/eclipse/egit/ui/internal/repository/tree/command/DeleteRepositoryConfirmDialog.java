@@ -87,7 +87,7 @@ public class DeleteRepositoryConfirmDialog extends TitleAreaDialog {
 			GridDataFactory.fillDefaults().grab(true, false).applyTo(removeProjects);
 			removeProjects
 				.setText(NLS
-						.bind(UIText.RepositoriesView_ConfirmProjectDeletion_Question,
+						.bind(UIText.DeleteRepositoryConfirmDialog_DeleteProjectsCheckbox,
 								Integer.valueOf(numberOfProjects)));
 		} else
 			removeProjects.setVisible(false);

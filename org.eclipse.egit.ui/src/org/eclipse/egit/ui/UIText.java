@@ -2940,6 +2940,9 @@ public class UIText extends NLS {
 	public static String DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox;
 
 	/** */
+	public static String DeleteRepositoryConfirmDialog_DeleteProjectsCheckbox;
+
+	/** */
 	public static String DeleteTagCommand_messageConfirmMultipleTag;
 
 	/** */
