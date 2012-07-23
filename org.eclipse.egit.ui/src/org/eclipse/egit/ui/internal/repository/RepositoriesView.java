@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2011 SAP AG and others.
+ * Copyright (c) 2010, 2012 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Dariusz Luksza <dariusz@luksza.org> - add synchronization feature
  *    Daniel Megert <daniel_megert@ch.ibm.com> - Only check out on double-click
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - Don't reveal selection on refresh
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -626,23 +627,18 @@ public class RepositoriesView extends CommonNavigator {
 											.getLocation(),
 									"Starting async update job"); //$NON-NLS-1$
 						}
-						// keep expansion state and selection so that we can
-						// restore the tree
-						// after update
-						Object[] expanded = tv.getExpandedElements();
-						IStructuredSelection sel = (IStructuredSelection) tv
-								.getSelection();
 
-						if (needsNewInput)
+
+						if (needsNewInput) {
+							// keep expansion state and selection so that we can
+							// restore the tree
+							// after update
+							Object[] expanded = tv.getExpandedElements();
 							tv.setInput(ResourcesPlugin.getWorkspace()
 									.getRoot());
-						else
+							tv.setExpandedElements(expanded);
+						} else
 							tv.refresh(true);
-						tv.setExpandedElements(expanded);
-
-						Object selected = sel.getFirstElement();
-						if (selected != null)
-							tv.reveal(selected);
 
 						IViewPart part = PlatformUI.getWorkbench()
 								.getActiveWorkbenchWindow().getActivePage()
