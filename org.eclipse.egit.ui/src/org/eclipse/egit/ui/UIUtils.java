@@ -20,6 +20,7 @@ import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.ui.internal.RepositorySaveableFilter;
 import org.eclipse.egit.ui.internal.components.RefContentProposal;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
@@ -56,6 +57,8 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;
 
@@ -611,5 +614,19 @@ public class UIUtils {
 		} catch (NotHandledException e) {
 			Activator.handleError(e.getMessage(), e, false);
 		}
+	}
+
+	/**
+	 * Prompt for saving all dirty editors for resources in the working
+	 * directory of the specified repository.
+	 *
+	 * @param repository
+	 * @return true, if the user opted to continue, false otherwise
+	 * @see IWorkbench#saveAllEditors(boolean)
+	 */
+	public static boolean saveAllEditors(Repository repository) {
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+		return workbench.saveAll(window, window, new RepositorySaveableFilter(repository), true);
 	}
 }
