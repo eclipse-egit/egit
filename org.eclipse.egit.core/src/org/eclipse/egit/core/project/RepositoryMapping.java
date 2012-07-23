@@ -194,10 +194,24 @@ public class RepositoryMapping {
 	 *         <code>null</code> if the path cannot be determined.
 	 */
 	public String getRepoRelativePath(final IResource rsrc) {
-		final int pfxLen = workdirPrefix.length();
 		IPath location = rsrc.getLocation();
 		if (location == null)
 			location = rsrc.getFullPath();
+		return getRepoRelativePath(location);
+	}
+
+	/**
+	 * This method should only be called for resources that are actually in this
+	 * repository, so we can safely assume that their path prefix matches
+	 * {@link #getWorkTree()}. Testing that here is rather expensive so we don't
+	 * bother.
+	 *
+	 * @param location
+	 * @return the path relative to the Git repository, including base name.
+	 *         <code>null</code> if the path cannot be determined.
+	 */
+	public String getRepoRelativePath(IPath location) {
+		final int pfxLen = workdirPrefix.length();
 		final String p = location.toString();
 		final int pLen = p.length();
 		if (pLen > pfxLen)
@@ -230,6 +244,36 @@ public class RepositoryMapping {
 			return null;
 
 		return ((GitProvider)rp).getData().getRepositoryMapping(resource);
+	}
+
+	/**
+	 * Get the repository mapping for a path if it exists.
+	 *
+	 * @param path
+	 * @return the RepositoryMapping for this path,
+	 *         or null for non GitProvider.
+	 */
+	public static RepositoryMapping getMapping(IPath path) {
+		IPath fullPath = path.removeLastSegments(1);
+		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
+				.getProjects();
+
+		for (IProject project : projects) {
+			if (isNonWorkspace(project))
+				continue;
+			RepositoryMapping mapping = getMapping(project);
+			if (mapping == null)
+				continue;
+
+			Path workingTree = new Path(mapping.getWorkTree().toString());
+			IPath relative = fullPath.makeRelativeTo(workingTree);
+			String firstSegment = relative.segment(0);
+
+			if (firstSegment == null || !"..".equals(firstSegment)) //$NON-NLS-1$
+				return mapping;
+		}
+
+		return null;
 	}
 
 	/**
@@ -269,26 +313,6 @@ public class RepositoryMapping {
 
 	private static RepositoryMapping getMappingForNonWorkspaceResource(
 			final IResource resource) {
-		IPath fullPath = resource.getFullPath().removeLastSegments(1);
-		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
-				.getProjects();
-
-		for (IProject project : projects) {
-			if (isNonWorkspace(project))
-				continue;
-			RepositoryMapping mapping = getMapping(project);
-			if (mapping == null)
-				continue;
-
-			Path workingTree = new Path(mapping.getWorkTree().toString());
-			IPath relative = fullPath.makeRelativeTo(workingTree);
-			String firstSegment = relative.segment(0);
-
-			if (firstSegment == null || !"..".equals(firstSegment)) //$NON-NLS-1$
-				return mapping;
-		}
-
-		return null;
+		return getMapping(resource.getFullPath());
 	}
-
 }
