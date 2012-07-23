@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//+Ts\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-23T15:20:26Z",
+      "side": 1,
+      "message": "I don\u0027t get this: does the result of `getInitialSize()` change after the first invocation or why is it called twice?",
+      "revId": "5a5cb6df87cfcaee4565b7f562a2eeca84442131",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
