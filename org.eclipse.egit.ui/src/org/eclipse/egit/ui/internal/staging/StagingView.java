@@ -1472,6 +1472,10 @@ public class StagingView extends ViewPart {
 		}
 		if (!commitMessageComponent.checkCommitInfo())
 			return;
+
+		if (!UIUtils.saveAllEditors(currentRepository))
+			return;
+
 		String commitMessage = commitMessageComponent.getCommitMessage();
 		CommitOperation commitOperation = null;
 		try {
