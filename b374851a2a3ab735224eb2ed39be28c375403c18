@@ -33,6 +33,24 @@
       "revId": "b374851a2a3ab735224eb2ed39be28c375403c18",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+Rs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-07-23T21:58:59Z",
+      "side": 1,
+      "message": "I see; the text is reused in two different dialogs. I always get the title though. Will break out the strings.",
+      "parentUuid": "AABOIn//+TI\u003d",
+      "revId": "b374851a2a3ab735224eb2ed39be28c375403c18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
