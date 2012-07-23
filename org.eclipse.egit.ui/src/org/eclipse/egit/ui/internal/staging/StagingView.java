@@ -39,6 +39,7 @@ import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.DeleteResourcesOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -141,6 +142,7 @@ import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.operations.UndoRedoActionGroup;
@@ -1452,7 +1454,12 @@ public class StagingView extends ViewPart {
 		}
 		if (!commitMessageComponent.checkCommitInfo())
 			return;
+
 		final Repository repository = currentRepository;
+		IProject[] projects = ProjectUtil.getProjects(repository);
+		if (!IDE.saveAllEditors(projects, true))
+			return;
+
 		String commitMessage = commitMessageComponent.getCommitMessage();
 		CommitOperation commitOperation = null;
 		try {
