@@ -57,6 +57,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE;
 
 /**
  * UI component for performing a commit
@@ -113,16 +114,17 @@ public class CommitUI  {
 	 * Performs a commit
 	 */
 	public void commit() {
+		final IProject[] projects = getProjectsOfRepositories();
+
 		// let's see if there is any dirty editor around and
 		// ask the user if they want to save or abort
-		if (!PlatformUI.getWorkbench().saveAllEditors(true)) {
+		if (!IDE.saveAllEditors(projects, true)) {
 			return;
 		}
 
 		BasicConfigurationDialog.show(new Repository[]{repo});
 
 		resetState();
-		final IProject[] projects = getProjectsOfRepositories();
 		try {
 			PlatformUI.getWorkbench().getProgressService().busyCursorWhile(new IRunnableWithProgress() {
 
