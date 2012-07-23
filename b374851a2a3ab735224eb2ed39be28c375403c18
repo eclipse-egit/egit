@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//+TE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-23T15:55:26Z",
+      "side": 1,
+      "message": "This one is ok.",
+      "revId": "b374851a2a3ab735224eb2ed39be28c375403c18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//+TI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-23T15:55:26Z",
+      "side": 1,
+      "message": "This doesn\u0027t work as on certain platforms (OS X, GNOME 3), the title of the modal dialog is not displayed. This is what it looks for me:\n\nhttp://imgur.com/osJhS",
+      "revId": "b374851a2a3ab735224eb2ed39be28c375403c18",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
