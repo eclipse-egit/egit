@@ -9,11 +9,18 @@
 package org.eclipse.egit.core.internal.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.resources.mapping.ResourceMappingContext;
+import org.eclipse.core.resources.mapping.ResourceTraversal;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
 
@@ -64,4 +71,33 @@ public class ResourceUtil {
 		return resource.getLocation() == null;
 	}
 
+	/**
+	 * Get all the resources behind the model element.
+	 *
+	 * @param element
+	 * @return the resources (may be empty)
+	 */
+	public static Collection<IResource> getMappedResources(Object element) {
+		ResourceMapping mapping = AdapterUtils.adapt(element, ResourceMapping.class);
+		if (mapping != null) {
+			try {
+				Collection<IResource> result = new ArrayList<IResource>();
+				ResourceTraversal[] traversals = mapping.getTraversals(
+						ResourceMappingContext.LOCAL_CONTEXT, null);
+				for (ResourceTraversal traversal : traversals) {
+					IResource[] resources = traversal.getResources();
+					result.addAll(Arrays.asList(resources));
+				}
+				return result;
+			} catch (CoreException e) {
+				return Collections.emptyList();
+			}
+		}
+
+		IResource resource = AdapterUtils.adapt(element, IResource.class);
+		if (resource != null)
+			return Arrays.asList(resource);
+
+		return Collections.emptyList();
+	}
 }
