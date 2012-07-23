@@ -3012,6 +3012,32 @@
                </and>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.egit.ui.RepositoriesDeleteFile"
+               icon="/icons/obj16/delete_obj.gif"
+               label="%RepoViewDeleteFile.label"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.FileNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
          <menu
                id="org.eclipse.egit.ui.RepositoriesViewShowIn"
                label="%ShowIn"
@@ -3929,6 +3955,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.AddToIndexCommand"
             id="org.eclipse.egit.ui.RepositoriesViewAddToIndex"
             name="%AddToIndexCommand">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.repository.tree.command.DeleteFileCommand"
+            id="org.eclipse.egit.ui.RepositoriesDeleteFile"
+            name="%DeleteFileCommand">
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"

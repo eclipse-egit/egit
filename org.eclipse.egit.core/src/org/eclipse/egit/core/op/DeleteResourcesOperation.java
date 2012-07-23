@@ -85,7 +85,7 @@ public class DeleteResourcesOperation implements IEGitOperation {
 				File file = resource.getFullPath().toFile();
 				if (file.exists()) {
 					try {
-						FileUtils.delete(file);
+						FileUtils.delete(file, FileUtils.RECURSIVE);
 					} catch (IOException e) {
 						errorOccurred = true;
 						String message = MessageFormat
