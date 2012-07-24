@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//+QE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-24T08:20:49Z",
+      "side": 1,
+      "message": "You apparently forgot to re-add the question here (modal dialog without title).",
+      "revId": "5cd9f36bad4db96e28d8b6911a79dce60c818078",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
