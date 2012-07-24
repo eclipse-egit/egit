@@ -12,6 +12,7 @@
 package org.eclipse.egit.ui.internal.decorators;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
@@ -435,6 +436,31 @@ public class DecoratableResourceAdapterTest extends LocalDiskRepositoryTestCase 
 
 		assertArrayEquals(expectedDRs, actualDRs);
 	}
+
+	@Test
+	public void testDecorationDeletedFile() throws Exception {
+		// Create new file
+		File f = new File(project.getLocation().toFile(), TEST_FILE);
+		write(f, "Something");
+		project.refreshLocal(IResource.DEPTH_INFINITE, null);
+		// Add and commit file
+		git.add().addFilepattern(".").call();
+		git.commit().setMessage("First commit").call();
+
+		// Delete file
+		FileUtils.delete(f);
+
+		IDecoratableResource expectedDR = new TestDecoratableResource(project,
+				true, false, true, false, Staged.NOT_STAGED);
+
+		waitForIndexDiffUpdate(true);
+		IndexDiffData indexDiffData = indexDiffCacheEntry.getIndexDiff();
+		IDecoratableResource actualDR = new DecoratableResourceAdapter(
+				indexDiffData, project);
+
+		assertEquals(expectedDR, actualDR);
+	}
+
 }
 
 class TestDecoratableResource extends DecoratableResource {
