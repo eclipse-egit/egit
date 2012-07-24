@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//+PU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-24T10:58:43Z",
+      "side": 1,
+      "message": "Is this a policy thing? Because if everybody did that, the whole git log of this file would be here (76 lines). Just asking, maybe there is a situation where this information is useful outside of log/blame.",
+      "revId": "df6717090bb7708e238e9219c0f17fac49da1604",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
