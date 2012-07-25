@@ -42,6 +42,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.IDecoration;
+import org.eclipse.jface.viewers.IDecorationContext;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
@@ -76,6 +77,12 @@ public class GitLightweightDecorator extends LabelProvider implements
 	 * decorator
 	 */
 	public static final String DECORATOR_ID = "org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator"; //$NON-NLS-1$
+
+	/**
+	 * Property for use as a key in {@link IDecorationContext} to disable this
+	 * decorator. Set to {@link Boolean#TRUE} to disable.
+	 */
+	public static final String DISABLED = "GIT_LIGHTWEIGHT_DECORATOR_DISABLED"; //$NON-NLS-1$
 
 	/**
 	 * Collector for keeping the error view from filling up with exceptions
@@ -153,6 +160,10 @@ public class GitLightweightDecorator extends LabelProvider implements
 	public void decorate(Object element, IDecoration decoration) {
 		// Don't decorate if UI plugin is not running
 		if (Activator.getDefault() == null)
+			return;
+
+		Object disabled = decoration.getDecorationContext().getProperty(DISABLED);
+		if (disabled instanceof Boolean && ((Boolean) disabled).booleanValue() == true)
 			return;
 
 		// Don't decorate if the workbench is not running
