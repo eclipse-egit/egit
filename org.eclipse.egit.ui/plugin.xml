@@ -522,6 +522,20 @@
             %Decorator_description
          </description>
       </decorator>
+      <decorator
+            lightweight="true"
+            label="%ProblemDecorator_name"
+            class="org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator"
+            state="true"
+            location="BOTTOM_LEFT"
+            id="org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator">
+            <enablement>
+              <objectClass name="org.eclipse.egit.ui.internal.decorators.IProblemDecoratable"/>
+            </enablement>
+         <description>
+            %ProblemDecorator_description
+         </description>
+      </decorator>
    </extension>
 
    <extension point="org.eclipse.ui.themes">
