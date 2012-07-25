@@ -16,6 +16,24 @@
       "revId": "5a5cb6df87cfcaee4565b7f562a2eeca84442131",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//9/w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2012-07-25T15:03:28Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s a bit tricky. The basic problem is that the infrastructure that uses Dialog#getDialogBoundsStrategy() only supports persisting the size (width \u0026 height together), but not just one of the dimensions.\n\nThe trick here is that we:\n1. compute the default height (not using any persisted value)\n2. temporarily set \"persistSize \u003d true\", which will affect our getDialogBoundsStrategy()\n3. call super.getInitialSize() to get the persisted size\n4. return a Point with persisted width and default height\n\nAnd the reason for all this is to improve UI stability and readability. Now that multi-selection is supported in the MultiPullResultDialog and that the PullResultDialog shows the repository name in the title, it\u0027s better to use full-width dialogs all the time.",
+      "parentUuid": "AABOIn//+Ts\u003d",
+      "revId": "5a5cb6df87cfcaee4565b7f562a2eeca84442131",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
