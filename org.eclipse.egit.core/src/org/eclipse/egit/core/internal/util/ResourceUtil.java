@@ -18,6 +18,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
 
@@ -39,6 +40,24 @@ public class ResourceUtil {
 		if (file != null)
 			return file;
 		return root.getContainerForLocation(location);
+	}
+
+	/**
+	 * Get the {@link IFile} corresponding to the arguments, using
+	 * {@link IWorkspaceRoot#getFileForLocation(org.eclipse.core.runtime.IPath)}
+	 * .
+	 *
+	 * @param repository
+	 *            the repository of the file
+	 * @param repoRelativePath
+	 *            the repository-relative path of the file to search for
+	 * @return the IFile corresponding to this path, or null
+	 */
+	public static IFile getFileForLocation(Repository repository,
+			String repoRelativePath) {
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IPath path = new Path(repository.getWorkTree().getAbsolutePath()).append(repoRelativePath);
+		return root.getFileForLocation(path);
 	}
 
 	/**

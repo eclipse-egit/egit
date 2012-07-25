@@ -55,6 +55,7 @@ import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.commit.CommitUI;
 import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel;
+import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponent;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentState;
@@ -77,6 +78,7 @@ import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ContentViewer;
+import org.eclipse.jface.viewers.DecoratingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
@@ -346,7 +348,7 @@ public class StagingView extends ViewPart {
 		unstagedTableViewer.getTable().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TREE_BORDER);
 		unstagedTableViewer.getTable().setLinesVisible(true);
-		unstagedTableViewer.setLabelProvider(createLabelProvider());
+		unstagedTableViewer.setLabelProvider(createLabelProvider(unstagedTableViewer));
 		unstagedTableViewer.setContentProvider(new StagingViewContentProvider(
 				true));
 		unstagedTableViewer.addDragSupport(DND.DROP_MOVE | DND.DROP_COPY
@@ -466,7 +468,7 @@ public class StagingView extends ViewPart {
 		stagedTableViewer.getTable().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TREE_BORDER);
 		stagedTableViewer.getTable().setLinesVisible(true);
-		stagedTableViewer.setLabelProvider(createLabelProvider());
+		stagedTableViewer.setLabelProvider(createLabelProvider(stagedTableViewer));
 		stagedTableViewer.setContentProvider(new StagingViewContentProvider(
 				false));
 		stagedTableViewer.addDragSupport(
@@ -736,11 +738,13 @@ public class StagingView extends ViewPart {
 		undoRedoActionGroup.fillActionBars(actionBars);
 	}
 
-	private IBaseLabelProvider createLabelProvider() {
+	private IBaseLabelProvider createLabelProvider(TableViewer tableViewer) {
 		StagingViewLabelProvider baseProvider = new StagingViewLabelProvider();
 		baseProvider.setFileNameMode(getPreferenceStore().getBoolean(
 				UIPreferences.STAGING_VIEW_FILENAME_MODE));
-		return new DelegatingStyledCellLabelProvider(baseProvider);
+
+		ProblemLabelDecorator decorator = new ProblemLabelDecorator(tableViewer);
+		return new DecoratingStyledCellLabelProvider(baseProvider, decorator, null);
 	}
 
 	private IPreferenceStore getPreferenceStore() {
