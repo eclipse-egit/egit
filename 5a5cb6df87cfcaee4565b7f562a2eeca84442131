@@ -88,6 +88,24 @@
       "revId": "5a5cb6df87cfcaee4565b7f562a2eeca84442131",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//95o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-26T13:33:49Z",
+      "side": 1,
+      "message": "Right :/. Ok, just a minor code change then, to make this a bit more clear:\n\n* Extract the persistSize \u003d true and try block into a method int getPersistedWidth.\n* Then the code reads like this:\n\n    int persistedWidth \u003d getPersistedWidth();\n    return new Point(persistedWidth, defaultHeight);\n\nAgreed?",
+      "parentUuid": "AABOIn//97s\u003d",
+      "revId": "5a5cb6df87cfcaee4565b7f562a2eeca84442131",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
