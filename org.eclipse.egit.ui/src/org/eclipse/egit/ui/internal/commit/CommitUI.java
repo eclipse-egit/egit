@@ -161,7 +161,7 @@ public class CommitUI  {
 				if (!result)
 					return;
 				amending = true;
-			} else {
+			} else if (!CommitHelper.isCommitWithoutFilesAllowed(repo)) {
 				MessageDialog.openWarning(shell,
 						UIText.CommitAction_noFilesToCommit,
 						UIText.CommitAction_amendNotPossible);
