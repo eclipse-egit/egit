@@ -36,6 +36,7 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
+import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.dialogs.CommitItem.Status;
@@ -933,8 +934,7 @@ public class CommitDialog extends TitleAreaDialog {
 		if (commitMsg == null || commitMsg.trim().length() == 0) {
 			message = UIText.CommitDialog_Message;
 			type = IMessageProvider.INFORMATION;
-		} else if (filesViewer.getCheckedElements().length == 0
-				&& !amendingItem.getSelection()) {
+		} else if (!isCommitWithoutFilesAllowed()) {
 			message = UIText.CommitDialog_MessageNoFilesSelected;
 			type = IMessageProvider.INFORMATION;
 		} else {
@@ -946,6 +946,16 @@ public class CommitDialog extends TitleAreaDialog {
 		setMessage(message, type);
 		commitButton.setEnabled(type == IMessageProvider.WARNING
 				|| type == IMessageProvider.NONE);
+	}
+
+	private boolean isCommitWithoutFilesAllowed() {
+		if (filesViewer.getCheckedElements().length > 0)
+			return true;
+
+		if (amendingItem.getSelection())
+			return true;
+
+		return CommitHelper.isCommitWithoutFilesAllowed(repository);
 	}
 
 	private Collection<String> getFileList() {
@@ -1062,6 +1072,11 @@ public class CommitDialog extends TitleAreaDialog {
 
 	@Override
 	protected void okPressed() {
+		if (!isCommitWithoutFilesAllowed()) {
+			MessageDialog.openWarning(getShell(), UIText.CommitDialog_ErrorNoItemsSelected, UIText.CommitDialog_ErrorNoItemsSelectedToBeCommitted);
+			return;
+		}
+
 		if (!commitMessageComponent.checkCommitInfo())
 			return;
 
@@ -1075,11 +1090,6 @@ public class CommitDialog extends TitleAreaDialog {
 		author = commitMessageComponent.getAuthor();
 		committer = commitMessageComponent.getCommitter();
 		createChangeId = changeIdItem.getSelection();
-
-		if (selectedFiles.isEmpty() && !amending) {
-			MessageDialog.openWarning(getShell(), UIText.CommitDialog_ErrorNoItemsSelected, UIText.CommitDialog_ErrorNoItemsSelectedToBeCommitted);
-			return;
-		}
 
 		IDialogSettings settings = org.eclipse.egit.ui.Activator
 			.getDefault().getDialogSettings();

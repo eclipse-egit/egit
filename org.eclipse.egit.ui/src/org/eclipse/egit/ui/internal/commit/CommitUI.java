@@ -154,14 +154,14 @@ public class CommitUI  {
 		}
 		boolean amendAllowed = commitHelper.amendAllowed();
 		if (files.isEmpty()) {
-			if (amendAllowed && commitHelper.getPreviousCommit() != null) {
+			if (amendAllowed) {
 				boolean result = MessageDialog.openQuestion(shell,
 						UIText.CommitAction_noFilesToCommit,
 						UIText.CommitAction_amendCommit);
 				if (!result)
 					return;
 				amending = true;
-			} else {
+			} else if (!commitHelper.isCommitWithoutFilesAllowed()) {
 				MessageDialog.openWarning(shell,
 						UIText.CommitAction_noFilesToCommit,
 						UIText.CommitAction_amendNotPossible);
