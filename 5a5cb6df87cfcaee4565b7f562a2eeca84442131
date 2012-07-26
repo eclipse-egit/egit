@@ -70,6 +70,24 @@
       "revId": "5a5cb6df87cfcaee4565b7f562a2eeca84442131",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//97s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2012-07-26T11:20:04Z",
+      "side": 1,
+      "message": "Sorry, the \"actual\" would be worse, since it sometimes restores a wrong height:\n- actual: persist size of all dialogs; restore width in all dialogs; only restore height of big dialogs, but restore it to the last stored value, which could be the height of a small dialog",
+      "parentUuid": "AABOIn//970\u003d",
+      "revId": "5a5cb6df87cfcaee4565b7f562a2eeca84442131",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
