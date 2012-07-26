@@ -106,6 +106,24 @@
       "revId": "5a5cb6df87cfcaee4565b7f562a2eeca84442131",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//94s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2012-07-26T15:40:14Z",
+      "side": 1,
+      "message": "Problems of getPersistedWidth():\n- throws away a Point object which has to be re-created on the next line\n- getPersistedWidth() would either only work for persistSize\u003d\u003dfalse dialogs, or would need to be more complicated and save the old value of persistSize in a temp variable\n\nI would keep my code, but maybe add an explanation\n// For \"small\" dialogs with label-only results, use the default height and the persisted width\n\nBut feel free to go with getPersistedWidth() or getPersistedSize() if you really think that\u0027s clearer.",
+      "parentUuid": "AABOIn//95o\u003d",
+      "revId": "5a5cb6df87cfcaee4565b7f562a2eeca84442131",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
