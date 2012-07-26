@@ -34,6 +34,24 @@
       "revId": "5a5cb6df87cfcaee4565b7f562a2eeca84442131",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//98Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-07-26T09:52:57Z",
+      "side": 1,
+      "message": "I see. I wonder if there\u0027s another way. Would the following work?:\n\n* getDialogBoundsStrategy always uses DIALOG_PERSISTSIZE.\n* rename persistSize to usePersistedHeight\n\nin getInitialSize:\n\n\t\tPoint size \u003d super.getInitialSize();\n\t\tif (!usePersistedHeight) {\n\t\t\tPoint defaultSize \u003d getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT, true);\n\t\t\tsize.y \u003d defaultSize.y;\n\t\t}\n\t\treturn size;",
+      "parentUuid": "AABOIn//9/w\u003d",
+      "revId": "5a5cb6df87cfcaee4565b7f562a2eeca84442131",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
