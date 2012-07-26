@@ -1443,8 +1443,7 @@ public class StagingView extends ViewPart {
 	}
 
 	private void commit() {
-		if (stagedTableViewer.getTable().getItemCount() == 0
-				&& !amendPreviousCommitAction.isChecked()) {
+		if (!isCommitWithoutFilesAllowed()) {
 			MessageDialog.openError(getSite().getShell(),
 					UIText.StagingView_committingNotPossible,
 					UIText.StagingView_noStagedFiles);
@@ -1452,11 +1451,10 @@ public class StagingView extends ViewPart {
 		}
 		if (!commitMessageComponent.checkCommitInfo())
 			return;
-		final Repository repository = currentRepository;
 		String commitMessage = commitMessageComponent.getCommitMessage();
 		CommitOperation commitOperation = null;
 		try {
-			commitOperation = new CommitOperation(repository,
+			commitOperation = new CommitOperation(currentRepository,
 					commitMessageComponent.getAuthor(),
 					commitMessageComponent.getCommitter(),
 					commitMessage);
@@ -1472,6 +1470,16 @@ public class StagingView extends ViewPart {
 		CommitMessageHistory.saveCommitHistory(commitMessage);
 		clearCommitMessageToggles();
 		commitMessageText.setText(EMPTY_STRING);
+	}
+
+	private boolean isCommitWithoutFilesAllowed() {
+		if (stagedTableViewer.getTable().getItemCount() > 0)
+			return true;
+
+		if (amendPreviousCommitAction.isChecked())
+			return true;
+
+		return CommitHelper.isCommitWithoutFilesAllowed(currentRepository);
 	}
 
 	@Override
