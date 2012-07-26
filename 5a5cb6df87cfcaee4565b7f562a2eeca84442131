@@ -52,6 +52,24 @@
       "revId": "5a5cb6df87cfcaee4565b7f562a2eeca84442131",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//970\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2012-07-26T11:14:16Z",
+      "side": 1,
+      "message": "\u003e Would the following work?:\n\nI don\u0027t think it would do what we want. This would always persist width \u0026 height when a dialog is closed. Persisting of the height would override the user-chosen height for the big dialog, so that value would be lost.\n\nIn JUnit-speak:\n- expected: only persist size of big dialog; in small dialog, only restore width\n- actual: only persist \u0026 restore width of all dialogs",
+      "parentUuid": "AABOIn//98Q\u003d",
+      "revId": "5a5cb6df87cfcaee4565b7f562a2eeca84442131",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
