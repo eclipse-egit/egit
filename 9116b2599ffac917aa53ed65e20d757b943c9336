@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//9vE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-07-27T05:58:01Z",
+      "side": 1,
+      "message": "Keep only one of these. Don\u0027t litter code with methods that just maybe might be useful to others. The static method serves all well.",
+      "revId": "9116b2599ffac917aa53ed65e20d757b943c9336",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//9vA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-07-27T05:58:01Z",
+      "side": 1,
+      "message": "What does this have to do with anything?",
+      "revId": "9116b2599ffac917aa53ed65e20d757b943c9336",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
