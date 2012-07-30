@@ -16,6 +16,24 @@
       "revId": "40b3868aae1a9d647093a5d30f19356042f29efd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//9fs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullResultDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2012-07-30T17:08:06Z",
+      "side": 1,
+      "message": "It\u0027s the \"nontrivial\" in \"only persist height for nontrivial\ncontent\".\n\nSee further down in createDialogArea(..), where the \"else if (hasRebaseResults())\" branch only creates one-line labels. \"hasUpdates\" is not the condition we should use here.\n\nWe don\u0027t want to persist the size of the \"small\" dialogs, that\u0027s why I renamed the field from \"hasUpdates\" to \"persistSize\" when I fixed the condition.",
+      "parentUuid": "AABOIn//9xM\u003d",
+      "revId": "40b3868aae1a9d647093a5d30f19356042f29efd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
