@@ -23,11 +23,14 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 
 /**
- * Action for selecting a commit and merging it with the current branch.
+ * Action to start the Merge Tool.
  */
 public class MergeToolActionHandler extends RepositoryActionHandler {
 
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
+		Repository  repo = getRepository(true, event);
+		if (repo == null)
+			return null;
 		int mergeMode = Activator.getDefault().getPreferenceStore().getInt(
 				UIPreferences.MERGE_MODE);
 		CompareEditorInput input;
@@ -47,10 +50,10 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 	}
 
 	public boolean isEnabled() {
-		Repository[] repos = getRepositoriesFor(getProjectsForSelectedResources());
-		if (repos.length != 1)
+		Repository  repo = getRepository();
+		if (repo == null)
 			return false;
-		switch (repos[0].getRepositoryState()) {
+		switch (repo.getRepositoryState()) {
 		case MERGING:
 			// fall through
 		case CHERRY_PICKING:

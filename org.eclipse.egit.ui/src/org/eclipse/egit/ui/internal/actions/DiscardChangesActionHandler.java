@@ -13,7 +13,6 @@ package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -75,16 +74,9 @@ public class DiscardChangesActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		for (IResource res : getSelectedResources()) {
-			IProject[] proj = new IProject[] { res.getProject() };
-			Repository[] repositories = getRepositoriesFor(proj);
-			if (repositories.length == 0)
-				return false;
-			Repository repository = repositories[0];
-			if (!repository.getRepositoryState().equals(RepositoryState.SAFE))
-				return false;
-		}
-		return true;
+		Repository repo = getRepository();
+		return repo!=null
+				&& repo.getRepositoryState().equals(RepositoryState.SAFE);
 	}
 
 	private DiscardChangesOperation createOperation(IWorkbenchPart part,

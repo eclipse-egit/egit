@@ -1619,7 +1619,7 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 					continue;
 				if (db != map.getRepository())
 					throw new IllegalStateException(
-							UIText.AbstractHistoryCommanndHandler_NoUniqueRepository);
+							UIText.RepositoryAction_multiRepoSelection);
 
 				if (showAllFilter == ShowFilter.SHOWALLFOLDER) {
 					final String path;

@@ -115,15 +115,18 @@ public class GitScopeUtil {
 	}
 
 	/**
-	 * Returns all resource mappings for the given resources
+	 * Returns all resource mappings for the given resources.
+	 * Linked resources are ignored.
 	 *
 	 * @param resources
 	 * @return ResourceMappings
 	 */
 	private static ResourceMapping[] getResourceMappings(IResource[] resources) {
 		List<ResourceMapping> result = new ArrayList<ResourceMapping>();
-		for (IResource resource : resources)
-			result.add(getResourceMapping(resource));
+		for (IResource resource : resources) {
+			if (!resource.isLinked(IResource.CHECK_ANCESTORS))
+				result.add(getResourceMapping(resource));
+		}
 		return result.toArray(new ResourceMapping[result.size()]);
 	}
 

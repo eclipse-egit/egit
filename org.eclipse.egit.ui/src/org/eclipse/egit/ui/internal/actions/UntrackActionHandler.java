@@ -31,8 +31,16 @@ public class UntrackActionHandler extends RepositoryActionHandler {
 		IResource[] resources = getSelectedResources();
 		if (resources.length == 0)
 			return null;
+		if (selectionContainsLinkedResources())
+			throw new ExecutionException(
+					"Unexpected Linked Resources in selection"); //$NON-NLS-1$
 		JobUtil.scheduleUserJob(new UntrackOperation(Arrays.asList(resources)),
 				UIText.Untrack_untrack, JobFamilies.UNTRACK);
 		return null;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return !selectionContainsLinkedResources();
 	}
 }

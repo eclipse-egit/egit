@@ -167,7 +167,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		if (resource.getType() == IResource.ROOT
 				|| resource.getType() == IResource.PROJECT)
 			return false;
-		if (Team.isIgnoredHint(resource))
+		if (Team.isIgnoredHint(resource) || resource.isLinked())
 			return true;
 		return isEntryIgnoredByTeamProvider(resource.getParent());
 	}
