@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//8sM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-08-06T08:46:12Z",
+      "side": 1,
+      "message": "Could you please extract that block into a separate method, e.g. shouldShowPrompt? Then you don\u0027t have to use break but can just `return true`.",
+      "revId": "277025c89f32309469123e5c793186066e5e706b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
