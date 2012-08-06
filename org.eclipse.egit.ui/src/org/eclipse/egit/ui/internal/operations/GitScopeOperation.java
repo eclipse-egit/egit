@@ -67,14 +67,9 @@ public class GitScopeOperation extends ModelOperation {
 	protected boolean promptForInputChange(String requestPreviewMessage,
 			IProgressMonitor monitor) {
 		List<IResource> relevantResources = getRelevantResources();
-		boolean showPrompt = false;
-
 		for (IResource resource : relevantResources)
-			showPrompt |= hasChanged(resource);
-
-		if(showPrompt)
+			if (hasChanged(resource))
 				return super.promptForInputChange(requestPreviewMessage, monitor);
-
 		return false;
 	}
 
@@ -86,11 +81,11 @@ public class GitScopeOperation extends ModelOperation {
 			Status repoStatus = new Git(repository).status().call();
 			String path = resource.getFullPath().removeFirstSegments(1)
 					.toOSString();
-			hasChanged |= repoStatus.getAdded().contains(path);
-			hasChanged |= repoStatus.getChanged().contains(path);
-			hasChanged |= repoStatus.getModified().contains(path);
-			hasChanged |= repoStatus.getRemoved().contains(path);
-			hasChanged |= repoStatus.getUntracked().contains(path);
+			hasChanged = repoStatus.getAdded().contains(path)
+					|| repoStatus.getChanged().contains(path)
+					|| repoStatus.getModified().contains(path)
+					|| repoStatus.getRemoved().contains(path)
+					|| repoStatus.getUntracked().contains(path);
 		} catch (Exception e) {
 			Activator.logError(UIText.GitScopeOperation_couldNotDetermineState,
 					e);
