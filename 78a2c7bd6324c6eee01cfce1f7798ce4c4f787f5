@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//8m0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-08-06T22:32:41Z",
+      "side": 1,
+      "message": "I think this should be moved down into the corresponding case clause of the switch statement below and extracted into a new private method extractProjectProperties",
+      "revId": "78a2c7bd6324c6eee01cfce1f7798ce4c4f787f5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
