@@ -16,6 +16,24 @@
       "revId": "277025c89f32309469123e5c793186066e5e706b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//8p8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/operations/GitScopeOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-08-06T16:06:41Z",
+      "side": 1,
+      "message": "or just return super.prompt... when hasChanged is true\nand return false when he comes out of the loop. In either case\navoid the unneeded extra boolean and shorter logic",
+      "parentUuid": "AABOIn//8sM\u003d",
+      "revId": "277025c89f32309469123e5c793186066e5e706b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
