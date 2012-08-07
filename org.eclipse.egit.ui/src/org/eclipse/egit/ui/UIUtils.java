@@ -41,6 +41,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
@@ -68,6 +69,11 @@ public class UIUtils {
 	 * special chars
 	 */
 	private static final char[] VALUE_HELP_ACTIVATIONCHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123457890*@ <>".toCharArray(); //$NON-NLS-1$
+
+	/**
+	 * the keystroke which provides the submit action, see {@link #isSubmitKeyEvent(KeyEvent)}
+	 */
+	public static final KeyStroke SUBMIT_KEY_STROKE = KeyStroke.getInstance(SWT.MOD1, SWT.CR);
 
 	/**
 	 * Handles a "previously used values" content assist.
@@ -611,5 +617,16 @@ public class UIUtils {
 		} catch (NotHandledException e) {
 			Activator.handleError(e.getMessage(), e, false);
 		}
+	}
+
+	/**
+	 * Determine if the key event represents a "submit" action (Ctrl+Enter or
+	 * Command+Enter).
+	 *
+	 * @param event
+	 * @return true, if it means submit, false otherwise
+	 */
+	public static boolean isSubmitKeyEvent(KeyEvent event) {
+		return event.stateMask == SUBMIT_KEY_STROKE.getModifierKeys() && event.keyCode == SUBMIT_KEY_STROKE.getNaturalKey();
 	}
 }
