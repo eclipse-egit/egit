@@ -627,6 +627,7 @@ public class UIUtils {
 	 * @return true, if it means submit, false otherwise
 	 */
 	public static boolean isSubmitKeyEvent(KeyEvent event) {
-		return event.stateMask == SUBMIT_KEY_STROKE.getModifierKeys() && event.keyCode == SUBMIT_KEY_STROKE.getNaturalKey();
+		return (event.stateMask & SWT.MODIFIER_MASK) != 0
+				&& event.keyCode == SUBMIT_KEY_STROKE.getNaturalKey();
 	}
 }
