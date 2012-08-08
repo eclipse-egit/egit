@@ -74,7 +74,7 @@ public class UIUtils {
 	private static final char[] VALUE_HELP_ACTIVATIONCHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123457890*@ <>".toCharArray(); //$NON-NLS-1$
 
 	/**
-	 * the keystroke which provides the submit action, see {@link #isSubmitKeyEvent(KeyEvent)}
+	 * A keystroke for a "submit" action, see {@link #isSubmitKeyEvent(KeyEvent)}
 	 */
 	public static final KeyStroke SUBMIT_KEY_STROKE = KeyStroke.getInstance(SWT.MOD1, SWT.CR);
 
@@ -623,14 +623,15 @@ public class UIUtils {
 	}
 
 	/**
-	 * Determine if the key event represents a "submit" action (Ctrl+Enter or
-	 * Command+Enter).
+	 * Determine if the key event represents a "submit" action
+	 * (&lt;modifier&gt;+Enter).
 	 *
 	 * @param event
 	 * @return true, if it means submit, false otherwise
 	 */
 	public static boolean isSubmitKeyEvent(KeyEvent event) {
-		return event.stateMask == SUBMIT_KEY_STROKE.getModifierKeys() && event.keyCode == SUBMIT_KEY_STROKE.getNaturalKey();
+		return (event.stateMask & SWT.MODIFIER_MASK) != 0
+				&& event.keyCode == SUBMIT_KEY_STROKE.getNaturalKey();
 	}
 
 	/**
