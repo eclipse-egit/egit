@@ -119,6 +119,8 @@ import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.VerifyEvent;
@@ -556,6 +558,19 @@ public class StagingView extends ViewPart {
 			}
 		});
 
+		commitMessageText.getTextWidget().addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				// Ctrl+Enter shortcut only works when the focus is on the commit message text
+				commitAction.setToolTipText(MessageFormat.format(
+						UIText.StagingView_CommitToolTip,
+						UIUtils.SUBMIT_KEY_STROKE.format()));
+			}
+
+			public void focusLost(FocusEvent e) {
+				commitAction.setToolTipText(null);
+			}
+		});
+
 		ModifyListener modifyListener = new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateMessage();
@@ -672,11 +687,6 @@ public class StagingView extends ViewPart {
 				IAction.AS_PUSH_BUTTON) {
 			public void run() {
 				commit();
-			}
-
-			@Override
-			public String getToolTipText() {
-				return MessageFormat.format(UIText.StagingView_CommitToolTip, UIUtils.SUBMIT_KEY_STROKE.format());
 			}
 		};
 		commitAction.setImageDescriptor(UIIcons.COMMIT);
