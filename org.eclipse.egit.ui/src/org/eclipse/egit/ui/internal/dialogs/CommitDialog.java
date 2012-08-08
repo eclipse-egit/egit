@@ -92,8 +92,6 @@ import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -662,15 +660,6 @@ public class CommitDialog extends TitleAreaDialog {
 
 		UIUtils.addBulbDecorator(commitText.getTextWidget(),
 				UIText.CommitDialog_ContentAssist);
-
-		// allow to commit with ctrl-enter
-		commitText.getTextWidget().addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent event) {
-				if (UIUtils.isSubmitKeyEvent(event)) {
-					okPressed();
-				}
-			}
-		});
 
 		Composite personArea = toolkit.createComposite(container);
 		toolkit.paintBordersFor(personArea);
