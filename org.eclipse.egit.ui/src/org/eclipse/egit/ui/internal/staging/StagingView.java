@@ -552,10 +552,6 @@ public class StagingView extends ViewPart {
 				if (UIUtils.isSubmitKeyEvent(event)) {
 					event.doit = false;
 					commit();
-				} else if (event.keyCode == SWT.TAB
-						&& (event.stateMask & SWT.SHIFT) == 0) {
-					event.doit = false;
-					authorText.setFocus();
 				}
 			}
 		});

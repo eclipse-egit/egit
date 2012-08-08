@@ -668,10 +668,6 @@ public class CommitDialog extends TitleAreaDialog {
 			public void keyPressed(KeyEvent event) {
 				if (UIUtils.isSubmitKeyEvent(event)) {
 					okPressed();
-				} else if (event.keyCode == SWT.TAB
-						&& (event.stateMask & SWT.SHIFT) == 0) {
-					event.doit = false;
-					commitText.traverse(SWT.TRAVERSE_TAB_NEXT);
 				}
 			}
 		});
