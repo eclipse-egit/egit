@@ -208,7 +208,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 				.getBoolean(ADVANCED_MODE_PREFERENCE);
 		final Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
+		GridDataFactory.fillDefaults().grab(true, true).minSize(SWT.DEFAULT, SWT.DEFAULT).applyTo(main);
 
 		if (showBranchInfo) {
 			Composite branchArea = new Composite(main, SWT.NONE);
@@ -295,6 +295,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 
 			public void expansionStateChanged(ExpansionEvent e) {
 				main.layout(true, true);
+				main.getShell().pack();
 			}
 		});
 		pushUriArea.setText(UIText.SimpleConfigurePushDialog_PushUrisLabel);
@@ -367,7 +368,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 		});
 
 		final Group refSpecGroup = new Group(main, SWT.SHADOW_ETCHED_IN);
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(refSpecGroup);
+		GridDataFactory.fillDefaults().grab(true, true).minSize(SWT.DEFAULT, SWT.DEFAULT).applyTo(refSpecGroup);
 		refSpecGroup.setText(UIText.SimpleConfigurePushDialog_RefMappingGroup);
 		refSpecGroup.setLayout(new GridLayout(2, false));
 
@@ -385,7 +386,7 @@ public class SimpleConfigurePushDialog extends TitleAreaDialog {
 
 		final Composite refButtonArea = new Composite(refSpecGroup, SWT.NONE);
 		GridLayoutFactory.fillDefaults().applyTo(refButtonArea);
-		GridDataFactory.fillDefaults().grab(false, true).applyTo(refButtonArea);
+		GridDataFactory.fillDefaults().grab(false, true).minSize(SWT.DEFAULT, SWT.DEFAULT).applyTo(refButtonArea);
 
 		addRefSpec = new Button(refButtonArea, SWT.PUSH);
 		addRefSpec.setText(UIText.SimpleConfigurePushDialog_AddRefSpecButton);
