@@ -78,9 +78,9 @@ public final class ThreeWayDiffEntry {
 	 */
 	public static List<ThreeWayDiffEntry> scan(TreeWalk walk)
 			throws IOException {
-		if (walk.getTreeCount() != 3)
+		if (walk.getTreeCount() != 3 && walk.getTreeCount() != 4)
 			throw new IllegalArgumentException(
-					"TreeWalk need to have exactly three trees"); //$NON-NLS-1$
+					"TreeWalk need to have three or four trees"); //$NON-NLS-1$
 		if (walk.isRecursive())
 			throw new IllegalArgumentException(
 					"TreeWalk shouldn't be recursive."); //$NON-NLS-1$
