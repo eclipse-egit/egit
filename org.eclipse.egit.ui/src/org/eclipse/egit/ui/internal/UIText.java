@@ -4303,10 +4303,10 @@ public class UIText extends NLS {
 	public static String SimpleFetchRefSpecWizard_WizardTitle;
 
 	/** */
-	public static String SimplePushActionHandler_NothingToPushDialogMessage;
+	public static String SimplePushActionHandler_ConfiguredName;
 
 	/** */
-	public static String SimplePushActionHandler_NothingToPushDialogTitle;
+	public static String SimplePushActionHandler_UnconfiguredName;
 
 	/** */
 	public static String SimplePushSpecPage_message;

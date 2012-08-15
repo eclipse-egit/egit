@@ -26,6 +26,8 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.IRemoteSelectionListener;
+import org.eclipse.egit.ui.internal.components.RemoteSelectionCombo.SelectionType;
 import org.eclipse.egit.ui.internal.provisional.wizards.GitRepositoryInfo;
 import org.eclipse.egit.ui.internal.provisional.wizards.IRepositorySearchResult;
 import org.eclipse.jface.dialogs.Dialog;
@@ -72,8 +74,6 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 
 	private final static String USED_URIS_PREF = "RepositorySelectionPage.UsedUris"; //$NON-NLS-1$
 
-	private static final int REMOTE_CONFIG_TEXT_MAX_LENGTH = 80;
-
 	private final List<RemoteConfig> configuredRemotes;
 
 	private final boolean sourceSelection;
@@ -110,7 +110,7 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 
 	private Button remoteButton;
 
-	private Combo remoteCombo;
+	private RemoteSelectionCombo remoteCombo;
 
 	private Composite uriPanel;
 
@@ -344,7 +344,6 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 		this.presetUri = preset;
 
 		this.configuredRemotes = getUsableConfigs(configuredRemotes);
-		this.remoteConfig = selectDefaultRemoteConfig();
 
 		selection = RepositorySelection.INVALID_SELECTION;
 
@@ -409,6 +408,8 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 
 		if (configuredRemotes != null)
 			createRemotePanel(panel);
+		else
+			createRemoteNamePanel(panel);
 
 		createUriPanel(panel);
 
@@ -444,22 +445,23 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 		gd.horizontalAlignment = SWT.FILL;
 		remotePanel.setLayoutData(gd);
 
-		remoteCombo = new Combo(remotePanel, SWT.READ_ONLY | SWT.DROP_DOWN);
-		final String items[] = new String[configuredRemotes.size()];
-		int i = 0;
-		for (final RemoteConfig rc : configuredRemotes)
-			items[i++] = getTextForRemoteConfig(rc);
-		final int defaultIndex = configuredRemotes.indexOf(remoteConfig);
-		remoteCombo.setItems(items);
-		remoteCombo.select(defaultIndex);
-		remoteCombo.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				final int idx = remoteCombo.getSelectionIndex();
-				remoteConfig = configuredRemotes.get(idx);
+		SelectionType selectionType = sourceSelection ? SelectionType.FETCH : SelectionType.PUSH;
+		remoteCombo = new RemoteSelectionCombo(remotePanel, SWT.NULL, selectionType);
+		remoteConfig = remoteCombo.setItems(configuredRemotes);
+		remoteCombo.addRemoteSelectionListener(new IRemoteSelectionListener() {
+			public void remoteSelected(RemoteConfig rc) {
+				remoteConfig = rc;
 				checkPage();
 			}
 		});
+	}
+
+	/**
+	 *
+	 * @param panel
+	 */
+	protected void createRemoteNamePanel(Composite panel) {
+		// Only used by subclass
 	}
 
 	private void createUriPanel(final Composite parent) {
@@ -732,46 +734,10 @@ public class RepositorySelectionPage extends WizardPage implements IRepositorySe
 		return null;
 	}
 
-	private RemoteConfig selectDefaultRemoteConfig() {
-		if (configuredRemotes == null)
-			return null;
-		for (final RemoteConfig rc : configuredRemotes)
-			if (Constants.DEFAULT_REMOTE_NAME.equals(rc.getName()))
-				return rc;
-		return configuredRemotes.get(0);
-	}
-
-	private String getTextForRemoteConfig(final RemoteConfig rc) {
-		final StringBuilder sb = new StringBuilder(rc.getName());
-		sb.append(": "); //$NON-NLS-1$
-		boolean first = true;
-		List<URIish> uris;
-		if (sourceSelection)
-			uris = rc.getURIs();
-		else {
-			uris = rc.getPushURIs();
-			// if no push URIs are defined, use fetch URIs instead
-			if (uris.isEmpty())
-				uris = rc.getURIs();
-		}
-
-		for (final URIish u : uris) {
-			final String uString = u.toString();
-			if (first)
-				first = false;
-			else {
-				sb.append(", "); //$NON-NLS-1$
-				if (sb.length() + uString.length() > REMOTE_CONFIG_TEXT_MAX_LENGTH) {
-					sb.append("..."); //$NON-NLS-1$
-					break;
-				}
-			}
-			sb.append(uString);
-		}
-		return sb.toString();
-	}
-
-	private void checkPage() {
+	/**
+	 * Check the user input and set messages in case of invalid input.
+	 */
+	protected void checkPage() {
 		if (isURISelected()) {
 			assert uri != null;
 			if (uriText.getText().length() == 0) {

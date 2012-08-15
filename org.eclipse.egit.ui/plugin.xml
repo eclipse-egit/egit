@@ -64,14 +64,6 @@
                menubarPath="team.main/group2">
          </action>
          <action
-               class="org.eclipse.egit.ui.internal.actions.SimplePushAction"
-               definitionId="org.eclipse.egit.ui.team.SimplePush"
-               icon="icons/obj16/push.gif"
-               id="org.eclipse.egit.ui.team.SimplePush"
-               label="%PushToUpstreamAction.label"
-               menubarPath="team.main/group1">
-         </action>
-         <action
                class="org.eclipse.egit.ui.internal.actions.SimpleFetchAction"
                definitionId="org.eclipse.egit.ui.team.SimpleFetch"
                icon="icons/obj16/fetch.gif"
@@ -739,7 +731,7 @@
            menubarPath="org.eclipse.egit.ui.gitmenu/repo"
            style="push"
            toolbarPath="org.eclipse.egit.ui"
-           tooltip="%PushAction_tooltip">
+           tooltip="%PushToUpstreamAction.tooltip">
 		 </action>
 		 <action
            class="org.eclipse.egit.ui.internal.actions.ResetAction"
@@ -854,6 +846,10 @@
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.SimplePush"
             name="%PushUpstreamCommand.name">
+         <state
+               class="org.eclipse.jface.menus.TextState"
+               id="NAME">
+         </state>
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
@@ -1174,6 +1170,26 @@
                   <adapt
                         type="org.eclipse.core.resources.IProject">
                   </adapt>
+               </iterate>
+            </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.SimplePush">
+         <class
+               class="org.eclipse.egit.ui.internal.actions.SimplePushActionHandler">
+         </class>
+         <activeWhen>
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate>
+                  <or>
+                     <adapt
+                           type="org.eclipse.core.resources.IProject">
+                     </adapt>
+                  </or>
                </iterate>
             </and>
          </activeWhen>
@@ -2828,7 +2844,6 @@
          <command
                commandId="org.eclipse.egit.ui.team.SimplePush"
                icon="icons/obj16/push.gif"
-               label="%PushToUpstreamCommand.label"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -3590,6 +3605,29 @@
                   name="group1"
                   visible="true">
             </separator>
+            <command
+                  commandId="org.eclipse.egit.ui.team.SimplePush"
+                  icon="icons/obj16/push.gif"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <and>
+                           <adapt
+                                 type="org.eclipse.core.resources.IProject">
+                              <test
+                                    property="GitResource.isShared">
+                              </test>
+                           </adapt>
+                        </and>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+            </command>
             <separator
                   name="org.eclipse.egit.ui.remoteSeparator"
                   visible="true">
