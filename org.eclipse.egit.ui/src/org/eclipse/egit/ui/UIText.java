@@ -4608,6 +4608,9 @@ public class UIText extends NLS {
 	/** */
 	public static String CloneFailureDialog_checkList;
 
+	/** */
+	public static String GitModelSynchronizeParticipant_initialScpeName;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
