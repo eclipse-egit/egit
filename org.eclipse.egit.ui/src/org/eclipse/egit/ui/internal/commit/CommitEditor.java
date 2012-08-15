@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011 GitHub Inc. and others.
+ *  Copyright (c) 2011, 2012 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -80,9 +80,40 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	 */
 	public static final IEditorPart open(RepositoryCommit commit)
 			throws PartInitException {
+		return open(commit, true);
+	}
+
+	/**
+	 * Open commit in editor
+	 *
+	 * @param commit
+	 * @param activateOnOpen <code>true</code> if the newly opened editor should be activated
+	 * @return opened editor part
+	 * @throws PartInitException
+	 * @since 2.1
+	 */
+	public static final IEditorPart open(RepositoryCommit commit, boolean activateOnOpen)
+			throws PartInitException {
 		CommitEditorInput input = new CommitEditorInput(commit);
 		return IDE.openEditor(PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage(), input, ID);
+				.getActiveWorkbenchWindow().getActivePage(), input, ID, activateOnOpen);
+	}
+
+	/**
+	 * Open commit in editor
+	 *
+	 * @param commit
+	 * @param activateOnOpen <code>true</code> if the newly opened editor should be activated
+	 * @return opened editor part or null if opening fails
+	 * @since 2.1
+	 */
+	public static final IEditorPart openQuiet(RepositoryCommit commit, boolean activateOnOpen) {
+		try {
+			return open(commit, activateOnOpen);
+		} catch (PartInitException e) {
+			Activator.logError(e.getMessage(), e);
+			return null;
+		}
 	}
 
 	/**
@@ -92,12 +123,7 @@ public class CommitEditor extends SharedHeaderFormEditor implements
 	 * @return opened editor part or null if opening fails
 	 */
 	public static final IEditorPart openQuiet(RepositoryCommit commit) {
-		try {
-			return open(commit);
-		} catch (PartInitException e) {
-			Activator.logError(e.getMessage(), e);
-			return null;
-		}
+		return openQuiet(commit, true);
 	}
 
 	private CommitEditorPage commitPage;
