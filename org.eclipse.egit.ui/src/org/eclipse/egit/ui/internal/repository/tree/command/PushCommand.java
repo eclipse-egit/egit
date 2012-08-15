@@ -16,6 +16,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.push.PushBranchWizard;
 import org.eclipse.egit.ui.internal.push.PushWizard;
 import org.eclipse.egit.ui.internal.push.SimplePushRefWizard;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
@@ -36,9 +37,8 @@ public class PushCommand extends RepositoriesViewCommandHandler<RepositoryNode> 
 		try {
 			switch (node.getType()) {
 			case REF:
-				pushWiz = new SimplePushRefWizard(node.getRepository(),
-						(Ref) node.getObject(),
-						UIText.PushCommand_pushBranchTitle);
+				pushWiz = new PushBranchWizard(node.getRepository(),
+						(Ref) node.getObject());
 				break;
 			case TAG:
 				pushWiz = new SimplePushRefWizard(node.getRepository(),
