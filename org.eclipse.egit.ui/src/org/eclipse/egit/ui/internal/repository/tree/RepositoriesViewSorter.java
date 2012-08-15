@@ -38,6 +38,8 @@ public class RepositoriesViewSorter extends
 	public int category(Object element) {
 		if (element instanceof RepositoryTreeNode) {
 			RepositoryTreeNode<? extends Object> node = (RepositoryTreeNode<? extends Object>) element;
+			if (node.getType() == RepositoryTreeNodeType.BRANCHHIERARCHY)
+				return RepositoryTreeNodeType.REF.ordinal();
 			return node.getType().ordinal();
 		}
 		return super.category(element);
