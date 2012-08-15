@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2010, 2013 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,13 +9,14 @@
 package org.eclipse.egit.ui.internal.actions;
 
 /**
- * Action for "simple" push
+ * Action for "Push to Upstream" or "Push Branch..." if not configured
  */
-public class SimplePushAction extends RepositoryAction {
+public class PushUpstreamOrBranchAction extends RepositoryAction {
 	/**
 	 *
 	 */
-	public SimplePushAction() {
-		super(ActionCommands.SIMPLE_PUSH_ACTION, new SimplePushActionHandler());
+	public PushUpstreamOrBranchAction() {
+		super(ActionCommands.SIMPLE_PUSH_ACTION,
+				new PushUpstreamOrBranchActionHandler());
 	}
 }

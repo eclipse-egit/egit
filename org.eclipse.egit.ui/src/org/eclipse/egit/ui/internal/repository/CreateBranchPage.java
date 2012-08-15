@@ -33,7 +33,6 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
@@ -147,7 +146,7 @@ class CreateBranchPage extends WizardPage {
 		this.myValidator = ValidationUtils.getRefNameInputValidator(
 				myRepository, Constants.R_HEADS, true);
 		if (baseRef != null)
-			this.upstreamConfig = getDefaultUpstreamConfig(repo, baseRef.getName());
+			this.upstreamConfig = UpstreamConfig.getDefault(repo, baseRef.getName());
 		else
 			this.upstreamConfig = UpstreamConfig.NONE;
 		setTitle(UIText.CreateBranchPage_Title);
@@ -274,7 +273,7 @@ class CreateBranchPage extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				String ref = branchCombo.getText();
 				suggestBranchName(ref);
-				upstreamConfig = getDefaultUpstreamConfig(myRepository, ref);
+				upstreamConfig = UpstreamConfig.getDefault(myRepository, ref);
 				checkPage();
 			}
 		});
@@ -474,37 +473,6 @@ class CreateBranchPage extends WizardPage {
 			BranchOperationUI.checkout(myRepository, Constants.R_HEADS + newRefName)
 					.run(monitor);
 		}
-	}
-
-	private UpstreamConfig getDefaultUpstreamConfig(Repository repo,
-			String refName) {
-		String autosetupMerge = repo.getConfig().getString(
-				ConfigConstants.CONFIG_BRANCH_SECTION, null,
-				ConfigConstants.CONFIG_KEY_AUTOSETUPMERGE);
-		if (autosetupMerge == null)
-			autosetupMerge = ConfigConstants.CONFIG_KEY_TRUE;
-		boolean isLocalBranch = refName.startsWith(Constants.R_HEADS);
-		boolean isRemoteBranch = refName.startsWith(Constants.R_REMOTES);
-		if (!isLocalBranch && !isRemoteBranch)
-			return UpstreamConfig.NONE;
-		boolean setupMerge = autosetupMerge
-				.equals(ConfigConstants.CONFIG_KEY_ALWAYS)
-				|| (isRemoteBranch && autosetupMerge
-						.equals(ConfigConstants.CONFIG_KEY_TRUE));
-		if (!setupMerge)
-			return UpstreamConfig.NONE;
-		String autosetupRebase = repo.getConfig().getString(
-				ConfigConstants.CONFIG_BRANCH_SECTION, null,
-				ConfigConstants.CONFIG_KEY_AUTOSETUPREBASE);
-		if (autosetupRebase == null)
-			autosetupRebase = ConfigConstants.CONFIG_KEY_NEVER;
-		boolean setupRebase = autosetupRebase
-				.equals(ConfigConstants.CONFIG_KEY_ALWAYS)
-				|| (autosetupRebase.equals(ConfigConstants.CONFIG_KEY_LOCAL) && isLocalBranch)
-				|| (autosetupRebase.equals(ConfigConstants.CONFIG_KEY_REMOTE) && isRemoteBranch);
-		if (setupRebase)
-			return UpstreamConfig.REBASE;
-		return UpstreamConfig.MERGE;
 	}
 
 	private void suggestBranchName(String ref) {
