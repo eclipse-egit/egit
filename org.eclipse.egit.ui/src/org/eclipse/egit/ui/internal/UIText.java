@@ -87,6 +87,24 @@ public class UIText extends NLS {
 	public static String AddConfigEntryDialog_ValueLabel;
 
 	/** */
+	public static String AddRemotePage_EnterRemoteNameMessage;
+
+	/** */
+	public static String AddRemotePage_RemoteNameAlreadyExistsError;
+
+	/** */
+	public static String AddRemotePage_RemoteNameEmptyError;
+
+	/** */
+	public static String AddRemotePage_RemoteNameInvalidError;
+
+	/** */
+	public static String AddRemotePage_RemoteNameLabel;
+
+	/** */
+	public static String AddRemoteWizard_Title;
+
+	/** */
 	public static String AddSubmoduleWizard_WindowTitle;
 
 	/** */
@@ -1831,6 +1849,39 @@ public class UIText extends NLS {
 
 	/** */
 	public static String PushAction_wrongURITitle;
+
+	/** */
+	public static String PushBranchPage_BranchNameLabel;
+
+	/** */
+	public static String PushBranchPage_ChooseBranchNameError;
+
+	/** */
+	public static String PushBranchPage_ChooseRemoteError;
+
+	/** */
+	public static String PushBranchPage_InvalidBranchNameError;
+
+	/** */
+	public static String PushBranchPage_NewRemoteButton;
+
+	/** */
+	public static String PushBranchPage_PageMessage;
+
+	/** */
+	public static String PushBranchPage_PageName;
+
+	/** */
+	public static String PushBranchPage_PageTitle;
+
+	/** */
+	public static String PushBranchPage_RemoteLabel;
+
+	/** */
+	public static String PushBranchPage_UpstreamConfigOverwriteWarning;
+
+	/** */
+	public static String PushBranchWizard_WindowTitle;
 
 	/** */
 	public static String PushCommand_pushBranchTitle;
