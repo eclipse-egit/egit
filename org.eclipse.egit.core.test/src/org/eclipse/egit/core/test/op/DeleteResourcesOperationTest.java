@@ -9,7 +9,7 @@
 package org.eclipse.egit.core.test.op;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.util.Arrays;
@@ -21,11 +21,16 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.op.DeleteResourcesOperation;
 import org.eclipse.egit.core.test.DualRepositoryTestCase;
+import org.eclipse.egit.core.test.JobSchedulingAssert;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -77,11 +82,25 @@ public class DeleteResourcesOperationTest extends DualRepositoryTestCase {
 		IWorkspaceRoot root = project.getWorkspace().getRoot();
 		IResource resource = root.getFile(path);
 
+		// Make sure the cache has at least be refreshed once, otherwise the
+		// assertion at the end is not effective
+		initIndexDiffCache(repository1.getRepository());
+
+		JobSchedulingAssert jobSchedulingAssertion = JobSchedulingAssert
+				.forFamily(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 		deleteResources(Arrays.asList(resource));
 
 		assertFalse("File should have been deleted", outsideOfProject.exists());
-		Job[] indexDiffCacheJobs = Job.getJobManager().find(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
-		assertTrue("Should cause an index diff cache job", indexDiffCacheJobs.length > 0);
+		jobSchedulingAssertion
+				.assertScheduled("Delete of file outside of workspace should have cause an index diff cache job.");
+	}
+
+	private static void initIndexDiffCache(Repository repository)
+			throws Exception {
+		IndexDiffCache cache = Activator.getDefault().getIndexDiffCache();
+		IndexDiffCacheEntry cacheEntry = cache.getIndexDiffCacheEntry(repository);
+		assertNotNull(cacheEntry);
+		Job.getJobManager().join(JobFamilies.INDEX_DIFF_CACHE_UPDATE, null);
 	}
 
 	private void deleteResources(Collection<IResource> resources) throws CoreException {
