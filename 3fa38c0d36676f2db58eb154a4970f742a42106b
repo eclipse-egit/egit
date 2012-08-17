@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//7d0\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/AbstractSynchronizeViewTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-08-17T12:22:30Z",
+      "side": 1,
+      "message": "Of course this \"fix\" is somewhat ugly. We shouldn\u0027t have\nan issue with smudged entries.",
+      "revId": "3fa38c0d36676f2db58eb154a4970f742a42106b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
