@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//7Ys\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RebaseCurrentHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-08-17T22:04:00Z",
+      "side": 1,
+      "message": "with change I74e932d5eacd74dbf6b0dffcfc65ba3222a8250e this should become getTrackingBranch(), then this will also work if the tracked branch is a local one",
+      "revId": "391c49f47b2b15261a72d8521e16ee21fd62f605",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
