@@ -30,6 +30,8 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.swt.widgets.Display;
@@ -49,9 +51,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- * Tests for the Team->Branch action
- */
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class HistoryViewTest extends LocalRepositoryTestCase {
 	private static final String SECONDFOLDER = "secondFolder";
@@ -375,6 +374,17 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 				.startsWith(FILE1));
 	}
 
+	@Test
+	public void testRebaseAlreadyUpToDate() throws Exception {
+		Repository repo = lookupRepository(repoFile);
+		Ref stable = repo.getRef("stable");
+		SWTBotTable table = getHistoryViewTable(PROJ1);
+		SWTBotTableItem stableItem = getTableItemWithId(table, stable.getObjectId());
+
+		stableItem.contextMenu(UIText.GitHistoryPage_rebaseMenuItem).click();
+		TestUtil.joinJobs(JobFamilies.REBASE);
+	}
+
 	private RevCommit[] checkoutLine(final SWTBotTable table, int line)
 			throws InterruptedException {
 		table.getTableItem(line).select();
@@ -414,5 +424,17 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 		boolean isChecked = showAllBranches.isChecked();
 		if(isChecked && !checked || !isChecked && checked)
 			showAllBranches.click();
+	}
+
+	private static SWTBotTableItem getTableItemWithId(SWTBotTable table,
+			ObjectId wantedId) {
+		for (int i = 0; i < table.rowCount(); i++) {
+			String id = table.cell(i, UIText.CommitGraphTable_CommitId);
+			String idWithoutEllipsis = id.substring(0, 7);
+			if (wantedId.getName().startsWith(idWithoutEllipsis))
+				return table.getTableItem(i);
+		}
+
+		throw new IllegalStateException("TableItem for commit with ID " + wantedId + " not found.");
 	}
 }
