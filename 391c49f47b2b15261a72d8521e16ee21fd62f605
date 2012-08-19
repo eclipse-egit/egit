@@ -16,6 +16,24 @@
       "revId": "391c49f47b2b15261a72d8521e16ee21fd62f605",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//7TQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/RebaseCurrentHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-08-19T11:56:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//7Ys\u003d",
+      "revId": "391c49f47b2b15261a72d8521e16ee21fd62f605",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
