@@ -10,9 +10,13 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.view.repositories;
 
+import static org.eclipse.swtbot.swt.finder.waits.Conditions.shellCloses;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -20,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -613,4 +618,55 @@ public class GitRepositoriesViewTest extends GitRepositoriesViewTestBase {
 		assertEquals("stable", items[1].getText());
 	}
 
+	@Test
+	public void testDeleteFileInProject() throws Exception {
+		SWTBotTree tree = getOrOpenView().bot().tree();
+		refreshAndWait();
+
+		IProject project1 = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ1);
+		// Make sure that the refresh doesn't happen on delete and cause a timeout
+		project1.refreshLocal(IResource.DEPTH_INFINITE, null);
+
+		SWTBotTreeItem folder = findWorkdirNode(tree, PROJ1, FOLDER);
+		folder.getNode(FILE1).select();
+
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue("RepoViewDeleteFile.label"));
+
+		SWTBotShell confirm = bot.shell("Delete Resources");
+		confirm.bot().button(IDialogConstants.OK_LABEL).click();
+		bot.waitUntil(shellCloses(confirm));
+		TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
+
+		assertThat(folder.getNodes(), not(hasItem(FILE1)));
+		assertThat(folder.getNodes(), hasItem(FILE2));
+	}
+
+	@Test
+	public void testDeleteFileNotInProject() throws Exception {
+		SWTBotTree tree = getOrOpenView().bot().tree();
+		refreshAndWait();
+
+		SWTBotTreeItem folder = findWorkdirNode(tree, PROJ2, FOLDER);
+		folder.getNode(FILE1).select();
+
+		ContextMenuHelper.clickContextMenu(tree,
+				myUtil.getPluginLocalizedValue("RepoViewDeleteFile.label"));
+
+		SWTBotShell confirm = bot.shell(UIText.DeleteResourcesOperationUI_confirmActionTitle);
+		confirm.bot().button(IDialogConstants.OK_LABEL).click();
+		bot.waitUntil(shellCloses(confirm));
+		TestUtil.joinJobs(JobFamilies.REPO_VIEW_REFRESH);
+
+		folder = findWorkdirNode(tree, PROJ2, FOLDER);
+		assertThat(folder.getNodes(), not(hasItem(FILE1)));
+		assertThat(folder.getNodes(), hasItem(FILE2));
+	}
+
+	private SWTBotTreeItem findWorkdirNode(SWTBotTree tree, String... nodes) throws Exception {
+		SWTBotTreeItem item = myRepoViewUtil.getWorkdirItem(tree, repositoryFile).expand();
+		for (String node : nodes)
+			item = item.getNode(node).expand();
+		return item;
+	}
 }

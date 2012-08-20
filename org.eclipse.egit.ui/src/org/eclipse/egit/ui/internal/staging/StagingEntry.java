@@ -145,12 +145,20 @@ public class StagingEntry implements IAdaptable {
 	 * @return the file corresponding to the entry
 	 */
 	public IFile getFile() {
-		IPath absolutePath = new Path(repository.getWorkTree().getAbsolutePath()).append(path);
+		IPath absolutePath = getLocation();
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IFile resource = root.getFileForLocation(absolutePath);
 		if (resource == null)
 			resource = root.getFile(absolutePath);
 		return resource;
+	}
+
+	/**
+	 * @return the location (path) of the entry
+	 */
+	public IPath getLocation() {
+		IPath absolutePath = new Path(repository.getWorkTree().getAbsolutePath()).append(path);
+		return absolutePath;
 	}
 
 	public Object getAdapter(Class adapter) {
