@@ -1,6 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
- *
+ * Copyright (C) 2008, 2012 Marek Zawirski <marek.zawirski@gmail.com> and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,15 +20,14 @@ import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.IElementComparer;
-import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StyledString;
@@ -51,6 +49,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.OpenAndLinkWithEditorHelper;
 
 /**
  * Table displaying push operation results.
@@ -210,17 +209,28 @@ class PushResultTable {
 			}
 		});
 
-		treeViewer.addOpenListener(new IOpenListener() {
-
-			public void open(OpenEvent event) {
-				ISelection selection = event.getSelection();
+		new OpenAndLinkWithEditorHelper(treeViewer) {
+			@Override
+			protected void linkToEditor(ISelection selection) {
+				// Not supported
+			}
+			@Override
+			protected void open(ISelection selection, boolean activate) {
+				handleOpen(selection, OpenStrategy.activateOnOpen());
+			}
+			@Override
+			protected void activate(ISelection selection) {
+				handleOpen(selection, true);
+			}
+			private void handleOpen(ISelection selection, boolean activateOnOpen) {
 				if (selection instanceof IStructuredSelection)
 					for (Object element : ((IStructuredSelection) selection)
 							.toArray())
 						if (element instanceof RepositoryCommit)
-							CommitEditor.openQuiet((RepositoryCommit) element);
+							CommitEditor.openQuiet((RepositoryCommit) element, activateOnOpen);
 			}
-		});
+		};
+
 	}
 
 	private void addToolbar(Composite parent) {
