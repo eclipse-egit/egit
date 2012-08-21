@@ -29,7 +29,7 @@
 		<p>This post is not about the relative merits of Git over CVS/SVN, or of Git versus other distributed version control systems (DVCS) like Mercurial (Hg). Other sites can give those flavours if needed.</p>
 		<p>Once you understand the conceptual differences between CVS/SVN and Git, and then subsequently start to use Git, you may find it very difficult to go back. You should really start to experiment only if you think you're going to migrate in the near future, because using Git is like watching TV in colour: once you've discovered it, it's really difficult to go back to black &amp; white.</p>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>Once you start to use a DVCS, it's very unlikely you'll want to go back</b>
 			</dd>
 		</dl>
@@ -58,7 +58,7 @@
 			<a href="http://www.bitkeeper.com/" target="egit_external">Bitkeeper</a>, etc.) exist. In a DVCS each user has a complete copy of the repository, including its entire history.  A user may potentially push changes to or pull changes from any other repository. Although policy may confer special status on one or more repositories, in principle every repository is a first-class citizen in the DVCS model. This stands in contrast to a centralised version control system, where every individual checks files into and out of an authoritative repository.
 		</p>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>Each user has a full copy of the repository</b>
 			</dd>
 		</dl>
@@ -76,16 +76,16 @@
 				<a href="http://sourceforge.net/projects/rcpapps/files/maclipse/" target="egit_external">Maclipse</a>. The key thing here is that whilst forks are possible, 
 				<i>forking is not a bad thing in itself</i>. After all, look at Linux and Android; originally, they shared a history, but are now different. XFree86 and X.Org 
 				<a href="http://www.x.org/wiki/XorgFoundation" target="egit_external">split</a> over licensing issues. MySQL was forked to create 
-				<a href="http://askmonty.org/wiki/index.php/MariaDB" target="egit_external">MariaDB</a>, and so on. The key thing about forks is that the best survive. X.Org is now the default X client, whereas XFree86 was the default beforehand. The jury is still out on MySQL versus MariaDB. And although Maclipse has been downloaded literally <span title="Actually, about one and a half thousand. That&#39;s more than I expected.">tens of times</span>, it hasn't caused a dent in Eclipse's growth.
+				<a href="http://askmonty.org/wiki/index.php/MariaDB" target="egit_external">MariaDB</a>, and so on. The key thing about forks is that the best survive. X.Org is now the default X client, whereas XFree86 was the default beforehand. The jury is still out on MySQL versus MariaDB. And although Maclipse has been downloaded literally <span title="Actually, about one and a half thousand. That's more than I expected.">tens of times</span>, it hasn't caused a dent in Eclipse's growth.
 				<dl>
-					<dd>&#9758; 
+					<dd>☞ 
 						<b>Forks happen</b>
 					</dd>
 				</dl>
 			</li>
 			<li>Do not try to bend the <span title="spoon">master repository</span> – that's impossible. Instead, try only to realise the truth; there is no <span title="spoon">master repository</span>. In fact, there's a veritable matrix of master repositories possible. Each repository can be considered a node in a graph; nodes in the graph can be connected to each other in any way. However, rather than an n-n set of links, the graph usually self-organises into a tree-like structure, logically associating with one point that acts as a funnel for everything else. In a sense, that's a master repository – everyone has already made the choice; now you have to understand it. Should an oracle intervene, a neo-master can be chosen.
 				<dl>
-					<dd>&#9758; 
+					<dd>☞ 
 						<b>There is no master repository</b>
 					</dd>
 				</dl>
@@ -97,7 +97,7 @@
 				<a href="http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.equinox/?root=RT_Project" target="egit_external">Equinox</a> and 
 				<a href="http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.ecf/?root=RT_Project&amp;view=log" target="egit_external">ECF</a>, a DVCS-based solution would almost certainly see the Equinox and ECF projects in their own repositories; perhaps, even breaking down further into (say) ECF-Doc and ECF-Bundles. Think of a DVCS repository as one or a few Eclipse projects instead of hundreds of projects together.
 				<dl>
-					<dd>&#9758; 
+					<dd>☞ 
 						<b>DVCS repositories are much smaller, typically because they contain only a small number of highly-related projects</b>
 					</dd>
 				</dl>
@@ -105,7 +105,7 @@
 			<li>That's not a question. Look, if you want the benefits of a centralised DVCS with pessimistic locking and pessimistic users, then go look at 
 				<a href="http://www-01.ibm.com/software/awdtools/clearcase/" target="egit_external">ClearCase</a>.
 				<dl>
-					<dd>&#9758; 
+					<dd>☞ 
 						<b>Friends don't let friends use ClearCase</b>
 					</dd>
 				</dl>
@@ -130,7 +130,7 @@
 </pre>
 		<p>we can create a 'hash' using (for example) <code>md5</code>, to generate the string <code>0878a8189e6a3ae1ded86d9e9c7cbe3f</code>. When referring to our change with others, we can use this hash to identify the change in question.</p>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>Changesets are identified by a hash of their contents</b>
 			</dd>
 		</dl>
@@ -144,7 +144,7 @@
 +Git is great
 </pre>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>Changesets (recursively) contain pointers to the previous changeset</b>
 			</dd>
 		</dl>
@@ -177,14 +177,14 @@
 			<b>Note</b>: Rather than using <code>md5</code>, as shown here, most DVCS (including Git) use an <code>sha1</code> hash instead. Also, the exact way that the prior elements in the tree are stored, and their relationships, isn't accurately portrayed above; however, it gives sufficiently well the idea of how they are organised.''
 		</p>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>Git changesets are identified by an SHA-1 hash</b>
 			</dd>
 		</dl>
 		<h2 id="Changesets_and_branches">Changesets and branches</h2>
 		<p>Given that a changeset is a long value like <code>48b2179994d494485b79504e8b5a6b23ce24a026</code>, it can be unfriendly to use. Fortunately, there are a couple of ways around this. Git, like other DVCSs, allow you to use an abbreviated form of the changeset, provided that it's unique in the repository. For small repositories, this means that you can refer to changesets by really short values, like <code>48b21</code> or even <code>48</code>. Conventionally, developers often use 6 digits of the hash – but large projects (like the Linux kernel) tend to have to use slightly larger references in order to have uniqueness.</p>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>Git hashes can be shortened to any unique prefix</b>
 			</dd>
 		</dl>
@@ -193,16 +193,16 @@
 			<i>master</i>.
 		</p>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>The default 'trunk' is called 'master' in Git</b>
 			</dd>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>The tip of the current branch is referred to as 'HEAD</b>'
 			</dd>
 		</dl>
 		<p>As a direct corollary to this, creating branches in a DVCS is fast. All that happens is that the repository on disk is updated to point to a different element in the (already physically present) tree, and you're done. Furthermore, it's trivial to ping-pong between different branches on the same repository that may contain different states and evolve independently.</p>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>Creating, and switching between, branches is fast</b>
 			</dd>
 		</dl>
@@ -210,17 +210,17 @@
 			<a href="http://www.peterfriese.de/using-cvs-change-sets/" target="egit_external">changesets</a> might in CVS, if not more so.
 		</p>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>Create a new branch for each Bugzilla or feature item that you work on</b>
 			</dd>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>Think of branches as throwaway changesets</b>
 			</dd>
 		</dl>
 		<h2 id="Merging">Merging</h2>
 		<p>With great power comes great flexibility, but ultimately, you want to get your changes into some kind of merged stream (like HEAD). One of the fears of unconstrained branching is that of unconstrained merge pains later on. SVN makes this slightly less difficult than CVS, but unless you merge to HEAD frequently, you can easily get lost – particularly when refactorings start happening.</p>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>It's painful to merge in a CVCS; therefore branches tend not to happen</b>
 			</dd>
 		</dl>
@@ -232,7 +232,7 @@
 			<a href="http://www.kernel.org/pub//software/scm/git-core/docs/git-merge.html" target="egit_external">git merge</a> documentation has some graphical examples of this; but basically, it's just like any other merge you've seen. However, unlike CVCS, you don't have to specify anything about where you're merging from and to; the trees automatically know what their split point was in the past, and can work it out from there.
 		</p>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>Merging in a DVCS like Git is trivial</b>
 			</dd>
 		</dl>
@@ -252,7 +252,7 @@
 		</p>
 		<p>The best part of a DVCS is that it takes care of all the paperwork for you. You don't need to use SVN-like <code>314:321</code> tags to remind you where you branched from; you don't even have to worry if you haven't updated recently. It all just works.</p>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>Pulling and pushing in a DVCS like Git is trivial</b>
 			</dd>
 		</dl>
@@ -277,14 +277,14 @@ git push github
 			<i>origin</i>, but you can specify whatever remote to talk to on the command line.
 		</p>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>Origin is the name of the default remote, but you can have many remotes per repository.</b>
 			</dd>
 		</dl>
 		<h2 id="Initialising.2C_committing_and_branching">Initialising, committing and branching</h2>
 		<p>To create a new Git repository, the <code>git init</code> command is used. This creates an empty repository in the current directory. They can, but often don't, end with <code>.git</code> – typically it's only repositories pushed to remote servers that use the <code>.git</code> extension. As noted above, a Git repository should ideally hold only one or a few highly related/coupled projects.</p>
 		<dl>
-			<dd>&#9758; '
+			<dd>☞ '
 				<b>git init' creates a fresh repository in the current directory</b>
 			</dd>
 		</dl>
@@ -292,22 +292,22 @@ git push github
 			<i>index</i>, which is a set of files that would be committed. You can think of it as an active changeset; as you're working on multiple files, you want only some changes to be committed as a unit. These files get <code>git add</code>ed to the index first, then <code>git commit</code>ted subsequently. (If you don't like this behaviour, there's a <code>git commit -a</code> option, which performs as CVS or SVN would.)
 		</p>
 		<dl>
-			<dd>&#9758; '
+			<dd>☞ '
 				<b>git add' is used to add files and track changes to files</b>
 			</dd>
-			<dd>&#9758; '
+			<dd>☞ '
 				<b>git commit' is used to commit tracked files</b>
 			</dd>
 		</dl>
 		<p>To create branches, you can use <code>git branch</code> (which creates, but does not switch to, the new branch) and <code>git checkout</code> (which switches to the new branch). A shorthand for new branches is <code>git checkout -b</code>, which creates-and-switches to a branch. At any point, <code>git branch</code> shows you a list of branches and marks the current one with a * next to the name.</p>
 		<dl>
-			<dd>&#9758; '
+			<dd>☞ '
 				<b>git branch' is used to create and list branches</b>
 			</dd>
-			<dd>&#9758; '
+			<dd>☞ '
 				<b>git checkout' is used to switch branches</b>
 			</dd>
-			<dd>&#9758; '
+			<dd>☞ '
 				<b>git checkout -b' is used to create and then switch branches</b>
 			</dd>
 		</dl>
@@ -493,7 +493,7 @@ $ git log --graph --oneline
 			<i>rebase</i> is uprooting the branch from the original commit, and re-writing history as if it had been done from the current point in time. For example, in the above Git trace, <code>1441b16d</code> to <code>843dc8f</code> to <code>0c8c0fd</code> was only one commit off the main tree. Had the change been rebased on <code>74ba6fc</code>, then we would have only seen a single timeline across those commits. It's generally considered good practice to rebase changes prior to pushing to a remote tree to avoid these kind of fan-outs, but it's not necessary to do so. Furthermore, the rebase operation changes the <code>sha1</code> hashes of your tree, which can affect those who have forked your repository. Best practice is to frequently rebase your changes in your own local repository, but once they've been made public (by pushing to a shared repository) to avoid rebasing further.
 		</p>
 		<dl>
-			<dd>&#9758; 
+			<dd>☞ 
 				<b>Rebasing replants your tree; but do it on local branches only</b>
 			</dd>
 		</dl><hr/>
