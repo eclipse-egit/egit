@@ -13,19 +13,21 @@ package org.eclipse.egit.ui.internal.branch;
 import java.io.File;
 import java.util.List;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.internal.job.JobUtil;
+import org.eclipse.egit.core.op.ResetOperation;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.commit.CommitUI;
 import org.eclipse.egit.ui.internal.dialogs.NonDeletedFilesDialog;
 import org.eclipse.egit.ui.internal.dialogs.NonDeletedFilesTree;
-import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
-import org.eclipse.egit.ui.internal.repository.tree.command.CommitCommand;
-import org.eclipse.egit.ui.internal.repository.tree.command.ResetCommand;
-import org.eclipse.egit.ui.internal.repository.tree.command.StashCreateCommand;
+import org.eclipse.egit.ui.internal.stash.StashCreateUI;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.api.CheckoutResult;
+import org.eclipse.jgit.api.ResetCommand.ResetType;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -48,6 +50,8 @@ public class BranchResultDialog extends MessageDialog {
 
 	private final Repository repository;
 
+	private static String target;
+
 	/**
 	 * @param result
 	 *            the result to show
@@ -57,6 +61,7 @@ public class BranchResultDialog extends MessageDialog {
 	 */
 	public static void show(final CheckoutResult result,
 			final Repository repository, final String target) {
+		BranchResultDialog.target = target;
 		if (result.getStatus() == CheckoutResult.Status.CONFLICTS)
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 				public void run() {
@@ -119,32 +124,41 @@ public class BranchResultDialog extends MessageDialog {
 	}
 
 	protected void buttonPressed(int buttonId) {
+		boolean shouldCheckout = false;
 		switch (buttonId) {
 		case IDialogConstants.PROCEED_ID:
-			CommonUtils.runCommand(CommitCommand.ID, new StructuredSelection(
-					new RepositoryNode(null, repository)));
+			CommitUI commitUI = new CommitUI(getShell(), repository, new IResource[0], true);
+			shouldCheckout = commitUI.commit();
 			break;
 		case IDialogConstants.ABORT_ID:
-			CommonUtils.runCommand(ResetCommand.ID, new StructuredSelection(
-					new RepositoryNode(null, repository)));
+			final ResetOperation operation = new ResetOperation(repository,
+					Constants.HEAD, ResetType.HARD);
+			String jobname = NLS.bind(UIText.ResetAction_reset, Constants.HEAD);
+			JobUtil.scheduleUserJob(operation, jobname, JobFamilies.RESET);
+			shouldCheckout = true;
 			break;
 		case IDialogConstants.SKIP_ID:
-			CommonUtils.runCommand(StashCreateCommand.ID,
-					new StructuredSelection(
-							new RepositoryNode(null, repository)));
+			StashCreateUI stashCreateUI = new StashCreateUI(getShell(), repository);
+			shouldCheckout = stashCreateUI.createStash();
 			break;
+		case IDialogConstants.OK_ID:
+			super.buttonPressed(buttonId);
 		}
-		super.buttonPressed(buttonId);
+		if (shouldCheckout) {
+			super.buttonPressed(buttonId);
+			BranchOperationUI op = BranchOperationUI.checkout(repository, target);
+			op.start();
+		}
 	}
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		super.createButtonsForButtonBar(parent);
-		createButton(parent, IDialogConstants.ABORT_ID,
-				UIText.BranchResultDialog_buttonReset, false);
 		createButton(parent, IDialogConstants.PROCEED_ID,
 				UIText.BranchResultDialog_buttonCommit, false);
 		createButton(parent, IDialogConstants.SKIP_ID,
 				UIText.BranchResultDialog_buttonStash, false);
+		createButton(parent, IDialogConstants.ABORT_ID,
+				UIText.BranchResultDialog_buttonReset, false);
 	}
 }

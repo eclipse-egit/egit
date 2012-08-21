@@ -113,12 +113,13 @@ public class CommitUI  {
 
 	/**
 	 * Performs a commit
+	 * @return true if a commit operation was triggered
 	 */
-	public void commit() {
+	public boolean commit() {
 		// let's see if there is any dirty editor around and
 		// ask the user if they want to save or abort
 		if (!UIUtils.saveAllEditors(repo))
-			return;
+			return false;
 
 		BasicConfigurationDialog.show(new Repository[]{repo});
 
@@ -139,9 +140,9 @@ public class CommitUI  {
 		} catch (InvocationTargetException e) {
 			Activator.handleError(UIText.CommitAction_errorComputingDiffs, e.getCause(),
 					true);
-			return;
+			return false;
 		} catch (InterruptedException e) {
-			return;
+			return false;
 		}
 
 		CommitHelper commitHelper = new CommitHelper(repo);
@@ -151,7 +152,7 @@ public class CommitUI  {
 					shell,
 					UIText.CommitAction_cannotCommit,
 					commitHelper.getCannotCommitMessage());
-			return;
+			return false;
 		}
 		boolean amendAllowed = commitHelper.amendAllowed();
 		if (files.isEmpty()) {
@@ -160,13 +161,13 @@ public class CommitUI  {
 						UIText.CommitAction_noFilesToCommit,
 						UIText.CommitAction_amendCommit);
 				if (!result)
-					return;
+					return false;
 				amending = true;
 			} else {
 				MessageDialog.openWarning(shell,
 						UIText.CommitAction_noFilesToCommit,
 						UIText.CommitAction_amendNotPossible);
-				return;
+				return false;
 			}
 		}
 
@@ -182,7 +183,7 @@ public class CommitUI  {
 		commitDialog.setCommitMessage(commitHelper.getCommitMessage());
 
 		if (commitDialog.open() != IDialogConstants.OK_ID)
-			return;
+			return false;
 
 		final CommitOperation commitOperation;
 		try {
@@ -192,7 +193,7 @@ public class CommitUI  {
 					commitDialog.getCommitter(), commitDialog.getCommitMessage());
 		} catch (CoreException e1) {
 			Activator.handleError(UIText.CommitUI_commitFailed, e1, true);
-			return;
+			return false;
 		}
 		if (commitDialog.isAmending())
 			commitOperation.setAmending(true);
@@ -201,7 +202,7 @@ public class CommitUI  {
 		if (commitHelper.isMergedResolved)
 			commitOperation.setRepository(repo);
 		performCommit(repo, commitOperation, false);
-		return;
+		return true;
 	}
 
 	/**
