@@ -11,7 +11,7 @@
 <target name="egit-4.2.target" sequenceNumber="53">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-      <repository location="http://download.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.0.v20120127/"/>
+      <repository location="http://archive.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.0.v20120127/"/>
       <unit id="org.eclipse.jetty.client" version="7.6.0.v20120127"/>
       <unit id="org.eclipse.jetty.client.source" version="7.6.0.v20120127"/>
       <unit id="org.eclipse.jetty.continuation" version="7.6.0.v20120127"/>
@@ -61,13 +61,13 @@
       <unit id="javax.servlet.source" version="2.5.0.v201103041518"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-      <repository location="http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site"/>
+      <repository location="http://download.eclipse.org/technology/swtbot/snapshots/"/>
       <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.swtbot.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.swtbot.eclipse.test.junit4.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.swtbot.eclipse.test.junit.feature.group" version="0.0.0"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-      <repository location="http://download.eclipse.org/releases/juno/"/>
+      <repository location="http://download.eclipse.org/releases/juno"/>
       <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
       <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.commons.sdk.feature.group" version="0.0.0"/>
