@@ -16,6 +16,24 @@
       "revId": "c93ae1503a806c256ac4fe1688747bd2f0e47f30",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//67o\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 3065,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-08-22T07:39:01Z",
+      "side": 1,
+      "message": "I think it should be there. This element is there to create a menu entry. The entry above is there to associate a handler with the command.",
+      "parentUuid": "AABOIn//7Fw\u003d",
+      "revId": "c93ae1503a806c256ac4fe1688747bd2f0e47f30",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
