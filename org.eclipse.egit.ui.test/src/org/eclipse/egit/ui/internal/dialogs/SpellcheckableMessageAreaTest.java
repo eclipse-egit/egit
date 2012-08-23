@@ -113,6 +113,55 @@ public class SpellcheckableMessageAreaTest {
 		assertWrappedEquals(input, input);
 	}
 
+	@Test
+	public void lineAfterWrappedWordShouldBeJoined() {
+		String input = "000000001 000000002 000000003 000000004 000000005 000000006 000000007 000000008\n000000009";
+		String expected = "000000001 000000002 000000003 000000004 000000005 000000006 000000007\n000000008 000000009";
+		assertWrappedEquals(expected, input);
+	}
+
+	@Test
+	public void lineAfterWrappedWordShouldBeJoinedAndJoinedLineWrapCorrectly() {
+		String input = "000000001 000000002 000000003 000000004 000000005 000000006 000000007 000000008\n"
+				+ "000000009 000000010 000000011 000000012 000000013 000000014 000000015 000000016";
+		String expected = "000000001 000000002 000000003 000000004 000000005 000000006 000000007\n"
+				+ "000000008 000000009 000000010 000000011 000000012 000000013 000000014\n000000015 000000016";
+		assertWrappedEquals(expected, input);
+	}
+
+	@Test
+	public void lineAfterWrappedLineShouldBeJoinedAndFollowingLineWrappedCorrectly() {
+		String input = "000000001 000000002 000000003 000000004 000000005 000000006 000000007 "
+				+ "000000008 000000009 000000010 000000011 000000012 000000013 000000014\n"
+				+ "000000015 000000016 000000017 000000018 000000019 000000020 000000021";
+		String expected = "000000001 000000002 000000003 000000004 000000005 000000006 000000007\n"
+				+ "000000008 000000009 000000010 000000011 000000012 000000013 000000014\n"
+				+ "000000015 000000016 000000017 000000018 000000019 000000020 000000021";
+		assertWrappedEquals(expected, input);
+	}
+
+	@Test
+	public void lineAfterWrappedWordShouldNotBeJoinedIfItsEmpty() {
+		String input = "000000001 000000002 000000003 000000004 000000005 000000006 000000007 000000008\n\nNew paragraph";
+		String expected = "000000001 000000002 000000003 000000004 000000005 000000006 000000007\n000000008\n\nNew paragraph";
+		assertWrappedEquals(expected, input);
+	}
+
+	@Test
+	public void lineAfterWrappedWordShouldNotBeJoinedIfItStartsWithASymbol() {
+		String input = "* 000000001 000000002 000000003 000000004 000000005 000000006 000000007 000000008\n* Bullet 2";
+		String expected = "* 000000001 000000002 000000003 000000004 000000005 000000006 000000007\n000000008\n* Bullet 2";
+		assertWrappedEquals(expected, input);
+	}
+
+	@Test
+	public void lineAfterWrappedWordShouldBeJoinedIfItStartsWithAParenthesis() {
+		String input = "* 000000001 000000002 000000003 000000004 000000005 000000006 000000007 000000008\n(paren)";
+		String expected = "* 000000001 000000002 000000003 000000004 000000005 000000006 000000007\n000000008 (paren)";
+		assertWrappedEquals(expected, input);
+	}
+
+
 	private static void assertWrappedEquals(String expected, String input) {
 		assertWrappedEqualsOnUnix(expected, input);
 		assertWrappedEqualsOnWindows(expected, input);
@@ -136,7 +185,7 @@ public class SpellcheckableMessageAreaTest {
 						SpellcheckableMessageArea.MAX_LINE_WIDTH, lineDelimiter);
 		for (WrapEdit wrapEdit : wrapEdits) {
 			sb.replace(wrapEdit.getStart(),
-					wrapEdit.getStart() + wrapEdit.getLength(), lineDelimiter);
+					wrapEdit.getStart() + wrapEdit.getLength(), wrapEdit.getReplacement());
 		}
 		return sb.toString();
 	}
