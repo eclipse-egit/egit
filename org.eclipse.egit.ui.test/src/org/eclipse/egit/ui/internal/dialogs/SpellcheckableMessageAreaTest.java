@@ -113,6 +113,36 @@ public class SpellcheckableMessageAreaTest {
 		assertWrappedEquals(input, input);
 	}
 
+	@Test
+	public void lineAfterWrappedWordShouldBeJoined() {
+		String input = "123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789\n123456789";
+		String expected = "123456789 123456789 123456789 123456789 123456789 123456789 123456789\n123456789 123456789";
+		assertWrappedEquals(expected, input);
+	}
+
+	@Test
+	public void lineAfterWrappedWordShouldBeJoinedAndJoinedLineWrapCorrect() {
+		String input = "123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789\n"
+				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789";
+		String expected = "123456789 123456789 123456789 123456789 123456789 123456789 123456789\n"
+				+ "123456789 123456789 123456789 123456789 123456789 123456789 123456789\n123456789 123456789";
+		assertWrappedEquals(expected, input);
+	}
+
+	@Test
+	public void lineAfterWrappedWordShouldNotBeJoinedIfItsEmpty() {
+		String input = "123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789\n\nNew paragraph";
+		String expected = "123456789 123456789 123456789 123456789 123456789 123456789 123456789\n123456789\n\nNew paragraph";
+		assertWrappedEquals(expected, input);
+	}
+
+	@Test
+	public void lineAfterWrappedWordShouldNotBeJoinedIfItStartsWithASymbol() {
+		String input = "* 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789\n* Bullet 2";
+		String expected = "* 123456789 123456789 123456789 123456789 123456789 123456789 123456789\n123456789\n* Bullet 2";
+		assertWrappedEquals(expected, input);
+	}
+
 	private static void assertWrappedEquals(String expected, String input) {
 		assertWrappedEqualsOnUnix(expected, input);
 		assertWrappedEqualsOnWindows(expected, input);
@@ -136,7 +166,7 @@ public class SpellcheckableMessageAreaTest {
 						SpellcheckableMessageArea.MAX_LINE_WIDTH, lineDelimiter);
 		for (WrapEdit wrapEdit : wrapEdits) {
 			sb.replace(wrapEdit.getStart(),
-					wrapEdit.getStart() + wrapEdit.getLength(), lineDelimiter);
+					wrapEdit.getStart() + wrapEdit.getLength(), wrapEdit.getReplacement());
 		}
 		return sb.toString();
 	}
