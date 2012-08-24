@@ -16,6 +16,24 @@
       "revId": "7305e02c426fb4a54456b136b637c93a6dae0a86",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//6no\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/FetchAndMergeActionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-08-24T11:03:02Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "AABOIn//7f8\u003d",
+      "revId": "7305e02c426fb4a54456b136b637c93a6dae0a86",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }

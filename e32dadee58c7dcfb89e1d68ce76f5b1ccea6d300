@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//6n0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/MergeOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-08-24T11:03:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//7gI\u003d",
+      "revId": "e32dadee58c7dcfb89e1d68ce76f5b1ccea6d300",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//7gE\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/FetchAndMergeActionTest.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-08-16T22:42:27Z",
       "side": 1,
       "message": "trailing whitespace",
+      "revId": "e32dadee58c7dcfb89e1d68ce76f5b1ccea6d300",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//6nw\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/FetchAndMergeActionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-08-24T11:03:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//7gE\u003d",
       "revId": "e32dadee58c7dcfb89e1d68ce76f5b1ccea6d300",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//6ns\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/FetchAndMergeActionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-08-24T11:03:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//7gA\u003d",
+      "revId": "e32dadee58c7dcfb89e1d68ce76f5b1ccea6d300",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//7f4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2012-08-16T22:42:27Z",
       "side": 1,
       "message": "I\u0027d add a short description what squash means to this dialog",
+      "revId": "e32dadee58c7dcfb89e1d68ce76f5b1ccea6d300",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//6nk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-08-24T11:03:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//7f4\u003d",
       "revId": "e32dadee58c7dcfb89e1d68ce76f5b1ccea6d300",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
