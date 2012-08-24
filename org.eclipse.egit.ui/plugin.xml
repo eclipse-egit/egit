@@ -4434,6 +4434,12 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.CreatePatchActionHandler"
+            id="org.eclipse.egit.ui.team.CreatePatch"
+            name="%CreatePatchCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.actions.RemoveFromIndexActionHandler"
             id="org.eclipse.egit.ui.team.RemoveFromIndex"
             name="%RemoveFromIndexCommand.name">
