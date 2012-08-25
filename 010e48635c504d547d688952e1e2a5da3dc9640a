@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//6eQ\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-08-25T00:08:36Z",
+      "side": 1,
+      "message": "s/:/./",
+      "revId": "010e48635c504d547d688952e1e2a5da3dc9640a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//6eU\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/RepositoryCacheTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-08-25T00:08:36Z",
+      "side": 1,
+      "message": "this license header doesn\u0027t match the Eclipse license template. compare it to the header in other source files.",
+      "revId": "010e48635c504d547d688952e1e2a5da3dc9640a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//6eY\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/RepositoryCacheTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-08-25T00:08:36Z",
+      "side": 1,
+      "message": "how does this assertion prove that the repository is no longer in the cache ? I\u0027d expect isNotIn here, or do I miss something ?",
+      "revId": "010e48635c504d547d688952e1e2a5da3dc9640a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//6eg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-08-25T00:08:36Z",
+      "side": 1,
+      "message": "looks like you incompletely renamed V to Repository",
+      "revId": "010e48635c504d547d688952e1e2a5da3dc9640a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
