@@ -883,6 +883,11 @@
             id="org.eclipse.egit.ui.PushHeadToGerrit"
             name="%PushToGerritCommand.label">
       </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            id="org.eclipse.egit.ui.team.GarbageCollect"
+            name="%GarbageCollectCommand.label">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -1708,6 +1713,32 @@
                   </adapt>
                </iterate>
             </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.GarbageCollect">
+         <class
+               class="org.eclipse.egit.ui.internal.repository.tree.command.GarbageCollectCommand">
+         </class>
+         <activeWhen>
+             <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                        </instanceof>
+                        <test
+                              property="GitRepository.isSafe">
+                        </test>
+                        <test
+                              property="GitRepository.containsHead">
+                        </test>
+                     </and>
+                  </iterate>
+               </and>
          </activeWhen>
       </handler>
    </extension>
@@ -3154,6 +3185,11 @@
                visible="true">
          </separator>
          <command
+               commandId="org.eclipse.egit.ui.team.GarbageCollect"
+               label="%GarbageCollectCommand.label"
+               style="push">
+         </command>
+         <command
                commandId="org.eclipse.egit.ui.RepositoriesViewRemove"
                label="%RepoViewRemove.label"
                style="push">
@@ -4305,6 +4341,10 @@
       <image
             commandId="org.eclipse.egit.ui.RepositoriesViewConfigureGerritRemote"
             icon="icons/obj16/gerrit_obj.gif">
+      </image>
+      <image
+            commandId="org.eclipse.egit.ui.team.GarbageCollect"
+            icon="icons/elcl16/trash.gif">
       </image>
    </extension>
    <extension
