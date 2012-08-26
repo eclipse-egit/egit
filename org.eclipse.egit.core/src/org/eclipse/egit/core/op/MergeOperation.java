@@ -1,5 +1,7 @@
 /*******************************************************************************
  * Copyright (c) 2010 SAP AG.
+ * Copyright (C) 2012, Tomasz Zarna <Tomasz.Zarna@pl.ibm.com>
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +9,7 @@
  *
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
+ *    Tomasz Zarna (IBM) - merge squash, bug 382720
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -52,6 +55,8 @@ public class MergeOperation implements IEGitOperation {
 
 	private MergeStrategy mergeStrategy;
 
+	private boolean squash;
+
 	private MergeResult mergeResult;
 
 	/**
@@ -75,6 +80,13 @@ public class MergeOperation implements IEGitOperation {
 		this.refName = refName;
 		if (mergeStrategy != null)
 			this.mergeStrategy = MergeStrategy.get(mergeStrategy);
+	}
+
+	/**
+	 * @param squash true to squash merge commits
+	 */
+	public void setSquash(boolean squash) {
+		this.squash = squash;
 	}
 
 	public void execute(IProgressMonitor m) throws CoreException {
@@ -103,6 +115,7 @@ public class MergeOperation implements IEGitOperation {
 				} catch (IOException e) {
 					throw new TeamException(CoreText.MergeOperation_InternalError, e);
 				}
+				merge.setSquash(squash);
 				if (mergeStrategy != null) {
 					merge.setStrategy(mergeStrategy);
 				}
