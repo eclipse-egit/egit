@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -46,13 +45,13 @@ public class RepositoryCache {
 	 */
 	public synchronized Repository lookupRepository(final File gitDir)
 			throws IOException {
+		prune(repositoryCache);
 		Reference<Repository> r = repositoryCache.get(gitDir);
 		Repository d = r != null ? r.get() : null;
 		if (d == null) {
 			d = new FileRepository(gitDir);
 			repositoryCache.put(gitDir, new WeakReference<Repository>(d));
 		}
-		prune(repositoryCache);
 		return d;
 	}
 
@@ -60,20 +59,20 @@ public class RepositoryCache {
 	 * @return all Repository instances contained in the cache
 	 */
 	public synchronized Repository[] getAllRepositories() {
-		List<Repository> result = new ArrayList<Repository>();
-		Collection<Reference<Repository>> values = repositoryCache.values();
-		for(Reference<Repository> ref:values) {
-			Repository repo = ref.get();
-			if(repo!=null)
-				result.add(repo);
+		prune(repositoryCache);
+		List<Repository> repositories = new ArrayList<Repository>();
+		for (Reference<Repository> reference : repositoryCache.values()) {
+			repositories.add(reference.get());
 		}
-		return result.toArray(new Repository[result.size()]);
+		return repositories.toArray(new Repository[repositories.size()]);
 	}
 
-	private static <K, V> void prune(Map<K, Reference<V>> map) {
-		for (final Iterator<Map.Entry<K, Reference<V>>> i = map.entrySet()
+	private static void prune(Map<File, Reference<Repository>> map) {
+		for (final Iterator<Map.Entry<File, Reference<Repository>>> i = map.entrySet()
 				.iterator(); i.hasNext();) {
-			if (i.next().getValue().get() == null)
+			Repository repository = i.next().getValue().get();
+			if (repository == null
+					|| !repository.getDirectory().exists())
 				i.remove();
 		}
 	}
