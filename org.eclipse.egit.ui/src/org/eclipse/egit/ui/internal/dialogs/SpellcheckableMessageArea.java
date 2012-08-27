@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
@@ -99,6 +100,9 @@ import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 public class SpellcheckableMessageArea extends Composite {
 
 	static final int MAX_LINE_WIDTH = 72;
+
+	// Symbol or Punctuation, Dash or Punctuation, Other
+	private static final Pattern STARTS_WITH_SYMBOL = Pattern.compile("[\\p{S}\\p{Pd}\\p{Po}].*"); //$NON-NLS-1$
 
 	private static class TextViewerAction extends Action implements IUpdate {
 
@@ -338,9 +342,15 @@ public class SpellcheckableMessageArea extends Composite {
 								lineDelimiter);
 						// Prevent infinite loop because replaceTextRange causes a ModifyEvent
 						active = false;
-						for (WrapEdit wrapEdit : wrapEdits)
-							textWidget.replaceTextRange(wrapEdit.getStart(), wrapEdit.getLength(), lineDelimiter);
-						active = true;
+						textWidget.setRedraw(false);
+						try {
+							for (WrapEdit wrapEdit : wrapEdits)
+								textWidget.replaceTextRange(wrapEdit.getStart(), wrapEdit.getLength(),
+										wrapEdit.getReplacement());
+						} finally {
+							textWidget.setRedraw(true);
+							active = true;
+						}
 					}
 				};
 				textWidget.addModifyListener(hardWrapModifyListener);
@@ -823,8 +833,12 @@ public class SpellcheckableMessageArea extends Composite {
 	public static List<WrapEdit> calculateWrapEdits(final String text, final int maxLineLength, final String lineDelimiter) {
 		List<WrapEdit> wrapEdits = new LinkedList<WrapEdit>();
 
+		final int lineDelimiterLength = lineDelimiter.length();
+		final int spaceLength = 1;
+
 		int offset = 0;
-		int lineDelimiterLength = lineDelimiter.length();
+		boolean lastChunkWasWrapped = false;
+		int lastChunkWrappedOffset = 0;
 
 		String[] chunks = text.split(lineDelimiter, -1);
 		for (int chunkIndex = 0; chunkIndex < chunks.length; chunkIndex++) {
@@ -835,46 +849,66 @@ public class SpellcheckableMessageArea extends Composite {
 
 			for (int wordIndex = 0; wordIndex < words.length; wordIndex++) {
 				String word = words[wordIndex];
-
 				int wordLength = word.length();
-				int newLineLength = lineLength + wordLength + 1 /* the space */;
+				boolean adjustForSpace = wordIndex != 0;
+
+				if (wordIndex == 0 && lastChunkWasWrapped) {
+					if (wordLength != 0 && !STARTS_WITH_SYMBOL.matcher(word).matches()) {
+						wrapEdits.add(new WrapEdit(offset - lineDelimiterLength, lineDelimiterLength, " ")); //$NON-NLS-1$
+						/* adjust for join edit above */
+						offset -= lineDelimiterLength;
+						adjustForSpace = true;
+						lineLength = offset - lastChunkWrappedOffset;
+					}
+					lastChunkWasWrapped = false;
+				}
+
+				int newLineLength = lineLength + spaceLength + wordLength;
 				if (newLineLength > maxLineLength) {
 					/* don't break before a single long word */
 					if (lineLength != 0) {
-						wrapEdits.add(new WrapEdit(offset, 1));
+						wrapEdits.add(new WrapEdit(offset, spaceLength, lineDelimiter));
 						/* adjust for the shifting of text after the edit is applied */
 						offset += lineDelimiterLength;
+						adjustForSpace = false;
+						lastChunkWasWrapped = true;
+						lastChunkWrappedOffset = offset;
 					}
 					lineLength = 0;
-				} else if (wordIndex != 0) {
-					lineLength += 1;
-					offset += 1;
 				}
+
+				if (adjustForSpace) {
+					offset += spaceLength;
+					lineLength += spaceLength;
+				}
+
 				offset += wordLength;
 				lineLength += wordLength;
 			}
 
-			if (chunkIndex != chunks.length - 1)
-				offset += lineDelimiterLength;
+			offset += lineDelimiterLength;
 		}
 
 		return wrapEdits;
 	}
 
 	/**
-	 * Edit for replacing a space with a line delimiter to wrap a long line.
+	 * Edit for replacing a text range with another text to wrap or join lines.
 	 */
 	public static class WrapEdit {
-		private int start;
-		private int length;
+		private final int start;
+		private final int length;
+		private final String replacement;
 
 		/**
 		 * @param start see {@link #getStart()}
 		 * @param length see {@link #getLength()}
+		 * @param replacement see {@link #getReplacement()}
 		 */
-		public WrapEdit(int start, int length) {
+		public WrapEdit(int start, int length, String replacement) {
 			this.start = start;
 			this.length = length;
+			this.replacement = replacement;
 		}
 
 		/**
@@ -886,11 +920,18 @@ public class SpellcheckableMessageArea extends Composite {
 		}
 
 		/**
-		 * @return number of characters which should be replaced by the line
-		 *         delimiter
+		 * @return number of characters which should be replaced by the
+		 *         replacement text
 		 */
 		public int getLength() {
 			return length;
+		}
+
+		/**
+		 * @return the text which replaces the edit range
+		 */
+		public String getReplacement() {
+			return replacement;
 		}
 	}
 }
