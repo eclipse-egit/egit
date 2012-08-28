@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//6QQ\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3190,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-08-28T08:31:10Z",
+      "side": 1,
+      "message": "The menu entry is also visible on other nodes but greyed out. Please do not display the node in these cases.",
+      "revId": "249a283eefa106b7b5ffb042dcb3c42ad07a3eae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//6QE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/GarbageCollectCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-08-28T08:31:10Z",
+      "side": 1,
+      "message": "This is not necessary.",
+      "revId": "249a283eefa106b7b5ffb042dcb3c42ad07a3eae",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
