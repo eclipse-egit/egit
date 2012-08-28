@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2011, 2012 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,6 +16,7 @@ import static org.eclipse.egit.ui.internal.actions.ActionCommands.ADD_TO_INDEX;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.COMMIT_ACTION;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.IGNORE_ACTION;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.MERGE_TOOL_ACTION;
+import static org.eclipse.egit.ui.internal.actions.ActionCommands.CREATE_PATCH;
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.PUSH_ACTION;
 import static org.eclipse.egit.ui.internal.synchronize.model.SupportedContextActionsHelper.canPush;
 import static org.eclipse.team.internal.ui.synchronize.SynchronizePageConfiguration.P_OPEN_ACTION;
@@ -70,6 +71,7 @@ class GitActionContributor extends SynchronizePageActionGroup {
 			menu.appendToGroup(GIT_ACTIONS, createItem(ADD_TO_INDEX));
 			menu.appendToGroup(GIT_ACTIONS, createItem(IGNORE_ACTION));
 			menu.appendToGroup(GIT_ACTIONS, createItem(MERGE_TOOL_ACTION));
+			menu.appendToGroup(GIT_ACTIONS, createItem(CREATE_PATCH));
 		} else if (element instanceof GitModelObject && selection.size() == 1)
 			createMenuForGitModelObject(menu, (GitModelObject) element);
 
