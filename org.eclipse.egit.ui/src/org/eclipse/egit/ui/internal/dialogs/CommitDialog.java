@@ -41,6 +41,7 @@ import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
 import org.eclipse.egit.ui.internal.dialogs.CommitItem.Status;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponent.CommitStatus;
+import org.eclipse.egit.ui.internal.push.SimpleConfigurePushDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -347,6 +348,10 @@ public class CommitDialog extends TitleAreaDialog {
 
 	private Repository repository;
 
+	private boolean pushing;
+
+	private boolean canPush;
+
 	/**
 	 * @param parentShell
 	 */
@@ -497,6 +502,22 @@ public class CommitDialog extends TitleAreaDialog {
 	 */
 	public boolean getCreateChangeId() {
 		return createChangeId;
+	}
+
+	/**
+	 * Returns whether we are pushing after the commit
+	 * @return pushing
+	 */
+	public boolean isPushing() {
+		return pushing;
+	}
+
+	/**
+	 * Pre-set whether we will push after the commit
+	 * @param pushing
+	 */
+	public void setPushing(boolean pushing) {
+		this.pushing = true;
 	}
 
 	@Override
@@ -884,6 +905,27 @@ public class CommitDialog extends TitleAreaDialog {
 				filesViewer.setChecked(item, true);
 			}
 		}
+
+		Section pushSection = toolkit.createSection(container,
+				ExpandableComposite.TITLE_BAR
+						| ExpandableComposite.CLIENT_INDENT);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(pushSection);
+		Composite pushArea = toolkit.createComposite(pushSection);
+		pushSection.setClient(pushArea);
+		toolkit.paintBordersFor(pushArea);
+		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
+				.applyTo(pushArea);
+		pushSection.setText("Push"); //$NON-NLS-1$
+		final Button pushCheckbox = toolkit.createButton(pushArea, "&Push the changes to upstream", SWT.CHECK); //$NON-NLS-1$
+		canPush = SimpleConfigurePushDialog.getConfiguredRemote(repository) != null;
+		pushCheckbox.setEnabled(canPush);
+		pushCheckbox.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				pushing = pushCheckbox.getSelection();
+			}
+		});
 
 		applyDialogFont(container);
 		statCol.pack();
