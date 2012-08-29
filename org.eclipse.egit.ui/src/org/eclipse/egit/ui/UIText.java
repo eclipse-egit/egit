@@ -1968,6 +1968,12 @@ public class UIText extends NLS {
 	public static String CommitDialog_Title;
 
 	/** */
+	public static String CommitDialog_PushSectionTitle;
+
+	/** */
+	public static String CommitDialog_PushUpstream;
+
+	/** */
 	public static String ConfigurationChecker_gitPrefixWarningMessage;
 
 	/** */

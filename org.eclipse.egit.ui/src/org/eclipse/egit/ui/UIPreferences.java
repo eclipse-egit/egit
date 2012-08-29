@@ -73,6 +73,8 @@ public class UIPreferences {
 	/** */
 	public final static String COMMIT_DIALOG_INCLUDE_UNTRACKED = "commit_dialog_include_untracked"; //$NON-NLS-1$
 	/** */
+	public final static String COMMIT_DIALOG_PUSH_UPSTREAM = "commit_dialog_push_upstream"; //$NON-NLS-1$
+	/** */
 	public final static String CHECKOUT_PROJECT_RESTORE = "restore_projects_on_checkout"; //$NON-NLS-1$
 	/** */
 	public final static String THEME_CommitGraphNormalFont = "org.eclipse.egit.ui.CommitGraphNormalFont"; //$NON-NLS-1$
