@@ -178,9 +178,22 @@ public class RepositoryMapping {
 	}
 
 	public String toString() {
+		IPath absolutePath = getGitDirAbsolutePath();
 		return "RepositoryMapping[" //$NON-NLS-1$
-				+ containerPathString + " -> " //$NON-NLS-1$
-				+ gitDirPathString + "]"; //$NON-NLS-1$
+				+ format(containerPathString)
+				+ " -> '" //$NON-NLS-1$
+				+ format(gitDirPathString)
+				+ "', absolute path: '"  //$NON-NLS-1$
+				+ format(absolutePath) + "' ]"; //$NON-NLS-1$
+	}
+
+	private String format(Object o) {
+		if (o == null)
+			return "<null>"; //$NON-NLS-1$
+		else if (o.toString().length() == 0)
+			return "<empty>"; //$NON-NLS-1$
+		else
+			return o.toString();
 	}
 
 	/**
@@ -305,9 +318,13 @@ public class RepositoryMapping {
 	 * @return The GIT DIR absolute path
 	 */
 	public synchronized IPath getGitDirAbsolutePath() {
-		if (gitDirAbsolutePath == null)
-			gitDirAbsolutePath = container.getLocation()
-					.append(getGitDirPath());
+		if (gitDirAbsolutePath == null) {
+			if (container != null) {
+				IPath cloc = container.getLocation();
+				if (cloc != null)
+					gitDirAbsolutePath = cloc.append(getGitDirPath());
+			}
+		}
 		return gitDirAbsolutePath;
 	}
 
