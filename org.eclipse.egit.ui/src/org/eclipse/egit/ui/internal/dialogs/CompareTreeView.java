@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 SAP AG and others.
+ * Copyright (c) 2011, 2012 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -162,7 +162,7 @@ public class CompareTreeView extends ViewPart {
 		GridLayoutFactory.fillDefaults().spacing(0, 0).applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
 
-		tree = new TreeViewer(main, SWT.BORDER);
+		tree = new TreeViewer(main, SWT.NONE);
 		tree.setContentProvider(new PathNodeContentProvider());
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(tree.getTree());
 
