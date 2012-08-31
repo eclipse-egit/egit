@@ -493,6 +493,12 @@
             name="%RepositoryConfigPropertyPage"
             objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
       </page>
+      <page
+            class="org.eclipse.egit.ui.internal.repository.RepositoryStatisticsPage"
+            id="org.eclipse.egit.ui.property.RepositoryStatisticsPage"
+            name="%RepositoryStatisticsPage"
+            objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+      </page>
    </extension>
 
    <extension point="org.eclipse.ui.keywords">
