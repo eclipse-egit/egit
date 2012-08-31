@@ -2895,6 +2895,9 @@ public class UIText extends NLS {
 	public static String DecoratorPreferencesPage_labelDecorationsLink;
 
 	/** */
+	public static String DecoratorPreferencesPage_colorsAndFontsLink;
+
+	/** */
 	public static String DecoratorPreferencesPage_iconsShowTracked;
 
 	/** */

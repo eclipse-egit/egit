@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2000, 2007 IBM Corporation and others.
+ * Copyright (c) 2000, 2012 IBM Corporation and others.
  * Copyright (C) 2009, Tor Arne Vestbø <torarnv@gmail.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  *
@@ -212,6 +212,11 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 				(IWorkbenchPreferenceContainer) getContainer(), composite,
 				"org.eclipse.ui.preferencePages.Decorators", //$NON-NLS-1$
 				UIText.DecoratorPreferencesPage_labelDecorationsLink);
+
+		SWTUtils.createPreferenceLink(
+				(IWorkbenchPreferenceContainer) getContainer(), composite,
+				"org.eclipse.ui.preferencePages.ColorsAndFonts", //$NON-NLS-1$
+				UIText.DecoratorPreferencesPage_colorsAndFontsLink);
 
 		TabFolder tabFolder = new TabFolder(composite, SWT.NONE);
 		tabFolder.setLayoutData(SWTUtils.createHVFillGridData());
