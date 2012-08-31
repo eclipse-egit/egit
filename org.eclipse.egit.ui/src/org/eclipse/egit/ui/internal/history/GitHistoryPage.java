@@ -1897,11 +1897,17 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 			markStartRef(walk, ref);
 	}
 
-	private void markStartRef(RevWalk walk, Ref ref) throws MissingObjectException,
-			IOException, IncorrectObjectTypeException {
-		Object refTarget = walk.parseAny(ref.getLeaf().getObjectId());
-		if (refTarget instanceof RevCommit)
-			walk.markStart((RevCommit) refTarget);
+	private void markStartRef(RevWalk walk, Ref ref) throws IOException,
+			IncorrectObjectTypeException {
+		try {
+			Object refTarget = walk.parseAny(ref.getLeaf().getObjectId());
+			if (refTarget instanceof RevCommit)
+				walk.markStart((RevCommit) refTarget);
+		} catch (MissingObjectException e) {
+			// If there is a ref which points to Nirvana then we should simply
+			// ignore this ref. We should not let a corrupt ref cause that the
+			// history view is not filled at all
+		}
 	}
 
 	private void markUninteresting(RevWalk walk, String prefix) throws IOException,
