@@ -1008,6 +1008,9 @@ public class UIText extends NLS {
 	public static String CompareTreeView_WorkspaceVersionText;
 
 	/** */
+	public static String CompareTreeView_ShowIn_label;
+
+	/** */
 	public static String CompareUtils_errorGettingEncoding;
 
 	/** */
