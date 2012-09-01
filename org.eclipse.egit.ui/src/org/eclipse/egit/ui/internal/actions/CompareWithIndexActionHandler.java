@@ -10,15 +10,15 @@
 
 package org.eclipse.egit.ui.internal.actions;
 
-import static org.eclipse.egit.core.internal.util.ResourceUtil.isNonWorkspace;
-
 import java.io.IOException;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
@@ -41,14 +41,14 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 		// assert all resources map to the same repository
 		if (getRepository(true, event) == null)
 			return null;
-		final IResource[] resources = getSelectedResources(event);
+		final IPath[] locations = getSelectedLocations(event);
 
-		if (resources.length == 1 && resources[0] instanceof IFile) {
-			final IFile baseFile = (IFile) resources[0];
-			final ITypedElement base = getBaseTypeElement(baseFile);
+		if (locations.length == 1 && locations[0].toFile().isFile()) {
+			final IPath baseLocation = locations[0];
+			final ITypedElement base = getBaseTypeElement(baseLocation);
 			final ITypedElement next;
 			try {
-				next = CompareUtils.getIndexTypedElement(baseFile);
+				next = getIndexTypedElement(baseLocation);
 			} catch (IOException e) {
 				Activator.handleError(
 						UIText.CompareWithIndexAction_errorOnAddToIndex, e,
@@ -66,7 +66,7 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 				view = (CompareTreeView) PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getActivePage().showView(
 								CompareTreeView.ID);
-				view.setInput(resources, CompareTreeView.INDEX_VERSION);
+				view.setInput(getSelectedResources(event), CompareTreeView.INDEX_VERSION);
 			} catch (PartInitException e) {
 				Activator.handleError(e.getMessage(), e, true);
 			}
@@ -74,20 +74,30 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 		return null;
 	}
 
+
 	@Override
 	public boolean isEnabled() {
 		return getRepository() != null;
 	}
 
-	private ITypedElement getBaseTypeElement(final IFile baseFile) {
-		final ITypedElement base;
-		if (isNonWorkspace(baseFile)) {
-			String path = baseFile.getFullPath().toOSString();
-			base = new LocalNonWorkspaceTypedElement(path);
-		} else
-			base = SaveableCompareEditorInput
-			.createFileElement(baseFile);
-		return base;
+	private ITypedElement getBaseTypeElement(final IPath baseLocation) {
+		IFile file = ResourceUtil.getFileForLocation(baseLocation);
+		if (file != null)
+			return SaveableCompareEditorInput.createFileElement(file);
+		else
+			return new LocalNonWorkspaceTypedElement(baseLocation.toOSString());
 	}
 
+	private ITypedElement getIndexTypedElement(final IPath location) throws IOException {
+		IFile file = ResourceUtil.getFileForLocation(location);
+		if (file != null)
+			return CompareUtils.getIndexTypedElement(file);
+		else {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(location);
+			if (mapping != null)
+				return CompareUtils.getIndexTypedElement(mapping.getRepository(), mapping.getRepoRelativePath(location));
+			else
+				return null;
+		}
+	}
 }
