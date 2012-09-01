@@ -15,13 +15,17 @@ package org.eclipse.egit.ui.internal.repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.commands.Command;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
@@ -33,9 +37,10 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIIcons;
@@ -476,27 +481,35 @@ public class RepositoriesView extends CommonNavigator {
 	}
 
 	/**
-	 * Opens the tree and marks the working directory file or folder that points
-	 * to a resource if possible
-	 *
+	 * @see #showResources(List)
 	 * @param resource
-	 *            the resource to show
 	 */
-	@SuppressWarnings("unchecked")
 	private void showResource(final IResource resource) {
-		try {
-			IProject project = resource.getProject();
-			RepositoryMapping mapping = RepositoryMapping.getMapping(project);
-			if (mapping == null)
-				return;
-			String repoPath = mapping.getRepoRelativePath(resource);
-			if( repoPath == null)
-				return;
+		showResources(Arrays.asList(resource));
+	}
 
-			boolean added = repositoryUtil.addConfiguredRepository(mapping
-					.getRepository().getDirectory());
-			if (added)
-				scheduleRefresh(0);
+	/**
+	 * Opens the tree and marks the working directory files or folders that points
+	 * to a resources if possible
+	 *
+	 * @param resources
+	 *            the resources to show
+	 */
+	private void showResources(final List<IResource> resources) {
+		final List<RepositoryTreeNode> nodesToShow = new ArrayList<RepositoryTreeNode>();
+
+		IResource[] r = resources.toArray(new IResource[resources.size()]);
+		Map<Repository, Collection<String>> resourcesByRepo = ResourceUtil.splitResourcesByRepository(r);
+		for (Map.Entry<Repository, Collection<String>> entry : resourcesByRepo.entrySet()) {
+			Repository repository = entry.getKey();
+			try {
+				boolean added = repositoryUtil.addConfiguredRepository(repository.getDirectory());
+				if (added)
+					scheduleRefresh(0);
+			} catch (IllegalArgumentException iae) {
+				Activator.handleError(iae.getMessage(), iae, false);
+				continue;
+			}
 
 			if (this.scheduledJob != null)
 				try {
@@ -505,48 +518,18 @@ public class RepositoriesView extends CommonNavigator {
 					Activator.handleError(e.getMessage(), e, false);
 				}
 
-			RepositoryTreeNode currentNode = null;
-			ITreeContentProvider cp = (ITreeContentProvider) getCommonViewer()
-					.getContentProvider();
-			for (Object repo : cp.getElements(getCommonViewer().getInput())) {
-				RepositoryTreeNode node = (RepositoryTreeNode) repo;
-				// TODO equals implementation of Repository?
-				if (mapping.getRepository().getDirectory().equals(
-						((Repository) node.getObject()).getDirectory())) {
-					for (Object child : cp.getChildren(node)) {
-						RepositoryTreeNode childNode = (RepositoryTreeNode) child;
-						if (childNode.getType() == RepositoryTreeNodeType.WORKINGDIR) {
-							currentNode = childNode;
-							break;
-						}
-					}
-					break;
-				}
+			for (String repoPath : entry.getValue()) {
+				final RepositoryTreeNode node = getNodeForPath(repository, repoPath);
+				if (node != null)
+					nodesToShow.add(node);
 			}
-
-			IPath relPath = new Path(repoPath);
-
-			for (String segment : relPath.segments())
-				for (Object child : cp.getChildren(currentNode)) {
-					RepositoryTreeNode<File> childNode = (RepositoryTreeNode<File>) child;
-					if (childNode.getObject().getName().equals(segment)) {
-						currentNode = childNode;
-						break;
-					}
-				}
-
-			final RepositoryTreeNode selNode = currentNode;
-
-			Display.getDefault().asyncExec(new Runnable() {
-
-				public void run() {
-					selectReveal(new StructuredSelection(selNode));
-				}
-			});
-
-		} catch (RuntimeException rte) {
-			Activator.handleError(rte.getMessage(), rte, false);
 		}
+
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				selectReveal(new StructuredSelection(nodesToShow));
+			}
+		});
 	}
 
 	/**
@@ -710,16 +693,16 @@ public class RepositoriesView extends CommonNavigator {
 		ISelection selection = context.getSelection();
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection ss = (IStructuredSelection) selection;
-			if (ss.size() == 1) {
-				Object element = ss.getFirstElement();
-				if (element instanceof IAdaptable) {
-					IResource resource = (IResource) ((IAdaptable) element)
-							.getAdapter(IResource.class);
-					if (resource != null) {
-						showResource(resource);
-						return true;
-					}
-				}
+			List<IResource> resources = new ArrayList<IResource>();
+			for (Iterator it = ss.iterator(); it.hasNext();) {
+				Object element = it.next();
+				IResource resource = AdapterUtils.adapt(element, IResource.class);
+				if (resource != null)
+					resources.add(resource);
+			}
+			if (!resources.isEmpty()) {
+				showResources(resources);
+				return true;
 			}
 		}
 		if(context.getInput() instanceof IFileEditorInput) {
@@ -743,6 +726,41 @@ public class RepositoriesView extends CommonNavigator {
 					showResource(adapted);
 			}
 		}
+	}
+
+	private RepositoryTreeNode getNodeForPath(Repository repository, String repoRelativePath) {
+		RepositoryTreeNode currentNode = null;
+		ITreeContentProvider cp = (ITreeContentProvider) getCommonViewer()
+				.getContentProvider();
+		for (Object repo : cp.getElements(getCommonViewer().getInput())) {
+			RepositoryTreeNode node = (RepositoryTreeNode) repo;
+			// TODO equals implementation of Repository?
+			if (repository.getDirectory().equals(
+					((Repository) node.getObject()).getDirectory())) {
+				for (Object child : cp.getChildren(node)) {
+					RepositoryTreeNode childNode = (RepositoryTreeNode) child;
+					if (childNode.getType() == RepositoryTreeNodeType.WORKINGDIR) {
+						currentNode = childNode;
+						break;
+					}
+				}
+				break;
+			}
+		}
+
+		IPath relPath = new Path(repoRelativePath);
+
+		for (String segment : relPath.segments())
+			for (Object child : cp.getChildren(currentNode)) {
+				@SuppressWarnings("unchecked")
+				RepositoryTreeNode<File> childNode = (RepositoryTreeNode<File>) child;
+				if (childNode.getObject().getName().equals(segment)) {
+					currentNode = childNode;
+					break;
+				}
+			}
+
+		return currentNode;
 	}
 
 	// TODO delete does not work because of file locks on .pack-files
