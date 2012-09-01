@@ -209,7 +209,7 @@ public class RepositoryMapping {
 	public String getRepoRelativePath(final IResource rsrc) {
 		IPath location = rsrc.getLocation();
 		if (location == null)
-			location = rsrc.getFullPath();
+			return null;
 		return getRepoRelativePath(location);
 	}
 
@@ -243,7 +243,7 @@ public class RepositoryMapping {
 	 */
 	public static RepositoryMapping getMapping(final IResource resource) {
 		if (isNonWorkspace(resource))
-			return getMappingForNonWorkspaceResource(resource);
+			return null;
 
 		IProject project = resource.getProject();
 		if (project == null)
@@ -326,10 +326,5 @@ public class RepositoryMapping {
 			}
 		}
 		return gitDirAbsolutePath;
-	}
-
-	private static RepositoryMapping getMappingForNonWorkspaceResource(
-			final IResource resource) {
-		return getMapping(resource.getFullPath());
 	}
 }
