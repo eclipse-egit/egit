@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010-2012 SAP AG
+ * Copyright (c) 2010-2012 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -461,7 +461,28 @@ public class CompareUtils {
 		final RepositoryMapping mapping = RepositoryMapping.getMapping(baseFile);
 		final Repository repository = mapping.getRepository();
 		final String gitPath = mapping.getRepoRelativePath(baseFile);
+		final String encoding = CompareCoreUtils.getResourceEncoding(baseFile);
+		return getIndexTypedElement(repository, gitPath, encoding);
+	}
 
+	/**
+	 * Get a typed element for the repository and repository-relative path in the index.
+	 *
+	 * @param repository
+	 * @param repoRelativePath
+	 * @return typed element
+	 * @throws IOException
+	 */
+	public static ITypedElement getIndexTypedElement(
+			final Repository repository, final String repoRelativePath)
+			throws IOException {
+		String encoding = CompareCoreUtils.getResourceEncoding(repository, repoRelativePath);
+		return getIndexTypedElement(repository, repoRelativePath, encoding);
+	}
+
+	private static ITypedElement getIndexTypedElement(
+			final Repository repository, final String gitPath,
+			String encoding) throws IOException {
 		DirCache dc = repository.lockDirCache();
 		final DirCacheEntry entry;
 		try {
@@ -471,7 +492,6 @@ public class CompareUtils {
 		}
 
 		IFileRevision nextFile = GitFileRevision.inIndex(repository, gitPath);
-		String encoding = CompareCoreUtils.getResourceEncoding(baseFile);
 		final EditableRevision next = new EditableRevision(nextFile, encoding);
 
 		IContentChangeListener listener = new IContentChangeListener() {
