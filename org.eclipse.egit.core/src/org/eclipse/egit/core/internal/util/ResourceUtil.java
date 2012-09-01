@@ -44,6 +44,17 @@ public class ResourceUtil {
 	}
 
 	/**
+	 * Return the corresponding file if it exists.
+	 *
+	 * @param location
+	 * @return the file, or null
+	 */
+	public static IFile getFileForLocation(IPath location) {
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		return root.getFileForLocation(location);
+	}
+
+	/**
 	 * Get the {@link IFile} corresponding to the arguments, using
 	 * {@link IWorkspaceRoot#getFileForLocation(org.eclipse.core.runtime.IPath)}
 	 * .
