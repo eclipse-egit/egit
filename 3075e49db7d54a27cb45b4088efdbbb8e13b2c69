@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//5d4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-09-01T12:40:28Z",
+      "side": 1,
+      "message": "We could additionally also make this useful for PathNodes:\n\n\n\t\tIPath repoPath \u003d getRepositoryPath();\n\t\tList\u003cIResource\u003e resources \u003d new ArrayList\u003cIResource\u003e();\n\t\tITreeSelection selection \u003d (ITreeSelection) tree.getSelection();\n\t\tfor (Iterator it \u003d selection.iterator(); it.hasNext();) {\n\t\t\tObject obj \u003d it.next();\n\t\t\tif (obj instanceof IResource)\n\t\t\t\tresources.add((IResource) obj);\n\t\t\telse if (obj instanceof PathNode \u0026\u0026 repoPath !\u003d null) {\n\t\t\t\tPathNode pathNode \u003d (PathNode) obj;\n\t\t\t\tIResource resource \u003d ResourceUtil.getResourceForLocation(repoPath.append(pathNode.path.toString()));\n\t\t\t\tif (resource !\u003d null)\n\t\t\t\t\tresources.add(resource);\n\t\t\t}\n\t\t}\n\t\treturn new ShowInContext(null, new StructuredSelection(resources));",
+      "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//5eA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-09-01T12:40:28Z",
+      "side": 1,
+      "message": "I\u0027d move this method to the end of the file, so that order of declaration corresponds to use as createOpenAction -\u003e getSelectedPaths -\u003e getRepositoryPath.",
+      "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//5d8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-09-01T12:40:28Z",
+      "side": 1,
+      "message": "Return is missing here.",
+      "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//5eE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-09-01T12:40:28Z",
+      "side": 1,
+      "message": "Use a for-each loop here.",
+      "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
