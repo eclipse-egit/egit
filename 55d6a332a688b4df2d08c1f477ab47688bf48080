@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//5dQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-09-01T13:15:00Z",
+      "side": 1,
+      "message": "It is ok that the order of the included paths could change (because it is a HashSet)? Maybe it should be a LinkedHashSet to get stable ordering.",
+      "revId": "55d6a332a688b4df2d08c1f477ab47688bf48080",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//5dM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-09-01T13:15:00Z",
+      "side": 1,
+      "message": "If the above comment is addressed, this should also be a LinkedHashSet.",
+      "revId": "55d6a332a688b4df2d08c1f477ab47688bf48080",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//5dI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 1609,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-09-01T13:15:00Z",
+      "side": 1,
+      "message": "Typo: ScpeName -\u003e ScopeName",
+      "revId": "55d6a332a688b4df2d08c1f477ab47688bf48080",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
