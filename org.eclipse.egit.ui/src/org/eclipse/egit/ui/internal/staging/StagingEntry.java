@@ -153,8 +153,6 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		IPath absolutePath = getLocation();
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IFile resource = root.getFileForLocation(absolutePath);
-		if (resource == null)
-			resource = root.getFile(absolutePath);
 		return resource;
 	}
 
@@ -167,8 +165,7 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 	}
 
 	public int getProblemSeverity() {
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IFile file = root.getFileForLocation(getLocation());
+		IFile file = getFile();
 		if (file == null)
 			return SEVERITY_NONE;
 
@@ -180,9 +177,10 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 	}
 
 	public Object getAdapter(Class adapter) {
-		if (adapter == IResource.class) {
+		if (adapter == IResource.class)
 			return getFile();
-		}
+		else if (adapter == IPath.class)
+			return getLocation();
 		return null;
 	}
 
