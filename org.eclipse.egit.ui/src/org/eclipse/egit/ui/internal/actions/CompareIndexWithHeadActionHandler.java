@@ -17,7 +17,9 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
@@ -46,15 +48,19 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		// assert all resources map to the same repository
 		if (repository == null)
 			return null;
-		final IResource[] resources = getSelectedResources(event);
-		final IFile baseFile = (IFile) resources[0];
-		final String gitPath = RepositoryMapping.getMapping(baseFile)
-				.getRepoRelativePath(baseFile);
+		final IPath[] locations = getSelectedLocations(event);
+		final IPath baseLocation = locations[0];
+		final String gitPath = RepositoryMapping.getMapping(baseLocation)
+				.getRepoRelativePath(baseLocation);
 		ITypedElement base;
 
 		ITypedElement next;
 		try {
-			base = CompareUtils.getHeadTypedElement(baseFile);
+			IFile file = ResourceUtil.getFileForLocation(baseLocation);
+			if (file != null)
+				base = CompareUtils.getHeadTypedElement(file);
+			else
+				base = CompareUtils.getHeadTypedElement(baseLocation, null);
 			Ref head = repository.getRef(Constants.HEAD);
 			RevWalk rw = new RevWalk(repository);
 			RevCommit commit = rw.parseCommit(head.getObjectId());
@@ -81,34 +87,28 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		if (selection.size() != 1)
 			return false;
 
-		IResource resource = (IResource) getAdapter(selection.getFirstElement(), IResource.class);
-		// action is only working on files. Avoid calculation
-		// of unnecessary expensive IndexDiff on a folder
-		if (resource == null || !(resource instanceof IFile))
-			return false;
-
 		Repository repository = getRepository();
 		if (repository == null)
 			return false;
 
-		return isStaged(repository, resource);
-	}
-
-	private Object getAdapter(Object adaptable, Class c) {
-		if (c.isInstance(adaptable))
-			return adaptable;
-		if (adaptable instanceof IAdaptable) {
-			IAdaptable a = (IAdaptable) adaptable;
-			Object adapter = a.getAdapter(c);
-			if (c.isInstance(adapter))
-				return adapter;
+		IResource resource = AdapterUtils.adapt(selection.getFirstElement(), IResource.class);
+		if (resource != null) {
+			// action is only working on files. Avoid calculation
+			// of unnecessary expensive IndexDiff on a folder
+			if (resource instanceof IFile)
+				return isStaged(repository, resource.getLocation());
+		} else {
+			IPath location = AdapterUtils.adapt(selection.getFirstElement(), IPath.class);
+			if (location != null && location.toFile().isFile())
+				return isStaged(repository, location);
 		}
-		return null;
+
+		return false;
 	}
 
 	private boolean isStaged(Repository repository,
-			IResource resource) {
-		String resRelPath = RepositoryMapping.getMapping(resource).getRepoRelativePath(resource);
+			IPath location) {
+		String resRelPath = RepositoryMapping.getMapping(location).getRepoRelativePath(location);
 
 		// This action at the moment only works for files anyway
 		if (resRelPath == null || resRelPath.length() == 0) {
@@ -126,7 +126,7 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 					|| indexDiff.getRemoved().contains(resRelPath);
 		} catch (IOException e) {
 			Activator.error(NLS.bind(UIText.GitHistoryPage_errorLookingUpPath,
-					resource.getFullPath().toString()), e);
+					location.toString()), e);
 			return false;
 		}
 	}

@@ -30,6 +30,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -395,9 +396,21 @@ public class CompareUtils {
 	 */
 	public static ITypedElement getHeadTypedElement(final IFile baseFile)
 			throws IOException {
-		final RepositoryMapping mapping = RepositoryMapping.getMapping(baseFile);
+		String encoding = CompareCoreUtils.getResourceEncoding(baseFile);
+		return getHeadTypedElement(baseFile.getLocation(), encoding);
+	}
+
+	/**
+	 * @param location
+	 * @param encoding
+	 * @return typed element
+	 * @throws IOException
+	 */
+	public static ITypedElement getHeadTypedElement(IPath location,
+			String encoding) throws IOException {
+		final RepositoryMapping mapping = RepositoryMapping.getMapping(location);
 		final Repository repository = mapping.getRepository();
-		final String gitPath = mapping.getRepoRelativePath(baseFile);
+		final String gitPath = mapping.getRepoRelativePath(location);
 
 		DirCache dc = repository.lockDirCache();
 		final DirCacheEntry entry;
@@ -408,7 +421,6 @@ public class CompareUtils {
 		}
 
 		IFileRevision nextFile = GitFileRevision.inIndex(repository, gitPath);
-		String encoding = CompareCoreUtils.getResourceEncoding(baseFile);
 		final EditableRevision next = new EditableRevision(nextFile, encoding);
 
 		IContentChangeListener listener = new IContentChangeListener() {
