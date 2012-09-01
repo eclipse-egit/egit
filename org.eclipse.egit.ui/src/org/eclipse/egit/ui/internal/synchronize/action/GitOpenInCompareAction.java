@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org> and others
+ * Copyright (C) 2011, 2012 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.action;
 
-import static org.eclipse.core.resources.ResourcesPlugin.getWorkspace;
-import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 import static org.eclipse.ui.PlatformUI.getWorkbench;
 
 import java.io.IOException;
@@ -20,11 +18,9 @@ import java.util.Iterator;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
@@ -34,11 +30,7 @@ import org.eclipse.egit.ui.internal.synchronize.model.GitModelWorkingFile;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.ObjectWalk;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.internal.ui.synchronize.actions.OpenInCompareAction;
 import org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration;
 import org.eclipse.team.ui.synchronize.ISynchronizePageSite;
@@ -91,15 +83,15 @@ public class GitOpenInCompareAction extends Action {
 	private void handleGitObjectComparison(GitModelBlob obj, boolean reuseEditor) {
 		ITypedElement left;
 		ITypedElement right;
-		IFile file = getFileForBlob(obj);
 		if (obj instanceof GitModelWorkingFile) {
-			if (file.getLocation() == null)
-				left = new LocalNonWorkspaceTypedElement(file.getFullPath().toString());
+			IFile file = ResourceUtil.getFileForLocation(obj.getLocation());
+			if (file == null)
+				left = new LocalNonWorkspaceTypedElement(obj.getLocation().toOSString().toString());
 			else
-				left= SaveableCompareEditorInput.createFileElement(file);
-			right = getCachedFileElement(file);
+				left = SaveableCompareEditorInput.createFileElement(file);
+			right = getCachedFileElement(obj);
 		} else if (obj instanceof GitModelCacheFile) {
-			left = getCachedFileElement(file);
+			left = getCachedFileElement(obj);
 			right = getHeadFileElement(obj);
 			if (right == null)
 				return;
@@ -127,41 +119,22 @@ public class GitOpenInCompareAction extends Action {
 		return page;
 	}
 
-	private ITypedElement getCachedFileElement(IFile file) {
+	private ITypedElement getCachedFileElement(GitModelBlob blob) {
 		try {
-			return CompareUtils.getIndexTypedElement(file);
+			IPath location = blob.getLocation();
+			RepositoryMapping mapping = RepositoryMapping.getMapping(location);
+			Repository repo = mapping.getRepository();
+			String repoRelativePath = mapping.getRepoRelativePath(location);
+			return CompareUtils.getIndexTypedElement(repo, repoRelativePath);
 		} catch (IOException e) {
 			return null;
 		}
 	}
 
 	private ITypedElement getHeadFileElement(GitModelBlob blob) {
-		IFile file = getFileForBlob(blob);
-		Repository repo = RepositoryMapping.getMapping(file).getRepository();
-		String gitPath = stripWorkDir(repo.getWorkTree(), blob.getLocation().toFile());
-		ObjectWalk ow = new ObjectWalk(repo);
-		ObjectId objectId = blob.getBaseCommitId().toObjectId();
-		RevCommit commit;
-		try {
-			commit = ow.parseCommit(objectId);
-		} catch (IOException e) {
-			Activator.error(NLS.bind(UIText.GitOpenInCompareAction_cannotRetrieveCommitWithId,
-					objectId, repo.getDirectory()), e);
-			return null;
-		}
-
-		return CompareUtils.getFileRevisionTypedElement(gitPath, commit, repo);
+		RepositoryMapping mapping = RepositoryMapping.getMapping(blob.getLocation());
+		Repository repo = mapping.getRepository();
+		String gitPath = mapping.getRepoRelativePath(blob.getLocation());
+		return CompareUtils.getHeadTypedElement(repo, gitPath);
 	}
-
-	private IFile getFileForBlob(GitModelBlob blob) {
-		IPath blobLocation = blob.getLocation();
-
-		IWorkspaceRoot root = getWorkspace().getRoot();
-		IFile file = root.getFileForLocation(blobLocation);
-		if (file == null)
-			file = root.getFile(blobLocation);
-
-		return file;
-	}
-
 }

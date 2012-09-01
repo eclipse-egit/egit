@@ -4,6 +4,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Shunichi Fuji <palglowr@gmail.com>
  * Copyright (C) 2008, Google Inc.
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -209,7 +210,7 @@ public class RepositoryMapping {
 	public String getRepoRelativePath(final IResource rsrc) {
 		IPath location = rsrc.getLocation();
 		if (location == null)
-			location = rsrc.getFullPath();
+			return null;
 		return getRepoRelativePath(location);
 	}
 
@@ -243,7 +244,7 @@ public class RepositoryMapping {
 	 */
 	public static RepositoryMapping getMapping(final IResource resource) {
 		if (isNonWorkspace(resource))
-			return getMappingForNonWorkspaceResource(resource);
+			return null;
 
 		IProject project = resource.getProject();
 		if (project == null)
@@ -326,10 +327,5 @@ public class RepositoryMapping {
 			}
 		}
 		return gitDirAbsolutePath;
-	}
-
-	private static RepositoryMapping getMappingForNonWorkspaceResource(
-			final IResource resource) {
-		return getMapping(resource.getFullPath());
 	}
 }
