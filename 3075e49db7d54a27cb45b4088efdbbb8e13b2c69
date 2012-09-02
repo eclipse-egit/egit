@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//5a0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2012-09-02T16:24:28Z",
+      "side": 1,
+      "message": "I can add that. What is the test case / scenario in the UI?",
+      "parentUuid": "AABOIn//5d4\u003d",
+      "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//5eA\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-09-01T12:40:28Z",
       "side": 1,
       "message": "I\u0027d move this method to the end of the file, so that order of declaration corresponds to use as createOpenAction -\u003e getSelectedPaths -\u003e getRepositoryPath.",
+      "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//5as\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2012-09-02T16:24:28Z",
+      "side": 1,
+      "message": "The order isn\u0027t really too relevant. What if you start to use one method more often from a method which is \"higher\" in the file? Do you then reorder the methods again? I\u0027m fine if someone wants to reorder the methods after we\u0027ve solved the \"real\" problem ;-)",
+      "parentUuid": "AABOIn//5eA\u003d",
       "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//5ao\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2012-09-02T16:24:28Z",
+      "side": 1,
+      "message": "Good catch! I\u0027ll fix that in the next version.",
+      "parentUuid": "AABOIn//5d8\u003d",
+      "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//5eE\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2012-09-01T12:40:28Z",
       "side": 1,
       "message": "Use a for-each loop here.",
+      "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//5aw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2012-09-02T16:24:28Z",
+      "side": 1,
+      "message": "I can do that, but that\u0027s really a taste issue.",
+      "parentUuid": "AABOIn//5eE\u003d",
       "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
