@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//5Z8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-09-02T21:59:37Z",
+      "side": 1,
+      "message": "I think it would be better to check this already when the checkbox is checked (failing as early as possible is less frustrating for the user), even better the checkbox could be hidden if no remote is configured. Alternatively the \"Push Branch...\" dialog (available on branch nodes in the repositories view) could be used in that case",
+      "revId": "0b4f3879c617ebbd75eb54786e10d1c1a1a0a884",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//5Z4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-09-02T21:59:37Z",
+      "side": 1,
+      "message": "this error message seems to be misleading, there is something to push (the new commit) but you don\u0027t know where to push it to",
+      "revId": "0b4f3879c617ebbd75eb54786e10d1c1a1a0a884",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//5Zs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-09-02T21:59:37Z",
+      "side": 1,
+      "message": "isPushEnabled",
+      "revId": "0b4f3879c617ebbd75eb54786e10d1c1a1a0a884",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//5Zw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-09-02T21:59:37Z",
+      "side": 1,
+      "message": "funny method name, use a better name like \"enablePush(boolean enabled)\"",
+      "revId": "0b4f3879c617ebbd75eb54786e10d1c1a1a0a884",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
