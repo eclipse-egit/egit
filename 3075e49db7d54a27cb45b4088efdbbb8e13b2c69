@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//5ag\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-09-02T19:09:12Z",
+      "side": 1,
+      "message": "Select two commits in the History View, and Compare With Each Other in Tree. The selection won\u0027t be resources, but it would be nice if the Show In menu would work if the paths map to existing resources. That\u0027s what the above enables.",
+      "parentUuid": "AABOIn//5a0\u003d",
+      "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//5eA\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "The order isn\u0027t really too relevant. What if you start to use one method more often from a method which is \"higher\" in the file? Do you then reorder the methods again? I\u0027m fine if someone wants to reorder the methods after we\u0027ve solved the \"real\" problem ;-)",
       "parentUuid": "AABOIn//5eA\u003d",
+      "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//5ac\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-09-02T19:09:12Z",
+      "side": 1,
+      "message": "I think the order can help when reading code. And yes, sometimes I reorder methods.\n\nWell, why do it in a separate change when this is all new code that is still in review? :)",
+      "parentUuid": "AABOIn//5as\u003d",
       "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
