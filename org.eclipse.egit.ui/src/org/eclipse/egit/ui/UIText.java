@@ -675,6 +675,9 @@ public class UIText extends NLS {
 	public static String RebaseCurrentRefCommand_RebasingCurrentJobName;
 
 	/** */
+	public static String RebaseCurrentRefCommand_ErrorGettingCurrentBranchMessage;
+
+	/** */
 	public static String RebaseResultDialog_Aborted;
 
 	/** */
