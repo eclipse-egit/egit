@@ -238,9 +238,11 @@ public class CompareTreeView extends ViewPart {
 			left = new GitCompareFileRevisionEditorInput.EmptyTypedElement(NLS
 					.bind(UIText.CompareTreeView_ItemNotFoundInVersionMessage,
 							rightRevision.getName(), getBaseVersion()));
-			right = new FileRevisionTypedElement(rightRevision);
+			right = new FileRevisionTypedElement(rightRevision, null);
 		} else if (selected instanceof PathNode) {
 			PathNode node = (PathNode) selected;
+			String encoding = CompareCoreUtils.getResourceEncoding(
+					repositoryMapping.getRepository(), node.getRepoRelativePath());
 			switch (node.type) {
 			case FILE_BOTH_SIDES_DIFFER:
 				// fall through
@@ -248,16 +250,16 @@ public class CompareTreeView extends ViewPart {
 				// open a compare editor with both sides filled
 				GitFileRevision rightRevision = compareVersionMap
 						.get(node.path);
-				right = new FileRevisionTypedElement(rightRevision);
+				right = new FileRevisionTypedElement(rightRevision, encoding);
 				GitFileRevision leftRevision = baseVersionMap.get(node.path);
-				left = new FileRevisionTypedElement(leftRevision);
+				left = new FileRevisionTypedElement(leftRevision, encoding);
 				break;
 			}
 			case FILE_DELETED: {
 				// open compare editor with left side empty
 				GitFileRevision rightRevision = compareVersionMap
 						.get(node.path);
-				right = new FileRevisionTypedElement(rightRevision);
+				right = new FileRevisionTypedElement(rightRevision, encoding);
 				left = new GitCompareFileRevisionEditorInput.EmptyTypedElement(
 						NLS
 								.bind(
@@ -269,7 +271,7 @@ public class CompareTreeView extends ViewPart {
 			case FILE_ADDED: {
 				// open compare editor with right side empty
 				GitFileRevision leftRevision = baseVersionMap.get(node.path);
-				left = new FileRevisionTypedElement(leftRevision);
+				left = new FileRevisionTypedElement(leftRevision, encoding);
 				right = new GitCompareFileRevisionEditorInput.EmptyTypedElement(
 						NLS
 								.bind(
@@ -292,7 +294,9 @@ public class CompareTreeView extends ViewPart {
 			PathNodeAdapter node = (PathNodeAdapter) selected;
 			GitFileRevision rightRevision = compareVersionMap
 					.get(node.pathNode.path);
-			right = new FileRevisionTypedElement(rightRevision);
+			String encoding = CompareCoreUtils.getResourceEncoding(
+					repositoryMapping.getRepository(), node.pathNode.getRepoRelativePath());
+			right = new FileRevisionTypedElement(rightRevision, encoding);
 			left = new GitCompareFileRevisionEditorInput.EmptyTypedElement(NLS
 					.bind(UIText.CompareTreeView_ItemNotFoundInVersionMessage,
 							node.pathNode.path.lastSegment(), getBaseVersion()));
@@ -734,6 +738,10 @@ public class CompareTreeView extends ViewPart {
 		public PathNode(IPath path, Type type) {
 			this.path = path;
 			this.type = type;
+		}
+
+		public String getRepoRelativePath() {
+			return path.toString();
 		}
 
 		@Override
