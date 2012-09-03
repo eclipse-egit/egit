@@ -23,6 +23,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
+import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput.EmptyTypedElement;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
@@ -56,11 +57,16 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		try {
 			base = CompareUtils.getHeadTypedElement(baseFile);
 			Ref head = repository.getRef(Constants.HEAD);
-			RevWalk rw = new RevWalk(repository);
-			RevCommit commit = rw.parseCommit(head.getObjectId());
+			if (head == null || head.getObjectId() == null)
+				// Initial import, not yet a HEAD commit
+				next = new EmptyTypedElement(""); //$NON-NLS-1$
+			else {
+				RevWalk rw = new RevWalk(repository);
+				RevCommit commit = rw.parseCommit(head.getObjectId());
 
-			next = CompareUtils.getFileRevisionTypedElement(gitPath,
-					commit, repository);
+				next = CompareUtils.getFileRevisionTypedElement(gitPath,
+						commit, repository);
+			}
 		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, true);
 			return null;
