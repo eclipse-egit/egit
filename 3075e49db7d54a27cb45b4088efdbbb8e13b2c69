@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//5YQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2012-09-03T07:12:46Z",
+      "side": 1,
+      "message": "Sounds good. I\u0027ll add and test that.",
+      "parentUuid": "AABOIn//5ag\u003d",
+      "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//5eA\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
         "patchSetId": 2
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "I think the order can help when reading code. And yes, sometimes I reorder methods.\n\nWell, why do it in a separate change when this is all new code that is still in review? :)",
       "parentUuid": "AABOIn//5as\u003d",
+      "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//5YM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CompareTreeView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 315
+      },
+      "writtenOn": "2012-09-03T07:12:46Z",
+      "side": 1,
+      "message": "I will reorder it if you think it helps. I never read code as it is in the file but use the navigation support in the IDE.",
+      "parentUuid": "AABOIn//5ac\u003d",
       "revId": "3075e49db7d54a27cb45b4088efdbbb8e13b2c69",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
