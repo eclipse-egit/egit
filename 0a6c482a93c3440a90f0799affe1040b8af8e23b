@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//5LE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitUI.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-09-04T20:40:00Z",
+      "side": 1,
+      "message": "style nit: no braces around single line blocks",
+      "revId": "0a6c482a93c3440a90f0799affe1040b8af8e23b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
