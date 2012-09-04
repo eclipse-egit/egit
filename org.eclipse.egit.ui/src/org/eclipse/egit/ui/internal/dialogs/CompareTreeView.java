@@ -1127,10 +1127,14 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 	 * @since 2.1
 	 */
 	public void menuAboutToShow(IMenuManager manager) {
+		ITreeSelection selection = (ITreeSelection) tree.getSelection();
+		if (selection.isEmpty())
+			return;
+
 		manager.add(new Separator(ICommonMenuConstants.GROUP_OPEN));
 		manager.add(new Separator(ICommonMenuConstants.GROUP_ADDITIONS));
 
-		IAction openAction = createOpenAction();
+		IAction openAction = createOpenAction(selection);
 		if (openAction != null)
 			manager.appendToGroup(ICommonMenuConstants.GROUP_OPEN, openAction);
 
@@ -1187,10 +1191,9 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		EgitUiEditorUtils.openEditor(file, page);
 	}
 
-	private IAction createOpenAction() {
-		ITreeSelection selection = (ITreeSelection) tree.getSelection();
+	private IAction createOpenAction(ITreeSelection selection) {
 		final List<String> pathsToOpen = getSelectedPaths(selection);
-		if (pathsToOpen == null)
+		if (pathsToOpen == null || pathsToOpen.isEmpty())
 			return null;
 
 		return new Action(
