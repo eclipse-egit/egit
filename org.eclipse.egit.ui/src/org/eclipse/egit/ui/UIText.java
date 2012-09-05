@@ -4665,6 +4665,9 @@ public class UIText extends NLS {
 	/** */
 	public static String GarbageCollectCommand_failed;
 
+	/** */
+	public static String GitModelSynchronizeParticipant_initialScopeName;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
