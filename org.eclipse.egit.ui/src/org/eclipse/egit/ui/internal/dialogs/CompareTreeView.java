@@ -262,7 +262,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		} else if (selected instanceof PathNode) {
 			PathNode node = (PathNode) selected;
 			String encoding = CompareCoreUtils.getResourceEncoding(
-					repositoryMapping.getRepository(), node.getRepoRelativePath());
+					getRepository(), node.getRepoRelativePath());
 			switch (node.type) {
 			case FILE_BOTH_SIDES_DIFFER:
 				// fall through
@@ -315,7 +315,7 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 			GitFileRevision rightRevision = compareVersionMap
 					.get(node.pathNode.path);
 			String encoding = CompareCoreUtils.getResourceEncoding(
-					repositoryMapping.getRepository(), node.pathNode.getRepoRelativePath());
+					getRepository(), node.pathNode.getRepoRelativePath());
 			right = new FileRevisionTypedElement(rightRevision, encoding);
 			left = new GitCompareFileRevisionEditorInput.EmptyTypedElement(NLS
 					.bind(UIText.CompareTreeView_ItemNotFoundInVersionMessage,
@@ -1227,14 +1227,18 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 	}
 
 	private IPath getRepositoryPath() {
-		Repository repo = null;
-		if (repositoryMapping != null)
-			repo = repositoryMapping.getRepository();
-		else if (input instanceof Repository)
-			repo = (Repository) input;
-
+		Repository repo = getRepository();
 		if (repo != null)
 			return new Path(repo.getWorkTree().getAbsolutePath());
+
+		return null;
+	}
+
+	private Repository getRepository() {
+		if (repositoryMapping != null)
+			return repositoryMapping.getRepository();
+		else if (input instanceof Repository)
+			return (Repository) input;
 
 		return null;
 	}
