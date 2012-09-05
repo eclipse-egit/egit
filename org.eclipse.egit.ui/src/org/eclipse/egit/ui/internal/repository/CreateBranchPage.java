@@ -8,6 +8,7 @@
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
  *    Dariusz Luksza <dariusz@luksza.org>
+ *    Steffen Pingel (Tasktop Technologies) - fixes for bug 352253
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -378,20 +379,28 @@ class CreateBranchPage extends WizardPage {
 	}
 
 	private void checkPage() {
-		setErrorMessage(null);
 		try {
+			boolean layoutChanged = false;
+
 			GridData gd = (GridData) warningComposite.getLayoutData();
-			gd.exclude = !branchCombo.getText().startsWith(Constants.R_HEADS);
-			warningComposite.setVisible(!gd.exclude);
+			if (gd.exclude != !branchCombo.getText().startsWith(Constants.R_HEADS)) {
+				gd.exclude = !branchCombo.getText().startsWith(Constants.R_HEADS);
+				warningComposite.setVisible(!gd.exclude);
+				layoutChanged = true;
+			}
 
 			warningComposite.getParent().getParent().layout(true);
 
 			boolean showRebase = !branchCombo.getText().startsWith(Constants.R_TAGS) && !ObjectId.isId(branchCombo.getText());
 			gd = (GridData) upstreamConfigGroup.getLayoutData();
-			gd.exclude = !showRebase;
-			upstreamConfigGroup.setVisible(!gd.exclude);
+			if (gd.exclude == showRebase) {
+				gd.exclude = !showRebase;
+				upstreamConfigGroup.setVisible(!gd.exclude);
+				layoutChanged = true;
+			}
 
-			upstreamConfigGroup.getParent().layout(true);
+			if (layoutChanged)
+				upstreamConfigGroup.getParent().layout(true);
 
 			if (!gd.exclude)
 				buttonConfigMerge.setSelection(false);
@@ -422,6 +431,8 @@ class CreateBranchPage extends WizardPage {
 				setErrorMessage(message);
 				return;
 			}
+
+			setErrorMessage(null);
 		} finally {
 			setPageComplete(getErrorMessage() == null);
 		}
