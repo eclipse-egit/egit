@@ -19,4 +19,13 @@
        <Class name="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType" />
        <Bug pattern="MS_SHOULD_BE_FINAL" />
      </Match>
+     <!-- These classes are not meant to be serializable
+       -->
+     <Match>
+       <Or>
+         <Class name="org.eclipse.egit.ui.internal.history.SWTCommit" />
+         <Class name="org.eclipse.egit.ui.internal.history.SWTCommitList$SWTLane" />
+       </Or>
+       <Bug pattern="SE_BAD_FIELD" />
+     </Match>
 </FindBugsFilter>
