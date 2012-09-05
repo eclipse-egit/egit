@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//5EM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2012-09-05T15:21:38Z",
+      "side": 1,
+      "message": "to be honest I can\u0027t imagine any real side effects for having included paths unordered. at the end everything is sorted alphabetically in view. IMO also changing order of filtered paths shouldn\u0027t change synchronization results.",
+      "parentUuid": "AABOIn//5dQ\u003d",
+      "revId": "55d6a332a688b4df2d08c1f477ab47688bf48080",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//5dM\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
         "patchSetId": 6
