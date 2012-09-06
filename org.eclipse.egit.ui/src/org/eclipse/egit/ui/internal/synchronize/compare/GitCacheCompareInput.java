@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.compare;
 
-import static org.eclipse.egit.ui.internal.CompareUtils.getHeadTypedElement;
+import static org.eclipse.egit.ui.internal.CompareUtils.getIndexTypedElement;
 import static org.eclipse.egit.ui.internal.CompareUtils.getFileRevisionTypedElement;
 
 import java.io.IOException;
@@ -53,7 +53,7 @@ public class GitCacheCompareInput extends GitCompareInput {
 
 	public ITypedElement getLeft() {
 		try {
-			return getHeadTypedElement(baseFile);
+			return getIndexTypedElement(baseFile);
 		} catch (IOException e) {
 			return null;
 		}

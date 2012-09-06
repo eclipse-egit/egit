@@ -129,7 +129,7 @@ public class GitOpenInCompareAction extends Action {
 
 	private ITypedElement getCachedFileElement(IFile file) {
 		try {
-			return CompareUtils.getHeadTypedElement(file);
+			return CompareUtils.getIndexTypedElement(file);
 		} catch (IOException e) {
 			return null;
 		}

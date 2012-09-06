@@ -48,7 +48,7 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 			final ITypedElement base = getBaseTypeElement(baseFile);
 			final ITypedElement next;
 			try {
-				next = CompareUtils.getHeadTypedElement(baseFile);
+				next = CompareUtils.getIndexTypedElement(baseFile);
 			} catch (IOException e) {
 				Activator.handleError(
 						UIText.CompareWithIndexAction_errorOnAddToIndex, e,

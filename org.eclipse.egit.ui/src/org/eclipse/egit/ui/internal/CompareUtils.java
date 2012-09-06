@@ -388,12 +388,13 @@ public class CompareUtils {
 	}
 
 	/**
-	 * Extracted from {@link CompareWithCommitActionHandler}
+	 * Get a typed element for the file in the index.
+	 *
 	 * @param baseFile
 	 * @return typed element
 	 * @throws IOException
 	 */
-	public static ITypedElement getHeadTypedElement(final IFile baseFile)
+	public static ITypedElement getIndexTypedElement(final IFile baseFile)
 			throws IOException {
 		final RepositoryMapping mapping = RepositoryMapping.getMapping(baseFile);
 		final Repository repository = mapping.getRepository();

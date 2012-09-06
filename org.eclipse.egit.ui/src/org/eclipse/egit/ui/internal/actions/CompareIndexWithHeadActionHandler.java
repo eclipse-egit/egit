@@ -55,7 +55,7 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 
 		ITypedElement next;
 		try {
-			base = CompareUtils.getHeadTypedElement(baseFile);
+			base = CompareUtils.getIndexTypedElement(baseFile);
 			Ref head = repository.getRef(Constants.HEAD);
 			if (head == null || head.getObjectId() == null)
 				// Initial import, not yet a HEAD commit
