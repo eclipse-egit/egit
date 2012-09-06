@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -51,9 +52,9 @@ import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.actions.BooleanPrefAction;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
+import org.eclipse.egit.ui.internal.commit.CommitJob;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
-import org.eclipse.egit.ui.internal.commit.CommitUI;
 import org.eclipse.egit.ui.internal.components.ToggleableWarningLabel;
 import org.eclipse.egit.ui.internal.decorators.ProblemLabelDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CommitMessageArea;
@@ -125,6 +126,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -184,6 +186,8 @@ public class StagingView extends ViewPart {
 	private Text authorText;
 
 	private Action commitAction;
+
+	private Button pushCheckbox;
 
 	private CommitMessageComponent commitMessageComponent;
 
@@ -379,13 +383,22 @@ public class StagingView extends ViewPart {
 			}
 		});
 
+		Composite commitSashForm = new Composite(horizontalSashForm,
+				SWT.NONE);
+		toolkit.adapt(commitSashForm, true, true);
+		GridDataFactory.fillDefaults().grab(true, true)
+				.applyTo(commitSashForm);
+		GridLayoutFactory.fillDefaults().applyTo(commitSashForm);
+
 		commitMessageSection = toolkit.createSection(
-				horizontalSashForm, ExpandableComposite.TITLE_BAR);
+				commitSashForm, ExpandableComposite.TITLE_BAR);
 		commitMessageSection.setText(UIText.StagingView_CommitMessage);
 
 		Composite commitMessageComposite = toolkit
 				.createComposite(commitMessageSection);
 		commitMessageSection.setClient(commitMessageComposite);
+		GridDataFactory.fillDefaults().grab(true, true)
+				.applyTo(commitMessageSection);
 		GridLayoutFactory.fillDefaults().numColumns(1)
 				.applyTo(commitMessageComposite);
 
@@ -454,6 +467,33 @@ public class StagingView extends ViewPart {
 				FormToolkit.TEXT_BORDER);
 		committerText.setLayoutData(GridDataFactory.fillDefaults()
 				.grab(true, false).create());
+
+		Section pushSection = toolkit.createSection(commitSashForm,
+				ExpandableComposite.TITLE_BAR
+						| ExpandableComposite.CLIENT_INDENT);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(pushSection);
+		Composite pushArea = toolkit.createComposite(pushSection);
+		pushSection.setClient(pushArea);
+		toolkit.paintBordersFor(pushArea);
+		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
+				.applyTo(pushArea);
+		pushSection.setText(UIText.CommitDialog_PushSectionTitle);
+		pushCheckbox = toolkit.createButton(pushArea,
+				UIText.CommitDialog_PushUpstream, SWT.CHECK);
+		pushCheckbox.setSelection(getPreferenceStore().getBoolean(
+					UIPreferences.COMMIT_DIALOG_PUSH_UPSTREAM));
+//		pushEnabled = getPreferenceStore().getBoolean(
+//				UIPreferences.COMMIT_DIALOG_PUSH_UPSTREAM);
+//		pushCheckbox.addSelectionListener(new SelectionAdapter() {
+//
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				pushEnabled = pushCheckbox.getSelection();
+//				getPreferenceStore().setValue(
+//						UIPreferences.COMMIT_DIALOG_PUSH_UPSTREAM, pushEnabled);
+//			}
+//		});
+
 
 		stagedSection = toolkit.createSection(stagingSashForm,
 				ExpandableComposite.TITLE_BAR);
@@ -1480,8 +1520,9 @@ public class StagingView extends ViewPart {
 		if (amendPreviousCommitAction.isChecked())
 			commitOperation.setAmending(true);
 		commitOperation.setComputeChangeId(addChangeIdAction.isChecked());
-		CommitUI.performCommit(currentRepository, commitOperation,
-				openNewCommitsAction.isChecked());
+		Job commitJob = new CommitJob(currentRepository, commitOperation,
+				openNewCommitsAction.isChecked(), pushCheckbox.getSelection());
+		commitJob.schedule();
 		CommitMessageHistory.saveCommitHistory(commitMessage);
 		clearCommitMessageToggles();
 		commitMessageText.setText(EMPTY_STRING);
