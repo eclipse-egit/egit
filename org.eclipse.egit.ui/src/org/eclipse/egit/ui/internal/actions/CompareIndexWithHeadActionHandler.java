@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2011, Bernard Leach <leachbj@bouncycastle.org>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,14 +24,10 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
-import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput.EmptyTypedElement;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.IndexDiff;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.osgi.util.NLS;
@@ -52,25 +49,16 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		final String gitPath = RepositoryMapping.getMapping(baseFile)
 				.getRepoRelativePath(baseFile);
 		ITypedElement base;
-
-		ITypedElement next;
 		try {
 			base = CompareUtils.getIndexTypedElement(baseFile);
-			Ref head = repository.getRef(Constants.HEAD);
-			if (head == null || head.getObjectId() == null)
-				// Initial import, not yet a HEAD commit
-				next = new EmptyTypedElement(""); //$NON-NLS-1$
-			else {
-				RevWalk rw = new RevWalk(repository);
-				RevCommit commit = rw.parseCommit(head.getObjectId());
-
-				next = CompareUtils.getFileRevisionTypedElement(gitPath,
-						commit, repository);
-			}
 		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, true);
 			return null;
 		}
+
+		ITypedElement next = CompareUtils.getHeadTypedElement(repository, gitPath);
+		if (next == null)
+			return null;
 
 		final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 				base, next, null);
