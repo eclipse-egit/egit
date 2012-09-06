@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2009, Stefan Lay <stefan.lay@sap.com>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,9 +19,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -29,9 +32,11 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Compares the working tree content of a file with the version of the file in
@@ -84,8 +89,15 @@ public class CompareWithHeadActionHandler extends RepositoryActionHandler {
 						.getActiveWorkbenchWindow().getActivePage().showView(
 								CompareTreeView.ID);
 				try {
-					view.setInput(resources, repository.resolve(Constants.HEAD)
-							.name());
+					Ref head = repository.getRef(Constants.HEAD);
+					if (head == null || head.getObjectId() == null) {
+						// Initial commit case
+						Shell shell = HandlerUtil.getActiveShell(event);
+						MessageDialog.openInformation(shell,
+								UIText.CompareWithHeadActionHandler_NoHeadTitle,
+								UIText.CompareWithHeadActionHandler_NoHeadMessage);
+					} else
+						view.setInput(resources, Repository.shortenRefName(head.getTarget().getName()));
 				} catch (IOException e) {
 					Activator.handleError(e.getMessage(), e, true);
 					return null;
