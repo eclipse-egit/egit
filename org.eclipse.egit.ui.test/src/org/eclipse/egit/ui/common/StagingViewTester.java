@@ -60,7 +60,7 @@ public class StagingViewTester {
 	}
 
 	public void commit() throws Exception {
-		stagingView.toolbarPushButton(UIText.StagingView_Commit).click();
+		stagingView.bot().button(UIText.StagingView_Commit).click();
 		// wait until commit is completed
 		Job.getJobManager().join(JobFamilies.COMMIT, null);
 	}
