@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//4go\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commands/shared/AbstractSharedCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-09-08T15:23:48Z",
+      "side": 1,
+      "message": "getActiveEditorInput is \"since 3.7\". AFAIK we still support 3.5.\n\nI don\u0027t like making code more complicated for compatibility, but in this case I think it\u0027s not that bad to copy the implementation with getVariable. What do you think?",
+      "revId": "d47c281590967757243b3b743371501d89345e93",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
