@@ -1,50 +1,55 @@
 Eclipse Git Plugin
 ==================
 
-This package is licensed under the EPL.  Please refer to the COPYING
-and LICENSE files for the complete licenses within each package.
+EGit is an Eclipse plugin for working with Git repositories. It is based
+on the JGit library, which is a Git implementation in pure Java.
 
-This package is actually composed of three major components plus
-three for packaging.
+This package is licensed under the EPL. Please refer to the LICENSE file
+for the complete license.
 
-- org.eclipse.egit.core/
+This package is composed of the following major components:
+
+- org.eclipse.egit.core
 
     An Eclipse plugin providing an interface to org.eclipse.jgit
     and support routines to allow processing against the Eclipse
     workspace and resource APIs, rather than the standard Java
-    file APIs.  It also supplies the team provider implementation.
+    file APIs. It also supplies the team provider implementation.
 
-- org.eclipse.egit.ui/
+- org.eclipse.egit.ui
 
     An Eclipse plugin providing the user interface on top of
     org.eclipse.egit.core.
 
-- org.eclipse.egit.core.test/
+- org.eclipse.egit.core.test
 
     Unit tests for org.eclipse.egit.core.
 
-- org.eclipse.egit/
+- org.eclipse.egit.ui.test
+
+    UI tests for org.eclipse.egit.ui.
+
+- org.eclipse.egit
 
     A plugin for packaging
 
-- org.eclipse.egit-feature/
+- org.eclipse.egit-feature
 
     Also packaging. This project is for building an Eclipse "feature"
     out of the plugins above.
 
-- org.eclipse.egit.repository/
+- org.eclipse.egit.repository
 
     This package is for producing a p2 repository, i.e. a web site
     you can point your eclipse at and just upgrade.
 
+There are other components which provide integration with other plugins.
+
 Warnings/Caveats
 ----------------
 
-- Symbolic links are not supported because java does not support it.
-  Such links could be damaged.
-
-- Only the timestamp of the index is used by jgit check if  the index
-  is dirty.
+- Symbolic links are not yet supported because they used to be
+  unsupported by Java. Such links could be damaged.
 
 - Don't try the plugin with a JDK other than 1.6 (Java 6) unless you
   are prepared to investigate problems yourself. JDK 1.5.0_11 and later
@@ -53,9 +58,8 @@ Warnings/Caveats
   have no information about other vendors. Please report your findings
   if you try.
 
-- CRLF conversion is never performed. On Windows you should thereforc
-  make sure your projects and workspaces are configured to save files
-  with Unix (LF) line endings.
+- CRLF conversion works for some things, but is in general still being
+  worked on.
 
 Compatibility
 -------------
@@ -70,7 +74,10 @@ Compatibility
 Package Features
 ----------------
 
-- org.eclipse.egit.core/
+The following list is not complete, but it gives an overview of the
+features:
+
+- org.eclipse.egit.core
 
     * Supplies an Eclipse team provider.
 
@@ -87,7 +94,7 @@ Package Features
 
     * Resolves through linked containers.
 
-- org.eclipse.egit.ui/
+- org.eclipse.egit.ui
 
     * Connect team provider wizard panels.
 
@@ -104,50 +111,40 @@ Package Features
 
     * Creating new commits or amending commits.
 
+    * View for staging changes (whole files and partial staging),
+      showing their differences and committing them.
+
     * Graphical history viewer with the ability to compare versions
       using eclipse built-in compare editor.
 
-    * Clone, push, fetch
+    * Clone, push, pull, fetch
+
+    * Merge, rebase, cherry-pick
+
 
 Missing Features
 ----------------
 
-There are a lot of missing features. You need the real Git for this.
-For some operations it may just be the preferred solution also. There
-are not just a command line, there is e.g. git-gui that makes committing
-partial files simple.
-
-- Merging.
-
-- Repacking from within the plugin.
-
-- Generate a Git format patch.
-
-- Apply a Git format patch.
-
-- Documentation. :-)
-
 - gitattributes support
-  In particular CRLF conversion is not implemented. Files are treated
-  as byte sequences.
 
-- submodule support
-  Submodules are not supported or even recognized.
+  In particular CRLF conversion is not yet fully implemented.
 
-- The Eclipse plugin cannot handle files outside any Eclipse project. You
-  need commit changes to such files outside of Eclipse.
 
 Support
 -------
 
-  Post question, comments or patches to the git@vger.kernel.org mailing list.
+Post question or comments to the egit-dev@eclipse.org mailing list.
+You need to be subscribed to post, see here:
+
+https://dev.eclipse.org/mailman/listinfo/egit-dev
 
 
 Contributing
 ------------
 
-See SUBMITTING_PATCHES in this directory. However, feedback and bug reports
-are also contributions.
+See the EGit Contributor Guide:
+
+http://wiki.eclipse.org/EGit/Contributor_Guide
 
 
 About Git
@@ -156,7 +153,4 @@ About Git
 More information about Git, its repository format, and the canonical
 C based implementation can be obtained from the Git websites:
 
-  http://git.or.cz/
-  http://www.kernel.org/pub/software/scm/git/
-  http://www.kernel.org/pub/software/scm/git/docs/
-
+http://git-scm.com/
