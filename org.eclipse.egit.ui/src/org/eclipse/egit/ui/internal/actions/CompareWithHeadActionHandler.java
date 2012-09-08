@@ -27,11 +27,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.PartInitException;
@@ -57,25 +52,9 @@ public class CompareWithHeadActionHandler extends RepositoryActionHandler {
 			final ITypedElement base = SaveableCompareEditorInput
 					.createFileElement(baseFile);
 
-			ITypedElement next;
-			try {
-				Ref head = repository.getRef(Constants.HEAD);
-				RevWalk rw = new RevWalk(repository);
-				RevCommit commit = rw.parseCommit(head.getObjectId());
-				rw.markStart(commit);
-				rw.setTreeFilter(AndTreeFilter.create(
-						PathFilter.create(gitPath), TreeFilter.ANY_DIFF));
-				RevCommit latestFileCommit = rw.next();
-				// Fall back to HEAD
-				if (latestFileCommit == null)
-					latestFileCommit = commit;
-
-				next = CompareUtils.getFileRevisionTypedElement(gitPath,
-						latestFileCommit, repository);
-			} catch (IOException e) {
-				Activator.handleError(e.getMessage(), e, true);
+			final ITypedElement next = CompareUtils.getHeadTypedElement(repository, gitPath);
+			if (next == null)
 				return null;
-			}
 
 			final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 					base, next, null);
