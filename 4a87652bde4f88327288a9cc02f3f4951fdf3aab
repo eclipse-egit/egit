@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//4Lg\u003d",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-09-10T22:18:11Z",
+      "side": 0,
+      "message": "gitattributes are still not supported",
+      "revId": "4a87652bde4f88327288a9cc02f3f4951fdf3aab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
