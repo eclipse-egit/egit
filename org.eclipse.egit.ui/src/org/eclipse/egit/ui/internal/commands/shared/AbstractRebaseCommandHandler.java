@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2012 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -29,6 +29,7 @@ import org.eclipse.jgit.api.RebaseCommand.Operation;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.ISources;
 import org.eclipse.ui.PlatformUI;
 
@@ -111,4 +112,20 @@ public abstract class AbstractRebaseCommandHandler extends AbstractSharedCommand
 			selection = ctx.getVariable(ISources.ACTIVE_CURRENT_SELECTION_NAME);
 		return selection;
 	}
+
+	/**
+	 * Extracts the editor input from the given context.
+	 *
+	 * @param ctx the context
+	 * @return the editor input for the given context or <code>null</code> if not available
+	 * @since 2.1
+	 */
+	protected IEditorInput getActiveEditorInput(IEvaluationContext ctx) {
+		Object editorInput = ctx.getVariable(ISources.ACTIVE_EDITOR_INPUT_NAME);
+		if (editorInput instanceof IEditorInput)
+			return (IEditorInput) editorInput;
+
+		return null;
+	}
+
 }
