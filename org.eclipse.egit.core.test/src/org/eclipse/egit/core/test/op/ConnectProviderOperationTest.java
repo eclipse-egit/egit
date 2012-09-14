@@ -39,7 +39,7 @@ public class ConnectProviderOperationTest extends GitTestCase {
 		operation.execute(null);
 
 		assertFalse(RepositoryProvider.isShared(project.getProject()));
-		assertTrue(!gitDir.exists());
+		assertFalse(gitDir.exists());
 	}
 
 	@Test
