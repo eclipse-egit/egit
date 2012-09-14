@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//3o0\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/AdaptableFileTreeIteratorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-09-14T20:21:46Z",
+      "side": 1,
+      "message": "Also trailing whitespace before closing parenthesis here.",
+      "revId": "0071cd554138b948363086b27a23d23f5f190493",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
