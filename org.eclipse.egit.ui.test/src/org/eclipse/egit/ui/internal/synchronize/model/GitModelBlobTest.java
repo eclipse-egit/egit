@@ -93,6 +93,7 @@ public class GitModelBlobTest extends GitModelTestCase {
 		assertTrue(actual);
 	}
 
+	@SuppressWarnings("boxing")
 	@Test
 	public void shouldBeSymmetric() throws Exception {
 		// given
@@ -104,7 +105,7 @@ public class GitModelBlobTest extends GitModelTestCase {
 		boolean actual2 = right.equals(left);
 
 		// then
-		assertTrue(actual1 == actual2);
+		assertEquals(actual1, actual2);
 	}
 
 	@Test
