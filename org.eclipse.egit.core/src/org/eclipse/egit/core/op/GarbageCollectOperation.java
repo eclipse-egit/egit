@@ -9,6 +9,7 @@
 package org.eclipse.egit.core.op;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -46,6 +47,9 @@ public class GarbageCollectOperation implements IEGitOperation {
 		try {
 			gc.gc();
 		} catch (IOException e) {
+			throw new CoreException(new Status(IStatus.ERROR,
+					Activator.getPluginId(), e.getMessage(), e));
+		} catch (ParseException e) {
 			throw new CoreException(new Status(IStatus.ERROR,
 					Activator.getPluginId(), e.getMessage(), e));
 		}
