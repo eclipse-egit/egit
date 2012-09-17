@@ -16,6 +16,24 @@
       "revId": "2b7548446e164404c4e787fe117589be235f5c11",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//3eE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/BranchOperation.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-09-17T05:58:41Z",
+      "side": 1,
+      "message": "ah, right, of course :) thx for finding",
+      "parentUuid": "AABOIn//3o4\u003d",
+      "revId": "2b7548446e164404c4e787fe117589be235f5c11",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
