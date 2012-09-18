@@ -28,9 +28,8 @@
 		<h1 id="Getting_Started">Getting Started</h1>
 		<h2 id="Overview">Overview</h2>
 		<p>If you're new to Git or distributed version control systems generally, then you might want to read 
-			<a href="../../EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" title="EGit/Git For Eclipse Users">Git for Eclipse Users</a> first. If you need more details and background read the 
-			<a href="http://book.git-scm.com" target="egit_external">Git Community Book</a> or 
-			<a href="http://progit.org/book/" target="egit_external">Git Pro</a>.
+			<a href="../../EGit/Git_For_Eclipse_Users/Git-For-Eclipse-Users.html" title="EGit/Git For Eclipse Users">Git for Eclipse Users</a> first. More background and details can be found in the on-line book 
+			<a href="http://progit.org/book/" target="egit_external">Pro Git</a>.
 		</p>
 		<p>If there you are coming from CVS, you can find common CVS workflows for Git 
 			<a href="http://wiki.eclipse.org/Platform-releng/Git_Workflows" title="Platform-releng/Git Workflows" target="egit_external">Platform-releng/Git Workflows</a>.
@@ -85,9 +84,15 @@
 		<p>
 			<img border="0" src="images/Egit_no_home.png"/>
 		</p>
+		<h4 id="Pointing_out_the_System_wide_configuration">Pointing out the System wide configuration</h4>
+		<p>If you use Git for Windows as a companion to EGit, make sure EGit knows where Git is installed so it can find the "system wide settings", e.g. how core.autocrlf is set. Go to the settings and look under Team&gt;Git&gt;Configuration and then the System Settings tab. </p>
+		<p>If you selected one of the options to use Git from the Command Line Prompt when you installed Git for Windows, then the location of the system
+			wide settings is filled in with a path and everything is fine. If not, use the Browse button to locate where Git is installed, e.g. C:\Program Files(x86)\Git. </p>
+		<p>This advice also applies to users of other Git packagings, e.g. Git under Cygwin or TortoiseGit.</p>
+		<p>Non-Windows users should in theory check this setting, but the system wide settings are usually not used on non-Windows platforms.</p>
 		<h3 id="Create_Repository">Create Repository</h3>
 		<ul>
-			<li>Create a new Java project <code>HelloWorld</code>.(In this case,the project was builded outside of your Eclipse Workspace.)</li>
+			<li>Create a new Java project <code>HelloWorld</code>.(In this case,the project was built outside of your Eclipse Workspace.)</li>
 		</ul>
 		<p>
 			<img border="0" src="images/Egit-0.9-getstarted-project.png"/>
@@ -122,7 +127,8 @@
 			<li>Click 
 				<b>Finish</b> to close the wizard.
 			</li>
-			<li>The decorator text "[master]" behind the project shows that this project is tracked in a repository on the 
+			<li>The decorator text "
+				<a href="master">master</a>" behind the project shows that this project is tracked in a repository on the 
 				<i>master</i> branch and the question mark decorators show that the <code>.classpath</code> and <code>.project</code> and the <code>.settings</code> files are not yet under version control
 			</li>
 		</ul>
@@ -346,35 +352,7 @@
 		</p>
 		<p>Follow the 
 			<a href="https://docs.google.com/document/d/1UCbNCvljiInc6-vwBsHHzOQ1ItC10f1bFAOi8T30DJ8/edit" target="egit_external">exercise #1</a> to prepare for the Git Tutorial.
-			Find download links to the training packages below.
-		</p>
-		<h3 id="EGit_Training_Packages">EGit Training Packages</h3>
-		<p>Pre-installed EGit training packages including</p>
-		<ul>
-			<li>Eclipse SDK 3.7.2</li>
-			<li>JGit, EGit 2.0-SNAPSHOT (nightly build)</li>
-			<li>Github connector 2.0-SNAPSHOT (nightly build 2012-03-22)</li>
-			<li>Mylyn Reviews Gerrit Connector 0.9-SNAPSHOT (weekly build 2012-03-22)</li>
-			<li>Mylyn Builds 0.9-SNAPSHOT (weekly build)</li>
-		</ul>
-		<p>
-			<b>Linux</b>
-		</p>
-		<pre>[http://download.eclipse.org/egit/training/eclipse-SDK-3.7.2-linux-gtk-x86_64.tar.gz eclipse-SDK-3.7.2-linux-gtk-x86_64.tar.gz] 
-[http://download.eclipse.org/egit/training/eclipse-SDK-3.7.2-linux-gtk.tar.gz eclipse-SDK-3.7.2-linux-gtk.tar.gz]
-</pre>
-		<p>
-			<b>Mac</b>
-		</p>
-		<pre>[http://download.eclipse.org/egit/training/eclipse-SDK-3.7.2-macosx-cocoa-x86_64.tar.gz eclipse-SDK-3.7.2-macosx-cocoa-x86_64.tar.gz ]
-[http://download.eclipse.org/egit/training/eclipse-SDK-3.7.2-macosx-cocoa.tar.gz eclipse-SDK-3.7.2-macosx-cocoa.tar.gz]
-</pre>
-		<p>
-			<b>Windows</b>
-		</p>
-		<pre>[http://download.eclipse.org/egit/training/eclipse-SDK-3.7.2-win32-x86_64.zip eclipse-SDK-3.7.2-win32-x86_64.zip]
-[http://download.eclipse.org/egit/training/eclipse-SDK-3.7.2-win32.zip eclipse-SDK-3.7.2-win32.zip]
-</pre><hr/>
+		</p><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left"></td>

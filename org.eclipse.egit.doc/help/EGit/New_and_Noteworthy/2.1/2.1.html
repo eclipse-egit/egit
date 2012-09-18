@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 2.1 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 2.1 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bugs-Closed.html" title="Bugs Closed">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bugs Closed</td>
+			</tr>
+		</table><hr/>
+		<p>
+			<i>Note that 2.1 is not yet released, please install from the 
+				<a href="http://download.eclipse.org/egit/updates-nightly" target="egit_external">Nightly Update Site</a> to use these features.
+			</i>
+		</p>
+		<h1 id="EGit_Features">EGit Features</h1>
+		<h2 id=".22Push_to_Gerrit....22_action">"Push to Gerrit..." action</h2>
+		<ul>
+			<li>Click "Push to Gerrit..." on repository nodes in the Repositories View or "Team &gt; Remote &gt; Push to Gerrit..." in the team menu in order to push changes to Gerrit for code review, this way you now can specify the branch you are targeting on the fly.</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-2.1-push-to-gerrit.png"/>
+		</p>
+		<h2 id="Delete_untracked_files_in_Staging_View_and_Repositories_View">Delete untracked files in Staging View and Repositories View</h2>
+		<p>The Staging View now has a context menu action 
+			<i>Delete</i> which makes it possible to delete untracked files directly from the view. The Repositories View has the same action.
+		</p>
+		<p>When all the selected files are workspace resources, it's possible to undo the delete using the "Edit &gt; Undo" menu.</p>
+		<p>Before, it was always necessary to locate the file in the Package Explorer or Navigator. In the case of non-workspace resources, it was necessary to leave Eclipse.</p>
+		<h2 id="Commit_using_Ctrl.2BEnter_.28Cmd.2BEnter.29_in_Staging_View_and_Commit_Dialog">Commit using Ctrl+Enter (Cmd+Enter) in Staging View and Commit Dialog</h2>
+		<p>After having entered the commit message, it's now possible to commit using the "Ctrl+Enter" (or "Cmd+Enter" on Mac OS X) shortcut instead of clicking on the toolbar icon.</p>
+		<h2 id="Show_warnings.2Ferrors_on_files_in_Staging_View_and_Commit_Dialog">Show warnings/errors on files in Staging View and Commit Dialog</h2>
+		<p>When there is a problem on a file, it was previously only possible to see this in the Package Explorer or Navigator. Now the decorations are also shown when preparing a commit, in the Commit Dialog and in the Staging View:</p>
+		<p>
+			<img border="0" src="images/EGit-2.1-staging-view-problem-decorations.png"/>
+		</p>
+		<h2 id="Context_menu_in_Git_Tree_Compare_view">Context menu in Git Tree Compare view</h2>
+		<p>The Git Tree Compare view now has a context menu, with 
+			<i>Open Working Tree Version</i> and a 
+			<i>Show In</i> menu:
+		</p>
+		<p>
+			<img border="0" src="images/EGit-2.1-tree-compare-context-menu.png"/>
+		</p>
+		<p>It now also acts as a selection provider, so that other views (e.g. History view) can track the selection of the Tree Compare view.</p>
+		<h2 id="Improved_conflict_markers_for_rebase.2Fcherry-pick_conflicts">Improved conflict markers for rebase/cherry-pick conflicts</h2>
+		<p>Instead of <code>OURS</code>/<code>THEIRS</code>, the conflict markers now show more useful information. For example, a conflicting cherry-pick:</p>
+		<pre>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; master
+a
+=======
+b
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; bad1dea Message of the commit I'm cherry-picking
+</pre>
+		<p>A conflict during rebase:</p>
+		<pre>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; Upstream, based on master
+a
+=======
+b
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; b161dea Message of a commit I'm rebasing
+</pre>
+		<h2 id="Garbage_Collector_and_Repository_Storage_Statistics">Garbage Collector and Repository Storage Statistics</h2>
+		<ul>
+			<li>Click "Collect Garbage..." on repository nodes in the Repositories View to run JGit's new gc implementation. 
+				<b>Caution:</b> We did a lot of tests but gc is a complex algorithm so there still might be some problems in corner cases so be cautious and don't use it on your most precious repositories without a backup. If in doubt run native git's <code>git fsck</code> in order to check consistency.
+			</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-2.1-gc.png"/>
+		</p>
+		<ul>
+			<li>Click "Properties" on a repository node in the Repositores View to access a new property page displaying repository storage statistics</li>
+		</ul>
+		<p>
+			<img border="0" src="images/Egit-2.1-repo-storage-statistics.png"/>
+		</p>
+		<h2 id="Branch_Tracking_Status_Decoration_for_Tracking_of_Local_Branches">Branch Tracking Status Decoration for Tracking of Local Branches</h2>
+		<p>EGit does now decorate local branches tracking another local
+			branch with the number of commits the checked out local branch differs from
+			the other local branch it's tracking.</p>
+		<h2 id="Improved_autocrlf_Support">Improved autocrlf Support</h2>
+		<ul>
+			<li>EGit now expands LF to CRLF in input for compare editors if autocrlf = true</li>
+		</ul>
+		<h2 id="One-click_Commit_and_Push">One-click Commit and Push</h2>
+		<ul>
+			<li>The Commit Dialog now supports "commit" and "push to upstream" in one step</li>
+		</ul>
+		<h2 id="Synchronize_View">Synchronize View</h2>
+		<ul>
+			<li>Now synchronization configuration is persisted between eclipse sessions. </li>
+			<li>Users can also "pin" configured synchronization.</li>
+			<li>Performance of decorations in Synchronize View was improved</li>
+			<li>"Create Patch..." command was added to the context menu of the Synchronize View</li>
+		</ul>
+		<h2 id="Other_Improvements">Other Improvements</h2>
+		<ul>
+			<li>MultiPullResultDialog supports multi-selection. The details button in MultiPullResultDialog can now also work with multi-selections.</li>
+			<li>Staging View prompts if there are unsaved files on commit</li>
+			<li>Merge does now support option --squash (see 
+				<a href="http://www.kernel.org/pub/software/scm/git/docs/git-merge.html" target="egit_external">git-merge</a>)
+			</li>
+			<li>"Show In &gt; Git Repositories" in Repositories View supports multi-selection</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Bugs-Closed.html" title="Bugs Closed">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Bugs Closed</td>
+			</tr>
+		</table>
+	</body>
+</html>

@@ -446,17 +446,25 @@
 		</p>
 		<h4 id="View_Menu_actions">View Menu actions</h4>
 		<h5 id="Configuring_the_View">Configuring the View</h5>
-		<p>Most of the toolbar actions are available in the View Menu, too. In addition, the following four toggles are available:</p>
+		<p>Most of the toolbar actions are available in the View Menu, too. In addition, the following toggles are available:</p>
 		<p>
-			<img border="0" src="images/Egit-1.2-history-view-menu.png"/>
+			<img border="0" src="images/Egit-2.1-history-view-menu.png"/>
 		</p>
-		<p>"Show Revision Details" toggles the Revision Detail area and "Show Revision Comment" the Revision Comment area. The "Wrap Comments" and "Fill paragraphs" actions are only available if "Show Revision Comment" is active and govern the formatting within the Revision Comment area.</p>
-		<p>The first two actions are also available by right-clicking anywhere in the Commit Graph area, and the last two actions are also available by right-clicking anywhere in the Revision Comment area.</p>
-		<p>The preference 
-			<b>Show &gt; Follow Renames</b> allows to toggle whether renames of a selected resource should be followed in the History View, if the  "Resource" filter is used.
+		<p>"Additional Refs" toggles the visibility of certain Refs created during actions like fetch, rebase, merge, for example FETCH_HEAD, ORIGIN_HEAD... This can be helpful to remove clutter from the history view.</p>
+		<p>"Notes History" toggles the displaying of Gerrit's review notes in the "Revision Comment" area.</p>
+		<p>"Follow Renames" toggles whether renames of a selected resource should be followed in the History View, if the  "Resource" filter is used.
 			This preference can also be configured in the preference wizard 
-			<b>Preferences &gt; Team &gt; Git &gt; Views &gt; Follow Renames</b>.
+			<b>Preferences &gt; Team &gt; Git &gt; History &gt; Follow Renames</b>.
 		</p>
+		<p>"Revision Comment" toggles the visiblity of the Revision Comment area.</p>
+		<p>"Revision Details" toggles the visibility of the Revision Detail area.</p>
+		<p>If "Relative Dates" is checked, the commit dates are shown as relative dates instead of absolute dates.</p>
+		<p>"E-mail Adresses" toggles the display of committer e-mails.</p>
+		<p>The sub-menu "In Revision Comment" opens a sub-menu with some more toggles that govern the appearance of the Revision Comment area:</p>
+		<p>"Tag sequence" allows to show/hide a couple of lines indicating the last tag in the list of ancestors of the given commit and the next tag in the list of successors of the given commit, i.e. the tags preceding/following the given commit.</p>
+		<p>The "Wrap Comments" and "Fill paragraphs" toggles govern the formatting within the Revision Comment area.</p>
+		<p>"Revision Details" and "Revision Comments" are also available by right-clicking anywhere in the Commit Graph area.</p>
+		<p>"Tag sequence", "Wrap Comments" and "Fill paragraphs" are also available by right-clicking anywhere in the Revision Comment area.</p>
 		<h4 id="Context_Menu_actions">Context Menu actions</h4>
 		<p>The context menu in the Commit Graph area is slightly different, depending on whether the current is a File or a Folder/Project, respectively. The following menu entries are always available:</p>
 		<p>
@@ -677,6 +685,10 @@
 			<b>Remove from Git Index</b> action on the file's context menu.
 		</p>
 		<p>The commit action will commit the staged changes only -- similar to what <code>git commit</code> does in native git. An intergrated commit message editor allows to edit the commit message for the commit. In contrast to the commit dialog, the staging view can be kept open while doing changes. This allows for incrementally writing the commit message along with the changes. The commit message being edited is associated with the repository, the staging view is linked with. It is not stored persistently and will get lost if the staging view or Eclipse are closed.</p>
+		<p>To commit, press 
+			<b>Ctrl+Enter</b> (
+			<b>Command+Enter</b> on Mac OS X) in the commit message text field, or click on the toolbar icon with the red arrow.
+		</p>
 		<h3 id="Git_Reflog_View">Git Reflog View</h3>
 		<p>
 			<img border="0" src="images/Egit-1.2-reflog-view.png"/>
@@ -776,7 +788,7 @@
 			</tr>
 			<tr>
 				<td>ORIG_HEAD</td>
-				<td>Points to the commit that was checked out before a merge or rebse operation was started</td>
+				<td>Points to the commit that was checked out before a merge or rebase operation was started</td>
 			</tr>
 		</table>
 		<p>For a complete list for Ref names and the order of precedence if multiple references have the same shorthand form see the section "Specifying Revisions" section of 

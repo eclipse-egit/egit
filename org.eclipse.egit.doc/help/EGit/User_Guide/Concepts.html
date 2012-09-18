@@ -83,6 +83,16 @@
 			<li>The index enables fast comparison of the tree it defines with the current working directory. This is achieved by storing additional meta data about the involved files in the index data.</li>
 			<li>The index can efficiently store information about merge conflicts between the trees involved in the merge so that for each pathname there is enough information about the involved trees to enable a three-way merge.</li>
 		</ul>
+		<h2 id="Branches">Branches</h2>
+		<p>A branch in Git is a named reference to a commit. There are two types of branches, namely "Local" and "Remote Tracking" branches which serve different purposes.</p>
+		<h3 id="Local_Branches">Local Branches</h3>
+		<p>Whenever a change to a (local) Repository is committed, a new commit object is created. Without any other means, it would be very difficult to keep track of the changes in the Repository, in particular when other commits are added to the Repository, for example due to an update from the remote Repository or when checking out another commit.</p>
+		<p>A local branch helps with this task by providing a (local) name by which the "current" commit can be found. When changes are commited to the local repository, the branch is automatically updated to point to the newly created commit.</p>
+		<p>In addition, it is possible to add a so-called upstream configuration to a local branch which can be helpful when synchronizing with a remote repository.</p>
+		<h3 id="Remote_Tracking_Branches">Remote Tracking Branches</h3>
+		<p>Remote tracking branches are created automatically when cloning and fetching from remote repositories. A remote tracking branch in the local repository always corresponds to a (local) branch in the remote repository, and the name of such a branch is following a certain convention.</p>
+		<p>The remote tracking branch points to the same commit as the corresponding branch in the remote repository (at the time of clone/fetch).</p>
+		<p>Remote tracking branches can be used for automated creation of upstream configuration for local branches.</p>
 		<h2 id="Working_Directory">Working Directory</h2>
 		<p>The working directory is the directory used to modify files for the next commit. By default it is located one level above the .git directory.
 			Making a new commit involves typically the following steps :</p>
