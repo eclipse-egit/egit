@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.egit.psf"
       label="%featureName"
-      version="2.1.0.qualifier"
+      version="2.2.0.qualifier"
       provider-name="%providerName">
 
    <description>
@@ -22,7 +22,7 @@
    </url>
 
    <requires>
-      <import plugin="org.eclipse.egit.core" version="2.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.egit.core" version="2.2.0" match="equivalent"/>
       <import plugin="org.eclipse.core.runtime.compatibility" version="3.2.0" match="greaterOrEqual"/>
    </requires>
 
