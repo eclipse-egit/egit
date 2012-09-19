@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -68,7 +69,7 @@ public class AdaptableFileTreeIteratorTest extends GitTestCase {
 		final Set<String> repositoryPaths = Collections.singleton(mapping
 				.getRepoRelativePath(eclipseFile));
 
-		assertTrue(repositoryPaths.size() == 1);
+		assertEquals(1, repositoryPaths.size());
 		treeWalk.setFilter(PathFilterGroup.createFromStrings(repositoryPaths));
 
 		assertTrue(treeWalk.next());
