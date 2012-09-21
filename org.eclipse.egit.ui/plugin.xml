@@ -476,6 +476,16 @@
                id="org.eclipse.egit.ui.keyword.git">
          </keywordReference>
       </page>
+      <page
+            category="org.eclipse.egit.ui.GitPreferences"
+            class="org.eclipse.egit.ui.internal.preferences.IgnorePreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.IgnorePreferencePage"
+            name="%IgnorePreferencePage_name">
+         <keywordReference
+            id="org.eclipse.egit.ui.keyword.git">
+         </keywordReference>
+      </page>
+
    </extension>
 
    <extension point="org.eclipse.ui.propertyPages">
@@ -3738,7 +3748,7 @@
                               <and>
                                  <test property="GitResource.isShared" />
                                  <test property="GitResource.isContainer" />
-                              </and>                           
+                              </and>
                            </adapt>
                         </and>
                      </iterate>
@@ -4794,7 +4804,7 @@
             defaultHandler="org.eclipse.egit.ui.internal.history.command.RenameBranchOnCommitHandler"
             id="org.eclipse.egit.ui.history.RenameBranch"
             name="%RenameBranchCommand">
-      </command>      
+      </command>
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.CreateTagOnCommitHandler"
             id="org.eclipse.egit.ui.history.CreateTag"
