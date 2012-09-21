@@ -2,6 +2,7 @@
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2013, Matthias Sohn <matthias.sohn@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -51,6 +52,8 @@ public class TestProject {
 
 	private final File workspaceSupplement;
 
+	private IFolder binFolder;
+
 	/**
 	 * @throws CoreException
 	 *             If project already exists
@@ -96,11 +99,15 @@ public class TestProject {
 		project.create(description, null);
 		project.open(null);
 		javaProject = JavaCore.create(project);
-		IFolder binFolder = createBinFolder();
+		binFolder = createBinFolder();
 		setJavaNature();
 		javaProject.setRawClasspath(new IClasspathEntry[0], null);
 		createOutputFolder(binFolder);
 		addSystemLibraries();
+	}
+
+	public void setBinFolderDerived() throws CoreException {
+		binFolder.setDerived(true, null);
 	}
 
 	public File getWorkspaceSupplement() {

@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
- * Copyright (C) 2010, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2010, 2013 Matthias Sohn <matthias.sohn@sap.com>
  * Copyright (C) 2011, Daniel Megert <daniel_megert@ch.ibm.com>
  * Copyright (C) 2012, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
@@ -3019,6 +3019,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String IgnoreActionHandler_addToGitignore;
+
+	/** */
+	public static String IgnorePreferencePage_autoIgnoreDerivedResources;
 
 	/** */
 	public static String RepositoriesView_BranchDeletionFailureMessage;
