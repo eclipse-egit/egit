@@ -26,5 +26,6 @@ public class GitCorePreferenceInitializer extends AbstractPreferenceInitializer 
 		p.putInt(GitCorePreferences.core_deltaBaseCacheLimit, 10 * MB);
 		p.putInt(GitCorePreferences.core_streamFileThreshold, 50 * MB);
 		p.putBoolean(GitCorePreferences.core_autoShareProjects, false);
+		p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources, true);
 	}
 }
