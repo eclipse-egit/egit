@@ -96,6 +96,7 @@ public class TestProject {
 		project.open(null);
 		javaProject = JavaCore.create(project);
 		IFolder binFolder = createBinFolder();
+		binFolder.setDerived(true, null);
 		setJavaNature();
 		javaProject.setRawClasspath(new IClasspathEntry[0], null);
 		createOutputFolder(binFolder);
