@@ -26,10 +26,16 @@ public class CoreText extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.egit.core.coretext"; //$NON-NLS-1$
 
 	/** */
+	public static String Activator_autoIgnoreDerivedResources;
+
+	/** */
 	public static String Activator_AutoShareJobName;
 
 	/** */
 	public static String Activator_AutoSharingFailed;
+
+	/** */
+	public static String Activator_ignoreResourceFailed;
 
 	/** */
 	public static String Activator_ReconfigureWindowCacheError;

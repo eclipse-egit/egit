@@ -51,6 +51,8 @@ public class TestProject {
 
 	private final File workspaceSupplement;
 
+	private IFolder binFolder;
+
 	/**
 	 * @throws CoreException
 	 *             If project already exists
@@ -96,11 +98,15 @@ public class TestProject {
 		project.create(description, null);
 		project.open(null);
 		javaProject = JavaCore.create(project);
-		IFolder binFolder = createBinFolder();
+		binFolder = createBinFolder();
 		setJavaNature();
 		javaProject.setRawClasspath(new IClasspathEntry[0], null);
 		createOutputFolder(binFolder);
 		addSystemLibraries();
+	}
+
+	public void setBinFolderDerived() throws CoreException {
+		binFolder.setDerived(true, null);
 	}
 
 	public File getWorkspaceSupplement() {
