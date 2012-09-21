@@ -2,6 +2,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Google Inc.
  * Copyright (C) 2009, Mykola Nikishov <mn@mn.com.ua>
+ * Copyright (C) 2013, Matthias Sohn <matthias.sohn@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,16 +13,20 @@ package org.eclipse.egit.core.op;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
@@ -146,6 +151,7 @@ public class ConnectProviderOperation implements IEGitOperation {
 					}
 					RepositoryProvider
 							.map(project, GitProvider.class.getName());
+					autoIgnoreDerivedResources(project, monitor);
 					project.refreshLocal(IResource.DEPTH_INFINITE,
 							new SubProgressMonitor(monitor, 50));
 					monitor.worked(10);
@@ -162,6 +168,29 @@ public class ConnectProviderOperation implements IEGitOperation {
 		} finally {
 			monitor.done();
 		}
+	}
+
+	private void autoIgnoreDerivedResources(IProject project,
+			IProgressMonitor monitor) throws CoreException {
+		List<IPath> paths = findDerivedResources(project);
+		if (paths.size() > 0) {
+			IgnoreOperation ignoreOp = new IgnoreOperation(paths);
+			IProgressMonitor subMonitor = new SubProgressMonitor(monitor, 1);
+			ignoreOp.execute(subMonitor);
+		}
+	}
+
+	private List<IPath> findDerivedResources(IContainer c)
+			throws CoreException {
+		List<IPath> derived = new ArrayList<IPath>();
+		IResource[] members = c.members(IContainer.INCLUDE_HIDDEN);
+		for (IResource r : members) {
+			if (r.isDerived())
+				derived.add(r.getLocation());
+			else if (r instanceof IContainer)
+				derived.addAll(findDerivedResources((IContainer) r));
+		}
+		return derived;
 	}
 
 	/* (non-Javadoc)

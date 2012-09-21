@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
+ * Copyright (C) 2007, 2013 Robin Rosenberg <robin.rosenberg@dewire.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,7 +15,10 @@ import java.io.IOException;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.GitCorePreferences;
 import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -26,6 +29,7 @@ import org.eclipse.jgit.util.IO;
 import org.eclipse.jgit.util.SystemReader;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 public abstract class GitTestCase {
 
@@ -34,6 +38,14 @@ public abstract class GitTestCase {
 	protected TestProject project;
 
 	protected File gitDir;
+
+	@BeforeClass
+	public static void setUpClass() {
+		// suppress auto-ignoring to avoid interference
+		IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
+				.getPluginId());
+		p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources, false);
+	}
 
 	@Before
 	public void setUp() throws Exception {
