@@ -16,6 +16,24 @@
       "revId": "4a87652bde4f88327288a9cc02f3f4951fdf3aab",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//2uU\u003d",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-09-22T13:17:16Z",
+      "side": 0,
+      "message": "Done.\n\nI wonder though if it would not be better to have this information in the wiki, where it is maybe less likely to become outdated.\n\nDon\u0027t we have a green/red/orange table of Git feature coverage somewhere? I couldn\u0027t find it in the wiki.",
+      "parentUuid": "AABOIn//4Lg\u003d",
+      "revId": "4a87652bde4f88327288a9cc02f3f4951fdf3aab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
