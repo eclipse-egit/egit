@@ -301,6 +301,11 @@ public class CommitDialog extends TitleAreaDialog {
 
 	private static final String SHOW_UNTRACKED_PREF = "CommitDialog.showUntracked"; //$NON-NLS-1$
 
+	/**
+	 * A constant used for the 'commit and push button' button
+	 */
+	public static final int COMMIT_AND_PUSH_ID = 30;
+
 	FormToolkit toolkit;
 
 	CommitMessageComponent commitMessageComponent;
@@ -324,6 +329,8 @@ public class CommitDialog extends TitleAreaDialog {
 	Section filesSection;
 
 	Button commitButton;
+
+	Button commitAndPushButton;
 
 	ArrayList<CommitItem> items = new ArrayList<CommitItem>();
 
@@ -354,7 +361,7 @@ public class CommitDialog extends TitleAreaDialog {
 
 	private Repository repository;
 
-	private boolean pushEnabled = false;
+	private boolean isPushRequested = false;
 
 	/**
 	 * @param parentShell
@@ -510,21 +517,32 @@ public class CommitDialog extends TitleAreaDialog {
 	}
 
 	/**
-	 * Returns whether we are pushing after the commit
-	 * @return pushing
+	 * @return true if push shall be executed
 	 */
-	public boolean isPushEnabled() {
-		return pushEnabled;
+	public boolean isPushRequested() {
+		return isPushRequested;
 	}
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		toolkit.adapt(parent, false, false);
-		commitButton = createButton(parent, IDialogConstants.OK_ID,
-				UIText.CommitDialog_Commit, true);
 		createButton(parent, IDialogConstants.CANCEL_ID,
 				IDialogConstants.CANCEL_LABEL, false);
+		commitButton = createButton(parent, IDialogConstants.OK_ID,
+				UIText.CommitDialog_Commit, true);
+		commitAndPushButton = createButton(parent, COMMIT_AND_PUSH_ID,
+				UIText.CommitDialog_CommitAndPush, false);
 		updateMessage();
+	}
+
+	protected void buttonPressed(int buttonId) {
+		if (IDialogConstants.OK_ID == buttonId)
+			okPressed();
+		else if (COMMIT_AND_PUSH_ID == buttonId) {
+			isPushRequested = true;
+			okPressed();
+		} else if (IDialogConstants.CANCEL_ID == buttonId)
+			cancelPressed();
 	}
 
 	@Override
@@ -890,32 +908,6 @@ public class CommitDialog extends TitleAreaDialog {
 			}
 		}
 
-		Section pushSection = toolkit.createSection(container,
-				ExpandableComposite.TITLE_BAR
-						| ExpandableComposite.CLIENT_INDENT);
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(pushSection);
-		Composite pushArea = toolkit.createComposite(pushSection);
-		pushSection.setClient(pushArea);
-		toolkit.paintBordersFor(pushArea);
-		GridLayoutFactory.fillDefaults().extendedMargins(2, 2, 2, 2)
-				.applyTo(pushArea);
-		pushSection.setText(UIText.CommitDialog_PushSectionTitle);
-		final Button pushCheckbox = toolkit.createButton(pushArea,
-				UIText.CommitDialog_PushUpstream, SWT.CHECK);
-		pushCheckbox.setSelection(getPreferenceStore().getBoolean(
-					UIPreferences.COMMIT_DIALOG_PUSH_UPSTREAM));
-		pushEnabled = getPreferenceStore().getBoolean(
-				UIPreferences.COMMIT_DIALOG_PUSH_UPSTREAM);
-		pushCheckbox.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				pushEnabled = pushCheckbox.getSelection();
-				getPreferenceStore().setValue(
-						UIPreferences.COMMIT_DIALOG_PUSH_UPSTREAM, pushEnabled);
-			}
-		});
-
 		applyDialogFont(container);
 		statCol.pack();
 		resourceCol.pack();
@@ -985,8 +977,10 @@ public class CommitDialog extends TitleAreaDialog {
 		}
 
 		setMessage(message, type);
-		commitButton.setEnabled(type == IMessageProvider.WARNING
-				|| type == IMessageProvider.NONE);
+		boolean commitEnabled = type == IMessageProvider.WARNING
+				|| type == IMessageProvider.NONE;
+		commitButton.setEnabled(commitEnabled);
+		commitAndPushButton.setEnabled(commitEnabled);
 	}
 
 	private boolean isCommitWithoutFilesAllowed() {
