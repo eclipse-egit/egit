@@ -212,7 +212,7 @@ public class CommitUI  {
 		if (commitHelper.isMergedResolved)
 			commitOperation.setRepository(repo);
 		Job commitJob = createCommitJob(repo, commitOperation, false);
-		if (commitDialog.isPushEnabled())
+		if (commitDialog.isPushRequested())
 			pushWhenFinished(commitJob);
 
 		commitJob.schedule();
