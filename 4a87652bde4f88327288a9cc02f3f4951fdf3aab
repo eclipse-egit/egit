@@ -34,6 +34,24 @@
       "revId": "4a87652bde4f88327288a9cc02f3f4951fdf3aab",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//2bE\u003d",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-09-25T12:41:03Z",
+      "side": 0,
+      "message": "that\u0027s true, the table so far was only available in release docuware as part of the release review document\n\nIf you think this would be useful I can upload it to the wiki. I first tried to maintain it as a shared Google document but the table formatting didn\u0027t really work so I maintain this in a local powerpoint :( Still it\u0027s a manually maintained coarse table which doesn\u0027t rely on technical checks. There was a GSoC project to improve this but the student failed to create any useful results :(",
+      "parentUuid": "AABOIn//2uU\u003d",
+      "revId": "4a87652bde4f88327288a9cc02f3f4951fdf3aab",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
