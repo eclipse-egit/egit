@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,6 +8,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history.command;
+
+import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -22,12 +25,10 @@ import org.eclipse.jgit.revwalk.RevCommit;
 public class CreatePatchHandler extends AbstractHistoryCommandHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = getSelection(getPage());
-		if (selection.size() == 1) {
-			RevCommit commit = (RevCommit) selection.getFirstElement();
-			Repository repo = getRepository(event);
-			PatchOperationUI.createPatch(getPart(event), commit, repo).start();
-		}
+		List<RevCommit> selectedCommits = getSelectedCommits();
+		RevCommit commit = selectedCommits.get(0);
+		Repository repo = getRepository(event);
+		PatchOperationUI.createPatch(getPart(event), commit, repo).start();
 		return null;
 	}
 
