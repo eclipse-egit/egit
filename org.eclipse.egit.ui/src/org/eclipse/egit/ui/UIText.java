@@ -1962,6 +1962,9 @@ public class UIText extends NLS {
 	public static String CommitDialog_ContentAssist;
 
 	/** */
+	public static String CommitDialog_DetachedHead;
+
+	/** */
 	public static String CommitDialog_Files;
 
 	/** */
