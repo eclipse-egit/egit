@@ -10,7 +10,10 @@ package org.eclipse.egit.ui.internal.staging;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
+import org.eclipse.egit.ui.internal.decorators.DecorationResult;
+import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.DecorationHelper;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
@@ -38,6 +41,10 @@ public class StagingViewLabelProvider extends BaseLabelProvider implements
 
 	private ResourceManager resourceManager = new LocalResourceManager(
 			JFaceResources.getResources());
+
+	private final DecorationHelper decorationHelper = new DecorationHelper(
+			Activator.getDefault().getPreferenceStore());
+
 
 	private boolean fileNameMode = false;
 
@@ -94,51 +101,44 @@ public class StagingViewLabelProvider extends BaseLabelProvider implements
 	}
 
 	public StyledString getStyledText(Object element) {
-		StyledString styled = new StyledString();
 		final StagingEntry c = (StagingEntry) element;
-		if (c.getState() == StagingEntry.State.MODIFIED
-				|| c.getState() == StagingEntry.State.PARTIALLY_MODIFIED)
-			styled.append('>', StyledString.DECORATIONS_STYLER).append(' ');
+		final DecorationResult decoration = new DecorationResult();
+		decorationHelper.decorate(decoration, c);
+
+		final StyledString styled = new StyledString();
+		final String prefix = decoration.getPrefix();
+		final String suffix = decoration.getSuffix();
+		if (prefix != null)
+			styled.append(prefix, StyledString.DECORATIONS_STYLER);
 		if (fileNameMode) {
 			IPath parsed = Path.fromOSString(c.getPath());
 			if (parsed.segmentCount() > 1) {
 				styled.append(parsed.lastSegment());
+				if (suffix != null)
+					styled.append(suffix, StyledString.DECORATIONS_STYLER);
 				styled.append(' ');
 				styled.append('-', StyledString.QUALIFIER_STYLER);
 				styled.append(' ');
 				styled.append(parsed.removeLastSegments(1).toString(),
 						StyledString.QUALIFIER_STYLER);
-			} else
+			} else {
 				styled.append(c.getPath());
-		} else
+				if (suffix != null)
+					styled.append(suffix, StyledString.DECORATIONS_STYLER);
+			}
+		} else {
 			styled.append(c.getPath());
+			if (suffix != null)
+				styled.append(suffix, StyledString.DECORATIONS_STYLER);
+		}
 
 		return styled;
 	}
 
 	public Image getImage(Object element) {
 		final StagingEntry c = (StagingEntry) element;
-		switch (c.getState()) {
-		case ADDED:
-			return getDecoratedImage(getEditorImage(c), UIIcons.OVR_STAGED_ADD);
-		case CHANGED:
-			return getDecoratedImage(getEditorImage(c), UIIcons.OVR_DIRTY);
-		case REMOVED:
-			return getDecoratedImage(getEditorImage(c),
-					UIIcons.OVR_STAGED_REMOVE);
-		case MISSING:
-			return getDecoratedImage(getEditorImage(c),
-					UIIcons.OVR_STAGED_REMOVE);
-		case MODIFIED:
-			return getEditorImage(c);
-		case PARTIALLY_MODIFIED:
-			return getDecoratedImage(getEditorImage(c), UIIcons.OVR_DIRTY);
-		case CONFLICTING:
-			return getDecoratedImage(getEditorImage(c), UIIcons.OVR_CONFLICT);
-		case UNTRACKED:
-			return getDecoratedImage(getEditorImage(c), UIIcons.OVR_UNTRACKED);
-		default:
-			return getEditorImage(c);
-		}
+		final DecorationResult decoration = new DecorationResult();
+		decorationHelper.decorate(decoration, c);
+		return getDecoratedImage(getEditorImage(c), decoration.getOverlay());
 	}
 }
