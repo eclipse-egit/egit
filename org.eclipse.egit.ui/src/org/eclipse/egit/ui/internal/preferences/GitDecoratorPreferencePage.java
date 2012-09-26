@@ -17,8 +17,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -30,6 +28,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.DecorationHelper;
+import org.eclipse.egit.ui.internal.decorators.DecorationResult;
 import org.eclipse.egit.ui.internal.decorators.IDecoratableResource;
 import org.eclipse.egit.ui.internal.decorators.IDecoratableResource.Staged;
 import org.eclipse.egit.ui.internal.synchronize.mapping.GitChangeSetLabelProvider;
@@ -45,10 +44,8 @@ import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.DecorationContext;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.IDecoration;
-import org.eclipse.jface.viewers.IDecorationContext;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -63,8 +60,6 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -898,7 +893,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 
 		private void setColorsAndFonts(TreeItem[] items) {
 			for (int i = 0; i < items.length; i++) {
-				PreviewDecoration decoration = getDecoration(items[i].getData());
+				DecorationResult decoration = getDecoration(items[i].getData());
 				items[i].setBackground(decoration.getBackgroundColor());
 				items[i].setForeground(decoration.getForegroundColor());
 				items[i].setFont(decoration.getFont());
@@ -926,8 +921,8 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 			// No-op
 		}
 
-		private PreviewDecoration getDecoration(Object element) {
-			PreviewDecoration decoration = new PreviewDecoration();
+		private DecorationResult getDecoration(Object element) {
+			DecorationResult decoration = new DecorationResult();
 			fHelper.decorate(decoration, (PreviewResource) element);
 			return decoration;
 		}
@@ -935,7 +930,7 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		private class ResLabelProvider extends LabelProvider {
 
 			public String getText(Object element) {
-				final PreviewDecoration decoration = getDecoration(element);
+				final DecorationResult decoration = getDecoration(element);
 				final StringBuilder buffer = new StringBuilder();
 				final String prefix = decoration.getPrefix();
 				if (prefix != null)
@@ -1083,92 +1078,5 @@ public class GitDecoratorPreferencePage extends PreferencePage implements
 		public boolean isAssumeValid() {
 			return assumeValid;
 		}
-	}
-
-	private static class PreviewDecoration implements IDecoration {
-
-		private List<String> prefixes = new ArrayList<String>();
-
-		private List<String> suffixes = new ArrayList<String>();
-
-		private ImageDescriptor overlay = null;
-
-		private Color backgroundColor = null;
-
-		private Font font = null;
-
-		private Color foregroundColor = null;
-
-		/**
-		 * Adds an icon overlay to the decoration
-		 * <p>
-		 * Copies the behavior of <code>DecorationBuilder</code> of only
-		 * allowing the overlay to be set once.
-		 */
-		public void addOverlay(ImageDescriptor overlayImage) {
-			if (overlay == null)
-				overlay = overlayImage;
-		}
-
-		public void addOverlay(ImageDescriptor overlayImage, int quadrant) {
-			addOverlay(overlayImage);
-		}
-
-		public void addPrefix(String prefix) {
-			prefixes.add(prefix);
-		}
-
-		public void addSuffix(String suffix) {
-			suffixes.add(suffix);
-		}
-
-		public IDecorationContext getDecorationContext() {
-			return new DecorationContext();
-		}
-
-		public void setBackgroundColor(Color color) {
-			backgroundColor = color;
-		}
-
-		public void setForegroundColor(Color color) {
-			foregroundColor = color;
-		}
-
-		public void setFont(Font font) {
-			this.font = font;
-		}
-
-		public ImageDescriptor getOverlay() {
-			return overlay;
-		}
-
-		public Color getBackgroundColor() {
-			return backgroundColor;
-		}
-
-		public Color getForegroundColor() {
-			return foregroundColor;
-		}
-
-		public Font getFont() {
-			return font;
-		}
-
-		public String getPrefix() {
-			StringBuilder sb = new StringBuilder();
-			for (Iterator<String> iter = prefixes.iterator(); iter.hasNext();) {
-				sb.append(iter.next());
-			}
-			return sb.toString();
-		}
-
-		public String getSuffix() {
-			StringBuilder sb = new StringBuilder();
-			for (Iterator<String> iter = suffixes.iterator(); iter.hasNext();) {
-				sb.append(iter.next());
-			}
-			return sb.toString();
-		}
-
 	}
 }
