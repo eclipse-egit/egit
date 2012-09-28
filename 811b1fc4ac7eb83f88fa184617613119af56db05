@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//17s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-09-28T15:27:43Z",
+      "side": 1,
+      "message": "Why don\u0027t you use the getRepository method?",
+      "revId": "811b1fc4ac7eb83f88fa184617613119af56db05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
