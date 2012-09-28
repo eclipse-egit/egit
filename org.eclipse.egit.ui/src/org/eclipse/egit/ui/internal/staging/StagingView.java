@@ -32,7 +32,10 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
@@ -135,6 +138,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
@@ -201,6 +206,8 @@ public class StagingView extends ViewPart implements IShowInSource {
 	private ISelectionListener selectionChangedListener;
 
 	private Repository currentRepository;
+
+	private Job stageJob;
 
 	static class StagingViewUpdate {
 		Repository repository;
@@ -1217,117 +1224,203 @@ public class StagingView extends ViewPart implements IShowInSource {
 			reload(mapping.getRepository());
 	}
 
-	private void stage(IStructuredSelection selection) {
-		Git git = new Git(currentRepository);
-		RmCommand rm = null;
-		Iterator iterator = selection.iterator();
-		List<String> addPaths = new ArrayList<String>();
-		while (iterator.hasNext()) {
-			Object element = iterator.next();
-			if (element instanceof StagingEntry) {
-				StagingEntry entry = (StagingEntry) element;
-				switch (entry.getState()) {
-				case ADDED:
-				case CHANGED:
-				case REMOVED:
-					// already staged
-					break;
-				case CONFLICTING:
-				case MODIFIED:
-				case PARTIALLY_MODIFIED:
-				case UNTRACKED:
-					addPaths.add(entry.getPath());
-					break;
-				case MISSING:
-					if (rm == null)
-						rm = git.rm();
-					rm.addFilepattern(entry.getPath());
-					break;
-				}
-			} else {
-				IResource resource = AdapterUtils.adapt(element, IResource.class);
-				if (resource != null) {
-					RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
-					if (mapping != null && mapping.getRepository() == currentRepository) {
-						String path = mapping.getRepoRelativePath(resource);
-						// If resource corresponds to root of working directory
-						if ("".equals(path)) //$NON-NLS-1$
-							addPaths.add("."); //$NON-NLS-1$
-						else
-							addPaths.add(path);
+	private void stage(final IStructuredSelection selection) {
+		awaitStageJob();
+
+		stageJob = new Job(UIText.StagingView_Staging) {
+			public IStatus run(IProgressMonitor monitor) {
+				asyncLockUI();
+				try {
+					Git git = new Git(currentRepository);
+					RmCommand rm = null;
+					Iterator iterator = selection.iterator();
+					List<String> addPaths = new ArrayList<String>();
+					while (iterator.hasNext()) {
+						Object element = iterator.next();
+						if (element instanceof StagingEntry) {
+							StagingEntry entry = (StagingEntry) element;
+							switch (entry.getState()) {
+							case ADDED:
+							case CHANGED:
+							case REMOVED:
+								// already staged
+								break;
+							case CONFLICTING:
+							case MODIFIED:
+							case PARTIALLY_MODIFIED:
+							case UNTRACKED:
+								addPaths.add(entry.getPath());
+								break;
+							case MISSING:
+								if (rm == null)
+									rm = git.rm();
+								rm.addFilepattern(entry.getPath());
+								break;
+							}
+						} else {
+							IResource resource = AdapterUtils.adapt(element, IResource.class);
+							if (resource != null) {
+								RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+								if (mapping != null && mapping.getRepository() == currentRepository) {
+									String path = mapping.getRepoRelativePath(resource);
+									// If resource corresponds to root of working directory
+									if ("".equals(path)) //$NON-NLS-1$
+										addPaths.add("."); //$NON-NLS-1$
+									else
+										addPaths.add(path);
+								}
+							}
+						}
 					}
+
+					if (!addPaths.isEmpty())
+						try {
+							AddCommand add = git.add();
+							for (String addPath : addPaths)
+								add.addFilepattern(addPath);
+							add.call();
+						} catch (NoFilepatternException e1) {
+							// cannot happen
+						} catch (Exception e2) {
+							Activator.error(e2.getMessage(), e2);
+						}
+					if (rm != null)
+						try {
+							rm.call();
+						} catch (NoFilepatternException e) {
+							// cannot happen
+						} catch (Exception e2) {
+							Activator.error(e2.getMessage(), e2);
+						}
+				} finally {
+					asyncUnlockUI();
 				}
+				return Status.OK_STATUS;
+			}
+		};
+		stageJob.setUser(true);
+		stageJob.schedule();
+	}
+
+	/**
+	 * Asynchronously re-enables the staged and unstaged tables to re-enable
+	 * operations after staging/unstaging finished in background.
+	 */
+	protected void asyncUnlockUI() {
+		final Table staged = stagedTableViewer.getTable();
+		final Table unstaged = unstagedTableViewer.getTable();
+		asyncEnableTable(staged, true);
+		asyncEnableTable(unstaged, true);
+	}
+
+	/**
+	 * Asynchronously disables the staged and unstaged tables, so that no further
+	 * operations are possible until the staging threads finish.
+	 */
+	protected void asyncLockUI() {
+		final Table staged = stagedTableViewer.getTable();
+		final Table unstaged = unstagedTableViewer.getTable();
+		asyncEnableTable(staged, false);
+		asyncEnableTable(unstaged, false);
+	}
+
+	private void asyncEnableTable(final Table table, final boolean enable) {
+		table.getDisplay().syncExec(new Runnable() {
+			public void run() {
+				table.setEnabled(enable);
+			}
+		});
+	}
+
+	private void awaitStageJob() {
+		if(stageJob != null) {
+			try {
+				stageJob.join();
+			} catch(Exception ex) {
+				Activator.error("cannot await staging job!", ex); //$NON-NLS-1$
 			}
 		}
 
-		if (!addPaths.isEmpty())
-			try {
-				AddCommand add = git.add();
-				for (String addPath : addPaths)
-					add.addFilepattern(addPath);
-				add.call();
-			} catch (NoFilepatternException e1) {
-				// cannot happen
-			} catch (Exception e2) {
-				Activator.error(e2.getMessage(), e2);
-			}
-		if (rm != null)
-			try {
-				rm.call();
-			} catch (NoFilepatternException e) {
-				// cannot happen
-			} catch (Exception e2) {
-				Activator.error(e2.getMessage(), e2);
-			}
+		stageJob = null;
 	}
 
-	private void unstage(IStructuredSelection selection) {
+
+	private void unstage(final IStructuredSelection selection) {
 		if (selection.isEmpty())
 			return;
 
-		RevCommit headRev = null;
-		try {
-			final Ref head = currentRepository.getRef(Constants.HEAD);
-			// head.getObjectId() is null if the repository does not contain any
-			// commit
-			if (head.getObjectId() != null)
-				headRev = new RevWalk(currentRepository).parseCommit(head
-						.getObjectId());
-		} catch (IOException e1) {
-			// TODO fix text
-			MessageDialog.openError(getSite().getShell(),
-					UIText.CommitAction_MergeHeadErrorTitle,
-					UIText.CommitAction_ErrorReadingMergeMsg);
-			return;
-		}
+		awaitStageJob();
 
-		final DirCache dirCache;
-		final DirCacheEditor edit;
-		try {
-			dirCache = currentRepository.lockDirCache();
-			edit = dirCache.editor();
-		} catch (IOException e) {
-			// TODO fix text
-			MessageDialog.openError(getSite().getShell(),
-					UIText.CommitAction_MergeHeadErrorTitle,
-					UIText.CommitAction_ErrorReadingMergeMsg);
-			return;
-		}
+		stageJob = new Job(UIText.StagingView_Unstaging) {
+			public IStatus run(IProgressMonitor monitor) {
 
-		try {
-			updateDirCache(selection, headRev, edit);
+				asyncLockUI();
 
-			try {
-				edit.commit();
-			} catch (IOException e) {
-				// TODO fix text
-				MessageDialog.openError(getSite().getShell(),
-						UIText.CommitAction_MergeHeadErrorTitle,
-						UIText.CommitAction_ErrorReadingMergeMsg);
+				try {
+
+					RevCommit headRev = null;
+					try {
+						final Ref head = currentRepository.getRef(Constants.HEAD);
+						// head.getObjectId() is null if the repository does not contain any
+						// commit
+						if (head.getObjectId() != null)
+							headRev = new RevWalk(currentRepository).parseCommit(head
+									.getObjectId());
+					} catch (IOException e1) {
+						// TODO fix text
+						MessageDialog.openError(getSite().getShell(),
+								UIText.CommitAction_MergeHeadErrorTitle,
+								UIText.CommitAction_ErrorReadingMergeMsg);
+						return new Status(IStatus.ERROR,
+								Activator.getPluginId(),
+								UIText.CommitAction_ErrorReadingMergeMsg);
+					}
+
+					final DirCache dirCache;
+					final DirCacheEditor edit;
+					try {
+						dirCache = currentRepository.lockDirCache();
+						edit = dirCache.editor();
+					} catch (IOException e) {
+						// TODO fix text
+						syncOpenError(getSite().getShell(),
+								UIText.CommitAction_MergeHeadErrorTitle,
+								UIText.CommitAction_ErrorReadingMergeMsg);
+						return new Status(IStatus.ERROR,
+								Activator.getPluginId(),
+								UIText.CommitAction_ErrorReadingMergeMsg);
+					}
+
+					try {
+						updateDirCache(selection, headRev, edit);
+
+						try {
+							edit.commit();
+						} catch (IOException e) {
+							// TODO fix text
+							syncOpenError(getSite().getShell(),
+									UIText.CommitAction_MergeHeadErrorTitle,
+									UIText.CommitAction_ErrorReadingMergeMsg);
+						}
+					} finally {
+						dirCache.unlock();
+					}
+				} finally {
+					asyncUnlockUI();
+				}
+				return Status.OK_STATUS;
 			}
-		} finally {
-			dirCache.unlock();
-		}
+		};
+		stageJob.setUser(true);
+		stageJob.schedule();
+	}
+
+	private void syncOpenError(final Shell shell, final String title, final String message) {
+		shell.getDisplay().syncExec(new Runnable() {
+			public void run() {
+				MessageDialog.openError(shell, title, message);
+			}
+		});
 	}
 
 	private void updateDirCache(IStructuredSelection selection,
