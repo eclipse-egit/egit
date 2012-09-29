@@ -40,4 +40,15 @@
          JGit
       </description>
    </category-def>
+   <category-def name="egit-orbit" label="Orbit bundles needed by JGit and EGit">
+      <description>
+         Orbit bundles needed by JGit and EGit
+      </description>
+   </category-def>
+   <iu id="org.kohsuke.args4j" version="0.0.0">
+     <category name="egit-orbit" />
+   </iu>
+   <iu id="com.jcraft.jsch" version="0.0.0">
+     <category name="egit-orbit" />
+   </iu>
 </site>
