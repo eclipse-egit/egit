@@ -16,6 +16,24 @@
       "revId": "811b1fc4ac7eb83f88fa184617613119af56db05",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//108\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-09-30T15:37:29Z",
+      "side": 1,
+      "message": "Because then one would have to pass an ExecutionEvent as argument (because getRepository needs that). Also, `getSelectedCommits` only works when the history page is active, so the additional ways to get the repository in `getRepository` are not needed.",
+      "parentUuid": "AABOIn//17s\u003d",
+      "revId": "811b1fc4ac7eb83f88fa184617613119af56db05",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
