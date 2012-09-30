@@ -15,16 +15,8 @@ import java.util.List;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.op.IgnoreOperation;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
-import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
+import org.eclipse.egit.ui.internal.operations.IgnoreOperationUI;
 
 /** Action for ignoring files via .gitignore. */
 public class IgnoreActionHandler extends RepositoryActionHandler {
@@ -36,25 +28,9 @@ public class IgnoreActionHandler extends RepositoryActionHandler {
 		List<IPath> paths = new ArrayList<IPath>();
 		for (IResource resource : resources)
 			paths.add(resource.getLocation());
-		final IgnoreOperation operation = new IgnoreOperation(paths);
-		String jobname = UIText.IgnoreActionHandler_addToGitignore;
-		Job job = new Job(jobname) {
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				try {
-					operation.execute(monitor);
-				} catch (CoreException e) {
-					return Activator.createErrorStatus(e.getStatus()
-							.getMessage(), e);
-				}
-				if (operation.isGitignoreOutsideWSChanged())
-					GitLightweightDecorator.refresh();
-				return Status.OK_STATUS;
-			}
-		};
-		job.setUser(true);
-		job.setRule(operation.getSchedulingRule());
-		job.schedule();
+
+		IgnoreOperationUI operation = new IgnoreOperationUI(paths);
+		operation.run();
 		return null;
 	}
 

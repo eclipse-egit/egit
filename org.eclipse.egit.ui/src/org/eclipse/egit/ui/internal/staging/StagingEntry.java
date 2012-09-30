@@ -54,7 +54,7 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		PARTIALLY_MODIFIED(EnumSet.of(Action.REPLACE_WITH_FILE_IN_GIT_INDEX, Action.REPLACE_WITH_HEAD_REVISION, Action.STAGE)),
 
 		/** not ignored, and not in the index */
-		UNTRACKED(EnumSet.of(Action.STAGE, Action.DELETE)),
+		UNTRACKED(EnumSet.of(Action.STAGE, Action.DELETE, Action.IGNORE)),
 
 		/** in conflict */
 		CONFLICTING(EnumSet.of(Action.REPLACE_WITH_FILE_IN_GIT_INDEX, Action.REPLACE_WITH_HEAD_REVISION,
@@ -83,6 +83,7 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		STAGE,
 		UNSTAGE,
 		DELETE,
+		IGNORE,
 		LAUNCH_MERGE_TOOL,
 	}
 
