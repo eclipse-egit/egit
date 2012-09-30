@@ -141,6 +141,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.Form;
@@ -738,11 +739,15 @@ public class StagingView extends ViewPart {
 		dropdownMenu.add(columnLayoutAction);
 		dropdownMenu.add(fileNameModeAction);
 
+		actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(), new GlobalDeleteActionHandler());
+
 		// For the normal resource undo/redo actions to be active, so that files
 		// deleted via the "Delete" action in the staging view can be restored.
 		IUndoContext workspaceContext = (IUndoContext) ResourcesPlugin.getWorkspace().getAdapter(IUndoContext.class);
 		undoRedoActionGroup = new UndoRedoActionGroup(getViewSite(), workspaceContext, true);
 		undoRedoActionGroup.fillActionBars(actionBars);
+
+		actionBars.updateActionBars();
 	}
 
 	private IBaseLabelProvider createLabelProvider(TableViewer tableViewer) {
@@ -952,6 +957,38 @@ public class StagingView extends ViewPart {
 			DeletePathsOperationUI operation = new DeletePathsOperationUI(
 					getSelectedPaths(selection), getSite());
 			operation.run();
+		}
+	}
+
+	private class GlobalDeleteActionHandler extends Action {
+
+		@Override
+		public void run() {
+			DeletePathsOperationUI operation = new DeletePathsOperationUI(
+					getSelectedPaths(getSelection()), getSite());
+			operation.run();
+		}
+
+		@Override
+		public boolean isEnabled() {
+			if (!unstagedTableViewer.getTable().isFocusControl())
+				return false;
+
+			IStructuredSelection selection = getSelection();
+			if (selection.isEmpty())
+				return false;
+
+			for (Object element : selection.toList()) {
+				StagingEntry entry = (StagingEntry) element;
+				if (!entry.getAvailableActions().contains(StagingEntry.Action.DELETE))
+					return false;
+			}
+
+			return true;
+		}
+
+		private IStructuredSelection getSelection() {
+			return (IStructuredSelection) unstagedTableViewer.getSelection();
 		}
 	}
 
