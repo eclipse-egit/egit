@@ -13,12 +13,9 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -30,11 +27,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.job.RuleUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.util.FileUtils;
@@ -121,13 +118,7 @@ public class DeletePathsOperation implements IEGitOperation {
 	}
 
 	private ISchedulingRule calculateSchedulingRule() {
-		Set<IContainer> containers = new HashSet<IContainer>();
-		for (IPath path : paths) {
-			IResource resource = ResourceUtil.getResourceForLocation(path);
-			if (resource != null)
-				containers.add(resource.getParent());
-		}
-		return new MultiRule(containers.toArray(new IResource[containers.size()]));
+		return RuleUtil.getRuleForContainers(paths);
 	}
 
 	private void refreshIndexDiffCache(List<IPath> refreshCachePaths, boolean refreshAll) {
