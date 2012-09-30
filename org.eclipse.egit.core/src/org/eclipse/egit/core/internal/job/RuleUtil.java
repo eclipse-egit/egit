@@ -19,6 +19,7 @@ import java.util.Set;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceRuleFactory;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
@@ -84,16 +85,22 @@ public class RuleUtil {
 	 * @return scheduling rule
 	 */
 	public static ISchedulingRule getRuleForContainers(Collection<IPath> paths) {
-		Set<IContainer> containers = new HashSet<IContainer>();
+		List<ISchedulingRule> rules = new ArrayList<ISchedulingRule>();
+		IResourceRuleFactory ruleFactory = ResourcesPlugin.getWorkspace()
+				.getRuleFactory();
 		for (IPath path : paths) {
 			IResource resource = ResourceUtil.getResourceForLocation(path);
 			if (resource != null) {
-				IContainer parent = resource.getParent();
-				if (parent != null)
-					containers.add(parent);
+				IContainer container = resource.getParent();
+				ISchedulingRule rule = ruleFactory.modifyRule(container);
+				if (rule != null)
+					rules.add(rule);
 			}
 		}
-		return new MultiRule(containers.toArray(new IResource[containers.size()]));
+		if (rules.size() == 0)
+			return null;
+		else
+			return new MultiRule(rules.toArray(new ISchedulingRule[rules.size()]));
 	}
 
 	private static IProject[] getProjects(Repository repository) {

@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2010, Benjamin Muskalla <bmuskalla@eclipsesource.com>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,12 +16,14 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.util.Arrays;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.op.IgnoreOperation;
 import org.eclipse.egit.core.test.GitTestCase;
@@ -59,9 +62,7 @@ public class IgnoreOperationTest extends GitTestCase {
 	@Test
 	public void testIgnoreFolder() throws Exception {
 		IFolder binFolder = project.getProject().getFolder("bin");
-		IgnoreOperation operation = new IgnoreOperation(
-				new IResource[] { binFolder });
-		operation.execute(new NullProgressMonitor());
+		IgnoreOperation operation = executeIgnore(binFolder.getLocation());
 
 		String content = project.getFileContent(Constants.GITIGNORE_FILENAME);
 		assertEquals("/bin\n", content);
@@ -71,8 +72,7 @@ public class IgnoreOperationTest extends GitTestCase {
 	@Test
 	public void testIgnoreFileCancel() throws Exception {
 		IFolder binFolder = project.getProject().getFolder("bin");
-		IgnoreOperation operation = new IgnoreOperation(
-				new IResource[] { binFolder });
+		IgnoreOperation operation = new IgnoreOperation(Arrays.asList(binFolder.getLocation()));
 		NullProgressMonitor monitor = new NullProgressMonitor();
 		monitor.setCanceled(true);
 		operation.execute(monitor);
@@ -84,10 +84,7 @@ public class IgnoreOperationTest extends GitTestCase {
 	@Test
 	public void testSchedulingRule() throws Exception {
 		IFolder binFolder = project.getProject().getFolder("bin");
-		IgnoreOperation operation = new IgnoreOperation(
-				new IResource[] { binFolder });
-		NullProgressMonitor monitor = new NullProgressMonitor();
-		operation.execute(monitor);
+		IgnoreOperation operation = executeIgnore(binFolder.getLocation());
 
 		assertNotNull(operation.getSchedulingRule());
 	}
@@ -97,16 +94,12 @@ public class IgnoreOperationTest extends GitTestCase {
 		project.createSourceFolder();
 		IFolder binFolder = project.getProject().getFolder("bin");
 		IFolder srcFolder = project.getProject().getFolder("src");
-		IgnoreOperation operation = new IgnoreOperation(
-				new IResource[] { binFolder });
-		operation.execute(new NullProgressMonitor());
+		executeIgnore(binFolder.getLocation());
 
 		String content = project.getFileContent(Constants.GITIGNORE_FILENAME);
 		assertEquals("/bin\n", content);
 
-		operation = new IgnoreOperation(
-				new IResource[] { srcFolder });
-		operation.execute(new NullProgressMonitor());
+		executeIgnore(srcFolder.getLocation());
 
 		content = project.getFileContent(Constants.GITIGNORE_FILENAME);
 		assertEquals("/bin\n/src\n", content);
@@ -114,9 +107,8 @@ public class IgnoreOperationTest extends GitTestCase {
 
 	@Test
 	public void testIgnoreProject() throws Exception {
-		IgnoreOperation operation = new IgnoreOperation(
-				new IResource[] { project.getProject() });
-		operation.execute(new NullProgressMonitor());
+		IgnoreOperation operation = executeIgnore(
+				project.getProject().getLocation());
 
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		File rootFile = root.getRawLocation().toFile();
@@ -137,12 +129,16 @@ public class IgnoreOperationTest extends GitTestCase {
 				IResource.FORCE, new NullProgressMonitor());
 
 		IFolder binFolder = project.getProject().getFolder("bin");
-		IgnoreOperation operation = new IgnoreOperation(
-				new IResource[] { binFolder });
-		operation.execute(new NullProgressMonitor());
+		IgnoreOperation operation = executeIgnore(binFolder.getLocation());
 
 		String content = project.getFileContent(Constants.GITIGNORE_FILENAME);
 		assertEquals(existing + "\n/bin\n", content);
 		assertFalse(operation.isGitignoreOutsideWSChanged());
+	}
+
+	private IgnoreOperation executeIgnore(IPath... paths) throws Exception {
+		IgnoreOperation operation = new IgnoreOperation(Arrays.asList(paths));
+		operation.execute(new NullProgressMonitor());
+		return operation;
 	}
 }
