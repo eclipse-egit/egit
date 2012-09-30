@@ -47,7 +47,7 @@ public class CompareWithCommitActionHandler extends RepositoryActionHandler {
 			return null;
 
 		CommitSelectionDialog dlg = new CommitSelectionDialog(getShell(event),
-				repo);
+				repo, resources);
 		if (dlg.open() != Window.OK)
 			return null;
 
