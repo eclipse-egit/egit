@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, Robin Stocker
  * Copyright (C) 2011, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2012, IBM Corporation (Markus Keller <markus_keller@ch.ibm.com>)
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,10 +12,6 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
-
-import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
-import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea.WrapEdit;
 import org.junit.Test;
 
 public class SpellcheckableMessageAreaTest {
@@ -114,18 +111,20 @@ public class SpellcheckableMessageAreaTest {
 	}
 
 	@Test
-	public void lineAfterWrappedWordShouldBeJoined() {
+	public void lineAfterWrappedWordShouldNotBeJoined() {
 		String input = "000000001 000000002 000000003 000000004 000000005 000000006 000000007 000000008\n000000009";
-		String expected = "000000001 000000002 000000003 000000004 000000005 000000006 000000007\n000000008 000000009";
+		String expected = "000000001 000000002 000000003 000000004 000000005 000000006 000000007\n000000008\n000000009";
 		assertWrappedEquals(expected, input);
 	}
 
 	@Test
-	public void lineAfterWrappedWordShouldBeJoinedAndJoinedLineWrapCorrectly() {
+	public void lineAfterWrappedWordShouldNotBeJoined2() {
 		String input = "000000001 000000002 000000003 000000004 000000005 000000006 000000007 000000008\n"
 				+ "000000009 000000010 000000011 000000012 000000013 000000014 000000015 000000016";
 		String expected = "000000001 000000002 000000003 000000004 000000005 000000006 000000007\n"
-				+ "000000008 000000009 000000010 000000011 000000012 000000013 000000014\n000000015 000000016";
+				+ "000000008\n"
+				+ "000000009 000000010 000000011 000000012 000000013 000000014 000000015\n"
+				+ "000000016";
 		assertWrappedEquals(expected, input);
 	}
 
@@ -155,9 +154,9 @@ public class SpellcheckableMessageAreaTest {
 	}
 
 	@Test
-	public void lineAfterWrappedWordShouldBeJoinedIfItStartsWithAParenthesis() {
+	public void lineAfterWrappedWordShouldNotBeJoined3() {
 		String input = "* 000000001 000000002 000000003 000000004 000000005 000000006 000000007 000000008\n(paren)";
-		String expected = "* 000000001 000000002 000000003 000000004 000000005 000000006 000000007\n000000008 (paren)";
+		String expected = "* 000000001 000000002 000000003 000000004 000000005 000000006 000000007\n000000008\n(paren)";
 		assertWrappedEquals(expected, input);
 	}
 
@@ -179,14 +178,6 @@ public class SpellcheckableMessageAreaTest {
 	}
 
 	private static String wrap(String text, String lineDelimiter) {
-		StringBuilder sb = new StringBuilder(text);
-		List<WrapEdit> wrapEdits = SpellcheckableMessageArea
-				.calculateWrapEdits(text,
-						SpellcheckableMessageArea.MAX_LINE_WIDTH, lineDelimiter);
-		for (WrapEdit wrapEdit : wrapEdits) {
-			sb.replace(wrapEdit.getStart(),
-					wrapEdit.getStart() + wrapEdit.getLength(), wrapEdit.getReplacement());
-		}
-		return sb.toString();
+		return SpellcheckableMessageArea.getCommitMessage(text).replaceAll("\n", lineDelimiter);
 	}
 }
