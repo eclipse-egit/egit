@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//1jQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/job/RuleUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2012-10-02T14:19:14Z",
+      "side": 1,
+      "message": "If container is IWorkspaceRoot the scheduling rule must be WorkspaceRoot.",
+      "revId": "aa7c097f0e5d4f4e478ddb4b4612df369bd61f3e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//1js\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2012-10-02T14:19:14Z",
+      "side": 1,
+      "message": "Please also provide a constructor consuming resources.\nThen no changes in resource-based code are required.",
+      "revId": "aa7c097f0e5d4f4e478ddb4b4612df369bd61f3e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//1jU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/IgnoreActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2012-10-02T14:19:14Z",
+      "side": 1,
+      "message": "Change is not needed if IgnoreOperation also provides resource based constructor.",
+      "revId": "aa7c097f0e5d4f4e478ddb4b4612df369bd61f3e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
