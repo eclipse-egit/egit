@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,16 +11,19 @@ package org.eclipse.egit.core.internal.job;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.MultiRule;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
 
@@ -70,6 +74,26 @@ public class RuleUtil {
 			result = MultiRule.combine(result, rule);
 		}
 		return result;
+	}
+
+	/**
+	 * Calculates a {@link ISchedulingRule} for all containers of the paths that
+	 * are in the workspace.
+	 *
+	 * @param paths
+	 * @return scheduling rule
+	 */
+	public static ISchedulingRule getRuleForContainers(Collection<IPath> paths) {
+		Set<IContainer> containers = new HashSet<IContainer>();
+		for (IPath path : paths) {
+			IResource resource = ResourceUtil.getResourceForLocation(path);
+			if (resource != null) {
+				IContainer parent = resource.getParent();
+				if (parent != null)
+					containers.add(parent);
+			}
+		}
+		return new MultiRule(containers.toArray(new IResource[containers.size()]));
 	}
 
 	private static IProject[] getProjects(Repository repository) {
