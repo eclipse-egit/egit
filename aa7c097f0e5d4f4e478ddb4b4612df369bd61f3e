@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//1gU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/job/RuleUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-10-02T21:28:25Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll add it. (The old code in IgnoreOperation didn\u0027t do that.)",
+      "parentUuid": "AABOIn//1jQ\u003d",
+      "revId": "aa7c097f0e5d4f4e478ddb4b4612df369bd61f3e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//1js\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//1gM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/IgnoreOperation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-10-02T21:28:25Z",
+      "side": 1,
+      "message": "Please see comment in IgnoreActionHandler.java.",
+      "parentUuid": "AABOIn//1js\u003d",
+      "revId": "aa7c097f0e5d4f4e478ddb4b4612df369bd61f3e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//1jU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/IgnoreActionHandler.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2012-10-02T14:19:14Z",
       "side": 1,
       "message": "Change is not needed if IgnoreOperation also provides resource based constructor.",
+      "revId": "aa7c097f0e5d4f4e478ddb4b4612df369bd61f3e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//1gQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/IgnoreActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-10-02T21:28:25Z",
+      "side": 1,
+      "message": "Hm, I want to prevent (in an explicit way) that the caller passes `IResource` objects for which getLocation() returns null (\"non-workspace resources\").\n\nWith only an IPath API, the caller has to handle that case. When we\u0027d do it in IgnoreOperation, we would have to decide what to do with such a resource.\n\nWhat do you think?",
+      "parentUuid": "AABOIn//1jU\u003d",
       "revId": "aa7c097f0e5d4f4e478ddb4b4612df369bd61f3e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
