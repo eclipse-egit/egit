@@ -104,6 +104,24 @@
       "revId": "aa7c097f0e5d4f4e478ddb4b4612df369bd61f3e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//1Y0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/IgnoreActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2012-10-04T07:46:18Z",
+      "side": 1,
+      "message": "Good point. On the other hand we need conversion on all resource based locations. Proposal: let\u0027s do it as you proposed for the moment and have a look again later when we change other operations also to work with non-workspace files.",
+      "parentUuid": "AABOIn//1gQ\u003d",
+      "revId": "aa7c097f0e5d4f4e478ddb4b4612df369bd61f3e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
