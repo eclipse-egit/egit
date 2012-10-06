@@ -889,9 +889,8 @@ public class StagingView extends ViewPart {
 						menuMgr.add(createItem(ActionCommands.REPLACE_WITH_HEAD_ACTION, tableViewer));
 				if (addIgnore)
 					menuMgr.add(new IgnoreAction(selection));
-				if (addDelete) {
+				if (addDelete)
 					menuMgr.add(new DeleteAction(selection));
-				}
 				if (addLaunchMergeTool)
 					menuMgr.add(createItem(ActionCommands.MERGE_TOOL_ACTION, tableViewer));
 			}
