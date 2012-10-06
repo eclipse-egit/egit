@@ -63,6 +63,7 @@ import org.eclipse.egit.ui.internal.dialogs.CommitMessageComponentStateManager;
 import org.eclipse.egit.ui.internal.dialogs.ICommitMessageComponentNotifications;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageArea;
 import org.eclipse.egit.ui.internal.operations.DeletePathsOperationUI;
+import org.eclipse.egit.ui.internal.operations.IgnoreOperationUI;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -858,6 +859,7 @@ public class StagingView extends ViewPart {
 				boolean addStage = availableActions.contains(StagingEntry.Action.STAGE);
 				boolean addUnstage = availableActions.contains(StagingEntry.Action.UNSTAGE);
 				boolean addDelete = availableActions.contains(StagingEntry.Action.DELETE);
+				boolean addIgnore = availableActions.contains(StagingEntry.Action.IGNORE);
 				boolean addLaunchMergeTool = availableActions.contains(StagingEntry.Action.LAUNCH_MERGE_TOOL);
 
 				if (addStage)
@@ -885,6 +887,8 @@ public class StagingView extends ViewPart {
 						menuMgr.add(new ReplaceAction(UIText.StagingView_replaceWithHeadRevision, selection, true));
 					else
 						menuMgr.add(createItem(ActionCommands.REPLACE_WITH_HEAD_ACTION, tableViewer));
+				if (addIgnore)
+					menuMgr.add(new IgnoreAction(selection));
 				if (addDelete) {
 					menuMgr.add(new DeleteAction(selection));
 				}
@@ -918,6 +922,23 @@ public class StagingView extends ViewPart {
 		}
 	}
 
+	private static class IgnoreAction extends Action {
+
+		private final IStructuredSelection selection;
+
+		IgnoreAction(IStructuredSelection selection) {
+			super(UIText.StagingView_IgnoreItemMenuLabel);
+			this.selection = selection;
+		}
+
+		@Override
+		public void run() {
+			IgnoreOperationUI operation = new IgnoreOperationUI(
+					getSelectedPaths(selection));
+			operation.run();
+		}
+	}
+
 	private class DeleteAction extends Action {
 
 		private final IStructuredSelection selection;
@@ -929,18 +950,9 @@ public class StagingView extends ViewPart {
 
 		@Override
 		public void run() {
-			DeletePathsOperationUI operation = new DeletePathsOperationUI(getSelectedPaths(), getSite());
+			DeletePathsOperationUI operation = new DeletePathsOperationUI(
+					getSelectedPaths(selection), getSite());
 			operation.run();
-		}
-
-		private List<IPath> getSelectedPaths() {
-			List<IPath> paths = new ArrayList<IPath>();
-			Iterator iterator = selection.iterator();
-			while (iterator.hasNext()) {
-				StagingEntry stagingEntry = (StagingEntry) iterator.next();
-				paths.add(stagingEntry.getLocation());
-			}
-			return paths;
 		}
 	}
 
@@ -967,6 +979,16 @@ public class StagingView extends ViewPart {
 			result.add(stagingEntry.getPath());
 		}
 		return result.toArray(new String[result.size()]);
+	}
+
+	private static List<IPath> getSelectedPaths(IStructuredSelection selection) {
+		List<IPath> paths = new ArrayList<IPath>();
+		Iterator iterator = selection.iterator();
+		while (iterator.hasNext()) {
+			StagingEntry stagingEntry = (StagingEntry) iterator.next();
+			paths.add(stagingEntry.getLocation());
+		}
+		return paths;
 	}
 
 	/**
