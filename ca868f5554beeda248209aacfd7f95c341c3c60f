@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//0/4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2012-10-08T20:44:50Z",
+      "side": 1,
+      "message": "Yes, it\u0027s a workaround for bug 384886.",
+      "parentUuid": "AABOIn//1go\u003d",
+      "revId": "ca868f5554beeda248209aacfd7f95c341c3c60f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//1gk\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-10-02T21:14:08Z",
       "side": 1,
       "message": "Could you extract the whole hard wrap block into its own method? This way the SpellcheckableMessageAreaTest could still be run as a normal unit test and the getCommitMessage(String) method could be made private.",
+      "revId": "ca868f5554beeda248209aacfd7f95c341c3c60f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//0/o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2012-10-08T20:44:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//1gk\u003d",
       "revId": "ca868f5554beeda248209aacfd7f95c341c3c60f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//0/w\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2012-10-08T20:44:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//1g0\u003d",
+      "revId": "ca868f5554beeda248209aacfd7f95c341c3c60f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//1gw\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//0/s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2012-10-08T20:44:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//1gw\u003d",
+      "revId": "ca868f5554beeda248209aacfd7f95c341c3c60f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//1gs\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2012-10-02T21:14:08Z",
       "side": 1,
       "message": "Style nit: `int i \u003d 0` (missing space)",
+      "revId": "ca868f5554beeda248209aacfd7f95c341c3c60f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//0/0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2012-10-08T20:44:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//1gs\u003d",
       "revId": "ca868f5554beeda248209aacfd7f95c341c3c60f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
