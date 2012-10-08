@@ -526,12 +526,12 @@ public class CommitDialog extends TitleAreaDialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		toolkit.adapt(parent, false, false);
-		createButton(parent, IDialogConstants.CANCEL_ID,
-				IDialogConstants.CANCEL_LABEL, false);
-		commitButton = createButton(parent, IDialogConstants.OK_ID,
-				UIText.CommitDialog_Commit, true);
 		commitAndPushButton = createButton(parent, COMMIT_AND_PUSH_ID,
 				UIText.CommitDialog_CommitAndPush, false);
+		commitButton = createButton(parent, IDialogConstants.OK_ID,
+				UIText.CommitDialog_Commit, true);
+		createButton(parent, IDialogConstants.CANCEL_ID,
+				IDialogConstants.CANCEL_LABEL, false);
 		updateMessage();
 	}
 
