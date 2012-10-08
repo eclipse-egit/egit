@@ -7,6 +7,7 @@
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, IBM Corporation (Markus Keller <markus_keller@ch.ibm.com>)
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -56,7 +57,6 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
@@ -81,7 +81,6 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
@@ -583,11 +582,8 @@ public class CommitDialog extends TitleAreaDialog {
 
 			public void widgetSelected(SelectionEvent e) {
 				String[] pages = new String[] { UIPreferences.PAGE_COMMIT_PREFERENCES };
-				PreferenceDialog dialog = PreferencesUtil
-						.createPreferenceDialogOn(getShell(), pages[0], pages,
-								null);
-				if (Window.OK == dialog.open())
-					commitText.reconfigure();
+				PreferencesUtil.createPreferenceDialogOn(getShell(), pages[0],
+						pages, null).open();
 			}
 
 		});
