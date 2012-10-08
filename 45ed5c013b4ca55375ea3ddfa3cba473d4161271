@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//0/E\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-10-08T22:32:15Z",
+      "side": 1,
+      "message": "what is XXX: ? I guess you meant TODO",
+      "revId": "45ed5c013b4ca55375ea3ddfa3cba473d4161271",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//0/M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-10-08T22:32:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "45ed5c013b4ca55375ea3ddfa3cba473d4161271",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//0/I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/SpellcheckableMessageArea.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-10-08T22:32:15Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "45ed5c013b4ca55375ea3ddfa3cba473d4161271",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
