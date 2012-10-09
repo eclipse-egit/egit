@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2010, 2012 Dariusz Luksza <dariusz@luksza.org>.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,9 +27,7 @@ import org.eclipse.egit.core.synchronize.GitSubscriberMergeContext;
 import org.eclipse.egit.core.synchronize.GitSubscriberResourceMappingContext;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
@@ -65,27 +63,12 @@ public class GitModelSynchronize {
 	 */
 	public static final void launch(final GitSynchronizeDataSet gsdSet,
 			IResource[] resources) {
-		final ResourceMapping[] mappings = getSelectedResourceMappings(resources);
+		ResourceMapping[] mappings = getSelectedResourceMappings(resources);
 
-		final IWorkbenchWindow window = PlatformUI.getWorkbench()
+		IWorkbenchWindow window = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 
-		boolean launchFetch = Activator.getDefault().getPreferenceStore()
-				.getBoolean(UIPreferences.SYNC_VIEW_FETCH_BEFORE_LAUNCH);
-		if (launchFetch || gsdSet.forceFetch()) {
-			Job fetchJob = new SynchronizeFetchJob(gsdSet);
-			fetchJob.setUser(true);
-			fetchJob.addJobChangeListener(new JobChangeAdapter() {
-				@Override
-				public void done(IJobChangeEvent event) {
-					fireSynchronizeAction(window, gsdSet, mappings);
-				}
-			});
-
-			fetchJob.schedule();
-		} else {
-			fireSynchronizeAction(window, gsdSet, mappings);
-		}
+		fireSynchronizeAction(window, gsdSet, mappings);
 	}
 
 	/**
