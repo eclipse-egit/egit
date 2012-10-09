@@ -38,6 +38,6 @@ public class IgnoreActionHandler extends RepositoryActionHandler {
 	public boolean isEnabled() {
 		// Do not consult Team.isIgnoredHint here because the user
 		// should be allowed to add ignored resources to .gitignore
-		return true;
+		return !selectionContainsLinkedResources();
 	}
 }

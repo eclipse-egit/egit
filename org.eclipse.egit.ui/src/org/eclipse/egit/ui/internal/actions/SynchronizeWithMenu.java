@@ -89,7 +89,7 @@ public class SynchronizeWithMenu extends ContributionItem implements
 		if (srv == null)
 			return;
 		final IResource selectedResource = getSelection();
-		if (selectedResource == null)
+		if (selectedResource == null || selectedResource.isLinked(IResource.CHECK_ANCESTORS))
 			return;
 
 		RepositoryMapping mapping = RepositoryMapping

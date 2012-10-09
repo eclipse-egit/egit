@@ -42,9 +42,9 @@ public class CompareWithCommitActionHandler extends RepositoryActionHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repo = getRepository(true, event);
-		IResource[] resources = getSelectedResources(event);
 		if (repo == null)
 			return null;
+		IResource[] resources = getSelectedResources(event);
 
 		CommitSelectionDialog dlg = new CommitSelectionDialog(getShell(event),
 				repo, resources);
