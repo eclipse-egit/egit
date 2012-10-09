@@ -24,7 +24,7 @@ public class CreatePatchActionHandler extends RepositoryActionHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repository = getRepository(true, event);
 		// assert all resources map to the same repository
-		if (repository == null)
+		if (repository == null || selectionContainsLinkedResources())
 			return null;
 		IResource[] resources = getSelectedResources();
 		PatchOperationUI.createPatch(getPart(event), getRepository(),
@@ -34,6 +34,6 @@ public class CreatePatchActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return getRepository() != null;
+		return getRepository() != null && !selectionContainsLinkedResources();
 	}
 }

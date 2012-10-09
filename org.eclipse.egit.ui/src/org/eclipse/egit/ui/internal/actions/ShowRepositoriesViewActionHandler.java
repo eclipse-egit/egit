@@ -22,6 +22,9 @@ import org.eclipse.ui.part.ShowInContext;
 public class ShowRepositoriesViewActionHandler extends RepositoryActionHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		if (selectionContainsLinkedResources())
+			throw new ExecutionException(
+					"Unexpected Linked Resources in selection"); //$NON-NLS-1$
 		RepositoriesView view;
 		try {
 			view = (RepositoriesView) PlatformUI.getWorkbench()
@@ -37,6 +40,6 @@ public class ShowRepositoriesViewActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return getSelection().size() == 1;
+		return getSelection().size() == 1 && !selectionContainsLinkedResources();
 	}
 }

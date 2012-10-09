@@ -242,6 +242,13 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 			IStructuredSelection selection, Shell shell) {
 		RepositoryMapping mapping = null;
 		for (IResource resource : getSelectedResources(selection)) {
+			if (resource.isLinked(IResource.CHECK_ANCESTORS)) {
+				if (warn)
+					MessageDialog.openError(shell,
+							UIText.RepositoryAction_linkedResourceSelectionTitle,
+							UIText.RepositoryAction_linkedResourceSelection);
+				return null;
+			}
 			RepositoryMapping repositoryMapping = RepositoryMapping
 					.getMapping(resource);
 			if (mapping == null)
@@ -490,6 +497,17 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	protected IResource[] getSelectedResources() {
 		IStructuredSelection selection = getSelection();
 		return getSelectedResources(selection);
+	}
+
+	/**
+	 * @return true if selection contains one or more linked resources, false otherwise.
+	 */
+	protected boolean selectionContainsLinkedResources() {
+		IResource[] selectedResources = getSelectedResources();
+		for (IResource res: selectedResources)
+			if (res.isLinked(IResource.CHECK_ANCESTORS))
+				return true;
+		return false;
 	}
 
 	/**

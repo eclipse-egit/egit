@@ -32,7 +32,9 @@ public class ShowBlameActionHandler extends RepositoryActionHandler {
 	/** @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent) */
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		IResource[] selected = getSelectedResources();
-		if (selected.length != 1 || !(selected[0] instanceof IStorage))
+		if (selected.length != 1
+				|| !(selected[0] instanceof IStorage)
+				|| selected[0].isLinked(IResource.CHECK_ANCESTORS))
 			return null;
 
 		Repository repository = getRepository();
@@ -52,5 +54,12 @@ public class ShowBlameActionHandler extends RepositoryActionHandler {
 				null, shell, page), UIText.ShowBlameHandler_JobName,
 				JobFamilies.BLAME);
 		return null;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		IResource[] selectedResources = getSelectedResources();
+		return selectedResources.length == 1 &&
+				!selectedResources[0].isLinked(IResource.CHECK_ANCESTORS);
 	}
 }

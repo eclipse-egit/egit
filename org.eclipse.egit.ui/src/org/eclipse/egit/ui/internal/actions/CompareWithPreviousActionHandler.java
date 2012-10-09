@@ -160,19 +160,25 @@ public class CompareWithPreviousActionHandler extends RepositoryActionHandler {
 		Repository repository = getRepository(true, event);
 		if (repository == null)
 			return null;
-
 		IResource[] resources = getSelectedResources(event);
-		if (resources.length == 1)
-			JobUtil.scheduleUserJob(
-					new CompareWithPreviousOperation(event, repository,
-							resources[0]),
-					UIText.CompareWithPreviousActionHandler_TaskGeneratingInput,
-					null);
+		if (resources.length != 1)
+			throw new ExecutionException(
+					"Unexpected number of selected Resources"); //$NON-NLS-1$
+		if (resources[0].isLinked(IResource.CHECK_ANCESTORS))
+			throw new ExecutionException(
+					"Unexpected Linked Resource: " + resources[0].getName()); //$NON-NLS-1$
+		JobUtil.scheduleUserJob(
+				new CompareWithPreviousOperation(event, repository,
+						resources[0]),
+				UIText.CompareWithPreviousActionHandler_TaskGeneratingInput,
+				null);
 		return null;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return super.isEnabled() && getSelectedResources().length == 1;
+		IResource[] selectedResources = getSelectedResources();
+		return super.isEnabled() && selectedResources.length == 1 &&
+				!selectedResources[0].isLinked(IResource.CHECK_ANCESTORS);
 	}
 }
