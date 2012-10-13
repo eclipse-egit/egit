@@ -978,6 +978,9 @@ public class UIText extends NLS {
 	public static String CompareTreeView_AnalyzingRepositoryTaskText;
 
 	/** */
+	public static String CompareTreeView_ExpandAllTooltip;
+
+	/** */
 	public static String CompareTreeView_CollapseAllTooltip;
 
 	/** */
