@@ -217,14 +217,24 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		getViewSite().getActionBars().getToolBarManager().add(showEqualsAction);
 
 		IAction expandAllAction = new Action(
+				UIText.CompareTreeView_ExpandAllTooltip) {
+			@Override
+			public void run() {
+				tree.expandAll();
+			}
+		};
+		expandAllAction.setImageDescriptor(UIIcons.EXPAND_ALL);
+		getViewSite().getActionBars().getToolBarManager().add(expandAllAction);
+
+		IAction collapseAllAction = new Action(
 				UIText.CompareTreeView_CollapseAllTooltip) {
 			@Override
 			public void run() {
 				tree.collapseAll();
 			}
 		};
-		expandAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
-		getViewSite().getActionBars().getToolBarManager().add(expandAllAction);
+		collapseAllAction.setImageDescriptor(UIIcons.COLLAPSEALL);
+		getViewSite().getActionBars().getToolBarManager().add(collapseAllAction);
 	}
 
 	private void reactOnOpen(OpenEvent event) {
