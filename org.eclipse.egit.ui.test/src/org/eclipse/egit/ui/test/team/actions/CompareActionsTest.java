@@ -12,7 +12,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test.team.actions;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -45,6 +47,7 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -117,14 +120,12 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		assertEquals(3, dialog.bot().table().rowCount());
 		dialog.bot().table().select(0);
 		dialog.bot().button(IDialogConstants.OK_LABEL).click();
-		TestUtil.waitUntilViewWithGivenIdShows(CompareTreeView.ID);
-		assertEquals(0, bot.viewById(CompareTreeView.ID).bot().tree()
-				.getAllItems().length);
+		assertNoDifferences();
 		// use the second (previous) -> should have a change
 		dialog = openCompareWithDialog(compareWithCommitMenuText, dialogTitle);
 		dialog.bot().table().select(1);
 		dialog.bot().button(IDialogConstants.OK_LABEL).click();
-		waitUntilCompareTreeViewTreeHasNodeCount(1);
+		assertHasDifferenceNodes(1);
 	}
 
 	@Test
@@ -138,7 +139,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		// use the default (the last commit) -> no changes
 		dialog.bot().button(UIText.CompareTargetSelectionDialog_CompareButton)
 				.click();
-		waitUntilCompareTreeViewTreeHasNodeCount(0);
+		assertNoDifferences();
 
 		// use the tag -> should have a change
 		dialog = openCompareWithDialog(compareWithRefActionLabel, dialogTitle);
@@ -146,7 +147,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 				.select();
 		dialog.bot().button(UIText.CompareTargetSelectionDialog_CompareButton)
 				.click();
-		waitUntilCompareTreeViewTreeHasNodeCount(1);
+		assertHasDifferenceNodes(1);
 	}
 
 	@Test
@@ -154,7 +155,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		String menuLabel = util
 				.getPluginLocalizedValue("CompareWithPreviousAction.label");
 		clickCompareWith(menuLabel);
-		waitUntilCompareTreeViewTreeHasNodeCount(1);
+		assertHasDifferenceNodes(1);
 	}
 
 	@Test
@@ -191,14 +192,14 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		clickCompareWith(compareWithIndexActionLabel);
 
 		// compare with index should not have any changes
-		assertEquals(0, bot.viewById(CompareTreeView.ID).bot().tree()
-				.getAllItems().length);
+		assertNoDifferences();
+
 		// change test file -> should have one change
 		setTestFileContent("Hello there");
 
 		clickCompareWith(compareWithIndexActionLabel);
 
-		waitUntilCompareTreeViewTreeHasNodeCount(1);
+		assertHasDifferenceNodes(1);
 
 		// add to index -> no more changes
 		new Git(lookupRepository(repositoryFile)).add().addFilepattern(
@@ -206,8 +207,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 
 		clickCompareWith(compareWithIndexActionLabel);
 
-		assertEquals(0, bot.viewById(CompareTreeView.ID).bot().tree()
-				.getAllItems().length);
+		assertNoDifferences();
 
 		// reset -> there should be no more changes
 		ResetOperation rop = new ResetOperation(
@@ -216,7 +216,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		rop.execute(new NullProgressMonitor());
 
 		clickCompareWith(compareWithIndexActionLabel);
-		waitUntilCompareTreeViewTreeHasNodeCount(0);
+		assertNoDifferences();
 	}
 
 	@Test
@@ -226,13 +226,13 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		clickCompareWith(compareWithHeadMenuLabel);
 
 		// compare with HEAD should not have any changes
-		waitUntilCompareTreeViewTreeHasNodeCount(0);
+		assertNoDifferences();
 		// change test file -> should have one change
 		setTestFileContent("Hello there");
 
 		clickCompareWith(compareWithHeadMenuLabel);
 
-		waitUntilCompareTreeViewTreeHasNodeCount(1);
+		assertHasDifferenceNodes(1);
 		// add to index -> should still show as change
 		new Git(lookupRepository(repositoryFile)).add().addFilepattern(
 				PROJ1 + "/" + FOLDER + "/" + FILE1).call();
@@ -249,7 +249,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		rop.execute(new NullProgressMonitor());
 
 		clickCompareWith(compareWithHeadMenuLabel);
-		waitUntilCompareTreeViewTreeHasNodeCount(0);
+		assertNoDifferences();
 	}
 
 	private void clickCompareWith(String menuLabel) {
@@ -267,9 +267,22 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		return dialog;
 	}
 
-	private void waitUntilCompareTreeViewTreeHasNodeCount(int nodeCount) {
-		SWTBotTree tree = bot.viewById(CompareTreeView.ID).bot().tree();
-		bot.waitUntil(Conditions.treeHasRows(tree, nodeCount), 10000);
+	private void assertNoDifferences() {
+		SWTBotTree tree = waitUntilCompareTreeViewTreeHasNodeCount(1);
+		SWTBotTreeItem[] items = tree.getAllItems();
+		assertEquals(1, items.length);
+		assertEquals(UIText.CompareTreeView_NoDifferencesFoundMessage, items[0].getText());
 	}
 
+	private void assertHasDifferenceNodes(int nodeCount) {
+		SWTBotTree tree = waitUntilCompareTreeViewTreeHasNodeCount(nodeCount);
+		SWTBotTreeItem[] items = tree.getAllItems();
+		assertThat(items[0].getText(), not(UIText.CompareTreeView_NoDifferencesFoundMessage));
+	}
+
+	private SWTBotTree waitUntilCompareTreeViewTreeHasNodeCount(int nodeCount) {
+		SWTBotTree tree = bot.viewById(CompareTreeView.ID).bot().tree();
+		bot.waitUntil(Conditions.treeHasRows(tree, nodeCount), 10000);
+		return tree;
+	}
 }
