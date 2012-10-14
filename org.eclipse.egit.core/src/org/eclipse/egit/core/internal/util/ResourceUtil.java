@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -59,6 +60,24 @@ public class ResourceUtil {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IPath path = new Path(repository.getWorkTree().getAbsolutePath()).append(repoRelativePath);
 		return root.getFileForLocation(path);
+	}
+
+	/**
+	 * Get the {@link IContainer} corresponding to the arguments, using
+	 * {@link IWorkspaceRoot#getContainerForLocation(org.eclipse.core.runtime.IPath)}
+	 * .
+	 *
+	 * @param repository
+	 *            the repository
+	 * @param repoRelativePath
+	 *            the repository-relative path of the container to search for
+	 * @return the IContainer corresponding to this path, or null
+	 */
+	public static IContainer getContainerForLocation(Repository repository,
+			String repoRelativePath) {
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IPath path = new Path(repository.getWorkTree().getAbsolutePath()).append(repoRelativePath);
+		return root.getContainerForLocation(path);
 	}
 
 	/**
