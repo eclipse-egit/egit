@@ -14,7 +14,9 @@ package org.eclipse.egit.ui.test.team.actions;
 
 import static org.eclipse.jface.dialogs.MessageDialogWithToggle.NEVER;
 import static org.eclipse.team.internal.ui.IPreferenceIds.SYNCHRONIZING_COMPLETE_PERSPECTIVE;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
@@ -216,14 +218,13 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		clickCompareWith(compareWithIndexActionLabel);
 
 		// compare with index should not have any changes
-		assertEquals(0, bot.viewById(CompareTreeView.ID).bot().tree()
-				.getAllItems().length);
+		assertTreeCompareNoChange();
 		// change test file -> should have one change
 		setTestFileContent("Hello there");
 
 		clickCompareWith(compareWithIndexActionLabel);
 
-		waitUntilCompareTreeViewTreeHasNodeCount(1);
+		assertTreeCompareChanges(1);
 
 		// add to index -> no more changes
 		new Git(lookupRepository(repositoryFile)).add().addFilepattern(
@@ -231,8 +232,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 
 		clickCompareWith(compareWithIndexActionLabel);
 
-		assertEquals(0, bot.viewById(CompareTreeView.ID).bot().tree()
-				.getAllItems().length);
+		assertTreeCompareNoChange();
 
 		// reset -> there should be no more changes
 		ResetOperation rop = new ResetOperation(
@@ -242,7 +242,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 
 		clickCompareWith(compareWithIndexActionLabel);
 
-		waitUntilCompareTreeViewTreeHasNodeCount(0);
+		assertTreeCompareNoChange();
 	}
 
 	@Test
@@ -308,9 +308,10 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		return projectExplorerTree;
 	}
 
-	private void waitUntilCompareTreeViewTreeHasNodeCount(int nodeCount) {
+	private SWTBotTree waitUntilCompareTreeViewTreeHasNodeCount(int nodeCount) {
 		SWTBotTree tree = bot.viewById(CompareTreeView.ID).bot().tree();
 		bot.waitUntil(Conditions.treeHasRows(tree, nodeCount), 10000);
+		return tree;
 	}
 
 	/**
@@ -354,4 +355,18 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		assertTrue(level2Children[0].getText().contains(FILE1));
 	}
 
+	private void assertTreeCompareNoChange() {
+		SWTBotTree tree = waitUntilCompareTreeViewTreeHasNodeCount(1);
+		SWTBotTreeItem[] items = tree.getAllItems();
+		assertEquals(1, items.length);
+		assertEquals(UIText.CompareTreeView_NoDifferencesFoundMessage,
+				items[0].getText());
+	}
+
+	private void assertTreeCompareChanges(int nodeCount) {
+		SWTBotTree tree = waitUntilCompareTreeViewTreeHasNodeCount(nodeCount);
+		SWTBotTreeItem[] items = tree.getAllItems();
+		assertThat(items[0].getText(),
+				not(UIText.CompareTreeView_NoDifferencesFoundMessage));
+	}
 }
