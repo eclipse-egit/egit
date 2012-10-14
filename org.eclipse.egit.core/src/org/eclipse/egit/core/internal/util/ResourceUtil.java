@@ -119,6 +119,24 @@ public class ResourceUtil {
 	}
 
 	/**
+	 * Get the {@link IContainer} corresponding to the arguments, using
+	 * {@link IWorkspaceRoot#getContainerForLocation(org.eclipse.core.runtime.IPath)}
+	 * .
+	 *
+	 * @param repository
+	 *            the repository
+	 * @param repoRelativePath
+	 *            the repository-relative path of the container to search for
+	 * @return the IContainer corresponding to this path, or null
+	 */
+	public static IContainer getContainerForLocation(Repository repository,
+			String repoRelativePath) {
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IPath path = new Path(repository.getWorkTree().getAbsolutePath()).append(repoRelativePath);
+		return root.getContainerForLocation(path);
+	}
+
+	/**
 	 * The method splits the given resources by their repository. For each
 	 * occurring repository a list is built containing the repository relative
 	 * paths of the related resources.
