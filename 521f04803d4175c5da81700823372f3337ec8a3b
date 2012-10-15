@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//0SY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-10-15T16:15:32Z",
+      "side": 1,
+      "message": "\"eventually\" should probably be \"optionally\" here (\"eventually\" !\u003d \"eventuell\" :))",
+      "revId": "521f04803d4175c5da81700823372f3337ec8a3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//0SI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/CommitJob.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-10-15T16:15:32Z",
+      "side": 1,
+      "message": "Could we replace these two booleans with two enums? Would improve readability IMO, new CommitJob(..., ..., OPEN_NEW_COMMIT, PUSH_UPSTREAM) is better than new CommitJob(..., ..., true, true). Could also be done in one enum and then taking vararg of optional actions here.\n\nAn alternative would be to take these out of the constructor and make them setters.",
+      "revId": "521f04803d4175c5da81700823372f3337ec8a3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//0SQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-10-15T16:15:32Z",
+      "side": 1,
+      "message": "The vertical indent of 20 seems a bit too much for me (judging from the screenshot).",
+      "revId": "521f04803d4175c5da81700823372f3337ec8a3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//0SA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-10-15T16:15:32Z",
+      "side": 1,
+      "message": "Is it possible to make \"Commit\" appear as the default button? Like in a dialog where the default button is highlighted a bit.",
+      "revId": "521f04803d4175c5da81700823372f3337ec8a3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//0SM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-10-15T16:15:32Z",
+      "side": 1,
+      "message": "Looks a bit odd that the \"Commit\" button has more padding around the text than \"Commit and Push\". Maybe \"Commit and Push\" also needs a hint?",
+      "revId": "521f04803d4175c5da81700823372f3337ec8a3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//0SE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-10-15T16:15:32Z",
+      "side": 1,
+      "message": "Unrelated changes here (and following), please submit these in a separate change.",
+      "revId": "521f04803d4175c5da81700823372f3337ec8a3b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
