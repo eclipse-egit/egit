@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2012, Matthias Sohn <matthias.sohn@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,7 +18,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
-import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;
@@ -63,20 +63,10 @@ public class ConfigurationChecker {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		boolean hidden = !store
 				.getBoolean(UIPreferences.SHOW_GIT_PREFIX_WARNING);
-		if (!hidden) {
-			if (FS.DETECTED.gitPrefix() == null) {
-				MessageDialogWithToggle dialog = MessageDialogWithToggle
-						.openInformation(
-								PlatformUI.getWorkbench()
-										.getActiveWorkbenchWindow().getShell(),
-								UIText.ConfigurationChecker_gitPrefixWarningTitle,
-								UIText.ConfigurationChecker_gitPrefixWarningMessage,
-								UIText.ConfigurationChecker_doNotShowGitPrefixWarningAgain,
-								false, null, null);
-				store.setValue(UIPreferences.SHOW_GIT_PREFIX_WARNING,
-						!dialog.getToggleState());
-			}
-		}
+		if (!hidden && FS.DETECTED.gitPrefix() == null)
+			Activator.handleIssue(IStatus.WARNING,
+					UIText.ConfigurationChecker_gitPrefixWarningMessage, null,
+					false);
 	}
 
 	private static void checkHome() {
@@ -84,21 +74,11 @@ public class ConfigurationChecker {
 		if (home != null)
 			return; // home is set => ok
 		home = calcHomeDir();
-
-		String title = NLS.bind(UIText.ConfigurationChecker_checkHomeDirectory,
-				home);
 		String message = NLS.bind(UIText.ConfigurationChecker_homeNotSet, home);
-		String toggleMessage = UIText.ConfigurationChecker_doNotShowAgain;
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		boolean hidden = !store.getBoolean(UIPreferences.SHOW_HOME_DIR_WARNING);
-		if (!hidden) {
-			MessageDialogWithToggle dialog = MessageDialogWithToggle
-					.openInformation(PlatformUI.getWorkbench()
-							.getActiveWorkbenchWindow().getShell(), title,
-							message, toggleMessage, false, null, null);
-			store.setValue(UIPreferences.SHOW_HOME_DIR_WARNING, !dialog
-					.getToggleState());
-		}
+		if (!hidden)
+			Activator.handleIssue(IStatus.WARNING, message, null, false);
 	}
 
 	private static String calcHomeDir() {
