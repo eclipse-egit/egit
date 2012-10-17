@@ -16,6 +16,24 @@
       "revId": "abeb8bc93bf9edc3ab5a08ef689c911834a87362",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//z8s\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-10-17T23:03:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//0BI\u003d",
+      "revId": "abeb8bc93bf9edc3ab5a08ef689c911834a87362",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
