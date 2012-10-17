@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//0BI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/Activator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 44
+      },
+      "writtenOn": "2012-10-17T08:38:49Z",
+      "side": 1,
+      "message": "handleError should use handleIssue",
+      "revId": "abeb8bc93bf9edc3ab5a08ef689c911834a87362",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
