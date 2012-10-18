@@ -1,11 +1,15 @@
 /*******************************************************************************
- * Copyright (C) 2010, Thorsten Kamann <thorsten@kamann.info>
+ * Copyright (C) 2010,2012, Thorsten Kamann <thorsten@kamann.info>
  *
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *  Thorsten Kamann                   - initial API and initial doc.
+ *  Peter Bäckman (Tieto Corporation) - external interface info. Bugzilla 376387
  *******************************************************************************/
 package org.eclipse.egit.ui;
 
@@ -18,6 +22,10 @@ import org.eclipse.egit.ui.internal.dialogs.CommitDialog;
  * This message will be added to the text field in the {@link CommitDialog}. <br/>
  *
  * @see CommitDialog
+ *
+ * PUBLIC EXTERNAL INTERFACE. DO NOT CHANGE!
+ * Users of the extension point commitMessageProvider implements this interface.
+ * Since the extension point is public this interface must not be changed.
  */
 public interface ICommitMessageProvider {
 
