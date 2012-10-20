@@ -11,10 +11,19 @@
 
 package org.eclipse.egit.ui.internal.actions;
 
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
@@ -47,24 +56,39 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 	}
 
 	public boolean isEnabled() {
-		Repository[] repos = getRepositoriesFor(getProjectsForSelectedResources());
-		if (repos.length != 1)
+		IResource[] resources = getSelectedResources();
+		Map<Repository, Collection<String>> pathsByRepository = ResourceUtil.splitResourcesByRepository(resources);
+
+		Set<Repository> repos = pathsByRepository.keySet();
+
+		if (repos.size() != 1)
 			return false;
-		switch (repos[0].getRepositoryState()) {
-		case MERGING:
-			// fall through
-		case CHERRY_PICKING:
-			// fall through
-		case REBASING:
-			// fall through
-		case REBASING_INTERACTIVE:
-			// fall through
-		case REBASING_MERGE:
-			// fall through
-		case REBASING_REBASING:
-			return true;
-		default:
+
+		Repository repo = repos.iterator().next();
+		Collection<String> selectedRepoPaths = pathsByRepository.get(repo);
+		if (selectedRepoPaths.isEmpty())
 			return false;
+
+		IndexDiffCache cache = org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache();
+		if (cache == null)
+			return false;
+
+		IndexDiffCacheEntry entry = cache.getIndexDiffCacheEntry(repo);
+		if (entry == null || entry.getIndexDiff() == null)
+			return false;
+
+		Set<String> conflictingFiles = entry.getIndexDiff().getConflicting();
+		if (conflictingFiles.isEmpty())
+			return false;
+
+		for (String selectedRepoPath : selectedRepoPaths) {
+			Path selectedPath = new Path(selectedRepoPath);
+
+			for (String conflictingFile : conflictingFiles)
+				if (selectedPath.isPrefixOf(new Path(conflictingFile)))
+					return true;
 		}
+
+		return false;
 	}
 }
