@@ -3739,6 +3739,9 @@ public class UIText extends NLS {
 	public static String GitSynchronizeWizard_synchronize;
 
 	/** */
+	public static String GitChangeSetModelProviderLabel;
+
+	/** */
 	public static String GitBranchSynchronizeWizardPage_title;
 
 	/** */
