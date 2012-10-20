@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2010, Roland Grunberg <rgrunber@redhat.com>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -170,11 +171,11 @@ public class DiscardChangesOperation implements IEGitOperation {
 			Collection<String> paths = entry.getValue();
 			CheckoutCommand checkoutCommand = new Git(repository).checkout();
 			checkoutCommand.setStartPoint(this.revision);
-			if (!paths.isEmpty())
+			if (paths.isEmpty() || paths.contains("")) //$NON-NLS-1$
+				checkoutCommand.setAllPaths(true);
+			else
 				for (String path : paths)
 					checkoutCommand.addPath(path);
-			else
-				checkoutCommand.setAllPaths(true);
 			checkoutCommand.call();
 		}
 	}
