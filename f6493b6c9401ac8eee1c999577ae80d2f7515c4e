@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//zgs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceMapping.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2012-10-21T16:15:39Z",
+      "side": 1,
+      "message": "No, not at all. Just tried to avoid any conflicts with IResource. Technically, type is a bit mask but the decorator just uses a switch so anything can be used.",
+      "parentUuid": "AABOIn//ziI\u003d",
+      "revId": "f6493b6c9401ac8eee1c999577ae80d2f7515c4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//ziE\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceMapping.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-10-20T18:07:47Z",
       "side": 1,
       "message": "The lastBranch and lastBranchStatus should only be done once as they can be costly.",
+      "revId": "f6493b6c9401ac8eee1c999577ae80d2f7515c4e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//zgo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceMapping.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2012-10-21T16:15:39Z",
+      "side": 1,
+      "message": "Good to know, thanks. I\u0027ll wrap it into an if so that\u0027s only calculated once.",
+      "parentUuid": "AABOIn//ziE\u003d",
       "revId": "f6493b6c9401ac8eee1c999577ae80d2f7515c4e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
