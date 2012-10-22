@@ -227,6 +227,12 @@ public class CoreText extends NLS {
 	public static String MoveDeleteHook_operationError;
 
 	/** */
+	public static String MoveDeleteHook_unmergedFileError;
+
+	/** */
+	public static String MoveDeleteHook_unmergedFileInFolderError;
+
+	/** */
 	public static String Error_CanonicalFile;
 
 	/** */
