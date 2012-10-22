@@ -21,12 +21,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.filesystem.URIUtil;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -34,9 +36,12 @@ import org.eclipse.egit.core.test.TestProject;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.dircache.DirCacheBuilder;
+import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.errors.CorruptObjectException;
 import org.eclipse.jgit.junit.MockSystemReader;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
@@ -499,6 +504,77 @@ public class GitMoveDeleteHookTest {
 			if ("true".equals(System.getProperty("egit.assume_307140_fixed")))
 				throw e;
 		}
+	}
+
+	@Test
+	public void testMoveFileWithConflictsShouldBeCanceled() throws Exception {
+		TestProject project = initRepoInsideProjectInsideWorkspace();
+		String filePath = "file.txt";
+		IFile file = testUtils.addFileToProject(project.getProject(), filePath, "some text");
+
+		Repository repo = testRepository.getRepository();
+		DirCache index = repo.lockDirCache();
+		DirCacheBuilder builder = index.builder();
+		addUnmergedEntry(filePath, builder);
+		builder.commit();
+
+		try {
+			file.move(new Path("destination.txt"), false, null);
+			fail("Expected move of file with conflicts to fail.");
+		} catch (CoreException e) {
+			IStatus status = e.getStatus();
+			assertNotNull(status);
+			assertEquals(IStatus.WARNING, status.getSeverity());
+		}
+
+		assertTrue("File should still exist at old location", file.exists());
+		DirCache indexAfter = repo.readDirCache();
+		DirCacheEntry entry = indexAfter.getEntry(filePath);
+		assertEquals("Expected entry to still be in non-zero (conflict) stage",
+				DirCacheEntry.STAGE_1, entry.getStage());
+	}
+
+	@Test
+	public void testMoveFolderWithFileWithConflictsShouldBeCanceled() throws Exception {
+		TestProject project = initRepoInsideProjectInsideWorkspace();
+		String filePath = "folder/file.txt";
+		IFile file = testUtils.addFileToProject(project.getProject(), filePath, "some text");
+
+		Repository repo = testRepository.getRepository();
+		DirCache index = repo.lockDirCache();
+		DirCacheBuilder builder = index.builder();
+		addUnmergedEntry(filePath, builder);
+		builder.commit();
+
+		try {
+			project.getProject()
+					.getFolder("folder")
+					.move(project.getProject().getFolder("newfolder")
+							.getFullPath(), false, null);
+			fail("Expected move of folder with file with conflicts to fail.");
+		} catch (CoreException e) {
+			IStatus status = e.getStatus();
+			assertNotNull(status);
+			assertEquals(IStatus.WARNING, status.getSeverity());
+		}
+
+		assertTrue("File should still exist at old location", file.exists());
+		DirCache indexAfter = repo.readDirCache();
+		DirCacheEntry entry = indexAfter.getEntry(filePath);
+		assertEquals("Expected entry to still be in non-zero (conflict) stage",
+				DirCacheEntry.STAGE_1, entry.getStage());
+	}
+
+	private static void addUnmergedEntry(String filePath, DirCacheBuilder builder) {
+		DirCacheEntry stage1 = new DirCacheEntry(filePath, DirCacheEntry.STAGE_1);
+		DirCacheEntry stage2 = new DirCacheEntry(filePath, DirCacheEntry.STAGE_2);
+		DirCacheEntry stage3 = new DirCacheEntry(filePath, DirCacheEntry.STAGE_3);
+		stage1.setFileMode(FileMode.REGULAR_FILE);
+		stage2.setFileMode(FileMode.REGULAR_FILE);
+		stage3.setFileMode(FileMode.REGULAR_FILE);
+		builder.add(stage1);
+		builder.add(stage2);
+		builder.add(stage3);
 	}
 
 	private void dotestMoveProjectWithinRepoWithinWorkspace(String srcParent,
