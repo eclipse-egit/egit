@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//y20\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4713,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-10-24T22:09:25Z",
+      "side": 1,
+      "message": "should platform\u003d, be specified here too?",
+      "revId": "b620dea9c68f06f30a052b18267148ee0d7de293",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
