@@ -16,6 +16,24 @@
       "revId": "b620dea9c68f06f30a052b18267148ee0d7de293",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//y08\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4713,
+      "author": {
+        "id": 339
+      },
+      "writtenOn": "2012-10-25T10:35:12Z",
+      "side": 1,
+      "message": "Nope, this is a \"deletion marker\" that applies to all platforms, see http://help.eclipse.org/juno/index.jsp?topic\u003d%2Forg.eclipse.platform.doc.isv%2Freference%2Fextension-points%2Forg_eclipse_ui_bindings.html",
+      "parentUuid": "AABOIn//y20\u003d",
+      "revId": "b620dea9c68f06f30a052b18267148ee0d7de293",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
