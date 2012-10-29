@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (C) 2011, Benjamin Muskalla <benjamin.muskalla@tasktop.com>
+ * Copyright (C) 2011, 2012 Benjamin Muskalla <benjamin.muskalla@tasktop.com>
+ * and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,10 +15,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
-import org.eclipse.core.internal.resources.mapping.SimpleResourceMapping;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
@@ -80,7 +81,7 @@ public class GitSubscriberMergeContextTest extends GitTestCase {
 
 		IFile workspaceFile = testRepo.getIFile(iProject, file);
 
-		ResourceMapping mapping = new SimpleResourceMapping(workspaceFile);
+		ResourceMapping mapping = AdapterUtils.adapt(workspaceFile, ResourceMapping.class);
 		ResourceMapping[] inputMappings = new ResourceMapping[] { mapping };
 		SubscriberScopeManager manager = new SubscriberScopeManager("Scope",
 				inputMappings, subscriber, true);
