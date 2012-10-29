@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//ye4\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-10-29T13:19:38Z",
+      "side": 1,
+      "message": "I don\u0027t grok the subject here. you mean the oppsite?",
+      "revId": "e123d520729a3b0b62d0fb24ae94c286364f748b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//ye0\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-10-29T13:19:38Z",
+      "side": 1,
+      "message": "Skip the last sentence",
+      "revId": "e123d520729a3b0b62d0fb24ae94c286364f748b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
