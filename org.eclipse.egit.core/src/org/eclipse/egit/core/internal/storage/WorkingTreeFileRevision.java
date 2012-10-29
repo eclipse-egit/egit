@@ -67,11 +67,6 @@ public class WorkingTreeFileRevision extends GitFileRevision implements IFileRev
 		return false;
 	}
 
-	public IFileRevision withAllProperties(IProgressMonitor monitor)
-			throws CoreException {
-		return null;
-	}
-
 	public String getAuthor() {
 		return "";  //$NON-NLS-1$
 	}
