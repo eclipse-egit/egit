@@ -286,12 +286,19 @@ public class CommitOperation implements IEGitOperation {
 		}
 	}
 
-	private void setAuthorAndCommitter(CommitCommand commitCommand) {
-		final Date commitDate = new Date();
+	private void setAuthorAndCommitter(CommitCommand commitCommand) throws TeamException {
+		final Date commitDate =	 new Date();
 		final TimeZone timeZone = TimeZone.getDefault();
 
 		final PersonIdent enteredAuthor = RawParseUtils.parsePersonIdent(author);
 		final PersonIdent enteredCommitter = RawParseUtils.parsePersonIdent(committer);
+		if (enteredAuthor == null)
+			throw new TeamException(NLS.bind(
+					CoreText.CommitOperation_errorParsingPersonIdent, author));
+		if (enteredCommitter == null)
+			throw new TeamException(
+					NLS.bind(CoreText.CommitOperation_errorParsingPersonIdent,
+							committer));
 
 		PersonIdent authorIdent = new PersonIdent(enteredAuthor, commitDate, timeZone);
 		final PersonIdent committerIdent = new PersonIdent(enteredCommitter, commitDate, timeZone);
