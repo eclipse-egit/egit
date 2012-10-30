@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2012 GitHub Inc.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - handle RevisionSyntaxException
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
@@ -25,6 +26,7 @@ import org.eclipse.egit.ui.internal.search.CommitSearchPage;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
@@ -197,6 +199,8 @@ public class CommitSelectionDialog extends FilteredItemsSelectionDialog {
 							new RepositoryCommit(repository, commit),
 							itemsFilter);
 				}
+			} catch (RevisionSyntaxException ignored) {
+				// Ignore and advance
 			} catch (IOException ignored) {
 				// Ignore and advance
 			}
