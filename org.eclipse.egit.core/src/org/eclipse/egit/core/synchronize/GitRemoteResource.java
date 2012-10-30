@@ -29,7 +29,7 @@ abstract class GitRemoteResource extends CachedResourceVariant {
 		this.path = path;
 		this.objectId = objectId;
 		this.commitId = commitId;
-		this.authorIdent = commitId.getAuthorIdent();
+		this.authorIdent = commitId != null ? commitId.getAuthorIdent() : null;
 	}
 
 	public String getName() {

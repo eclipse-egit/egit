@@ -91,7 +91,7 @@ public class GitResourceVariantTreeSubscriberTest extends GitTestCase {
 		// then
 		IResourceVariant actual = commonAssertionsForBaseTree(baseTree,
 				mainJava);
-		assertEquals(commit.abbreviate(7).name() + "...",
+		assertEquals(commit.abbreviate(7).name() + "... (J. Git)",
 				actual.getContentIdentifier());
 	}
 
