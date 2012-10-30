@@ -23,13 +23,11 @@ abstract class GitRemoteResource extends CachedResourceVariant {
 
 	private final ObjectId objectId;
 
-	private final PersonIdent authorIdent;
 
 	GitRemoteResource(RevCommit commitId, ObjectId objectId, String path) {
 		this.path = path;
 		this.objectId = objectId;
 		this.commitId = commitId;
-		this.authorIdent = commitId.getAuthorIdent();
 	}
 
 	public String getName() {
@@ -38,9 +36,14 @@ abstract class GitRemoteResource extends CachedResourceVariant {
 	}
 
 	public String getContentIdentifier() {
+		if (commitId == null)
+			return ""; //$NON-NLS-1$
+
 		StringBuilder s = new StringBuilder();
 		s.append(commitId.abbreviate(7).name());
 		s.append("..."); //$NON-NLS-1$
+
+		PersonIdent authorIdent = commitId.getAuthorIdent();
 		if (authorIdent != null) {
 			s.append(" ("); //$NON-NLS-1$
 			s.append(authorIdent.getName());
