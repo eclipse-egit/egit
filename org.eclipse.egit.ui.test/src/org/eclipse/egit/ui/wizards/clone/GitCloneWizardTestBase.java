@@ -36,6 +36,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
+@SuppressWarnings("restriction")
 public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 
 	protected static final int NUMBER_RANDOM_COMMITS = 100;

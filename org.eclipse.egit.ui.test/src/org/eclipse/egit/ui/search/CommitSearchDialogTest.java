@@ -38,6 +38,7 @@ import org.junit.Test;
 /**
  * Unit tests of {@link CommitSearchPage}
  */
+@SuppressWarnings("restriction")
 public class CommitSearchDialogTest extends LocalRepositoryTestCase {
 
 	private static Repository repository;

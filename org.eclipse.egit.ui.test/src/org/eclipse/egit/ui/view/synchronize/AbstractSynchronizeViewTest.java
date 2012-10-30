@@ -71,6 +71,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
+@SuppressWarnings("restriction")
 public abstract class AbstractSynchronizeViewTest extends
 		LocalRepositoryTestCase {
 
