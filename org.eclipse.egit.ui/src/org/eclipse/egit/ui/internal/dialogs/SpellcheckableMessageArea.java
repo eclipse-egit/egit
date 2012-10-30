@@ -211,6 +211,10 @@ public class SpellcheckableMessageArea extends Composite {
 
 	private BidiSegmentListener hardWrapSegmentListener;
 
+	private ActionHandler quickFixActionHandler;
+
+	private ActionHandler contentAssistActionHandler;
+
 	/**
 	 * @param parent
 	 * @param initialText
@@ -273,13 +277,7 @@ public class SpellcheckableMessageArea extends Composite {
 
 		final SourceViewerDecorationSupport support = configureAnnotationPreferences();
 		if (isEditable(sourceViewer)) {
-			final IHandlerActivation handlerActivation = installQuickFixActionHandler();
-			getTextWidget().addDisposeListener(new DisposeListener() {
-
-				public void widgetDisposed(DisposeEvent e) {
-					getHandlerService().deactivateHandler(handlerActivation);
-				}
-			});
+			quickFixActionHandler = createQuickFixActionHandler(sourceViewer);
 		}
 
 		Document document = new Document(initialText);
@@ -303,17 +301,8 @@ public class SpellcheckableMessageArea extends Composite {
 					return null;
 				IContentAssistant assistant = createContentAssistant(viewer);
 				// Add content assist proposal handler if assistant exists
-				if (assistant != null) {
-					final IHandlerActivation activation = installContentAssistActionHandler();
-					viewer.getTextWidget().addDisposeListener(
-							new DisposeListener() {
-
-								public void widgetDisposed(DisposeEvent e) {
-									getHandlerService().deactivateHandler(
-											activation);
-								}
-							});
-				}
+				if (assistant != null)
+					contentAssistActionHandler = createContentAssistActionHandler(sourceViewer);
 				return assistant;
 			}
 
@@ -487,6 +476,8 @@ public class SpellcheckableMessageArea extends Composite {
 			private IHandlerActivation selectAllHandlerActivation;
 			private IHandlerActivation undoHandlerActivation;
 			private IHandlerActivation redoHandlerActivation;
+			private IHandlerActivation quickFixHandlerActivation;
+			private IHandlerActivation contentAssistHandlerActivation;
 
 			public void focusGained(FocusEvent e) {
 				IHandlerService service = getHandlerService();
@@ -525,6 +516,16 @@ public class SpellcheckableMessageArea extends Composite {
 							IWorkbenchCommandConstants.EDIT_REDO,
 							new ActionHandler(redoAction),
 							new ActiveShellExpression(getParent().getShell()));
+				if (quickFixActionHandler != null)
+					quickFixHandlerActivation = getHandlerService().activateHandler(
+							quickFixActionHandler.getAction().getActionDefinitionId(),
+							quickFixActionHandler,
+							new ActiveShellExpression(getParent().getShell()));
+				if (contentAssistActionHandler != null)
+					contentAssistHandlerActivation = getHandlerService().activateHandler(
+							contentAssistActionHandler.getAction().getActionDefinitionId(),
+							contentAssistActionHandler,
+							new ActiveShellExpression(getParent().getShell()));
 			}
 
 			public void focusLost(FocusEvent e) {
@@ -549,6 +550,12 @@ public class SpellcheckableMessageArea extends Composite {
 
 				if (redoHandlerActivation != null)
 					service.deactivateHandler(redoHandlerActivation);
+
+				if (quickFixHandlerActivation != null)
+					service.deactivateHandler(quickFixHandlerActivation);
+
+				if (contentAssistHandlerActivation != null)
+					service.deactivateHandler(contentAssistHandlerActivation);
 			}
 
 		});
@@ -692,24 +699,6 @@ public class SpellcheckableMessageArea extends Composite {
 	 */
 	public StyledText getTextWidget() {
 		return sourceViewer.getTextWidget();
-	}
-
-	private IHandlerActivation installQuickFixActionHandler() {
-		ActionHandler handler = createQuickFixActionHandler(sourceViewer);
-		return addHandler(handler);
-	}
-
-	private IHandlerActivation installContentAssistActionHandler() {
-		ActionHandler handler = createContentAssistActionHandler(sourceViewer);
-		return addHandler(handler);
-	}
-
-	private IHandlerActivation addHandler(ActionHandler handler) {
-		ActiveShellExpression expression = new ActiveShellExpression(
-				sourceViewer.getTextWidget().getShell());
-		return getHandlerService().activateHandler(
-				handler.getAction().getActionDefinitionId(), handler,
-				expression);
 	}
 
 	private ActionHandler createQuickFixActionHandler(
