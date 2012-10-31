@@ -66,7 +66,7 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 	 *
 	 * @param repo
 	 *            repository that is connected with this object
-	 * @param ancestroDataSource
+	 * @param ancestorDataSource
 	 *            data that should be use to obtain common ancestor object data
 	 * @param baseDataSource
 	 *            data that should be use to obtain base object data
@@ -76,7 +76,7 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 	 *            repository relative path of object
 	 */
 	public GitCompareInput(Repository repo,
-			ComparisonDataSource ancestroDataSource,
+			ComparisonDataSource ancestorDataSource,
 			ComparisonDataSource baseDataSource,
 			ComparisonDataSource remoteDataSource, String gitPath) {
 		this.repo = repo;
@@ -84,9 +84,9 @@ public class GitCompareInput implements ISynchronizationCompareInput {
 		this.baseId = baseDataSource.getObjectId();
 		this.remoteId = remoteDataSource.getObjectId();
 		this.baseCommit = baseDataSource.getRevCommit();
-		this.ancestorId = ancestroDataSource.getObjectId();
+		this.ancestorId = ancestorDataSource.getObjectId();
 		this.remoteCommit = remoteDataSource.getRevCommit();
-		this.ancestorCommit = ancestroDataSource.getRevCommit();
+		this.ancestorCommit = ancestorDataSource.getRevCommit();
 		this.name = gitPath.lastIndexOf('/') < 0 ? gitPath : gitPath
 				.substring(gitPath.lastIndexOf('/') + 1);
 	}
