@@ -489,8 +489,10 @@ public class SpellcheckableMessageArea extends Composite {
 			private IHandlerActivation redoHandlerActivation;
 
 			public void focusGained(FocusEvent e) {
-				IHandlerService service = (IHandlerService) PlatformUI
-						.getWorkbench().getService(IHandlerService.class);
+				IHandlerService service = getHandlerService();
+				if (service == null)
+					return;
+
 				if (cutAction != null) {
 					cutAction.update();
 					cutHandlerActivation = service.activateHandler(
@@ -526,7 +528,9 @@ public class SpellcheckableMessageArea extends Composite {
 			}
 
 			public void focusLost(FocusEvent e) {
-				IHandlerService service = (IHandlerService) PlatformUI.getWorkbench().getService(IHandlerService.class);
+				IHandlerService service = getHandlerService();
+				if (service == null)
+					return;
 
 				if (cutHandlerActivation != null)
 					service.deactivateHandler(cutHandlerActivation);
