@@ -9,6 +9,7 @@
 package org.eclipse.egit.ui.internal.history.command;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 
 import org.eclipse.compare.ITypedElement;
@@ -21,6 +22,7 @@ import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -37,6 +39,13 @@ public class CompareWithWorkingTreeHandler extends
 			Iterator<?> it = selection.iterator();
 			RevCommit commit = (RevCommit) it.next();
 			Object input = getPage().getInputInternal().getSingleFile();
+			Repository repo = getRepository(event);
+			ObjectId headCommit;
+			try {
+				headCommit = repo.resolve(Constants.HEAD);
+			} catch (IOException e) {
+				throw new ExecutionException(e.getMessage(), e);
+			}
 			if (input instanceof IFile) {
 				IFile file = (IFile) input;
 				final RepositoryMapping mapping = RepositoryMapping
@@ -44,19 +53,21 @@ public class CompareWithWorkingTreeHandler extends
 				final String gitPath = mapping.getRepoRelativePath(file);
 				ITypedElement right = CompareUtils.getFileRevisionTypedElement(
 						gitPath, commit, mapping.getRepository());
+				final ITypedElement ancestor = CompareUtils.
+						getFileRevisionTypedElementForCommonAncestor(
+						gitPath, headCommit, commit, repo);
+
 				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 						SaveableCompareEditorInput.createFileElement(file),
-						right, null);
+						right, ancestor, null);
 				openInCompare(event, in);
 			}
 			if (input instanceof File) {
 				File file = (File) input;
 				// TODO can we create a ITypedElement from the local file?
-				Repository repo = getRepository(event);
 				RevCommit leftCommit;
 				try {
-					leftCommit = new RevWalk(repo).parseCommit(repo
-							.resolve(Constants.HEAD));
+					leftCommit = new RevWalk(repo).parseCommit(headCommit);
 				} catch (Exception e) {
 					throw new ExecutionException(e.getMessage(), e);
 				}
@@ -65,8 +76,11 @@ public class CompareWithWorkingTreeHandler extends
 						gitPath, leftCommit, repo);
 				ITypedElement right = CompareUtils.getFileRevisionTypedElement(
 						gitPath, commit, repo);
+				final ITypedElement ancestor = CompareUtils.
+						getFileRevisionTypedElementForCommonAncestor(
+						gitPath, headCommit, commit, repo);
 				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-						left, right, null);
+						left, right, ancestor, null);
 				openInCompare(event, in);
 				return null;
 			}

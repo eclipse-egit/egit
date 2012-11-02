@@ -57,6 +57,13 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 		boolean errorOccurred = false;
 		List<ObjectId> ids = new ArrayList<ObjectId>();
 		String gitPath = null;
+		Repository repo = getRepository(event);
+		ObjectId headCommit;
+		try {
+			headCommit = repo.resolve(Constants.HEAD);
+		} catch (IOException e) {
+			throw new ExecutionException(e.getMessage(), e);
+		}
 		if (input instanceof IFile) {
 			IFile resource = (IFile) input;
 			final RepositoryMapping map = RepositoryMapping
@@ -80,9 +87,12 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 						ITypedElement right = CompareUtils
 								.getFileRevisionTypedElement(gitPath, commit,
 										map.getRepository());
+						ITypedElement ancestor = CompareUtils.
+								getFileRevisionTypedElementForCommonAncestor(
+								gitPath, headCommit, commit, repo);
 						final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 								SaveableCompareEditorInput
-										.createFileElement(resource), right,
+										.createFileElement(resource), right, ancestor,
 								null);
 						try {
 							openInCompare(event, in);
@@ -107,7 +117,6 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 		}
 		if (input instanceof File) {
 			File fileInput = (File) input;
-			Repository repo = getRepository(event);
 			gitPath = getRepoRelativePath(repo, fileInput);
 			Iterator<?> it = selection.iterator();
 			while (it.hasNext()) {
@@ -133,8 +142,11 @@ public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 							ITypedElement right = CompareUtils
 									.getFileRevisionTypedElement(gitPath,
 											commit, repo);
+							ITypedElement ancestor = CompareUtils.
+									getFileRevisionTypedElementForCommonAncestor(
+									gitPath, headCommit, commit, repo);
 							final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-									left, right, null);
+									left, right, ancestor, null);
 							openInCompare(event, in);
 						} catch (IOException e) {
 							errorOccurred = true;
