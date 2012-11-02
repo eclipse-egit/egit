@@ -9,13 +9,17 @@
 package org.eclipse.egit.ui.internal.history.command;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
@@ -24,6 +28,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 
 /**
@@ -37,6 +42,14 @@ public class CompareWithWorkingTreeHandler extends
 			Iterator<?> it = selection.iterator();
 			RevCommit commit = (RevCommit) it.next();
 			Object input = getPage().getInputInternal().getSingleFile();
+			RevCommit commonAncestor = null;
+			try {
+				Repository repo = getRepository(event);
+				commonAncestor = RevUtils.getCommonAncestor(repo, repo.resolve(Constants.HEAD), commit);
+			} catch (IOException e) {
+				Activator.logError(NLS.bind(UIText.CompareWithWorkingTreeHandler_errorCommonAncestor,
+						Constants.HEAD, commit.getName()), e);
+			}
 			if (input instanceof IFile) {
 				IFile file = (IFile) input;
 				final RepositoryMapping mapping = RepositoryMapping
@@ -44,9 +57,12 @@ public class CompareWithWorkingTreeHandler extends
 				final String gitPath = mapping.getRepoRelativePath(file);
 				ITypedElement right = CompareUtils.getFileRevisionTypedElement(
 						gitPath, commit, mapping.getRepository());
+				final ITypedElement ancestor = commonAncestor != null ? CompareUtils.getFileRevisionTypedElement(
+						gitPath, commonAncestor, mapping.getRepository()) : null;
+
 				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
 						SaveableCompareEditorInput.createFileElement(file),
-						right, null);
+						right, ancestor, null);
 				openInCompare(event, in);
 			}
 			if (input instanceof File) {
@@ -65,8 +81,10 @@ public class CompareWithWorkingTreeHandler extends
 						gitPath, leftCommit, repo);
 				ITypedElement right = CompareUtils.getFileRevisionTypedElement(
 						gitPath, commit, repo);
+				ITypedElement ancestor = commonAncestor != null ? CompareUtils.getFileRevisionTypedElement(
+						gitPath, commonAncestor, repo) : null;
 				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-						left, right, null);
+						left, right, ancestor, null);
 				openInCompare(event, in);
 				return null;
 			}
