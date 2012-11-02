@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//xnw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceMapping.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-02T12:33:33Z",
+      "side": 1,
+      "message": "Please also add the following here to reduce unnecessary calculation:\n\n    if (branches.size() \u003e 1)\n        break;\n\n(Then you could also set the capacity of the set to 2.)",
+      "revId": "78113bf194b697ce7f35f3ec0f01b47daa0fc24d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//xns\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/DecoratableResourceMapping.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-02T12:33:33Z",
+      "side": 1,
+      "message": "Style nit: We don\u0027t use braces ({}) for simple single-line blocks.",
+      "revId": "78113bf194b697ce7f35f3ec0f01b47daa0fc24d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
