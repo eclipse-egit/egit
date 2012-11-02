@@ -37,6 +37,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.internal.CompareCoreUtils;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
 import org.eclipse.egit.core.internal.storage.WorkingTreeFileRevision;
@@ -171,7 +172,36 @@ public class CompareUtils {
 		return null;
 	}
 
+
 	/**
+	 * Creates a {@link ITypedElement} for the commit which is the common ancestor of
+	 * the provided commits.
+	 * @param gitPath
+	 *            path within the ancestor commit's tree of the file.
+	 * @param commit1
+	 * @param commit2
+	 * @param db
+	 *            the repository this commit was loaded out of.
+	 * @return an instance of {@link ITypedElement} which can be used in
+	 *         {@link CompareEditorInput}
+	 */
+	public static ITypedElement getFileRevisionTypedElementForCommonAncestor(
+			final String gitPath, ObjectId commit1, ObjectId commit2,
+			Repository db) {
+		ITypedElement ancestor = null;
+		RevCommit commonAncestor = null;
+		try {
+			commonAncestor = RevUtils.getCommonAncestor(db, commit1, commit2);
+		} catch (IOException e) {
+			Activator.logError(NLS.bind(UIText.CompareUtils_errorCommonAncestor,
+					commit1.getName(), commit2.getName()), e);
+		}
+		if (commonAncestor != null)
+			ancestor = CompareUtils
+				.getFileRevisionTypedElement(gitPath, commonAncestor, db);
+		return ancestor;
+	}
+/**
 	 * @param element
 	 * @param adapterType
 	 * @return the adapted element, or null
@@ -479,6 +509,8 @@ public class CompareUtils {
 		next.addContentChangeListener(listener);
 		return next;
 	}
+
+
 
 	/**
 	 * Extracted from {@link CompareWithCommitActionHandler}

@@ -53,6 +53,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 
 	private ITypedElement left;
 	private ITypedElement right;
+	private ITypedElement ancestor;
 
 	/**
 	 * Creates a new CompareFileRevisionEditorInput.
@@ -64,6 +65,20 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		super(new CompareConfiguration(), page);
 		this.left = left;
 		this.right = right;
+	}
+
+	/**
+	 * Creates a new CompareFileRevisionEditorInput.
+	 * @param left
+	 * @param right
+	 * @param ancestor
+	 * @param page
+	 */
+	public GitCompareFileRevisionEditorInput(ITypedElement left, ITypedElement right, ITypedElement ancestor, IWorkbenchPage page) {
+		super(new CompareConfiguration(), page);
+		this.left = left;
+		this.right = right;
+		this.ancestor = ancestor;
 	}
 
 	FileRevisionTypedElement getRightRevision() {
@@ -80,7 +95,13 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		return null;
 	}
 
-	private static void ensureContentsCached(FileRevisionTypedElement left, FileRevisionTypedElement right,
+	FileRevisionTypedElement getAncestorRevision() {
+		if (ancestor instanceof FileRevisionTypedElement)
+			return (FileRevisionTypedElement) ancestor;
+		return null;
+	}
+
+	private static void ensureContentsCached(FileRevisionTypedElement left, FileRevisionTypedElement right, FileRevisionTypedElement ancestor,
 			IProgressMonitor monitor) {
 		if (left != null) {
 			try {
@@ -92,6 +113,13 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		if (right != null) {
 			try {
 				right.cacheContents(monitor);
+			} catch (CoreException e) {
+				Activator.logError(e.getMessage(), e);
+			}
+		}
+		if (ancestor != null) {
+			try {
+				ancestor.cacheContents(monitor);
 			} catch (CoreException e) {
 				Activator.logError(e.getMessage(), e);
 			}
@@ -124,29 +152,37 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 	}
 
 	private ICompareInput createCompareInput() {
-		return compare(left, right);
+		return compare(left, right, ancestor);
 	}
 
-	private DiffNode compare(ITypedElement actLeft, ITypedElement actRight) {
+	private DiffNode compare(ITypedElement actLeft, ITypedElement actRight, ITypedElement actAncestor) {
 		if (actLeft.getType().equals(ITypedElement.FOLDER_TYPE)) {
 			//			return new MyDiffContainer(null, left,right);
-			DiffNode diffNode = new DiffNode(null,Differencer.CHANGE,null,actLeft,actRight);
+			DiffNode diffNode = new DiffNode(null, Differencer.CHANGE,
+					actAncestor, actLeft, actRight);
 			ITypedElement[] lc = (ITypedElement[])((IStructureComparator)actLeft).getChildren();
 			ITypedElement[] rc = (ITypedElement[])((IStructureComparator)actRight).getChildren();
+			ITypedElement[] ac = null;
+			if (actAncestor != null)
+				ac = (ITypedElement[]) ((IStructureComparator) actAncestor)
+						.getChildren();
 			int li=0;
 			int ri=0;
 			while (li<lc.length && ri<rc.length) {
 				ITypedElement ln = lc[li];
 				ITypedElement rn = rc[ri];
+				ITypedElement an = null;
+				if (ac != null)
+					an = ac[ri];
 				int compareTo = ln.getName().compareTo(rn.getName());
 				// TODO: Git ordering!
 				if (compareTo == 0) {
 					if (!ln.equals(rn))
-						diffNode.add(compare(ln,rn));
+						diffNode.add(compare(ln,rn, an));
 					++li;
 					++ri;
 				} else if (compareTo < 0) {
-					DiffNode childDiffNode = new DiffNode(Differencer.ADDITION, null, ln, null);
+					DiffNode childDiffNode = new DiffNode(Differencer.ADDITION, an, ln, null);
 					diffNode.add(childDiffNode);
 					if (ln.getType().equals(ITypedElement.FOLDER_TYPE)) {
 						ITypedElement[] children = (ITypedElement[])((IStructureComparator)ln).getChildren();
@@ -158,7 +194,7 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 					}
 					++li;
 				} else {
-					DiffNode childDiffNode = new DiffNode(Differencer.DELETION, null, null, rn);
+					DiffNode childDiffNode = new DiffNode(Differencer.DELETION, an, null, rn);
 					diffNode.add(childDiffNode);
 					if (rn.getType().equals(ITypedElement.FOLDER_TYPE)) {
 						ITypedElement[] children = (ITypedElement[])((IStructureComparator)rn).getChildren();
@@ -173,7 +209,10 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 			}
 			while (li<lc.length) {
 				ITypedElement ln = lc[li];
-				DiffNode childDiffNode = new DiffNode(Differencer.ADDITION, null, ln, null);
+				ITypedElement an = null;
+				if (ac != null)
+					an= ac[li];
+				DiffNode childDiffNode = new DiffNode(Differencer.ADDITION, an, ln, null);
 				diffNode.add(childDiffNode);
 				if (ln.getType().equals(ITypedElement.FOLDER_TYPE)) {
 					ITypedElement[] children = (ITypedElement[])((IStructureComparator)ln).getChildren();
@@ -187,7 +226,10 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 			}
 			while (ri<rc.length) {
 				ITypedElement rn = rc[ri];
-				DiffNode childDiffNode = new DiffNode(Differencer.DELETION, null, null, rn);
+				ITypedElement an = null;
+				if (ac != null)
+					an = ac[ri];
+				DiffNode childDiffNode = new DiffNode(Differencer.DELETION, an, null, rn);
 				diffNode.add(childDiffNode);
 				if (rn.getType().equals(ITypedElement.FOLDER_TYPE)) {
 					ITypedElement[] children = (ITypedElement[])((IStructureComparator)rn).getChildren();
@@ -201,7 +243,10 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 			}
 			return diffNode;
 		} else {
-			return new DiffNode(actLeft, actRight);
+			if (actAncestor != null)
+				return new DiffNode(Differencer.CONFLICTING, actAncestor, actLeft, actRight);
+			else
+				return new DiffNode(actLeft, actRight);
 		}
 	}
 
@@ -243,6 +288,10 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 			cc.setRightLabel(rightLabel);
 		} else {
 			cc.setRightLabel(right.getName());
+		}
+		if (getAncestorRevision() != null) {
+			String ancestorLabel = getFileRevisionLabel(getAncestorRevision());
+			cc.setAncestorLabel(ancestorLabel);
 		}
 
 	}
@@ -351,14 +400,14 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		ICompareInput input = createCompareInput();
 		getCompareConfiguration().setLeftEditable(isLeftEditable(input));
 		getCompareConfiguration().setRightEditable(isRightEditable(input));
-		ensureContentsCached(getLeftRevision(), getRightRevision(), monitor);
+		ensureContentsCached(getLeftRevision(), getRightRevision(), getAncestorRevision(), monitor);
 		initLabels(input);
 		setTitle(NLS.bind(UIText.GitCompareFileRevisionEditorInput_CompareInputTitle, new String[] { input.getName() }));
 
 		// The compare editor (Structure Compare) will show the diff filenames
 		// with their project relative path. So, no need to also show directory entries.
 		DiffNode flatDiffNode = new NotifiableDiffNode(null,
-				Differencer.CHANGE, null, left, right);
+				ancestor != null ? Differencer.CONFLICTING : Differencer.CHANGE, ancestor, left, right);
 		flatDiffView(flatDiffNode, (DiffNode) input);
 
 		return flatDiffNode;
