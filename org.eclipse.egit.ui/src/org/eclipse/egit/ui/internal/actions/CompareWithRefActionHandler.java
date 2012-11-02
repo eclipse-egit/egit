@@ -17,6 +17,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
@@ -25,10 +26,12 @@ import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.dialogs.CompareTargetSelectionDialog;
 import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -69,8 +72,19 @@ public class CompareWithRefActionHandler extends RepositoryActionHandler {
 					return null;
 				}
 
+				ITypedElement ancestor = null;
+				try {
+					RevCommit commonAncestor = RevUtils.getCommonAncestor(repo, repo.resolve(Constants.HEAD), repo.resolve(dlg.getRefName()));
+					RepositoryMapping mapping = RepositoryMapping
+							.getMapping(resources[0]);
+					ancestor =  CompareUtils.getFileRevisionTypedElement(mapping
+							.getRepoRelativePath(baseFile), commonAncestor, mapping.getRepository());
+				} catch (IOException e) {
+					Activator.logError(NLS.bind(UIText.CompareWithWorkingTreeHandler_errorCommonAncestor,
+							Constants.HEAD, dlg.getRefName()), e);
+				}
 				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-						base, next, null);
+						base, next, ancestor, null);
 				in.getCompareConfiguration().setRightLabel(dlg.getRefName());
 				CompareUI.openCompareEditor(in);
 			} else {

@@ -17,6 +17,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.RevUtils;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
@@ -25,6 +26,7 @@ import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
 import org.eclipse.egit.ui.internal.history.CommitSelectionDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -58,11 +60,18 @@ public class CompareWithCommitActionHandler extends RepositoryActionHandler {
 					.createFileElement(baseFile);
 
 			final ITypedElement next;
+			ITypedElement ancestor = null;
+			RevCommit commonAncestor = null;
 			try {
 				RepositoryMapping mapping = RepositoryMapping
 						.getMapping(resources[0]);
 				next = getElementForCommit(mapping.getRepository(), mapping
 						.getRepoRelativePath(baseFile), dlg.getCommitId());
+
+				commonAncestor = RevUtils.getCommonAncestor(repo, repo.resolve(Constants.HEAD), dlg.getCommitId());
+				if (commonAncestor != null)
+					ancestor = CompareUtils.getFileRevisionTypedElement( mapping
+						.getRepoRelativePath(baseFile), commonAncestor, mapping.getRepository());
 			} catch (IOException e) {
 				Activator.handleError(
 						UIText.CompareWithIndexAction_errorOnAddToIndex, e,
@@ -71,9 +80,12 @@ public class CompareWithCommitActionHandler extends RepositoryActionHandler {
 			}
 
 			final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-					base, next, null);
+					base, next, ancestor, null);
 			in.getCompareConfiguration()
 					.setRightLabel(dlg.getCommitId().name());
+			if (commonAncestor != null)
+				in.getCompareConfiguration()
+					.setAncestorLabel(commonAncestor.name());
 			CompareUI.openCompareEditor(in);
 		} else {
 			CompareTreeView view;
