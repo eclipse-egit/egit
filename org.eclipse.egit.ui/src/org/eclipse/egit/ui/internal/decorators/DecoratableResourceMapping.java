@@ -11,6 +11,8 @@ package org.eclipse.egit.ui.internal.decorators;
 
 import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
@@ -26,10 +28,17 @@ import org.eclipse.ui.IWorkingSet;
  */
 public class DecoratableResourceMapping extends DecoratableResource {
 
+	private static final String MULTIPLE = "*"; //$NON-NLS-1$
+
 	/**
 	 * Denotes the type of decoratable resource, used by the decoration helper.
 	 */
 	public static final int RESOURCE_MAPPING = 0x10;
+
+	/**
+	 * Denotes the type of decoratable resource, used by the decoration helper.
+	 */
+	public static final int WORKING_SET = 0x9999;
 
 	/**
 	 * Stores the actual mapping we are currently decorating.
@@ -40,8 +49,9 @@ public class DecoratableResourceMapping extends DecoratableResource {
 	 * Creates a decoratable resource mapping (used for e.g. working sets)
 	 *
 	 * @param mapping the resource mapping to decorate
+	 * @throws IOException
 	 */
-	public DecoratableResourceMapping(ResourceMapping mapping) {
+	public DecoratableResourceMapping(ResourceMapping mapping) throws IOException {
 		super(null); // no resource ...
 
 		this.mapping = mapping;
@@ -49,6 +59,9 @@ public class DecoratableResourceMapping extends DecoratableResource {
 
 		if(projects == null || projects.length == 0)
 			return;
+
+		// collect repositories to allow decoration of mappings (bug 369969)
+		Set<Repository> repositories = new HashSet<Repository>(projects.length);
 
 		// we could use DecoratableResourceAdapter for each project, but that would be too much overhead,
 		// as we need only very little information at all...
@@ -64,7 +77,8 @@ public class DecoratableResourceMapping extends DecoratableResource {
 			// at least one contained resource is tracked for sure here.
 			tracked = true;
 
-			String repoRelative = makeRepoRelative(repoMapping.getRepository(), prj) + "/"; //$NON-NLS-1$
+			Repository repository = repoMapping.getRepository();
+			String repoRelative = makeRepoRelative(repository, prj) + "/"; //$NON-NLS-1$
 
 			Set<String> modified = diffData.getModified();
 			Set<String> conflicting = diffData.getConflicting();
@@ -75,10 +89,44 @@ public class DecoratableResourceMapping extends DecoratableResource {
 
 			if(containsPrefix(conflicting, repoRelative))
 				conflicts = true;
+
+			// collect repository
+			repositories.add(repository);
+		}
+
+		// collect repository info for decoration (bug 369969)
+		if(repositories.size() == 1) {
+			// single repo, single branch --> [repo branch]
+			Repository repository = repositories.iterator().next();
+			repositoryName = DecoratableResourceHelper
+					.getRepositoryName(repository);
+			branch = DecoratableResourceHelper.getShortBranch(repository);
+			branchStatus = DecoratableResourceHelper
+					.getBranchStatus(repository);
+		} else if(repositories.size() > 1) {
+			// collect branch names but skip branch status (doesn't make sense)
+			Set<String> branches = new HashSet<String>(2);
+			for (Repository repository : repositories) {
+				branches.add(DecoratableResourceHelper
+						.getShortBranch(repository));
+			    if (branches.size() > 1)
+			        break;
+			}
+
+			// multiple repos, one branch --> [* branch]
+			if (branches.size() == 1) {
+				repositoryName = MULTIPLE;
+				branch = branches.iterator().next();
+			}
+
+			// we set nothing in the following case:
+			//   multiple repos, multiple branches
 		}
 	}
 
 	public int getType() {
+		if (mapping.getModelObject() instanceof IWorkingSet)
+			return WORKING_SET;
 		return RESOURCE_MAPPING;
 	}
 
