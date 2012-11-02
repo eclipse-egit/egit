@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//xmk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/ConnectProviderOperation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-02T14:42:36Z",
+      "side": 1,
+      "message": "Should a SubMonitor be used here?",
+      "revId": "7a334247f5e7baa58d703b011563b47503b235e8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
