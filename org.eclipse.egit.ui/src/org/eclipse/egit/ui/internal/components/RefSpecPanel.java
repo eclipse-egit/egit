@@ -1410,9 +1410,11 @@ public class RefSpecPanel {
 	}
 
 	private void validateCreationPanel() {
-		final String src = creationSrcCombo.getText();
-		final String dst = creationDstCombo.getText();
+		final String srcLabel = creationSrcCombo.getText();
+		final String dstLabel = creationDstCombo.getText();
 
+		final String src = srcLabel.replaceAll(" .*",""); //$NON-NLS-1$ //$NON-NLS-2$
+		final String dst = dstLabel.replaceAll(" .*",""); //$NON-NLS-1$ //$NON-NLS-2$
 		// check src ref field
 		boolean srcOk = false;
 		final boolean srcWildcard = RefSpec.isWildcard(src);
