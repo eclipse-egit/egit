@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//xlo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitCompareFileRevisionEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-02T16:10:25Z",
+      "side": 1,
+      "message": "No null check for ac here?",
+      "revId": "c7855626a82551c20b6c63bfde6800e2b12fb666",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//xlA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitCompareFileRevisionEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-02T16:10:25Z",
+      "side": 1,
+      "message": "No null check for ac here?",
+      "revId": "c7855626a82551c20b6c63bfde6800e2b12fb666",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//xko\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CompareWithWorkingTreeHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-02T16:10:25Z",
+      "side": 1,
+      "message": "Space missing in `null?`. Same below.",
+      "revId": "c7855626a82551c20b6c63bfde6800e2b12fb666",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
