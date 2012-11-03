@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,9 +13,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jface.fieldassist.IContentProposal;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Combo;
 
 /**
@@ -22,6 +20,9 @@ import org.eclipse.swt.widgets.Combo;
  * item label and item content.
  * <p>
  * This implementation takes {@link IContentProposal} instances as data source.
+ * <p>
+ * Use {@link #getContent()} instead of {@link Combo#getText()} to get the
+ * current item content (instead of label).
  */
 public class ComboLabelingSupport {
 	private final Combo combo;
@@ -36,25 +37,9 @@ public class ComboLabelingSupport {
 	 *
 	 * @param combo
 	 *            target combo to install on.
-	 * @param selectionListener
-	 *            listener that is notified when content is filled after label
-	 *            being clicked. May be null.
 	 */
-	public ComboLabelingSupport(final Combo combo,
-			final SelectionListener selectionListener) {
+	public ComboLabelingSupport(final Combo combo) {
 		this.combo = combo;
-
-		combo.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				final int i = combo.getSelectionIndex();
-				if (i != -1 && i < proposals.size()) {
-					combo.setText(proposals.get(i).getContent());
-					if (selectionListener != null)
-						selectionListener.widgetSelected(e);
-				}
-			}
-		});
 		setProposals(Collections.<IContentProposal> emptyList());
 	}
 
@@ -74,5 +59,17 @@ public class ComboLabelingSupport {
 		for (final IContentProposal p : proposals)
 			itemsLabels[i++] = p.getLabel();
 		combo.setItems(itemsLabels);
+	}
+
+	/**
+	 * @return the content of the selected item, or just the text if it does not
+	 *         match a proposal
+	 */
+	public String getContent() {
+		String text = combo.getText();
+		for (final IContentProposal p : proposals)
+			if (text.equals(p.getLabel()))
+				return p.getContent();
+		return text;
 	}
 }
