@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
+ * Copyright (C) 2008, 2012 Marek Zawirski <marek.zawirski@gmail.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -663,8 +663,8 @@ public class RefSpecPanel {
 		creationButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				final String src = creationSrcCombo.getText();
-				final String dst = creationDstCombo.getText();
+				final String src = creationSrcComboSupport.getContent();
+				final String dst = creationDstComboSupport.getContent();
 				RefSpec spec = new RefSpec(src + ':' + dst);
 				addRefSpec(spec);
 				creationSrcCombo.setText(""); //$NON-NLS-1$
@@ -779,7 +779,7 @@ public class RefSpecPanel {
 		deleteButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				RefSpec spec = new RefSpec(':' + deleteRefCombo.getText());
+				RefSpec spec = new RefSpec(':' + deleteRefComboSupport.getContent());
 				addRefSpec(spec);
 				deleteRefCombo.setText(""); //$NON-NLS-1$
 			}
@@ -1334,8 +1334,8 @@ public class RefSpecPanel {
 	}
 
 	private void tryAutoCompleteSrcToDst() {
-		final String src = creationSrcCombo.getText();
-		final String dst = creationDstCombo.getText();
+		final String src = creationSrcComboSupport.getContent();
+		final String dst = creationDstComboSupport.getContent();
 
 		if (src == null || src.length() == 0)
 			return;
@@ -1347,7 +1347,8 @@ public class RefSpecPanel {
 				newDst = wildcardSpecComponent(dst);
 			else
 				newDst = unwildcardSpecComponent(dst, src);
-			creationDstCombo.setText(newDst);
+			if (!dst.equals(newDst))
+				creationDstCombo.setText(newDst);
 			return;
 		}
 
@@ -1391,8 +1392,8 @@ public class RefSpecPanel {
 	}
 
 	private void tryAutoCompleteDstToSrc() {
-		final String src = creationSrcCombo.getText();
-		final String dst = creationDstCombo.getText();
+		final String src = creationSrcComboSupport.getContent();
+		final String dst = creationDstComboSupport.getContent();
 
 		if (dst == null || dst.length() == 0)
 			return;
@@ -1404,14 +1405,15 @@ public class RefSpecPanel {
 				newSrc = wildcardSpecComponent(src);
 			else
 				newSrc = unwildcardSpecComponent(src, dst);
-			creationSrcCombo.setText(newSrc);
+			if (!src.equals(newSrc))
+				creationSrcCombo.setText(newSrc);
 			return;
 		}
 	}
 
 	private void validateCreationPanel() {
-		final String src = creationSrcCombo.getText();
-		final String dst = creationDstCombo.getText();
+		final String src = creationSrcComboSupport.getContent();
+		final String dst = creationDstComboSupport.getContent();
 
 		// check src ref field
 		boolean srcOk = false;
@@ -1504,7 +1506,7 @@ public class RefSpecPanel {
 	}
 
 	private void validateDeleteCreationPanel() {
-		final String ref = deleteRefCombo.getText();
+		final String ref = deleteRefComboSupport.getContent();
 
 		deleteButton.setEnabled(false);
 		if (ref == null || ref.length() == 0)
@@ -1760,6 +1762,8 @@ public class RefSpecPanel {
 	}
 
 	private ObjectId tryResolveLocalRef(final String ref) {
+		if (!isValidRefExpression(ref))
+			return null;
 		try {
 			return localDb.resolve(ref);
 		} catch (final IOException e) {

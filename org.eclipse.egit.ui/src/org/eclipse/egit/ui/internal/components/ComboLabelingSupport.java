@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, Marek Zawirski <marek.zawirski@gmail.com>
+ * Copyright (C) 2008, 2012 Marek Zawirski <marek.zawirski@gmail.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,6 +22,9 @@ import org.eclipse.swt.widgets.Combo;
  * item label and item content.
  * <p>
  * This implementation takes {@link IContentProposal} instances as data source.
+ * <p>
+ * Use {@link #getContent()} instead of {@link Combo#getText()} to get the
+ * current item content (instead of label).
  */
 public class ComboLabelingSupport {
 	private final Combo combo;
@@ -74,5 +77,17 @@ public class ComboLabelingSupport {
 		for (final IContentProposal p : proposals)
 			itemsLabels[i++] = p.getLabel();
 		combo.setItems(itemsLabels);
+	}
+
+	/**
+	 * @return the content of the selected item, or just the text if it does not
+	 *         match a proposal
+	 */
+	public String getContent() {
+		String text = combo.getText();
+		for (final IContentProposal p : proposals)
+			if (text.equals(p.getLabel()))
+				return p.getContent();
+		return text;
 	}
 }
