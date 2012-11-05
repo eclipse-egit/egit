@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//xJ4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-05T13:24:44Z",
+      "side": 0,
+      "message": "Err, why is this removed?",
+      "revId": "4f1c9820d737d87140dd998863610fa9747e8929",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
