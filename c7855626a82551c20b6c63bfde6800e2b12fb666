@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//xL0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitCompareFileRevisionEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-11-05T08:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//xlo\u003d",
+      "revId": "c7855626a82551c20b6c63bfde6800e2b12fb666",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//xlA\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitCompareFileRevisionEditorInput.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOIn//xLw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/GitCompareFileRevisionEditorInput.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-11-05T08:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//xlA\u003d",
+      "revId": "c7855626a82551c20b6c63bfde6800e2b12fb666",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//xko\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CompareWithWorkingTreeHandler.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2012-11-02T16:10:25Z",
       "side": 1,
       "message": "Space missing in `null?`. Same below.",
+      "revId": "c7855626a82551c20b6c63bfde6800e2b12fb666",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//xLs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CompareWithWorkingTreeHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2012-11-05T08:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//xko\u003d",
       "revId": "c7855626a82551c20b6c63bfde6800e2b12fb666",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
