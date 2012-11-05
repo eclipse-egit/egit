@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//xIU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CompareWithCommitActionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-05T14:24:04Z",
+      "side": 1,
+      "message": "This seems to be unnecessary. I also get the label after removing this.",
+      "revId": "3cae79a078033e67e850f5a8653de5a1fbf87152",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//xIs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CompareVersionsHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-05T14:24:04Z",
+      "side": 1,
+      "message": "Missing `ancestor \u003d ` here.",
+      "revId": "3cae79a078033e67e850f5a8653de5a1fbf87152",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//xIg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CompareVersionsHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-05T14:24:04Z",
+      "side": 1,
+      "message": "s/commit2/commonAncestor/, right?\n\nCould you extract the common code from above into a new method? It\u0027s the same except getting gitPath and repository.",
+      "revId": "3cae79a078033e67e850f5a8653de5a1fbf87152",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
