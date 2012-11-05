@@ -52,7 +52,7 @@ public class RepositoryUtil {
 
 	private final Map<String, String> repositoryNameCache = new HashMap<String, String>();
 
-	private final IEclipsePreferences prefs = InstanceScope.INSTANCE
+	private final IEclipsePreferences prefs = new InstanceScope()
 			.getNode(Activator.getPluginId());
 
 	/**

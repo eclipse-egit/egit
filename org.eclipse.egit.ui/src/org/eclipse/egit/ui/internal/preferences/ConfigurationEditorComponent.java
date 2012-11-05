@@ -165,8 +165,9 @@ public class ConfigurationEditorComponent {
 	public void restore() throws IOException {
 		if (changeablePath) {
 			try {
-				IEclipsePreferences node = InstanceScope.INSTANCE
-						.getNode(org.eclipse.egit.core.Activator.getPluginId());
+				IEclipsePreferences node = new InstanceScope()
+						.getNode(org.eclipse.egit.core.Activator
+								.getPluginId());
 				node.remove(GitCorePreferences.core_gitPrefix);
 				node.flush();
 				// Create a temporary FS instance to compute the Git prefix
@@ -242,7 +243,7 @@ public class ConfigurationEditorComponent {
 							}
 							location.setText(file);
 							try {
-								IEclipsePreferences node = InstanceScope.INSTANCE
+								IEclipsePreferences node = new InstanceScope()
 										.getNode(org.eclipse.egit.core.Activator
 												.getPluginId());
 								node.put(GitCorePreferences.core_gitPrefix,
