@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2011 Mathias Kinzler <mathias.kinzler@sap.com> and others.
+ * Copyright (C) 2010, 2012 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -193,17 +193,17 @@ public class GitMergeEditorInput extends CompareEditorInput {
 			// set the labels
 			CompareConfiguration config = getCompareConfiguration();
 			config.setRightLabel(NLS.bind(LABELPATTERN, rightCommit
-					.getShortMessage(), rightCommit.name()));
+					.getShortMessage(), CompareUtils.truncatedRevision(rightCommit.name())));
 
 			if (!useWorkspace)
 				config.setLeftLabel(NLS.bind(LABELPATTERN, headCommit
-						.getShortMessage(), headCommit.name()));
+						.getShortMessage(), CompareUtils.truncatedRevision(headCommit.name())));
 			else
 				config.setLeftLabel(UIText.GitMergeEditorInput_WorkspaceHeader);
 
 			if (ancestorCommit != null)
 				config.setAncestorLabel(NLS.bind(LABELPATTERN, ancestorCommit
-						.getShortMessage(), ancestorCommit.name()));
+						.getShortMessage(), CompareUtils.truncatedRevision(ancestorCommit.name())));
 
 			// set title and icon
 			setTitle(NLS.bind(UIText.GitMergeEditorInput_MergeEditorTitle,
