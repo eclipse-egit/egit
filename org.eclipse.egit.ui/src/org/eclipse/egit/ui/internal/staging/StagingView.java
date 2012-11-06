@@ -701,6 +701,15 @@ public class StagingView extends ViewPart {
 				UIText.StagingView_Ammend_Previous_Commit, IAction.AS_CHECK_BOX) {
 
 			public void run() {
+				if (isChecked())
+					saveCommitMessageComponentState();
+				else {
+					CommitMessageComponentState oldState = loadCommitMessageComponentState();
+					if (oldState != null) {
+						commitMessageComponent.setCommitMessage(oldState.getCommitMessage());
+						commitMessageComponent.updateUIFromState();
+					}
+				}
 				commitMessageComponent.setAmendingButtonSelection(isChecked());
 				updateMessage();
 			}
