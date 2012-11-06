@@ -1,4 +1,4 @@
 # UUID                                  	Group Name
 #
 e667efa4d7e88410dd42728155ab14051e894019	Administrators
-r8w8h56pxk6e5ed66ob9s5vi4ywsffmuxxezjmv0	technology.egit
+ldap:cn=technology.egit,ou=group,dc=eclipse,dc=org	ldap/technology.egit
