@@ -74,32 +74,6 @@
 
   <profiles>
     <profile>
-      <id>platform-galileo</id>
-      <activation>
-        <property>
-          <name>platform-version-name</name>
-          <value>galileo</value>
-        </property>
-      </activation>
-      <properties>
-        <target-platform>egit-3.5</target-platform>
-        <platform-version>[3.5,3.6)</platform-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>platform-helios</id>
-      <activation>
-        <property>
-          <name>platform-version-name</name>
-          <value>helios</value>
-        </property>
-      </activation>
-      <properties>
-        <target-platform>egit-3.6</target-platform>
-        <platform-version>[3.6,3.7)</platform-version>
-      </properties>
-    </profile>
-    <profile>
       <id>platform-indigo</id>
       <activation>
         <activeByDefault>true</activeByDefault>
