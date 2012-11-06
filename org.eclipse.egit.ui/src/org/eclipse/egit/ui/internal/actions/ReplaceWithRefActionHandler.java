@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2012 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -31,10 +31,10 @@ public class ReplaceWithRefActionHandler extends DiscardChangesActionHandler {
 		final IResource[] resources = getSelectedResources(event);
 		Shell shell = getShell(event);
 		Repository repository = getRepository(true, event);
-		final String pathString = resources.length == 1 ? resources[0].getFullPath()
-				.toString() : null;
+		final String resourceName = resources.length == 1 ? resources[0].getFullPath()
+				.lastSegment() : null;
 		ReplaceTargetSelectionDialog dlg = new ReplaceTargetSelectionDialog(
-				shell, repository, pathString);
+				shell, repository, resourceName);
 		if (dlg.open() == Window.OK)
 			return dlg.getRefName();
 		else

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Tasktop Technologies.
+ * Copyright (c) 2011, 2012 Tasktop Technologies and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,19 +22,19 @@ import org.eclipse.swt.widgets.Shell;
  *
  */
 public class ReplaceTargetSelectionDialog extends AbstractBranchSelectionDialog {
-	private final String pathString;
+	private final String resourceName;
 
 	/**
 	 * @param parentShell
 	 * @param repo
-	 * @param pathString
+	 * @param resourceName
 	 */
 	public ReplaceTargetSelectionDialog(Shell parentShell, Repository repo,
-			String pathString) {
+			String resourceName) {
 		super(parentShell, repo, SHOW_LOCAL_BRANCHES | SHOW_REMOTE_BRANCHES
 				| SHOW_TAGS | SHOW_REFERENCES | EXPAND_LOCAL_BRANCHES_NODE
 				| SELECT_CURRENT_REF);
-		this.pathString = pathString;
+		this.resourceName = resourceName;
 	}
 
 	@Override
@@ -51,8 +51,11 @@ public class ReplaceTargetSelectionDialog extends AbstractBranchSelectionDialog 
 
 	@Override
 	protected String getTitle() {
-		return NLS.bind(UIText.ReplaceTargetSelectionDialog_ReplaceTitle,
-				pathString);
+		if (resourceName != null && resourceName.length() > 0)
+			return NLS.bind(UIText.ReplaceTargetSelectionDialog_ReplaceTitle,
+					resourceName);
+		else
+			return UIText.ReplaceTargetSelectionDialog_ReplaceTitleEmptyPath;
 	}
 
 	@Override
