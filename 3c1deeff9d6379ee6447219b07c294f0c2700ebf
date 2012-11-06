@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//wzk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-06T23:16:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this rather be named \"getChangedPaths\" (as the event is also called \"IndexChangedEvent\")?",
+      "revId": "3c1deeff9d6379ee6447219b07c294f0c2700ebf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
