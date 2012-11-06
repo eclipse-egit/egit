@@ -7,6 +7,7 @@
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2012, IBM Corporation (Markus Keller <markus_keller@ch.ibm.com>)
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -125,6 +126,8 @@ public class CommitMessageComponent {
 
 	private String commitMessage = null;
 
+	private String commitMessageBeforeAmending = EMPTY_STRING;
+
 	private String previousCommitMessage = EMPTY_STRING;
 
 	private String author = null;
@@ -182,7 +185,8 @@ public class CommitMessageComponent {
 	public void resetState() {
 		originalChangeId = null;
 		commitMessage = null;
-		previousCommitMessage =EMPTY_STRING;
+		commitMessageBeforeAmending = EMPTY_STRING;
+		previousCommitMessage = EMPTY_STRING;
 		author = null;
 		previousAuthor = null;
 		committer = null;
@@ -320,6 +324,7 @@ public class CommitMessageComponent {
 	 */
 	public void setAmendAllowed(boolean amendAllowed) {
 		this.amendAllowed = amendAllowed;
+		commitMessageBeforeAmending = EMPTY_STRING;
 	}
 
 	/**
@@ -330,9 +335,12 @@ public class CommitMessageComponent {
 		if (!selection) {
 			originalChangeId = null;
 			authorText.setText(author);
+			commitText.setText(commitMessageBeforeAmending);
+			commitMessageBeforeAmending = EMPTY_STRING;
 		} else {
 			getHeadCommitInfo();
 			saveOriginalChangeId();
+			commitMessageBeforeAmending = commitText.getText();
 			commitText.setText(previousCommitMessage);
 			if (previousAuthor != null)
 				authorText.setText(previousAuthor);
