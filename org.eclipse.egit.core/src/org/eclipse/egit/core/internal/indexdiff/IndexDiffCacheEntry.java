@@ -78,7 +78,11 @@ public class IndexDiffCacheEntry {
 		repository.getListenerList().addIndexChangedListener(
 				new IndexChangedListener() {
 					public void onIndexChanged(IndexChangedEvent event) {
-						scheduleReloadJob("IndexChanged"); //$NON-NLS-1$
+						List<String> modifiedPaths = event.getModifiedPaths();
+						if (!modifiedPaths.isEmpty()) {
+							Collection<IResource> res = Collections.emptyList();
+							scheduleUpdateJob(modifiedPaths, res);
+						}
 					}
 				});
 		repository.getListenerList().addRefsChangedListener(
