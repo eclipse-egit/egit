@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//wuQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ResourceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-07T13:27:42Z",
+      "side": 1,
+      "message": "Style nit: We don\u0027t use braces for simple single-line blocks.",
+      "revId": "0ba7aedd5b22afac157991086bf2cb6e74528171",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//wuU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-07T13:27:42Z",
+      "side": 1,
+      "message": "Style nit: We don\u0027t use braces for simple single-line blocks.",
+      "revId": "0ba7aedd5b22afac157991086bf2cb6e74528171",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//wuE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitChangeSetModelProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-07T13:27:42Z",
+      "side": 1,
+      "message": "This was also in a separate patch in the bug report, right? Please also move that to a separate change and explain why it\u0027s done.",
+      "revId": "0ba7aedd5b22afac157991086bf2cb6e74528171",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
