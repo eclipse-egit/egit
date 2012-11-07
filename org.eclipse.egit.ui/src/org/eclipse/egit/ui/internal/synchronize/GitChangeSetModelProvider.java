@@ -10,6 +10,7 @@ package org.eclipse.egit.ui.internal.synchronize;
 
 import java.io.IOException;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.ModelProvider;
 import org.eclipse.core.resources.mapping.ResourceMapping;
@@ -57,10 +58,10 @@ public class GitChangeSetModelProvider extends ModelProvider {
 	public ResourceMapping[] getMappings(IResource resource,
 			ResourceMappingContext context, IProgressMonitor monitor)
 			throws CoreException {
-		if (context instanceof GitSubscriberResourceMappingContext) {
+		if (context instanceof GitSubscriberResourceMappingContext && resource instanceof IProject) {
 			GitSubscriberResourceMappingContext gitContext = (GitSubscriberResourceMappingContext) context;
 			GitSynchronizeDataSet gsds = gitContext.getSyncData();
-			GitSynchronizeData data = gsds.getData(resource.getProject());
+			GitSynchronizeData data = gsds.getData((IProject)resource);
 
 			if (data != null) {
 				GitModelObject object = null;

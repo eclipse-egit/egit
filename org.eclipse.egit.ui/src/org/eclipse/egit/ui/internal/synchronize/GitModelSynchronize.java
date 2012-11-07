@@ -42,7 +42,7 @@ import org.eclipse.ui.PlatformUI;
  */
 public class GitModelSynchronize {
 
-	private static final String providerId = "org.eclipse.egit.core.GitProvider"; //$NON-NLS-1$
+	private static final String gitProviderId = "org.eclipse.egit.core.GitProvider"; //$NON-NLS-1$
 
 	/**
 	 * Launches Git Model synchronization action
@@ -63,8 +63,20 @@ public class GitModelSynchronize {
 	 */
 	public static final void launch(final GitSynchronizeDataSet gsdSet,
 			IResource[] resources) {
-		ResourceMapping[] mappings = getSelectedResourceMappings(resources);
+		ResourceMapping[] mappings = getGitResourceMappings(resources);
 
+		launch(gsdSet, mappings);
+	}
+
+	/**
+	 * Launches Git Model synchronization action using the specified resource
+	 * mapping
+	 *
+	 * @param gsdSet
+	 * @param mappings
+	 */
+	public static final void launch(final GitSynchronizeDataSet gsdSet,
+			ResourceMapping[] mappings) {
 		IWorkbenchWindow window = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 
@@ -78,7 +90,7 @@ public class GitModelSynchronize {
 	 * @return the resource mappings that contain resources associated with the
 	 *         given provider
 	 */
-	private static ResourceMapping[] getSelectedResourceMappings(
+	private static ResourceMapping[] getGitResourceMappings(
 			IResource[] elements) {
 		List<ResourceMapping> providerMappings = new ArrayList<ResourceMapping>();
 
@@ -87,7 +99,7 @@ public class GitModelSynchronize {
 			if (adapted != null && adapted instanceof ResourceMapping) {
 				ResourceMapping mapping = (ResourceMapping) adapted;
 
-				if (isMappedToProvider(mapping))
+				if (isMappedToGitProvider(mapping))
 					providerMappings.add(mapping);
 			}
 		}
@@ -119,13 +131,13 @@ public class GitModelSynchronize {
 	 * @return <code>true</code> if resource is mapped to Git provider,
 	 *         <code>false</code> otherwise
 	 */
-	private static boolean isMappedToProvider(ResourceMapping element) {
+	private static boolean isMappedToGitProvider(ResourceMapping element) {
 		IProject[] projects = element.getProjects();
 		for (IProject project: projects) {
 			RepositoryProvider provider = RepositoryProvider
 					.getProvider(project);
 
-			if (provider != null && provider.getID().equals(providerId))
+			if (provider != null && provider.getID().equals(gitProviderId))
 				return true;
 		}
 		return false;

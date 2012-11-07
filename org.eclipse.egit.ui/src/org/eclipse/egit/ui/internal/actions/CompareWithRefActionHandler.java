@@ -9,6 +9,9 @@
 
 package org.eclipse.egit.ui.internal.actions;
 
+import static org.eclipse.egit.core.internal.util.ResourceUtil.getResourceMappings;
+import static org.eclipse.jgit.lib.Constants.HEAD;
+
 import java.io.IOException;
 
 import org.eclipse.compare.CompareUI;
@@ -17,13 +20,18 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
+import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.dialogs.CompareTargetSelectionDialog;
 import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
+import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
@@ -53,26 +61,11 @@ public class CompareWithRefActionHandler extends RepositoryActionHandler {
 			if (resources.length == 1 && resources[0] instanceof IFile) {
 				final IFile baseFile = (IFile) resources[0];
 
-				final ITypedElement base = SaveableCompareEditorInput
-						.createFileElement(baseFile);
-
-				final ITypedElement next;
-				try {
-					RepositoryMapping mapping = RepositoryMapping
-							.getMapping(resources[0]);
-					next = getElementForRef(mapping.getRepository(), mapping
-							.getRepoRelativePath(baseFile), dlg.getRefName());
-				} catch (IOException e) {
-					Activator.handleError(
-							UIText.CompareWithIndexAction_errorOnAddToIndex, e,
-							true);
-					return null;
+				if (isOKToShowSingleFile(baseFile)) {
+					showSingleFileComparison(baseFile, dlg.getRefName());
+				} else {
+					synchronizeModel(baseFile, repo, dlg.getRefName());
 				}
-
-				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-						base, next, null);
-				in.getCompareConfiguration().setRightLabel(dlg.getRefName());
-				CompareUI.openCompareEditor(in);
 			} else {
 				CompareTreeView view;
 				try {
@@ -88,6 +81,47 @@ public class CompareWithRefActionHandler extends RepositoryActionHandler {
 		return null;
 	}
 
+	private void showSingleFileComparison(IFile file, String refName) {
+		final ITypedElement base = SaveableCompareEditorInput
+				.createFileElement(file);
+
+		final ITypedElement next;
+		try {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(file);
+			next = getElementForRef(mapping.getRepository(),
+					mapping.getRepoRelativePath(file), refName);
+		} catch (IOException e) {
+			Activator.handleError(
+					UIText.CompareWithIndexAction_errorOnAddToIndex, e, true);
+			return;
+		}
+
+		final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+				base, next, null);
+		in.getCompareConfiguration().setRightLabel(refName);
+		CompareUI.openCompareEditor(in);
+	}
+
+	private void synchronizeModel(final IFile file, Repository repo,
+			String refName) {
+		try {
+			final GitSynchronizeData data = new GitSynchronizeData(repo, HEAD,
+					refName, true);
+			final GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(
+					data);
+
+			// use all available local mappings for proper model support
+			final ResourceMapping[] mappings = getResourceMappings(file,
+					ResourceMappingContext.LOCAL_CONTEXT);
+
+			GitModelSynchronize.launch(dataSet, mappings);
+		} catch (IOException e) {
+			Activator.handleError(
+					UIText.CompareWithRefAction_errorOnSynchronize, e, true);
+			return;
+		}
+	}
+
 	private ITypedElement getElementForRef(final Repository repository,
 			final String gitPath, final String refName) throws IOException {
 		ObjectId commitId = repository.resolve(refName + "^{commit}"); //$NON-NLS-1$
@@ -95,7 +129,8 @@ public class CompareWithRefActionHandler extends RepositoryActionHandler {
 		RevCommit commit = rw.parseCommit(commitId);
 		rw.release();
 
-		return CompareUtils.getFileRevisionTypedElement(gitPath, commit, repository);
+		return CompareUtils.getFileRevisionTypedElement(gitPath, commit,
+				repository);
 	}
 
 	@Override
