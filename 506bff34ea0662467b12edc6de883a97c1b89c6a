@@ -121,6 +121,23 @@
     },
     {
       "key": {
+        "uuid": "AABOI3///8c\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-11-07T15:59:27Z",
+      "side": 1,
+      "message": "nit-pick: we don\u0027 use branches for very simple statements",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//wts\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
         "patchSetId": 2
