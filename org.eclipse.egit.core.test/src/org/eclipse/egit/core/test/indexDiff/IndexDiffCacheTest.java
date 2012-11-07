@@ -23,7 +23,6 @@ import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.events.IndexChangedEvent;
 import org.eclipse.jgit.lib.Repository;
 import org.junit.After;
 import org.junit.Before;
@@ -84,7 +83,6 @@ public class IndexDiffCacheTest extends GitTestCase {
 			fail("IndexDiffData did not contain aFile as untracked");
 		new Git(repository).add().addFilepattern(path).call();
 		// This call should trigger an indexDiffChanged event
-		repository.fireEvent(new IndexChangedEvent());
 		waitForListenerCalled(listenerCalled);
 		indexDiffData = resultDiff.get();
 		if (indexDiffData.getUntracked().contains(path))
