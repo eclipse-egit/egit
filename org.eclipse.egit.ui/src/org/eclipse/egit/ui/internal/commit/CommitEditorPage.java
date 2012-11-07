@@ -77,6 +77,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
+import org.eclipse.ui.part.ShowInContext;
 
 /**
  * Commit editor page class displaying author, committer, parent commits,
@@ -542,6 +543,13 @@ public class CommitEditorPage extends FormPage implements ISchedulingRule {
 
 	public boolean isConflicting(ISchedulingRule rule) {
 		return rule == this;
+	}
+
+	ShowInContext getShowInContext() {
+		if (diffViewer != null && diffViewer.getControl().isFocusControl())
+			return diffViewer.getShowInContext();
+		else
+			return null;
 	}
 
 }
