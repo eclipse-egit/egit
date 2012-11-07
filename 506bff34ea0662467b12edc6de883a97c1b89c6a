@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOIn//wtk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/CoreText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-07T13:44:28Z",
+      "side": 1,
+      "message": "Suggestion: failed_index_load -\u003e errorCalculatingIndexDelta",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//wtg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/CoreText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-07T13:44:28Z",
+      "side": 1,
+      "message": "Please add missing copyright here too.",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//wt8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-07T13:44:28Z",
+      "side": 1,
+      "message": "Please add a space between keywords and parentheses. Also in rest of change.",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//wt4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-07T13:44:28Z",
+      "side": 1,
+      "message": "Also use repository.readDirCache here like below.",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//wtc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-07T13:44:28Z",
+      "side": 1,
+      "message": "This mentions refs changed, but the listener above does not use it.",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//wt0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-07T13:44:28Z",
+      "side": 1,
+      "message": "Does this have to be public?",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//wtw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-07T13:44:28Z",
+      "side": 1,
+      "message": "walk should be released (I\u0027m not sure if it\u0027s absolutely necessary here, but do it anyway).",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//wts\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-07T13:44:28Z",
+      "side": 1,
+      "message": "Please catch only necessary exceptions, not everything.",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOIn//wto\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-07T13:44:28Z",
+      "side": 1,
+      "message": "\"failed to calculate index delta!\" -\u003e \"Exception while calculating index delta, doing full reload instead\"",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
