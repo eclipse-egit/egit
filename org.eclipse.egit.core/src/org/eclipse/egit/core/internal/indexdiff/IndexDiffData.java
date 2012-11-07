@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2011, 2012 Jens Baumgart <jens.baumgart@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -99,7 +99,6 @@ public class IndexDiffData {
 		Set<String> missing2 = new HashSet<String>(baseDiff.getMissing());
 		Set<String> modified2 = new HashSet<String>(baseDiff.getModified());
 		Set<String> untracked2 = new HashSet<String>(baseDiff.getUntracked());
-		Set<String> untrackedFolders2 = new HashSet<String>(baseDiff.getUntrackedFolders());
 		Set<String> conflicts2 = new HashSet<String>(baseDiff.getConflicting());
 		Set<String> ignored2 = new HashSet<String>(baseDiff.getIgnoredNotInIndex());
 
@@ -109,7 +108,9 @@ public class IndexDiffData {
 		mergeList(missing2, changedFiles, diffForChangedFiles.getMissing());
 		mergeList(modified2, changedFiles, diffForChangedFiles.getModified());
 		mergeList(untracked2, changedFiles, diffForChangedFiles.getUntracked());
-		mergeList(untrackedFolders2, changedFiles, getUntrackedFolders(diffForChangedFiles));
+		Set<String> untrackedFolders2 = mergeUntrackedFolders(
+				baseDiff.getUntrackedFolders(), changedFiles,
+				getUntrackedFolders(diffForChangedFiles));
 		mergeList(conflicts2, changedFiles,
 				diffForChangedFiles.getConflicting());
 		mergeList(ignored2, changedFiles,
@@ -137,6 +138,27 @@ public class IndexDiffData {
 					baseList.add(file);
 			}
 		}
+	}
+
+	private static Set<String> mergeUntrackedFolders(Set<String> oldUntrackedFolders,
+			Collection<String> changedFiles, Set<String> newUntrackedFolders) {
+		Set<String> merged = new HashSet<String>();
+		for (String oldUntrackedFolder : oldUntrackedFolders) {
+			boolean changeInUntrackedFolder = isAnyFileContainedInFolder(
+					oldUntrackedFolder, changedFiles);
+			if (!changeInUntrackedFolder)
+				merged.add(oldUntrackedFolder);
+		}
+		merged.addAll(newUntrackedFolders);
+		return merged;
+	}
+
+	private static boolean isAnyFileContainedInFolder(String folder,
+			Collection<String> files) {
+		for (String file : files)
+			if (file.startsWith(folder))
+				return true;
+		return false;
 	}
 
 	/**
