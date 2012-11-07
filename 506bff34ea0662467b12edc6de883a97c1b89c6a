@@ -104,6 +104,23 @@
     },
     {
       "key": {
+        "uuid": "AABOI3///1k\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-11-07T22:26:31Z",
+      "side": 1,
+      "message": "bare repositories don\u0027t have a working tree so this seems esoteric to me",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//wtw\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
         "patchSetId": 2
@@ -132,6 +149,23 @@
       "writtenOn": "2012-11-07T15:59:27Z",
       "side": 1,
       "message": "nit-pick: we don\u0027 use branches for very simple statements",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///1g\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-11-07T22:26:31Z",
+      "side": 1,
+      "message": "I guess you meant no braces around single line statements",
       "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
