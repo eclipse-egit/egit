@@ -3120,18 +3120,12 @@
                      checkEnabled="false">
                   <and>
                      <count
-                           value="+">
+                           value="1">
                      </count>
                      <iterate>
                         <or>
                            <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.FileNode">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
                            </instanceof>
                         </or>
                      </iterate>
@@ -3191,7 +3185,37 @@
                      </iterate>
                   </and>
                </visibleWhen>
-           </command>
+            </command>
+         </menu>
+         <menu
+               id="org.eclipse.egit.ui.RepositoriesViewWorkingDirShowIn"
+               label="%ShowIn"
+               mnemonic="w">
+            <dynamic
+                  class="org.eclipse.ui.ExtensionFactory:showInContribution"
+                  id="org.eclipse.ui.menus.dynamicShowInMenu">
+            </dynamic>
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="+">
+                  </count>
+                  <iterate>
+                     <or>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.FileNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.FolderNode">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </visibleWhen>
          </menu>
          <command
                commandId="org.eclipse.egit.ui.RepositoriesViewImportProjects"

@@ -46,12 +46,15 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
+import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
+import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -106,6 +109,7 @@ import org.eclipse.ui.handlers.RegistryToggleState;
 import org.eclipse.ui.navigator.CommonNavigator;
 import org.eclipse.ui.navigator.CommonViewer;
 import org.eclipse.ui.part.IPage;
+import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
@@ -115,7 +119,7 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 /**
  * The "Git Repositories View"
  */
-public class RepositoriesView extends CommonNavigator {
+public class RepositoriesView extends CommonNavigator implements IShowInSource {
 
 	/** "remote" */
 	public static final String REMOTE = "remote"; //$NON-NLS-1$
@@ -710,6 +714,67 @@ public class RepositoriesView extends CommonNavigator {
 			showResource(input.getFile());
 		}
 		return false;
+	}
+
+	public ShowInContext getShowInContext() {
+		IStructuredSelection selection = (IStructuredSelection) getCommonViewer()
+				.getSelection();
+		List<IResource> resources = getResources(selection);
+		// GenericHistoryView only shows a selection of a single resource (see
+		// bug 392949), so prepare our own history page input which can contain
+		// multiple files to support showing more than one file in history.
+		// It's also necessary for a single file that is outside of the
+		// workspace (and as such is not an IResource).
+		HistoryPageInput historyPageInput = getHistoryPageInput(selection);
+		return new ShowInContext(historyPageInput, new StructuredSelection(resources));
+	}
+
+	private static List<IResource> getResources(IStructuredSelection selection) {
+		List<IResource> resources = new ArrayList<IResource>();
+		for (Object element : selection.toList()) {
+			if (element instanceof FileNode || element instanceof FolderNode
+					|| element instanceof WorkingDirNode) {
+				RepositoryTreeNode treeNode = (RepositoryTreeNode) element;
+				IPath path = treeNode.getPath();
+				IResource resource = ResourceUtil.getResourceForLocation(path);
+				if (resource != null)
+					resources.add(resource);
+			}
+		}
+		return resources;
+	}
+
+	/**
+	 * @param selection
+	 * @return the HistoryPageInput corresponding to the selection, or null
+	 */
+	private static HistoryPageInput getHistoryPageInput(IStructuredSelection selection) {
+		List<File> files = new ArrayList<File>();
+		Repository repo = null;
+		for (Object element : selection.toList()) {
+			Repository nodeRepository;
+			if (element instanceof FileNode) {
+				FileNode fileNode = (FileNode) element;
+				files.add(fileNode.getObject());
+				nodeRepository = fileNode.getRepository();
+			} else if (element instanceof FolderNode) {
+				FolderNode folderNode = (FolderNode) element;
+				files.add(folderNode.getObject());
+				nodeRepository = folderNode.getRepository();
+			} else {
+				// Don't return input if selection is not file/folder
+				return null;
+			}
+			if (repo == null)
+				repo = nodeRepository;
+			// Don't return input if nodes from different repositories are selected
+			if (repo != nodeRepository)
+				return null;
+		}
+		if (repo != null)
+			return new HistoryPageInput(repo, files.toArray(new File[files.size()]));
+		else
+			return null;
 	}
 
 	private void reactOnSelection(ISelection selection) {
