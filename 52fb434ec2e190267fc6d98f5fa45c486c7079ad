@@ -16,6 +16,24 @@
       "revId": "52fb434ec2e190267fc6d98f5fa45c486c7079ad",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///vM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2012-11-08T12:16:46Z",
+      "side": 0,
+      "message": "Is there an easy way to do this via Gerrit? I\u0027m afraid that I\u0027ll end up in rebase hell when trying to implement and maintain separate commits for a change. Currently I always amend the previous commit in order to maintain a single change id for a bug.\n\nWhat\u0027s the recommended strategy here?",
+      "parentUuid": "AABOIn//wuI\u003d",
+      "revId": "52fb434ec2e190267fc6d98f5fa45c486c7079ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
