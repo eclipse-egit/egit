@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOI3///vA\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/indexDiff/IndexDiffCacheTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-08T13:14:04Z",
+      "side": 0,
+      "message": "Was this already unnecessary before? Please also move the comment one line up.",
+      "revId": "4a99f1562ab10c39f944022659bb1143d8a5181e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
