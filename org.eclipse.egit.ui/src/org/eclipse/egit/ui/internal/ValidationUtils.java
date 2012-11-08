@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2010, 2012 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -41,6 +41,10 @@ public class ValidationUtils {
 						return null;
 				}
 				String testFor = refPrefix + newText;
+				if (!Repository.isValidRefName(testFor))
+					return NLS.bind(
+							UIText.ValidationUtils_InvalidRefNameMessage,
+							testFor);
 				try {
 					if (repo.resolve(testFor) != null)
 						return NLS.bind(
@@ -52,10 +56,6 @@ public class ValidationUtils {
 							testFor), e1);
 					return e1.getMessage();
 				}
-				if (!Repository.isValidRefName(testFor))
-					return NLS.bind(
-							UIText.ValidationUtils_InvalidRefNameMessage,
-							testFor);
 				return null;
 			}
 		};
