@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOI3///yc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/CoreText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T07:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//wtk\u003d",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//wtg\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/CoreText.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-11-07T13:44:28Z",
       "side": 1,
       "message": "Please add missing copyright here too.",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///yY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/CoreText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T07:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//wtg\u003d",
       "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOI3///yU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T07:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//wt8\u003d",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//wt4\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2012-11-07T13:44:28Z",
       "side": 1,
       "message": "Also use repository.readDirCache here like below.",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///yQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T07:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//wt4\u003d",
       "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AABOI3///yE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T07:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//wtc\u003d",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//wt0\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2012-11-07T13:44:28Z",
       "side": 1,
       "message": "Does this have to be public?",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///yA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T07:22:00Z",
+      "side": 1,
+      "message": "not really - i changed to private. if somebody would need the api from the outside, we can change it back anyway :)",
+      "parentUuid": "AABOIn//wt0\u003d",
       "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AABOI3///x8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T07:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOI3///1k\u003d",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//wtw\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2012-11-07T13:44:28Z",
       "side": 1,
       "message": "walk should be released (I\u0027m not sure if it\u0027s absolutely necessary here, but do it anyway).",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///x4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T07:22:00Z",
+      "side": 1,
+      "message": "oups - i had that in the first version, but missed it here :/",
+      "parentUuid": "AABOIn//wtw\u003d",
       "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "AABOI3///x0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T07:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOI3///1g\u003d",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//wts\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
         "patchSetId": 2
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "AABOI3///xw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T07:22:00Z",
+      "side": 1,
+      "message": "done. still i\u0027m only catching IOException, and not CorruptObjectException additionally, as i would handle both the same.",
+      "parentUuid": "AABOIn//wts\u003d",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOIn//wto\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
         "patchSetId": 2
@@ -200,6 +380,24 @@
       "writtenOn": "2012-11-07T13:44:28Z",
       "side": 1,
       "message": "\"failed to calculate index delta!\" -\u003e \"Exception while calculating index delta, doing full reload instead\"",
+      "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///xs\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T07:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOIn//wto\u003d",
       "revId": "506bff34ea0662467b12edc6de883a97c1b89c6a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
