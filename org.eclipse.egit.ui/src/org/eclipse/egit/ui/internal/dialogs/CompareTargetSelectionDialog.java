@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2012 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,19 +22,19 @@ import org.eclipse.swt.widgets.Shell;
  *
  */
 public class CompareTargetSelectionDialog extends AbstractBranchSelectionDialog {
-	private final String pathString;
+	private final String resourceName;
 
 	/**
 	 * @param parentShell
 	 * @param repo
-	 * @param pathString
+	 * @param resourceName
 	 */
 	public CompareTargetSelectionDialog(Shell parentShell, Repository repo,
-			String pathString) {
+			String resourceName) {
 		super(parentShell, repo, SHOW_LOCAL_BRANCHES | SHOW_REMOTE_BRANCHES
 				| SHOW_TAGS | SHOW_REFERENCES | EXPAND_LOCAL_BRANCHES_NODE
 				| SELECT_CURRENT_REF);
-		this.pathString = pathString;
+		this.resourceName = resourceName;
 	}
 
 	@Override
@@ -51,9 +51,9 @@ public class CompareTargetSelectionDialog extends AbstractBranchSelectionDialog 
 
 	@Override
 	protected String getTitle() {
-		if (pathString != null && pathString.length() > 0)
+		if (resourceName != null && resourceName.length() > 0)
 			return NLS.bind(UIText.CompareTargetSelectionDialog_CompareTitle,
-					pathString);
+					resourceName);
 		else
 			return UIText.CompareTargetSelectionDialog_CompareTitleEmptyPath;
 	}
