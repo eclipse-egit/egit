@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOI3///sg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T14:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOI3///u8\u003d",
+      "revId": "f98719de9e1532cb60e2c6ce2e4d8d6be9c419a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOI3///us\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2012-11-08T13:14:04Z",
       "side": 1,
       "message": "Must MessageFormat.format here (for {}), String.format is only %s etc.",
+      "revId": "f98719de9e1532cb60e2c6ce2e4d8d6be9c419a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///sc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T14:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOI3///us\u003d",
       "revId": "f98719de9e1532cb60e2c6ce2e4d8d6be9c419a5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOI3///sU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T14:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOI3///u4\u003d",
+      "revId": "f98719de9e1532cb60e2c6ce2e4d8d6be9c419a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOI3///uo\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2012-11-08T13:14:04Z",
       "side": 1,
       "message": "Must MessageFormat.format here (for {}), String.format is only %s etc.",
+      "revId": "f98719de9e1532cb60e2c6ce2e4d8d6be9c419a5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///sY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T14:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOI3///uo\u003d",
       "revId": "f98719de9e1532cb60e2c6ce2e4d8d6be9c419a5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
