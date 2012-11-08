@@ -34,6 +34,24 @@
       "revId": "4a99f1562ab10c39f944022659bb1143d8a5181e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///rw\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/indexDiff/IndexDiffCacheTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 326
+      },
+      "writtenOn": "2012-11-08T15:09:03Z",
+      "side": 0,
+      "message": "yes it was - adding a file to the index causes such an event, and the second one was completely useless.",
+      "parentUuid": "AABOI3///vA\u003d",
+      "revId": "4a99f1562ab10c39f944022659bb1143d8a5181e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
