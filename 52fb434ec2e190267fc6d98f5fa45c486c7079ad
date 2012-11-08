@@ -34,6 +34,24 @@
       "revId": "52fb434ec2e190267fc6d98f5fa45c486c7079ad",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOI3///t0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-08T14:16:03Z",
+      "side": 0,
+      "message": "You would have to manually separate the parts out into a new commit, which would receive a new Gerrit change ID.\n\nTo edit the previous-to-last commit later, you would have to do an interactive rebase and specify \"edit\" for the commit and then you can amend and if it\u0027s ok, continue rebasing. Then push the rebased commits to review again.\n\nBut if it\u0027s too much work for you, it\u0027s ok for once. Just make sure to explain why this here is needed in the commit message.",
+      "parentUuid": "AABOI3///vM\u003d",
+      "revId": "52fb434ec2e190267fc6d98f5fa45c486c7079ad",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
