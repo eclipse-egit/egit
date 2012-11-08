@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2012 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -12,6 +12,8 @@ package org.eclipse.egit.ui.internal.repository.tree;
 
 import java.io.File;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -33,4 +35,8 @@ public class FileNode extends RepositoryTreeNode<File> {
 		super(parent, RepositoryTreeNodeType.FILE, repository, file);
 	}
 
+	@Override
+	public IPath getPath() {
+		return new Path(getObject().getAbsolutePath());
+	}
 }
