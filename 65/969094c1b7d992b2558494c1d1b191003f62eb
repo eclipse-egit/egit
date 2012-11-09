@@ -1,0 +1,9 @@
+Code-Review+2: Jens Baumgart <jens.baumgart@sap.com>
+IP-Clean+1: Jens Baumgart <jens.baumgart@sap.com>
+Verified+1: Hudson CI
+Code-Review+1: Tobias Oberlies <tobias.oberlies@sap.com>
+Submitted-by: Jens Baumgart <jens.baumgart@sap.com>
+Submitted-at: Fri, 09 Nov 2012 11:31:57 -0500
+Reviewed-on: https://git.eclipse.org/r/8547
+Project: egit/egit
+Branch: refs/heads/master
