@@ -16,6 +16,23 @@
       "revId": "edb5a6549f4c7c2c9172810dfa0999599db8729f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJH///tw\u003d",
+        "filename": "org.eclipse.egit.core/.settings/org.eclipse.jdt.ui.prefs",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-11-11T02:09:33Z",
+      "side": 1,
+      "message": "What\u0027s the difference between cleanup and sp_cleanup? Some are different",
+      "revId": "edb5a6549f4c7c2c9172810dfa0999599db8729f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
