@@ -12,12 +12,11 @@ package org.eclipse.egit.ui.internal.repository.tree.command;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
 
 /**
  * Deletes a Repository
  */
-public class DeleteCommand extends RemoveCommand implements IHandler {
+public class DeleteCommand extends RemoveCommand {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		super.removeRepository(event, true);
 		return null;

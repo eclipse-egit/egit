@@ -18,7 +18,6 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -58,7 +57,7 @@ import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
  * "Removes" one or several nodes
  */
 public class RemoveCommand extends
-		RepositoriesViewCommandHandler<RepositoryNode> implements IHandler {
+		RepositoriesViewCommandHandler<RepositoryNode> {
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
 		removeRepository(event, false);
 		return null;
