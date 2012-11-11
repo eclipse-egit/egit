@@ -16,13 +16,11 @@ import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.dialogs.CommitLabelProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
 
 /**
  * A Label Provider for Commits
  */
-class GraphLabelProvider extends CommitLabelProvider implements
-		ITableLabelProvider {
+class GraphLabelProvider extends CommitLabelProvider {
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 		final SWTCommit c = (SWTCommit) element;
