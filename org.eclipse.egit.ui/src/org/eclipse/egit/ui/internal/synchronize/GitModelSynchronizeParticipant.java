@@ -5,6 +5,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Dariusz Luksza <dariusz@luksza.org> - initial API and implementation
+ *     Laurent Goubet <laurent.goubet@obeo.fr> - Logical Model enhancements
+ *     Gunnar Wagenknecht <gunnar@wagenknecht.org> - Logical Model enhancements
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize;
 
@@ -31,6 +36,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
@@ -213,15 +219,21 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 
 	@Override
 	public ICompareInput asCompareInput(Object object) {
+		// check model compare input first
+		ICompareInput compareInput = super.asCompareInput(object);
+		if(compareInput != null)
+			return compareInput;
+
 		// handle file comparison in Workspace model
-		if (object instanceof IFile) {
-			IFile file = (IFile) object;
-			GitSynchronizeData gsd = gsds.getData(file.getProject());
+		IResource resource = AdapterUtils.adapt(object, IResource.class);
+		if (resource != null && resource.getType() == IResource.FILE) {
+			GitSynchronizeData gsd = gsds.getData(resource.getProject());
 			if (!gsd.shouldIncludeLocal())
-				return getFileFromGit(gsd, file.getLocation());
+				return getFileFromGit(gsd, resource.getLocation());
 		}
 
-		return super.asCompareInput(object);
+		// give up
+		return null;
 	}
 
 	@Override
