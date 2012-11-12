@@ -2161,6 +2161,9 @@ public class UIText extends NLS {
 	public static String CompareWithIndexAction_errorOnAddToIndex;
 
 	/** */
+	public static String CompareWithRefAction_errorOnSynchronize;
+
+	/** */
 	public static String CompareWithPreviousActionHandler_MessageRevisionNotFound;
 
 	/** */
