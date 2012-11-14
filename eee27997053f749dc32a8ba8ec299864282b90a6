@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJX///2o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-14T13:42:46Z",
+      "side": 1,
+      "message": "The \"and others.\" is missing here. See the just created section http://wiki.eclipse.org/EGit/Contributor_Guide#Copyright for how to update the statements. This also applies to your other changes.",
+      "revId": "eee27997053f749dc32a8ba8ec299864282b90a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
