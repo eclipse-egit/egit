@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
+import static org.eclipse.egit.core.AdapterUtils.adapt;
+
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -31,7 +33,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
@@ -450,7 +451,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 			result = new ArrayList();
 			Iterator elements = ((IStructuredSelection) selection).iterator();
 			while (elements.hasNext()) {
-				Object adapter = getAdapter(elements.next(), c);
+				Object adapter = adapt(elements.next(), c);
 				if (c.isInstance(adapter))
 					result.add(adapter);
 			}
@@ -459,18 +460,6 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 			return result
 					.toArray((Object[]) Array.newInstance(c, result.size()));
 		return (Object[]) Array.newInstance(c, 0);
-	}
-
-	private Object getAdapter(Object adaptable, Class c) {
-		if (c.isInstance(adaptable))
-			return adaptable;
-		if (adaptable instanceof IAdaptable) {
-			IAdaptable a = (IAdaptable) adaptable;
-			Object adapter = a.getAdapter(c);
-			if (c.isInstance(adapter))
-				return adapter;
-		}
-		return null;
 	}
 
 	/**
@@ -499,7 +488,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	private IResource[] getSelectedResources(IStructuredSelection selection) {
 		Set<IResource> result = new LinkedHashSet<IResource>();
 		for (Object o : selection.toList()) {
-			IResource resource = (IResource) getAdapter(o, IResource.class);
+			IResource resource = adapt(o, IResource.class);
 			if (resource != null)
 				result.add(resource);
 			else
@@ -509,8 +498,7 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	}
 
 	private void extractResourcesFromMapping(Set<IResource> result, Object o) {
-		ResourceMapping mapping = (ResourceMapping) getAdapter(o,
-				ResourceMapping.class);
+		ResourceMapping mapping = adapt(o, ResourceMapping.class);
 		if (mapping != null) {
 			ResourceTraversal[] traversals;
 			try {
