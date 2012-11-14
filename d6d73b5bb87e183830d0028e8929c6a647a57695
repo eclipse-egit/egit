@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJX///vw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-11-14T22:31:40Z",
+      "side": 1,
+      "message": "can we find a better name e.g. canDirectlyOpenInCompare(IFile) ?",
+      "revId": "d6d73b5bb87e183830d0028e8929c6a647a57695",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJX///y4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-11-14T22:31:40Z",
+      "side": 1,
+      "message": "s/change/chance/",
+      "revId": "d6d73b5bb87e183830d0028e8929c6a647a57695",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJX///y0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-11-14T22:31:40Z",
+      "side": 1,
+      "message": "s/one/on/",
+      "revId": "d6d73b5bb87e183830d0028e8929c6a647a57695",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJX///yw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-11-14T22:31:40Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "d6d73b5bb87e183830d0028e8929c6a647a57695",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
