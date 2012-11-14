@@ -392,6 +392,11 @@
             class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
          <adapter type="org.eclipse.ui.model.IWorkbenchAdapter"/>
       </factory>
+      <factory
+            adaptableType="org.eclipse.team.ui.history.IHistoryView"
+            class="org.eclipse.egit.ui.internal.factories.GitAdapterFactory">
+         <adapter type="org.eclipse.ui.part.IShowInSource"/>
+      </factory>
    </extension>
 
    <extension point="org.eclipse.ui.preferencePages">

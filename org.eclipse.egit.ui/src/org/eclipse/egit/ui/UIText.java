@@ -3710,6 +3710,9 @@ public class UIText extends NLS {
 	public static String CommitFileDiffViewer_OpenInEditorMenuLabel;
 
 	/** */
+	public static String CommitFileDiffViewer_ShowInMenuLabel;
+
+	/** */
 	public static String CommitFileDiffViewer_notContainedInCommit;
 
 	/** */
