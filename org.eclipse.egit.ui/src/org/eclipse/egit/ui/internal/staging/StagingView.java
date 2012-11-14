@@ -156,12 +156,14 @@ import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.operations.UndoRedoActionGroup;
+import org.eclipse.ui.part.IShowInSource;
+import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.part.ViewPart;
 
 /**
  * A GitX style staging view with embedded commit dialog.
  */
-public class StagingView extends ViewPart {
+public class StagingView extends ViewPart implements IShowInSource {
 
 	/**
 	 * Staging view id
@@ -640,6 +642,29 @@ public class StagingView extends ViewPart {
 		}
 
 		site.setSelectionProvider(unstagedTableViewer);
+	}
+
+	public ShowInContext getShowInContext() {
+		if (stagedTableViewer != null && stagedTableViewer.getTable().isFocusControl())
+			return getShowInContext(stagedTableViewer);
+		else if (unstagedTableViewer != null && unstagedTableViewer.getTable().isFocusControl())
+			return getShowInContext(unstagedTableViewer);
+		else
+			return null;
+	}
+
+	private ShowInContext getShowInContext(TableViewer tableViewer) {
+		IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+		List<IResource> resources = new ArrayList<IResource>();
+		for (Object element : selection.toList()) {
+			if (element instanceof StagingEntry) {
+				StagingEntry entry = (StagingEntry) element;
+				IFile file = entry.getFile();
+				if (file != null)
+					resources.add(file);
+			}
+		}
+		return new ShowInContext(null, new StructuredSelection(resources));
 	}
 
 	private int getStagingFormOrientation() {
