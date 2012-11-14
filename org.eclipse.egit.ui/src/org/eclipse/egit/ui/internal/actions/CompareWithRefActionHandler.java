@@ -10,6 +10,7 @@
 package org.eclipse.egit.ui.internal.actions;
 
 import static org.eclipse.egit.core.internal.util.ResourceUtil.getResourceMappings;
+import static org.eclipse.egit.ui.internal.CompareUtils.isOKToShowSingleFile;
 import static org.eclipse.jgit.lib.Constants.HEAD;
 
 import java.io.IOException;
