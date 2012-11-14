@@ -8,14 +8,20 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize;
 
+import static org.eclipse.egit.core.AdapterUtils.adapt;
+import static org.eclipse.egit.core.internal.util.ResourceUtil.getResourceMappings;
+import static org.eclipse.jgit.lib.Constants.HEAD;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.mapping.RemoteResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceMapping;
-import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -29,6 +35,7 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;
 import org.eclipse.team.ui.TeamUI;
@@ -43,6 +50,56 @@ import org.eclipse.ui.PlatformUI;
 public class GitModelSynchronize {
 
 	private static final String GIT_PROVIDER_ID = "org.eclipse.egit.core.GitProvider"; //$NON-NLS-1$
+
+	/**
+	 * Launches Git Model synchronize operation for synchronizing a set of
+	 * resources in the workspace with a remote reference.
+	 *
+	 * @param file
+	 *            the file to synchronize (will also be used to lookup resouce
+	 *            mappings)
+	 * @param repository
+	 *            the repository
+	 * @param refName
+	 *            the reference to synchronize with
+	 * @throws IOException
+	 */
+	public static final void synchronizeModelWithWorkspace(IFile file,
+			Repository repository, String refName) throws IOException {
+		synchronizeModel(file, new GitSynchronizeData(repository, HEAD,
+				refName, true));
+	}
+
+	/**
+	 * Launches Git Model synchronize operation for synchronizing a set of
+	 * resources in the workspace with a remote reference.
+	 *
+	 * @param file
+	 *            the file to synchronize (will also be used to lookup resouce
+	 *            mappings)
+	 * @param repository
+	 *            the repository
+	 * @param sourceRef
+	 *            the source reference
+	 * @param destinationRef
+	 *            the destination reference
+	 * @throws IOException
+	 */
+	public static final void synchronizeModelBetweenRefs(IFile file,
+			Repository repository, String sourceRef, String destinationRef) throws IOException {
+		synchronizeModel(file, new GitSynchronizeData(repository,
+				sourceRef, destinationRef, false));
+	}
+
+	private static void synchronizeModel(IFile file, final GitSynchronizeData data) {
+		final GitSynchronizeDataSet dataSet = new GitSynchronizeDataSet(data);
+
+		// use all available local mappings for proper model support
+		final ResourceMapping[] mappings = getResourceMappings(file,
+				ResourceMappingContext.LOCAL_CONTEXT);
+
+		GitModelSynchronize.launch(dataSet, mappings);
+	}
 
 	/**
 	 * Launches Git Model synchronization action
@@ -93,36 +150,15 @@ public class GitModelSynchronize {
 	 */
 	private static ResourceMapping[] getGitResourceMappings(
 			IResource[] elements) {
-		List<ResourceMapping> providerMappings = new ArrayList<ResourceMapping>();
+		List<ResourceMapping> gitMappings = new ArrayList<ResourceMapping>();
 
 		for (IResource element : elements) {
-			Object adapted = getResourceMapping(element);
-			if (adapted != null && adapted instanceof ResourceMapping) {
-				ResourceMapping mapping = (ResourceMapping) adapted;
-
-				if (isMappedToGitProvider(mapping))
-					providerMappings.add(mapping);
-			}
+			ResourceMapping mapping = adapt(element, ResourceMapping.class);
+			if (mapping != null && isMappedToGitProvider(mapping))
+				gitMappings.add(mapping);
 		}
 
-		return providerMappings.toArray(new ResourceMapping[providerMappings
-				.size()]);
-	}
-
-	/**
-	 * Copied from TeamAction#getResourceMapping(Object)
-	 *
-	 * @param object
-	 * @return resource mapping
-	 */
-	private static Object getResourceMapping(Object object) {
-		if (object instanceof ResourceMapping)
-			return object;
-
-		if (object instanceof IAdaptable)
-			return ((IAdaptable) object).getAdapter(ResourceMapping.class);
-
-		return null;
+		return gitMappings.toArray(new ResourceMapping[gitMappings.size()]);
 	}
 
 	/**
