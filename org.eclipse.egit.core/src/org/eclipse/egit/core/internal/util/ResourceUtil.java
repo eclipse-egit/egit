@@ -1,6 +1,8 @@
 /*******************************************************************************
  * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, Laurent Goubet <laurent.goubet@obeo.fr>
+ * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,15 +14,23 @@ package org.eclipse.egit.core.internal.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.mapping.IModelProviderDescriptor;
+import org.eclipse.core.resources.mapping.ModelProvider;
+import org.eclipse.core.resources.mapping.ResourceMapping;
+import org.eclipse.core.resources.mapping.ResourceMappingContext;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
 
@@ -149,5 +159,40 @@ public class ResourceUtil {
 			}
 			resourcesList.add(path);
 		}
+	}
+
+	/**
+	 * This will query all model providers for those that are enabled on the
+	 * given file and list all mappings available for that file.
+	 *
+	 * @param file
+	 *            The file for which we need the associated resource mappings.
+	 * @param context
+	 *            Context from which remote content could be retrieved.
+	 * @return All mappings available for that file.
+	 */
+	public static ResourceMapping[] getResourceMappings(IFile file,
+			ResourceMappingContext context) {
+		final IModelProviderDescriptor[] modelDescriptors = ModelProvider
+				.getModelProviderDescriptors();
+
+		final Set<ResourceMapping> mappings = new LinkedHashSet<ResourceMapping>();
+		for (IModelProviderDescriptor candidate : modelDescriptors) {
+			try {
+				final IResource[] resources = candidate
+						.getMatchingResources(new IResource[] { file, });
+				if (resources.length > 0) {
+					// get mappings from model provider if there are matching resources
+					final ModelProvider model = candidate.getModelProvider();
+					final ResourceMapping[] modelMappings = model.getMappings(
+							file, context, null);
+					for (ResourceMapping mapping : modelMappings)
+						mappings.add(mapping);
+				}
+			} catch (CoreException e) {
+				Activator.logError(e.getMessage(), e);
+			}
+		}
+		return mappings.toArray(new ResourceMapping[mappings.size()]);
 	}
 }
