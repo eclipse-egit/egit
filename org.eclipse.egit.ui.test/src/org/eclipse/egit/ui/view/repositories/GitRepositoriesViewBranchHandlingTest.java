@@ -409,7 +409,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 
 		ContextMenuHelper.clickContextMenuSync(view.bot().tree(),
 				myUtil.getPluginLocalizedValue("ShowIn"),
-				myUtil.getPluginLocalizedValue("RepoViewOpenProperties.label"));
+				"Properties");
 
 		SWTBotView propsView = bot.viewByTitle("Properties");
 		SWTBotTreeItem rootItem = propsView
@@ -493,7 +493,7 @@ public class GitRepositoriesViewBranchHandlingTest extends
 
 		ContextMenuHelper.clickContextMenu(view.bot().tree(),
 				myUtil.getPluginLocalizedValue("ShowIn"),
-				myUtil.getPluginLocalizedValue("RepoViewOpenProperties.label"));
+				"Properties");
 
 		propsView = bot.viewByTitle("Properties");
 		rootItem = propsView
