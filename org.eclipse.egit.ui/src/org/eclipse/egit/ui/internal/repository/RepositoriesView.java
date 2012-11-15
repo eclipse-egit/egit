@@ -10,6 +10,7 @@
  *    Dariusz Luksza <dariusz@luksza.org> - add synchronization feature
  *    Daniel Megert <daniel_megert@ch.ibm.com> - Only check out on double-click
  *    Daniel Megert <daniel_megert@ch.ibm.com> - Don't reveal selection on refresh
+ *    Robin Stocker <robin@nibor.org> - Show In support
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository;
 
@@ -46,12 +47,20 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.history.HistoryPageInput;
+import org.eclipse.egit.ui.internal.reflog.ReflogView;
+import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
 import org.eclipse.egit.ui.internal.repository.tree.FileNode;
+import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
+import org.eclipse.egit.ui.internal.repository.tree.PushNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
+import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
+import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
+import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -108,6 +117,8 @@ import org.eclipse.ui.handlers.RegistryToggleState;
 import org.eclipse.ui.navigator.CommonNavigator;
 import org.eclipse.ui.navigator.CommonViewer;
 import org.eclipse.ui.part.IPage;
+import org.eclipse.ui.part.IShowInSource;
+import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
@@ -117,7 +128,7 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 /**
  * The "Git Repositories View"
  */
-public class RepositoriesView extends CommonNavigator {
+public class RepositoriesView extends CommonNavigator implements IShowInSource, IShowInTargetList {
 
 	/** "remote" */
 	public static final String REMOTE = "remote"; //$NON-NLS-1$
@@ -722,6 +733,88 @@ public class RepositoriesView extends CommonNavigator {
 			showResource(input.getFile());
 		}
 		return false;
+	}
+
+	public ShowInContext getShowInContext() {
+		IStructuredSelection selection = (IStructuredSelection) getCommonViewer()
+				.getSelection();
+		List<Object> elements = getShowInElements(selection);
+		// GenericHistoryView only shows a selection of a single resource (see
+		// bug 392949), so prepare our own history page input which can contain
+		// multiple files to support showing more than one file in history.
+		// It's also necessary for a single file that is outside of the
+		// workspace (and as such is not an IResource).
+		HistoryPageInput historyPageInput = getHistoryPageInput(selection);
+		return new ShowInContext(historyPageInput, new StructuredSelection(elements));
+	}
+
+	public String[] getShowInTargetIds() {
+		IStructuredSelection selection = (IStructuredSelection) getCommonViewer()
+				.getSelection();
+		for (Object element : selection.toList())
+			if (element instanceof RepositoryNode)
+				return new String[] { ReflogView.VIEW_ID };
+
+		// No additional views
+		return new String[] {};
+	}
+
+	private static List<Object> getShowInElements(IStructuredSelection selection) {
+		List<Object> elements = new ArrayList<Object>();
+		for (Object element : selection.toList()) {
+			if (element instanceof FileNode || element instanceof FolderNode
+					|| element instanceof WorkingDirNode) {
+				RepositoryTreeNode treeNode = (RepositoryTreeNode) element;
+				IPath path = treeNode.getPath();
+				IResource resource = ResourceUtil.getResourceForLocation(path);
+				if (resource != null)
+					elements.add(resource);
+			} else if (element instanceof RepositoryNode) {
+				// Can be shown in History, Reflog and Properties views
+				elements.add(element);
+			} else if (element instanceof RepositoryNode
+					|| element instanceof RemoteNode
+					|| element instanceof FetchNode
+					|| element instanceof PushNode
+					|| element instanceof RefNode) {
+				// These can be shown in Properties view directly
+				elements.add(element);
+			}
+		}
+		return elements;
+	}
+
+	/**
+	 * @param selection
+	 * @return the HistoryPageInput corresponding to the selection, or null
+	 */
+	private static HistoryPageInput getHistoryPageInput(IStructuredSelection selection) {
+		List<File> files = new ArrayList<File>();
+		Repository repo = null;
+		for (Object element : selection.toList()) {
+			Repository nodeRepository;
+			if (element instanceof FileNode) {
+				FileNode fileNode = (FileNode) element;
+				files.add(fileNode.getObject());
+				nodeRepository = fileNode.getRepository();
+			} else if (element instanceof FolderNode) {
+				FolderNode folderNode = (FolderNode) element;
+				files.add(folderNode.getObject());
+				nodeRepository = folderNode.getRepository();
+			} else {
+				// Don't return input if selection is not file/folder
+				return null;
+			}
+			if (repo == null)
+				repo = nodeRepository;
+			// Don't return input if nodes from different repositories are selected
+			if (repo != nodeRepository)
+				return null;
+		}
+		if (repo != null)
+			return new HistoryPageInput(repo, files.toArray(new File[files.size()]));
+		else
+			return null;
 	}
 
 	private void reactOnSelection(ISelection selection) {
