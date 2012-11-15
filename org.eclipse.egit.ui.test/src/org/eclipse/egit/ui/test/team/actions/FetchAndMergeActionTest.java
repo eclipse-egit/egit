@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2012 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -15,7 +15,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
@@ -23,6 +25,7 @@ import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.ConfigConstants;
@@ -94,9 +97,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 	public void testFetchFromOriginThenMerge() throws Exception {
 		String previousCommit = prepare();
 		String oldContent = getTestFileContent();
-		SWTBotShell fetchDialog = openFetchDialog();
-		fetchDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
-		fetchDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
+		fetch();
 
 		String uri = lookupRepository(childRepositoryFile).getConfig()
 				.getString(ConfigConstants.CONFIG_REMOTE_SECTION, "origin",
@@ -113,9 +114,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 		String newContent = getTestFileContent();
 		assertEquals(oldContent, newContent);
 
-		fetchDialog = openFetchDialog();
-		fetchDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
-		fetchDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
+		fetch();
 		confirm = bot.shell(NLS.bind(UIText.FetchResultDialog_title, uri));
 		int count = confirm.bot().tree().rowCount();
 
@@ -180,6 +179,14 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 		newBranchDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
 	}
 
+	private void fetch() throws Exception {
+		SWTBotShell fetchDialog = openFetchDialog();
+		fetchDialog.bot().button(IDialogConstants.NEXT_LABEL).click();
+		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.FETCH, 20, TimeUnit.SECONDS);
+		fetchDialog.bot().button(IDialogConstants.FINISH_LABEL).click();
+		jobJoiner.join();
+	}
+
 	private SWTBotShell openFetchDialog() throws Exception {
 		SWTBotTree projectExplorerTree = bot.viewById(
 				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
@@ -229,7 +236,8 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 				util.getPluginLocalizedValue("TeamMenu.label"),
 				util.getPluginLocalizedValue("SwitchToMenu.label"),
 				branchToCheckout };
+		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.CHECKOUT, 60, TimeUnit.SECONDS);
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, menuPath);
-		waitForWorkspaceRefresh();
+		jobJoiner.join();
 	}
 }
