@@ -95,8 +95,6 @@ import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.MenuDetectEvent;
-import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -919,13 +917,6 @@ public class GitHistoryPage extends HistoryPage implements RefsChangedListener,
 		actions = new GitHistoryPageActions(this);
 		setupToolBar();
 		setupViewMenu();
-
-		graph.getControl().addMenuDetectListener(new MenuDetectListener() {
-			public void menuDetected(MenuDetectEvent e) {
-				popupMgr.add(actions.showFilesAction);
-				popupMgr.add(actions.showCommentAction);
-			}
-		});
 	}
 
 	private void setupToolBar() {
