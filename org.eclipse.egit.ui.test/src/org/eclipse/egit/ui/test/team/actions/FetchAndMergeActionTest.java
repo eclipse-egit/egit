@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2012 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
@@ -23,6 +24,7 @@ import org.eclipse.egit.ui.internal.repository.tree.LocalNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteTrackingNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.lib.ConfigConstants;
@@ -221,7 +223,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 		return dialog;
 	}
 
-	private void checkoutBranch(String branchToCheckout) {
+	private void checkoutBranch(String branchToCheckout) throws InterruptedException {
 		SWTBotTree projectExplorerTree = bot
 				.viewById("org.eclipse.jdt.ui.PackageExplorer").bot().tree();
 		getProjectItem(projectExplorerTree, PROJ1).select();
@@ -230,6 +232,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 				util.getPluginLocalizedValue("SwitchToMenu.label"),
 				branchToCheckout };
 		ContextMenuHelper.clickContextMenu(projectExplorerTree, menuPath);
+		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		waitForWorkspaceRefresh();
 	}
 }

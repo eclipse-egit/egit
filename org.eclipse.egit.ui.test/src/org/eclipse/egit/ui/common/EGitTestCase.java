@@ -2,6 +2,7 @@
  * Copyright (C) 2009, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2010, Ketan Padegaonkar <KetanPadegaonkar@gmail.com>
  * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -62,14 +63,25 @@ public abstract class EGitTestCase {
 	private static class WorkspaceRefreshHook extends DefaultCondition
 			implements IResourceChangeListener {
 		private boolean state = false;
+		private IResourceChangeEvent lastEvent;
 
 		public void resourceChanged(IResourceChangeEvent event) {
 			if (event.getType() == IResourceChangeEvent.POST_CHANGE)
 				state = true;
+			else
+				lastEvent = event;
 		}
 
 		public String getFailureMessage() {
-			return "Failed waiting for workspace refresh.";
+			StringBuilder s = new StringBuilder("Failed waiting for workspace refresh.");
+			if (lastEvent != null) {
+				s.append(" Last event was: ").append(lastEvent);
+				s.append(", resource ").append(lastEvent.getResource());
+				s.append(", type ").append(lastEvent.getType());
+			} else {
+				s.append(" There was no last IResourceChangeEvent.");
+			}
+			return s.toString();
 		}
 
 		public boolean test() throws Exception {
