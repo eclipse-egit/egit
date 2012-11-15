@@ -68,6 +68,7 @@ import org.eclipse.egit.ui.internal.operations.IgnoreOperationUI;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -959,9 +960,17 @@ public class StagingView extends ViewPart implements IShowInSource {
 					menuMgr.add(new DeleteAction(selection));
 				if (addLaunchMergeTool)
 					menuMgr.add(createItem(ActionCommands.MERGE_TOOL_ACTION, tableViewer));
+
+				menuMgr.add(new Separator());
+				menuMgr.add(createShowInMenu());
 			}
 		});
 
+	}
+
+	private IContributionItem createShowInMenu() {
+		IWorkbenchWindow workbenchWindow = getSite().getWorkbenchWindow();
+		return UIUtils.createShowInMenu(workbenchWindow);
 	}
 
 	private class ReplaceAction extends Action {
