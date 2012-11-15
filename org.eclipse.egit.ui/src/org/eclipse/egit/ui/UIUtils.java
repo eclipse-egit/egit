@@ -22,6 +22,7 @@ import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.internal.RepositorySaveableFilter;
 import org.eclipse.egit.ui.internal.components.RefContentProposal;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -59,9 +60,12 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.keys.IBindingService;
 
 /**
  * Some utilities for UI code
@@ -648,4 +652,26 @@ public class UIUtils {
 		return workbench.saveAll(window, window, new RepositorySaveableFilter(repository), true);
 	}
 
+	/**
+	 * @param workbenchWindow the workbench window to use for creating the show in menu.
+	 * @return the show in menu
+	 */
+	public static MenuManager createShowInMenu(IWorkbenchWindow workbenchWindow) {
+		MenuManager showInSubMenu = new MenuManager(getShowInMenuLabel());
+		showInSubMenu.add(ContributionItemFactory.VIEWS_SHOW_IN.create(workbenchWindow));
+		return showInSubMenu;
+	}
+
+	private static String getShowInMenuLabel() {
+		IBindingService bindingService = (IBindingService) PlatformUI
+				.getWorkbench().getAdapter(IBindingService.class);
+		if (bindingService != null) {
+			String keyBinding = bindingService
+					.getBestActiveBindingFormattedFor(IWorkbenchCommandConstants.NAVIGATE_SHOW_IN_QUICK_MENU);
+			if (keyBinding != null)
+				return UIText.UIUtils_ShowInMenuLabel + '\t' + keyBinding;
+		}
+
+		return UIText.UIUtils_ShowInMenuLabel;
+	}
 }
