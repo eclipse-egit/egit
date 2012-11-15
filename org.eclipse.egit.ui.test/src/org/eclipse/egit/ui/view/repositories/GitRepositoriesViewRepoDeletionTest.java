@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (c) 2012, Matthias Sohn <matthias.sohn@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,8 +14,10 @@ import static org.junit.Assert.assertNotNull;
 import java.io.File;
 
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.SubmoduleAddCommand;
 import org.eclipse.jgit.lib.Repository;
@@ -68,7 +70,8 @@ public class GitRepositoriesViewRepoDeletionTest extends
 						workDir);
 		shell.bot().checkBox(checkboxLabel).select();
 		shell.bot().button(IDialogConstants.OK_LABEL).click();
-		waitInUI();
+		TestUtil.joinJobs(JobFamilies.REPOSITORY_DELETE);
+
 		refreshAndWait();
 		assertEmpty();
 		assertProjectExistence(PROJ1, false);
@@ -115,7 +118,8 @@ public class GitRepositoriesViewRepoDeletionTest extends
 						workDir);
 		shell.bot().checkBox(checkboxLabel).select();
 		shell.bot().button(IDialogConstants.OK_LABEL).click();
-		waitInUI();
+		TestUtil.joinJobs(JobFamilies.REPOSITORY_DELETE);
+
 		refreshAndWait();
 		assertFalse(subRepo.getDirectory().exists());
 		assertFalse(subRepo.getWorkTree().exists());
