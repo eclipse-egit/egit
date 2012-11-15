@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010-2011 SAP AG.
+ * Copyright (c) 2010-2012 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -102,7 +102,7 @@ public class GitRepositoriesViewRemoteHandlingTest extends
 		remotesItem.getNode("test").select();
 		ContextMenuHelper.clickContextMenu(tree,
 				myUtil.getPluginLocalizedValue("ShowIn"),
-				myUtil.getPluginLocalizedValue("RepoViewOpenProperties.label"));
+				"Properties");
 		waitInUI();
 		assertEquals("org.eclipse.ui.views.PropertySheet", bot.activeView()
 				.getReference().getId());
