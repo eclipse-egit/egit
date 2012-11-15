@@ -656,16 +656,18 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private ShowInContext getShowInContext(TableViewer tableViewer) {
 		IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
-		List<IResource> resources = new ArrayList<IResource>();
-		for (Object element : selection.toList()) {
-			if (element instanceof StagingEntry) {
-				StagingEntry entry = (StagingEntry) element;
+		List<Object> elements = new ArrayList<Object>();
+		for (Object selectedElement : selection.toList()) {
+			if (selectedElement instanceof StagingEntry) {
+				StagingEntry entry = (StagingEntry) selectedElement;
 				IFile file = entry.getFile();
 				if (file != null)
-					resources.add(file);
+					elements.add(file);
+				else
+					elements.add(entry.getLocation());
 			}
 		}
-		return new ShowInContext(null, new StructuredSelection(resources));
+		return new ShowInContext(null, new StructuredSelection(elements));
 	}
 
 	private int getStagingFormOrientation() {
