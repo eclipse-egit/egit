@@ -444,6 +444,7 @@ public class RepositoryUtil {
 	 *
 	 * @param repository
 	 * @return the commit or null if HEAD does not exist or could not be parsed.
+	 * @since 2.2
 	 */
 	public RevCommit parseHeadCommit(Repository repository) {
 		RevWalk walk = null;

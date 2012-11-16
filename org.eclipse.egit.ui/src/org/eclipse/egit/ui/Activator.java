@@ -121,6 +121,7 @@ public class Activator extends AbstractUIPlugin implements DebugOptionsListener 
 	 *            a localized message
 	 * @param throwable
 	 * @param show
+	 * @since 2.2
 	 */
 	public static void handleIssue(int severity, String message, Throwable throwable,
 			boolean show) {
