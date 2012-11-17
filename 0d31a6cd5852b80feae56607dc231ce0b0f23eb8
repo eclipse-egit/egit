@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJX///NM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-11-17T14:34:35Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we also check isEnabled() which checks handler.isEnabled()?\nThe reason I\u0027m asking is because this change request provides most handlers with an implementation of isEnabled() that checks whether linked resources are selected. But if handlers are called without prior checking of isEnabled() then maybe a double check should be made in the handler.execute().\nComments anyone?",
+      "revId": "0d31a6cd5852b80feae56607dc231ce0b0f23eb8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
