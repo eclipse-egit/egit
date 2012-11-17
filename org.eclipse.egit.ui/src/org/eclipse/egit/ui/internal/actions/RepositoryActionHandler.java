@@ -4,6 +4,7 @@
  * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -242,6 +243,13 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 			IStructuredSelection selection, Shell shell) {
 		RepositoryMapping mapping = null;
 		for (IResource resource : getSelectedResources(selection)) {
+			if (resource.isLinked(IResource.CHECK_ANCESTORS)) {
+				if (warn)
+					MessageDialog.openError(shell,
+							UIText.RepositoryAction_linkedResourceSelectionTitle,
+							UIText.RepositoryAction_linkedResourceSelection);
+				return null;
+			}
 			RepositoryMapping repositoryMapping = RepositoryMapping
 					.getMapping(resource);
 			if (mapping == null)
@@ -490,6 +498,17 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	protected IResource[] getSelectedResources() {
 		IStructuredSelection selection = getSelection();
 		return getSelectedResources(selection);
+	}
+
+	/**
+	 * @return true if selection contains one or more linked resources, false otherwise.
+	 */
+	protected boolean selectionContainsLinkedResources() {
+		IResource[] selectedResources = getSelectedResources();
+		for (IResource res: selectedResources)
+			if (res.isLinked(IResource.CHECK_ANCESTORS))
+				return true;
+		return false;
 	}
 
 	/**

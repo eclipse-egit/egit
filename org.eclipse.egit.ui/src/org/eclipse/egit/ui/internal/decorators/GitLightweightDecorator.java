@@ -7,6 +7,7 @@
  * Copyright (C) 2008, Tor Arne Vestbø <torarnv@gmail.com>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
  * Copyright (C) 2011, Christian Halstrick <christian.halstrick@sap.com>
+ * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -208,7 +209,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 			return null;
 
 		// Cannot decorate linked resources
-		if (mapping.getRepoRelativePath(resource) == null)
+		if (resource.isLinked(IResource.CHECK_ANCESTORS))
 			return null;
 
 		IndexDiffData indexDiffData = org.eclipse.egit.core.Activator
