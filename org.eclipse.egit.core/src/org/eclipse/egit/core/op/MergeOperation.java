@@ -31,11 +31,13 @@ import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeCommand;
+import org.eclipse.jgit.api.MergeCommand.FastForwardMode;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.errors.CheckoutConflictException;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -107,11 +109,15 @@ public class MergeOperation implements IEGitOperation {
 				mymonitor.worked(1);
 				MergeCommand merge;
 				try {
+					FastForwardMode ffmode = repository.getConfig().getEnum(
+							ConfigConstants.CONFIG_BRANCH_SECTION, repository.getBranch(),
+							ConfigConstants.CONFIG_KEY_MERGEOPTIONS,
+							FastForwardMode.FF);
 					Ref ref = repository.getRef(refName);
 					if (ref != null)
-						merge = git.merge().include(ref);
+						merge = git.merge().include(ref).setFastForward(ffmode);
 					else
-						merge = git.merge().include(ObjectId.fromString(refName));
+						merge = git.merge().include(ObjectId.fromString(refName)).setFastForward(ffmode);
 				} catch (IOException e) {
 					throw new TeamException(CoreText.MergeOperation_InternalError, e);
 				}
