@@ -86,7 +86,7 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 		if (file != null)
 			return SaveableCompareEditorInput.createFileElement(file);
 		else
-			return new LocalNonWorkspaceTypedElement(baseLocation.toOSString());
+			return new LocalNonWorkspaceTypedElement(baseLocation);
 	}
 
 	private ITypedElement getIndexTypedElement(final IPath location) throws IOException {

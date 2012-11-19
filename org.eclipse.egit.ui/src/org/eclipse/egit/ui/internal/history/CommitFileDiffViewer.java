@@ -21,6 +21,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.job.JobUtil;
@@ -501,10 +502,10 @@ public class CommitFileDiffViewer extends TableViewer {
 		final ITypedElement base;
 		final ITypedElement next;
 
-		String path = new Path(getRepository().getWorkTree().getAbsolutePath())
-				.append(p).toOSString();
+		IPath path = new Path(getRepository().getWorkTree().getAbsolutePath())
+				.append(p);
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IFile[] files = root.findFilesForLocationURI(new File(path).toURI());
+		IFile[] files = root.findFilesForLocationURI(path.toFile().toURI());
 		if (files.length > 0)
 			next = SaveableCompareEditorInput.createFileElement(files[0]);
 		else
