@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOBX//+0k\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-07T04:51:12Z",
+      "side": 1,
+      "message": "Put return on a line of its own",
+      "revId": "c0fcc492f08f873d2f38acae2740865b426dc66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX//+0g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/AddToIndexActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-07T04:51:12Z",
+      "side": 1,
+      "message": "re-format",
+      "revId": "c0fcc492f08f873d2f38acae2740865b426dc66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX//+0c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/AssumeUnchangedActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-07T04:51:12Z",
+      "side": 1,
+      "message": "This is inconstent with other operations that accept linked resources, but ignore them when executing the operation.\n\nThe same pattern seems to apply to other operations and patterns.",
+      "revId": "c0fcc492f08f873d2f38acae2740865b426dc66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOBX//+0Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2011-10-07T04:51:12Z",
+      "side": 1,
+      "message": "reformat",
+      "revId": "c0fcc492f08f873d2f38acae2740865b426dc66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
