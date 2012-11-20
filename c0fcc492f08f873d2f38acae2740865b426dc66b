@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOHH///nU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-04-30T19:10:30Z",
+      "side": 1,
+      "message": "Done.\nUnfortunately, due to some difficulties when migrating my gerrit user to the new eclipse git/gerrit server, pushing it again gave it a new home:\nhttps://git.eclipse.org/r/#/c/5766/\nChangeId is still the same though...",
+      "parentUuid": "AABOBX//+0k\u003d",
+      "revId": "c0fcc492f08f873d2f38acae2740865b426dc66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBX//+0g\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/AddToIndexActionHandler.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2011-10-07T04:51:12Z",
       "side": 1,
       "message": "re-format",
+      "revId": "c0fcc492f08f873d2f38acae2740865b426dc66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///nM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/AddToIndexActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-04-30T19:10:30Z",
+      "side": 1,
+      "message": "Done.\nUnfortunately, due to some difficulties when migrating my gerrit user to the new eclipse git/gerrit server, pushing it again gave it a new home:\nhttps://git.eclipse.org/r/#/c/5766/\nChangeId is still the same though...",
+      "parentUuid": "AABOBX//+0g\u003d",
       "revId": "c0fcc492f08f873d2f38acae2740865b426dc66b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOHH///nE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/AssumeUnchangedActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-04-30T19:10:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure what\u0027s the best way forward. Would you like to remove this enabling condition for that particular action?\nBTW, due to some difficulties when migrating my gerrit user to the new eclipse git/gerrit server, pushing it again gave it a new home:\nhttps://git.eclipse.org/r/#/c/5766/\nChangeId is still the same though...",
+      "parentUuid": "AABOBX//+0c\u003d",
+      "revId": "c0fcc492f08f873d2f38acae2740865b426dc66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOBX//+0Y\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitActionHandler.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2011-10-07T04:51:12Z",
       "side": 1,
       "message": "reformat",
+      "revId": "c0fcc492f08f873d2f38acae2740865b426dc66b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOHH///nA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/CommitActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-04-30T19:10:30Z",
+      "side": 1,
+      "message": "Done.\nUnfortunately, due to some difficulties when migrating my gerrit user to the new eclipse git/gerrit server, pushing it again gave it a new home:\nhttps://git.eclipse.org/r/#/c/5766/\nChangeId is still the same though...",
+      "parentUuid": "AABOBX//+0Y\u003d",
       "revId": "c0fcc492f08f873d2f38acae2740865b426dc66b",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
