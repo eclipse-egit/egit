@@ -43,6 +43,7 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIIcons;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.FileEditableRevision;
@@ -99,7 +100,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
-import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
@@ -1148,10 +1148,8 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 		if (openAction != null)
 			manager.appendToGroup(ICommonMenuConstants.GROUP_OPEN, openAction);
 
-		MenuManager showInSubMenu = new MenuManager(
-				UIText.CompareTreeView_ShowIn_label);
-		showInSubMenu.add(ContributionItemFactory.VIEWS_SHOW_IN
-				.create(getSite().getWorkbenchWindow()));
+		MenuManager showInSubMenu = UIUtils.createShowInMenu(
+				getSite().getWorkbenchWindow());
 		manager.appendToGroup(ICommonMenuConstants.GROUP_OPEN, showInSubMenu);
 	}
 

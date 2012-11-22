@@ -1018,9 +1018,6 @@ public class UIText extends NLS {
 	public static String CompareTreeView_WorkspaceVersionText;
 
 	/** */
-	public static String CompareTreeView_ShowIn_label;
-
-	/** */
 	public static String CompareUtils_errorGettingEncoding;
 
 	/** */
@@ -3711,9 +3708,6 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CommitFileDiffViewer_OpenInEditorMenuLabel;
-
-	/** */
-	public static String CommitFileDiffViewer_ShowInMenuLabel;
 
 	/** */
 	public static String CommitFileDiffViewer_notContainedInCommit;
