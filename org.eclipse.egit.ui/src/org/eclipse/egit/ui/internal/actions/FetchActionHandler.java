@@ -50,6 +50,6 @@ public class FetchActionHandler extends RepositoryActionHandler {
 	}
 
 	public boolean isEnabled() {
-		return getRepository() != null;
+		return selectionMapsToSingleRepository();
 	}
 }
