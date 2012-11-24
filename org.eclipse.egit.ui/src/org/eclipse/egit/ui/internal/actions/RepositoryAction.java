@@ -145,8 +145,8 @@ public abstract class RepositoryAction extends AbstractHandler implements
 	}
 
 	/**
-	 * By default always return true. Allow implementers decide does given
-	 * action should be run or not
+	 * By default always return true. Allow implementers to decide whether
+	 * the action should be run or not
 	 *
 	 * @return {@code true} when action should be executed, {@code false}
 	 *         otherwise

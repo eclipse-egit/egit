@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2012 SAP AG. and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Stefan Lay (SAP AG) - initial implementation
+ *    François Rey - refactoring as part of gracefully ignoring linked resources
  *******************************************************************************/
 
 package org.eclipse.egit.ui.internal.actions;
@@ -23,7 +24,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 
 /**
- * Action for selecting a commit and merging it with the current branch.
+ * Action to start the Merge Tool.
  */
 public class MergeToolActionHandler extends RepositoryActionHandler {
 
@@ -47,10 +48,10 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 	}
 
 	public boolean isEnabled() {
-		Repository[] repos = getRepositoriesFor(getProjectsForSelectedResources());
-		if (repos.length != 1)
+		Repository  repo = getRepository();
+		if (repo == null)
 			return false;
-		switch (repos[0].getRepositoryState()) {
+		switch (repo.getRepositoryState()) {
 		case MERGING:
 			// fall through
 		case CHERRY_PICKING:
