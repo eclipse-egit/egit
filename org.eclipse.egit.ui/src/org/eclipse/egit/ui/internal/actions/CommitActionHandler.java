@@ -7,6 +7,7 @@
  * Copyright (C) 2010, Stefan Lay <stefan.lay@sap.com>
  * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2011, Benjamin Muskalla <benjamin.muskalla@tasktop.com>
+ * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -30,10 +31,9 @@ import org.eclipse.ui.IWorkbenchPart;
 public class CommitActionHandler extends RepositoryActionHandler {
 
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
-		final Repository[] repos = getRepositories(event);
-		if (repos.length == 0)
+		final Repository repo = getRepository(true, event);
+		if (repo == null)
 			return null;
-
 		final Shell shell = getShell(event);
 		IResource[] resourcesInScope;
 		try {
@@ -49,7 +49,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 			// cancels the scope operation
 			return null;
 		}
-		CommitUI commitUi = new CommitUI(shell, repos[0], resourcesInScope,
+		CommitUI commitUi = new CommitUI(shell, repo, resourcesInScope,
 				false);
 		commitUi.commit();
 		return null;
@@ -57,7 +57,7 @@ public class CommitActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return getRepositories().length > 0;
+		return selectionMapsToSingleRepository();
 	}
 
 }

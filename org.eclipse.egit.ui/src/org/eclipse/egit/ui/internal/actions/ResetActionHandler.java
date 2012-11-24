@@ -56,7 +56,7 @@ public class ResetActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		Repository repo = getRepository();
+		Repository repo = getSelectionRepository();
 		return repo != null && containsHead(repo);
 	}
 }

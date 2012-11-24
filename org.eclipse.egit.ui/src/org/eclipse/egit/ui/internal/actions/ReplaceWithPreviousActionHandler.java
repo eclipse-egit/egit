@@ -37,6 +37,9 @@ public class ReplaceWithPreviousActionHandler extends
 		if (resources.length != 1)
 			throw new ExecutionException(
 					"Unexpected number of selected Resources"); //$NON-NLS-1$
+		if (resources[0].isLinked(IResource.CHECK_ANCESTORS))
+			throw new ExecutionException(
+					"Unexpected Linked Resource: " + resources[0].getName()); //$NON-NLS-1$
 		try {
 			List<PreviousCommit> pcs = findPreviousCommits();
 			List<RevCommit> previousCommits = new ArrayList<RevCommit>();
@@ -68,6 +71,8 @@ public class ReplaceWithPreviousActionHandler extends
 
 	@Override
 	public boolean isEnabled() {
-		return super.isEnabled() && getSelectedResources().length == 1;
+		IResource[] selectedResources = getSelectedResources();
+		return super.isEnabled() && selectedResources.length == 1 &&
+				!selectedResources[0].isLinked(IResource.CHECK_ANCESTORS);
 	}
 }

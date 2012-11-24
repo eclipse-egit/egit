@@ -76,7 +76,7 @@ public class CompareIndexWithHeadActionHandler extends RepositoryActionHandler {
 		if (selection.size() != 1)
 			return false;
 
-		Repository repository = getRepository();
+		Repository repository = getSelectionRepository();
 		if (repository == null)
 			return false;
 
