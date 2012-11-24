@@ -28,9 +28,10 @@ public class ConfigureFetchActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return getRepository() != null
+		Repository repository = getSelectionRepository();
+		return repository != null
 				&& SimpleConfigureFetchDialog
-						.getConfiguredRemote(getRepository()) != null;
+						.getConfiguredRemote(repository) != null;
 	}
 
 }

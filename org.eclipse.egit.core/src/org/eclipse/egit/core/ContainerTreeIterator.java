@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, Google Inc.
+ * Copyright (C) 2008, 2012 Google Inc. and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -154,6 +154,12 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		for (int i = 0; i < r.length; i++)
 			r[i] = new ResourceEntry(all[i]);
 		return r;
+	}
+
+	@Override
+	public boolean isEntryIgnored() throws IOException {
+		return super.isEntryIgnored() ||
+			getResourceEntry().getResource().isLinked(IResource.CHECK_ANCESTORS);
 	}
 
 	/**
