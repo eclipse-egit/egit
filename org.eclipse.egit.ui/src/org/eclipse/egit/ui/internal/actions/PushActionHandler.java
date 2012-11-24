@@ -54,8 +54,9 @@ public class PushActionHandler extends RepositoryActionHandler {
 	@Override
 	public boolean isEnabled() {
 		try {
-			return getRepository() != null
-					&& getRepository().getRef(Constants.HEAD).getObjectId() != null;
+			Repository repository = getRepository();
+			return repository != null
+					&& repository.getRef(Constants.HEAD).getObjectId() != null;
 		} catch (IOException e) {
 			Activator.handleError(e.getMessage(), e, false);
 			return false;
