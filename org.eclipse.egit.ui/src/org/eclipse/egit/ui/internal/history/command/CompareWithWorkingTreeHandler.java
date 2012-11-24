@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,6 +21,7 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
+import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
@@ -48,19 +50,28 @@ public class CompareWithWorkingTreeHandler extends
 			}
 			if (input instanceof IFile) {
 				IFile file = (IFile) input;
-				final RepositoryMapping mapping = RepositoryMapping
-						.getMapping(file.getProject());
-				final String gitPath = mapping.getRepoRelativePath(file);
-				ITypedElement right = CompareUtils.getFileRevisionTypedElement(
-						gitPath, commit, mapping.getRepository());
-				final ITypedElement ancestor = CompareUtils.
-						getFileRevisionTypedElementForCommonAncestor(
-						gitPath, headCommit, commit, repo);
+				if (CompareUtils.canDirectlyOpenInCompare(file)) {
+					final RepositoryMapping mapping = RepositoryMapping
+							.getMapping(file.getProject());
+					final String gitPath = mapping.getRepoRelativePath(file);
+					ITypedElement right = CompareUtils.getFileRevisionTypedElement(
+							gitPath, commit, mapping.getRepository());
+					final ITypedElement ancestor = CompareUtils.
+							getFileRevisionTypedElementForCommonAncestor(
+							gitPath, headCommit, commit, repo);
 
-				final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-						SaveableCompareEditorInput.createFileElement(file),
-						right, ancestor, null);
-				openInCompare(event, in);
+					final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+							SaveableCompareEditorInput.createFileElement(file),
+							right, ancestor, null);
+					openInCompare(event, in);
+				} else {
+					try {
+						GitModelSynchronize.synchronizeModelWithWorkspace(file,
+								repo, commit.getName());
+					} catch (IOException e) {
+						throw new ExecutionException(e.getMessage(), e);
+					}
+				}
 			}
 			if (input instanceof File) {
 				File file = (File) input;
