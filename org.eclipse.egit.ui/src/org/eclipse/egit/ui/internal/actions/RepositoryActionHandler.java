@@ -491,6 +491,24 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	}
 
 	/**
+	 * @return true if selection contains one or more linked resources, false otherwise.
+	 */
+	protected boolean selectionContainsLinkedResources() {
+		IResource[] selectedResources = getSelectedResources();
+		for (IResource res: selectedResources)
+			if (res.isLinked(IResource.CHECK_ANCESTORS))
+				return true;
+		return false;
+	}
+
+	/**
+	 * @return true if all selected items map to the same repository, false otherwise.
+	 */
+	protected boolean selectionMapsToSingleRepository() {
+		return getRepository()!=null;
+	}
+
+	/**
 	 * @param selection
 	 * @return the resources in the selection
 	 */
