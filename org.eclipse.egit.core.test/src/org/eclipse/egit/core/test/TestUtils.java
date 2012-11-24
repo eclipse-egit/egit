@@ -2,6 +2,7 @@
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -44,6 +45,19 @@ public class TestUtils {
 	public final static String COMMITTER = "The Commiter <The.committer@some.com>";
 
 	/**
+	 * Return the base directory in which temporary directories are created.
+	 * Current implementation returns a "temporary" folder in the user home.
+	 *
+	 * @return a "temporary" folder in the user home that may not exist.
+	 * @throws IOException
+	 */
+	public File getBaseTempDir() throws IOException {
+		File userHome = FS.DETECTED.userHome();
+		File rootDir = new File(userHome, "EGitCoreTestTempDir");
+		return rootDir;
+	}
+
+	/**
 	 * Create a "temporary" directory
 	 *
 	 * @param name
@@ -53,9 +67,7 @@ public class TestUtils {
 	 * @throws IOException
 	 */
 	public File createTempDir(String name) throws IOException {
-		File userHome = FS.DETECTED.userHome();
-		File rootDir = new File(userHome, "EGitCoreTestTempDir");
-		File result = new File(rootDir, name);
+		File result = new File(getBaseTempDir(), name);
 		if (result.exists())
 			FileUtils.delete(result, FileUtils.RECURSIVE | FileUtils.RETRY);
 		return result;
@@ -67,8 +79,7 @@ public class TestUtils {
 	 * @throws IOException
 	 */
 	public void deleteTempDirs() throws IOException {
-		File userHome = FS.DETECTED.userHome();
-		File rootDir = new File(userHome, "EGitCoreTestTempDir");
+		File rootDir = getBaseTempDir();
 		if (rootDir.exists())
 			FileUtils.delete(rootDir, FileUtils.RECURSIVE | FileUtils.RETRY);
 	}
@@ -142,10 +153,23 @@ public class TestUtils {
 	}
 
 	/**
+	 * Create a project in the base directory of temp dirs
+	 *
+	 * @param projectName
+	 *            project name
+	 * @return the project with a location pointing to the local file system
+	 * @throws Exception
+	 */
+	public IProject createProjectInLocalFileSystem(
+			String projectName) throws Exception {
+		return createProjectInLocalFileSystem(getBaseTempDir(), projectName);
+	}
+
+	/**
 	 * Create a project in the local file system
 	 *
 	 * @param parentFile
-	 *            the parent
+	 *            the parent directory
 	 * @param projectName
 	 *            project name
 	 * @return the project with a location pointing to the local file system

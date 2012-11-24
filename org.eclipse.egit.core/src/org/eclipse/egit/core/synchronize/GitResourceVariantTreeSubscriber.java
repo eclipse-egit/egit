@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2011 IBM Corporation and others.
+ * Copyright (c) 2010, 2012 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *     Dariusz Luksza <dariusz@luksza.org>
+ *     François Rey - gracefully ignore linked resources
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
@@ -255,7 +256,7 @@ public class GitResourceVariantTreeSubscriber extends
 	}
 
 	private boolean shouldBeIncluded(IResource res) {
-		if (res == null)
+		if (res == null || res.isLinked(IResource.CHECK_ANCESTORS))
 			return false;
 		final IProject proj = res.getProject();
 		if (proj == null)

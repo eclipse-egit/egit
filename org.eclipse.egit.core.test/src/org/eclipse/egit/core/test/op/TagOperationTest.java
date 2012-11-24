@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Chris Aniszczyk <caniszczyk@gmail.com>
+ * Copyright (C) 2010, 2012 Chris Aniszczyk <caniszczyk@gmail.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,14 +14,9 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 
-import org.eclipse.core.filesystem.EFS;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.core.test.DualRepositoryTestCase;
 import org.eclipse.egit.core.test.TestRepository;
@@ -56,24 +51,7 @@ public class TagOperationTest extends DualRepositoryTestCase {
 		testUtils.addFileToProject(project, "folder1/file1.txt", "Hello world");
 
 		repository1.connect(project);
-
-		project.accept(new IResourceVisitor() {
-
-			public boolean visit(IResource resource) throws CoreException {
-				if (resource instanceof IFile) {
-					try {
-						repository1
-								.track(EFS.getStore(resource.getLocationURI())
-										.toLocalFile(0, null));
-					} catch (Exception e) {
-						throw new CoreException(Activator.error(e.getMessage(),
-								e));
-					}
-				}
-				return true;
-			}
-		});
-
+		repository1.trackAllFiles(project);
 		repository1.commit("Initial commit");
 	}
 

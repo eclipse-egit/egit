@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Tasktop Technologies Inc.
+ * Copyright (C) 2011, 2012 Tasktop Technologies Inc. and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  *    Benjamin Muskalla (benjamin.muskalla@tasktop.com) - initial implementation
+ *    François Rey - gracefully ignore linked resources
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.operations;
 
@@ -115,15 +116,18 @@ public class GitScopeUtil {
 	}
 
 	/**
-	 * Returns all resource mappings for the given resources
+	 * Returns all resource mappings for the given resources.
+	 * Linked resources are ignored.
 	 *
 	 * @param resources
 	 * @return ResourceMappings
 	 */
 	private static ResourceMapping[] getResourceMappings(IResource[] resources) {
 		List<ResourceMapping> result = new ArrayList<ResourceMapping>();
-		for (IResource resource : resources)
-			result.add(getResourceMapping(resource));
+		for (IResource resource : resources) {
+			if (!resource.isLinked(IResource.CHECK_ANCESTORS))
+				result.add(getResourceMapping(resource));
+		}
 		return result.toArray(new ResourceMapping[result.size()]);
 	}
 
