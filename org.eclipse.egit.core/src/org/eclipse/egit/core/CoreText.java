@@ -110,9 +110,6 @@ public class CoreText extends NLS {
 	public static String DiscardChangesOperation_refreshFailed;
 
 	/** */
-	public static String DiscardChangesOperation_repoNotFound;
-
-	/** */
 	public static String DeleteResourcesOperation_deletingResources;
 
 	/** */

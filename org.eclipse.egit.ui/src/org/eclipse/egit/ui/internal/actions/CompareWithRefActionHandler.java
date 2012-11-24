@@ -124,6 +124,6 @@ public class CompareWithRefActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return getRepository() != null;
+		return selectionMapsToSingleRepository();
 	}
 }
