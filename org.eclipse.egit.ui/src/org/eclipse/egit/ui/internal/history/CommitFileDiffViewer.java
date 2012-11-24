@@ -10,6 +10,11 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history;
 
+import static org.eclipse.egit.core.internal.util.ResourceUtil.getFileForLocation;
+import static org.eclipse.egit.ui.internal.CompareUtils.canDirectlyOpenInCompare;
+import static org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize.synchronizeModelBetweenRefs;
+import static org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize.synchronizeModelWithWorkspace;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,10 +23,7 @@ import java.util.List;
 
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.job.JobUtil;
@@ -465,54 +467,96 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	void showTwoWayFileDiff(final FileDiff d) {
-		final GitCompareFileRevisionEditorInput in;
-
 		final String p = d.getPath();
 		final RevCommit c = d.getCommit();
-		final ITypedElement base;
-		final ITypedElement next;
 
-		if (d.getBlobs().length == 2 && !d.getChange().equals(ChangeType.ADD))
-			base = CompareUtils.getFileRevisionTypedElement(p, c.getParent(0),
-					getRepository(), d.getBlobs()[0]);
-		else
+		// extract commits
+		final RevCommit leftCommit;
+		final ObjectId baseObjectId;
+		if (d.getBlobs().length == 2 && !d.getChange().equals(ChangeType.ADD)) {
+			leftCommit = c.getParent(0);
+			baseObjectId = d.getBlobs()[0];
+		} else {
 			// Initial import
-			base = new GitCompareFileRevisionEditorInput.EmptyTypedElement(""); //$NON-NLS-1$
+			leftCommit = null;
+			baseObjectId = null;
+		}
 
-		if (d.getChange().equals(ChangeType.DELETE))
-			next = new GitCompareFileRevisionEditorInput.EmptyTypedElement(""); //$NON-NLS-1$
-		else
-			next = CompareUtils.getFileRevisionTypedElement(p, c,
-					getRepository(), d.getBlobs()[1]);
+		final RevCommit rightCommit;
+		final ObjectId rightObjectId;
+		if (d.getChange().equals(ChangeType.DELETE)) {
+			rightCommit = null;
+			rightObjectId = null;
+		} else {
+			rightCommit = c;
+			rightObjectId = d.getBlobs()[1];
+		}
 
-		in = new GitCompareFileRevisionEditorInput(next, base, null);
+
+		// determine (from a local available file) if a model compare is possible
+		IFile file = getFileForLocation(getRepository(), p);
+		if (file != null && leftCommit != null && rightCommit != null) {
+			if(!canDirectlyOpenInCompare(file)) {
+				try {
+					synchronizeModelBetweenRefs(file, getRepository(),
+							leftCommit.getName(), rightCommit.getName());
+				} catch (Exception e) {
+					Activator.logError(UIText.GitHistoryPage_openFailed, e);
+					Activator.showError(UIText.GitHistoryPage_openFailed, null);
+				}
+				return;
+			}
+		}
+
+		final ITypedElement base= createTypedElement(p, leftCommit, baseObjectId);
+		final ITypedElement next= createTypedElement(p, rightCommit, rightObjectId);
 		CompareUtils.openInCompare(site.getWorkbenchWindow().getActivePage(),
-				in);
+				new GitCompareFileRevisionEditorInput(next, base, null));
+	}
 
+	private ITypedElement createTypedElement(final String path,
+			final RevCommit commit, final ObjectId objectId) {
+		final ITypedElement base;
+		if (null != commit)
+			base = CompareUtils.getFileRevisionTypedElement(path, commit,
+					getRepository(), objectId);
+		else
+			base = new GitCompareFileRevisionEditorInput.EmptyTypedElement(""); //$NON-NLS-1$
+		return base;
 	}
 
 	void showWorkingDirectoryFileDiff(final FileDiff d) {
 		final GitCompareFileRevisionEditorInput in;
 
 		final String p = d.getPath();
-		final RevCommit c = d.getCommit();
+		final RevCommit commit = d.getCommit();
 		final ObjectId[] blobs = d.getBlobs();
 		final ITypedElement base;
 		final ITypedElement next;
 
-		IPath path = new Path(getRepository().getWorkTree().getAbsolutePath())
-				.append(p);
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IFile[] files = root.findFilesForLocationURI(path.toFile().toURI());
-		if (files.length > 0)
-			next = SaveableCompareEditorInput.createFileElement(files[0]);
+		IFile file = getFileForLocation(getRepository(), p);
+		if (file != null && commit != null) {
+			if(!canDirectlyOpenInCompare(file)) {
+				try {
+					synchronizeModelWithWorkspace(file, getRepository(), commit.getName());
+				} catch (Exception e) {
+					Activator.logError(UIText.GitHistoryPage_openFailed, e);
+					Activator.showError(UIText.GitHistoryPage_openFailed, null);
+				}
+				return;
+			}
+		}
+
+		if (file != null)
+			next = SaveableCompareEditorInput.createFileElement(file);
 		else
-			next = new LocalNonWorkspaceTypedElement(path);
+			next = new LocalNonWorkspaceTypedElement(new Path(getRepository()
+					.getWorkTree().getAbsolutePath()).append(p));
 
 		if (d.getChange().equals(ChangeType.DELETE))
 			base = new GitCompareFileRevisionEditorInput.EmptyTypedElement(""); //$NON-NLS-1$
 		else
-			base = CompareUtils.getFileRevisionTypedElement(p, c,
+			base = CompareUtils.getFileRevisionTypedElement(p, commit,
 					getRepository(), blobs[blobs.length - 1]);
 
 		in = new GitCompareFileRevisionEditorInput(next, base, null);
