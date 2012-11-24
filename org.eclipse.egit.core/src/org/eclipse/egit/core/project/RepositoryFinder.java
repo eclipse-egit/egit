@@ -2,6 +2,7 @@
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2007, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Google Inc.
+ * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -35,19 +36,16 @@ import org.eclipse.jgit.util.SystemReader;
  * <p>
  * This finder algorithm searches a project's contained files to see if any of
  * them are located within the working directory of an existing Git repository.
- * The finder searches through linked resources, as the EGit core is capable of
- * dealing with linked directories spanning multiple repositories in the same
- * project.
+ * By default linked resources are ignored and not included in the search.
  * </p>
  * <p>
  * The search algorithm is exhaustive, it will find all matching repositories.
- * For the project itself as well as for each linked container within the
+ * For the project itself and possibly for each linked container within the
  * project it scans down the local filesystem trees to locate any Git
  * repositories which may be found there. It also scans up the local filesystem
  * tree to locate any Git repository which may be outside of Eclipse's
- * workspace-view of the world, but which contains the project or a linked
- * resource within the project. In short, if there is a Git repository
- * associated, it finds it.
+ * workspace-view of the world.
+ * In short, if there is a Git repository associated, it finds it.
  * </p>
  */
 public class RepositoryFinder {
@@ -76,7 +74,7 @@ public class RepositoryFinder {
 	}
 
 	/**
-	 * Run the search algorithm.
+	 * Run the search algorithm, ignoring linked resources.
 	 *
 	 * @param m
 	 *            a progress monitor to report feedback to; may be null.
@@ -88,17 +86,38 @@ public class RepositoryFinder {
 	 */
 	public Collection<RepositoryMapping> find(IProgressMonitor m)
 			throws CoreException {
+		return find(m, false);
+	}
+	
+	/**
+	 * Run the search algorithm.
+	 * 
+	 * @param m
+	 *            a progress monitor to report feedback to; may be null.
+	 * @param searchLinkedFolders
+	 *            specify if linked folders should be included in the search
+	 * @return all found {@link RepositoryMapping} instances associated with the
+	 *         project supplied to this instance's constructor.
+	 * @throws CoreException
+	 *             Eclipse was unable to access its workspace, and threw up on
+	 *             us. We're throwing it back at the caller.
+	 * @since 2.3
+	 */
+	public Collection<RepositoryMapping> find(IProgressMonitor m, boolean searchLinkedFolders)
+			throws CoreException {
 		IProgressMonitor monitor;
 		if (m == null)
 			monitor = new NullProgressMonitor();
 		else
 			monitor = m;
-		find(monitor, proj);
+		find(monitor, proj, searchLinkedFolders);
 		return results;
 	}
 
-	private void find(final IProgressMonitor m, final IContainer c)
-			throws CoreException {
+	private void find(final IProgressMonitor m, final IContainer c, boolean searchLinkedFolders)
+				throws CoreException {
+		if (!searchLinkedFolders && c.isLinked())
+			return; // Ignore linked folders
 		final IPath loc = c.getLocation();
 
 		m.beginTask("", 101);  //$NON-NLS-1$
@@ -113,7 +132,7 @@ public class RepositoryFinder {
 				if (ownCfg.isFile()) {
 					register(c, ownCfg.getParentFile());
 				}
-				if (c.isLinked() || c instanceof IProject) {
+				if (c instanceof IProject) {
 					File p = fsLoc.getParentFile();
 					while (p != null) {
 						// TODO is this the right location?
@@ -141,7 +160,7 @@ public class RepositoryFinder {
 						if (o instanceof IContainer
 								&& !o.getName().equals(Constants.DOT_GIT)) {
 							find(new SubProgressMonitor(m, scale),
-									(IContainer) o);
+									(IContainer) o, searchLinkedFolders);
 						} else {
 							m.worked(scale);
 						}
