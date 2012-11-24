@@ -68,6 +68,8 @@ public class ReplaceWithPreviousActionHandler extends
 
 	@Override
 	public boolean isEnabled() {
-		return super.isEnabled() && getSelectedResources().length == 1;
+		IResource[] selectedResources = getSelectedResources();
+		return super.isEnabled() && selectedResources.length == 1 &&
+				selectionMapsToSingleRepository();
 	}
 }
