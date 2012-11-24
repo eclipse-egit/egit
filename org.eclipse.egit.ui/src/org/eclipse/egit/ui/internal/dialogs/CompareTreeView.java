@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2012 SAP AG and others.
+ * Copyright (c) 2011-2013 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Robin Stocker <robin@nibor.org> - ignore linked resources
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
@@ -115,7 +116,8 @@ import org.eclipse.ui.part.ViewPart;
  * If the input is an {@link IContainer}, the tree is similar to the tree shown
  * by the PackageExplorer (based on {@link WorkbenchLabelProvider} and
  * {@link WorkbenchContentProvider}, otherwise a simple tree representing files
- * and folders is used based on {@link PathNode} instances.
+ * and folders is used based on {@link PathNode} instances. Linked resources
+ * however are ignored and not listed as content.
  * <p>
  * The tree nodes are shown with icons for "Added", "Deleted", and
  * "Same Contents" for files. Files with same content can be hidden using a
@@ -123,6 +125,7 @@ import org.eclipse.ui.part.ViewPart;
  * <p>
  * This view can also show files and folders outside the Eclipse workspace when
  * a {@link Repository} is used as input.
+ * <p>
  */
 public class CompareTreeView extends ViewPart implements IMenuListener, IShowInSource {
 	/** The "magic" compare version to compare with the index */
@@ -932,9 +935,12 @@ public class CompareTreeView extends ViewPart implements IMenuListener, IShowInS
 				children = super.getChildren(element);
 			List<Object> childList = new ArrayList<Object>(children.length);
 			for (Object child : children) {
+				IResource childResource = (IResource) child;
+				if (childResource.isLinked())
+					continue;
 				IPath path = new Path(repositoryMapping
-						.getRepoRelativePath((IResource) child));
-				boolean isFile = ((IResource) child).getType() == IResource.FILE;
+.getRepoRelativePath(childResource));
+				boolean isFile = childResource.getType() == IResource.FILE;
 
 				// each path that is not ignored creates an entry in either
 				// compareVersionMap or addedPaths, so we can check if a path
