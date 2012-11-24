@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2008, Google Inc.
+ * Copyright (C) 2008, 2012 Google Inc. and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -143,16 +143,23 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	}
 
 	private Entry[] entries() {
+		if (node.isLinked(IResource.CHECK_ANCESTORS))
+			return EOF;
 		final IResource[] all;
 		try {
 			all = node.members(IContainer.INCLUDE_HIDDEN);
 		} catch (CoreException err) {
 			return EOF;
 		}
-
-		final Entry[] r = new Entry[all.length];
-		for (int i = 0; i < r.length; i++)
-			r[i] = new ResourceEntry(all[i]);
+		// Calculate result size ignoring linked resources
+		int length = 0;
+		for (int i = 0; i < all.length; i++)
+			if (!all[i].isLinked()) length++;
+		// Build result array ignoring linked resources
+		final Entry[] r = new Entry[length];
+		for (int i = 0, j = 0; i < all.length; i++)
+			if (!all[i].isLinked())
+				r[j++] = new ResourceEntry(all[i]);
 		return r;
 	}
 

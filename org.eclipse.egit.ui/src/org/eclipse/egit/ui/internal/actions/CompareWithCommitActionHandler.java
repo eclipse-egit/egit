@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2011, 2012 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -43,9 +43,9 @@ public class CompareWithCommitActionHandler extends RepositoryActionHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Repository repo = getRepository(true, event);
-		IResource[] resources = getSelectedResources(event);
 		if (repo == null)
 			return null;
+		IResource[] resources = getSelectedResources(event);
 
 		CommitSelectionDialog dlg = new CommitSelectionDialog(getShell(event),
 				repo, resources);
@@ -106,6 +106,6 @@ public class CompareWithCommitActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		return getRepository() != null;
+		return selectionMapsToSingleRepository();
 	}
 }
