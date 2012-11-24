@@ -39,9 +39,6 @@ public class UIText extends NLS {
 	public static String AbstractHistoryCommanndHandler_NoInputMessage;
 
 	/** */
-	public static String AbstractHistoryCommanndHandler_NoUniqueRepository;
-
-	/** */
 	public static String AbstractRebaseCommand_DialogTitle;
 
 	/** */
