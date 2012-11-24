@@ -94,6 +94,8 @@ public class IgnoreOperation implements IEGitOperation {
 
 	private boolean isIgnored(IPath path) throws IOException {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(path);
+		if (mapping == null)
+			return true; // Linked resources may not be mapped
 		Repository repository = mapping.getRepository();
 		String repoRelativePath = mapping.getRepoRelativePath(path);
 		TreeWalk walk = new TreeWalk(repository);
