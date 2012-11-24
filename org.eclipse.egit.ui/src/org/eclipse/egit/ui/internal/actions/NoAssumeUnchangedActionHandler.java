@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2011, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2010, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,12 +29,17 @@ import org.eclipse.egit.ui.UIText;
 public class NoAssumeUnchangedActionHandler extends RepositoryActionHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IResource[] resources = getSelectedResources(event);
-		if (resources.length == 0)
+		if (resources.length == 0 || !selectionMapsToSingleRepository())
 			return null;
 		AssumeUnchangedOperation op = new AssumeUnchangedOperation(Arrays
 				.asList(resources), false);
 		JobUtil.scheduleUserJob(op, UIText.AssumeUnchanged_assumeUnchanged,
 				JobFamilies.ASSUME_NOASSUME_UNCHANGED);
 		return null;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return selectionMapsToSingleRepository();
 	}
 }

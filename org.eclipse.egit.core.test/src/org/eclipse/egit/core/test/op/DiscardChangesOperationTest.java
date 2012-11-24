@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,15 +15,11 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 
-import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceVisitor;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.op.DiscardChangesOperation;
 import org.eclipse.egit.core.test.DualRepositoryTestCase;
 import org.eclipse.egit.core.test.TestRepository;
@@ -54,8 +51,7 @@ public class DiscardChangesOperationTest extends DualRepositoryTestCase {
 		testUtils.addFileToProject(project, "folder1/file2.txt", "Hello world 2");
 
 		repository1.connect(project);
-
-		trackAllFiles(project, repository1);
+		repository1.trackAllFiles(project);
 		repository1.commit("Initial commit");
 
 		File workdir2 = testUtils.createTempDir("Project2");
@@ -64,8 +60,7 @@ public class DiscardChangesOperationTest extends DualRepositoryTestCase {
 		testUtils.addFileToProject(project2, "file.txt", "initial");
 		repository2 = new TestRepository(new File(workdir2, Constants.DOT_GIT));
 		repository2.connect(project2);
-
-		trackAllFiles(project2, repository2);
+		repository2.trackAllFiles(project2);
 		repository2.commit("Initial commit");
 	}
 
@@ -117,25 +112,6 @@ public class DiscardChangesOperationTest extends DualRepositoryTestCase {
 
 		String replacedContents = testUtils.slurpAndClose(file.getContents());
 		assertEquals("initial", replacedContents);
-	}
-
-	private static void trackAllFiles(IProject project, final TestRepository testRepository) throws CoreException {
-		project.accept(new IResourceVisitor() {
-
-			public boolean visit(IResource resource) throws CoreException {
-				if (resource instanceof IFile) {
-					try {
-						testRepository
-								.track(EFS.getStore(resource.getLocationURI())
-										.toLocalFile(0, null));
-					} catch (Exception e) {
-						throw new CoreException(Activator.error(e.getMessage(),
-								e));
-					}
-				}
-				return true;
-			}
-		});
 	}
 
 	private void setNewFileContent(IFile file, String content) throws Exception {

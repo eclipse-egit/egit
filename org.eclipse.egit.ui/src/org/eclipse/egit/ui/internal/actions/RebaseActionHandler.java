@@ -27,7 +27,7 @@ public class RebaseActionHandler extends RepositoryActionHandler {
 
 	@Override
 	public boolean isEnabled() {
-		Repository repo = getRepository();
+		Repository repo = getSelectionRepository();
 		return repo != null && isLocalBranchCheckedout(repo);
 	}
 }
