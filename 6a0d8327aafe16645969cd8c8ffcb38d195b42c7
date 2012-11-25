@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJn///u4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1312,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-25T21:23:18Z",
+      "side": 1,
+      "message": "This label is also used in the Staging view and in the Tree Compare view. In the history view, I sometimes mistakenly press on \"Open in Editor\" when I want to open the current file to edit it. I\u0027m wondering if it\u0027s just me, but I\u0027d prefer OpenWorkingTreeVersionInEditorMenuLabel to be \"Open in Editor\" and OpenInEditorMenuLabel to be \"Open Version from Commit\".\n\nAlternatively, I\u0027d prefer this to be \"Open Working Directory Version\", because \"Open Version in Working Directory\" below \"Open in Editor\" sounds like \"Working Directory\" is a kind of editor (the \"in\" mean different things here).\n\nYet another option would be \"Open Workspace Version\", which would use the Eclipse term.\n\nWhat do you think?",
+      "revId": "6a0d8327aafe16645969cd8c8ffcb38d195b42c7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
