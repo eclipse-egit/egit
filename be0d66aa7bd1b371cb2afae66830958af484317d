@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJn///zg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-11-25T16:30:47Z",
+      "side": 1,
+      "message": "I myself is not very fond of static import, with a few exceptions for unit tests, i.e. assert and methods for setting up data.",
+      "revId": "be0d66aa7bd1b371cb2afae66830958af484317d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
