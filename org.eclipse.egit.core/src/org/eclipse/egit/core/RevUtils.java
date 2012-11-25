@@ -47,6 +47,7 @@ public class RevUtils {
 		Assert.isNotNull(commit2);
 
 		RevWalk rw = new RevWalk(repo);
+		rw.setRetainBody(false);
 		rw.setRevFilter(RevFilter.MERGE_BASE);
 
 		RevCommit srcRev = rw.lookupCommit(commit1);
