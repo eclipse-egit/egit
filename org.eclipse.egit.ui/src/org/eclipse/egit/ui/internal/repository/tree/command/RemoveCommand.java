@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Daniel Megert <daniel_megert@ch.ibm.com> - Delete empty working directory
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
@@ -229,6 +230,13 @@ public class RemoveCommand extends
 				FileUtils.delete(repo.getWorkTree(), FileUtils.RECURSIVE
 						| FileUtils.RETRY | FileUtils.SKIP_MISSING);
 				node.getParent().getRepository().notifyIndexChanged();
+			}
+
+			// Delete empty working directory
+			String[] files = repo.getWorkTree().list();
+			boolean isWorkingDirEmpty = files != null && files.length == 0;
+			if (deleteWorkDir && isWorkingDirEmpty) {
+				FileUtils.delete(repo.getWorkTree(), FileUtils.RETRY | FileUtils.SKIP_MISSING);
 			}
 		}
 	}
