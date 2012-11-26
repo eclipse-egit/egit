@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJn///r8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-26T15:48:40Z",
+      "side": 1,
+      "message": "I think we should also check for !repo.isBare() before calling getWorkTree() here. You could combine that with the check for deleteWorkDir, as above:\n\nif (deleteWorkDir \u0026\u0026 !repo.isBare()) {\n  // ...\n}",
+      "revId": "bf13705be1fbbb005c738ce6462e48325bd6fa23",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
