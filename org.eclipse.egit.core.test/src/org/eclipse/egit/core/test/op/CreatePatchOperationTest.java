@@ -16,7 +16,6 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -318,8 +317,8 @@ public class CreatePatchOperationTest extends GitTestCase {
 	@Test
 	public void testWorkspacePatchForWorkingDir() throws Exception {
 		// setup workspace
-		testRepository.addToIndex((IFile) project.getProject().findMember(".classpath"));
-		testRepository.addToIndex((IFile) project.getProject().findMember(".project"));
+		testRepository.addToIndex(project.getProject().findMember(".classpath"));
+		testRepository.addToIndex(project.getProject().findMember(".project"));
 		testRepository.commit("commit all");
 		testRepository.appendFileContent(file, "another line");
 		File newFile = testRepository.createFile(project.getProject(), "new-file");
