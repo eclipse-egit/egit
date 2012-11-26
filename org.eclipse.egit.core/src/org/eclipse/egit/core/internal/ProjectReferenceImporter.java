@@ -31,9 +31,11 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.ProjectReference;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.jgit.lib.Config;
@@ -82,54 +84,64 @@ public class ProjectReferenceImporter {
 				final String branch = branchEntry.getKey();
 				final Set<ProjectReference> projects = branchEntry.getValue();
 
-				final IPath workDir = getWorkingDir(gitUrl, branch,
-						branches.keySet());
-				final File repositoryPath = workDir.append(
-						Constants.DOT_GIT_EXT).toFile();
+				final Set<String> allBranches = branches.keySet();
 
-				boolean shouldClone = true;
+				File repositoryPath = null;
+				if (allBranches.size() == 1)
+					repositoryPath = findConfiguredRepository(gitUrl);
 
-				if (workDir.toFile().exists()) {
-					if (repositoryAlreadyExistsForUrl(repositoryPath, gitUrl))
-						shouldClone = false;
-					else {
-						final Collection<String> projectNames = new LinkedList<String>();
-						for (final ProjectReference projectReference : projects)
-							projectNames.add(projectReference.getProjectDir());
-						throw new TeamException(
-								NLS.bind(
-										CoreText.GitProjectSetCapability_CloneToExistingDirectory,
-										new Object[] { workDir, projectNames,
-												gitUrl }));
+				if (repositoryPath == null) {
+					try {
+						IPath workDir = getWorkingDir(gitUrl, branch, branches.keySet());
+						repositoryPath = cloneIfNecessary(gitUrl, branch, workDir, projects, monitor);
+					} catch (final InterruptedException e) {
+						// was canceled by user
+						return Collections.emptyList();
 					}
 				}
 
-				try {
-					if (shouldClone) {
-						int timeout = 60;
-						String refName = Constants.R_HEADS + branch;
-						final CloneOperation cloneOperation = new CloneOperation(
-								gitUrl, true, null, workDir.toFile(), refName,
-								Constants.DEFAULT_REMOTE_NAME, timeout);
-						cloneOperation.run(monitor);
-					}
+				getRepositoryUtil().addConfiguredRepository(repositoryPath);
 
-					Activator.getDefault().getRepositoryUtil()
-							.addConfiguredRepository(repositoryPath);
-
-					List<IProject> p = importProjects(projects, workDir,
-							repositoryPath, monitor);
-					importedProjects.addAll(p);
-				} catch (final InvocationTargetException e) {
-					throw getTeamException(e);
-
-				} catch (final InterruptedException e) {
-					// was canceled by user
-					return Collections.emptyList();
-				}
+				IPath newWorkDir = new Path(repositoryPath.getAbsolutePath())
+						.removeLastSegments(1);
+				List<IProject> p = importProjects(projects, newWorkDir,
+						repositoryPath, monitor);
+				importedProjects.addAll(p);
 			}
 		}
 		return importedProjects;
+	}
+
+	private static File cloneIfNecessary(final URIish gitUrl, final String branch, final IPath workDir,
+			final Set<ProjectReference> projects, IProgressMonitor monitor) throws TeamException, InterruptedException {
+
+		final File repositoryPath = workDir.append(Constants.DOT_GIT_EXT).toFile();
+
+		if (workDir.toFile().exists()) {
+			if (repositoryAlreadyExistsForUrl(repositoryPath, gitUrl))
+				return repositoryPath;
+			else {
+				final Collection<String> projectNames = new LinkedList<String>();
+				for (final ProjectReference projectReference : projects)
+					projectNames.add(projectReference.getProjectDir());
+				throw new TeamException(
+						NLS.bind(CoreText.GitProjectSetCapability_CloneToExistingDirectory,
+								new Object[] { workDir, projectNames, gitUrl }));
+			}
+		} else {
+			try {
+				int timeout = 60;
+				String refName = Constants.R_HEADS + branch;
+				final CloneOperation cloneOperation = new CloneOperation(
+						gitUrl, true, null, workDir.toFile(), refName,
+						Constants.DEFAULT_REMOTE_NAME, timeout);
+				cloneOperation.run(monitor);
+
+				return repositoryPath;
+			} catch (final InvocationTargetException e) {
+				throw getTeamException(e);
+			}
+		}
 	}
 
 	private Map<URIish, Map<String, Set<ProjectReference>>> parseReferenceStrings()
@@ -186,6 +198,15 @@ public class ProjectReferenceImporter {
 			extendedName = humanishName + "_" + branch; //$NON-NLS-1$
 		final IPath workDir = workspaceLocation.append(extendedName);
 		return workDir;
+	}
+
+	private static File findConfiguredRepository(URIish gitUrl) {
+		for (String repoDir : getRepositoryUtil().getConfiguredRepositories()) {
+			File repoDirFile = new File(repoDir);
+			if (repositoryAlreadyExistsForUrl(repoDirFile, gitUrl))
+				return repoDirFile;
+		}
+		return null;
 	}
 
 	private static boolean repositoryAlreadyExistsForUrl(File repositoryPath,
@@ -258,10 +279,14 @@ public class ProjectReferenceImporter {
 		}
 	}
 
-	private TeamException getTeamException(final Throwable throwable) {
+	private static TeamException getTeamException(final Throwable throwable) {
 		Throwable current = throwable;
 		while (current.getCause() != null)
 			current = current.getCause();
 		return new TeamException(current.getMessage(), current);
+	}
+
+	private static RepositoryUtil getRepositoryUtil() {
+		return Activator.getDefault().getRepositoryUtil();
 	}
 }

@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.GitProjectSetCapability;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.api.Git;
@@ -121,9 +122,7 @@ public class GitProjectSetCapabilityTest {
 		String cReference = "1.0," + cPath.toFile().toURI().toString() + ",stable,.";
 		String[] references = new String[] { aReference, baReference, bbReference, cReference };
 
-		capability.addToWorkspace(references,
-						new ProjectSetSerializationContext(),
-						new NullProgressMonitor());
+		addToWorkspace(references);
 
 		pathsToClean.add(root.getLocation().append("b").toFile());
 
@@ -169,9 +168,7 @@ public class GitProjectSetCapabilityTest {
 		String xbStableReference = "1.0," + xPath.toFile().toURI().toString() + ",stable,xb";
 		String[] references = new String[] { xaMasterReference, xbStableReference };
 
-		capability.addToWorkspace(references,
-						new ProjectSetSerializationContext(),
-						new NullProgressMonitor());
+		addToWorkspace(references);
 
 		pathsToClean.add(root.getLocation().append("x").toFile());
 		pathsToClean.add(root.getLocation().append("x_stable").toFile());
@@ -211,16 +208,12 @@ public class GitProjectSetCapabilityTest {
 		String xbReference = createProjectReference(xPath, "master", "xb");
 
 		// This should work because there is not yet a repo at the destination
-		capability.addToWorkspace(new String[] { xaReference },
-				new ProjectSetSerializationContext(),
-				new NullProgressMonitor());
+		addToWorkspace(new String[] { xaReference });
 
 		// This should work because the repo that is already there is for the
 		// same remote URL. It's assumed to be ok and will skip cloning and
 		// directly import the project.
-		capability.addToWorkspace(new String[] { xbReference },
-				new ProjectSetSerializationContext(),
-				new NullProgressMonitor());
+		addToWorkspace(new String[] { xbReference });
 
 		pathsToClean.add(root.getLocation().append("x").toFile());
 
@@ -235,6 +228,34 @@ public class GitProjectSetCapabilityTest {
 		} catch (TeamException e) {
 			// This is expected
 		}
+	}
+
+	@Test
+	public void testImportWhereRepoAlreadyExistsAtDifferentLocation() throws Exception {
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IPath reposPath = root.getLocation().append("existingbutdifferent");
+		pathsToClean.add(reposPath.toFile());
+
+		IPath repoPath = reposPath.append("repo");
+		IProject project = createProject(repoPath, "project");
+		project.delete(false, true, null);
+		String url = createUrl(repoPath);
+		File repoDir = createRepository(repoPath, url, "master");
+
+		IPath otherRepoPath = reposPath.append("other");
+		File otherRepoDir = createRepository(otherRepoPath, "other-url", "master");
+
+		RepositoryUtil util = Activator.getDefault().getRepositoryUtil();
+		util.addConfiguredRepository(repoDir);
+		util.addConfiguredRepository(otherRepoDir);
+
+		String reference = createProjectReference(repoPath, "master", "project");
+
+		addToWorkspace(new String[] { reference });
+
+		IProject imported = root.getProject("project");
+		assertEquals("Expected imported project to be from already existing repository",
+				root.getLocation().append("existingbutdifferent/repo/project"), imported.getLocation());
 	}
 
 	private IProject createProject(String name) throws CoreException {
@@ -290,5 +311,11 @@ public class GitProjectSetCapabilityTest {
 
 	private static String createUrl(IPath repoPath) {
 		return repoPath.toFile().toURI().toString();
+	}
+
+	private void addToWorkspace(String[] references) throws TeamException {
+		capability.addToWorkspace(references,
+				new ProjectSetSerializationContext(),
+				new NullProgressMonitor());
 	}
 }
