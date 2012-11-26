@@ -268,7 +268,6 @@ public class RepositoryMapping {
 	 *         or null for non GitProvider.
 	 */
 	public static RepositoryMapping getMapping(IPath path) {
-		IPath fullPath = path.removeLastSegments(1);
 		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot()
 				.getProjects();
 
@@ -280,7 +279,7 @@ public class RepositoryMapping {
 				continue;
 
 			Path workingTree = new Path(mapping.getWorkTree().toString());
-			IPath relative = fullPath.makeRelativeTo(workingTree);
+			IPath relative = path.makeRelativeTo(workingTree);
 			String firstSegment = relative.segment(0);
 
 			if (firstSegment == null || !"..".equals(firstSegment)) //$NON-NLS-1$
