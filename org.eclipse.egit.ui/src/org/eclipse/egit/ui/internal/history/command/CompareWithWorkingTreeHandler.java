@@ -66,10 +66,13 @@ public class CompareWithWorkingTreeHandler extends
 				File file = (File) input;
 				// TODO can we create a ITypedElement from the local file?
 				RevCommit leftCommit;
+				RevWalk walk = new RevWalk(repo);
 				try {
-					leftCommit = new RevWalk(repo).parseCommit(headCommit);
+					leftCommit = walk.parseCommit(headCommit);
 				} catch (Exception e) {
 					throw new ExecutionException(e.getMessage(), e);
+				} finally {
+					walk.release();
 				}
 				final String gitPath = getRepoRelativePath(repo, file);
 				ITypedElement left = CompareUtils.getFileRevisionTypedElement(
