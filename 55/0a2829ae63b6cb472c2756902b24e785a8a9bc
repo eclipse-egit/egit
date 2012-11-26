@@ -1,0 +1,9 @@
+Code-Review+2: Dani Megert <Daniel_Megert@ch.ibm.com>
+IP-Clean+1: Dani Megert <Daniel_Megert@ch.ibm.com>
+Verified+1: Dani Megert <Daniel_Megert@ch.ibm.com>
+Verified+1: Hudson CI
+Submitted-by: Dani Megert <Daniel_Megert@ch.ibm.com>
+Submitted-at: Mon, 26 Nov 2012 10:13:08 -0500
+Reviewed-on: https://git.eclipse.org/r/8056
+Project: egit/egit
+Branch: refs/heads/master
