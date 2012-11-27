@@ -11,9 +11,7 @@ package org.eclipse.egit.ui.internal;
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.compare.IResourceProvider;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -26,8 +24,7 @@ import org.eclipse.team.core.history.IFileRevision;
 /**
  * Editable revision backed by an {@link IFile}.
  */
-public class FileEditableRevision extends EditableRevision implements
-		IResourceProvider {
+public class FileEditableRevision extends EditableRevision {
 
 	private final IFile file;
 
@@ -70,10 +67,6 @@ public class FileEditableRevision extends EditableRevision implements
 		} catch (InterruptedException e) {
 			// ignore here
 		}
-	}
-
-	public IResource getResource() {
-		return file;
 	}
 
 	@Override
