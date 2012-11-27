@@ -1,0 +1,11 @@
+Verified+1: Tomasz Zarna <tomasz.zarna@tasktop.com>
+Code-Review+2: Dani Megert <Daniel_Megert@ch.ibm.com>
+IP-Clean+1: Dani Megert <Daniel_Megert@ch.ibm.com>
+Verified+1: Dani Megert <Daniel_Megert@ch.ibm.com>
+Verified+1: Hudson CI
+Code-Review+1: François  Rey <eclipse.org@francois.rey.name>
+Submitted-by: Dani Megert <Daniel_Megert@ch.ibm.com>
+Submitted-at: Tue, 27 Nov 2012 05:32:42 -0500
+Reviewed-on: https://git.eclipse.org/r/8857
+Project: egit/egit
+Branch: refs/heads/master
