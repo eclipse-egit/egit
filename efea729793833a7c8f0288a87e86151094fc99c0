@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3///0c\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/FetchAndMergeActionTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-11-28T23:49:53Z",
+      "side": 1,
+      "message": "in change I7f75957d2d44e08679c3eb512cdc446eeb426677 the timeout is 10 sec here you have 20 and below 60, what\u0027s the reason not to use a common timeout ? \n\nMaybe we should make this configurable through a system property so that we don\u0027t have to change code in order to experiment with different timeout settings",
+      "revId": "efea729793833a7c8f0288a87e86151094fc99c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
