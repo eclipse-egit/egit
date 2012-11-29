@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 SAP AG.
+ * Copyright (c) 2011, 2012 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,6 +13,7 @@ package org.eclipse.egit.ui.internal.push;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
@@ -33,6 +34,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
@@ -175,8 +177,13 @@ public class PushOperationUI {
 
 			for (URIish uri : urisToPush) {
 				try {
-					spec.addURIRefUpdates(uri, Transport.open(repository, uri)
-							.findRemoteRefUpdatesFor(pushRefSpecs));
+					// Fetch ref specs are passed here to make sure that the
+					// returned remote ref updates include tracking branch
+					// updates.
+					Collection<RemoteRefUpdate> remoteRefUpdates = Transport
+							.findRemoteRefUpdatesFor(repository, pushRefSpecs,
+									config.getFetchRefSpecs());
+					spec.addURIRefUpdates(uri, remoteRefUpdates);
 				} catch (NotSupportedException e) {
 					throw new CoreException(Activator.createErrorStatus(
 							e.getMessage(), e));
