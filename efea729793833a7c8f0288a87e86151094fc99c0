@@ -34,6 +34,24 @@
       "revId": "efea729793833a7c8f0288a87e86151094fc99c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///pQ\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/FetchAndMergeActionTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-11-29T22:15:06Z",
+      "side": 1,
+      "message": "ok then let\u0027s first gather some experience with the approach you\u0027ve chosen here",
+      "parentUuid": "AABOJ3///xk\u003d",
+      "revId": "efea729793833a7c8f0288a87e86151094fc99c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
