@@ -13,6 +13,7 @@ package org.eclipse.egit.core.test;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Pattern;
@@ -46,6 +47,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.FileUtils;
 
@@ -500,6 +502,10 @@ public class TestRepository {
 		DisconnectProviderOperation disconnect = new DisconnectProviderOperation(
 				projects);
 		disconnect.execute(null);
+	}
+
+	public URIish getUri() throws URISyntaxException {
+		return new URIish("file:///" + repository.getDirectory().toString());
 	}
 
 	private DirCacheEntry getDirCacheEntry(String path) throws IOException {
