@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3///o0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-11-29T22:48:45Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "84e207fcfb4108245f9b0a9c658847ecbb1462de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///ok\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-11-29T22:48:45Z",
+      "side": 1,
+      "message": "we don\u0027t like dead code",
+      "revId": "84e207fcfb4108245f9b0a9c658847ecbb1462de",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
