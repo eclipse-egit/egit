@@ -16,6 +16,24 @@
       "revId": "efea729793833a7c8f0288a87e86151094fc99c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///xk\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/test/team/actions/FetchAndMergeActionTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-11-29T13:47:17Z",
+      "side": 1,
+      "message": "No specific reason, just guessing which operation takes longer than others.\n\nI\u0027m not sure a common timeout is appropriate for jobs. Maybe we should define a default timeout per job family in a common location, so we can change it in one place?",
+      "parentUuid": "AABOJ3///0c\u003d",
+      "revId": "efea729793833a7c8f0288a87e86151094fc99c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
