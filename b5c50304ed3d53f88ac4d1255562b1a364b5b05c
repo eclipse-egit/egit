@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3///qY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RebaseActionHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-11-29T21:42:48Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be the same as org.eclipse.egit.ui.internal.actions.RebaseAction.shouldRunAction(), which also tests that the repository is not in a rebasing state?",
+      "revId": "b5c50304ed3d53f88ac4d1255562b1a364b5b05c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///qU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RemoveFromIndexActionHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-11-29T21:42:48Z",
+      "side": 1,
+      "message": "Should RemoveFromIndex operate on multiple repositories as well (it doesn\u0027t at present, the corresponding operation would also need to be changed)?",
+      "revId": "b5c50304ed3d53f88ac4d1255562b1a364b5b05c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///qQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RemoveFromIndexActionHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-11-29T21:42:48Z",
+      "side": 1,
+      "message": "Should RemoveFromIndex also include related model elements (it doesn\u0027t at present, unlike Add)?",
+      "revId": "b5c50304ed3d53f88ac4d1255562b1a364b5b05c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
