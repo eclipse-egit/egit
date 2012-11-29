@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2010, 2012 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,6 +16,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,8 +42,11 @@ import org.eclipse.egit.core.test.DualRepositoryTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.egit.core.test.TestUtils;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.RemoteRefUpdate.Status;
 import org.eclipse.jgit.transport.URIish;
@@ -106,8 +110,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 		project.delete(false, false, null);
 
 		// let's clone repository1 to repository2
-		URIish uri = new URIish("file:///"
-				+ repository1.getRepository().getDirectory().toString());
+		URIish uri = repository1.getUri();
 		CloneOperation clop = new CloneOperation(uri, true, null, workdir2,
 				"refs/heads/master", "origin", 0);
 		clop.run(null);
@@ -279,8 +282,7 @@ public class PushOperationTest extends DualRepositoryTestCase {
 
 		PushOperationSpecification spec = new PushOperationSpecification();
 		// the remote is repo2
-		URIish remote = new URIish("file:///"
-				+ repository2.getRepository().getDirectory().toString());
+		URIish remote = repository2.getUri();
 		// update master upon master
 		List<RemoteRefUpdate> refUpdates = new ArrayList<RemoteRefUpdate>();
 		RemoteRefUpdate update = new RemoteRefUpdate(repository1
@@ -299,6 +301,34 @@ public class PushOperationTest extends DualRepositoryTestCase {
 		} catch (IllegalStateException e) {
 			// expected
 		}
+	}
+
+	@Test
+	public void testUpdateTrackingBranchIfSpecifiedInRemoteRefUpdate() throws Exception {
+		// Commit on repository 2
+		IProject project = importProject(repository2, projectName);
+		RevCommit commit = repository2.addAndCommit(project, new File(workdir2, "test.txt"), "Commit in repository 2");
+
+		// We want to push from repository 2 to 1 (because repository 2 already
+		// has tracking set up)
+		URIish remote = repository1.getUri();
+		String trackingRef = "refs/remotes/origin/master";
+		RemoteRefUpdate update = new RemoteRefUpdate(
+				repository2.getRepository(), "HEAD", "refs/heads/master", false,
+				trackingRef, null);
+		PushOperationSpecification spec = new PushOperationSpecification();
+		spec.addURIRefUpdates(remote, Arrays.asList(update));
+
+		PushOperation push = new PushOperation(repository2.getRepository(),
+				spec, false, 0);
+		push.run(null);
+
+		PushOperationResult result = push.getOperationResult();
+		PushResult pushResult = result.getPushResult(remote);
+		assertNotNull("Expected result to have tracking ref update", pushResult.getTrackingRefUpdate(trackingRef));
+
+		ObjectId trackingId = repository2.getRepository().resolve(trackingRef);
+		assertEquals("Expected tracking branch to be updated", commit.getId(), trackingId);
 	}
 
 	private Status getStatus(PushOperationResult operationResult) {
