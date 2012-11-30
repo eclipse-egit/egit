@@ -39,6 +39,7 @@ import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.securestorage.EGitSecureStore;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugOptionsListener;
@@ -57,6 +58,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	private RepositoryUtil repositoryUtil;
 	private EGitSecureStore secureStore;
 	private AutoShareProjects shareGitProjectsJob;
+	private IResourceChangeListener preDeleteProjectListener;
 
 	/**
 	 * @return the singleton {@link Activator}
@@ -135,6 +137,27 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		secureStore = new EGitSecureStore(SecurePreferencesFactory.getDefault());
 
 		registerAutoShareProjects();
+		registerPreDeleteResourceChangeListener();
+	}
+
+	private void registerPreDeleteResourceChangeListener() {
+		if (preDeleteProjectListener == null) {
+			preDeleteProjectListener = new IResourceChangeListener() {
+
+				public void resourceChanged(IResourceChangeEvent event) {
+					IResource resource = event.getResource();
+					if (resource instanceof IProject) {
+						IProject project = (IProject) resource;
+						if (RepositoryProvider.getProvider(project) instanceof GitProvider) {
+							IResource dotGit = project.findMember(Constants.DOT_GIT);
+							if (dotGit != null && dotGit.getType() == IResource.FOLDER)
+								GitProjectData.reconfigureWindowCache();
+						}
+					}
+				}
+			};
+			ResourcesPlugin.getWorkspace().addResourceChangeListener(preDeleteProjectListener, IResourceChangeEvent.PRE_DELETE);
+		}
 	}
 
 	public void optionsChanged(DebugOptions options) {
@@ -179,6 +202,10 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		secureStore = null;
 		super.stop(context);
 		plugin = null;
+		if (preDeleteProjectListener != null) {
+			ResourcesPlugin.getWorkspace().removeResourceChangeListener(preDeleteProjectListener);
+			preDeleteProjectListener = null;
+		}
 	}
 
 	private void registerAutoShareProjects() {
