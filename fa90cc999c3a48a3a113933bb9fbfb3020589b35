@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3///mQ\u003d",
+        "filename": "tools/egit-developer-tools.p2f",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2012-11-30T09:07:37Z",
+      "side": 1,
+      "message": "To me it looks like it is a runtime/test-time dependency and should be droped.",
+      "revId": "fa90cc999c3a48a3a113933bb9fbfb3020589b35",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3///mM\u003d",
+        "filename": "tools/egit-developer-tools.p2f",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2012-11-30T09:07:37Z",
+      "side": 1,
+      "message": "Same as for org.apache.log4j",
+      "revId": "fa90cc999c3a48a3a113933bb9fbfb3020589b35",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
