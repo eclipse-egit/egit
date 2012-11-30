@@ -57,6 +57,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	private RepositoryUtil repositoryUtil;
 	private EGitSecureStore secureStore;
 	private AutoShareProjects shareGitProjectsJob;
+	private IResourceChangeListener egitChangeListener;
 
 	/**
 	 * @return the singleton {@link Activator}
@@ -135,6 +136,17 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		secureStore = new EGitSecureStore(SecurePreferencesFactory.getDefault());
 
 		registerAutoShareProjects();
+		if (egitChangeListener == null) {
+			egitChangeListener = new IResourceChangeListener() {
+
+				public void resourceChanged(IResourceChangeEvent event) {
+					IResource project = event.getResource();
+					if (project instanceof IProject)
+						GitProjectData.reconfigureWindowCache();
+				}
+			};
+			ResourcesPlugin.getWorkspace().addResourceChangeListener(egitChangeListener, IResourceChangeEvent.PRE_DELETE);
+		}
 	}
 
 	public void optionsChanged(DebugOptions options) {
@@ -179,6 +191,10 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		secureStore = null;
 		super.stop(context);
 		plugin = null;
+		if (egitChangeListener != null) {
+			ResourcesPlugin.getWorkspace().removeResourceChangeListener(egitChangeListener);
+			egitChangeListener = null;
+		}
 	}
 
 	private void registerAutoShareProjects() {
