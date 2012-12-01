@@ -12,13 +12,20 @@ package org.eclipse.egit.core;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceFilterDescription;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.Constants;
@@ -27,6 +34,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
+import org.eclipse.jgit.treewalk.FileTreeIterator.FileEntry;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.WorkingTreeOptions;
 import org.eclipse.jgit.util.FS;
@@ -76,7 +84,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	public ContainerTreeIterator(final Repository repository, final IContainer base) {
 		super(computePrefix(base), repository.getConfig().get(WorkingTreeOptions.KEY));
 		node = base;
-		init(entries());
+		init(entries(false));
 		initRootIterator(repository);
 	}
 
@@ -96,7 +104,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	public ContainerTreeIterator(final Repository repository, final IWorkspaceRoot root) {
 		super("", repository.getConfig().get(WorkingTreeOptions.KEY));  //$NON-NLS-1$
 		node = root;
-		init(entries());
+		init(entries(false));
 		initRootIterator(repository);
 	}
 
@@ -117,18 +125,33 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	 */
 	public ContainerTreeIterator(final WorkingTreeIterator p,
 			final IContainer base) {
+		this(p, base, false);
+	}
+
+	private ContainerTreeIterator(final WorkingTreeIterator p,
+			final IContainer base, final boolean hasInheritedResourceFilters) {
 		super(p);
 		node = base;
-		init(entries());
+		init(entries(hasInheritedResourceFilters));
 	}
 
 	@Override
 	public AbstractTreeIterator createSubtreeIterator(ObjectReader reader)
 			throws IncorrectObjectTypeException, IOException {
-		if (FileMode.TREE.equals(mode))
-			return new ContainerTreeIterator(this,
-					(IContainer) ((ResourceEntry) current()).rsrc);
-		else
+		if (FileMode.TREE.equals(mode)) {
+			if (current() instanceof ResourceEntry) {
+				ResourceEntry resourceEntry = (ResourceEntry) current();
+				return new ContainerTreeIterator(this,
+						(IContainer) resourceEntry.rsrc,
+						resourceEntry.hasInheritedResourceFilters);
+			} else if (current() instanceof FileEntry) {
+				FileEntry fileEntry = (FileEntry) current();
+				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+				return new AdaptableFileTreeIterator(this, fileEntry.getFile(), root);
+			} else {
+				throw new IllegalStateException("Unknown entry type: " + current()); //$NON-NLS-1$
+			}
+		} else
 			throw new IncorrectObjectTypeException(ObjectId.zeroId(),
 					Constants.TYPE_TREE);
 	}
@@ -142,18 +165,93 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		return (ResourceEntry) current();
 	}
 
-	private Entry[] entries() {
-		final IResource[] all;
+	private Entry[] entries(final boolean hasInheritedResourceFilters) {
+		final IResource[] resources;
 		try {
-			all = node.members(IContainer.INCLUDE_HIDDEN);
+			resources = node.members(IContainer.INCLUDE_HIDDEN);
 		} catch (CoreException err) {
 			return EOF;
 		}
 
-		final Entry[] r = new Entry[all.length];
-		for (int i = 0; i < r.length; i++)
-			r[i] = new ResourceEntry(all[i]);
-		return r;
+		List<Entry> entries = new ArrayList<Entry>(resources.length);
+
+		boolean inheritableResourceFilter = addFilteredEntries(
+				hasInheritedResourceFilters, resources, entries);
+
+		for (IResource resource : resources)
+			entries.add(new ResourceEntry(resource, inheritableResourceFilter));
+
+		return entries.toArray(new Entry[entries.size()]);
+	}
+
+	/**
+	 * Add entries for filtered resources.
+	 *
+	 * @param hasInheritedResourceFilters
+	 *            true if resource filters of parents could be active, false
+	 *            otherwise
+	 * @param memberResources
+	 *            the resources returned from members() that do not have to be
+	 *            added as entries again
+	 * @param entries
+	 *            where entries should be added to
+	 * @return true if we now have resource filters that are inherited, false if
+	 *         there are no resource filters which are inherited.
+	 */
+	private boolean addFilteredEntries(
+			final boolean hasInheritedResourceFilters,
+			final IResource[] memberResources, final List<Entry> entries) {
+		// Inheritable resource filters must be propagated.
+		boolean inheritableResourceFilter = hasInheritedResourceFilters;
+		IResourceFilterDescription[] filters;
+		try {
+			filters = node.getFilters();
+		} catch (CoreException e) {
+			// Should not happen, but assume we have no filters then.
+			filters = new IResourceFilterDescription[] {};
+		}
+
+		if (filters.length != 0 || hasInheritedResourceFilters) {
+			if (!inheritableResourceFilter) {
+				for (IResourceFilterDescription filter : filters) {
+					boolean inheritable = (filter.getType() & IResourceFilterDescription.INHERITABLE) != 0;
+					if (inheritable)
+						inheritableResourceFilter = true;
+				}
+			}
+
+			Set<File> resourceEntries = new HashSet<File>();
+			for (IResource resource : memberResources) {
+				IPath location = resource.getLocation();
+				if (location != null)
+					resourceEntries.add(location.toFile());
+			}
+
+			IPath containerLocation = node.getLocation();
+			if (containerLocation != null) {
+				File folder = containerLocation.toFile();
+				File[] children = folder.listFiles();
+				for (File child : children) {
+					if (resourceEntries.contains(child))
+						continue;
+
+					IPath childLocation = new Path(child.getAbsolutePath());
+					IWorkspaceRoot root = node.getWorkspace().getRoot();
+					IContainer container = root.getContainerForLocation(childLocation);
+					// Check if the container is accessible in the workspace.
+					// This may seem strange, as it was not returned from
+					// members() above, but it's the case for nested projects
+					// that are filtered directly.
+					if (container != null && container.isAccessible())
+						// Resource filters does not cross the non-member line
+						// -> stop inheriting resource filter here (false)
+						entries.add(new ResourceEntry(container, false));
+					else
+						entries.add(new FileEntry(child, FS.DETECTED));
+				}
+			}
+		}
+		return inheritableResourceFilter;
 	}
 
 	/**
@@ -161,13 +259,15 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 	 */
 	static public class ResourceEntry extends Entry {
 		final IResource rsrc;
+		final boolean hasInheritedResourceFilters;
 
 		private final FileMode mode;
 
 		private long length = -1;
 
-		ResourceEntry(final IResource f) {
+		ResourceEntry(final IResource f, final boolean hasInheritedResourceFilters) {
 			rsrc = f;
+			this.hasInheritedResourceFilters = hasInheritedResourceFilters;
 
 			switch (f.getType()) {
 			case IResource.FILE:
