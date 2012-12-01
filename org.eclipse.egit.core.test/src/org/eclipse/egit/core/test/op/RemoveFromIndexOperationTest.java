@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2010, Stefan Lay <stefan.lay@sap.com>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,7 +25,6 @@ import org.eclipse.egit.core.op.RemoveFromIndexOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +33,6 @@ import org.junit.Test;
 public class RemoveFromIndexOperationTest extends GitTestCase {
 
 	TestRepository testRepo;
-	private Repository repo;
 
 	@Before
 	public void setUp() throws Exception {
@@ -43,8 +42,6 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 		testRepo = new TestRepository(gitDir);
 		testRepo.connect(project.getProject());
 		testRepo.commit("initial commit");
-
-		repo = testRepo.getRepository();
 	}
 
 	@After
@@ -61,7 +58,7 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 		new AddToIndexOperation(asList(file1)).execute(null);
 
 		// when
-		new RemoveFromIndexOperation(repo, resources).execute(null);
+		new RemoveFromIndexOperation(resources).execute(null);
 
 		// then
 		assertTrue(testRepo.removedFromIndex(file1.getLocation()
@@ -78,7 +75,7 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 		new AddToIndexOperation(asList(file1, file2)).execute(null);
 
 		// when
-		new RemoveFromIndexOperation(repo, resources).execute(null);
+		new RemoveFromIndexOperation(resources).execute(null);
 
 		// then
 		assertTrue(testRepo.removedFromIndex(file1.getLocation().toPortableString()));
@@ -101,7 +98,7 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 		new AddToIndexOperation(asList(file1)).execute(null);
 
 		// when
-		new RemoveFromIndexOperation(repo, resources).execute(null);
+		new RemoveFromIndexOperation(resources).execute(null);
 
 		// then
 		assertTrue(testRepo.removedFromIndex(file1.getLocation().toPortableString()));
@@ -130,7 +127,7 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 		new AddToIndexOperation(addResources).execute(null);
 
 		// when
-		new RemoveFromIndexOperation(repo, resources).execute(null);
+		new RemoveFromIndexOperation(resources).execute(null);
 
 		// then
 		assertTrue(testRepo.removedFromIndex(file1.getLocation().toPortableString()));
@@ -160,7 +157,7 @@ public class RemoveFromIndexOperationTest extends GitTestCase {
 		new AddToIndexOperation(addResources).execute(null);
 
 		// when
-		new RemoveFromIndexOperation(repo, resources).execute(null);
+		new RemoveFromIndexOperation(resources).execute(null);
 
 		// then
 		assertTrue(testRepo.removedFromIndex(file1.getLocation().toPortableString()));
