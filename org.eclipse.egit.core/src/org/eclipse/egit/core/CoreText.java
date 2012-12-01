@@ -317,6 +317,9 @@ public class CoreText extends NLS {
 	public static String AddToIndexOperation_failed;
 
 	/** */
+	public static String RemoveFromIndexOperation_removingFilesFromIndex;
+
+	/** */
 	public static String RemoveFromIndexOperation_failed;
 
 	/** */

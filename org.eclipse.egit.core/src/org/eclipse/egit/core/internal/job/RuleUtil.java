@@ -55,6 +55,22 @@ public class RuleUtil {
 	}
 
 	/**
+	 * Calculates a {@link ISchedulingRule} for Jobs working on the index of
+	 * multiple repositories, see {@link #getRule(Repository)}.
+	 *
+	 * @param repositories
+	 * @return scheduling rule
+	 */
+	public static ISchedulingRule getRuleForRepositories(Collection<Repository> repositories) {
+		ISchedulingRule result = null;
+		for (Repository repository : repositories) {
+			ISchedulingRule rule = getRule(repository);
+			result = MultiRule.combine(result, rule);
+		}
+		return result;
+	}
+
+	/**
 	 * Calculates a {@link ISchedulingRule} for all repositories related to the
 	 * given resources.
 	 *
