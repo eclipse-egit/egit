@@ -47,19 +47,26 @@ public class RevUtils {
 		Assert.isNotNull(commit2);
 
 		RevWalk rw = new RevWalk(repo);
-		rw.setRetainBody(false);
-		rw.setRevFilter(RevFilter.MERGE_BASE);
+		try {
+			rw.setRetainBody(false);
+			rw.setRevFilter(RevFilter.MERGE_BASE);
 
-		RevCommit srcRev = rw.lookupCommit(commit1);
-		RevCommit dstRev = rw.lookupCommit(commit2);
+			RevCommit srcRev = rw.lookupCommit(commit1);
+			RevCommit dstRev = rw.lookupCommit(commit2);
 
-		rw.markStart(dstRev);
-		rw.markStart(srcRev);
+			rw.markStart(dstRev);
+			rw.markStart(srcRev);
 
-		RevCommit result;
-		result = rw.next();
-
-		return result != null ? result : null;
+			RevCommit result = rw.next();
+			if (result != null) {
+				rw.parseBody(result);
+				return result;
+			} else {
+				return null;
+			}
+		} finally {
+			rw.release();
+		}
 	}
 
 	/**
