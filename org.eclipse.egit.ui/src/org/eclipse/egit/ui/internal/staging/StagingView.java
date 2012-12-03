@@ -37,6 +37,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.egit.core.AdapterUtils;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
@@ -532,8 +533,14 @@ public class StagingView extends ViewPart implements IShowInSource {
 					public void drop(DropTargetEvent event) {
 						if (event.data instanceof IStructuredSelection) {
 							final IStructuredSelection selection = (IStructuredSelection) event.data;
-							if (selection.getFirstElement() instanceof StagingEntry)
+							Object firstElement = selection.getFirstElement();
+							if (firstElement instanceof StagingEntry)
 								stage(selection);
+							else {
+								IResource resource = AdapterUtils.adapt(firstElement, IResource.class);
+								if (resource != null)
+									stage(selection);
+							}
 						}
 					}
 
@@ -1212,35 +1219,52 @@ public class StagingView extends ViewPart implements IShowInSource {
 
 	private void stage(IStructuredSelection selection) {
 		Git git = new Git(currentRepository);
-		AddCommand add = null;
 		RmCommand rm = null;
 		Iterator iterator = selection.iterator();
+		List<String> addPaths = new ArrayList<String>();
 		while (iterator.hasNext()) {
-			StagingEntry entry = (StagingEntry) iterator.next();
-			switch (entry.getState()) {
-			case ADDED:
-			case CHANGED:
-			case REMOVED:
-				// already staged
-				break;
-			case CONFLICTING:
-			case MODIFIED:
-			case PARTIALLY_MODIFIED:
-			case UNTRACKED:
-				if (add == null)
-					add = git.add();
-				add.addFilepattern(entry.getPath());
-				break;
-			case MISSING:
-				if (rm == null)
-					rm = git.rm();
-				rm.addFilepattern(entry.getPath());
-				break;
+			Object element = iterator.next();
+			if (element instanceof StagingEntry) {
+				StagingEntry entry = (StagingEntry) element;
+				switch (entry.getState()) {
+				case ADDED:
+				case CHANGED:
+				case REMOVED:
+					// already staged
+					break;
+				case CONFLICTING:
+				case MODIFIED:
+				case PARTIALLY_MODIFIED:
+				case UNTRACKED:
+					addPaths.add(entry.getPath());
+					break;
+				case MISSING:
+					if (rm == null)
+						rm = git.rm();
+					rm.addFilepattern(entry.getPath());
+					break;
+				}
+			} else {
+				IResource resource = AdapterUtils.adapt(element, IResource.class);
+				if (resource != null) {
+					RepositoryMapping mapping = RepositoryMapping.getMapping(resource);
+					if (mapping != null && mapping.getRepository() == currentRepository) {
+						String path = mapping.getRepoRelativePath(resource);
+						// If resource corresponds to root of working directory
+						if ("".equals(path)) //$NON-NLS-1$
+							addPaths.add("."); //$NON-NLS-1$
+						else
+							addPaths.add(path);
+					}
+				}
 			}
 		}
 
-		if (add != null)
+		if (!addPaths.isEmpty())
 			try {
+				AddCommand add = git.add();
+				for (String addPath : addPaths)
+					add.addFilepattern(addPath);
 				add.call();
 			} catch (NoFilepatternException e1) {
 				// cannot happen
