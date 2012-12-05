@@ -345,10 +345,10 @@ public abstract class AbstractSynchronizeViewTest extends
 	protected void commit(String projectName) throws InterruptedException {
 		showDialog(projectName, "Team", CommitAction_commit);
 
-		bot.shell(CommitDialog_CommitChanges).bot().activeShell();
-		bot.styledText(0).setText(TEST_COMMIT_MSG);
-		bot.toolbarButtonWithTooltip(CommitDialog_SelectAll).click();
-		bot.button(CommitDialog_Commit).click();
+		SWTBot shellBot = bot.shell(CommitDialog_CommitChanges).bot();
+		shellBot.styledText(0).setText(TEST_COMMIT_MSG);
+		shellBot.toolbarButtonWithTooltip(CommitDialog_SelectAll).click();
+		shellBot.button(CommitDialog_Commit).click();
 		TestUtil.joinJobs(JobFamilies.COMMIT);
 	}
 
@@ -367,7 +367,6 @@ public abstract class AbstractSynchronizeViewTest extends
 
 	private static void showDialog(String projectName, String... cmd) {
 		SWTBot packageExplorerBot = bot.viewByTitle("Package Explorer").bot();
-		packageExplorerBot.activeShell();
 		SWTBotTree tree = packageExplorerBot.tree();
 
 		// EGit decorates the project node shown in the package explorer. The
