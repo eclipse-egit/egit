@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2010, 2012 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,7 +16,6 @@ import org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObjectContainer;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelRepository;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelTree;
 import org.eclipse.egit.ui.internal.synchronize.model.HasProjects;
 
@@ -39,8 +38,6 @@ public abstract class GitObjectMapping extends ResourceMapping {
 			return new GitTreeMapping((GitModelTree) object);
 		if (object instanceof GitModelObjectContainer)
 			return new GitContainerMapping((GitModelObjectContainer) object);
-		if (object instanceof GitModelRepository)
-			return new GitRepositoryMapping((GitModelRepository) object);
 
 		return null;
 	}
