@@ -470,8 +470,10 @@ public class TestRepository {
 	}
 
 	public void dispose() {
-		repository.close();
-		repository = null;
+		if (repository != null) {
+			repository.close();
+			repository = null;
+		}
 	}
 
 	/**
