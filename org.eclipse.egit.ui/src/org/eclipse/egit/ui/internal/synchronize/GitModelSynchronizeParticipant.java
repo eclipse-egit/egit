@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2012 Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2010, 2012 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -247,20 +247,22 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 	public void saveState(IMemento memento) {
 		super.saveState(memento);
 		for (GitSynchronizeData gsd : gsds) {
-			IMemento child = memento.createChild(DATA_NODE_KEY);
 			Repository repo = gsd.getRepository();
 			RepositoryMapping mapping = RepositoryMapping.findRepositoryMapping(repo);
-			child.putString(CONTAINER_PATH_KEY, getPathForContainer(mapping.getContainer()));
-			child.putString(SRC_REV_KEY, gsd.getSrcRev());
-			child.putString(DST_REV_KEY, gsd.getDstRev());
-			child.putBoolean(INCLUDE_LOCAL_KEY, gsd.shouldIncludeLocal());
-			Set<IContainer> includedPaths = gsd.getIncludedPaths();
-			if (includedPaths != null && !includedPaths.isEmpty()) {
-				IMemento paths = child.createChild(INCLUDED_PATHS_NODE_KEY);
-				for (IContainer container : includedPaths) {
-					String path = getPathForContainer(container);
-					paths.createChild(INCLUDED_PATH_KEY).putString(
-							INCLUDED_PATH_KEY, path);
+			if (mapping != null) {
+				IMemento child = memento.createChild(DATA_NODE_KEY);
+				child.putString(CONTAINER_PATH_KEY, getPathForContainer(mapping.getContainer()));
+				child.putString(SRC_REV_KEY, gsd.getSrcRev());
+				child.putString(DST_REV_KEY, gsd.getDstRev());
+				child.putBoolean(INCLUDE_LOCAL_KEY, gsd.shouldIncludeLocal());
+				Set<IContainer> includedPaths = gsd.getIncludedPaths();
+				if (includedPaths != null && !includedPaths.isEmpty()) {
+					IMemento paths = child.createChild(INCLUDED_PATHS_NODE_KEY);
+					for (IContainer container : includedPaths) {
+						String path = getPathForContainer(container);
+						paths.createChild(INCLUDED_PATH_KEY).putString(
+								INCLUDED_PATH_KEY, path);
+					}
 				}
 			}
 		}
