@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2010, 2012 Mathias Kinzler <mathias.kinzler@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -39,6 +39,13 @@ public abstract class DualRepositoryTestCase {
 	@After
 	public void afterTestCase() throws Exception {
 		Activator.getDefault().getRepositoryCache().clear();
+		if (repository1 != null)
+			repository1.dispose();
+		if (repository2 != null)
+			repository2.dispose();
+		if (testProject != null)
+			testProject.delete(false, false, null);
+		testUtils.deleteTempDirs();
 	}
 
 	protected IProject importProject(TestRepository repo, String projectName)
