@@ -84,6 +84,8 @@ class PushToGerritPage extends WizardPage {
 
 	private Text branchText;
 
+	private Text reviewerText;
+
 	/**
 	 * @param repository
 	 */
@@ -166,6 +168,14 @@ class PushToGerritPage extends WizardPage {
 		selectLastUsedUri();
 		setLastUsedBranch();
 		branchText.setFocus();
+
+		Label reviewerLabel = new Label(main, SWT.NONE);
+		reviewerLabel.setText("Reviewer:"); //$NON-NLS-1$
+
+		reviewerText = new Text(main, SWT.BORDER);
+		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
+		.applyTo(reviewerText);
+
 		Dialog.applyDialogFont(main);
 		setControl(main);
 	}
@@ -228,6 +238,9 @@ class PushToGerritPage extends WizardPage {
 			PushOperationUI op = new PushOperationUI(repository, spec, timeout,
 					false);
 			op.setCredentialsProvider(new EGitCredentialsProvider());
+
+			// It's just a prototype to present that it really works
+			op.setReceivePack(String.format("git receive-pack --reviewer=%s", reviewerText.getText())); //$NON-NLS-1$
 			PushOperationResult result = op.execute(monitor);
 			PushResultDialog dlg = new PushResultDialog(getShell(), repository,
 					result, op.getDestinationString());
