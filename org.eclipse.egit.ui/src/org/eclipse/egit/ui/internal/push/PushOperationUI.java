@@ -60,6 +60,12 @@ public class PushOperationUI {
 	private final String remoteName;
 
 	/**
+	 * Content of git's recive-pack option. See
+	 * http://www.kernel.org/pub/software/scm/git/docs/git-receive-pack.html.
+	 */
+	private String receivePack;
+
+	/**
 	 * @param repository
 	 * @param remoteName
 	 * @param timeout
@@ -77,7 +83,6 @@ public class PushOperationUI {
 		destinationString = NLS.bind("{0} - {1}", repository.getDirectory() //$NON-NLS-1$
 				.getParentFile().getName(), remoteName);
 	}
-
 
 	/**
 	 * @param repository
@@ -129,6 +134,17 @@ public class PushOperationUI {
 	}
 
 	/**
+	 * Sets content of git's recive-pack option. See
+	 * http://www.kernel.org/pub/software/scm/git/docs/git-receive-pack.html.
+	 *
+	 * @param receivePack
+	 *            content of git's receive-pack option.
+	 */
+	public void setReceivePack(String receivePack) {
+		this.receivePack = receivePack;
+	}
+
+	/**
 	 * Executes this directly, without showing a confirmation dialog
 	 *
 	 * @param monitor
@@ -150,10 +166,12 @@ public class PushOperationUI {
 		}
 	}
 
-
 	private void createPushOperation() throws CoreException {
 		if (remoteName != null) {
 			op = new PushOperation(repository, remoteName, dryRun, timeout);
+			if (receivePack != null) {
+				op.setReceivePack(receivePack);
+			}
 			return;
 		}
 
@@ -187,6 +205,9 @@ public class PushOperationUI {
 			}
 		}
 		op = new PushOperation(repository, spec, dryRun, timeout);
+		if (receivePack != null) {
+			op.setReceivePack(receivePack);
+		}
 	}
 
 	/**
