@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//+aY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 866
+      },
+      "writtenOn": "2012-12-06T21:20:18Z",
+      "side": 1,
+      "message": "* Yes I know that. I intend to create some sort of prototype to check whether it is interesting to you. My blame - I should push it to drafts.\n* As i wrote, It\u0027s a prototype. In next patch set I will provide more advanced UI.\n* I\u0027m going to investigate how Mylyn gerrit connector deals with it.",
+      "parentUuid": "AABOJ3//+ao\u003d",
+      "revId": "64554be16fb4af74439ffdc51c60e2f3a4367465",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//+ak\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2012-12-06T21:10:25Z",
       "side": 1,
       "message": "style nit: this line isn\u0027t formatted properly",
+      "revId": "64554be16fb4af74439ffdc51c60e2f3a4367465",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//+aU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 866
+      },
+      "writtenOn": "2012-12-06T21:20:18Z",
+      "side": 1,
+      "message": "Will be fixed.",
+      "parentUuid": "AABOJ3//+ak\u003d",
       "revId": "64554be16fb4af74439ffdc51c60e2f3a4367465",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
