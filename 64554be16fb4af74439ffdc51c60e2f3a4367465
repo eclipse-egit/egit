@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3//+ao\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-06T21:10:25Z",
+      "side": 1,
+      "message": "- text needs to be externalized to enable translation \n- how to invite multiple reviewers ?\n- would it be possible to get value help from Gerrit so that only known users can be invited ? I am not sure if this is already exposed by Gerrit\u0027s REST API.",
+      "revId": "64554be16fb4af74439ffdc51c60e2f3a4367465",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//+ak\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-06T21:10:25Z",
+      "side": 1,
+      "message": "style nit: this line isn\u0027t formatted properly",
+      "revId": "64554be16fb4af74439ffdc51c60e2f3a4367465",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//+as\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-06T21:10:25Z",
+      "side": 1,
+      "message": "we don\u0027t use curly braces around single line blocks, see [1] \n\n[1] http://wiki.eclipse.org/EGit/Contributor_Guide#Coding_standards",
+      "revId": "64554be16fb4af74439ffdc51c60e2f3a4367465",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
