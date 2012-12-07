@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2012 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -256,7 +256,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 			explorerItem = testUtil.getChildNode(childItem.expand(), path[2]);
 		}
 		explorerItem.select();
-		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Show In",
+		ContextMenuHelper.clickContextMenuSync(projectExplorerTree, "Show In",
 				"History");
 		// join GenerateHistoryJob
 		Job.getJobManager().join(JobFamilies.GENERATE_HISTORY, null);
@@ -399,7 +399,7 @@ public class HistoryViewTest extends LocalRepositoryTestCase {
 			}
 		});
 
-		ContextMenuHelper.clickContextMenu(table,
+		ContextMenuHelper.clickContextMenuSync(table,
 				UIText.GitHistoryPage_CheckoutMenuLabel);
 		TestUtil.joinJobs(JobFamilies.CHECKOUT);
 		return commit;

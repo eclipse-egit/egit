@@ -237,7 +237,7 @@ public class FetchAndMergeActionTest extends LocalRepositoryTestCase {
 				util.getPluginLocalizedValue("SwitchToMenu.label"),
 				branchToCheckout };
 		JobJoiner jobJoiner = JobJoiner.startListening(JobFamilies.CHECKOUT, 60, TimeUnit.SECONDS);
-		ContextMenuHelper.clickContextMenu(projectExplorerTree, menuPath);
+		ContextMenuHelper.clickContextMenuSync(projectExplorerTree, menuPath);
 		jobJoiner.join();
 	}
 }
