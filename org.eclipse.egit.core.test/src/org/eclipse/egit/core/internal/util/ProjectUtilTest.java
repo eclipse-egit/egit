@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2012, Matthias Sohn <matthias.sohn@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.util;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -27,6 +29,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
+import org.eclipse.egit.core.test.TestProject;
 import org.eclipse.egit.core.test.TestRepository;
 import org.eclipse.jgit.util.FileUtils;
 import org.junit.After;
@@ -37,6 +40,8 @@ public class ProjectUtilTest extends GitTestCase {
 
 	private TestRepository repository;
 
+	private TestProject project2;
+
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -46,6 +51,8 @@ public class ProjectUtilTest extends GitTestCase {
 	@After
 	public void tearDown() throws Exception {
 		super.tearDown();
+		if (project2 != null)
+			project2.dispose();
 	}
 
 	@Test
@@ -140,4 +147,17 @@ public class ProjectUtilTest extends GitTestCase {
 				new NullProgressMonitor()));
 	}
 
+	@Test
+	public void testFindProjectFilesNested() throws Exception {
+		project2 = new TestProject(true, "Project-1/Project-Nested");
+		File workingDir = gitDir.getParentFile();
+
+		Collection<File> foundFiles = new ArrayList<File>();
+		boolean found = ProjectUtil.findProjectFiles(foundFiles, workingDir,
+				null, new NullProgressMonitor());
+
+		assertTrue("Expected to find projects", found);
+		assertThat(foundFiles, hasItem(new File(workingDir, "Project-1/.project")));
+		assertThat(foundFiles, hasItem(new File(workingDir, "Project-1/Project-Nested/.project")));
+	}
 }

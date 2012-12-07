@@ -3,6 +3,7 @@
  * Copyright (C) 2007, Martin Oberhuber (martin.oberhuber@windriver.com)
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -253,8 +254,8 @@ public class ProjectUtil {
 	 * Find directories containing .project files recursively starting at given
 	 * directory
 	 *
-	 * @param files
-	 * @param directory
+	 * @param files the collection to add the found projects to
+	 * @param directory where to search for project files
 	 * @param visistedDirs
 	 * @param monitor
 	 * @return true if projects files found, false otherwise
@@ -300,12 +301,9 @@ public class ProjectUtil {
 			File file = contents[i];
 			if (file.isFile() && file.getName().equals(dotProject)) {
 				files.add(file);
-				// don't search sub-directories since we can't have nested
-				// projects
-				return true;
 			}
 		}
-		// no project description found, so recurse into sub-directories
+		// recurse into sub-directories (even when project was found above, for nested projects)
 		for (int i = 0; i < contents.length; i++) {
 			// Skip non-directories
 			if (!contents[i].isDirectory())
