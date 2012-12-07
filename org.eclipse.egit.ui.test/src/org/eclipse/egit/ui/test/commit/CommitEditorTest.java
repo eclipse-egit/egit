@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2012 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -114,7 +114,7 @@ public class CommitEditorTest extends LocalRepositoryTestCase {
 		SWTBotTable table = commitEditor.bot().table(0);
 		assertTrue(table.rowCount() > 0);
 		table.select(0);
-		ContextMenuHelper.clickContextMenu(table,
+		ContextMenuHelper.clickContextMenuSync(table,
 				UIText.CommitFileDiffViewer_ShowAnnotationsMenuLabel);
 		TestUtil.joinJobs(JobFamilies.BLAME);
 		assertFalse(commitEditor.getReference().equals(
