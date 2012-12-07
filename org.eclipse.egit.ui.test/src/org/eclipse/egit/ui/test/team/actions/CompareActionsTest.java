@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 SAP AG.
+ * Copyright (c) 2012 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -175,8 +175,7 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 		git.merge().include(masterId).call();
 		String menuLabel = util
 				.getPluginLocalizedValue("CompareWithPreviousAction.label");
-		clickCompareWith(menuLabel);
-		SWTBotShell selectDialog = bot.shell(UIText.CommitSelectDialog_WindowTitle);
+		SWTBotShell selectDialog = openCompareWithDialog(menuLabel, UIText.CommitSelectDialog_WindowTitle);
 		assertEquals(2, selectDialog.bot().table().rowCount());
 		selectDialog.close();
 		// cleanup: checkout again master and delete merged branch
@@ -253,18 +252,25 @@ public class CompareActionsTest extends LocalRepositoryTestCase {
 	}
 
 	private void clickCompareWith(String menuLabel) {
-		SWTBotTree projectExplorerTree = bot.viewById(
-				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
-		getProjectItem(projectExplorerTree, PROJ1).select();
-		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Compare With",
+		SWTBotTree projectExplorerTree = selectProjectItem();
+		ContextMenuHelper.clickContextMenuSync(projectExplorerTree, "Compare With",
 				menuLabel);
 	}
 
-	private SWTBotShell openCompareWithDialog(String menuString,
+	private SWTBotShell openCompareWithDialog(String menuLabel,
 			String dialogTitle) {
-			clickCompareWith(menuString);
+		SWTBotTree projectExplorerTree = selectProjectItem();
+		ContextMenuHelper.clickContextMenu(projectExplorerTree, "Compare With",
+				menuLabel);
 		SWTBotShell dialog = bot.shell(dialogTitle);
 		return dialog;
+	}
+
+	private SWTBotTree selectProjectItem() {
+		SWTBotTree projectExplorerTree = bot.viewById(
+				"org.eclipse.jdt.ui.PackageExplorer").bot().tree();
+		getProjectItem(projectExplorerTree, PROJ1).select();
+		return projectExplorerTree;
 	}
 
 	private void waitUntilCompareTreeViewTreeHasNodeCount(int nodeCount) {
