@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2012 GitHub Inc.
+ *  Copyright (c) 2012 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -88,7 +88,7 @@ public class SubmoduleUpdateTest extends GitRepositoriesViewTestBase {
 				.expandNode(
 						UIText.RepositoriesViewLabelProvider_SubmodulesNodeText)
 				.select();
-		ContextMenuHelper.clickContextMenu(tree, myUtil
+		ContextMenuHelper.clickContextMenuSync(tree, myUtil
 				.getPluginLocalizedValue(UPDATE_SUBMODULE_CONTEXT_MENU_LABEL));
 		TestUtil.joinJobs(JobFamilies.SUBMODULE_UPDATE);
 		refreshAndWait();
