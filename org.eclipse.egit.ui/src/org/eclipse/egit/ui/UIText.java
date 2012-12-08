@@ -2410,6 +2410,12 @@ public class UIText extends NLS {
 	public static String PushToGerritPage_MissingUriMessage;
 
 	/** */
+	public static String PushToGerritPage_ReviewersContentProposalText;
+
+	/** */
+	public static String PushToGerritPage_ReviewersLabel;
+
+	/** */
 	public static String PushToGerritPage_Title;
 
 	/** */

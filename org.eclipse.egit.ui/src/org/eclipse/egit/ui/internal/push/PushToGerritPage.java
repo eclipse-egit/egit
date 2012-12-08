@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Kamil Sobon - reviewers section
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
@@ -14,10 +15,13 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.UUID;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -30,12 +34,15 @@ import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
+import org.eclipse.egit.ui.internal.push.IPersonProvider.Person;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.fieldassist.ContentProposal;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.IContentProposal;
+import org.eclipse.jface.fieldassist.IContentProposalListener;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -52,21 +59,30 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.fieldassist.ContentAssistCommandAdapter;
 
 /**
  * Push the current HEAD to Gerrit
  */
 class PushToGerritPage extends WizardPage {
+
 	private static final String PUSH_TO_GERRIT_PAGE_SECTION = "PushToGerritPage"; //$NON-NLS-1$
 
 	private static final String LAST_URI_POSTFIX = ".lastUri"; //$NON-NLS-1$
 
 	private static final String LAST_BRANCH_POSTFIX = ".lastBranch"; //$NON-NLS-1$
+
+	private static final char REVIEWERS_SEPARATOR = ',';
+
+	private static final String REVIEWERS_START_BRACKET = "<"; //$NON-NLS-1$
+
+	private static final String REVIEWERS_STOP_BRACKET = ">"; //$NON-NLS-1$
 
 	private final Repository repository;
 
@@ -83,6 +99,11 @@ class PushToGerritPage extends WizardPage {
 	private Label branchTextlabel;
 
 	private Text branchText;
+
+	/**
+	 * Text area that keeps list of Gerrit's reviewers.
+	 */
+	private Text reviewersText;
 
 	/**
 	 * @param repository
@@ -166,6 +187,20 @@ class PushToGerritPage extends WizardPage {
 		selectLastUsedUri();
 		setLastUsedBranch();
 		branchText.setFocus();
+
+		// Initialize SWT controls for "Reviewers" section
+		Label reviewerLabel = new Label(main, SWT.NONE);
+		reviewerLabel.setText(UIText.PushToGerritPage_ReviewersLabel);
+		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.BEGINNING)
+				.applyTo(reviewerLabel);
+
+		reviewersText = new Text(main, SWT.BORDER | SWT.MULTI | SWT.WRAP
+				| SWT.V_SCROLL);
+		GridDataFactory.fillDefaults().grab(true, false).span(2, 1)
+				.hint(SWT.DEFAULT, 50).applyTo(reviewersText);
+
+		configureContentProposalToReveiwerText();
+
 		Dialog.applyDialogFont(main);
 		setControl(main);
 	}
@@ -228,6 +263,31 @@ class PushToGerritPage extends WizardPage {
 			PushOperationUI op = new PushOperationUI(repository, spec, timeout,
 					false);
 			op.setCredentialsProvider(new EGitCredentialsProvider());
+
+			// Construct git recive-pack message with reviewers
+			StringBuilder recivePack = new StringBuilder("git receive-pack"); //$NON-NLS-1$
+			String[] reviewers = reviewersText.getText().split(
+					new Character(REVIEWERS_SEPARATOR).toString());
+
+			for (String reviewerRaw : reviewers) {
+				String reviewer = reviewerRaw.trim();
+
+				// Check whether reviewer matches: "full name <login>" and pull
+				// the "login" part
+				if (reviewer.matches(String.format(".*%s.*%s.*", //$NON-NLS-1$
+						REVIEWERS_START_BRACKET, REVIEWERS_STOP_BRACKET))) {
+					reviewer = reviewer.substring(
+							reviewer.indexOf(REVIEWERS_START_BRACKET) + 1,
+							reviewer.lastIndexOf(REVIEWERS_STOP_BRACKET));
+				}
+
+				if (reviewer.length() > 0) {
+					recivePack.append(String.format(
+							" --reviewer='%s'", reviewer)); //$NON-NLS-1$
+				}
+			}
+			op.setReceivePack(recivePack.toString());
+
 			PushOperationResult result = op.execute(monitor);
 			PushResultDialog dlg = new PushResultDialog(getShell(), repository,
 					result, op.getDestinationString());
@@ -323,6 +383,57 @@ class PushToGerritPage extends WizardPage {
 		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 	}
 
+	private void configureContentProposalToReveiwerText() {
+		// Create text's decoration (bulb image and tooltips's text)
+		UIUtils.addBulbDecorator(reviewersText,
+				UIText.PushToGerritPage_ReviewersContentProposalText);
+
+		// Create field assistance for reviewer text area
+		ContentProposalAdapter proposalAdapter = new ContentAssistCommandAdapter(
+				reviewersText, new TextContentAdapter(),
+				new ReviewerProposalProvider(new FakePersonProvider()), null,
+				null, false);
+		proposalAdapter.setPropagateKeys(true);
+		proposalAdapter
+				.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_IGNORE);
+
+		// Strategy how new proposal should be places in text area
+		proposalAdapter
+				.addContentProposalListener(new IContentProposalListener() {
+					public void proposalAccepted(IContentProposal proposal) {
+						String content = reviewersText.getText();
+
+						// Determine where new proposal should be placed.
+						// Look for index of previous and next separator
+						int currentPosition = reviewersText.getSelection().x;
+						int nextSeparator = content.indexOf(
+								REVIEWERS_SEPARATOR, currentPosition);
+						int prevSeparator = currentPosition - 1;
+						while (prevSeparator >= 0
+								&& content.charAt(prevSeparator) != REVIEWERS_SEPARATOR) {
+							prevSeparator--;
+						}
+
+						// Determine prefix and suffix of new proposal text
+						String prefix = prevSeparator < 0 ? "" : content.substring(0, prevSeparator + 1).trim(); //$NON-NLS-1$
+						String suffix = nextSeparator < 0 ? "" : content.substring(nextSeparator + 1).trim(); //$NON-NLS-1$
+
+						// Set new reviewer's text
+						String proposalText = proposal.getLabel();
+						reviewersText.setText(String.format("%s%s%c%s", prefix, //$NON-NLS-1$
+								proposalText,
+								new Character(REVIEWERS_SEPARATOR), suffix));
+
+						// Set text's cursor after new proposal
+						int position = prefix.length() + proposalText.length()
+								+ 1;
+						reviewersText
+								.setSelection(new Point(position, position));
+					}
+				});
+
+	}
+
 	private final static class BranchContentProposal implements
 			IContentProposal {
 		private final String myString;
@@ -350,6 +461,81 @@ class PushToGerritPage extends WizardPage {
 		@Override
 		public String toString() {
 			return getContent();
+		}
+	}
+
+	/**
+	 * Proposal provider of Gerrit reviewers. Reviewers are obtained from
+	 * {@link IPersonProvider} and filtered with prefix entered by user. Both
+	 * person full name and login are taken into consideration when filtering.
+	 */
+	private static final class ReviewerProposalProvider implements
+			IContentProposalProvider {
+
+		/**
+		 * Collection of potential reviewers.
+		 */
+		private Collection<Person> people;
+
+		/**
+		 * Constructor.
+		 *
+		 * @param personProvider
+		 *            source of potential reviewers
+		 */
+		public ReviewerProposalProvider(IPersonProvider personProvider) {
+			people = personProvider.getPeople();
+		}
+
+		public IContentProposal[] getProposals(String contents, int position) {
+			// Determine prefix
+			String prefix = null;
+
+			// Look for index of previous separator
+			int prevSeparator = position - 1;
+			while (prevSeparator >= 0
+					&& contents.charAt(prevSeparator) != REVIEWERS_SEPARATOR) {
+				prevSeparator--;
+			}
+
+			prefix = contents.substring(prevSeparator + 1, position);
+			prefix = prefix.trim();
+
+			// Look for candidates that matches prefix
+			String proposalContent = null;
+			List<IContentProposal> result = new LinkedList<IContentProposal>();
+			for (Person person : people) {
+				if (person.getLogin().startsWith(prefix)
+						|| (person.getName() != null && person.getName()
+								.startsWith(prefix))) {
+
+					// Create content of proposal
+					proposalContent = person.getName() != null ? //
+					String.format("%s %s%s%s", person.getName(), //$NON-NLS-1$
+							REVIEWERS_START_BRACKET, person.getLogin(),
+							REVIEWERS_STOP_BRACKET) //
+							: person.getLogin();
+
+					result.add(new ContentProposal(proposalContent));
+				}
+			}
+
+			return result.toArray(new IContentProposal[0]);
+		}
+
+	}
+
+	private static final class FakePersonProvider implements IPersonProvider {
+
+		public Collection<Person> getPeople() {
+			ArrayList<IPersonProvider.Person> people = new ArrayList<IPersonProvider.Person>();
+			for (int i = 0; i < 100000; i++) {
+				people.add(new Person(UUID.randomUUID().toString()
+						.substring(1, 10), i
+						+ UUID.randomUUID().toString().substring(1, 10)));
+			}
+
+			return people;
 		}
 	}
 }
