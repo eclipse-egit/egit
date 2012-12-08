@@ -145,6 +145,14 @@ class GitSyncObjectCache {
 	}
 
 	/**
+	 * @return {@code true} when object have members
+	 */
+	public boolean isEmpty() {
+		// members always contain root node, therefore we need to ignore one member
+		return members == null || members.size() < 2;
+	}
+
+	/**
 	 * @return list of all cached members or {@code null} when there this object
 	 *         doesn't contain members
 	 */
@@ -169,7 +177,7 @@ class GitSyncObjectCache {
 		if (value.members != null) {
 			if (members == null)
 				members = new HashMap<String, GitSyncObjectCache>();
-			else
+			else if (!value.isEmpty()) // don't merge empty cache
 				for (Entry<String, GitSyncObjectCache> entry : members
 						.entrySet())
 					if (!value.members.containsKey(entry.getKey()))

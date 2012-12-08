@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.jgit.lib.Repository;
 
 /**
  *
@@ -111,6 +112,17 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 	 */
 	public GitSynchronizeData getData(IProject project) {
 		return projectMapping.get(project.getName());
+	}
+
+	/**
+	 * @param repo
+	 * @return <code>null</code> if project does not have corresponding data
+	 */
+	public GitSynchronizeData getData(Repository repo) {
+		for (GitSynchronizeData gsd : gsdSet)
+			if (repo.equals(gsd.getRepository()))
+				return gsd;
+		return null;
 	}
 
 	public Iterator<GitSynchronizeData> iterator() {
