@@ -169,11 +169,6 @@ class GitSyncObjectCache {
 		if (value.members != null) {
 			if (members == null)
 				members = new HashMap<String, GitSyncObjectCache>();
-			else
-				for (Entry<String, GitSyncObjectCache> entry : members
-						.entrySet())
-					if (!value.members.containsKey(entry.getKey()))
-						entry.getValue().diffEntry.changeType = ChangeType.IN_SYNC;
 
 			for (Entry<String, GitSyncObjectCache> entry : value.members
 					.entrySet()) {

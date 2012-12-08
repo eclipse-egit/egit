@@ -11,6 +11,7 @@ package org.eclipse.egit.core.synchronize;
 import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.synchronize.ThreeWayDiffEntry.ChangeType;
 import org.eclipse.egit.core.synchronize.ThreeWayDiffEntry.Direction;
 import org.eclipse.jgit.lib.Repository;
@@ -44,6 +45,8 @@ class GitSyncInfo extends SyncInfo {
 			path = ((GitRemoteResource)getRemote()).getPath();
 		else if (getBase() != null)
 			path = ((GitRemoteResource)getBase()).getPath();
+		else if (ResourceUtil.isNonWorkspace(getLocal()))
+			return OUTGOING | ADDITION;
 		else
 			return IN_SYNC;
 

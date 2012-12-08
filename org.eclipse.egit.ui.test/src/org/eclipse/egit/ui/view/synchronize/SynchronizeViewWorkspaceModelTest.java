@@ -31,6 +31,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
@@ -228,6 +229,8 @@ public class SynchronizeViewWorkspaceModelTest extends AbstractSynchronizeViewTe
 		SWTBotTreeItem projectTree = waitForNodeWithText(syncViewTree, PROJ1);
 		projectTree.expand();
 		assertEquals(1, projectTree.getItems().length);
+		// clean up
+		deleteFiles(ignoredFile, gitignore);
 	}
 
 	@Test
@@ -253,6 +256,8 @@ public class SynchronizeViewWorkspaceModelTest extends AbstractSynchronizeViewTe
 		syncItems[0].expand();
 		// WidgetNotFoundException will be thrown when node named 'new.txt' not exists
 		assertNotNull(syncItems[0].getNode(newFileName));
+		// clean up
+		deleteFiles(newFile);
 	}
 
 	@Test
@@ -336,4 +341,8 @@ public class SynchronizeViewWorkspaceModelTest extends AbstractSynchronizeViewTe
 		assertNotSame(left, right);
 	}
 
+	private void deleteFiles(IFile... files) throws Exception {
+		for (IFile file : files)
+			file.delete(true, new NullProgressMonitor());
+	}
 }

@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
-import static org.eclipse.egit.core.internal.util.ResourceUtil.isNonWorkspace;
 import static org.eclipse.jgit.lib.ObjectId.zeroId;
 import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 
@@ -25,6 +24,8 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.jgit.lib.ObjectId;
@@ -78,7 +79,7 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 	protected IResourceVariant fetchVariant(IResource resource, int depth,
 			IProgressMonitor monitor) throws TeamException {
 		SubMonitor subMonitor = SubMonitor.convert(monitor);
-		if (resource == null || isNonWorkspace(resource)) {
+		if (resource == null) {
 			subMonitor.done();
 			return null;
 		}
@@ -100,11 +101,20 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 		if (cache.containsKey(resource))
 			return cache.get(resource);
 
+		Repository repo = null;
 		GitSynchronizeData gsd = gsds.getData(resource.getProject());
-		if (gsd == null)
+		if (gsd != null)
+			repo = gsd.getRepository();
+		else {
+			RepositoryMapping mapping = RepositoryMapping.getMapping(resource.getFullPath());
+			if (mapping != null) {
+				repo = mapping.getRepository();
+				gsd = gsds.getData(repo);
+			}
+		}
+		if (gsd == null || repo == null)
 			return null;
 
-		Repository repo = gsd.getRepository();
 		String path = getPath(resource, repo);
 
 		GitSyncObjectCache syncCache = gitCache.get(repo);
@@ -153,7 +163,9 @@ abstract class GitResourceVariantTree extends ResourceVariantTree {
 	}
 
 	private String getPath(final IResource resource, Repository repo) {
-		return stripWorkDir(repo.getWorkTree(), resource.getLocation().toFile());
+		if (!ResourceUtil.isNonWorkspace(resource))
+			return stripWorkDir(repo.getWorkTree(), resource.getLocation().toFile());
+		return stripWorkDir(repo.getWorkTree(), resource.getFullPath().toFile());
 	}
 
 }
