@@ -33,6 +33,40 @@
       "revId": "fa90cc999c3a48a3a113933bb9fbfb3020589b35",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//910\u003d",
+        "filename": "tools/egit-developer-tools.p2f",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-12-09T21:35:20Z",
+      "side": 1,
+      "message": "1.1, 1.3 and 1.4? Our code won\u0027t work with that so why bother?",
+      "revId": "fa90cc999c3a48a3a113933bb9fbfb3020589b35",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//91w\u003d",
+        "filename": "tools/egit-developer-tools.p2f",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-12-09T21:35:20Z",
+      "side": 1,
+      "message": "That\u0027s not useful, is it?",
+      "revId": "fa90cc999c3a48a3a113933bb9fbfb3020589b35",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
