@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//9rA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 866
+      },
+      "writtenOn": "2012-12-10T17:23:20Z",
+      "side": 1,
+      "message": "Due to [1] It is \"git receive-pack\".\n\n[1] http://gerrit.googlecode.com/svn/documentation/2.0.34/user-upload.html#push_create",
+      "parentUuid": "AABOJ3//9ts\u003d",
+      "revId": "12b4d797f7974298de3c6c2007d7f6ce4cdf37e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//9tk\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
         "patchSetId": 6
@@ -47,6 +65,24 @@
       "writtenOn": "2012-12-10T16:01:20Z",
       "side": 1,
       "message": "I guess that if there are no reviewers there is no need to set the receive-pack service.",
+      "revId": "12b4d797f7974298de3c6c2007d7f6ce4cdf37e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9rE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 866
+      },
+      "writtenOn": "2012-12-10T17:23:20Z",
+      "side": 1,
+      "message": "You\u0027re absolutely right. Will be fixed.",
+      "parentUuid": "AABOJ3//9tk\u003d",
       "revId": "12b4d797f7974298de3c6c2007d7f6ce4cdf37e4",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
