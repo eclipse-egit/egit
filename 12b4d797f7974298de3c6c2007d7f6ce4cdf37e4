@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3//9tc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-10T16:01:20Z",
+      "side": 1,
+      "message": "Unrelated change.",
+      "revId": "12b4d797f7974298de3c6c2007d7f6ce4cdf37e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9ts\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-10T16:01:20Z",
+      "side": 1,
+      "message": "1. Typo in variable name.\n2. Is it \"git receive-pack\" or \"git-receive-pack\" as in org.eclipse.jgit.transport.RemoteConfig.DEFAULT_RECEIVE_PACK. If the latter, please use the constant.",
+      "revId": "12b4d797f7974298de3c6c2007d7f6ce4cdf37e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9tk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-10T16:01:20Z",
+      "side": 1,
+      "message": "I guess that if there are no reviewers there is no need to set the receive-pack service.",
+      "revId": "12b4d797f7974298de3c6c2007d7f6ce4cdf37e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9tg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-10T16:01:20Z",
+      "side": 1,
+      "message": "Unrelated change.",
+      "revId": "12b4d797f7974298de3c6c2007d7f6ce4cdf37e4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
