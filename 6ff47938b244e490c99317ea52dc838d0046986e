@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOJ3//9yg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/IPersonProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-10T10:03:26Z",
+      "side": 1,
+      "message": "Not sure if keeping it internal is a good idea. I can imagine an extension point for it and an extension in Gerrit Mylyn connector providing a set of reviewers from gerrit.",
+      "revId": "6ff47938b244e490c99317ea52dc838d0046986e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//97Y\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/IPersonProvider.java",
         "patchSetId": 5
@@ -13,6 +30,41 @@
       "writtenOn": "2012-12-08T20:30:21Z",
       "side": 1,
       "message": "I\u0027ve idea for 3 different providers:\n* provider of people defined in Eclipse\u0027s preferences (In Team -\u003e Git subtree). User can manually add some well known reviewers. This settings may be easily shared among within developer team by using \u0027Workspace Mechanic\u0027 or by importin/exporting Eclipse\u0027s preferences.\n* we can obtain list of users using REST endpoint that show changes. Yeas I know it will be quite slow but there is no other way to obtain users from gerrit (f you don;t have admini privileges)\n* provider that obtains people from gerrit mylyn connector",
+      "revId": "6ff47938b244e490c99317ea52dc838d0046986e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9yk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/IPersonProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-10T10:03:26Z",
+      "side": 1,
+      "message": "It sounds reasonable but I\u0027m not sure if this needs to be part of this change. I would like to keep the change as small/simple as possible. Do you think the IPersonProvider can be extracted to a separate change? It seems that not only PushToReview dialog would benefit from that. How does it sound?",
+      "parentUuid": "AABOJ3//97Y\u003d",
+      "revId": "6ff47938b244e490c99317ea52dc838d0046986e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9yc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/IPersonProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-10T10:03:26Z",
+      "side": 1,
+      "message": "How different it is from org.eclipse.jgit.lib.PersonIdent ?",
       "revId": "6ff47938b244e490c99317ea52dc838d0046986e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -36,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//9ys\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-10T10:03:26Z",
+      "side": 1,
+      "message": "Have a look at Git Staging view and the way Author and Committer fields are implemented there. It\u0027s nothing fancy but they provide a simple content assist. You could do the same here.\n\nDepending on how Gerrit handles invalid \"reviewer\" property you could consider checking provided value before sending it over the wire.",
+      "parentUuid": "AABOJ3//97U\u003d",
+      "revId": "6ff47938b244e490c99317ea52dc838d0046986e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//97Q\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
         "patchSetId": 5
@@ -47,6 +117,24 @@
       "writtenOn": "2012-12-08T20:30:21Z",
       "side": 1,
       "message": "It\u0027s just to present how field assistance looks like and to show that \"filtering\" logic is sufficient to work with big amount of potential reviewers.",
+      "revId": "6ff47938b244e490c99317ea52dc838d0046986e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9yo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-10T10:03:26Z",
+      "side": 1,
+      "message": "Again, check out  Commit Dialog and maybe implement an IPersonProvider for both Commit and PushToGerrit dialogs.",
+      "parentUuid": "AABOJ3//97Q\u003d",
       "revId": "6ff47938b244e490c99317ea52dc838d0046986e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
