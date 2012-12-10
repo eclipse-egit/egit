@@ -53,6 +53,12 @@ public class PushOperation {
 	private CredentialsProvider credentialsProvider;
 
 	/**
+	 * Content of git's recive-pack option. See
+	 * http://www.kernel.org/pub/software/scm/git/docs/git-receive-pack.html.
+	 */
+	private String receivePack;
+
+	/**
 	 * Create push operation for provided specification.
 	 *
 	 * @param localDb
@@ -98,6 +104,18 @@ public class PushOperation {
 	 */
 	public void setCredentialsProvider(CredentialsProvider credentialsProvider) {
 		this.credentialsProvider = credentialsProvider;
+	}
+
+	/**
+	 * Sets content of git's recive-pack option. See
+	 * http://www.kernel.org/pub/software/scm/git/docs/git-receive-pack.html.
+	 *
+	 * @param receivePack
+	 *            content of git's receive-pack option.
+	 * @since 2.3
+	 */
+	public void setReceivePack(String receivePack) {
+		this.receivePack = receivePack;
 	}
 
 	/**
@@ -185,12 +203,13 @@ public class PushOperation {
 							subMonitor);
 
 					try {
-						Iterable<PushResult> results = git.push().setRemote(
-								uri.toPrivateString()).setRefSpecs(specs)
-								.setDryRun(dryRun).setTimeout(timeout)
+						Iterable<PushResult> results = git.push()
+								.setRemote(uri.toPrivateString())
+								.setRefSpecs(specs).setDryRun(dryRun)
+								.setTimeout(timeout)
 								.setProgressMonitor(gitSubMonitor)
 								.setCredentialsProvider(credentialsProvider)
-								.call();
+								.setReceivePack(receivePack).call();
 						for (PushResult result : results) {
 							operationResult.addOperationResult(result.getURI(),
 									result);
@@ -200,8 +219,8 @@ public class PushOperation {
 					} catch (JGitInternalException e) {
 						String errorMessage = e.getCause() != null ? e
 								.getCause().getMessage() : e.getMessage();
-						String userMessage = NLS.bind(
-										CoreText.PushOperation_InternalExceptionOccurredMessage,
+						String userMessage = NLS
+								.bind(CoreText.PushOperation_InternalExceptionOccurredMessage,
 										errorMessage);
 						handleException(uri, e, userMessage);
 					} catch (Exception e) {
@@ -220,19 +239,20 @@ public class PushOperation {
 			final EclipseGitProgressTransformer gitMonitor = new EclipseGitProgressTransformer(
 					monitor);
 			try {
-				Iterable<PushResult> results = git.push().setRemote(
-						remoteName).setDryRun(dryRun).setTimeout(timeout)
-						.setProgressMonitor(gitMonitor).setCredentialsProvider(
-								credentialsProvider).call();
+				Iterable<PushResult> results = git.push().setRemote(remoteName)
+						.setDryRun(dryRun).setTimeout(timeout)
+						.setProgressMonitor(gitMonitor)
+						.setCredentialsProvider(credentialsProvider)
+						.setReceivePack(receivePack).call();
 				for (PushResult result : results) {
 					operationResult.addOperationResult(result.getURI(), result);
 				}
 			} catch (JGitInternalException e) {
 				String errorMessage = e.getCause() != null ? e.getCause()
 						.getMessage() : e.getMessage();
-				String userMessage = NLS.bind(
-						CoreText.PushOperation_InternalExceptionOccurredMessage,
-						errorMessage);
+				String userMessage = NLS
+						.bind(CoreText.PushOperation_InternalExceptionOccurredMessage,
+								errorMessage);
 				URIish uri = getPushURIForErrorHandling();
 				handleException(uri, e, userMessage);
 			} catch (Exception e) {
