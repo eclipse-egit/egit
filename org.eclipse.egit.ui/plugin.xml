@@ -476,6 +476,12 @@
                id="org.eclipse.egit.ui.keyword.git">
          </keywordReference>
       </page>
+      <page
+            category="org.eclipse.egit.ui.GitPreferences"
+            class="org.eclipse.egit.ui.internal.preferences.GerritUsersPreferencePage"
+            id="org.eclipse.egit.ui.internal.preferences.GerritUsersPreferencePage"
+            name="%GerritUsersPreferencePage.name">
+      </page>
    </extension>
 
    <extension point="org.eclipse.ui.propertyPages">
