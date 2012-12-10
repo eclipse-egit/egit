@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//9w4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 866
+      },
+      "writtenOn": "2012-12-10T13:36:57Z",
+      "side": 1,
+      "message": "I\u0027m not sure what do you think by \"simple content assist\". The content assist that in my proposal is quite the same.\nIf you mean the \"code complexity\" the magic stuff from Staging View is implemented in UIUtils#addPreviousValuesContentProposalToText(Text, String). It is not simple and definitely I cannot simple reuse this code.\n\nReveiwers text is MULTI-ENTRY when Author/Commiter fields in Staging is SIGNLE-ENTRY.",
+      "parentUuid": "AABOJ3//9xw\u003d",
+      "revId": "6ff47938b244e490c99317ea52dc838d0046986e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//97Q\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
         "patchSetId": 5
@@ -225,6 +243,24 @@
       "side": 1,
       "message": "I\u0027ll and provide some feedback or changes.",
       "parentUuid": "AABOJ3//9yo\u003d",
+      "revId": "6ff47938b244e490c99317ea52dc838d0046986e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9ww\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushToGerritPage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 866
+      },
+      "writtenOn": "2012-12-10T13:36:57Z",
+      "side": 1,
+      "message": "Do you mean I should change/enhance logic of CommitDialog to propose other users in Author/Commiter dialog ?",
+      "parentUuid": "AABOJ3//9xs\u003d",
       "revId": "6ff47938b244e490c99317ea52dc838d0046986e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
