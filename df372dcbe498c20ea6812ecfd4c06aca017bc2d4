@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3//9vY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IPersonProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 866
+      },
+      "writtenOn": "2012-12-10T14:55:34Z",
+      "side": 1,
+      "message": "I\u0027m not sure whether this interface should be part of egit-ui plug-in , egit.core or some other.",
+      "revId": "df372dcbe498c20ea6812ecfd4c06aca017bc2d4",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
