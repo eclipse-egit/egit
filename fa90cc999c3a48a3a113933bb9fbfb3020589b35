@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//9lc\u003d",
+        "filename": "tools/egit-developer-tools.p2f",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-10T23:54:23Z",
+      "side": 1,
+      "message": "I want to be able to install all runtime dependencies locally so that I can build and test EGit without using a target platform definition which is typically slower.",
+      "parentUuid": "AABOJ3///mQ\u003d",
+      "revId": "fa90cc999c3a48a3a113933bb9fbfb3020589b35",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3///mM\u003d",
         "filename": "tools/egit-developer-tools.p2f",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//9lg\u003d",
+        "filename": "tools/egit-developer-tools.p2f",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-10T23:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJ3//910\u003d",
+      "revId": "fa90cc999c3a48a3a113933bb9fbfb3020589b35",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//91w\u003d",
         "filename": "tools/egit-developer-tools.p2f",
         "patchSetId": 2
@@ -64,6 +100,24 @@
       "writtenOn": "2012-12-09T21:35:20Z",
       "side": 1,
       "message": "That\u0027s not useful, is it?",
+      "revId": "fa90cc999c3a48a3a113933bb9fbfb3020589b35",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9lk\u003d",
+        "filename": "tools/egit-developer-tools.p2f",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-10T23:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJ3//91w\u003d",
       "revId": "fa90cc999c3a48a3a113933bb9fbfb3020589b35",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
