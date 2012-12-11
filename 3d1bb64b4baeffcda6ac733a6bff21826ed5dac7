@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//9ek\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 866
+      },
+      "writtenOn": "2012-12-11T22:28:11Z",
+      "side": 1,
+      "message": "I definitely need to check whether \"e\" key is working properly on my keyboard :D",
+      "parentUuid": "AABOJ3//9fU\u003d",
+      "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//9fQ\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//9ec\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 866
+      },
+      "writtenOn": "2012-12-11T22:28:11Z",
+      "side": 1,
+      "message": "Do you mean link to JGit\u0027s documentation or some JGit\u0027s class/Javadoc ?",
+      "parentUuid": "AABOJ3//9fQ\u003d",
+      "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//9fI\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2012-12-11T22:16:26Z",
       "side": 1,
       "message": "I would not document  a private field in the first place. Save the effort for public getters and setters.",
+      "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9eY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 866
+      },
+      "writtenOn": "2012-12-11T22:28:11Z",
+      "side": 1,
+      "message": "Ok.",
+      "parentUuid": "AABOJ3//9fI\u003d",
       "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//9eQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 866
+      },
+      "writtenOn": "2012-12-11T22:28:11Z",
+      "side": 1,
+      "message": "Due to my recent (deep) code incestigation - yes, it can.\nHere is invocation chain for this option:\nPushOperation -\u003e PushCommand -\u003e org.eclipse.jgit.transport.Transport (only if not null)\n\nDefault value of optionReceivePack in Transport is RemoteConfig.DEFAULT_RECEIVE_PACK.",
+      "parentUuid": "AABOJ3//9e4\u003d",
+      "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//9e8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushOperationUI.java",
         "patchSetId": 4
@@ -98,6 +170,24 @@
       "writtenOn": "2012-12-11T22:16:26Z",
       "side": 1,
       "message": "You check for null here, but don\u0027t do it in PushOperation. Is null a valid parameter?",
+      "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9d8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushOperationUI.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 866
+      },
+      "writtenOn": "2012-12-11T22:28:11Z",
+      "side": 1,
+      "message": "I forgot about this. I\u0027ve create this if-statement because I didn\u0027t know that null can be set to PushCommand.\nIt will be fixed. Null value is valid here.",
+      "parentUuid": "AABOJ3//9e8\u003d",
       "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
