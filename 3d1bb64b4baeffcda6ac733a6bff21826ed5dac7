@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3//9fU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-11T22:16:26Z",
+      "side": 1,
+      "message": "Typo.",
+      "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9fQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-11T22:16:26Z",
+      "side": 1,
+      "message": "I don\u0027t see any other refs to git man in EGit. Maybe a link to JGit would be enough.",
+      "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9fI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-11T22:16:26Z",
+      "side": 1,
+      "message": "I would not document  a private field in the first place. Save the effort for public getters and setters.",
+      "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9fE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-11T22:16:26Z",
+      "side": 1,
+      "message": "Same as above.",
+      "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9e4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-11T22:16:26Z",
+      "side": 1,
+      "message": "receivePack can be null here, is that ok?",
+      "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9e8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/push/PushOperationUI.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-11T22:16:26Z",
+      "side": 1,
+      "message": "You check for null here, but don\u0027t do it in PushOperation. Is null a valid parameter?",
+      "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
