@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3//9do\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-11T22:31:07Z",
+      "side": 1,
+      "message": "Some background for this change would be helpful.",
+      "revId": "64da4eb03398127c640e7ee941506e9a3a042816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9eM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IPersonProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-11T22:31:07Z",
+      "side": 1,
+      "message": "2.2 is already rolling out.",
+      "revId": "64da4eb03398127c640e7ee941506e9a3a042816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9d4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IPersonProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-11T22:31:07Z",
+      "side": 1,
+      "message": "No need to doc a private field.",
+      "revId": "64da4eb03398127c640e7ee941506e9a3a042816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9dw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IPersonProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-11T22:31:07Z",
+      "side": 1,
+      "message": "Nondescriptive.",
+      "revId": "64da4eb03398127c640e7ee941506e9a3a042816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9eA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IPersonProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-11T22:31:07Z",
+      "side": 1,
+      "message": "Externalize.",
+      "revId": "64da4eb03398127c640e7ee941506e9a3a042816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9ds\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IPersonProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-11T22:31:07Z",
+      "side": 1,
+      "message": "Should that be public?",
+      "revId": "64da4eb03398127c640e7ee941506e9a3a042816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
