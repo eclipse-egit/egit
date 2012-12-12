@@ -227,6 +227,24 @@
       "revId": "64da4eb03398127c640e7ee941506e9a3a042816",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9aA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IPersonProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 866
+      },
+      "writtenOn": "2012-12-12T09:19:26Z",
+      "side": 1,
+      "message": "I don\u0027t understand :)\nCould (re)write it differently.\n\nSorry, English is not my mother tongue :)",
+      "parentUuid": "AABOJ3//9aM\u003d",
+      "revId": "64da4eb03398127c640e7ee941506e9a3a042816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
