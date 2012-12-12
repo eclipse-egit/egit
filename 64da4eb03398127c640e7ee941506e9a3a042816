@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//9aY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IPersonProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-12T09:14:09Z",
+      "side": 1,
+      "message": "In that case you should -1 the change.",
+      "parentUuid": "AABOJ3//9dA\u003d",
+      "revId": "64da4eb03398127c640e7ee941506e9a3a042816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//9d4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IPersonProvider.java",
         "patchSetId": 2
@@ -188,6 +206,24 @@
       "side": 1,
       "message": "It should ;) How could I missed that ?",
       "parentUuid": "AABOJ3//9ds\u003d",
+      "revId": "64da4eb03398127c640e7ee941506e9a3a042816",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//9aM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/IPersonProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2012-12-12T09:14:09Z",
+      "side": 1,
+      "message": "If you provided a client for the interface that would not happen. Is there a place in EGit that can benefit from it?",
+      "parentUuid": "AABOJ3//9dM\u003d",
       "revId": "64da4eb03398127c640e7ee941506e9a3a042816",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
