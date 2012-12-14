@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -175,6 +176,11 @@ public class TestProject {
 	public IFolder createFolder(String name) throws Exception {
 		IFolder folder = project.getFolder(name);
 		folder.create(true, true, null);
+		return folder;
+	}
+
+	public IFolder createFolderWithKeep(String name) throws Exception {
+		IFolder folder = createFolder(name);
 
 		IFile keep = project.getFile(name + "/keep");
 		keep.create(new ByteArrayInputStream(new byte[] {0}), true, null);
