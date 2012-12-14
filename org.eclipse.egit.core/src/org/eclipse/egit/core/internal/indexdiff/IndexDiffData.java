@@ -100,7 +100,6 @@ public class IndexDiffData {
 		Set<String> modified2 = new HashSet<String>(baseDiff.getModified());
 		Set<String> untracked2 = new HashSet<String>(baseDiff.getUntracked());
 		Set<String> conflicts2 = new HashSet<String>(baseDiff.getConflicting());
-		Set<String> ignored2 = new HashSet<String>(baseDiff.getIgnoredNotInIndex());
 
 		mergeList(added2, changedFiles, diffForChangedFiles.getAdded());
 		mergeList(changed2, changedFiles, diffForChangedFiles.getChanged());
@@ -113,7 +112,7 @@ public class IndexDiffData {
 				getUntrackedFolders(diffForChangedFiles));
 		mergeList(conflicts2, changedFiles,
 				diffForChangedFiles.getConflicting());
-		mergeList(ignored2, changedFiles,
+		Set<String> ignored2 = mergeIgnored(baseDiff.getIgnoredNotInIndex(), changedFiles,
 				diffForChangedFiles.getIgnoredNotInIndex());
 
 		added = Collections.unmodifiableSet(added2);
@@ -157,6 +156,25 @@ public class IndexDiffData {
 			Collection<String> files) {
 		for (String file : files)
 			if (file.startsWith(folder))
+				return true;
+		return false;
+	}
+
+	private static Set<String> mergeIgnored(Set<String> oldIgnoredPaths,
+			Collection<String> changedPaths, Set<String> newIgnoredPaths) {
+		Set<String> merged = new HashSet<String>();
+		for (String oldIgnoredPath : oldIgnoredPaths) {
+			boolean changed = isAnyPrefixOf(oldIgnoredPath, changedPaths);
+			if (!changed)
+				merged.add(oldIgnoredPath);
+		}
+		merged.addAll(newIgnoredPaths);
+		return merged;
+	}
+
+	private static boolean isAnyPrefixOf(String pathToCheck, Collection<String> possiblePrefixes) {
+		for (String possiblePrefix : possiblePrefixes)
+			if (pathToCheck.startsWith(possiblePrefix) || possiblePrefix.equals(pathToCheck + '/'))
 				return true;
 		return false;
 	}
