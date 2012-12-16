@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011,  Markus Duft <markus.duft@salomon.at>
+ * Copyright (C) 2011, 2012  Markus Duft <markus.duft@salomon.at> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,6 +10,7 @@
 package org.eclipse.egit.ui.internal.push;
 
 import java.net.URISyntaxException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,8 +28,10 @@ import org.eclipse.jgit.lib.AbbreviatedObjectId;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
+import org.eclipse.jgit.transport.Transport;
 
 /**
  * A simple push wizard, which only pushes out the selected ref/commit to the
@@ -133,12 +136,19 @@ public class SimplePushRefWizard extends Wizard {
 			PushOperationSpecification specification = new PushOperationSpecification();
 			RepositorySelection remote = repoPage.getSelection();
 
-			RemoteRefUpdate update = new RemoteRefUpdate(repo, null, pushObj,
-					targetPage.getTargetRef(), targetPage.isForceUpdate(),
-					null, null);
+			RefSpec refSpec = new RefSpec().
+					setSourceDestination(pushObj.name(), targetPage.getTargetRef()).
+					setForceUpdate(targetPage.isForceUpdate());
 
-			specification.addURIRefUpdates(remote.getURI(true),
-					Collections.singleton(update));
+			// Include fetchSpecs in calculation so that tracking refs are also updated
+			RemoteConfig remoteConfig = remote.getConfig();
+			List<RefSpec> fetchSpecs = remoteConfig != null ? remoteConfig.getFetchRefSpecs() : null;
+
+			Collection<RemoteRefUpdate> remoteRefUpdates = Transport
+					.findRemoteRefUpdatesFor(repo,
+							Collections.singleton(refSpec), fetchSpecs);
+
+			specification.addURIRefUpdates(remote.getURI(true), remoteRefUpdates);
 
 			PushOperation pop = new PushOperation(repo, specification, false,
 					timeout);

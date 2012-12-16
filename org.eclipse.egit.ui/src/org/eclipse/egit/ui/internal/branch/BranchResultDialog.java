@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010-2012 SAP AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -105,7 +105,7 @@ public class BranchResultDialog extends MessageDialog {
 				NLS.bind(UIText.BranchResultDialog_CheckoutConflictsMessage,
 						Repository.shortenRefName(target)),
 				MessageDialog.INFORMATION,
-				new String[] { IDialogConstants.OK_LABEL }, 0);
+				new String[] { IDialogConstants.CANCEL_LABEL }, 0);
 		setShellStyle(getShellStyle() | SWT.SHELL_TRIM);
 		this.repository = repository;
 		this.result = result;
@@ -123,6 +123,7 @@ public class BranchResultDialog extends MessageDialog {
 		return main;
 	}
 
+	@Override
 	protected void buttonPressed(int buttonId) {
 		boolean shouldCheckout = false;
 		switch (buttonId) {
@@ -143,6 +144,7 @@ public class BranchResultDialog extends MessageDialog {
 			break;
 		case IDialogConstants.OK_ID:
 			super.buttonPressed(buttonId);
+			break;
 		}
 		if (shouldCheckout) {
 			super.buttonPressed(buttonId);
