@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='utf-8' ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>EGit 2.2 New and Noteworthy</title>
+		<link type="text/css" rel="stylesheet" href="../../../book.css"/>
+	</head>
+	<body>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<th style="width: 100%" align="center" colspan="3">EGit 2.2 New and Noteworthy</th>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Performance-Improvements.html" title="Performance Improvements">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Performance Improvements</td>
+			</tr>
+		</table><hr/>
+		<h1 id="EGit_Features">EGit Features</h1>
+		<h2 id="Staging_view">Staging view</h2>
+		<h3 id=".22Commit.22_and_.22Commit_and_Push.22_buttons">"Commit" and "Commit and Push" buttons</h3>
+		<p>We moved the commit button from the toolbar to the form. Furthermore we now allow you to push and commit in a single step by hitting the appropriate form button. The push occurrs either to the default remote or to upstream that the user configures in the push configuration dialog. (
+			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=388913" target="egit_external">bug 388913</a>):
+		</p>
+		<p>
+			<img border="0" src="images/EGit-2.2-staging-commit-and-push.png"/>
+		</p>
+		<h3 id="Staging_with_drag_and_drop_of_resources_from_navigator_views_.28e.g._Package_Explorer.29">Staging with drag and drop of resources from navigator views (e.g. Package Explorer)</h3>
+		<p>Files and entire folders can now be staged by dragging them from the Package Explorer and other navigator views to the 
+			<i>Staged Changes</i> table of the Staging view (
+			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=385412" target="egit_external">bug 385412</a>).
+		</p>
+		<p>For example, the package 
+			<i>org.eclipse.jgit.api</i> is dragged from the Package Explorer on the left:
+		</p>
+		<p>
+			<img border="0" src="images/EGit-2.2-staging-view-dnd-1.png"/>
+		</p>
+		<p>Which results in all the contained files being staged:</p>
+		<p>
+			<img border="0" src="images/EGit-2.2-staging-view-dnd-2.png"/>
+		</p>
+		<h3 id="Ignore_action_for_adding_files_to_.gitignore">Ignore action for adding files to .gitignore</h3>
+		<p>For an untracked file, the Staging view now has a 
+			<i>Ignore</i> action in the context menu. This will add the file to <tt>.gitignore</tt>. (
+			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=385178" target="egit_external">bug 385178</a>)
+		</p>
+		<p>
+			<img border="0" src="images/EGit-2.2-staging-view-ignore.png"/>
+		</p>
+		<h3 id="Improved_label_decorations">Improved label decorations</h3>
+		<p>The Staging view now honors label decoration preferences. For example, when the label decorations are configured to not show any text decorations, but instead use an icon for the "dirty" state (
+			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=390297" target="egit_external">bug 390297</a>):
+		</p>
+		<p>
+			<img border="0" src="images/EGit-2.2-staging-view-decoration-settings.png"/>
+		</p>
+		<h2 id="Working_set_project_decorations">Working set project decorations</h2>
+		<p>Working sets now also receive the decorations, depending on what projects they contain. When all are from the same repository, the repository name, branch name and branch status is shown. When they are from different repositories but all on the same branch, only the branch name is shown. (
+			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=369969" target="egit_external">bug 369969</a>)
+		</p>
+		<p>
+			<img border="0" src="images/EGit-2.2-working-set-decorations.png"/>
+		</p>
+		<h2 id="Resource_filter_and_nested_project_support">Resource filter and nested project support</h2>
+		<p>Resource filters are now handled correctly, e.g. when used to exclude sub projects from appearing in the parent project tree with a nested project layout. (
+			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=358901" target="egit_external">bug 358901</a>)
+		</p>
+		<p>The following shows an example of a nested project layout. Notice that there is a 
+			<i>.project</i> in the root of the working directory and that the 
+			<i>.project</i> for 
+			<i>nested-sub</i> is in a sub directory:
+		</p>
+		<p>
+			<img border="0" src="images/EGit-2.2-nested-projects.png"/>
+		</p>
+		<p>Additionally, the 
+			<i>Import Projects...</i> wizard in the Git Repositories view now searches for nested projects (
+			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=396067" target="egit_external">bug 396067</a>). The standard 
+			<i>Import Existing Projects</i> wizard supports this since Eclipse 4.3 (
+			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=144610" target="egit_external">bug 144610</a>).
+		</p>
+		<h2 id="Ancestor_pane_in_compare_editors_.28three-way_mode.29">Ancestor pane in compare editors (three-way mode)</h2>
+		<p>When comparing a file against another commit or branch, the content of the common ancestor can now be shown using the 
+			<i>Show Ancestor Pane</i> button in the compare editor. This will show a third text field showing the content of the ancestor.
+		</p>
+		<p>The common ancestor (also called merge base) is the first parent commit that both compared commits have in common. E.g. when a 
+			<i>feature</i> branch was created from 
+			<i>master</i>, the common ancestor is the commit on 
+			<i>master</i> after which 
+			<i>feature</i> was split off.
+		</p>
+		<p>
+			<img border="0" src="images/EGit-2.2-compare-ancestor.png"/>
+		</p>
+		<h2 id="Show_In_support_for_files_in_History_view.2C_Commit_viewer_and_Staging_view">Show In support for files in History view, Commit viewer and Staging view</h2>
+		<p>The listing of changed files of a commit and in the Staging view now has a 
+			<i>Show In</i> entry in the context menu, e.g. to show a file in the Package Explorer. The usual keyboard shortcut can also be used to show the menu. (
+			<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=363567" target="egit_external">bug 363567</a>)
+		</p>
+		<p>
+			<img border="0" src="images/EGit-2.2-commit-file-show-in.png"/>
+		</p>
+		<h2 id="Other_Improvements">Other Improvements</h2>
+		<ul>
+			<li>Deleting untracked files from the Staging view can now be done using the delete key (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=389137" target="egit_external">bug 389137</a>).
+			</li>
+			<li>Amend now preserves the original authorship date and time (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=362391" target="egit_external">bug 362391</a>).
+			</li>
+			<li>When comparing a file with the current version (HEAD), its side now always shows the author and ID of the commit which last affected the file, not from HEAD (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=359071" target="egit_external">bug 359071</a>).
+			</li>
+			<li>Git Tree Compare view now has an 
+				<i>Expand all</i> button (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=376241" target="egit_external">bug 376241</a>).
+			</li>
+			<li>When accidentally pressing 
+				<i>Amend</i> in the Commit dialog or Staging view, pressing it again causes the original commit message to appear again instead of being lost (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=364022" target="egit_external">bug 364022</a>).
+			</li>
+			<li>When using Compare With/Replace With &gt; Commit..., the dialog now filters the shown commits to only those that affected the selected resources, not the complete history (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=382476" target="egit_external">bug 382476</a>).
+			</li>
+			<li>Synchronize view now fetches changes when using F5/Synchronize when the 
+				<i>Always launch fetch before synchronization</i> option is enabled (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=355837" target="egit_external">bug 355837</a>).
+			</li>
+			<li>Undo in the Staging view commit message field is now available again (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=388594" target="egit_external">bug 388594</a>).
+			</li>
+			<li>Stashed commits are now sorted in the order in which they were created, not by the label.</li>
+			<li>The 
+				<i>Remove from Index</i> action now works across resources of multiple repositories (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=395722" target="egit_external">bug 395722</a>).
+			</li>
+			<li>Pushing now also updates remote tracking branches when using Synchronize view, 
+				<i>Push Branch...</i> and 
+				<i>Push...</i> (
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=317411" target="egit_external">bug 317411</a>, 
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=317371" target="egit_external">bug 317371</a>, 
+				<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=328138" target="egit_external">bug 328138</a>).
+			</li>
+			<li>'Push to Gerrit' wizard supports Gerrit draft reviews</li>
+		</ul><hr/>
+		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
+			<tr>
+				<td style="width: 20%" align="left"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right">
+					<a href="Performance-Improvements.html" title="Performance Improvements">
+						<img alt="Next" border="0" src="../../../images/next.gif"/>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 20%" align="left" valign="top"></td>
+				<td style="width: 60%" align="center"></td>
+				<td style="width: 20%" align="right" valign="top">Performance Improvements</td>
+			</tr>
+		</table>
+	</body>
+</html>

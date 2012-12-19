@@ -63,7 +63,7 @@
 		<p>
 			<b>Trust</b>
 		</p>
-		<p>Git provides a built-in trust chain through secure SHA-1 hashes which allow to verify if objects obtained from a (potentially untrusted) source are correct and have not been modified since they have been created.</p>
+		<p>Git provides a built-in trust chain through secure SHA-1 hashes which allow it to verify if objects obtained from a (potentially untrusted) source are correct and have not been modified since they have been created.</p>
 		<p>If you get the signed tag for e.g. a project release which you can verify with e.g. the tagger's (e.g. the project lead's) public signing key
 			git ensures that the chain of trust covers the following:</p>
 		<ul>
@@ -72,7 +72,7 @@
 			<li>the commit object contains the tree of blob objects and other tree objects representing the directory structure of the project revision</li>
 			<li>the blob objects contain the file contents for this project revision</li>
 		</ul>
-		<p>All the involved object names can be checked for consistency using the SHA-1 algorithm to ensure the correctness of the project revision and this way ensure that the entire history can be trusted.</p>
+		<p>All of the involved object names can be checked for consistency using the SHA-1 algorithm to ensure the correctness of the project revision and this way ensure that the entire history can be trusted.</p>
 		<h2 id="Index">Index</h2>
 		<p>The 
 			<b>Git Index</b> is a binary file stored in the <code>.git/index</code> directory containing a sorted list of file names, file modes, file meta data used to efficiently detect file modifications and the SHA-1 object name of blob objects.
@@ -87,7 +87,7 @@
 		<p>A branch in Git is a named reference to a commit. There are two types of branches, namely "Local" and "Remote Tracking" branches which serve different purposes.</p>
 		<h3 id="Local_Branches">Local Branches</h3>
 		<p>Whenever a change to a (local) Repository is committed, a new commit object is created. Without any other means, it would be very difficult to keep track of the changes in the Repository, in particular when other commits are added to the Repository, for example due to an update from the remote Repository or when checking out another commit.</p>
-		<p>A local branch helps with this task by providing a (local) name by which the "current" commit can be found. When changes are commited to the local repository, the branch is automatically updated to point to the newly created commit.</p>
+		<p>A local branch helps with this task by providing a (local) name by which the "current" commit can be found. When changes are committed to the local repository, the branch is automatically updated to point to the newly created commit.</p>
 		<p>In addition, it is possible to add a so-called upstream configuration to a local branch which can be helpful when synchronizing with a remote repository.</p>
 		<h3 id="Remote_Tracking_Branches">Remote Tracking Branches</h3>
 		<p>Remote tracking branches are created automatically when cloning and fetching from remote repositories. A remote tracking branch in the local repository always corresponds to a (local) branch in the remote repository, and the name of such a branch is following a certain convention.</p>
