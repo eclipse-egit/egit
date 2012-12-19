@@ -122,9 +122,7 @@ public class MergeOperation implements IEGitOperation {
 				try {
 					mergeResult = merge.call();
 					mymonitor.worked(1);
-					if (MergeResult.MergeStatus.FAILED.equals(mergeResult.getMergeStatus()))
-						throw new TeamException(mergeResult.toString());
-					else if (MergeResult.MergeStatus.NOT_SUPPORTED.equals(mergeResult.getMergeStatus()))
+					if (MergeResult.MergeStatus.NOT_SUPPORTED.equals(mergeResult.getMergeStatus()))
 						throw new TeamException(new Status(IStatus.INFO, Activator.getPluginId(), mergeResult.toString()));
 				} catch (NoHeadException e) {
 					throw new TeamException(CoreText.MergeOperation_MergeFailedNoHead, e);
