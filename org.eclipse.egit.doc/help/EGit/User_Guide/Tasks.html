@@ -667,7 +667,7 @@
 			<li>In the URI combo, select or enter the URI that points to your Gerrit instance; the combo will be pre-filled with all URIs defined in any remote of your current Repository; in addition you can type any URI into this field</li>
 			<li>In the Gerrit Branch field, enter the name of the Gerrit branch to push to</li>
 		</ul>
-		<p>The dialog also offers a content assist for the Gerrit branch. Simply press "Ctrl+Space" to activate this (consult the tooltip that appears when hovering over the little bulb decorator near the Gerrt Branch field). The remote tracking branches for the current repository will be shown. Note that this content assist is filtered, so in order to see all proposals, you need to make sure to have the Gerrit Branch field empty before requesting the content assist.</p>
+		<p>The dialog also offers a content assist for the Gerrit branch. Simply press "Ctrl+Space" to activate this (consult the tooltip that appears when hovering over the little bulb decorator near the Gerrit Branch field). The remote tracking branches for the current repository will be shown. Note that this content assist is filtered, so in order to see all proposals, you need to make sure to have the Gerrit Branch field empty before requesting the content assist.</p>
 		<p>Upon clicking 
 			<b>Finish</b>, the currently checked out commit will be pushed to the Gerrit branch specified. Also, the URI and Gerrit Branch values will be remembered and suggested again when the dialog is opened again later.
 		</p>
@@ -792,7 +792,7 @@
 		<h4 id="Compare_editor_and_Git_Tree_Compare_View">Compare editor and Git Tree Compare View</h4>
 		<p>If you use any of the submenu actions of 
 			<b>Compare With</b> on a single file, a compare editor will be shown, otherwise the 
-			<a href="Reference.html#Git_Tree_Compare_View">Git Tree Compare View</a> will be opened that lets you browse the changes; by double-clicking on a changed file in this view, a compare editor will be opened for this file. An excpetion is the submenu action 
+			<a href="Reference.html#Git_Tree_Compare_View">Git Tree Compare View</a> will be opened that lets you browse the changes; by double-clicking on a changed file in this view, a compare editor will be opened for this file. An exception is the submenu action 
 			<b>History...</b>, which opens the History View.
 		</p>
 		<h4 id="Compare_working_tree_with_last_commit">Compare working tree with last commit</h4>
@@ -869,7 +869,7 @@
 		<p>
 			<img border="0" src="images/Egit-1.0-synchronize-custom.png"/>
 		</p>
-		<p>When clicking "Include local uncommited changes in comparison" also local, not yet staged changes and the already staged changes will be shown in comparison.</p>
+		<p>When clicking "Include local uncommitted changes in comparison" also local, not yet staged changes and the already staged changes will be shown in comparison.</p>
 		<p>It is also possible to compare multiple repositories at once. In this case in the Synchronize Wizard select for each repository the Ref you want to compare against.</p>
 		<h3 id="Quickdiff">Quickdiff</h3>
 		<p>Instead of using a compare editor you can enable quick diff support and see the changes within the text editor.
@@ -1001,7 +1001,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 				<a href="http://code.google.com/p/gerrit/" target="egit_external">Gerrit Code Review</a> uses the 
 				<i>Change-Id:</i> footer to correlate different patchsets of a change evolving during the review process towards the finally accepted patch. To generate a Gerrit Change-Id click 
 				<b>Compute Change-Id for Gerrit Code Review</b>; the ID will be generated on commit, until then a null Change-Id is shown as a placeholder. With the egit configuration parameter 
-				<b>gerrit.createchangeid</b> set to true the corresponding checkbox in the Commit Dialog is alway preselected. This parameter can be set on repository level, on system level or on user level. See 
+				<b>gerrit.createchangeid</b> set to true the corresponding checkbox in the Commit Dialog is always preselected. This parameter can be set on repository level, on system level or on user level. See 
 				<a href="http://wiki.eclipse.org/EGit/User_Guide#Repository_Configuration" target="egit_external">Repository Configuration</a> for more information.
 			</li>
 			<li>The 
@@ -1013,13 +1013,13 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		</ul>
 		<p>Additionally this dialog controls which of the changes will be included in the commit. If you clear the checkbox in front of a file, the changes to this file will not be included in the commit. The local file in your eclipse workspace will still contain the modifications giving you the chance to commit these changes with a subsequent commit. This feature is often used to separate modifications done to a set of files into different commits.</p>
 		<p>
-			<b>One example:</b> Imagine since the last commit you have fixed a bug in A.java and you have added a new method to B.java. These two modifications are logically independent from each other hence you may want to commit them in two independant commits. In this case you initate the commit, deselect B.java from the set of committed files and specify a commit message describing only the bugfix in A.java. After a succesfull first commit you just call commit again and the upcoming dialog will present you the remaining changes in B.java. Now you specify a commit message describing the addition of the method and finish the second commit.
+			<b>One example:</b> Imagine since the last commit you have fixed a bug in A.java and you have added a new method to B.java. These two modifications are logically independent from each other hence you may want to commit them in two independent commits. In this case you initate the commit, deselect B.java from the set of committed files and specify a commit message describing only the bugfix in A.java. After a successful first commit you just call commit again and the upcoming dialog will present you the remaining changes in B.java. Now you specify a commit message describing the addition of the method and finish the second commit.
 		</p>
 		<p>New files you added to the project which have not been explicitly added to version control (see "Modifying the content") will be listed in the commit dialog if you select the checkbox "Show untracked Files". If you select the checkbox in front of these files in the list they will be added to the repository and committed once you press the commit button. Files which are excluded by the team ignore list or a <tt>.gitignore</tt> file or which are derived (e.g. the bin folder in java projects) will not be shown here. If you have no other changes in your repository than such untracked files the checkbox 
 			<b>Show untracked Files</b> is selected by default.
 		</p>
 		<h4 id="Amending_Commits">Amending Commits</h4>
-		<p>If you recognize that you missed something when committing a change you may fix this : open the commit dialog again and specify that the current commit shall "amend" the previous commit in the current branch. The new commit will then replace the previous one. This feature is often used to correct wrong commits before they are published to other repositories.</p>
+		<p>If you recognize that you missed something when committing a change you may fix this: open the commit dialog again and specify that the current commit shall "amend" the previous commit in the current branch. The new commit will then replace the previous one. This feature is often used to correct incorrect commits before they are published to other repositories.</p>
 		<p>
 			<b>Note:</b> do not amend commits if they have already been published to a shared repository since this may disturb others if they already based their changes on the published change.
 		</p>
@@ -1042,8 +1042,8 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<img border="0" src="images/Egit-0.9-commit-dialog-amend.png"/>
 		</p>
 		<p>The commit message of your previous commit (the one you want to replace) is filled into the "Commit Message" field. This gives you the chance not only to correct errors in the content of the version-controlled files but to also correct errors (e.g. typos) in the commit message describing your change.</p>
-		<p>As an alternative to amending you could just commit the corrected version as a subsequent commit. But the first commit containing the typo is of no use to anybody and in order not to clutter the history of your project with unneeded commits you may decide to amend the commit.</p>
-		<p>Be aware that amending commits which are already published to other repositories may cause trouble. Once you have pushed a commit to a remote repository or your local repository was cloned by somebody else you should be very careful whith amending commits. In this case publishing a second commit which corrects the first one is probably a better solution. Otherwise inform all others that you amended a published commit so that they can react accordingly.</p>
+		<p>As an alternative to amending you could just commit the corrected version as a subsequent commit. But the first commit containing the typo is of no use to anybody and in order not to clutter the history of your project with unneeded commits you should amend the commit.</p>
+		<p>Be aware that amending commits which are already published to other repositories may cause trouble. Once you have pushed a commit to a remote repository or your local repository was cloned by somebody else, you should be very careful with amending commits. In this case publishing a second commit which corrects the first one is probably a better solution. Otherwise inform all others that you amended a published commit so that they can react accordingly.</p>
 		<h2 id="Reverting_Changes">Reverting Changes</h2>
 		<h3 id="Reverting_changes_in_the_working_tree">Reverting changes in the working tree</h3>
 		<h4 id="Replace_with_File_in_Git_Index">Replace with File in Git Index</h4>
@@ -1062,7 +1062,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 		</p>
 		<p>This is mainly intended for "removing" single files from a commit (when committing the reverted workspace resources, they are effectively removed from the current commit). Even though this also works on folders and projects, the results of replacing a folder or project with a "previous revision" may be unexpected.</p>
 		<h3 id="Revert_using_quickdiff">Revert using quickdiff</h3>
-		<p>The quickddiff feature can be used to revert individual changes to a file. You can revert by line, block (se range of changes lines) or selection. Select all text and then 
+		<p>The quickdiff feature can be used to revert individual changes to a file. You can revert by line, block (se range of changes lines) or selection. Select all text and then 
 			<b>Revert selection</b> to revert a whole file.
 		</p>
 		<h3 id="Reverting_changes_introduced_by_a_specific_commit">Reverting changes introduced by a specific commit</h3>
@@ -1235,7 +1235,7 @@ Signed-off-by: William Shakespeare &lt;will.from@the.past&gt;
 			<li>The currently checked out branch can not be deleted</li>
 			<li>If deletion of the branch may result in data loss, a warning is displayed that must be confirmed
 				<ul>
-					<li>EGit assumes a pontential data loss if the branch points to a commit that is not reachable from the currently checked out commit</li>
+					<li>EGit assumes a potential data loss if the branch points to a commit that is not reachable from the currently checked out commit</li>
 				</ul>
 			</li>
 		</ul>
@@ -1510,7 +1510,7 @@ Sein oder nicht sein
 			<img border="0" src="images/EGit-0.10-MergeDemoHistoryAfterRebase.png"/>
 		</p>
 		<h3 id="The_Real_World:_Rebase_Conflicts">The Real World: Rebase Conflicts</h3>
-		<p>Up to now, we have assumed that the changes in "topic" can be auto-merged into "master". In the real world, however, it may happend that you encounter conflicts during rebase. Now, if a commit that is to be cherry-picked contains changes that conflict with changes in "master", the rebase operation is interrupted after applying the conflicting change; the conflicts are visualized in the usual way (with conflict markers) and the user gets a chance to decide whether to</p>
+		<p>Up to now, we have assumed that the changes in "topic" can be auto-merged into "master". In the real world, however, it may happen that you encounter conflicts during rebase. Now, if a commit that is to be cherry-picked contains changes that conflict with changes in "master", the rebase operation is interrupted after applying the conflicting change; the conflicts are visualized in the usual way (with conflict markers) and the user gets a chance to decide whether to</p>
 		<ul>
 			<li>resolve these conflicts manually,</li>
 			<li>skip the current commit, or</li>
@@ -2031,7 +2031,7 @@ Sein oder nicht sein
 			</li>
 		</ul>
 		<ul>
-			<li>Additionaly the wizard adds a refspec "refs/notes/*:refs/notes/*" to your fetch specification. Gerrit stores data about the review in git notes. With this refspec these review data will be fetched automatically when you fetch from this remote and they will be displayed in the commit viewer.</li>
+			<li>Additionally the wizard adds a refspec "refs/notes/*:refs/notes/*" to your fetch specification. Gerrit stores data about the review in git notes. With this refspec these review data will be fetched automatically when you fetch from this remote and they will be displayed in the commit viewer.</li>
 		</ul>
 		<ul>
 			<li>In the section 
@@ -2315,7 +2315,38 @@ Sein oder nicht sein
 		<p>Selecting the 
 			<i>Sync Submodule</i> action on a submodule will update the remote URL used by the submodule from the current value in the 
 			<i>.gitmodules</i> file at the root of the working directory of the parent repository.
-		</p><hr/>
+		</p>
+		<h2 id="Team_Project_Sets">Team Project Sets</h2>
+		<p>Team project sets (<tt>.psf</tt> files) are supported by the Git team provider.</p>
+		<h3 id="Import">Import</h3>
+		<p>To import an existing project set, use the 
+			<i>Import...</i> wizard and then select 
+			<i>Team Project Set</i> from 
+			<i>Team</i>.
+		</p>
+		<p>You can then select a file which contains the import definitions and optionally choose to add imported projects to a working set.</p>
+		<p>In the next step, the repositories are cloned, the projects imported and connected. This can take a while depending on the size of the repositories.</p>
+		<h3 id="Export">Export</h3>
+		<p>To create a project set file for existing Git projects, select the projects/working sets which are already connected to the Git team provider.</p>
+		<p>Then open the 
+			<i>Export...</i> wizard and select 
+			<i>Team Project Set</i> from 
+			<i>Team</i>. There you can choose to export working sets or projects only and can refine your selection. In the next step, select an output path and finish the wizard.
+		</p>
+		<h3 id="Format">Format</h3>
+		<p>You can also manually edit a <tt>.psf</tt> file. Each project has an entry which looks like this:</p>
+		<pre>
+&lt;project reference="1.0,git://egit.eclipse.org/egit.git,master,org.eclipse.egit"/&gt;
+</pre>
+		<p>The values are separated by commas and have the following meaning:</p>
+		<ol>
+			<li>Format version</li>
+			<li>Git repository URL</li>
+			<li>Name of branch to initially check out</li>
+			<li>Path to the project to import (folder which contains <tt>.project</tt>), relative to the repository</li>
+		</ol>
+		<p>Each project has one entry. So for multiple projects in the same repository, create such an entry for each project with the same repository URL. The import is smart enough to only clone each repository once.</p>
+		<p>If the repository contains a project at the root, use <tt>.</tt> as the project path.</p><hr/>
 		<table class="navigation" style="width: 100%;" border="0" summary="navigation">
 			<tr>
 				<td style="width: 20%" align="left">

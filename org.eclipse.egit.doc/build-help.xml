@@ -38,8 +38,8 @@
 				generateUnifiedToc="true">
 				<path name="EGit/User_Guide" title="EGit User Guide" />
 				<path name="JGit/User_Guide" title="JGit User Guide" />
-				<path name="EGit/New_and_Noteworthy/2.1" title="EGit 2.1 New and Noteworthy" />
-				<path name="JGit/New_and_Noteworthy/2.1" title="JGit 2.1 New and Noteworthy" />
+				<path name="EGit/New_and_Noteworthy/2.2" title="EGit 2.2 New and Noteworthy" />
+				<path name="JGit/New_and_Noteworthy/2.2" title="JGit 2.2 New and Noteworthy" />
 				<path name="EGit/Git_For_Eclipse_Users" title="Git for Eclipse Users" />
 				<stylesheet url="book.css" />
 				<pageAppendum>
