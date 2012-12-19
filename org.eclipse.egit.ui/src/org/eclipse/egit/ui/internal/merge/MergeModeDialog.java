@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Shell;
  * Asks the user whether to use the workspace or HEAD
  */
 public class MergeModeDialog extends Dialog {
-	private boolean useWs = true;
+	private boolean useWs = false;
 
 	Button dontAskAgain;
 
