@@ -8,6 +8,7 @@
  * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
  * Copyright (C) 2012, IBM Corporation (Markus Keller <markus_keller@ch.ibm.com>)
  * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, Tieto Corporation, Peter Bäckman <peter.backman@tieto.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,6 +23,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -608,7 +610,7 @@ public class CommitMessageComponent {
 
 		if (amending)
 			return previousCommitMessage;
-		String calculatedCommitMessage = null;
+		String calculatedCommitMessage = EMPTY_STRING;
 
 		Set<IResource> resources = new HashSet<IResource>();
 		for (String path : paths) {
@@ -617,40 +619,43 @@ public class CommitMessageComponent {
 				resources.add(file.getProject());
 		}
 		try {
-			ICommitMessageProvider messageProvider = getCommitMessageProvider();
-			if (messageProvider != null) {
-				IResource[] resourcesArray = resources
-						.toArray(new IResource[0]);
-				calculatedCommitMessage = messageProvider
-						.getMessage(resourcesArray);
+			List <ICommitMessageProvider> messageProviders = getCommitMessageProviders();
+			for (ICommitMessageProvider messageProvider : messageProviders) {
+				if (messageProvider != null) {
+					IResource[] resourcesArray = resources
+							.toArray(new IResource[0]);
+					calculatedCommitMessage = calculatedCommitMessage+System.getProperty("line.separator") //$NON-NLS-1$
+							+(messageProvider.getMessage(resourcesArray).trim());
+				}
 			}
 		} catch (CoreException coreException) {
 			Activator.error(coreException.getLocalizedMessage(), coreException);
 		}
-		if (calculatedCommitMessage != null)
-			return calculatedCommitMessage;
-		else
-			return EMPTY_STRING;
+		return calculatedCommitMessage;
 	}
 
-	private ICommitMessageProvider getCommitMessageProvider()
+	private List<ICommitMessageProvider> getCommitMessageProviders()
 			throws CoreException {
+		List<ICommitMessageProvider> providers = new ArrayList<ICommitMessageProvider>();
+
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		IConfigurationElement[] config = registry
 				.getConfigurationElementsFor(COMMIT_MESSAGE_PROVIDER_ID);
-		if (config.length > 0) {
+		for (int i = 0; i < config.length; i++) {
 			Object provider;
-			provider = config[0].createExecutableExtension("class");//$NON-NLS-1$
+			provider = config[i].createExecutableExtension("class");//$NON-NLS-1$
 			if (provider instanceof ICommitMessageProvider) {
-				return (ICommitMessageProvider) provider;
+				providers.add((ICommitMessageProvider) provider);
 			} else {
 				Activator.logError(
 						UIText.CommitDialog_WrongTypeOfCommitMessageProvider,
 						null);
 			}
 		}
-		return null;
+		return providers;
 	}
+
+
 
 	private void saveOriginalChangeId() {
 		int changeIdOffset = findOffsetOfChangeIdLine(previousCommitMessage);
