@@ -259,8 +259,8 @@ public class CommitFileDiffViewer extends TableViewer {
 			}
 		};
 
-		mgr.add(open);
 		mgr.add(openWorkingTreeVersion);
+		mgr.add(open);
 		mgr.add(compare);
 		mgr.add(compareWorkingTreeVersion);
 		mgr.add(blame);
