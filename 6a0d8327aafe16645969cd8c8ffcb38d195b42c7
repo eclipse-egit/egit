@@ -16,6 +16,24 @@
       "revId": "6a0d8327aafe16645969cd8c8ffcb38d195b42c7",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7rA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1312,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2012-12-21T06:39:30Z",
+      "side": 1,
+      "message": "Open Workspace Version sounds ok",
+      "parentUuid": "AABOJn///u4\u003d",
+      "revId": "6a0d8327aafe16645969cd8c8ffcb38d195b42c7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
