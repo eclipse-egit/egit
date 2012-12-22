@@ -419,18 +419,18 @@ public class TestRepository {
 		}
 	}
 
-	public boolean inIndex(String path) throws IOException {
-		return getDirCacheEntry(path) != null;
+	public boolean inIndex(String absolutePath) throws IOException {
+		return getDirCacheEntry(absolutePath) != null;
 	}
 
-	public boolean removedFromIndex(String path) throws IOException {
-		DirCacheEntry dc = getDirCacheEntry(path);
+	public boolean removedFromIndex(String absolutePath) throws IOException {
+		DirCacheEntry dc = getDirCacheEntry(absolutePath);
 		if (dc == null)
 			return true;
 
 		Ref ref = repository.getRef(Constants.HEAD);
 		RevCommit c = new RevWalk(repository).parseCommit(ref.getObjectId());
-		TreeWalk tw = TreeWalk.forPath(repository, path, c.getTree());
+		TreeWalk tw = TreeWalk.forPath(repository, getRepoRelativePath(absolutePath), c.getTree());
 
 		return tw == null || dc.getObjectId().equals(tw.getObjectId(0));
 	}
