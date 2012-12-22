@@ -10,11 +10,14 @@
 package org.eclipse.egit.ui.internal;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jgit.lib.RefDatabase;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -50,6 +53,14 @@ public class ValidationUtils {
 						return NLS.bind(
 								UIText.ValidationUtils_RefAlreadyExistsMessage,
 								testFor);
+					RefDatabase refDatabase = repo.getRefDatabase();
+					List<String> conflictingNames = refDatabase.getConflictingNames(testFor);
+					if (!conflictingNames.isEmpty()) {
+						String joined = StringUtils.join(conflictingNames, ", "); //$NON-NLS-1$
+						return NLS.bind(
+								UIText.ValidationUtils_RefNameConflictsWithExistingMessage,
+								joined);
+					}
 				} catch (IOException e1) {
 					Activator.logError(NLS.bind(
 							UIText.ValidationUtils_CanNotResolveRefMessage,
