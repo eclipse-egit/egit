@@ -192,6 +192,24 @@
       "revId": "0ce4a64c922308b63a1f89a7fc9f91dbd17544bd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7dY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 15
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-12-23T12:57:17Z",
+      "side": 1,
+      "message": "Looks like a trailing space was removed here.",
+      "parentUuid": "AABOJ3//7d4\u003d",
+      "revId": "0ce4a64c922308b63a1f89a7fc9f91dbd17544bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
