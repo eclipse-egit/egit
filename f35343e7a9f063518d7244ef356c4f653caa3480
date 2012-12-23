@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOJ3//7dM\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitResourceDeltaTestHelper.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-12-23T13:32:10Z",
+      "side": 1,
+      "message": "Please use assertThat, gives a much better message in case of failure:\n\n    assertThat(changedResources, Matchers.hasItem(root.findMember(file)));",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7dQ\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitResourceDeltaTestHelper.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-12-23T13:32:10Z",
+      "side": 1,
+      "message": "Please use assertEquals here, gives a better assertion failure message.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7dI\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitResourceDeltaTestHelper.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-12-23T13:32:10Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be used anywhere, please remove it. With the changes from above comments, the assertion errors are doing the job of helping with \"debugging\".",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//7eE\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/LinkedResourcesTest.java",
         "patchSetId": 16
@@ -13,6 +64,142 @@
       "writtenOn": "2012-12-23T01:47:51Z",
       "side": 1,
       "message": "reformatted to make this file follow standard formatting settings",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7dE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-12-23T13:32:10Z",
+      "side": 1,
+      "message": "This variant is not used anywhere. I\u0027d prefer to only introduce it when it\u0027s actually needed from somewhere.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7dA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-12-23T13:32:10Z",
+      "side": 1,
+      "message": "Why is this changed? Before, this action worked on multiple repositories. With this change, it no longer does.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7c8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/IgnoreActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-12-23T13:32:10Z",
+      "side": 1,
+      "message": "This makes the action no longer work on multiple repositories. I\u0027d prefer not to regress here.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7c4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/NoAssumeUnchangedActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-12-23T13:32:10Z",
+      "side": 1,
+      "message": "This is also a regression that makes the action no longer work for multiple repositories.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7c0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RemoveFromIndexActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-12-23T13:32:10Z",
+      "side": 1,
+      "message": "This also regresses in that it no longer works for multiple repositories.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7cw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-12-23T13:32:10Z",
+      "side": 1,
+      "message": "This seems to be from a previous revision of this patch, it has no callers -\u003e please remove.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7cs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWorkspaceActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-12-23T13:32:10Z",
+      "side": 1,
+      "message": "This is also a regression, it no longer works for multiple repositories. Note that there is extra code below which handles multiple repositories.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7co\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/UntrackActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2012-12-23T13:32:10Z",
+      "side": 1,
+      "message": "Same here.",
       "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
