@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3//7eE\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/LinkedResourcesTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-23T01:47:51Z",
+      "side": 1,
+      "message": "reformatted to make this file follow standard formatting settings",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
