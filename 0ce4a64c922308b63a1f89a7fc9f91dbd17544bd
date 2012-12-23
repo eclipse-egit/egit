@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//7eM\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitResourceDeltaTestHelper.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-23T01:48:08Z",
+      "side": 1,
+      "message": "done, reformatted this file since it was not using project formatting settings",
+      "parentUuid": "AABOJ3//7ew\u003d",
+      "revId": "0ce4a64c922308b63a1f89a7fc9f91dbd17544bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//7es\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitResourceDeltaTestHelper.java",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2012-12-23T01:28:36Z",
       "side": 1,
       "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "0ce4a64c922308b63a1f89a7fc9f91dbd17544bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7eI\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitResourceDeltaTestHelper.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-23T01:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJ3//7es\u003d",
       "revId": "0ce4a64c922308b63a1f89a7fc9f91dbd17544bd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//7eA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-23T01:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJ3//7eo\u003d",
+      "revId": "0ce4a64c922308b63a1f89a7fc9f91dbd17544bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//7ek\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
         "patchSetId": 15
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//7d8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-23T01:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJ3//7ek\u003d",
+      "revId": "0ce4a64c922308b63a1f89a7fc9f91dbd17544bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//7eg\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 15
@@ -81,6 +153,24 @@
       "writtenOn": "2012-12-23T01:28:36Z",
       "side": 1,
       "message": "why was this touched and what\u0027s the difference here ?",
+      "revId": "0ce4a64c922308b63a1f89a7fc9f91dbd17544bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7d4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 15
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-23T01:48:08Z",
+      "side": 1,
+      "message": "looks like a Gerrit problem ?",
+      "parentUuid": "AABOJ3//7eg\u003d",
       "revId": "0ce4a64c922308b63a1f89a7fc9f91dbd17544bd",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
