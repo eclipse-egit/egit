@@ -16,6 +16,24 @@
       "revId": "af2dcfb84d777184684da871372272d92170bb7e",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7Y8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-23T23:56:03Z",
+      "side": 1,
+      "message": "Workspace.isOpen() looks like the right method but it is not exposed (package is x-internal). Also the workspace could close right after we asked if it is open and using a workspace lock doesn\u0027t look like the right thing to do here.",
+      "parentUuid": "AABOJ3//7aQ\u003d",
+      "revId": "af2dcfb84d777184684da871372272d92170bb7e",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
