@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3//7Yw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ValidationUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2012-12-24T00:06:07Z",
+      "side": 1,
+      "message": "could we also show the conflicting ref ?",
+      "revId": "13fae951eeda632387d7259a322253bfc53a56ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
