@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//7UE\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitResourceDeltaTestHelper.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-24T17:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//7dQ\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitResourceDeltaTestHelper.java",
         "patchSetId": 16
@@ -30,6 +47,23 @@
       "writtenOn": "2012-12-23T13:32:10Z",
       "side": 1,
       "message": "Please use assertEquals here, gives a better assertion failure message.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7UA\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitResourceDeltaTestHelper.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-24T17:49:02Z",
+      "side": 1,
+      "message": "Done",
       "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +87,23 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//7T8\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitResourceDeltaTestHelper.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-24T17:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//7eE\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/LinkedResourcesTest.java",
         "patchSetId": 16
@@ -64,6 +115,23 @@
       "writtenOn": "2012-12-23T01:47:51Z",
       "side": 1,
       "message": "reformatted to make this file follow standard formatting settings",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7T4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-24T17:49:02Z",
+      "side": 1,
+      "message": "It\u0027s used in the previous method... Did you mean to merge both methods?",
       "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +189,40 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//7Ts\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/IgnoreActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-24T17:49:02Z",
+      "side": 1,
+      "message": "Actually I had to make the underlying operation able to handle linked resources that point to a file that does not map to a git repo.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7T0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/IgnoreActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-24T17:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//7c4\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/NoAssumeUnchangedActionHandler.java",
         "patchSetId": 16
@@ -138,6 +240,23 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//7Tw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/NoAssumeUnchangedActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-24T17:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//7c0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RemoveFromIndexActionHandler.java",
         "patchSetId": 16
@@ -149,6 +268,23 @@
       "writtenOn": "2012-12-23T13:32:10Z",
       "side": 1,
       "message": "This also regresses in that it no longer works for multiple repositories.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7To\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RemoveFromIndexActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-24T17:49:02Z",
+      "side": 1,
+      "message": "Done",
       "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -189,6 +325,23 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//7Tk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/SynchronizeWorkspaceActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-24T17:49:02Z",
+      "side": 1,
+      "message": "Done, but had to amend the code to ignore linked resources that do not map to a repo.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//7co\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/UntrackActionHandler.java",
         "patchSetId": 16
@@ -200,6 +353,23 @@
       "writtenOn": "2012-12-23T13:32:10Z",
       "side": 1,
       "message": "Same here.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7Tg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/UntrackActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-24T17:49:02Z",
+      "side": 1,
+      "message": "Done",
       "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
