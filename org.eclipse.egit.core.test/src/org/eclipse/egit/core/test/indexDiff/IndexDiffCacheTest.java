@@ -184,11 +184,11 @@ public class IndexDiffCacheTest extends GitTestCase {
 
 	private IndexDiffData waitForListenerCalled() throws InterruptedException {
 		long time = 0;
-		while (!listenerCalled.get() && time < 10000) {
-			Thread.sleep(1);
-			time++;
+		while (!listenerCalled.get() && time < 60000) {
+			Thread.sleep(100);
+			time += 100;
 		}
-		assertTrue("indexDiffChanged was not called", listenerCalled.get());
+		assertTrue("indexDiffChanged was not called after " + time + " ms", listenerCalled.get());
 		listenerCalled.set(false);
 		return indexDiffDataResult.get();
 	}
