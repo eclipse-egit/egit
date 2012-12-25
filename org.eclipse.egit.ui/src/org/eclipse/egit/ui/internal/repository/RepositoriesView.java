@@ -53,6 +53,8 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNodeType;
 import org.eclipse.egit.ui.internal.repository.tree.StashedCommitNode;
 import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -234,9 +236,14 @@ public class RepositoriesView extends CommonNavigator {
 		emptyArea = new Composite(parent, SWT.NONE);
 		emptyArea.setBackgroundMode(SWT.INHERIT_FORCE);
 		MenuManager manager = new MenuManager();
+		manager.addMenuListener(new IMenuListener() {
+			public void menuAboutToShow(IMenuManager m) {
+				getNavigatorActionService().fillContextMenu(m);
+			}
+		});
+		getSite().registerContextMenu(manager, getCommonViewer());
 		Menu menu = manager.createContextMenu(emptyArea);
 		emptyArea.setMenu(menu);
-		getSite().registerContextMenu(manager, getCommonViewer());
 		GridLayoutFactory.fillDefaults().applyTo(emptyArea);
 		Composite infoArea = new Composite(emptyArea, SWT.NONE);
 		infoArea.setMenu(menu);
