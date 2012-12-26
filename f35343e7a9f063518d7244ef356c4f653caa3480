@@ -172,6 +172,57 @@
     },
     {
       "key": {
+        "uuid": "AABOJ3//7Qs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-26T15:50:17Z",
+      "side": 1,
+      "message": "I finally removed the throwing of a CoreException in the corresponding DiscardChangeOperation.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7Qw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-26T15:50:17Z",
+      "side": 1,
+      "message": "Actually DiscardChangesOperation will throw an exception if a resource is without a repo, which could happen for a linked resource. So either we change the operation to not throw an exception, or we disable this handler when a linked resource is selected.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7TE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/DiscardChangesActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-26T15:50:17Z",
+      "side": 1,
+      "message": "Actually in case of a linked resource pointing to a file not in any repo, the underlying operation will probably NPE... Need more time to prevent this, right now it\u0027s Xmas eve...",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//7c8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/IgnoreActionHandler.java",
         "patchSetId": 16
@@ -319,6 +370,23 @@
       "writtenOn": "2012-12-24T18:39:33Z",
       "side": 1,
       "message": "Actually I forgot to remove this in my last patch set. I\u0027m fine removing it, will do it in the next patch set.",
+      "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//7Qo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RepositoryActionHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2012-12-26T15:50:17Z",
+      "side": 1,
+      "message": "Done",
       "revId": "f35343e7a9f063518d7244ef356c4f653caa3480",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
