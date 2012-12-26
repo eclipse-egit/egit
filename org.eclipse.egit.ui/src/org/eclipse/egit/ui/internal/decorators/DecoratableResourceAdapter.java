@@ -18,6 +18,7 @@ package org.eclipse.egit.ui.internal.decorators;
 
 import static org.eclipse.jgit.lib.Repository.stripWorkDir;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,6 +28,8 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.util.FS;
 
 class DecoratableResourceAdapter extends DecoratableResource {
 
@@ -60,21 +63,26 @@ class DecoratableResourceAdapter extends DecoratableResource {
 			if (repository == null)
 				return;
 
-			switch (resource.getType()) {
-			case IResource.FILE:
+			File file = resource.getLocation().toFile();
+			if (FS.DETECTED.isSymLink(file))
 				extractResourceProperties();
-				break;
-			case IResource.PROJECT:
-				// We only need this very expensive info for project decoration
-				repositoryName = DecoratableResourceHelper
-						.getRepositoryName(repository);
-				branch = DecoratableResourceHelper.getShortBranch(repository);
-				branchStatus = DecoratableResourceHelper.getBranchStatus(repository);
-				tracked = true;
-				//$FALL-THROUGH$
-			case IResource.FOLDER:
-				extractContainerProperties();
-				break;
+			else {
+				switch (resource.getType()) {
+				case IResource.FILE:
+					extractResourceProperties();
+					break;
+				case IResource.PROJECT:
+					// We only need this very expensive info for project decoration
+					repositoryName = DecoratableResourceHelper
+							.getRepositoryName(repository);
+					branch = DecoratableResourceHelper.getShortBranch(repository);
+					branchStatus = DecoratableResourceHelper.getBranchStatus(repository);
+					tracked = true;
+					//$FALL-THROUGH$
+				case IResource.FOLDER:
+					extractContainerProperties();
+					break;
+				}
 			}
 		} finally {
 			if (trace)
@@ -99,8 +107,21 @@ class DecoratableResourceAdapter extends DecoratableResource {
 		ignored = ignoredFiles.contains(repoRelativePath)
 				|| containsPrefixPath(ignoredFiles, repoRelativePath);
 		Set<String> untracked = indexDiffData.getUntracked();
-		tracked = !untracked.contains(repoRelativePath) && !ignored;
-
+		if (!untracked.contains(repoRelativePath) && !ignored) {
+			if (indexDiffData.getAdded().contains(repoRelativePath))
+				tracked = true;
+			else {
+				try {
+					TreeWalk tw = TreeWalk.forPath(repository, repoRelativePath, repository.resolve("HEAD^{tree}")); //$NON-NLS-1$
+					if (tw == null)
+						tracked = false;
+					else
+						tracked = true;
+				} catch (Exception e) {
+					tracked = false;
+				}
+			}
+		}
 		Set<String> added = indexDiffData.getAdded();
 		Set<String> removed = indexDiffData.getRemoved();
 		Set<String> changed = indexDiffData.getChanged();
