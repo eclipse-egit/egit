@@ -9,6 +9,7 @@
 
 package org.eclipse.egit.core;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -269,27 +270,39 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 			rsrc = f;
 			this.hasInheritedResourceFilters = hasInheritedResourceFilters;
 
-			switch (f.getType()) {
-			case IResource.FILE:
-				if (FS.DETECTED.supportsExecute()
-						&& FS.DETECTED.canExecute(asFile()))
-					mode = FileMode.EXECUTABLE_FILE;
-				else
-					mode = FileMode.REGULAR_FILE;
-				break;
-			case IResource.PROJECT:
-			case IResource.FOLDER: {
-				final IContainer c = (IContainer) f;
-				if (c.findMember(Constants.DOT_GIT) != null)
-					mode = FileMode.GITLINK;
-				else
-					mode = FileMode.TREE;
-				break;
-			}
-			default:
+			FileMode mode = null;
+			File file = asFile();
+			try {
+				if (FS.DETECTED.supportsSymlinks()
+						&& FS.DETECTED.isSymLink(file))
+					mode = FileMode.SYMLINK;
+				else {
+					switch (f.getType()) {
+					case IResource.FILE:
+						if (FS.DETECTED.supportsExecute()
+									&& FS.DETECTED.canExecute(file))
+								mode = FileMode.EXECUTABLE_FILE;
+							else
+								mode = FileMode.REGULAR_FILE;
+						break;
+					case IResource.PROJECT:
+					case IResource.FOLDER: {
+						final IContainer c = (IContainer) f;
+						if (c.findMember(Constants.DOT_GIT) != null)
+							mode = FileMode.GITLINK;
+						else
+							mode = FileMode.TREE;
+						break;
+					}
+					default:
+						mode = FileMode.MISSING;
+						break;
+					}
+				}
+			} catch (IOException e) {
 				mode = FileMode.MISSING;
-				break;
 			}
+			this.mode = mode;
 		}
 
 		@Override
@@ -308,28 +321,44 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		@Override
 		public long getLength() {
 			if (length < 0)
-				if (rsrc instanceof IFile)
-					length = asFile().length();
-				else
+				if (rsrc instanceof IFile || mode == FileMode.SYMLINK) {
+					try {
+						length = FS.DETECTED.length(asFile());
+					} catch (IOException e) {
+						length = 0;
+					}
+				} else
 					length = 0;
 			return length;
 		}
 
 		@Override
 		public long getLastModified() {
+			if (mode == FileMode.SYMLINK) {
+				try {
+					return FS.DETECTED.lastModified(asFile());
+				} catch (IOException e) {
+					return 0;
+				}
+			}
 			return rsrc.getLocalTimeStamp();
 		}
 
 		@Override
 		public InputStream openInputStream() throws IOException {
-			if (rsrc.getType() == IResource.FILE)
-				try {
-					return ((IFile) rsrc).getContents(true);
-				} catch (CoreException err) {
-					final IOException ioe = new IOException(err.getMessage());
-					ioe.initCause(err);
-					throw ioe;
-				}
+			if (mode == FileMode.SYMLINK) {
+				return new ByteArrayInputStream(FS.DETECTED.readSymLink(
+						asFile()).getBytes(Constants.CHARACTER_ENCODING));
+			} else {
+				if (rsrc.getType() == IResource.FILE)
+					try {
+						return ((IFile) rsrc).getContents(true);
+					} catch (CoreException err) {
+						final IOException ioe = new IOException(err.getMessage());
+						ioe.initCause(err);
+						throw ioe;
+					}
+			}
 			throw new IOException("Not a regular file: " + rsrc);  //$NON-NLS-1$
 		}
 
@@ -343,7 +372,7 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		}
 
 		private File asFile() {
-			return ((IFile) rsrc).getLocation().toFile();
+			return rsrc.getLocation().toFile();
 		}
 	}
 
