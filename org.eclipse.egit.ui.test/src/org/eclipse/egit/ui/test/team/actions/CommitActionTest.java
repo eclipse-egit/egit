@@ -176,6 +176,8 @@ public class CommitActionTest extends LocalRepositoryTestCase {
 		setTestFileContent(fileContent);
 		CommitDialogTester commitDialogTester = CommitDialogTester
 				.openCommitDialog(PROJ1);
+		commitDialogTester.setShowUntracked(false);
+
 		assertEquals("Wrong row count", 1, commitDialogTester.getRowCount());
 		assertTrue("Wrong file",
 				commitDialogTester.getEntryText(0).endsWith("test.txt"));
