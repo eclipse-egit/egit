@@ -141,29 +141,32 @@ public class SelectResetTypePage extends WizardPage {
 			}
 		}
 
-		RevCommit targetCommit = getLatestCommit(target);
+		boolean resetToSelf = current.equals(target);
+		if (!resetToSelf) {
+			RevCommit targetCommit = getLatestCommit(target);
 
-		Label targetLabel = new Label(displayArea, SWT.NONE);
-		targetLabel.setText(UIText.SelectResetTypePage_labelResettingTo);
-		targetLabel
-				.setToolTipText(UIText.SelectResetTypePage_tooltipResettingTo);
+			Label targetLabel = new Label(displayArea, SWT.NONE);
+			targetLabel.setText(UIText.SelectResetTypePage_labelResettingTo);
+			targetLabel
+					.setToolTipText(UIText.SelectResetTypePage_tooltipResettingTo);
 
-		CLabel targetValue = new CLabel(displayArea, SWT.NONE);
-		Image targetIcon = getIcon(target);
-		UIUtils.hookDisposal(targetValue, targetIcon);
-		targetValue.setImage(targetIcon);
-		targetValue.setText(Repository.shortenRefName(target));
+			CLabel targetValue = new CLabel(displayArea, SWT.NONE);
+			Image targetIcon = getIcon(target);
+			UIUtils.hookDisposal(targetValue, targetIcon);
+			targetValue.setImage(targetIcon);
+			targetValue.setText(Repository.shortenRefName(target));
 
-		if (targetCommit != null) {
-			if (isCommit(target))
-				targetValue.setText(formatCommit(targetCommit));
-			else {
-				new Label(displayArea, SWT.NONE);
-				CLabel commitLabel = new CLabel(displayArea, SWT.NONE);
-				Image commitIcon = UIIcons.CHANGESET.createImage();
-				UIUtils.hookDisposal(commitLabel, commitIcon);
-				commitLabel.setImage(commitIcon);
-				commitLabel.setText(formatCommit(targetCommit));
+			if (targetCommit != null) {
+				if (isCommit(target))
+					targetValue.setText(formatCommit(targetCommit));
+				else {
+					new Label(displayArea, SWT.NONE);
+					CLabel commitLabel = new CLabel(displayArea, SWT.NONE);
+					Image commitIcon = UIIcons.CHANGESET.createImage();
+					UIUtils.hookDisposal(commitLabel, commitIcon);
+					commitLabel.setImage(commitIcon);
+					commitLabel.setText(formatCommit(targetCommit));
+				}
 			}
 		}
 
@@ -173,18 +176,20 @@ public class SelectResetTypePage extends WizardPage {
 				.indent(0, 5).applyTo(g);
 		GridLayoutFactory.swtDefaults().applyTo(g);
 
-		Button soft = new Button(g, SWT.RADIO);
-		soft.setText(UIText.ResetTargetSelectionDialog_ResetTypeSoftButton);
-		soft.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				if (((Button) event.widget).getSelection())
-					resetType = ResetType.SOFT;
-			}
-		});
+		if (!resetToSelf) {
+			Button soft = new Button(g, SWT.RADIO);
+			soft.setText(UIText.ResetTargetSelectionDialog_ResetTypeSoftButton);
+			soft.addListener(SWT.Selection, new Listener() {
+				public void handleEvent(Event event) {
+					if (((Button) event.widget).getSelection())
+						resetType = ResetType.SOFT;
+				}
+			});
+		}
 
 		Button medium = new Button(g, SWT.RADIO);
 		medium.setSelection(true);
-		medium.setText(UIText.ResetTargetSelectionDialog_ResetTypeMixedButton);
+		medium.setText(resetToSelf ? UIText.ResetTargetSelectionDialog_ResetTypeHEADMixedButton : UIText.ResetTargetSelectionDialog_ResetTypeMixedButton);
 		medium.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				if (((Button) event.widget).getSelection())
@@ -193,7 +198,7 @@ public class SelectResetTypePage extends WizardPage {
 		});
 
 		Button hard = new Button(g, SWT.RADIO);
-		hard.setText(UIText.ResetTargetSelectionDialog_ResetTypeHardButton);
+		hard.setText(resetToSelf ? UIText.ResetTargetSelectionDialog_ResetTypeHEADHardButton : UIText.ResetTargetSelectionDialog_ResetTypeHardButton);
 		hard.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				if (((Button) event.widget).getSelection())
