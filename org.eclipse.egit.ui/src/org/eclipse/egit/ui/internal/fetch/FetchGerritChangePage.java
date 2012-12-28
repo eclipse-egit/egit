@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -56,6 +57,8 @@ import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -138,6 +141,19 @@ public class FetchGerritChangePage extends WizardPage {
 	}
 
 	public void createControl(Composite parent) {
+		Clipboard clipboard = new Clipboard(parent.getDisplay());
+		String clipText = (String) clipboard.getContents(TextTransfer
+				.getInstance());
+		final String pattern = "git fetch (\\w+:\\S+) (refs/changes/\\d+/\\d+/\\d+) && git (\\w+) FETCH_HEAD"; //$NON-NLS-1$
+		Matcher matcher = Pattern.compile(pattern).matcher(clipText);
+		String defaultUri = null;
+		String defaultCommand = null;
+		String defaultChange = null;
+		if (matcher.matches()) {
+			defaultUri = matcher.group(1);
+			defaultChange = matcher.group(2);
+			defaultCommand = matcher.group(3);
+		}
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(2, false));
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(main);
@@ -154,6 +170,8 @@ public class FetchGerritChangePage extends WizardPage {
 		new Label(main, SWT.NONE)
 				.setText(UIText.FetchGerritChangePage_ChangeLabel);
 		refText = new Text(main, SWT.BORDER);
+		if (defaultChange != null)
+			refText.setText(defaultChange);
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(refText);
 		addRefContentProposalToText(refText);
 
@@ -233,6 +251,8 @@ public class FetchGerritChangePage extends WizardPage {
 			}
 		});
 
+		if ("checkout".equals(defaultCommand)) //$NON-NLS-1$
+			checkout.setSelection(true);
 		warningAdditionalRefNotActive = new Composite(main, SWT.NONE);
 		GridDataFactory.fillDefaults().span(2, 1).grab(true, false)
 				.exclude(true).applyTo(warningAdditionalRefNotActive);
@@ -280,7 +300,10 @@ public class FetchGerritChangePage extends WizardPage {
 		}
 		for (String aUri : uris)
 			uriCombo.add(aUri);
-		selectLastUsedUri();
+		if (defaultUri != null)
+			uriCombo.setText(defaultUri);
+		else
+			selectLastUsedUri();
 		refText.setFocus();
 		Dialog.applyDialogFont(main);
 		setControl(main);
