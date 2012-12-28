@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            lightweight="true"
+            adaptable="true"
+            class="org.eclipse.egit.symlinkdecorator.SymlinkDecorator"
+			state="true"
+			location="TOP_LEFT"
+            id="org.eclipse.egit.symlinkdecorator.symlinkdecorator"
+            label="Symbolic links">
+            <enablement>
+              <objectClass name="org.eclipse.core.resources.mapping.ResourceMapping"/>
+            </enablement>
+      </decorator>
+   </extension>
+</plugin>
