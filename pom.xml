@@ -161,6 +161,8 @@
     <module>org.eclipse.egit.mylyn.ui.test</module>
 
     <module>org.eclipse.egit.source-feature</module>
+
+    <module>org.eclipse.egit.symlinkdecorator</module>
   </modules>
 
   <pluginRepositories>
