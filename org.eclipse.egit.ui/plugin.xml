@@ -3034,7 +3034,11 @@
                         value="1">
                   </count>
                   <iterate>
-                     <and>
+                    <or>
+                      <instanceof
+                             value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+                      </instanceof>
+                      <and>
                         <test
                               property="GitRepository.isSafe">
                         </test>
@@ -3045,11 +3049,9 @@
                            <instanceof
                                  value="org.eclipse.egit.ui.internal.repository.tree.TagNode">
                            </instanceof>
-                           <instanceof
-                                 value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
-                           </instanceof>
                         </or>
-                     </and>
+                      </and>
+                    </or>
                   </iterate>
                </and>
             </visibleWhen>
