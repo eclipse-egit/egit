@@ -41,6 +41,7 @@ import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.dircache.DirCacheIterator;
 import org.eclipse.jgit.events.IndexChangedEvent;
 import org.eclipse.jgit.events.IndexChangedListener;
@@ -210,7 +211,7 @@ public class IndexDiffCacheEntry {
 			try {
 				walk.addTree(new DirCacheIterator(oldIndex));
 				walk.addTree(new DirCacheIterator(currentIndex));
-				walk.setFilter(TreeFilter.ANY_DIFF);
+				walk.setFilter(new InterIndexDiffFilter());
 
 				while (walk.next()) {
 					if (walk.isSubtree())
@@ -230,6 +231,57 @@ public class IndexDiffCacheEntry {
 					CoreText.IndexDiffCacheEntry_errorCalculatingIndexDelta,
 					repository), ex);
 			scheduleReloadJob("Exception while calculating index delta, doing full reload instead"); //$NON-NLS-1$
+		}
+	}
+
+	/**
+	 * A filter for extracting changes between two versions of the dirache. In
+	 * addition to what {@link TreeFilter#ANY_DIFF} would do, it also detect
+	 * changes that will affect decorations, currently the assume-value
+	 * (CE_VALID) bit.
+	 */
+	private static final class InterIndexDiffFilter extends TreeFilter {
+		private static final int baseTree = 0;
+		private static final int newTree = 1;
+
+		@Override
+		public boolean include(final TreeWalk walker) {
+			final int n = walker.getTreeCount();
+			if (n == 1) // Assume they meant difference to empty tree.
+				return true;
+
+			final int m = walker.getRawMode(baseTree);
+			for (int i = 1; i < n; i++) {
+				if (walker.getRawMode(i) != m || !walker.idEqual(i, baseTree))
+					return true;
+				DirCacheIterator baseDirCache = walker.getTree(baseTree, DirCacheIterator.class);
+				DirCacheIterator newDirCache = walker.getTree(newTree, DirCacheIterator.class);
+				if (baseDirCache != null) {
+					if (newDirCache != null) {
+						DirCacheEntry baseDci = baseDirCache.getDirCacheEntry();
+						DirCacheEntry newDci = newDirCache.getDirCacheEntry();
+						if (baseDci != null && newDci != null)
+							if (baseDci.isAssumeValid() != newDci.isAssumeValid())
+								return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		@Override
+		public boolean shouldBeRecursive() {
+			return false;
+		}
+
+		@Override
+		public TreeFilter clone() {
+			return this;
+		}
+
+		@Override
+		public String toString() {
+			return "INTERINDEX_DIFF"; //$NON-NLS-1$
 		}
 	}
 
