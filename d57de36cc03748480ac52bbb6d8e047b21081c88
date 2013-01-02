@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOJ3//6vM\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-02T23:42:02Z",
+      "side": 1,
+      "message": "s/affect/affects/",
+      "revId": "d57de36cc03748480ac52bbb6d8e047b21081c88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//6vQ\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-02T23:42:02Z",
+      "side": 1,
+      "message": "this sentence seems incomplete",
+      "revId": "d57de36cc03748480ac52bbb6d8e047b21081c88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//6vk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-02T23:42:02Z",
+      "side": 1,
+      "message": "s/detect/detects/",
+      "revId": "d57de36cc03748480ac52bbb6d8e047b21081c88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//6vg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-02T23:42:02Z",
+      "side": 1,
+      "message": "s/assume-value/assume-valid/",
+      "revId": "d57de36cc03748480ac52bbb6d8e047b21081c88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOJ3//6vY\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-02T23:42:02Z",
+      "side": 1,
+      "message": "I think this way it would be easier to read:\n\n if (baseDirCache !\u003d null \u0026\u0026 newDirCache !\u003d null) {\n ...",
+      "revId": "d57de36cc03748480ac52bbb6d8e047b21081c88",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
