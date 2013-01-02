@@ -51,8 +51,8 @@ import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
+import org.eclipse.jgit.treewalk.filter.InterIndexDiffFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -210,7 +210,7 @@ public class IndexDiffCacheEntry {
 			try {
 				walk.addTree(new DirCacheIterator(oldIndex));
 				walk.addTree(new DirCacheIterator(currentIndex));
-				walk.setFilter(TreeFilter.ANY_DIFF);
+				walk.setFilter(new InterIndexDiffFilter());
 
 				while (walk.next()) {
 					if (walk.isSubtree())
