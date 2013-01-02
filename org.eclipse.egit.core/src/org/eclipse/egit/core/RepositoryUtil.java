@@ -37,6 +37,9 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.storage.file.CheckoutEntry;
+import org.eclipse.jgit.storage.file.ReflogEntry;
+import org.eclipse.jgit.storage.file.ReflogReader;
 import org.eclipse.jgit.util.FS;
 import org.osgi.service.prefs.BackingStoreException;
 
@@ -104,6 +107,27 @@ public class RepositoryUtil {
 
 			if (!ObjectId.isId(commitId)) {
 				return null;
+			}
+
+			try {
+				ReflogReader reflogReader = repository.getReflogReader(Constants.HEAD);
+				if (reflogReader != null) {
+					List<ReflogEntry> lastEntry = reflogReader.getReverseEntries();
+					for (ReflogEntry entry : lastEntry) {
+						if (entry.getNewId().name().equals(commitId)) {
+							CheckoutEntry checkoutEntry = entry.parseCheckout();
+							if (checkoutEntry != null) {
+								Ref ref = repository.getRef(checkoutEntry.getToBranch());
+								if (ref != null)
+									ref = repository.peel(ref);
+								if (ref != null && ref.getPeeledObjectId().getName().equals(commitId))
+									return checkoutEntry.getToBranch();
+							}
+						}
+					}
+				}
+			} catch (IOException e) {
+				// ignore here
 			}
 
 			Map<String, String> cacheEntry = commitMappingCache.get(repository
