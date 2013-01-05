@@ -16,6 +16,24 @@
       "revId": "a3f82d37eb964abc4b7fec506a68924253f18c20",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOKn///94\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-01-05T16:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOJ3//7jI\u003d",
+      "revId": "a3f82d37eb964abc4b7fec506a68924253f18c20",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
