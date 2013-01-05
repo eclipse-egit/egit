@@ -3049,7 +3049,7 @@
                   <iterate>
                      <and>
                         <test
-                              property="GitRepository.isSafe">
+                              property="GitRepository.canResetHead">
                         </test>
                         <or>
                            <instanceof
