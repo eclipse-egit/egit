@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOKn///7Y\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/AbstractSynchronizeViewTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-05T18:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOKn///7s\u003d",
+      "revId": "029d3d4a96ce958ab1b9c56c5200c619ce3e588c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOKn///7o\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2013-01-05T18:45:42Z",
       "side": 1,
       "message": "s/2010, 2013/2010-2013/",
+      "revId": "029d3d4a96ce958ab1b9c56c5200c619ce3e588c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOKn///7U\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-05T18:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOKn///7o\u003d",
       "revId": "029d3d4a96ce958ab1b9c56c5200c619ce3e588c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOKn///7Q\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-05T18:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOKn///74\u003d",
+      "revId": "029d3d4a96ce958ab1b9c56c5200c619ce3e588c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOKn///70\u003d",
         "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2013-01-05T18:45:42Z",
       "side": 1,
       "message": "mark this as a TODO",
+      "revId": "029d3d4a96ce958ab1b9c56c5200c619ce3e588c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOKn///7M\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/SynchronizeViewGitChangeSetModelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-05T18:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOKn///70\u003d",
       "revId": "029d3d4a96ce958ab1b9c56c5200c619ce3e588c",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
