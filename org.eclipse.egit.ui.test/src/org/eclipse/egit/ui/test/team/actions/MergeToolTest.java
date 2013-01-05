@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,10 +16,12 @@ import java.io.File;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.egit.core.JobFamilies;
 import org.eclipse.egit.core.op.MergeOperation;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
+import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
@@ -69,6 +71,8 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 		assertThat(mergeResult.getMergeStatus(), is(MergeStatus.CONFLICTING));
 		assertThat(mergeResult.getConflicts().keySet(),
 				hasItem(path.toString()));
+
+		TestUtil.joinJobs(JobFamilies.INDEX_DIFF_CACHE_UPDATE);
 
 		SWTBotTree packageExplorer = bot
 				.viewById("org.eclipse.jdt.ui.PackageExplorer").bot().tree();
