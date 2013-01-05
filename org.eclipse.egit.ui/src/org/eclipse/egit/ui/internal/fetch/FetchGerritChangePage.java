@@ -187,7 +187,6 @@ public class FetchGerritChangePage extends WizardPage {
 		createBranch = new Button(checkoutGroup, SWT.RADIO);
 		GridDataFactory.fillDefaults().span(2, 1).applyTo(createBranch);
 		createBranch.setText(UIText.FetchGerritChangePage_LocalBranchRadio);
-		createBranch.setSelection(true);
 		createBranch.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -255,6 +254,9 @@ public class FetchGerritChangePage extends WizardPage {
 
 		if ("checkout".equals(defaultCommand)) //$NON-NLS-1$
 			checkout.setSelection(true);
+		else
+			createBranch.setSelection(true);
+
 		warningAdditionalRefNotActive = new Composite(main, SWT.NONE);
 		GridDataFactory.fillDefaults().span(2, 1).grab(true, false)
 				.exclude(true).applyTo(warningAdditionalRefNotActive);
@@ -309,7 +311,7 @@ public class FetchGerritChangePage extends WizardPage {
 		refText.setFocus();
 		Dialog.applyDialogFont(main);
 		setControl(main);
-		setPageComplete(false);
+		checkPage();
 	}
 
 
