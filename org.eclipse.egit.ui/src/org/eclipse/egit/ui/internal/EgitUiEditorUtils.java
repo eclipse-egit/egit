@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2000, 2008 IBM Corporation and others.
+ * Copyright (c) 2000, 2013 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,13 +18,12 @@ import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IStorage;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.content.IContentType;
+import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.util.OpenStrategy;
@@ -139,11 +138,10 @@ public class EgitUiEditorUtils {
 	public static void openEditor(File file, IWorkbenchPage page) {
 		if (!file.exists())
 			return;
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IFile[] files = root.findFilesForLocationURI(file.toURI());
-		if (files.length > 0) {
+		IFile fileResource = ResourceUtil.getFileForLocation(new Path(file.getAbsolutePath()));
+		if (fileResource != null) {
 			try {
-				IDE.openEditor(page, files[0], OpenStrategy.activateOnOpen());
+				IDE.openEditor(page, fileResource, OpenStrategy.activateOnOpen());
 			} catch (PartInitException e) {
 				Activator.handleError(UIText.EgitUiEditorUtils_openFailed, e,
 						true);

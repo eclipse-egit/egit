@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2011, Jens Baumgart <jens.baumgart@sap.com>
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,11 +9,13 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.util;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -55,13 +57,16 @@ public class ResourceUtil {
 	 */
 	public static IFile getFileForLocation(IPath location) {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		return root.getFileForLocation(location);
+		URI uri = URIUtil.toURI(location);
+		IFile[] files = root.findFilesForLocationURI(uri);
+		for (IFile file : files)
+			if (file.exists())
+				return file;
+		return null;
 	}
 
 	/**
-	 * Get the {@link IFile} corresponding to the arguments, using
-	 * {@link IWorkspaceRoot#getFileForLocation(org.eclipse.core.runtime.IPath)}
-	 * .
+	 * Get the {@link IFile} corresponding to the arguments if it exists.
 	 *
 	 * @param repository
 	 *            the repository of the file
@@ -71,9 +76,8 @@ public class ResourceUtil {
 	 */
 	public static IFile getFileForLocation(Repository repository,
 			String repoRelativePath) {
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IPath path = new Path(repository.getWorkTree().getAbsolutePath()).append(repoRelativePath);
-		return root.getFileForLocation(path);
+		return getFileForLocation(path);
 	}
 
 	/**
