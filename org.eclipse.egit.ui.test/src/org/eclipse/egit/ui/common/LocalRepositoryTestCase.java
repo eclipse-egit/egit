@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2012 SAP AG and others.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -180,10 +179,9 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 				prj.delete(false, false, null);
 			else if (prj.getName().equals(PROJ2)) {
 				// delete the .project on disk
-				FileUtils.delete(EFS.getStore(
-						prj.getFile(".project").getLocationURI()).toLocalFile(
-						EFS.NONE, null), FileUtils.RETRY);
+				File dotProject = prj.getLocation().append(".project").toFile();
 				prj.delete(false, false, null);
+				FileUtils.delete(dotProject, FileUtils.RETRY);
 			}
 
 	}
