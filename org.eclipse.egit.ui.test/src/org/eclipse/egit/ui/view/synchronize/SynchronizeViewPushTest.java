@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -64,7 +64,6 @@ public class SynchronizeViewPushTest extends AbstractSynchronizeViewTest {
 
 		String trackingBranch = Constants.R_REMOTES + "origin/master";
 		launchSynchronization(Constants.HEAD, trackingBranch, false);
-		setGitChangeSetPresentationModel();
 
 		SWTBotView viewBot = bot.viewByTitle("Synchronize");
 		SWTBotToolbarButton pushButton = viewBot.toolbarButton(UIText.GitActionContributor_Push);
