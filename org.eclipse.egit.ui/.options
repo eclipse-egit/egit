@@ -12,4 +12,5 @@ org.eclipse.egit.ui/debug/ui/decoration = false
 org.eclipse.egit.ui/debug/quickdiff = false
 # Trace location for RepositoryChangeScanner
 org.eclipse.egit.ui/debug/repochangescanner = false
-
+# Trace location for properties testers
+org.eclipse.egit.ui/debug/ui/propertiestesters = false
