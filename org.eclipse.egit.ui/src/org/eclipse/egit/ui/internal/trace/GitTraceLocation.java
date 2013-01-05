@@ -30,8 +30,9 @@ public enum GitTraceLocation implements ITraceLocation {
 	/** DECORATION */
 	DECORATION("/debug/ui/decoration"), //$NON-NLS-1$
 	/** QUICKDIFF */
-	QUICKDIFF("/debug/quickdiff"); //$NON-NLS-1$
-
+	QUICKDIFF("/debug/quickdiff"), //$NON-NLS-1$
+	/** Properties testers */
+	PROPERTIESTESTER("/debug/ui/propertiestesters"); //$NON-NLS-1$
 	/**
 	 * Initialize the locations
 	 *

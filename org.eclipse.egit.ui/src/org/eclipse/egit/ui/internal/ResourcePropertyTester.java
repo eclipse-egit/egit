@@ -16,6 +16,7 @@ import static org.eclipse.jgit.lib.RepositoryState.SAFE;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.trace.GitTraceLocation;
 
 /**
  * Resource-based property tester
@@ -23,6 +24,18 @@ import org.eclipse.egit.core.project.RepositoryMapping;
 public class ResourcePropertyTester extends PropertyTester {
 
 	public boolean test(Object receiver, String property, Object[] args,
+			Object expectedValue) {
+		boolean value = internalTest(receiver, property, args, expectedValue);
+		boolean trace = GitTraceLocation.PROPERTIESTESTER.isActive();
+		if (trace)
+			GitTraceLocation
+					.getTrace()
+					.trace(GitTraceLocation.PROPERTIESTESTER.getLocation(),
+							"prop "	+ property + " of " + receiver + " = " + value + ", expected = " + expectedValue); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return value;
+	}
+
+	private boolean internalTest(Object receiver, String property, Object[] args,
 			Object expectedValue) {
 		if (!(receiver instanceof IResource))
 			return false;
