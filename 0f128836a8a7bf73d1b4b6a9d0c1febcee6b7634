@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOK3///9c\u003d",
+        "filename": "org.eclipse.egit.core.test/.settings/org.eclipse.pde.core.prefs",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-01-07T00:19:56Z",
+      "side": 1,
+      "message": "Honestly, I don\u0027t know, but eclipse creates it this way by default",
+      "parentUuid": "AABOJ3//7Zs\u003d",
+      "revId": "0f128836a8a7bf73d1b4b6a9d0c1febcee6b7634",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//7Z0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIText.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2012-12-23T18:54:29Z",
       "side": 1,
       "message": "What\u0027s this :)?",
+      "revId": "0f128836a8a7bf73d1b4b6a9d0c1febcee6b7634",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOK3///9Q\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/UIText.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-01-07T00:19:56Z",
+      "side": 1,
+      "message": "My fault or merge/rebase bug.\nDone.",
+      "parentUuid": "AABOJ3//7Z0\u003d",
       "revId": "0f128836a8a7bf73d1b4b6a9d0c1febcee6b7634",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
