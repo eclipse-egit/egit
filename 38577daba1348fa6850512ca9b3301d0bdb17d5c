@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOLX///3A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-01-08T16:22:29Z",
+      "side": 1,
+      "message": "The Mnemonic is missing. What about \u0027T\u0027?",
+      "revId": "38577daba1348fa6850512ca9b3301d0bdb17d5c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
