@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOLX///wM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-09T00:12:07Z",
+      "side": 1,
+      "message": "- why isn\u0027t this logic implemented in calculateCommitMessage() ?\n- I think at the moment findOffsetofChangeIdLine() is incorrectly implemented since it would also accept a change-id line which isn\u0027t in the footer but an earlier paragraph, I\u0027d use RevCommit.getFooterLines() to extract footers.\n- also it could make sense to move findOffsetofChangeIdLine() to jgit",
+      "revId": "e77ca6862dfe25162c121ebb27f3d67641318563",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
