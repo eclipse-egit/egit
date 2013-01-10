@@ -57,6 +57,7 @@ public class MergeActionHandler extends RepositoryActionHandler {
 			String jobname = NLS.bind(UIText.MergeAction_JobNameMerge, refName);
 			final MergeOperation op = new MergeOperation(repository, refName);
 			op.setSquash(mergeTargetSelectionDialog.isMergeSquash());
+			op.setFastForwardMode(mergeTargetSelectionDialog.getFastForwardMode());
 			Job job = new Job(jobname) {
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
