@@ -17,9 +17,11 @@ package org.eclipse.egit.ui.internal.dialogs;
 import java.io.IOException;
 import java.text.MessageFormat;
 
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.api.MergeCommand.FastForwardMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
@@ -38,6 +40,7 @@ import org.eclipse.swt.widgets.Shell;
 public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 
 	private boolean mergeSquash = false;
+	private FastForwardMode fastForwardMode = null;
 
 	/**
 	 * @param parentShell
@@ -47,6 +50,8 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 		super(parentShell, repo, getMergeTarget(repo), SHOW_LOCAL_BRANCHES
 				| SHOW_REMOTE_BRANCHES | SHOW_TAGS | EXPAND_LOCAL_BRANCHES_NODE
 				| getSelectSetting(repo));
+		fastForwardMode = Activator.getDefault().getRepositoryUtil()
+				.getFastForwardMode(repo);
 	}
 
 	@Override
@@ -104,12 +109,14 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(main);
-		Group g = new Group(main, SWT.NONE);
-		g.setText(UIText.MergeTargetSelectionDialog_MergeTypeGroup);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(g);
-		g.setLayout(new GridLayout(1, false));
+		Group mergeTypeGroup = new Group(main, SWT.NONE);
+		mergeTypeGroup
+				.setText(UIText.MergeTargetSelectionDialog_MergeTypeGroup);
+		GridDataFactory.fillDefaults().grab(true, false)
+				.applyTo(mergeTypeGroup);
+		mergeTypeGroup.setLayout(new GridLayout(1, false));
 
-		Button commit = new Button(g, SWT.RADIO);
+		Button commit = new Button(mergeTypeGroup, SWT.RADIO);
 		commit.setSelection(true);
 		commit.setText(UIText.MergeTargetSelectionDialog_MergeTypeCommitButton);
 		commit.addListener(SWT.Selection, new Listener() {
@@ -119,7 +126,7 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 			}
 		});
 
-		Button squash = new Button(g, SWT.RADIO);
+		Button squash = new Button(mergeTypeGroup, SWT.RADIO);
 		squash.setText(UIText.MergeTargetSelectionDialog_MergeTypeSquashButton);
 		squash.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
@@ -127,6 +134,36 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 					mergeSquash = true;
 			}
 		});
+
+		Group fastForwardGroup = new Group(main, SWT.NONE);
+		fastForwardGroup
+				.setText(UIText.MergeTargetSelectionDialog_FastForwardGroup);
+		GridDataFactory.fillDefaults().grab(true, false)
+				.applyTo(fastForwardGroup);
+		fastForwardGroup.setLayout(new GridLayout(1, false));
+
+		createFastForwardButton(fastForwardGroup,
+				UIText.MergeTargetSelectionDialog_FastForwardButton,
+				FastForwardMode.FF);
+		createFastForwardButton(fastForwardGroup,
+				UIText.MergeTargetSelectionDialog_NoFastForwardButton,
+				FastForwardMode.NO_FF);
+		createFastForwardButton(fastForwardGroup,
+				UIText.MergeTargetSelectionDialog_OnlyFastForwardButton,
+				FastForwardMode.FF_ONLY);
+	}
+
+	private void createFastForwardButton(Group grp, String text,
+			final FastForwardMode ffMode) {
+		Button btn = new Button(grp, SWT.RADIO);
+		btn.setText(text);
+		btn.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				if (((Button) event.widget).getSelection())
+					fastForwardMode = ffMode;
+			}
+		});
+		btn.setSelection(fastForwardMode == ffMode);
 	}
 
 	/**
@@ -134,5 +171,12 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 	 */
 	public boolean isMergeSquash() {
 		return mergeSquash;
+	}
+
+	/**
+	 * @return selected fast forward mode
+	 */
+	public FastForwardMode getFastForwardMode() {
+		return fastForwardMode;
 	}
 }

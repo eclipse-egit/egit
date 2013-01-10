@@ -3465,6 +3465,18 @@ public class UIText extends NLS {
 	public static String MergeTargetSelectionDialog_TitleMergeWithBranch;
 
 	/** */
+	public static String MergeTargetSelectionDialog_FastForwardGroup;
+
+	/** */
+	public static String MergeTargetSelectionDialog_FastForwardButton;
+
+	/** */
+	public static String MergeTargetSelectionDialog_NoFastForwardButton;
+
+	/** */
+	public static String MergeTargetSelectionDialog_OnlyFastForwardButton;
+
+	/** */
 	public static String MergeTargetSelectionDialog_MergeTypeGroup;
 
 	/** */
