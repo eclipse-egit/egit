@@ -17,9 +17,11 @@ package org.eclipse.egit.ui.internal.dialogs;
 import java.io.IOException;
 import java.text.MessageFormat;
 
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jgit.api.MergeCommand.FastForwardMode;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
@@ -38,6 +40,7 @@ import org.eclipse.swt.widgets.Shell;
 public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 
 	private boolean mergeSquash = false;
+	private FastForwardMode fastForwardMode = null;
 
 	/**
 	 * @param parentShell
@@ -47,6 +50,8 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 		super(parentShell, repo, getMergeTarget(repo), SHOW_LOCAL_BRANCHES
 				| SHOW_REMOTE_BRANCHES | SHOW_TAGS | EXPAND_LOCAL_BRANCHES_NODE
 				| getSelectSetting(repo));
+		fastForwardMode = Activator.getDefault().getRepositoryUtil()
+				.getFastForwardMode(repo);
 	}
 
 	@Override
@@ -127,6 +132,56 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 					mergeSquash = true;
 			}
 		});
+
+		Group g2 = new Group(main, SWT.NONE);
+		g2.setText("FF"); //$NON-NLS-1$ // TODO
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(g2);
+		g2.setLayout(new GridLayout(1, false));
+
+		Button ff = new Button(g2, SWT.RADIO);
+		ff.setSelection(true);
+		ff.setText("ff");//$NON-NLS-1$ // TODO
+		ff.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				if (((Button) event.widget).getSelection())
+					fastForwardMode = FastForwardMode.FF;
+			}
+		});
+
+		Button noff = new Button(g2, SWT.RADIO);
+		noff.setSelection(true);
+		noff.setText("no-ff");//$NON-NLS-1$ // TODO
+		noff.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				if (((Button) event.widget).getSelection())
+					fastForwardMode = FastForwardMode.NO_FF;
+			}
+		});
+
+		Button ffonly = new Button(g2, SWT.RADIO);
+		ffonly.setSelection(true);
+		ffonly.setText("ffonly");//$NON-NLS-1$ // TODO
+		ffonly.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				if (((Button) event.widget).getSelection())
+					fastForwardMode = FastForwardMode.FF_ONLY;
+			}
+		});
+
+		ff.setSelection(false);
+		noff.setSelection(false);
+		ffonly.setSelection(false);
+		switch (fastForwardMode) {
+		case FF:
+			ff.setSelection(true);
+			break;
+		case NO_FF:
+			noff.setSelection(true);
+			break;
+		case FF_ONLY:
+			ffonly.setSelection(true);
+			break;
+		}
 	}
 
 	/**
@@ -134,5 +189,12 @@ public class MergeTargetSelectionDialog extends AbstractBranchSelectionDialog {
 	 */
 	public boolean isMergeSquash() {
 		return mergeSquash;
+	}
+
+	/**
+	 * @return selected fast forward mode
+	 */
+	public FastForwardMode getFastForwardMode() {
+		return fastForwardMode;
 	}
 }

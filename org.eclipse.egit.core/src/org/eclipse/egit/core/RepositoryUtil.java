@@ -29,7 +29,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jgit.api.MergeCommand.FastForwardMode;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
@@ -504,5 +506,32 @@ public class RepositoryUtil {
 			walk.release();
 		}
 		return false;
+	}
+
+	/**
+	 * TODO:
+	 *
+	 * @param repository
+	 * @return the fast-forward mode for the current branch
+	 * @since 2.4
+	 */
+	public FastForwardMode getFastForwardMode(Repository repository) {
+		FastForwardMode ffmode = FastForwardMode.valueOf(repository.getConfig()
+				.getEnum(ConfigConstants.CONFIG_KEY_MERGE, null,
+						ConfigConstants.CONFIG_KEY_FF,
+						FastForwardMode.Merge.TRUE));
+		ffmode = repository.getConfig().getEnum(
+				ConfigConstants.CONFIG_BRANCH_SECTION,
+				getCurrentBranch(repository),
+				ConfigConstants.CONFIG_KEY_MERGEOPTIONS, ffmode);
+		return ffmode;
+	}
+
+	private String getCurrentBranch(Repository repository) {
+		try {
+			return repository.getBranch();
+		} catch (IOException e) {
+			return null;
+		}
 	}
 }
