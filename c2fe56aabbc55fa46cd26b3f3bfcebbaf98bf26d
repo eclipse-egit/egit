@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOMH///xg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-11T19:48:40Z",
+      "side": 1,
+      "message": "I\u0027d prefer to use the type-safe, explicit and no-magic variant here:\n\nif (\"isCherryPickingResolved\".equals(property)) return state \u003d\u003d RepositoryState.CHERRY_PICKING_RESOLVED;\n// ... same for can*\n\nI\u0027m just not a fan of such dynamic code in Java. It will silently break on API changes and it\u0027s probably slower. Also, it\u0027s harder for people to find the code behind the properties, e.g. searching for \"isReverting\" will find the simple code, but not the one using reflection.",
+      "revId": "c2fe56aabbc55fa46cd26b3f3bfcebbaf98bf26d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
