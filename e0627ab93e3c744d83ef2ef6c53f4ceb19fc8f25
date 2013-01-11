@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOMH///ww\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-11T20:03:18Z",
+      "side": 1,
+      "message": "Please remove these from the commit message, a comment on the review is enough.\n\nAlso, please explain a bit more why this change is needed, the commit message is pretty short and kind of \"huh?\".",
+      "revId": "e0627ab93e3c744d83ef2ef6c53f4ceb19fc8f25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOMH///ws\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-11T20:03:18Z",
+      "side": 1,
+      "message": "A better name for this would be something like \"preDeleteProjectListener\".",
+      "revId": "e0627ab93e3c744d83ef2ef6c53f4ceb19fc8f25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOMH///wo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-11T20:03:18Z",
+      "side": 1,
+      "message": "This should probably also check if the project was managed by EGit, something like:\n\n  RepositoryProvider.getProvider(project) instanceof GitProvider\n\nOr is it too late in PRE_DELETE?",
+      "revId": "e0627ab93e3c744d83ef2ef6c53f4ceb19fc8f25",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
