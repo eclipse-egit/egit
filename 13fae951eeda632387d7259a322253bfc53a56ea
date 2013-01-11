@@ -34,6 +34,24 @@
       "revId": "13fae951eeda632387d7259a322253bfc53a56ea",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOMH///uE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ValidationUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-01-11T20:56:36Z",
+      "side": 1,
+      "message": "Default implementation is the way to go.",
+      "parentUuid": "AABOJ3//7UM\u003d",
+      "revId": "13fae951eeda632387d7259a322253bfc53a56ea",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
