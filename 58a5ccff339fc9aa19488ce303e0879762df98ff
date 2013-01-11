@@ -33,6 +33,24 @@
       "revId": "58a5ccff339fc9aa19488ce303e0879762df98ff",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOMH///+w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-01-11T11:28:13Z",
+      "side": 1,
+      "message": "Add a trace option",
+      "parentUuid": "AABOLX///vU\u003d",
+      "revId": "58a5ccff339fc9aa19488ce303e0879762df98ff",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
