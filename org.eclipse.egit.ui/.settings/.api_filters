@@ -9,80 +9,14 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/egit/ui/UIText.java" type="org.eclipse.egit.ui.UIText">
-        <filter id="338755678">
+        <filter id="1143996420">
             <message_arguments>
-                <message_argument value="org.eclipse.egit.ui.UIText"/>
-                <message_argument value="CommitDialog_PushSectionTitle"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.egit.ui.UIText"/>
-                <message_argument value="CommitDialog_PushUpstream"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.egit.ui.UIText"/>
-                <message_argument value="ConfigurationChecker_checkHomeDirectory"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.egit.ui.UIText"/>
-                <message_argument value="ConfigurationChecker_doNotShowAgain"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.egit.ui.UIText"/>
-                <message_argument value="ConfigurationChecker_doNotShowGitPrefixWarningAgain"/>
-            </message_arguments>
-        </filter>
-        <filter id="338755678">
-            <message_arguments>
-                <message_argument value="org.eclipse.egit.ui.UIText"/>
-                <message_argument value="ConfigurationChecker_gitPrefixWarningTitle"/>
+                <message_argument value="MergeResultDialog_failed"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="CommitDialog_CommitAndPush"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="CompareTreeView_ExpandAllTooltip"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="CompareUtils_errorCommonAncestor"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="DialogsPreferencePage_HideWarningGroupHeader"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="GitChangeSetModelProviderLabel"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="ReplaceTargetSelectionDialog_ReplaceTitleEmptyPath"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="StagingView_CommitAndPush"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="StagingView_IgnoreItemMenuLabel"/>
+                <message_argument value="MergeResultDialog_nMore"/>
             </message_arguments>
         </filter>
     </resource>
