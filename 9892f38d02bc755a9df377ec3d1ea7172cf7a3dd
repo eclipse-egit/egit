@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOMX////k\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-01-12T12:27:10Z",
+      "side": 1,
+      "message": "This is misleading, refresh will affect whole projects",
+      "revId": "9892f38d02bc755a9df377ec3d1ea7172cf7a3dd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
