@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOMH///qw\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-12T00:42:39Z",
+      "side": 1,
+      "message": "reformat this message in the following way to improve readability and to follow our style:\n\n Can not delete git project\n\n Steps to reproduce:\n - ensure the Git decorator is enabled\n - import a project to Eclipse using the Import Project from Git wizard\n - try to delete the project including its contents\n Deleting will fail\n\n - delete the project without its contents\n - try to delete the project\u0027s directory using an OS command\n Deleting will fail\n\n The issue can always be reproduced on Windows. As to Linux, it can be\n reproduced when cloning the project to a mounted NFS device.\n For more details, see https://issues.jboss.org/browse/JBIDE-10398.\n\n Bug: 395488\n Change-Id: Iae1be7fa4c3419f2a7fddcacb04679e85c83d490\n Signed-off-by: Snjezana Peco \u003csnjeza.peco@gmail.com\u003e",
+      "revId": "de3221cebe34577c4febd5697c45867470178c4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOMH///qs\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-12T00:42:39Z",
+      "side": 1,
+      "message": "The assertions should not go into the commit message but given in a comment on this review. Also you misunderstood Robin, don\u0027t remove the 3rd assertion.\n\nSo click \"Review\" and comment your own change in the following way as you did in the previous commit\u0027s message:\n\n I have authored 100% of the content I\u0027m contributing\n I have the rights to donate the content to Eclipse\n I contribute the content under the EPL",
+      "revId": "de3221cebe34577c4febd5697c45867470178c4d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
