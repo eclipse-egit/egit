@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (C) 2010, Benjamin Muskalla <bmuskalla@eclipsesource.com>
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -134,6 +134,17 @@ public class IgnoreOperationTest extends GitTestCase {
 		String content = project.getFileContent(Constants.GITIGNORE_FILENAME);
 		assertEquals(existing + "\n/bin\n", content);
 		assertFalse(operation.isGitignoreOutsideWSChanged());
+	}
+
+	@Test
+	public void testIgnoreWithResource() throws Exception {
+		IFolder binFolder = project.getProject().getFolder("bin");
+		@SuppressWarnings("deprecation")
+		IgnoreOperation operation = new IgnoreOperation(new IResource[] {binFolder});
+		operation.execute(new NullProgressMonitor());
+
+		String content = project.getFileContent(Constants.GITIGNORE_FILENAME);
+		assertEquals("/bin\n", content);
 	}
 
 	private IgnoreOperation executeIgnore(IPath... paths) throws Exception {

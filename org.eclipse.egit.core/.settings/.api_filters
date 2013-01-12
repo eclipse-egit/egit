@@ -8,15 +8,9 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/egit/core/op/IgnoreOperation.java" type="org.eclipse.egit.core.op.IgnoreOperation">
-        <filter id="338722907">
+        <filter comment="was removed in 2.2 and added back in 2.3, see bug 397544" id="1143996420">
             <message_arguments>
-                <message_argument value="org.eclipse.egit.core.op.IgnoreOperation"/>
                 <message_argument value="IgnoreOperation(IResource[])"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="IgnoreOperation(Collection&lt;IPath&gt;)"/>
             </message_arguments>
         </filter>
     </resource>
