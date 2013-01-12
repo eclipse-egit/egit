@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOMH///qA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-01-12T01:06:14Z",
+      "side": 1,
+      "message": "I don\u0027t agree here. The dialog should have precedence over settings which should just set the default for the dialog.",
+      "revId": "21251ede25e4c8e344034d50f5f10a4f1f275fa5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
