@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2009, Alex Blewitt <alex.blewitt@gmail.com>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,10 +18,12 @@ import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -60,11 +62,26 @@ public class IgnoreOperation implements IEGitOperation {
 	 * construct an IgnoreOperation
 	 *
 	 * @param paths
+	 * @since 2.2
 	 */
 	public IgnoreOperation(Collection<IPath> paths) {
 		this.paths = paths;
 		gitignoreOutsideWSChanged = false;
 		schedulingRule = calcSchedulingRule();
+	}
+
+	/**
+	 * @param resources
+	 * @deprecated use {@link #IgnoreOperation(Collection)}
+	 */
+	@Deprecated
+	public IgnoreOperation(IResource[] resources) {
+		paths = new ArrayList<IPath>(resources.length);
+		for (IResource resource : resources) {
+			IPath location = resource.getLocation();
+			if (location != null)
+				paths.add(location);
+		}
 	}
 
 	public void execute(IProgressMonitor monitor) throws CoreException {
