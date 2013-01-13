@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOMX///84\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-01-13T00:50:31Z",
+      "side": 1,
+      "message": "Add a space before the period so one can follow it.\nI did not see any Linux/NFS information at that page.",
+      "revId": "ba2e74440964f51ba2a5abf772c1876cb2e4de59",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOMX///80\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-01-13T00:50:31Z",
+      "side": 1,
+      "message": "Can you make a method of this section, like registerAutoShareProjects",
+      "revId": "ba2e74440964f51ba2a5abf772c1876cb2e4de59",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
