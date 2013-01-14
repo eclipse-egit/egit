@@ -2,6 +2,7 @@
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2011, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -173,6 +174,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	public void stop(final BundleContext context) throws Exception {
 		GitProjectData.detachFromWorkspace();
 		repositoryCache = null;
+		indexDiffCache.dispose();
 		indexDiffCache = null;
 		repositoryUtil.dispose();
 		repositoryUtil = null;
