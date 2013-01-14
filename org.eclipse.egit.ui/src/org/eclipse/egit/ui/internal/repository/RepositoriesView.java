@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2012 SAP AG and others.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -776,6 +776,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 					|| element instanceof RemoteNode
 					|| element instanceof FetchNode
 					|| element instanceof PushNode
+					|| element instanceof TagNode
 					|| element instanceof RefNode) {
 				// These can be shown in Properties view directly
 				elements.add(element);

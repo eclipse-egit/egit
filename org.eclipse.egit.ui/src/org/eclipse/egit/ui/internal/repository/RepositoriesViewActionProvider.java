@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,6 +16,7 @@ import org.eclipse.egit.ui.internal.repository.tree.PushNode;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.egit.ui.internal.repository.tree.RemoteNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
+import org.eclipse.egit.ui.internal.repository.tree.TagNode;
 import org.eclipse.egit.ui.internal.repository.tree.WorkingDirNode;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -58,6 +59,7 @@ public class RepositoriesViewActionProvider extends CommonActionProvider {
 					|| element instanceof RemoteNode
 					|| element instanceof FetchNode
 					|| element instanceof PushNode
+					|| element instanceof TagNode
 					|| element instanceof RefNode)
 				return true;
 		}
