@@ -2755,6 +2755,9 @@ public class UIText extends NLS {
 	public static String BranchResultDialog_CheckoutConflictsTitle;
 
 	/** */
+	public static String BranchResultDialog_dontShowAgain;
+
+	/** */
 	public static String CheckoutDialog_ErrorCouldNotCreateNewRef;
 
 	/** */
