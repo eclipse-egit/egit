@@ -55,6 +55,7 @@ import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.mylyn.tasks.ui.TasksUi;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
@@ -113,6 +114,8 @@ public class FetchGerritChangePage extends WizardPage {
 	private Composite warningAdditionalRefNotActive;
 
 	private Button activateAdditionalRefs;
+
+	private Button baseBranchNameOnTaskButton;
 
 	/**
 	 * @param repository
@@ -205,6 +208,18 @@ public class FetchGerritChangePage extends WizardPage {
 				checkPage();
 			}
 		});
+		if(TasksUi.getTaskActivityManager().getActiveTask()!=null){
+			baseBranchNameOnTaskButton = new Button(checkoutGroup, SWT.CHECK);
+			baseBranchNameOnTaskButton.setText("Base branch name on active task"); //$NON-NLS-1$
+			GridDataFactory.swtDefaults().span(2, 1).applyTo(baseBranchNameOnTaskButton);
+			baseBranchNameOnTaskButton.setSelection(true);
+			baseBranchNameOnTaskButton.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					updateBranchAndTag();
+				}
+			});
+		}
 
 		// radio: create tag
 		createTag = new Button(checkoutGroup, SWT.RADIO);
@@ -272,18 +287,7 @@ public class FetchGerritChangePage extends WizardPage {
 
 		refText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				Change change = Change.fromRef(refText.getText());
-				if (change != null) {
-					branchText.setText(NLS
-							.bind(UIText.FetchGerritChangePage_SuggestedRefNamePattern,
-									change.getChangeNumber(),
-									change.getPatchSetNumber()));
-					tagText.setText(branchText.getText());
-				} else {
-					branchText.setText(""); //$NON-NLS-1$
-					tagText.setText(""); //$NON-NLS-1$
-				}
-				checkPage();
+				updateBranchAndTag();
 			}
 		});
 
@@ -651,6 +655,29 @@ public class FetchGerritChangePage extends WizardPage {
 				new TextContentAdapter(), cp, stroke, null);
 		// set the acceptance style to always replace the complete content
 		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+	}
+
+	/**
+	 *
+	 */
+	protected void updateBranchAndTag() {
+		Change change = Change.fromRef(refText.getText());
+		if (change != null) {
+			if(baseBranchNameOnTaskButton!=null&& baseBranchNameOnTaskButton.getSelection()) {
+				String branchName = TaskBranchNameSuggester.suggestBranchName(TasksUi.getTaskActivityManager().getActiveTask(), "task"); //$NON-NLS-1$
+				branchText.setText(branchName);
+			} else {
+				branchText.setText(NLS
+						.bind(UIText.FetchGerritChangePage_SuggestedRefNamePattern,
+								change.getChangeNumber(),
+								change.getPatchSetNumber()));
+			}
+			tagText.setText(branchText.getText());
+		} else {
+			branchText.setText(""); //$NON-NLS-1$
+			tagText.setText(""); //$NON-NLS-1$
+		}
+		checkPage();
 	}
 
 	private final static class Change {
