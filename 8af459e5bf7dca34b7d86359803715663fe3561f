@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABONX///rk\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-16T23:04:25Z",
+      "side": 1,
+      "message": "I think this doesn\u0027t match what you implemented, did you mean:\n\nOnly show target in reset dialog if it differs from HEAD",
+      "revId": "8af459e5bf7dca34b7d86359803715663fe3561f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
