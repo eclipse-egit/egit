@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABONn///tY\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-17T23:37:14Z",
+      "side": 1,
+      "message": "mark work in progress with [DRAFT] or [RFC] in the commit message header to avoid wasting the time of reviewers looking for changes ready to be submitted",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABONn///vY\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-17T23:37:14Z",
+      "side": 1,
+      "message": "this is a newer version than the latest available mylyn release (3.8.2), when is 3.9 going to be shipped ? \n\nThis requires that we build against http://download.eclipse.org/mylyn/snapshots/weekly, i.e. this change also needs to update the target platform definitions in org.eclipse.egit.target, this will fix the build error\n\ns/3.9.0/[3.9.0,4.0.0)/",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABONn///vU\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-17T23:37:14Z",
+      "side": 1,
+      "message": "s/3.9.0/[3.9.0,4.0.0)/",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABONn///u8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-17T23:37:14Z",
+      "side": 1,
+      "message": "style nit: missing blanks around operators, see contributor guide for styles we use",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABONn///u4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-17T23:37:14Z",
+      "side": 1,
+      "message": "style nit: this line looks too wide\n\nif the generated branch name is already taken, it\u0027s likely that either the wrong task is active or several commits are required to fix the bug, so probably we could act a bit smarter",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABONn///uw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-17T23:37:14Z",
+      "side": 1,
+      "message": "why 2004 ? Are you transferring something written earlier ?",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABONn///uc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-17T23:37:14Z",
+      "side": 1,
+      "message": "- we don\u0027t use author tags\n- we want javadoc for public classes",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABONn///uk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-17T23:37:14Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this list be configurable with a reasonable default ? What if somebody wants to use a different language than English ?",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABONn///tw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-17T23:37:14Z",
+      "side": 1,
+      "message": "this may generate pretty long branch names, e.g. in the history view you end up seeing the bugID and only a few chars of the tasks header line, hence I would prefer to\n- not use any prefix\n- start with the semantic part of the task name and append the bug number\n- use camel case instead of _\n- limit the max length of the generated branch name\n\nIf we would first fetch and then inspect the commit messages we could find the bug ID in the commit message and use the corresponding bug instead of the active task, this would avoid the need to first select the correct active task manually. \n\nThen we could even automatically set the active task based on the bug ID contained in the commit message :-)",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABONn///tk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-17T23:37:14Z",
+      "side": 1,
+      "message": "Maybe we could make this configurable via a branch name template similar to the commit message template which can accept task attributes to construct a commit message from the active task",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABONn///uQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-17T23:37:14Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks, see contributor guide",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
