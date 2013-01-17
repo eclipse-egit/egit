@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.op;
 
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.Collection;
@@ -48,6 +49,8 @@ public class PushOperation {
 
 	private final int timeout;
 
+	private OutputStream out;
+
 	private PushOperationResult operationResult;
 
 	private CredentialsProvider credentialsProvider;
@@ -69,11 +72,7 @@ public class PushOperation {
 	public PushOperation(final Repository localDb,
 			final PushOperationSpecification specification,
 			final boolean dryRun, int timeout) {
-		this.localDb = localDb;
-		this.specification = specification;
-		this.dryRun = dryRun;
-		this.remoteName = null;
-		this.timeout = timeout;
+		this(localDb, null, specification, dryRun, timeout);
 	}
 
 	/**
@@ -86,8 +85,14 @@ public class PushOperation {
 	 */
 	public PushOperation(final Repository localDb, final String remoteName,
 			final boolean dryRun, int timeout) {
+		this(localDb, remoteName, null, dryRun, timeout);
+	}
+
+	private PushOperation(final Repository localDb, final String remoteName,
+			PushOperationSpecification specification, final boolean dryRun,
+			int timeout) {
 		this.localDb = localDb;
-		this.specification = null;
+		this.specification = specification;
 		this.dryRun = dryRun;
 		this.remoteName = remoteName;
 		this.timeout = timeout;
@@ -182,7 +187,7 @@ public class PushOperation {
 						transport.setTimeout(timeout);
 						if (credentialsProvider != null)
 							transport.setCredentialsProvider(credentialsProvider);
-						PushResult result = transport.push(gitSubMonitor, refUpdates);
+						PushResult result = transport.push(gitSubMonitor, refUpdates, out);
 
 						operationResult.addOperationResult(result.getURI(), result);
 						specification.addURIRefUpdates(result.getURI(), result.getRemoteUpdates());
@@ -258,5 +263,15 @@ public class PushOperation {
 			Activator.logError("Reading RemoteConfig failed", e); //$NON-NLS-1$
 			return null;
 		}
+	}
+
+	/**
+	 * Sets the output stream this operation will write sideband messages to.
+	 *
+	 * @param out
+	 *            the outputstream to write to
+	 */
+	public void setOutputStream(OutputStream out) {
+		this.out = out;
 	}
 }
