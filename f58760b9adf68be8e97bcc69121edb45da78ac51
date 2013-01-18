@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABON3///+I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/branch/BranchResultDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-18T10:41:11Z",
+      "side": 1,
+      "message": "I think we should log here, but don\u0027t show anything to the user.",
+      "revId": "f58760b9adf68be8e97bcc69121edb45da78ac51",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
