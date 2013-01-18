@@ -1822,6 +1822,12 @@
                visible="false">
          </view>
       </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.egit.ui.GitRepositoryExploring">
+         <showInPart
+               id="org.eclipse.team.ui.GenericHistoryView">
+         </showInPart>
+      </perspectiveExtension>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.navigatorContent">
