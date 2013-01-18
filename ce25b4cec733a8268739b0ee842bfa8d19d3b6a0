@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "AABONn///tA\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 659
+      },
+      "writtenOn": "2013-01-18T00:20:42Z",
+      "side": 1,
+      "message": "I would think the mylyn dependency should only be from a separate bundle anyway (egit.mylyn or mylyn.git) and should be contributed through extension point.",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABONn///vU\u003d",
         "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
         "patchSetId": 2
@@ -81,6 +98,23 @@
       "writtenOn": "2013-01-17T23:37:14Z",
       "side": 1,
       "message": "style nit: this line looks too wide\n\nif the generated branch name is already taken, it\u0027s likely that either the wrong task is active or several commits are required to fix the bug, so probably we could act a bit smarter",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABONn///s8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 659
+      },
+      "writtenOn": "2013-01-18T00:20:42Z",
+      "side": 1,
+      "message": "I agree we could be smarter e.g. offering to delete the branch or cherry-pick the commit on to it.",
       "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -138,6 +172,23 @@
     },
     {
       "key": {
+        "uuid": "AABONn///s4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 659
+      },
+      "writtenOn": "2013-01-18T00:20:42Z",
+      "side": 1,
+      "message": "Sounds like a good idea. OTOH, does git support branches with, say, Chinese characters in the name? :-)",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABONn///tw\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
         "patchSetId": 2
@@ -149,6 +200,23 @@
       "writtenOn": "2013-01-17T23:37:14Z",
       "side": 1,
       "message": "this may generate pretty long branch names, e.g. in the history view you end up seeing the bugID and only a few chars of the tasks header line, hence I would prefer to\n- not use any prefix\n- start with the semantic part of the task name and append the bug number\n- use camel case instead of _\n- limit the max length of the generated branch name\n\nIf we would first fetch and then inspect the commit messages we could find the bug ID in the commit message and use the corresponding bug instead of the active task, this would avoid the need to first select the correct active task manually. \n\nThen we could even automatically set the active task based on the bug ID contained in the commit message :-)",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABONn///s0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 659
+      },
+      "writtenOn": "2013-01-18T00:20:42Z",
+      "side": 1,
+      "message": "That all sounds great, but I thought I\u0027d start with baby steps. :) Also I followed the convention in use at Tasktop and Mylyn of naming branches as (task|bug)_ID_summary. But I agree we should probably encourage more compact branch names. I think ideally the task ID would not be part of the branch name at all but rather the branch would have metadata containing the task URL, but I don\u0027t know if this is possible.",
       "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -183,6 +251,23 @@
       "writtenOn": "2013-01-17T23:37:14Z",
       "side": 1,
       "message": "style nit: we don\u0027t use braces around single line blocks, see contributor guide",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABONn///sw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 659
+      },
+      "writtenOn": "2013-01-18T00:20:42Z",
+      "side": 1,
+      "message": "I suppose there\u0027s no point in pointing out that omitting braces is discouraged:\r\nhttp://www.oracle.com/technetwork/java/javase/documentation/codeconventions-142311.html#449\r\n:-)",
       "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
