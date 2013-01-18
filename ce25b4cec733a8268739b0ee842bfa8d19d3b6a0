@@ -88,6 +88,23 @@
     },
     {
       "key": {
+        "uuid": "AABON3///7A\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 659
+      },
+      "writtenOn": "2013-01-18T16:19:26Z",
+      "side": 1,
+      "message": "There\u0027s actually no need for this to depend on 3.9.",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABONn///u8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
         "patchSetId": 2
@@ -133,6 +150,23 @@
       "writtenOn": "2013-01-18T00:20:42Z",
       "side": 1,
       "message": "I agree we could be smarter e.g. offering to delete the branch or cherry-pick the commit on to it.",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABON3///64\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 659
+      },
+      "writtenOn": "2013-01-18T16:19:26Z",
+      "side": 1,
+      "message": "All of this code was writtin in 2012 or 2013. This copyright message is just the template I have in my workspace.",
       "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
