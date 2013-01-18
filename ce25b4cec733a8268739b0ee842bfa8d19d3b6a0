@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "AABON3////Q\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-18T09:20:20Z",
+      "side": 1,
+      "message": "that\u0027s true this functionality should move to egit.mylyn, egit.ui should not depend on mylyn, I missed this. But still the target platform needs to be adapted in order to fix the build and we need to know if 3.9 will be released with Juno SR2, otherwise this change has to wait until egit 2.3 was released",
+      "parentUuid": "AABONn///tA\u003d",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABONn///vU\u003d",
         "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
         "patchSetId": 2
@@ -189,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "AABON3////I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-18T09:20:20Z",
+      "side": 1,
+      "message": "AFAIK jgit always uses UTF-8, but native git or the file system may have a different opinion",
+      "parentUuid": "AABONn///s4\u003d",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABONn///tw\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
         "patchSetId": 2
@@ -217,6 +253,24 @@
       "writtenOn": "2013-01-18T00:20:42Z",
       "side": 1,
       "message": "That all sounds great, but I thought I\u0027d start with baby steps. :) Also I followed the convention in use at Tasktop and Mylyn of naming branches as (task|bug)_ID_summary. But I agree we should probably encourage more compact branch names. I think ideally the task ID would not be part of the branch name at all but rather the branch would have metadata containing the task URL, but I don\u0027t know if this is possible.",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABON3////Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-18T09:20:20Z",
+      "side": 1,
+      "message": "I agree, small steps are alway a good idea :)\n\nAFAIK branches are just pointers implemented as a file containing a SHA1 so there\u0027s no way to add metadata in a git conform way at the moment",
+      "parentUuid": "AABONn///s0\u003d",
       "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -268,6 +322,24 @@
       "writtenOn": "2013-01-18T00:20:42Z",
       "side": 1,
       "message": "I suppose there\u0027s no point in pointing out that omitting braces is discouraged:\r\nhttp://www.oracle.com/technetwork/java/javase/documentation/codeconventions-142311.html#449\r\n:-)",
+      "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABON3////c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-18T09:20:20Z",
+      "side": 1,
+      "message": "we just follow the convention established a long time ago (pre-dates my involvement in these projects), if you want to change this start the discussion on the jgit/egit dev lists",
+      "parentUuid": "AABONn///sw\u003d",
       "revId": "ce25b4cec733a8268739b0ee842bfa8d19d3b6a0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
