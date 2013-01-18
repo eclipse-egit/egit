@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -49,6 +50,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepository;
 import org.eclipse.jgit.util.FileUtils;
+import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.SWTBot;
@@ -297,17 +299,22 @@ public abstract class AbstractSynchronizeViewTest extends
 				return item;
 			}
 
-		throw new RuntimeException("Poject with name " + projectName +
+		throw new RuntimeException("Project with name " + projectName +
 				" was not found in given tree");
 	}
 
 	private SWTBotTreeItem getTreeItemContainingText(SWTBotTreeItem[] items,
 			String text) {
-		for (SWTBotTreeItem item : items)
+		List<String> existingItems = new ArrayList<String>();
+		for (SWTBotTreeItem item : items) {
 			if (item.getText().contains(text))
 				return item;
+			existingItems.add(item.getText());
+		}
 
 		throw new WidgetNotFoundException(
-					"Tree item elment containing text: test commit was not found");
+				"Tree item element containing text \"" + text
+						+ "\" was not found. Existing tree items:\n"
+						+ StringUtils.join(existingItems, "\n"));
 	}
 }
