@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABON3///+4\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-18T09:25:08Z",
+      "side": 1,
+      "message": "there is no need to add both [DRAFT] and [RFC]\n\nthe commit message header should be shorter than 72 chars otherwise some commands like git shortlog show truncated message header",
+      "revId": "0ffdd706b2cf9207cc095bae253ae67842c15584",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
