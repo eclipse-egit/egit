@@ -25,6 +25,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -34,7 +35,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -44,6 +44,7 @@ import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
+import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
@@ -164,13 +165,12 @@ public abstract class AbstractSynchronizeViewTest extends
 	}
 
 	protected void launchSynchronization(String srcRef, String dstRef,
-			boolean includeLocal) throws InterruptedException, IOException {
+			boolean includeLocal) throws IOException {
 		launchSynchronization(PROJ1, srcRef, dstRef, includeLocal);
 	}
 
 	protected void launchSynchronization(String projectName, String srcRef,
-			String dstRef, boolean includeLocal) throws InterruptedException,
-			IOException {
+			String dstRef, boolean includeLocal) throws IOException {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(projectName);
 		Repository repo = RepositoryMapping.getMapping(project).getRepository();
@@ -178,11 +178,11 @@ public abstract class AbstractSynchronizeViewTest extends
 		GitSynchronizeData data = new GitSynchronizeData(repo, srcRef, dstRef,
 				includeLocal);
 
+		JobJoiner jobJoiner = JobJoiner.startListening(
+				ISynchronizeManager.FAMILY_SYNCHRONIZE_OPERATION, 60,
+				TimeUnit.SECONDS);
 		GitModelSynchronize.launch(data, new IResource[] { project });
-
-		Job.getJobManager().join(JobFamilies.SYNCHRONIZE_READ_DATA, null);
-		Job.getJobManager().join(
-				ISynchronizeManager.FAMILY_SYNCHRONIZE_OPERATION, null);
+		jobJoiner.join();
 	}
 
 	protected void setEnabledModelProvider(String modelProviderId) {
