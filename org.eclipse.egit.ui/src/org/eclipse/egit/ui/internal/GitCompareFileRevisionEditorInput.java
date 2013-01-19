@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Roger C. Soares <rogersoares@intelinet.com.br>
+ * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -31,6 +32,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.storage.IndexFileRevision;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
@@ -300,6 +302,11 @@ public class GitCompareFileRevisionEditorInput extends SaveableCompareEditorInpu
 		Object fileObject = element.getFileRevision();
 		if (fileObject instanceof LocalFileRevision){
 			return NLS.bind(UIText.GitCompareFileRevisionEditorInput_LocalHistoryLabel, new Object[]{element.getName(), element.getTimestamp()});
+		} else if (fileObject instanceof IndexFileRevision
+				&& isEditable(element)) {
+			return NLS.bind(
+					UIText.GitCompareFileRevisionEditorInput_IndexLabel,
+					element.getName());
 		} else {
 			return NLS.bind(UIText.GitCompareFileRevisionEditorInput_RevisionLabel, new Object[]{element.getName(),
 					CompareUtils.truncatedRevision(element.getContentIdentifier()), element.getAuthor()});

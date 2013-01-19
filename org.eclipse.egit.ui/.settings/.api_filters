@@ -72,6 +72,11 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="GitCompareFileRevisionEditorInput_IndexLabel"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="ReplaceTargetSelectionDialog_ReplaceTitleEmptyPath"/>
             </message_arguments>
         </filter>

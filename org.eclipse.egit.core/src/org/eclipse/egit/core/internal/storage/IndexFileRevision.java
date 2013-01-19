@@ -25,7 +25,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
 
 /** An {@link IFileRevision} for the version in the Git index. */
-class IndexFileRevision extends GitFileRevision {
+public class IndexFileRevision extends GitFileRevision {
 	private final Repository db;
 
 	private final String path;
