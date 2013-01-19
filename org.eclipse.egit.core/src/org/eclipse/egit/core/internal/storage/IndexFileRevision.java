@@ -27,7 +27,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
 
 /** An {@link IFileRevision} for the version in the Git index. */
-class IndexFileRevision extends GitFileRevision {
+public class IndexFileRevision extends GitFileRevision {
 
 	// This is to maintain compatibility with the old behavior
 	private static final int FIRST_AVAILABLE = -1;
