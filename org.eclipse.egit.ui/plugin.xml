@@ -4506,12 +4506,12 @@
             id="org.eclipse.egit.ui.team.CompareWithPrevious"
             name="%CompareWithPreviousCommand.name">
       </command>
-            <command
+      <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             id="org.eclipse.egit.ui.team.CompareWithRevision"
             name="%CompareWithHistoryCommand.name">
-            </command>
-            <command
+      </command>
+      <command
             categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithIndexActionHandler"
             id="org.eclipse.egit.ui.team.CompareWithIndex"
