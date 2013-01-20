@@ -4519,6 +4519,18 @@
       </command>
       <command
             categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithOursActionHandler"
+            id="org.eclipse.egit.ui.team.CompareWithOurs"
+            name="%CompareWithOursCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.CompareWithTheirsActionHandler"
+            id="org.eclipse.egit.ui.team.CompareWithTheirs"
+            name="%CompareWithTheirsCommand.name">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
             defaultHandler="org.eclipse.egit.ui.internal.actions.DiscardChangesActionHandler"
             id="org.eclipse.egit.ui.team.Discard"
             name="%ReplaceWithIndexCommand.name">

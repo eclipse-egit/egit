@@ -62,6 +62,21 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="CompareWithTheirsActionHandler_LabelWhenCherryPicking"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CompareWithTheirsActionHandler_LabelWhenMerging"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CompareWithTheirsActionHandler_LabelWhenRebasing"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="DialogsPreferencePage_HideWarningGroupHeader"/>
             </message_arguments>
         </filter>

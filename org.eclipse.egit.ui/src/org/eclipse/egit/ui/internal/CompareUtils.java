@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010-2012 SAP AG and others.
+ * Copyright (c) 2010-2013 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -37,6 +37,7 @@ import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -55,6 +56,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput.EmptyTypedElement;
 import org.eclipse.egit.ui.internal.actions.CompareWithCommitActionHandler;
 import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
+import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jgit.dircache.DirCache;
@@ -410,6 +412,20 @@ public class CompareUtils {
 	}
 
 	/**
+	 * Returns an editable typed element for a local file.
+	 *
+	 * @param location
+	 * @return typed element for the file
+	 */
+	public static ITypedElement getFileTypedElement(IPath location) {
+		IFile file = ResourceUtil.getFileForLocation(location);
+		if (file != null)
+			return SaveableCompareEditorInput.createFileElement(file);
+		else
+			return new LocalNonWorkspaceTypedElement(location);
+	}
+
+	/**
 	 * Get a typed element for the file as contained in HEAD. Tries to return
 	 * the last commit that modified the file in order to have more useful
 	 * author information.
@@ -487,6 +503,45 @@ public class CompareUtils {
 		return getIndexTypedElement(repository, repoRelativePath, encoding);
 	}
 
+	/**
+	 * Returns an editable typed element for the index entry of the specified
+	 * path. Note that this should only be used for stage 0.
+	 *
+	 * @param location
+	 * @return typed element
+	 * @throws IOException
+	 */
+	public static ITypedElement getIndexTypedElement(final IPath location)
+			throws IOException {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(location);
+		if (mapping != null)
+			return getIndexTypedElement(mapping.getRepository(),
+					mapping.getRepoRelativePath(location));
+		else
+			return null;
+	}
+
+	/**
+	 * Returns a read-only typed element for the index entry with the specified
+	 * stage. It's only meant to be used for stages other than 0 (on conflicts).
+	 *
+	 * @param location
+	 * @param stage
+	 * @return typed element for index with specified stage, or null
+	 */
+	public static ITypedElement getIndexTypedElement(final IPath location,
+			int stage) {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(location);
+		if (mapping == null)
+			return null;
+		Repository repository = mapping.getRepository();
+		String repoRelativePath = mapping.getRepoRelativePath(location);
+		IFileRevision revision = GitFileRevision.inIndex(repository,
+				repoRelativePath, stage);
+		String encoding = CompareCoreUtils.getResourceEncoding(repository, repoRelativePath);
+		return new FileRevisionTypedElement(revision, encoding);
+	}
+
 	private static ITypedElement getIndexTypedElement(
 			final Repository repository, final String gitPath,
 			String encoding) throws IOException {
@@ -496,6 +551,14 @@ public class CompareUtils {
 			entry = dc.getEntry(gitPath);
 		} finally {
 			dc.unlock();
+		}
+
+		if (!entry.isMerged()) {
+			// Conflicting -> edit of index entry not allowed, show "ours" stage
+			// (better than "base")
+			IFileRevision revision = GitFileRevision.inIndex(repository,
+					gitPath, DirCacheEntry.STAGE_2);
+			return new FileRevisionTypedElement(revision, encoding);
 		}
 
 		IFileRevision nextFile = GitFileRevision.inIndex(repository, gitPath);

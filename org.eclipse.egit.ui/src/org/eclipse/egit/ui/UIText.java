@@ -5,7 +5,7 @@
  * Copyright (C) 2011, Daniel Megert <daniel_megert@ch.ibm.com>
  * Copyright (C) 2012, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, Laurent Goubet <laurent.goubet@obeo.fr>
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  * All rights reserved. This program and the accompanying materials
@@ -2158,6 +2158,18 @@ public class UIText extends NLS {
 
 	/** */
 	public static String CompareWithIndexAction_errorOnAddToIndex;
+
+	/** */
+	public static String CompareWithOursActionHandler_Label;
+
+	/** */
+	public static String CompareWithTheirsActionHandler_LabelWhenRebasing;
+
+	/** */
+	public static String CompareWithTheirsActionHandler_LabelWhenCherryPicking;
+
+	/** */
+	public static String CompareWithTheirsActionHandler_LabelWhenMerging;
 
 	/** */
 	public static String CompareWithRefAction_errorOnSynchronize;

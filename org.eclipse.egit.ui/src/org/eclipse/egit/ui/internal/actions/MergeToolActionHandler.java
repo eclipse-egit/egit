@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,8 +21,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
-import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
@@ -69,17 +67,7 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		if (selectedRepoPaths.isEmpty())
 			return false;
 
-		IndexDiffCache cache = org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache();
-		if (cache == null)
-			return false;
-
-		IndexDiffCacheEntry entry = cache.getIndexDiffCacheEntry(repo);
-		if (entry == null || entry.getIndexDiff() == null)
-			return false;
-
-		Set<String> conflictingFiles = entry.getIndexDiff().getConflicting();
-		if (conflictingFiles.isEmpty())
-			return false;
+		Set<String> conflictingFiles = getConflictingFiles(repo);
 
 		for (String selectedRepoPath : selectedRepoPaths) {
 			Path selectedPath = new Path(selectedRepoPath);

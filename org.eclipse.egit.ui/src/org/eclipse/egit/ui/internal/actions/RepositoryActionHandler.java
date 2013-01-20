@@ -4,7 +4,7 @@
  * Copyright (C) 2006, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, François Rey <eclipse.org_@_francois_._rey_._name>
  *
  * All rights reserved. This program and the accompanying materials
@@ -37,6 +37,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.core.AdapterUtils;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
+import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
@@ -491,6 +493,14 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 	}
 
 	/**
+	 * @return the {@link IPath} in the selection
+	 */
+	protected IPath[] getSelectedLocations() {
+		IStructuredSelection selection = getSelection();
+		return getSelectedLocations(selection);
+	}
+
+	/**
 	 * @param selection
 	 * @return the resources in the selection
 	 */
@@ -636,6 +646,24 @@ abstract class RepositoryActionHandler extends AbstractHandler {
 		}
 
 		return false;
+	}
+
+	/**
+	 * @param repo
+	 * @return conflicting file paths, empty if there are no conflicts or
+	 *         {@link IndexDiffCache} was not ready.
+	 */
+	protected static Set<String> getConflictingFiles(Repository repo) {
+		IndexDiffCache cache = org.eclipse.egit.core.Activator.getDefault()
+				.getIndexDiffCache();
+		if (cache == null)
+			return Collections.emptySet();
+
+		IndexDiffCacheEntry entry = cache.getIndexDiffCacheEntry(repo);
+		if (entry == null || entry.getIndexDiff() == null)
+			return Collections.emptySet();
+
+		return entry.getIndexDiff().getConflicting();
 	}
 
 	protected String getPreviousPath(Repository repository,

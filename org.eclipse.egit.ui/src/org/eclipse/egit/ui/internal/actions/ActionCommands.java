@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -40,6 +40,12 @@ public class ActionCommands {
 
 	/** "Compare with index" action command id */
 	public static final String COMPARE_WITH_INDEX_ACTION = "org.eclipse.egit.ui.team.CompareWithIndex"; //$NON-NLS-1$
+
+	/** "Compare with ours" action command id */
+	public static final String COMPARE_WITH_OURS_ACTION = "org.eclipse.egit.ui.team.CompareWithOurs"; //$NON-NLS-1$
+
+	/** "Compare with theirs" action command id */
+	public static final String COMPARE_WITH_THEIRS_ACTION = "org.eclipse.egit.ui.team.CompareWithTheirs"; //$NON-NLS-1$
 
 	/** "Compare with Ref" action command id */
 	public static final String COMPARE_WITH_REF_ACTION = "org.eclipse.egit.ui.team.CompareWithRef"; //$NON-NLS-1$

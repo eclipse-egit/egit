@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2012 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2013 Bernard Leach <leachbj@bouncycastle.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -882,6 +882,9 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (stagingEntry.isSubmodule())
 			return;
 		switch (stagingEntry.getState()) {
+		case CONFLICTING:
+			// compare with ours or theirs? User should choose via context menu
+			break;
 		case ADDED:
 		case CHANGED:
 		case REMOVED:
@@ -891,7 +894,6 @@ public class StagingView extends ViewPart implements IShowInSource {
 		case MISSING:
 		case MODIFIED:
 		case PARTIALLY_MODIFIED:
-		case CONFLICTING:
 		case UNTRACKED:
 		default:
 			// compare with index
@@ -937,6 +939,19 @@ public class StagingView extends ViewPart implements IShowInSource {
 				boolean addDelete = availableActions.contains(StagingEntry.Action.DELETE);
 				boolean addIgnore = availableActions.contains(StagingEntry.Action.IGNORE);
 				boolean addLaunchMergeTool = availableActions.contains(StagingEntry.Action.LAUNCH_MERGE_TOOL);
+				boolean addCompareWithOurs = availableActions
+						.contains(StagingEntry.Action.COMPARE_WITH_OURS);
+				boolean addCompareWithTheirs = availableActions
+						.contains(StagingEntry.Action.COMPARE_WITH_THEIRS);
+
+				if (addCompareWithOurs)
+					menuMgr.add(createItem(
+							ActionCommands.COMPARE_WITH_OURS_ACTION,
+							tableViewer));
+				if (addCompareWithTheirs)
+					menuMgr.add(createItem(
+							ActionCommands.COMPARE_WITH_THEIRS_ACTION,
+							tableViewer));
 
 				if (addStage)
 					menuMgr.add(new Action(UIText.StagingView_StageItemMenuLabel) {

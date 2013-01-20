@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2009, Yann Simon <yann.simon.fr@gmail.com>
  * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,17 +16,12 @@ import java.io.IOException;
 import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.dialogs.CompareTreeView;
-import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
-import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -46,10 +41,11 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 
 		if (locations.length == 1 && locations[0].toFile().isFile()) {
 			final IPath baseLocation = locations[0];
-			final ITypedElement base = getBaseTypeElement(baseLocation);
+			final ITypedElement base = CompareUtils
+					.getFileTypedElement(baseLocation);
 			final ITypedElement next;
 			try {
-				next = getIndexTypedElement(baseLocation);
+				next = CompareUtils.getIndexTypedElement(baseLocation);
 			} catch (IOException e) {
 				Activator.handleError(
 						UIText.CompareWithIndexAction_errorOnAddToIndex, e,
@@ -79,26 +75,5 @@ public class CompareWithIndexActionHandler extends RepositoryActionHandler {
 	@Override
 	public boolean isEnabled() {
 		return getRepository() != null;
-	}
-
-	private ITypedElement getBaseTypeElement(final IPath baseLocation) {
-		IFile file = ResourceUtil.getFileForLocation(baseLocation);
-		if (file != null)
-			return SaveableCompareEditorInput.createFileElement(file);
-		else
-			return new LocalNonWorkspaceTypedElement(baseLocation);
-	}
-
-	private ITypedElement getIndexTypedElement(final IPath location) throws IOException {
-		IFile file = ResourceUtil.getFileForLocation(location);
-		if (file != null)
-			return CompareUtils.getIndexTypedElement(file);
-		else {
-			RepositoryMapping mapping = RepositoryMapping.getMapping(location);
-			if (mapping != null)
-				return CompareUtils.getIndexTypedElement(mapping.getRepository(), mapping.getRepoRelativePath(location));
-			else
-				return null;
-		}
 	}
 }
