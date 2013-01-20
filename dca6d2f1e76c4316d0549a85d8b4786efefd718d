@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOOX///8M\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-20T23:21:03Z",
+      "side": 1,
+      "message": "I think this should be 2005-2013 I am pretty sure that we touched some texts every year ;-)",
+      "revId": "dca6d2f1e76c4316d0549a85d8b4786efefd718d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOOX///8I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-20T23:21:03Z",
+      "side": 1,
+      "message": "maybe we could throw an IllegalStateException when used with stage 0 ?",
+      "revId": "dca6d2f1e76c4316d0549a85d8b4786efefd718d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOOX///8A\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/staging/StagingView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-20T23:21:03Z",
+      "side": 1,
+      "message": "2011-2013",
+      "revId": "dca6d2f1e76c4316d0549a85d8b4786efefd718d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOOX///74\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-20T23:21:03Z",
+      "side": 1,
+      "message": "this is called HEAD revision in other menus, we should not use different terms for the same thing in different menus",
+      "revId": "dca6d2f1e76c4316d0549a85d8b4786efefd718d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOOX///78\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-20T23:21:03Z",
+      "side": 1,
+      "message": "these labels are pretty confusing, e.g. when doing a rebase with conflicts I get \"Compare with Rebase Version\".\n\nwhat is a current, rebase, cherry-pick, merge version ??? I think we would better give branch name and commit id of the respective commit similar to what we show in the merge tool editor. I think this would be easier to understand",
+      "revId": "dca6d2f1e76c4316d0549a85d8b4786efefd718d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
