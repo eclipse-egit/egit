@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOOn///xQ\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-22T00:08:06Z",
+      "side": 1,
+      "message": "As noted on other change, please see {DATE} here: http://www.eclipse.org/legal/copyrightandlicensenotice.php",
+      "parentUuid": "AABOOX///8M\u003d",
+      "revId": "dca6d2f1e76c4316d0549a85d8b4786efefd718d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOOX///8I\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
         "patchSetId": 1
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "AABOOn///xY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-22T00:08:06Z",
+      "side": 1,
+      "message": "Does \"ours\" always correspond to HEAD? I\u0027m not sure, e.g. during rebase or after applying stash.",
+      "parentUuid": "AABOOX///74\u003d",
+      "revId": "dca6d2f1e76c4316d0549a85d8b4786efefd718d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOOX///78\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
         "patchSetId": 1
@@ -81,6 +117,24 @@
       "writtenOn": "2013-01-20T23:21:03Z",
       "side": 1,
       "message": "these labels are pretty confusing, e.g. when doing a rebase with conflicts I get \"Compare with Rebase Version\".\n\nwhat is a current, rebase, cherry-pick, merge version ??? I think we would better give branch name and commit id of the respective commit similar to what we show in the merge tool editor. I think this would be easier to understand",
+      "revId": "dca6d2f1e76c4316d0549a85d8b4786efefd718d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOOn///xU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-22T00:08:06Z",
+      "side": 1,
+      "message": "Let\u0027s discuss this on bug 391856, ok?",
+      "parentUuid": "AABOOX///78\u003d",
       "revId": "dca6d2f1e76c4316d0549a85d8b4786efefd718d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
