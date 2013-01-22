@@ -25,7 +25,7 @@ public class ResourcePropertyTester extends PropertyTester {
 
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
-		boolean value = internalTest(receiver, property, args, expectedValue);
+		boolean value = internalTest(receiver, property);
 		boolean trace = GitTraceLocation.PROPERTIESTESTER.isActive();
 		if (trace)
 			GitTraceLocation
@@ -35,8 +35,7 @@ public class ResourcePropertyTester extends PropertyTester {
 		return value;
 	}
 
-	private boolean internalTest(Object receiver, String property, Object[] args,
-			Object expectedValue) {
+	private boolean internalTest(Object receiver, String property) {
 		if (!(receiver instanceof IResource))
 			return false;
 		IResource res = (IResource) receiver;
