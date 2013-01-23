@@ -186,7 +186,6 @@ public class BlameOperation implements IEGitOperation {
 
 		Map<RevCommit, BlameRevision> revisions = new HashMap<RevCommit, BlameRevision>();
 		int lineCount = result.getResultContents().size();
-		monitor.beginTask("", lineCount); //$NON-NLS-1$
 		BlameRevision previous = null;
 		for (int i = 0; i < lineCount; i++) {
 			RevCommit commit = result.getSourceCommit(i);
@@ -215,7 +214,6 @@ public class BlameOperation implements IEGitOperation {
 				}
 			else
 				previous = revision.reset(i);
-			monitor.worked(1);
 		}
 		if (previous != null)
 			previous.register();
