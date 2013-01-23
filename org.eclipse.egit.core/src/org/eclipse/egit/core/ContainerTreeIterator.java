@@ -38,6 +38,7 @@ import org.eclipse.jgit.treewalk.FileTreeIterator.FileEntry;
 import org.eclipse.jgit.treewalk.WorkingTreeIterator;
 import org.eclipse.jgit.treewalk.WorkingTreeOptions;
 import org.eclipse.jgit.util.FS;
+import org.eclipse.team.core.Team;
 
 /**
  * Adapts an Eclipse {@link IContainer} for use in a <code>TreeWalk</code>.
@@ -252,6 +253,21 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 			}
 		}
 		return inheritableResourceFilter;
+	}
+
+	@Override
+	public boolean isEntryIgnored() throws IOException {
+		return super.isEntryIgnored() ||
+			isEntryIgnoredByTeamProvider(getResourceEntry().getResource());
+	}
+
+	private boolean isEntryIgnoredByTeamProvider(IResource resource) {
+		if (resource.getType() == IResource.ROOT
+				|| resource.getType() == IResource.PROJECT)
+			return false;
+		if (Team.isIgnoredHint(resource))
+			return true;
+		return isEntryIgnoredByTeamProvider(resource.getParent());
 	}
 
 	/**
