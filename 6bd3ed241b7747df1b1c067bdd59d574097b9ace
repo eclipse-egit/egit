@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPH///8Y\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-01-23T17:10:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABONX///wM\u003d",
+      "revId": "6bd3ed241b7747df1b1c067bdd59d574097b9ace",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABONX///wI\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPH///8g\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-01-23T17:10:20Z",
+      "side": 1,
+      "message": "I can do that?!\nDone",
+      "parentUuid": "AABONX///wI\u003d",
+      "revId": "6bd3ed241b7747df1b1c067bdd59d574097b9ace",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABONX///wE\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2013-01-16T21:41:46Z",
       "side": 1,
       "message": "why don\u0027t you simply leave out the varargs arguments instead of casting null ?\n\n method.invoke(state)",
+      "revId": "6bd3ed241b7747df1b1c067bdd59d574097b9ace",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH///8c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/ResourcePropertyTester.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-01-23T17:10:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABONX///wE\u003d",
       "revId": "6bd3ed241b7747df1b1c067bdd59d574097b9ace",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
