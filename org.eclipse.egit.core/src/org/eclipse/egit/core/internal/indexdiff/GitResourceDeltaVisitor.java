@@ -24,6 +24,7 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.team.core.Team;
 
 /**
  * Git specific implementation of {@link IResourceDeltaVisitor} that ignores not
@@ -66,6 +67,9 @@ public class GitResourceDeltaVisitor implements IResourceDeltaVisitor {
 
 	public boolean visit(IResourceDelta delta) throws CoreException {
 		final IResource resource = delta.getResource();
+		// Don't include ignored resources
+		if (Team.isIgnoredHint(resource))
+			return false;
 		// If the resource is not part of a project under
 		// Git revision control
 		final RepositoryMapping mapping = RepositoryMapping

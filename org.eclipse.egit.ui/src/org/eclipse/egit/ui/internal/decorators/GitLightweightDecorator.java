@@ -51,6 +51,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.team.core.Team;
 import org.eclipse.team.internal.ui.Utils;
 import org.eclipse.team.ui.ISharedImages;
 import org.eclipse.team.ui.TeamImages;
@@ -205,6 +206,11 @@ public class GitLightweightDecorator extends LabelProvider implements
 		final RepositoryMapping mapping = RepositoryMapping
 				.getMapping(resource);
 		if (mapping == null)
+			return null;
+
+		// Don't decorate ignored resources (e.g. bin folder content)
+		if (resource.getType() != IResource.PROJECT
+				&& Team.isIgnoredHint(resource))
 			return null;
 
 		// Cannot decorate linked resources
