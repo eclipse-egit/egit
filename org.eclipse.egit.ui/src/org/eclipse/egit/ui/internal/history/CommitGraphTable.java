@@ -62,6 +62,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revplot.PlotCommit;
@@ -764,9 +765,16 @@ class CommitGraphTable {
 
 			if (selectionSize == 1) {
 				popupMgr.add(new Separator());
-				popupMgr.add(getCommandContributionItem(
-						HistoryViewCommands.CHECKOUT,
-						UIText.GitHistoryPage_CheckoutMenuLabel));
+				if (hasMultipleRefNodes()) {
+					popupMgr.add(getCommandContributionItem(
+							HistoryViewCommands.CHECKOUT,
+							UIText.GitHistoryPage_CheckoutMenuLabel2));
+				} else {
+					popupMgr.add(getCommandContributionItem(
+							HistoryViewCommands.CHECKOUT,
+							UIText.GitHistoryPage_CheckoutMenuLabel));
+				}
+
 				popupMgr.add(getCommandContributionItem(
 						HistoryViewCommands.PUSH_COMMIT,
 						UIText.GitHistoryPage_pushCommit));
@@ -861,6 +869,25 @@ class CommitGraphTable {
 			popupMgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 			popupMgr.add(copyAction);
 			popupMgr.add(new Separator());
+		}
+
+		private boolean hasMultipleRefNodes() {
+			try {
+				Map<String, Ref> branches = input.getRepository()
+						.getRefDatabase().getRefs(Constants.R_HEADS);
+				int count = 0;
+				for (Ref branch : branches.values()) {
+					if (branch.getLeaf().getObjectId()
+							.equals(((RevCommit) ((IStructuredSelection) selectionProvider
+									.getSelection()).getFirstElement()).getId()))
+						count++;
+				}
+				return (count > 1);
+
+			} catch (IOException e) {
+				// ignore here
+			}
+			return false;
 		}
 
 		private CommandContributionItem getCommandContributionItem(
