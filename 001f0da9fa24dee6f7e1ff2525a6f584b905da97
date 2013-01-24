@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPH///xk\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-24T21:34:29Z",
+      "side": 1,
+      "message": "reformat the commit message and follow commit message guidelines for formatting [1]\n\n[1] http://wiki.eclipse.org/EGit/Contributor_Guide#Commit_message_guidelines",
+      "revId": "001f0da9fa24dee6f7e1ff2525a6f584b905da97",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
