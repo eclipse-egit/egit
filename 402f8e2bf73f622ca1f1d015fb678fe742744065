@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPH///nQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/DiscardChangesOperation.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-25T15:39:26Z",
+      "side": 0,
+      "message": "The message should also be removed from CoreText.",
+      "revId": "402f8e2bf73f622ca1f1d015fb678fe742744065",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

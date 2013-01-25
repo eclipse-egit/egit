@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPH///no\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitResourceDeltaTestHelper.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-25T15:39:26Z",
+      "side": 1,
+      "message": "Could put these println statements in an `if (expected.length !\u003d changedResources.size())`? We shouldn\u0027t be printing things in general (but in case of a test failure, it\u0027s ok).",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH///nc\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ContainerTreeIterator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-25T15:39:26Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary, as it\u0027s already checked by callers with findContainer.",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH///nA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-25T15:39:26Z",
+      "side": 1,
+      "message": "If we really want to add that API (although there are no callers), it should have a @since 2.3.",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH///m4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-25T15:39:26Z",
+      "side": 1,
+      "message": "Why getRawLocation and not getLocation here?",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH///mo\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/AssumeUnchangedActionHandler.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-25T15:39:26Z",
+      "side": 1,
+      "message": "This is not needed, AssumeUnchangedOperation can handle multiple repositories.",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
