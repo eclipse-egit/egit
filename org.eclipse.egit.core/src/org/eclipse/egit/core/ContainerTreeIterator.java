@@ -271,8 +271,9 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 
 			switch (f.getType()) {
 			case IResource.FILE:
-				if (FS.DETECTED.supportsExecute()
-						&& FS.DETECTED.canExecute(asFile()))
+				File file = asFile();
+				if (FS.DETECTED.supportsExecute() && file != null
+						&& FS.DETECTED.canExecute(file))
 					mode = FileMode.EXECUTABLE_FILE;
 				else
 					mode = FileMode.REGULAR_FILE;
@@ -308,9 +309,13 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 		@Override
 		public long getLength() {
 			if (length < 0)
-				if (rsrc instanceof IFile)
-					length = asFile().length();
-				else
+				if (rsrc instanceof IFile) {
+					File file = asFile();
+					if (file != null)
+						length = file.length();
+					else
+						length = 0;
+				} else
 					length = 0;
 			return length;
 		}
@@ -342,18 +347,21 @@ public class ContainerTreeIterator extends WorkingTreeIterator {
 			return rsrc;
 		}
 
+		/**
+		 * @return file of the resource or null
+		 */
 		private File asFile() {
-			return ((IFile) rsrc).getLocation().toFile();
+			return ContainerTreeIterator.asFile(rsrc);
 		}
 	}
 
-	private File asFile() {
-		final IPath location = node.getLocation();
+	private static File asFile(IResource resource) {
+		final IPath location = resource.getLocation();
 		return location != null ? location.toFile() : null;
 	}
 
 	protected byte[] idSubmodule(Entry e) {
-		File nodeFile = asFile();
+		File nodeFile = asFile(node);
 		if (nodeFile != null)
 			return idSubmodule(nodeFile, e);
 		return super.idSubmodule(e);
