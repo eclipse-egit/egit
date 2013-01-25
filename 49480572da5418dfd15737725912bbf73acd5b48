@@ -33,6 +33,24 @@
       "revId": "49480572da5418dfd15737725912bbf73acd5b48",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH///d4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-01-25T23:57:19Z",
+      "side": 1,
+      "message": "For the sake of the IP review of the downstream commits, I think it\u0027d better to do that as a followup. For very large number of files we could definitely see a huge performance boost there.",
+      "parentUuid": "AABOPH///lg\u003d",
+      "revId": "49480572da5418dfd15737725912bbf73acd5b48",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
