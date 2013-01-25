@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPH///lU\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-25T16:37:05Z",
+      "side": 1,
+      "message": "Could we rename this to make it clear that this only returns projects and workspace root? In contrast to findContainersForLocationURI, it does not return folders.\n\nDo we even need to return the workspace root? If not, it could just be called findProject.",
+      "revId": "49480572da5418dfd15737725912bbf73acd5b48",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH///lg\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/util/ProjectUtil.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-25T16:37:05Z",
+      "side": 1,
+      "message": "How about doing the getProjects() and sorting only once in the getProjectsContaining case instead of for each file?",
+      "revId": "49480572da5418dfd15737725912bbf73acd5b48",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
