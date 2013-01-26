@@ -426,6 +426,9 @@ public class UIText extends NLS {
 	public static String GitHistoryPage_CheckoutMenuLabel;
 
 	/** */
+	public static String GitHistoryPage_CheckoutMenuLabel2;
+
+	/** */
 	public static String GitHistoryPage_CompareModeMenuLabel;
 
 	/** */
