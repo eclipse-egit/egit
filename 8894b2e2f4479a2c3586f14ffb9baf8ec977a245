@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "AABOPH///ZI\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/GitResourceDeltaTestHelper.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2013-01-26T18:49:56Z",
+      "side": 1,
+      "message": "I just removed these print statements, I did not mean to leave them here.\nThis will be visible in the rebased patch set 22 as I forgot to do it before.",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPH///nc\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ContainerTreeIterator.java",
         "patchSetId": 20
@@ -65,6 +82,23 @@
       "side": 1,
       "message": "I would agree that checking doesn\u0027t hurt in general, but at this point it\u0027s already too late to check, because at least the current entry is already bad (linked). Even though we wouldn\u0027t create any child entries, it\u0027s already a bug. So it should be checked before even creating a ContainerTreeIterator (which is what is done in findContainer).\n\nBy the way, JGit itself never creates such a ContainerTreeIterator, it\u0027s all under our control here.\n\nIt doesn\u0027t hurt to add a big warning to the Javadoc of the constructors to NOT pass linked resources.",
       "parentUuid": "AABOPH///as\u003d",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH///Xk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ContainerTreeIterator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2013-01-26T18:49:56Z",
+      "side": 1,
+      "message": "I don\u0027t know enough yet about the inner workings of jgit and iterators/treewalk to be as sure as you are, hence my overly cautious approach here. This class inherits from a jgit class and I assume it could be used within jgit operations.\nThere is a case I\u0027m having trouble understanding: in your test where you created a linked folder to the parent folder, have you tried using comparing the project with previous version? The problem I see is that the linked folder appears in the resulting git tree compare view, and I\u0027m still searching why it appears. Linked files do not appear, so it\u0027s an issue with linked folders only.\nAnyway, I\u0027m fine removing this check if you vouch for it, and since it does not help in the case I just mentioned, so there must be something else related to containers and iterators/treewalk that makes linked folder appear in the git tree compare view... Any idea?",
       "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
