@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "AABOPH///as\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ContainerTreeIterator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2013-01-26T14:30:44Z",
+      "side": 1,
+      "message": "Checking the call hierarchy I can see what you mean.\nHowever what\u0027s the hurt of leaving this safety check? Is it a performance penalty to have this checked each time a ContainerTreeIterator is instantiated? In other words are ContainerTreeIterators created so frequently that it\u0027s an issue?\nThe primary reason for me to add this check is that instances of this class are used internally by jgit, and I wanted to make sure jgit never received any linked resources ever, meaning that tree walks should not follow linked resources and stick to the file system. So if there is no specifically good reason I\u0027d rather leave this check in place just in case.",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPH///nA\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
         "patchSetId": 20
@@ -47,6 +64,23 @@
       "writtenOn": "2013-01-25T15:39:26Z",
       "side": 1,
       "message": "If we really want to add that API (although there are no callers), it should have a @since 2.3.",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH///ak\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2013-01-26T14:30:44Z",
+      "side": 1,
+      "message": "There are no callers within egit indeed. But the description of the behavior before clearly stated that linked resources were traversed. This was an issue in some specific cases, so I disabled this default behavior, and made the handling of linked resource explicit in the API. I have no idea if anything out there depends on the default behavior of traversing linked resources, but if one does, the way forward is simple. BTW, how do we flag that this must be mentioned in the What\u0027s new/release notes?",
       "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -70,6 +104,23 @@
     },
     {
       "key": {
+        "uuid": "AABOPH///Zk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryMapping.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2013-01-26T14:30:44Z",
+      "side": 1,
+      "message": "Done. Not sure what I was thinking.",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPH///mo\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/AssumeUnchangedActionHandler.java",
         "patchSetId": 20
@@ -81,6 +132,23 @@
       "writtenOn": "2013-01-25T15:39:26Z",
       "side": 1,
       "message": "This is not needed, AssumeUnchangedOperation can handle multiple repositories.",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH///ZY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/AssumeUnchangedActionHandler.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2013-01-26T14:30:44Z",
+      "side": 1,
+      "message": "Done.",
       "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
