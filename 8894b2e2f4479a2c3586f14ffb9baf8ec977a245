@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPH///Xw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ContainerTreeIterator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-26T17:22:00Z",
+      "side": 1,
+      "message": "I would agree that checking doesn\u0027t hurt in general, but at this point it\u0027s already too late to check, because at least the current entry is already bad (linked). Even though we wouldn\u0027t create any child entries, it\u0027s already a bug. So it should be checked before even creating a ContainerTreeIterator (which is what is done in findContainer).\n\nBy the way, JGit itself never creates such a ContainerTreeIterator, it\u0027s all under our control here.\n\nIt doesn\u0027t hurt to add a big warning to the Javadoc of the constructors to NOT pass linked resources.",
+      "parentUuid": "AABOPH///as\u003d",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPH///nA\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
         "patchSetId": 20
@@ -81,6 +99,24 @@
       "writtenOn": "2013-01-26T14:30:44Z",
       "side": 1,
       "message": "There are no callers within egit indeed. But the description of the behavior before clearly stated that linked resources were traversed. This was an issue in some specific cases, so I disabled this default behavior, and made the handling of linked resource explicit in the API. I have no idea if anything out there depends on the default behavior of traversing linked resources, but if one does, the way forward is simple. BTW, how do we flag that this must be mentioned in the What\u0027s new/release notes?",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH///Xs\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-26T17:22:00Z",
+      "side": 1,
+      "message": "Ok. Well, the best way is to add it yourself to the following page as soon as this change is accepted:\n\nhttp://wiki.eclipse.org/EGit/New_and_Noteworthy/2.3",
+      "parentUuid": "AABOPH///ak\u003d",
       "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
