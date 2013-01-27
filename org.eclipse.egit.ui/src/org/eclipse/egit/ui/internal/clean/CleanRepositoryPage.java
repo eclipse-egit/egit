@@ -19,7 +19,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ArrayContentProvider;

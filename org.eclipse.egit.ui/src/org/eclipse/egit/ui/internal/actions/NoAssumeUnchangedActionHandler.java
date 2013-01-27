@@ -17,7 +17,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.AssumeUnchangedOperation;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 
 /**
  * This operation unsets the assume-valid bit in the index for the selected

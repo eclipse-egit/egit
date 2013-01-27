@@ -15,7 +15,7 @@ import java.io.IOException;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIIcons;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectLoader;

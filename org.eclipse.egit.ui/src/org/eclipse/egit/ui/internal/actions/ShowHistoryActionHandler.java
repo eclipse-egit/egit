@@ -12,7 +12,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.ui.history.IHistoryView;

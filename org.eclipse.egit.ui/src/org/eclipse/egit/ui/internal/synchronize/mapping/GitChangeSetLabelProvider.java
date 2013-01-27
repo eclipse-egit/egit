@@ -16,8 +16,8 @@ import java.util.Map.Entry;
 
 import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Commit;
 import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
 import org.eclipse.jface.preference.IPreferenceStore;

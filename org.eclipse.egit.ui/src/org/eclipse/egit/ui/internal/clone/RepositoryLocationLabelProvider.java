@@ -13,7 +13,7 @@ package org.eclipse.egit.ui.internal.clone;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.egit.ui.UIIcons;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.clone.GitCloneSourceProviderExtension.CloneSourceProvider;
 import org.eclipse.egit.ui.internal.provisional.wizards.RepositoryServerInfo;
 import org.eclipse.jface.viewers.LabelProvider;

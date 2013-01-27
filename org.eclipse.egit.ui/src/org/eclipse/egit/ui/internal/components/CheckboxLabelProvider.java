@@ -13,7 +13,7 @@ import static org.eclipse.jface.resource.ImageDescriptor.createFromImageData;
 import static org.eclipse.jface.resource.JFaceResources.getResources;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.egit.ui.UIIcons;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.swt.SWT;

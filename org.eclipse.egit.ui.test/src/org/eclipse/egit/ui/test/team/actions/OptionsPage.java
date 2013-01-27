@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test.team.actions;
 
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 

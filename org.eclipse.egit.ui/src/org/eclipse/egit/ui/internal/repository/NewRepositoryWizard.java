@@ -15,7 +15,7 @@ import java.io.IOException;
 
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryCache;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Constants;

@@ -13,7 +13,7 @@ import java.io.IOException;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.reflog.ReflogView;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;

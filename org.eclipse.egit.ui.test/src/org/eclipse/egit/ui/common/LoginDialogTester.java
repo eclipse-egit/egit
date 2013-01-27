@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.common;
 
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 

@@ -13,7 +13,6 @@ import java.io.IOException;
 
 import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jgit.transport.URIish;
 

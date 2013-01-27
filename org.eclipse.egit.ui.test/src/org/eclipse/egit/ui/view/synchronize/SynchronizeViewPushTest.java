@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.eclipse.egit.core.op.FetchOperation;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;

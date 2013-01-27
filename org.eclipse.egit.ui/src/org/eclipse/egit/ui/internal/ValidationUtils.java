@@ -12,7 +12,6 @@ package org.eclipse.egit.ui.internal;
 import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.osgi.util.NLS;

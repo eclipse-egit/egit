@@ -22,7 +22,7 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.op.IgnoreOperation;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.jgit.lib.Repository;
 

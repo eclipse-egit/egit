@@ -9,11 +9,12 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.ui;
+package org.eclipse.egit.ui.internal;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.eclipse.egit.ui.Activator;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 /**

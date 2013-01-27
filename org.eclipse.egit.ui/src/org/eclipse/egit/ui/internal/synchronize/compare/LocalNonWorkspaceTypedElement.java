@@ -30,7 +30,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jgit.events.IndexChangedEvent;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.team.internal.ui.synchronize.EditableSharedDocumentAdapter;

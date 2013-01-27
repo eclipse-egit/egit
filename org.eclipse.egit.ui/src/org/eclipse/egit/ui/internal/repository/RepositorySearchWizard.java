@@ -13,7 +13,7 @@ package org.eclipse.egit.ui.internal.repository;
 import java.util.Collection;
 import java.util.Set;
 
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.wizard.Wizard;
 
 /**

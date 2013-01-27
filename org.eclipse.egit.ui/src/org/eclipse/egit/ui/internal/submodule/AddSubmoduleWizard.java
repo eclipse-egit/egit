@@ -10,9 +10,9 @@
  *****************************************************************************/
 package org.eclipse.egit.ui.internal.submodule;
 
-import org.eclipse.egit.ui.UIIcons;
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.SecureStoreUtils;
+import org.eclipse.egit.ui.internal.UIIcons;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.lib.Repository;

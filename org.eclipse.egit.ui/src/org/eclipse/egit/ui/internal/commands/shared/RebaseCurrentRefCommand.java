@@ -19,7 +19,7 @@ import java.io.IOException;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.IEvaluationContext;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.BasicConfigurationDialog;
 import org.eclipse.egit.ui.internal.dialogs.RebaseTargetSelectionDialog;
 import org.eclipse.egit.ui.internal.rebase.RebaseHelper;

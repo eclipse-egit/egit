@@ -12,7 +12,7 @@ package org.eclipse.egit.ui.internal.submodule;
 
 import java.io.File;
 
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.wizard.WizardPage;

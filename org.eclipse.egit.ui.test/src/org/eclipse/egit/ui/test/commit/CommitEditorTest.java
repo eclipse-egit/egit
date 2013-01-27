@@ -20,8 +20,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
