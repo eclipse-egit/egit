@@ -8,6 +8,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize.mapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -26,22 +29,21 @@ class GitTreeTraversal extends ResourceTraversal {
 	}
 
 	private static IResource[] getResourcesImpl(GitModelObject[] children) {
-		IResource[] result = new IResource[children.length];
+		List<IResource> result = new ArrayList<IResource>(children.length);
 
-		for (int i = 0; i < children.length; i++) {
-			IResource resource = null;
-			IPath childPath = children[i].getLocation();
-			if (children[i].isContainer())
-				resource = ROOT.getContainerForLocation(childPath);
+		for (GitModelObject object : children) {
+			IPath location = object.getLocation();
+			IResource resource;
+			if (object.isContainer())
+				resource = ROOT.getContainerForLocation(location);
 			else
-				resource = ROOT.getFileForLocation(childPath);
+				resource = ROOT.getFileForLocation(location);
 
 			if (resource != null)
-				result[i] = resource;
+				result.add(resource);
 		}
 
-		return result;
-
+		return result.toArray(new IResource[result.size()]);
 	}
 
 }
