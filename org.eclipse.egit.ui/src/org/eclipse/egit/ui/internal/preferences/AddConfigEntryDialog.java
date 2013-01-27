@@ -12,7 +12,7 @@ package org.eclipse.egit.ui.internal.preferences;
 
 import java.util.StringTokenizer;
 
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;

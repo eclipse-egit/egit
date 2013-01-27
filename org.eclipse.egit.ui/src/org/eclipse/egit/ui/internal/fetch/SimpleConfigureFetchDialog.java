@@ -19,7 +19,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.push.RefSpecDialog;
 import org.eclipse.egit.ui.internal.push.RefSpecWizard;
 import org.eclipse.egit.ui.internal.repository.SelectUriWizard;

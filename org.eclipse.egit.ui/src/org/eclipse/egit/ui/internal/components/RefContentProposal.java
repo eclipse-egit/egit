@@ -12,7 +12,7 @@ package org.eclipse.egit.ui.internal.components;
 import java.io.IOException;
 
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;

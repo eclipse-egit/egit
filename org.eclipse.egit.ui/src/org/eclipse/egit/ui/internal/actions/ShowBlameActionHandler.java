@@ -17,7 +17,7 @@ import org.eclipse.core.resources.IStorage;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.blame.BlameOperation;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;

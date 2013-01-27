@@ -18,7 +18,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.op.UntrackOperation;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 
 /**
  * An action to remove files from a Git repository. The removal does not alter

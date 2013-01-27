@@ -17,7 +17,7 @@ package org.eclipse.egit.ui.internal.dialogs;
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Constants;
