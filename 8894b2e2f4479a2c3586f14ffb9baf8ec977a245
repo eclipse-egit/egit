@@ -123,6 +123,23 @@
     },
     {
       "key": {
+        "uuid": "AABOPH///R0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ContainerTreeIterator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 507
+      },
+      "writtenOn": "2013-01-27T20:23:44Z",
+      "side": 1,
+      "message": "I\u0027ve made the change you suggested and indeed the linked resources no longer appear in the git tree view. I put your name in the license header, as I don\u0027t like to take credit for someone else\u0027s work, however small it is. Hope that\u0027s fine with you. This is in patch set 23, rebased.",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPH///nA\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
         "patchSetId": 20
