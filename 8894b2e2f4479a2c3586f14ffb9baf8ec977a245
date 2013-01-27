@@ -105,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPH///WI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/ContainerTreeIterator.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-27T12:10:50Z",
+      "side": 1,
+      "message": "JGit just wants a WorkingTreeIterator. In EGit, we typically pass e.g. an AdaptableFileTreeIterator. For each iterator, the entries are passed via init() to the base class. Later, JGit calls createSubtreeIterator for each entry, where we can again return subclasses of AbstractTreeIterator. So JGit never directly creates an EGit iterator, it\u0027s always under our control.\n\nAs to the problem with the compare tree view, the problem is in WorkbenchTreeContentProvider\u0027s getChildren, where the following should be added to the children for loop:\n\n\t\t\t\tIResource childResource \u003d (IResource) child;\n\t\t\t\tif (childResource.isLinked())\n\t\t\t\t\tcontinue;",
+      "parentUuid": "AABOPH///Xk\u003d",
+      "revId": "8894b2e2f4479a2c3586f14ffb9baf8ec977a245",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPH///nA\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/project/RepositoryFinder.java",
         "patchSetId": 20
