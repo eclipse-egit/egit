@@ -173,9 +173,9 @@ public class ProjectUtilTest extends GitTestCase {
 		File test1 = new File(project.getProject().getLocation().toFile(), "xxx");
 		File test2 = new File(repository.getRepository().getWorkTree(), "xxx");
 
-		assertNull(ProjectUtil.findContainer(tmp));
-		assertEquals(project.getProject(), ProjectUtil.findContainer(test1));
-		assertEquals(ResourcesPlugin.getWorkspace().getRoot(), ProjectUtil.findContainer(test2));
+		assertNull(ProjectUtil.findProjectOrWorkspaceRoot(tmp));
+		assertEquals(project.getProject(), ProjectUtil.findProjectOrWorkspaceRoot(test1));
+		assertEquals(ResourcesPlugin.getWorkspace().getRoot(), ProjectUtil.findProjectOrWorkspaceRoot(test2));
 	}
 
 	@Test
