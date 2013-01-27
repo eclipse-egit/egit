@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.Vector;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.eclipse.core.resources.IProject;
@@ -32,7 +33,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.EclipseGitProgressTransformer;
@@ -71,6 +74,10 @@ public class IndexDiffCacheEntry {
 	private volatile IndexDiffData indexDiffData;
 
 	private Job reloadJob;
+
+	private volatile boolean reloadJobIsInitializing;
+
+	private List<Job> updateJobs = new Vector<Job>();
 
 	private DirCache lastIndex;
 
@@ -247,17 +254,28 @@ public class IndexDiffCacheEntry {
 	}
 
 	private void scheduleReloadJob(final String trigger) {
-		if (reloadJob != null)
+		if (reloadJob != null) {
+			if (reloadJobIsInitializing)
+				return;
 			reloadJob.cancel();
+		}
+		for (Job updateJob : updateJobs)
+			updateJob.cancel();
+
 		if (!checkRepository())
 			return;
 		reloadJob = new Job(getReloadJobName()) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				waitForWorkspaceLock(monitor);
+				try {
+					reloadJobIsInitializing = true;
+					waitForWorkspaceLock(monitor);
+					lock.lock();
+				} finally {
+					reloadJobIsInitializing = false;
+				}
 				if (monitor.isCanceled())
 					return Status.CANCEL_STATUS;
-				lock.lock();
 				try {
 					long startTime = System.currentTimeMillis();
 					IndexDiffData result = calcIndexDiffDataFull(monitor, getName());
@@ -332,7 +350,9 @@ public class IndexDiffCacheEntry {
 			final Collection<IResource> resourcesToUpdate) {
 		if (!checkRepository())
 			return;
-		Job job = new Job(getReloadJobName()) {
+		if (reloadJob != null && reloadJobIsInitializing)
+			return;
+		Job job = new Job(getUpdateJobName()) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				waitForWorkspaceLock(monitor);
@@ -378,6 +398,12 @@ public class IndexDiffCacheEntry {
 			}
 
 		};
+		updateJobs.add(job);
+		job.addJobChangeListener(new JobChangeAdapter() {
+			public void done(IJobChangeEvent event) {
+				updateJobs.remove(event.getJob());
+			}
+		});
 		job.schedule();
 	}
 
@@ -457,6 +483,13 @@ public class IndexDiffCacheEntry {
 		String repoName = Activator.getDefault().getRepositoryUtil()
 				.getRepositoryName(repository);
 		return MessageFormat.format(CoreText.IndexDiffCacheEntry_reindexing, repoName);
+	}
+
+	private String getUpdateJobName() {
+		String repoName = Activator.getDefault().getRepositoryUtil()
+				.getRepositoryName(repository);
+		return MessageFormat.format(
+				CoreText.IndexDiffCacheEntry_reindexingIncrementally, repoName);
 	}
 
 	private void createResourceChangeListener() {
