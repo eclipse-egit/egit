@@ -278,6 +278,9 @@ public class CoreText extends NLS {
 	public static String IndexDiffCacheEntry_reindexing;
 
 	/** */
+	public static String IndexDiffCacheEntry_reindexingincrementally;
+
+	/** */
 	public static String IndexFileRevision_errorLookingUpPath;
 
 	/** */
