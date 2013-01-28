@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Chris Aniszczyk <caniszczyk@gmail.com> - initial API and implementation
  *     Manuel Doninger <manuel@doninger.net>
@@ -17,16 +17,15 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.ICommitMessageProvider;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionContext;
-import org.eclipse.mylyn.internal.team.ui.ContextChangeSet;
 import org.eclipse.mylyn.tasks.core.ITask;
 import org.eclipse.mylyn.tasks.ui.TasksUi;
+import org.eclipse.mylyn.team.ui.TeamUiUtil;
 
 
 /**
  * Gets the active task and combines the description and title with
  * the commit message template defined in the preferences
  */
-@SuppressWarnings("restriction")
 public class MylynCommitMessageProvider implements ICommitMessageProvider {
 
 	/**
@@ -40,9 +39,7 @@ public class MylynCommitMessageProvider implements ICommitMessageProvider {
 		if (task == null)
 			return message;
 		boolean checkTaskRepository = true;
-		message = ContextChangeSet.getComment(checkTaskRepository, task,
-				resources);
-
+		message = TeamUiUtil.getComment(checkTaskRepository, task, resources);
 		return message;
 	}
 
