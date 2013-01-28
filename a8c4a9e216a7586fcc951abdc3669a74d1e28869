@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPH///G4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitTreeTraversal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2013-01-28T19:37:37Z",
+      "side": 1,
+      "message": "do you have any practical reason for replacing array with array list?\n\ntheoretically simple array should consume less memory and be faster then creating ArrayList object, adding objects and converting it back to array.",
+      "revId": "a8c4a9e216a7586fcc951abdc3669a74d1e28869",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
