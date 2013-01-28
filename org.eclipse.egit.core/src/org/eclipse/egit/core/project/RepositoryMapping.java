@@ -4,7 +4,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2008, Shunichi Fuji <palglowr@gmail.com>
  * Copyright (C) 2008, Google Inc.
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2013, François Rey <eclipse.org_@_francois_._rey_._name>
  *
  * All rights reserved. This program and the accompanying materials
@@ -205,8 +205,10 @@ public class RepositoryMapping {
 	 * bother.
 	 *
 	 * @param rsrc
-	 * @return the path relative to the Git repository, including base name.
-	 *         <code>null</code> if the path cannot be determined.
+	 * @return the path relative to the Git repository, including base name. An
+	 *         empty string (<code>""</code>) if passed resource corresponds to
+	 *         working directory (root). <code>null</code> if the path cannot be
+	 *         determined.
 	 */
 	public String getRepoRelativePath(final IResource rsrc) {
 		IPath location = rsrc.getLocation();
@@ -222,8 +224,10 @@ public class RepositoryMapping {
 	 * bother.
 	 *
 	 * @param location
-	 * @return the path relative to the Git repository, including base name.
-	 *         <code>null</code> if the path cannot be determined.
+	 * @return the path relative to the Git repository, including base name. An
+	 *         empty string (<code>""</code>) if passed location corresponds to
+	 *         working directory (root). <code>null</code> if the path cannot be
+	 *         determined.
 	 */
 	public String getRepoRelativePath(IPath location) {
 		final int pfxLen = workdirPrefix.length();
