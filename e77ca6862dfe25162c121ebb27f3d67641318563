@@ -16,6 +16,24 @@
       "revId": "e77ca6862dfe25162c121ebb27f3d67641318563",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOLn///90\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-01-28T08:32:21Z",
+      "side": 1,
+      "message": "As far as I understand the method calculateCommitMessage is used to ask the provided instances of ICommitMessageProvider. This is only done if there is no message set yet. So the method name is misleading.\n\nI\u0027ll push another implementation of findOffsetofChangeIdLine() in JGit in a subsequent commit.",
+      "parentUuid": "AABOLX///wM\u003d",
+      "revId": "e77ca6862dfe25162c121ebb27f3d67641318563",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
