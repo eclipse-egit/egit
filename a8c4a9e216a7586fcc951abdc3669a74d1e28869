@@ -16,6 +16,24 @@
       "revId": "a8c4a9e216a7586fcc951abdc3669a74d1e28869",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//+8I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/mapping/GitTreeTraversal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-01-29T10:15:50Z",
+      "side": 1,
+      "message": "Yes. Because of the `if (resource !\u003d null)` below, the old code with the array could contain null values, which could cause problems later.",
+      "parentUuid": "AABOPH///G4\u003d",
+      "revId": "a8c4a9e216a7586fcc951abdc3669a74d1e28869",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
