@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2013 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
+ *    Tobias Pfeifer (SAP AG) - customizable font and color for the first header line - https://bugs.eclipse.org/397723
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
@@ -16,6 +17,9 @@ import static org.eclipse.egit.ui.UIPreferences.THEME_DiffHunkBackgroundColor;
 import static org.eclipse.egit.ui.UIPreferences.THEME_DiffHunkForegroundColor;
 import static org.eclipse.egit.ui.UIPreferences.THEME_DiffRemoveBackgroundColor;
 import static org.eclipse.egit.ui.UIPreferences.THEME_DiffRemoveForegroundColor;
+import static org.eclipse.egit.ui.UIPreferences.THEME_DiffHeadlineBackgroundColor;
+import static org.eclipse.egit.ui.UIPreferences.THEME_DiffHeadlineForegroundColor;
+import static org.eclipse.egit.ui.UIPreferences.THEME_DiffHeadlineFont;
 
 import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter.DiffStyleRange;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -23,6 +27,7 @@ import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.jface.resource.ColorDescriptor;
 import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.jface.resource.DeviceResourceManager;
+import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.source.CompositeRuler;
@@ -38,6 +43,7 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.EditorsUI;
@@ -71,6 +77,12 @@ public class DiffViewer extends SourceViewer {
 
 	private Color removeForegroundColor;
 
+	private Color headlineBackgroundColor;
+
+	private Color headlineForegroundColor;
+
+	private Font headlineFont;
+
 	private IPropertyChangeListener themeListener = new IPropertyChangeListener() {
 
 		public void propertyChange(PropertyChangeEvent event) {
@@ -80,9 +92,13 @@ public class DiffViewer extends SourceViewer {
 					|| THEME_DiffAddForegroundColor.equals(property)
 					|| THEME_DiffHunkBackgroundColor.equals(property)
 					|| THEME_DiffHunkForegroundColor.equals(property)
+					|| THEME_DiffHeadlineBackgroundColor.equals(property)
+					|| THEME_DiffHeadlineForegroundColor.equals(property)
+					|| THEME_DiffHeadlineFont.equals(property)
 					|| THEME_DiffRemoveBackgroundColor.equals(property)
 					|| THEME_DiffRemoveForegroundColor.equals(property)) {
 				refreshDiffColors();
+				refreshDiffFonts();
 				refreshStyleRanges();
 			}
 		}
@@ -125,7 +141,14 @@ public class DiffViewer extends SourceViewer {
 			}
 		});
 		refreshDiffColors();
+		refreshDiffFonts();
 		styleViewer();
+	}
+
+	private void refreshDiffFonts() {
+		FontRegistry reg = PlatformUI.getWorkbench().getThemeManager()
+				.getCurrentTheme().getFontRegistry();
+		this.headlineFont = reg.get(THEME_DiffHeadlineFont);
 	}
 
 	private void refreshDiffColors() {
@@ -137,6 +160,8 @@ public class DiffViewer extends SourceViewer {
 		this.removeForegroundColor = reg.get(THEME_DiffRemoveForegroundColor);
 		this.hunkBackgroundColor = reg.get(THEME_DiffHunkBackgroundColor);
 		this.hunkForegroundColor = reg.get(THEME_DiffHunkForegroundColor);
+		this.headlineBackgroundColor = reg.get(THEME_DiffHeadlineBackgroundColor);
+		this.headlineForegroundColor = reg.get(THEME_DiffHeadlineForegroundColor);
 	}
 
 	private void initListeners() {
@@ -219,6 +244,11 @@ public class DiffViewer extends SourceViewer {
 			case HUNK:
 				range.foreground = hunkForegroundColor;
 				range.lineBackground = hunkBackgroundColor;
+				break;
+			case HEADLINE:
+				range.font = headlineFont;
+				range.foreground = headlineForegroundColor;
+				range.lineBackground = headlineBackgroundColor;
 				break;
 			default:
 				break;

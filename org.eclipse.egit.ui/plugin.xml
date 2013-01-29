@@ -661,6 +661,35 @@
             %Theme_DiffRemoveForegroundColor_description
          </description>
       </colorDefinition>
+      <colorDefinition
+            categoryId="org.eclipse.egit.ui.GitTheme"
+            id="org.eclipse.egit.ui.DiffHeadlineForegroundColor"
+            isEditable="true"
+            label="%Theme_DiffHeadlineForegroundColor_label"
+            value="COLOR_BLACK">
+         <description>
+            %Theme_DiffHeadlineForegroundColor_description
+         </description>
+      </colorDefinition>
+      <colorDefinition
+            categoryId="org.eclipse.egit.ui.GitTheme"
+            id="org.eclipse.egit.ui.DiffHeadlineBackgroundColor"
+            isEditable="true"
+            label="%Theme_DiffHeadlineBackgroundColor_label"
+            value="170,170,170">
+         <description>
+            %Theme_DiffHeadlineBackgroundColor_description
+         </description>
+      </colorDefinition>
+      <fontDefinition
+            categoryId="org.eclipse.egit.ui.GitTheme"
+            defaultsTo="org.eclipse.jface.textfont"
+            id="org.eclipse.egit.ui.DiffHeadlineFont"
+            label="%Theme_DiffHeadlineFont_label">
+         <description>
+            %Theme_DiffHeadlineFont_description
+         </description>
+      </fontDefinition>
    </extension>
 
 <!-- ********** QuickDiff text editor support ************** -->
