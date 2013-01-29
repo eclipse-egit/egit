@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2006, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,6 +17,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.core.history.provider.FileRevision;
+import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -63,6 +65,22 @@ public abstract class GitFileRevision extends FileRevision {
 	 */
 	public static GitFileRevision inIndex(final Repository db, final String path) {
 		return new IndexFileRevision(db, path);
+	}
+
+	/**
+	 * @param db
+	 *            the repository which contains the index to use.
+	 * @param path
+	 *            path of the resource in the index
+	 * @param stage
+	 *            stage of the index entry to get, use one of the
+	 *            {@link DirCacheEntry} constants (e.g.
+	 *            {@link DirCacheEntry#STAGE_2})
+	 * @return revision implementation for the given path in the index
+	 */
+	public static GitFileRevision inIndex(final Repository db,
+			final String path, int stage) {
+		return new IndexFileRevision(db, path, stage);
 	}
 
 	private final String path;
