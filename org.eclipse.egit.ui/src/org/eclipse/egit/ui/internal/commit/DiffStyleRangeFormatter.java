@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.EditList;
 import org.eclipse.jgit.diff.RawText;
+import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.graphics.Color;
@@ -58,6 +60,11 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 			 * Hunk line
 			 */
 			HUNK,
+
+			/**
+			 * Headline
+			 */
+			HEADLINE,
 
 			/**
 			 * Other line
@@ -227,6 +234,20 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 			stream.flushLine();
 			range.length = stream.offset - range.start;
 		}
+	}
+
+	/**
+	 * @see org.eclipse.jgit.diff.DiffFormatter#writeHeadLine(ByteArrayOutputStream
+	 *      o, ChangeType type, String oldPath, String newPath)
+	 */
+	@Override
+	protected void writeHeadLine(ByteArrayOutputStream o, ChangeType type,
+			String oldPath, String newPath)
+			throws IOException {
+		DiffStyleRange range = addRange(Type.HEADLINE);
+		super.writeHeadLine(o, type, oldPath, newPath);
+		stream.flushLine();
+		range.length = stream.offset - range.start;
 	}
 
 	@Override
