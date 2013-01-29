@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2011 GitHub Inc.
+ *  Copyright (c) 2011, 2013 GitHub Inc. and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,9 +7,11 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
+ *    Tobias Pfeifer (SAP AG) - customizable font and color for the first header line - https://bugs.eclipse.org/397723
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.EditList;
 import org.eclipse.jgit.diff.RawText;
+import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.graphics.Color;
@@ -58,6 +61,11 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 			 * Hunk line
 			 */
 			HUNK,
+
+			/**
+			 * Headline
+			 */
+			HEADLINE,
 
 			/**
 			 * Other line
@@ -189,12 +197,18 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 	 * Create and add diff style range
 	 *
 	 * @param type
+	 *            the {@link Type}
+	 * @param start
+	 *            start offset
+	 * @param end
+	 *            end offset
 	 * @return added range
 	 */
-	protected DiffStyleRange addRange(Type type) {
+	protected DiffStyleRange addRange(Type type, int start, int end) {
 		DiffStyleRange range = new DiffStyleRange();
-		range.start = stream.offset;
+		range.start = start;
 		range.diffType = type;
+		range.length = end - start;
 		ranges.add(range);
 		return range;
 	}
@@ -205,10 +219,10 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 	 */
 	protected void writeHunkHeader(int aStartLine, int aEndLine,
 			int bStartLine, int bEndLine) throws IOException {
-		DiffStyleRange range = addRange(Type.HUNK);
+		int start = stream.offset;
 		super.writeHunkHeader(aStartLine, aEndLine, bStartLine, bEndLine);
 		stream.flushLine();
-		range.length = stream.offset - range.start;
+		addRange(Type.HUNK, start, stream.offset);
 	}
 
 	/**
@@ -221,12 +235,28 @@ public class DiffStyleRangeFormatter extends DiffFormatter {
 			super.writeLine(prefix, text, cur);
 			stream.flushLine();
 		} else {
-			DiffStyleRange range = addRange(prefix == '+' ? Type.ADD
-					: Type.REMOVE);
+			Type type = prefix == '+' ? Type.ADD : Type.REMOVE;
+			int start = stream.offset;
 			super.writeLine(prefix, text, cur);
 			stream.flushLine();
-			range.length = stream.offset - range.start;
+			addRange(type, start, stream.offset);
 		}
+	}
+
+	/**
+	 * @see org.eclipse.jgit.diff.DiffFormatter#formatGitDiffFirstHeaderLine(ByteArrayOutputStream
+	 *      o, ChangeType type, String oldPath, String newPath)
+	 */
+	@Override
+	protected void formatGitDiffFirstHeaderLine(ByteArrayOutputStream o,
+			final ChangeType type, final String oldPath, final String newPath)
+			throws IOException {
+		stream.flushLine();
+		int offset = stream.offset;
+		int start = o.size();
+		super.formatGitDiffFirstHeaderLine(o, type, oldPath, newPath);
+		int end = o.size();
+		addRange(Type.HEADLINE, offset + start, offset + end);
 	}
 
 	@Override
