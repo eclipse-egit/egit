@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPH//+Gk\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-31T21:59:04Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "9353bdca24db86e2fb528fc6ffb1930bb371e0b9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//+GM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffStyleRangeFormatter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-31T21:59:04Z",
+      "side": 1,
+      "message": "s/writeHeadLine/formatGitDiffFirstHeaderLine/",
+      "revId": "9353bdca24db86e2fb528fc6ffb1930bb371e0b9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//+GI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffStyleRangeFormatter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-31T21:59:04Z",
+      "side": 1,
+      "message": "s/writeHeadLine/formatGitDiffFirstHeaderLine/",
+      "revId": "9353bdca24db86e2fb528fc6ffb1930bb371e0b9",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

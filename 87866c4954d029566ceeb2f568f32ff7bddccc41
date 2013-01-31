@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPH//+Gg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/commit/DiffStyleRangeFormatter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-01-31T21:59:04Z",
+      "side": 0,
+      "message": "update the copyright statement (also in other modified files):\n\ns/2011 GitHub Inc./2011,2012 GitHub Inc. and others/",
+      "revId": "87866c4954d029566ceeb2f568f32ff7bddccc41",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
