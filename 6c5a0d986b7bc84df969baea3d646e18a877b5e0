@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPH//9+8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/model/GitModelWorkingTree.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 49
+      },
+      "writtenOn": "2013-02-01T14:07:21Z",
+      "side": 1,
+      "message": "unused import?",
+      "revId": "6c5a0d986b7bc84df969baea3d646e18a877b5e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
