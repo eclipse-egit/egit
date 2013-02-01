@@ -5,6 +5,7 @@
  * Copyright (C) 2009, Mykola Nikishov <mn@mn.com.ua>
  * Copyright (C) 2010, Wim Jongman <wim.jongman@remainsoftware.com>
  * Copyright (C) 2010, Ryan Schmitt <ryan.schmitt@boeing.com>
+ * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -87,6 +88,12 @@ public class GitProjectsImportPage extends WizardPage {
 
 	private CachedCheckboxTreeViewer projectsList;
 
+	private Button nestedProjectsCheckbox;
+
+	private boolean nestedProjects = true;
+
+	private boolean lastNestedProjects = true;
+
 	private ProjectRecord[] selectedProjects = new ProjectRecord[0];
 
 	private IProject[] wsProjects;
@@ -127,6 +134,7 @@ public class GitProjectsImportPage extends WizardPage {
 
 		createProjectsRoot(workArea);
 		createProjectsList(workArea);
+		createOptionsArea(workArea);
 		createWorkingSetGroup(workArea);
 		Dialog.applyDialogFont(workArea);
 
@@ -278,6 +286,26 @@ public class GitProjectsImportPage extends WizardPage {
 		setButtonLayoutData(deselectAll);
 	}
 
+	private void createOptionsArea(Composite workArea) {
+		Composite optionsGroup = new Composite(workArea, SWT.NONE);
+		optionsGroup.setLayout(new GridLayout());
+		optionsGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		nestedProjectsCheckbox = new Button(workArea, SWT.CHECK);
+		nestedProjectsCheckbox
+				.setText(UIText.GitProjectsImportPage_SearchForNestedProjects);
+		nestedProjectsCheckbox.setLayoutData(new GridData(
+				GridData.FILL_HORIZONTAL));
+		nestedProjectsCheckbox.setSelection(nestedProjects);
+		nestedProjectsCheckbox.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				nestedProjects = nestedProjectsCheckbox.getSelection();
+				setProjectsList(lastPath);
+			}
+		});
+	}
+
 	private void selectAllNewProjects() {
 		for (TreeItem item : projectsList.getTree().getItems()) {
 			ProjectRecord record = (ProjectRecord) item.getData();
@@ -323,7 +351,8 @@ public class GitProjectsImportPage extends WizardPage {
 
 		final File directory = new File(path);
 		long modified = directory.lastModified();
-		if (path.equals(lastPath) && lastModified == modified) {
+		if (path.equals(lastPath) && lastModified == modified
+				&& lastNestedProjects == nestedProjects) {
 			// since the file/folder was not modified and the path did not
 			// change, no refreshing is required
 			return;
@@ -333,6 +362,7 @@ public class GitProjectsImportPage extends WizardPage {
 
 		lastPath = path;
 		lastModified = modified;
+		lastNestedProjects = nestedProjects;
 
 		try {
 			getContainer().run(true, true, new IRunnableWithProgress() {
@@ -346,11 +376,14 @@ public class GitProjectsImportPage extends WizardPage {
 					Collection<File> files = new ArrayList<File>();
 					monitor.worked(10);
 					if (directory.isDirectory()) {
+						boolean searchNested = nestedProjects;
 
-						if (!collectProjectFilesFromDirectory(files, directory,
-								null, monitor)) {
+						boolean found = ProjectUtil.findProjectFiles(files,
+								directory, searchNested, monitor);
+
+						if (!found)
 							return;
-						}
+
 						Iterator<File> filesIterator = files.iterator();
 						selectedProjects = new ProjectRecord[files.size()];
 						int index = 0;
@@ -370,6 +403,7 @@ public class GitProjectsImportPage extends WizardPage {
 									setErrorMessage(UIText.GitProjectsImportPage_NoProjectsMessage);
 								}
 							});
+
 					} else {
 						monitor.worked(60);
 					}
@@ -400,23 +434,6 @@ public class GitProjectsImportPage extends WizardPage {
 		int selectionCount = projectsList.getCheckedLeafCount();
 		selectAll.setEnabled(itemCount > selectionCount && itemCount > 0);
 		deselectAll.setEnabled(selectionCount > 0);
-	}
-
-	/**
-	 * Collect the list of .project files that are under directory into files.
-	 *
-	 * @param files
-	 * @param directory
-	 * @param visistedDirs
-	 *            Set of canonical paths of directories, used as recursion guard
-	 * @param monitor
-	 *            The monitor to report to
-	 * @return boolean <code>true</code> if the operation was completed.
-	 */
-	private boolean collectProjectFilesFromDirectory(Collection<File> files,
-			File directory, Set<String> visistedDirs, IProgressMonitor monitor) {
-		return ProjectUtil.findProjectFiles(files, directory, visistedDirs,
-				monitor);
 	}
 
 	/**
