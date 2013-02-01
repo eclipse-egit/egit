@@ -15,7 +15,7 @@ import static org.mockito.Mockito.mock;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache.FileModelFactory;
+import org.eclipse.egit.ui.internal.synchronize.model.TreeBuilder.FileModelFactory;
 import org.eclipse.jgit.lib.Repository;
 import org.junit.BeforeClass;
 import org.junit.Test;
