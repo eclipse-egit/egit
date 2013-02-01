@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPH//97c\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-02-01T20:18:36Z",
+      "side": 1,
+      "message": "The other caller also needs to be adjusted for the newline difference (refreshChangeIdText). You can reproduce the problem with this message when repeatedly pressing the change-ID button:\n\n    Test\n\n    Bug: 398461\n    Change-Id: I68405ae952b1fd9e6f73a94711ce9363f1159735\n    Signed-off-by: Matthias Sohn \u003cmatthias.sohn@sap.com\u003e",
+      "revId": "23aaf60bab210f3067aae97827a9ee22fe690afa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
