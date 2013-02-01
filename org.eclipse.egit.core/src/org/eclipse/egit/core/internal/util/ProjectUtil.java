@@ -3,7 +3,7 @@
  * Copyright (C) 2007, Martin Oberhuber (martin.oberhuber@windriver.com)
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2010, Jens Baumgart <jens.baumgart@sap.com>
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -336,13 +336,19 @@ public class ProjectUtil {
 	 *
 	 * @param files the collection to add the found projects to
 	 * @param directory where to search for project files
-	 * @param visistedDirs
+	 * @param searchNested whether to search for nested projects or not
 	 * @param monitor
 	 * @return true if projects files found, false otherwise
 	 */
 	public static boolean findProjectFiles(final Collection<File> files,
-			final File directory, final Set<String> visistedDirs,
+			final File directory, boolean searchNested,
 			final IProgressMonitor monitor) {
+		return findProjectFiles(files, directory, searchNested, null, monitor);
+	}
+
+	private static boolean findProjectFiles(final Collection<File> files,
+			final File directory, final boolean searchNested,
+			final Set<String> visistedDirs, final IProgressMonitor monitor) {
 		if (directory == null)
 			return false;
 
@@ -376,13 +382,17 @@ public class ProjectUtil {
 			directoriesVisited = visistedDirs;
 
 		// first look for project description files
+		boolean foundProject = false;
 		final String dotProject = IProjectDescription.DESCRIPTION_FILE_NAME;
 		for (int i = 0; i < contents.length; i++) {
 			File file = contents[i];
 			if (file.isFile() && file.getName().equals(dotProject)) {
 				files.add(file);
+				foundProject = true;
 			}
 		}
+		if (foundProject && !searchNested)
+			return true;
 		// recurse into sub-directories (even when project was found above, for nested projects)
 		for (int i = 0; i < contents.length; i++) {
 			// Skip non-directories
@@ -400,7 +410,8 @@ public class ProjectUtil {
 				Activator.logError(exception.getLocalizedMessage(), exception);
 
 			}
-			findProjectFiles(files, contents[i], directoriesVisited, pm);
+			findProjectFiles(files, contents[i], searchNested,
+					directoriesVisited, pm);
 		}
 		return true;
 	}

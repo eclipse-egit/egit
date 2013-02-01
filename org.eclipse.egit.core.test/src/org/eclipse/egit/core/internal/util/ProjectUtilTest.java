@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, Matthias Sohn <matthias.sohn@sap.com> and others.
+ * Copyright (C) 2012, 2013 Matthias Sohn <matthias.sohn@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -241,13 +241,13 @@ public class ProjectUtilTest extends GitTestCase {
 	public void testFindProjectFiles() {
 		Collection<File> files = new ArrayList<File>();
 		assertTrue(ProjectUtil.findProjectFiles(files, gitDir.getParentFile(),
-				null, new NullProgressMonitor()));
+				true, new NullProgressMonitor()));
 	}
 
 	@Test
 	public void testFindProjectFilesNullDir() {
 		Collection<File> files = new ArrayList<File>();
-		assertFalse(ProjectUtil.findProjectFiles(files, null, null,
+		assertFalse(ProjectUtil.findProjectFiles(files, null, true,
 				new NullProgressMonitor()));
 	}
 
@@ -257,7 +257,7 @@ public class ProjectUtilTest extends GitTestCase {
 		File dir = new File(gitDir.getParentFile().getPath() + File.separator
 				+ "xxx");
 		FileUtils.mkdir(dir);
-		assertFalse(ProjectUtil.findProjectFiles(files, dir, null,
+		assertFalse(ProjectUtil.findProjectFiles(files, dir, true,
 				new NullProgressMonitor()));
 	}
 
@@ -266,12 +266,24 @@ public class ProjectUtilTest extends GitTestCase {
 		project2 = new TestProject(true, "Project-1/Project-Nested");
 		File workingDir = gitDir.getParentFile();
 
-		Collection<File> foundFiles = new ArrayList<File>();
-		boolean found = ProjectUtil.findProjectFiles(foundFiles, workingDir,
-				null, new NullProgressMonitor());
+		Collection<File> nestedResult = new ArrayList<File>();
+		boolean nestedFound = ProjectUtil.findProjectFiles(nestedResult,
+				workingDir, true,
+				new NullProgressMonitor());
 
-		assertTrue("Expected to find projects", found);
-		assertThat(foundFiles, hasItem(new File(workingDir, "Project-1/.project")));
-		assertThat(foundFiles, hasItem(new File(workingDir, "Project-1/Project-Nested/.project")));
+		assertTrue("Expected to find projects", nestedFound);
+		assertEquals(2, nestedResult.size());
+		assertThat(nestedResult, hasItem(new File(workingDir,
+				"Project-1/.project")));
+		assertThat(nestedResult, hasItem(new File(workingDir,
+				"Project-1/Project-Nested/.project")));
+
+		Collection<File> noNestedResult = new ArrayList<File>();
+		boolean noNestedFound = ProjectUtil.findProjectFiles(noNestedResult,
+				workingDir, false, new NullProgressMonitor());
+		assertTrue("Expected to find projects", noNestedFound);
+		assertEquals(1, noNestedResult.size());
+		assertThat(noNestedResult, hasItem(new File(workingDir,
+				"Project-1/.project")));
 	}
 }

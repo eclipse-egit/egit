@@ -352,7 +352,7 @@ public abstract class AbstractGitCloneWizard extends Wizard {
 			protected IStatus run(IProgressMonitor monitor) {
 				List<File> files = new ArrayList<File>();
 				ProjectUtil.findProjectFiles(files, repository.getWorkTree(),
-						null, monitor);
+						true, monitor);
 				if (files.isEmpty())
 					return Status.OK_STATUS;
 
