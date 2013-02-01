@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPH//9+s\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/CoreText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-02-01T14:25:51Z",
+      "side": 1,
+      "message": "s/reindexingincrementally/reindexingIncrementally/",
+      "revId": "e5f3b249891648cafba929d0398e99f350a26ff3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//9+o\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-02-01T14:25:51Z",
+      "side": 1,
+      "message": "I think \"Re-indexing repository foo (full/incremental)\" would look nicer.",
+      "revId": "e5f3b249891648cafba929d0398e99f350a26ff3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//9+0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-02-01T14:25:51Z",
+      "side": 1,
+      "message": "Hm, is this ever non-null except after IndexDiffCacheEntry construction? I don\u0027t see it getting set to null anywhere after the job is done. Not directly related to this change though.",
+      "revId": "e5f3b249891648cafba929d0398e99f350a26ff3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//9+w\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-02-01T14:25:51Z",
+      "side": 1,
+      "message": "Is iteration safe against concurrent modification here? Maybe we should wrap this in synchronized(updateJobs)?",
+      "revId": "e5f3b249891648cafba929d0398e99f350a26ff3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
