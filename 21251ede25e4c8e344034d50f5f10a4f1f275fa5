@@ -34,6 +34,24 @@
       "revId": "21251ede25e4c8e344034d50f5f10a4f1f275fa5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//9zM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-02-02T20:02:56Z",
+      "side": 1,
+      "message": "We could signal that in the dialog using an alert icon instead.",
+      "parentUuid": "AABOPH//9z8\u003d",
+      "revId": "21251ede25e4c8e344034d50f5f10a4f1f275fa5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
