@@ -16,6 +16,24 @@
       "revId": "21251ede25e4c8e344034d50f5f10a4f1f275fa5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//9z8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 17
+      },
+      "writtenOn": "2013-02-02T09:27:10Z",
+      "side": 1,
+      "message": "Robin, that\u0027s a flaw in the current design. When the preference is set, untracked files will be included in the commit. Thus, the dialog must make sure that the committer recognizes this. If the dialog doesn\u0027t show them they might be accidentally committed without recognizing. I don\u0027t think that\u0027s the intent.",
+      "parentUuid": "AABOMH///qA\u003d",
+      "revId": "21251ede25e4c8e344034d50f5f10a4f1f275fa5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
