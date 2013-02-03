@@ -16,6 +16,24 @@
       "revId": "23aaf60bab210f3067aae97827a9ee22fe690afa",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//9w4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/dialogs/CommitMessageComponent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-03T00:11:55Z",
+      "side": 1,
+      "message": "refreshChangeIdText didn\u0027t remove the newline after the changeId when removing the changeId, fixed that",
+      "parentUuid": "AABOPH//97c\u003d",
+      "revId": "23aaf60bab210f3067aae97827a9ee22fe690afa",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
