@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPH//8uM\u003d",
+        "filename": "org.eclipse.egit.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-07T23:08:15Z",
+      "side": 1,
+      "message": "this should be moved to o.e.egit.mylyn.ui, o.e.egit.ui should not depend on mylyn",
+      "revId": "2126cdfaf5cb7a52eb80e9eceafd05d509b588a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//8uI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-07T23:08:15Z",
+      "side": 1,
+      "message": "style nit: formatting doesn\u0027t follow project conventions, we use blanks around operators, see contributor guide",
+      "revId": "2126cdfaf5cb7a52eb80e9eceafd05d509b588a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//8uE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-07T23:08:15Z",
+      "side": 1,
+      "message": "text needs to be externalized",
+      "revId": "2126cdfaf5cb7a52eb80e9eceafd05d509b588a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//8t0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/FetchGerritChangePage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-07T23:08:15Z",
+      "side": 1,
+      "message": "style nit: needs to be formatted properly",
+      "revId": "2126cdfaf5cb7a52eb80e9eceafd05d509b588a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//8to\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-07T23:08:15Z",
+      "side": 1,
+      "message": "why 2004 ?",
+      "revId": "2126cdfaf5cb7a52eb80e9eceafd05d509b588a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//8tk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/fetch/TaskBranchNameSuggester.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-07T23:08:15Z",
+      "side": 1,
+      "message": "we don\u0027t use author tags, instead add some meaningful javadoc",
+      "revId": "2126cdfaf5cb7a52eb80e9eceafd05d509b588a8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
