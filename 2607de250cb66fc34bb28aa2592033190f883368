@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPH//8uo\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-07T22:46:39Z",
+      "side": 1,
+      "message": "these methods shouldn\u0027t be copied but moved down from egit.ui down to egit.core, I\u0027d recommend to then move all related methods",
+      "revId": "2607de250cb66fc34bb28aa2592033190f883368",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//8ug\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-07T22:46:39Z",
+      "side": 1,
+      "message": "are you sure this is correct ? CommitFileRevision.getTimestamp() returns author time which isn\u0027t necessarily matching topological order of the history graph",
+      "revId": "2607de250cb66fc34bb28aa2592033190f883368",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
