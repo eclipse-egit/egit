@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -65,6 +65,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 		setWindowTitle(NLS.bind(
 				UIText.GitCreateProjectViaWizardWizard_WizardTitle,
 				myRepository.getDirectory().getPath()));
+		setDialogSettings(GitImportWizard.getImportWizardDialogSettings());
 	}
 
 	@Override
@@ -157,6 +158,7 @@ public class GitCreateProjectViaWizardWizard extends Wizard {
 					IWorkingSet[] workingSetArray = myProjectsImportPage
 							.getSelectedWorkingSets();
 					workingSets.addAll(Arrays.asList(workingSetArray));
+					myProjectsImportPage.saveWidgetValues();
 				}
 			});
 			ProjectUtils.createProjects(projectsToCreate, myRepository,
