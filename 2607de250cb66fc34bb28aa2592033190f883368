@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPH//8rA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-02-08T08:35:51Z",
+      "side": 1,
+      "message": "These two were copy/pasted from GitHistoryPage (see comment on related bug 398982 ) since I did not really know where to factorize them. Is there already an utility that would be a good place for that?",
+      "parentUuid": "AABOPH//8uo\u003d",
+      "revId": "2607de250cb66fc34bb28aa2592033190f883368",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPH//8ug\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-02-07T22:46:39Z",
       "side": 1,
       "message": "are you sure this is correct ? CommitFileRevision.getTimestamp() returns author time which isn\u0027t necessarily matching topological order of the history graph",
+      "revId": "2607de250cb66fc34bb28aa2592033190f883368",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//8rE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-02-08T08:35:51Z",
+      "side": 1,
+      "message": "I was pretty sure since that gave me the correct answer for my tests. I had no idea that this wasn\u0027t the \"commit\" time :s. This code is exactly the same as what is used by CVS ( http://git.eclipse.org/c/platform/eclipse.platform.team.git/tree/bundles/org.eclipse.team.cvs.core/src/org/eclipse/team/internal/ccvs/core/filehistory/CVSFileHistory.java#n255 ). How exactly could I get all descendants of a given commit if not using the timestamp?",
+      "parentUuid": "AABOPH//8ug\u003d",
       "revId": "2607de250cb66fc34bb28aa2592033190f883368",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
