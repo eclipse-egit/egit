@@ -23,12 +23,15 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -40,6 +43,10 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.CheckoutEntry;
 import org.eclipse.jgit.storage.file.ReflogEntry;
 import org.eclipse.jgit.storage.file.ReflogReader;
+import org.eclipse.jgit.treewalk.FileTreeIterator;
+import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.WorkingTreeIterator;
+import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.util.FS;
 import org.osgi.service.prefs.BackingStoreException;
 
@@ -462,5 +469,33 @@ public class RepositoryUtil {
 			if (walk != null)
 				walk.release();
 		}
+	}
+
+	/**
+	 * Checks if resource with given path is to be ignored.
+	 *
+	 * @param path
+	 *            Path to be checked
+	 * @return true if the path matches an ignore rule
+	 * @throws IOException
+	 */
+	public static boolean isIgnored(IPath path) throws IOException {
+		RepositoryMapping mapping = RepositoryMapping.getMapping(path);
+		if (mapping == null)
+			return true; // Linked resources may not be mapped
+		Repository repository = mapping.getRepository();
+		String repoRelativePath = mapping.getRepoRelativePath(path);
+		TreeWalk walk = new TreeWalk(repository);
+		walk.addTree(new FileTreeIterator(repository));
+		walk.setFilter(PathFilter.create(repoRelativePath));
+		while (walk.next()) {
+			WorkingTreeIterator workingTreeIterator = walk.getTree(0,
+					WorkingTreeIterator.class);
+			if (walk.getPathString().equals(repoRelativePath))
+				return workingTreeIterator.isEntryIgnored();
+			if (workingTreeIterator.getEntryFileMode().equals(FileMode.TREE))
+				walk.enterSubtree();
+		}
+		return false;
 	}
 }
