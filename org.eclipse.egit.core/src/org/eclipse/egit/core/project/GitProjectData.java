@@ -537,6 +537,14 @@ public class GitProjectData {
 		while (c != null && !c.equals(getProject())) {
 			trace("protect " + c);  //$NON-NLS-1$
 			protectedResources.add(c);
+			try {
+				c.setTeamPrivateMember(true);
+			} catch (CoreException e) {
+				Activator.logError(MessageFormat.format(
+						CoreText.GitProjectData_FailedToMarkTeamPrivate,
+						c.getFullPath()),
+						e);
+			}
 			c = c.getParent();
 		}
 	}
