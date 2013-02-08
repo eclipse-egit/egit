@@ -34,6 +34,7 @@ import org.eclipse.egit.ui.internal.CachedCheckboxTreeViewer;
 import org.eclipse.egit.ui.internal.FilteredCheckboxTree;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
@@ -80,6 +81,8 @@ public class GitProjectsImportPage extends WizardPage {
 			return null;
 		}
 	}
+
+	private final static String STORE_NESTED_PROJECTS = "GitProjectsImportPage.STORE_NESTED_PROJECTS"; //$NON-NLS-1$
 
 	/**
 	 * The name of the folder containing metadata information for the workspace.
@@ -136,6 +139,7 @@ public class GitProjectsImportPage extends WizardPage {
 		createProjectsList(workArea);
 		createOptionsArea(workArea);
 		createWorkingSetGroup(workArea);
+		restoreWidgetValues();
 		Dialog.applyDialogFont(workArea);
 
 	}
@@ -520,5 +524,21 @@ public class GitProjectsImportPage extends WizardPage {
 
 	private void checkPageComplete() {
 		setPageComplete(!getCheckedProjects().isEmpty());
+	}
+
+	private void restoreWidgetValues() {
+		IDialogSettings settings = getDialogSettings();
+		if (settings != null && settings.get(STORE_NESTED_PROJECTS) != null) {
+			nestedProjects = settings.getBoolean(STORE_NESTED_PROJECTS);
+			nestedProjectsCheckbox.setSelection(nestedProjects);
+			lastNestedProjects = nestedProjects;
+		}
+	}
+
+	void saveWidgetValues() {
+		IDialogSettings settings = getDialogSettings();
+		if (settings != null)
+			settings.put(STORE_NESTED_PROJECTS,
+					nestedProjectsCheckbox.getSelection());
 	}
 }
