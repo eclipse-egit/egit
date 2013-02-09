@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPH//8co\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-09T08:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPH//8dk\u003d",
+      "revId": "b6367f08bcf2343760091a6bf38ff873ee7f9f78",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPH//8dg\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2013-02-09T06:06:08Z",
       "side": 1,
       "message": "no braces here",
+      "revId": "b6367f08bcf2343760091a6bf38ff873ee7f9f78",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//8ck\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-09T08:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPH//8dg\u003d",
       "revId": "b6367f08bcf2343760091a6bf38ff873ee7f9f78",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
