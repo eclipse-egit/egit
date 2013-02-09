@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPH//8dE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-09T08:43:24Z",
+      "side": 1,
+      "message": "will be fed from a new preference (todo) to allow switching off auto-ignore",
+      "parentUuid": "AABOPH//8dw\u003d",
+      "revId": "851337ad87ce407203a09e76e7743f555635e48f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPH//8ds\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2013-02-09T06:04:13Z",
       "side": 1,
       "message": "Shouldn\u0027t we inform the user when we modifiy files?\n\n(Not required to pass review)",
+      "revId": "851337ad87ce407203a09e76e7743f555635e48f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPH//8dA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-09T08:43:24Z",
+      "side": 1,
+      "message": "good question, opening a dialog seems too intrusive, we could log that to a git console which was suggested already in https://bugs.eclipse.org/bugs/show_bug.cgi?id\u003d399776",
+      "parentUuid": "AABOPH//8ds\u003d",
       "revId": "851337ad87ce407203a09e76e7743f555635e48f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
