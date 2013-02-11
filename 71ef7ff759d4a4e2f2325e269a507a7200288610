@@ -17,6 +17,23 @@
       "revId": "71ef7ff759d4a4e2f2325e269a507a7200288610",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX///+w\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-11T08:29:53Z",
+      "side": 1,
+      "message": "duplicate change-id",
+      "revId": "71ef7ff759d4a4e2f2325e269a507a7200288610",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
