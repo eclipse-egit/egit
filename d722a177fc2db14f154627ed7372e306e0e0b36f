@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX///7M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-02-11T11:39:13Z",
+      "side": 1,
+      "message": "The names are the sames as in WizardProjectsImportPage (from org.eclipse.ui.ide), where most of the code of this class was copied from. What do you think, keep them or change them?",
+      "parentUuid": "AABOPH//8fg\u003d",
+      "revId": "d722a177fc2db14f154627ed7372e306e0e0b36f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPH//8fc\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-02-08T23:46:45Z",
       "side": 1,
       "message": "maybe better s/saveWidgetValues/saveWidgetSettings/",
+      "revId": "d722a177fc2db14f154627ed7372e306e0e0b36f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX///7I\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitProjectsImportPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-02-11T11:39:13Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "AABOPH//8fc\u003d",
       "revId": "d722a177fc2db14f154627ed7372e306e0e0b36f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
