@@ -41,10 +41,11 @@ public abstract class GitTestCase {
 
 	@BeforeClass
 	public static void setUpClass() {
-		// suppress auto-ignoring to avoid interference
+		// suppress auto-ignoring and auto-sharing to avoid interference
 		IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
 				.getPluginId());
 		p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources, false);
+		p.putBoolean(GitCorePreferences.core_autoShareProjects, false);
 	}
 
 	@Before

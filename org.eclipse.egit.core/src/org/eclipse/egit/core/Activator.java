@@ -251,7 +251,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 					.getPluginId());
 			return p.getBoolean(GitCorePreferences.core_autoShareProjects, d
 					.getBoolean(GitCorePreferences.core_autoShareProjects,
-							false));
+							true));
 		}
 
 		public void resourceChanged(IResourceChangeEvent event) {

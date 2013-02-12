@@ -143,11 +143,12 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 		File repoRoot = new File(testDirectory, "RepositoryRoot");
 		if (!repoRoot.exists())
 			FileUtils.mkdir(repoRoot, true);
-		// suppress auto-ignoring to avoid interference
+		// suppress auto-ignoring and auto-sharing to avoid interference
 		IEclipsePreferences corePrefs = InstanceScope.INSTANCE
 				.getNode(org.eclipse.egit.core.Activator.getPluginId());
 		corePrefs.putBoolean(
 				GitCorePreferences.core_autoIgnoreDerivedResources, false);
+		corePrefs.putBoolean(GitCorePreferences.core_autoShareProjects, false);
 		// make sure the default directory for Repos is not the user home
 		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
 				.setValue(UIPreferences.DEFAULT_REPO_DIR, repoRoot.getPath());
