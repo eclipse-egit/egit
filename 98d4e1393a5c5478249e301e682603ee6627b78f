@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX///yI\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/op/ConnectProviderOperationTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-02-12T00:55:32Z",
+      "side": 1,
+      "message": "Could this also use the isIgnored which is now exposed because of the previous change?",
+      "revId": "98d4e1393a5c5478249e301e682603ee6627b78f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX///x4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/Activator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-02-12T00:55:32Z",
+      "side": 1,
+      "message": "Should the listener also be removed again in stop()?",
+      "revId": "98d4e1393a5c5478249e301e682603ee6627b78f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX///yA\u003d",
+        "filename": "org.eclipse.egit.ui/plugin.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-02-12T00:55:32Z",
+      "side": 1,
+      "message": "Hm, a new preference page only for this? Maybe we could add it to \"Projects\"?",
+      "revId": "98d4e1393a5c5478249e301e682603ee6627b78f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX///x8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/uitext.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-02-12T00:55:32Z",
+      "side": 1,
+      "message": "\"Automatically ignore derived resources\" would be a bit less \"techy\". Maybe we could also append something like \" (add to .gitignore)\" or mention it in the tooltip to make it clear which \"ignore\" is meant here.",
+      "revId": "98d4e1393a5c5478249e301e682603ee6627b78f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
