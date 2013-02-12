@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX///xE\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-12T07:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX///yY\u003d",
+      "revId": "8b850416c360a1de9840af803cffc49f6ea595e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX///yQ\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX///xA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-12T07:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX///yQ\u003d",
+      "revId": "8b850416c360a1de9840af803cffc49f6ea595e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX///yU\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2013-02-12T00:14:02Z",
       "side": 1,
       "message": "Does the walk need to be released in a finally? (I\u0027m never sure with TreeWalk.)",
+      "revId": "8b850416c360a1de9840af803cffc49f6ea595e0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX///w8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/RepositoryUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-12T07:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX///yU\u003d",
       "revId": "8b850416c360a1de9840af803cffc49f6ea595e0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
