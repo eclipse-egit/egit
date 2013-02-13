@@ -97,6 +97,7 @@ import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RmCommand;
+import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEditor;
@@ -1240,7 +1241,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 					break;
 				case MISSING:
 					if (rm == null)
-						rm = git.rm();
+						rm = git.rm().setCached(true);
 					rm.addFilepattern(entry.getPath());
 					break;
 				}
@@ -1268,16 +1269,22 @@ public class StagingView extends ViewPart implements IShowInSource {
 				add.call();
 			} catch (NoFilepatternException e1) {
 				// cannot happen
-			} catch (Exception e2) {
-				Activator.error(e2.getMessage(), e2);
+			} catch (JGitInternalException e1) {
+				Activator.handleError(e1.getCause().getMessage(),
+						e1.getCause(), true);
+			} catch (Exception e1) {
+				Activator.handleError(e1.getMessage(), e1, true);
 			}
 		if (rm != null)
 			try {
 				rm.call();
 			} catch (NoFilepatternException e) {
 				// cannot happen
-			} catch (Exception e2) {
-				Activator.error(e2.getMessage(), e2);
+			} catch (JGitInternalException e) {
+				Activator.handleError(e.getCause().getMessage(), e.getCause(),
+						true);
+			} catch (Exception e) {
+				Activator.handleError(e.getMessage(), e, true);
 			}
 	}
 

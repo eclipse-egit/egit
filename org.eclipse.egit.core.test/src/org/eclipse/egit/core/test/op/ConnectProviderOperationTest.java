@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2013, Matthias Sohn <matthias.sohn@sap.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,6 +21,14 @@ import java.io.IOException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.GitCorePreferences;
+import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.egit.core.test.GitTestCase;
 import org.eclipse.egit.core.test.TestRepository;
@@ -55,6 +64,29 @@ public class ConnectProviderOperationTest extends GitTestCase {
 		assertTrue(RepositoryProvider.isShared(project.getProject()));
 
 		assertTrue(gitDir.exists());
+	}
+
+	@Test
+	public void testAutoIgnoresDerivedFolder() throws Exception {
+		// enable auto-ignore
+		IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
+				.getPluginId());
+		p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources, true);
+		Repository repository = new FileRepository(gitDir);
+		repository.create();
+		repository.close();
+		project.setBinFolderDerived();
+		ConnectProviderOperation operation = new ConnectProviderOperation(
+				project.getProject(), gitDir);
+		operation.execute(null);
+
+		assertTrue(RepositoryProvider.isShared(project.getProject()));
+		Job.getJobManager().join(JobFamilies.AUTO_IGNORE, null);
+
+		IPath binPath = project.getProject().getLocation().append("bin");
+		assertTrue(RepositoryUtil.isIgnored(binPath));
+		assertTrue(gitDir.exists());
+		p.putBoolean(GitCorePreferences.core_autoIgnoreDerivedResources, false);
 	}
 
 	@Test

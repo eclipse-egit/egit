@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
- * Copyright (C) 2011, Matthias Sohn <matthias.sohn@sap.com>
+ * Copyright (C) 2011, 2013 Matthias Sohn <matthias.sohn@sap.com>
  * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
@@ -12,9 +12,13 @@
 package org.eclipse.egit.core;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -24,6 +28,7 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Plugin;
@@ -35,6 +40,7 @@ import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.job.JobUtil;
 import org.eclipse.egit.core.internal.trace.GitTraceLocation;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
+import org.eclipse.egit.core.op.IgnoreOperation;
 import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryFinder;
 import org.eclipse.egit.core.project.RepositoryMapping;
@@ -60,6 +66,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 	private EGitSecureStore secureStore;
 	private AutoShareProjects shareGitProjectsJob;
 	private IResourceChangeListener preDeleteProjectListener;
+	private IgnoreDerivedResources ignoreDerivedResourcesListener;
 
 	/**
 	 * @return the singleton {@link Activator}
@@ -138,6 +145,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 		secureStore = new EGitSecureStore(SecurePreferencesFactory.getDefault());
 
 		registerAutoShareProjects();
+		registerAutoIgnoreDerivedResources();
 		registerPreDeleteResourceChangeListener();
 	}
 
@@ -208,6 +216,16 @@ public class Activator extends Plugin implements DebugOptionsListener {
 			ResourcesPlugin.getWorkspace().removeResourceChangeListener(preDeleteProjectListener);
 			preDeleteProjectListener = null;
 		}
+		if (ignoreDerivedResourcesListener != null) {
+			ResourcesPlugin.getWorkspace().removeResourceChangeListener(
+					ignoreDerivedResourcesListener);
+			ignoreDerivedResourcesListener = null;
+		}
+		if (shareGitProjectsJob != null) {
+			ResourcesPlugin.getWorkspace().removeResourceChangeListener(
+					shareGitProjectsJob);
+			shareGitProjectsJob = null;
+		}
 	}
 
 	private void registerAutoShareProjects() {
@@ -233,7 +251,7 @@ public class Activator extends Plugin implements DebugOptionsListener {
 					.getPluginId());
 			return p.getBoolean(GitCorePreferences.core_autoShareProjects, d
 					.getBoolean(GitCorePreferences.core_autoShareProjects,
-							false));
+							true));
 		}
 
 		public void resourceChanged(IResourceChangeEvent event) {
@@ -285,6 +303,77 @@ public class Activator extends Plugin implements DebugOptionsListener {
 						return false;
 					}
 				});
+			} catch (CoreException e) {
+				Activator.logError(e.getMessage(), e);
+				return;
+			}
+		}
+	}
+
+	private void registerAutoIgnoreDerivedResources() {
+		ignoreDerivedResourcesListener = new IgnoreDerivedResources();
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(
+				ignoreDerivedResourcesListener,
+				IResourceChangeEvent.POST_CHANGE);
+	}
+
+	private static class IgnoreDerivedResources implements
+			IResourceChangeListener {
+
+		protected boolean autoIgnoreDerived() {
+			IEclipsePreferences d = DefaultScope.INSTANCE.getNode(Activator
+					.getPluginId());
+			IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator
+					.getPluginId());
+			return p.getBoolean(
+					GitCorePreferences.core_autoIgnoreDerivedResources,
+					d.getBoolean(
+							GitCorePreferences.core_autoIgnoreDerivedResources,
+							true));
+		}
+
+		public void resourceChanged(IResourceChangeEvent event) {
+			try {
+				IResourceDelta d = event.getDelta();
+				if (d == null || !autoIgnoreDerived())
+					return;
+
+				final List<IPath> toBeIgnored = new ArrayList<IPath>();
+
+				d.accept(new IResourceDeltaVisitor() {
+
+					public boolean visit(IResourceDelta delta)
+							throws CoreException {
+						if ((delta.getKind() & (IResourceDelta.ADDED | IResourceDelta.CHANGED)) == 0)
+							return false;
+						int flags = delta.getFlags();
+						if ((flags != 0)
+								&& ((flags & IResourceDelta.DERIVED_CHANGED) == 0))
+							return false;
+
+						final IResource r = delta.getResource();
+						if (r.isTeamPrivateMember())
+							return false;
+
+						if (r.isDerived()) {
+							try {
+								if (!RepositoryUtil.isIgnored(r.getLocation()))
+									toBeIgnored.add(r.getLocation());
+							} catch (IOException e) {
+								logError(
+										MessageFormat.format(
+												CoreText.Activator_ignoreResourceFailed,
+												r.getFullPath()), e);
+							}
+							return false;
+						}
+						return true;
+					}
+				});
+				if (toBeIgnored.size() > 0)
+					JobUtil.scheduleUserJob(new IgnoreOperation(toBeIgnored),
+							CoreText.Activator_autoIgnoreDerivedResources,
+							JobFamilies.AUTO_IGNORE);
 			} catch (CoreException e) {
 				Activator.logError(e.getMessage(), e);
 				return;

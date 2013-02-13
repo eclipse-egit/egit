@@ -759,7 +759,8 @@
 				<b>staged</b> - The resource has changes which have been added to the index. Note that adding changes to the index is currently possible only in the commit dialog via the context menu of a resource.
 			</li>
 			<li>
-				<b>partially-staged</b> - The resource has changes which are added to the index and additional changes in the working tree that neither reached the index nor have been committed to the repository.
+				<b>partially-staged</b> - The resource has changes which are added to the index and additional changes in the working tree that neither reached the index nor have been committed to the repository. See 
+				<a href="Reference.html#Partial_Staging">partial staging from the Git Staging view</a> for how to do that.
 			</li>
 			<li>
 				<b>added</b> - The resource has not yet reached any commit in the repository but has been freshly added to the Git repository in order to be tracked in future.
@@ -1573,8 +1574,12 @@ Sein oder nicht sein
 </pre>
 		<p>Cherry-pick the commit 
 			<i>C</i> to create a new commit 
-			<i>C' '' on top of the head commit of the currently checked out branch ''master</i>. 
-			<i>C' '' will then contain the changes performed in ''C</i> applied onto the HEAD of the currently checked out branch 
+			<i>C' 
+				<i> on top of the head commit of the currently checked out branch </i>master
+			</i>. 
+			<i>C' 
+				<i> will then contain the changes performed in </i>C
+			</i> applied onto the HEAD of the currently checked out branch 
 			<i>master</i>.
 		</p>
 		<pre>                  A--B--C--D stable-1.0
@@ -1918,9 +1923,8 @@ Sein oder nicht sein
 		<p>If the Reference is symbolic, i.e. points to another Reference, the name of the target reference is shown, followed by the object ID of the reference's target. If the Reference is not symbolic, only the object ID is shown.</p>
 		<p>In the example above, HEAD is a symbolic Reference pointing to branch "refs/heads/master" (i.e. branch "master" is checked out", while FETCH_HEAD points directly to commit 226a7f... .</p>
 		<p>The following actions are available on right-clicking on a Reference: 
-			<b>Checkout '
-				<i>(unless the Reference is already checked out) and '</i>Create Branch
-			</b>
+			<b>Checkout </b>(unless the Reference is already checked out) and 
+			<b>Create Branch</b>
 			<b>...</b> .
 		</p>
 		<h4 id="Browsing_the_Working_Directory">Browsing the Working Directory</h4>
@@ -2241,7 +2245,8 @@ Sein oder nicht sein
 		<h3 id="Open_commit_dialog">Open commit dialog</h3>
 		<p>EGit 1.0 has an 
 			<b>Open Git Commit</b> dialog similar to the Mylyn 
-			<b>Open Task</b> and core''' Open Resource''' dialogs. The dialog searches every configured Git repository for the branch, tag, or commit SHA-1 entered into the filter box and displays the matching commits.
+			<b>Open Task</b> and core'
+			<i> Open Resource</i>' dialogs. The dialog searches every configured Git repository for the branch, tag, or commit SHA-1 entered into the filter box and displays the matching commits.
 		</p>
 		<p>
 			<img border="0" src="images/Git-open-commit.png"/>
