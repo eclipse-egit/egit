@@ -105,7 +105,7 @@
                icon="$nl$/icons/obj16/untrack.gif"
                id="org.eclipse.egit.ui.internal.actions.Untrack"
                label="%UntrackAction_label"
-               menubarPath="team.main/group9"/>
+               menubarPath="team.main/group8"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.CommitAction"
                definitionId="org.eclipse.egit.ui.team.Commit"
@@ -154,14 +154,14 @@
                icon="$nl$/icons/obj16/unstage.gif"
                id="org.eclipse.egit.ui.internal.actions.RemoveFromIndexAction"
                label="%RemoveFromIndexAction_label"
-               menubarPath="team.main/group9"/>
+               menubarPath="team.main/group8"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.AddToIndexAction"
                definitionId="org.eclipse.egit.ui.team.AddToIndex"
                icon="$nl$/icons/obj16/add.gif"
                id="org.eclipse.egit.ui.internal.actions.AddToIndexAction"
                label="%AddToIndexAction_label"
-               menubarPath="team.main/group9"/>
+               menubarPath="team.main/group8"/>
          <action
                class="org.eclipse.egit.ui.internal.actions.DiscardChangesAction"
                id="org.eclipse.egit.ui.internal.actions.DiscardChangesAction"
@@ -204,7 +204,7 @@
                icon="icons/obj16/history.gif"
                id="org.eclipse.egit.ui.internal.actions.ShowHistoryActionHandler"
                label="%ShowResourceInHistoryAction_label"
-               menubarPath="team.main/group10">
+               menubarPath="team.main/group9">
          </action>
          <action
                class="org.eclipse.egit.ui.internal.actions.ShowRepositoriesViewAction"
@@ -212,7 +212,7 @@
                icon="icons/eview16/repo_rep.gif"
                id="org.eclipse.egit.ui.internal.actions.ShowRepositoriesViewAction"
                label="%ShowRepositoryAction_label"
-               menubarPath="team.main/group10">
+               menubarPath="team.main/group9">
          </action>
          <action
                class="org.eclipse.egit.ui.internal.actions.MergeToolAction"
@@ -265,7 +265,7 @@
                definitionId="org.eclipse.egit.ui.team.ShowBlame"
                label="%ShowBlameAction_label"
                icon="icons/etool16/annotate.gif"
-               menubarPath="team.main/group10">
+               menubarPath="team.main/group9">
          </action>
       </objectContribution>
    </extension>
@@ -3738,7 +3738,7 @@
                               <and>
                                  <test property="GitResource.isShared" />
                                  <test property="GitResource.isContainer" />
-                              </and>                           
+                              </and>
                            </adapt>
                         </and>
                      </iterate>
@@ -4794,7 +4794,7 @@
             defaultHandler="org.eclipse.egit.ui.internal.history.command.RenameBranchOnCommitHandler"
             id="org.eclipse.egit.ui.history.RenameBranch"
             name="%RenameBranchCommand">
-      </command>      
+      </command>
       <command
             defaultHandler="org.eclipse.egit.ui.internal.history.command.CreateTagOnCommitHandler"
             id="org.eclipse.egit.ui.history.CreateTag"
