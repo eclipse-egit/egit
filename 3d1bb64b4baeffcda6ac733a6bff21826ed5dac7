@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX///Yw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-02-13T21:57:09Z",
+      "side": 1,
+      "message": "JGit contains quite a number of references to git man pages, so I think it\u0027s ok.",
+      "parentUuid": "AABOJ3//9ec\u003d",
+      "revId": "3d1bb64b4baeffcda6ac733a6bff21826ed5dac7",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOJ3//9fI\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/op/PushOperation.java",
         "patchSetId": 4
