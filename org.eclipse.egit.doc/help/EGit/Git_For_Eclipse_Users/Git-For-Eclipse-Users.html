@@ -270,7 +270,7 @@
 		<p>...but we're not limited to one repository. Let's say we wanted to create a separate copy on 
 			<a href="http://www.github.com" target="egit_external">GitHub</a> for easy forking; we can do that by adding another remote Git URL and then pushing to that:
 		</p>
-		<pre>git remote add github http://github.com/alblue/babel.git
+		<pre>git remote add github <a href="http://github.com/alblue/babel.git" target="egit_external">http://github.com/alblue/babel.git</a>
 git push github
 </pre>
 		<p>We can now use <code>git push</code> and <code>git pull</code> to move items between the two git repositories. By default, they both refer to the special-named 
@@ -317,35 +317,35 @@ git push github
 $ cd /tmp/example
 $ git init
 Initialized empty Git repository in /tmp/example/.git/
-$ echo "Hello, world" &amp;gt; README.txt
+$ echo "Hello, world" &gt; README.txt
 $ git commit # Won't commit files by default
 # On branch master
 #
 # Initial commit
 #
 # Untracked files:
-#   (use "git add &amp;lt;file&amp;gt;..." to include in what will be committed)
+#   (use "git add &lt;file&gt;..." to include in what will be committed)
 #
 #	README.txt
 nothing added to commit but untracked files present (use "git add" to track)
-$ git add README.txt # Similar to Team -&amp;gt; Add to Version Control
+$ git add README.txt # Similar to Team -&gt; Add to Version Control
 $ # git commit # Would prompt for message
 $ git commit -m "Added README.txt"
-[master (root-commit) 0dd1f35] Added README.txt
+<a href="master">(root-commit) 0dd1f35</a> Added README.txt
  1 files changed, 1 insertions(+), 0 deletions(-)
  create mode 100644 README.txt
-$ echo "Hello, solar system" &amp;gt; README.txt
+$ echo "Hello, solar system" &gt; README.txt
 $ git commit
 # On branch master
 # Changed but not updated:
-#   (use "git add &amp;lt;file&amp;gt;..." to update what will be committed)
-#   (use "git checkout -- &amp;lt;file&amp;gt;..." to discard changes in working directory)
+#   (use "git add &lt;file&gt;..." to update what will be committed)
+#   (use "git checkout -- &lt;file&gt;..." to discard changes in working directory)
 #
 #	modified:   README.txt
 #
 no changes added to commit (use "git add" and/or "git commit -a")
 $ git commit -a -m "Updated README.txt"
-[master 9b1939a] Updated README.txt
+<a href="master">9b1939a</a> Updated README.txt
  1 files changed, 1 insertions(+), 1 deletions(-)
 $ git log --graph --oneline # Shows graph nodes (not much here) and change info
 * 9b1939a Updated README.txt
@@ -354,19 +354,19 @@ $ git checkout -b french 0dd1f35 # create and switch to a new branch 'french'
 Switched to a new branch 'french'
 $ cat README.txt 
 Hello, world
-$ echo "Bonjour, tout le monde" &amp;gt; README.txt
+$ echo "Bonjour, tout le monde" &gt; README.txt
 $ git add README.txt # or commit -a
 $ git commit -m "Ajouté README.txt"
-[french 66a644c] Ajouté README.txt
+<a href="french">66a644c</a> Ajouté README.txt
  1 files changed, 1 insertions(+), 1 deletions(-)
 $ git log --graph --oneline
 * 66a644c Ajouté README.txt
 * 0dd1f35 Added README.txt
 $ git checkout -b web 0dd1f35 # Create and checkout a branch 'web' from initial commit
-$ echo '&amp;lt;a href="http://git.eclipse.org"&amp;gt;git.eclipse.org&amp;lt;/a&amp;gt;' &amp;gt; index.html
+$ echo '&lt;a href="<a href="http://git.eclipse.org" target="egit_external">http://git.eclipse.org</a>"&gt;git.eclipse.org&lt;/a&gt;' &gt; index.html
 $ git add index.html
 $ git commit -m "Added homepage"
-[web d47e30c] Added homepage
+<a href="web">d47e30c</a> Added homepage
  1 files changed, 1 insertions(+), 0 deletions(-)
  create mode 100644 index.html
 $ git checkout master
@@ -413,7 +413,7 @@ Writing objects: 100% (11/11), 981 bytes, done.
 Total 11 (delta 1), reused 0 (delta 0)
 Unpacking objects: 100% (11/11), done.
 To /tmp/other
- * [new branch]      master -&amp;gt; master
+ * <a href="new">branch</a>      master -&gt; master
 $ git push --all other # Push all branches to 'other'
 Counting objects: 8, done.
 Delta compression using up to 2 threads.
@@ -422,8 +422,8 @@ Writing objects: 100% (5/5), 567 bytes, done.
 Total 5 (delta 0), reused 0 (delta 0)
 Unpacking objects: 100% (5/5), done.
 To /tmp/other
- * [new branch]      french -&amp;gt; french
- * [new branch]      web -&amp;gt; web
+ * <a href="new">branch</a>      french -&gt; french
+ * <a href="new">branch</a>      web -&gt; web
 $ cd /tmp/other # Switch to 'other' repository
 $ git config --bool core.bare false # need to allow this repository to have checked out files
 $ ls # Nothing to be seen, but it's there
@@ -434,9 +434,9 @@ $ git branch
 $ git checkout web # Get the contents of the 'web' branch in other
 $ ls
 README.txt index.html
-$ echo '&amp;lt;h1&amp;gt;Git rocks!&amp;lt;/h1&amp;gt;' &amp;gt;&amp;gt; index.html
+$ echo '&lt;h1&gt;Git rocks!&lt;/h1&gt;' &gt;&gt; index.html
 $ git commit -a -m "Added Git Rocks!"
-[web 510621a] Added Git Rocks
+<a href="web">510621a</a> Added Git Rocks
  1 files changed, 1 insertions(+), 0 deletions(-)
 $ cd /tmp/example # Back to first repo
 $ git pull other web # Pull changes from 'other' repo 'web' branch
@@ -445,7 +445,7 @@ remote: Compressing objects: 100% (3/3), done.
 remote: Total 3 (delta 0), reused 0 (delta 0)
 Unpacking objects: 100% (3/3), done.
 From /tmp/other
- * branch            web        -&amp;gt; FETCH_HEAD
+ * branch            web        -&gt; FETCH_HEAD
 Merge made by recursive.
  index.html |    1 +
  1 files changed, 1 insertions(+), 0 deletions(-)
