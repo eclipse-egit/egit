@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX///Oc\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-02-14T18:16:12Z",
+      "side": 1,
+      "message": "s/Bug/Bug:/",
+      "revId": "d8f18c733c17d1d3af4615326199104f71367202",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
