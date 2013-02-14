@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2008 IBM Corporation and others.
+ * Copyright (c) 2004, 2013 IBM Corporation and others.
  * Copyright (C) 2007, Martin Oberhuber (martin.oberhuber@windriver.com)
  * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2009, Mykola Nikishov <mn@mn.com.ua>
@@ -292,10 +292,13 @@ public class GitProjectsImportPage extends WizardPage {
 
 	private void createOptionsArea(Composite workArea) {
 		Composite optionsGroup = new Composite(workArea, SWT.NONE);
-		optionsGroup.setLayout(new GridLayout());
+		GridLayout layout = new GridLayout();
+		layout.marginBottom = 2 * layout.marginHeight;
+		layout.marginHeight = 0;
+		optionsGroup.setLayout(layout);
 		optionsGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-		nestedProjectsCheckbox = new Button(workArea, SWT.CHECK);
+		nestedProjectsCheckbox = new Button(optionsGroup, SWT.CHECK);
 		nestedProjectsCheckbox
 				.setText(UIText.GitProjectsImportPage_SearchForNestedProjects);
 		nestedProjectsCheckbox.setLayoutData(new GridData(
