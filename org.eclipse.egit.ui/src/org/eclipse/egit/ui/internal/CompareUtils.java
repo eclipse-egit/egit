@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010-2012 SAP AG and others.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -384,6 +384,52 @@ public class CompareUtils {
 		GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(
 				next, base, null);
 		CompareUI.openCompareDialog(input);
+	}
+
+	/**
+	 * Opens a compare editor comparing the workspace version of the given IFile
+	 * with the version of that file at commit {@code commitId}.
+	 *
+	 * @param repository
+	 *            The repository from which remote revisions of the given file
+	 *            should be loaded.
+	 * @param file
+	 *            The file which revisions we are to compare.
+	 * @param refName
+	 *            Identifier of the reference with which we'll compare the
+	 *            workspace version of {@code file}. Can be either a commit ID,
+	 *            a reference or a branch name.
+	 * @throws IOException
+	 *             This will be thrown if we cannot resolve the HEAD or
+	 *             {@code commitId} commits on the given repository.
+	 */
+	public static void compareWorkspaceWithRef(Repository repository,
+			IFile file, String refName) throws IOException {
+		final RepositoryMapping mapping = RepositoryMapping.getMapping(file);
+		final String gitPath = mapping.getRepoRelativePath(file);
+		final ITypedElement base = SaveableCompareEditorInput
+				.createFileElement(file);
+
+		final ObjectId destCommitId = repository.resolve(refName);
+		RevWalk rw = new RevWalk(repository);
+		RevCommit commit = rw.parseCommit(destCommitId);
+		rw.release();
+		final ITypedElement destCommit = getFileRevisionTypedElement(gitPath,
+				commit, repository);
+
+		final ITypedElement commonAncestor;
+		if (base != null && commit != null) {
+			final ObjectId headCommitId = repository.resolve(Constants.HEAD);
+			commonAncestor = getFileRevisionTypedElementForCommonAncestor(
+					gitPath, headCommitId, destCommitId, repository);
+		} else {
+			commonAncestor = null;
+		}
+
+		final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+				base, destCommit, commonAncestor, null);
+		in.getCompareConfiguration().setRightLabel(refName);
+		CompareUI.openCompareEditor(in);
 	}
 
 	/**
