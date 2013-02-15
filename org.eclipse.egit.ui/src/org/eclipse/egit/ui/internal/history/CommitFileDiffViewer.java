@@ -3,6 +3,7 @@
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2012, Gunnar Wagenknecht <gunnar@wagenknecht.org>
+ * Copyright (C) 2013, Laurent Goubet <laurent.goubet@obeo.fr>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -53,6 +54,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -73,7 +75,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchSite;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -538,43 +539,53 @@ public class CommitFileDiffViewer extends TableViewer {
 	}
 
 	void showWorkingDirectoryFileDiff(final FileDiff d) {
-		final GitCompareFileRevisionEditorInput in;
-
 		final String p = d.getPath();
 		final RevCommit commit = d.getCommit();
 		final ObjectId[] blobs = d.getBlobs();
-		final ITypedElement base;
-		final ITypedElement next;
 
 		IFile file = ResourceUtil.getFileForLocation(getRepository(), p);
-		if (file != null && commit != null) {
-			if (!CompareUtils.canDirectlyOpenInCompare(file)) {
-				try {
+		try {
+			if (file != null && commit != null) {
+				if (!CompareUtils.canDirectlyOpenInCompare(file)) {
 					GitModelSynchronize.synchronizeModelWithWorkspace(file,
 							getRepository(), commit.getName());
-				} catch (Exception e) {
-					Activator.logError(UIText.GitHistoryPage_openFailed, e);
-					Activator.showError(UIText.GitHistoryPage_openFailed, null);
+				} else {
+					CompareUtils.compareWorkspaceWithRef(getRepository(), file,
+							commit.getName(), null);
 				}
-				return;
+			} else {
+				ITypedElement base = new LocalNonWorkspaceTypedElement(
+						new Path(getRepository().getWorkTree()
+								.getAbsolutePath()).append(p));
+
+				final ITypedElement right;
+				if (d.getChange().equals(ChangeType.DELETE))
+					right = new GitCompareFileRevisionEditorInput.EmptyTypedElement(
+							""); //$NON-NLS-1$
+				else
+					right = CompareUtils.getFileRevisionTypedElement(p, commit,
+							getRepository(), blobs[blobs.length - 1]);
+
+				final ITypedElement commonAncestor;
+				if (commit != null) {
+					final ObjectId headCommitId = getRepository().resolve(
+							Constants.HEAD);
+					commonAncestor = CompareUtils
+							.getFileRevisionTypedElementForCommonAncestor(p,
+									headCommitId, commit, getRepository());
+				} else {
+					commonAncestor = null;
+				}
+
+				GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+						base, right, commonAncestor, null);
+				CompareUtils.openInCompare(site.getWorkbenchWindow()
+						.getActivePage(), in);
 			}
+		} catch (IOException e) {
+			Activator.logError(UIText.GitHistoryPage_openFailed, e);
+			Activator.showError(UIText.GitHistoryPage_openFailed, null);
 		}
-
-		if (file != null)
-			next = SaveableCompareEditorInput.createFileElement(file);
-		else
-			next = new LocalNonWorkspaceTypedElement(new Path(getRepository()
-					.getWorkTree().getAbsolutePath()).append(p));
-
-		if (d.getChange().equals(ChangeType.DELETE))
-			base = new GitCompareFileRevisionEditorInput.EmptyTypedElement(""); //$NON-NLS-1$
-		else
-			base = CompareUtils.getFileRevisionTypedElement(p, commit,
-					getRepository(), blobs[blobs.length - 1]);
-
-		in = new GitCompareFileRevisionEditorInput(next, base, null);
-		CompareUtils.openInCompare(site.getWorkbenchWindow().getActivePage(),
-				in);
 	}
 
 	TreeWalk getTreeWalk() {

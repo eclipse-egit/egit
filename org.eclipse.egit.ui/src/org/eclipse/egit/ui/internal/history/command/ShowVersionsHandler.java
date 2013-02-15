@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
+ * Copyright (C) 2010, 2013 Mathias Kinzler <mathias.kinzler@sap.com> and others
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.compare.ITypedElement;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
@@ -25,18 +24,16 @@ import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
-import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileRevision;
-import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Show versions/open.
@@ -46,127 +43,77 @@ import org.eclipse.team.ui.synchronize.SaveableCompareEditorInput;
  */
 public class ShowVersionsHandler extends AbstractHistoryCommandHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		boolean compareMode = Boolean.TRUE.toString().equals(
-				event.getParameter(HistoryViewCommands.COMPARE_MODE_PARAM));
 		IStructuredSelection selection = getSelection(getPage());
-		if (selection.size() < 1)
-			return null;
 		Object input = getPage().getInputInternal().getSingleFile();
-		if (input == null)
+		if (selection.size() < 1 || input == null)
 			return null;
-		boolean errorOccurred = false;
-		List<ObjectId> ids = new ArrayList<ObjectId>();
+
+		boolean compareMode = Boolean.parseBoolean(event
+				.getParameter(HistoryViewCommands.COMPARE_MODE_PARAM));
+		Repository repository = getRepository(event);
+
 		String gitPath = null;
-		Repository repo = getRepository(event);
-		ObjectId headCommit;
-		try {
-			headCommit = repo.resolve(Constants.HEAD);
-		} catch (IOException e) {
-			throw new ExecutionException(e.getMessage(), e);
-		}
 		if (input instanceof IFile) {
 			IFile resource = (IFile) input;
-			final RepositoryMapping map = RepositoryMapping
+			RepositoryMapping map = RepositoryMapping
 					.getMapping(resource);
 			gitPath = map.getRepoRelativePath(resource);
-			Iterator<?> it = selection.iterator();
-			while (it.hasNext()) {
-				RevCommit commit = (RevCommit) it.next();
-				IFileRevision rev = null;
-				try {
-					rev = CompareUtils.getFileRevision(gitPath, commit, map
-							.getRepository(), null);
-				} catch (IOException e) {
-					Activator.logError(NLS.bind(
-							UIText.GitHistoryPage_errorLookingUpPath, gitPath,
-							commit.getId()), e);
-					errorOccurred = true;
-				}
-				if (rev != null) {
-					if (compareMode) {
-						ITypedElement right = CompareUtils
-								.getFileRevisionTypedElement(gitPath, commit,
-										map.getRepository());
-						ITypedElement ancestor = CompareUtils.
-								getFileRevisionTypedElementForCommonAncestor(
-								gitPath, headCommit, commit, repo);
-						final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-								SaveableCompareEditorInput
-										.createFileElement(resource), right, ancestor,
-								null);
-						try {
-							openInCompare(event, in);
-						} catch (Exception e) {
-							errorOccurred = true;
-						}
-					} else {
-						try {
-							EgitUiEditorUtils.openEditor(getPart(event)
-									.getSite().getPage(), rev,
-									new NullProgressMonitor());
-						} catch (CoreException e) {
-							Activator.logError(
-									UIText.GitHistoryPage_openFailed, e);
-							errorOccurred = true;
-						}
-					}
-				} else {
-					ids.add(commit.getId());
-				}
-			}
-		}
-		if (input instanceof File) {
+		} else if (input instanceof File) {
 			File fileInput = (File) input;
-			gitPath = getRepoRelativePath(repo, fileInput);
-			Iterator<?> it = selection.iterator();
-			while (it.hasNext()) {
-				RevCommit commit = (RevCommit) it.next();
-				IFileRevision rev = null;
+			gitPath = getRepoRelativePath(repository, fileInput);
+		} else {
+			// Should be unreachable
+			return null;
+		}
+
+		boolean errorOccurred = false;
+		List<ObjectId> ids = new ArrayList<ObjectId>();
+
+		Iterator<?> it = selection.iterator();
+		while (it.hasNext()) {
+			RevCommit commit = (RevCommit) it.next();
+			IFileRevision revision = null;
+			try {
+				revision = CompareUtils.getFileRevision(gitPath, commit,
+						repository, null);
+			} catch (IOException e) {
+				Activator.logError(NLS.bind(
+						UIText.GitHistoryPage_errorLookingUpPath, gitPath,
+						commit.getId()), e);
+				errorOccurred = true;
+			}
+
+			if (revision == null) {
+				ids.add(commit.getId());
+			} else if (compareMode) {
 				try {
-					rev = CompareUtils.getFileRevision(gitPath, commit, repo,
-							null);
+					IWorkbenchPage workBenchPage = HandlerUtil
+							.getActiveWorkbenchWindowChecked(event)
+							.getActivePage();
+					if (input instanceof IFile) {
+						CompareUtils.compareWorkspaceWithRef(repository,
+								(IFile) input, commit.getId().getName(),
+								workBenchPage);
+					} else {
+						CompareUtils.compareLocalWithRef(repository,
+								(File) input, commit.getId().getName(),
+								workBenchPage);
+					}
 				} catch (IOException e) {
-					Activator.logError(NLS.bind(
-							UIText.GitHistoryPage_errorLookingUpPath, gitPath,
-							commit.getId()), e);
+					Activator.logError(UIText.GitHistoryPage_openFailed, e);
 					errorOccurred = true;
 				}
-				if (rev != null) {
-					if (compareMode) {
-						try {
-							ITypedElement left = CompareUtils
-									.getFileRevisionTypedElement(gitPath,
-											new RevWalk(repo).parseCommit(repo
-													.resolve(Constants.HEAD)),
-											repo);
-							ITypedElement right = CompareUtils
-									.getFileRevisionTypedElement(gitPath,
-											commit, repo);
-							ITypedElement ancestor = CompareUtils.
-									getFileRevisionTypedElementForCommonAncestor(
-									gitPath, headCommit, commit, repo);
-							final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
-									left, right, ancestor, null);
-							openInCompare(event, in);
-						} catch (IOException e) {
-							errorOccurred = true;
-						}
-					} else {
-						try {
-							EgitUiEditorUtils.openEditor(getPart(event)
-									.getSite().getPage(), rev,
-									new NullProgressMonitor());
-						} catch (CoreException e) {
-							Activator.logError(
-									UIText.GitHistoryPage_openFailed, e);
-							errorOccurred = true;
-						}
-					}
-				} else {
-					ids.add(commit.getId());
+			} else {
+				try {
+					EgitUiEditorUtils.openEditor(getPart(event).getSite()
+							.getPage(), revision, new NullProgressMonitor());
+				} catch (CoreException e) {
+					Activator.logError(UIText.GitHistoryPage_openFailed, e);
+					errorOccurred = true;
 				}
 			}
 		}
+
 		if (errorOccurred)
 			Activator.showError(UIText.GitHistoryPage_openFailed, null);
 		if (ids.size() > 0) {
