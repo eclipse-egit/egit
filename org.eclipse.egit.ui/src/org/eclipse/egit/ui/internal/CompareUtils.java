@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010-2012 SAP AG and others.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -37,6 +37,8 @@ import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.resources.mapping.ResourceTraversal;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -55,6 +57,7 @@ import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput.EmptyTypedElement;
 import org.eclipse.egit.ui.internal.actions.CompareWithCommitActionHandler;
 import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;
+import org.eclipse.egit.ui.internal.synchronize.compare.LocalNonWorkspaceTypedElement;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.jgit.dircache.DirCache;
@@ -384,6 +387,116 @@ public class CompareUtils {
 		GitCompareFileRevisionEditorInput input = new GitCompareFileRevisionEditorInput(
 				next, base, null);
 		CompareUI.openCompareDialog(input);
+	}
+
+	/**
+	 * Opens a compare editor comparing the working directory version of the
+	 * given IFile with the version of that file corresponding to
+	 * {@code refName}.
+	 *
+	 * @param repository
+	 *            The repository to load file revisions from.
+	 * @param file
+	 *            File to compare revisions for.
+	 * @param refName
+	 *            Reference to compare with the workspace version of
+	 *            {@code file}. Can be either a commit ID, a reference or a
+	 *            branch name.
+	 * @param page
+	 *            If not {@null} try to re-use a compare editor on this
+	 *            page if any is available. Otherwise open a new one.
+	 * @throws IOException
+	 *             If HEAD or {@code refName} can't be resolved in the given
+	 *             repository.
+	 */
+	public static void compareWorkspaceWithRef(Repository repository,
+			IFile file, String refName, IWorkbenchPage page) throws IOException {
+		final RepositoryMapping mapping = RepositoryMapping.getMapping(file);
+		final String gitPath = mapping.getRepoRelativePath(file);
+		final ITypedElement base = SaveableCompareEditorInput
+				.createFileElement(file);
+
+		CompareEditorInput in = prepareCompareInput(repository, gitPath, base,
+				refName);
+
+		if (page != null)
+			openInCompare(page, in);
+		else
+			CompareUI.openCompareEditor(in);
+	}
+
+	/**
+	 * Opens a compare editor comparing the working directory version of the
+	 * given File with the version of that file corresponding to {@code refName}
+	 * .
+	 *
+	 * @param repository
+	 *            The repository to load file revisions from.
+	 * @param file
+	 *            File to compare revisions for.
+	 * @param refName
+	 *            Reference to compare with the workspace version of
+	 *            {@code file}. Can be either a commit ID, a reference or a
+	 *            branch name.
+	 * @param page
+	 *            If not {@null} try to re-use a compare editor on this
+	 *            page if any is available. Otherwise open a new one.
+	 * @throws IOException
+	 *             If HEAD or {@code refName} can't be resolved in the given
+	 *             repository.
+	 */
+	public static void compareLocalWithRef(Repository repository, File file,
+			String refName, IWorkbenchPage page) throws IOException {
+		final String gitPath = getRepoRelativePath(repository, file);
+		final ITypedElement base = new LocalNonWorkspaceTypedElement(new Path(
+				file.getAbsolutePath()));
+
+		CompareEditorInput in = prepareCompareInput(repository, gitPath, base,
+				refName);
+
+		if (page != null)
+			openInCompare(page, in);
+		else
+			CompareUI.openCompareEditor(in);
+	}
+
+	/*
+	 * Creates a compare input that can be used to compare a given local file
+	 * with another reference. The given "base" element should always reflect a
+	 * local file, either in the workspace (IFile) or on the file system
+	 * (java.io.File) since we'll use "HEAD" to find a common ancestor of this
+	 * base and the reference we compare it with.
+	 */
+	private static CompareEditorInput prepareCompareInput(
+			Repository repository, String gitPath, ITypedElement base,
+			String refName) throws IOException {
+		final ObjectId destCommitId = repository.resolve(refName);
+		RevWalk rw = new RevWalk(repository);
+		RevCommit commit = rw.parseCommit(destCommitId);
+		rw.release();
+		final ITypedElement destCommit = getFileRevisionTypedElement(gitPath,
+				commit, repository);
+
+		final ITypedElement commonAncestor;
+		if (base != null && commit != null) {
+			final ObjectId headCommitId = repository.resolve(Constants.HEAD);
+			commonAncestor = getFileRevisionTypedElementForCommonAncestor(
+					gitPath, headCommitId, destCommitId, repository);
+		} else {
+			commonAncestor = null;
+		}
+
+		final GitCompareFileRevisionEditorInput in = new GitCompareFileRevisionEditorInput(
+				base, destCommit, commonAncestor, null);
+		in.getCompareConfiguration().setRightLabel(refName);
+		return in;
+	}
+
+	private static String getRepoRelativePath(Repository repository, File file) {
+		IPath workdirPath = new Path(repository.getWorkTree().getPath());
+		IPath filePath = new Path(file.getPath()).setDevice(null);
+		return filePath.removeFirstSegments(workdirPath.segmentCount())
+				.toString();
 	}
 
 	/**
