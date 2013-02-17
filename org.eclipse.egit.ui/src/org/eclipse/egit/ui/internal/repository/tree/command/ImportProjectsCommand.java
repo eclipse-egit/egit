@@ -10,12 +10,17 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.repository.tree.command;
 
+import java.util.List;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.clone.GitCreateProjectViaWizardWizard;
 import org.eclipse.egit.ui.internal.repository.tree.FolderNode;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * Implements "Add Projects" for Repository, Working Directory, and Folder
@@ -23,7 +28,21 @@ import org.eclipse.jface.wizard.WizardDialog;
 public class ImportProjectsCommand extends
 		RepositoriesViewCommandHandler<RepositoryTreeNode> {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		RepositoryTreeNode node = getSelectedNodes(event).get(0);
+		List<RepositoryTreeNode> selectedNodes = getSelectedNodes(event);
+		if (selectedNodes == null || selectedNodes.isEmpty()) {
+			MessageDialog
+					.openError(Display.getDefault().getActiveShell(),
+					UIText.ImportProjectsWrongSelection,
+					UIText.ImportProjectsSelectionInRepositoryRequired);
+			return null;
+		}
+		if (!(((List) selectedNodes).get(0) instanceof RepositoryTreeNode)) {
+			MessageDialog.openError(Display.getDefault().getActiveShell(),
+					UIText.ImportProjectsWrongSelection,
+					UIText.ImportProjectsSelectionInRepositoryRequired);
+			return null;
+		}
+		RepositoryTreeNode node = selectedNodes.get(0);
 		String path;
 
 		switch (node.getType()) {
@@ -36,6 +55,9 @@ public class ImportProjectsCommand extends
 			path = ((FolderNode) node).getObject().getPath().toString();
 			break;
 		default:
+			MessageDialog.openError(Display.getDefault().getActiveShell(),
+					UIText.ImportProjectsWrongSelection,
+					UIText.ImportProjectsSelectionInRepositoryRequired);
 			return null;
 		}
 
