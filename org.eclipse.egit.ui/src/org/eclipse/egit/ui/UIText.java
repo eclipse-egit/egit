@@ -3856,6 +3856,12 @@ public class UIText extends NLS {
 	public static String GitTraceConfigurationDialog_TraceFileLocationLabel;
 
 	/** */
+	public static String ImportProjectsWrongSelection;
+
+	/** */
+	public static String ImportProjectsSelectionInRepositoryRequired;
+
+	/** */
 	public static String LocalFileRevision_CurrentVersion;
 
 	/** */
