@@ -23,6 +23,7 @@ import java.util.Map;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -114,13 +115,27 @@ public class BranchOperation extends BaseOperation {
 
 				if (missing.length > 0) {
 					SubProgressMonitor closeMonitor = new SubProgressMonitor(
-							pm, 1);
+							pm, 2);
 					closeMonitor.beginTask("", missing.length); //$NON-NLS-1$
 					for (IProject project : missing) {
+						File projectDir = project.getLocation().toFile();
+						closeMonitor.subTask(MessageFormat.format(
+								CoreText.BranchOperation_cleaningMissingProject,
+								project.getName()));
+						project.build(IncrementalProjectBuilder.CLEAN_BUILD,
+								closeMonitor);
 						closeMonitor.subTask(MessageFormat.format(
 								CoreText.BranchOperation_closingMissingProject,
 								project.getName()));
 						project.close(closeMonitor);
+						try {
+							FileUtils.delete(projectDir,
+									FileUtils.EMPTY_DIRECTORIES_ONLY
+											| FileUtils.RECURSIVE
+											| FileUtils.IGNORE_ERRORS);
+						} catch (IOException e) {
+							// Best effort, ignore
+						}
 					}
 					closeMonitor.done();
 				}
