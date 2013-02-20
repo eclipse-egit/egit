@@ -339,6 +339,9 @@ public class CoreText extends NLS {
 	public static String RevertCommitOperation_reverting;
 
 	/** */
+	public static String BranchOperation_cleaningMissingProject;
+
+	/** */
 	public static String BranchOperation_closingMissingProject;
 
 	/** */
