@@ -60,6 +60,7 @@
       <unit id="com.jcraft.jsch.source" version="0.1.46.v201205102330"/>
       <unit id="org.junit" version="4.8.2.v4_8_2_v20110321-1705"/>
       <unit id="org.junit.source" version="4.8.2.v4_8_2_v20110321-1705"/>
+      <unit id="com.google.gson" version="1.6.0.v201101131530"/>
       <unit id="com.google.protobuf" version="2.4.0.v201105131100"/>
       <unit id="com.google.protobuf.source" version="2.4.0.v201105131100"/>
       <unit id="javax.servlet" version="2.5.0.v201103041518"/>
