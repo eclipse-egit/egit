@@ -16,6 +16,24 @@
       "revId": "117ab3bc7ee88785d2d618ed1565772fbb44c396",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//+BM\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-20T23:30:52Z",
+      "side": 1,
+      "message": "yes, the egit target platform shouldn\u0027t include dependencies of the github connector, but the other way round, so instead extend egit-github\u0027s target platform definition, unfortunately I don\u0027t know a way how a target platform could include another one so the only way to achieve that seems to be copy\u0026paste which is tedious and error prone :-(",
+      "parentUuid": "AABOPX//+Ns\u003d",
+      "revId": "117ab3bc7ee88785d2d618ed1565772fbb44c396",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
