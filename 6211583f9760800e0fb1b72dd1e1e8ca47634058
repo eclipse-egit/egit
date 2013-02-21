@@ -19,6 +19,159 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//9sM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-21T23:03:52Z",
+      "side": 1,
+      "message": "maybe shorter: The repository to load file revisions from",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9sI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-21T23:03:52Z",
+      "side": 1,
+      "message": "File to compare revisions for",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9sA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-21T23:03:52Z",
+      "side": 1,
+      "message": "Reference to compare with the workspace version of {@code file}",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9r8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-21T23:03:52Z",
+      "side": 1,
+      "message": "if not {@null} try to re-use a compare editor on this page if any is available. Otherwise open a new one.",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9sU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-21T23:03:52Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t use braces around single line blocks",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9r4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-21T23:03:52Z",
+      "side": 1,
+      "message": "see above",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9r0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-21T23:03:52Z",
+      "side": 1,
+      "message": "see above",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9rw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-21T23:03:52Z",
+      "side": 1,
+      "message": "see above",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9rs\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-21T23:03:52Z",
+      "side": 1,
+      "message": "if HEAD or {@code refName} can\u0027t be resolved in the given repository.",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//93M\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
         "patchSetId": 2
@@ -30,6 +183,23 @@
       "writtenOn": "2013-02-21T15:34:24Z",
       "side": 1,
       "message": "There is now a lot of duplicate code with the method above. Please refactor out the common code.",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9ro\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-21T23:03:52Z",
+      "side": 1,
+      "message": "no braces here",
       "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -65,6 +235,24 @@
       "side": 1,
       "message": "I have to admit that I did not understand why this one method was coded so differently from the others. Had I had unit tests to check, I probably would have changed it to use what we now have in CompareUtils.\n\nI\u0027ll try and test this point in more depth to see whether it can be changed to the common code.",
       "parentUuid": "AABOPX//920\u003d",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9rk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-21T23:03:52Z",
+      "side": 1,
+      "message": "please add missing tests",
+      "parentUuid": "AABOPX//92M\u003d",
       "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
