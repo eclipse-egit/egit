@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//94o\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-02-21T15:34:24Z",
+      "side": 1,
+      "message": "s/direction/directory/",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//93M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-02-21T15:34:24Z",
+      "side": 1,
+      "message": "There is now a lot of duplicate code with the method above. Please refactor out the common code.",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//920\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2013-02-21T15:34:24Z",
+      "side": 1,
+      "message": "I just wonder if that would also work with \nCompareUtils.compareWorkspaceWithRef(getRepository(), file,\ncommit.getName(), null);\n\n with file being an instance of java.io.file.",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
