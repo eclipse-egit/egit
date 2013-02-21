@@ -50,6 +50,24 @@
       "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//92M\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-02-21T15:48:34Z",
+      "side": 1,
+      "message": "I have to admit that I did not understand why this one method was coded so differently from the others. Had I had unit tests to check, I probably would have changed it to use what we now have in CompareUtils.\n\nI\u0027ll try and test this point in more depth to see whether it can be changed to the common code.",
+      "parentUuid": "AABOPX//920\u003d",
+      "revId": "6211583f9760800e0fb1b72dd1e1e8ca47634058",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
