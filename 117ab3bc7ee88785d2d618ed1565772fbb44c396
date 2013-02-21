@@ -34,6 +34,24 @@
       "revId": "117ab3bc7ee88785d2d618ed1565772fbb44c396",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//960\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2013-02-21T11:05:17Z",
+      "side": 1,
+      "message": "We could try to use Tycho\u0027s 0.17.0 support for multiple targets in target-platform-configuration, I264b8526912181c8f249b03455454e2f90ab932d.\n\nhttp://wiki.eclipse.org/Tycho/Target_Platform#Target_files",
+      "parentUuid": "AABOPX//+BM\u003d",
+      "revId": "117ab3bc7ee88785d2d618ed1565772fbb44c396",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
