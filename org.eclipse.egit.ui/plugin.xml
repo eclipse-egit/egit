@@ -4718,6 +4718,7 @@
       </key>
       <!-- Command+Shift+3 takes a screenshot on the Mac. Delete and redefine key binding: -->
       <key
+            platform="carbon"
             commandId=""
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
