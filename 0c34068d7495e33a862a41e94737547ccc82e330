@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//9UU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/CompareUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-23T00:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//9VQ\u003d",
+      "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//9VM\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2013-02-22T23:57:25Z",
       "side": 1,
       "message": "no braces around single line blocks",
+      "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9UA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-23T00:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//9VM\u003d",
       "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//9T8\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-23T00:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//9VI\u003d",
+      "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//9VE\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2013-02-22T23:57:25Z",
       "side": 1,
       "message": "no braces around single line blocks",
+      "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9T4\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/CommitFileDiffViewer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-23T00:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//9VE\u003d",
       "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//9To\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CompareWithWorkingTreeHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-23T00:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//9VA\u003d",
+      "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//9U8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CompareWithWorkingTreeHandler.java",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2013-02-22T23:57:25Z",
       "side": 1,
       "message": "no braces around single line blocks",
+      "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9TU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CompareWithWorkingTreeHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-23T00:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//9U8\u003d",
       "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//9TQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CompareWithWorkingTreeHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-23T00:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//9U4\u003d",
+      "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//9U0\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CompareWithWorkingTreeHandler.java",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2013-02-22T23:57:25Z",
       "side": 1,
       "message": "no braces around single line blocks",
+      "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9TM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CompareWithWorkingTreeHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-23T00:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//9U0\u003d",
       "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//9TI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/ShowVersionsHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-23T00:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//9Uw\u003d",
+      "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//9Us\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/ShowVersionsHandler.java",
         "patchSetId": 3
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//9TE\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/ShowVersionsHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-23T00:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//9Us\u003d",
+      "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//9Uo\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/ShowVersionsHandler.java",
         "patchSetId": 3
@@ -183,6 +363,24 @@
       "writtenOn": "2013-02-22T23:57:25Z",
       "side": 1,
       "message": "no braces around single line blocks",
+      "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//9TA\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/ShowVersionsHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-02-23T00:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//9Uo\u003d",
       "revId": "0c34068d7495e33a862a41e94737547ccc82e330",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
