@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 IBM Corporation and others.
+ * Copyright (c) 2010, 2013 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *     Dariusz Luksza <dariusz@luksza.org>
+ *     Laurent Goubet <laurent.goubet@obeo.fr> - 393294
  *******************************************************************************/
 package org.eclipse.egit.core.synchronize;
 
@@ -30,7 +31,7 @@ class GitRemoteResourceVariantTree extends GitResourceVariantTree {
 
 	@Override
 	protected RevCommit getCommitId(GitSynchronizeData gsd) {
-		return gsd.getSrcRevCommit();
+		return gsd.getDstRevCommit();
 	}
 
 }
