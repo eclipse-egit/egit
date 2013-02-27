@@ -16,6 +16,24 @@
       "revId": "df7757fa7b0189ef4419b02852c70317a0e881a6",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//8cI\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/ShowVersionsHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-02-27T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//8k4\u003d",
+      "revId": "df7757fa7b0189ef4419b02852c70317a0e881a6",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
