@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//7ig\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-03-04T13:40:29Z",
+      "side": 1,
+      "message": "there is an another test class with the same name in package org.eclipse.egit.core.test.internal.mapping, would it make sense to merge these classes both testing history ?",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//7iM\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-03-04T13:40:29Z",
+      "side": 1,
+      "message": "I think you should factor out the common code this test shares with the previous one",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//7iI\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-03-04T13:40:29Z",
+      "side": 1,
+      "message": "I think you should factor out the common code this test shares with the previous one",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//7iE\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-03-04T13:40:29Z",
+      "side": 1,
+      "message": "we don\u0027t use braces around single line blocks, many more occurrences in this patch",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//7jQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-03-04T13:40:29Z",
+      "side": 1,
+      "message": "we should log an error here but not stop rendering the history",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//7i0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-03-04T13:40:29Z",
+      "side": 1,
+      "message": "this execution branch isn\u0027t covered by any test",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//7jM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-03-04T13:40:29Z",
+      "side": 1,
+      "message": "this comment isn\u0027t necessary",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//7jI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-03-04T13:40:29Z",
+      "side": 1,
+      "message": "what\u0027s the TODO here ?",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//7ik\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-03-04T13:40:29Z",
+      "side": 1,
+      "message": "the implementation of this method seems to be an identical copy of getContributors(IFileRevision) so it seems this could be factored out",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
