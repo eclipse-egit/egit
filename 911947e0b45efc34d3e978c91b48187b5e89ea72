@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//694\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-03-05T16:01:51Z",
+      "side": 1,
+      "message": "The file revision returned here is a ResourceVariantFileRevision. It has no timestamp, no author, no comment... in other words most information is missing from there. This could be improved through GitResourceVariantTreeSubscriber#getDiff(), by using our own SyncInforConverter instead of the default, Team one. That is what\u0027s done by CVS (see CVSSyncTreeSubscriber and CVSSyncInfoToDiffConverter), though this change would require discouraged access on Team\u0027s SyncInfoConverter.",
+      "revId": "911947e0b45efc34d3e978c91b48187b5e89ea72",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//6+I\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-03-05T16:01:51Z",
+      "side": 1,
+      "message": "We expect \"commit1\" as the common ancestor of our comparison. However, this is not what EGit tells us. It gives us \"branchCommit1\" as the common ancestor of \"branchCommit1\" and \"masterCommit3\", which is obviously wrong. Merging change https://git.eclipse.org/r/#/c/10654/2 makes it a lot better: EGit then tells us that the common ancestor is masterCommit2, which is indeed the branching point... but not our expected ancestor: this is a Diff for File1, the common ancestor \"should\" be masterCommit1. I\u0027ll try and see if that can be improved through the aforementionned change 10654.",
+      "revId": "911947e0b45efc34d3e978c91b48187b5e89ea72",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
