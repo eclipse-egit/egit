@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//7FE\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-03-05T15:47:35Z",
+      "side": 1,
+      "message": "The other test seems to focus more on the IFileRevisions\u0027 content, while this one focuses on their hierarchy. Merging them seems feasible, but I am not confident enough with the test harness to try and get two distinct IProjects under tests (or to merge one of the two in the other and reproduce exactly the tests.",
+      "parentUuid": "AABOPX//7ig\u003d",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//7iM\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2013-03-04T13:40:29Z",
       "side": 1,
       "message": "I think you should factor out the common code this test shares with the previous one",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//7FQ\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-03-05T15:47:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//7iM\u003d",
       "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//7FM\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-03-05T15:47:35Z",
+      "side": 1,
+      "message": "Switched to a single test method, the only variable is the target file, which I changed into a nested loop.",
+      "parentUuid": "AABOPX//7iI\u003d",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//7iE\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2013-03-04T13:40:29Z",
       "side": 1,
       "message": "we don\u0027t use braces around single line blocks, many more occurrences in this patch",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//7Fk\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-03-05T15:47:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//7iE\u003d",
       "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//7FA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-03-05T15:47:35Z",
+      "side": 1,
+      "message": "This (comment included) was copied from GitHistoryPage. I left the code exactly as-is to have an easier time searching for duplicates. I can log the exception if you think it is valuable here.",
+      "parentUuid": "AABOPX//7jQ\u003d",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//7i0\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2013-03-04T13:40:29Z",
       "side": 1,
       "message": "this execution branch isn\u0027t covered by any test",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//6+4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-03-05T15:47:35Z",
+      "side": 1,
+      "message": "see my comment on patch set 6",
+      "parentUuid": "AABOPX//7i0\u003d",
       "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//7E8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-03-05T15:47:35Z",
+      "side": 1,
+      "message": "The code did not seem obvious to me (I have a commit; let\u0027s use a RevWalk to re-parse it instead of using it directly : GitRemoteResource#getCommitId() returns a RevCommit). Still, I removed the comment in the next patch set.",
+      "parentUuid": "AABOPX//7jM\u003d",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//7jI\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
         "patchSetId": 5
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//7E4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-03-05T15:47:35Z",
+      "side": 1,
+      "message": "These markers were meant for me (create and externalize an error message), it was not meant to remain in the contribution. Sorry about that.",
+      "parentUuid": "AABOPX//7jI\u003d",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//7ik\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
         "patchSetId": 5
@@ -149,6 +293,24 @@
       "writtenOn": "2013-03-04T13:40:29Z",
       "side": 1,
       "message": "the implementation of this method seems to be an identical copy of getContributors(IFileRevision) so it seems this could be factored out",
+      "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//7Es\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/GitFileHistory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-03-05T15:47:35Z",
+      "side": 1,
+      "message": "These two only differ in that one fetches children while the other retrieves parents. The first half is strictly identical ... but I need two variables as output of that \"half\".\n\nI did not factorize this out since I see no real way to improve readability. The only option I saw was to create two methods, this is what\u0027s reflected in the next patch set.",
+      "parentUuid": "AABOPX//7ik\u003d",
       "revId": "e514d691aabdb03edac6bee4c795fa920806334a",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
