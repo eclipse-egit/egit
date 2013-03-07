@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.command.CheckoutHandler;
 import org.eclipse.egit.ui.internal.commit.command.CreateBranchHandler;
 import org.eclipse.egit.ui.internal.commit.command.CreateTagHandler;

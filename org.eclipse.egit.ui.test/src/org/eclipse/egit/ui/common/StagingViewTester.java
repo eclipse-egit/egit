@@ -10,7 +10,7 @@ package org.eclipse.egit.ui.common;
 
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.staging.StagingView;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;

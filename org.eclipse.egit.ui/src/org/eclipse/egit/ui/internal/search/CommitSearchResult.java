@@ -12,7 +12,7 @@ package org.eclipse.egit.ui.internal.search;
 
 import java.text.MessageFormat;
 
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.search.ui.ISearchQuery;

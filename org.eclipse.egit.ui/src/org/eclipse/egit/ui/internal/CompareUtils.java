@@ -51,7 +51,6 @@ import org.eclipse.egit.core.internal.storage.WorkspaceFileRevision;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.GitCompareFileRevisionEditorInput.EmptyTypedElement;
 import org.eclipse.egit.ui.internal.actions.CompareWithCommitActionHandler;
 import org.eclipse.egit.ui.internal.merge.GitCompareEditorInput;

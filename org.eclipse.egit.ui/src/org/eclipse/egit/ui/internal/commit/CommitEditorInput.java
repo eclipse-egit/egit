@@ -14,8 +14,8 @@ import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.PlatformObject;
-import org.eclipse.egit.ui.UIIcons;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIIcons;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;

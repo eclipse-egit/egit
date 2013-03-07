@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.internal.dialogs.CreateTagDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;

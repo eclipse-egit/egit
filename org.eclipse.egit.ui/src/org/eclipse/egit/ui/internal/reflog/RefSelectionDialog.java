@@ -12,7 +12,7 @@ package org.eclipse.egit.ui.internal.reflog;
 
 import java.text.MessageFormat;
 
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.AbstractBranchSelectionDialog;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.jface.viewers.Viewer;

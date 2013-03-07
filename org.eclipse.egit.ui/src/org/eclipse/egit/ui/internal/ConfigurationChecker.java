@@ -17,7 +17,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.SystemReader;

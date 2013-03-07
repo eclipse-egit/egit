@@ -14,7 +14,7 @@ import org.eclipse.compare.structuremergeviewer.Differencer;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.synchronize.model.TreeBuilder.FileModelFactory;
 import org.eclipse.egit.ui.internal.synchronize.model.TreeBuilder.TreeModelFactory;
 import org.eclipse.jgit.lib.Repository;

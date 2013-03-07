@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.branch.BranchOperationUI;
 import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;

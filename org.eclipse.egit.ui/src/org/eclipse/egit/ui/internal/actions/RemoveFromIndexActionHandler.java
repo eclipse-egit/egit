@@ -22,7 +22,7 @@ import org.eclipse.egit.core.op.AddToIndexOperation;
 import org.eclipse.egit.core.op.RemoveFromIndexOperation;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 
 /**
  * Action for removing resource from the git index

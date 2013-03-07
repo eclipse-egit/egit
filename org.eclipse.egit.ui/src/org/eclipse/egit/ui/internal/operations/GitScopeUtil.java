@@ -25,7 +25,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.synchronize.GitResourceVariantTreeSubscriber;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.team.core.subscribers.Subscriber;
 import org.eclipse.team.core.subscribers.SubscriberScopeManager;

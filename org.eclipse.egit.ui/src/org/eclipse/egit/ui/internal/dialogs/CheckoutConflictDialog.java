@@ -14,8 +14,8 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import java.util.List;
 
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.internal.CommonUtils;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.egit.ui.internal.repository.tree.command.CommitCommand;
 import org.eclipse.egit.ui.internal.repository.tree.command.ResetCommand;

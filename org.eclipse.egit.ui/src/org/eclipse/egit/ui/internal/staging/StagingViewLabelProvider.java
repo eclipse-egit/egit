@@ -11,7 +11,7 @@ package org.eclipse.egit.ui.internal.staging;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIIcons;
+import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.decorators.DecorationResult;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.DecorationHelper;
 import org.eclipse.jface.resource.ImageDescriptor;

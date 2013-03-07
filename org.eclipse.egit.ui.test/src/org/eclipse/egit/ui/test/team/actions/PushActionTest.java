@@ -15,8 +15,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;

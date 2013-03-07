@@ -14,7 +14,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.util.OpenStrategy;
