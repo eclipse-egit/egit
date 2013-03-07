@@ -14,8 +14,8 @@ package org.eclipse.egit.ui.internal.commit;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
 
-import org.eclipse.egit.ui.UIText;
 import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.TextViewer;

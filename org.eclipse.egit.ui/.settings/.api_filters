@@ -8,16 +8,4 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/egit/ui/UIText.java" type="org.eclipse.egit.ui.UIText">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="MergeResultDialog_failed"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="MergeResultDialog_nMore"/>
-            </message_arguments>
-        </filter>
-    </resource>
 </component>

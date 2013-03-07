@@ -13,8 +13,8 @@ package org.eclipse.egit.ui.internal.repository;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.egit.ui.UIIcons;
-import org.eclipse.egit.ui.UIText;
+import org.eclipse.egit.ui.internal.UIIcons;
+import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.BranchConfigurationDialog;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;

@@ -8,10 +8,10 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.view.synchronize;
 
-import static org.eclipse.egit.ui.UIText.CommitAction_commit;
-import static org.eclipse.egit.ui.UIText.CommitDialog_Commit;
-import static org.eclipse.egit.ui.UIText.CommitDialog_CommitChanges;
-import static org.eclipse.egit.ui.UIText.CommitDialog_SelectAll;
+import static org.eclipse.egit.ui.internal.UIText.CommitAction_commit;
+import static org.eclipse.egit.ui.internal.UIText.CommitDialog_Commit;
+import static org.eclipse.egit.ui.internal.UIText.CommitDialog_CommitChanges;
+import static org.eclipse.egit.ui.internal.UIText.CommitDialog_SelectAll;
 import static org.eclipse.egit.ui.test.ContextMenuHelper.clickContextMenu;
 import static org.eclipse.egit.ui.test.TestUtil.waitUntilTreeHasNodeContainsText;
 import static org.eclipse.jface.dialogs.MessageDialogWithToggle.NEVER;
