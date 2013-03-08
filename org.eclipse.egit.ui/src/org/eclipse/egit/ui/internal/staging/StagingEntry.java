@@ -44,8 +44,12 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		/** removed from index, but in tree */
 		REMOVED(EnumSet.of(Action.REPLACE_WITH_HEAD_REVISION, Action.UNSTAGE)),
 
-		/** in index, but not filesystem */
-		MISSING(EnumSet.of(Action.REPLACE_WITH_FILE_IN_GIT_INDEX, Action.REPLACE_WITH_HEAD_REVISION, Action.STAGE)),
+		/** in index (unchanged), but not filesystem */
+		MISSING(EnumSet.of(Action.REPLACE_WITH_HEAD_REVISION, Action.STAGE)),
+
+		/** in index (changed from tree to index), but not filesystem */
+		MISSING_AND_CHANGED(EnumSet.of(Action.REPLACE_WITH_FILE_IN_GIT_INDEX,
+				Action.REPLACE_WITH_HEAD_REVISION, Action.STAGE)),
 
 		/** modified on disk relative to the index */
 		MODIFIED(EnumSet.of(Action.REPLACE_WITH_HEAD_REVISION, Action.STAGE)),
@@ -226,6 +230,7 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 		case REMOVED:
 			return Staged.REMOVED;
 		case MISSING:
+		case MISSING_AND_CHANGED:
 			return Staged.REMOVED;
 		default:
 			return Staged.NOT_STAGED;
