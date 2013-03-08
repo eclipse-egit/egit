@@ -23,6 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.op.ListRemoteOperation;
@@ -49,6 +50,7 @@ import org.eclipse.jgit.api.CheckoutResult;
 import org.eclipse.jgit.api.CheckoutResult.Status;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.CheckoutConflictException;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
@@ -462,7 +464,6 @@ public class FetchGerritChangePage extends WizardPage {
 									});
 						}
 					});
-
 		}
 		return changeRefs;
 	}
@@ -479,6 +480,7 @@ public class FetchGerritChangePage extends WizardPage {
 					.getSelection()) && activateAdditionalRefs.getSelection();
 			final String textForTag = tagText.getText();
 			final String textForBranch = branchText.getText();
+
 			getWizard().getContainer().run(true, true,
 					new IRunnableWithProgress() {
 						public void run(IProgressMonitor monitor)
@@ -492,96 +494,22 @@ public class FetchGerritChangePage extends WizardPage {
 							monitor.beginTask(
 									UIText.FetchGerritChangePage_GetChangeTaskName,
 									totalWork);
-							List<RefSpec> specs = new ArrayList<RefSpec>(1);
-							specs.add(spec);
-							int timeout = Activator
-									.getDefault()
-									.getPreferenceStore()
-									.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
-							FetchResult fetchRes;
-							try {
-								String taskName = NLS
-										.bind(UIText.FetchGerritChangePage_FetchingTaskName,
-												spec.getSource());
-								monitor.setTaskName(taskName);
-								fetchRes = new FetchOperationUI(repository,
-										new URIish(uri), specs, timeout, false)
-										.execute(monitor);
 
-								monitor.worked(1);
-								RevCommit commit = new RevWalk(repository)
-										.parseCommit(fetchRes.getAdvertisedRef(
-												spec.getSource()).getObjectId());
+							try {
+								RevCommit commit = fetchChange(uri, spec,
+										monitor);
 
 								if (doCreateTag) {
-									monitor.setTaskName(UIText.FetchGerritChangePage_CreatingTagTaskName);
-									final TagBuilder tag = new TagBuilder();
-									PersonIdent personIdent = new PersonIdent(
-											repository);
-
-									tag.setTag(textForTag);
-									tag.setTagger(personIdent);
-									tag.setMessage(NLS
-											.bind(UIText.FetchGerritChangePage_GeneratedTagMessage,
-													spec.getSource()));
-									tag.setObjectId(commit);
-									new TagOperation(repository, tag, false)
-											.execute(monitor);
-									monitor.worked(1);
+									createTag(spec, textForTag, commit, monitor);
 								}
 								if (doCreateBranch) {
-									monitor.setTaskName(UIText.FetchGerritChangePage_CreatingBranchTaskName);
-									CreateLocalBranchOperation bop = new CreateLocalBranchOperation(
-											repository, textForBranch, commit);
-									bop.execute(monitor);
-									CheckoutCommand co = new Git(repository)
-											.checkout();
-									try {
-										co.setName(textForBranch).call();
-									} catch (CheckoutConflictException e) {
-										final CheckoutResult result = co
-												.getResult();
-
-										if (result.getStatus() == Status.CONFLICTS) {
-											final Shell shell = getWizard()
-													.getContainer().getShell();
-
-											shell.getDisplay().asyncExec(
-													new Runnable() {
-														public void run() {
-															new CheckoutConflictDialog(
-																	shell,
-																	repository,
-																	result.getConflictList())
-																	.open();
-														}
-													});
-										}
-									}
-									monitor.worked(1);
+									createBranch(textForBranch, commit, monitor);
 								}
 								if (doCheckout || doCreateTag) {
-									monitor.setTaskName(UIText.FetchGerritChangePage_CheckingOutTaskName);
-									BranchOperationUI.checkout(repository, commit.name())
-											.run(monitor);
-
-									monitor.worked(1);
+									checkout(commit, monitor);
 								}
 								if (doActivateAdditionalRefs) {
-									// do this in the UI thread as it results in a
-									// refresh() on the history page
-									getContainer().getShell().getDisplay()
-											.asyncExec(new Runnable() {
-
-												public void run() {
-													Activator
-															.getDefault()
-															.getPreferenceStore()
-															.setValue(
-																	UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS,
-																	true);
-												}
-											});
+									activateAdditionalRefs();
 								}
 								storeLastUsedUri(uri);
 							} catch (RuntimeException e) {
@@ -601,6 +529,92 @@ public class FetchGerritChangePage extends WizardPage {
 			// just return
 		}
 		return true;
+	}
+
+	private RevCommit fetchChange(String uri, RefSpec spec,
+			IProgressMonitor monitor) throws CoreException, URISyntaxException,
+			IOException {
+		int timeout = Activator.getDefault().getPreferenceStore()
+				.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT);
+
+		List<RefSpec> specs = new ArrayList<RefSpec>(1);
+		specs.add(spec);
+
+		String taskName = NLS
+				.bind(UIText.FetchGerritChangePage_FetchingTaskName,
+						spec.getSource());
+		monitor.setTaskName(taskName);
+		FetchResult fetchRes = new FetchOperationUI(repository,
+				new URIish(uri), specs, timeout, false).execute(monitor);
+
+		monitor.worked(1);
+		return new RevWalk(repository).parseCommit(fetchRes.getAdvertisedRef(
+				spec.getSource()).getObjectId());
+	}
+
+	private void createTag(final RefSpec spec, final String textForTag,
+			RevCommit commit, IProgressMonitor monitor) throws CoreException {
+		monitor.setTaskName(UIText.FetchGerritChangePage_CreatingTagTaskName);
+		final TagBuilder tag = new TagBuilder();
+		PersonIdent personIdent = new PersonIdent(repository);
+
+		tag.setTag(textForTag);
+		tag.setTagger(personIdent);
+		tag.setMessage(NLS.bind(
+				UIText.FetchGerritChangePage_GeneratedTagMessage,
+				spec.getSource()));
+		tag.setObjectId(commit);
+		new TagOperation(repository, tag, false).execute(monitor);
+		monitor.worked(1);
+	}
+
+	private void createBranch(final String textForBranch, RevCommit commit,
+			IProgressMonitor monitor) throws CoreException, GitAPIException {
+		monitor.setTaskName(UIText.FetchGerritChangePage_CreatingBranchTaskName);
+		CreateLocalBranchOperation bop = new CreateLocalBranchOperation(
+				repository, textForBranch, commit);
+		bop.execute(monitor);
+		CheckoutCommand co = new Git(repository).checkout();
+		try {
+			co.setName(textForBranch).call();
+		} catch (CheckoutConflictException e) {
+			final CheckoutResult result = co.getResult();
+
+			if (result.getStatus() == Status.CONFLICTS) {
+				final Shell shell = getWizard().getContainer().getShell();
+
+				shell.getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						new CheckoutConflictDialog(shell, repository, result
+								.getConflictList()).open();
+					}
+				});
+			}
+		}
+		monitor.worked(1);
+	}
+
+	private void checkout(RevCommit commit, IProgressMonitor monitor)
+			throws CoreException {
+		monitor.setTaskName(UIText.FetchGerritChangePage_CheckingOutTaskName);
+		BranchOperationUI.checkout(repository, commit.name()).run(monitor);
+
+		monitor.worked(1);
+	}
+
+	private void activateAdditionalRefs() {
+		// do this in the UI thread as it results in a
+		// refresh() on the history page
+		getContainer().getShell().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				Activator
+						.getDefault()
+						.getPreferenceStore()
+						.setValue(
+								UIPreferences.RESOURCEHISTORY_SHOW_ADDITIONAL_REFS,
+								true);
+			}
+		});
 	}
 
 	private void addRefContentProposalToText(final Text textField) {
