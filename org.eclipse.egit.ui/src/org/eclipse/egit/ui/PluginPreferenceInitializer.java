@@ -3,6 +3,7 @@
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
  * Copyright (C) 2010, Mathias Kinzler <mathias.kinzler@sap.com>
  * Copyright (C) 2012, Daniel Megert <daniel_megert@ch.ibm.com>
+ * Copyright (C) 2013, Robin Stocker <robin@nibor.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -38,7 +39,7 @@ public class PluginPreferenceInitializer extends AbstractPreferenceInitializer {
 		int[] w;
 
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_RELATIVE_DATE, true);
-		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_EMAIL_ADDRESSES, true);
+		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_EMAIL_ADDRESSES, false);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_NOTES, false);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_COMMENT_WRAP, true);
 		store.setDefault(UIPreferences.RESOURCEHISTORY_SHOW_REV_DETAIL, true);
