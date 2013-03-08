@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, 2012 Bernard Leach <leachbj@bouncycastle.org> and others.
+ * Copyright (C) 2011, 2013 Bernard Leach <leachbj@bouncycastle.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -1142,12 +1142,15 @@ public class StagingView extends ViewPart implements IShowInSource {
 		if (s.isEmpty() || !(s instanceof IStructuredSelection))
 			return;
 		final IStructuredSelection iss = (IStructuredSelection) s;
-		for (Iterator<StagingEntry> it = iss.iterator(); it.hasNext();) {
-			String relativePath = it.next().getPath();
-			String path = new Path(currentRepository.getWorkTree()
-					.getAbsolutePath()).append(relativePath)
-					.toOSString();
-			openFileInEditor(path);
+		for (Object element : iss.toList()) {
+			if (element instanceof StagingEntry) {
+				StagingEntry entry = (StagingEntry) element;
+				String relativePath = entry.getPath();
+				String path = new Path(currentRepository.getWorkTree()
+						.getAbsolutePath()).append(relativePath)
+						.toOSString();
+				openFileInEditor(path);
+			}
 		}
 	}
 
