@@ -889,6 +889,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			break;
 
 		case MISSING:
+		case MISSING_AND_CHANGED:
 		case MODIFIED:
 		case PARTIALLY_MODIFIED:
 		case CONFLICTING:
@@ -1232,6 +1233,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 					addPaths.add(entry.getPath());
 					break;
 				case MISSING:
+				case MISSING_AND_CHANGED:
 					if (rm == null)
 						rm = git.rm().setCached(true);
 					rm.addFilepattern(entry.getPath());
