@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2011, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2011, 2013 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,24 +10,55 @@ package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.core.op.RebaseOperation;
 import org.eclipse.egit.ui.internal.commands.shared.RebaseCurrentRefCommand;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryState;
 
 /**
- * An action to rebase the current branch on top of given branch.
+ * An action to rebase the current branch on top of given branch. This is the
+ * "main" action of the rebase pulldown, see {@link RebaseAction} for the menu
+ * items.
  *
- * @see RebaseOperation
+ * @see RebaseAction
  */
 public class RebaseActionHandler extends RepositoryActionHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		return new RebaseCurrentRefCommand().execute(event);
+		RebaseCurrentRefCommand rebaseCurrent = new RebaseCurrentRefCommand();
+		rebaseCurrent.setEnabled(event.getApplicationContext());
+		// Because the enabled state is for both starting a new rebase as well
+		// as working with an existing rebase, it can be that this is executed
+		// even though starting a new rebase is not possible. So check enabled
+		// state again here. See also isEnabled.
+		if (rebaseCurrent.isEnabled()) {
+			return rebaseCurrent.execute(event);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public boolean isEnabled() {
 		Repository repo = getRepository();
-		return repo != null && isLocalBranchCheckedout(repo);
+		if (repo == null)
+			return false;
+
+		// Either we want this to be enabled because a new rebase can be started
+		// (main action) or an active rebase can be continued, skipped or
+		// aborted (menu items). Even when the main action is not enabled we
+		// must enable this because otherwise the menu items can not be opened.
+		RepositoryState state = repo.getRepositoryState();
+		return state == RepositoryState.SAFE || isRebasing(state);
+	}
+
+	/**
+	 * @param state
+	 * @return whether the state is one of the "rebasing" states
+	 */
+	static boolean isRebasing(RepositoryState state) {
+		return state == RepositoryState.REBASING
+				|| state == RepositoryState.REBASING_INTERACTIVE
+				|| state == RepositoryState.REBASING_MERGE
+				|| state == RepositoryState.REBASING_REBASING;
 	}
 }
