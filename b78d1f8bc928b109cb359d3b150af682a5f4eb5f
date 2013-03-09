@@ -16,6 +16,24 @@
       "revId": "b78d1f8bc928b109cb359d3b150af682a5f4eb5f",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//5Ts\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-03-09T15:42:49Z",
+      "side": 1,
+      "message": "Sorry about that, added an explanation in patch set 2. I\u0027m starting to wish for Gerrit to have an online \"edit commit message\" feature :).",
+      "parentUuid": "AABOPX//5VI\u003d",
+      "revId": "b78d1f8bc928b109cb359d3b150af682a5f4eb5f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
