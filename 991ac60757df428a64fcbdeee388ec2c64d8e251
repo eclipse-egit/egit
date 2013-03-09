@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//5Vk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RebaseAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-03-09T15:15:46Z",
+      "side": 1,
+      "message": "Ok, I can do that.",
+      "parentUuid": "AABOPX//5WA\u003d",
+      "revId": "991ac60757df428a64fcbdeee388ec2c64d8e251",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//5V8\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RebaseActionHandler.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-03-09T15:05:49Z",
       "side": 1,
       "message": "This enables rebase when on a detached head? If so that\nss good, because it\u0027s a common use case when grabbing stuff from Gerrit",
+      "revId": "991ac60757df428a64fcbdeee388ec2c64d8e251",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//5VY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/actions/RebaseActionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-03-09T15:15:46Z",
+      "side": 1,
+      "message": "Yeah, I thought the check before was strange, for the reason you say. Looking at RebaseCurrentRefCommand, I now think we should reuse its logic (it also checks if HEAD exists), will update the change.",
+      "parentUuid": "AABOPX//5V8\u003d",
       "revId": "991ac60757df428a64fcbdeee388ec2c64d8e251",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
