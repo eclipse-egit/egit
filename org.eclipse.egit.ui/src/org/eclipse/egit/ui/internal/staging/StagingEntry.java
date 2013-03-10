@@ -181,6 +181,8 @@ public class StagingEntry implements IAdaptable, IProblemDecoratable, IDecoratab
 			return getFile();
 		else if (adapter == IPath.class)
 			return getLocation();
+		else if (adapter == Repository.class)
+			return getRepository();
 		return null;
 	}
 
