@@ -11,9 +11,12 @@
 package org.eclipse.egit.ui.internal.rebase;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.compare.CompareEditorInput;
@@ -49,6 +52,7 @@ import org.eclipse.jgit.api.RebaseResult;
 import org.eclipse.jgit.api.RebaseResult.Status;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.merge.ResolveMerger.MergeFailureReason;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.osgi.util.NLS;
@@ -56,6 +60,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -175,10 +180,175 @@ public class RebaseResultDialog extends MessageDialog {
 	@Override
 	protected Control createCustomArea(Composite parent) {
 
-		if (result.getStatus() != Status.STOPPED) {
-			createToggleButton(parent);
-			return null;
+		if (result.getStatus() == Status.STOPPED)
+			return createStoppedDialogArea(parent);
+		if (result.getStatus() == Status.FAILED)
+			return createFailedDialog(parent);
+		createToggleButton(parent);
+		return null;
+	}
+
+	private Control createFailedDialog(Composite parent) {
+		Composite composite = new Composite(parent, SWT.NONE);
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		composite.setLayout(gridLayout);
+		// result
+		Label resultLabel = new Label(composite, SWT.NONE);
+		resultLabel.setText(UIText.MergeResultDialog_result);
+		resultLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false,
+				false));
+		Text resultText = new Text(composite, SWT.READ_ONLY);
+		resultText.setText(result.getStatus().toString());
+		resultText.setSelection(resultText.getCaretPosition());
+		resultText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		if (result.getStatus() == Status.FAILED) {
+			resultText.setForeground(parent.getDisplay().getSystemColor(
+					SWT.COLOR_RED));
+
+			StringBuilder paths = new StringBuilder();
+			Label pathsLabel = new Label(composite, SWT.NONE);
+			pathsLabel.setText(UIText.MergeResultDialog_failed);
+			pathsLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false,
+					false));
+			Text pathsText = new Text(composite, SWT.READ_ONLY);
+			pathsText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
+					false));
+			Set<Entry<String, MergeFailureReason>> failedPaths = result
+					.getFailingPaths().entrySet();
+			int n = 0;
+			for (Map.Entry<String, MergeFailureReason> e : failedPaths) {
+				if (n > 0)
+					paths.append(Text.DELIMITER);
+				paths.append(e.getValue());
+				paths.append("\t"); //$NON-NLS-1$
+				paths.append(e.getKey());
+				n++;
+				if (n > 10 && failedPaths.size() > 15)
+					break;
+			}
+			if (n < failedPaths.size()) {
+				paths.append(Text.DELIMITER);
+				paths.append(MessageFormat.format(
+						UIText.MergeResultDialog_nMore,
+						Integer.valueOf(n - failedPaths.size())));
+			}
+			pathsText.setText(paths.toString());
 		}
+
+		// if (result.getStatus() != Status.FAILED) {
+		// // new head
+		// Label newHeadLabel = new Label(composite, SWT.NONE);
+		// newHeadLabel.setText(UIText.MergeResultDialog_newHead);
+		// newHeadLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER,
+		// false, false));
+		// Text newHeadText = new Text(composite, SWT.READ_ONLY);
+		// ObjectId newHead = result.getNewHead();
+		// if (newHead != null)
+		// newHeadText.setText(getCommitMessage(newHead) + SPACE
+		// + abbreviate(mergeResult.getNewHead(), true));
+		// newHeadText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+		// false));
+		// }
+		//
+		// // Merge Input
+		// Label mergeInputLabel = new Label(composite, SWT.NONE);
+		// mergeInputLabel.setText(UIText.MergeResultDialog_mergeInput);
+		// GridDataFactory.fillDefaults().align(SWT.LEAD, SWT.CENTER).span(2, 1)
+		// .applyTo(mergeInputLabel);
+		// TableViewer viewer = new TableViewer(composite);
+		// viewer.setContentProvider(new IStructuredContentProvider() {
+		//
+		// public void dispose() {
+		// // empty
+		// }
+		//
+		// public void inputChanged(Viewer theViewer, Object oldInput,
+		// Object newInput) {
+		// // empty
+		// }
+		//
+		// public Object[] getElements(Object inputElement) {
+		// return getCommits(mergeResult.getMergedCommits());
+		// }
+		// });
+		// Table table = viewer.getTable();
+		// table.setLinesVisible(true);
+		// final IStyledLabelProvider styleProvider = new IStyledLabelProvider()
+		// {
+		//
+		// private final WorkbenchLabelProvider wrapped = new
+		// WorkbenchLabelProvider();
+		//
+		// public void removeListener(ILabelProviderListener listener) {
+		// // Empty
+		// }
+		//
+		// public boolean isLabelProperty(Object element, String property) {
+		// return false;
+		// }
+		//
+		// public void dispose() {
+		// wrapped.dispose();
+		// }
+		//
+		// public void addListener(ILabelProviderListener listener) {
+		// // Empty
+		// }
+		//
+		// public StyledString getStyledText(Object element) {
+		// // TODO Replace with use of IWorkbenchAdapter3 when is no longer
+		// // supported
+		// if (element instanceof RepositoryCommit)
+		// return ((RepositoryCommit) element).getStyledText(element);
+		//
+		// return new StyledString(wrapped.getText(element));
+		// }
+		//
+		// public Image getImage(Object element) {
+		// return wrapped.getImage(element);
+		// }
+		// };
+		// viewer.setLabelProvider(new DelegatingStyledCellLabelProvider(
+		// styleProvider));
+		// applyDialogFont(composite);
+		// GridDataFactory.fillDefaults().grab(true, true)
+		// .align(SWT.FILL, SWT.FILL).span(2, 1)
+		// .applyTo(viewer.getControl());
+		// viewer.setInput(mergeResult);
+		//
+		// new OpenAndLinkWithEditorHelper(viewer) {
+		// @Override
+		// protected void linkToEditor(ISelection selection) {
+		// // Not supported
+		//
+		// }
+		//
+		// @Override
+		// protected void open(ISelection selection, boolean activate) {
+		// handleOpen(selection, OpenStrategy.activateOnOpen());
+		// }
+		//
+		// @Override
+		// protected void activate(ISelection selection) {
+		// handleOpen(selection, true);
+		// }
+		//
+		// private void handleOpen(ISelection selection, boolean activateOnOpen)
+		// {
+		// if (selection instanceof IStructuredSelection)
+		// for (Object element : ((IStructuredSelection) selection)
+		// .toArray())
+		// if (element instanceof RepositoryCommit)
+		// CommitEditor.openQuiet((RepositoryCommit) element,
+		// activateOnOpen);
+		// }
+		// };
+
+		return composite;
+	}
+
+	private Control createStoppedDialogArea(Composite parent) {
 		Composite main = new Composite(parent, SWT.NONE);
 		main.setLayout(new GridLayout(1, false));
 		GridDataFactory.fillDefaults().indent(0, 0).grab(true, true).applyTo(
