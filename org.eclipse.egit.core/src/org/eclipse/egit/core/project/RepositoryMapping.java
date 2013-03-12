@@ -288,11 +288,8 @@ public class RepositoryMapping {
 			if (mapping == null)
 				continue;
 
-			Path workingTree = new Path(mapping.getWorkTree().toString());
-			IPath relative = path.makeRelativeTo(workingTree);
-			String firstSegment = relative.segment(0);
-
-			if (firstSegment == null || !"..".equals(firstSegment)) //$NON-NLS-1$
+			IPath workingTree = new Path(mapping.getWorkTree().toString());
+			if (workingTree.isPrefixOf(path))
 				return mapping;
 		}
 
