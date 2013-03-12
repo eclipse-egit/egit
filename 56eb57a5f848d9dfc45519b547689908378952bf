@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//4rQ\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-03-12T15:27:46Z",
+      "side": 1,
+      "message": "Remove the period. Also, maybe change to \"Fix RepositoryMapping returning wrong mapping on Windows for different devices\", as this is only a problem when there is a device part.",
+      "revId": "56eb57a5f848d9dfc45519b547689908378952bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//4rE\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-03-12T15:27:46Z",
+      "side": 1,
+      "message": "makeRelativ -\u003e makeRelativeTo",
+      "revId": "56eb57a5f848d9dfc45519b547689908378952bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//4rI\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/project/RepositoryMappingTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-03-12T15:27:46Z",
+      "side": 1,
+      "message": "thershouldnever -\u003e thereshouldnever",
+      "revId": "56eb57a5f848d9dfc45519b547689908378952bf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
