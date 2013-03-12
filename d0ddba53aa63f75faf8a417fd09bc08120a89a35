@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//4qU\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-03-12T16:15:13Z",
+      "side": 1,
+      "message": "Please change to \"Fix RepositoryMapping bug on Windows for paths with different devices\".",
+      "revId": "d0ddba53aa63f75faf8a417fd09bc08120a89a35",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//4qY\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-03-12T16:15:13Z",
+      "side": 1,
+      "message": "It\u0027s relative, with an eee :). Also, trailing whitespace here.",
+      "revId": "d0ddba53aa63f75faf8a417fd09bc08120a89a35",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//4qg\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/project/RepositoryMappingTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-03-12T16:15:13Z",
+      "side": 1,
+      "message": "Sorry to bother with this, but the year should be \"2012, 2013\".",
+      "revId": "d0ddba53aa63f75faf8a417fd09bc08120a89a35",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
