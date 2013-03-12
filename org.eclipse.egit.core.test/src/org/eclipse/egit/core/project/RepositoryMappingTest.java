@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012, Robin Stocker <robin@nibor.org>
+ * Copyright (C) 2012, Robin Stocker <robin@nibor.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -82,6 +82,21 @@ public class RepositoryMappingTest extends GitTestCase {
 		assertNotNull(mapping);
 		assertEquals(repository, mapping.getRepository());
 		assertEquals("", mapping.getRepoRelativePath(workTreePath));
+	}
+
+	@Test
+	public void shouldNotReturnMappingWhenPathIsOutsideRepository() {
+		IPath workTreePath = getWorkTreePath();
+
+		assertNull(RepositoryMapping
+				.getMapping(new Path("D:/some/made/up/path")));
+		assertNull(RepositoryMapping.getMapping(new Path("/some/made/up/path")));
+		assertNull(RepositoryMapping.getMapping(new Path(
+				"/thereshouldnever/be/something/here")));
+
+		if (workTreePath.getDevice() == null)
+			assertNull(RepositoryMapping.getMapping(workTreePath
+					.setDevice("C:")));
 	}
 
 	@Test
