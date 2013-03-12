@@ -6,6 +6,7 @@
  * Copyright (C) 2008, Google Inc.
  * Copyright (C) 2012, 2013 Robin Stocker <robin@nibor.org>
  * Copyright (C) 2013, François Rey <eclipse.org_@_francois_._rey_._name>
+ * Copyright (C) 2013, Gunnar Wagenknecht <gunnar@wagenknecht.org>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -288,11 +289,8 @@ public class RepositoryMapping {
 			if (mapping == null)
 				continue;
 
-			Path workingTree = new Path(mapping.getWorkTree().toString());
-			IPath relative = path.makeRelativeTo(workingTree);
-			String firstSegment = relative.segment(0);
-
-			if (firstSegment == null || !"..".equals(firstSegment)) //$NON-NLS-1$
+			IPath workingTree = new Path(mapping.getWorkTree().toString());
+			if (workingTree.isPrefixOf(path))
 				return mapping;
 		}
 
