@@ -25,10 +25,13 @@ import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.CreateLocalBranchOperation;
 import org.eclipse.egit.core.op.ListRemoteOperation;
 import org.eclipse.egit.core.op.TagOperation;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
@@ -79,6 +82,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Fetch a change from Gerrit
@@ -322,7 +326,6 @@ public class FetchGerritChangePage extends WizardPage {
 		checkPage();
 	}
 
-
 	private void storeLastUsedUri(String uri) {
 		settings.put(lastUriKey, uri.trim());
 	}
@@ -469,66 +472,76 @@ public class FetchGerritChangePage extends WizardPage {
 	}
 
 	boolean doFetch() {
+
+		final RefSpec spec = new RefSpec().setSource(refText.getText())
+				.setDestination(Constants.FETCH_HEAD);
+		final String uri = uriCombo.getText();
+		final boolean doCheckout = checkout.getSelection();
+		final boolean doCreateTag = createTag.getSelection();
+		final boolean doCreateBranch = createBranch.getSelection();
+		final boolean doActivateAdditionalRefs = (checkout.getSelection() || dontCheckout
+				.getSelection()) && activateAdditionalRefs.getSelection();
+		final String textForTag = tagText.getText();
+		final String textForBranch = branchText.getText();
+
+		Job job = new Job(UIText.FetchGerritChangePage_GetChangeTaskName) {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				internalDoFetch(spec, uri, doCheckout, doCreateTag,
+						doCreateBranch, doActivateAdditionalRefs, textForTag,
+						textForBranch, monitor);
+				return org.eclipse.core.runtime.Status.OK_STATUS;
+			}
+
+			@Override
+			public boolean belongsTo(Object family) {
+				if (JobFamilies.FETCH.equals(family))
+					return true;
+				return super.belongsTo(family);
+			}
+		};
+		job.setUser(true);
+		job.schedule();
+		return true;
+	}
+
+	void internalDoFetch(RefSpec spec, String uri, boolean doCheckout,
+			boolean doCreateTag, boolean doCreateBranch,
+			boolean doActivateAdditionalRefs, String textForTag,
+			String textForBranch, IProgressMonitor monitor) {
+
+		int totalWork = 1;
+		if (doCheckout)
+			totalWork++;
+		if (doCreateTag || doCreateBranch)
+			totalWork++;
+		monitor.beginTask(
+				UIText.FetchGerritChangePage_GetChangeTaskName,
+				totalWork);
+
 		try {
-			final RefSpec spec = new RefSpec().setSource(refText.getText())
-					.setDestination(Constants.FETCH_HEAD);
-			final String uri = uriCombo.getText();
-			final boolean doCheckout = checkout.getSelection();
-			final boolean doCreateTag = createTag.getSelection();
-			final boolean doCreateBranch = createBranch.getSelection();
-			final boolean doActivateAdditionalRefs = (checkout.getSelection() || dontCheckout
-					.getSelection()) && activateAdditionalRefs.getSelection();
-			final String textForTag = tagText.getText();
-			final String textForBranch = branchText.getText();
+			RevCommit commit = fetchChange(uri, spec,
+					monitor);
 
-			getWizard().getContainer().run(true, true,
-					new IRunnableWithProgress() {
-						public void run(IProgressMonitor monitor)
-								throws InvocationTargetException,
-								InterruptedException {
-							int totalWork = 1;
-							if (doCheckout)
-								totalWork++;
-							if (doCreateTag || doCreateBranch)
-								totalWork++;
-							monitor.beginTask(
-									UIText.FetchGerritChangePage_GetChangeTaskName,
-									totalWork);
-
-							try {
-								RevCommit commit = fetchChange(uri, spec,
-										monitor);
-
-								if (doCreateTag) {
-									createTag(spec, textForTag, commit, monitor);
-								}
-								if (doCreateBranch) {
-									createBranch(textForBranch, commit, monitor);
-								}
-								if (doCheckout || doCreateTag) {
-									checkout(commit, monitor);
-								}
-								if (doActivateAdditionalRefs) {
-									activateAdditionalRefs();
-								}
-								storeLastUsedUri(uri);
-							} catch (RuntimeException e) {
-								throw e;
-							} catch (Exception e) {
-								throw new InvocationTargetException(e);
-							} finally {
-								monitor.done();
-							}
-						}
-					});
-		} catch (InvocationTargetException e) {
+			if (doCreateTag) {
+				createTag(spec, textForTag, commit, monitor);
+			}
+			if (doCreateBranch) {
+				createBranch(textForBranch, commit, monitor);
+			}
+			if (doCheckout || doCreateTag) {
+				checkout(commit, monitor);
+			}
+			if (doActivateAdditionalRefs) {
+				activateAdditionalRefs();
+			}
+			storeLastUsedUri(uri);
+		} catch (Exception e) {
 			Activator
 					.handleError(e.getCause().getMessage(), e.getCause(), true);
-			return false;
-		} catch (InterruptedException e) {
-			// just return
+		} finally {
+			monitor.done();
 		}
-		return true;
 	}
 
 	private RevCommit fetchChange(String uri, RefSpec spec,
@@ -605,7 +618,7 @@ public class FetchGerritChangePage extends WizardPage {
 	private void activateAdditionalRefs() {
 		// do this in the UI thread as it results in a
 		// refresh() on the history page
-		getContainer().getShell().getDisplay().asyncExec(new Runnable() {
+		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				Activator
 						.getDefault()
