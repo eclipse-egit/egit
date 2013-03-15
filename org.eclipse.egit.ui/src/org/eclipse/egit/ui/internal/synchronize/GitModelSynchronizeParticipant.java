@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, 2012 Dariusz Luksza <dariusz@luksza.org> and others.
+ * Copyright (C) 2010, 2013 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,7 +13,6 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.synchronize;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,6 +23,7 @@ import org.eclipse.compare.ITypedElement;
 import org.eclipse.compare.ResourceNode;
 import org.eclipse.compare.structuremergeviewer.ICompareInput;
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IEncodedStorage;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -47,20 +47,22 @@ import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
 import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.FileRevisionTypedElement;
 import org.eclipse.egit.ui.internal.UIText;
-import org.eclipse.egit.ui.internal.synchronize.compare.ComparisonDataSource;
-import org.eclipse.egit.ui.internal.synchronize.compare.GitCompareInput;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.eclipse.team.core.TeamException;
+import org.eclipse.team.core.history.IFileRevision;
+import org.eclipse.team.core.mapping.ISynchronizationContext;
 import org.eclipse.team.core.mapping.ISynchronizationScopeManager;
 import org.eclipse.team.core.mapping.provider.MergeContext;
 import org.eclipse.team.core.mapping.provider.SynchronizationScopeManager;
+import org.eclipse.team.core.subscribers.Subscriber;
+import org.eclipse.team.core.subscribers.SubscriberMergeContext;
+import org.eclipse.team.internal.ui.mapping.ResourceDiffCompareInput;
 import org.eclipse.team.ui.TeamUI;
 import org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration;
 import org.eclipse.team.ui.synchronize.ModelSynchronizeParticipant;
@@ -220,35 +222,44 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 
 	@Override
 	public ICompareInput asCompareInput(Object object) {
-		ICompareInput compareInput = super.asCompareInput(object);
+		final ICompareInput input = super.asCompareInput(object);
+		final ISynchronizationContext ctx = getContext();
 
-		if (compareInput != null) {
-			// note, ResourceDiffCompareInput maybe returned from super;
-			// it always has the local resource on the left side!
-			// this is only ok if we are comparing with the working tree
+		if (input instanceof ResourceDiffCompareInput && ctx instanceof SubscriberMergeContext) {
+			// Team only considers local resources as "left"
+			// We'll use the cached data instead as left could be remote
+			final IResource resource = ((ResourceNode) input.getLeft())
+					.getResource();
+			final Subscriber subscriber = ((SubscriberMergeContext)ctx).getSubscriber();
 
-			// handle file comparison outside working tree
-			ITypedElement left = compareInput.getLeft();
-			if (left instanceof ResourceNode) {
-				// the left side can only be a resource node if
-				// we are comparing against the local working tree
-				IResource resource = ((ResourceNode) left).getResource();
-				if (resource.getType() == IResource.FILE) {
-					GitSynchronizeData gsd = gsds
-							.getData(resource.getProject());
-					if (gsd != null && !gsd.shouldIncludeLocal())
-						return getFileFromGit(gsd, resource.getLocation());
+			if (resource instanceof IFile
+					&& subscriber instanceof GitResourceVariantTreeSubscriber) {
+				try {
+					final IFileRevision revision = ((GitResourceVariantTreeSubscriber) subscriber)
+							.getSourceFileRevision((IFile) resource);
+					final ITypedElement newSource = new FileRevisionTypedElement(
+							revision,
+							getLocalEncoding(resource));
+					((ResourceDiffCompareInput) input).setLeft(newSource);
+				} catch (TeamException e) {
+					// Keep the input from super as-is
 				}
-			}
-		} else {
-			IResource resource = AdapterUtils.adapt(object, IResource.class);
-			if (resource.getType() == IResource.FILE) {
-				GitSynchronizeData gsd = gsds.getData(resource.getProject());
-				return getFileFromGit(gsd, resource.getLocation());
 			}
 		}
 
-		return compareInput;
+		return input;
+	}
+
+	private static String getLocalEncoding(IResource resource) {
+		if (resource instanceof IEncodedStorage) {
+			IEncodedStorage es = (IEncodedStorage) resource;
+			try {
+				return es.getCharset();
+			} catch (CoreException e) {
+				Activator.logError(e.getMessage(), e);
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -332,37 +343,6 @@ public class GitModelSynchronizeParticipant extends ModelSynchronizeParticipant 
 		return new SynchronizationScopeManager(
 				UIText.GitModelSynchronizeParticipant_initialScopeName,
 				mappings, context, true);
-	}
-
-	private ICompareInput getFileFromGit(GitSynchronizeData gsd, IPath location) {
-		Repository repo = gsd.getRepository();
-		File workTree = repo.getWorkTree();
-		String repoRelativeLocation = Repository.stripWorkDir(workTree,
-				location.toFile());
-
-		TreeWalk tw = new TreeWalk(repo);
-		tw.setRecursive(true);
-		tw.setFilter(PathFilter.create(repoRelativeLocation.toString()));
-		RevCommit baseCommit = gsd.getSrcRevCommit();
-		RevCommit remoteCommit = gsd.getDstRevCommit();
-
-		try {
-			int baseNth = tw.addTree(baseCommit.getTree());
-			int remoteNth = tw.addTree(remoteCommit.getTree());
-
-			if (tw.next()) {
-				ComparisonDataSource baseData = new ComparisonDataSource(
-						baseCommit, tw.getObjectId(baseNth));
-				ComparisonDataSource remoteData = new ComparisonDataSource(
-						remoteCommit, tw.getObjectId(remoteNth));
-				return new GitCompareInput(repo, baseData, baseData,
-						remoteData, repoRelativeLocation);
-			}
-		} catch (IOException e) {
-			Activator.logError(e.getMessage(), e);
-		}
-
-		return null;
 	}
 
 	private void restoreSynchronizationData(IMemento[] children) {
