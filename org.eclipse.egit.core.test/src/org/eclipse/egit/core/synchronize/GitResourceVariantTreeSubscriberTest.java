@@ -74,14 +74,34 @@ public class GitResourceVariantTreeSubscriberTest extends GitTestCase {
 	}
 
 	@Test
-	public void testSyncMasterAndBranch() throws Exception {
+	public void testSyncLocalAndBranch() throws Exception {
+		// Note that HEAD is on master
 		GitResourceVariantTreeSubscriber grvts = createGitResourceVariantTreeSubscriber(
-				MASTER, BRANCH);
+				Constants.HEAD, BRANCH, true);
 		grvts.init(new NullProgressMonitor());
 
+		IResourceVariant actualSource = getSourceVariant(grvts, changedFile,
+				true);
 		IResourceVariant actualBase = getBaseVariant(grvts, changedFile);
 		IResourceVariant actualRemote = getRemoteVariant(grvts, changedFile);
 
+		assertVariantIsLocal(actualSource, changedFile);
+		assertVariantMatchCommit(actualBase, initialCommit);
+		assertVariantMatchCommit(actualRemote, commitBranch);
+	}
+
+	@Test
+	public void testSyncMasterAndBranch() throws Exception {
+		GitResourceVariantTreeSubscriber grvts = createGitResourceVariantTreeSubscriber(
+				MASTER, BRANCH, false);
+		grvts.init(new NullProgressMonitor());
+
+		IResourceVariant actualSource = getSourceVariant(grvts, changedFile,
+				false);
+		IResourceVariant actualBase = getBaseVariant(grvts, changedFile);
+		IResourceVariant actualRemote = getRemoteVariant(grvts, changedFile);
+
+		assertVariantMatchCommit(actualSource, commitMaster);
 		assertVariantMatchCommit(actualBase, initialCommit);
 		assertVariantMatchCommit(actualRemote, commitBranch);
 	}
@@ -89,14 +109,22 @@ public class GitResourceVariantTreeSubscriberTest extends GitTestCase {
 	@Test
 	public void testSyncBranchAndMaster() throws Exception {
 		GitResourceVariantTreeSubscriber grvts = createGitResourceVariantTreeSubscriber(
-				BRANCH, MASTER);
+				BRANCH, MASTER, false);
 		grvts.init(new NullProgressMonitor());
 
+		IResourceVariant actualSource = getSourceVariant(grvts, changedFile,
+				false);
 		IResourceVariant actualBase = getBaseVariant(grvts, changedFile);
 		IResourceVariant actualRemote = getRemoteVariant(grvts, changedFile);
 
+		assertVariantMatchCommit(actualSource, commitBranch);
 		assertVariantMatchCommit(actualBase, initialCommit);
 		assertVariantMatchCommit(actualRemote, commitMaster);
+	}
+
+	private void assertVariantIsLocal(IResourceVariant variant, IResource local) {
+		assertTrue(variant instanceof GitLocalResourceVariant);
+		assertEquals(local, ((GitLocalResourceVariant) variant).getResource());
 	}
 
 	private void assertVariantMatchCommit(IResourceVariant variant,
@@ -106,11 +134,26 @@ public class GitResourceVariantTreeSubscriberTest extends GitTestCase {
 	}
 
 	private GitResourceVariantTreeSubscriber createGitResourceVariantTreeSubscriber(
-			String src, String dst) throws IOException {
+			String src, String dst, boolean includeLocal) throws IOException {
 		GitSynchronizeData gsd = new GitSynchronizeData(
-				testRepo.getRepository(), src, dst, false);
+				testRepo.getRepository(), src, dst, includeLocal);
 		GitSynchronizeDataSet gsds = new GitSynchronizeDataSet(gsd);
 		return new GitResourceVariantTreeSubscriber(gsds);
+	}
+
+	private IResourceVariant getSourceVariant(
+			GitResourceVariantTreeSubscriber subscriber, IResource resource,
+			boolean includeLocal) throws TeamException {
+		IResourceVariantTree tree = subscriber.getSourceTree();
+		assertNotNull(tree);
+		assertTrue(tree instanceof GitSourceResourceVariantTree);
+		IResourceVariant resourceVariant = tree.getResourceVariant(resource);
+		assertNotNull(resourceVariant);
+		if (includeLocal)
+			assertTrue(resourceVariant instanceof GitLocalResourceVariant);
+		else
+			assertTrue(resourceVariant instanceof GitRemoteResource);
+		return resourceVariant;
 	}
 
 	private IResourceVariant getBaseVariant(
