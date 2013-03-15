@@ -4758,6 +4758,9 @@ public class UIText extends NLS {
 	/** */
 	public static String GitModelSynchronizeParticipant_initialScopeName;
 
+	/** */
+	public static String GitModelSynchronizeParticipant_noCachedSourceVariant;
+
 	static {
 		initializeMessages(BUNDLE_NAME, UIText.class);
 	}
