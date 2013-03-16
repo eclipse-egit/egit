@@ -3083,7 +3083,7 @@
                                  value="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
                            </instanceof>
                            <test
-                                 property="GitRepository.canAbortRebase">
+                                 property="GitRepository.canContinueRebase">
                            </test>
                         </and>
                      </iterate>
@@ -4441,7 +4441,7 @@
             class="org.eclipse.egit.ui.internal.repository.tree.RepositoriesViewPropertyTester"
             id="org.eclipse.egit.ui.RepositoryTester"
             namespace="GitRepository"
-            properties="isBare,isSafe,canCommit,canAmend,canResetHead,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,isSubmodule,containsHead"
+            properties="isBare,isSafe,canCommit,canAmend,canResetHead,isRefCheckedOut,isLocalBranch,fetchExists,pushExists,canMerge,canAbortRebase,canContinueRebase,isSubmodule,containsHead"
             type="org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode">
       </propertyTester>
       <propertyTester
