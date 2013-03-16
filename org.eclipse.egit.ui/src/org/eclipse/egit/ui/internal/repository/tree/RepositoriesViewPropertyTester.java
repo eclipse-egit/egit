@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 SAP AG.
+ * Copyright (c) 2010, 2013 SAP AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -133,6 +133,16 @@ public class RepositoriesViewPropertyTester extends PropertyTester {
 		}
 
 		if (property.equals("canAbortRebase")) //$NON-NLS-1$
+			switch (node.getRepository().getRepositoryState()) {
+			case REBASING_INTERACTIVE:
+				return true;
+			case REBASING_REBASING:
+				return true;
+			default:
+				return false;
+			}
+
+		if (property.equals("canContinueRebase")) //$NON-NLS-1$
 			switch (node.getRepository().getRepositoryState()) {
 			case REBASING_INTERACTIVE:
 				return true;
