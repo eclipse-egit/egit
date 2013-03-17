@@ -1806,9 +1806,6 @@ public class UIText extends NLS {
 	public static String PullResultDialog_RebaseStatusLabel;
 
 	/** */
-	public static String PullResultDialog_RebaseStoppedMessage;
-
-	/** */
 	public static String PushAction_wrongURIDescription;
 
 	/** */
@@ -3430,6 +3427,9 @@ public class UIText extends NLS {
 
 	/** */
 	public static String MergeResultDialog_id;
+
+	/** */
+	public static String MergeResultDialog_conflicts;
 
 	/** */
 	public static String MergeResultDialog_failed;
