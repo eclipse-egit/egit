@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//3M4\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/CoreText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-03-17T23:00:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPH//9+s\u003d",
+      "revId": "e5f3b249891648cafba929d0398e99f350a26ff3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPH//9+o\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-02-01T14:25:51Z",
       "side": 1,
       "message": "I think \"Re-indexing repository foo (full/incremental)\" would look nicer.",
+      "revId": "e5f3b249891648cafba929d0398e99f350a26ff3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//3M0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/coretext.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-03-17T23:00:19Z",
+      "side": 1,
+      "message": "The problem is space, The repository name is so long and the most important information is that the is something going on, rather than exactly where.",
+      "parentUuid": "AABOPH//9+o\u003d",
       "revId": "e5f3b249891648cafba929d0398e99f350a26ff3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//3Mw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-03-17T23:00:19Z",
+      "side": 1,
+      "message": "It\u0027s null on the first call.",
+      "parentUuid": "AABOPH//9+0\u003d",
+      "revId": "e5f3b249891648cafba929d0398e99f350a26ff3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPH//9+w\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2013-02-01T14:25:51Z",
       "side": 1,
       "message": "Is iteration safe against concurrent modification here? Maybe we should wrap this in synchronized(updateJobs)?",
+      "revId": "e5f3b249891648cafba929d0398e99f350a26ff3",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//3Ms\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-03-17T23:00:19Z",
+      "side": 1,
+      "message": "That\u0027s why it is a Vector.",
+      "parentUuid": "AABOPH//9+w\u003d",
       "revId": "e5f3b249891648cafba929d0398e99f350a26ff3",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
