@@ -16,6 +16,7 @@ import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.fetch.FetchResultDialog;
 import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
+import org.eclipse.egit.ui.internal.rebase.RebaseResultDialog;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -37,9 +38,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Display the result of a pull.
@@ -131,33 +129,10 @@ public class PullResultDialog extends Dialog {
 					repo, result.getMergeResult());
 			dlg.createDialogArea(mergeResultGroup);
 		} else if (hasRebaseResults()) {
+			RebaseResultDialog.createFailedOrConflictsParts(mergeResultGroup,
+					result.getRebaseResult());
 			GridDataFactory.fillDefaults().grab(true, false).applyTo(
 					mergeResultGroup);
-			GridLayoutFactory.swtDefaults().applyTo(mergeResultGroup);
-			Status status = result.getRebaseResult().getStatus();
-			switch (status) {
-			case OK:
-				// fall through
-			case FAST_FORWARD:
-				// fall through
-			case UP_TO_DATE:
-				// fall through
-			case FAILED:
-				// fall through
-			case ABORTED:
-				break;
-			case STOPPED:
-				Label errorLabel = new Label(mergeResultGroup, SWT.NONE);
-				errorLabel.setImage(PlatformUI.getWorkbench().getSharedImages()
-						.getImage(ISharedImages.IMG_OBJS_ERROR_TSK));
-				Text errorText = new Text(mergeResultGroup, SWT.READ_ONLY);
-				errorText.setText(UIText.PullResultDialog_RebaseStoppedMessage);
-				break;
-			}
-			Label statusLabel = new Label(mergeResultGroup, SWT.NONE);
-			statusLabel.setText(UIText.PullResultDialog_RebaseStatusLabel);
-			Text statusText = new Text(mergeResultGroup, SWT.READ_ONLY);
-			statusText.setText(status.name());
 		} else {
 			GridDataFactory.fillDefaults().grab(true, false).applyTo(
 					mergeResultGroup);

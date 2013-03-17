@@ -3432,6 +3432,9 @@ public class UIText extends NLS {
 	public static String MergeResultDialog_id;
 
 	/** */
+	public static String MergeResultDialog_conflicts;
+
+	/** */
 	public static String MergeResultDialog_failed;
 
 	/** */
