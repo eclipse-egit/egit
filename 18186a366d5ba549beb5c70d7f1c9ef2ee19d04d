@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//3H0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1089
+      },
+      "writtenOn": "2013-03-18T11:28:29Z",
+      "side": 1,
+      "message": "If you want this iteration to be thread safe you need to hold the lock on updateJobs.",
+      "revId": "18186a366d5ba549beb5c70d7f1c9ef2ee19d04d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
