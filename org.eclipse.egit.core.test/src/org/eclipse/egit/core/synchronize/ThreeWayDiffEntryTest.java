@@ -21,7 +21,7 @@ import org.eclipse.egit.core.synchronize.ThreeWayDiffEntry.Direction;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.junit.LocalDiskRepositoryTestCase;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.junit.Before;

@@ -20,7 +20,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.revwalk.RevBlob;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.transport.Daemon;
 import org.eclipse.jgit.transport.DaemonClient;
 import org.eclipse.jgit.transport.resolver.FileResolver;

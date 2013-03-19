@@ -31,7 +31,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.ContainerTreeIterator;
 import org.eclipse.egit.core.op.ConnectProviderOperation;
-import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.treewalk.AbstractTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.junit.Before;

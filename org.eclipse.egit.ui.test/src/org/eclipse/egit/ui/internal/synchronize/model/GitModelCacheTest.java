@@ -21,7 +21,7 @@ import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
 import org.eclipse.egit.core.synchronize.StagedChangeCache;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.storage.file.FileRepository;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
