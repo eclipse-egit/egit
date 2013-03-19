@@ -101,12 +101,6 @@
                value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
          </filter>
          <action
-               class="org.eclipse.egit.ui.internal.actions.UntrackAction"
-               icon="$nl$/icons/obj16/untrack.gif"
-               id="org.eclipse.egit.ui.internal.actions.Untrack"
-               label="%UntrackAction_label"
-               menubarPath="team.main/group8"/>
-         <action
                class="org.eclipse.egit.ui.internal.actions.CommitAction"
                definitionId="org.eclipse.egit.ui.team.Commit"
                icon="$nl$/icons/obj16/commit.gif"
@@ -1784,6 +1778,22 @@
                      </and>
                   </iterate>
                </and>
+         </activeWhen>
+      </handler>
+      <handler
+            commandId="org.eclipse.egit.ui.team.Untrack">
+         <activeWhen>
+            <iterate>
+               <and>
+                  <or>
+                     <instanceof value="org.eclipse.core.resources.IResource" />
+		             <adapt type="org.eclipse.core.resources.IResource" />
+	              </or>
+                    <test
+                          property="projectPersistentProperty"
+                          value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider"/>
+               </and>
+               </iterate>
          </activeWhen>
       </handler>
    </extension>
@@ -3818,6 +3828,26 @@
                      </and>
                   </visibleWhen>
                </command>
+               <command
+                     commandId="org.eclipse.egit.ui.team.Untrack"
+                     icon="$nl$/icons/obj16/untrack.gif"
+                     label="%UntrackAction_label"
+                     style="push">
+                 <visibleWhen checkEnabled="false">
+                  <and>
+                     <count value="+" />
+                     <iterate>
+                        <and>
+                           <adapt type="org.eclipse.core.resources.IResource">
+                              <and>
+                                 <test property="GitResource.isShared" />
+                              </and>
+                           </adapt>
+                        </and>
+                     </iterate>
+                  </and>
+               </visibleWhen>
+               </command>
             </menu>
             <separator
                   name="applyPatchGroup"
@@ -4706,6 +4736,12 @@
             defaultHandler="org.eclipse.egit.ui.internal.actions.NoAssumeUnchangedActionHandler"
             id="org.eclipse.egit.ui.team.NoAssumeUnchanged"
             name="%NoAssumeUnchangedCommand">
+      </command>
+      <command
+            categoryId="org.eclipse.egit.ui.commandCategory"
+            defaultHandler="org.eclipse.egit.ui.internal.actions.UntrackActionHandler"
+            id="org.eclipse.egit.ui.team.Untrack"
+            name="%UntrackCommand.name">
       </command>
    </extension>
    <extension
