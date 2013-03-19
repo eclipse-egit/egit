@@ -154,6 +154,8 @@ public class UIPreferences {
 	/** */
 	public static final String SHOW_REBASE_CONFIRM = "show_rebase_confirm"; //$NON-NLS-1$
 	/** */
+	public static final String SHOW_PUSH_CONFIRM = "show_push_confirm"; //$NON-NLS-1$
+	/** */
 	public static final String SHOW_INITIAL_CONFIG_DIALOG = "show_initial_config_dialog"; //$NON-NLS-1$
 	/** */
 	public static final String SHOW_HOME_DIR_WARNING = "show_home_drive_warning"; //$NON-NLS-1$
