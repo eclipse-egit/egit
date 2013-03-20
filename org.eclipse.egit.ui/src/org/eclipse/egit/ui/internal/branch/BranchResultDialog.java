@@ -16,10 +16,10 @@ import java.util.List;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.job.JobUtil;
-import org.eclipse.egit.core.op.ResetOperation;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.core.internal.op.ResetOperation;
+import org.eclipse.egit.ui.internal.Activator;
+import org.eclipse.egit.ui.internal.JobFamilies;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitUI;
 import org.eclipse.egit.ui.internal.dialogs.NonDeletedFilesDialog;

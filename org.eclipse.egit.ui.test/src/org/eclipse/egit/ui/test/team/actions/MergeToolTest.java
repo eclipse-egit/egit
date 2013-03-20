@@ -16,8 +16,8 @@ import java.io.File;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.JobFamilies;
-import org.eclipse.egit.core.op.MergeOperation;
+import org.eclipse.egit.core.internal.JobFamilies;
+import org.eclipse.egit.core.internal.op.MergeOperation;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;

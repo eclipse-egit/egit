@@ -12,7 +12,7 @@ package org.eclipse.egit.ui.internal.decorators;
 
 import java.io.IOException;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.jgit.lib.BranchTrackingStatus;
 import org.eclipse.jgit.lib.Repository;

@@ -19,8 +19,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.test.GitTestCase;
-import org.eclipse.egit.core.test.TestProject;
+import org.eclipse.egit.core.internal.test.GitTestCase;
+import org.eclipse.egit.core.internal.test.TestProject;
 import org.junit.Test;
 
 public class ResourceUtilTest extends GitTestCase {

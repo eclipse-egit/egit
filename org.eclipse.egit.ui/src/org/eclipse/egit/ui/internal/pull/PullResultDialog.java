@@ -11,9 +11,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.pull;
 
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
 import org.eclipse.egit.ui.internal.fetch.FetchResultDialog;
 import org.eclipse.egit.ui.internal.merge.MergeResultDialog;
 import org.eclipse.jface.dialogs.Dialog;

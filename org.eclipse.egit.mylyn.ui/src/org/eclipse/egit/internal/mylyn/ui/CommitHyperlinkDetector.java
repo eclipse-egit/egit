@@ -19,9 +19,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.RepositoryCache;
-import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.RepositoryCache;
+import org.eclipse.egit.core.internal.RepositoryUtil;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jface.dialogs.MessageDialog;

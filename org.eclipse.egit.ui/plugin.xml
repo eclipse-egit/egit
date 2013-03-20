@@ -4,7 +4,7 @@
    <extension-point id="commitMessageProvider" name="%CommitMessageProviderExtension-point.name" schema="schema/commitMessageProvider.exsd"/>
    <extension-point id="cloneSourceProvider" name="%CloneSourceProviderExtension-point.name" schema="schema/cloneSourceProvider.exsd"/>
    <extension point="org.eclipse.core.runtime.preferences">
-      <initializer class="org.eclipse.egit.ui.PluginPreferenceInitializer"/>
+      <initializer class="org.eclipse.egit.ui.internal.PluginPreferenceInitializer"/>
    </extension>
 
    <extension point="org.eclipse.ui.importWizards">
@@ -32,7 +32,7 @@
             objectClass="org.eclipse.core.resources.IProject"
             adaptable="true">
          <filter name="projectPersistentProperty"
-               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
+               value="org.eclipse.team.core.repository=org.eclipse.egit.core.internal.GitProvider">
          </filter>
          <action
                class="org.eclipse.egit.ui.internal.actions.DisconnectAction"
@@ -84,7 +84,7 @@
             objectClass="org.eclipse.core.resources.IContainer"
             adaptable="true">
          <filter name="projectPersistentProperty"
-               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
+               value="org.eclipse.team.core.repository=org.eclipse.egit.core.internal.GitProvider">
          </filter>
          <action
                class="org.eclipse.egit.ui.internal.actions.SynchronizeWorkspaceAction"
@@ -98,7 +98,7 @@
             id="org.eclipse.egit.ui.resourceContributions"
             objectClass="org.eclipse.core.resources.IResource">
          <filter name="projectPersistentProperty"
-               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
+               value="org.eclipse.team.core.repository=org.eclipse.egit.core.internal.GitProvider">
          </filter>
          <action
                class="org.eclipse.egit.ui.internal.actions.UntrackAction"
@@ -241,7 +241,7 @@
          id="org.eclipse.egit.ui.fileContributions"
          objectClass="org.eclipse.core.resources.IFile">
          <filter name="projectPersistentProperty"
-               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
+               value="org.eclipse.team.core.repository=org.eclipse.egit.core.internal.GitProvider">
          </filter>
          <action
                class="org.eclipse.egit.ui.internal.actions.CompareWithRevisionAction"
@@ -256,7 +256,7 @@
             objectClass="org.eclipse.core.resources.IFile">
          <filter
                name="projectPersistentProperty"
-               value="org.eclipse.team.core.repository=org.eclipse.egit.core.GitProvider">
+               value="org.eclipse.team.core.repository=org.eclipse.egit.core.internal.GitProvider">
          </filter>
          <action
                class="org.eclipse.egit.ui.internal.actions.ShowBlameAction"
@@ -487,7 +487,7 @@
 		<adapt type="org.eclipse.core.resources.IResource">
 			<test
 				property="org.eclipse.core.resources.projectPersistentProperty"
-				args="org.eclipse.team.core.repository, org.eclipse.egit.core.GitProvider">
+				args="org.eclipse.team.core.repository, org.eclipse.egit.core.internal.GitProvider">
 			</test>
 		</adapt>
 	    </enabledWhen>
@@ -1828,7 +1828,7 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="org.eclipse.egit.ui.GitRepositoriesPerspectiveFactory"
+            class="org.eclipse.egit.ui.internal.GitRepositoriesPerspectiveFactory"
             icon="icons/obj16/gitrepository.gif"
             id="org.eclipse.egit.ui.GitRepositoryExploring"
             name="%GitRepositoryPerspective_name">

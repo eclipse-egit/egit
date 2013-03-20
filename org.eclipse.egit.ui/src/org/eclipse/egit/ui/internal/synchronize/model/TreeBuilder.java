@@ -15,7 +15,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
+import org.eclipse.egit.core.internal.synchronize.GitCommitsModelCache.Change;
 import org.eclipse.jgit.lib.Repository;
 
 /**

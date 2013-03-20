@@ -17,9 +17,9 @@ import static org.mockito.Mockito.mock;
 import java.io.File;
 import java.util.Map;
 
-import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
-import org.eclipse.egit.core.synchronize.StagedChangeCache;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.internal.synchronize.StagedChangeCache;
+import org.eclipse.egit.core.internal.synchronize.GitCommitsModelCache.Change;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.junit.BeforeClass;

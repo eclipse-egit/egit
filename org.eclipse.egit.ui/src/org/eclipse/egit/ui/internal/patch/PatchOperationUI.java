@@ -16,7 +16,7 @@ import java.util.Set;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
-import org.eclipse.egit.core.op.CreatePatchOperation;
+import org.eclipse.egit.core.internal.op.CreatePatchOperation;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.history.GitCreatePatchWizard;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -107,7 +107,7 @@ public class PatchOperationUI {
 	}
 
 	private boolean isWorkingTreeClean() {
-		IndexDiffCache diffCache = org.eclipse.egit.core.Activator.getDefault()
+		IndexDiffCache diffCache = org.eclipse.egit.core.internal.Activator.getDefault()
 				.getIndexDiffCache();
 		if (diffCache != null) {
 			IndexDiffData diffData = diffCache.getIndexDiffCacheEntry(

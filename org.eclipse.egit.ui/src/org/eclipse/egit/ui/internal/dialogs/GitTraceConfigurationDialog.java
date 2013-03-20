@@ -23,7 +23,7 @@ import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -202,7 +202,7 @@ public class GitTraceConfigurationDialog extends TitleAreaDialog {
 
 	private static final PluginNode[] PLUGIN_LIST = new PluginNode[] {
 			new PluginNode(Activator.getPluginId()),
-			new PluginNode(org.eclipse.egit.core.Activator.getPluginId()) };
+			new PluginNode(org.eclipse.egit.core.internal.Activator.getPluginId()) };
 
 	private static final int APPLY_ID = 77;
 

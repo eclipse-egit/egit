@@ -8,8 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.sharing;
 
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.RepositoryUtil;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ComboViewer;

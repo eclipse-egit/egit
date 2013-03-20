@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-import static org.eclipse.egit.core.synchronize.dto.GitSynchronizeData.BRANCH_NAME_PATTERN;
+import static org.eclipse.egit.core.internal.synchronize.dto.GitSynchronizeData.BRANCH_NAME_PATTERN;
 import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_BRANCH_SECTION;
 import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_MERGE;
 import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_REMOTE;
@@ -28,11 +28,11 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
-import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.core.internal.project.RepositoryMapping;
+import org.eclipse.egit.core.internal.synchronize.dto.GitSynchronizeData;
+import org.eclipse.egit.core.internal.synchronize.dto.GitSynchronizeDataSet;
+import org.eclipse.egit.ui.internal.Activator;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.synchronize.GitModelSynchronize;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;

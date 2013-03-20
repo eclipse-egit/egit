@@ -21,10 +21,10 @@ import java.util.TimeZone;
 
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.GitProvider;
+import org.eclipse.egit.core.internal.GitProvider;
+import org.eclipse.egit.core.internal.op.ConnectProviderOperation;
 import org.eclipse.egit.core.internal.storage.GitFileRevision;
-import org.eclipse.egit.core.op.ConnectProviderOperation;
-import org.eclipse.egit.core.test.GitTestCase;
+import org.eclipse.egit.core.internal.test.GitTestCase;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;

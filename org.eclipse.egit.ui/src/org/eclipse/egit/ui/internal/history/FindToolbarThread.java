@@ -10,7 +10,7 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 
 /**
  * This class executes the search function for the find toolbar. Only one thread

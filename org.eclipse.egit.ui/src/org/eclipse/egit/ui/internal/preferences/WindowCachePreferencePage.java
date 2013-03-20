@@ -9,9 +9,9 @@
 package org.eclipse.egit.ui.internal.preferences;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.GitCorePreferences;
-import org.eclipse.egit.core.project.GitProjectData;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.GitCorePreferences;
+import org.eclipse.egit.core.internal.project.GitProjectData;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -72,7 +72,7 @@ public class WindowCachePreferencePage extends FieldEditorPreferencePage
 			GitProjectData.reconfigureWindowCache();
 			return true;
 		} catch (RuntimeException e) {
-			org.eclipse.egit.ui.Activator.handleError(e.getMessage(), e, true);
+			org.eclipse.egit.ui.internal.Activator.handleError(e.getMessage(), e, true);
 			return false;
 		}
 	}

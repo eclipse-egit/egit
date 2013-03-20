@@ -12,7 +12,6 @@ package org.eclipse.egit.ui.internal;
 
 import java.util.Arrays;
 
-import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.jface.resource.CompositeImageDescriptor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;

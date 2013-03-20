@@ -30,15 +30,15 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.GitCorePreferences;
-import org.eclipse.egit.core.RepositoryCache;
-import org.eclipse.egit.core.op.AddToIndexOperation;
-import org.eclipse.egit.core.op.CloneOperation;
-import org.eclipse.egit.core.op.CommitOperation;
-import org.eclipse.egit.core.op.ConnectProviderOperation;
-import org.eclipse.egit.core.op.ListRemoteOperation;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.GitCorePreferences;
+import org.eclipse.egit.core.internal.RepositoryCache;
+import org.eclipse.egit.core.internal.op.AddToIndexOperation;
+import org.eclipse.egit.core.internal.op.CloneOperation;
+import org.eclipse.egit.core.internal.op.CommitOperation;
+import org.eclipse.egit.core.internal.op.ConnectProviderOperation;
+import org.eclipse.egit.core.internal.op.ListRemoteOperation;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.Eclipse;
@@ -145,18 +145,18 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 			FileUtils.mkdir(repoRoot, true);
 		// suppress auto-ignoring and auto-sharing to avoid interference
 		IEclipsePreferences corePrefs = InstanceScope.INSTANCE
-				.getNode(org.eclipse.egit.core.Activator.getPluginId());
+				.getNode(org.eclipse.egit.core.internal.Activator.getPluginId());
 		corePrefs.putBoolean(
 				GitCorePreferences.core_autoIgnoreDerivedResources, false);
 		corePrefs.putBoolean(GitCorePreferences.core_autoShareProjects, false);
 		// make sure the default directory for Repos is not the user home
-		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+		org.eclipse.egit.ui.internal.Activator.getDefault().getPreferenceStore()
 				.setValue(UIPreferences.DEFAULT_REPO_DIR, repoRoot.getPath());
 		// suppress the configuration dialog
-		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+		org.eclipse.egit.ui.internal.Activator.getDefault().getPreferenceStore()
 				.setValue(UIPreferences.SHOW_INITIAL_CONFIG_DIALOG, false);
 		// suppress the detached head warning dialog
-		org.eclipse.egit.ui.Activator
+		org.eclipse.egit.ui.internal.Activator
 				.getDefault()
 				.getPreferenceStore()
 				.setValue(UIPreferences.SHOW_DETACHED_HEAD_WARNING,
@@ -414,7 +414,7 @@ public abstract class LocalRepositoryTestCase extends EGitTestCase {
 
 	protected static FileRepository lookupRepository(File directory)
 			throws Exception {
-		return (FileRepository) org.eclipse.egit.core.Activator.getDefault()
+		return (FileRepository) org.eclipse.egit.core.internal.Activator.getDefault()
 				.getRepositoryCache().lookupRepository(directory);
 	}
 

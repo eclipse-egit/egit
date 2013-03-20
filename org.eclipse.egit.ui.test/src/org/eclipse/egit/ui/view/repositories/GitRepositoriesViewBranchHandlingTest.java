@@ -20,10 +20,10 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.eclipse.egit.core.op.BranchOperation;
-import org.eclipse.egit.core.op.CloneOperation;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.core.internal.op.BranchOperation;
+import org.eclipse.egit.core.internal.op.CloneOperation;
+import org.eclipse.egit.ui.internal.Activator;
+import org.eclipse.egit.ui.internal.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.egit.ui.test.ContextMenuHelper;

@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
-import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.synchronize.dto.GitSynchronizeData;
+import org.eclipse.egit.core.internal.synchronize.dto.GitSynchronizeDataSet;
 
 /**
  * Root of all model objects.

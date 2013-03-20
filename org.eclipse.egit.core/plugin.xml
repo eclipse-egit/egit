@@ -2,12 +2,12 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension point="org.eclipse.core.runtime.preferences">
-      <initializer class="org.eclipse.egit.core.GitCorePreferenceInitializer"/>
+      <initializer class="org.eclipse.egit.core.internal.GitCorePreferenceInitializer"/>
    </extension>
 
   <extension point="org.eclipse.team.core.repository">
 	<repository
-       class="org.eclipse.egit.core.GitProvider"
+       class="org.eclipse.egit.core.internal.GitProvider"
        id="org.eclipse.egit.core.GitProvider"
        typeClass="org.eclipse.egit.core.internal.GitRepositoryProviderType">
 	</repository>

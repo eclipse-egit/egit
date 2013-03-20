@@ -14,7 +14,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.op.IEGitOperation;
+import org.eclipse.egit.core.internal.op.IEGitOperation;
 
 /**
  * Utility class for scheduling jobs

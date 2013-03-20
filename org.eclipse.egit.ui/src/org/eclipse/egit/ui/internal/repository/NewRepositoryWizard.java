@@ -13,8 +13,8 @@ package org.eclipse.egit.ui.internal.repository;
 import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.RepositoryCache;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.RepositoryCache;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -67,7 +67,7 @@ public class NewRepositoryWizard extends Wizard implements INewWizard {
 					.addConfiguredRepository(repoFile);
 			this.newRepo = repoToCreate;
 		} catch (IOException e) {
-			org.eclipse.egit.ui.Activator.handleError(e.getMessage(), e, false);
+			org.eclipse.egit.ui.internal.Activator.handleError(e.getMessage(), e, false);
 		}
 		return true;
 	}

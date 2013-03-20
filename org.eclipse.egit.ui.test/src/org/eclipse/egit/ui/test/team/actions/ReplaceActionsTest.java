@@ -21,10 +21,10 @@ import java.util.TimeZone;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.egit.core.op.BranchOperation;
-import org.eclipse.egit.core.op.TagOperation;
-import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.core.internal.op.BranchOperation;
+import org.eclipse.egit.core.internal.op.TagOperation;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
@@ -146,7 +146,7 @@ public class ReplaceActionsTest extends LocalRepositoryTestCase {
 		selectDialog = bot.shell(UIText.CommitSelectDialog_WindowTitle);
 		selectDialog.bot().table().select(1);
 		selectDialog.bot().button(IDialogConstants.OK_LABEL).click();
-		TestUtil.joinJobs(org.eclipse.egit.ui.JobFamilies.DISCARD_CHANGES);
+		TestUtil.joinJobs(org.eclipse.egit.ui.internal.JobFamilies.DISCARD_CHANGES);
 		oldContent = getTestFileContent();
 		assertFalse(newContent.equals(oldContent));
 		// cleanup: checkout again master and delete merged branch

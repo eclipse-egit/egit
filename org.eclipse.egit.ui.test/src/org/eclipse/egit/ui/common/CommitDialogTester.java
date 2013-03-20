@@ -9,7 +9,7 @@
 package org.eclipse.egit.ui.common;
 
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.internal.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;

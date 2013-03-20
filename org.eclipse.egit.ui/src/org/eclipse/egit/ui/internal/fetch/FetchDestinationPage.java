@@ -12,10 +12,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.UIUtils.IRefListProvider;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
+import org.eclipse.egit.ui.internal.UIUtils.IRefListProvider;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;

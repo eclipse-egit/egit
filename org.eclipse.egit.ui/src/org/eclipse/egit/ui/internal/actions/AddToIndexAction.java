@@ -9,7 +9,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-import org.eclipse.egit.core.op.AddToIndexOperation;
+import org.eclipse.egit.core.internal.op.AddToIndexOperation;
 
 /**
  * An action to add files to a Git index.

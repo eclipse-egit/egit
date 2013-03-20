@@ -29,12 +29,12 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.core.op.CommitOperation;
-import org.eclipse.egit.core.op.ConnectProviderOperation;
-import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.RepositoryUtil;
+import org.eclipse.egit.core.internal.op.CommitOperation;
+import org.eclipse.egit.core.internal.op.ConnectProviderOperation;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
@@ -161,7 +161,7 @@ public abstract class GitRepositoriesViewTestBase extends
 
 	protected static File createRemoteRepository(File repositoryDir)
 			throws Exception {
-		Repository myRepository = org.eclipse.egit.core.Activator.getDefault()
+		Repository myRepository = org.eclipse.egit.core.internal.Activator.getDefault()
 				.getRepositoryCache().lookupRepository(repositoryDir);
 		File gitDir = new File(getTestDirectory(), REPO2);
 		Repository myRemoteRepository = lookupRepository(gitDir);

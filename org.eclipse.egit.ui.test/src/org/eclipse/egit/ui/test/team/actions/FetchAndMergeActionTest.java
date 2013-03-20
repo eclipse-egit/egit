@@ -17,8 +17,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.RepositoriesViewLabelProvider;
 import org.eclipse.egit.ui.internal.repository.tree.LocalNode;

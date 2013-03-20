@@ -38,15 +38,15 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
-import org.eclipse.egit.core.AdapterUtils;
-import org.eclipse.egit.core.RepositoryCache;
-import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.AdapterUtils;
+import org.eclipse.egit.core.internal.RepositoryCache;
+import org.eclipse.egit.core.internal.RepositoryUtil;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.Activator;
+import org.eclipse.egit.ui.internal.JobFamilies;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
 import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.egit.ui.internal.reflog.ReflogView;
 import org.eclipse.egit.ui.internal.repository.tree.FetchNode;
@@ -188,7 +188,7 @@ public class RepositoriesView extends CommonNavigator implements IShowInSource, 
 	 */
 	public RepositoriesView() {
 		repositoryUtil = Activator.getDefault().getRepositoryUtil();
-		repositoryCache = org.eclipse.egit.core.Activator.getDefault()
+		repositoryCache = org.eclipse.egit.core.internal.Activator.getDefault()
 				.getRepositoryCache();
 
 		configurationListener = new IPreferenceChangeListener() {

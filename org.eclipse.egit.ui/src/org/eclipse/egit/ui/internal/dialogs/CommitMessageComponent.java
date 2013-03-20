@@ -31,13 +31,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.RevUtils;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.RevUtils;
 import org.eclipse.egit.ui.ICommitMessageProvider;
-import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.UIUtils;
-import org.eclipse.egit.ui.UIUtils.IPreviousValueProposalHandler;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
+import org.eclipse.egit.ui.internal.UIUtils.IPreviousValueProposalHandler;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitHelper.CommitInfo;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -527,7 +527,7 @@ public class CommitMessageComponent {
 		createChangeId = repository.getConfig().getBoolean(
 				ConfigConstants.CONFIG_GERRIT_SECTION,
 				ConfigConstants.CONFIG_KEY_CREATECHANGEID, false);
-		signedOff = org.eclipse.egit.ui.Activator.getDefault()
+		signedOff = org.eclipse.egit.ui.internal.Activator.getDefault()
 		.getPreferenceStore()
 		.getBoolean(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY);
 	}

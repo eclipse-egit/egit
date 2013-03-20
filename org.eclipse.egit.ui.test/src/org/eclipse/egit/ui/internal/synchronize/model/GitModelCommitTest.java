@@ -15,7 +15,7 @@ import static org.mockito.Mockito.mock;
 
 import java.io.File;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

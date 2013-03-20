@@ -12,7 +12,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commands.shared.AbortRebaseCommand;
@@ -113,7 +113,7 @@ public class RebaseAction extends RepositoryAction implements
 	}
 
 	private boolean canContinue(Repository repo) {
-		IndexDiffCache diffCache = org.eclipse.egit.core.Activator.getDefault()
+		IndexDiffCache diffCache = org.eclipse.egit.core.internal.Activator.getDefault()
 				.getIndexDiffCache();
 		if (diffCache != null) {
 			IndexDiffCacheEntry entry = diffCache.getIndexDiffCacheEntry(repo);

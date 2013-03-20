@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.PlatformObject;
-import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
+import org.eclipse.egit.core.internal.synchronize.dto.GitSynchronizeData;
 import org.eclipse.jgit.errors.MissingObjectException;
 
 /**

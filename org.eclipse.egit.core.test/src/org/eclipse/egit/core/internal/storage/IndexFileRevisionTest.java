@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 
 import org.eclipse.core.resources.IStorage;
-import org.eclipse.egit.core.test.GitTestCase;
+import org.eclipse.egit.core.internal.test.GitTestCase;
 import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheBuilder;
 import org.eclipse.jgit.dircache.DirCacheEntry;

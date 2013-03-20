@@ -31,7 +31,7 @@ import java.util.StringTokenizer;
 
 import org.eclipse.core.net.proxy.IProxyService;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitHelper.CommitInfo;
 import org.eclipse.jgit.lib.ConfigConstants;

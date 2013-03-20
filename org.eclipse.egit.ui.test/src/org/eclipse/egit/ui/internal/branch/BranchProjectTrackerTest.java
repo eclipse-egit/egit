@@ -20,9 +20,9 @@ import java.io.File;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.core.internal.Activator;
 import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.JobFamilies;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
@@ -48,9 +48,9 @@ public class BranchProjectTrackerTest extends LocalRepositoryTestCase {
 				.lookupRepository(repoFile);
 		assertNotNull(repository);
 		BranchProjectTracker tracker = new BranchProjectTracker(repository);
-		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+		org.eclipse.egit.ui.internal.Activator.getDefault().getPreferenceStore()
 				.setValue(tracker.getPreference(Constants.MASTER), "");
-		org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+		org.eclipse.egit.ui.internal.Activator.getDefault().getPreferenceStore()
 				.setValue(tracker.getPreference(BRANCH), "");
 	}
 

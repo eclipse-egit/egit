@@ -13,8 +13,8 @@ package org.eclipse.egit.ui.test.trace;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.common.EGitTestCase;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.GitTraceConfigurationDialog;
 import org.eclipse.jface.dialogs.IDialogConstants;

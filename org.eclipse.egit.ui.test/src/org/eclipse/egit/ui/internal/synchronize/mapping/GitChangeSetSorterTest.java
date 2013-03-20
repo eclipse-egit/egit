@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Date;
 
-import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Commit;
+import org.eclipse.egit.core.internal.synchronize.GitCommitsModelCache.Commit;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelBlob;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCache;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;

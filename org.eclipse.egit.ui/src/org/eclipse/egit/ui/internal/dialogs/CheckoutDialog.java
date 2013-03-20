@@ -16,7 +16,7 @@ import static org.eclipse.jgit.lib.Constants.R_REMOTES;
 import java.io.IOException;
 import java.util.Iterator;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.CommonUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.ValidationUtils;
