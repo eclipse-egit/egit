@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//2J0\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-03-20T23:54:08Z",
+      "side": 0,
+      "message": "This message is no longer used, should be removed.",
+      "revId": "8de078338ad9921ed38b497c493d35ee6971a868",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
