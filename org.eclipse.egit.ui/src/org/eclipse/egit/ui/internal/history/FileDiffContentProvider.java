@@ -12,7 +12,7 @@ package org.eclipse.egit.ui.internal.history;
 import java.io.IOException;
 import java.util.Set;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;

@@ -163,7 +163,7 @@ public class GitRepositoriesViewTestUtils {
 	}
 
 	public Repository lookupRepository(File directory) throws Exception {
-		return org.eclipse.egit.core.Activator.getDefault()
+		return org.eclipse.egit.core.internal.Activator.getDefault()
 				.getRepositoryCache().lookupRepository(directory);
 	}
 

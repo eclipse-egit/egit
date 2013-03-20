@@ -14,9 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Commit;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.core.internal.synchronize.GitCommitsModelCache.Commit;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
@@ -44,7 +44,7 @@ public class GitChangeSetLabelProvider extends SynchronizationLabelProvider impl
 	public static final String BINDING_CHANGESET_DATE = "{date}"; //$NON-NLS-1$
 
 
-	private IPreferenceStore store = org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore();
+	private IPreferenceStore store = org.eclipse.egit.ui.internal.Activator.getDefault().getPreferenceStore();
 
 	private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
 			store.getString(UIPreferences.DATE_FORMAT));

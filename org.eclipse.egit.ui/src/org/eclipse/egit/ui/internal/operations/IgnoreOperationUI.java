@@ -19,9 +19,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
+import org.eclipse.egit.core.internal.op.IgnoreOperation;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.core.op.IgnoreOperation;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 import org.eclipse.jgit.lib.Repository;
@@ -73,7 +73,7 @@ public class IgnoreOperationUI {
 		Map<Repository, Collection<String>> pathsByRepository =
 				ResourceUtil.splitPathsByRepository(paths);
 		for (Repository repository : pathsByRepository.keySet()) {
-			IndexDiffCache cache = org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache();
+			IndexDiffCache cache = org.eclipse.egit.core.internal.Activator.getDefault().getIndexDiffCache();
 			IndexDiffCacheEntry entry = cache.getIndexDiffCacheEntry(repository);
 			if (entry != null)
 				entry.refresh();

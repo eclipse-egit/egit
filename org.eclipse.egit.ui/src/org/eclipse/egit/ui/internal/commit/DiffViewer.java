@@ -11,15 +11,15 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.commit;
 
-import static org.eclipse.egit.ui.UIPreferences.THEME_DiffAddBackgroundColor;
-import static org.eclipse.egit.ui.UIPreferences.THEME_DiffAddForegroundColor;
-import static org.eclipse.egit.ui.UIPreferences.THEME_DiffHunkBackgroundColor;
-import static org.eclipse.egit.ui.UIPreferences.THEME_DiffHunkForegroundColor;
-import static org.eclipse.egit.ui.UIPreferences.THEME_DiffRemoveBackgroundColor;
-import static org.eclipse.egit.ui.UIPreferences.THEME_DiffRemoveForegroundColor;
-import static org.eclipse.egit.ui.UIPreferences.THEME_DiffHeadlineBackgroundColor;
-import static org.eclipse.egit.ui.UIPreferences.THEME_DiffHeadlineForegroundColor;
-import static org.eclipse.egit.ui.UIPreferences.THEME_DiffHeadlineFont;
+import static org.eclipse.egit.ui.internal.UIPreferences.THEME_DiffAddBackgroundColor;
+import static org.eclipse.egit.ui.internal.UIPreferences.THEME_DiffAddForegroundColor;
+import static org.eclipse.egit.ui.internal.UIPreferences.THEME_DiffHeadlineBackgroundColor;
+import static org.eclipse.egit.ui.internal.UIPreferences.THEME_DiffHeadlineFont;
+import static org.eclipse.egit.ui.internal.UIPreferences.THEME_DiffHeadlineForegroundColor;
+import static org.eclipse.egit.ui.internal.UIPreferences.THEME_DiffHunkBackgroundColor;
+import static org.eclipse.egit.ui.internal.UIPreferences.THEME_DiffHunkForegroundColor;
+import static org.eclipse.egit.ui.internal.UIPreferences.THEME_DiffRemoveBackgroundColor;
+import static org.eclipse.egit.ui.internal.UIPreferences.THEME_DiffRemoveForegroundColor;
 
 import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter.DiffStyleRange;
 import org.eclipse.jface.preference.IPreferenceStore;

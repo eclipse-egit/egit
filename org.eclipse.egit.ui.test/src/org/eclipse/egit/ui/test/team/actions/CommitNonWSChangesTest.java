@@ -16,10 +16,10 @@ import java.io.File;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.Activator;
+import org.eclipse.egit.ui.internal.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -49,7 +49,7 @@ public class CommitNonWSChangesTest extends LocalRepositoryTestCase {
 		repositoryFile = createProjectAndCommitToRepository();
 		Activator.getDefault().getRepositoryUtil()
 				.addConfiguredRepository(repositoryFile);
-		repository = org.eclipse.egit.core.Activator.getDefault()
+		repository = org.eclipse.egit.core.internal.Activator.getDefault()
 				.getRepositoryCache().lookupRepository(repositoryFile);
 	}
 

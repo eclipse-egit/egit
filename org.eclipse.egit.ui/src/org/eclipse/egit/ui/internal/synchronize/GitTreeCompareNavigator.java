@@ -15,7 +15,7 @@ import org.eclipse.compare.CompareNavigator;
 import org.eclipse.compare.INavigatable;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.ui.internal.JobFamilies;
 
 /**
  * Wraps given {@link CompareNavigator} and waits for add to index, remove from
@@ -62,7 +62,7 @@ class GitTreeCompareNavigator extends CompareNavigator {
 		try {
 			manager.join(JobFamilies.ADD_TO_INDEX, null);
 			manager.join(JobFamilies.REMOVE_FROM_INDEX, null);
-			manager.join(org.eclipse.egit.core.JobFamilies.REPOSITORY_CHANGED, null);
+			manager.join(org.eclipse.egit.core.internal.JobFamilies.REPOSITORY_CHANGED, null);
 		} catch (InterruptedException e) {
 			// ignore
 		}

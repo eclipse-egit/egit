@@ -30,8 +30,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.op.ConnectProviderOperation;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.internal.op.ConnectProviderOperation;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.clone.GitCloneSourceProviderExtension.CloneSourceProvider;
@@ -170,7 +170,7 @@ public class GitImportWizard extends AbstractGitCloneWizard implements IImportWi
 			return existingRepo;
 		else
 			try {
-				return org.eclipse.egit.core.Activator
+				return org.eclipse.egit.core.internal.Activator
 						.getDefault()
 						.getRepositoryCache()
 						.lookupRepository(

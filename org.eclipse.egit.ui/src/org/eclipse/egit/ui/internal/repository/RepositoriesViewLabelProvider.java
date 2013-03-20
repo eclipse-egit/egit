@@ -20,7 +20,7 @@ import java.util.Map;
 import org.eclipse.core.commands.IStateListener;
 import org.eclipse.core.commands.State;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.Activator;
 import org.eclipse.egit.ui.internal.GitLabelProvider;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;

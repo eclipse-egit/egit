@@ -10,7 +10,7 @@ package org.eclipse.egit.ui.internal.actions;
 
 import static org.eclipse.egit.ui.internal.actions.ActionCommands.REMOVE_FROM_INDEX;
 
-import org.eclipse.egit.core.op.RemoveFromIndexOperation;
+import org.eclipse.egit.core.internal.op.RemoveFromIndexOperation;
 
 
 /**

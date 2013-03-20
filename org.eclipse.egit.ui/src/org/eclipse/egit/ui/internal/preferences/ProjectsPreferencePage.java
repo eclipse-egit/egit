@@ -9,9 +9,9 @@
 package org.eclipse.egit.ui.internal.preferences;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.GitCorePreferences;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.GitCorePreferences;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -47,7 +47,7 @@ public class ProjectsPreferencePage extends FieldEditorPreferencePage implements
 				UIText.ProjectsPreferencePage_RestoreBranchProjects,
 				getFieldEditorParent()) {
 			public IPreferenceStore getPreferenceStore() {
-				return org.eclipse.egit.ui.Activator.getDefault()
+				return org.eclipse.egit.ui.internal.Activator.getDefault()
 						.getPreferenceStore();
 			}
 		});

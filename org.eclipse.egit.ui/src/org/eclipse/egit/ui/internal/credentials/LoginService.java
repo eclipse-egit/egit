@@ -10,8 +10,8 @@ package org.eclipse.egit.ui.internal.credentials;
 
 import java.io.IOException;
 
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
+import org.eclipse.egit.core.internal.securestorage.UserPasswordCredentials;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jface.window.Window;
@@ -72,7 +72,7 @@ public class LoginService {
 	private static void storeCredentials(URIish uri,
 			UserPasswordCredentials credentials) {
 		try {
-			org.eclipse.egit.core.Activator.getDefault().getSecureStore()
+			org.eclipse.egit.core.internal.Activator.getDefault().getSecureStore()
 					.putCredentials(uri, credentials);
 		} catch (StorageException e) {
 			Activator.handleError(UIText.LoginService_storingCredentialsFailed, e, true);
@@ -84,7 +84,7 @@ public class LoginService {
 	private static UserPasswordCredentials getCredentialsFromSecureStore(final URIish uri) {
 		UserPasswordCredentials credentials = null;
 		try {
-			credentials = org.eclipse.egit.core.Activator.getDefault().getSecureStore()
+			credentials = org.eclipse.egit.core.internal.Activator.getDefault().getSecureStore()
 					.getCredentials(uri);
 		} catch (StorageException e) {
 			Activator.logError(

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.provisional.wizards.IRepositoryServerProvider;
 import org.eclipse.egit.ui.internal.provisional.wizards.RepositoryServerInfo;
 

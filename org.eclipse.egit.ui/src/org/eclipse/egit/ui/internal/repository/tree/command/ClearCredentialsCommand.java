@@ -13,7 +13,7 @@ import java.net.URISyntaxException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RepositoryTreeNode;
 import org.eclipse.jgit.transport.URIish;
@@ -37,7 +37,7 @@ public class ClearCredentialsCommand extends
 			return null;
 		}
 		try {
-			org.eclipse.egit.core.Activator.getDefault().getSecureStore().clearCredentials(uri);
+			org.eclipse.egit.core.internal.Activator.getDefault().getSecureStore().clearCredentials(uri);
 		} catch (IOException e) {
 			Activator.handleError(UIText.ClearCredentialsCommand_clearingCredentialsFailed, e, true);
 		}

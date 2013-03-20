@@ -11,8 +11,7 @@ package org.eclipse.egit.ui.internal;
 
 import java.io.IOException;
 
-import org.eclipse.egit.core.securestorage.UserPasswordCredentials;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.internal.securestorage.UserPasswordCredentials;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jgit.transport.URIish;
 
@@ -31,7 +30,7 @@ public class SecureStoreUtils {
 			URIish uri) {
 		if (credentials != null && uri != null) {
 			try {
-				org.eclipse.egit.core.Activator.getDefault().getSecureStore()
+				org.eclipse.egit.core.internal.Activator.getDefault().getSecureStore()
 						.putCredentials(uri, credentials);
 			} catch (StorageException e) {
 				Activator.handleError(

@@ -34,16 +34,16 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.AdaptableFileTreeIterator;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.AdaptableFileTreeIterator;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.CachedCheckboxTreeViewer;
 import org.eclipse.egit.ui.internal.CompareUtils;
 import org.eclipse.egit.ui.internal.FilteredCheckboxTree;
 import org.eclipse.egit.ui.internal.UIIcons;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
 import org.eclipse.egit.ui.internal.commit.CommitMessageHistory;
 import org.eclipse.egit.ui.internal.commit.CommitProposalProcessor;
@@ -131,7 +131,7 @@ import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 public class CommitDialog extends TitleAreaDialog {
 
 	private static IPreferenceStore getPreferenceStore() {
-		return org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore();
+		return org.eclipse.egit.ui.internal.Activator.getDefault().getPreferenceStore();
 	}
 
 	static class CommitFileContentProvider extends BaseWorkbenchContentProvider {
@@ -848,7 +848,7 @@ public class CommitDialog extends TitleAreaDialog {
 		ColumnViewerToolTipSupport.enableFor(filesViewer);
 		filesViewer.setContentProvider(new CommitFileContentProvider());
 		filesViewer.setUseHashlookup(true);
-		IDialogSettings settings = org.eclipse.egit.ui.Activator.getDefault()
+		IDialogSettings settings = org.eclipse.egit.ui.internal.Activator.getDefault()
 				.getDialogSettings();
 		if (settings.get(SHOW_UNTRACKED_PREF) != null) {
 			// note, no matter how the dialog settings are, if
@@ -1180,7 +1180,7 @@ public class CommitDialog extends TitleAreaDialog {
 		committer = commitMessageComponent.getCommitter();
 		createChangeId = changeIdItem.getSelection();
 
-		IDialogSettings settings = org.eclipse.egit.ui.Activator
+		IDialogSettings settings = org.eclipse.egit.ui.internal.Activator
 			.getDefault().getDialogSettings();
 		settings.put(SHOW_UNTRACKED_PREF, showUntracked);
 		CommitMessageHistory.saveCommitHistory(getCommitMessage());

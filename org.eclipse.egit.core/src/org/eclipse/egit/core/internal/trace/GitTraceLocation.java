@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.trace;
 
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.Activator;
 import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.osgi.service.debug.DebugTrace;
 

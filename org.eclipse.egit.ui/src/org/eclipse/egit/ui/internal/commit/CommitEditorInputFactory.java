@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.Activator;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;

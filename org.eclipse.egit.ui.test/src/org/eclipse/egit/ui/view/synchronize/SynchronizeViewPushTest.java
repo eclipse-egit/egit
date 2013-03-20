@@ -13,8 +13,8 @@ import static org.hamcrest.Matchers.is;
 
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.egit.core.op.FetchOperation;
-import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.core.internal.op.FetchOperation;
+import org.eclipse.egit.ui.internal.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.test.JobJoiner;
 import org.eclipse.jgit.lib.ConfigConstants;

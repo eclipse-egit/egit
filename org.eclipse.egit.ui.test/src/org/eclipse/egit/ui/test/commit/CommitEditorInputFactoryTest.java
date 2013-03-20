@@ -17,11 +17,11 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.core.internal.Activator;
 import org.eclipse.egit.ui.internal.commit.CommitEditorInput;
 import org.eclipse.egit.ui.internal.commit.CommitEditorInputFactory;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.common.LocalRepositoryTestCase;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;

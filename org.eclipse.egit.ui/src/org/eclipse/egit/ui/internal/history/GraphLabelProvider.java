@@ -14,7 +14,7 @@ package org.eclipse.egit.ui.internal.history;
 
 import java.io.IOException;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.dialogs.CommitLabelProvider;
 
 /**

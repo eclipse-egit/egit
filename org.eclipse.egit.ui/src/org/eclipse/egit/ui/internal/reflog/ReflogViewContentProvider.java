@@ -12,7 +12,7 @@
 package org.eclipse.egit.ui.internal.reflog;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jgit.api.Git;

@@ -25,8 +25,8 @@ Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Export-Package: org.eclipse.egit.internal.mylyn.ui;version="3.0.0";x-friends:="org.eclipse.egit.ui.test",
  org.eclipse.egit.internal.mylyn.ui.commit;version="3.0.0";x-internal:=true
-Import-Package: org.eclipse.egit.core;version="[3.0.0,3.1.0)",
- org.eclipse.egit.core.synchronize;version="[3.0.0,3.1.0)",
+Import-Package: org.eclipse.egit.core.internal;version="3.0.0",
+ org.eclipse.egit.core.internal.synchronize;version="[3.0.0,3.1.0)",
  org.eclipse.egit.ui;version="[3.0.0,3.1.0)",
  org.eclipse.egit.ui.internal.commit;version="[3.0.0,3.1.0)",
  org.eclipse.egit.ui.internal.synchronize.model;version="[3.0.0,3.1.0)",

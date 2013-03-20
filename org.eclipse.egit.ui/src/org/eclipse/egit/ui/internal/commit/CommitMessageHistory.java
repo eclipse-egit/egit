@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.WorkbenchException;
@@ -46,7 +46,7 @@ public class CommitMessageHistory {
 		try {
 			memento = XMLMemento.createReadRoot(new StringReader(all));
 		} catch (WorkbenchException e) {
-			org.eclipse.egit.ui.Activator.logError(
+			org.eclipse.egit.ui.internal.Activator.logError(
 					"Error reading commit message history", e); //$NON-NLS-1$
 			return Collections.emptySet();
 		}
@@ -92,13 +92,13 @@ public class CommitMessageHistory {
 					UIPreferences.COMMIT_DIALOG_HISTORY_MESSAGES,
 					writer.toString());
 		} catch (IOException e) {
-			org.eclipse.egit.ui.Activator.logError(
+			org.eclipse.egit.ui.internal.Activator.logError(
 					"Error writing commit message history", e); //$NON-NLS-1$
 		}
 	}
 
 	private static IPreferenceStore getPreferenceStore() {
-		return org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore();
+		return org.eclipse.egit.ui.internal.Activator.getDefault().getPreferenceStore();
 	}
 
 	private static int getCommitHistorySize() {

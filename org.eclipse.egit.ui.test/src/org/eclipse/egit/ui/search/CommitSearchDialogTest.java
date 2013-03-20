@@ -16,9 +16,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.core.internal.Activator;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.search.CommitSearchPage;
 import org.eclipse.egit.ui.internal.search.RepositoryMatch;
 import org.eclipse.egit.ui.test.TestUtil;

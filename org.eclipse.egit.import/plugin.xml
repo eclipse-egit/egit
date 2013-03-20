@@ -6,7 +6,7 @@
     <importer
            id="org.eclipse.egit.core.importer"
            name="%gitBundleImporter"
-           repository="org.eclipse.egit.core.GitProvider">
+           repository="org.eclipse.egit.core.internal.GitProvider">
         <supports
               prefix="scm:git:">
         </supports>

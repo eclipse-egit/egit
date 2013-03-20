@@ -9,9 +9,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
-import org.eclipse.egit.core.op.PushOperationResult;
-import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.core.internal.op.PushOperationResult;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;

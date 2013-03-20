@@ -12,9 +12,9 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import java.util.List;
 
-import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
 import org.eclipse.egit.ui.internal.dialogs.FileTreeContentProvider.Mode;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;

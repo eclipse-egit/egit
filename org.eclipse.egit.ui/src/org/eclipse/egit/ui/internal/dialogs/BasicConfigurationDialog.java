@@ -11,8 +11,8 @@ package org.eclipse.egit.ui.internal.dialogs;
 
 import java.io.IOException;
 
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.Activator;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.preferences.GlobalConfigurationPreferencePage;
 import org.eclipse.jface.dialogs.TitleAreaDialog;

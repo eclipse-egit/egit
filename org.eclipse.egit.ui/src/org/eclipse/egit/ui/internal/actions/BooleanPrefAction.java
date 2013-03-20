@@ -13,7 +13,7 @@ package org.eclipse.egit.ui.internal.actions;
 
 import java.io.IOException;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;

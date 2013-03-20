@@ -31,9 +31,9 @@ import org.eclipse.core.commands.State;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.RepositoryCache;
-import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.internal.RepositoryCache;
+import org.eclipse.egit.core.internal.RepositoryUtil;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefNode;
 import org.eclipse.egit.ui.internal.repository.tree.AdditionalRefsNode;
@@ -81,7 +81,7 @@ import org.eclipse.ui.commands.ICommandService;
  */
 public class RepositoriesViewContentProvider implements ITreeContentProvider,
 		IStateListener {
-	private final RepositoryCache repositoryCache = org.eclipse.egit.core.Activator
+	private final RepositoryCache repositoryCache = org.eclipse.egit.core.internal.Activator
 			.getDefault().getRepositoryCache();
 
 	private final State commandState;
