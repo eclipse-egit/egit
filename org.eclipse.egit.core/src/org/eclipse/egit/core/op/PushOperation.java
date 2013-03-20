@@ -271,6 +271,7 @@ credentialsProvider)
 	 *
 	 * @param out
 	 *            the outputstream to write to
+	 * @since 3.0
 	 */
 	public void setOutputStream(OutputStream out) {
 		this.out = out;
