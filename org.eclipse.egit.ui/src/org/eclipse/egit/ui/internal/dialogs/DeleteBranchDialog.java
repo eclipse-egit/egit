@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.egit.core.op.DeleteBranchOperation;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.internal.op.DeleteBranchOperation;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.tree.RefNode;
 import org.eclipse.jface.dialogs.MessageDialog;

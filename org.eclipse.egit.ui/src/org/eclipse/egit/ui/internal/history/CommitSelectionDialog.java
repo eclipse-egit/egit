@@ -16,11 +16,11 @@ import java.util.Map.Entry;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.core.internal.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.Activator;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;

@@ -18,8 +18,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.egit.core.internal.job.JobUtil;
-import org.eclipse.egit.core.op.DisconnectProviderOperation;
-import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.core.internal.op.DisconnectProviderOperation;
+import org.eclipse.egit.ui.internal.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator;
 

@@ -24,10 +24,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.RepositoryUtil;
-import org.eclipse.egit.core.project.RepositoryFinder;
-import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.internal.RepositoryUtil;
+import org.eclipse.egit.core.internal.project.RepositoryFinder;
+import org.eclipse.egit.core.internal.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.repository.NewRepositoryWizard;
@@ -398,12 +398,12 @@ class ExistingOrNewPage extends WizardPage {
 					String msg = NLS
 							.bind(UIText.ExistingOrNewPage_ErrorFailedToCreateRepository,
 									gitDir.toString());
-					org.eclipse.egit.ui.Activator.handleError(msg, e1, true);
+					org.eclipse.egit.ui.internal.Activator.handleError(msg, e1, true);
 				} catch (CoreException e2) {
 					String msg = NLS
 							.bind(UIText.ExistingOrNewPage_ErrorFailedToRefreshRepository,
 									gitDir);
-					org.eclipse.egit.ui.Activator.handleError(msg, e2, true);
+					org.eclipse.egit.ui.internal.Activator.handleError(msg, e2, true);
 				}
 				for (TreeItem ti : tree.getSelection()) {
 					ti.setText(2, gitDir.toString());

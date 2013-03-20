@@ -11,7 +11,7 @@ package org.eclipse.egit.ui.internal.synchronize.model;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.jgit.lib.Repository;
 import org.junit.BeforeClass;
 import org.junit.Test;

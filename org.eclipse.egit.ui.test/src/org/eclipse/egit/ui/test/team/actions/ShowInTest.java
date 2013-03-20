@@ -13,7 +13,7 @@ package org.eclipse.egit.ui.test.team.actions;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.ui.internal.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.repository.RepositoriesView;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;

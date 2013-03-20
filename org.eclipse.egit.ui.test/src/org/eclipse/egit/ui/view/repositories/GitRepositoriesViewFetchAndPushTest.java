@@ -16,9 +16,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.egit.core.op.CloneOperation;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.core.internal.op.CloneOperation;
+import org.eclipse.egit.ui.internal.Activator;
+import org.eclipse.egit.ui.internal.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.push.PushOperationUI;
 import org.eclipse.egit.ui.test.ContextMenuHelper;

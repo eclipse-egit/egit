@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.Activator;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.history.SWTCommitList.SWTLane;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jgit.lib.Constants;

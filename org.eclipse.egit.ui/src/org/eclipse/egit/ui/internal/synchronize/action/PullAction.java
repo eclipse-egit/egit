@@ -16,8 +16,8 @@ import java.util.Set;
 
 import org.eclipse.compare.structuremergeviewer.IDiffElement;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
-import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
+import org.eclipse.egit.core.internal.synchronize.dto.GitSynchronizeData;
+import org.eclipse.egit.core.internal.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.internal.pull.PullOperationUI;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.team.ui.synchronize.ISynchronizePageConfiguration;

@@ -10,8 +10,8 @@ package org.eclipse.egit.ui.internal.actions;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.Activator;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.fetch.FetchOperationUI;
 import org.eclipse.egit.ui.internal.fetch.SimpleConfigureFetchDialog;

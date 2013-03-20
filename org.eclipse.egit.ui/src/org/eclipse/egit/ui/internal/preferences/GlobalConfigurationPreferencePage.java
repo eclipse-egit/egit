@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.egit.core.RepositoryCache;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.internal.RepositoryCache;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.Dialog;
@@ -245,7 +245,7 @@ public class GlobalConfigurationPreferencePage extends PreferencePage implements
 		if (repositories == null) {
 			repositories = new ArrayList<Repository>();
 			List<String> repoPaths = Activator.getDefault().getRepositoryUtil().getConfiguredRepositories();
-			RepositoryCache repositoryCache = org.eclipse.egit.core.Activator.getDefault().getRepositoryCache();
+			RepositoryCache repositoryCache = org.eclipse.egit.core.internal.Activator.getDefault().getRepositoryCache();
 			for (String repoPath : repoPaths) {
 				File gitDir = new File(repoPath);
 				if (!gitDir.exists())

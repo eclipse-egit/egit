@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.GitProvider;
 import org.eclipse.egit.core.internal.util.ProjectUtil;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.clone.ProjectRecord;
 import org.eclipse.egit.ui.internal.clone.ProjectUtils;
 import org.eclipse.jface.preference.IPreferenceStore;

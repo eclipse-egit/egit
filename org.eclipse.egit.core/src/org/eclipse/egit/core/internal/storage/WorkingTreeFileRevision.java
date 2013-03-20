@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.Activator;
 import org.eclipse.team.core.history.IFileRevision;
 
 /** An {@link IFileRevision} for the current version in the working tree */

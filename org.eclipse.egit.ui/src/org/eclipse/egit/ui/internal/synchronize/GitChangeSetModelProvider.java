@@ -16,10 +16,10 @@ import org.eclipse.core.resources.mapping.ResourceMapping;
 import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.synchronize.GitSubscriberResourceMappingContext;
-import org.eclipse.egit.core.synchronize.dto.GitSynchronizeData;
-import org.eclipse.egit.core.synchronize.dto.GitSynchronizeDataSet;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.synchronize.GitSubscriberResourceMappingContext;
+import org.eclipse.egit.core.internal.synchronize.dto.GitSynchronizeData;
+import org.eclipse.egit.core.internal.synchronize.dto.GitSynchronizeDataSet;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelObject;
 
 /**

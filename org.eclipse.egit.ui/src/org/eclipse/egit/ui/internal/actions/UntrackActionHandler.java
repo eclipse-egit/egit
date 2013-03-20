@@ -16,8 +16,8 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.core.internal.job.JobUtil;
-import org.eclipse.egit.core.op.UntrackOperation;
-import org.eclipse.egit.ui.JobFamilies;
+import org.eclipse.egit.core.internal.op.UntrackOperation;
+import org.eclipse.egit.ui.internal.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 
 /**

@@ -21,7 +21,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.egit.core.Activator;
+import org.eclipse.egit.core.internal.Activator;
 import org.eclipse.egit.internal.mylyn.ui.EGitMylynUI;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelCommit;
 import org.eclipse.egit.ui.internal.synchronize.model.GitModelRepository;

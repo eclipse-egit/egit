@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.egit.ui.UIUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
 import org.eclipse.jface.fieldassist.ComboContentAdapter;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.IContentProposal;

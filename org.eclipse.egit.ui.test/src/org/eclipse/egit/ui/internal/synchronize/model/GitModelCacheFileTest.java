@@ -16,8 +16,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.internal.synchronize.GitCommitsModelCache.Change;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.jgit.lib.AbbreviatedObjectId;
 import org.eclipse.jgit.lib.ObjectId;
 import org.junit.BeforeClass;

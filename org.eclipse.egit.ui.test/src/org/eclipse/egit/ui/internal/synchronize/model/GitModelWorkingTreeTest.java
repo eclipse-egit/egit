@@ -12,7 +12,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

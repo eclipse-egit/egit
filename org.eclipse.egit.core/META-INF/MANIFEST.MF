@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %plugin_name
 Bundle-SymbolicName: org.eclipse.egit.core;singleton:=true
 Bundle-Version: 3.0.0.qualifier
-Bundle-Activator: org.eclipse.egit.core.Activator
+Bundle-Activator: org.eclipse.egit.core.internal.Activator
 Bundle-Vendor: %provider_name
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
@@ -15,14 +15,14 @@ Export-Package: org.eclipse.egit.core;version="3.0.0",
  org.eclipse.egit.core.internal;version="3.0.0";x-friends:="org.eclipse.egit.ui,org.eclipse.egit.import",
  org.eclipse.egit.core.internal.indexdiff;version="3.0.0";x-friends:="org.eclipse.egit.ui",
  org.eclipse.egit.core.internal.job;version="3.0.0";x-friends:="org.eclipse.egit.ui",
+ org.eclipse.egit.core.internal.op;version="3.0.0",
+ org.eclipse.egit.core.internal.project;version="3.0.0",
+ org.eclipse.egit.core.internal.securestorage;version="3.0.0",
  org.eclipse.egit.core.internal.storage;version="3.0.0";x-friends:="org.eclipse.egit.ui,org.eclipse.egit.core.test",
+ org.eclipse.egit.core.internal.synchronize;version="3.0.0",
+ org.eclipse.egit.core.internal.synchronize.dto;version="3.0.0",
  org.eclipse.egit.core.internal.trace;version="3.0.0";x-internal:=true,
- org.eclipse.egit.core.internal.util;version="3.0.0";x-friends:="org.eclipse.egit.ui",
- org.eclipse.egit.core.op;version="3.0.0",
- org.eclipse.egit.core.project;version="3.0.0",
- org.eclipse.egit.core.securestorage;version="3.0.0",
- org.eclipse.egit.core.synchronize;version="3.0.0",
- org.eclipse.egit.core.synchronize.dto;version="3.0.0"
+ org.eclipse.egit.core.internal.util;version="3.0.0";x-friends:="org.eclipse.egit.ui"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.eclipse.jgit.api;version="[3.0.0,3.1.0)",

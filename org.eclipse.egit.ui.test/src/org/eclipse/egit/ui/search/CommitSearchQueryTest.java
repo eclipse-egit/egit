@@ -19,9 +19,9 @@ import java.util.Locale;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.core.internal.Activator;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.internal.search.CommitSearchQuery;
 import org.eclipse.egit.ui.internal.search.CommitSearchResult;
 import org.eclipse.egit.ui.internal.search.CommitSearchSettings;

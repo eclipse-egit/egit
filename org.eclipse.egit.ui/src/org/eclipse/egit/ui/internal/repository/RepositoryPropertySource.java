@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.preferences.ConfigurationEditorComponent;

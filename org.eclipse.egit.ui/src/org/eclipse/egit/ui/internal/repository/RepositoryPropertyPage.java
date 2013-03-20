@@ -13,7 +13,7 @@ package org.eclipse.egit.ui.internal.repository;
 import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.preferences.ConfigurationEditorComponent;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;

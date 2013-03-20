@@ -14,10 +14,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.egit.core.op.PushOperation;
-import org.eclipse.egit.core.op.PushOperationSpecification;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.core.internal.op.PushOperation;
+import org.eclipse.egit.core.internal.op.PushOperationSpecification;
+import org.eclipse.egit.ui.internal.Activator;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.components.RefContentAssistProvider;
 import org.eclipse.egit.ui.internal.components.RepositorySelection;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;

@@ -22,7 +22,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.internal.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
 
 /**

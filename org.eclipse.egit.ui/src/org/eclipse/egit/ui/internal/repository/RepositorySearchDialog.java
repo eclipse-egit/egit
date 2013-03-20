@@ -23,13 +23,13 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.core.internal.Activator;
 import org.eclipse.egit.ui.internal.CachedCheckboxTreeViewer;
 import org.eclipse.egit.ui.internal.FilteredCheckboxTree;
 import org.eclipse.egit.ui.internal.UIIcons;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -220,7 +220,7 @@ public class RepositorySearchDialog extends WizardPage {
 				false).hint(300, SWT.DEFAULT).applyTo(dir);
 		dir.setToolTipText(UIText.RepositorySearchDialog_EnterDirectoryToolTip);
 
-		String defaultRepoPath = org.eclipse.egit.ui.Activator.getDefault()
+		String defaultRepoPath = org.eclipse.egit.ui.internal.Activator.getDefault()
 				.getPreferenceStore().getString(UIPreferences.DEFAULT_REPO_DIR);
 
 		String initialPath = prefs.get(PREF_PATH, defaultRepoPath);
@@ -483,7 +483,7 @@ public class RepositorySearchDialog extends WizardPage {
 		try {
 			getContainer().run(true, true, action);
 		} catch (InvocationTargetException e1) {
-			org.eclipse.egit.ui.Activator.handleError(
+			org.eclipse.egit.ui.internal.Activator.handleError(
 					UIText.RepositorySearchDialog_errorOccurred, e1, true);
 		} catch (InterruptedException e1) {
 			// ignore

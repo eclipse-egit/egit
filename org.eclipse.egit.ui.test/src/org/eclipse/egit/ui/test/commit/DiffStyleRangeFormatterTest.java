@@ -15,10 +15,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.core.internal.Activator;
 import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter;
 import org.eclipse.egit.ui.internal.commit.DiffStyleRangeFormatter.DiffStyleRange;
+import org.eclipse.egit.ui.internal.common.LocalRepositoryTestCase;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jgit.lib.Constants;

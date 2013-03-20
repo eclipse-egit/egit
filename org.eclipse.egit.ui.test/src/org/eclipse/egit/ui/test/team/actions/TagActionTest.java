@@ -17,10 +17,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
-import org.eclipse.egit.core.op.BranchOperation;
-import org.eclipse.egit.core.op.TagOperation;
-import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.core.internal.op.BranchOperation;
+import org.eclipse.egit.core.internal.op.TagOperation;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;

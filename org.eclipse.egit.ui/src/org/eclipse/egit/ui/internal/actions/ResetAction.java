@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-import org.eclipse.egit.core.op.ResetOperation;
+import org.eclipse.egit.core.internal.op.ResetOperation;
 
 /**
  * An action to reset the current branch to a specific revision.

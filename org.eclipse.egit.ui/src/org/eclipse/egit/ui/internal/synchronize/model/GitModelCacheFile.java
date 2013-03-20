@@ -10,7 +10,7 @@ package org.eclipse.egit.ui.internal.synchronize.model;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
+import org.eclipse.egit.core.internal.synchronize.GitCommitsModelCache.Change;
 import org.eclipse.egit.ui.internal.synchronize.compare.ComparisonDataSource;
 import org.eclipse.egit.ui.internal.synchronize.compare.GitCacheCompareInput;
 import org.eclipse.egit.ui.internal.synchronize.compare.GitCompareInput;

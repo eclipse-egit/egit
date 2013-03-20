@@ -9,7 +9,7 @@
 package org.eclipse.egit.ui.internal.synchronize.model;
 
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
+import org.eclipse.egit.core.internal.synchronize.GitCommitsModelCache.Change;
 import org.eclipse.jgit.lib.Repository;
 
 /**

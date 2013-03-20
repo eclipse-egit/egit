@@ -12,7 +12,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.egit.core.op.TagOperation;
+import org.eclipse.egit.core.internal.op.TagOperation;
 import org.eclipse.egit.ui.internal.dialogs.CreateTagDialog;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
 import org.eclipse.jface.viewers.IStructuredSelection;

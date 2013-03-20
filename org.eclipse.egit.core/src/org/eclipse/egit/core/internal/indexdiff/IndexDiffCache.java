@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.JobFamilies;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.JobFamilies;
 import org.eclipse.jgit.lib.IndexDiff;
 import org.eclipse.jgit.lib.Repository;
 

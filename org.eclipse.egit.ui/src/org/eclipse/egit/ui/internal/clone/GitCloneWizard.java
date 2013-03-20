@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage;

@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.push;
 
-import org.eclipse.egit.core.op.PushOperationResult;
+import org.eclipse.egit.core.internal.op.PushOperationResult;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 

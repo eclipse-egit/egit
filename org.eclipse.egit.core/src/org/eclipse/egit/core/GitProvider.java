@@ -17,8 +17,10 @@ import org.eclipse.core.resources.team.ResourceRuleFactory;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.GitMoveDeleteHook;
+import org.eclipse.egit.core.internal.project.GitProjectData;
 import org.eclipse.egit.core.internal.storage.GitFileHistoryProvider;
-import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.core.history.IFileHistoryProvider;
 

@@ -30,7 +30,7 @@ import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.ui.common.EGitTestCase;
+import org.eclipse.egit.ui.internal.common.EGitTestCase;
 import org.eclipse.egit.ui.internal.operations.GitScopeOperation;
 import org.eclipse.egit.ui.internal.operations.GitScopeOperationFactory;
 import org.eclipse.egit.ui.internal.operations.GitScopeUtil;

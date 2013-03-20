@@ -23,12 +23,12 @@ import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.egit.core.op.PushOperationResult;
-import org.eclipse.egit.core.op.PushOperationSpecification;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.core.internal.op.PushOperationResult;
+import org.eclipse.egit.core.internal.op.PushOperationSpecification;
+import org.eclipse.egit.ui.internal.Activator;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
 import org.eclipse.egit.ui.internal.credentials.EGitCredentialsProvider;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;

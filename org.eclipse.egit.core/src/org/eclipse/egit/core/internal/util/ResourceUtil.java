@@ -32,8 +32,8 @@ import org.eclipse.core.resources.mapping.ResourceMappingContext;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.core.internal.project.RepositoryMapping;
 import org.eclipse.jgit.lib.Repository;
 
 /**

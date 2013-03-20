@@ -30,11 +30,11 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
+import org.eclipse.egit.core.internal.project.RepositoryMapping;
 import org.eclipse.egit.core.internal.util.ExceptionCollector;
-import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIIcons;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.decorators.IDecoratableResource.Staged;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -99,7 +99,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 		PlatformUI.getWorkbench().getThemeManager().getCurrentTheme()
 				.addPropertyChangeListener(this);
 
-		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache().addIndexDiffChangedListener(this);
+		org.eclipse.egit.core.internal.Activator.getDefault().getIndexDiffCache().addIndexDiffChangedListener(this);
 		// This is an optimization to ensure that while decorating our fonts and colors are
 		// pre-created and decoration can occur without having to syncExec.
 		ensureFontAndColorsCreated(fonts, colors);
@@ -140,7 +140,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 				.removePropertyChangeListener(this);
 		TeamUI.removePropertyChangeListener(this);
 		Activator.removePropertyChangeListener(this);
-		org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache().removeIndexDiffChangedListener(this);
+		org.eclipse.egit.core.internal.Activator.getDefault().getIndexDiffCache().removeIndexDiffChangedListener(this);
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 		if (mapping.getRepoRelativePath(resource) == null)
 			return null;
 
-		IndexDiffData indexDiffData = org.eclipse.egit.core.Activator
+		IndexDiffData indexDiffData = org.eclipse.egit.core.internal.Activator
 				.getDefault().getIndexDiffCache()
 				.getIndexDiffCacheEntry(mapping.getRepository()).getIndexDiff();
 

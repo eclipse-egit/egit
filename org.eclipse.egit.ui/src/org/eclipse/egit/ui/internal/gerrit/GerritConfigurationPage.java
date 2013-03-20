@@ -19,10 +19,10 @@ import java.util.TreeSet;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
 import org.eclipse.egit.ui.internal.components.RepositorySelectionPage.Protocol;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;

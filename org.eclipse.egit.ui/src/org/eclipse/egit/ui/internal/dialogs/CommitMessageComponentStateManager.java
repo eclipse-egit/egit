@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.dialogs;
 
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;

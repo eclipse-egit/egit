@@ -24,8 +24,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.util.ResourceUtil;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.egit.ui.internal.Activator;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.merge.GitMergeEditorInput;
 import org.eclipse.egit.ui.internal.merge.MergeModeDialog;
 import org.eclipse.jface.window.Window;
@@ -69,7 +69,7 @@ public class MergeToolActionHandler extends RepositoryActionHandler {
 		if (selectedRepoPaths.isEmpty())
 			return false;
 
-		IndexDiffCache cache = org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache();
+		IndexDiffCache cache = org.eclipse.egit.core.internal.Activator.getDefault().getIndexDiffCache();
 		if (cache == null)
 			return false;
 

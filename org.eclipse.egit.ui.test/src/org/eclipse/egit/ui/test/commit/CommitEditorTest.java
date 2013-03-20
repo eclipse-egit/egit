@@ -18,12 +18,12 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.ui.JobFamilies;
-import org.eclipse.egit.ui.common.LocalRepositoryTestCase;
+import org.eclipse.egit.core.internal.Activator;
+import org.eclipse.egit.ui.internal.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.common.LocalRepositoryTestCase;
 import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.lib.Constants;

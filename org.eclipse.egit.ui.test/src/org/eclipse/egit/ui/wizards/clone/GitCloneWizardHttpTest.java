@@ -11,8 +11,8 @@ package org.eclipse.egit.ui.wizards.clone;
 import java.io.File;
 
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.egit.ui.common.RepoPropertiesPage;
-import org.eclipse.egit.ui.common.RepoRemoteBranchesPage;
+import org.eclipse.egit.ui.internal.common.RepoPropertiesPage;
+import org.eclipse.egit.ui.internal.common.RepoRemoteBranchesPage;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;

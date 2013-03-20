@@ -4,7 +4,7 @@
    <extension-point id="commitMessageProvider" name="%CommitMessageProviderExtension-point.name" schema="schema/commitMessageProvider.exsd"/>
    <extension-point id="cloneSourceProvider" name="%CloneSourceProviderExtension-point.name" schema="schema/cloneSourceProvider.exsd"/>
    <extension point="org.eclipse.core.runtime.preferences">
-      <initializer class="org.eclipse.egit.ui.PluginPreferenceInitializer"/>
+      <initializer class="org.eclipse.egit.ui.internal.PluginPreferenceInitializer"/>
    </extension>
 
    <extension point="org.eclipse.ui.importWizards">
@@ -1828,7 +1828,7 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="org.eclipse.egit.ui.GitRepositoriesPerspectiveFactory"
+            class="org.eclipse.egit.ui.internal.GitRepositoriesPerspectiveFactory"
             icon="icons/obj16/gitrepository.gif"
             id="org.eclipse.egit.ui.GitRepositoryExploring"
             name="%GitRepositoryPerspective_name">

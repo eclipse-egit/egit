@@ -9,9 +9,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.fetch;
 
-import org.eclipse.egit.core.op.FetchOperationResult;
-import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.core.internal.op.FetchOperationResult;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;

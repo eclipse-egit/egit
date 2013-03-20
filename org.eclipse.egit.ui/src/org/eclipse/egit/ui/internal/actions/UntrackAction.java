@@ -8,7 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.actions;
 
-import org.eclipse.egit.core.op.TagOperation;
+import org.eclipse.egit.core.internal.op.TagOperation;
 
 /**
  * An action for creating tag.

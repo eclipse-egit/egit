@@ -37,19 +37,19 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.AdapterUtils;
-import org.eclipse.egit.core.RepositoryUtil;
+import org.eclipse.egit.core.internal.AdapterUtils;
+import org.eclipse.egit.core.internal.RepositoryUtil;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffData;
-import org.eclipse.egit.core.op.CommitOperation;
-import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.Activator;
-import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.egit.ui.UIUtils;
+import org.eclipse.egit.core.internal.op.CommitOperation;
+import org.eclipse.egit.core.internal.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.EgitUiEditorUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
+import org.eclipse.egit.ui.internal.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.UIUtils;
 import org.eclipse.egit.ui.internal.actions.ActionCommands;
 import org.eclipse.egit.ui.internal.actions.BooleanPrefAction;
 import org.eclipse.egit.ui.internal.commit.CommitHelper;
@@ -580,7 +580,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			preferenceStore.setDefault(UIPreferences.STAGING_VIEW_SYNC_SELECTION, true);
 
 		InstanceScope.INSTANCE.getNode(
-				org.eclipse.egit.core.Activator.getPluginId())
+				org.eclipse.egit.core.internal.Activator.getPluginId())
 				.addPreferenceChangeListener(prefListener);
 
 		updateSectionText();
@@ -1382,7 +1382,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 		return repository != null
 				&& !repository.isBare()
 				&& repository.getWorkTree().exists()
-				&& org.eclipse.egit.core.Activator.getDefault()
+				&& org.eclipse.egit.core.internal.Activator.getDefault()
 						.getRepositoryUtil().contains(repository);
 	}
 
@@ -1446,7 +1446,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 	private IndexDiffData doReload(final Repository repository) {
 		currentRepository = repository;
 
-		IndexDiffCacheEntry entry = org.eclipse.egit.core.Activator.getDefault().getIndexDiffCache().getIndexDiffCacheEntry(currentRepository);
+		IndexDiffCacheEntry entry = org.eclipse.egit.core.internal.Activator.getDefault().getIndexDiffCache().getIndexDiffCacheEntry(currentRepository);
 
 		if(cacheEntry != null && cacheEntry != entry)
 			cacheEntry.removeIndexDiffChangedListener(myIndexDiffListener);
@@ -1566,7 +1566,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			message = message.replace(chIdLine, ""); //$NON-NLS-1$
 		}
 
-		if (org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore()
+		if (org.eclipse.egit.ui.internal.Activator.getDefault().getPreferenceStore()
 				.getBoolean(UIPreferences.COMMIT_DIALOG_SIGNED_OFF_BY)
 				&& commitMessageComponent.isSignedOff()
 				&& message.trim().equals(
@@ -1685,7 +1685,7 @@ public class StagingView extends ViewPart implements IShowInSource {
 			undoRedoActionGroup.dispose();
 
 		InstanceScope.INSTANCE.getNode(
-				org.eclipse.egit.core.Activator.getPluginId())
+				org.eclipse.egit.core.internal.Activator.getPluginId())
 				.removePreferenceChangeListener(prefListener);
 	}
 

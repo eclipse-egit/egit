@@ -16,8 +16,8 @@ import java.util.TreeMap;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.internal.project.RepositoryMapping;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.SWTUtils;
 import org.eclipse.egit.ui.internal.UIIcons;
 import org.eclipse.egit.ui.internal.UIText;

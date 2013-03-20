@@ -25,8 +25,8 @@ import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.egit.core.GitCorePreferences;
-import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.core.internal.GitCorePreferences;
+import org.eclipse.egit.ui.internal.Activator;
 import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -166,7 +166,7 @@ public class ConfigurationEditorComponent {
 		if (changeablePath) {
 			try {
 				IEclipsePreferences node = InstanceScope.INSTANCE
-						.getNode(org.eclipse.egit.core.Activator.getPluginId());
+						.getNode(org.eclipse.egit.core.internal.Activator.getPluginId());
 				node.remove(GitCorePreferences.core_gitPrefix);
 				node.flush();
 				// Create a temporary FS instance to compute the Git prefix
@@ -243,7 +243,7 @@ public class ConfigurationEditorComponent {
 							location.setText(file);
 							try {
 								IEclipsePreferences node = InstanceScope.INSTANCE
-										.getNode(org.eclipse.egit.core.Activator
+										.getNode(org.eclipse.egit.core.internal.Activator
 												.getPluginId());
 								node.put(GitCorePreferences.core_gitPrefix,
 										file);

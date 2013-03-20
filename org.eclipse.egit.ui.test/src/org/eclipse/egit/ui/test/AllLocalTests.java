@@ -8,9 +8,9 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.test;
 
-import org.eclipse.egit.ui.httpauth.PushTest;
 import org.eclipse.egit.ui.internal.branch.BranchTests;
 import org.eclipse.egit.ui.internal.dialogs.SpellcheckableMessageAreaTest;
+import org.eclipse.egit.ui.internal.httpauth.PushTest;
 import org.eclipse.egit.ui.operations.GitScopeUtilTest;
 import org.eclipse.egit.ui.prefpages.configuration.GlobalConfigurationPageTest;
 import org.eclipse.egit.ui.search.SearchTests;
