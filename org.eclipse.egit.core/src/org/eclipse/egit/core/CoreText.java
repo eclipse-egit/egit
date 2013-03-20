@@ -150,6 +150,9 @@ public class CoreText extends NLS {
 	public static String GitFileHistory_gitNotAttached;
 
 	/** */
+	public static String GitFileHistory_invalidCommit;
+
+	/** */
 	public static String GitFileHistory_invalidHeadRevision;
 
 	/** */

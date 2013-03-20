@@ -1,6 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2007, Robin Rosenberg <robin.rosenberg@dewire.com>
  * Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
+ * Copyright (C) 2013, Laurent Goubet <laurent.goubet@obeo.fr>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,6 +12,7 @@ package org.eclipse.egit.core.internal.storage;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Map.Entry;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
@@ -18,14 +20,20 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.CoreText;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.egit.core.synchronize.GitRemoteResource;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.history.IFileHistoryProvider;
 import org.eclipse.team.core.history.IFileRevision;
 import org.eclipse.team.core.history.provider.FileHistory;
+import org.eclipse.team.core.variants.IResourceVariant;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
@@ -36,8 +44,6 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
  * listing all files with the same path.
  */
 class GitFileHistory extends FileHistory implements IAdaptable {
-	private static final int SINGLE_REVISION = IFileHistoryProvider.SINGLE_REVISION;
-
 	private static final IFileRevision[] NO_REVISIONS = {};
 
 	private static final int BATCH_SIZE = 256;
@@ -48,7 +54,7 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 
 	private final Repository db;
 
-	private final KidWalk walk;
+	private final RevWalk walk;
 
 	private final IFileRevision[] revisions;
 
@@ -94,7 +100,7 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 			}
 
 			root = walk.parseCommit(headId);
-			if ((flags & SINGLE_REVISION) == SINGLE_REVISION) {
+			if ((flags & IFileHistoryProvider.SINGLE_REVISION) != 0) {
 				// If all Eclipse wants is one revision it probably is
 				// for the editor "quick diff" feature. We can pass off
 				// just the repository HEAD, even though it may not be
@@ -104,6 +110,10 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 				single = new CommitFileRevision(db, root, gitPath);
 				return new IFileRevision[] { single };
 			}
+
+			markStartAllRefs(walk, Constants.R_HEADS);
+			markStartAllRefs(walk, Constants.R_REMOTES);
+			markStartAllRefs(walk, Constants.R_TAGS);
 
 			walk.markStart(root);
 		} catch (IOException e) {
@@ -137,34 +147,94 @@ class GitFileHistory extends FileHistory implements IAdaptable {
 		return r;
 	}
 
-	public IFileRevision[] getContributors(final IFileRevision ifr) {
-		if (!(ifr instanceof CommitFileRevision))
-			return NO_REVISIONS;
+	private void markStartAllRefs(RevWalk theWalk, String prefix)
+			throws IOException, MissingObjectException,
+			IncorrectObjectTypeException {
+		for (Entry<String, Ref> refEntry : db.getRefDatabase().getRefs(prefix)
+				.entrySet()) {
+			Ref ref = refEntry.getValue();
+			if (ref.isSymbolic())
+				continue;
+			markStartRef(theWalk, ref);
+		}
+	}
 
-		final CommitFileRevision rev = (CommitFileRevision) ifr;
-		final String p = rev.getGitPath();
-		final RevCommit c = rev.getRevCommit();
-		final IFileRevision[] r = new IFileRevision[c.getParentCount()];
-		for (int i = 0; i < r.length; i++)
-			r[i] = new CommitFileRevision(db, c.getParent(i), p);
-		return r;
+	private void markStartRef(RevWalk theWalk, Ref ref) throws IOException,
+			IncorrectObjectTypeException {
+		try {
+			Object refTarget = theWalk.parseAny(ref.getLeaf().getObjectId());
+			if (refTarget instanceof RevCommit)
+				theWalk.markStart((RevCommit) refTarget);
+		} catch (MissingObjectException e) {
+			// If there is a ref which points to Nirvana then we should simply
+			// ignore this ref. We should not let a corrupt ref cause that the
+			// history view is not filled at all
+		}
+	}
+
+	public IFileRevision[] getContributors(final IFileRevision ifr) {
+		String path = getGitPath(ifr);
+		RevCommit commit = getRevCommit(ifr);
+
+		if (path != null && commit != null) {
+			final IFileRevision[] r = new IFileRevision[commit.getParentCount()];
+			for (int i = 0; i < r.length; i++)
+				r[i] = new CommitFileRevision(db, commit.getParent(i), path);
+			return r;
+		}
+
+		return NO_REVISIONS;
 	}
 
 	public IFileRevision[] getTargets(final IFileRevision ifr) {
-		if (!(ifr instanceof CommitFileRevision))
-			return NO_REVISIONS;
+		String path = getGitPath(ifr);
+		RevCommit commit = getRevCommit(ifr);
 
-		final CommitFileRevision rev = (CommitFileRevision) ifr;
-		final String p = rev.getGitPath();
-		final RevCommit rc = rev.getRevCommit();
-		if (!(rc instanceof KidCommit))
-			return NO_REVISIONS;
+		if (path != null && commit instanceof KidCommit) {
+			final KidCommit c = (KidCommit) commit;
+			final IFileRevision[] r = new IFileRevision[c.children.length];
+			for (int i = 0; i < r.length; i++)
+				r[i] = new CommitFileRevision(db, c.children[i], path);
+			return r;
+		}
 
-		final KidCommit c = (KidCommit) rc;
-		final IFileRevision[] r = new IFileRevision[c.children.length];
-		for (int i = 0; i < r.length; i++)
-			r[i] = new CommitFileRevision(db, c.children[i], p);
-		return r;
+		return NO_REVISIONS;
+	}
+
+	private String getGitPath(IFileRevision revision) {
+		if (revision instanceof CommitFileRevision)
+			return ((CommitFileRevision) revision).getGitPath();
+		else if (revision instanceof IAdaptable) {
+			final IResourceVariant variant = (IResourceVariant) ((IAdaptable) revision)
+					.getAdapter(IResourceVariant.class);
+
+			if (variant instanceof GitRemoteResource)
+				return ((GitRemoteResource) variant).getPath();
+		}
+
+		return null;
+	}
+
+	private RevCommit getRevCommit(IFileRevision revision) {
+		if (revision instanceof CommitFileRevision)
+			return ((CommitFileRevision) revision).getRevCommit();
+		else if (revision instanceof IAdaptable) {
+			final IResourceVariant variant = (IResourceVariant) ((IAdaptable) revision)
+					.getAdapter(IResourceVariant.class);
+			if (variant instanceof GitRemoteResource) {
+				final RevCommit commit = ((GitRemoteResource) variant)
+						.getCommitId();
+				try {
+					return walk.parseCommit(commit);
+				} catch (IOException e) {
+					Activator.logError(NLS.bind(
+							CoreText.GitFileHistory_invalidCommit,
+							commit.getName(), resource.getName()), e);
+				}
+			}
+		}
+
+		return null;
 	}
 
 	public IFileRevision getFileRevision(final String id) {
