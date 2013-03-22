@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2012 SAP AG and others.
+ * Copyright (c) 2010, 2013 SAP AG and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Mathias Kinzler (SAP AG) - initial implementation
+ *    Laurent Goubet <laurent.goubet@obeo.fr - 404121
  *******************************************************************************/
 package org.eclipse.egit.ui.view.repositories;
 
@@ -170,6 +171,8 @@ public abstract class GitRepositoriesViewTestBase extends
 		createStableBranch(myRepository);
 
 		// now we configure the push destination
+		myRepository.getConfig().setString("remote", "push", "url",
+				"file:///" + myRemoteRepository.getDirectory().getPath());
 		myRepository.getConfig().setString("remote", "push", "pushurl",
 				"file:///" + myRemoteRepository.getDirectory().getPath());
 		myRepository.getConfig().setString("remote", "push", "push",

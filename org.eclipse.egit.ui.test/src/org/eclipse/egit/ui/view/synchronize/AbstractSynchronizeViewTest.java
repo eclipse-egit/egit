@@ -96,6 +96,14 @@ public abstract class AbstractSynchronizeViewTest extends
 		syncView.close();
 	}
 
+	@After
+	public void deleteEmptyProject() throws Exception {
+		IProject prj = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(EMPTY_PROJECT);
+		if (prj.exists())
+			prj.delete(false, false, null);
+	}
+
 	@Before
 	public void setupRepository() throws Exception {
 		repositoryFile = createProjectAndCommitToRepository();
