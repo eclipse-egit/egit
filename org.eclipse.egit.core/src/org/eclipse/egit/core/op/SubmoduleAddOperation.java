@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2012 GitHub Inc.
+ *  Copyright (c) 2012, 2013 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
+ *    Laurent Goubet <laurent.goubet@obeo.fr - 404121
  *****************************************************************************/
 package org.eclipse.egit.core.op;
 
@@ -57,8 +58,11 @@ public class SubmoduleAddOperation implements IEGitOperation {
 				add.setPath(path);
 				add.setURI(uri);
 				try {
-					if (add.call() != null)
+					Repository subRepo = add.call();
+					if (subRepo != null) {
+						subRepo.close();
 						repo.notifyIndexChanged();
+					}
 				} catch (GitAPIException e) {
 					throw new TeamException(e.getLocalizedMessage(),
 							e.getCause());
