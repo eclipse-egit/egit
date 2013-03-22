@@ -20,8 +20,8 @@ import org.eclipse.egit.core.synchronize.ThreeWayDiffEntry.ChangeType;
 import org.eclipse.egit.core.synchronize.ThreeWayDiffEntry.Direction;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.junit.LocalDiskRepositoryTestCase;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.junit.Before;
@@ -29,7 +29,7 @@ import org.junit.Test;
 
 public class ThreeWayDiffEntryTest extends LocalDiskRepositoryTestCase {
 
-	private FileRepository db;
+	private Repository db;
 
 	@Before
 	@Override
