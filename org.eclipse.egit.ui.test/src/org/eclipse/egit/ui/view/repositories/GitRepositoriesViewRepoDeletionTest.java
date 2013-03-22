@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, Matthias Sohn <matthias.sohn@sap.com> and others.
+ * Copyright (c) 2012, 2013 Matthias Sohn <matthias.sohn@sap.com> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -98,6 +98,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 		command.setURI(uri);
 		Repository subRepo = command.call();
 		assertNotNull(subRepo);
+		subRepo.close();
 
 		refreshAndWait();
 
