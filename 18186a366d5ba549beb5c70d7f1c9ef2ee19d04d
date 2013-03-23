@@ -16,6 +16,41 @@
       "revId": "18186a366d5ba549beb5c70d7f1c9ef2ee19d04d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//1r0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-03-23T22:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//3H0\u003d",
+      "revId": "18186a366d5ba549beb5c70d7f1c9ef2ee19d04d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//1rw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/indexdiff/IndexDiffCacheEntry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-03-23T22:30:14Z",
+      "side": 1,
+      "message": "Must unlock, always.\ndone",
+      "revId": "18186a366d5ba549beb5c70d7f1c9ef2ee19d04d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
