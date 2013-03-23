@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//1uw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/RepositoriesViewContentProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-03-23T04:07:34Z",
+      "side": 1,
+      "message": "This should be done in a finally clause since lookupRepository may fail",
+      "revId": "e8cf926daf513cb2ebb71c233529c633fd89e847",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//1us\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/command/RemoveCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-03-23T04:07:34Z",
+      "side": 1,
+      "message": "call close is a try/finally statement",
+      "revId": "e8cf926daf513cb2ebb71c233529c633fd89e847",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
