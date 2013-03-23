@@ -44,7 +44,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.util.FS;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.SystemReader;
@@ -213,7 +213,8 @@ public class GitMoveDeleteHookTest {
 		RepositoryMapping mapping = RepositoryMapping.getMapping(project
 				.getProject());
 		IPath gitDirAbsolutePath = mapping.getGitDirAbsolutePath();
-		Repository db = new FileRepository(gitDirAbsolutePath.toFile());
+		Repository db = FileRepositoryBuilder.create(gitDirAbsolutePath
+				.toFile());
 		DirCache index = DirCache.read(db.getIndexFile(), db.getFS());
 		assertNotNull(index.getEntry("P/Project-1/file.txt"));
 		db.close();
@@ -225,7 +226,7 @@ public class GitMoveDeleteHookTest {
 		assertTrue(gitDirAbsolutePath.toString(),
 				gitDirAbsolutePath.append("HEAD").toFile().exists());
 
-		db = new FileRepository(gitDirAbsolutePath.toFile());
+		db = FileRepositoryBuilder.create(gitDirAbsolutePath.toFile());
 		index = DirCache.read(db.getIndexFile(), db.getFS());
 		// FIXME: Shouldn't we unstage deleted projects?
 		assertNotNull(index.getEntry("P/Project-1/file.txt"));

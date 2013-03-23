@@ -8,8 +8,8 @@
  *******************************************************************************/
 package org.eclipse.egit.core.internal.storage;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
@@ -32,7 +32,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.team.core.history.IFileHistory;
 import org.junit.After;
@@ -46,7 +46,7 @@ public class BlobStorageTest extends GitTestCase {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		repository = new FileRepository(gitDir);
+		repository = FileRepositoryBuilder.create(gitDir);
 		repository.create();
 	}
 
@@ -75,7 +75,8 @@ public class BlobStorageTest extends GitTestCase {
 		if (singleProjectGitDir.exists())
 			FileUtils.delete(singleProjectGitDir, FileUtils.RECURSIVE | FileUtils.RETRY);
 
-		Repository singleProjectRepo = new FileRepository(singleProjectGitDir);
+		Repository singleProjectRepo = FileRepositoryBuilder
+				.create(singleProjectGitDir);
 		singleProjectRepo.create();
 
 		// Repository must be mapped in order to test the GitFileHistory

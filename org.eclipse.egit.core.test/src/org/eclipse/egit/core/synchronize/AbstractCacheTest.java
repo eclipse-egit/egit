@@ -25,13 +25,13 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.junit.LocalDiskRepositoryTestCase;
 import org.eclipse.jgit.lib.AbbreviatedObjectId;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Repository;
 import org.junit.Before;
 
 @SuppressWarnings("boxing")
 public abstract class AbstractCacheTest extends LocalDiskRepositoryTestCase {
 
-	protected FileRepository db;
+	protected Repository db;
 
 	protected static final String INITIAL_TAG = "initial-tag";
 
