@@ -16,6 +16,24 @@
       "revId": "8de078338ad9921ed38b497c493d35ee6971a868",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//1pM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/pull/PullResultDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-03-24T12:10:14Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "AABOPX//2J0\u003d",
+      "revId": "8de078338ad9921ed38b497c493d35ee6971a868",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
