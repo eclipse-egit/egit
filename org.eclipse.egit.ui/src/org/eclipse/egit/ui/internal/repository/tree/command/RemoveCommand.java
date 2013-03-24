@@ -226,10 +226,16 @@ public class RemoveCommand extends
 			while (walk.next()) {
 				Repository subRepo = walk.getRepository();
 				if (subRepo != null) {
-					final RepositoryCache cache = org.eclipse.egit.core.Activator
-							.getDefault().getRepositoryCache();
-					cache.lookupRepository(subRepo.getDirectory()).close();
-					subRepo.close();
+					RepositoryCache cache = null;
+					try {
+						cache = org.eclipse.egit.core.Activator.getDefault()
+								.getRepositoryCache();
+					} finally {
+						if (cache != null)
+							cache.lookupRepository(subRepo.getDirectory())
+									.close();
+						subRepo.close();
+					}
 				}
 			}
 			walk.release();
