@@ -770,6 +770,7 @@ public class CommitDialog extends TitleAreaDialog {
 		commitMessageComponent.setCommitter(committer);
 		commitMessageComponent.setAmending(amending);
 		commitMessageComponent.setFilesToCommit(getFileList());
+		commitMessageComponent.setPreselectedFiles(preselectedFiles);
 
 		amendingItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent arg0) {

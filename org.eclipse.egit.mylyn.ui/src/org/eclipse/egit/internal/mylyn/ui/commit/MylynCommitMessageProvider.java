@@ -21,17 +21,17 @@ import org.eclipse.mylyn.tasks.core.ITask;
 import org.eclipse.mylyn.tasks.ui.TasksUi;
 import org.eclipse.mylyn.team.ui.TeamUiUtil;
 
-
 /**
- * Gets the active task and combines the description and title with
- * the commit message template defined in the preferences
+ * Gets the active task and combines the description and title with the commit
+ * message template defined in the preferences
  */
 public class MylynCommitMessageProvider implements ICommitMessageProvider {
 
 	/**
 	 * @return the mylyn commit message template defined in the preferences
 	 */
-	public String getMessage(IResource[] resources) {
+	public String getMessage(IResource[] resources,
+			IResource[] preselectedResources) {
 		String message = ""; //$NON-NLS-1$
 		if (resources == null)
 			return message;
@@ -44,16 +44,16 @@ public class MylynCommitMessageProvider implements ICommitMessageProvider {
 	}
 
 	/**
-	* @return the currently activated task or <code>null</code> if no task is
-	*         activated
-	*/
+	 * @return the currently activated task or <code>null</code> if no task is
+	 *         activated
+	 */
 	protected ITask getCurrentTask() {
 		return TasksUi.getTaskActivityManager().getActiveTask();
 	}
 
 	/**
-	* @return the activecontext or <code>null</code> if no activecontext exists
-	*/
+	 * @return the activecontext or <code>null</code> if no activecontext exists
+	 */
 	protected IInteractionContext getActiveContext() {
 		return ContextCore.getContextManager().getActiveContext();
 	}
