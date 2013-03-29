@@ -14,13 +14,17 @@ package org.eclipse.egit.ui.internal.commit;
 import java.net.URISyntaxException;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.egit.ui.Activator;
+import org.eclipse.egit.ui.ICommitMessageProvider;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.UIPreferences;
 import org.eclipse.egit.ui.internal.UIText;
@@ -43,6 +47,8 @@ import org.eclipse.ui.PlatformUI;
  * show the commit that was performed and push the repository upstream.
  */
 public class CommitJob extends Job {
+
+	private static final String COMMIT_MESSAGE_PROVIDER_ID = "org.eclipse.egit.ui.commitMessageProvider"; //$NON-NLS-1$
 
 	private CommitOperation commitOperation;
 
@@ -79,6 +85,7 @@ public class CommitJob extends Job {
 
 	/**
 	 * Sets this job to push the changes upstream after successfully committing.
+	 *
 	 * @param pushUpstream
 	 * @return this commit job instance
 	 */
@@ -109,6 +116,7 @@ public class CommitJob extends Job {
 		}
 
 		if (commit != null) {
+			performTaskAfterCommit(commit);
 			if (openCommitEditor)
 				openCommitEditor(commit);
 			if (pushUpstream)
@@ -162,6 +170,42 @@ public class CommitJob extends Job {
 		if (family.equals(JobFamilies.COMMIT))
 			return true;
 		return super.belongsTo(family);
+	}
+
+	private void performTaskAfterCommit(RevCommit commit) {
+		if (commit != null) {
+			ICommitMessageProvider commitProvider;
+			try {
+				commitProvider = getCommitMessageProvider();
+				if (commitProvider != null)
+					commitProvider.performTaskAfterCommit(new RepositoryCommit(
+							repository, commit));
+			} catch (CoreException e) {
+				// do nothing
+			}
+		}
+	}
+
+	private ICommitMessageProvider getCommitMessageProvider()
+			throws CoreException {
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IConfigurationElement[] config = registry
+				.getConfigurationElementsFor(COMMIT_MESSAGE_PROVIDER_ID);
+		if (config.length > 0) {
+			Object provider;
+			for (IConfigurationElement configElement : config) {
+				provider = configElement.createExecutableExtension("class");//$NON-NLS-1$
+				if (provider instanceof ICommitMessageProvider) {
+					return (ICommitMessageProvider) provider;
+				} else {
+					Activator
+							.logError(
+									UIText.CommitDialog_WrongTypeOfCommitMessageProvider,
+									null);
+				}
+			}
+		}
+		return null;
 	}
 
 }

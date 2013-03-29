@@ -15,6 +15,7 @@ package org.eclipse.egit.internal.mylyn.ui.commit;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.egit.ui.ICommitMessageProvider;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.context.core.IInteractionContext;
 import org.eclipse.mylyn.tasks.core.ITask;
@@ -56,5 +57,9 @@ public class MylynCommitMessageProvider implements ICommitMessageProvider {
 	 */
 	protected IInteractionContext getActiveContext() {
 		return ContextCore.getContextManager().getActiveContext();
+	}
+
+	public void performTaskAfterCommit(RepositoryCommit commit) {
+		// Ignored
 	}
 }
