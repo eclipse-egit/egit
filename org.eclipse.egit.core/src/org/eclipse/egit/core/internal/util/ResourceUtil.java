@@ -44,8 +44,11 @@ public class ResourceUtil {
 
 	/**
 	 * Return the corresponding resource if it exists.
+	 * <p>
+	 * The returned file will be relative to the most nested non-closed project.
 	 *
-	 * @param location the path to check
+	 * @param location
+	 *            the path to check
 	 * @return the resources, or null
 	 */
 	public static IResource getResourceForLocation(IPath location) {
@@ -55,14 +58,24 @@ public class ResourceUtil {
 		if (file != null)
 			return file;
 		IContainer[] containers = root.findContainersForLocationURI(uri);
-		for (IContainer container : containers)
-			if (container.exists())
-				return container;
-		return null;
+		int shortestContainerPath = Integer.MAX_VALUE;
+		IContainer containeeWithShortestPath = null;
+		for (IContainer container : containers) {
+			if (!container.exists())
+				continue;
+			IPath fullPath = container.getFullPath();
+			if (fullPath.segmentCount() < shortestContainerPath) {
+				shortestContainerPath = fullPath.segmentCount();
+				containeeWithShortestPath = container;
+			}
+		}
+		return containeeWithShortestPath;
 	}
 
 	/**
 	 * Return the corresponding file if it exists.
+	 * <p>
+	 * The returned file will be relative to the most nested non-closed project.
 	 *
 	 * @param location
 	 * @return the file, or null
@@ -75,6 +88,8 @@ public class ResourceUtil {
 
 	/**
 	 * Get the {@link IFile} corresponding to the arguments if it exists.
+	 * <p>
+	 * The returned file will be relative to the most nested non-closed project.
 	 *
 	 * @param repository
 	 *            the repository of the file
@@ -152,10 +167,18 @@ public class ResourceUtil {
 
 	private static IFile getFileForLocationURI(IWorkspaceRoot root, URI uri) {
 		IFile[] files = root.findFilesForLocationURI(uri);
-		for (IFile file : files)
-			if (file.exists())
-				return file;
-		return null;
+		int shortestPathSegmentCount = Integer.MAX_VALUE;
+		IFile shortestPath = null;
+		for (IFile file : files) {
+			IPath fullPath = file.getFullPath();
+			if (!file.exists())
+				continue;
+			if (fullPath.segmentCount() < shortestPathSegmentCount) {
+				shortestPath = file;
+				shortestPathSegmentCount = fullPath.segmentCount();
+			}
+		}
+		return shortestPath;
 	}
 
 	private static void addPathToMap(RepositoryMapping repositoryMapping,
