@@ -70,10 +70,8 @@ public class StashCreateOperation implements IEGitOperation {
 			public void run(IProgressMonitor pm) throws CoreException {
 				try {
 					StashCreateCommand command = Git.wrap(repository).stashCreate();
-					if (message != null) {
-						command.setIndexMessage(message);
+					if (message != null)
 						command.setWorkingDirectoryMessage(message);
-					}
 					commit = command.call();
 				} catch (JGitInternalException e) {
 					throw new TeamException(e.getLocalizedMessage(),
