@@ -8,7 +8,7 @@
    http://www.eclipse.org/legal/epl-v10.html
 -->
 <?pde version="3.6"?>
-<target name="egit-4.2.target" sequenceNumber="53">
+<target name="egit-4.3.target" sequenceNumber="54">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
       <repository location="http://archive.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.0.v20120127/"/>
