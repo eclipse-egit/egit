@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//ymQ\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitLocalResourceVariant.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-04-10T08:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//ypE\u003d",
+      "revId": "64f448859debb5af3292c2f6ea22b20eca3b920d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//yo8\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2013-04-09T22:14:37Z",
       "side": 1,
       "message": "style nit: no braces around single line blocks",
+      "revId": "64f448859debb5af3292c2f6ea22b20eca3b920d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//ymM\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-04-10T08:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//yo8\u003d",
       "revId": "64f448859debb5af3292c2f6ea22b20eca3b920d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//ymI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-04-10T08:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//yow\u003d",
+      "revId": "64f448859debb5af3292c2f6ea22b20eca3b920d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//yos\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2013-04-09T22:14:37Z",
       "side": 1,
       "message": "we should log the exception",
+      "revId": "64f448859debb5af3292c2f6ea22b20eca3b920d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//ymA\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-04-10T08:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//yos\u003d",
       "revId": "64f448859debb5af3292c2f6ea22b20eca3b920d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//yl8\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-04-10T08:37:05Z",
+      "side": 1,
+      "message": "I can\u0027t believe I still leave so many of these in....\n\nAnyway, Done.",
+      "parentUuid": "AABOPX//yoo\u003d",
+      "revId": "64f448859debb5af3292c2f6ea22b20eca3b920d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//yok\u003d",
         "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//yl0\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/synchronize/GitResourceVariantTreeSubscriber.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-04-10T08:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//yok\u003d",
+      "revId": "64f448859debb5af3292c2f6ea22b20eca3b920d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//yog\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2013-04-09T22:14:37Z",
       "side": 1,
       "message": "shouldn\u0027t we log the exception ?",
+      "revId": "64f448859debb5af3292c2f6ea22b20eca3b920d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//ylw\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/synchronize/GitModelSynchronizeParticipant.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-04-10T08:37:05Z",
+      "side": 1,
+      "message": "Now that I think about it a little more, yes, it should be logged. We\u0027re falling back to the \"super\" input... which will have the local IResource for \"left\" instead of the desired remote. Though this will work, it\u0027s still better to tell users about it.\n\nDone.",
+      "parentUuid": "AABOPX//yog\u003d",
       "revId": "64f448859debb5af3292c2f6ea22b20eca3b920d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
