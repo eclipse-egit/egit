@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//yUc\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-10T22:49:41Z",
+      "side": 1,
+      "message": "I meant the below for-loop extracting the revisions the test wants to check, but I have no concrete proposal how this could be done in a nice way ;-| so don\u0027t bother about this comment",
+      "parentUuid": "AABOPX//ylk\u003d",
+      "revId": "76979a182bdbca4e5c471ff3b3d0c2b5957e483d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//ynY\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
         "patchSetId": 3
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "Yes: this assertion is above, on line 317.\n\nThough I could also have added a check that history.getTargets(branchFileRevision2) returns no children. Done in the incoming patch set.",
       "parentUuid": "AABOPX//ynQ\u003d",
+      "revId": "76979a182bdbca4e5c471ff3b3d0c2b5957e483d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//yUY\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-10T22:49:41Z",
+      "side": 1,
+      "message": "ah, I missed that since I compared this test with the previous one and hence expected the check here",
+      "parentUuid": "AABOPX//ylc\u003d",
       "revId": "76979a182bdbca4e5c471ff3b3d0c2b5957e483d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
