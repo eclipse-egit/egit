@@ -30,7 +30,7 @@ public class WorkingTreeFileRevision extends GitFileRevision {
 	 * @param file
 	 */
 	public WorkingTreeFileRevision(final File file) {
-		super(file.getName());
+		super(file.getPath());
 		this.file = file;
 	}
 
