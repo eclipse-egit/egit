@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//yls\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-04-10T08:37:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//yng\u003d",
+      "revId": "76979a182bdbca4e5c471ff3b3d0c2b5957e483d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//ynk\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2013-04-10T06:27:49Z",
       "side": 1,
       "message": "as above don\u0027t call this \u0027ref\u0027",
+      "revId": "76979a182bdbca4e5c471ff3b3d0c2b5957e483d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//ylo\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-04-10T08:37:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//ynk\u003d",
       "revId": "76979a182bdbca4e5c471ff3b3d0c2b5957e483d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//ylk\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-04-10T08:37:24Z",
+      "side": 1,
+      "message": "Most tests also need a reference to the IFileHistory for their purpose (getContributors, getTarget...). Extracting only the call to getFileRevisions() does not seem to provide much value.",
+      "parentUuid": "AABOPX//ynM\u003d",
+      "revId": "76979a182bdbca4e5c471ff3b3d0c2b5957e483d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//ynY\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//ylg\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-04-10T08:37:24Z",
+      "side": 1,
+      "message": "It should. Thanks for catching that.\n\nAdded the assertions for branch-commit-2 contributors.",
+      "parentUuid": "AABOPX//ynY\u003d",
+      "revId": "76979a182bdbca4e5c471ff3b3d0c2b5957e483d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//ynQ\u003d",
         "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2013-04-10T06:27:49Z",
       "side": 1,
       "message": "isn\u0027t branch-commit2 also a child of master-commit2 with respect to file-2 ?",
+      "revId": "76979a182bdbca4e5c471ff3b3d0c2b5957e483d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//ylc\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/HistoryTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-04-10T08:37:24Z",
+      "side": 1,
+      "message": "Yes: this assertion is above, on line 317.\n\nThough I could also have added a check that history.getTargets(branchFileRevision2) returns no children. Done in the incoming patch set.",
+      "parentUuid": "AABOPX//ynQ\u003d",
       "revId": "76979a182bdbca4e5c471ff3b3d0c2b5957e483d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
