@@ -56,11 +56,20 @@ public class GitResourceVariantTreeSubscriber extends
 	 */
 	private GitBaseResourceVariantTree baseTree;
 
-	private GitSynchronizeDataSet gsds;
+	/**
+	 * Git synchronize data
+	 */
+	protected GitSynchronizeDataSet gsds;
 
-	private IResource[] roots;
+	/**
+	 * Resources of Git projects root
+	 */
+	protected IResource[] roots;
 
-	private GitSyncCache cache;
+	/**
+	 * Git cache
+	 */
+	protected GitSyncCache cache;
 
 	/**
 	 * @param data
