@@ -14,11 +14,17 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
@@ -29,6 +35,7 @@ import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.egit.ui.JobFamilies;
 import org.eclipse.egit.ui.internal.UIText;
+import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
 import org.eclipse.jgit.errors.NotSupportedException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
@@ -43,6 +50,13 @@ import org.eclipse.osgi.util.NLS;
  * UI Wrapper for {@link PushOperation}
  */
 public class PushOperationUI {
+
+	private static final String EXT_POINT_PUSH_TASKS = "pushTasksProvider"; //$NON-NLS-1$
+
+	private static final String ELEM_PUSH_TASKS = "pushTasksProvider"; //$NON-NLS-1$
+
+	private static final String ATTR_CLASS = "class"; //$NON-NLS-1$
+
 	private final Repository repository;
 
 	private final int timeout;
@@ -226,10 +240,11 @@ public class PushOperationUI {
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override
 			public void done(IJobChangeEvent event) {
-				if (event.getResult().isOK())
+				if (event.getResult().isOK()) {
+					performTasksAfterPush(repository, op.getOperationResult());
 					PushResultDialog.show(repository, op.getOperationResult(),
 							destinationString);
-				else
+				} else
 					Activator.handleError(event.getResult().getMessage(), event
 							.getResult().getException(), true);
 			}
@@ -241,5 +256,71 @@ public class PushOperationUI {
 	 */
 	public String getDestinationString() {
 		return destinationString;
+	}
+
+	/**
+	 * @param repo
+	 * @param result
+	 */
+	public void performTasksAfterPush(final Repository repo,
+			final PushOperationResult result) {
+		if (result == null)
+			return;
+		for (URIish uri : result.getURIs())
+			if (result.isSuccessfulConnection(uri))
+				for (RemoteRefUpdate update : result.getPushResult(uri)
+						.getRemoteUpdates()) {
+					RefUpdateElement element = new RefUpdateElement(result,
+							update, uri, repo.newObjectReader(), repo);
+					for (IPushTasksProvider provider : readExtensions())
+						provider.performTasksAfterPush(getCommits(element)
+								.toArray(new RepositoryCommit[0]));
+				}
+	}
+
+	/**
+	 *
+	 * @param element
+	 * @return repositoryCommits
+	 */
+	private Collection<RepositoryCommit> getCommits(RefUpdateElement element) {
+		Set<RepositoryCommit> repositoryCommits = new HashSet<RepositoryCommit>();
+		Object[] commits = element.getChildren(null);
+		for (Object commit : commits)
+			if (commit instanceof RepositoryCommit)
+				repositoryCommits.add((RepositoryCommit) commit);
+
+		return repositoryCommits;
+	}
+
+	/**
+	 * Read extension point.
+	 *
+	 * @return pushActionProviders
+	 */
+	private Collection<IPushTasksProvider> readExtensions() {
+		List<IPushTasksProvider> pushTasksProviders = new ArrayList<IPushTasksProvider>();
+		IExtensionPoint sheetUpdate = Platform.getExtensionRegistry()
+				.getExtensionPoint(Activator.getPluginId(),
+						EXT_POINT_PUSH_TASKS);
+		IExtension[] extensions = sheetUpdate.getExtensions();
+		for (IExtension extension : extensions) {
+			IConfigurationElement[] elements = extension
+					.getConfigurationElements();
+
+			for (IConfigurationElement element : elements) {
+				if (ELEM_PUSH_TASKS.equals(element.getName())) {
+					try {
+						IPushTasksProvider provider = (IPushTasksProvider) element
+								.createExecutableExtension(ATTR_CLASS);
+						pushTasksProviders.add(provider);
+					} catch (Throwable e) {
+						// do nothing for now
+					}
+				}
+			}
+		}
+
+		return pushTasksProviders;
 	}
 }
