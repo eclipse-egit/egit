@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.egit.core.Activator;
-import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.indexdiff.GitResourceDeltaVisitor;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffCache;
 import org.eclipse.egit.core.internal.indexdiff.IndexDiffChangedListener;
