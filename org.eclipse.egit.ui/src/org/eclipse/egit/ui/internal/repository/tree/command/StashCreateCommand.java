@@ -40,8 +40,8 @@ public class StashCreateCommand extends
 			return null;
 
 		final Shell shell = HandlerUtil.getActiveShell(event);
-		StashCreateUI stashCreateUI = new StashCreateUI(shell, repo);
-		stashCreateUI.createStash();
+		StashCreateUI stashCreateUI = new StashCreateUI(repo);
+		stashCreateUI.createStash(shell);
 
 		return null;
 	}
