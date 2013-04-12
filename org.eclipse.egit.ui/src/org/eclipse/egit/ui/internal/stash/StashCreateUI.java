@@ -1,5 +1,5 @@
 /******************************************************************************
- *  Copyright (c) 2012 GitHub Inc.
+ *  Copyright (c) 2012, 2013 GitHub Inc and others.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -25,7 +25,9 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 /**
 * The UI wrapper for {@link StashCreateOperation} */
@@ -89,10 +91,12 @@ public class StashCreateUI {
 
 	}
 
-	private void showNoChangesToStash() {
-		shell.getDisplay().asyncExec(new Runnable() {
+	private static void showNoChangesToStash() {
+		Display.getDefault().asyncExec(new Runnable() {
 
 			public void run() {
+				Shell shell = PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell();
 				MessageDialog.openInformation(shell,
 						UIText.StashCreateCommand_titleNoChanges,
 						UIText.StashCreateCommand_messageNoChanges);
