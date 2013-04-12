@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//xmI\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/WorkspaceFileRevision.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-04-12T13:26:43Z",
+      "side": 1,
+      "message": "This is wrong. getFullPath returns the workspace path (e.g. /org.eclipse.egit.ui/plugin.xml). It should use getLocation(), which returns the file system path.",
+      "revId": "ff24ed64de317d9cc71e82fe3a9fac6f48080e28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
