@@ -3658,7 +3658,7 @@ public class UIText extends NLS {
 	 * "Find Broken Externalized Strings" tool will not be
 	 * able to find the corresponding bundle file.
 	 */
-	private static final String BUNDLE_NAME = "org.eclipse.egit.ui.uitext"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.egit.ui.internal.uitext"; //$NON-NLS-1$
 
 	/** */
 	public static String CommitAction_commit;
