@@ -24,6 +24,7 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.internal.GitURI;
 import org.eclipse.egit.core.internal.ProjectReferenceImporter;
 import org.eclipse.egit.core.project.RepositoryMapping;
