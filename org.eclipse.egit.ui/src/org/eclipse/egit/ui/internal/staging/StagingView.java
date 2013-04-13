@@ -27,7 +27,6 @@ import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
@@ -1121,21 +1120,11 @@ public class StagingView extends ViewPart implements IShowInSource {
 			if (!(selectedObject instanceof StagingEntry))
 				return false;
 			StagingEntry stagingEntry = (StagingEntry) selectedObject;
-			String path = currentRepository.getWorkTree() + "/" + stagingEntry.getPath(); //$NON-NLS-1$
-			if (getResource(path) == null)
+			IFile file = stagingEntry.getFile();
+			if (file == null)
 				return true;
 		}
 		return false;
-	}
-
-	private IFile getResource(String path) {
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IFile file = root.getFileForLocation(new Path(path));
-		if (file == null)
-			return null;
-		if (file.getProject().isAccessible())
-			return file;
-		return null;
 	}
 
 	private void openSelectionInEditor(ISelection s) {
