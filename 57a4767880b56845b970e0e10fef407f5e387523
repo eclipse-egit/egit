@@ -33,6 +33,24 @@
       "revId": "57a4767880b56845b970e0e10fef407f5e387523",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//xPI\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-04-13T23:31:17Z",
+      "side": 1,
+      "message": "See existing comments. The message still needs to be corrected.",
+      "parentUuid": "AABOPX//xP8\u003d",
+      "revId": "57a4767880b56845b970e0e10fef407f5e387523",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
