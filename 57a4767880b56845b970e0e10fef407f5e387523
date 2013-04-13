@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//xQA\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-04-13T22:12:53Z",
+      "side": 1,
+      "message": "nit: extra whitespace",
+      "revId": "57a4767880b56845b970e0e10fef407f5e387523",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//xP8\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-04-13T22:12:53Z",
+      "side": 1,
+      "message": "It\u0027s probably ok to do some extra checking, but the backgroup comment, I do not understand: Why is \"$HOME/.git\"  /typically\" not  a repository?",
+      "revId": "57a4767880b56845b970e0e10fef407f5e387523",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
