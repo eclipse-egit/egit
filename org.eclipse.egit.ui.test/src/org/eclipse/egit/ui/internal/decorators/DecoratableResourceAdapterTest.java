@@ -32,8 +32,8 @@ import org.eclipse.egit.ui.internal.decorators.IDecoratableResource.Staged;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.util.FileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -64,7 +64,7 @@ public class DecoratableResourceAdapterTest extends LocalRepositoryTestCase {
 		gitDir = createProjectAndCommitToRepository();
 		project = ResourcesPlugin.getWorkspace().getRoot().getProject(PROJ1);
 
-		FileRepository repo = lookupRepository(gitDir);
+		Repository repo = lookupRepository(gitDir);
 		git = new Git(repo);
 		indexDiffCacheEntry = Activator.getDefault().getIndexDiffCache()
 				.getIndexDiffCacheEntry(repo);

@@ -39,7 +39,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.synchronize.GitChangeSetModelProvider;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
@@ -316,7 +316,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 
 
 		// then file FILE1 should be in index
-		FileRepository repo = lookupRepository(repositoryFile);
+		Repository repo = lookupRepository(repositoryFile);
 		Status status = new Git(repo).status().call();
 		assertThat(Long.valueOf(status.getChanged().size()),
 				is(Long.valueOf(1L)));
@@ -341,7 +341,7 @@ public class SynchronizeViewGitChangeSetModelTest extends
 		bot.activeEditor().save();
 
 		// then file FILE1 should be unchanged in working tree
-		FileRepository repo = lookupRepository(repositoryFile);
+		Repository repo = lookupRepository(repositoryFile);
 		Status status = new Git(repo).status().call();
 		assertThat(Long.valueOf(status.getModified().size()),
 				is(Long.valueOf(1)));

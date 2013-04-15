@@ -41,7 +41,8 @@ import org.eclipse.egit.core.op.ConnectProviderOperation;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.team.core.TeamException;
@@ -212,9 +213,10 @@ public class ProjectReferenceImporter {
 	private static boolean repositoryAlreadyExistsForUrl(File repositoryPath,
 			URIish gitUrl) {
 		if (repositoryPath.exists()) {
-			FileRepository existingRepository;
+			Repository existingRepository;
 			try {
-				existingRepository = new FileRepository(repositoryPath);
+				existingRepository = new RepositoryBuilder().setGitDir(
+						repositoryPath).build();
 			} catch (IOException e) {
 				return false;
 			}

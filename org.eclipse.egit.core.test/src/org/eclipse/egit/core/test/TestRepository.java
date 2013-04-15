@@ -47,9 +47,9 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.FileUtils;
@@ -71,7 +71,8 @@ public class TestRepository {
 	 * @throws IOException
 	 */
 	public TestRepository(File gitDir) throws IOException {
-		FileRepository tmpRepository = new FileRepository(gitDir);
+		Repository tmpRepository = new RepositoryBuilder()
+				.setGitDir(gitDir).build();
 		tmpRepository.create();
 		tmpRepository.close();
 		// use repository instance from RepositoryCache!

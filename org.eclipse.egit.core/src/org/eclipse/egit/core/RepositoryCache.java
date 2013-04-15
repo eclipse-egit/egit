@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.RepositoryBuilder;
 
 /**
  * Central cache for Repository instances
@@ -49,7 +49,7 @@ public class RepositoryCache {
 		Reference<Repository> r = repositoryCache.get(gitDir);
 		Repository d = r != null ? r.get() : null;
 		if (d == null) {
-			d = new FileRepository(gitDir);
+			d = new RepositoryBuilder().setGitDir(gitDir).build();
 			repositoryCache.put(gitDir, new WeakReference<Repository>(d));
 		}
 		return d;

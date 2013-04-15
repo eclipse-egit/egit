@@ -52,10 +52,10 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -377,7 +377,8 @@ class ExistingOrNewPage extends WizardPage {
 				File gitDir = new File(repositoryToCreate.getText(),
 						Constants.DOT_GIT);
 				try {
-					Repository repository = new FileRepository(gitDir);
+					Repository repository = new RepositoryBuilder().setGitDir(
+							gitDir).build();
 					repository.create();
 					for (IProject project : getProjects(false).keySet()) {
 						// If we don't refresh the project directories right
@@ -510,8 +511,8 @@ class ExistingOrNewPage extends WizardPage {
 			treeItem.setText(2, relativePath.toOSString());
 			try {
 				IProject project = m.getContainer().getProject();
-				FileRepository repo = new FileRepository(m
-						.getGitDirAbsolutePath().toFile());
+				Repository repo = new RepositoryBuilder().setGitDir(
+						m.getGitDirAbsolutePath().toFile()).build();
 				File workTree = repo.getWorkTree();
 				IPath workTreePath = Path.fromOSString(workTree
 						.getAbsolutePath());

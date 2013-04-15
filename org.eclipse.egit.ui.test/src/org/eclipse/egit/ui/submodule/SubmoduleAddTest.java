@@ -22,7 +22,7 @@ import org.eclipse.egit.ui.test.ContextMenuHelper;
 import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.egit.ui.view.repositories.GitRepositoriesViewTestBase;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -57,7 +57,7 @@ public class SubmoduleAddTest extends GitRepositoriesViewTestBase {
 		assertProjectExistence(PROJ1, true);
 		refreshAndWait();
 		assertHasRepo(repositoryFile);
-		FileRepository repo = lookupRepository(repositoryFile);
+		Repository repo = lookupRepository(repositoryFile);
 
 		SWTBotTree tree = getOrOpenView().bot().tree();
 		tree.getAllItems()[0].select();

@@ -43,7 +43,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -217,8 +217,9 @@ public class GitSelectRepositoryPage extends WizardPage {
 			for (String dir : dirsAfter)
 				if (!dirsBefore.contains(dir))
 					try {
-						RepositoryNode node = new RepositoryNode(
-								null, new FileRepository(new File(dir)));
+						RepositoryNode node = new RepositoryNode(null,
+								new RepositoryBuilder()
+										.setGitDir(new File(dir)).build());
 						tv.setSelection(new StructuredSelection(
 								node));
 					} catch (IOException e1) {

@@ -21,7 +21,7 @@ import org.eclipse.egit.core.synchronize.GitCommitsModelCache.Change;
 import org.eclipse.egit.core.synchronize.StagedChangeCache;
 import org.eclipse.egit.ui.Activator;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Repository;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -102,7 +102,7 @@ public class GitModelCacheTest extends GitModelTestCase {
 
 	@Test
 	public void shouldReturnChildren() throws Exception {
-		FileRepository repo = lookupRepository(leftRepoFile);
+		Repository repo = lookupRepository(leftRepoFile);
 		writeTrashFile(repo, "dir/a.txt", "trash");
 		writeTrashFile(repo, "dir/b.txt", "trash");
 		writeTrashFile(repo, "dir/c.txt", "trash");
