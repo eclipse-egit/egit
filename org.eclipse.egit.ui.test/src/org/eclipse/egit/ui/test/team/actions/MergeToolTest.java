@@ -28,7 +28,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
 import org.eclipse.jgit.junit.TestRepository;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -49,8 +49,8 @@ public class MergeToolTest extends LocalRepositoryTestCase {
 	@Before
 	public void setUp() throws Exception {
 		File repositoryFile = createProjectAndCommitToRepository();
-		FileRepository repository = lookupRepository(repositoryFile);
-		testRepository = new TestRepository<FileRepository>(repository);
+		Repository repository = lookupRepository(repositoryFile);
+		testRepository = new TestRepository<Repository>(repository);
 	}
 
 	@After

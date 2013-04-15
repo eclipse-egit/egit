@@ -24,7 +24,7 @@ import org.eclipse.egit.ui.internal.repository.RepositoriesViewContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -95,7 +95,8 @@ public class LinkHelper implements ILinkHelper {
 		for (String repo : repos) {
 			Repository repository;
 			try {
-				repository = new FileRepository(new File(repo));
+				repository = new RepositoryBuilder().setGitDir(new File(repo))
+						.build();
 			} catch (IOException e) {
 				continue;
 			}

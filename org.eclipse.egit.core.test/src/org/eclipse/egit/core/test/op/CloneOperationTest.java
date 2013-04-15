@@ -28,7 +28,7 @@ import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.util.FileUtils;
 import org.junit.Before;
@@ -63,7 +63,7 @@ public class CloneOperationTest extends DualRepositoryTestCase {
 				"refs/heads/master", "origin", 0);
 		clop.run(null);
 
-		Repository clonedRepo = new FileRepository(new File(workdir2,
+		Repository clonedRepo = FileRepositoryBuilder.create(new File(workdir2,
 				Constants.DOT_GIT));
 		assertEquals(
 				"",
@@ -112,7 +112,7 @@ public class CloneOperationTest extends DualRepositoryTestCase {
 		clop.addPostCloneTask(new ConfigurePushAfterCloneTask("origin",
 				"HEAD:refs/for/master", new URIish("file:///pushtarget")));
 		clop.run(null);
-		Repository clonedRepo = new FileRepository(new File(workdir2,
+		Repository clonedRepo = FileRepositoryBuilder.create(new File(workdir2,
 				Constants.DOT_GIT));
 		assertEquals(
 				"",
@@ -140,7 +140,7 @@ public class CloneOperationTest extends DualRepositoryTestCase {
 		clop.addPostCloneTask(new ConfigureFetchAfterCloneTask("origin",
 				"refs/notes/review:refs/notes/review"));
 		clop.run(null);
-		Repository clonedRepo = new FileRepository(new File(workdir2,
+		Repository clonedRepo = FileRepositoryBuilder.create(new File(workdir2,
 				Constants.DOT_GIT));
 		assertTrue(
 				clonedRepo.getConfig()

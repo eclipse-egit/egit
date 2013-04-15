@@ -29,7 +29,7 @@ import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.dircache.DirCacheEntry;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.jgit.util.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -72,8 +72,8 @@ public abstract class GitCloneWizardTestBase extends LocalRepositoryTestCase {
 		// the integrity of the repository here. Only a few basic properties
 		// we'd expect from a clone made this way, that would possibly
 		// not hold true given other parameters in the GUI.
-		Repository repository = new FileRepository(new File(destinationRepo,
-				Constants.DOT_GIT));
+		Repository repository = new RepositoryBuilder().setGitDir(
+				new File(destinationRepo, Constants.DOT_GIT)).build();
 		// we always have an origin/master
 		assertNotNull(repository.resolve("origin/master"));
 		// and a local master initialized from origin/master (default!)
