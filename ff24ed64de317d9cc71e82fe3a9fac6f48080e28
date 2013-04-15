@@ -16,6 +16,24 @@
       "revId": "ff24ed64de317d9cc71e82fe3a9fac6f48080e28",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//xJk\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/internal/storage/WorkspaceFileRevision.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 934
+      },
+      "writtenOn": "2013-04-15T12:44:42Z",
+      "side": 1,
+      "message": "Well, for a \"Workspace\"FileRevision, I really thought that a client would expect a path relative to the workspace. But indeed, it would probably be more coherent with a file system path (other users of the GitFileRevision constructor use a git path, relative to the repository).\n\nDone",
+      "parentUuid": "AABOPX//xmI\u003d",
+      "revId": "ff24ed64de317d9cc71e82fe3a9fac6f48080e28",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
