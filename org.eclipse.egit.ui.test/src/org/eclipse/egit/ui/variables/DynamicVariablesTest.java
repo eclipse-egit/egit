@@ -29,7 +29,8 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.team.core.RepositoryProvider;
@@ -46,8 +47,8 @@ public class DynamicVariablesTest extends EGitTestCase {
 	private File gitDir2;
 	private IProject project;
 	private IProject project2;
-	private FileRepository repository;
-	private FileRepository repository2;
+	private Repository repository;
+	private Repository repository2;
 	private Git git;
 
 	private static final String TEST_PROJECT = "TestProject";
@@ -65,7 +66,7 @@ public class DynamicVariablesTest extends EGitTestCase {
 		FileUtils.mkdir(new File(root.getLocation().toFile(),"Sub"), true);
 		gitDir = new File(new File(root.getLocation().toFile(), "Sub"), Constants.DOT_GIT);
 
-		repository = new FileRepository(gitDir);
+		repository = FileRepositoryBuilder.create(gitDir);
 		repository.create();
 
 		project = root.getProject(TEST_PROJECT);
@@ -79,7 +80,7 @@ public class DynamicVariablesTest extends EGitTestCase {
 		project2.create(null);
 		project2.open(null);
 		gitDir2 = new File(project2.getLocation().toFile().getAbsoluteFile(), Constants.DOT_GIT);
-		repository2 = new FileRepository(gitDir2);
+		repository2 = FileRepositoryBuilder.create(gitDir2);
 		repository2.create();
 
 		RepositoryMapping mapping = new RepositoryMapping(project, gitDir);

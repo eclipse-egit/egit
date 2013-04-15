@@ -29,7 +29,6 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
@@ -63,7 +62,7 @@ public class SubmoduleUpdateTest extends GitRepositoriesViewTestBase {
 		assertProjectExistence(PROJ1, true);
 		refreshAndWait();
 		assertHasRepo(repositoryFile);
-		FileRepository repo = lookupRepository(repositoryFile);
+		Repository repo = lookupRepository(repositoryFile);
 		ObjectId repoHead = repo.resolve(Constants.HEAD);
 
 		SubmoduleAddCommand command = new SubmoduleAddCommand(repo);

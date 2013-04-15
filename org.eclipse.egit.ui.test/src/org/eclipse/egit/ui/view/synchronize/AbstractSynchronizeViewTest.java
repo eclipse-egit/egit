@@ -49,7 +49,7 @@ import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.util.FileUtils;
 import org.eclipse.jgit.util.StringUtils;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
@@ -203,7 +203,7 @@ public abstract class AbstractSynchronizeViewTest extends
 	protected void createEmptyRepository() throws Exception {
 		File gitDir = new File(new File(getTestDirectory(), EMPTY_REPOSITORY),
 				Constants.DOT_GIT);
-		Repository myRepository = new FileRepository(gitDir);
+		Repository myRepository = FileRepositoryBuilder.create(gitDir);
 		myRepository.create();
 
 		// we need to commit into master first
