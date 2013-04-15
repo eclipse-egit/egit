@@ -21,7 +21,6 @@ import org.eclipse.egit.ui.test.TestUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jgit.api.SubmoduleAddCommand;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -63,7 +62,7 @@ public class GitRepositoriesViewRepoDeletionTest extends
 				.getPluginLocalizedValue(DELETE_REPOSITORY_CONTEXT_MENU_LABEL));
 		SWTBotShell shell = bot.shell(UIText.DeleteRepositoryConfirmDialog_DeleteRepositoryWindowTitle);
 		shell.activate();
-		FileRepository repo = lookupRepository(repositoryFile);
+		Repository repo = lookupRepository(repositoryFile);
 		String workDir=repo.getWorkTree().getPath();
 		String checkboxLabel = NLS
 				.bind(UIText.DeleteRepositoryConfirmDialog_DeleteWorkingDirectoryCheckbox,

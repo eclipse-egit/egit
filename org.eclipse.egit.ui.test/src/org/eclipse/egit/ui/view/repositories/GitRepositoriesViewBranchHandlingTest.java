@@ -38,7 +38,7 @@ import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
@@ -378,7 +378,8 @@ public class GitRepositoriesViewBranchHandlingTest extends
 
 		String title = NLS.bind(
 				UIText.MergeTargetSelectionDialog_TitleMergeWithBranch,
-				new FileRepository(clonedRepositoryFile).getBranch());
+				new RepositoryBuilder().setGitDir(clonedRepositoryFile).build()
+						.getBranch());
 
 		SWTBotShell mergeDialog = bot.shell(title);
 		// TODO do some merge here
