@@ -28,12 +28,11 @@ import org.eclipse.egit.ui.internal.repository.tree.RepositoryNode;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jgit.lib.CheckoutEntry;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.ReflogEntry;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.internal.storage.file.CheckoutEntry;
-import org.eclipse.jgit.internal.storage.file.ReflogEntry;
-import org.eclipse.jgit.internal.storage.file.ReflogReader;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -128,9 +127,8 @@ public class SwitchToMenu extends ContributionItem implements
 			TreeMap<String, Ref> sortedRefs = new TreeMap<String, Ref>();
 
 			// Add the MAX_NUM_MENU_ENTRIES most recently used branches first
-			List<ReflogEntry> reflogEntries = new ReflogReader(
-					repository, Constants.HEAD)
-					.getReverseEntries();
+			List<ReflogEntry> reflogEntries = repository.getReflogReader(
+					Constants.HEAD).getReverseEntries();
 			for (ReflogEntry entry : reflogEntries) {
 				CheckoutEntry checkout = entry.parseCheckout();
 				if (checkout != null) {
