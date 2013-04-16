@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//wpw\u003d",
+        "filename": "org.eclipse.egit.core/src/org/eclipse/egit/core/CoreText.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-04-16T21:20:27Z",
+      "side": 1,
+      "message": "The whole class should be made internal instead",
+      "revId": "6da4b8783320da89a732fe451f1042b0dbc51d43",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
