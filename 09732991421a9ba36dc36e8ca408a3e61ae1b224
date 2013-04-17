@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//wdc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/decorators/GitLightweightDecorator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-04-17T16:15:06Z",
+      "side": 1,
+      "message": "Why the change for the space before {branch_status}? The space inside it is a deliberate format instruction for only putting the space iff branch_status is non-empty. Otherwise the label looks like \"[repo master ]\" instead of \"[repo master]\". Please change it back and add an explanation to the comment above it.",
+      "revId": "09732991421a9ba36dc36e8ca408a3e61ae1b224",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
