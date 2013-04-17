@@ -4009,6 +4009,9 @@ public class UIText extends NLS {
 	public static String RemoveCommand_ConfirmDeleteBareRepositoryTitle;
 
 	/** */
+	public static String RemoveCommand_RemoveRepositoriesJob;
+
+	/** */
 	public static String RenameBranchDialog_DialogMessage;
 
 	/** */
