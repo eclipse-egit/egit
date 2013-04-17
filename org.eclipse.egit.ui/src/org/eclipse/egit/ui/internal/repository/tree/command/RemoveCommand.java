@@ -143,7 +143,7 @@ public class RemoveCommand extends
 		final boolean deleteWorkDir = deleteWorkingDir;
 		final boolean removeProj = removeProjects;
 
-		Job job = new Job("Remove Repositories Job") { //$NON-NLS-1$
+		Job job = new Job(UIText.RemoveCommand_RemoveRepositoriesJob) {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
