@@ -23,16 +23,12 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog;
 import org.eclipse.egit.ui.internal.dialogs.UnmergedBranchDialog;
 import org.eclipse.egit.ui.internal.history.GitHistoryPage;
-import org.eclipse.egit.ui.internal.history.HistoryPageInput;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revplot.PlotCommit;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 
@@ -131,39 +127,6 @@ public class DeleteBranchOnCommitHandler extends AbstractHistoryCommandHandler {
 		}
 
 		return null;
-	}
-
-	private List<Ref> getBranchesOfCommit(GitHistoryPage page,
-			final Repository repo, boolean hideCurrentBranch) throws IOException {
-		final List<Ref> branchesOfCommit = new ArrayList<Ref>();
-		IStructuredSelection selection = getSelection(page);
-		if (selection.isEmpty())
-			return branchesOfCommit;
-		PlotCommit commit = (PlotCommit) selection.getFirstElement();
-		String head = repo.getFullBranch();
-
-		int refCount = commit.getRefCount();
-		for (int i = 0; i < refCount; i++) {
-			Ref ref = commit.getRef(i);
-			String refName = ref.getName();
-			if (hideCurrentBranch && head != null && refName.equals(head))
-				continue;
-			if (refName.startsWith(Constants.R_HEADS)
-					|| refName.startsWith(Constants.R_REMOTES))
-				branchesOfCommit.add(ref);
-		}
-		return branchesOfCommit;
-	}
-
-	private Repository getRepository(GitHistoryPage page) {
-		if (page == null)
-			return null;
-		HistoryPageInput input = page.getInputInternal();
-		if (input == null)
-			return null;
-
-		final Repository repository = input.getRepository();
-		return repository;
 	}
 
 	private int deleteBranch(Repository repo, final Ref ref, boolean force)
