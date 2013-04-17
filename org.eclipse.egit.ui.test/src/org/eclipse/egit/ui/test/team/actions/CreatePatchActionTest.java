@@ -20,7 +20,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.egit.core.CoreText;
+import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.ResetOperation;
 import org.eclipse.egit.core.op.TagOperation;

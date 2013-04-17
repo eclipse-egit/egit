@@ -15,6 +15,7 @@ package org.eclipse.egit.core;
 import java.net.URISyntaxException;
 import java.util.regex.Pattern;
 
+import org.eclipse.egit.core.internal.CoreText;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.osgi.util.NLS;

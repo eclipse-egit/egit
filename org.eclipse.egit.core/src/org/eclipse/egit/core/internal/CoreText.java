@@ -11,7 +11,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package org.eclipse.egit.core;
+package org.eclipse.egit.core.internal;
 
 import org.eclipse.osgi.util.NLS;
 
@@ -25,7 +25,7 @@ public class CoreText extends NLS {
 	 * "Find Broken Externalized Strings" tool will not be
 	 * able to find the corresponding bundle file.
 	 */
-	private static final String BUNDLE_NAME = "org.eclipse.egit.core.coretext"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.egit.core.internal.coretext"; //$NON-NLS-1$
 
 	/** */
 	public static String Activator_autoIgnoreDerivedResources;
@@ -150,9 +150,7 @@ public class CoreText extends NLS {
 	/** */
 	public static String GitFileHistory_gitNotAttached;
 
-	/**
-	 * @since 3.0
-	 */
+	/** */
 	public static String GitFileHistory_invalidCommit;
 
 	/** */
@@ -290,9 +288,7 @@ public class CoreText extends NLS {
 	/** */
 	public static String IndexDiffCacheEntry_reindexing;
 
-	/**
-	 * @since 3.0
-	 */
+	/** */
 	public static String IndexDiffCacheEntry_reindexingIncrementally;
 
 	/** */
@@ -376,9 +372,7 @@ public class CoreText extends NLS {
 	/** */
 	public static String GitResourceVariantTree_fetchingVariant;
 
-	/**
-	 * @since 3.0
-	 */
+	/** */
 	public static String GitResourceVariantTreeSubscriber_CouldNotFindSourceVariant;
 
 	/** */
