@@ -286,7 +286,7 @@ public class GitLightweightDecorator extends LabelProvider implements
 		public static final String FOLDER_FORMAT_DEFAULT = "{dirty:>} {name}"; //$NON-NLS-1$
 
 		/** */
-		public static final String PROJECT_FORMAT_DEFAULT ="{dirty:>} {name} [{repository} {branch}{ branch_status}]";  //$NON-NLS-1$
+		public static final String PROJECT_FORMAT_DEFAULT = "{dirty:>} {name}  [{repository} {branch} {branch_status}]"; //$NON-NLS-1$
 
 		private IPreferenceStore store;
 
