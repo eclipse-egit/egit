@@ -57,12 +57,9 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 
 		BasicConfigurationDialog.show(repository);
 
-		try {
-			if (ref != null && ref.getName().equals(repository.getFullBranch()))
-				ref = null;
-		} catch (IOException ignored) {
-			// Ignored
-		}
+		String currentFullBranch = getFullBranch(repository);
+		if (ref != null && ref.getName().equals(currentFullBranch))
+			ref = null;
 
 		if (ref == null) {
 			RebaseTargetSelectionDialog rebaseTargetSelectionDialog = new RebaseTargetSelectionDialog(
@@ -79,8 +76,8 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 		}
 
 		String jobname = NLS.bind(
-				UIText.RebaseCurrentRefCommand_RebasingCurrentJobName, ref
-						.getName());
+				UIText.RebaseCurrentRefCommand_RebasingCurrentJobName,
+				Repository.shortenRefName(currentFullBranch), ref.getName());
 		RebaseHelper.runRebaseJob(repository, jobname, ref);
 		return null;
 	}
@@ -123,4 +120,14 @@ public class RebaseCurrentRefCommand extends AbstractRebaseCommandHandler {
 		}
 	}
 
+	private String getFullBranch(Repository repository)
+			throws ExecutionException {
+		try {
+			return repository.getFullBranch();
+		} catch (IOException e) {
+			throw new ExecutionException(
+					UIText.RebaseCurrentRefCommand_ErrorGettingCurrentBranchMessage,
+					e);
+		}
+	}
 }
