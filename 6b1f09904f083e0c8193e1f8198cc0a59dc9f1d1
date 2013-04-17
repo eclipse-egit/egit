@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//wK0\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/AdaptableFileTreeIteratorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-17T23:34:48Z",
+      "side": 1,
+      "message": "use FileRepositoryBuilder.create instead which requires less code ?",
+      "revId": "6b1f09904f083e0c8193e1f8198cc0a59dc9f1d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
