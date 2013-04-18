@@ -241,7 +241,7 @@ public class GitResourceVariantTreeSubscriber extends
 	@Override
 	public IDiff getDiff(IResource resource) throws CoreException {
 		final GitSynchronizeData syncData = gsds.getData(resource.getProject());
-		if (syncData.shouldIncludeLocal())
+		if (syncData == null || syncData.shouldIncludeLocal())
 			return super.getDiff(resource);
 
 		SyncInfo info = getSyncInfo(resource);
