@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010, Dariusz Luksza <dariusz@luksza.org>
+ * Copyright (C) 2010, 2013 Dariusz Luksza <dariusz@luksza.org> and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
 
 /**
  *
@@ -128,6 +130,36 @@ public class GitSynchronizeDataSet implements Iterable<GitSynchronizeData> {
 		return resource.toArray(new IProject[resource.size()]);
 	}
 
+	/**
+	 * @param res
+	 * @return whether the given resource should be included in the
+	 *         synchronization.
+	 */
+	public boolean shouldBeIncluded(IResource res) {
+		final IProject project = res.getProject();
+		if (project == null)
+			return false;
+
+		final GitSynchronizeData syncData = getData(project);
+		if (syncData == null)
+			return false;
+
+		final Set<? extends IResource> includedPaths = syncData
+				.getIncludedPaths();
+		if (includedPaths == null)
+			return true;
+
+		IPath path = res.getLocation();
+		if (path != null) {
+			for (IResource resource : includedPaths) {
+				IPath inclResourceLocation = resource.getLocation();
+				if (inclResourceLocation != null
+						&& inclResourceLocation.isPrefixOf(path))
+					return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * @return {@code true} when fetch action should be forced before
