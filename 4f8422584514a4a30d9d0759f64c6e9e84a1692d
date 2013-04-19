@@ -34,6 +34,24 @@
       "revId": "4f8422584514a4a30d9d0759f64c6e9e84a1692d",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//vnQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/stash/StashCreateUI.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 79
+      },
+      "writtenOn": "2013-04-19T14:52:17Z",
+      "side": 1,
+      "message": "See patch set 3.",
+      "parentUuid": "AABOPX//vns\u003d",
+      "revId": "4f8422584514a4a30d9d0759f64c6e9e84a1692d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
