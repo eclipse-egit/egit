@@ -21,6 +21,7 @@ import org.eclipse.egit.ui.internal.UIText;
 import org.eclipse.egit.ui.internal.WorkbenchStyledLabelProvider;
 import org.eclipse.egit.ui.internal.commit.CommitEditor;
 import org.eclipse.egit.ui.internal.commit.RepositoryCommit;
+import org.eclipse.egit.ui.internal.history.FileDiff;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -289,6 +290,12 @@ class FetchResultTable {
 				if (e1 instanceof RepositoryCommit
 						&& e2 instanceof RepositoryCommit)
 					return 0;
+
+				if (e1 instanceof FileDiff && e2 instanceof FileDiff) {
+					FileDiff f1 = (FileDiff) e1;
+					FileDiff f2 = (FileDiff) e2;
+					return f1.getPath().compareTo(f2.getPath());
+				}
 
 				return super.compare(viewer, e1, e2);
 			}
