@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -201,19 +202,22 @@ abstract class AbstractHistoryCommandHandler extends AbstractHandler {
 	/**
 	 * Utility to get a list of Refs from a commit in order to handle ambiguous
 	 * selections when a Ref is preferred over a commit.
-	 *
+	 * 
 	 * @param commit
 	 * @param repo
-	 * @param refPrefix
+	 * @param refPrefixes
 	 *            e.g. "refs/heads/" or ""
 	 * @return a list of RefNodes
 	 */
-	protected List<RefNode> getRefNodes(RevCommit commit, Repository repo, String refPrefix) {
+	protected List<RefNode> getRefNodes(RevCommit commit, Repository repo,
+			String... refPrefixes) {
 		List<Ref> availableBranches = new ArrayList<Ref>();
 		List<RefNode> nodes = new ArrayList<RefNode>();
 		try {
-			Map<String, Ref> branches = repo.getRefDatabase().getRefs(
-					refPrefix);
+			Map<String, Ref> branches = new HashMap<String, Ref>();
+			for (String refPrefix : refPrefixes) {
+				branches.putAll(repo.getRefDatabase().getRefs(refPrefix));
+			}
 			for (Ref branch : branches.values()) {
 				if (branch.getLeaf().getObjectId().equals(commit.getId()))
 					availableBranches.add(branch);

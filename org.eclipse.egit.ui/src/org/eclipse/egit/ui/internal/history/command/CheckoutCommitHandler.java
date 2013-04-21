@@ -35,7 +35,8 @@ public class CheckoutCommitHandler extends AbstractHistoryCommandHandler {
 
 		final BranchOperationUI op;
 
-		List<RefNode> nodes = getRefNodes(commit, repo, Constants.R_HEADS);
+		List<RefNode> nodes = getRefNodes(commit, repo, Constants.R_HEADS,
+				Constants.R_REMOTES);
 
 		if (nodes.isEmpty())
 			op = BranchOperationUI.checkout(repo, commit.name());
