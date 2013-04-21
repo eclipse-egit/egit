@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//vbQ\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CreateBranchOnCommitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 118
+      },
+      "writtenOn": "2013-04-21T23:02:28Z",
+      "side": 1,
+      "message": "Use BranchSelectionDialog or allow select between available branches in the wizard.",
+      "revId": "25e2ea64756e56bd338856ee47c0c2c941c0bf7f",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
