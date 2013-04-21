@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.egit.ui.internal.history.command;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -35,7 +36,9 @@ public class CheckoutCommitHandler extends AbstractHistoryCommandHandler {
 
 		final BranchOperationUI op;
 
-		List<RefNode> nodes = getRefNodes(commit, repo, Constants.R_HEADS);
+		List<RefNode> nodes = getRefNodes(commit, repo, Constants.R_HEADS,
+				Constants.R_REMOTES);
+		Collections.sort(nodes);
 
 		if (nodes.isEmpty())
 			op = BranchOperationUI.checkout(repo, commit.name());
