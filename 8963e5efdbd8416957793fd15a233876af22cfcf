@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//vDg\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-23T08:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//vDs\u003d",
+      "revId": "8963e5efdbd8416957793fd15a233876af22cfcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//vEY\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommandHandler.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AABOPX//vDc\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-23T08:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//vEY\u003d",
+      "revId": "8963e5efdbd8416957793fd15a233876af22cfcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//vEU\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommandHandler.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2013-04-23T08:43:33Z",
       "side": 1,
       "message": "style nit: no braces around single line blocks",
+      "revId": "8963e5efdbd8416957793fd15a233876af22cfcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//vDY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-23T08:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//vEU\u003d",
       "revId": "8963e5efdbd8416957793fd15a233876af22cfcf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -81,6 +135,24 @@
       "writtenOn": "2013-04-23T08:43:33Z",
       "side": 1,
       "message": "nodes should be sorted by name",
+      "revId": "8963e5efdbd8416957793fd15a233876af22cfcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//vDU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CheckoutCommitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-23T08:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AABOPX//vEM\u003d",
       "revId": "8963e5efdbd8416957793fd15a233876af22cfcf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
