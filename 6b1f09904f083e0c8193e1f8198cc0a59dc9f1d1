@@ -16,6 +16,24 @@
       "revId": "6b1f09904f083e0c8193e1f8198cc0a59dc9f1d1",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//u1E\u003d",
+        "filename": "org.eclipse.egit.core.test/src/org/eclipse/egit/core/test/AdaptableFileTreeIteratorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2013-04-23T21:18:38Z",
+      "side": 1,
+      "message": "Maybe but this looks kind of stange. create x 2\n\n\t\trepository \u003d FileRepositoryBuilder.create(gitDir);\n\t\trepository.create();",
+      "parentUuid": "AABOPX//wK0\u003d",
+      "revId": "6b1f09904f083e0c8193e1f8198cc0a59dc9f1d1",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
