@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AABOPX//vEY\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-23T08:43:33Z",
+      "side": 1,
+      "message": "style nit: trailing whitespace",
+      "revId": "8963e5efdbd8416957793fd15a233876af22cfcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//vEU\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/AbstractHistoryCommandHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-23T08:43:33Z",
+      "side": 1,
+      "message": "style nit: no braces around single line blocks",
+      "revId": "8963e5efdbd8416957793fd15a233876af22cfcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AABOPX//vbE\u003d",
         "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CheckoutCommitHandler.java",
         "patchSetId": 1
@@ -13,6 +47,23 @@
       "writtenOn": "2013-04-21T23:07:09Z",
       "side": 1,
       "message": "Ignore current branch.",
+      "revId": "8963e5efdbd8416957793fd15a233876af22cfcf",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//vEM\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/history/command/CheckoutCommitHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-23T08:43:33Z",
+      "side": 1,
+      "message": "nodes should be sorted by name",
       "revId": "8963e5efdbd8416957793fd15a233876af22cfcf",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
