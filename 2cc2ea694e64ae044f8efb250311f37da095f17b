@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AABOPX//usM\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/variables/DynamicVariablesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-24T13:41:37Z",
+      "side": 1,
+      "message": "use static create method of FileRepositoryBuilder",
+      "revId": "2cc2ea694e64ae044f8efb250311f37da095f17b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//usI\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/repositories/GitRepositoriesViewBranchHandlingTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-24T13:41:37Z",
+      "side": 1,
+      "message": "use FileRepositoryBuilder.create",
+      "revId": "2cc2ea694e64ae044f8efb250311f37da095f17b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//usE\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/view/synchronize/AbstractSynchronizeViewTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-24T13:41:37Z",
+      "side": 1,
+      "message": "use FileRepositoryBuilder.create",
+      "revId": "2cc2ea694e64ae044f8efb250311f37da095f17b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//usA\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-24T13:41:37Z",
+      "side": 1,
+      "message": "use FileRepositoryBuilder.create",
+      "revId": "2cc2ea694e64ae044f8efb250311f37da095f17b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//ur8\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/clone/GitCloneWizardTestBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-24T13:41:37Z",
+      "side": 1,
+      "message": "use FileRepositoryBuilder.create",
+      "revId": "2cc2ea694e64ae044f8efb250311f37da095f17b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//ur4\u003d",
+        "filename": "org.eclipse.egit.ui.test/src/org/eclipse/egit/ui/wizards/share/SharingWizardTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-24T13:41:37Z",
+      "side": 1,
+      "message": "use FileRepositoryBuilder.create",
+      "revId": "2cc2ea694e64ae044f8efb250311f37da095f17b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//uro\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/SourceBranchPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-24T13:41:37Z",
+      "side": 1,
+      "message": "use FileRepositoryBuilder.create",
+      "revId": "2cc2ea694e64ae044f8efb250311f37da095f17b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//urk\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/repository/tree/LinkHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-24T13:41:37Z",
+      "side": 1,
+      "message": "use FileRepositoryBuilder.create",
+      "revId": "2cc2ea694e64ae044f8efb250311f37da095f17b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AABOPX//urg\u003d",
+        "filename": "org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/sharing/ExistingOrNewPage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2013-04-24T13:41:37Z",
+      "side": 1,
+      "message": "use FileRepositoryBuilder.create",
+      "revId": "2cc2ea694e64ae044f8efb250311f37da095f17b",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
